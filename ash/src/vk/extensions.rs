@@ -43,6 +43,7 @@ pub type PFN_vkGetPhysicalDeviceSurfacePresentModesKHR = unsafe extern "system" 
     p_present_mode_count: *mut u32,
     p_present_modes: *mut PresentModeKHR,
 ) -> Result;
+#[derive(Clone)]
 pub struct KhrSurfaceFn {
     pub destroy_surface_khr: unsafe extern "system" fn(
         instance: Instance,
@@ -75,19 +76,6 @@ pub struct KhrSurfaceFn {
 }
 unsafe impl Send for KhrSurfaceFn {}
 unsafe impl Sync for KhrSurfaceFn {}
-impl ::std::clone::Clone for KhrSurfaceFn {
-    fn clone(&self) -> Self {
-        KhrSurfaceFn {
-            destroy_surface_khr: self.destroy_surface_khr,
-            get_physical_device_surface_support_khr: self.get_physical_device_surface_support_khr,
-            get_physical_device_surface_capabilities_khr: self
-                .get_physical_device_surface_capabilities_khr,
-            get_physical_device_surface_formats_khr: self.get_physical_device_surface_formats_khr,
-            get_physical_device_surface_present_modes_khr: self
-                .get_physical_device_surface_present_modes_khr,
-        }
-    }
-}
 impl KhrSurfaceFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -343,6 +331,7 @@ pub type PFN_vkAcquireNextImage2KHR = unsafe extern "system" fn(
     p_acquire_info: *const AcquireNextImageInfoKHR,
     p_image_index: *mut u32,
 ) -> Result;
+#[derive(Clone)]
 pub struct KhrSwapchainFn {
     pub create_swapchain_khr: unsafe extern "system" fn(
         device: Device,
@@ -394,24 +383,6 @@ pub struct KhrSwapchainFn {
 }
 unsafe impl Send for KhrSwapchainFn {}
 unsafe impl Sync for KhrSwapchainFn {}
-impl ::std::clone::Clone for KhrSwapchainFn {
-    fn clone(&self) -> Self {
-        KhrSwapchainFn {
-            create_swapchain_khr: self.create_swapchain_khr,
-            destroy_swapchain_khr: self.destroy_swapchain_khr,
-            get_swapchain_images_khr: self.get_swapchain_images_khr,
-            acquire_next_image_khr: self.acquire_next_image_khr,
-            queue_present_khr: self.queue_present_khr,
-            get_device_group_present_capabilities_khr: self
-                .get_device_group_present_capabilities_khr,
-            get_device_group_surface_present_modes_khr: self
-                .get_device_group_surface_present_modes_khr,
-            get_physical_device_present_rectangles_khr: self
-                .get_physical_device_present_rectangles_khr,
-            acquire_next_image2_khr: self.acquire_next_image2_khr,
-        }
-    }
-}
 impl KhrSwapchainFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -809,6 +780,7 @@ pub type PFN_vkCreateDisplayPlaneSurfaceKHR = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
+#[derive(Clone)]
 pub struct KhrDisplayFn {
     pub get_physical_device_display_properties_khr: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
@@ -854,21 +826,6 @@ pub struct KhrDisplayFn {
 }
 unsafe impl Send for KhrDisplayFn {}
 unsafe impl Sync for KhrDisplayFn {}
-impl ::std::clone::Clone for KhrDisplayFn {
-    fn clone(&self) -> Self {
-        KhrDisplayFn {
-            get_physical_device_display_properties_khr: self
-                .get_physical_device_display_properties_khr,
-            get_physical_device_display_plane_properties_khr: self
-                .get_physical_device_display_plane_properties_khr,
-            get_display_plane_supported_displays_khr: self.get_display_plane_supported_displays_khr,
-            get_display_mode_properties_khr: self.get_display_mode_properties_khr,
-            create_display_mode_khr: self.create_display_mode_khr,
-            get_display_plane_capabilities_khr: self.get_display_plane_capabilities_khr,
-            create_display_plane_surface_khr: self.create_display_plane_surface_khr,
-        }
-    }
-}
 impl KhrDisplayFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -1153,6 +1110,7 @@ pub type PFN_vkCreateSharedSwapchainsKHR = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_swapchains: *mut SwapchainKHR,
 ) -> Result;
+#[derive(Clone)]
 pub struct KhrDisplaySwapchainFn {
     pub create_shared_swapchains_khr: unsafe extern "system" fn(
         device: Device,
@@ -1164,13 +1122,6 @@ pub struct KhrDisplaySwapchainFn {
 }
 unsafe impl Send for KhrDisplaySwapchainFn {}
 unsafe impl Sync for KhrDisplaySwapchainFn {}
-impl ::std::clone::Clone for KhrDisplaySwapchainFn {
-    fn clone(&self) -> Self {
-        KhrDisplaySwapchainFn {
-            create_shared_swapchains_khr: self.create_shared_swapchains_khr,
-        }
-    }
-}
 impl KhrDisplaySwapchainFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -1249,6 +1200,7 @@ pub type PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR = unsafe extern "syst
     dpy: *mut Display,
     visual_id: VisualID,
 ) -> Bool32;
+#[derive(Clone)]
 pub struct KhrXlibSurfaceFn {
     pub create_xlib_surface_khr: unsafe extern "system" fn(
         instance: Instance,
@@ -1265,15 +1217,6 @@ pub struct KhrXlibSurfaceFn {
 }
 unsafe impl Send for KhrXlibSurfaceFn {}
 unsafe impl Sync for KhrXlibSurfaceFn {}
-impl ::std::clone::Clone for KhrXlibSurfaceFn {
-    fn clone(&self) -> Self {
-        KhrXlibSurfaceFn {
-            create_xlib_surface_khr: self.create_xlib_surface_khr,
-            get_physical_device_xlib_presentation_support_khr: self
-                .get_physical_device_xlib_presentation_support_khr,
-        }
-    }
-}
 impl KhrXlibSurfaceFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -1376,6 +1319,7 @@ pub type PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR = unsafe extern "syste
     connection: *mut xcb_connection_t,
     visual_id: xcb_visualid_t,
 ) -> Bool32;
+#[derive(Clone)]
 pub struct KhrXcbSurfaceFn {
     pub create_xcb_surface_khr: unsafe extern "system" fn(
         instance: Instance,
@@ -1392,15 +1336,6 @@ pub struct KhrXcbSurfaceFn {
 }
 unsafe impl Send for KhrXcbSurfaceFn {}
 unsafe impl Sync for KhrXcbSurfaceFn {}
-impl ::std::clone::Clone for KhrXcbSurfaceFn {
-    fn clone(&self) -> Self {
-        KhrXcbSurfaceFn {
-            create_xcb_surface_khr: self.create_xcb_surface_khr,
-            get_physical_device_xcb_presentation_support_khr: self
-                .get_physical_device_xcb_presentation_support_khr,
-        }
-    }
-}
 impl KhrXcbSurfaceFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -1503,6 +1438,7 @@ pub type PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR = unsafe extern "s
     display: *mut wl_display,
 )
     -> Bool32;
+#[derive(Clone)]
 pub struct KhrWaylandSurfaceFn {
     pub create_wayland_surface_khr: unsafe extern "system" fn(
         instance: Instance,
@@ -1519,15 +1455,6 @@ pub struct KhrWaylandSurfaceFn {
 }
 unsafe impl Send for KhrWaylandSurfaceFn {}
 unsafe impl Sync for KhrWaylandSurfaceFn {}
-impl ::std::clone::Clone for KhrWaylandSurfaceFn {
-    fn clone(&self) -> Self {
-        KhrWaylandSurfaceFn {
-            create_wayland_surface_khr: self.create_wayland_surface_khr,
-            get_physical_device_wayland_presentation_support_khr: self
-                .get_physical_device_wayland_presentation_support_khr,
-        }
-    }
-}
 impl KhrWaylandSurfaceFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -1613,14 +1540,10 @@ impl KhrMirSurfaceFn {
     }
     pub const SPEC_VERSION: u32 = 4u32;
 }
+#[derive(Clone)]
 pub struct KhrMirSurfaceFn {}
 unsafe impl Send for KhrMirSurfaceFn {}
 unsafe impl Sync for KhrMirSurfaceFn {}
-impl ::std::clone::Clone for KhrMirSurfaceFn {
-    fn clone(&self) -> Self {
-        KhrMirSurfaceFn {}
-    }
-}
 impl KhrMirSurfaceFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -1643,6 +1566,7 @@ pub type PFN_vkCreateAndroidSurfaceKHR = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
+#[derive(Clone)]
 pub struct KhrAndroidSurfaceFn {
     pub create_android_surface_khr: unsafe extern "system" fn(
         instance: Instance,
@@ -1653,13 +1577,6 @@ pub struct KhrAndroidSurfaceFn {
 }
 unsafe impl Send for KhrAndroidSurfaceFn {}
 unsafe impl Sync for KhrAndroidSurfaceFn {}
-impl ::std::clone::Clone for KhrAndroidSurfaceFn {
-    fn clone(&self) -> Self {
-        KhrAndroidSurfaceFn {
-            create_android_surface_khr: self.create_android_surface_khr,
-        }
-    }
-}
 impl KhrAndroidSurfaceFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -1721,6 +1638,7 @@ pub type PFN_vkCreateWin32SurfaceKHR = unsafe extern "system" fn(
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR =
     unsafe extern "system" fn(physical_device: PhysicalDevice, queue_family_index: u32) -> Bool32;
+#[derive(Clone)]
 pub struct KhrWin32SurfaceFn {
     pub create_win32_surface_khr: unsafe extern "system" fn(
         instance: Instance,
@@ -1736,15 +1654,6 @@ pub struct KhrWin32SurfaceFn {
 }
 unsafe impl Send for KhrWin32SurfaceFn {}
 unsafe impl Sync for KhrWin32SurfaceFn {}
-impl ::std::clone::Clone for KhrWin32SurfaceFn {
-    fn clone(&self) -> Self {
-        KhrWin32SurfaceFn {
-            create_win32_surface_khr: self.create_win32_surface_khr,
-            get_physical_device_win32_presentation_support_khr: self
-                .get_physical_device_win32_presentation_support_khr,
-        }
-    }
-}
 impl KhrWin32SurfaceFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -1859,6 +1768,7 @@ pub type PFN_vkGetSwapchainGrallocUsage2ANDROID = unsafe extern "system" fn(
     gralloc_consumer_usage: *mut u64,
     gralloc_producer_usage: *mut u64,
 ) -> Result;
+#[derive(Clone)]
 pub struct AndroidNativeBufferFn {
     pub get_swapchain_gralloc_usage_android: unsafe extern "system" fn(
         device: Device,
@@ -1891,16 +1801,6 @@ pub struct AndroidNativeBufferFn {
 }
 unsafe impl Send for AndroidNativeBufferFn {}
 unsafe impl Sync for AndroidNativeBufferFn {}
-impl ::std::clone::Clone for AndroidNativeBufferFn {
-    fn clone(&self) -> Self {
-        AndroidNativeBufferFn {
-            get_swapchain_gralloc_usage_android: self.get_swapchain_gralloc_usage_android,
-            acquire_image_android: self.acquire_image_android,
-            queue_signal_release_image_android: self.queue_signal_release_image_android,
-            get_swapchain_gralloc_usage2_android: self.get_swapchain_gralloc_usage2_android,
-        }
-    }
-}
 impl AndroidNativeBufferFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -2101,6 +2001,7 @@ pub type PFN_vkDebugReportMessageEXT = unsafe extern "system" fn(
     p_layer_prefix: *const c_char,
     p_message: *const c_char,
 );
+#[derive(Clone)]
 pub struct ExtDebugReportFn {
     pub create_debug_report_callback_ext: unsafe extern "system" fn(
         instance: Instance,
@@ -2126,15 +2027,6 @@ pub struct ExtDebugReportFn {
 }
 unsafe impl Send for ExtDebugReportFn {}
 unsafe impl Sync for ExtDebugReportFn {}
-impl ::std::clone::Clone for ExtDebugReportFn {
-    fn clone(&self) -> Self {
-        ExtDebugReportFn {
-            create_debug_report_callback_ext: self.create_debug_report_callback_ext,
-            destroy_debug_report_callback_ext: self.destroy_debug_report_callback_ext,
-            debug_report_message_ext: self.debug_report_message_ext,
-        }
-    }
-}
 impl ExtDebugReportFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -2285,14 +2177,10 @@ impl NvGlslShaderFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct NvGlslShaderFn {}
 unsafe impl Send for NvGlslShaderFn {}
 unsafe impl Sync for NvGlslShaderFn {}
-impl ::std::clone::Clone for NvGlslShaderFn {
-    fn clone(&self) -> Self {
-        NvGlslShaderFn {}
-    }
-}
 impl NvGlslShaderFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -2312,14 +2200,10 @@ impl ExtDepthRangeUnrestrictedFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct ExtDepthRangeUnrestrictedFn {}
 unsafe impl Send for ExtDepthRangeUnrestrictedFn {}
 unsafe impl Sync for ExtDepthRangeUnrestrictedFn {}
-impl ::std::clone::Clone for ExtDepthRangeUnrestrictedFn {
-    fn clone(&self) -> Self {
-        ExtDepthRangeUnrestrictedFn {}
-    }
-}
 impl ExtDepthRangeUnrestrictedFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -2335,14 +2219,10 @@ impl KhrSamplerMirrorClampToEdgeFn {
     }
     pub const SPEC_VERSION: u32 = 3u32;
 }
+#[derive(Clone)]
 pub struct KhrSamplerMirrorClampToEdgeFn {}
 unsafe impl Send for KhrSamplerMirrorClampToEdgeFn {}
 unsafe impl Sync for KhrSamplerMirrorClampToEdgeFn {}
-impl ::std::clone::Clone for KhrSamplerMirrorClampToEdgeFn {
-    fn clone(&self) -> Self {
-        KhrSamplerMirrorClampToEdgeFn {}
-    }
-}
 impl KhrSamplerMirrorClampToEdgeFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -2366,14 +2246,10 @@ impl ImgFilterCubicFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct ImgFilterCubicFn {}
 unsafe impl Send for ImgFilterCubicFn {}
 unsafe impl Sync for ImgFilterCubicFn {}
-impl ::std::clone::Clone for ImgFilterCubicFn {
-    fn clone(&self) -> Self {
-        ImgFilterCubicFn {}
-    }
-}
 impl ImgFilterCubicFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -2397,14 +2273,10 @@ impl AmdExtension17Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension17Fn {}
 unsafe impl Send for AmdExtension17Fn {}
 unsafe impl Sync for AmdExtension17Fn {}
-impl ::std::clone::Clone for AmdExtension17Fn {
-    fn clone(&self) -> Self {
-        AmdExtension17Fn {}
-    }
-}
 impl AmdExtension17Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -2420,14 +2292,10 @@ impl AmdExtension18Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension18Fn {}
 unsafe impl Send for AmdExtension18Fn {}
 unsafe impl Sync for AmdExtension18Fn {}
-impl ::std::clone::Clone for AmdExtension18Fn {
-    fn clone(&self) -> Self {
-        AmdExtension18Fn {}
-    }
-}
 impl AmdExtension18Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -2443,14 +2311,10 @@ impl AmdRasterizationOrderFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct AmdRasterizationOrderFn {}
 unsafe impl Send for AmdRasterizationOrderFn {}
 unsafe impl Sync for AmdRasterizationOrderFn {}
-impl ::std::clone::Clone for AmdRasterizationOrderFn {
-    fn clone(&self) -> Self {
-        AmdRasterizationOrderFn {}
-    }
-}
 impl AmdRasterizationOrderFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -2470,14 +2334,10 @@ impl AmdExtension20Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension20Fn {}
 unsafe impl Send for AmdExtension20Fn {}
 unsafe impl Sync for AmdExtension20Fn {}
-impl ::std::clone::Clone for AmdExtension20Fn {
-    fn clone(&self) -> Self {
-        AmdExtension20Fn {}
-    }
-}
 impl AmdExtension20Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -2493,14 +2353,10 @@ impl AmdShaderTrinaryMinmaxFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct AmdShaderTrinaryMinmaxFn {}
 unsafe impl Send for AmdShaderTrinaryMinmaxFn {}
 unsafe impl Sync for AmdShaderTrinaryMinmaxFn {}
-impl ::std::clone::Clone for AmdShaderTrinaryMinmaxFn {
-    fn clone(&self) -> Self {
-        AmdShaderTrinaryMinmaxFn {}
-    }
-}
 impl AmdShaderTrinaryMinmaxFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -2516,14 +2372,10 @@ impl AmdShaderExplicitVertexParameterFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct AmdShaderExplicitVertexParameterFn {}
 unsafe impl Send for AmdShaderExplicitVertexParameterFn {}
 unsafe impl Sync for AmdShaderExplicitVertexParameterFn {}
-impl ::std::clone::Clone for AmdShaderExplicitVertexParameterFn {
-    fn clone(&self) -> Self {
-        AmdShaderExplicitVertexParameterFn {}
-    }
-}
 impl AmdShaderExplicitVertexParameterFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -2561,6 +2413,7 @@ pub type PFN_vkCmdDebugMarkerInsertEXT = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     p_marker_info: *const DebugMarkerMarkerInfoEXT,
 );
+#[derive(Clone)]
 pub struct ExtDebugMarkerFn {
     pub debug_marker_set_object_tag_ext: unsafe extern "system" fn(
         device: Device,
@@ -2582,17 +2435,6 @@ pub struct ExtDebugMarkerFn {
 }
 unsafe impl Send for ExtDebugMarkerFn {}
 unsafe impl Sync for ExtDebugMarkerFn {}
-impl ::std::clone::Clone for ExtDebugMarkerFn {
-    fn clone(&self) -> Self {
-        ExtDebugMarkerFn {
-            debug_marker_set_object_tag_ext: self.debug_marker_set_object_tag_ext,
-            debug_marker_set_object_name_ext: self.debug_marker_set_object_name_ext,
-            cmd_debug_marker_begin_ext: self.cmd_debug_marker_begin_ext,
-            cmd_debug_marker_end_ext: self.cmd_debug_marker_end_ext,
-            cmd_debug_marker_insert_ext: self.cmd_debug_marker_insert_ext,
-        }
-    }
-}
 impl ExtDebugMarkerFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -2751,14 +2593,10 @@ impl AmdExtension24Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension24Fn {}
 unsafe impl Send for AmdExtension24Fn {}
 unsafe impl Sync for AmdExtension24Fn {}
-impl ::std::clone::Clone for AmdExtension24Fn {
-    fn clone(&self) -> Self {
-        AmdExtension24Fn {}
-    }
-}
 impl AmdExtension24Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -2822,14 +2660,10 @@ impl AmdExtension25Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension25Fn {}
 unsafe impl Send for AmdExtension25Fn {}
 unsafe impl Sync for AmdExtension25Fn {}
-impl ::std::clone::Clone for AmdExtension25Fn {
-    fn clone(&self) -> Self {
-        AmdExtension25Fn {}
-    }
-}
 impl AmdExtension25Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -2893,14 +2727,10 @@ impl AmdGcnShaderFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct AmdGcnShaderFn {}
 unsafe impl Send for AmdGcnShaderFn {}
 unsafe impl Sync for AmdGcnShaderFn {}
-impl ::std::clone::Clone for AmdGcnShaderFn {
-    fn clone(&self) -> Self {
-        AmdGcnShaderFn {}
-    }
-}
 impl AmdGcnShaderFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -2916,14 +2746,10 @@ impl NvDedicatedAllocationFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct NvDedicatedAllocationFn {}
 unsafe impl Send for NvDedicatedAllocationFn {}
 unsafe impl Sync for NvDedicatedAllocationFn {}
-impl ::std::clone::Clone for NvDedicatedAllocationFn {
-    fn clone(&self) -> Self {
-        NvDedicatedAllocationFn {}
-    }
-}
 impl NvDedicatedAllocationFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -2951,14 +2777,10 @@ impl ExtExtension28Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ExtExtension28Fn {}
 unsafe impl Send for ExtExtension28Fn {}
 unsafe impl Sync for ExtExtension28Fn {}
-impl ::std::clone::Clone for ExtExtension28Fn {
-    fn clone(&self) -> Self {
-        ExtExtension28Fn {}
-    }
-}
 impl ExtExtension28Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -3024,6 +2846,7 @@ pub type PFN_vkCmdDrawIndirectByteCountEXT = unsafe extern "system" fn(
     counter_offset: u32,
     vertex_stride: u32,
 );
+#[derive(Clone)]
 pub struct ExtTransformFeedbackFn {
     pub cmd_bind_transform_feedback_buffers_ext: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
@@ -3072,18 +2895,6 @@ pub struct ExtTransformFeedbackFn {
 }
 unsafe impl Send for ExtTransformFeedbackFn {}
 unsafe impl Sync for ExtTransformFeedbackFn {}
-impl ::std::clone::Clone for ExtTransformFeedbackFn {
-    fn clone(&self) -> Self {
-        ExtTransformFeedbackFn {
-            cmd_bind_transform_feedback_buffers_ext: self.cmd_bind_transform_feedback_buffers_ext,
-            cmd_begin_transform_feedback_ext: self.cmd_begin_transform_feedback_ext,
-            cmd_end_transform_feedback_ext: self.cmd_end_transform_feedback_ext,
-            cmd_begin_query_indexed_ext: self.cmd_begin_query_indexed_ext,
-            cmd_end_query_indexed_ext: self.cmd_end_query_indexed_ext,
-            cmd_draw_indirect_byte_count_ext: self.cmd_draw_indirect_byte_count_ext,
-        }
-    }
-}
 impl ExtTransformFeedbackFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -3374,14 +3185,10 @@ impl NvxExtension30Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct NvxExtension30Fn {}
 unsafe impl Send for NvxExtension30Fn {}
 unsafe impl Sync for NvxExtension30Fn {}
-impl ::std::clone::Clone for NvxExtension30Fn {
-    fn clone(&self) -> Self {
-        NvxExtension30Fn {}
-    }
-}
 impl NvxExtension30Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -3406,6 +3213,7 @@ pub type PFN_vkGetImageViewAddressNVX = unsafe extern "system" fn(
     image_view: ImageView,
     p_properties: *mut ImageViewAddressPropertiesNVX,
 ) -> Result;
+#[derive(Clone)]
 pub struct NvxImageViewHandleFn {
     pub get_image_view_handle_nvx:
         unsafe extern "system" fn(device: Device, p_info: *const ImageViewHandleInfoNVX) -> u32,
@@ -3417,14 +3225,6 @@ pub struct NvxImageViewHandleFn {
 }
 unsafe impl Send for NvxImageViewHandleFn {}
 unsafe impl Sync for NvxImageViewHandleFn {}
-impl ::std::clone::Clone for NvxImageViewHandleFn {
-    fn clone(&self) -> Self {
-        NvxImageViewHandleFn {
-            get_image_view_handle_nvx: self.get_image_view_handle_nvx,
-            get_image_view_address_nvx: self.get_image_view_address_nvx,
-        }
-    }
-}
 impl NvxImageViewHandleFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -3505,14 +3305,10 @@ impl AmdExtension32Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension32Fn {}
 unsafe impl Send for AmdExtension32Fn {}
 unsafe impl Sync for AmdExtension32Fn {}
-impl ::std::clone::Clone for AmdExtension32Fn {
-    fn clone(&self) -> Self {
-        AmdExtension32Fn {}
-    }
-}
 impl AmdExtension32Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -3528,14 +3324,10 @@ impl AmdExtension33Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension33Fn {}
 unsafe impl Send for AmdExtension33Fn {}
 unsafe impl Sync for AmdExtension33Fn {}
-impl ::std::clone::Clone for AmdExtension33Fn {
-    fn clone(&self) -> Self {
-        AmdExtension33Fn {}
-    }
-}
 impl AmdExtension33Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -3571,6 +3363,7 @@ pub type PFN_vkCmdDrawIndexedIndirectCount = unsafe extern "system" fn(
     max_draw_count: u32,
     stride: u32,
 );
+#[derive(Clone)]
 pub struct AmdDrawIndirectCountFn {
     pub cmd_draw_indirect_count_amd: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
@@ -3593,14 +3386,6 @@ pub struct AmdDrawIndirectCountFn {
 }
 unsafe impl Send for AmdDrawIndirectCountFn {}
 unsafe impl Sync for AmdDrawIndirectCountFn {}
-impl ::std::clone::Clone for AmdDrawIndirectCountFn {
-    fn clone(&self) -> Self {
-        AmdDrawIndirectCountFn {
-            cmd_draw_indirect_count_amd: self.cmd_draw_indirect_count_amd,
-            cmd_draw_indexed_indirect_count_amd: self.cmd_draw_indexed_indirect_count_amd,
-        }
-    }
-}
 impl AmdDrawIndirectCountFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -3708,14 +3493,10 @@ impl AmdExtension35Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension35Fn {}
 unsafe impl Send for AmdExtension35Fn {}
 unsafe impl Sync for AmdExtension35Fn {}
-impl ::std::clone::Clone for AmdExtension35Fn {
-    fn clone(&self) -> Self {
-        AmdExtension35Fn {}
-    }
-}
 impl AmdExtension35Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -3731,14 +3512,10 @@ impl AmdNegativeViewportHeightFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct AmdNegativeViewportHeightFn {}
 unsafe impl Send for AmdNegativeViewportHeightFn {}
 unsafe impl Sync for AmdNegativeViewportHeightFn {}
-impl ::std::clone::Clone for AmdNegativeViewportHeightFn {
-    fn clone(&self) -> Self {
-        AmdNegativeViewportHeightFn {}
-    }
-}
 impl AmdNegativeViewportHeightFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -3754,14 +3531,10 @@ impl AmdGpuShaderHalfFloatFn {
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
+#[derive(Clone)]
 pub struct AmdGpuShaderHalfFloatFn {}
 unsafe impl Send for AmdGpuShaderHalfFloatFn {}
 unsafe impl Sync for AmdGpuShaderHalfFloatFn {}
-impl ::std::clone::Clone for AmdGpuShaderHalfFloatFn {
-    fn clone(&self) -> Self {
-        AmdGpuShaderHalfFloatFn {}
-    }
-}
 impl AmdGpuShaderHalfFloatFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -3777,14 +3550,10 @@ impl AmdShaderBallotFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct AmdShaderBallotFn {}
 unsafe impl Send for AmdShaderBallotFn {}
 unsafe impl Sync for AmdShaderBallotFn {}
-impl ::std::clone::Clone for AmdShaderBallotFn {
-    fn clone(&self) -> Self {
-        AmdShaderBallotFn {}
-    }
-}
 impl AmdShaderBallotFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -3800,14 +3569,10 @@ impl AmdExtension39Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension39Fn {}
 unsafe impl Send for AmdExtension39Fn {}
 unsafe impl Sync for AmdExtension39Fn {}
-impl ::std::clone::Clone for AmdExtension39Fn {
-    fn clone(&self) -> Self {
-        AmdExtension39Fn {}
-    }
-}
 impl AmdExtension39Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -3823,14 +3588,10 @@ impl AmdExtension40Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension40Fn {}
 unsafe impl Send for AmdExtension40Fn {}
 unsafe impl Sync for AmdExtension40Fn {}
-impl ::std::clone::Clone for AmdExtension40Fn {
-    fn clone(&self) -> Self {
-        AmdExtension40Fn {}
-    }
-}
 impl AmdExtension40Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -3846,14 +3607,10 @@ impl AmdExtension41Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension41Fn {}
 unsafe impl Send for AmdExtension41Fn {}
 unsafe impl Sync for AmdExtension41Fn {}
-impl ::std::clone::Clone for AmdExtension41Fn {
-    fn clone(&self) -> Self {
-        AmdExtension41Fn {}
-    }
-}
 impl AmdExtension41Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -3869,14 +3626,10 @@ impl AmdTextureGatherBiasLodFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct AmdTextureGatherBiasLodFn {}
 unsafe impl Send for AmdTextureGatherBiasLodFn {}
 unsafe impl Sync for AmdTextureGatherBiasLodFn {}
-impl ::std::clone::Clone for AmdTextureGatherBiasLodFn {
-    fn clone(&self) -> Self {
-        AmdTextureGatherBiasLodFn {}
-    }
-}
 impl AmdTextureGatherBiasLodFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -3905,6 +3658,7 @@ pub type PFN_vkGetShaderInfoAMD = unsafe extern "system" fn(
     p_info_size: *mut usize,
     p_info: *mut c_void,
 ) -> Result;
+#[derive(Clone)]
 pub struct AmdShaderInfoFn {
     pub get_shader_info_amd: unsafe extern "system" fn(
         device: Device,
@@ -3917,13 +3671,6 @@ pub struct AmdShaderInfoFn {
 }
 unsafe impl Send for AmdShaderInfoFn {}
 unsafe impl Sync for AmdShaderInfoFn {}
-impl ::std::clone::Clone for AmdShaderInfoFn {
-    fn clone(&self) -> Self {
-        AmdShaderInfoFn {
-            get_shader_info_amd: self.get_shader_info_amd,
-        }
-    }
-}
 impl AmdShaderInfoFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -3979,14 +3726,10 @@ impl AmdExtension44Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension44Fn {}
 unsafe impl Send for AmdExtension44Fn {}
 unsafe impl Sync for AmdExtension44Fn {}
-impl ::std::clone::Clone for AmdExtension44Fn {
-    fn clone(&self) -> Self {
-        AmdExtension44Fn {}
-    }
-}
 impl AmdExtension44Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -4002,14 +3745,10 @@ impl AmdExtension45Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension45Fn {}
 unsafe impl Send for AmdExtension45Fn {}
 unsafe impl Sync for AmdExtension45Fn {}
-impl ::std::clone::Clone for AmdExtension45Fn {
-    fn clone(&self) -> Self {
-        AmdExtension45Fn {}
-    }
-}
 impl AmdExtension45Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -4025,14 +3764,10 @@ impl AmdExtension46Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension46Fn {}
 unsafe impl Send for AmdExtension46Fn {}
 unsafe impl Sync for AmdExtension46Fn {}
-impl ::std::clone::Clone for AmdExtension46Fn {
-    fn clone(&self) -> Self {
-        AmdExtension46Fn {}
-    }
-}
 impl AmdExtension46Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -4048,14 +3783,10 @@ impl AmdShaderImageLoadStoreLodFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct AmdShaderImageLoadStoreLodFn {}
 unsafe impl Send for AmdShaderImageLoadStoreLodFn {}
 unsafe impl Sync for AmdShaderImageLoadStoreLodFn {}
-impl ::std::clone::Clone for AmdShaderImageLoadStoreLodFn {
-    fn clone(&self) -> Self {
-        AmdShaderImageLoadStoreLodFn {}
-    }
-}
 impl AmdShaderImageLoadStoreLodFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -4071,14 +3802,10 @@ impl NvxExtension48Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct NvxExtension48Fn {}
 unsafe impl Send for NvxExtension48Fn {}
 unsafe impl Sync for NvxExtension48Fn {}
-impl ::std::clone::Clone for NvxExtension48Fn {
-    fn clone(&self) -> Self {
-        NvxExtension48Fn {}
-    }
-}
 impl NvxExtension48Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -4094,14 +3821,10 @@ impl GoogleExtension49Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct GoogleExtension49Fn {}
 unsafe impl Send for GoogleExtension49Fn {}
 unsafe impl Sync for GoogleExtension49Fn {}
-impl ::std::clone::Clone for GoogleExtension49Fn {
-    fn clone(&self) -> Self {
-        GoogleExtension49Fn {}
-    }
-}
 impl GoogleExtension49Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -4124,6 +3847,7 @@ pub type PFN_vkCreateStreamDescriptorSurfaceGGP = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
+#[derive(Clone)]
 pub struct GgpStreamDescriptorSurfaceFn {
     pub create_stream_descriptor_surface_ggp: unsafe extern "system" fn(
         instance: Instance,
@@ -4134,13 +3858,6 @@ pub struct GgpStreamDescriptorSurfaceFn {
 }
 unsafe impl Send for GgpStreamDescriptorSurfaceFn {}
 unsafe impl Sync for GgpStreamDescriptorSurfaceFn {}
-impl ::std::clone::Clone for GgpStreamDescriptorSurfaceFn {
-    fn clone(&self) -> Self {
-        GgpStreamDescriptorSurfaceFn {
-            create_stream_descriptor_surface_ggp: self.create_stream_descriptor_surface_ggp,
-        }
-    }
-}
 impl GgpStreamDescriptorSurfaceFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -4193,14 +3910,10 @@ impl NvCornerSampledImageFn {
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
+#[derive(Clone)]
 pub struct NvCornerSampledImageFn {}
 unsafe impl Send for NvCornerSampledImageFn {}
 unsafe impl Sync for NvCornerSampledImageFn {}
-impl ::std::clone::Clone for NvCornerSampledImageFn {
-    fn clone(&self) -> Self {
-        NvCornerSampledImageFn {}
-    }
-}
 impl NvCornerSampledImageFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -4224,14 +3937,10 @@ impl NvExtension52Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct NvExtension52Fn {}
 unsafe impl Send for NvExtension52Fn {}
 unsafe impl Sync for NvExtension52Fn {}
-impl ::std::clone::Clone for NvExtension52Fn {
-    fn clone(&self) -> Self {
-        NvExtension52Fn {}
-    }
-}
 impl NvExtension52Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -4255,14 +3964,10 @@ impl NvExtension53Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct NvExtension53Fn {}
 unsafe impl Send for NvExtension53Fn {}
 unsafe impl Sync for NvExtension53Fn {}
-impl ::std::clone::Clone for NvExtension53Fn {
-    fn clone(&self) -> Self {
-        NvExtension53Fn {}
-    }
-}
 impl NvExtension53Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -4278,14 +3983,10 @@ impl KhrMultiviewFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct KhrMultiviewFn {}
 unsafe impl Send for KhrMultiviewFn {}
 unsafe impl Sync for KhrMultiviewFn {}
-impl ::std::clone::Clone for KhrMultiviewFn {
-    fn clone(&self) -> Self {
-        KhrMultiviewFn {}
-    }
-}
 impl KhrMultiviewFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -4319,14 +4020,10 @@ impl ImgFormatPvrtcFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct ImgFormatPvrtcFn {}
 unsafe impl Send for ImgFormatPvrtcFn {}
 unsafe impl Sync for ImgFormatPvrtcFn {}
-impl ::std::clone::Clone for ImgFormatPvrtcFn {
-    fn clone(&self) -> Self {
-        ImgFormatPvrtcFn {}
-    }
-}
 impl ImgFormatPvrtcFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -4386,6 +4083,7 @@ pub type PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV =
         external_handle_type: ExternalMemoryHandleTypeFlagsNV,
         p_external_image_format_properties: *mut ExternalImageFormatPropertiesNV,
     ) -> Result;
+#[derive(Clone)]
 pub struct NvExternalMemoryCapabilitiesFn {
     pub get_physical_device_external_image_format_properties_nv:
         unsafe extern "system" fn(
@@ -4401,14 +4099,6 @@ pub struct NvExternalMemoryCapabilitiesFn {
 }
 unsafe impl Send for NvExternalMemoryCapabilitiesFn {}
 unsafe impl Sync for NvExternalMemoryCapabilitiesFn {}
-impl ::std::clone::Clone for NvExternalMemoryCapabilitiesFn {
-    fn clone(&self) -> Self {
-        NvExternalMemoryCapabilitiesFn {
-            get_physical_device_external_image_format_properties_nv: self
-                .get_physical_device_external_image_format_properties_nv,
-        }
-    }
-}
 impl NvExternalMemoryCapabilitiesFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -4474,14 +4164,10 @@ impl NvExternalMemoryFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct NvExternalMemoryFn {}
 unsafe impl Send for NvExternalMemoryFn {}
 unsafe impl Sync for NvExternalMemoryFn {}
-impl ::std::clone::Clone for NvExternalMemoryFn {
-    fn clone(&self) -> Self {
-        NvExternalMemoryFn {}
-    }
-}
 impl NvExternalMemoryFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -4512,6 +4198,7 @@ pub type PFN_vkGetMemoryWin32HandleNV = unsafe extern "system" fn(
     handle_type: ExternalMemoryHandleTypeFlagsNV,
     p_handle: *mut HANDLE,
 ) -> Result;
+#[derive(Clone)]
 pub struct NvExternalMemoryWin32Fn {
     pub get_memory_win32_handle_nv: unsafe extern "system" fn(
         device: Device,
@@ -4522,13 +4209,6 @@ pub struct NvExternalMemoryWin32Fn {
 }
 unsafe impl Send for NvExternalMemoryWin32Fn {}
 unsafe impl Sync for NvExternalMemoryWin32Fn {}
-impl ::std::clone::Clone for NvExternalMemoryWin32Fn {
-    fn clone(&self) -> Self {
-        NvExternalMemoryWin32Fn {
-            get_memory_win32_handle_nv: self.get_memory_win32_handle_nv,
-        }
-    }
-}
 impl NvExternalMemoryWin32Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -4584,14 +4264,10 @@ impl NvWin32KeyedMutexFn {
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
+#[derive(Clone)]
 pub struct NvWin32KeyedMutexFn {}
 unsafe impl Send for NvWin32KeyedMutexFn {}
 unsafe impl Sync for NvWin32KeyedMutexFn {}
-impl ::std::clone::Clone for NvWin32KeyedMutexFn {
-    fn clone(&self) -> Self {
-        NvWin32KeyedMutexFn {}
-    }
-}
 impl NvWin32KeyedMutexFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -4651,6 +4327,7 @@ pub type PFN_vkGetPhysicalDeviceSparseImageFormatProperties2 = unsafe extern "sy
     p_property_count: *mut u32,
     p_properties: *mut SparseImageFormatProperties2,
 );
+#[derive(Clone)]
 pub struct KhrGetPhysicalDeviceProperties2Fn {
     pub get_physical_device_features2_khr: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
@@ -4688,24 +4365,6 @@ pub struct KhrGetPhysicalDeviceProperties2Fn {
 }
 unsafe impl Send for KhrGetPhysicalDeviceProperties2Fn {}
 unsafe impl Sync for KhrGetPhysicalDeviceProperties2Fn {}
-impl ::std::clone::Clone for KhrGetPhysicalDeviceProperties2Fn {
-    fn clone(&self) -> Self {
-        KhrGetPhysicalDeviceProperties2Fn {
-            get_physical_device_features2_khr: self.get_physical_device_features2_khr,
-            get_physical_device_properties2_khr: self.get_physical_device_properties2_khr,
-            get_physical_device_format_properties2_khr: self
-                .get_physical_device_format_properties2_khr,
-            get_physical_device_image_format_properties2_khr: self
-                .get_physical_device_image_format_properties2_khr,
-            get_physical_device_queue_family_properties2_khr: self
-                .get_physical_device_queue_family_properties2_khr,
-            get_physical_device_memory_properties2_khr: self
-                .get_physical_device_memory_properties2_khr,
-            get_physical_device_sparse_image_format_properties2_khr: self
-                .get_physical_device_sparse_image_format_properties2_khr,
-        }
-    }
-}
 impl KhrGetPhysicalDeviceProperties2Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -5005,6 +4664,7 @@ pub type PFN_vkCmdDispatchBase = unsafe extern "system" fn(
     group_count_y: u32,
     group_count_z: u32,
 );
+#[derive(Clone)]
 pub struct KhrDeviceGroupFn {
     pub get_device_group_peer_memory_features_khr: unsafe extern "system" fn(
         device: Device,
@@ -5047,23 +4707,6 @@ pub struct KhrDeviceGroupFn {
 }
 unsafe impl Send for KhrDeviceGroupFn {}
 unsafe impl Sync for KhrDeviceGroupFn {}
-impl ::std::clone::Clone for KhrDeviceGroupFn {
-    fn clone(&self) -> Self {
-        KhrDeviceGroupFn {
-            get_device_group_peer_memory_features_khr: self
-                .get_device_group_peer_memory_features_khr,
-            cmd_set_device_mask_khr: self.cmd_set_device_mask_khr,
-            cmd_dispatch_base_khr: self.cmd_dispatch_base_khr,
-            get_device_group_present_capabilities_khr: self
-                .get_device_group_present_capabilities_khr,
-            get_device_group_surface_present_modes_khr: self
-                .get_device_group_surface_present_modes_khr,
-            get_physical_device_present_rectangles_khr: self
-                .get_physical_device_present_rectangles_khr,
-            acquire_next_image2_khr: self.acquire_next_image2_khr,
-        }
-    }
-}
 impl KhrDeviceGroupFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -5379,14 +5022,10 @@ impl ExtValidationFlagsFn {
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
+#[derive(Clone)]
 pub struct ExtValidationFlagsFn {}
 unsafe impl Send for ExtValidationFlagsFn {}
 unsafe impl Sync for ExtValidationFlagsFn {}
-impl ::std::clone::Clone for ExtValidationFlagsFn {
-    fn clone(&self) -> Self {
-        ExtValidationFlagsFn {}
-    }
-}
 impl ExtValidationFlagsFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -5413,6 +5052,7 @@ pub type PFN_vkCreateViSurfaceNN = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
+#[derive(Clone)]
 pub struct NnViSurfaceFn {
     pub create_vi_surface_nn: unsafe extern "system" fn(
         instance: Instance,
@@ -5423,13 +5063,6 @@ pub struct NnViSurfaceFn {
 }
 unsafe impl Send for NnViSurfaceFn {}
 unsafe impl Sync for NnViSurfaceFn {}
-impl ::std::clone::Clone for NnViSurfaceFn {
-    fn clone(&self) -> Self {
-        NnViSurfaceFn {
-            create_vi_surface_nn: self.create_vi_surface_nn,
-        }
-    }
-}
 impl NnViSurfaceFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -5478,14 +5111,10 @@ impl KhrShaderDrawParametersFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct KhrShaderDrawParametersFn {}
 unsafe impl Send for KhrShaderDrawParametersFn {}
 unsafe impl Sync for KhrShaderDrawParametersFn {}
-impl ::std::clone::Clone for KhrShaderDrawParametersFn {
-    fn clone(&self) -> Self {
-        KhrShaderDrawParametersFn {}
-    }
-}
 impl KhrShaderDrawParametersFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -5501,14 +5130,10 @@ impl ExtShaderSubgroupBallotFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct ExtShaderSubgroupBallotFn {}
 unsafe impl Send for ExtShaderSubgroupBallotFn {}
 unsafe impl Sync for ExtShaderSubgroupBallotFn {}
-impl ::std::clone::Clone for ExtShaderSubgroupBallotFn {
-    fn clone(&self) -> Self {
-        ExtShaderSubgroupBallotFn {}
-    }
-}
 impl ExtShaderSubgroupBallotFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -5524,14 +5149,10 @@ impl ExtShaderSubgroupVoteFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct ExtShaderSubgroupVoteFn {}
 unsafe impl Send for ExtShaderSubgroupVoteFn {}
 unsafe impl Sync for ExtShaderSubgroupVoteFn {}
-impl ::std::clone::Clone for ExtShaderSubgroupVoteFn {
-    fn clone(&self) -> Self {
-        ExtShaderSubgroupVoteFn {}
-    }
-}
 impl ExtShaderSubgroupVoteFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -5547,14 +5168,10 @@ impl ExtTextureCompressionAstcHdrFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct ExtTextureCompressionAstcHdrFn {}
 unsafe impl Send for ExtTextureCompressionAstcHdrFn {}
 unsafe impl Sync for ExtTextureCompressionAstcHdrFn {}
-impl ::std::clone::Clone for ExtTextureCompressionAstcHdrFn {
-    fn clone(&self) -> Self {
-        ExtTextureCompressionAstcHdrFn {}
-    }
-}
 impl ExtTextureCompressionAstcHdrFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -5630,14 +5247,10 @@ impl ExtAstcDecodeModeFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct ExtAstcDecodeModeFn {}
 unsafe impl Send for ExtAstcDecodeModeFn {}
 unsafe impl Sync for ExtAstcDecodeModeFn {}
-impl ::std::clone::Clone for ExtAstcDecodeModeFn {
-    fn clone(&self) -> Self {
-        ExtAstcDecodeModeFn {}
-    }
-}
 impl ExtAstcDecodeModeFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -5661,14 +5274,10 @@ impl ImgExtension69Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ImgExtension69Fn {}
 unsafe impl Send for ImgExtension69Fn {}
 unsafe impl Sync for ImgExtension69Fn {}
-impl ::std::clone::Clone for ImgExtension69Fn {
-    fn clone(&self) -> Self {
-        ImgExtension69Fn {}
-    }
-}
 impl ImgExtension69Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -5690,6 +5299,7 @@ pub type PFN_vkTrimCommandPool = unsafe extern "system" fn(
     command_pool: CommandPool,
     flags: CommandPoolTrimFlags,
 );
+#[derive(Clone)]
 pub struct KhrMaintenance1Fn {
     pub trim_command_pool_khr: unsafe extern "system" fn(
         device: Device,
@@ -5699,13 +5309,6 @@ pub struct KhrMaintenance1Fn {
 }
 unsafe impl Send for KhrMaintenance1Fn {}
 unsafe impl Sync for KhrMaintenance1Fn {}
-impl ::std::clone::Clone for KhrMaintenance1Fn {
-    fn clone(&self) -> Self {
-        KhrMaintenance1Fn {
-            trim_command_pool_khr: self.trim_command_pool_khr,
-        }
-    }
-}
 impl KhrMaintenance1Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -5773,6 +5376,7 @@ pub type PFN_vkEnumeratePhysicalDeviceGroups = unsafe extern "system" fn(
     p_physical_device_group_count: *mut u32,
     p_physical_device_group_properties: *mut PhysicalDeviceGroupProperties,
 ) -> Result;
+#[derive(Clone)]
 pub struct KhrDeviceGroupCreationFn {
     pub enumerate_physical_device_groups_khr: unsafe extern "system" fn(
         instance: Instance,
@@ -5782,13 +5386,6 @@ pub struct KhrDeviceGroupCreationFn {
 }
 unsafe impl Send for KhrDeviceGroupCreationFn {}
 unsafe impl Sync for KhrDeviceGroupCreationFn {}
-impl ::std::clone::Clone for KhrDeviceGroupCreationFn {
-    fn clone(&self) -> Self {
-        KhrDeviceGroupCreationFn {
-            enumerate_physical_device_groups_khr: self.enumerate_physical_device_groups_khr,
-        }
-    }
-}
 impl KhrDeviceGroupCreationFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -5857,6 +5454,7 @@ pub type PFN_vkGetPhysicalDeviceExternalBufferProperties = unsafe extern "system
     p_external_buffer_info: *const PhysicalDeviceExternalBufferInfo,
     p_external_buffer_properties: *mut ExternalBufferProperties,
 );
+#[derive(Clone)]
 pub struct KhrExternalMemoryCapabilitiesFn {
     pub get_physical_device_external_buffer_properties_khr: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
@@ -5866,14 +5464,6 @@ pub struct KhrExternalMemoryCapabilitiesFn {
 }
 unsafe impl Send for KhrExternalMemoryCapabilitiesFn {}
 unsafe impl Sync for KhrExternalMemoryCapabilitiesFn {}
-impl ::std::clone::Clone for KhrExternalMemoryCapabilitiesFn {
-    fn clone(&self) -> Self {
-        KhrExternalMemoryCapabilitiesFn {
-            get_physical_device_external_buffer_properties_khr: self
-                .get_physical_device_external_buffer_properties_khr,
-        }
-    }
-}
 impl KhrExternalMemoryCapabilitiesFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -5986,14 +5576,10 @@ impl KhrExternalMemoryFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct KhrExternalMemoryFn {}
 unsafe impl Send for KhrExternalMemoryFn {}
 unsafe impl Sync for KhrExternalMemoryFn {}
-impl ::std::clone::Clone for KhrExternalMemoryFn {
-    fn clone(&self) -> Self {
-        KhrExternalMemoryFn {}
-    }
-}
 impl KhrExternalMemoryFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -6039,6 +5625,7 @@ pub type PFN_vkGetMemoryWin32HandlePropertiesKHR = unsafe extern "system" fn(
     handle: HANDLE,
     p_memory_win32_handle_properties: *mut MemoryWin32HandlePropertiesKHR,
 ) -> Result;
+#[derive(Clone)]
 pub struct KhrExternalMemoryWin32Fn {
     pub get_memory_win32_handle_khr: unsafe extern "system" fn(
         device: Device,
@@ -6054,14 +5641,6 @@ pub struct KhrExternalMemoryWin32Fn {
 }
 unsafe impl Send for KhrExternalMemoryWin32Fn {}
 unsafe impl Sync for KhrExternalMemoryWin32Fn {}
-impl ::std::clone::Clone for KhrExternalMemoryWin32Fn {
-    fn clone(&self) -> Self {
-        KhrExternalMemoryWin32Fn {
-            get_memory_win32_handle_khr: self.get_memory_win32_handle_khr,
-            get_memory_win32_handle_properties_khr: self.get_memory_win32_handle_properties_khr,
-        }
-    }
-}
 impl KhrExternalMemoryWin32Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -6173,6 +5752,7 @@ pub type PFN_vkGetMemoryFdPropertiesKHR = unsafe extern "system" fn(
     fd: c_int,
     p_memory_fd_properties: *mut MemoryFdPropertiesKHR,
 ) -> Result;
+#[derive(Clone)]
 pub struct KhrExternalMemoryFdFn {
     pub get_memory_fd_khr: unsafe extern "system" fn(
         device: Device,
@@ -6188,14 +5768,6 @@ pub struct KhrExternalMemoryFdFn {
 }
 unsafe impl Send for KhrExternalMemoryFdFn {}
 unsafe impl Sync for KhrExternalMemoryFdFn {}
-impl ::std::clone::Clone for KhrExternalMemoryFdFn {
-    fn clone(&self) -> Self {
-        KhrExternalMemoryFdFn {
-            get_memory_fd_khr: self.get_memory_fd_khr,
-            get_memory_fd_properties_khr: self.get_memory_fd_properties_khr,
-        }
-    }
-}
 impl KhrExternalMemoryFdFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -6281,14 +5853,10 @@ impl KhrWin32KeyedMutexFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct KhrWin32KeyedMutexFn {}
 unsafe impl Send for KhrWin32KeyedMutexFn {}
 unsafe impl Sync for KhrWin32KeyedMutexFn {}
-impl ::std::clone::Clone for KhrWin32KeyedMutexFn {
-    fn clone(&self) -> Self {
-        KhrWin32KeyedMutexFn {}
-    }
-}
 impl KhrWin32KeyedMutexFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -6314,6 +5882,7 @@ pub type PFN_vkGetPhysicalDeviceExternalSemaphoreProperties = unsafe extern "sys
     p_external_semaphore_info: *const PhysicalDeviceExternalSemaphoreInfo,
     p_external_semaphore_properties: *mut ExternalSemaphoreProperties,
 );
+#[derive(Clone)]
 pub struct KhrExternalSemaphoreCapabilitiesFn {
     pub get_physical_device_external_semaphore_properties_khr: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
@@ -6323,14 +5892,6 @@ pub struct KhrExternalSemaphoreCapabilitiesFn {
 }
 unsafe impl Send for KhrExternalSemaphoreCapabilitiesFn {}
 unsafe impl Sync for KhrExternalSemaphoreCapabilitiesFn {}
-impl ::std::clone::Clone for KhrExternalSemaphoreCapabilitiesFn {
-    fn clone(&self) -> Self {
-        KhrExternalSemaphoreCapabilitiesFn {
-            get_physical_device_external_semaphore_properties_khr: self
-                .get_physical_device_external_semaphore_properties_khr,
-        }
-    }
-}
 impl KhrExternalSemaphoreCapabilitiesFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -6418,14 +5979,10 @@ impl KhrExternalSemaphoreFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct KhrExternalSemaphoreFn {}
 unsafe impl Send for KhrExternalSemaphoreFn {}
 unsafe impl Sync for KhrExternalSemaphoreFn {}
-impl ::std::clone::Clone for KhrExternalSemaphoreFn {
-    fn clone(&self) -> Self {
-        KhrExternalSemaphoreFn {}
-    }
-}
 impl KhrExternalSemaphoreFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -6460,6 +6017,7 @@ pub type PFN_vkGetSemaphoreWin32HandleKHR = unsafe extern "system" fn(
     p_get_win32_handle_info: *const SemaphoreGetWin32HandleInfoKHR,
     p_handle: *mut HANDLE,
 ) -> Result;
+#[derive(Clone)]
 pub struct KhrExternalSemaphoreWin32Fn {
     pub import_semaphore_win32_handle_khr: unsafe extern "system" fn(
         device: Device,
@@ -6473,14 +6031,6 @@ pub struct KhrExternalSemaphoreWin32Fn {
 }
 unsafe impl Send for KhrExternalSemaphoreWin32Fn {}
 unsafe impl Sync for KhrExternalSemaphoreWin32Fn {}
-impl ::std::clone::Clone for KhrExternalSemaphoreWin32Fn {
-    fn clone(&self) -> Self {
-        KhrExternalSemaphoreWin32Fn {
-            import_semaphore_win32_handle_khr: self.import_semaphore_win32_handle_khr,
-            get_semaphore_win32_handle_khr: self.get_semaphore_win32_handle_khr,
-        }
-    }
-}
 impl KhrExternalSemaphoreWin32Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -6582,6 +6132,7 @@ pub type PFN_vkGetSemaphoreFdKHR = unsafe extern "system" fn(
     p_get_fd_info: *const SemaphoreGetFdInfoKHR,
     p_fd: *mut c_int,
 ) -> Result;
+#[derive(Clone)]
 pub struct KhrExternalSemaphoreFdFn {
     pub import_semaphore_fd_khr: unsafe extern "system" fn(
         device: Device,
@@ -6595,14 +6146,6 @@ pub struct KhrExternalSemaphoreFdFn {
 }
 unsafe impl Send for KhrExternalSemaphoreFdFn {}
 unsafe impl Sync for KhrExternalSemaphoreFdFn {}
-impl ::std::clone::Clone for KhrExternalSemaphoreFdFn {
-    fn clone(&self) -> Self {
-        KhrExternalSemaphoreFdFn {
-            import_semaphore_fd_khr: self.import_semaphore_fd_khr,
-            get_semaphore_fd_khr: self.get_semaphore_fd_khr,
-        }
-    }
-}
 impl KhrExternalSemaphoreFdFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -6697,6 +6240,7 @@ pub type PFN_vkCmdPushDescriptorSetWithTemplateKHR = unsafe extern "system" fn(
     set: u32,
     p_data: *const c_void,
 );
+#[derive(Clone)]
 pub struct KhrPushDescriptorFn {
     pub cmd_push_descriptor_set_khr: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
@@ -6716,15 +6260,6 @@ pub struct KhrPushDescriptorFn {
 }
 unsafe impl Send for KhrPushDescriptorFn {}
 unsafe impl Sync for KhrPushDescriptorFn {}
-impl ::std::clone::Clone for KhrPushDescriptorFn {
-    fn clone(&self) -> Self {
-        KhrPushDescriptorFn {
-            cmd_push_descriptor_set_khr: self.cmd_push_descriptor_set_khr,
-            cmd_push_descriptor_set_with_template_khr: self
-                .cmd_push_descriptor_set_with_template_khr,
-        }
-    }
-}
 impl KhrPushDescriptorFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -6843,6 +6378,7 @@ pub type PFN_vkCmdBeginConditionalRenderingEXT = unsafe extern "system" fn(
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdEndConditionalRenderingEXT =
     unsafe extern "system" fn(command_buffer: CommandBuffer);
+#[derive(Clone)]
 pub struct ExtConditionalRenderingFn {
     pub cmd_begin_conditional_rendering_ext: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
@@ -6852,14 +6388,6 @@ pub struct ExtConditionalRenderingFn {
 }
 unsafe impl Send for ExtConditionalRenderingFn {}
 unsafe impl Sync for ExtConditionalRenderingFn {}
-impl ::std::clone::Clone for ExtConditionalRenderingFn {
-    fn clone(&self) -> Self {
-        ExtConditionalRenderingFn {
-            cmd_begin_conditional_rendering_ext: self.cmd_begin_conditional_rendering_ext,
-            cmd_end_conditional_rendering_ext: self.cmd_end_conditional_rendering_ext,
-        }
-    }
-}
 impl ExtConditionalRenderingFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -6951,14 +6479,10 @@ impl KhrShaderFloat16Int8Fn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct KhrShaderFloat16Int8Fn {}
 unsafe impl Send for KhrShaderFloat16Int8Fn {}
 unsafe impl Sync for KhrShaderFloat16Int8Fn {}
-impl ::std::clone::Clone for KhrShaderFloat16Int8Fn {
-    fn clone(&self) -> Self {
-        KhrShaderFloat16Int8Fn {}
-    }
-}
 impl KhrShaderFloat16Int8Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -6984,14 +6508,10 @@ impl Khr16bitStorageFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct Khr16bitStorageFn {}
 unsafe impl Send for Khr16bitStorageFn {}
 unsafe impl Sync for Khr16bitStorageFn {}
-impl ::std::clone::Clone for Khr16bitStorageFn {
-    fn clone(&self) -> Self {
-        Khr16bitStorageFn {}
-    }
-}
 impl Khr16bitStorageFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -7012,14 +6532,10 @@ impl KhrIncrementalPresentFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct KhrIncrementalPresentFn {}
 unsafe impl Send for KhrIncrementalPresentFn {}
 unsafe impl Sync for KhrIncrementalPresentFn {}
-impl ::std::clone::Clone for KhrIncrementalPresentFn {
-    fn clone(&self) -> Self {
-        KhrIncrementalPresentFn {}
-    }
-}
 impl KhrIncrementalPresentFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -7059,6 +6575,7 @@ pub type PFN_vkUpdateDescriptorSetWithTemplate = unsafe extern "system" fn(
     descriptor_update_template: DescriptorUpdateTemplate,
     p_data: *const c_void,
 );
+#[derive(Clone)]
 pub struct KhrDescriptorUpdateTemplateFn {
     pub create_descriptor_update_template_khr: unsafe extern "system" fn(
         device: Device,
@@ -7087,17 +6604,6 @@ pub struct KhrDescriptorUpdateTemplateFn {
 }
 unsafe impl Send for KhrDescriptorUpdateTemplateFn {}
 unsafe impl Sync for KhrDescriptorUpdateTemplateFn {}
-impl ::std::clone::Clone for KhrDescriptorUpdateTemplateFn {
-    fn clone(&self) -> Self {
-        KhrDescriptorUpdateTemplateFn {
-            create_descriptor_update_template_khr: self.create_descriptor_update_template_khr,
-            destroy_descriptor_update_template_khr: self.destroy_descriptor_update_template_khr,
-            update_descriptor_set_with_template_khr: self.update_descriptor_set_with_template_khr,
-            cmd_push_descriptor_set_with_template_khr: self
-                .cmd_push_descriptor_set_with_template_khr,
-        }
-    }
-}
 impl KhrDescriptorUpdateTemplateFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -7279,14 +6785,10 @@ impl NvxDeviceGeneratedCommandsFn {
     }
     pub const SPEC_VERSION: u32 = 3u32;
 }
+#[derive(Clone)]
 pub struct NvxDeviceGeneratedCommandsFn {}
 unsafe impl Send for NvxDeviceGeneratedCommandsFn {}
 unsafe impl Sync for NvxDeviceGeneratedCommandsFn {}
-impl ::std::clone::Clone for NvxDeviceGeneratedCommandsFn {
-    fn clone(&self) -> Self {
-        NvxDeviceGeneratedCommandsFn {}
-    }
-}
 impl NvxDeviceGeneratedCommandsFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -7309,6 +6811,7 @@ pub type PFN_vkCmdSetViewportWScalingNV = unsafe extern "system" fn(
     viewport_count: u32,
     p_viewport_w_scalings: *const ViewportWScalingNV,
 );
+#[derive(Clone)]
 pub struct NvClipSpaceWScalingFn {
     pub cmd_set_viewport_w_scaling_nv: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
@@ -7319,13 +6822,6 @@ pub struct NvClipSpaceWScalingFn {
 }
 unsafe impl Send for NvClipSpaceWScalingFn {}
 unsafe impl Sync for NvClipSpaceWScalingFn {}
-impl ::std::clone::Clone for NvClipSpaceWScalingFn {
-    fn clone(&self) -> Self {
-        NvClipSpaceWScalingFn {
-            cmd_set_viewport_w_scaling_nv: self.cmd_set_viewport_w_scaling_nv,
-        }
-    }
-}
 impl NvClipSpaceWScalingFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -7390,19 +6886,13 @@ impl ExtDirectModeDisplayFn {
 #[allow(non_camel_case_types)]
 pub type PFN_vkReleaseDisplayEXT =
     unsafe extern "system" fn(physical_device: PhysicalDevice, display: DisplayKHR) -> Result;
+#[derive(Clone)]
 pub struct ExtDirectModeDisplayFn {
     pub release_display_ext:
         unsafe extern "system" fn(physical_device: PhysicalDevice, display: DisplayKHR) -> Result,
 }
 unsafe impl Send for ExtDirectModeDisplayFn {}
 unsafe impl Sync for ExtDirectModeDisplayFn {}
-impl ::std::clone::Clone for ExtDirectModeDisplayFn {
-    fn clone(&self) -> Self {
-        ExtDirectModeDisplayFn {
-            release_display_ext: self.release_display_ext,
-        }
-    }
-}
 impl ExtDirectModeDisplayFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -7456,6 +6946,7 @@ pub type PFN_vkGetRandROutputDisplayEXT = unsafe extern "system" fn(
     rr_output: RROutput,
     p_display: *mut DisplayKHR,
 ) -> Result;
+#[derive(Clone)]
 pub struct ExtAcquireXlibDisplayFn {
     pub acquire_xlib_display_ext: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
@@ -7471,14 +6962,6 @@ pub struct ExtAcquireXlibDisplayFn {
 }
 unsafe impl Send for ExtAcquireXlibDisplayFn {}
 unsafe impl Sync for ExtAcquireXlibDisplayFn {}
-impl ::std::clone::Clone for ExtAcquireXlibDisplayFn {
-    fn clone(&self) -> Self {
-        ExtAcquireXlibDisplayFn {
-            acquire_xlib_display_ext: self.acquire_xlib_display_ext,
-            get_rand_r_output_display_ext: self.get_rand_r_output_display_ext,
-        }
-    }
-}
 impl ExtAcquireXlibDisplayFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -7562,6 +7045,7 @@ pub type PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT = unsafe extern "system"
     surface: SurfaceKHR,
     p_surface_capabilities: *mut SurfaceCapabilities2EXT,
 ) -> Result;
+#[derive(Clone)]
 pub struct ExtDisplaySurfaceCounterFn {
     pub get_physical_device_surface_capabilities2_ext: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
@@ -7571,14 +7055,6 @@ pub struct ExtDisplaySurfaceCounterFn {
 }
 unsafe impl Send for ExtDisplaySurfaceCounterFn {}
 unsafe impl Sync for ExtDisplaySurfaceCounterFn {}
-impl ::std::clone::Clone for ExtDisplaySurfaceCounterFn {
-    fn clone(&self) -> Self {
-        ExtDisplaySurfaceCounterFn {
-            get_physical_device_surface_capabilities2_ext: self
-                .get_physical_device_surface_capabilities2_ext,
-        }
-    }
-}
 impl ExtDisplaySurfaceCounterFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -7665,6 +7141,7 @@ pub type PFN_vkGetSwapchainCounterEXT = unsafe extern "system" fn(
     counter: SurfaceCounterFlagsEXT,
     p_counter_value: *mut u64,
 ) -> Result;
+#[derive(Clone)]
 pub struct ExtDisplayControlFn {
     pub display_power_control_ext: unsafe extern "system" fn(
         device: Device,
@@ -7693,16 +7170,6 @@ pub struct ExtDisplayControlFn {
 }
 unsafe impl Send for ExtDisplayControlFn {}
 unsafe impl Sync for ExtDisplayControlFn {}
-impl ::std::clone::Clone for ExtDisplayControlFn {
-    fn clone(&self) -> Self {
-        ExtDisplayControlFn {
-            display_power_control_ext: self.display_power_control_ext,
-            register_device_event_ext: self.register_device_event_ext,
-            register_display_event_ext: self.register_display_event_ext,
-            get_swapchain_counter_ext: self.get_swapchain_counter_ext,
-        }
-    }
-}
 impl ExtDisplayControlFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -7878,6 +7345,7 @@ pub type PFN_vkGetPastPresentationTimingGOOGLE = unsafe extern "system" fn(
     p_presentation_timing_count: *mut u32,
     p_presentation_timings: *mut PastPresentationTimingGOOGLE,
 ) -> Result;
+#[derive(Clone)]
 pub struct GoogleDisplayTimingFn {
     pub get_refresh_cycle_duration_google: unsafe extern "system" fn(
         device: Device,
@@ -7893,14 +7361,6 @@ pub struct GoogleDisplayTimingFn {
 }
 unsafe impl Send for GoogleDisplayTimingFn {}
 unsafe impl Sync for GoogleDisplayTimingFn {}
-impl ::std::clone::Clone for GoogleDisplayTimingFn {
-    fn clone(&self) -> Self {
-        GoogleDisplayTimingFn {
-            get_refresh_cycle_duration_google: self.get_refresh_cycle_duration_google,
-            get_past_presentation_timing_google: self.get_past_presentation_timing_google,
-        }
-    }
-}
 impl GoogleDisplayTimingFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -7988,14 +7448,10 @@ impl NvSampleMaskOverrideCoverageFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct NvSampleMaskOverrideCoverageFn {}
 unsafe impl Send for NvSampleMaskOverrideCoverageFn {}
 unsafe impl Sync for NvSampleMaskOverrideCoverageFn {}
-impl ::std::clone::Clone for NvSampleMaskOverrideCoverageFn {
-    fn clone(&self) -> Self {
-        NvSampleMaskOverrideCoverageFn {}
-    }
-}
 impl NvSampleMaskOverrideCoverageFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -8011,14 +7467,10 @@ impl NvGeometryShaderPassthroughFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct NvGeometryShaderPassthroughFn {}
 unsafe impl Send for NvGeometryShaderPassthroughFn {}
 unsafe impl Sync for NvGeometryShaderPassthroughFn {}
-impl ::std::clone::Clone for NvGeometryShaderPassthroughFn {
-    fn clone(&self) -> Self {
-        NvGeometryShaderPassthroughFn {}
-    }
-}
 impl NvGeometryShaderPassthroughFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -8034,14 +7486,10 @@ impl NvViewportArray2Fn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct NvViewportArray2Fn {}
 unsafe impl Send for NvViewportArray2Fn {}
 unsafe impl Sync for NvViewportArray2Fn {}
-impl ::std::clone::Clone for NvViewportArray2Fn {
-    fn clone(&self) -> Self {
-        NvViewportArray2Fn {}
-    }
-}
 impl NvViewportArray2Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -8057,14 +7505,10 @@ impl NvxMultiviewPerViewAttributesFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct NvxMultiviewPerViewAttributesFn {}
 unsafe impl Send for NvxMultiviewPerViewAttributesFn {}
 unsafe impl Sync for NvxMultiviewPerViewAttributesFn {}
-impl ::std::clone::Clone for NvxMultiviewPerViewAttributesFn {
-    fn clone(&self) -> Self {
-        NvxMultiviewPerViewAttributesFn {}
-    }
-}
 impl NvxMultiviewPerViewAttributesFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -8093,14 +7537,10 @@ impl NvViewportSwizzleFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct NvViewportSwizzleFn {}
 unsafe impl Send for NvViewportSwizzleFn {}
 unsafe impl Sync for NvViewportSwizzleFn {}
-impl ::std::clone::Clone for NvViewportSwizzleFn {
-    fn clone(&self) -> Self {
-        NvViewportSwizzleFn {}
-    }
-}
 impl NvViewportSwizzleFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -8127,6 +7567,7 @@ pub type PFN_vkCmdSetDiscardRectangleEXT = unsafe extern "system" fn(
     discard_rectangle_count: u32,
     p_discard_rectangles: *const Rect2D,
 );
+#[derive(Clone)]
 pub struct ExtDiscardRectanglesFn {
     pub cmd_set_discard_rectangle_ext: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
@@ -8137,13 +7578,6 @@ pub struct ExtDiscardRectanglesFn {
 }
 unsafe impl Send for ExtDiscardRectanglesFn {}
 unsafe impl Sync for ExtDiscardRectanglesFn {}
-impl ::std::clone::Clone for ExtDiscardRectanglesFn {
-    fn clone(&self) -> Self {
-        ExtDiscardRectanglesFn {
-            cmd_set_discard_rectangle_ext: self.cmd_set_discard_rectangle_ext,
-        }
-    }
-}
 impl ExtDiscardRectanglesFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -8209,14 +7643,10 @@ impl NvExtension101Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct NvExtension101Fn {}
 unsafe impl Send for NvExtension101Fn {}
 unsafe impl Sync for NvExtension101Fn {}
-impl ::std::clone::Clone for NvExtension101Fn {
-    fn clone(&self) -> Self {
-        NvExtension101Fn {}
-    }
-}
 impl NvExtension101Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -8232,14 +7662,10 @@ impl ExtConservativeRasterizationFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct ExtConservativeRasterizationFn {}
 unsafe impl Send for ExtConservativeRasterizationFn {}
 unsafe impl Sync for ExtConservativeRasterizationFn {}
-impl ::std::clone::Clone for ExtConservativeRasterizationFn {
-    fn clone(&self) -> Self {
-        ExtConservativeRasterizationFn {}
-    }
-}
 impl ExtConservativeRasterizationFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -8263,14 +7689,10 @@ impl ExtDepthClipEnableFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct ExtDepthClipEnableFn {}
 unsafe impl Send for ExtDepthClipEnableFn {}
 unsafe impl Sync for ExtDepthClipEnableFn {}
-impl ::std::clone::Clone for ExtDepthClipEnableFn {
-    fn clone(&self) -> Self {
-        ExtDepthClipEnableFn {}
-    }
-}
 impl ExtDepthClipEnableFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -8294,14 +7716,10 @@ impl NvExtension104Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct NvExtension104Fn {}
 unsafe impl Send for NvExtension104Fn {}
 unsafe impl Sync for NvExtension104Fn {}
-impl ::std::clone::Clone for NvExtension104Fn {
-    fn clone(&self) -> Self {
-        NvExtension104Fn {}
-    }
-}
 impl NvExtension104Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -8317,14 +7735,10 @@ impl ExtSwapchainColorspaceFn {
     }
     pub const SPEC_VERSION: u32 = 4u32;
 }
+#[derive(Clone)]
 pub struct ExtSwapchainColorspaceFn {}
 unsafe impl Send for ExtSwapchainColorspaceFn {}
 unsafe impl Sync for ExtSwapchainColorspaceFn {}
-impl ::std::clone::Clone for ExtSwapchainColorspaceFn {
-    fn clone(&self) -> Self {
-        ExtSwapchainColorspaceFn {}
-    }
-}
 impl ExtSwapchainColorspaceFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -8407,6 +7821,7 @@ pub type PFN_vkSetHdrMetadataEXT = unsafe extern "system" fn(
     p_swapchains: *const SwapchainKHR,
     p_metadata: *const HdrMetadataEXT,
 );
+#[derive(Clone)]
 pub struct ExtHdrMetadataFn {
     pub set_hdr_metadata_ext: unsafe extern "system" fn(
         device: Device,
@@ -8417,13 +7832,6 @@ pub struct ExtHdrMetadataFn {
 }
 unsafe impl Send for ExtHdrMetadataFn {}
 unsafe impl Sync for ExtHdrMetadataFn {}
-impl ::std::clone::Clone for ExtHdrMetadataFn {
-    fn clone(&self) -> Self {
-        ExtHdrMetadataFn {
-            set_hdr_metadata_ext: self.set_hdr_metadata_ext,
-        }
-    }
-}
 impl ExtHdrMetadataFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -8472,14 +7880,10 @@ impl ImgExtension107Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ImgExtension107Fn {}
 unsafe impl Send for ImgExtension107Fn {}
 unsafe impl Sync for ImgExtension107Fn {}
-impl ::std::clone::Clone for ImgExtension107Fn {
-    fn clone(&self) -> Self {
-        ImgExtension107Fn {}
-    }
-}
 impl ImgExtension107Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -8495,14 +7899,10 @@ impl ImgExtension108Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ImgExtension108Fn {}
 unsafe impl Send for ImgExtension108Fn {}
 unsafe impl Sync for ImgExtension108Fn {}
-impl ::std::clone::Clone for ImgExtension108Fn {
-    fn clone(&self) -> Self {
-        ImgExtension108Fn {}
-    }
-}
 impl ImgExtension108Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -8518,14 +7918,10 @@ impl KhrImagelessFramebufferFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct KhrImagelessFramebufferFn {}
 unsafe impl Send for KhrImagelessFramebufferFn {}
 unsafe impl Sync for KhrImagelessFramebufferFn {}
-impl ::std::clone::Clone for KhrImagelessFramebufferFn {
-    fn clone(&self) -> Self {
-        KhrImagelessFramebufferFn {}
-    }
-}
 impl KhrImagelessFramebufferFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -8587,6 +7983,7 @@ pub type PFN_vkCmdEndRenderPass2 = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     p_subpass_end_info: *const SubpassEndInfo,
 );
+#[derive(Clone)]
 pub struct KhrCreateRenderpass2Fn {
     pub create_render_pass2_khr: unsafe extern "system" fn(
         device: Device,
@@ -8611,16 +8008,6 @@ pub struct KhrCreateRenderpass2Fn {
 }
 unsafe impl Send for KhrCreateRenderpass2Fn {}
 unsafe impl Sync for KhrCreateRenderpass2Fn {}
-impl ::std::clone::Clone for KhrCreateRenderpass2Fn {
-    fn clone(&self) -> Self {
-        KhrCreateRenderpass2Fn {
-            create_render_pass2_khr: self.create_render_pass2_khr,
-            cmd_begin_render_pass2_khr: self.cmd_begin_render_pass2_khr,
-            cmd_next_subpass2_khr: self.cmd_next_subpass2_khr,
-            cmd_end_render_pass2_khr: self.cmd_end_render_pass2_khr,
-        }
-    }
-}
 impl KhrCreateRenderpass2Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -8781,14 +8168,10 @@ impl ImgExtension111Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ImgExtension111Fn {}
 unsafe impl Send for ImgExtension111Fn {}
 unsafe impl Sync for ImgExtension111Fn {}
-impl ::std::clone::Clone for ImgExtension111Fn {
-    fn clone(&self) -> Self {
-        ImgExtension111Fn {}
-    }
-}
 impl ImgExtension111Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -8807,19 +8190,13 @@ impl KhrSharedPresentableImageFn {
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetSwapchainStatusKHR =
     unsafe extern "system" fn(device: Device, swapchain: SwapchainKHR) -> Result;
+#[derive(Clone)]
 pub struct KhrSharedPresentableImageFn {
     pub get_swapchain_status_khr:
         unsafe extern "system" fn(device: Device, swapchain: SwapchainKHR) -> Result,
 }
 unsafe impl Send for KhrSharedPresentableImageFn {}
 unsafe impl Sync for KhrSharedPresentableImageFn {}
-impl ::std::clone::Clone for KhrSharedPresentableImageFn {
-    fn clone(&self) -> Self {
-        KhrSharedPresentableImageFn {
-            get_swapchain_status_khr: self.get_swapchain_status_khr,
-        }
-    }
-}
 impl KhrSharedPresentableImageFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -8885,6 +8262,7 @@ pub type PFN_vkGetPhysicalDeviceExternalFenceProperties = unsafe extern "system"
     p_external_fence_info: *const PhysicalDeviceExternalFenceInfo,
     p_external_fence_properties: *mut ExternalFenceProperties,
 );
+#[derive(Clone)]
 pub struct KhrExternalFenceCapabilitiesFn {
     pub get_physical_device_external_fence_properties_khr: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
@@ -8894,14 +8272,6 @@ pub struct KhrExternalFenceCapabilitiesFn {
 }
 unsafe impl Send for KhrExternalFenceCapabilitiesFn {}
 unsafe impl Sync for KhrExternalFenceCapabilitiesFn {}
-impl ::std::clone::Clone for KhrExternalFenceCapabilitiesFn {
-    fn clone(&self) -> Self {
-        KhrExternalFenceCapabilitiesFn {
-            get_physical_device_external_fence_properties_khr: self
-                .get_physical_device_external_fence_properties_khr,
-        }
-    }
-}
 impl KhrExternalFenceCapabilitiesFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -8985,14 +8355,10 @@ impl KhrExternalFenceFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct KhrExternalFenceFn {}
 unsafe impl Send for KhrExternalFenceFn {}
 unsafe impl Sync for KhrExternalFenceFn {}
-impl ::std::clone::Clone for KhrExternalFenceFn {
-    fn clone(&self) -> Self {
-        KhrExternalFenceFn {}
-    }
-}
 impl KhrExternalFenceFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -9027,6 +8393,7 @@ pub type PFN_vkGetFenceWin32HandleKHR = unsafe extern "system" fn(
     p_get_win32_handle_info: *const FenceGetWin32HandleInfoKHR,
     p_handle: *mut HANDLE,
 ) -> Result;
+#[derive(Clone)]
 pub struct KhrExternalFenceWin32Fn {
     pub import_fence_win32_handle_khr: unsafe extern "system" fn(
         device: Device,
@@ -9040,14 +8407,6 @@ pub struct KhrExternalFenceWin32Fn {
 }
 unsafe impl Send for KhrExternalFenceWin32Fn {}
 unsafe impl Sync for KhrExternalFenceWin32Fn {}
-impl ::std::clone::Clone for KhrExternalFenceWin32Fn {
-    fn clone(&self) -> Self {
-        KhrExternalFenceWin32Fn {
-            import_fence_win32_handle_khr: self.import_fence_win32_handle_khr,
-            get_fence_win32_handle_khr: self.get_fence_win32_handle_khr,
-        }
-    }
-}
 impl KhrExternalFenceWin32Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -9144,6 +8503,7 @@ pub type PFN_vkGetFenceFdKHR = unsafe extern "system" fn(
     p_get_fd_info: *const FenceGetFdInfoKHR,
     p_fd: *mut c_int,
 ) -> Result;
+#[derive(Clone)]
 pub struct KhrExternalFenceFdFn {
     pub import_fence_fd_khr: unsafe extern "system" fn(
         device: Device,
@@ -9157,14 +8517,6 @@ pub struct KhrExternalFenceFdFn {
 }
 unsafe impl Send for KhrExternalFenceFdFn {}
 unsafe impl Sync for KhrExternalFenceFdFn {}
-impl ::std::clone::Clone for KhrExternalFenceFdFn {
-    fn clone(&self) -> Self {
-        KhrExternalFenceFdFn {
-            import_fence_fd_khr: self.import_fence_fd_khr,
-            get_fence_fd_khr: self.get_fence_fd_khr,
-        }
-    }
-}
 impl KhrExternalFenceFdFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -9259,6 +8611,7 @@ pub type PFN_vkAcquireProfilingLockKHR =
     unsafe extern "system" fn(device: Device, p_info: *const AcquireProfilingLockInfoKHR) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkReleaseProfilingLockKHR = unsafe extern "system" fn(device: Device);
+#[derive(Clone)]
 pub struct KhrPerformanceQueryFn {
     pub enumerate_physical_device_queue_family_performance_query_counters_khr:
         unsafe extern "system" fn(
@@ -9282,18 +8635,6 @@ pub struct KhrPerformanceQueryFn {
 }
 unsafe impl Send for KhrPerformanceQueryFn {}
 unsafe impl Sync for KhrPerformanceQueryFn {}
-impl ::std::clone::Clone for KhrPerformanceQueryFn {
-    fn clone(&self) -> Self {
-        KhrPerformanceQueryFn {
-            enumerate_physical_device_queue_family_performance_query_counters_khr: self
-                .enumerate_physical_device_queue_family_performance_query_counters_khr,
-            get_physical_device_queue_family_performance_query_passes_khr: self
-                .get_physical_device_queue_family_performance_query_passes_khr,
-            acquire_profiling_lock_khr: self.acquire_profiling_lock_khr,
-            release_profiling_lock_khr: self.release_profiling_lock_khr,
-        }
-    }
-}
 impl KhrPerformanceQueryFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -9465,14 +8806,10 @@ impl KhrMaintenance2Fn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct KhrMaintenance2Fn {}
 unsafe impl Send for KhrMaintenance2Fn {}
 unsafe impl Sync for KhrMaintenance2Fn {}
-impl ::std::clone::Clone for KhrMaintenance2Fn {
-    fn clone(&self) -> Self {
-        KhrMaintenance2Fn {}
-    }
-}
 impl KhrMaintenance2Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -9541,14 +8878,10 @@ impl KhrExtension119Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct KhrExtension119Fn {}
 unsafe impl Send for KhrExtension119Fn {}
 unsafe impl Sync for KhrExtension119Fn {}
-impl ::std::clone::Clone for KhrExtension119Fn {
-    fn clone(&self) -> Self {
-        KhrExtension119Fn {}
-    }
-}
 impl KhrExtension119Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -9577,6 +8910,7 @@ pub type PFN_vkGetPhysicalDeviceSurfaceFormats2KHR = unsafe extern "system" fn(
     p_surface_format_count: *mut u32,
     p_surface_formats: *mut SurfaceFormat2KHR,
 ) -> Result;
+#[derive(Clone)]
 pub struct KhrGetSurfaceCapabilities2Fn {
     pub get_physical_device_surface_capabilities2_khr: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
@@ -9592,15 +8926,6 @@ pub struct KhrGetSurfaceCapabilities2Fn {
 }
 unsafe impl Send for KhrGetSurfaceCapabilities2Fn {}
 unsafe impl Sync for KhrGetSurfaceCapabilities2Fn {}
-impl ::std::clone::Clone for KhrGetSurfaceCapabilities2Fn {
-    fn clone(&self) -> Self {
-        KhrGetSurfaceCapabilities2Fn {
-            get_physical_device_surface_capabilities2_khr: self
-                .get_physical_device_surface_capabilities2_khr,
-            get_physical_device_surface_formats2_khr: self.get_physical_device_surface_formats2_khr,
-        }
-    }
-}
 impl KhrGetSurfaceCapabilities2Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -9700,14 +9025,10 @@ impl KhrVariablePointersFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct KhrVariablePointersFn {}
 unsafe impl Send for KhrVariablePointersFn {}
 unsafe impl Sync for KhrVariablePointersFn {}
-impl ::std::clone::Clone for KhrVariablePointersFn {
-    fn clone(&self) -> Self {
-        KhrVariablePointersFn {}
-    }
-}
 impl KhrVariablePointersFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -9758,6 +9079,7 @@ pub type PFN_vkGetDisplayPlaneCapabilities2KHR = unsafe extern "system" fn(
     p_display_plane_info: *const DisplayPlaneInfo2KHR,
     p_capabilities: *mut DisplayPlaneCapabilities2KHR,
 ) -> Result;
+#[derive(Clone)]
 pub struct KhrGetDisplayProperties2Fn {
     pub get_physical_device_display_properties2_khr: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
@@ -9783,18 +9105,6 @@ pub struct KhrGetDisplayProperties2Fn {
 }
 unsafe impl Send for KhrGetDisplayProperties2Fn {}
 unsafe impl Sync for KhrGetDisplayProperties2Fn {}
-impl ::std::clone::Clone for KhrGetDisplayProperties2Fn {
-    fn clone(&self) -> Self {
-        KhrGetDisplayProperties2Fn {
-            get_physical_device_display_properties2_khr: self
-                .get_physical_device_display_properties2_khr,
-            get_physical_device_display_plane_properties2_khr: self
-                .get_physical_device_display_plane_properties2_khr,
-            get_display_mode_properties2_khr: self.get_display_mode_properties2_khr,
-            get_display_plane_capabilities2_khr: self.get_display_plane_capabilities2_khr,
-        }
-    }
-}
 impl KhrGetDisplayProperties2Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -9977,6 +9287,7 @@ pub type PFN_vkCreateIOSSurfaceMVK = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
+#[derive(Clone)]
 pub struct MvkIosSurfaceFn {
     pub create_ios_surface_mvk: unsafe extern "system" fn(
         instance: Instance,
@@ -9987,13 +9298,6 @@ pub struct MvkIosSurfaceFn {
 }
 unsafe impl Send for MvkIosSurfaceFn {}
 unsafe impl Sync for MvkIosSurfaceFn {}
-impl ::std::clone::Clone for MvkIosSurfaceFn {
-    fn clone(&self) -> Self {
-        MvkIosSurfaceFn {
-            create_ios_surface_mvk: self.create_ios_surface_mvk,
-        }
-    }
-}
 impl MvkIosSurfaceFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -10052,6 +9356,7 @@ pub type PFN_vkCreateMacOSSurfaceMVK = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
+#[derive(Clone)]
 pub struct MvkMacosSurfaceFn {
     pub create_mac_os_surface_mvk: unsafe extern "system" fn(
         instance: Instance,
@@ -10062,13 +9367,6 @@ pub struct MvkMacosSurfaceFn {
 }
 unsafe impl Send for MvkMacosSurfaceFn {}
 unsafe impl Sync for MvkMacosSurfaceFn {}
-impl ::std::clone::Clone for MvkMacosSurfaceFn {
-    fn clone(&self) -> Self {
-        MvkMacosSurfaceFn {
-            create_mac_os_surface_mvk: self.create_mac_os_surface_mvk,
-        }
-    }
-}
 impl MvkMacosSurfaceFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -10119,14 +9417,10 @@ impl MvkMoltenvkFn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct MvkMoltenvkFn {}
 unsafe impl Send for MvkMoltenvkFn {}
 unsafe impl Sync for MvkMoltenvkFn {}
-impl ::std::clone::Clone for MvkMoltenvkFn {
-    fn clone(&self) -> Self {
-        MvkMoltenvkFn {}
-    }
-}
 impl MvkMoltenvkFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -10142,14 +9436,10 @@ impl ExtExternalMemoryDmaBufFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct ExtExternalMemoryDmaBufFn {}
 unsafe impl Send for ExtExternalMemoryDmaBufFn {}
 unsafe impl Sync for ExtExternalMemoryDmaBufFn {}
-impl ::std::clone::Clone for ExtExternalMemoryDmaBufFn {
-    fn clone(&self) -> Self {
-        ExtExternalMemoryDmaBufFn {}
-    }
-}
 impl ExtExternalMemoryDmaBufFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -10169,14 +9459,10 @@ impl ExtQueueFamilyForeignFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct ExtQueueFamilyForeignFn {}
 unsafe impl Send for ExtQueueFamilyForeignFn {}
 unsafe impl Sync for ExtQueueFamilyForeignFn {}
-impl ::std::clone::Clone for ExtQueueFamilyForeignFn {
-    fn clone(&self) -> Self {
-        ExtQueueFamilyForeignFn {}
-    }
-}
 impl ExtQueueFamilyForeignFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -10192,14 +9478,10 @@ impl KhrDedicatedAllocationFn {
     }
     pub const SPEC_VERSION: u32 = 3u32;
 }
+#[derive(Clone)]
 pub struct KhrDedicatedAllocationFn {}
 unsafe impl Send for KhrDedicatedAllocationFn {}
 unsafe impl Sync for KhrDedicatedAllocationFn {}
-impl ::std::clone::Clone for KhrDedicatedAllocationFn {
-    fn clone(&self) -> Self {
-        KhrDedicatedAllocationFn {}
-    }
-}
 impl KhrDedicatedAllocationFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -10273,6 +9555,7 @@ pub type PFN_vkSubmitDebugUtilsMessageEXT = unsafe extern "system" fn(
     message_types: DebugUtilsMessageTypeFlagsEXT,
     p_callback_data: *const DebugUtilsMessengerCallbackDataEXT,
 );
+#[derive(Clone)]
 pub struct ExtDebugUtilsFn {
     pub set_debug_utils_object_name_ext: unsafe extern "system" fn(
         device: Device,
@@ -10316,23 +9599,6 @@ pub struct ExtDebugUtilsFn {
 }
 unsafe impl Send for ExtDebugUtilsFn {}
 unsafe impl Sync for ExtDebugUtilsFn {}
-impl ::std::clone::Clone for ExtDebugUtilsFn {
-    fn clone(&self) -> Self {
-        ExtDebugUtilsFn {
-            set_debug_utils_object_name_ext: self.set_debug_utils_object_name_ext,
-            set_debug_utils_object_tag_ext: self.set_debug_utils_object_tag_ext,
-            queue_begin_debug_utils_label_ext: self.queue_begin_debug_utils_label_ext,
-            queue_end_debug_utils_label_ext: self.queue_end_debug_utils_label_ext,
-            queue_insert_debug_utils_label_ext: self.queue_insert_debug_utils_label_ext,
-            cmd_begin_debug_utils_label_ext: self.cmd_begin_debug_utils_label_ext,
-            cmd_end_debug_utils_label_ext: self.cmd_end_debug_utils_label_ext,
-            cmd_insert_debug_utils_label_ext: self.cmd_insert_debug_utils_label_ext,
-            create_debug_utils_messenger_ext: self.create_debug_utils_messenger_ext,
-            destroy_debug_utils_messenger_ext: self.destroy_debug_utils_messenger_ext,
-            submit_debug_utils_message_ext: self.submit_debug_utils_message_ext,
-        }
-    }
-}
 impl ExtDebugUtilsFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -10698,6 +9964,7 @@ pub type PFN_vkGetMemoryAndroidHardwareBufferANDROID = unsafe extern "system" fn
     p_info: *const MemoryGetAndroidHardwareBufferInfoANDROID,
     p_buffer: *mut *mut AHardwareBuffer,
 ) -> Result;
+#[derive(Clone)]
 pub struct AndroidExternalMemoryAndroidHardwareBufferFn {
     pub get_android_hardware_buffer_properties_android: unsafe extern "system" fn(
         device: Device,
@@ -10712,16 +9979,6 @@ pub struct AndroidExternalMemoryAndroidHardwareBufferFn {
 }
 unsafe impl Send for AndroidExternalMemoryAndroidHardwareBufferFn {}
 unsafe impl Sync for AndroidExternalMemoryAndroidHardwareBufferFn {}
-impl ::std::clone::Clone for AndroidExternalMemoryAndroidHardwareBufferFn {
-    fn clone(&self) -> Self {
-        AndroidExternalMemoryAndroidHardwareBufferFn {
-            get_android_hardware_buffer_properties_android: self
-                .get_android_hardware_buffer_properties_android,
-            get_memory_android_hardware_buffer_android: self
-                .get_memory_android_hardware_buffer_android,
-        }
-    }
-}
 impl AndroidExternalMemoryAndroidHardwareBufferFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -10826,14 +10083,10 @@ impl ExtSamplerFilterMinmaxFn {
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
+#[derive(Clone)]
 pub struct ExtSamplerFilterMinmaxFn {}
 unsafe impl Send for ExtSamplerFilterMinmaxFn {}
 unsafe impl Sync for ExtSamplerFilterMinmaxFn {}
-impl ::std::clone::Clone for ExtSamplerFilterMinmaxFn {
-    fn clone(&self) -> Self {
-        ExtSamplerFilterMinmaxFn {}
-    }
-}
 impl ExtSamplerFilterMinmaxFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -10875,14 +10128,10 @@ impl KhrStorageBufferStorageClassFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct KhrStorageBufferStorageClassFn {}
 unsafe impl Send for KhrStorageBufferStorageClassFn {}
 unsafe impl Sync for KhrStorageBufferStorageClassFn {}
-impl ::std::clone::Clone for KhrStorageBufferStorageClassFn {
-    fn clone(&self) -> Self {
-        KhrStorageBufferStorageClassFn {}
-    }
-}
 impl KhrStorageBufferStorageClassFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -10898,14 +10147,10 @@ impl AmdGpuShaderInt16Fn {
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
+#[derive(Clone)]
 pub struct AmdGpuShaderInt16Fn {}
 unsafe impl Send for AmdGpuShaderInt16Fn {}
 unsafe impl Sync for AmdGpuShaderInt16Fn {}
-impl ::std::clone::Clone for AmdGpuShaderInt16Fn {
-    fn clone(&self) -> Self {
-        AmdGpuShaderInt16Fn {}
-    }
-}
 impl AmdGpuShaderInt16Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -10921,14 +10166,10 @@ impl AmdExtension134Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension134Fn {}
 unsafe impl Send for AmdExtension134Fn {}
 unsafe impl Sync for AmdExtension134Fn {}
-impl ::std::clone::Clone for AmdExtension134Fn {
-    fn clone(&self) -> Self {
-        AmdExtension134Fn {}
-    }
-}
 impl AmdExtension134Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -10944,14 +10185,10 @@ impl AmdExtension135Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension135Fn {}
 unsafe impl Send for AmdExtension135Fn {}
 unsafe impl Sync for AmdExtension135Fn {}
-impl ::std::clone::Clone for AmdExtension135Fn {
-    fn clone(&self) -> Self {
-        AmdExtension135Fn {}
-    }
-}
 impl AmdExtension135Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -10967,14 +10204,10 @@ impl AmdExtension136Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension136Fn {}
 unsafe impl Send for AmdExtension136Fn {}
 unsafe impl Sync for AmdExtension136Fn {}
-impl ::std::clone::Clone for AmdExtension136Fn {
-    fn clone(&self) -> Self {
-        AmdExtension136Fn {}
-    }
-}
 impl AmdExtension136Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -10990,14 +10223,10 @@ impl AmdMixedAttachmentSamplesFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct AmdMixedAttachmentSamplesFn {}
 unsafe impl Send for AmdMixedAttachmentSamplesFn {}
 unsafe impl Sync for AmdMixedAttachmentSamplesFn {}
-impl ::std::clone::Clone for AmdMixedAttachmentSamplesFn {
-    fn clone(&self) -> Self {
-        AmdMixedAttachmentSamplesFn {}
-    }
-}
 impl AmdMixedAttachmentSamplesFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -11013,14 +10242,10 @@ impl AmdShaderFragmentMaskFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct AmdShaderFragmentMaskFn {}
 unsafe impl Send for AmdShaderFragmentMaskFn {}
 unsafe impl Sync for AmdShaderFragmentMaskFn {}
-impl ::std::clone::Clone for AmdShaderFragmentMaskFn {
-    fn clone(&self) -> Self {
-        AmdShaderFragmentMaskFn {}
-    }
-}
 impl AmdShaderFragmentMaskFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -11036,14 +10261,10 @@ impl ExtInlineUniformBlockFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct ExtInlineUniformBlockFn {}
 unsafe impl Send for ExtInlineUniformBlockFn {}
 unsafe impl Sync for ExtInlineUniformBlockFn {}
-impl ::std::clone::Clone for ExtInlineUniformBlockFn {
-    fn clone(&self) -> Self {
-        ExtInlineUniformBlockFn {}
-    }
-}
 impl ExtInlineUniformBlockFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -11079,14 +10300,10 @@ impl AmdExtension140Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension140Fn {}
 unsafe impl Send for AmdExtension140Fn {}
 unsafe impl Sync for AmdExtension140Fn {}
-impl ::std::clone::Clone for AmdExtension140Fn {
-    fn clone(&self) -> Self {
-        AmdExtension140Fn {}
-    }
-}
 impl AmdExtension140Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -11102,14 +10319,10 @@ impl ExtShaderStencilExportFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct ExtShaderStencilExportFn {}
 unsafe impl Send for ExtShaderStencilExportFn {}
 unsafe impl Sync for ExtShaderStencilExportFn {}
-impl ::std::clone::Clone for ExtShaderStencilExportFn {
-    fn clone(&self) -> Self {
-        ExtShaderStencilExportFn {}
-    }
-}
 impl ExtShaderStencilExportFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -11125,14 +10338,10 @@ impl AmdExtension142Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension142Fn {}
 unsafe impl Send for AmdExtension142Fn {}
 unsafe impl Sync for AmdExtension142Fn {}
-impl ::std::clone::Clone for AmdExtension142Fn {
-    fn clone(&self) -> Self {
-        AmdExtension142Fn {}
-    }
-}
 impl AmdExtension142Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -11148,14 +10357,10 @@ impl AmdExtension143Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension143Fn {}
 unsafe impl Send for AmdExtension143Fn {}
 unsafe impl Sync for AmdExtension143Fn {}
-impl ::std::clone::Clone for AmdExtension143Fn {
-    fn clone(&self) -> Self {
-        AmdExtension143Fn {}
-    }
-}
 impl AmdExtension143Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -11182,6 +10387,7 @@ pub type PFN_vkGetPhysicalDeviceMultisamplePropertiesEXT = unsafe extern "system
     samples: SampleCountFlags,
     p_multisample_properties: *mut MultisamplePropertiesEXT,
 );
+#[derive(Clone)]
 pub struct ExtSampleLocationsFn {
     pub cmd_set_sample_locations_ext: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
@@ -11195,15 +10401,6 @@ pub struct ExtSampleLocationsFn {
 }
 unsafe impl Send for ExtSampleLocationsFn {}
 unsafe impl Sync for ExtSampleLocationsFn {}
-impl ::std::clone::Clone for ExtSampleLocationsFn {
-    fn clone(&self) -> Self {
-        ExtSampleLocationsFn {
-            cmd_set_sample_locations_ext: self.cmd_set_sample_locations_ext,
-            get_physical_device_multisample_properties_ext: self
-                .get_physical_device_multisample_properties_ext,
-        }
-    }
-}
 impl ExtSampleLocationsFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -11310,14 +10507,10 @@ impl KhrRelaxedBlockLayoutFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct KhrRelaxedBlockLayoutFn {}
 unsafe impl Send for KhrRelaxedBlockLayoutFn {}
 unsafe impl Sync for KhrRelaxedBlockLayoutFn {}
-impl ::std::clone::Clone for KhrRelaxedBlockLayoutFn {
-    fn clone(&self) -> Self {
-        KhrRelaxedBlockLayoutFn {}
-    }
-}
 impl KhrRelaxedBlockLayoutFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -11352,6 +10545,7 @@ pub type PFN_vkGetImageSparseMemoryRequirements2 = unsafe extern "system" fn(
     p_sparse_memory_requirement_count: *mut u32,
     p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2,
 );
+#[derive(Clone)]
 pub struct KhrGetMemoryRequirements2Fn {
     pub get_image_memory_requirements2_khr: unsafe extern "system" fn(
         device: Device,
@@ -11372,16 +10566,6 @@ pub struct KhrGetMemoryRequirements2Fn {
 }
 unsafe impl Send for KhrGetMemoryRequirements2Fn {}
 unsafe impl Sync for KhrGetMemoryRequirements2Fn {}
-impl ::std::clone::Clone for KhrGetMemoryRequirements2Fn {
-    fn clone(&self) -> Self {
-        KhrGetMemoryRequirements2Fn {
-            get_image_memory_requirements2_khr: self.get_image_memory_requirements2_khr,
-            get_buffer_memory_requirements2_khr: self.get_buffer_memory_requirements2_khr,
-            get_image_sparse_memory_requirements2_khr: self
-                .get_image_sparse_memory_requirements2_khr,
-        }
-    }
-}
 impl KhrGetMemoryRequirements2Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -11517,14 +10701,10 @@ impl KhrImageFormatListFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct KhrImageFormatListFn {}
 unsafe impl Send for KhrImageFormatListFn {}
 unsafe impl Sync for KhrImageFormatListFn {}
-impl ::std::clone::Clone for KhrImageFormatListFn {
-    fn clone(&self) -> Self {
-        KhrImageFormatListFn {}
-    }
-}
 impl KhrImageFormatListFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -11544,14 +10724,10 @@ impl ExtBlendOperationAdvancedFn {
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
+#[derive(Clone)]
 pub struct ExtBlendOperationAdvancedFn {}
 unsafe impl Send for ExtBlendOperationAdvancedFn {}
 unsafe impl Sync for ExtBlendOperationAdvancedFn {}
-impl ::std::clone::Clone for ExtBlendOperationAdvancedFn {
-    fn clone(&self) -> Self {
-        ExtBlendOperationAdvancedFn {}
-    }
-}
 impl ExtBlendOperationAdvancedFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -11767,14 +10943,10 @@ impl NvFragmentCoverageToColorFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct NvFragmentCoverageToColorFn {}
 unsafe impl Send for NvFragmentCoverageToColorFn {}
 unsafe impl Sync for NvFragmentCoverageToColorFn {}
-impl ::std::clone::Clone for NvFragmentCoverageToColorFn {
-    fn clone(&self) -> Self {
-        NvFragmentCoverageToColorFn {}
-    }
-}
 impl NvFragmentCoverageToColorFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -11903,6 +11075,7 @@ pub type PFN_vkGetAccelerationStructureBuildSizesKHR = unsafe extern "system" fn
     p_max_primitive_counts: *const u32,
     p_size_info: *mut AccelerationStructureBuildSizesInfoKHR,
 );
+#[derive(Clone)]
 pub struct KhrAccelerationStructureFn {
     pub create_acceleration_structure_khr: unsafe extern "system" fn(
         device: Device,
@@ -12000,38 +11173,6 @@ pub struct KhrAccelerationStructureFn {
 }
 unsafe impl Send for KhrAccelerationStructureFn {}
 unsafe impl Sync for KhrAccelerationStructureFn {}
-impl ::std::clone::Clone for KhrAccelerationStructureFn {
-    fn clone(&self) -> Self {
-        KhrAccelerationStructureFn {
-            create_acceleration_structure_khr: self.create_acceleration_structure_khr,
-            destroy_acceleration_structure_khr: self.destroy_acceleration_structure_khr,
-            cmd_build_acceleration_structures_khr: self.cmd_build_acceleration_structures_khr,
-            cmd_build_acceleration_structures_indirect_khr: self
-                .cmd_build_acceleration_structures_indirect_khr,
-            build_acceleration_structures_khr: self.build_acceleration_structures_khr,
-            copy_acceleration_structure_khr: self.copy_acceleration_structure_khr,
-            copy_acceleration_structure_to_memory_khr: self
-                .copy_acceleration_structure_to_memory_khr,
-            copy_memory_to_acceleration_structure_khr: self
-                .copy_memory_to_acceleration_structure_khr,
-            write_acceleration_structures_properties_khr: self
-                .write_acceleration_structures_properties_khr,
-            cmd_copy_acceleration_structure_khr: self.cmd_copy_acceleration_structure_khr,
-            cmd_copy_acceleration_structure_to_memory_khr: self
-                .cmd_copy_acceleration_structure_to_memory_khr,
-            cmd_copy_memory_to_acceleration_structure_khr: self
-                .cmd_copy_memory_to_acceleration_structure_khr,
-            get_acceleration_structure_device_address_khr: self
-                .get_acceleration_structure_device_address_khr,
-            cmd_write_acceleration_structures_properties_khr: self
-                .cmd_write_acceleration_structures_properties_khr,
-            get_device_acceleration_structure_compatibility_khr: self
-                .get_device_acceleration_structure_compatibility_khr,
-            get_acceleration_structure_build_sizes_khr: self
-                .get_acceleration_structure_build_sizes_khr,
-        }
-    }
-}
 impl KhrAccelerationStructureFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -12769,6 +11910,7 @@ pub type PFN_vkGetRayTracingShaderGroupStackSizeKHR = unsafe extern "system" fn(
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetRayTracingPipelineStackSizeKHR =
     unsafe extern "system" fn(command_buffer: CommandBuffer, pipeline_stack_size: u32);
+#[derive(Clone)]
 pub struct KhrRayTracingPipelineFn {
     pub cmd_trace_rays_khr: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
@@ -12825,22 +11967,6 @@ pub struct KhrRayTracingPipelineFn {
 }
 unsafe impl Send for KhrRayTracingPipelineFn {}
 unsafe impl Sync for KhrRayTracingPipelineFn {}
-impl ::std::clone::Clone for KhrRayTracingPipelineFn {
-    fn clone(&self) -> Self {
-        KhrRayTracingPipelineFn {
-            cmd_trace_rays_khr: self.cmd_trace_rays_khr,
-            create_ray_tracing_pipelines_khr: self.create_ray_tracing_pipelines_khr,
-            get_ray_tracing_shader_group_handles_khr: self.get_ray_tracing_shader_group_handles_khr,
-            get_ray_tracing_capture_replay_shader_group_handles_khr: self
-                .get_ray_tracing_capture_replay_shader_group_handles_khr,
-            cmd_trace_rays_indirect_khr: self.cmd_trace_rays_indirect_khr,
-            get_ray_tracing_shader_group_stack_size_khr: self
-                .get_ray_tracing_shader_group_stack_size_khr,
-            cmd_set_ray_tracing_pipeline_stack_size_khr: self
-                .cmd_set_ray_tracing_pipeline_stack_size_khr,
-        }
-    }
-}
 impl KhrRayTracingPipelineFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -13224,14 +12350,10 @@ impl KhrRayQueryFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct KhrRayQueryFn {}
 unsafe impl Send for KhrRayQueryFn {}
 unsafe impl Sync for KhrRayQueryFn {}
-impl ::std::clone::Clone for KhrRayQueryFn {
-    fn clone(&self) -> Self {
-        KhrRayQueryFn {}
-    }
-}
 impl KhrRayQueryFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -13251,14 +12373,10 @@ impl NvExtension152Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct NvExtension152Fn {}
 unsafe impl Send for NvExtension152Fn {}
 unsafe impl Sync for NvExtension152Fn {}
-impl ::std::clone::Clone for NvExtension152Fn {
-    fn clone(&self) -> Self {
-        NvExtension152Fn {}
-    }
-}
 impl NvExtension152Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -13274,14 +12392,10 @@ impl NvFramebufferMixedSamplesFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct NvFramebufferMixedSamplesFn {}
 unsafe impl Send for NvFramebufferMixedSamplesFn {}
 unsafe impl Sync for NvFramebufferMixedSamplesFn {}
-impl ::std::clone::Clone for NvFramebufferMixedSamplesFn {
-    fn clone(&self) -> Self {
-        NvFramebufferMixedSamplesFn {}
-    }
-}
 impl NvFramebufferMixedSamplesFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -13301,14 +12415,10 @@ impl NvFillRectangleFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct NvFillRectangleFn {}
 unsafe impl Send for NvFillRectangleFn {}
 unsafe impl Sync for NvFillRectangleFn {}
-impl ::std::clone::Clone for NvFillRectangleFn {
-    fn clone(&self) -> Self {
-        NvFillRectangleFn {}
-    }
-}
 impl NvFillRectangleFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -13328,14 +12438,10 @@ impl NvShaderSmBuiltinsFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct NvShaderSmBuiltinsFn {}
 unsafe impl Send for NvShaderSmBuiltinsFn {}
 unsafe impl Sync for NvShaderSmBuiltinsFn {}
-impl ::std::clone::Clone for NvShaderSmBuiltinsFn {
-    fn clone(&self) -> Self {
-        NvShaderSmBuiltinsFn {}
-    }
-}
 impl NvShaderSmBuiltinsFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -13359,14 +12465,10 @@ impl ExtPostDepthCoverageFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct ExtPostDepthCoverageFn {}
 unsafe impl Send for ExtPostDepthCoverageFn {}
 unsafe impl Sync for ExtPostDepthCoverageFn {}
-impl ::std::clone::Clone for ExtPostDepthCoverageFn {
-    fn clone(&self) -> Self {
-        ExtPostDepthCoverageFn {}
-    }
-}
 impl ExtPostDepthCoverageFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -13395,6 +12497,7 @@ pub type PFN_vkDestroySamplerYcbcrConversion = unsafe extern "system" fn(
     ycbcr_conversion: SamplerYcbcrConversion,
     p_allocator: *const AllocationCallbacks,
 );
+#[derive(Clone)]
 pub struct KhrSamplerYcbcrConversionFn {
     pub create_sampler_ycbcr_conversion_khr: unsafe extern "system" fn(
         device: Device,
@@ -13410,14 +12513,6 @@ pub struct KhrSamplerYcbcrConversionFn {
 }
 unsafe impl Send for KhrSamplerYcbcrConversionFn {}
 unsafe impl Sync for KhrSamplerYcbcrConversionFn {}
-impl ::std::clone::Clone for KhrSamplerYcbcrConversionFn {
-    fn clone(&self) -> Self {
-        KhrSamplerYcbcrConversionFn {
-            create_sampler_ycbcr_conversion_khr: self.create_sampler_ycbcr_conversion_khr,
-            destroy_sampler_ycbcr_conversion_khr: self.destroy_sampler_ycbcr_conversion_khr,
-        }
-    }
-}
 impl KhrSamplerYcbcrConversionFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -13785,6 +12880,7 @@ pub type PFN_vkBindImageMemory2 = unsafe extern "system" fn(
     bind_info_count: u32,
     p_bind_infos: *const BindImageMemoryInfo,
 ) -> Result;
+#[derive(Clone)]
 pub struct KhrBindMemory2Fn {
     pub bind_buffer_memory2_khr: unsafe extern "system" fn(
         device: Device,
@@ -13799,14 +12895,6 @@ pub struct KhrBindMemory2Fn {
 }
 unsafe impl Send for KhrBindMemory2Fn {}
 unsafe impl Sync for KhrBindMemory2Fn {}
-impl ::std::clone::Clone for KhrBindMemory2Fn {
-    fn clone(&self) -> Self {
-        KhrBindMemory2Fn {
-            bind_buffer_memory2_khr: self.bind_buffer_memory2_khr,
-            bind_image_memory2_khr: self.bind_image_memory2_khr,
-        }
-    }
-}
 impl KhrBindMemory2Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -13899,6 +12987,7 @@ pub type PFN_vkGetImageDrmFormatModifierPropertiesEXT = unsafe extern "system" f
     image: Image,
     p_properties: *mut ImageDrmFormatModifierPropertiesEXT,
 ) -> Result;
+#[derive(Clone)]
 pub struct ExtImageDrmFormatModifierFn {
     pub get_image_drm_format_modifier_properties_ext: unsafe extern "system" fn(
         device: Device,
@@ -13908,14 +12997,6 @@ pub struct ExtImageDrmFormatModifierFn {
 }
 unsafe impl Send for ExtImageDrmFormatModifierFn {}
 unsafe impl Sync for ExtImageDrmFormatModifierFn {}
-impl ::std::clone::Clone for ExtImageDrmFormatModifierFn {
-    fn clone(&self) -> Self {
-        ExtImageDrmFormatModifierFn {
-            get_image_drm_format_modifier_properties_ext: self
-                .get_image_drm_format_modifier_properties_ext,
-        }
-    }
-}
 impl ExtImageDrmFormatModifierFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -14006,14 +13087,10 @@ impl ExtExtension160Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ExtExtension160Fn {}
 unsafe impl Send for ExtExtension160Fn {}
 unsafe impl Sync for ExtExtension160Fn {}
-impl ::std::clone::Clone for ExtExtension160Fn {
-    fn clone(&self) -> Self {
-        ExtExtension160Fn {}
-    }
-}
 impl ExtExtension160Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -14056,6 +13133,7 @@ pub type PFN_vkGetValidationCacheDataEXT = unsafe extern "system" fn(
     p_data_size: *mut usize,
     p_data: *mut c_void,
 ) -> Result;
+#[derive(Clone)]
 pub struct ExtValidationCacheFn {
     pub create_validation_cache_ext: unsafe extern "system" fn(
         device: Device,
@@ -14083,16 +13161,6 @@ pub struct ExtValidationCacheFn {
 }
 unsafe impl Send for ExtValidationCacheFn {}
 unsafe impl Sync for ExtValidationCacheFn {}
-impl ::std::clone::Clone for ExtValidationCacheFn {
-    fn clone(&self) -> Self {
-        ExtValidationCacheFn {
-            create_validation_cache_ext: self.create_validation_cache_ext,
-            destroy_validation_cache_ext: self.destroy_validation_cache_ext,
-            merge_validation_caches_ext: self.merge_validation_caches_ext,
-            get_validation_cache_data_ext: self.get_validation_cache_data_ext,
-        }
-    }
-}
 impl ExtValidationCacheFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -14247,14 +13315,10 @@ impl ExtDescriptorIndexingFn {
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
+#[derive(Clone)]
 pub struct ExtDescriptorIndexingFn {}
 unsafe impl Send for ExtDescriptorIndexingFn {}
 unsafe impl Sync for ExtDescriptorIndexingFn {}
-impl ::std::clone::Clone for ExtDescriptorIndexingFn {
-    fn clone(&self) -> Self {
-        ExtDescriptorIndexingFn {}
-    }
-}
 impl ExtDescriptorIndexingFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -14323,14 +13387,10 @@ impl ExtShaderViewportIndexLayerFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct ExtShaderViewportIndexLayerFn {}
 unsafe impl Send for ExtShaderViewportIndexLayerFn {}
 unsafe impl Sync for ExtShaderViewportIndexLayerFn {}
-impl ::std::clone::Clone for ExtShaderViewportIndexLayerFn {
-    fn clone(&self) -> Self {
-        ExtShaderViewportIndexLayerFn {}
-    }
-}
 impl ExtShaderViewportIndexLayerFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -14346,14 +13406,10 @@ impl KhrPortabilitySubsetFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct KhrPortabilitySubsetFn {}
 unsafe impl Send for KhrPortabilitySubsetFn {}
 unsafe impl Sync for KhrPortabilitySubsetFn {}
-impl ::std::clone::Clone for KhrPortabilitySubsetFn {
-    fn clone(&self) -> Self {
-        KhrPortabilitySubsetFn {}
-    }
-}
 impl KhrPortabilitySubsetFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -14397,6 +13453,7 @@ pub type PFN_vkCmdSetCoarseSampleOrderNV = unsafe extern "system" fn(
     custom_sample_order_count: u32,
     p_custom_sample_orders: *const CoarseSampleOrderCustomNV,
 );
+#[derive(Clone)]
 pub struct NvShadingRateImageFn {
     pub cmd_bind_shading_rate_image_nv: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
@@ -14418,15 +13475,6 @@ pub struct NvShadingRateImageFn {
 }
 unsafe impl Send for NvShadingRateImageFn {}
 unsafe impl Sync for NvShadingRateImageFn {}
-impl ::std::clone::Clone for NvShadingRateImageFn {
-    fn clone(&self) -> Self {
-        NvShadingRateImageFn {
-            cmd_bind_shading_rate_image_nv: self.cmd_bind_shading_rate_image_nv,
-            cmd_set_viewport_shading_rate_palette_nv: self.cmd_set_viewport_shading_rate_palette_nv,
-            cmd_set_coarse_sample_order_nv: self.cmd_set_coarse_sample_order_nv,
-        }
-    }
-}
 impl NvShadingRateImageFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -14662,21 +13710,12 @@ pub type PFN_vkCreateRayTracingPipelinesNV = unsafe extern "system" fn(
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetAccelerationStructureHandleNV = unsafe extern "system" fn(
     device: Device,
-    pipeline: Pipeline,
-    first_group: u32,
-    group_count: u32,
-    data_size: usize,
-    p_data: *mut c_void,
-) -> Result;
-#[allow(non_camel_case_types)]
-pub type PFN_vkCmdWriteAccelerationStructuresPropertiesNV = unsafe extern "system" fn(
-    device: Device,
     acceleration_structure: AccelerationStructureNV,
     data_size: usize,
     p_data: *mut c_void,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkCompileDeferredNV = unsafe extern "system" fn(
+pub type PFN_vkCmdWriteAccelerationStructuresPropertiesNV = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     acceleration_structure_count: u32,
     p_acceleration_structures: *const AccelerationStructureNV,
@@ -14684,6 +13723,10 @@ pub type PFN_vkCompileDeferredNV = unsafe extern "system" fn(
     query_pool: QueryPool,
     first_query: u32,
 );
+#[allow(non_camel_case_types)]
+pub type PFN_vkCompileDeferredNV =
+    unsafe extern "system" fn(device: Device, pipeline: Pipeline, shader: u32) -> Result;
+#[derive(Clone)]
 pub struct NvRayTracingFn {
     pub create_acceleration_structure_nv: unsafe extern "system" fn(
         device: Device,
@@ -14775,26 +13818,6 @@ pub struct NvRayTracingFn {
 }
 unsafe impl Send for NvRayTracingFn {}
 unsafe impl Sync for NvRayTracingFn {}
-impl ::std::clone::Clone for NvRayTracingFn {
-    fn clone(&self) -> Self {
-        NvRayTracingFn {
-            create_acceleration_structure_nv: self.create_acceleration_structure_nv,
-            destroy_acceleration_structure_nv: self.destroy_acceleration_structure_nv,
-            get_acceleration_structure_memory_requirements_nv: self
-                .get_acceleration_structure_memory_requirements_nv,
-            bind_acceleration_structure_memory_nv: self.bind_acceleration_structure_memory_nv,
-            cmd_build_acceleration_structure_nv: self.cmd_build_acceleration_structure_nv,
-            cmd_copy_acceleration_structure_nv: self.cmd_copy_acceleration_structure_nv,
-            cmd_trace_rays_nv: self.cmd_trace_rays_nv,
-            create_ray_tracing_pipelines_nv: self.create_ray_tracing_pipelines_nv,
-            get_ray_tracing_shader_group_handles_nv: self.get_ray_tracing_shader_group_handles_nv,
-            get_acceleration_structure_handle_nv: self.get_acceleration_structure_handle_nv,
-            cmd_write_acceleration_structures_properties_nv: self
-                .cmd_write_acceleration_structures_properties_nv,
-            compile_deferred_nv: self.compile_deferred_nv,
-        }
-    }
-}
 impl NvRayTracingFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -15479,14 +14502,10 @@ impl NvRepresentativeFragmentTestFn {
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
+#[derive(Clone)]
 pub struct NvRepresentativeFragmentTestFn {}
 unsafe impl Send for NvRepresentativeFragmentTestFn {}
 unsafe impl Sync for NvRepresentativeFragmentTestFn {}
-impl ::std::clone::Clone for NvRepresentativeFragmentTestFn {
-    fn clone(&self) -> Self {
-        NvRepresentativeFragmentTestFn {}
-    }
-}
 impl NvRepresentativeFragmentTestFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -15511,14 +14530,10 @@ impl NvExtension168Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct NvExtension168Fn {}
 unsafe impl Send for NvExtension168Fn {}
 unsafe impl Sync for NvExtension168Fn {}
-impl ::std::clone::Clone for NvExtension168Fn {
-    fn clone(&self) -> Self {
-        NvExtension168Fn {}
-    }
-}
 impl NvExtension168Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -15540,6 +14555,7 @@ pub type PFN_vkGetDescriptorSetLayoutSupport = unsafe extern "system" fn(
     p_create_info: *const DescriptorSetLayoutCreateInfo,
     p_support: *mut DescriptorSetLayoutSupport,
 );
+#[derive(Clone)]
 pub struct KhrMaintenance3Fn {
     pub get_descriptor_set_layout_support_khr: unsafe extern "system" fn(
         device: Device,
@@ -15549,13 +14565,6 @@ pub struct KhrMaintenance3Fn {
 }
 unsafe impl Send for KhrMaintenance3Fn {}
 unsafe impl Sync for KhrMaintenance3Fn {}
-impl ::std::clone::Clone for KhrMaintenance3Fn {
-    fn clone(&self) -> Self {
-        KhrMaintenance3Fn {
-            get_descriptor_set_layout_support_khr: self.get_descriptor_set_layout_support_khr,
-        }
-    }
-}
 impl KhrMaintenance3Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -15611,6 +14620,7 @@ impl KhrDrawIndirectCountFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct KhrDrawIndirectCountFn {
     pub cmd_draw_indirect_count_khr: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
@@ -15633,14 +14643,6 @@ pub struct KhrDrawIndirectCountFn {
 }
 unsafe impl Send for KhrDrawIndirectCountFn {}
 unsafe impl Sync for KhrDrawIndirectCountFn {}
-impl ::std::clone::Clone for KhrDrawIndirectCountFn {
-    fn clone(&self) -> Self {
-        KhrDrawIndirectCountFn {
-            cmd_draw_indirect_count_khr: self.cmd_draw_indirect_count_khr,
-            cmd_draw_indexed_indirect_count_khr: self.cmd_draw_indexed_indirect_count_khr,
-        }
-    }
-}
 impl KhrDrawIndirectCountFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -15748,14 +14750,10 @@ impl ExtFilterCubicFn {
     }
     pub const SPEC_VERSION: u32 = 3u32;
 }
+#[derive(Clone)]
 pub struct ExtFilterCubicFn {}
 unsafe impl Send for ExtFilterCubicFn {}
 unsafe impl Sync for ExtFilterCubicFn {}
-impl ::std::clone::Clone for ExtFilterCubicFn {
-    fn clone(&self) -> Self {
-        ExtFilterCubicFn {}
-    }
-}
 impl ExtFilterCubicFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -15787,14 +14785,10 @@ impl QcomRenderPassShaderResolveFn {
     }
     pub const SPEC_VERSION: u32 = 4u32;
 }
+#[derive(Clone)]
 pub struct QcomRenderPassShaderResolveFn {}
 unsafe impl Send for QcomRenderPassShaderResolveFn {}
 unsafe impl Sync for QcomRenderPassShaderResolveFn {}
-impl ::std::clone::Clone for QcomRenderPassShaderResolveFn {
-    fn clone(&self) -> Self {
-        QcomRenderPassShaderResolveFn {}
-    }
-}
 impl QcomRenderPassShaderResolveFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -15818,14 +14812,10 @@ impl QcomExtension173Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct QcomExtension173Fn {}
 unsafe impl Send for QcomExtension173Fn {}
 unsafe impl Sync for QcomExtension173Fn {}
-impl ::std::clone::Clone for QcomExtension173Fn {
-    fn clone(&self) -> Self {
-        QcomExtension173Fn {}
-    }
-}
 impl QcomExtension173Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -15853,14 +14843,10 @@ impl QcomExtension174Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct QcomExtension174Fn {}
 unsafe impl Send for QcomExtension174Fn {}
 unsafe impl Sync for QcomExtension174Fn {}
-impl ::std::clone::Clone for QcomExtension174Fn {
-    fn clone(&self) -> Self {
-        QcomExtension174Fn {}
-    }
-}
 impl QcomExtension174Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -15876,14 +14862,10 @@ impl ExtGlobalPriorityFn {
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
+#[derive(Clone)]
 pub struct ExtGlobalPriorityFn {}
 unsafe impl Send for ExtGlobalPriorityFn {}
 unsafe impl Sync for ExtGlobalPriorityFn {}
-impl ::std::clone::Clone for ExtGlobalPriorityFn {
-    fn clone(&self) -> Self {
-        ExtGlobalPriorityFn {}
-    }
-}
 impl ExtGlobalPriorityFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -15907,14 +14889,10 @@ impl KhrShaderSubgroupExtendedTypesFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct KhrShaderSubgroupExtendedTypesFn {}
 unsafe impl Send for KhrShaderSubgroupExtendedTypesFn {}
 unsafe impl Sync for KhrShaderSubgroupExtendedTypesFn {}
-impl ::std::clone::Clone for KhrShaderSubgroupExtendedTypesFn {
-    fn clone(&self) -> Self {
-        KhrShaderSubgroupExtendedTypesFn {}
-    }
-}
 impl KhrShaderSubgroupExtendedTypesFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -15935,14 +14913,10 @@ impl ExtExtension177Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ExtExtension177Fn {}
 unsafe impl Send for ExtExtension177Fn {}
 unsafe impl Sync for ExtExtension177Fn {}
-impl ::std::clone::Clone for ExtExtension177Fn {
-    fn clone(&self) -> Self {
-        ExtExtension177Fn {}
-    }
-}
 impl ExtExtension177Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -15958,14 +14932,10 @@ impl Khr8bitStorageFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct Khr8bitStorageFn {}
 unsafe impl Send for Khr8bitStorageFn {}
 unsafe impl Sync for Khr8bitStorageFn {}
-impl ::std::clone::Clone for Khr8bitStorageFn {
-    fn clone(&self) -> Self {
-        Khr8bitStorageFn {}
-    }
-}
 impl Khr8bitStorageFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -15993,6 +14963,7 @@ pub type PFN_vkGetMemoryHostPointerPropertiesEXT = unsafe extern "system" fn(
     p_host_pointer: *const c_void,
     p_memory_host_pointer_properties: *mut MemoryHostPointerPropertiesEXT,
 ) -> Result;
+#[derive(Clone)]
 pub struct ExtExternalMemoryHostFn {
     pub get_memory_host_pointer_properties_ext: unsafe extern "system" fn(
         device: Device,
@@ -16003,13 +14974,6 @@ pub struct ExtExternalMemoryHostFn {
 }
 unsafe impl Send for ExtExternalMemoryHostFn {}
 unsafe impl Sync for ExtExternalMemoryHostFn {}
-impl ::std::clone::Clone for ExtExternalMemoryHostFn {
-    fn clone(&self) -> Self {
-        ExtExternalMemoryHostFn {
-            get_memory_host_pointer_properties_ext: self.get_memory_host_pointer_properties_ext,
-        }
-    }
-}
 impl ExtExternalMemoryHostFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -16091,6 +15055,7 @@ pub type PFN_vkCmdWriteBufferMarkerAMD = unsafe extern "system" fn(
     dst_offset: DeviceSize,
     marker: u32,
 );
+#[derive(Clone)]
 pub struct AmdBufferMarkerFn {
     pub cmd_write_buffer_marker_amd: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
@@ -16102,13 +15067,6 @@ pub struct AmdBufferMarkerFn {
 }
 unsafe impl Send for AmdBufferMarkerFn {}
 unsafe impl Sync for AmdBufferMarkerFn {}
-impl ::std::clone::Clone for AmdBufferMarkerFn {
-    fn clone(&self) -> Self {
-        AmdBufferMarkerFn {
-            cmd_write_buffer_marker_amd: self.cmd_write_buffer_marker_amd,
-        }
-    }
-}
 impl AmdBufferMarkerFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -16164,14 +15122,10 @@ impl KhrShaderAtomicInt64Fn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct KhrShaderAtomicInt64Fn {}
 unsafe impl Send for KhrShaderAtomicInt64Fn {}
 unsafe impl Sync for KhrShaderAtomicInt64Fn {}
-impl ::std::clone::Clone for KhrShaderAtomicInt64Fn {
-    fn clone(&self) -> Self {
-        KhrShaderAtomicInt64Fn {}
-    }
-}
 impl KhrShaderAtomicInt64Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -16192,14 +15146,10 @@ impl KhrShaderClockFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct KhrShaderClockFn {}
 unsafe impl Send for KhrShaderClockFn {}
 unsafe impl Sync for KhrShaderClockFn {}
-impl ::std::clone::Clone for KhrShaderClockFn {
-    fn clone(&self) -> Self {
-        KhrShaderClockFn {}
-    }
-}
 impl KhrShaderClockFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -16219,14 +15169,10 @@ impl AmdExtension183Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension183Fn {}
 unsafe impl Send for AmdExtension183Fn {}
 unsafe impl Sync for AmdExtension183Fn {}
-impl ::std::clone::Clone for AmdExtension183Fn {
-    fn clone(&self) -> Self {
-        AmdExtension183Fn {}
-    }
-}
 impl AmdExtension183Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -16242,14 +15188,10 @@ impl AmdPipelineCompilerControlFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct AmdPipelineCompilerControlFn {}
 unsafe impl Send for AmdPipelineCompilerControlFn {}
 unsafe impl Sync for AmdPipelineCompilerControlFn {}
-impl ::std::clone::Clone for AmdPipelineCompilerControlFn {
-    fn clone(&self) -> Self {
-        AmdPipelineCompilerControlFn {}
-    }
-}
 impl AmdPipelineCompilerControlFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -16283,6 +15225,7 @@ pub type PFN_vkGetCalibratedTimestampsEXT = unsafe extern "system" fn(
     p_timestamps: *mut u64,
     p_max_deviation: *mut u64,
 ) -> Result;
+#[derive(Clone)]
 pub struct ExtCalibratedTimestampsFn {
     pub get_physical_device_calibrateable_time_domains_ext: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
@@ -16300,15 +15243,6 @@ pub struct ExtCalibratedTimestampsFn {
 }
 unsafe impl Send for ExtCalibratedTimestampsFn {}
 unsafe impl Sync for ExtCalibratedTimestampsFn {}
-impl ::std::clone::Clone for ExtCalibratedTimestampsFn {
-    fn clone(&self) -> Self {
-        ExtCalibratedTimestampsFn {
-            get_physical_device_calibrateable_time_domains_ext: self
-                .get_physical_device_calibrateable_time_domains_ext,
-            get_calibrated_timestamps_ext: self.get_calibrated_timestamps_ext,
-        }
-    }
-}
 impl ExtCalibratedTimestampsFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -16403,14 +15337,10 @@ impl AmdShaderCorePropertiesFn {
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
+#[derive(Clone)]
 pub struct AmdShaderCorePropertiesFn {}
 unsafe impl Send for AmdShaderCorePropertiesFn {}
 unsafe impl Sync for AmdShaderCorePropertiesFn {}
-impl ::std::clone::Clone for AmdShaderCorePropertiesFn {
-    fn clone(&self) -> Self {
-        AmdShaderCorePropertiesFn {}
-    }
-}
 impl AmdShaderCorePropertiesFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -16430,14 +15360,10 @@ impl AmdExtension187Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension187Fn {}
 unsafe impl Send for AmdExtension187Fn {}
 unsafe impl Sync for AmdExtension187Fn {}
-impl ::std::clone::Clone for AmdExtension187Fn {
-    fn clone(&self) -> Self {
-        AmdExtension187Fn {}
-    }
-}
 impl AmdExtension187Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -16453,14 +15379,10 @@ impl AmdExtension188Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension188Fn {}
 unsafe impl Send for AmdExtension188Fn {}
 unsafe impl Sync for AmdExtension188Fn {}
-impl ::std::clone::Clone for AmdExtension188Fn {
-    fn clone(&self) -> Self {
-        AmdExtension188Fn {}
-    }
-}
 impl AmdExtension188Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -16476,14 +15398,10 @@ impl AmdExtension189Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension189Fn {}
 unsafe impl Send for AmdExtension189Fn {}
 unsafe impl Sync for AmdExtension189Fn {}
-impl ::std::clone::Clone for AmdExtension189Fn {
-    fn clone(&self) -> Self {
-        AmdExtension189Fn {}
-    }
-}
 impl AmdExtension189Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -16499,14 +15417,10 @@ impl AmdMemoryOverallocationBehaviorFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct AmdMemoryOverallocationBehaviorFn {}
 unsafe impl Send for AmdMemoryOverallocationBehaviorFn {}
 unsafe impl Sync for AmdMemoryOverallocationBehaviorFn {}
-impl ::std::clone::Clone for AmdMemoryOverallocationBehaviorFn {
-    fn clone(&self) -> Self {
-        AmdMemoryOverallocationBehaviorFn {}
-    }
-}
 impl AmdMemoryOverallocationBehaviorFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -16526,14 +15440,10 @@ impl ExtVertexAttributeDivisorFn {
     }
     pub const SPEC_VERSION: u32 = 3u32;
 }
+#[derive(Clone)]
 pub struct ExtVertexAttributeDivisorFn {}
 unsafe impl Send for ExtVertexAttributeDivisorFn {}
 unsafe impl Sync for ExtVertexAttributeDivisorFn {}
-impl ::std::clone::Clone for ExtVertexAttributeDivisorFn {
-    fn clone(&self) -> Self {
-        ExtVertexAttributeDivisorFn {}
-    }
-}
 impl ExtVertexAttributeDivisorFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -16561,14 +15471,10 @@ impl GgpFrameTokenFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct GgpFrameTokenFn {}
 unsafe impl Send for GgpFrameTokenFn {}
 unsafe impl Sync for GgpFrameTokenFn {}
-impl ::std::clone::Clone for GgpFrameTokenFn {
-    fn clone(&self) -> Self {
-        GgpFrameTokenFn {}
-    }
-}
 impl GgpFrameTokenFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -16588,14 +15494,10 @@ impl ExtPipelineCreationFeedbackFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct ExtPipelineCreationFeedbackFn {}
 unsafe impl Send for ExtPipelineCreationFeedbackFn {}
 unsafe impl Sync for ExtPipelineCreationFeedbackFn {}
-impl ::std::clone::Clone for ExtPipelineCreationFeedbackFn {
-    fn clone(&self) -> Self {
-        ExtPipelineCreationFeedbackFn {}
-    }
-}
 impl ExtPipelineCreationFeedbackFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -16615,14 +15517,10 @@ impl GoogleExtension194Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct GoogleExtension194Fn {}
 unsafe impl Send for GoogleExtension194Fn {}
 unsafe impl Sync for GoogleExtension194Fn {}
-impl ::std::clone::Clone for GoogleExtension194Fn {
-    fn clone(&self) -> Self {
-        GoogleExtension194Fn {}
-    }
-}
 impl GoogleExtension194Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -16638,14 +15536,10 @@ impl GoogleExtension195Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct GoogleExtension195Fn {}
 unsafe impl Send for GoogleExtension195Fn {}
 unsafe impl Sync for GoogleExtension195Fn {}
-impl ::std::clone::Clone for GoogleExtension195Fn {
-    fn clone(&self) -> Self {
-        GoogleExtension195Fn {}
-    }
-}
 impl GoogleExtension195Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -16661,14 +15555,10 @@ impl GoogleExtension196Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct GoogleExtension196Fn {}
 unsafe impl Send for GoogleExtension196Fn {}
 unsafe impl Sync for GoogleExtension196Fn {}
-impl ::std::clone::Clone for GoogleExtension196Fn {
-    fn clone(&self) -> Self {
-        GoogleExtension196Fn {}
-    }
-}
 impl GoogleExtension196Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -16688,14 +15578,10 @@ impl KhrDriverPropertiesFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct KhrDriverPropertiesFn {}
 unsafe impl Send for KhrDriverPropertiesFn {}
 unsafe impl Sync for KhrDriverPropertiesFn {}
-impl ::std::clone::Clone for KhrDriverPropertiesFn {
-    fn clone(&self) -> Self {
-        KhrDriverPropertiesFn {}
-    }
-}
 impl KhrDriverPropertiesFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -16763,14 +15649,10 @@ impl KhrShaderFloatControlsFn {
     }
     pub const SPEC_VERSION: u32 = 4u32;
 }
+#[derive(Clone)]
 pub struct KhrShaderFloatControlsFn {}
 unsafe impl Send for KhrShaderFloatControlsFn {}
 unsafe impl Sync for KhrShaderFloatControlsFn {}
-impl ::std::clone::Clone for KhrShaderFloatControlsFn {
-    fn clone(&self) -> Self {
-        KhrShaderFloatControlsFn {}
-    }
-}
 impl KhrShaderFloatControlsFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -16803,14 +15685,10 @@ impl NvShaderSubgroupPartitionedFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct NvShaderSubgroupPartitionedFn {}
 unsafe impl Send for NvShaderSubgroupPartitionedFn {}
 unsafe impl Sync for NvShaderSubgroupPartitionedFn {}
-impl ::std::clone::Clone for NvShaderSubgroupPartitionedFn {
-    fn clone(&self) -> Self {
-        NvShaderSubgroupPartitionedFn {}
-    }
-}
 impl NvShaderSubgroupPartitionedFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -16830,14 +15708,10 @@ impl KhrDepthStencilResolveFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct KhrDepthStencilResolveFn {}
 unsafe impl Send for KhrDepthStencilResolveFn {}
 unsafe impl Sync for KhrDepthStencilResolveFn {}
-impl ::std::clone::Clone for KhrDepthStencilResolveFn {
-    fn clone(&self) -> Self {
-        KhrDepthStencilResolveFn {}
-    }
-}
 impl KhrDepthStencilResolveFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -16883,14 +15757,10 @@ impl KhrSwapchainMutableFormatFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct KhrSwapchainMutableFormatFn {}
 unsafe impl Send for KhrSwapchainMutableFormatFn {}
 unsafe impl Sync for KhrSwapchainMutableFormatFn {}
-impl ::std::clone::Clone for KhrSwapchainMutableFormatFn {
-    fn clone(&self) -> Self {
-        KhrSwapchainMutableFormatFn {}
-    }
-}
 impl KhrSwapchainMutableFormatFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -16910,14 +15780,10 @@ impl NvComputeShaderDerivativesFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct NvComputeShaderDerivativesFn {}
 unsafe impl Send for NvComputeShaderDerivativesFn {}
 unsafe impl Sync for NvComputeShaderDerivativesFn {}
-impl ::std::clone::Clone for NvComputeShaderDerivativesFn {
-    fn clone(&self) -> Self {
-        NvComputeShaderDerivativesFn {}
-    }
-}
 impl NvComputeShaderDerivativesFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -16958,6 +15824,7 @@ pub type PFN_vkCmdDrawMeshTasksIndirectCountNV = unsafe extern "system" fn(
     max_draw_count: u32,
     stride: u32,
 );
+#[derive(Clone)]
 pub struct NvMeshShaderFn {
     pub cmd_draw_mesh_tasks_nv:
         unsafe extern "system" fn(command_buffer: CommandBuffer, task_count: u32, first_task: u32),
@@ -16980,15 +15847,6 @@ pub struct NvMeshShaderFn {
 }
 unsafe impl Send for NvMeshShaderFn {}
 unsafe impl Sync for NvMeshShaderFn {}
-impl ::std::clone::Clone for NvMeshShaderFn {
-    fn clone(&self) -> Self {
-        NvMeshShaderFn {
-            cmd_draw_mesh_tasks_nv: self.cmd_draw_mesh_tasks_nv,
-            cmd_draw_mesh_tasks_indirect_nv: self.cmd_draw_mesh_tasks_indirect_nv,
-            cmd_draw_mesh_tasks_indirect_count_nv: self.cmd_draw_mesh_tasks_indirect_count_nv,
-        }
-    }
-}
 impl NvMeshShaderFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -17138,14 +15996,10 @@ impl NvFragmentShaderBarycentricFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct NvFragmentShaderBarycentricFn {}
 unsafe impl Send for NvFragmentShaderBarycentricFn {}
 unsafe impl Sync for NvFragmentShaderBarycentricFn {}
-impl ::std::clone::Clone for NvFragmentShaderBarycentricFn {
-    fn clone(&self) -> Self {
-        NvFragmentShaderBarycentricFn {}
-    }
-}
 impl NvFragmentShaderBarycentricFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -17165,14 +16019,10 @@ impl NvShaderImageFootprintFn {
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
+#[derive(Clone)]
 pub struct NvShaderImageFootprintFn {}
 unsafe impl Send for NvShaderImageFootprintFn {}
 unsafe impl Sync for NvShaderImageFootprintFn {}
-impl ::std::clone::Clone for NvShaderImageFootprintFn {
-    fn clone(&self) -> Self {
-        NvShaderImageFootprintFn {}
-    }
-}
 impl NvShaderImageFootprintFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -17199,6 +16049,7 @@ pub type PFN_vkCmdSetExclusiveScissorNV = unsafe extern "system" fn(
     exclusive_scissor_count: u32,
     p_exclusive_scissors: *const Rect2D,
 );
+#[derive(Clone)]
 pub struct NvScissorExclusiveFn {
     pub cmd_set_exclusive_scissor_nv: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
@@ -17209,13 +16060,6 @@ pub struct NvScissorExclusiveFn {
 }
 unsafe impl Send for NvScissorExclusiveFn {}
 unsafe impl Sync for NvScissorExclusiveFn {}
-impl ::std::clone::Clone for NvScissorExclusiveFn {
-    fn clone(&self) -> Self {
-        NvScissorExclusiveFn {
-            cmd_set_exclusive_scissor_nv: self.cmd_set_exclusive_scissor_nv,
-        }
-    }
-}
 impl NvScissorExclusiveFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -17290,6 +16134,7 @@ pub type PFN_vkGetQueueCheckpointDataNV = unsafe extern "system" fn(
     p_checkpoint_data_count: *mut u32,
     p_checkpoint_data: *mut CheckpointDataNV,
 );
+#[derive(Clone)]
 pub struct NvDeviceDiagnosticCheckpointsFn {
     pub cmd_set_checkpoint_nv: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
@@ -17303,14 +16148,6 @@ pub struct NvDeviceDiagnosticCheckpointsFn {
 }
 unsafe impl Send for NvDeviceDiagnosticCheckpointsFn {}
 unsafe impl Sync for NvDeviceDiagnosticCheckpointsFn {}
-impl ::std::clone::Clone for NvDeviceDiagnosticCheckpointsFn {
-    fn clone(&self) -> Self {
-        NvDeviceDiagnosticCheckpointsFn {
-            cmd_set_checkpoint_nv: self.cmd_set_checkpoint_nv,
-            get_queue_checkpoint_data_nv: self.get_queue_checkpoint_data_nv,
-        }
-    }
-}
 impl NvDeviceDiagnosticCheckpointsFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -17404,6 +16241,7 @@ pub type PFN_vkWaitSemaphores = unsafe extern "system" fn(
 #[allow(non_camel_case_types)]
 pub type PFN_vkSignalSemaphore =
     unsafe extern "system" fn(device: Device, p_signal_info: *const SemaphoreSignalInfo) -> Result;
+#[derive(Clone)]
 pub struct KhrTimelineSemaphoreFn {
     pub get_semaphore_counter_value_khr: unsafe extern "system" fn(
         device: Device,
@@ -17422,15 +16260,6 @@ pub struct KhrTimelineSemaphoreFn {
 }
 unsafe impl Send for KhrTimelineSemaphoreFn {}
 unsafe impl Sync for KhrTimelineSemaphoreFn {}
-impl ::std::clone::Clone for KhrTimelineSemaphoreFn {
-    fn clone(&self) -> Self {
-        KhrTimelineSemaphoreFn {
-            get_semaphore_counter_value_khr: self.get_semaphore_counter_value_khr,
-            wait_semaphores_khr: self.wait_semaphores_khr,
-            signal_semaphore_khr: self.signal_semaphore_khr,
-        }
-    }
-}
 impl KhrTimelineSemaphoreFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -17565,14 +16394,10 @@ impl KhrExtension209Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct KhrExtension209Fn {}
 unsafe impl Send for KhrExtension209Fn {}
 unsafe impl Sync for KhrExtension209Fn {}
-impl ::std::clone::Clone for KhrExtension209Fn {
-    fn clone(&self) -> Self {
-        KhrExtension209Fn {}
-    }
-}
 impl KhrExtension209Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -17588,14 +16413,10 @@ impl IntelShaderIntegerFunctions2Fn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct IntelShaderIntegerFunctions2Fn {}
 unsafe impl Send for IntelShaderIntegerFunctions2Fn {}
 unsafe impl Sync for IntelShaderIntegerFunctions2Fn {}
-impl ::std::clone::Clone for IntelShaderIntegerFunctions2Fn {
-    fn clone(&self) -> Self {
-        IntelShaderIntegerFunctions2Fn {}
-    }
-}
 impl IntelShaderIntegerFunctions2Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -17657,6 +16478,7 @@ pub type PFN_vkGetPerformanceParameterINTEL = unsafe extern "system" fn(
     parameter: PerformanceParameterTypeINTEL,
     p_value: *mut PerformanceValueINTEL,
 ) -> Result;
+#[derive(Clone)]
 pub struct IntelPerformanceQueryFn {
     pub initialize_performance_api_intel: unsafe extern "system" fn(
         device: Device,
@@ -17696,22 +16518,6 @@ pub struct IntelPerformanceQueryFn {
 }
 unsafe impl Send for IntelPerformanceQueryFn {}
 unsafe impl Sync for IntelPerformanceQueryFn {}
-impl ::std::clone::Clone for IntelPerformanceQueryFn {
-    fn clone(&self) -> Self {
-        IntelPerformanceQueryFn {
-            initialize_performance_api_intel: self.initialize_performance_api_intel,
-            uninitialize_performance_api_intel: self.uninitialize_performance_api_intel,
-            cmd_set_performance_marker_intel: self.cmd_set_performance_marker_intel,
-            cmd_set_performance_stream_marker_intel: self.cmd_set_performance_stream_marker_intel,
-            cmd_set_performance_override_intel: self.cmd_set_performance_override_intel,
-            acquire_performance_configuration_intel: self.acquire_performance_configuration_intel,
-            release_performance_configuration_intel: self.release_performance_configuration_intel,
-            queue_set_performance_configuration_intel: self
-                .queue_set_performance_configuration_intel,
-            get_performance_parameter_intel: self.get_performance_parameter_intel,
-        }
-    }
-}
 impl IntelPerformanceQueryFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -18014,14 +16820,10 @@ impl KhrVulkanMemoryModelFn {
     }
     pub const SPEC_VERSION: u32 = 3u32;
 }
+#[derive(Clone)]
 pub struct KhrVulkanMemoryModelFn {}
 unsafe impl Send for KhrVulkanMemoryModelFn {}
 unsafe impl Sync for KhrVulkanMemoryModelFn {}
-impl ::std::clone::Clone for KhrVulkanMemoryModelFn {
-    fn clone(&self) -> Self {
-        KhrVulkanMemoryModelFn {}
-    }
-}
 impl KhrVulkanMemoryModelFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -18042,14 +16844,10 @@ impl ExtPciBusInfoFn {
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
+#[derive(Clone)]
 pub struct ExtPciBusInfoFn {}
 unsafe impl Send for ExtPciBusInfoFn {}
 unsafe impl Sync for ExtPciBusInfoFn {}
-impl ::std::clone::Clone for ExtPciBusInfoFn {
-    fn clone(&self) -> Self {
-        ExtPciBusInfoFn {}
-    }
-}
 impl ExtPciBusInfoFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -18075,6 +16873,7 @@ pub type PFN_vkSetLocalDimmingAMD = unsafe extern "system" fn(
     swap_chain: SwapchainKHR,
     local_dimming_enable: Bool32,
 );
+#[derive(Clone)]
 pub struct AmdDisplayNativeHdrFn {
     pub set_local_dimming_amd: unsafe extern "system" fn(
         device: Device,
@@ -18084,13 +16883,6 @@ pub struct AmdDisplayNativeHdrFn {
 }
 unsafe impl Send for AmdDisplayNativeHdrFn {}
 unsafe impl Sync for AmdDisplayNativeHdrFn {}
-impl ::std::clone::Clone for AmdDisplayNativeHdrFn {
-    fn clone(&self) -> Self {
-        AmdDisplayNativeHdrFn {
-            set_local_dimming_amd: self.set_local_dimming_amd,
-        }
-    }
-}
 impl AmdDisplayNativeHdrFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -18155,6 +16947,7 @@ pub type PFN_vkCreateImagePipeSurfaceFUCHSIA = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
+#[derive(Clone)]
 pub struct FuchsiaImagepipeSurfaceFn {
     pub create_image_pipe_surface_fuchsia: unsafe extern "system" fn(
         instance: Instance,
@@ -18165,13 +16958,6 @@ pub struct FuchsiaImagepipeSurfaceFn {
 }
 unsafe impl Send for FuchsiaImagepipeSurfaceFn {}
 unsafe impl Sync for FuchsiaImagepipeSurfaceFn {}
-impl ::std::clone::Clone for FuchsiaImagepipeSurfaceFn {
-    fn clone(&self) -> Self {
-        FuchsiaImagepipeSurfaceFn {
-            create_image_pipe_surface_fuchsia: self.create_image_pipe_surface_fuchsia,
-        }
-    }
-}
 impl FuchsiaImagepipeSurfaceFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -18224,14 +17010,10 @@ impl KhrShaderTerminateInvocationFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct KhrShaderTerminateInvocationFn {}
 unsafe impl Send for KhrShaderTerminateInvocationFn {}
 unsafe impl Sync for KhrShaderTerminateInvocationFn {}
-impl ::std::clone::Clone for KhrShaderTerminateInvocationFn {
-    fn clone(&self) -> Self {
-        KhrShaderTerminateInvocationFn {}
-    }
-}
 impl KhrShaderTerminateInvocationFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -18251,14 +17033,10 @@ impl GoogleExtension217Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct GoogleExtension217Fn {}
 unsafe impl Send for GoogleExtension217Fn {}
 unsafe impl Sync for GoogleExtension217Fn {}
-impl ::std::clone::Clone for GoogleExtension217Fn {
-    fn clone(&self) -> Self {
-        GoogleExtension217Fn {}
-    }
-}
 impl GoogleExtension217Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -18281,6 +17059,7 @@ pub type PFN_vkCreateMetalSurfaceEXT = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
+#[derive(Clone)]
 pub struct ExtMetalSurfaceFn {
     pub create_metal_surface_ext: unsafe extern "system" fn(
         instance: Instance,
@@ -18291,13 +17070,6 @@ pub struct ExtMetalSurfaceFn {
 }
 unsafe impl Send for ExtMetalSurfaceFn {}
 unsafe impl Sync for ExtMetalSurfaceFn {}
-impl ::std::clone::Clone for ExtMetalSurfaceFn {
-    fn clone(&self) -> Self {
-        ExtMetalSurfaceFn {
-            create_metal_surface_ext: self.create_metal_surface_ext,
-        }
-    }
-}
 impl ExtMetalSurfaceFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -18349,14 +17121,10 @@ impl ExtFragmentDensityMapFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct ExtFragmentDensityMapFn {}
 unsafe impl Send for ExtFragmentDensityMapFn {}
 unsafe impl Sync for ExtFragmentDensityMapFn {}
-impl ::std::clone::Clone for ExtFragmentDensityMapFn {
-    fn clone(&self) -> Self {
-        ExtFragmentDensityMapFn {}
-    }
-}
 impl ExtFragmentDensityMapFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -18420,14 +17188,10 @@ impl ExtExtension220Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ExtExtension220Fn {}
 unsafe impl Send for ExtExtension220Fn {}
 unsafe impl Sync for ExtExtension220Fn {}
-impl ::std::clone::Clone for ExtExtension220Fn {
-    fn clone(&self) -> Self {
-        ExtExtension220Fn {}
-    }
-}
 impl ExtExtension220Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -18443,14 +17207,10 @@ impl KhrExtension221Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct KhrExtension221Fn {}
 unsafe impl Send for KhrExtension221Fn {}
 unsafe impl Sync for KhrExtension221Fn {}
-impl ::std::clone::Clone for KhrExtension221Fn {
-    fn clone(&self) -> Self {
-        KhrExtension221Fn {}
-    }
-}
 impl KhrExtension221Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -18470,14 +17230,10 @@ impl ExtScalarBlockLayoutFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct ExtScalarBlockLayoutFn {}
 unsafe impl Send for ExtScalarBlockLayoutFn {}
 unsafe impl Sync for ExtScalarBlockLayoutFn {}
-impl ::std::clone::Clone for ExtScalarBlockLayoutFn {
-    fn clone(&self) -> Self {
-        ExtScalarBlockLayoutFn {}
-    }
-}
 impl ExtScalarBlockLayoutFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -18498,14 +17254,10 @@ impl ExtExtension223Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ExtExtension223Fn {}
 unsafe impl Send for ExtExtension223Fn {}
 unsafe impl Sync for ExtExtension223Fn {}
-impl ::std::clone::Clone for ExtExtension223Fn {
-    fn clone(&self) -> Self {
-        ExtExtension223Fn {}
-    }
-}
 impl ExtExtension223Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -18521,14 +17273,10 @@ impl GoogleHlslFunctionality1Fn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct GoogleHlslFunctionality1Fn {}
 unsafe impl Send for GoogleHlslFunctionality1Fn {}
 unsafe impl Sync for GoogleHlslFunctionality1Fn {}
-impl ::std::clone::Clone for GoogleHlslFunctionality1Fn {
-    fn clone(&self) -> Self {
-        GoogleHlslFunctionality1Fn {}
-    }
-}
 impl GoogleHlslFunctionality1Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -18544,14 +17292,10 @@ impl GoogleDecorateStringFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct GoogleDecorateStringFn {}
 unsafe impl Send for GoogleDecorateStringFn {}
 unsafe impl Sync for GoogleDecorateStringFn {}
-impl ::std::clone::Clone for GoogleDecorateStringFn {
-    fn clone(&self) -> Self {
-        GoogleDecorateStringFn {}
-    }
-}
 impl GoogleDecorateStringFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -18567,14 +17311,10 @@ impl ExtSubgroupSizeControlFn {
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
+#[derive(Clone)]
 pub struct ExtSubgroupSizeControlFn {}
 unsafe impl Send for ExtSubgroupSizeControlFn {}
 unsafe impl Sync for ExtSubgroupSizeControlFn {}
-impl ::std::clone::Clone for ExtSubgroupSizeControlFn {
-    fn clone(&self) -> Self {
-        ExtSubgroupSizeControlFn {}
-    }
-}
 impl ExtSubgroupSizeControlFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -18623,6 +17363,7 @@ pub type PFN_vkCmdSetFragmentShadingRateKHR = unsafe extern "system" fn(
     p_fragment_size: *const Extent2D,
     combiner_ops: *const [FragmentShadingRateCombinerOpKHR; 2],
 );
+#[derive(Clone)]
 pub struct KhrFragmentShadingRateFn {
     pub get_physical_device_fragment_shading_rates_khr: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
@@ -18637,15 +17378,6 @@ pub struct KhrFragmentShadingRateFn {
 }
 unsafe impl Send for KhrFragmentShadingRateFn {}
 unsafe impl Sync for KhrFragmentShadingRateFn {}
-impl ::std::clone::Clone for KhrFragmentShadingRateFn {
-    fn clone(&self) -> Self {
-        KhrFragmentShadingRateFn {
-            get_physical_device_fragment_shading_rates_khr: self
-                .get_physical_device_fragment_shading_rates_khr,
-            cmd_set_fragment_shading_rate_khr: self.cmd_set_fragment_shading_rate_khr,
-        }
-    }
-}
 impl KhrFragmentShadingRateFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -18771,14 +17503,10 @@ impl AmdShaderCoreProperties2Fn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct AmdShaderCoreProperties2Fn {}
 unsafe impl Send for AmdShaderCoreProperties2Fn {}
 unsafe impl Sync for AmdShaderCoreProperties2Fn {}
-impl ::std::clone::Clone for AmdShaderCoreProperties2Fn {
-    fn clone(&self) -> Self {
-        AmdShaderCoreProperties2Fn {}
-    }
-}
 impl AmdShaderCoreProperties2Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -18798,14 +17526,10 @@ impl AmdExtension229Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension229Fn {}
 unsafe impl Send for AmdExtension229Fn {}
 unsafe impl Sync for AmdExtension229Fn {}
-impl ::std::clone::Clone for AmdExtension229Fn {
-    fn clone(&self) -> Self {
-        AmdExtension229Fn {}
-    }
-}
 impl AmdExtension229Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -18821,14 +17545,10 @@ impl AmdDeviceCoherentMemoryFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct AmdDeviceCoherentMemoryFn {}
 unsafe impl Send for AmdDeviceCoherentMemoryFn {}
 unsafe impl Sync for AmdDeviceCoherentMemoryFn {}
-impl ::std::clone::Clone for AmdDeviceCoherentMemoryFn {
-    fn clone(&self) -> Self {
-        AmdDeviceCoherentMemoryFn {}
-    }
-}
 impl AmdDeviceCoherentMemoryFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -18856,14 +17576,10 @@ impl AmdExtension231Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension231Fn {}
 unsafe impl Send for AmdExtension231Fn {}
 unsafe impl Sync for AmdExtension231Fn {}
-impl ::std::clone::Clone for AmdExtension231Fn {
-    fn clone(&self) -> Self {
-        AmdExtension231Fn {}
-    }
-}
 impl AmdExtension231Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -18879,14 +17595,10 @@ impl AmdExtension232Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension232Fn {}
 unsafe impl Send for AmdExtension232Fn {}
 unsafe impl Sync for AmdExtension232Fn {}
-impl ::std::clone::Clone for AmdExtension232Fn {
-    fn clone(&self) -> Self {
-        AmdExtension232Fn {}
-    }
-}
 impl AmdExtension232Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -18902,14 +17614,10 @@ impl AmdExtension233Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension233Fn {}
 unsafe impl Send for AmdExtension233Fn {}
 unsafe impl Sync for AmdExtension233Fn {}
-impl ::std::clone::Clone for AmdExtension233Fn {
-    fn clone(&self) -> Self {
-        AmdExtension233Fn {}
-    }
-}
 impl AmdExtension233Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -18925,14 +17633,10 @@ impl AmdExtension234Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension234Fn {}
 unsafe impl Send for AmdExtension234Fn {}
 unsafe impl Sync for AmdExtension234Fn {}
-impl ::std::clone::Clone for AmdExtension234Fn {
-    fn clone(&self) -> Self {
-        AmdExtension234Fn {}
-    }
-}
 impl AmdExtension234Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -18948,14 +17652,10 @@ impl ExtShaderImageAtomicInt64Fn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct ExtShaderImageAtomicInt64Fn {}
 unsafe impl Send for ExtShaderImageAtomicInt64Fn {}
 unsafe impl Sync for ExtShaderImageAtomicInt64Fn {}
-impl ::std::clone::Clone for ExtShaderImageAtomicInt64Fn {
-    fn clone(&self) -> Self {
-        ExtShaderImageAtomicInt64Fn {}
-    }
-}
 impl ExtShaderImageAtomicInt64Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -18975,14 +17675,10 @@ impl AmdExtension236Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension236Fn {}
 unsafe impl Send for AmdExtension236Fn {}
 unsafe impl Sync for AmdExtension236Fn {}
-impl ::std::clone::Clone for AmdExtension236Fn {
-    fn clone(&self) -> Self {
-        AmdExtension236Fn {}
-    }
-}
 impl AmdExtension236Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -18998,14 +17694,10 @@ impl KhrSpirv14Fn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct KhrSpirv14Fn {}
 unsafe impl Send for KhrSpirv14Fn {}
 unsafe impl Sync for KhrSpirv14Fn {}
-impl ::std::clone::Clone for KhrSpirv14Fn {
-    fn clone(&self) -> Self {
-        KhrSpirv14Fn {}
-    }
-}
 impl KhrSpirv14Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -19021,14 +17713,10 @@ impl ExtMemoryBudgetFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct ExtMemoryBudgetFn {}
 unsafe impl Send for ExtMemoryBudgetFn {}
 unsafe impl Sync for ExtMemoryBudgetFn {}
-impl ::std::clone::Clone for ExtMemoryBudgetFn {
-    fn clone(&self) -> Self {
-        ExtMemoryBudgetFn {}
-    }
-}
 impl ExtMemoryBudgetFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -19048,14 +17736,10 @@ impl ExtMemoryPriorityFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct ExtMemoryPriorityFn {}
 unsafe impl Send for ExtMemoryPriorityFn {}
 unsafe impl Sync for ExtMemoryPriorityFn {}
-impl ::std::clone::Clone for ExtMemoryPriorityFn {
-    fn clone(&self) -> Self {
-        ExtMemoryPriorityFn {}
-    }
-}
 impl ExtMemoryPriorityFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -19079,14 +17763,10 @@ impl KhrSurfaceProtectedCapabilitiesFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct KhrSurfaceProtectedCapabilitiesFn {}
 unsafe impl Send for KhrSurfaceProtectedCapabilitiesFn {}
 unsafe impl Sync for KhrSurfaceProtectedCapabilitiesFn {}
-impl ::std::clone::Clone for KhrSurfaceProtectedCapabilitiesFn {
-    fn clone(&self) -> Self {
-        KhrSurfaceProtectedCapabilitiesFn {}
-    }
-}
 impl KhrSurfaceProtectedCapabilitiesFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -19106,14 +17786,10 @@ impl NvDedicatedAllocationImageAliasingFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct NvDedicatedAllocationImageAliasingFn {}
 unsafe impl Send for NvDedicatedAllocationImageAliasingFn {}
 unsafe impl Sync for NvDedicatedAllocationImageAliasingFn {}
-impl ::std::clone::Clone for NvDedicatedAllocationImageAliasingFn {
-    fn clone(&self) -> Self {
-        NvDedicatedAllocationImageAliasingFn {}
-    }
-}
 impl NvDedicatedAllocationImageAliasingFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -19134,14 +17810,10 @@ impl KhrSeparateDepthStencilLayoutsFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct KhrSeparateDepthStencilLayoutsFn {}
 unsafe impl Send for KhrSeparateDepthStencilLayoutsFn {}
 unsafe impl Sync for KhrSeparateDepthStencilLayoutsFn {}
-impl ::std::clone::Clone for KhrSeparateDepthStencilLayoutsFn {
-    fn clone(&self) -> Self {
-        KhrSeparateDepthStencilLayoutsFn {}
-    }
-}
 impl KhrSeparateDepthStencilLayoutsFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -19188,14 +17860,10 @@ impl IntelExtension243Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct IntelExtension243Fn {}
 unsafe impl Send for IntelExtension243Fn {}
 unsafe impl Sync for IntelExtension243Fn {}
-impl ::std::clone::Clone for IntelExtension243Fn {
-    fn clone(&self) -> Self {
-        IntelExtension243Fn {}
-    }
-}
 impl IntelExtension243Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -19211,14 +17879,10 @@ impl MesaExtension244Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct MesaExtension244Fn {}
 unsafe impl Send for MesaExtension244Fn {}
 unsafe impl Sync for MesaExtension244Fn {}
-impl ::std::clone::Clone for MesaExtension244Fn {
-    fn clone(&self) -> Self {
-        MesaExtension244Fn {}
-    }
-}
 impl MesaExtension244Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -19239,6 +17903,7 @@ pub type PFN_vkGetBufferDeviceAddress = unsafe extern "system" fn(
     device: Device,
     p_info: *const BufferDeviceAddressInfo,
 ) -> DeviceAddress;
+#[derive(Clone)]
 pub struct ExtBufferDeviceAddressFn {
     pub get_buffer_device_address_ext: unsafe extern "system" fn(
         device: Device,
@@ -19247,13 +17912,6 @@ pub struct ExtBufferDeviceAddressFn {
 }
 unsafe impl Send for ExtBufferDeviceAddressFn {}
 unsafe impl Sync for ExtBufferDeviceAddressFn {}
-impl ::std::clone::Clone for ExtBufferDeviceAddressFn {
-    fn clone(&self) -> Self {
-        ExtBufferDeviceAddressFn {
-            get_buffer_device_address_ext: self.get_buffer_device_address_ext,
-        }
-    }
-}
 impl ExtBufferDeviceAddressFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -19333,6 +17991,7 @@ pub type PFN_vkGetPhysicalDeviceToolPropertiesEXT = unsafe extern "system" fn(
     p_tool_count: *mut u32,
     p_tool_properties: *mut PhysicalDeviceToolPropertiesEXT,
 ) -> Result;
+#[derive(Clone)]
 pub struct ExtToolingInfoFn {
     pub get_physical_device_tool_properties_ext: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
@@ -19342,13 +18001,6 @@ pub struct ExtToolingInfoFn {
 }
 unsafe impl Send for ExtToolingInfoFn {}
 unsafe impl Sync for ExtToolingInfoFn {}
-impl ::std::clone::Clone for ExtToolingInfoFn {
-    fn clone(&self) -> Self {
-        ExtToolingInfoFn {
-            get_physical_device_tool_properties_ext: self.get_physical_device_tool_properties_ext,
-        }
-    }
-}
 impl ExtToolingInfoFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -19411,14 +18063,10 @@ impl ExtSeparateStencilUsageFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct ExtSeparateStencilUsageFn {}
 unsafe impl Send for ExtSeparateStencilUsageFn {}
 unsafe impl Sync for ExtSeparateStencilUsageFn {}
-impl ::std::clone::Clone for ExtSeparateStencilUsageFn {
-    fn clone(&self) -> Self {
-        ExtSeparateStencilUsageFn {}
-    }
-}
 impl ExtSeparateStencilUsageFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -19438,14 +18086,10 @@ impl ExtValidationFeaturesFn {
     }
     pub const SPEC_VERSION: u32 = 4u32;
 }
+#[derive(Clone)]
 pub struct ExtValidationFeaturesFn {}
 unsafe impl Send for ExtValidationFeaturesFn {}
 unsafe impl Sync for ExtValidationFeaturesFn {}
-impl ::std::clone::Clone for ExtValidationFeaturesFn {
-    fn clone(&self) -> Self {
-        ExtValidationFeaturesFn {}
-    }
-}
 impl ExtValidationFeaturesFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -19465,14 +18109,10 @@ impl KhrExtension249Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct KhrExtension249Fn {}
 unsafe impl Send for KhrExtension249Fn {}
 unsafe impl Sync for KhrExtension249Fn {}
-impl ::std::clone::Clone for KhrExtension249Fn {
-    fn clone(&self) -> Self {
-        KhrExtension249Fn {}
-    }
-}
 impl KhrExtension249Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -19495,6 +18135,7 @@ pub type PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesNV = unsafe extern "s
     p_properties: *mut CooperativeMatrixPropertiesNV,
 )
     -> Result;
+#[derive(Clone)]
 pub struct NvCooperativeMatrixFn {
     pub get_physical_device_cooperative_matrix_properties_nv: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
@@ -19505,14 +18146,6 @@ pub struct NvCooperativeMatrixFn {
 }
 unsafe impl Send for NvCooperativeMatrixFn {}
 unsafe impl Sync for NvCooperativeMatrixFn {}
-impl ::std::clone::Clone for NvCooperativeMatrixFn {
-    fn clone(&self) -> Self {
-        NvCooperativeMatrixFn {
-            get_physical_device_cooperative_matrix_properties_nv: self
-                .get_physical_device_cooperative_matrix_properties_nv,
-        }
-    }
-}
 impl NvCooperativeMatrixFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -19582,6 +18215,7 @@ pub type PFN_vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV =
         p_combination_count: *mut u32,
         p_combinations: *mut FramebufferMixedSamplesCombinationNV,
     ) -> Result;
+#[derive(Clone)]
 pub struct NvCoverageReductionModeFn {
     pub get_physical_device_supported_framebuffer_mixed_samples_combinations_nv:
         unsafe extern "system" fn(
@@ -19592,14 +18226,6 @@ pub struct NvCoverageReductionModeFn {
 }
 unsafe impl Send for NvCoverageReductionModeFn {}
 unsafe impl Sync for NvCoverageReductionModeFn {}
-impl ::std::clone::Clone for NvCoverageReductionModeFn {
-    fn clone(&self) -> Self {
-        NvCoverageReductionModeFn {
-            get_physical_device_supported_framebuffer_mixed_samples_combinations_nv: self
-                .get_physical_device_supported_framebuffer_mixed_samples_combinations_nv,
-        }
-    }
-}
 impl NvCoverageReductionModeFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -19664,14 +18290,10 @@ impl ExtFragmentShaderInterlockFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct ExtFragmentShaderInterlockFn {}
 unsafe impl Send for ExtFragmentShaderInterlockFn {}
 unsafe impl Sync for ExtFragmentShaderInterlockFn {}
-impl ::std::clone::Clone for ExtFragmentShaderInterlockFn {
-    fn clone(&self) -> Self {
-        ExtFragmentShaderInterlockFn {}
-    }
-}
 impl ExtFragmentShaderInterlockFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -19691,14 +18313,10 @@ impl ExtYcbcrImageArraysFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct ExtYcbcrImageArraysFn {}
 unsafe impl Send for ExtYcbcrImageArraysFn {}
 unsafe impl Sync for ExtYcbcrImageArraysFn {}
-impl ::std::clone::Clone for ExtYcbcrImageArraysFn {
-    fn clone(&self) -> Self {
-        ExtYcbcrImageArraysFn {}
-    }
-}
 impl ExtYcbcrImageArraysFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -19718,14 +18336,10 @@ impl KhrUniformBufferStandardLayoutFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct KhrUniformBufferStandardLayoutFn {}
 unsafe impl Send for KhrUniformBufferStandardLayoutFn {}
 unsafe impl Sync for KhrUniformBufferStandardLayoutFn {}
-impl ::std::clone::Clone for KhrUniformBufferStandardLayoutFn {
-    fn clone(&self) -> Self {
-        KhrUniformBufferStandardLayoutFn {}
-    }
-}
 impl KhrUniformBufferStandardLayoutFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -19746,14 +18360,10 @@ impl ExtExtension255Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ExtExtension255Fn {}
 unsafe impl Send for ExtExtension255Fn {}
 unsafe impl Sync for ExtExtension255Fn {}
-impl ::std::clone::Clone for ExtExtension255Fn {
-    fn clone(&self) -> Self {
-        ExtExtension255Fn {}
-    }
-}
 impl ExtExtension255Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -19788,6 +18398,7 @@ pub type PFN_vkGetDeviceGroupSurfacePresentModes2EXT = unsafe extern "system" fn
     p_surface_info: *const PhysicalDeviceSurfaceInfo2KHR,
     p_modes: *mut DeviceGroupPresentModeFlagsKHR,
 ) -> Result;
+#[derive(Clone)]
 pub struct ExtFullScreenExclusiveFn {
     pub get_physical_device_surface_present_modes2_ext: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
@@ -19807,18 +18418,6 @@ pub struct ExtFullScreenExclusiveFn {
 }
 unsafe impl Send for ExtFullScreenExclusiveFn {}
 unsafe impl Sync for ExtFullScreenExclusiveFn {}
-impl ::std::clone::Clone for ExtFullScreenExclusiveFn {
-    fn clone(&self) -> Self {
-        ExtFullScreenExclusiveFn {
-            get_physical_device_surface_present_modes2_ext: self
-                .get_physical_device_surface_present_modes2_ext,
-            acquire_full_screen_exclusive_mode_ext: self.acquire_full_screen_exclusive_mode_ext,
-            release_full_screen_exclusive_mode_ext: self.release_full_screen_exclusive_mode_ext,
-            get_device_group_surface_present_modes2_ext: self
-                .get_device_group_surface_present_modes2_ext,
-        }
-    }
-}
 impl ExtFullScreenExclusiveFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -19981,6 +18580,7 @@ pub type PFN_vkCreateHeadlessSurfaceEXT = unsafe extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_surface: *mut SurfaceKHR,
 ) -> Result;
+#[derive(Clone)]
 pub struct ExtHeadlessSurfaceFn {
     pub create_headless_surface_ext: unsafe extern "system" fn(
         instance: Instance,
@@ -19991,13 +18591,6 @@ pub struct ExtHeadlessSurfaceFn {
 }
 unsafe impl Send for ExtHeadlessSurfaceFn {}
 unsafe impl Sync for ExtHeadlessSurfaceFn {}
-impl ::std::clone::Clone for ExtHeadlessSurfaceFn {
-    fn clone(&self) -> Self {
-        ExtHeadlessSurfaceFn {
-            create_headless_surface_ext: self.create_headless_surface_ext,
-        }
-    }
-}
 impl ExtHeadlessSurfaceFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -20051,13 +18644,14 @@ impl KhrBufferDeviceAddressFn {
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetBufferOpaqueCaptureAddress = unsafe extern "system" fn(
-    device: Device,
-    p_info: *const BufferDeviceAddressInfo,
-) -> DeviceAddress;
-#[allow(non_camel_case_types)]
-pub type PFN_vkGetDeviceMemoryOpaqueCaptureAddress =
+pub type PFN_vkGetBufferOpaqueCaptureAddress =
     unsafe extern "system" fn(device: Device, p_info: *const BufferDeviceAddressInfo) -> u64;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetDeviceMemoryOpaqueCaptureAddress = unsafe extern "system" fn(
+    device: Device,
+    p_info: *const DeviceMemoryOpaqueCaptureAddressInfo,
+) -> u64;
+#[derive(Clone)]
 pub struct KhrBufferDeviceAddressFn {
     pub get_buffer_device_address_khr: unsafe extern "system" fn(
         device: Device,
@@ -20072,16 +18666,6 @@ pub struct KhrBufferDeviceAddressFn {
 }
 unsafe impl Send for KhrBufferDeviceAddressFn {}
 unsafe impl Sync for KhrBufferDeviceAddressFn {}
-impl ::std::clone::Clone for KhrBufferDeviceAddressFn {
-    fn clone(&self) -> Self {
-        KhrBufferDeviceAddressFn {
-            get_buffer_device_address_khr: self.get_buffer_device_address_khr,
-            get_buffer_opaque_capture_address_khr: self.get_buffer_opaque_capture_address_khr,
-            get_device_memory_opaque_capture_address_khr: self
-                .get_device_memory_opaque_capture_address_khr,
-        }
-    }
-}
 impl KhrBufferDeviceAddressFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -20227,14 +18811,10 @@ impl ExtExtension259Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ExtExtension259Fn {}
 unsafe impl Send for ExtExtension259Fn {}
 unsafe impl Sync for ExtExtension259Fn {}
-impl ::std::clone::Clone for ExtExtension259Fn {
-    fn clone(&self) -> Self {
-        ExtExtension259Fn {}
-    }
-}
 impl ExtExtension259Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -20256,6 +18836,7 @@ pub type PFN_vkCmdSetLineStippleEXT = unsafe extern "system" fn(
     line_stipple_factor: u32,
     line_stipple_pattern: u16,
 );
+#[derive(Clone)]
 pub struct ExtLineRasterizationFn {
     pub cmd_set_line_stipple_ext: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
@@ -20265,13 +18846,6 @@ pub struct ExtLineRasterizationFn {
 }
 unsafe impl Send for ExtLineRasterizationFn {}
 unsafe impl Sync for ExtLineRasterizationFn {}
-impl ::std::clone::Clone for ExtLineRasterizationFn {
-    fn clone(&self) -> Self {
-        ExtLineRasterizationFn {
-            cmd_set_line_stipple_ext: self.cmd_set_line_stipple_ext,
-        }
-    }
-}
 impl ExtLineRasterizationFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -20333,14 +18907,10 @@ impl ExtShaderAtomicFloatFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct ExtShaderAtomicFloatFn {}
 unsafe impl Send for ExtShaderAtomicFloatFn {}
 unsafe impl Sync for ExtShaderAtomicFloatFn {}
-impl ::std::clone::Clone for ExtShaderAtomicFloatFn {
-    fn clone(&self) -> Self {
-        ExtShaderAtomicFloatFn {}
-    }
-}
 impl ExtShaderAtomicFloatFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -20367,6 +18937,7 @@ pub type PFN_vkResetQueryPool = unsafe extern "system" fn(
     first_query: u32,
     query_count: u32,
 );
+#[derive(Clone)]
 pub struct ExtHostQueryResetFn {
     pub reset_query_pool_ext: unsafe extern "system" fn(
         device: Device,
@@ -20377,13 +18948,6 @@ pub struct ExtHostQueryResetFn {
 }
 unsafe impl Send for ExtHostQueryResetFn {}
 unsafe impl Sync for ExtHostQueryResetFn {}
-impl ::std::clone::Clone for ExtHostQueryResetFn {
-    fn clone(&self) -> Self {
-        ExtHostQueryResetFn {
-            reset_query_pool_ext: self.reset_query_pool_ext,
-        }
-    }
-}
 impl ExtHostQueryResetFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -20433,14 +18997,10 @@ impl GgpExtension263Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct GgpExtension263Fn {}
 unsafe impl Send for GgpExtension263Fn {}
 unsafe impl Sync for GgpExtension263Fn {}
-impl ::std::clone::Clone for GgpExtension263Fn {
-    fn clone(&self) -> Self {
-        GgpExtension263Fn {}
-    }
-}
 impl GgpExtension263Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -20456,14 +19016,10 @@ impl BrcmExtension264Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct BrcmExtension264Fn {}
 unsafe impl Send for BrcmExtension264Fn {}
 unsafe impl Sync for BrcmExtension264Fn {}
-impl ::std::clone::Clone for BrcmExtension264Fn {
-    fn clone(&self) -> Self {
-        BrcmExtension264Fn {}
-    }
-}
 impl BrcmExtension264Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -20479,14 +19035,10 @@ impl BrcmExtension265Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct BrcmExtension265Fn {}
 unsafe impl Send for BrcmExtension265Fn {}
 unsafe impl Sync for BrcmExtension265Fn {}
-impl ::std::clone::Clone for BrcmExtension265Fn {
-    fn clone(&self) -> Self {
-        BrcmExtension265Fn {}
-    }
-}
 impl BrcmExtension265Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -20502,14 +19054,10 @@ impl ExtIndexTypeUint8Fn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct ExtIndexTypeUint8Fn {}
 unsafe impl Send for ExtIndexTypeUint8Fn {}
 unsafe impl Sync for ExtIndexTypeUint8Fn {}
-impl ::std::clone::Clone for ExtIndexTypeUint8Fn {
-    fn clone(&self) -> Self {
-        ExtIndexTypeUint8Fn {}
-    }
-}
 impl ExtIndexTypeUint8Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -20533,14 +19081,10 @@ impl ExtExtension267Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ExtExtension267Fn {}
 unsafe impl Send for ExtExtension267Fn {}
 unsafe impl Sync for ExtExtension267Fn {}
-impl ::std::clone::Clone for ExtExtension267Fn {
-    fn clone(&self) -> Self {
-        ExtExtension267Fn {}
-    }
-}
 impl ExtExtension267Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -20611,6 +19155,7 @@ pub type PFN_vkCmdSetStencilOpEXT = unsafe extern "system" fn(
     depth_fail_op: StencilOp,
     compare_op: CompareOp,
 );
+#[derive(Clone)]
 pub struct ExtExtendedDynamicStateFn {
     pub cmd_set_cull_mode_ext:
         unsafe extern "system" fn(command_buffer: CommandBuffer, cull_mode: CullModeFlags),
@@ -20660,24 +19205,6 @@ pub struct ExtExtendedDynamicStateFn {
 }
 unsafe impl Send for ExtExtendedDynamicStateFn {}
 unsafe impl Sync for ExtExtendedDynamicStateFn {}
-impl ::std::clone::Clone for ExtExtendedDynamicStateFn {
-    fn clone(&self) -> Self {
-        ExtExtendedDynamicStateFn {
-            cmd_set_cull_mode_ext: self.cmd_set_cull_mode_ext,
-            cmd_set_front_face_ext: self.cmd_set_front_face_ext,
-            cmd_set_primitive_topology_ext: self.cmd_set_primitive_topology_ext,
-            cmd_set_viewport_with_count_ext: self.cmd_set_viewport_with_count_ext,
-            cmd_set_scissor_with_count_ext: self.cmd_set_scissor_with_count_ext,
-            cmd_bind_vertex_buffers2_ext: self.cmd_bind_vertex_buffers2_ext,
-            cmd_set_depth_test_enable_ext: self.cmd_set_depth_test_enable_ext,
-            cmd_set_depth_write_enable_ext: self.cmd_set_depth_write_enable_ext,
-            cmd_set_depth_compare_op_ext: self.cmd_set_depth_compare_op_ext,
-            cmd_set_depth_bounds_test_enable_ext: self.cmd_set_depth_bounds_test_enable_ext,
-            cmd_set_stencil_test_enable_ext: self.cmd_set_stencil_test_enable_ext,
-            cmd_set_stencil_op_ext: self.cmd_set_stencil_op_ext,
-        }
-    }
-}
 impl ExtExtendedDynamicStateFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -21136,6 +19663,7 @@ pub type PFN_vkGetDeferredOperationResultKHR =
 #[allow(non_camel_case_types)]
 pub type PFN_vkDeferredOperationJoinKHR =
     unsafe extern "system" fn(device: Device, operation: DeferredOperationKHR) -> Result;
+#[derive(Clone)]
 pub struct KhrDeferredHostOperationsFn {
     pub create_deferred_operation_khr: unsafe extern "system" fn(
         device: Device,
@@ -21156,18 +19684,6 @@ pub struct KhrDeferredHostOperationsFn {
 }
 unsafe impl Send for KhrDeferredHostOperationsFn {}
 unsafe impl Sync for KhrDeferredHostOperationsFn {}
-impl ::std::clone::Clone for KhrDeferredHostOperationsFn {
-    fn clone(&self) -> Self {
-        KhrDeferredHostOperationsFn {
-            create_deferred_operation_khr: self.create_deferred_operation_khr,
-            destroy_deferred_operation_khr: self.destroy_deferred_operation_khr,
-            get_deferred_operation_max_concurrency_khr: self
-                .get_deferred_operation_max_concurrency_khr,
-            get_deferred_operation_result_khr: self.get_deferred_operation_result_khr,
-            deferred_operation_join_khr: self.deferred_operation_join_khr,
-        }
-    }
-}
 impl KhrDeferredHostOperationsFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -21370,6 +19886,7 @@ pub type PFN_vkGetPipelineExecutableInternalRepresentationsKHR =
         p_internal_representation_count: *mut u32,
         p_internal_representations: *mut PipelineExecutableInternalRepresentationKHR,
     ) -> Result;
+#[derive(Clone)]
 pub struct KhrPipelineExecutablePropertiesFn {
     pub get_pipeline_executable_properties_khr: unsafe extern "system" fn(
         device: Device,
@@ -21393,16 +19910,6 @@ pub struct KhrPipelineExecutablePropertiesFn {
 }
 unsafe impl Send for KhrPipelineExecutablePropertiesFn {}
 unsafe impl Sync for KhrPipelineExecutablePropertiesFn {}
-impl ::std::clone::Clone for KhrPipelineExecutablePropertiesFn {
-    fn clone(&self) -> Self {
-        KhrPipelineExecutablePropertiesFn {
-            get_pipeline_executable_properties_khr: self.get_pipeline_executable_properties_khr,
-            get_pipeline_executable_statistics_khr: self.get_pipeline_executable_statistics_khr,
-            get_pipeline_executable_internal_representations_khr: self
-                .get_pipeline_executable_internal_representations_khr,
-        }
-    }
-}
 impl KhrPipelineExecutablePropertiesFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -21563,14 +20070,10 @@ impl IntelExtension271Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct IntelExtension271Fn {}
 unsafe impl Send for IntelExtension271Fn {}
 unsafe impl Sync for IntelExtension271Fn {}
-impl ::std::clone::Clone for IntelExtension271Fn {
-    fn clone(&self) -> Self {
-        IntelExtension271Fn {}
-    }
-}
 impl IntelExtension271Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -21586,14 +20089,10 @@ impl IntelExtension272Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct IntelExtension272Fn {}
 unsafe impl Send for IntelExtension272Fn {}
 unsafe impl Sync for IntelExtension272Fn {}
-impl ::std::clone::Clone for IntelExtension272Fn {
-    fn clone(&self) -> Self {
-        IntelExtension272Fn {}
-    }
-}
 impl IntelExtension272Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -21609,14 +20108,10 @@ impl IntelExtension273Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct IntelExtension273Fn {}
 unsafe impl Send for IntelExtension273Fn {}
 unsafe impl Sync for IntelExtension273Fn {}
-impl ::std::clone::Clone for IntelExtension273Fn {
-    fn clone(&self) -> Self {
-        IntelExtension273Fn {}
-    }
-}
 impl IntelExtension273Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -21632,14 +20127,10 @@ impl IntelExtension274Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct IntelExtension274Fn {}
 unsafe impl Send for IntelExtension274Fn {}
 unsafe impl Sync for IntelExtension274Fn {}
-impl ::std::clone::Clone for IntelExtension274Fn {
-    fn clone(&self) -> Self {
-        IntelExtension274Fn {}
-    }
-}
 impl IntelExtension274Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -21655,14 +20146,10 @@ impl KhrExtension275Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct KhrExtension275Fn {}
 unsafe impl Send for KhrExtension275Fn {}
 unsafe impl Sync for KhrExtension275Fn {}
-impl ::std::clone::Clone for KhrExtension275Fn {
-    fn clone(&self) -> Self {
-        KhrExtension275Fn {}
-    }
-}
 impl KhrExtension275Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -21678,14 +20165,10 @@ impl KhrExtension276Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct KhrExtension276Fn {}
 unsafe impl Send for KhrExtension276Fn {}
 unsafe impl Sync for KhrExtension276Fn {}
-impl ::std::clone::Clone for KhrExtension276Fn {
-    fn clone(&self) -> Self {
-        KhrExtension276Fn {}
-    }
-}
 impl KhrExtension276Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -21701,14 +20184,10 @@ impl ExtShaderDemoteToHelperInvocationFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct ExtShaderDemoteToHelperInvocationFn {}
 unsafe impl Send for ExtShaderDemoteToHelperInvocationFn {}
 unsafe impl Sync for ExtShaderDemoteToHelperInvocationFn {}
-impl ::std::clone::Clone for ExtShaderDemoteToHelperInvocationFn {
-    fn clone(&self) -> Self {
-        ExtShaderDemoteToHelperInvocationFn {}
-    }
-}
 impl ExtShaderDemoteToHelperInvocationFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -21766,6 +20245,7 @@ pub type PFN_vkDestroyIndirectCommandsLayoutNV = unsafe extern "system" fn(
     indirect_commands_layout: IndirectCommandsLayoutNV,
     p_allocator: *const AllocationCallbacks,
 );
+#[derive(Clone)]
 pub struct NvDeviceGeneratedCommandsFn {
     pub get_generated_commands_memory_requirements_nv: unsafe extern "system" fn(
         device: Device,
@@ -21801,19 +20281,6 @@ pub struct NvDeviceGeneratedCommandsFn {
 }
 unsafe impl Send for NvDeviceGeneratedCommandsFn {}
 unsafe impl Sync for NvDeviceGeneratedCommandsFn {}
-impl ::std::clone::Clone for NvDeviceGeneratedCommandsFn {
-    fn clone(&self) -> Self {
-        NvDeviceGeneratedCommandsFn {
-            get_generated_commands_memory_requirements_nv: self
-                .get_generated_commands_memory_requirements_nv,
-            cmd_preprocess_generated_commands_nv: self.cmd_preprocess_generated_commands_nv,
-            cmd_execute_generated_commands_nv: self.cmd_execute_generated_commands_nv,
-            cmd_bind_pipeline_shader_group_nv: self.cmd_bind_pipeline_shader_group_nv,
-            create_indirect_commands_layout_nv: self.create_indirect_commands_layout_nv,
-            destroy_indirect_commands_layout_nv: self.destroy_indirect_commands_layout_nv,
-        }
-    }
-}
 impl NvDeviceGeneratedCommandsFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -22078,14 +20545,10 @@ impl NvExtension279Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct NvExtension279Fn {}
 unsafe impl Send for NvExtension279Fn {}
 unsafe impl Sync for NvExtension279Fn {}
-impl ::std::clone::Clone for NvExtension279Fn {
-    fn clone(&self) -> Self {
-        NvExtension279Fn {}
-    }
-}
 impl NvExtension279Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -22101,14 +20564,10 @@ impl KhrExtension280Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct KhrExtension280Fn {}
 unsafe impl Send for KhrExtension280Fn {}
 unsafe impl Sync for KhrExtension280Fn {}
-impl ::std::clone::Clone for KhrExtension280Fn {
-    fn clone(&self) -> Self {
-        KhrExtension280Fn {}
-    }
-}
 impl KhrExtension280Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -22124,14 +20583,10 @@ impl ArmExtension281Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ArmExtension281Fn {}
 unsafe impl Send for ArmExtension281Fn {}
 unsafe impl Sync for ArmExtension281Fn {}
-impl ::std::clone::Clone for ArmExtension281Fn {
-    fn clone(&self) -> Self {
-        ArmExtension281Fn {}
-    }
-}
 impl ArmExtension281Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -22147,14 +20602,10 @@ impl ExtTexelBufferAlignmentFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct ExtTexelBufferAlignmentFn {}
 unsafe impl Send for ExtTexelBufferAlignmentFn {}
 unsafe impl Sync for ExtTexelBufferAlignmentFn {}
-impl ::std::clone::Clone for ExtTexelBufferAlignmentFn {
-    fn clone(&self) -> Self {
-        ExtTexelBufferAlignmentFn {}
-    }
-}
 impl ExtTexelBufferAlignmentFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -22178,14 +20629,10 @@ impl QcomRenderPassTransformFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct QcomRenderPassTransformFn {}
 unsafe impl Send for QcomRenderPassTransformFn {}
 unsafe impl Sync for QcomRenderPassTransformFn {}
-impl ::std::clone::Clone for QcomRenderPassTransformFn {
-    fn clone(&self) -> Self {
-        QcomRenderPassTransformFn {}
-    }
-}
 impl QcomRenderPassTransformFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -22214,14 +20661,10 @@ impl ExtExtension284Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ExtExtension284Fn {}
 unsafe impl Send for ExtExtension284Fn {}
 unsafe impl Sync for ExtExtension284Fn {}
-impl ::std::clone::Clone for ExtExtension284Fn {
-    fn clone(&self) -> Self {
-        ExtExtension284Fn {}
-    }
-}
 impl ExtExtension284Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -22237,14 +20680,10 @@ impl ExtDeviceMemoryReportFn {
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
+#[derive(Clone)]
 pub struct ExtDeviceMemoryReportFn {}
 unsafe impl Send for ExtDeviceMemoryReportFn {}
 unsafe impl Sync for ExtDeviceMemoryReportFn {}
-impl ::std::clone::Clone for ExtDeviceMemoryReportFn {
-    fn clone(&self) -> Self {
-        ExtDeviceMemoryReportFn {}
-    }
-}
 impl ExtDeviceMemoryReportFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -22272,14 +20711,10 @@ impl ExtExtension286Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ExtExtension286Fn {}
 unsafe impl Send for ExtExtension286Fn {}
 unsafe impl Sync for ExtExtension286Fn {}
-impl ::std::clone::Clone for ExtExtension286Fn {
-    fn clone(&self) -> Self {
-        ExtExtension286Fn {}
-    }
-}
 impl ExtExtension286Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -22295,14 +20730,10 @@ impl ExtRobustness2Fn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct ExtRobustness2Fn {}
 unsafe impl Send for ExtRobustness2Fn {}
 unsafe impl Sync for ExtRobustness2Fn {}
-impl ::std::clone::Clone for ExtRobustness2Fn {
-    fn clone(&self) -> Self {
-        ExtRobustness2Fn {}
-    }
-}
 impl ExtRobustness2Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -22326,14 +20757,10 @@ impl ExtCustomBorderColorFn {
     }
     pub const SPEC_VERSION: u32 = 12u32;
 }
+#[derive(Clone)]
 pub struct ExtCustomBorderColorFn {}
 unsafe impl Send for ExtCustomBorderColorFn {}
 unsafe impl Sync for ExtCustomBorderColorFn {}
-impl ::std::clone::Clone for ExtCustomBorderColorFn {
-    fn clone(&self) -> Self {
-        ExtCustomBorderColorFn {}
-    }
-}
 impl ExtCustomBorderColorFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -22369,14 +20796,10 @@ impl ExtExtension289Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ExtExtension289Fn {}
 unsafe impl Send for ExtExtension289Fn {}
 unsafe impl Sync for ExtExtension289Fn {}
-impl ::std::clone::Clone for ExtExtension289Fn {
-    fn clone(&self) -> Self {
-        ExtExtension289Fn {}
-    }
-}
 impl ExtExtension289Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -22512,14 +20935,10 @@ impl GoogleUserTypeFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct GoogleUserTypeFn {}
 unsafe impl Send for GoogleUserTypeFn {}
 unsafe impl Sync for GoogleUserTypeFn {}
-impl ::std::clone::Clone for GoogleUserTypeFn {
-    fn clone(&self) -> Self {
-        GoogleUserTypeFn {}
-    }
-}
 impl GoogleUserTypeFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -22535,14 +20954,10 @@ impl KhrPipelineLibraryFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct KhrPipelineLibraryFn {}
 unsafe impl Send for KhrPipelineLibraryFn {}
 unsafe impl Sync for KhrPipelineLibraryFn {}
-impl ::std::clone::Clone for KhrPipelineLibraryFn {
-    fn clone(&self) -> Self {
-        KhrPipelineLibraryFn {}
-    }
-}
 impl KhrPipelineLibraryFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -22566,14 +20981,10 @@ impl NvExtension292Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct NvExtension292Fn {}
 unsafe impl Send for NvExtension292Fn {}
 unsafe impl Sync for NvExtension292Fn {}
-impl ::std::clone::Clone for NvExtension292Fn {
-    fn clone(&self) -> Self {
-        NvExtension292Fn {}
-    }
-}
 impl NvExtension292Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -22589,14 +21000,10 @@ impl NvExtension293Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct NvExtension293Fn {}
 unsafe impl Send for NvExtension293Fn {}
 unsafe impl Sync for NvExtension293Fn {}
-impl ::std::clone::Clone for NvExtension293Fn {
-    fn clone(&self) -> Self {
-        NvExtension293Fn {}
-    }
-}
 impl NvExtension293Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -22612,14 +21019,10 @@ impl KhrShaderNonSemanticInfoFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct KhrShaderNonSemanticInfoFn {}
 unsafe impl Send for KhrShaderNonSemanticInfoFn {}
 unsafe impl Sync for KhrShaderNonSemanticInfoFn {}
-impl ::std::clone::Clone for KhrShaderNonSemanticInfoFn {
-    fn clone(&self) -> Self {
-        KhrShaderNonSemanticInfoFn {}
-    }
-}
 impl KhrShaderNonSemanticInfoFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -22635,14 +21038,10 @@ impl KhrExtension295Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct KhrExtension295Fn {}
 unsafe impl Send for KhrExtension295Fn {}
 unsafe impl Sync for KhrExtension295Fn {}
-impl ::std::clone::Clone for KhrExtension295Fn {
-    fn clone(&self) -> Self {
-        KhrExtension295Fn {}
-    }
-}
 impl KhrExtension295Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -22687,6 +21086,7 @@ pub type PFN_vkGetPrivateDataEXT = unsafe extern "system" fn(
     private_data_slot: PrivateDataSlotEXT,
     p_data: *mut u64,
 );
+#[derive(Clone)]
 pub struct ExtPrivateDataFn {
     pub create_private_data_slot_ext: unsafe extern "system" fn(
         device: Device,
@@ -22716,16 +21116,6 @@ pub struct ExtPrivateDataFn {
 }
 unsafe impl Send for ExtPrivateDataFn {}
 unsafe impl Sync for ExtPrivateDataFn {}
-impl ::std::clone::Clone for ExtPrivateDataFn {
-    fn clone(&self) -> Self {
-        ExtPrivateDataFn {
-            create_private_data_slot_ext: self.create_private_data_slot_ext,
-            destroy_private_data_slot_ext: self.destroy_private_data_slot_ext,
-            set_private_data_ext: self.set_private_data_ext,
-            get_private_data_ext: self.get_private_data_ext,
-        }
-    }
-}
 impl ExtPrivateDataFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -22886,14 +21276,10 @@ impl KhrExtension297Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct KhrExtension297Fn {}
 unsafe impl Send for KhrExtension297Fn {}
 unsafe impl Sync for KhrExtension297Fn {}
-impl ::std::clone::Clone for KhrExtension297Fn {
-    fn clone(&self) -> Self {
-        KhrExtension297Fn {}
-    }
-}
 impl KhrExtension297Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -22913,14 +21299,10 @@ impl ExtPipelineCreationCacheControlFn {
     }
     pub const SPEC_VERSION: u32 = 3u32;
 }
+#[derive(Clone)]
 pub struct ExtPipelineCreationCacheControlFn {}
 unsafe impl Send for ExtPipelineCreationCacheControlFn {}
 unsafe impl Sync for ExtPipelineCreationCacheControlFn {}
-impl ::std::clone::Clone for ExtPipelineCreationCacheControlFn {
-    fn clone(&self) -> Self {
-        ExtPipelineCreationCacheControlFn {}
-    }
-}
 impl ExtPipelineCreationCacheControlFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -22961,14 +21343,10 @@ impl KhrExtension299Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct KhrExtension299Fn {}
 unsafe impl Send for KhrExtension299Fn {}
 unsafe impl Sync for KhrExtension299Fn {}
-impl ::std::clone::Clone for KhrExtension299Fn {
-    fn clone(&self) -> Self {
-        KhrExtension299Fn {}
-    }
-}
 impl KhrExtension299Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -22984,14 +21362,10 @@ impl KhrExtension300Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct KhrExtension300Fn {}
 unsafe impl Send for KhrExtension300Fn {}
 unsafe impl Sync for KhrExtension300Fn {}
-impl ::std::clone::Clone for KhrExtension300Fn {
-    fn clone(&self) -> Self {
-        KhrExtension300Fn {}
-    }
-}
 impl KhrExtension300Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -23007,14 +21381,10 @@ impl NvDeviceDiagnosticsConfigFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct NvDeviceDiagnosticsConfigFn {}
 unsafe impl Send for NvDeviceDiagnosticsConfigFn {}
 unsafe impl Sync for NvDeviceDiagnosticsConfigFn {}
-impl ::std::clone::Clone for NvDeviceDiagnosticsConfigFn {
-    fn clone(&self) -> Self {
-        NvDeviceDiagnosticsConfigFn {}
-    }
-}
 impl NvDeviceDiagnosticsConfigFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -23038,14 +21408,10 @@ impl QcomRenderPassStoreOpsFn {
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
+#[derive(Clone)]
 pub struct QcomRenderPassStoreOpsFn {}
 unsafe impl Send for QcomRenderPassStoreOpsFn {}
 unsafe impl Sync for QcomRenderPassStoreOpsFn {}
-impl ::std::clone::Clone for QcomRenderPassStoreOpsFn {
-    fn clone(&self) -> Self {
-        QcomRenderPassStoreOpsFn {}
-    }
-}
 impl QcomRenderPassStoreOpsFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -23065,14 +21431,10 @@ impl QcomExtension303Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct QcomExtension303Fn {}
 unsafe impl Send for QcomExtension303Fn {}
 unsafe impl Sync for QcomExtension303Fn {}
-impl ::std::clone::Clone for QcomExtension303Fn {
-    fn clone(&self) -> Self {
-        QcomExtension303Fn {}
-    }
-}
 impl QcomExtension303Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -23088,14 +21450,10 @@ impl QcomExtension304Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct QcomExtension304Fn {}
 unsafe impl Send for QcomExtension304Fn {}
 unsafe impl Sync for QcomExtension304Fn {}
-impl ::std::clone::Clone for QcomExtension304Fn {
-    fn clone(&self) -> Self {
-        QcomExtension304Fn {}
-    }
-}
 impl QcomExtension304Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -23111,14 +21469,10 @@ impl QcomExtension305Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct QcomExtension305Fn {}
 unsafe impl Send for QcomExtension305Fn {}
 unsafe impl Sync for QcomExtension305Fn {}
-impl ::std::clone::Clone for QcomExtension305Fn {
-    fn clone(&self) -> Self {
-        QcomExtension305Fn {}
-    }
-}
 impl QcomExtension305Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -23134,14 +21488,10 @@ impl QcomExtension306Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct QcomExtension306Fn {}
 unsafe impl Send for QcomExtension306Fn {}
 unsafe impl Sync for QcomExtension306Fn {}
-impl ::std::clone::Clone for QcomExtension306Fn {
-    fn clone(&self) -> Self {
-        QcomExtension306Fn {}
-    }
-}
 impl QcomExtension306Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -23157,14 +21507,10 @@ impl QcomExtension307Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct QcomExtension307Fn {}
 unsafe impl Send for QcomExtension307Fn {}
 unsafe impl Sync for QcomExtension307Fn {}
-impl ::std::clone::Clone for QcomExtension307Fn {
-    fn clone(&self) -> Self {
-        QcomExtension307Fn {}
-    }
-}
 impl QcomExtension307Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -23180,14 +21526,10 @@ impl NvExtension308Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct NvExtension308Fn {}
 unsafe impl Send for NvExtension308Fn {}
 unsafe impl Sync for NvExtension308Fn {}
-impl ::std::clone::Clone for NvExtension308Fn {
-    fn clone(&self) -> Self {
-        NvExtension308Fn {}
-    }
-}
 impl NvExtension308Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -23203,14 +21545,10 @@ impl KhrExtension309Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct KhrExtension309Fn {}
 unsafe impl Send for KhrExtension309Fn {}
 unsafe impl Sync for KhrExtension309Fn {}
-impl ::std::clone::Clone for KhrExtension309Fn {
-    fn clone(&self) -> Self {
-        KhrExtension309Fn {}
-    }
-}
 impl KhrExtension309Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -23230,14 +21568,10 @@ impl QcomExtension310Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct QcomExtension310Fn {}
 unsafe impl Send for QcomExtension310Fn {}
 unsafe impl Sync for QcomExtension310Fn {}
-impl ::std::clone::Clone for QcomExtension310Fn {
-    fn clone(&self) -> Self {
-        QcomExtension310Fn {}
-    }
-}
 impl QcomExtension310Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -23257,14 +21591,10 @@ impl NvExtension311Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct NvExtension311Fn {}
 unsafe impl Send for NvExtension311Fn {}
 unsafe impl Sync for NvExtension311Fn {}
-impl ::std::clone::Clone for NvExtension311Fn {
-    fn clone(&self) -> Self {
-        NvExtension311Fn {}
-    }
-}
 impl NvExtension311Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -23280,14 +21610,10 @@ impl ExtExtension312Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ExtExtension312Fn {}
 unsafe impl Send for ExtExtension312Fn {}
 unsafe impl Sync for ExtExtension312Fn {}
-impl ::std::clone::Clone for ExtExtension312Fn {
-    fn clone(&self) -> Self {
-        ExtExtension312Fn {}
-    }
-}
 impl ExtExtension312Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -23303,14 +21629,10 @@ impl ExtExtension313Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ExtExtension313Fn {}
 unsafe impl Send for ExtExtension313Fn {}
 unsafe impl Sync for ExtExtension313Fn {}
-impl ::std::clone::Clone for ExtExtension313Fn {
-    fn clone(&self) -> Self {
-        ExtExtension313Fn {}
-    }
-}
 impl ExtExtension313Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -23326,14 +21648,10 @@ impl AmdExtension314Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension314Fn {}
 unsafe impl Send for AmdExtension314Fn {}
 unsafe impl Sync for AmdExtension314Fn {}
-impl ::std::clone::Clone for AmdExtension314Fn {
-    fn clone(&self) -> Self {
-        AmdExtension314Fn {}
-    }
-}
 impl AmdExtension314Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -23401,6 +21719,7 @@ pub type PFN_vkGetQueueCheckpointData2NV = unsafe extern "system" fn(
     p_checkpoint_data_count: *mut u32,
     p_checkpoint_data: *mut CheckpointData2NV,
 );
+#[derive(Clone)]
 pub struct KhrSynchronization2Fn {
     pub cmd_set_event2_khr: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
@@ -23449,20 +21768,6 @@ pub struct KhrSynchronization2Fn {
 }
 unsafe impl Send for KhrSynchronization2Fn {}
 unsafe impl Sync for KhrSynchronization2Fn {}
-impl ::std::clone::Clone for KhrSynchronization2Fn {
-    fn clone(&self) -> Self {
-        KhrSynchronization2Fn {
-            cmd_set_event2_khr: self.cmd_set_event2_khr,
-            cmd_reset_event2_khr: self.cmd_reset_event2_khr,
-            cmd_wait_events2_khr: self.cmd_wait_events2_khr,
-            cmd_pipeline_barrier2_khr: self.cmd_pipeline_barrier2_khr,
-            cmd_write_timestamp2_khr: self.cmd_write_timestamp2_khr,
-            queue_submit2_khr: self.queue_submit2_khr,
-            cmd_write_buffer_marker2_amd: self.cmd_write_buffer_marker2_amd,
-            get_queue_checkpoint_data2_nv: self.get_queue_checkpoint_data2_nv,
-        }
-    }
-}
 impl KhrSynchronization2Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -23872,14 +22177,10 @@ impl AmdExtension316Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension316Fn {}
 unsafe impl Send for AmdExtension316Fn {}
 unsafe impl Sync for AmdExtension316Fn {}
-impl ::std::clone::Clone for AmdExtension316Fn {
-    fn clone(&self) -> Self {
-        AmdExtension316Fn {}
-    }
-}
 impl AmdExtension316Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -23895,14 +22196,10 @@ impl AmdExtension317Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension317Fn {}
 unsafe impl Send for AmdExtension317Fn {}
 unsafe impl Sync for AmdExtension317Fn {}
-impl ::std::clone::Clone for AmdExtension317Fn {
-    fn clone(&self) -> Self {
-        AmdExtension317Fn {}
-    }
-}
 impl AmdExtension317Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -23918,14 +22215,10 @@ impl AmdExtension318Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension318Fn {}
 unsafe impl Send for AmdExtension318Fn {}
 unsafe impl Sync for AmdExtension318Fn {}
-impl ::std::clone::Clone for AmdExtension318Fn {
-    fn clone(&self) -> Self {
-        AmdExtension318Fn {}
-    }
-}
 impl AmdExtension318Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -23941,14 +22234,10 @@ impl AmdExtension319Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension319Fn {}
 unsafe impl Send for AmdExtension319Fn {}
 unsafe impl Sync for AmdExtension319Fn {}
-impl ::std::clone::Clone for AmdExtension319Fn {
-    fn clone(&self) -> Self {
-        AmdExtension319Fn {}
-    }
-}
 impl AmdExtension319Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -23964,14 +22253,10 @@ impl AmdExtension320Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension320Fn {}
 unsafe impl Send for AmdExtension320Fn {}
 unsafe impl Sync for AmdExtension320Fn {}
-impl ::std::clone::Clone for AmdExtension320Fn {
-    fn clone(&self) -> Self {
-        AmdExtension320Fn {}
-    }
-}
 impl AmdExtension320Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -23987,14 +22272,10 @@ impl AmdExtension321Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension321Fn {}
 unsafe impl Send for AmdExtension321Fn {}
 unsafe impl Sync for AmdExtension321Fn {}
-impl ::std::clone::Clone for AmdExtension321Fn {
-    fn clone(&self) -> Self {
-        AmdExtension321Fn {}
-    }
-}
 impl AmdExtension321Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -24010,14 +22291,10 @@ impl AmdExtension322Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension322Fn {}
 unsafe impl Send for AmdExtension322Fn {}
 unsafe impl Sync for AmdExtension322Fn {}
-impl ::std::clone::Clone for AmdExtension322Fn {
-    fn clone(&self) -> Self {
-        AmdExtension322Fn {}
-    }
-}
 impl AmdExtension322Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -24033,14 +22310,10 @@ impl AmdExtension323Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct AmdExtension323Fn {}
 unsafe impl Send for AmdExtension323Fn {}
 unsafe impl Sync for AmdExtension323Fn {}
-impl ::std::clone::Clone for AmdExtension323Fn {
-    fn clone(&self) -> Self {
-        AmdExtension323Fn {}
-    }
-}
 impl AmdExtension323Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -24056,14 +22329,10 @@ impl KhrExtension324Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct KhrExtension324Fn {}
 unsafe impl Send for KhrExtension324Fn {}
 unsafe impl Sync for KhrExtension324Fn {}
-impl ::std::clone::Clone for KhrExtension324Fn {
-    fn clone(&self) -> Self {
-        KhrExtension324Fn {}
-    }
-}
 impl KhrExtension324Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -24079,14 +22348,10 @@ impl KhrExtension325Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct KhrExtension325Fn {}
 unsafe impl Send for KhrExtension325Fn {}
 unsafe impl Sync for KhrExtension325Fn {}
-impl ::std::clone::Clone for KhrExtension325Fn {
-    fn clone(&self) -> Self {
-        KhrExtension325Fn {}
-    }
-}
 impl KhrExtension325Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -24102,14 +22367,10 @@ impl KhrZeroInitializeWorkgroupMemoryFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct KhrZeroInitializeWorkgroupMemoryFn {}
 unsafe impl Send for KhrZeroInitializeWorkgroupMemoryFn {}
 unsafe impl Sync for KhrZeroInitializeWorkgroupMemoryFn {}
-impl ::std::clone::Clone for KhrZeroInitializeWorkgroupMemoryFn {
-    fn clone(&self) -> Self {
-        KhrZeroInitializeWorkgroupMemoryFn {}
-    }
-}
 impl KhrZeroInitializeWorkgroupMemoryFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -24136,6 +22397,7 @@ pub type PFN_vkCmdSetFragmentShadingRateEnumNV = unsafe extern "system" fn(
     shading_rate: FragmentShadingRateNV,
     combiner_ops: *const [FragmentShadingRateCombinerOpKHR; 2],
 );
+#[derive(Clone)]
 pub struct NvFragmentShadingRateEnumsFn {
     pub cmd_set_fragment_shading_rate_enum_nv: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
@@ -24145,13 +22407,6 @@ pub struct NvFragmentShadingRateEnumsFn {
 }
 unsafe impl Send for NvFragmentShadingRateEnumsFn {}
 unsafe impl Sync for NvFragmentShadingRateEnumsFn {}
-impl ::std::clone::Clone for NvFragmentShadingRateEnumsFn {
-    fn clone(&self) -> Self {
-        NvFragmentShadingRateEnumsFn {
-            cmd_set_fragment_shading_rate_enum_nv: self.cmd_set_fragment_shading_rate_enum_nv,
-        }
-    }
-}
 impl NvFragmentShadingRateEnumsFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -24210,14 +22465,10 @@ impl NvExtension328Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct NvExtension328Fn {}
 unsafe impl Send for NvExtension328Fn {}
 unsafe impl Sync for NvExtension328Fn {}
-impl ::std::clone::Clone for NvExtension328Fn {
-    fn clone(&self) -> Self {
-        NvExtension328Fn {}
-    }
-}
 impl NvExtension328Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -24245,14 +22496,10 @@ impl NvExtension329Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct NvExtension329Fn {}
 unsafe impl Send for NvExtension329Fn {}
 unsafe impl Sync for NvExtension329Fn {}
-impl ::std::clone::Clone for NvExtension329Fn {
-    fn clone(&self) -> Self {
-        NvExtension329Fn {}
-    }
-}
 impl NvExtension329Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -24268,14 +22515,10 @@ impl NvExtension330Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct NvExtension330Fn {}
 unsafe impl Send for NvExtension330Fn {}
 unsafe impl Sync for NvExtension330Fn {}
-impl ::std::clone::Clone for NvExtension330Fn {
-    fn clone(&self) -> Self {
-        NvExtension330Fn {}
-    }
-}
 impl NvExtension330Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -24291,14 +22534,10 @@ impl NvExtension331Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct NvExtension331Fn {}
 unsafe impl Send for NvExtension331Fn {}
 unsafe impl Sync for NvExtension331Fn {}
-impl ::std::clone::Clone for NvExtension331Fn {
-    fn clone(&self) -> Self {
-        NvExtension331Fn {}
-    }
-}
 impl NvExtension331Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -24314,14 +22553,10 @@ impl NvExtension332Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct NvExtension332Fn {}
 unsafe impl Send for NvExtension332Fn {}
 unsafe impl Sync for NvExtension332Fn {}
-impl ::std::clone::Clone for NvExtension332Fn {
-    fn clone(&self) -> Self {
-        NvExtension332Fn {}
-    }
-}
 impl NvExtension332Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -24337,14 +22572,10 @@ impl ExtFragmentDensityMap2Fn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct ExtFragmentDensityMap2Fn {}
 unsafe impl Send for ExtFragmentDensityMap2Fn {}
 unsafe impl Sync for ExtFragmentDensityMap2Fn {}
-impl ::std::clone::Clone for ExtFragmentDensityMap2Fn {
-    fn clone(&self) -> Self {
-        ExtFragmentDensityMap2Fn {}
-    }
-}
 impl ExtFragmentDensityMap2Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -24372,14 +22603,10 @@ impl QcomRotatedCopyCommandsFn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct QcomRotatedCopyCommandsFn {}
 unsafe impl Send for QcomRotatedCopyCommandsFn {}
 unsafe impl Sync for QcomRotatedCopyCommandsFn {}
-impl ::std::clone::Clone for QcomRotatedCopyCommandsFn {
-    fn clone(&self) -> Self {
-        QcomRotatedCopyCommandsFn {}
-    }
-}
 impl QcomRotatedCopyCommandsFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -24399,14 +22626,10 @@ impl KhrExtension335Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct KhrExtension335Fn {}
 unsafe impl Send for KhrExtension335Fn {}
 unsafe impl Sync for KhrExtension335Fn {}
-impl ::std::clone::Clone for KhrExtension335Fn {
-    fn clone(&self) -> Self {
-        KhrExtension335Fn {}
-    }
-}
 impl KhrExtension335Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -24422,14 +22645,10 @@ impl ExtImageRobustnessFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct ExtImageRobustnessFn {}
 unsafe impl Send for ExtImageRobustnessFn {}
 unsafe impl Sync for ExtImageRobustnessFn {}
-impl ::std::clone::Clone for ExtImageRobustnessFn {
-    fn clone(&self) -> Self {
-        ExtImageRobustnessFn {}
-    }
-}
 impl ExtImageRobustnessFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -24449,14 +22668,10 @@ impl KhrWorkgroupMemoryExplicitLayoutFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct KhrWorkgroupMemoryExplicitLayoutFn {}
 unsafe impl Send for KhrWorkgroupMemoryExplicitLayoutFn {}
 unsafe impl Sync for KhrWorkgroupMemoryExplicitLayoutFn {}
-impl ::std::clone::Clone for KhrWorkgroupMemoryExplicitLayoutFn {
-    fn clone(&self) -> Self {
-        KhrWorkgroupMemoryExplicitLayoutFn {}
-    }
-}
 impl KhrWorkgroupMemoryExplicitLayoutFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -24507,6 +22722,7 @@ pub type PFN_vkCmdResolveImage2KHR = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     p_resolve_image_info: *const ResolveImageInfo2KHR,
 );
+#[derive(Clone)]
 pub struct KhrCopyCommands2Fn {
     pub cmd_copy_buffer2_khr: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
@@ -24535,18 +22751,6 @@ pub struct KhrCopyCommands2Fn {
 }
 unsafe impl Send for KhrCopyCommands2Fn {}
 unsafe impl Sync for KhrCopyCommands2Fn {}
-impl ::std::clone::Clone for KhrCopyCommands2Fn {
-    fn clone(&self) -> Self {
-        KhrCopyCommands2Fn {
-            cmd_copy_buffer2_khr: self.cmd_copy_buffer2_khr,
-            cmd_copy_image2_khr: self.cmd_copy_image2_khr,
-            cmd_copy_buffer_to_image2_khr: self.cmd_copy_buffer_to_image2_khr,
-            cmd_copy_image_to_buffer2_khr: self.cmd_copy_image_to_buffer2_khr,
-            cmd_blit_image2_khr: self.cmd_blit_image2_khr,
-            cmd_resolve_image2_khr: self.cmd_resolve_image2_khr,
-        }
-    }
-}
 impl KhrCopyCommands2Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -24762,14 +22966,10 @@ impl ArmExtension339Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ArmExtension339Fn {}
 unsafe impl Send for ArmExtension339Fn {}
 unsafe impl Sync for ArmExtension339Fn {}
-impl ::std::clone::Clone for ArmExtension339Fn {
-    fn clone(&self) -> Self {
-        ArmExtension339Fn {}
-    }
-}
 impl ArmExtension339Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -24785,14 +22985,10 @@ impl ExtExtension340Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ExtExtension340Fn {}
 unsafe impl Send for ExtExtension340Fn {}
 unsafe impl Sync for ExtExtension340Fn {}
-impl ::std::clone::Clone for ExtExtension340Fn {
-    fn clone(&self) -> Self {
-        ExtExtension340Fn {}
-    }
-}
 impl ExtExtension340Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -24808,14 +23004,10 @@ impl Ext4444FormatsFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct Ext4444FormatsFn {}
 unsafe impl Send for Ext4444FormatsFn {}
 unsafe impl Sync for Ext4444FormatsFn {}
-impl ::std::clone::Clone for Ext4444FormatsFn {
-    fn clone(&self) -> Self {
-        Ext4444FormatsFn {}
-    }
-}
 impl Ext4444FormatsFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -24843,14 +23035,10 @@ impl ExtExtension342Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ExtExtension342Fn {}
 unsafe impl Send for ExtExtension342Fn {}
 unsafe impl Sync for ExtExtension342Fn {}
-impl ::std::clone::Clone for ExtExtension342Fn {
-    fn clone(&self) -> Self {
-        ExtExtension342Fn {}
-    }
-}
 impl ExtExtension342Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -24866,14 +23054,10 @@ impl ArmExtension343Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ArmExtension343Fn {}
 unsafe impl Send for ArmExtension343Fn {}
 unsafe impl Sync for ArmExtension343Fn {}
-impl ::std::clone::Clone for ArmExtension343Fn {
-    fn clone(&self) -> Self {
-        ArmExtension343Fn {}
-    }
-}
 impl ArmExtension343Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -24889,14 +23073,10 @@ impl ArmExtension344Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ArmExtension344Fn {}
 unsafe impl Send for ArmExtension344Fn {}
 unsafe impl Sync for ArmExtension344Fn {}
-impl ::std::clone::Clone for ArmExtension344Fn {
-    fn clone(&self) -> Self {
-        ArmExtension344Fn {}
-    }
-}
 impl ArmExtension344Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -24912,14 +23092,10 @@ impl ArmExtension345Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ArmExtension345Fn {}
 unsafe impl Send for ArmExtension345Fn {}
 unsafe impl Sync for ArmExtension345Fn {}
-impl ::std::clone::Clone for ArmExtension345Fn {
-    fn clone(&self) -> Self {
-        ArmExtension345Fn {}
-    }
-}
 impl ArmExtension345Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -24944,6 +23120,7 @@ pub type PFN_vkGetWinrtDisplayNV = unsafe extern "system" fn(
     device_relative_id: u32,
     p_display: *mut DisplayKHR,
 ) -> Result;
+#[derive(Clone)]
 pub struct NvAcquireWinrtDisplayFn {
     pub acquire_winrt_display_nv:
         unsafe extern "system" fn(physical_device: PhysicalDevice, display: DisplayKHR) -> Result,
@@ -24955,14 +23132,6 @@ pub struct NvAcquireWinrtDisplayFn {
 }
 unsafe impl Send for NvAcquireWinrtDisplayFn {}
 unsafe impl Sync for NvAcquireWinrtDisplayFn {}
-impl ::std::clone::Clone for NvAcquireWinrtDisplayFn {
-    fn clone(&self) -> Self {
-        NvAcquireWinrtDisplayFn {
-            acquire_winrt_display_nv: self.acquire_winrt_display_nv,
-            get_winrt_display_nv: self.get_winrt_display_nv,
-        }
-    }
-}
 impl NvAcquireWinrtDisplayFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -25046,6 +23215,7 @@ pub type PFN_vkGetPhysicalDeviceDirectFBPresentationSupportEXT =
         queue_family_index: u32,
         dfb: *mut IDirectFB,
     ) -> Bool32;
+#[derive(Clone)]
 pub struct ExtDirectfbSurfaceFn {
     pub create_direct_fb_surface_ext: unsafe extern "system" fn(
         instance: Instance,
@@ -25062,15 +23232,6 @@ pub struct ExtDirectfbSurfaceFn {
 }
 unsafe impl Send for ExtDirectfbSurfaceFn {}
 unsafe impl Sync for ExtDirectfbSurfaceFn {}
-impl ::std::clone::Clone for ExtDirectfbSurfaceFn {
-    fn clone(&self) -> Self {
-        ExtDirectfbSurfaceFn {
-            create_direct_fb_surface_ext: self.create_direct_fb_surface_ext,
-            get_physical_device_direct_fb_presentation_support_ext: self
-                .get_physical_device_direct_fb_presentation_support_ext,
-        }
-    }
-}
 impl ExtDirectfbSurfaceFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -25157,14 +23318,10 @@ impl KhrExtension350Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct KhrExtension350Fn {}
 unsafe impl Send for KhrExtension350Fn {}
 unsafe impl Sync for KhrExtension350Fn {}
-impl ::std::clone::Clone for KhrExtension350Fn {
-    fn clone(&self) -> Self {
-        KhrExtension350Fn {}
-    }
-}
 impl KhrExtension350Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -25184,14 +23341,10 @@ impl NvExtension351Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct NvExtension351Fn {}
 unsafe impl Send for NvExtension351Fn {}
 unsafe impl Sync for NvExtension351Fn {}
-impl ::std::clone::Clone for NvExtension351Fn {
-    fn clone(&self) -> Self {
-        NvExtension351Fn {}
-    }
-}
 impl NvExtension351Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -25207,14 +23360,10 @@ impl ValveMutableDescriptorTypeFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
+#[derive(Clone)]
 pub struct ValveMutableDescriptorTypeFn {}
 unsafe impl Send for ValveMutableDescriptorTypeFn {}
 unsafe impl Sync for ValveMutableDescriptorTypeFn {}
-impl ::std::clone::Clone for ValveMutableDescriptorTypeFn {
-    fn clone(&self) -> Self {
-        ValveMutableDescriptorTypeFn {}
-    }
-}
 impl ValveMutableDescriptorTypeFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -25250,14 +23399,10 @@ impl ExtExtension353Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ExtExtension353Fn {}
 unsafe impl Send for ExtExtension353Fn {}
 unsafe impl Sync for ExtExtension353Fn {}
-impl ::std::clone::Clone for ExtExtension353Fn {
-    fn clone(&self) -> Self {
-        ExtExtension353Fn {}
-    }
-}
 impl ExtExtension353Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -25273,14 +23418,10 @@ impl ExtExtension354Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ExtExtension354Fn {}
 unsafe impl Send for ExtExtension354Fn {}
 unsafe impl Sync for ExtExtension354Fn {}
-impl ::std::clone::Clone for ExtExtension354Fn {
-    fn clone(&self) -> Self {
-        ExtExtension354Fn {}
-    }
-}
 impl ExtExtension354Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -25296,14 +23437,10 @@ impl ExtExtension355Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ExtExtension355Fn {}
 unsafe impl Send for ExtExtension355Fn {}
 unsafe impl Sync for ExtExtension355Fn {}
-impl ::std::clone::Clone for ExtExtension355Fn {
-    fn clone(&self) -> Self {
-        ExtExtension355Fn {}
-    }
-}
 impl ExtExtension355Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -25319,14 +23456,10 @@ impl ExtVertexAttributeAliasingFn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ExtVertexAttributeAliasingFn {}
 unsafe impl Send for ExtVertexAttributeAliasingFn {}
 unsafe impl Sync for ExtVertexAttributeAliasingFn {}
-impl ::std::clone::Clone for ExtVertexAttributeAliasingFn {
-    fn clone(&self) -> Self {
-        ExtVertexAttributeAliasingFn {}
-    }
-}
 impl ExtVertexAttributeAliasingFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -25341,14 +23474,10 @@ impl ExtExtension357Fn {
             .expect("Wrong extension string")
     }
 }
+#[derive(Clone)]
 pub struct ExtExtension357Fn {}
 unsafe impl Send for ExtExtension357Fn {}
 unsafe impl Sync for ExtExtension357Fn {}
-impl ::std::clone::Clone for ExtExtension357Fn {
-    fn clone(&self) -> Self {
-        ExtExtension357Fn {}
-    }
-}
 impl ExtExtension357Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -25364,14 +23493,10 @@ impl KhrExtension358Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct KhrExtension358Fn {}
 unsafe impl Send for KhrExtension358Fn {}
 unsafe impl Sync for KhrExtension358Fn {}
-impl ::std::clone::Clone for KhrExtension358Fn {
-    fn clone(&self) -> Self {
-        KhrExtension358Fn {}
-    }
-}
 impl KhrExtension358Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -25386,14 +23511,10 @@ impl ExtExtension359Fn {
             .expect("Wrong extension string")
     }
 }
+#[derive(Clone)]
 pub struct ExtExtension359Fn {}
 unsafe impl Send for ExtExtension359Fn {}
 unsafe impl Sync for ExtExtension359Fn {}
-impl ::std::clone::Clone for ExtExtension359Fn {
-    fn clone(&self) -> Self {
-        ExtExtension359Fn {}
-    }
-}
 impl ExtExtension359Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -25408,14 +23529,10 @@ impl ExtExtension360Fn {
             .expect("Wrong extension string")
     }
 }
+#[derive(Clone)]
 pub struct ExtExtension360Fn {}
 unsafe impl Send for ExtExtension360Fn {}
 unsafe impl Sync for ExtExtension360Fn {}
-impl ::std::clone::Clone for ExtExtension360Fn {
-    fn clone(&self) -> Self {
-        ExtExtension360Fn {}
-    }
-}
 impl ExtExtension360Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -25430,14 +23547,10 @@ impl KhrExtension361Fn {
             .expect("Wrong extension string")
     }
 }
+#[derive(Clone)]
 pub struct KhrExtension361Fn {}
 unsafe impl Send for KhrExtension361Fn {}
 unsafe impl Sync for KhrExtension361Fn {}
-impl ::std::clone::Clone for KhrExtension361Fn {
-    fn clone(&self) -> Self {
-        KhrExtension361Fn {}
-    }
-}
 impl KhrExtension361Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -25453,14 +23566,10 @@ impl ExtExtension362Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ExtExtension362Fn {}
 unsafe impl Send for ExtExtension362Fn {}
 unsafe impl Sync for ExtExtension362Fn {}
-impl ::std::clone::Clone for ExtExtension362Fn {
-    fn clone(&self) -> Self {
-        ExtExtension362Fn {}
-    }
-}
 impl ExtExtension362Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -25476,14 +23585,10 @@ impl ExtExtension363Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ExtExtension363Fn {}
 unsafe impl Send for ExtExtension363Fn {}
 unsafe impl Sync for ExtExtension363Fn {}
-impl ::std::clone::Clone for ExtExtension363Fn {
-    fn clone(&self) -> Self {
-        ExtExtension363Fn {}
-    }
-}
 impl ExtExtension363Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -25499,14 +23604,10 @@ impl FuchsiaExtension364Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct FuchsiaExtension364Fn {}
 unsafe impl Send for FuchsiaExtension364Fn {}
 unsafe impl Sync for FuchsiaExtension364Fn {}
-impl ::std::clone::Clone for FuchsiaExtension364Fn {
-    fn clone(&self) -> Self {
-        FuchsiaExtension364Fn {}
-    }
-}
 impl FuchsiaExtension364Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -25535,6 +23636,7 @@ pub type PFN_vkGetMemoryZirconHandlePropertiesFUCHSIA = unsafe extern "system" f
     zircon_handle: zx_handle_t,
     p_memory_zircon_handle_properties: *mut MemoryZirconHandlePropertiesFUCHSIA,
 ) -> Result;
+#[derive(Clone)]
 pub struct FuchsiaExternalMemoryFn {
     pub get_memory_zircon_handle_fuchsia: unsafe extern "system" fn(
         device: Device,
@@ -25550,15 +23652,6 @@ pub struct FuchsiaExternalMemoryFn {
 }
 unsafe impl Send for FuchsiaExternalMemoryFn {}
 unsafe impl Sync for FuchsiaExternalMemoryFn {}
-impl ::std::clone::Clone for FuchsiaExternalMemoryFn {
-    fn clone(&self) -> Self {
-        FuchsiaExternalMemoryFn {
-            get_memory_zircon_handle_fuchsia: self.get_memory_zircon_handle_fuchsia,
-            get_memory_zircon_handle_properties_fuchsia: self
-                .get_memory_zircon_handle_properties_fuchsia,
-        }
-    }
-}
 impl FuchsiaExternalMemoryFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -25669,6 +23762,7 @@ pub type PFN_vkGetSemaphoreZirconHandleFUCHSIA = unsafe extern "system" fn(
     p_get_zircon_handle_info: *const SemaphoreGetZirconHandleInfoFUCHSIA,
     p_zircon_handle: *mut zx_handle_t,
 ) -> Result;
+#[derive(Clone)]
 pub struct FuchsiaExternalSemaphoreFn {
     pub import_semaphore_zircon_handle_fuchsia: unsafe extern "system" fn(
         device: Device,
@@ -25682,14 +23776,6 @@ pub struct FuchsiaExternalSemaphoreFn {
 }
 unsafe impl Send for FuchsiaExternalSemaphoreFn {}
 unsafe impl Sync for FuchsiaExternalSemaphoreFn {}
-impl ::std::clone::Clone for FuchsiaExternalSemaphoreFn {
-    fn clone(&self) -> Self {
-        FuchsiaExternalSemaphoreFn {
-            import_semaphore_zircon_handle_fuchsia: self.import_semaphore_zircon_handle_fuchsia,
-            get_semaphore_zircon_handle_fuchsia: self.get_semaphore_zircon_handle_fuchsia,
-        }
-    }
-}
 impl FuchsiaExternalSemaphoreFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -25780,14 +23866,10 @@ impl FuchsiaExtension367Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct FuchsiaExtension367Fn {}
 unsafe impl Send for FuchsiaExtension367Fn {}
 unsafe impl Sync for FuchsiaExtension367Fn {}
-impl ::std::clone::Clone for FuchsiaExtension367Fn {
-    fn clone(&self) -> Self {
-        FuchsiaExtension367Fn {}
-    }
-}
 impl FuchsiaExtension367Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -25803,14 +23885,10 @@ impl FuchsiaExtension368Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct FuchsiaExtension368Fn {}
 unsafe impl Send for FuchsiaExtension368Fn {}
 unsafe impl Sync for FuchsiaExtension368Fn {}
-impl ::std::clone::Clone for FuchsiaExtension368Fn {
-    fn clone(&self) -> Self {
-        FuchsiaExtension368Fn {}
-    }
-}
 impl FuchsiaExtension368Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -25826,14 +23904,10 @@ impl QcomExtension369Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct QcomExtension369Fn {}
 unsafe impl Send for QcomExtension369Fn {}
 unsafe impl Sync for QcomExtension369Fn {}
-impl ::std::clone::Clone for QcomExtension369Fn {
-    fn clone(&self) -> Self {
-        QcomExtension369Fn {}
-    }
-}
 impl QcomExtension369Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -25853,14 +23927,10 @@ impl HuaweiExtension370Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct HuaweiExtension370Fn {}
 unsafe impl Send for HuaweiExtension370Fn {}
 unsafe impl Sync for HuaweiExtension370Fn {}
-impl ::std::clone::Clone for HuaweiExtension370Fn {
-    fn clone(&self) -> Self {
-        HuaweiExtension370Fn {}
-    }
-}
 impl HuaweiExtension370Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -25876,14 +23946,10 @@ impl HuaweiExtension371Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct HuaweiExtension371Fn {}
 unsafe impl Send for HuaweiExtension371Fn {}
 unsafe impl Sync for HuaweiExtension371Fn {}
-impl ::std::clone::Clone for HuaweiExtension371Fn {
-    fn clone(&self) -> Self {
-        HuaweiExtension371Fn {}
-    }
-}
 impl HuaweiExtension371Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -25899,14 +23965,10 @@ impl NvExtension372Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct NvExtension372Fn {}
 unsafe impl Send for NvExtension372Fn {}
 unsafe impl Sync for NvExtension372Fn {}
-impl ::std::clone::Clone for NvExtension372Fn {
-    fn clone(&self) -> Self {
-        NvExtension372Fn {}
-    }
-}
 impl NvExtension372Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -25930,14 +23992,10 @@ impl NvExtension373Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct NvExtension373Fn {}
 unsafe impl Send for NvExtension373Fn {}
 unsafe impl Sync for NvExtension373Fn {}
-impl ::std::clone::Clone for NvExtension373Fn {
-    fn clone(&self) -> Self {
-        NvExtension373Fn {}
-    }
-}
 impl NvExtension373Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -25953,14 +24011,10 @@ impl NvExtension374Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct NvExtension374Fn {}
 unsafe impl Send for NvExtension374Fn {}
 unsafe impl Sync for NvExtension374Fn {}
-impl ::std::clone::Clone for NvExtension374Fn {
-    fn clone(&self) -> Self {
-        NvExtension374Fn {}
-    }
-}
 impl NvExtension374Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -25984,14 +24038,10 @@ impl NvExtension375Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct NvExtension375Fn {}
 unsafe impl Send for NvExtension375Fn {}
 unsafe impl Sync for NvExtension375Fn {}
-impl ::std::clone::Clone for NvExtension375Fn {
-    fn clone(&self) -> Self {
-        NvExtension375Fn {}
-    }
-}
 impl NvExtension375Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -26015,14 +24065,10 @@ impl ExtExtension376Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ExtExtension376Fn {}
 unsafe impl Send for ExtExtension376Fn {}
 unsafe impl Sync for ExtExtension376Fn {}
-impl ::std::clone::Clone for ExtExtension376Fn {
-    fn clone(&self) -> Self {
-        ExtExtension376Fn {}
-    }
-}
 impl ExtExtension376Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -26038,14 +24084,10 @@ impl ExtExtension377Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ExtExtension377Fn {}
 unsafe impl Send for ExtExtension377Fn {}
 unsafe impl Sync for ExtExtension377Fn {}
-impl ::std::clone::Clone for ExtExtension377Fn {
-    fn clone(&self) -> Self {
-        ExtExtension377Fn {}
-    }
-}
 impl ExtExtension377Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -26061,14 +24103,10 @@ impl NvExtension378Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct NvExtension378Fn {}
 unsafe impl Send for NvExtension378Fn {}
 unsafe impl Sync for NvExtension378Fn {}
-impl ::std::clone::Clone for NvExtension378Fn {
-    fn clone(&self) -> Self {
-        NvExtension378Fn {}
-    }
-}
 impl NvExtension378Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -26097,6 +24135,7 @@ pub type PFN_vkGetPhysicalDeviceScreenPresentationSupportQNX = unsafe extern "sy
     queue_family_index: u32,
     window: *mut _screen_window,
 ) -> Bool32;
+#[derive(Clone)]
 pub struct QnxScreenSurfaceFn {
     pub create_screen_surface_qnx: unsafe extern "system" fn(
         instance: Instance,
@@ -26113,15 +24152,6 @@ pub struct QnxScreenSurfaceFn {
 }
 unsafe impl Send for QnxScreenSurfaceFn {}
 unsafe impl Sync for QnxScreenSurfaceFn {}
-impl ::std::clone::Clone for QnxScreenSurfaceFn {
-    fn clone(&self) -> Self {
-        QnxScreenSurfaceFn {
-            create_screen_surface_qnx: self.create_screen_surface_qnx,
-            get_physical_device_screen_presentation_support_qnx: self
-                .get_physical_device_screen_presentation_support_qnx,
-        }
-    }
-}
 impl QnxScreenSurfaceFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -26207,14 +24237,10 @@ impl KhrExtension380Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct KhrExtension380Fn {}
 unsafe impl Send for KhrExtension380Fn {}
 unsafe impl Sync for KhrExtension380Fn {}
-impl ::std::clone::Clone for KhrExtension380Fn {
-    fn clone(&self) -> Self {
-        KhrExtension380Fn {}
-    }
-}
 impl KhrExtension380Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -26230,14 +24256,10 @@ impl KhrExtension381Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct KhrExtension381Fn {}
 unsafe impl Send for KhrExtension381Fn {}
 unsafe impl Sync for KhrExtension381Fn {}
-impl ::std::clone::Clone for KhrExtension381Fn {
-    fn clone(&self) -> Self {
-        KhrExtension381Fn {}
-    }
-}
 impl KhrExtension381Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -26253,14 +24275,10 @@ impl ExtExtension382Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ExtExtension382Fn {}
 unsafe impl Send for ExtExtension382Fn {}
 unsafe impl Sync for ExtExtension382Fn {}
-impl ::std::clone::Clone for ExtExtension382Fn {
-    fn clone(&self) -> Self {
-        ExtExtension382Fn {}
-    }
-}
 impl ExtExtension382Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -26276,14 +24294,10 @@ impl ExtExtension383Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ExtExtension383Fn {}
 unsafe impl Send for ExtExtension383Fn {}
 unsafe impl Sync for ExtExtension383Fn {}
-impl ::std::clone::Clone for ExtExtension383Fn {
-    fn clone(&self) -> Self {
-        ExtExtension383Fn {}
-    }
-}
 impl ExtExtension383Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -26299,14 +24313,10 @@ impl ExtExtension384Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ExtExtension384Fn {}
 unsafe impl Send for ExtExtension384Fn {}
 unsafe impl Sync for ExtExtension384Fn {}
-impl ::std::clone::Clone for ExtExtension384Fn {
-    fn clone(&self) -> Self {
-        ExtExtension384Fn {}
-    }
-}
 impl ExtExtension384Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -26322,14 +24332,10 @@ impl MesaExtension385Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct MesaExtension385Fn {}
 unsafe impl Send for MesaExtension385Fn {}
 unsafe impl Sync for MesaExtension385Fn {}
-impl ::std::clone::Clone for MesaExtension385Fn {
-    fn clone(&self) -> Self {
-        MesaExtension385Fn {}
-    }
-}
 impl MesaExtension385Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -26345,14 +24351,10 @@ impl GoogleExtension386Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct GoogleExtension386Fn {}
 unsafe impl Send for GoogleExtension386Fn {}
 unsafe impl Sync for GoogleExtension386Fn {}
-impl ::std::clone::Clone for GoogleExtension386Fn {
-    fn clone(&self) -> Self {
-        GoogleExtension386Fn {}
-    }
-}
 impl GoogleExtension386Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -26368,14 +24370,10 @@ impl KhrExtension387Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct KhrExtension387Fn {}
 unsafe impl Send for KhrExtension387Fn {}
 unsafe impl Sync for KhrExtension387Fn {}
-impl ::std::clone::Clone for KhrExtension387Fn {
-    fn clone(&self) -> Self {
-        KhrExtension387Fn {}
-    }
-}
 impl KhrExtension387Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -26391,14 +24389,10 @@ impl ExtExtension388Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ExtExtension388Fn {}
 unsafe impl Send for ExtExtension388Fn {}
 unsafe impl Sync for ExtExtension388Fn {}
-impl ::std::clone::Clone for ExtExtension388Fn {
-    fn clone(&self) -> Self {
-        ExtExtension388Fn {}
-    }
-}
 impl ExtExtension388Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -26414,14 +24408,10 @@ impl ExtExtension389Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ExtExtension389Fn {}
 unsafe impl Send for ExtExtension389Fn {}
 unsafe impl Sync for ExtExtension389Fn {}
-impl ::std::clone::Clone for ExtExtension389Fn {
-    fn clone(&self) -> Self {
-        ExtExtension389Fn {}
-    }
-}
 impl ExtExtension389Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -26437,14 +24427,10 @@ impl ExtExtension390Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ExtExtension390Fn {}
 unsafe impl Send for ExtExtension390Fn {}
 unsafe impl Sync for ExtExtension390Fn {}
-impl ::std::clone::Clone for ExtExtension390Fn {
-    fn clone(&self) -> Self {
-        ExtExtension390Fn {}
-    }
-}
 impl ExtExtension390Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -26460,14 +24446,10 @@ impl ExtExtension391Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ExtExtension391Fn {}
 unsafe impl Send for ExtExtension391Fn {}
 unsafe impl Sync for ExtExtension391Fn {}
-impl ::std::clone::Clone for ExtExtension391Fn {
-    fn clone(&self) -> Self {
-        ExtExtension391Fn {}
-    }
-}
 impl ExtExtension391Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -26483,14 +24465,10 @@ impl ExtExtension392Fn {
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[derive(Clone)]
 pub struct ExtExtension392Fn {}
 unsafe impl Send for ExtExtension392Fn {}
 unsafe impl Sync for ExtExtension392Fn {}
-impl ::std::clone::Clone for ExtExtension392Fn {
-    fn clone(&self) -> Self {
-        ExtExtension392Fn {}
-    }
-}
 impl ExtExtension392Fn {
     pub fn load<F>(mut _f: F) -> Self
     where

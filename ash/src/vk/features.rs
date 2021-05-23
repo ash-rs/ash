@@ -5,19 +5,13 @@ use std::os::raw::*;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetInstanceProcAddr =
     unsafe extern "system" fn(instance: Instance, p_name: *const c_char) -> PFN_vkVoidFunction;
+#[derive(Clone)]
 pub struct StaticFn {
     pub get_instance_proc_addr:
         unsafe extern "system" fn(instance: Instance, p_name: *const c_char) -> PFN_vkVoidFunction,
 }
 unsafe impl Send for StaticFn {}
 unsafe impl Sync for StaticFn {}
-impl ::std::clone::Clone for StaticFn {
-    fn clone(&self) -> Self {
-        StaticFn {
-            get_instance_proc_addr: self.get_instance_proc_addr,
-        }
-    }
-}
 impl StaticFn {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -71,6 +65,7 @@ pub type PFN_vkEnumerateInstanceLayerProperties = unsafe extern "system" fn(
     p_property_count: *mut u32,
     p_properties: *mut LayerProperties,
 ) -> Result;
+#[derive(Clone)]
 pub struct EntryFnV1_0 {
     pub create_instance: unsafe extern "system" fn(
         p_create_info: *const InstanceCreateInfo,
@@ -89,15 +84,6 @@ pub struct EntryFnV1_0 {
 }
 unsafe impl Send for EntryFnV1_0 {}
 unsafe impl Sync for EntryFnV1_0 {}
-impl ::std::clone::Clone for EntryFnV1_0 {
-    fn clone(&self) -> Self {
-        EntryFnV1_0 {
-            create_instance: self.create_instance,
-            enumerate_instance_extension_properties: self.enumerate_instance_extension_properties,
-            enumerate_instance_layer_properties: self.enumerate_instance_layer_properties,
-        }
-    }
-}
 impl EntryFnV1_0 {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -270,6 +256,7 @@ pub type PFN_vkGetPhysicalDeviceSparseImageFormatProperties = unsafe extern "sys
     p_property_count: *mut u32,
     p_properties: *mut SparseImageFormatProperties,
 );
+#[derive(Clone)]
 pub struct InstanceFnV1_0 {
     pub destroy_instance:
         unsafe extern "system" fn(instance: Instance, p_allocator: *const AllocationCallbacks),
@@ -341,28 +328,6 @@ pub struct InstanceFnV1_0 {
 }
 unsafe impl Send for InstanceFnV1_0 {}
 unsafe impl Sync for InstanceFnV1_0 {}
-impl ::std::clone::Clone for InstanceFnV1_0 {
-    fn clone(&self) -> Self {
-        InstanceFnV1_0 {
-            destroy_instance: self.destroy_instance,
-            enumerate_physical_devices: self.enumerate_physical_devices,
-            get_physical_device_features: self.get_physical_device_features,
-            get_physical_device_format_properties: self.get_physical_device_format_properties,
-            get_physical_device_image_format_properties: self
-                .get_physical_device_image_format_properties,
-            get_physical_device_properties: self.get_physical_device_properties,
-            get_physical_device_queue_family_properties: self
-                .get_physical_device_queue_family_properties,
-            get_physical_device_memory_properties: self.get_physical_device_memory_properties,
-            get_device_proc_addr: self.get_device_proc_addr,
-            create_device: self.create_device,
-            enumerate_device_extension_properties: self.enumerate_device_extension_properties,
-            enumerate_device_layer_properties: self.enumerate_device_layer_properties,
-            get_physical_device_sparse_image_format_properties: self
-                .get_physical_device_sparse_image_format_properties,
-        }
-    }
-}
 impl InstanceFnV1_0 {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -1575,6 +1540,7 @@ pub type PFN_vkCmdExecuteCommands = unsafe extern "system" fn(
     command_buffer_count: u32,
     p_command_buffers: *const CommandBuffer,
 );
+#[derive(Clone)]
 pub struct DeviceFnV1_0 {
     pub destroy_device:
         unsafe extern "system" fn(device: Device, p_allocator: *const AllocationCallbacks),
@@ -2253,132 +2219,6 @@ pub struct DeviceFnV1_0 {
 }
 unsafe impl Send for DeviceFnV1_0 {}
 unsafe impl Sync for DeviceFnV1_0 {}
-impl ::std::clone::Clone for DeviceFnV1_0 {
-    fn clone(&self) -> Self {
-        DeviceFnV1_0 {
-            destroy_device: self.destroy_device,
-            get_device_queue: self.get_device_queue,
-            queue_submit: self.queue_submit,
-            queue_wait_idle: self.queue_wait_idle,
-            device_wait_idle: self.device_wait_idle,
-            allocate_memory: self.allocate_memory,
-            free_memory: self.free_memory,
-            map_memory: self.map_memory,
-            unmap_memory: self.unmap_memory,
-            flush_mapped_memory_ranges: self.flush_mapped_memory_ranges,
-            invalidate_mapped_memory_ranges: self.invalidate_mapped_memory_ranges,
-            get_device_memory_commitment: self.get_device_memory_commitment,
-            bind_buffer_memory: self.bind_buffer_memory,
-            bind_image_memory: self.bind_image_memory,
-            get_buffer_memory_requirements: self.get_buffer_memory_requirements,
-            get_image_memory_requirements: self.get_image_memory_requirements,
-            get_image_sparse_memory_requirements: self.get_image_sparse_memory_requirements,
-            queue_bind_sparse: self.queue_bind_sparse,
-            create_fence: self.create_fence,
-            destroy_fence: self.destroy_fence,
-            reset_fences: self.reset_fences,
-            get_fence_status: self.get_fence_status,
-            wait_for_fences: self.wait_for_fences,
-            create_semaphore: self.create_semaphore,
-            destroy_semaphore: self.destroy_semaphore,
-            create_event: self.create_event,
-            destroy_event: self.destroy_event,
-            get_event_status: self.get_event_status,
-            set_event: self.set_event,
-            reset_event: self.reset_event,
-            create_query_pool: self.create_query_pool,
-            destroy_query_pool: self.destroy_query_pool,
-            get_query_pool_results: self.get_query_pool_results,
-            create_buffer: self.create_buffer,
-            destroy_buffer: self.destroy_buffer,
-            create_buffer_view: self.create_buffer_view,
-            destroy_buffer_view: self.destroy_buffer_view,
-            create_image: self.create_image,
-            destroy_image: self.destroy_image,
-            get_image_subresource_layout: self.get_image_subresource_layout,
-            create_image_view: self.create_image_view,
-            destroy_image_view: self.destroy_image_view,
-            create_shader_module: self.create_shader_module,
-            destroy_shader_module: self.destroy_shader_module,
-            create_pipeline_cache: self.create_pipeline_cache,
-            destroy_pipeline_cache: self.destroy_pipeline_cache,
-            get_pipeline_cache_data: self.get_pipeline_cache_data,
-            merge_pipeline_caches: self.merge_pipeline_caches,
-            create_graphics_pipelines: self.create_graphics_pipelines,
-            create_compute_pipelines: self.create_compute_pipelines,
-            destroy_pipeline: self.destroy_pipeline,
-            create_pipeline_layout: self.create_pipeline_layout,
-            destroy_pipeline_layout: self.destroy_pipeline_layout,
-            create_sampler: self.create_sampler,
-            destroy_sampler: self.destroy_sampler,
-            create_descriptor_set_layout: self.create_descriptor_set_layout,
-            destroy_descriptor_set_layout: self.destroy_descriptor_set_layout,
-            create_descriptor_pool: self.create_descriptor_pool,
-            destroy_descriptor_pool: self.destroy_descriptor_pool,
-            reset_descriptor_pool: self.reset_descriptor_pool,
-            allocate_descriptor_sets: self.allocate_descriptor_sets,
-            free_descriptor_sets: self.free_descriptor_sets,
-            update_descriptor_sets: self.update_descriptor_sets,
-            create_framebuffer: self.create_framebuffer,
-            destroy_framebuffer: self.destroy_framebuffer,
-            create_render_pass: self.create_render_pass,
-            destroy_render_pass: self.destroy_render_pass,
-            get_render_area_granularity: self.get_render_area_granularity,
-            create_command_pool: self.create_command_pool,
-            destroy_command_pool: self.destroy_command_pool,
-            reset_command_pool: self.reset_command_pool,
-            allocate_command_buffers: self.allocate_command_buffers,
-            free_command_buffers: self.free_command_buffers,
-            begin_command_buffer: self.begin_command_buffer,
-            end_command_buffer: self.end_command_buffer,
-            reset_command_buffer: self.reset_command_buffer,
-            cmd_bind_pipeline: self.cmd_bind_pipeline,
-            cmd_set_viewport: self.cmd_set_viewport,
-            cmd_set_scissor: self.cmd_set_scissor,
-            cmd_set_line_width: self.cmd_set_line_width,
-            cmd_set_depth_bias: self.cmd_set_depth_bias,
-            cmd_set_blend_constants: self.cmd_set_blend_constants,
-            cmd_set_depth_bounds: self.cmd_set_depth_bounds,
-            cmd_set_stencil_compare_mask: self.cmd_set_stencil_compare_mask,
-            cmd_set_stencil_write_mask: self.cmd_set_stencil_write_mask,
-            cmd_set_stencil_reference: self.cmd_set_stencil_reference,
-            cmd_bind_descriptor_sets: self.cmd_bind_descriptor_sets,
-            cmd_bind_index_buffer: self.cmd_bind_index_buffer,
-            cmd_bind_vertex_buffers: self.cmd_bind_vertex_buffers,
-            cmd_draw: self.cmd_draw,
-            cmd_draw_indexed: self.cmd_draw_indexed,
-            cmd_draw_indirect: self.cmd_draw_indirect,
-            cmd_draw_indexed_indirect: self.cmd_draw_indexed_indirect,
-            cmd_dispatch: self.cmd_dispatch,
-            cmd_dispatch_indirect: self.cmd_dispatch_indirect,
-            cmd_copy_buffer: self.cmd_copy_buffer,
-            cmd_copy_image: self.cmd_copy_image,
-            cmd_blit_image: self.cmd_blit_image,
-            cmd_copy_buffer_to_image: self.cmd_copy_buffer_to_image,
-            cmd_copy_image_to_buffer: self.cmd_copy_image_to_buffer,
-            cmd_update_buffer: self.cmd_update_buffer,
-            cmd_fill_buffer: self.cmd_fill_buffer,
-            cmd_clear_color_image: self.cmd_clear_color_image,
-            cmd_clear_depth_stencil_image: self.cmd_clear_depth_stencil_image,
-            cmd_clear_attachments: self.cmd_clear_attachments,
-            cmd_resolve_image: self.cmd_resolve_image,
-            cmd_set_event: self.cmd_set_event,
-            cmd_reset_event: self.cmd_reset_event,
-            cmd_wait_events: self.cmd_wait_events,
-            cmd_pipeline_barrier: self.cmd_pipeline_barrier,
-            cmd_begin_query: self.cmd_begin_query,
-            cmd_end_query: self.cmd_end_query,
-            cmd_reset_query_pool: self.cmd_reset_query_pool,
-            cmd_write_timestamp: self.cmd_write_timestamp,
-            cmd_copy_query_pool_results: self.cmd_copy_query_pool_results,
-            cmd_push_constants: self.cmd_push_constants,
-            cmd_begin_render_pass: self.cmd_begin_render_pass,
-            cmd_next_subpass: self.cmd_next_subpass,
-            cmd_end_render_pass: self.cmd_end_render_pass,
-            cmd_execute_commands: self.cmd_execute_commands,
-        }
-    }
-}
 impl DeviceFnV1_0 {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -5931,18 +5771,12 @@ impl DeviceFnV1_0 {
 #[allow(non_camel_case_types)]
 pub type PFN_vkEnumerateInstanceVersion =
     unsafe extern "system" fn(p_api_version: *mut u32) -> Result;
+#[derive(Clone)]
 pub struct EntryFnV1_1 {
     pub enumerate_instance_version: unsafe extern "system" fn(p_api_version: *mut u32) -> Result,
 }
 unsafe impl Send for EntryFnV1_1 {}
 unsafe impl Sync for EntryFnV1_1 {}
-impl ::std::clone::Clone for EntryFnV1_1 {
-    fn clone(&self) -> Self {
-        EntryFnV1_1 {
-            enumerate_instance_version: self.enumerate_instance_version,
-        }
-    }
-}
 impl EntryFnV1_1 {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -5975,6 +5809,7 @@ impl EntryFnV1_1 {
         (self.enumerate_instance_version)(p_api_version)
     }
 }
+#[derive(Clone)]
 pub struct InstanceFnV1_1 {
     pub enumerate_physical_device_groups: unsafe extern "system" fn(
         instance: Instance,
@@ -6032,29 +5867,6 @@ pub struct InstanceFnV1_1 {
 }
 unsafe impl Send for InstanceFnV1_1 {}
 unsafe impl Sync for InstanceFnV1_1 {}
-impl ::std::clone::Clone for InstanceFnV1_1 {
-    fn clone(&self) -> Self {
-        InstanceFnV1_1 {
-            enumerate_physical_device_groups: self.enumerate_physical_device_groups,
-            get_physical_device_features2: self.get_physical_device_features2,
-            get_physical_device_properties2: self.get_physical_device_properties2,
-            get_physical_device_format_properties2: self.get_physical_device_format_properties2,
-            get_physical_device_image_format_properties2: self
-                .get_physical_device_image_format_properties2,
-            get_physical_device_queue_family_properties2: self
-                .get_physical_device_queue_family_properties2,
-            get_physical_device_memory_properties2: self.get_physical_device_memory_properties2,
-            get_physical_device_sparse_image_format_properties2: self
-                .get_physical_device_sparse_image_format_properties2,
-            get_physical_device_external_buffer_properties: self
-                .get_physical_device_external_buffer_properties,
-            get_physical_device_external_fence_properties: self
-                .get_physical_device_external_fence_properties,
-            get_physical_device_external_semaphore_properties: self
-                .get_physical_device_external_semaphore_properties,
-        }
-    }
-}
 impl InstanceFnV1_1 {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -6422,9 +6234,10 @@ impl InstanceFnV1_1 {
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDeviceQueue2 = unsafe extern "system" fn(
     device: Device,
-    bind_info_count: u32,
-    p_bind_infos: *const BindBufferMemoryInfo,
-) -> Result;
+    p_queue_info: *const DeviceQueueInfo2,
+    p_queue: *mut Queue,
+);
+#[derive(Clone)]
 pub struct DeviceFnV1_1 {
     pub bind_buffer_memory2: unsafe extern "system" fn(
         device: Device,
@@ -6516,28 +6329,6 @@ pub struct DeviceFnV1_1 {
 }
 unsafe impl Send for DeviceFnV1_1 {}
 unsafe impl Sync for DeviceFnV1_1 {}
-impl ::std::clone::Clone for DeviceFnV1_1 {
-    fn clone(&self) -> Self {
-        DeviceFnV1_1 {
-            bind_buffer_memory2: self.bind_buffer_memory2,
-            bind_image_memory2: self.bind_image_memory2,
-            get_device_group_peer_memory_features: self.get_device_group_peer_memory_features,
-            cmd_set_device_mask: self.cmd_set_device_mask,
-            cmd_dispatch_base: self.cmd_dispatch_base,
-            get_image_memory_requirements2: self.get_image_memory_requirements2,
-            get_buffer_memory_requirements2: self.get_buffer_memory_requirements2,
-            get_image_sparse_memory_requirements2: self.get_image_sparse_memory_requirements2,
-            trim_command_pool: self.trim_command_pool,
-            get_device_queue2: self.get_device_queue2,
-            create_sampler_ycbcr_conversion: self.create_sampler_ycbcr_conversion,
-            destroy_sampler_ycbcr_conversion: self.destroy_sampler_ycbcr_conversion,
-            create_descriptor_update_template: self.create_descriptor_update_template,
-            destroy_descriptor_update_template: self.destroy_descriptor_update_template,
-            update_descriptor_set_with_template: self.update_descriptor_set_with_template,
-            get_descriptor_set_layout_support: self.get_descriptor_set_layout_support,
-        }
-    }
-}
 impl DeviceFnV1_1 {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -7048,14 +6839,10 @@ impl DeviceFnV1_1 {
         (self.get_descriptor_set_layout_support)(device, p_create_info, p_support)
     }
 }
+#[derive(Clone)]
 pub struct EntryFnV1_2 {}
 unsafe impl Send for EntryFnV1_2 {}
 unsafe impl Sync for EntryFnV1_2 {}
-impl ::std::clone::Clone for EntryFnV1_2 {
-    fn clone(&self) -> Self {
-        EntryFnV1_2 {}
-    }
-}
 impl EntryFnV1_2 {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -7064,14 +6851,10 @@ impl EntryFnV1_2 {
         EntryFnV1_2 {}
     }
 }
+#[derive(Clone)]
 pub struct InstanceFnV1_2 {}
 unsafe impl Send for InstanceFnV1_2 {}
 unsafe impl Sync for InstanceFnV1_2 {}
-impl ::std::clone::Clone for InstanceFnV1_2 {
-    fn clone(&self) -> Self {
-        InstanceFnV1_2 {}
-    }
-}
 impl InstanceFnV1_2 {
     pub fn load<F>(mut _f: F) -> Self
     where
@@ -7080,6 +6863,7 @@ impl InstanceFnV1_2 {
         InstanceFnV1_2 {}
     }
 }
+#[derive(Clone)]
 pub struct DeviceFnV1_2 {
     pub cmd_draw_indirect_count: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
@@ -7152,25 +6936,6 @@ pub struct DeviceFnV1_2 {
 }
 unsafe impl Send for DeviceFnV1_2 {}
 unsafe impl Sync for DeviceFnV1_2 {}
-impl ::std::clone::Clone for DeviceFnV1_2 {
-    fn clone(&self) -> Self {
-        DeviceFnV1_2 {
-            cmd_draw_indirect_count: self.cmd_draw_indirect_count,
-            cmd_draw_indexed_indirect_count: self.cmd_draw_indexed_indirect_count,
-            create_render_pass2: self.create_render_pass2,
-            cmd_begin_render_pass2: self.cmd_begin_render_pass2,
-            cmd_next_subpass2: self.cmd_next_subpass2,
-            cmd_end_render_pass2: self.cmd_end_render_pass2,
-            reset_query_pool: self.reset_query_pool,
-            get_semaphore_counter_value: self.get_semaphore_counter_value,
-            wait_semaphores: self.wait_semaphores,
-            signal_semaphore: self.signal_semaphore,
-            get_buffer_device_address: self.get_buffer_device_address,
-            get_buffer_opaque_capture_address: self.get_buffer_opaque_capture_address,
-            get_device_memory_opaque_capture_address: self.get_device_memory_opaque_capture_address,
-        }
-    }
-}
 impl DeviceFnV1_2 {
     pub fn load<F>(mut _f: F) -> Self
     where
