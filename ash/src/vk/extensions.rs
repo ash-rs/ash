@@ -3076,125 +3076,6 @@ impl ImageLayout {
 impl ImageLayout {
     pub const VIDEO_DECODE_DPB_KHR: Self = Self(1_000_024_002);
 }
-impl KhrVideoEncodeQueueFn {
-    pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_video_encode_queue\0")
-            .expect("Wrong extension string")
-    }
-    pub const SPEC_VERSION: u32 = 2u32;
-}
-#[allow(non_camel_case_types)]
-pub type PFN_vkCmdEncodeVideoKHR = unsafe extern "system" fn(
-    command_buffer: CommandBuffer,
-    p_encode_info: *const VideoEncodeInfoKHR,
-);
-#[derive(Clone)]
-pub struct KhrVideoEncodeQueueFn {
-    pub cmd_encode_video_khr: PFN_vkCmdEncodeVideoKHR,
-}
-unsafe impl Send for KhrVideoEncodeQueueFn {}
-unsafe impl Sync for KhrVideoEncodeQueueFn {}
-impl KhrVideoEncodeQueueFn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        KhrVideoEncodeQueueFn {
-            cmd_encode_video_khr: unsafe {
-                unsafe extern "system" fn cmd_encode_video_khr(
-                    _command_buffer: CommandBuffer,
-                    _p_encode_info: *const VideoEncodeInfoKHR,
-                ) {
-                    panic!(concat!("Unable to load ", stringify!(cmd_encode_video_khr)))
-                }
-                let cname =
-                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdEncodeVideoKHR\0");
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_encode_video_khr
-                } else {
-                    ::std::mem::transmute(val)
-                }
-            },
-        }
-    }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdEncodeVideoKHR.html>"]
-    pub unsafe fn cmd_encode_video_khr(
-        &self,
-        command_buffer: CommandBuffer,
-        p_encode_info: *const VideoEncodeInfoKHR,
-    ) {
-        (self.cmd_encode_video_khr)(command_buffer, p_encode_info)
-    }
-}
-#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
-impl PipelineStageFlags2KHR {
-    pub const VIDEO_ENCODE: Self = Self(0b1000_0000_0000_0000_0000_0000_0000);
-}
-#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
-impl AccessFlags2KHR {
-    pub const VIDEO_ENCODE_READ: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000);
-}
-#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
-impl AccessFlags2KHR {
-    pub const VIDEO_ENCODE_WRITE: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000_0000);
-}
-#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
-impl StructureType {
-    pub const VIDEO_ENCODE_INFO_KHR: Self = Self(1_000_299_000);
-}
-#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
-impl StructureType {
-    pub const VIDEO_ENCODE_RATE_CONTROL_INFO_KHR: Self = Self(1_000_299_001);
-}
-#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
-impl QueueFlags {
-    pub const VIDEO_ENCODE_KHR: Self = Self(0b100_0000);
-}
-#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
-impl BufferUsageFlags {
-    pub const VIDEO_ENCODE_DST_KHR: Self = Self(0b1000_0000_0000_0000);
-}
-#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
-impl BufferUsageFlags {
-    pub const VIDEO_ENCODE_SRC_KHR: Self = Self(0b1_0000_0000_0000_0000);
-}
-#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
-impl ImageUsageFlags {
-    pub const VIDEO_ENCODE_DST_KHR: Self = Self(0b10_0000_0000_0000);
-}
-#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
-impl ImageUsageFlags {
-    pub const VIDEO_ENCODE_SRC_KHR: Self = Self(0b100_0000_0000_0000);
-}
-#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
-impl ImageUsageFlags {
-    pub const VIDEO_ENCODE_DPB_KHR: Self = Self(0b1000_0000_0000_0000);
-}
-#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
-impl FormatFeatureFlags {
-    pub const VIDEO_ENCODE_INPUT_KHR: Self = Self(0b1000_0000_0000_0000_0000_0000_0000);
-}
-#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
-impl FormatFeatureFlags {
-    pub const VIDEO_ENCODE_DPB_KHR: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000);
-}
-#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
-impl ImageLayout {
-    pub const VIDEO_ENCODE_DST_KHR: Self = Self(1_000_299_000);
-}
-#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
-impl ImageLayout {
-    pub const VIDEO_ENCODE_SRC_KHR: Self = Self(1_000_299_001);
-}
-#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
-impl ImageLayout {
-    pub const VIDEO_ENCODE_DPB_KHR: Self = Self(1_000_299_002);
-}
-#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
-impl QueryType {
-    pub const VIDEO_ENCODESTREAM_BUFFER_RANGE_KHR: Self = Self(1_000_299_000);
-}
 impl AmdGcnShaderFn {
     pub fn name() -> &'static ::std::ffi::CStr {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_gcn_shader\0")
@@ -3615,24 +3496,232 @@ impl AccessFlags {
 impl PipelineStageFlags {
     pub const TRANSFORM_FEEDBACK_EXT: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
 }
-impl NvxExtension30Fn {
+impl NvxBinaryImportFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NVX_extension_30\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NVX_binary_import\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
+#[allow(non_camel_case_types)]
+pub type PFN_vkCreateCuModuleNVX = unsafe extern "system" fn(
+    device: Device,
+    p_create_info: *const CuModuleCreateInfoNVX,
+    p_allocator: *const AllocationCallbacks,
+    p_module: *mut CuModuleNVX,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCreateCuFunctionNVX = unsafe extern "system" fn(
+    device: Device,
+    p_create_info: *const CuFunctionCreateInfoNVX,
+    p_allocator: *const AllocationCallbacks,
+    p_function: *mut CuFunctionNVX,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkDestroyCuModuleNVX = unsafe extern "system" fn(
+    device: Device,
+    module: CuModuleNVX,
+    p_allocator: *const AllocationCallbacks,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkDestroyCuFunctionNVX = unsafe extern "system" fn(
+    device: Device,
+    function: CuFunctionNVX,
+    p_allocator: *const AllocationCallbacks,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdCuLaunchKernelNVX =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, p_launch_info: *const CuLaunchInfoNVX);
 #[derive(Clone)]
-pub struct NvxExtension30Fn {}
-unsafe impl Send for NvxExtension30Fn {}
-unsafe impl Sync for NvxExtension30Fn {}
-impl NvxExtension30Fn {
+pub struct NvxBinaryImportFn {
+    pub create_cu_module_nvx: PFN_vkCreateCuModuleNVX,
+    pub create_cu_function_nvx: PFN_vkCreateCuFunctionNVX,
+    pub destroy_cu_module_nvx: PFN_vkDestroyCuModuleNVX,
+    pub destroy_cu_function_nvx: PFN_vkDestroyCuFunctionNVX,
+    pub cmd_cu_launch_kernel_nvx: PFN_vkCmdCuLaunchKernelNVX,
+}
+unsafe impl Send for NvxBinaryImportFn {}
+unsafe impl Sync for NvxBinaryImportFn {}
+impl NvxBinaryImportFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvxExtension30Fn {}
+        NvxBinaryImportFn {
+            create_cu_module_nvx: unsafe {
+                unsafe extern "system" fn create_cu_module_nvx(
+                    _device: Device,
+                    _p_create_info: *const CuModuleCreateInfoNVX,
+                    _p_allocator: *const AllocationCallbacks,
+                    _p_module: *mut CuModuleNVX,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(create_cu_module_nvx)))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCreateCuModuleNVX\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    create_cu_module_nvx
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            create_cu_function_nvx: unsafe {
+                unsafe extern "system" fn create_cu_function_nvx(
+                    _device: Device,
+                    _p_create_info: *const CuFunctionCreateInfoNVX,
+                    _p_allocator: *const AllocationCallbacks,
+                    _p_function: *mut CuFunctionNVX,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(create_cu_function_nvx)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCreateCuFunctionNVX\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    create_cu_function_nvx
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            destroy_cu_module_nvx: unsafe {
+                unsafe extern "system" fn destroy_cu_module_nvx(
+                    _device: Device,
+                    _module: CuModuleNVX,
+                    _p_allocator: *const AllocationCallbacks,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(destroy_cu_module_nvx)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkDestroyCuModuleNVX\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    destroy_cu_module_nvx
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            destroy_cu_function_nvx: unsafe {
+                unsafe extern "system" fn destroy_cu_function_nvx(
+                    _device: Device,
+                    _function: CuFunctionNVX,
+                    _p_allocator: *const AllocationCallbacks,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(destroy_cu_function_nvx)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkDestroyCuFunctionNVX\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    destroy_cu_function_nvx
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_cu_launch_kernel_nvx: unsafe {
+                unsafe extern "system" fn cmd_cu_launch_kernel_nvx(
+                    _command_buffer: CommandBuffer,
+                    _p_launch_info: *const CuLaunchInfoNVX,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_cu_launch_kernel_nvx)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdCuLaunchKernelNVX\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_cu_launch_kernel_nvx
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateCuModuleNVX.html>"]
+    pub unsafe fn create_cu_module_nvx(
+        &self,
+        device: Device,
+        p_create_info: *const CuModuleCreateInfoNVX,
+        p_allocator: *const AllocationCallbacks,
+        p_module: *mut CuModuleNVX,
+    ) -> Result {
+        (self.create_cu_module_nvx)(device, p_create_info, p_allocator, p_module)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateCuFunctionNVX.html>"]
+    pub unsafe fn create_cu_function_nvx(
+        &self,
+        device: Device,
+        p_create_info: *const CuFunctionCreateInfoNVX,
+        p_allocator: *const AllocationCallbacks,
+        p_function: *mut CuFunctionNVX,
+    ) -> Result {
+        (self.create_cu_function_nvx)(device, p_create_info, p_allocator, p_function)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyCuModuleNVX.html>"]
+    pub unsafe fn destroy_cu_module_nvx(
+        &self,
+        device: Device,
+        module: CuModuleNVX,
+        p_allocator: *const AllocationCallbacks,
+    ) {
+        (self.destroy_cu_module_nvx)(device, module, p_allocator)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyCuFunctionNVX.html>"]
+    pub unsafe fn destroy_cu_function_nvx(
+        &self,
+        device: Device,
+        function: CuFunctionNVX,
+        p_allocator: *const AllocationCallbacks,
+    ) {
+        (self.destroy_cu_function_nvx)(device, function, p_allocator)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdCuLaunchKernelNVX.html>"]
+    pub unsafe fn cmd_cu_launch_kernel_nvx(
+        &self,
+        command_buffer: CommandBuffer,
+        p_launch_info: *const CuLaunchInfoNVX,
+    ) {
+        (self.cmd_cu_launch_kernel_nvx)(command_buffer, p_launch_info)
+    }
+}
+#[doc = "Generated from 'VK_NVX_binary_import'"]
+impl StructureType {
+    pub const CU_MODULE_CREATE_INFO_NVX: Self = Self(1_000_029_000);
+}
+#[doc = "Generated from 'VK_NVX_binary_import'"]
+impl StructureType {
+    pub const CU_FUNCTION_CREATE_INFO_NVX: Self = Self(1_000_029_001);
+}
+#[doc = "Generated from 'VK_NVX_binary_import'"]
+impl StructureType {
+    pub const CU_LAUNCH_INFO_NVX: Self = Self(1_000_029_002);
+}
+#[doc = "Generated from 'VK_NVX_binary_import'"]
+impl ObjectType {
+    pub const CU_MODULE_NVX: Self = Self(1_000_029_000);
+}
+#[doc = "Generated from 'VK_NVX_binary_import'"]
+impl ObjectType {
+    pub const CU_FUNCTION_NVX: Self = Self(1_000_029_001);
+}
+#[doc = "Generated from 'VK_NVX_binary_import'"]
+impl DebugReportObjectTypeEXT {
+    pub const CU_MODULE_NVX: Self = Self(1_000_029_000);
+}
+#[doc = "Generated from 'VK_NVX_binary_import'"]
+impl DebugReportObjectTypeEXT {
+    pub const CU_FUNCTION_NVX: Self = Self(1_000_029_001);
 }
 impl NvxImageViewHandleFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -21010,24 +21099,136 @@ impl KhrExtension299Fn {
         KhrExtension299Fn {}
     }
 }
-impl KhrExtension300Fn {
+#[doc = "Generated from 'VK_KHR_extension_299'"]
+impl MemoryHeapFlags {
+    pub const RESERVED_2_KHR: Self = Self(0b100);
+}
+#[doc = "Generated from 'VK_KHR_extension_299'"]
+impl PipelineCacheCreateFlags {
+    pub const RESERVED_1_KHR: Self = Self::RESERVED_1_EXT;
+}
+#[doc = "Generated from 'VK_KHR_extension_299'"]
+impl PipelineCacheCreateFlags {
+    pub const RESERVED_2_KHR: Self = Self(0b100);
+}
+impl KhrVideoEncodeQueueFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_300\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_video_encode_queue\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdEncodeVideoKHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_encode_info: *const VideoEncodeInfoKHR,
+);
 #[derive(Clone)]
-pub struct KhrExtension300Fn {}
-unsafe impl Send for KhrExtension300Fn {}
-unsafe impl Sync for KhrExtension300Fn {}
-impl KhrExtension300Fn {
+pub struct KhrVideoEncodeQueueFn {
+    pub cmd_encode_video_khr: PFN_vkCmdEncodeVideoKHR,
+}
+unsafe impl Send for KhrVideoEncodeQueueFn {}
+unsafe impl Sync for KhrVideoEncodeQueueFn {}
+impl KhrVideoEncodeQueueFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExtension300Fn {}
+        KhrVideoEncodeQueueFn {
+            cmd_encode_video_khr: unsafe {
+                unsafe extern "system" fn cmd_encode_video_khr(
+                    _command_buffer: CommandBuffer,
+                    _p_encode_info: *const VideoEncodeInfoKHR,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_encode_video_khr)))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdEncodeVideoKHR\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_encode_video_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdEncodeVideoKHR.html>"]
+    pub unsafe fn cmd_encode_video_khr(
+        &self,
+        command_buffer: CommandBuffer,
+        p_encode_info: *const VideoEncodeInfoKHR,
+    ) {
+        (self.cmd_encode_video_khr)(command_buffer, p_encode_info)
+    }
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl PipelineStageFlags2KHR {
+    pub const VIDEO_ENCODE: Self = Self(0b1000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl AccessFlags2KHR {
+    pub const VIDEO_ENCODE_READ: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl AccessFlags2KHR {
+    pub const VIDEO_ENCODE_WRITE: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl StructureType {
+    pub const VIDEO_ENCODE_INFO_KHR: Self = Self(1_000_299_000);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl StructureType {
+    pub const VIDEO_ENCODE_RATE_CONTROL_INFO_KHR: Self = Self(1_000_299_001);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl QueueFlags {
+    pub const VIDEO_ENCODE_KHR: Self = Self(0b100_0000);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl BufferUsageFlags {
+    pub const VIDEO_ENCODE_DST_KHR: Self = Self(0b1000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl BufferUsageFlags {
+    pub const VIDEO_ENCODE_SRC_KHR: Self = Self(0b1_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl ImageUsageFlags {
+    pub const VIDEO_ENCODE_DST_KHR: Self = Self(0b10_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl ImageUsageFlags {
+    pub const VIDEO_ENCODE_SRC_KHR: Self = Self(0b100_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl ImageUsageFlags {
+    pub const VIDEO_ENCODE_DPB_KHR: Self = Self(0b1000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl FormatFeatureFlags {
+    pub const VIDEO_ENCODE_INPUT_KHR: Self = Self(0b1000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl FormatFeatureFlags {
+    pub const VIDEO_ENCODE_DPB_KHR: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl ImageLayout {
+    pub const VIDEO_ENCODE_DST_KHR: Self = Self(1_000_299_000);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl ImageLayout {
+    pub const VIDEO_ENCODE_SRC_KHR: Self = Self(1_000_299_001);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl ImageLayout {
+    pub const VIDEO_ENCODE_DPB_KHR: Self = Self(1_000_299_002);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl QueryType {
+    pub const VIDEO_ENCODESTREAM_BUFFER_RANGE_KHR: Self = Self(1_000_299_000);
 }
 impl NvDeviceDiagnosticsConfigFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -21211,10 +21412,6 @@ impl KhrExtension309Fn {
     {
         KhrExtension309Fn {}
     }
-}
-#[doc = "Generated from 'VK_KHR_extension_309'"]
-impl MemoryHeapFlags {
-    pub const RESERVED_2_KHR: Self = Self(0b100);
 }
 impl QcomExtension310Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -22933,10 +23130,6 @@ impl KhrExtension350Fn {
         KhrExtension350Fn {}
     }
 }
-#[doc = "Generated from 'VK_KHR_extension_350'"]
-impl PipelineCacheCreateFlags {
-    pub const RESERVED_2_EXT: Self = Self(0b100);
-}
 impl NvExtension351Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_351\0")
@@ -23684,6 +23877,14 @@ impl ExternalFenceHandleTypeFlags {
 impl ExternalFenceHandleTypeFlags {
     pub const RESERVED_5_NV: Self = Self(0b10_0000);
 }
+#[doc = "Generated from 'VK_NV_extension_374'"]
+impl ExternalSemaphoreHandleTypeFlags {
+    pub const RESERVED_5_NV: Self = Self(0b10_0000);
+}
+#[doc = "Generated from 'VK_NV_extension_374'"]
+impl ExternalSemaphoreHandleTypeFlags {
+    pub const RESERVED_6_NV: Self = Self(0b100_0000);
+}
 impl NvExtension375Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_375\0")
@@ -23704,12 +23905,8 @@ impl NvExtension375Fn {
     }
 }
 #[doc = "Generated from 'VK_NV_extension_375'"]
-impl ExternalSemaphoreHandleTypeFlags {
-    pub const RESERVED_5_NV: Self = Self(0b10_0000);
-}
-#[doc = "Generated from 'VK_NV_extension_375'"]
-impl ExternalSemaphoreHandleTypeFlags {
-    pub const RESERVED_6_NV: Self = Self(0b100_0000);
+impl ExternalMemoryHandleTypeFlags {
+    pub const RESERVED_13_NV: Self = Self(0b10_0000_0000_0000);
 }
 impl ExtExtension376Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -24466,5 +24663,43 @@ impl NvExtension398Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         NvExtension398Fn {}
+    }
+}
+impl JuiceExtension399Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_JUICE_extension_399\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct JuiceExtension399Fn {}
+unsafe impl Send for JuiceExtension399Fn {}
+unsafe impl Sync for JuiceExtension399Fn {}
+impl JuiceExtension399Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        JuiceExtension399Fn {}
+    }
+}
+impl JuiceExtension400Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_JUICE_extension_400\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct JuiceExtension400Fn {}
+unsafe impl Send for JuiceExtension400Fn {}
+unsafe impl Sync for JuiceExtension400Fn {}
+impl JuiceExtension400Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        JuiceExtension400Fn {}
     }
 }

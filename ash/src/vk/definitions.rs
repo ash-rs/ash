@@ -53,7 +53,7 @@ pub const API_VERSION_1_0: u32 = make_api_version(0, 1, 0, 0);
 pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_API_VERSION_1_2.html>"]
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
-pub const HEADER_VERSION: u32 = 177u32;
+pub const HEADER_VERSION: u32 = 178u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 2, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSampleMask.html>"]
@@ -426,6 +426,8 @@ handle_nondispatchable ! (AccelerationStructureNV , ACCELERATION_STRUCTURE_NV , 
 handle_nondispatchable ! (PerformanceConfigurationINTEL , PERFORMANCE_CONFIGURATION_INTEL , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPerformanceConfigurationINTEL.html>") ;
 handle_nondispatchable ! (DeferredOperationKHR , DEFERRED_OPERATION_KHR , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDeferredOperationKHR.html>") ;
 handle_nondispatchable ! (PrivateDataSlotEXT , PRIVATE_DATA_SLOT_EXT , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPrivateDataSlotEXT.html>") ;
+handle_nondispatchable ! (CuModuleNVX , CU_MODULE_NVX , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkCuModuleNVX.html>") ;
+handle_nondispatchable ! (CuFunctionNVX , CU_FUNCTION_NVX , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkCuFunctionNVX.html>") ;
 handle_nondispatchable!(
     DisplayKHR,
     DISPLAY_KHR,
@@ -48818,6 +48820,243 @@ impl<'a> PipelineRasterizationProvokingVertexStateCreateInfoEXTBuilder<'a> {
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PipelineRasterizationProvokingVertexStateCreateInfoEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkCuModuleCreateInfoNVX.html>"]
+pub struct CuModuleCreateInfoNVX {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub data_size: usize,
+    pub p_data: *const c_void,
+}
+impl ::std::default::Default for CuModuleCreateInfoNVX {
+    fn default() -> CuModuleCreateInfoNVX {
+        CuModuleCreateInfoNVX {
+            s_type: StructureType::CU_MODULE_CREATE_INFO_NVX,
+            p_next: ::std::ptr::null(),
+            data_size: usize::default(),
+            p_data: ::std::ptr::null(),
+        }
+    }
+}
+impl CuModuleCreateInfoNVX {
+    pub fn builder<'a>() -> CuModuleCreateInfoNVXBuilder<'a> {
+        CuModuleCreateInfoNVXBuilder {
+            inner: CuModuleCreateInfoNVX::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct CuModuleCreateInfoNVXBuilder<'a> {
+    inner: CuModuleCreateInfoNVX,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+impl<'a> ::std::ops::Deref for CuModuleCreateInfoNVXBuilder<'a> {
+    type Target = CuModuleCreateInfoNVX;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for CuModuleCreateInfoNVXBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> CuModuleCreateInfoNVXBuilder<'a> {
+    pub fn data_size(mut self, data_size: usize) -> Self {
+        self.inner.data_size = data_size;
+        self
+    }
+    pub fn data(mut self, data: *const c_void) -> Self {
+        self.inner.p_data = data;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> CuModuleCreateInfoNVX {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkCuFunctionCreateInfoNVX.html>"]
+pub struct CuFunctionCreateInfoNVX {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub module: CuModuleNVX,
+    pub p_name: *const c_char,
+}
+impl ::std::default::Default for CuFunctionCreateInfoNVX {
+    fn default() -> CuFunctionCreateInfoNVX {
+        CuFunctionCreateInfoNVX {
+            s_type: StructureType::CU_FUNCTION_CREATE_INFO_NVX,
+            p_next: ::std::ptr::null(),
+            module: CuModuleNVX::default(),
+            p_name: ::std::ptr::null(),
+        }
+    }
+}
+impl CuFunctionCreateInfoNVX {
+    pub fn builder<'a>() -> CuFunctionCreateInfoNVXBuilder<'a> {
+        CuFunctionCreateInfoNVXBuilder {
+            inner: CuFunctionCreateInfoNVX::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct CuFunctionCreateInfoNVXBuilder<'a> {
+    inner: CuFunctionCreateInfoNVX,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+impl<'a> ::std::ops::Deref for CuFunctionCreateInfoNVXBuilder<'a> {
+    type Target = CuFunctionCreateInfoNVX;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for CuFunctionCreateInfoNVXBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> CuFunctionCreateInfoNVXBuilder<'a> {
+    pub fn module(mut self, module: CuModuleNVX) -> Self {
+        self.inner.module = module;
+        self
+    }
+    pub fn name(mut self, name: &'a ::std::ffi::CStr) -> Self {
+        self.inner.p_name = name.as_ptr();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> CuFunctionCreateInfoNVX {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkCuLaunchInfoNVX.html>"]
+pub struct CuLaunchInfoNVX {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub function: CuFunctionNVX,
+    pub grid_dim_x: u32,
+    pub grid_dim_y: u32,
+    pub grid_dim_z: u32,
+    pub block_dim_x: u32,
+    pub block_dim_y: u32,
+    pub block_dim_z: u32,
+    pub shared_mem_bytes: u32,
+    pub param_count: usize,
+    pub p_params: *const *const c_void,
+    pub extra_count: usize,
+    pub p_extras: *const *const c_void,
+}
+impl ::std::default::Default for CuLaunchInfoNVX {
+    fn default() -> CuLaunchInfoNVX {
+        CuLaunchInfoNVX {
+            s_type: StructureType::CU_LAUNCH_INFO_NVX,
+            p_next: ::std::ptr::null(),
+            function: CuFunctionNVX::default(),
+            grid_dim_x: u32::default(),
+            grid_dim_y: u32::default(),
+            grid_dim_z: u32::default(),
+            block_dim_x: u32::default(),
+            block_dim_y: u32::default(),
+            block_dim_z: u32::default(),
+            shared_mem_bytes: u32::default(),
+            param_count: usize::default(),
+            p_params: ::std::ptr::null(),
+            extra_count: usize::default(),
+            p_extras: ::std::ptr::null(),
+        }
+    }
+}
+impl CuLaunchInfoNVX {
+    pub fn builder<'a>() -> CuLaunchInfoNVXBuilder<'a> {
+        CuLaunchInfoNVXBuilder {
+            inner: CuLaunchInfoNVX::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct CuLaunchInfoNVXBuilder<'a> {
+    inner: CuLaunchInfoNVX,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+impl<'a> ::std::ops::Deref for CuLaunchInfoNVXBuilder<'a> {
+    type Target = CuLaunchInfoNVX;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for CuLaunchInfoNVXBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> CuLaunchInfoNVXBuilder<'a> {
+    pub fn function(mut self, function: CuFunctionNVX) -> Self {
+        self.inner.function = function;
+        self
+    }
+    pub fn grid_dim_x(mut self, grid_dim_x: u32) -> Self {
+        self.inner.grid_dim_x = grid_dim_x;
+        self
+    }
+    pub fn grid_dim_y(mut self, grid_dim_y: u32) -> Self {
+        self.inner.grid_dim_y = grid_dim_y;
+        self
+    }
+    pub fn grid_dim_z(mut self, grid_dim_z: u32) -> Self {
+        self.inner.grid_dim_z = grid_dim_z;
+        self
+    }
+    pub fn block_dim_x(mut self, block_dim_x: u32) -> Self {
+        self.inner.block_dim_x = block_dim_x;
+        self
+    }
+    pub fn block_dim_y(mut self, block_dim_y: u32) -> Self {
+        self.inner.block_dim_y = block_dim_y;
+        self
+    }
+    pub fn block_dim_z(mut self, block_dim_z: u32) -> Self {
+        self.inner.block_dim_z = block_dim_z;
+        self
+    }
+    pub fn shared_mem_bytes(mut self, shared_mem_bytes: u32) -> Self {
+        self.inner.shared_mem_bytes = shared_mem_bytes;
+        self
+    }
+    pub fn param_count(mut self, param_count: usize) -> Self {
+        self.inner.param_count = param_count;
+        self
+    }
+    pub fn params(mut self, params: *const *const c_void) -> Self {
+        self.inner.p_params = params;
+        self
+    }
+    pub fn extra_count(mut self, extra_count: usize) -> Self {
+        self.inner.extra_count = extra_count;
+        self
+    }
+    pub fn extras(mut self, extras: *const *const c_void) -> Self {
+        self.inner.p_extras = extras;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> CuLaunchInfoNVX {
         self.inner
     }
 }

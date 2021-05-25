@@ -1652,6 +1652,8 @@ impl DriverId {
     pub const MOLTENVK: Self = Self(14);
     #[doc = "Core Avionics & Industrial Inc."]
     pub const COREAVI_PROPRIETARY: Self = Self(15);
+    #[doc = "Juice Technologies, Inc."]
+    pub const JUICE_PROPRIETARY: Self = Self(16);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
