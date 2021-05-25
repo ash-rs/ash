@@ -13641,7 +13641,7 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_NV_shading_rate_image'"]
 impl ImageLayout {
-    pub const SHADING_RATE_OPTIMAL_NV: Self = Self(1_000_164_003);
+    pub const SHADING_RATE_OPTIMAL_NV: Self = Self::FRAGMENT_SHADING_RATE_ATTACHMENT_OPTIMAL_KHR;
 }
 #[doc = "Generated from 'VK_NV_shading_rate_image'"]
 impl DynamicState {
@@ -13649,15 +13649,15 @@ impl DynamicState {
 }
 #[doc = "Generated from 'VK_NV_shading_rate_image'"]
 impl AccessFlags {
-    pub const SHADING_RATE_IMAGE_READ_NV: Self = Self(0b1000_0000_0000_0000_0000_0000);
+    pub const SHADING_RATE_IMAGE_READ_NV: Self = Self::FRAGMENT_SHADING_RATE_ATTACHMENT_READ_KHR;
 }
 #[doc = "Generated from 'VK_NV_shading_rate_image'"]
 impl ImageUsageFlags {
-    pub const SHADING_RATE_IMAGE_NV: Self = Self(0b1_0000_0000);
+    pub const SHADING_RATE_IMAGE_NV: Self = Self::FRAGMENT_SHADING_RATE_ATTACHMENT_KHR;
 }
 #[doc = "Generated from 'VK_NV_shading_rate_image'"]
 impl PipelineStageFlags {
-    pub const SHADING_RATE_IMAGE_NV: Self = Self(0b100_0000_0000_0000_0000_0000);
+    pub const SHADING_RATE_IMAGE_NV: Self = Self::FRAGMENT_SHADING_RATE_ATTACHMENT_KHR;
 }
 #[doc = "Generated from 'VK_NV_shading_rate_image'"]
 impl StructureType {
@@ -17326,7 +17326,7 @@ impl KhrFragmentShadingRateFn {
 }
 #[doc = "Generated from 'VK_KHR_fragment_shading_rate'"]
 impl ImageLayout {
-    pub const FRAGMENT_SHADING_RATE_ATTACHMENT_OPTIMAL_KHR: Self = Self::SHADING_RATE_OPTIMAL_NV;
+    pub const FRAGMENT_SHADING_RATE_ATTACHMENT_OPTIMAL_KHR: Self = Self(1_000_164_003);
 }
 #[doc = "Generated from 'VK_KHR_fragment_shading_rate'"]
 impl DynamicState {
@@ -17354,15 +17354,16 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_KHR_fragment_shading_rate'"]
 impl AccessFlags {
-    pub const FRAGMENT_SHADING_RATE_ATTACHMENT_READ_KHR: Self = Self::SHADING_RATE_IMAGE_READ_NV;
+    pub const FRAGMENT_SHADING_RATE_ATTACHMENT_READ_KHR: Self =
+        Self(0b1000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_fragment_shading_rate'"]
 impl ImageUsageFlags {
-    pub const FRAGMENT_SHADING_RATE_ATTACHMENT_KHR: Self = Self::SHADING_RATE_IMAGE_NV;
+    pub const FRAGMENT_SHADING_RATE_ATTACHMENT_KHR: Self = Self(0b1_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_fragment_shading_rate'"]
 impl PipelineStageFlags {
-    pub const FRAGMENT_SHADING_RATE_ATTACHMENT_KHR: Self = Self::SHADING_RATE_IMAGE_NV;
+    pub const FRAGMENT_SHADING_RATE_ATTACHMENT_KHR: Self = Self(0b100_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_fragment_shading_rate'"]
 impl FormatFeatureFlags {
@@ -24701,5 +24702,24 @@ impl JuiceExtension400Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         JuiceExtension400Fn {}
+    }
+}
+impl KhrExtension401Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_401\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct KhrExtension401Fn {}
+unsafe impl Send for KhrExtension401Fn {}
+unsafe impl Sync for KhrExtension401Fn {}
+impl KhrExtension401Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        KhrExtension401Fn {}
     }
 }

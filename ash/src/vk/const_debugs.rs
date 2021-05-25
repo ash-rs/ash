@@ -172,12 +172,12 @@ impl fmt::Debug for AccessFlags {
                 "ACCELERATION_STRUCTURE_WRITE_KHR",
             ),
             (
-                AccessFlags::SHADING_RATE_IMAGE_READ_NV.0,
-                "SHADING_RATE_IMAGE_READ_NV",
-            ),
-            (
                 AccessFlags::FRAGMENT_DENSITY_MAP_READ_EXT.0,
                 "FRAGMENT_DENSITY_MAP_READ_EXT",
+            ),
+            (
+                AccessFlags::FRAGMENT_SHADING_RATE_ATTACHMENT_READ_KHR.0,
+                "FRAGMENT_SHADING_RATE_ATTACHMENT_READ_KHR",
             ),
             (
                 AccessFlags::COMMAND_PREPROCESS_READ_NV.0,
@@ -2107,8 +2107,10 @@ impl fmt::Debug for ImageLayout {
             Self::VIDEO_DECODE_SRC_KHR => Some("VIDEO_DECODE_SRC_KHR"),
             Self::VIDEO_DECODE_DPB_KHR => Some("VIDEO_DECODE_DPB_KHR"),
             Self::SHARED_PRESENT_KHR => Some("SHARED_PRESENT_KHR"),
-            Self::SHADING_RATE_OPTIMAL_NV => Some("SHADING_RATE_OPTIMAL_NV"),
             Self::FRAGMENT_DENSITY_MAP_OPTIMAL_EXT => Some("FRAGMENT_DENSITY_MAP_OPTIMAL_EXT"),
+            Self::FRAGMENT_SHADING_RATE_ATTACHMENT_OPTIMAL_KHR => {
+                Some("FRAGMENT_SHADING_RATE_ATTACHMENT_OPTIMAL_KHR")
+            }
             Self::VIDEO_ENCODE_DST_KHR => Some("VIDEO_ENCODE_DST_KHR"),
             Self::VIDEO_ENCODE_SRC_KHR => Some("VIDEO_ENCODE_SRC_KHR"),
             Self::VIDEO_ENCODE_DPB_KHR => Some("VIDEO_ENCODE_DPB_KHR"),
@@ -2198,15 +2200,15 @@ impl fmt::Debug for ImageUsageFlags {
                 ImageUsageFlags::VIDEO_DECODE_DPB_KHR.0,
                 "VIDEO_DECODE_DPB_KHR",
             ),
-            (
-                ImageUsageFlags::SHADING_RATE_IMAGE_NV.0,
-                "SHADING_RATE_IMAGE_NV",
-            ),
             (ImageUsageFlags::RESERVED_16_QCOM.0, "RESERVED_16_QCOM"),
             (ImageUsageFlags::RESERVED_17_QCOM.0, "RESERVED_17_QCOM"),
             (
                 ImageUsageFlags::FRAGMENT_DENSITY_MAP_EXT.0,
                 "FRAGMENT_DENSITY_MAP_EXT",
+            ),
+            (
+                ImageUsageFlags::FRAGMENT_SHADING_RATE_ATTACHMENT_KHR.0,
+                "FRAGMENT_SHADING_RATE_ATTACHMENT_KHR",
             ),
             (
                 ImageUsageFlags::VIDEO_ENCODE_DST_KHR.0,
@@ -2986,15 +2988,15 @@ impl fmt::Debug for PipelineStageFlags {
                 PipelineStageFlags::RAY_TRACING_SHADER_KHR.0,
                 "RAY_TRACING_SHADER_KHR",
             ),
-            (
-                PipelineStageFlags::SHADING_RATE_IMAGE_NV.0,
-                "SHADING_RATE_IMAGE_NV",
-            ),
             (PipelineStageFlags::TASK_SHADER_NV.0, "TASK_SHADER_NV"),
             (PipelineStageFlags::MESH_SHADER_NV.0, "MESH_SHADER_NV"),
             (
                 PipelineStageFlags::FRAGMENT_DENSITY_PROCESS_EXT.0,
                 "FRAGMENT_DENSITY_PROCESS_EXT",
+            ),
+            (
+                PipelineStageFlags::FRAGMENT_SHADING_RATE_ATTACHMENT_KHR.0,
+                "FRAGMENT_SHADING_RATE_ATTACHMENT_KHR",
             ),
             (
                 PipelineStageFlags::COMMAND_PREPROCESS_NV.0,
