@@ -3,8 +3,9 @@
 use heck::{CamelCase, ShoutySnakeCase, SnakeCase};
 use itertools::Itertools;
 use nom::{
-    alt, character::complete::digit1, delimited, do_parse, map, named, one_of, opt, pair, preceded,
-    tag, terminated,
+    alt,
+    character::complete::{digit1, hex_digit1},
+    complete, delimited, do_parse, map, named, one_of, opt, pair, preceded, tag, terminated, value,
 };
 use once_cell::sync::Lazy;
 use proc_macro2::{Delimiter, Group, Literal, Span, TokenStream, TokenTree};
@@ -26,30 +27,37 @@ pub enum CType {
     Bool32,
 }
 
+impl CType {
+    fn to_string(&self) -> &'static str {
+        match self {
+            Self::USize => "usize",
+            Self::U32 => "u32",
+            Self::U64 => "u64",
+            Self::Float => "f32",
+            Self::Bool32 => "Bool32",
+        }
+    }
+}
+
 impl quote::ToTokens for CType {
     fn to_tokens(&self, tokens: &mut TokenStream) {
-        let term = match self {
-            CType::USize => format_ident!("usize"),
-            CType::U32 => format_ident!("u32"),
-            CType::U64 => format_ident!("u64"),
-            CType::Float => format_ident!("f32"),
-            CType::Bool32 => format_ident!("Bool32"),
-        };
-        term.to_tokens(tokens);
+        format_ident!("{}", self.to_string()).to_tokens(tokens);
     }
 }
 
 named!(ctype<&str, CType>,
     alt!(
-        tag!("ULL") => { |_| CType::U64 } |
-        tag!("U") => { |_| CType::U32 }
+        value!(CType::U64, complete!(tag!("ULL"))) |
+        value!(CType::U32, complete!(tag!("U")))
     )
 );
 
 named!(cexpr<&str, (CType, String)>,
     alt!(
         map!(cfloat, |f| (CType::Float, format!("{:.2}", f))) |
-        inverse_number
+        inverse_number |
+        decimal_number |
+        hexadecimal_number
     )
 );
 
@@ -58,6 +66,17 @@ named!(decimal_number<&str, (CType, String)>,
         num: digit1 >>
         typ: ctype >>
         ((typ, num.to_string()))
+    )
+);
+
+named!(hexadecimal_number<&str, (CType, String)>,
+        preceded!(
+            alt!(tag!("0x") | tag!("0X")),
+            map!(
+                pair!(hex_digit1, ctype),
+                |(num, typ)| (typ, format!("0x{}{}", num.to_ascii_lowercase(), typ.to_string())
+            )
+        )
     )
 );
 
@@ -180,29 +199,6 @@ pub fn handle_nondispatchable_macro() -> TokenStream {
                     }
                 }
             }
-        }
-    }
-}
-pub fn vk_version_macros() -> TokenStream {
-    quote! {
-        #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_MAKE_VERSION.html>"]
-        pub const fn make_version(major: u32, minor: u32, patch: u32) -> u32 {
-            (major << 22) | (minor << 12) | patch
-        }
-
-        #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_VERSION_MAJOR.html>"]
-        pub const fn version_major(version: u32) -> u32 {
-            version >> 22
-        }
-
-        #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_VERSION_MINOR.html>"]
-        pub const fn version_minor(version: u32) -> u32 {
-            (version >> 12) & 0x3ff
-        }
-
-        #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_VERSION_PATCH.html>"]
-        pub const fn version_patch(version: u32) -> u32 {
-            version & 0xfff
         }
     }
 }
@@ -714,12 +710,25 @@ fn name_to_tokens(type_name: &str) -> Ident {
     format_ident!("{}", new_name.as_str())
 }
 
-fn map_identifier_to_rust(ident: Ident) -> TokenTree {
-    match ident.to_string().as_str() {
-        "VK_MAKE_VERSION" => {
-            TokenTree::Group(Group::new(Delimiter::None, quote!(crate::vk::make_version)))
+/// Parses and rewrites a C literal into Rust
+///
+/// If no special pattern is recognized the original literal is returned.
+/// Any new conversions need to be added to the [`cexpr()`] [`nom`] parser.
+///
+/// Examples:
+/// - `0x3FFU` -> `0x3ffu32`
+fn convert_c_literal(lit: Literal) -> Literal {
+    if let Ok((_, (_, rexpr))) = cexpr(&lit.to_string()) {
+        // lit::SynInt uses the same `.parse` method to create hexadecimal
+        // literals because there is no `Literal` constructor for it.
+        let mut stream = rexpr.parse::<TokenStream>().unwrap().into_iter();
+        // If expression rewriting succeeds this should parse into a single literal
+        match (stream.next(), stream.next()) {
+            (Some(TokenTree::Literal(l)), None) => l,
+            x => panic!("Stream must contain a single literal, not {:?}", x),
         }
-        s => format_ident!("{}", constant_name(s)).into(),
+    } else {
+        lit
     }
 }
 
@@ -727,25 +736,47 @@ fn map_identifier_to_rust(ident: Ident) -> TokenTree {
 /// Identifiers are replaced with their Rust vk equivalent.
 ///
 /// Examples:
-/// - `VK_MAKE_VERSION(1, 2, VK_HEADER_VERSION)` -> `crate::vk::make_version(1, 2, HEADER_VERSION)`
+/// - `VK_MAKE_VERSION(1, 2, VK_HEADER_VERSION)` -> `make_version(1, 2, HEADER_VERSION)`
 /// - `2*VK_UUID_SIZE` -> `2 * UUID_SIZE`
-fn convert_c_expression(c_expr: &str) -> TokenStream {
-    fn rewrite_token_stream(stream: TokenStream) -> TokenStream {
+fn convert_c_expression(c_expr: &str, identifier_renames: &BTreeMap<String, Ident>) -> TokenStream {
+    fn rewrite_token_stream(
+        stream: TokenStream,
+        identifier_renames: &BTreeMap<String, Ident>,
+    ) -> TokenStream {
         stream
             .into_iter()
             .map(|tt| match tt {
                 TokenTree::Group(group) => TokenTree::Group(Group::new(
                     group.delimiter(),
-                    rewrite_token_stream(group.stream()),
+                    rewrite_token_stream(group.stream(), identifier_renames),
                 )),
-                TokenTree::Ident(term) => map_identifier_to_rust(term),
-                _ => tt,
+                TokenTree::Ident(term) => {
+                    let name = term.to_string();
+                    identifier_renames
+                        .get(&name)
+                        .cloned()
+                        .unwrap_or_else(|| format_ident!("{}", constant_name(&name)))
+                        .into()
+                }
+                TokenTree::Literal(lit) => TokenTree::Literal(convert_c_literal(lit)),
+                tt => tt,
             })
             .collect::<TokenStream>()
     }
+    let c_expr = c_expr
+        .parse()
+        .unwrap_or_else(|_| panic!("Failed to parse `{}` as Rust", c_expr));
+    rewrite_token_stream(c_expr, identifier_renames)
+}
 
-    let c_expr = c_expr.parse().unwrap();
-    rewrite_token_stream(c_expr)
+fn discard_outmost_delimiter(stream: TokenStream) -> TokenStream {
+    let stream = stream.into_iter().collect_vec();
+    // Discard the delimiter if this stream consists of a single top-most group
+    if let [TokenTree::Group(group)] = stream.as_slice() {
+        TokenTree::Group(Group::new(Delimiter::None, group.stream())).into()
+    } else {
+        stream.into_iter().collect::<TokenStream>()
+    }
 }
 
 impl FieldExt for vkxml::Field {
@@ -1200,23 +1231,53 @@ pub fn generate_extension<'a>(
     };
     Some(q)
 }
-pub fn generate_define(define: &vkxml::Define) -> TokenStream {
+pub fn generate_define(
+    define: &vkxml::Define,
+    identifier_renames: &mut BTreeMap<String, Ident>,
+) -> TokenStream {
     let name = constant_name(&define.name);
     let ident = format_ident!("{}", name);
-    let deprecated = define
-        .comment
-        .as_ref()
-        .map_or(false, |c| c.contains("DEPRECATED"));
 
-    if name == "NULL_HANDLE" || deprecated {
+    if name == "NULL_HANDLE" {
         quote!()
     } else if let Some(value) = &define.value {
         str::parse::<u32>(value).map_or(quote!(), |v| quote!(pub const #ident: u32 = #v;))
     } else if let Some(c_expr) = &define.c_expression {
-        if define.defref.contains(&"VK_MAKE_VERSION".to_string()) {
-            let c_expr = convert_c_expression(c_expr);
+        if define.name.contains(&"VERSION".to_string()) {
+            let link = khronos_link(&define.name);
+            let c_expr = c_expr.trim_start_matches('\\');
+            let c_expr = c_expr.replace("(uint32_t)", "");
+            let c_expr = convert_c_expression(&c_expr, &identifier_renames);
+            let c_expr = discard_outmost_delimiter(c_expr);
 
-            quote!(pub const #ident: u32 = #c_expr;)
+            let deprecated = define
+                .comment
+                .as_ref()
+                .and_then(|c| c.strip_prefix("DEPRECATED: "))
+                .map(|comment| quote!(#[deprecated = #comment]));
+
+            let (code, ident) = if define.parameters.is_empty() {
+                (quote!(pub const #ident: u32 = #c_expr;), ident)
+            } else {
+                let params = define
+                    .parameters
+                    .iter()
+                    .map(|param| format_ident!("{}", param))
+                    .map(|i| quote!(#i: u32));
+                let ident = format_ident!("{}", name.to_lowercase());
+                (
+                    quote!(pub const fn #ident(#(#params),*) -> u32 { #c_expr }),
+                    ident,
+                )
+            };
+
+            identifier_renames.insert(define.name.clone(), ident);
+
+            quote! {
+                #deprecated
+                #[doc = #link]
+                #code
+            }
         } else {
             quote!()
         }
@@ -1843,7 +1904,7 @@ pub fn derive_setters(
                         let set_size_stmt = if array_size.contains("ename:") || array_size.contains('*') {
                             // c_size should contain the same minus `ename:`-prefixed identifiers
                             let array_size = field.c_size.as_ref().unwrap_or(array_size);
-                            let c_size = convert_c_expression(array_size);
+                            let c_size = convert_c_expression(array_size, &BTreeMap::new());
                             let inner_type = field.inner_type_tokens();
 
                             slice_param_ty_tokens = quote!([#inner_type; #c_size]);
@@ -2186,9 +2247,12 @@ pub fn generate_definition(
     root_structs: &HashSet<String, impl BuildHasher>,
     bitflags_cache: &mut HashSet<Ident, impl BuildHasher>,
     const_values: &mut BTreeMap<Ident, ConstantTypeInfo>,
+    identifier_renames: &mut BTreeMap<String, Ident>,
 ) -> Option<TokenStream> {
     match *definition {
-        vkxml::DefinitionsElement::Define(ref define) => Some(generate_define(define)),
+        vkxml::DefinitionsElement::Define(ref define) => {
+            Some(generate_define(define, identifier_renames))
+        }
         vkxml::DefinitionsElement::Typedef(ref typedef) => Some(generate_typedef(typedef)),
         vkxml::DefinitionsElement::Struct(ref _struct) => {
             Some(generate_struct(_struct, root_structs, union_types))
@@ -2585,6 +2649,8 @@ pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, src_dir: P) {
         })
         .collect::<HashSet<&str>>();
 
+    let mut identifier_renames = BTreeMap::new();
+
     let root_names = root_struct_names(&definitions);
     let definition_code: Vec<_> = definitions
         .into_iter()
@@ -2595,6 +2661,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, src_dir: P) {
                 &root_names,
                 &mut bitflags_cache,
                 &mut const_values,
+                &mut identifier_renames,
             )
         })
         .collect();
@@ -2611,7 +2678,6 @@ pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, src_dir: P) {
     let bitflags_macro = vk_bitflags_wrapped_macro();
     let handle_nondispatchable_macro = handle_nondispatchable_macro();
     let define_handle_macro = define_handle_macro();
-    let version_macros = vk_version_macros();
 
     let ptr_chain_code = quote! {
         /// Iterates through the pointer chain. Includes the item that is passed into the function.
@@ -2633,7 +2699,6 @@ pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, src_dir: P) {
     };
 
     let macros_code = quote! {
-        #version_macros
         #bitflags_macro
         #handle_nondispatchable_macro
         #define_handle_macro
