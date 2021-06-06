@@ -5,6 +5,7 @@ authors = ["Maik Klein <maikklein@googlemail.com>"]
 edition = "2018"
 
 [dependencies]
+bindgen = "0.58"
 heck = "0.3"
 itertools = "0.10"
 nom = "6.0"

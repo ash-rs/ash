@@ -2393,139 +2393,807 @@ impl StructureType {
 impl StructureType {
     pub const DEBUG_MARKER_MARKER_INFO_EXT: Self = Self(1_000_022_002);
 }
-impl AmdExtension24Fn {
+impl KhrVideoQueueFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_24\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_video_queue\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPhysicalDeviceVideoCapabilitiesKHR = unsafe extern "system" fn(
+    physical_device: PhysicalDevice,
+    p_video_profile: *const VideoProfileKHR,
+    p_capabilities: *mut VideoCapabilitiesKHR,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPhysicalDeviceVideoFormatPropertiesKHR = unsafe extern "system" fn(
+    physical_device: PhysicalDevice,
+    p_video_format_info: *const PhysicalDeviceVideoFormatInfoKHR,
+    p_video_format_property_count: *mut u32,
+    p_video_format_properties: *mut VideoFormatPropertiesKHR,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCreateVideoSessionKHR = unsafe extern "system" fn(
+    device: Device,
+    p_create_info: *const VideoSessionCreateInfoKHR,
+    p_allocator: *const AllocationCallbacks,
+    p_video_session: *mut VideoSessionKHR,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkDestroyVideoSessionKHR = unsafe extern "system" fn(
+    device: Device,
+    video_session: VideoSessionKHR,
+    p_allocator: *const AllocationCallbacks,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetVideoSessionMemoryRequirementsKHR = unsafe extern "system" fn(
+    device: Device,
+    video_session: VideoSessionKHR,
+    p_video_session_memory_requirements_count: *mut u32,
+    p_video_session_memory_requirements: *mut VideoGetMemoryPropertiesKHR,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkBindVideoSessionMemoryKHR = unsafe extern "system" fn(
+    device: Device,
+    video_session: VideoSessionKHR,
+    video_session_bind_memory_count: u32,
+    p_video_session_bind_memories: *const VideoBindMemoryKHR,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCreateVideoSessionParametersKHR = unsafe extern "system" fn(
+    device: Device,
+    p_create_info: *const VideoSessionParametersCreateInfoKHR,
+    p_allocator: *const AllocationCallbacks,
+    p_video_session_parameters: *mut VideoSessionParametersKHR,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkUpdateVideoSessionParametersKHR = unsafe extern "system" fn(
+    device: Device,
+    video_session_parameters: VideoSessionParametersKHR,
+    p_update_info: *const VideoSessionParametersUpdateInfoKHR,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkDestroyVideoSessionParametersKHR = unsafe extern "system" fn(
+    device: Device,
+    video_session_parameters: VideoSessionParametersKHR,
+    p_allocator: *const AllocationCallbacks,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBeginVideoCodingKHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_begin_info: *const VideoBeginCodingInfoKHR,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdEndVideoCodingKHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_end_coding_info: *const VideoEndCodingInfoKHR,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdControlVideoCodingKHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_coding_control_info: *const VideoCodingControlInfoKHR,
+);
 #[derive(Clone)]
-pub struct AmdExtension24Fn {}
-unsafe impl Send for AmdExtension24Fn {}
-unsafe impl Sync for AmdExtension24Fn {}
-impl AmdExtension24Fn {
+pub struct KhrVideoQueueFn {
+    pub get_physical_device_video_capabilities_khr: PFN_vkGetPhysicalDeviceVideoCapabilitiesKHR,
+    pub get_physical_device_video_format_properties_khr:
+        PFN_vkGetPhysicalDeviceVideoFormatPropertiesKHR,
+    pub create_video_session_khr: PFN_vkCreateVideoSessionKHR,
+    pub destroy_video_session_khr: PFN_vkDestroyVideoSessionKHR,
+    pub get_video_session_memory_requirements_khr: PFN_vkGetVideoSessionMemoryRequirementsKHR,
+    pub bind_video_session_memory_khr: PFN_vkBindVideoSessionMemoryKHR,
+    pub create_video_session_parameters_khr: PFN_vkCreateVideoSessionParametersKHR,
+    pub update_video_session_parameters_khr: PFN_vkUpdateVideoSessionParametersKHR,
+    pub destroy_video_session_parameters_khr: PFN_vkDestroyVideoSessionParametersKHR,
+    pub cmd_begin_video_coding_khr: PFN_vkCmdBeginVideoCodingKHR,
+    pub cmd_end_video_coding_khr: PFN_vkCmdEndVideoCodingKHR,
+    pub cmd_control_video_coding_khr: PFN_vkCmdControlVideoCodingKHR,
+}
+unsafe impl Send for KhrVideoQueueFn {}
+unsafe impl Sync for KhrVideoQueueFn {}
+impl KhrVideoQueueFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension24Fn {}
+        KhrVideoQueueFn {
+            get_physical_device_video_capabilities_khr: unsafe {
+                unsafe extern "system" fn get_physical_device_video_capabilities_khr(
+                    _physical_device: PhysicalDevice,
+                    _p_video_profile: *const VideoProfileKHR,
+                    _p_capabilities: *mut VideoCapabilitiesKHR,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_physical_device_video_capabilities_khr)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetPhysicalDeviceVideoCapabilitiesKHR\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_physical_device_video_capabilities_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_physical_device_video_format_properties_khr: unsafe {
+                unsafe extern "system" fn get_physical_device_video_format_properties_khr(
+                    _physical_device: PhysicalDevice,
+                    _p_video_format_info: *const PhysicalDeviceVideoFormatInfoKHR,
+                    _p_video_format_property_count: *mut u32,
+                    _p_video_format_properties: *mut VideoFormatPropertiesKHR,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_physical_device_video_format_properties_khr)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetPhysicalDeviceVideoFormatPropertiesKHR\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_physical_device_video_format_properties_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            create_video_session_khr: unsafe {
+                unsafe extern "system" fn create_video_session_khr(
+                    _device: Device,
+                    _p_create_info: *const VideoSessionCreateInfoKHR,
+                    _p_allocator: *const AllocationCallbacks,
+                    _p_video_session: *mut VideoSessionKHR,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(create_video_session_khr)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCreateVideoSessionKHR\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    create_video_session_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            destroy_video_session_khr: unsafe {
+                unsafe extern "system" fn destroy_video_session_khr(
+                    _device: Device,
+                    _video_session: VideoSessionKHR,
+                    _p_allocator: *const AllocationCallbacks,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(destroy_video_session_khr)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkDestroyVideoSessionKHR\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    destroy_video_session_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_video_session_memory_requirements_khr: unsafe {
+                unsafe extern "system" fn get_video_session_memory_requirements_khr(
+                    _device: Device,
+                    _video_session: VideoSessionKHR,
+                    _p_video_session_memory_requirements_count: *mut u32,
+                    _p_video_session_memory_requirements: *mut VideoGetMemoryPropertiesKHR,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_video_session_memory_requirements_khr)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetVideoSessionMemoryRequirementsKHR\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_video_session_memory_requirements_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            bind_video_session_memory_khr: unsafe {
+                unsafe extern "system" fn bind_video_session_memory_khr(
+                    _device: Device,
+                    _video_session: VideoSessionKHR,
+                    _video_session_bind_memory_count: u32,
+                    _p_video_session_bind_memories: *const VideoBindMemoryKHR,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(bind_video_session_memory_khr)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkBindVideoSessionMemoryKHR\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    bind_video_session_memory_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            create_video_session_parameters_khr: unsafe {
+                unsafe extern "system" fn create_video_session_parameters_khr(
+                    _device: Device,
+                    _p_create_info: *const VideoSessionParametersCreateInfoKHR,
+                    _p_allocator: *const AllocationCallbacks,
+                    _p_video_session_parameters: *mut VideoSessionParametersKHR,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(create_video_session_parameters_khr)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCreateVideoSessionParametersKHR\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    create_video_session_parameters_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            update_video_session_parameters_khr: unsafe {
+                unsafe extern "system" fn update_video_session_parameters_khr(
+                    _device: Device,
+                    _video_session_parameters: VideoSessionParametersKHR,
+                    _p_update_info: *const VideoSessionParametersUpdateInfoKHR,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(update_video_session_parameters_khr)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkUpdateVideoSessionParametersKHR\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    update_video_session_parameters_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            destroy_video_session_parameters_khr: unsafe {
+                unsafe extern "system" fn destroy_video_session_parameters_khr(
+                    _device: Device,
+                    _video_session_parameters: VideoSessionParametersKHR,
+                    _p_allocator: *const AllocationCallbacks,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(destroy_video_session_parameters_khr)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkDestroyVideoSessionParametersKHR\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    destroy_video_session_parameters_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_begin_video_coding_khr: unsafe {
+                unsafe extern "system" fn cmd_begin_video_coding_khr(
+                    _command_buffer: CommandBuffer,
+                    _p_begin_info: *const VideoBeginCodingInfoKHR,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_begin_video_coding_khr)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdBeginVideoCodingKHR\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_begin_video_coding_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_end_video_coding_khr: unsafe {
+                unsafe extern "system" fn cmd_end_video_coding_khr(
+                    _command_buffer: CommandBuffer,
+                    _p_end_coding_info: *const VideoEndCodingInfoKHR,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_end_video_coding_khr)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdEndVideoCodingKHR\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_end_video_coding_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_control_video_coding_khr: unsafe {
+                unsafe extern "system" fn cmd_control_video_coding_khr(
+                    _command_buffer: CommandBuffer,
+                    _p_coding_control_info: *const VideoCodingControlInfoKHR,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_control_video_coding_khr)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdControlVideoCodingKHR\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_control_video_coding_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceVideoCapabilitiesKHR.html>"]
+    pub unsafe fn get_physical_device_video_capabilities_khr(
+        &self,
+        physical_device: PhysicalDevice,
+        p_video_profile: *const VideoProfileKHR,
+        p_capabilities: *mut VideoCapabilitiesKHR,
+    ) -> Result {
+        (self.get_physical_device_video_capabilities_khr)(
+            physical_device,
+            p_video_profile,
+            p_capabilities,
+        )
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceVideoFormatPropertiesKHR.html>"]
+    pub unsafe fn get_physical_device_video_format_properties_khr(
+        &self,
+        physical_device: PhysicalDevice,
+        p_video_format_info: *const PhysicalDeviceVideoFormatInfoKHR,
+        p_video_format_property_count: *mut u32,
+        p_video_format_properties: *mut VideoFormatPropertiesKHR,
+    ) -> Result {
+        (self.get_physical_device_video_format_properties_khr)(
+            physical_device,
+            p_video_format_info,
+            p_video_format_property_count,
+            p_video_format_properties,
+        )
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateVideoSessionKHR.html>"]
+    pub unsafe fn create_video_session_khr(
+        &self,
+        device: Device,
+        p_create_info: *const VideoSessionCreateInfoKHR,
+        p_allocator: *const AllocationCallbacks,
+        p_video_session: *mut VideoSessionKHR,
+    ) -> Result {
+        (self.create_video_session_khr)(device, p_create_info, p_allocator, p_video_session)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyVideoSessionKHR.html>"]
+    pub unsafe fn destroy_video_session_khr(
+        &self,
+        device: Device,
+        video_session: VideoSessionKHR,
+        p_allocator: *const AllocationCallbacks,
+    ) {
+        (self.destroy_video_session_khr)(device, video_session, p_allocator)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetVideoSessionMemoryRequirementsKHR.html>"]
+    pub unsafe fn get_video_session_memory_requirements_khr(
+        &self,
+        device: Device,
+        video_session: VideoSessionKHR,
+        p_video_session_memory_requirements_count: *mut u32,
+        p_video_session_memory_requirements: *mut VideoGetMemoryPropertiesKHR,
+    ) -> Result {
+        (self.get_video_session_memory_requirements_khr)(
+            device,
+            video_session,
+            p_video_session_memory_requirements_count,
+            p_video_session_memory_requirements,
+        )
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkBindVideoSessionMemoryKHR.html>"]
+    pub unsafe fn bind_video_session_memory_khr(
+        &self,
+        device: Device,
+        video_session: VideoSessionKHR,
+        video_session_bind_memory_count: u32,
+        p_video_session_bind_memories: *const VideoBindMemoryKHR,
+    ) -> Result {
+        (self.bind_video_session_memory_khr)(
+            device,
+            video_session,
+            video_session_bind_memory_count,
+            p_video_session_bind_memories,
+        )
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateVideoSessionParametersKHR.html>"]
+    pub unsafe fn create_video_session_parameters_khr(
+        &self,
+        device: Device,
+        p_create_info: *const VideoSessionParametersCreateInfoKHR,
+        p_allocator: *const AllocationCallbacks,
+        p_video_session_parameters: *mut VideoSessionParametersKHR,
+    ) -> Result {
+        (self.create_video_session_parameters_khr)(
+            device,
+            p_create_info,
+            p_allocator,
+            p_video_session_parameters,
+        )
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkUpdateVideoSessionParametersKHR.html>"]
+    pub unsafe fn update_video_session_parameters_khr(
+        &self,
+        device: Device,
+        video_session_parameters: VideoSessionParametersKHR,
+        p_update_info: *const VideoSessionParametersUpdateInfoKHR,
+    ) -> Result {
+        (self.update_video_session_parameters_khr)(device, video_session_parameters, p_update_info)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyVideoSessionParametersKHR.html>"]
+    pub unsafe fn destroy_video_session_parameters_khr(
+        &self,
+        device: Device,
+        video_session_parameters: VideoSessionParametersKHR,
+        p_allocator: *const AllocationCallbacks,
+    ) {
+        (self.destroy_video_session_parameters_khr)(device, video_session_parameters, p_allocator)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBeginVideoCodingKHR.html>"]
+    pub unsafe fn cmd_begin_video_coding_khr(
+        &self,
+        command_buffer: CommandBuffer,
+        p_begin_info: *const VideoBeginCodingInfoKHR,
+    ) {
+        (self.cmd_begin_video_coding_khr)(command_buffer, p_begin_info)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdEndVideoCodingKHR.html>"]
+    pub unsafe fn cmd_end_video_coding_khr(
+        &self,
+        command_buffer: CommandBuffer,
+        p_end_coding_info: *const VideoEndCodingInfoKHR,
+    ) {
+        (self.cmd_end_video_coding_khr)(command_buffer, p_end_coding_info)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdControlVideoCodingKHR.html>"]
+    pub unsafe fn cmd_control_video_coding_khr(
+        &self,
+        command_buffer: CommandBuffer,
+        p_coding_control_info: *const VideoCodingControlInfoKHR,
+    ) {
+        (self.cmd_control_video_coding_khr)(command_buffer, p_coding_control_info)
     }
 }
-#[doc = "Generated from 'VK_AMD_extension_24'"]
-impl QueueFlags {
-    pub const RESERVED_6_KHR: Self = Self(0b100_0000);
+#[doc = "Generated from 'VK_KHR_video_queue'"]
+impl StructureType {
+    pub const VIDEO_PROFILE_KHR: Self = Self(1_000_023_000);
 }
-#[doc = "Generated from 'VK_AMD_extension_24'"]
-impl PipelineStageFlags2KHR {
-    pub const RESERVED_26: Self = Self(0b100_0000_0000_0000_0000_0000_0000);
+#[doc = "Generated from 'VK_KHR_video_queue'"]
+impl StructureType {
+    pub const VIDEO_CAPABILITIES_KHR: Self = Self(1_000_023_001);
 }
-#[doc = "Generated from 'VK_AMD_extension_24'"]
-impl AccessFlags2KHR {
-    pub const RESERVED_READ_35: Self = Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000);
+#[doc = "Generated from 'VK_KHR_video_queue'"]
+impl StructureType {
+    pub const VIDEO_PICTURE_RESOURCE_KHR: Self = Self(1_000_023_002);
 }
-#[doc = "Generated from 'VK_AMD_extension_24'"]
-impl AccessFlags2KHR {
-    pub const RESERVED_WRITE_36: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+#[doc = "Generated from 'VK_KHR_video_queue'"]
+impl StructureType {
+    pub const VIDEO_GET_MEMORY_PROPERTIES_KHR: Self = Self(1_000_023_003);
 }
-#[doc = "Generated from 'VK_AMD_extension_24'"]
-impl BufferUsageFlags {
-    pub const RESERVED_15_KHR: Self = Self(0b1000_0000_0000_0000);
+#[doc = "Generated from 'VK_KHR_video_queue'"]
+impl StructureType {
+    pub const VIDEO_BIND_MEMORY_KHR: Self = Self(1_000_023_004);
 }
-#[doc = "Generated from 'VK_AMD_extension_24'"]
-impl BufferUsageFlags {
-    pub const RESERVED_16_KHR: Self = Self(0b1_0000_0000_0000_0000);
+#[doc = "Generated from 'VK_KHR_video_queue'"]
+impl StructureType {
+    pub const VIDEO_SESSION_CREATE_INFO_KHR: Self = Self(1_000_023_005);
 }
-#[doc = "Generated from 'VK_AMD_extension_24'"]
-impl ImageUsageFlags {
-    pub const RESERVED_13_KHR: Self = Self(0b10_0000_0000_0000);
+#[doc = "Generated from 'VK_KHR_video_queue'"]
+impl StructureType {
+    pub const VIDEO_SESSION_PARAMETERS_CREATE_INFO_KHR: Self = Self(1_000_023_006);
 }
-#[doc = "Generated from 'VK_AMD_extension_24'"]
-impl ImageUsageFlags {
-    pub const RESERVED_14_KHR: Self = Self(0b100_0000_0000_0000);
+#[doc = "Generated from 'VK_KHR_video_queue'"]
+impl StructureType {
+    pub const VIDEO_SESSION_PARAMETERS_UPDATE_INFO_KHR: Self = Self(1_000_023_007);
 }
-#[doc = "Generated from 'VK_AMD_extension_24'"]
-impl ImageUsageFlags {
-    pub const RESERVED_15_KHR: Self = Self(0b1000_0000_0000_0000);
+#[doc = "Generated from 'VK_KHR_video_queue'"]
+impl StructureType {
+    pub const VIDEO_BEGIN_CODING_INFO_KHR: Self = Self(1_000_023_008);
 }
-#[doc = "Generated from 'VK_AMD_extension_24'"]
-impl FormatFeatureFlags {
-    pub const RESERVED_27_KHR: Self = Self(0b1000_0000_0000_0000_0000_0000_0000);
+#[doc = "Generated from 'VK_KHR_video_queue'"]
+impl StructureType {
+    pub const VIDEO_END_CODING_INFO_KHR: Self = Self(1_000_023_009);
 }
-#[doc = "Generated from 'VK_AMD_extension_24'"]
-impl FormatFeatureFlags {
-    pub const RESERVED_28_KHR: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000);
+#[doc = "Generated from 'VK_KHR_video_queue'"]
+impl StructureType {
+    pub const VIDEO_CODING_CONTROL_INFO_KHR: Self = Self(1_000_023_010);
 }
-#[doc = "Generated from 'VK_AMD_extension_24'"]
+#[doc = "Generated from 'VK_KHR_video_queue'"]
+impl StructureType {
+    pub const VIDEO_REFERENCE_SLOT_KHR: Self = Self(1_000_023_011);
+}
+#[doc = "Generated from 'VK_KHR_video_queue'"]
+impl StructureType {
+    pub const VIDEO_QUEUE_FAMILY_PROPERTIES_2_KHR: Self = Self(1_000_023_012);
+}
+#[doc = "Generated from 'VK_KHR_video_queue'"]
+impl StructureType {
+    pub const VIDEO_PROFILES_KHR: Self = Self(1_000_023_013);
+}
+#[doc = "Generated from 'VK_KHR_video_queue'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_VIDEO_FORMAT_INFO_KHR: Self = Self(1_000_023_014);
+}
+#[doc = "Generated from 'VK_KHR_video_queue'"]
+impl StructureType {
+    pub const VIDEO_FORMAT_PROPERTIES_KHR: Self = Self(1_000_023_015);
+}
+#[doc = "Generated from 'VK_KHR_video_queue'"]
+impl ObjectType {
+    pub const VIDEO_SESSION_KHR: Self = Self(1_000_023_000);
+}
+#[doc = "Generated from 'VK_KHR_video_queue'"]
+impl ObjectType {
+    pub const VIDEO_SESSION_PARAMETERS_KHR: Self = Self(1_000_023_001);
+}
+#[doc = "Generated from 'VK_KHR_video_queue'"]
 impl QueryType {
-    pub const RESERVED_8: Self = Self(1_000_023_008);
+    pub const RESULT_STATUS_ONLY_KHR: Self = Self(1_000_023_000);
 }
-impl AmdExtension25Fn {
+#[doc = "Generated from 'VK_KHR_video_queue'"]
+impl QueryResultFlags {
+    pub const WITH_STATUS_KHR: Self = Self(0b1_0000);
+}
+impl KhrVideoDecodeQueueFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_25\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_video_decode_queue\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDecodeVideoKHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_frame_info: *const VideoDecodeInfoKHR,
+);
 #[derive(Clone)]
-pub struct AmdExtension25Fn {}
-unsafe impl Send for AmdExtension25Fn {}
-unsafe impl Sync for AmdExtension25Fn {}
-impl AmdExtension25Fn {
+pub struct KhrVideoDecodeQueueFn {
+    pub cmd_decode_video_khr: PFN_vkCmdDecodeVideoKHR,
+}
+unsafe impl Send for KhrVideoDecodeQueueFn {}
+unsafe impl Sync for KhrVideoDecodeQueueFn {}
+impl KhrVideoDecodeQueueFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension25Fn {}
+        KhrVideoDecodeQueueFn {
+            cmd_decode_video_khr: unsafe {
+                unsafe extern "system" fn cmd_decode_video_khr(
+                    _command_buffer: CommandBuffer,
+                    _p_frame_info: *const VideoDecodeInfoKHR,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_decode_video_khr)))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdDecodeVideoKHR\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_decode_video_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDecodeVideoKHR.html>"]
+    pub unsafe fn cmd_decode_video_khr(
+        &self,
+        command_buffer: CommandBuffer,
+        p_frame_info: *const VideoDecodeInfoKHR,
+    ) {
+        (self.cmd_decode_video_khr)(command_buffer, p_frame_info)
     }
 }
-#[doc = "Generated from 'VK_AMD_extension_25'"]
+#[doc = "Generated from 'VK_KHR_video_decode_queue'"]
+impl StructureType {
+    pub const VIDEO_DECODE_INFO_KHR: Self = Self(1_000_024_000);
+}
+#[doc = "Generated from 'VK_KHR_video_decode_queue'"]
 impl QueueFlags {
-    pub const RESERVED_5_KHR: Self = Self(0b10_0000);
+    pub const VIDEO_DECODE_KHR: Self = Self(0b10_0000);
 }
-#[doc = "Generated from 'VK_AMD_extension_25'"]
+#[doc = "Generated from 'VK_KHR_video_decode_queue'"]
 impl PipelineStageFlags2KHR {
-    pub const RESERVED_27: Self = Self(0b1000_0000_0000_0000_0000_0000_0000);
+    pub const VIDEO_DECODE: Self = Self(0b100_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from 'VK_AMD_extension_25'"]
+#[doc = "Generated from 'VK_KHR_video_decode_queue'"]
 impl AccessFlags2KHR {
-    pub const RESERVED_READ_37: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const VIDEO_DECODE_READ: Self = Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from 'VK_AMD_extension_25'"]
+#[doc = "Generated from 'VK_KHR_video_decode_queue'"]
 impl AccessFlags2KHR {
-    pub const RESERVED_WRITE_38: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const VIDEO_DECODE_WRITE: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from 'VK_AMD_extension_25'"]
+#[doc = "Generated from 'VK_KHR_video_decode_queue'"]
 impl BufferUsageFlags {
-    pub const RESERVED_13_KHR: Self = Self(0b10_0000_0000_0000);
+    pub const VIDEO_DECODE_SRC_KHR: Self = Self(0b10_0000_0000_0000);
 }
-#[doc = "Generated from 'VK_AMD_extension_25'"]
+#[doc = "Generated from 'VK_KHR_video_decode_queue'"]
 impl BufferUsageFlags {
-    pub const RESERVED_14_KHR: Self = Self(0b100_0000_0000_0000);
+    pub const VIDEO_DECODE_DST_KHR: Self = Self(0b100_0000_0000_0000);
 }
-#[doc = "Generated from 'VK_AMD_extension_25'"]
+#[doc = "Generated from 'VK_KHR_video_decode_queue'"]
 impl ImageUsageFlags {
-    pub const RESERVED_10_KHR: Self = Self(0b100_0000_0000);
+    pub const VIDEO_DECODE_DST_KHR: Self = Self(0b100_0000_0000);
 }
-#[doc = "Generated from 'VK_AMD_extension_25'"]
+#[doc = "Generated from 'VK_KHR_video_decode_queue'"]
 impl ImageUsageFlags {
-    pub const RESERVED_11_KHR: Self = Self(0b1000_0000_0000);
+    pub const VIDEO_DECODE_SRC_KHR: Self = Self(0b1000_0000_0000);
 }
-#[doc = "Generated from 'VK_AMD_extension_25'"]
+#[doc = "Generated from 'VK_KHR_video_decode_queue'"]
 impl ImageUsageFlags {
-    pub const RESERVED_12_KHR: Self = Self(0b1_0000_0000_0000);
+    pub const VIDEO_DECODE_DPB_KHR: Self = Self(0b1_0000_0000_0000);
 }
-#[doc = "Generated from 'VK_AMD_extension_25'"]
+#[doc = "Generated from 'VK_KHR_video_decode_queue'"]
 impl FormatFeatureFlags {
-    pub const RESERVED_25_KHR: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
+    pub const VIDEO_DECODE_OUTPUT_KHR: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from 'VK_AMD_extension_25'"]
+#[doc = "Generated from 'VK_KHR_video_decode_queue'"]
 impl FormatFeatureFlags {
-    pub const RESERVED_26_KHR: Self = Self(0b100_0000_0000_0000_0000_0000_0000);
+    pub const VIDEO_DECODE_DPB_KHR: Self = Self(0b100_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from 'VK_AMD_extension_25'"]
+#[doc = "Generated from 'VK_KHR_video_decode_queue'"]
+impl ImageLayout {
+    pub const VIDEO_DECODE_DST_KHR: Self = Self(1_000_024_000);
+}
+#[doc = "Generated from 'VK_KHR_video_decode_queue'"]
+impl ImageLayout {
+    pub const VIDEO_DECODE_SRC_KHR: Self = Self(1_000_024_001);
+}
+#[doc = "Generated from 'VK_KHR_video_decode_queue'"]
+impl ImageLayout {
+    pub const VIDEO_DECODE_DPB_KHR: Self = Self(1_000_024_002);
+}
+impl KhrVideoEncodeQueueFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_video_encode_queue\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdEncodeVideoKHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_encode_info: *const VideoEncodeInfoKHR,
+);
+#[derive(Clone)]
+pub struct KhrVideoEncodeQueueFn {
+    pub cmd_encode_video_khr: PFN_vkCmdEncodeVideoKHR,
+}
+unsafe impl Send for KhrVideoEncodeQueueFn {}
+unsafe impl Sync for KhrVideoEncodeQueueFn {}
+impl KhrVideoEncodeQueueFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        KhrVideoEncodeQueueFn {
+            cmd_encode_video_khr: unsafe {
+                unsafe extern "system" fn cmd_encode_video_khr(
+                    _command_buffer: CommandBuffer,
+                    _p_encode_info: *const VideoEncodeInfoKHR,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_encode_video_khr)))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdEncodeVideoKHR\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_encode_video_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdEncodeVideoKHR.html>"]
+    pub unsafe fn cmd_encode_video_khr(
+        &self,
+        command_buffer: CommandBuffer,
+        p_encode_info: *const VideoEncodeInfoKHR,
+    ) {
+        (self.cmd_encode_video_khr)(command_buffer, p_encode_info)
+    }
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl PipelineStageFlags2KHR {
+    pub const VIDEO_ENCODE: Self = Self(0b1000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl AccessFlags2KHR {
+    pub const VIDEO_ENCODE_READ: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl AccessFlags2KHR {
+    pub const VIDEO_ENCODE_WRITE: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl StructureType {
+    pub const VIDEO_ENCODE_INFO_KHR: Self = Self(1_000_299_000);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl StructureType {
+    pub const VIDEO_ENCODE_RATE_CONTROL_INFO_KHR: Self = Self(1_000_299_001);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl QueueFlags {
+    pub const VIDEO_ENCODE_KHR: Self = Self(0b100_0000);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl BufferUsageFlags {
+    pub const VIDEO_ENCODE_DST_KHR: Self = Self(0b1000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl BufferUsageFlags {
+    pub const VIDEO_ENCODE_SRC_KHR: Self = Self(0b1_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl ImageUsageFlags {
+    pub const VIDEO_ENCODE_DST_KHR: Self = Self(0b10_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl ImageUsageFlags {
+    pub const VIDEO_ENCODE_SRC_KHR: Self = Self(0b100_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl ImageUsageFlags {
+    pub const VIDEO_ENCODE_DPB_KHR: Self = Self(0b1000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl FormatFeatureFlags {
+    pub const VIDEO_ENCODE_INPUT_KHR: Self = Self(0b1000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl FormatFeatureFlags {
+    pub const VIDEO_ENCODE_DPB_KHR: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl ImageLayout {
+    pub const VIDEO_ENCODE_DST_KHR: Self = Self(1_000_299_000);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl ImageLayout {
+    pub const VIDEO_ENCODE_SRC_KHR: Self = Self(1_000_299_001);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl ImageLayout {
+    pub const VIDEO_ENCODE_DPB_KHR: Self = Self(1_000_299_002);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
 impl QueryType {
-    pub const RESERVED_4: Self = Self(1_000_024_004);
+    pub const VIDEO_ENCODESTREAM_BUFFER_RANGE_KHR: Self = Self(1_000_299_000);
 }
 impl AmdGcnShaderFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -3310,62 +3978,119 @@ impl AmdShaderBallotFn {
         AmdShaderBallotFn {}
     }
 }
-impl AmdExtension39Fn {
+impl ExtVideoEncodeH264Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_39\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_video_encode_h264\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct AmdExtension39Fn {}
-unsafe impl Send for AmdExtension39Fn {}
-unsafe impl Sync for AmdExtension39Fn {}
-impl AmdExtension39Fn {
+pub struct ExtVideoEncodeH264Fn {}
+unsafe impl Send for ExtVideoEncodeH264Fn {}
+unsafe impl Sync for ExtVideoEncodeH264Fn {}
+impl ExtVideoEncodeH264Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension39Fn {}
+        ExtVideoEncodeH264Fn {}
     }
 }
-impl AmdExtension40Fn {
+#[doc = "Generated from 'VK_EXT_video_encode_h264'"]
+impl StructureType {
+    pub const VIDEO_ENCODE_H264_CAPABILITIES_EXT: Self = Self(1_000_038_000);
+}
+#[doc = "Generated from 'VK_EXT_video_encode_h264'"]
+impl StructureType {
+    pub const VIDEO_ENCODE_H264_SESSION_CREATE_INFO_EXT: Self = Self(1_000_038_001);
+}
+#[doc = "Generated from 'VK_EXT_video_encode_h264'"]
+impl StructureType {
+    pub const VIDEO_ENCODE_H264_SESSION_PARAMETERS_CREATE_INFO_EXT: Self = Self(1_000_038_002);
+}
+#[doc = "Generated from 'VK_EXT_video_encode_h264'"]
+impl StructureType {
+    pub const VIDEO_ENCODE_H264_SESSION_PARAMETERS_ADD_INFO_EXT: Self = Self(1_000_038_003);
+}
+#[doc = "Generated from 'VK_EXT_video_encode_h264'"]
+impl StructureType {
+    pub const VIDEO_ENCODE_H264_VCL_FRAME_INFO_EXT: Self = Self(1_000_038_004);
+}
+#[doc = "Generated from 'VK_EXT_video_encode_h264'"]
+impl StructureType {
+    pub const VIDEO_ENCODE_H264_DPB_SLOT_INFO_EXT: Self = Self(1_000_038_005);
+}
+#[doc = "Generated from 'VK_EXT_video_encode_h264'"]
+impl StructureType {
+    pub const VIDEO_ENCODE_H264_NALU_SLICE_EXT: Self = Self(1_000_038_006);
+}
+#[doc = "Generated from 'VK_EXT_video_encode_h264'"]
+impl StructureType {
+    pub const VIDEO_ENCODE_H264_EMIT_PICTURE_PARAMETERS_EXT: Self = Self(1_000_038_007);
+}
+#[doc = "Generated from 'VK_EXT_video_encode_h264'"]
+impl StructureType {
+    pub const VIDEO_ENCODE_H264_PROFILE_EXT: Self = Self(1_000_038_008);
+}
+#[doc = "Generated from 'VK_EXT_video_encode_h264'"]
+impl VideoCodecOperationFlagsKHR {
+    pub const ENCODE_H264_EXT: Self = Self(0b1_0000_0000_0000_0000);
+}
+impl ExtVideoDecodeH264Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_40\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_video_decode_h264\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct AmdExtension40Fn {}
-unsafe impl Send for AmdExtension40Fn {}
-unsafe impl Sync for AmdExtension40Fn {}
-impl AmdExtension40Fn {
+pub struct ExtVideoDecodeH264Fn {}
+unsafe impl Send for ExtVideoDecodeH264Fn {}
+unsafe impl Sync for ExtVideoDecodeH264Fn {}
+impl ExtVideoDecodeH264Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension40Fn {}
+        ExtVideoDecodeH264Fn {}
     }
 }
-impl AmdExtension41Fn {
-    pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_41\0")
-            .expect("Wrong extension string")
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
+#[doc = "Generated from 'VK_EXT_video_decode_h264'"]
+impl StructureType {
+    pub const VIDEO_DECODE_H264_CAPABILITIES_EXT: Self = Self(1_000_040_000);
 }
-#[derive(Clone)]
-pub struct AmdExtension41Fn {}
-unsafe impl Send for AmdExtension41Fn {}
-unsafe impl Sync for AmdExtension41Fn {}
-impl AmdExtension41Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        AmdExtension41Fn {}
-    }
+#[doc = "Generated from 'VK_EXT_video_decode_h264'"]
+impl StructureType {
+    pub const VIDEO_DECODE_H264_SESSION_CREATE_INFO_EXT: Self = Self(1_000_040_001);
+}
+#[doc = "Generated from 'VK_EXT_video_decode_h264'"]
+impl StructureType {
+    pub const VIDEO_DECODE_H264_PICTURE_INFO_EXT: Self = Self(1_000_040_002);
+}
+#[doc = "Generated from 'VK_EXT_video_decode_h264'"]
+impl StructureType {
+    pub const VIDEO_DECODE_H264_MVC_EXT: Self = Self(1_000_040_003);
+}
+#[doc = "Generated from 'VK_EXT_video_decode_h264'"]
+impl StructureType {
+    pub const VIDEO_DECODE_H264_PROFILE_EXT: Self = Self(1_000_040_004);
+}
+#[doc = "Generated from 'VK_EXT_video_decode_h264'"]
+impl StructureType {
+    pub const VIDEO_DECODE_H264_SESSION_PARAMETERS_CREATE_INFO_EXT: Self = Self(1_000_040_005);
+}
+#[doc = "Generated from 'VK_EXT_video_decode_h264'"]
+impl StructureType {
+    pub const VIDEO_DECODE_H264_SESSION_PARAMETERS_ADD_INFO_EXT: Self = Self(1_000_040_006);
+}
+#[doc = "Generated from 'VK_EXT_video_decode_h264'"]
+impl StructureType {
+    pub const VIDEO_DECODE_H264_DPB_SLOT_INFO_EXT: Self = Self(1_000_040_007);
+}
+#[doc = "Generated from 'VK_EXT_video_decode_h264'"]
+impl VideoCodecOperationFlagsKHR {
+    pub const DECODE_H264_EXT: Self = Self(0b1);
 }
 impl AmdTextureGatherBiasLodFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -6134,7 +6859,7 @@ impl KhrIncrementalPresentFn {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_incremental_present\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 1u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
 pub struct KhrIncrementalPresentFn {}
@@ -14484,24 +15209,56 @@ impl AmdExtension187Fn {
         AmdExtension187Fn {}
     }
 }
-impl AmdExtension188Fn {
+impl ExtVideoDecodeH265Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_188\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_video_decode_h265\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct AmdExtension188Fn {}
-unsafe impl Send for AmdExtension188Fn {}
-unsafe impl Sync for AmdExtension188Fn {}
-impl AmdExtension188Fn {
+pub struct ExtVideoDecodeH265Fn {}
+unsafe impl Send for ExtVideoDecodeH265Fn {}
+unsafe impl Sync for ExtVideoDecodeH265Fn {}
+impl ExtVideoDecodeH265Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension188Fn {}
+        ExtVideoDecodeH265Fn {}
     }
+}
+#[doc = "Generated from 'VK_EXT_video_decode_h265'"]
+impl StructureType {
+    pub const VIDEO_DECODE_H265_CAPABILITIES_EXT: Self = Self(1_000_187_000);
+}
+#[doc = "Generated from 'VK_EXT_video_decode_h265'"]
+impl StructureType {
+    pub const VIDEO_DECODE_H265_SESSION_CREATE_INFO_EXT: Self = Self(1_000_187_001);
+}
+#[doc = "Generated from 'VK_EXT_video_decode_h265'"]
+impl StructureType {
+    pub const VIDEO_DECODE_H265_SESSION_PARAMETERS_CREATE_INFO_EXT: Self = Self(1_000_187_002);
+}
+#[doc = "Generated from 'VK_EXT_video_decode_h265'"]
+impl StructureType {
+    pub const VIDEO_DECODE_H265_SESSION_PARAMETERS_ADD_INFO_EXT: Self = Self(1_000_187_003);
+}
+#[doc = "Generated from 'VK_EXT_video_decode_h265'"]
+impl StructureType {
+    pub const VIDEO_DECODE_H265_PROFILE_EXT: Self = Self(1_000_187_004);
+}
+#[doc = "Generated from 'VK_EXT_video_decode_h265'"]
+impl StructureType {
+    pub const VIDEO_DECODE_H265_PICTURE_INFO_EXT: Self = Self(1_000_187_005);
+}
+#[doc = "Generated from 'VK_EXT_video_decode_h265'"]
+impl StructureType {
+    pub const VIDEO_DECODE_H265_DPB_SLOT_INFO_EXT: Self = Self(1_000_187_006);
+}
+#[doc = "Generated from 'VK_EXT_video_decode_h265'"]
+impl VideoCodecOperationFlagsKHR {
+    pub const DECODE_H265_EXT: Self = Self(0b10);
 }
 impl AmdExtension189Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -19436,24 +20193,32 @@ impl AccessFlags {
 impl ObjectType {
     pub const INDIRECT_COMMANDS_LAYOUT_NV: Self = Self(1_000_277_000);
 }
-impl NvExtension279Fn {
+impl NvInheritedViewportScissorFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_279\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_inherited_viewport_scissor\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct NvExtension279Fn {}
-unsafe impl Send for NvExtension279Fn {}
-unsafe impl Sync for NvExtension279Fn {}
-impl NvExtension279Fn {
+pub struct NvInheritedViewportScissorFn {}
+unsafe impl Send for NvInheritedViewportScissorFn {}
+unsafe impl Sync for NvInheritedViewportScissorFn {}
+impl NvInheritedViewportScissorFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExtension279Fn {}
+        NvInheritedViewportScissorFn {}
     }
+}
+#[doc = "Generated from 'VK_NV_inherited_viewport_scissor'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_INHERITED_VIEWPORT_SCISSOR_FEATURES_NV: Self = Self(1_000_278_000);
+}
+#[doc = "Generated from 'VK_NV_inherited_viewport_scissor'"]
+impl StructureType {
+    pub const COMMAND_BUFFER_INHERITANCE_VIEWPORT_SCISSOR_INFO_NV: Self = Self(1_000_278_001);
 }
 impl KhrExtension280Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -19525,7 +20290,7 @@ impl QcomRenderPassTransformFn {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_render_pass_transform\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 1u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
 pub struct QcomRenderPassTransformFn {}
@@ -21364,24 +22129,44 @@ impl NvExtension330Fn {
         NvExtension330Fn {}
     }
 }
-impl NvExtension331Fn {
+impl ExtYcbcr2plane444FormatsFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_331\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_ycbcr_2plane_444_formats\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct NvExtension331Fn {}
-unsafe impl Send for NvExtension331Fn {}
-unsafe impl Sync for NvExtension331Fn {}
-impl NvExtension331Fn {
+pub struct ExtYcbcr2plane444FormatsFn {}
+unsafe impl Send for ExtYcbcr2plane444FormatsFn {}
+unsafe impl Sync for ExtYcbcr2plane444FormatsFn {}
+impl ExtYcbcr2plane444FormatsFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExtension331Fn {}
+        ExtYcbcr2plane444FormatsFn {}
     }
+}
+#[doc = "Generated from 'VK_EXT_ycbcr_2plane_444_formats'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_YCBCR_2_PLANE_444_FORMATS_FEATURES_EXT: Self = Self(1_000_330_000);
+}
+#[doc = "Generated from 'VK_EXT_ycbcr_2plane_444_formats'"]
+impl Format {
+    pub const G8_B8R8_2PLANE_444_UNORM_EXT: Self = Self(1_000_330_000);
+}
+#[doc = "Generated from 'VK_EXT_ycbcr_2plane_444_formats'"]
+impl Format {
+    pub const G10X6_B10X6R10X6_2PLANE_444_UNORM_3PACK16_EXT: Self = Self(1_000_330_001);
+}
+#[doc = "Generated from 'VK_EXT_ycbcr_2plane_444_formats'"]
+impl Format {
+    pub const G12X4_B12X4R12X4_2PLANE_444_UNORM_3PACK16_EXT: Self = Self(1_000_330_002);
+}
+#[doc = "Generated from 'VK_EXT_ycbcr_2plane_444_formats'"]
+impl Format {
+    pub const G16_B16R16_2PLANE_444_UNORM_EXT: Self = Self(1_000_330_003);
 }
 impl NvExtension332Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -22197,24 +22982,90 @@ impl DescriptorPoolCreateFlags {
 impl DescriptorSetLayoutCreateFlags {
     pub const HOST_ONLY_POOL_VALVE: Self = Self(0b100);
 }
-impl ExtExtension353Fn {
+impl ExtVertexInputDynamicStateFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_353\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_vertex_input_dynamic_state\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetVertexInputEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    vertex_binding_description_count: u32,
+    p_vertex_binding_descriptions: *const VertexInputBindingDescription2EXT,
+    vertex_attribute_description_count: u32,
+    p_vertex_attribute_descriptions: *const VertexInputAttributeDescription2EXT,
+);
 #[derive(Clone)]
-pub struct ExtExtension353Fn {}
-unsafe impl Send for ExtExtension353Fn {}
-unsafe impl Sync for ExtExtension353Fn {}
-impl ExtExtension353Fn {
+pub struct ExtVertexInputDynamicStateFn {
+    pub cmd_set_vertex_input_ext: PFN_vkCmdSetVertexInputEXT,
+}
+unsafe impl Send for ExtVertexInputDynamicStateFn {}
+unsafe impl Sync for ExtVertexInputDynamicStateFn {}
+impl ExtVertexInputDynamicStateFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension353Fn {}
+        ExtVertexInputDynamicStateFn {
+            cmd_set_vertex_input_ext: unsafe {
+                unsafe extern "system" fn cmd_set_vertex_input_ext(
+                    _command_buffer: CommandBuffer,
+                    _vertex_binding_description_count: u32,
+                    _p_vertex_binding_descriptions: *const VertexInputBindingDescription2EXT,
+                    _vertex_attribute_description_count: u32,
+                    _p_vertex_attribute_descriptions: *const VertexInputAttributeDescription2EXT,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_vertex_input_ext)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetVertexInputEXT\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_vertex_input_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetVertexInputEXT.html>"]
+    pub unsafe fn cmd_set_vertex_input_ext(
+        &self,
+        command_buffer: CommandBuffer,
+        vertex_binding_description_count: u32,
+        p_vertex_binding_descriptions: *const VertexInputBindingDescription2EXT,
+        vertex_attribute_description_count: u32,
+        p_vertex_attribute_descriptions: *const VertexInputAttributeDescription2EXT,
+    ) {
+        (self.cmd_set_vertex_input_ext)(
+            command_buffer,
+            vertex_binding_description_count,
+            p_vertex_binding_descriptions,
+            vertex_attribute_description_count,
+            p_vertex_attribute_descriptions,
+        )
+    }
+}
+#[doc = "Generated from 'VK_EXT_vertex_input_dynamic_state'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_VERTEX_INPUT_DYNAMIC_STATE_FEATURES_EXT: Self = Self(1_000_352_000);
+}
+#[doc = "Generated from 'VK_EXT_vertex_input_dynamic_state'"]
+impl StructureType {
+    pub const VERTEX_INPUT_BINDING_DESCRIPTION_2_EXT: Self = Self(1_000_352_001);
+}
+#[doc = "Generated from 'VK_EXT_vertex_input_dynamic_state'"]
+impl StructureType {
+    pub const VERTEX_INPUT_ATTRIBUTE_DESCRIPTION_2_EXT: Self = Self(1_000_352_002);
+}
+#[doc = "Generated from 'VK_EXT_vertex_input_dynamic_state'"]
+impl DynamicState {
+    pub const VERTEX_INPUT_EXT: Self = Self(1_000_352_000);
 }
 impl ExtExtension354Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -23048,24 +23899,79 @@ impl KhrExtension381Fn {
         KhrExtension381Fn {}
     }
 }
-impl ExtExtension382Fn {
+impl ExtColorWriteEnableFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_382\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_color_write_enable\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetColorWriteEnableEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    attachment_count: u32,
+    p_color_write_enables: *const Bool32,
+);
 #[derive(Clone)]
-pub struct ExtExtension382Fn {}
-unsafe impl Send for ExtExtension382Fn {}
-unsafe impl Sync for ExtExtension382Fn {}
-impl ExtExtension382Fn {
+pub struct ExtColorWriteEnableFn {
+    pub cmd_set_color_write_enable_ext: PFN_vkCmdSetColorWriteEnableEXT,
+}
+unsafe impl Send for ExtColorWriteEnableFn {}
+unsafe impl Sync for ExtColorWriteEnableFn {}
+impl ExtColorWriteEnableFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension382Fn {}
+        ExtColorWriteEnableFn {
+            cmd_set_color_write_enable_ext: unsafe {
+                unsafe extern "system" fn cmd_set_color_write_enable_ext(
+                    _command_buffer: CommandBuffer,
+                    _attachment_count: u32,
+                    _p_color_write_enables: *const Bool32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_color_write_enable_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetColorWriteEnableEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_color_write_enable_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetColorWriteEnableEXT.html>"]
+    pub unsafe fn cmd_set_color_write_enable_ext(
+        &self,
+        command_buffer: CommandBuffer,
+        attachment_count: u32,
+        p_color_write_enables: *const Bool32,
+    ) {
+        (self.cmd_set_color_write_enable_ext)(
+            command_buffer,
+            attachment_count,
+            p_color_write_enables,
+        )
+    }
+}
+#[doc = "Generated from 'VK_EXT_color_write_enable'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_COLOR_WRITE_ENABLE_FEATURES_EXT: Self = Self(1_000_381_000);
+}
+#[doc = "Generated from 'VK_EXT_color_write_enable'"]
+impl StructureType {
+    pub const PIPELINE_COLOR_WRITE_CREATE_INFO_EXT: Self = Self(1_000_381_001);
+}
+#[doc = "Generated from 'VK_EXT_color_write_enable'"]
+impl DynamicState {
+    pub const COLOR_WRITE_ENABLE_EXT: Self = Self(1_000_381_000);
 }
 impl ExtExtension383Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -23255,5 +24161,43 @@ impl ExtExtension392Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         ExtExtension392Fn {}
+    }
+}
+impl MesaMultiDrawFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_MESA_multi_draw\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct MesaMultiDrawFn {}
+unsafe impl Send for MesaMultiDrawFn {}
+unsafe impl Sync for MesaMultiDrawFn {}
+impl MesaMultiDrawFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        MesaMultiDrawFn {}
+    }
+}
+impl ExtExtension394Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_394\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct ExtExtension394Fn {}
+unsafe impl Send for ExtExtension394Fn {}
+unsafe impl Sync for ExtExtension394Fn {}
+impl ExtExtension394Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ExtExtension394Fn {}
     }
 }
