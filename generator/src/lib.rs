@@ -1778,7 +1778,7 @@ pub fn derive_debug(
 
 pub fn derive_setters(
     _struct: &vkxml::Struct,
-    root_struct_names: &HashSet<String, impl BuildHasher>,
+    root_structs: &HashSet<Ident, impl BuildHasher>,
 ) -> Option<TokenStream> {
     if &_struct.name == "VkBaseInStructure"
         || &_struct.name == "VkBaseOutStructure"
@@ -1979,19 +1979,7 @@ pub fn derive_setters(
 
     let extends_name = format_ident!("Extends{}", name);
 
-    let root_structs: Vec<Ident> = _struct
-        .extends
-        .as_ref()
-        .map(|extends| {
-            extends
-                .split(',')
-                .filter(|extend| root_struct_names.contains(*extend))
-                .map(|extends| format_ident!("Extends{}", name_to_tokens(extends)))
-                .collect()
-        })
-        .unwrap_or_else(Vec::new);
-
-    let is_root_struct = has_next && root_structs.is_empty();
+    let is_root_struct = has_next && root_structs.contains(&name);
 
     // We only implement a next methods for root structs with a `pnext` field.
     let next_function = if is_root_struct {
@@ -2032,13 +2020,18 @@ pub fn derive_setters(
         quote!()
     };
 
-    // If the struct extends something we need to implement the trait.
-    let impl_extend_trait = root_structs.iter().map(|extends| {
-        quote! {
-            unsafe impl #extends for #name_builder<'_> {}
-            unsafe impl #extends for #name {}
-        }
-    });
+    // If the struct extends something we need to implement the traits.
+    let impl_extend_trait = _struct
+        .extends
+        .iter()
+        .flat_map(|extends| extends.split(','))
+        .map(|extends| format_ident!("Extends{}", name_to_tokens(extends)))
+        .map(|extends| {
+            quote! {
+                unsafe impl #extends for #name_builder<'_> {}
+                unsafe impl #extends for #name {}
+            }
+        });
 
     let q = quote! {
         impl #name {
@@ -2104,7 +2097,7 @@ pub fn manual_derives(_struct: &vkxml::Struct) -> TokenStream {
 }
 pub fn generate_struct(
     _struct: &vkxml::Struct,
-    root_struct_names: &HashSet<String, impl BuildHasher>,
+    root_structs: &HashSet<Ident, impl BuildHasher>,
     union_types: &HashSet<&str, impl BuildHasher>,
 ) -> TokenStream {
     let name = name_to_tokens(&_struct.name);
@@ -2150,7 +2143,7 @@ pub fn generate_struct(
 
     let debug_tokens = derive_debug(_struct, union_types);
     let default_tokens = derive_default(_struct);
-    let setter_tokens = derive_setters(_struct, root_struct_names);
+    let setter_tokens = derive_setters(_struct, root_structs);
     let manual_derive_tokens = manual_derives(_struct);
     let dbg_str = if debug_tokens.is_none() {
         quote!(Debug,)
@@ -2248,26 +2241,23 @@ fn generate_union(union: &vkxml::Union) -> TokenStream {
         }
     }
 }
-pub fn root_struct_names(definitions: &[&vkxml::DefinitionsElement]) -> HashSet<String> {
-    definitions
-        .iter()
-        .filter_map(|definition| match *definition {
-            vkxml::DefinitionsElement::Struct(ref _struct) => {
-                let is_root_struct = _struct.extends.is_none();
-                if is_root_struct {
-                    Some(_struct.name.clone())
-                } else {
-                    None
-                }
+/// Root structs are all structs that are extended by other structs.
+pub fn root_structs(definitions: &[&vkxml::DefinitionsElement]) -> HashSet<Ident> {
+    let mut root_structs = HashSet::new();
+    // Loop over all structs and collect their extends
+    for definition in definitions {
+        if let vkxml::DefinitionsElement::Struct(ref _struct) = definition {
+            if let Some(extends) = &_struct.extends {
+                root_structs.extend(extends.split(',').map(name_to_tokens));
             }
-            _ => None,
-        })
-        .collect()
+        };
+    }
+    root_structs
 }
 pub fn generate_definition(
     definition: &vkxml::DefinitionsElement,
     union_types: &HashSet<&str, impl BuildHasher>,
-    root_structs: &HashSet<String, impl BuildHasher>,
+    root_structs: &HashSet<Ident, impl BuildHasher>,
     bitflags_cache: &mut HashSet<Ident, impl BuildHasher>,
     const_values: &mut BTreeMap<Ident, ConstantTypeInfo>,
     identifier_renames: &mut BTreeMap<String, Ident>,
@@ -2731,14 +2721,14 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
 
     let mut identifier_renames = BTreeMap::new();
 
-    let root_names = root_struct_names(&definitions);
+    let root_structs = root_structs(&definitions);
     let definition_code: Vec<_> = definitions
         .into_iter()
         .filter_map(|def| {
             generate_definition(
                 def,
                 &union_types,
-                &root_names,
+                &root_structs,
                 &mut bitflags_cache,
                 &mut const_values,
                 &mut identifier_renames,
