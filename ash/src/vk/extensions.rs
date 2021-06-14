@@ -4126,6 +4126,25 @@ impl StructureType {
 impl VideoCodecOperationFlagsKHR {
     pub const ENCODE_H264_EXT: Self = Self(0b1_0000_0000_0000_0000);
 }
+impl ExtVideoEncodeH265Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_video_encode_h265\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct ExtVideoEncodeH265Fn {}
+unsafe impl Send for ExtVideoEncodeH265Fn {}
+unsafe impl Sync for ExtVideoEncodeH265Fn {}
+impl ExtVideoEncodeH265Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ExtVideoEncodeH265Fn {}
+    }
+}
 impl ExtVideoDecodeH264Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_video_decode_h264\0")
@@ -4311,6 +4330,14 @@ impl AmdExtension45Fn {
     {
         AmdExtension45Fn {}
     }
+}
+#[doc = "Generated from 'VK_AMD_extension_45'"]
+impl PipelineCreateFlags {
+    pub const RESERVED_21_AMD: Self = Self(0b10_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_AMD_extension_45'"]
+impl PipelineCreateFlags {
+    pub const RESERVED_22_AMD: Self = Self(0b100_0000_0000_0000_0000_0000);
 }
 impl AmdExtension46Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -17951,7 +17978,7 @@ impl ExtValidationFeaturesFn {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_validation_features\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 4u32;
+    pub const SPEC_VERSION: u32 = 5u32;
 }
 #[derive(Clone)]
 pub struct ExtValidationFeaturesFn {}
@@ -22063,6 +22090,14 @@ impl AmdExtension319Fn {
         AmdExtension319Fn {}
     }
 }
+#[doc = "Generated from 'VK_AMD_extension_319'"]
+impl DescriptorSetLayoutCreateFlags {
+    pub const RESERVED_3_AMD: Self = Self(0b1000);
+}
+#[doc = "Generated from 'VK_AMD_extension_319'"]
+impl PipelineLayoutCreateFlags {
+    pub const RESERVED_0_AMD: Self = Self(0b1);
+}
 impl AmdExtension320Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_320\0")
@@ -22100,6 +22135,14 @@ impl AmdExtension321Fn {
     {
         AmdExtension321Fn {}
     }
+}
+#[doc = "Generated from 'VK_AMD_extension_321'"]
+impl PipelineCreateFlags {
+    pub const RESERVED_23_AMD: Self = Self(0b1000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_AMD_extension_321'"]
+impl PipelineCreateFlags {
+    pub const RESERVED_10_AMD: Self = Self(0b100_0000_0000);
 }
 impl AmdExtension322Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -22139,24 +22182,29 @@ impl AmdExtension323Fn {
         AmdExtension323Fn {}
     }
 }
-impl KhrExtension324Fn {
+impl KhrShaderSubgroupUniformControlFlowFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_324\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_shader_subgroup_uniform_control_flow\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct KhrExtension324Fn {}
-unsafe impl Send for KhrExtension324Fn {}
-unsafe impl Sync for KhrExtension324Fn {}
-impl KhrExtension324Fn {
+pub struct KhrShaderSubgroupUniformControlFlowFn {}
+unsafe impl Send for KhrShaderSubgroupUniformControlFlowFn {}
+unsafe impl Sync for KhrShaderSubgroupUniformControlFlowFn {}
+impl KhrShaderSubgroupUniformControlFlowFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExtension324Fn {}
+        KhrShaderSubgroupUniformControlFlowFn {}
     }
+}
+#[doc = "Generated from 'VK_KHR_shader_subgroup_uniform_control_flow'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_SUBGROUP_UNIFORM_CONTROL_FLOW_FEATURES_KHR: Self =
+        Self(1_000_323_000);
 }
 impl KhrExtension325Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -23805,6 +23853,19 @@ impl HuaweiExtension371Fn {
         HuaweiExtension371Fn {}
     }
 }
+#[doc = "Generated from 'VK_HUAWEI_extension_371'"]
+impl AccessFlags2KHR {
+    pub const RESERVED_39_HUAWEI: Self = Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_HUAWEI_extension_371'"]
+impl ImageUsageFlags {
+    pub const RESERVED_18_HUAWEI: Self = Self(0b100_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_HUAWEI_extension_371'"]
+impl PipelineStageFlags2KHR {
+    pub const RESERVED_40_HUAWEI: Self =
+        Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
 impl NvExtension372Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_372\0")
@@ -24476,24 +24537,32 @@ impl ExtExtension388Fn {
         ExtExtension388Fn {}
     }
 }
-impl ExtExtension389Fn {
+impl ExtGlobalPriorityQueryFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_389\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_global_priority_query\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct ExtExtension389Fn {}
-unsafe impl Send for ExtExtension389Fn {}
-unsafe impl Sync for ExtExtension389Fn {}
-impl ExtExtension389Fn {
+pub struct ExtGlobalPriorityQueryFn {}
+unsafe impl Send for ExtGlobalPriorityQueryFn {}
+unsafe impl Sync for ExtGlobalPriorityQueryFn {}
+impl ExtGlobalPriorityQueryFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension389Fn {}
+        ExtGlobalPriorityQueryFn {}
     }
+}
+#[doc = "Generated from 'VK_EXT_global_priority_query'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_GLOBAL_PRIORITY_QUERY_FEATURES_EXT: Self = Self(1_000_388_000);
+}
+#[doc = "Generated from 'VK_EXT_global_priority_query'"]
+impl StructureType {
+    pub const QUEUE_FAMILY_GLOBAL_PRIORITY_PROPERTIES_EXT: Self = Self(1_000_388_001);
 }
 impl ExtExtension390Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -24721,5 +24790,290 @@ impl KhrExtension401Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         KhrExtension401Fn {}
+    }
+}
+impl FbExtension402Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_FB_extension_402\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct FbExtension402Fn {}
+unsafe impl Send for FbExtension402Fn {}
+unsafe impl Sync for FbExtension402Fn {}
+impl FbExtension402Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        FbExtension402Fn {}
+    }
+}
+impl FbExtension403Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_FB_extension_403\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct FbExtension403Fn {}
+unsafe impl Send for FbExtension403Fn {}
+unsafe impl Sync for FbExtension403Fn {}
+impl FbExtension403Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        FbExtension403Fn {}
+    }
+}
+impl FbExtension404Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_FB_extension_404\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct FbExtension404Fn {}
+unsafe impl Send for FbExtension404Fn {}
+unsafe impl Sync for FbExtension404Fn {}
+impl FbExtension404Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        FbExtension404Fn {}
+    }
+}
+impl HuaweiExtension405Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_HUAWEI_extension_405\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct HuaweiExtension405Fn {}
+unsafe impl Send for HuaweiExtension405Fn {}
+unsafe impl Sync for HuaweiExtension405Fn {}
+impl HuaweiExtension405Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        HuaweiExtension405Fn {}
+    }
+}
+impl HuaweiExtension406Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_HUAWEI_extension_406\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct HuaweiExtension406Fn {}
+unsafe impl Send for HuaweiExtension406Fn {}
+unsafe impl Sync for HuaweiExtension406Fn {}
+impl HuaweiExtension406Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        HuaweiExtension406Fn {}
+    }
+}
+impl GgpExtension407Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GGP_extension_407\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct GgpExtension407Fn {}
+unsafe impl Send for GgpExtension407Fn {}
+unsafe impl Sync for GgpExtension407Fn {}
+impl GgpExtension407Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        GgpExtension407Fn {}
+    }
+}
+impl GgpExtension408Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GGP_extension_408\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct GgpExtension408Fn {}
+unsafe impl Send for GgpExtension408Fn {}
+unsafe impl Sync for GgpExtension408Fn {}
+impl GgpExtension408Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        GgpExtension408Fn {}
+    }
+}
+impl GgpExtension409Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GGP_extension_409\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct GgpExtension409Fn {}
+unsafe impl Send for GgpExtension409Fn {}
+unsafe impl Sync for GgpExtension409Fn {}
+impl GgpExtension409Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        GgpExtension409Fn {}
+    }
+}
+impl GgpExtension410Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GGP_extension_410\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct GgpExtension410Fn {}
+unsafe impl Send for GgpExtension410Fn {}
+unsafe impl Sync for GgpExtension410Fn {}
+impl GgpExtension410Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        GgpExtension410Fn {}
+    }
+}
+impl GgpExtension411Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GGP_extension_411\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct GgpExtension411Fn {}
+unsafe impl Send for GgpExtension411Fn {}
+unsafe impl Sync for GgpExtension411Fn {}
+impl GgpExtension411Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        GgpExtension411Fn {}
+    }
+}
+impl NvExtension412Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_412\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct NvExtension412Fn {}
+unsafe impl Send for NvExtension412Fn {}
+unsafe impl Sync for NvExtension412Fn {}
+impl NvExtension412Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        NvExtension412Fn {}
+    }
+}
+impl NvExtension413Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_413\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct NvExtension413Fn {}
+unsafe impl Send for NvExtension413Fn {}
+unsafe impl Sync for NvExtension413Fn {}
+impl NvExtension413Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        NvExtension413Fn {}
+    }
+}
+impl NvExtension414Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_414\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct NvExtension414Fn {}
+unsafe impl Send for NvExtension414Fn {}
+unsafe impl Sync for NvExtension414Fn {}
+impl NvExtension414Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        NvExtension414Fn {}
+    }
+}
+impl HuaweiExtension415Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_HUAWEI_extension_415\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct HuaweiExtension415Fn {}
+unsafe impl Send for HuaweiExtension415Fn {}
+unsafe impl Sync for HuaweiExtension415Fn {}
+impl HuaweiExtension415Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        HuaweiExtension415Fn {}
+    }
+}
+impl ArmExtension416Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_ARM_extension_416\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct ArmExtension416Fn {}
+unsafe impl Send for ArmExtension416Fn {}
+unsafe impl Sync for ArmExtension416Fn {}
+impl ArmExtension416Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ArmExtension416Fn {}
     }
 }

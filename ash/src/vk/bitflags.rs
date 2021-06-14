@@ -1048,6 +1048,12 @@ vk_bitflags_wrapped!(EventCreateFlags, 0b0, Flags);
 impl EventCreateFlags {}
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineLayoutCreateFlagBits.html>"]
+pub struct PipelineLayoutCreateFlags(pub(crate) Flags);
+vk_bitflags_wrapped!(PipelineLayoutCreateFlags, 0b0, Flags);
+impl PipelineLayoutCreateFlags {}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkVideoCodecOperationFlagBitsKHR.html>"]
 pub struct VideoCodecOperationFlagsKHR(pub(crate) Flags);
 vk_bitflags_wrapped!(VideoCodecOperationFlagsKHR, 0b0, Flags);

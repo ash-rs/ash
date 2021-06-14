@@ -294,6 +294,7 @@ impl fmt::Debug for AccessFlags2KHR {
                 AccessFlags2KHR::COLOR_ATTACHMENT_READ_NONCOHERENT_EXT.0,
                 "COLOR_ATTACHMENT_READ_NONCOHERENT_EXT",
             ),
+            (AccessFlags2KHR::RESERVED_39_HUAWEI.0, "RESERVED_39_HUAWEI"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -1058,6 +1059,10 @@ impl fmt::Debug for DescriptorSetLayoutCreateFlags {
             (
                 DescriptorSetLayoutCreateFlags::PUSH_DESCRIPTOR_KHR.0,
                 "PUSH_DESCRIPTOR_KHR",
+            ),
+            (
+                DescriptorSetLayoutCreateFlags::RESERVED_3_AMD.0,
+                "RESERVED_3_AMD",
             ),
             (
                 DescriptorSetLayoutCreateFlags::HOST_ONLY_POOL_VALVE.0,
@@ -2222,6 +2227,7 @@ impl fmt::Debug for ImageUsageFlags {
                 ImageUsageFlags::VIDEO_ENCODE_DPB_KHR.0,
                 "VIDEO_ENCODE_DPB_KHR",
             ),
+            (ImageUsageFlags::RESERVED_18_HUAWEI.0, "RESERVED_18_HUAWEI"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -2762,6 +2768,8 @@ impl fmt::Debug for PipelineCreateFlags {
                 "ALLOW_DERIVATIVES",
             ),
             (PipelineCreateFlags::DERIVATIVE.0, "DERIVATIVE"),
+            (PipelineCreateFlags::RESERVED_21_AMD.0, "RESERVED_21_AMD"),
+            (PipelineCreateFlags::RESERVED_22_AMD.0, "RESERVED_22_AMD"),
             (
                 PipelineCreateFlags::RAY_TRACING_NO_NULL_ANY_HIT_SHADERS_KHR.0,
                 "RAY_TRACING_NO_NULL_ANY_HIT_SHADERS_KHR",
@@ -2812,6 +2820,8 @@ impl fmt::Debug for PipelineCreateFlags {
                 PipelineCreateFlags::EARLY_RETURN_ON_FAILURE_EXT.0,
                 "EARLY_RETURN_ON_FAILURE_EXT",
             ),
+            (PipelineCreateFlags::RESERVED_23_AMD.0, "RESERVED_23_AMD"),
+            (PipelineCreateFlags::RESERVED_10_AMD.0, "RESERVED_10_AMD"),
             (PipelineCreateFlags::RESERVED_20_NV.0, "RESERVED_20_NV"),
             (
                 PipelineCreateFlags::VIEW_INDEX_FROM_DEVICE_INDEX.0,
@@ -2880,7 +2890,10 @@ impl fmt::Debug for PipelineInputAssemblyStateCreateFlags {
 }
 impl fmt::Debug for PipelineLayoutCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[];
+        const KNOWN: &[(Flags, &str)] = &[(
+            PipelineLayoutCreateFlags::RESERVED_0_AMD.0,
+            "RESERVED_0_AMD",
+        )];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -3088,6 +3101,10 @@ impl fmt::Debug for PipelineStageFlags2KHR {
             ),
             (PipelineStageFlags2KHR::TASK_SHADER_NV.0, "TASK_SHADER_NV"),
             (PipelineStageFlags2KHR::MESH_SHADER_NV.0, "MESH_SHADER_NV"),
+            (
+                PipelineStageFlags2KHR::RESERVED_40_HUAWEI.0,
+                "RESERVED_40_HUAWEI",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -4688,6 +4705,9 @@ impl fmt::Debug for StructureType {
                 Some("QUEUE_FAMILY_CHECKPOINT_PROPERTIES_2_NV")
             }
             Self::CHECKPOINT_DATA_2_NV => Some("CHECKPOINT_DATA_2_NV"),
+            Self::PHYSICAL_DEVICE_SHADER_SUBGROUP_UNIFORM_CONTROL_FLOW_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_SHADER_SUBGROUP_UNIFORM_CONTROL_FLOW_FEATURES_KHR")
+            }
             Self::PHYSICAL_DEVICE_ZERO_INITIALIZE_WORKGROUP_MEMORY_FEATURES_KHR => {
                 Some("PHYSICAL_DEVICE_ZERO_INITIALIZE_WORKGROUP_MEMORY_FEATURES_KHR")
             }
@@ -4770,6 +4790,12 @@ impl fmt::Debug for StructureType {
             }
             Self::PIPELINE_COLOR_WRITE_CREATE_INFO_EXT => {
                 Some("PIPELINE_COLOR_WRITE_CREATE_INFO_EXT")
+            }
+            Self::PHYSICAL_DEVICE_GLOBAL_PRIORITY_QUERY_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_GLOBAL_PRIORITY_QUERY_FEATURES_EXT")
+            }
+            Self::QUEUE_FAMILY_GLOBAL_PRIORITY_PROPERTIES_EXT => {
+                Some("QUEUE_FAMILY_GLOBAL_PRIORITY_PROPERTIES_EXT")
             }
             Self::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES => {
                 Some("PHYSICAL_DEVICE_SUBGROUP_PROPERTIES")
@@ -5237,6 +5263,7 @@ impl fmt::Debug for ValidationFeatureDisableEXT {
             Self::OBJECT_LIFETIMES => Some("OBJECT_LIFETIMES"),
             Self::CORE_CHECKS => Some("CORE_CHECKS"),
             Self::UNIQUE_HANDLES => Some("UNIQUE_HANDLES"),
+            Self::SHADER_VALIDATION_CACHE => Some("SHADER_VALIDATION_CACHE"),
             _ => None,
         };
         if let Some(x) = name {

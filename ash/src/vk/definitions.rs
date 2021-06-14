@@ -53,7 +53,7 @@ pub const API_VERSION_1_0: u32 = make_api_version(0, 1, 0, 0);
 pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_API_VERSION_1_2.html>"]
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
-pub const HEADER_VERSION: u32 = 179u32;
+pub const HEADER_VERSION: u32 = 181u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 2, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSampleMask.html>"]
@@ -73,11 +73,6 @@ pub type DeviceAddress = u64;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkQueryPoolCreateFlags.html>"]
 pub struct QueryPoolCreateFlags(pub(crate) Flags);
 vk_bitflags_wrapped!(QueryPoolCreateFlags, 0b0, Flags);
-#[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineLayoutCreateFlags.html>"]
-pub struct PipelineLayoutCreateFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(PipelineLayoutCreateFlags, 0b0, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineDepthStencilStateCreateFlags.html>"]
@@ -24210,6 +24205,128 @@ impl<'a> DeviceQueueGlobalPriorityCreateInfoEXTBuilder<'a> {
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDeviceGlobalPriorityQueryFeaturesEXT.html>"]
+pub struct PhysicalDeviceGlobalPriorityQueryFeaturesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub global_priority_query: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceGlobalPriorityQueryFeaturesEXT {
+    fn default() -> PhysicalDeviceGlobalPriorityQueryFeaturesEXT {
+        PhysicalDeviceGlobalPriorityQueryFeaturesEXT {
+            s_type: StructureType::PHYSICAL_DEVICE_GLOBAL_PRIORITY_QUERY_FEATURES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            global_priority_query: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceGlobalPriorityQueryFeaturesEXT {
+    pub fn builder<'a>() -> PhysicalDeviceGlobalPriorityQueryFeaturesEXTBuilder<'a> {
+        PhysicalDeviceGlobalPriorityQueryFeaturesEXTBuilder {
+            inner: PhysicalDeviceGlobalPriorityQueryFeaturesEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceGlobalPriorityQueryFeaturesEXTBuilder<'a> {
+    inner: PhysicalDeviceGlobalPriorityQueryFeaturesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceGlobalPriorityQueryFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceGlobalPriorityQueryFeaturesEXT {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceGlobalPriorityQueryFeaturesEXTBuilder<'a> {
+    type Target = PhysicalDeviceGlobalPriorityQueryFeaturesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceGlobalPriorityQueryFeaturesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceGlobalPriorityQueryFeaturesEXTBuilder<'a> {
+    pub fn global_priority_query(mut self, global_priority_query: bool) -> Self {
+        self.inner.global_priority_query = global_priority_query.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceGlobalPriorityQueryFeaturesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkQueueFamilyGlobalPriorityPropertiesEXT.html>"]
+pub struct QueueFamilyGlobalPriorityPropertiesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub priority_count: u32,
+    pub priorities: [QueueGlobalPriorityEXT; MAX_GLOBAL_PRIORITY_SIZE_EXT],
+}
+impl ::std::default::Default for QueueFamilyGlobalPriorityPropertiesEXT {
+    fn default() -> QueueFamilyGlobalPriorityPropertiesEXT {
+        QueueFamilyGlobalPriorityPropertiesEXT {
+            s_type: StructureType::QUEUE_FAMILY_GLOBAL_PRIORITY_PROPERTIES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            priority_count: u32::default(),
+            priorities: unsafe { ::std::mem::zeroed() },
+        }
+    }
+}
+impl QueueFamilyGlobalPriorityPropertiesEXT {
+    pub fn builder<'a>() -> QueueFamilyGlobalPriorityPropertiesEXTBuilder<'a> {
+        QueueFamilyGlobalPriorityPropertiesEXTBuilder {
+            inner: QueueFamilyGlobalPriorityPropertiesEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct QueueFamilyGlobalPriorityPropertiesEXTBuilder<'a> {
+    inner: QueueFamilyGlobalPriorityPropertiesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsQueueFamilyProperties2 for QueueFamilyGlobalPriorityPropertiesEXTBuilder<'_> {}
+unsafe impl ExtendsQueueFamilyProperties2 for QueueFamilyGlobalPriorityPropertiesEXT {}
+impl<'a> ::std::ops::Deref for QueueFamilyGlobalPriorityPropertiesEXTBuilder<'a> {
+    type Target = QueueFamilyGlobalPriorityPropertiesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for QueueFamilyGlobalPriorityPropertiesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> QueueFamilyGlobalPriorityPropertiesEXTBuilder<'a> {
+    pub fn priority_count(mut self, priority_count: u32) -> Self {
+        self.inner.priority_count = priority_count;
+        self
+    }
+    pub fn priorities(
+        mut self,
+        priorities: [QueueGlobalPriorityEXT; MAX_GLOBAL_PRIORITY_SIZE_EXT],
+    ) -> Self {
+        self.inner.priorities = priorities;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> QueueFamilyGlobalPriorityPropertiesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDebugUtilsObjectNameInfoEXT.html>"]
 pub struct DebugUtilsObjectNameInfoEXT {
     pub s_type: StructureType,
@@ -41540,6 +41657,81 @@ impl<'a> PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHRBuilder<'a> {
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHR {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR.html>"]
+pub struct PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub shader_subgroup_uniform_control_flow: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR {
+    fn default() -> PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR {
+        PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR {
+            s_type:
+                StructureType::PHYSICAL_DEVICE_SHADER_SUBGROUP_UNIFORM_CONTROL_FLOW_FEATURES_KHR,
+            p_next: ::std::ptr::null_mut(),
+            shader_subgroup_uniform_control_flow: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR {
+    pub fn builder<'a>() -> PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHRBuilder<'a> {
+        PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHRBuilder {
+            inner: PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHRBuilder<'a> {
+    inner: PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHRBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR
+{
+}
+unsafe impl ExtendsDeviceCreateInfo
+    for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHRBuilder<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR {}
+impl<'a> ::std::ops::Deref
+    for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHRBuilder<'a>
+{
+    type Target = PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut
+    for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHRBuilder<'a>
+{
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHRBuilder<'a> {
+    pub fn shader_subgroup_uniform_control_flow(
+        mut self,
+        shader_subgroup_uniform_control_flow: bool,
+    ) -> Self {
+        self.inner.shader_subgroup_uniform_control_flow =
+            shader_subgroup_uniform_control_flow.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR {
         self.inner
     }
 }
