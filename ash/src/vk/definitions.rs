@@ -1273,7 +1273,6 @@ pub struct ApplicationInfoBuilder<'a> {
     inner: ApplicationInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsApplicationInfo {}
 impl<'a> ::std::ops::Deref for ApplicationInfoBuilder<'a> {
     type Target = ApplicationInfo;
     fn deref(&self) -> &Self::Target {
@@ -1304,20 +1303,6 @@ impl<'a> ApplicationInfoBuilder<'a> {
     }
     pub fn api_version(mut self, api_version: u32) -> Self {
         self.inner.api_version = api_version;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsApplicationInfo>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -2204,7 +2189,6 @@ pub struct MappedMemoryRangeBuilder<'a> {
     inner: MappedMemoryRange,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsMappedMemoryRange {}
 impl<'a> ::std::ops::Deref for MappedMemoryRangeBuilder<'a> {
     type Target = MappedMemoryRange;
     fn deref(&self) -> &Self::Target {
@@ -2227,20 +2211,6 @@ impl<'a> MappedMemoryRangeBuilder<'a> {
     }
     pub fn size(mut self, size: DeviceSize) -> Self {
         self.inner.size = size;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsMappedMemoryRange>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -2619,7 +2589,6 @@ pub struct CopyDescriptorSetBuilder<'a> {
     inner: CopyDescriptorSet,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsCopyDescriptorSet {}
 impl<'a> ::std::ops::Deref for CopyDescriptorSetBuilder<'a> {
     type Target = CopyDescriptorSet;
     fn deref(&self) -> &Self::Target {
@@ -2658,20 +2627,6 @@ impl<'a> CopyDescriptorSetBuilder<'a> {
     }
     pub fn descriptor_count(mut self, descriptor_count: u32) -> Self {
         self.inner.descriptor_count = descriptor_count;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsCopyDescriptorSet>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -2814,7 +2769,6 @@ pub struct BufferViewCreateInfoBuilder<'a> {
     inner: BufferViewCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsBufferViewCreateInfo {}
 impl<'a> ::std::ops::Deref for BufferViewCreateInfoBuilder<'a> {
     type Target = BufferViewCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -2845,20 +2799,6 @@ impl<'a> BufferViewCreateInfoBuilder<'a> {
     }
     pub fn range(mut self, range: DeviceSize) -> Self {
         self.inner.range = range;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBufferViewCreateInfo>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -3071,7 +3011,6 @@ pub struct MemoryBarrierBuilder<'a> {
     inner: MemoryBarrier,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsMemoryBarrier {}
 impl<'a> ::std::ops::Deref for MemoryBarrierBuilder<'a> {
     type Target = MemoryBarrier;
     fn deref(&self) -> &Self::Target {
@@ -3090,20 +3029,6 @@ impl<'a> MemoryBarrierBuilder<'a> {
     }
     pub fn dst_access_mask(mut self, dst_access_mask: AccessFlags) -> Self {
         self.inner.dst_access_mask = dst_access_mask;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsMemoryBarrier>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -3155,7 +3080,6 @@ pub struct BufferMemoryBarrierBuilder<'a> {
     inner: BufferMemoryBarrier,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsBufferMemoryBarrier {}
 impl<'a> ::std::ops::Deref for BufferMemoryBarrierBuilder<'a> {
     type Target = BufferMemoryBarrier;
     fn deref(&self) -> &Self::Target {
@@ -3194,20 +3118,6 @@ impl<'a> BufferMemoryBarrierBuilder<'a> {
     }
     pub fn size(mut self, size: DeviceSize) -> Self {
         self.inner.size = size;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBufferMemoryBarrier>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -5317,7 +5227,6 @@ pub struct PipelineInputAssemblyStateCreateInfoBuilder<'a> {
     inner: PipelineInputAssemblyStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineInputAssemblyStateCreateInfo {}
 impl<'a> ::std::ops::Deref for PipelineInputAssemblyStateCreateInfoBuilder<'a> {
     type Target = PipelineInputAssemblyStateCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -5340,23 +5249,6 @@ impl<'a> PipelineInputAssemblyStateCreateInfoBuilder<'a> {
     }
     pub fn primitive_restart_enable(mut self, primitive_restart_enable: bool) -> Self {
         self.inner.primitive_restart_enable = primitive_restart_enable.into();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPipelineInputAssemblyStateCreateInfo>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -5993,7 +5885,6 @@ pub struct PipelineDynamicStateCreateInfoBuilder<'a> {
     inner: PipelineDynamicStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineDynamicStateCreateInfo {}
 impl<'a> ::std::ops::Deref for PipelineDynamicStateCreateInfoBuilder<'a> {
     type Target = PipelineDynamicStateCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -6013,20 +5904,6 @@ impl<'a> PipelineDynamicStateCreateInfoBuilder<'a> {
     pub fn dynamic_states(mut self, dynamic_states: &'a [DynamicState]) -> Self {
         self.inner.dynamic_state_count = dynamic_states.len() as _;
         self.inner.p_dynamic_states = dynamic_states.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPipelineDynamicStateCreateInfo>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -6156,7 +6033,6 @@ pub struct PipelineDepthStencilStateCreateInfoBuilder<'a> {
     inner: PipelineDepthStencilStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineDepthStencilStateCreateInfo {}
 impl<'a> ::std::ops::Deref for PipelineDepthStencilStateCreateInfoBuilder<'a> {
     type Target = PipelineDepthStencilStateCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -6207,23 +6083,6 @@ impl<'a> PipelineDepthStencilStateCreateInfoBuilder<'a> {
     }
     pub fn max_depth_bounds(mut self, max_depth_bounds: f32) -> Self {
         self.inner.max_depth_bounds = max_depth_bounds;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPipelineDepthStencilStateCreateInfo>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -6449,7 +6308,6 @@ pub struct PipelineCacheCreateInfoBuilder<'a> {
     inner: PipelineCacheCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineCacheCreateInfo {}
 impl<'a> ::std::ops::Deref for PipelineCacheCreateInfoBuilder<'a> {
     type Target = PipelineCacheCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -6469,20 +6327,6 @@ impl<'a> PipelineCacheCreateInfoBuilder<'a> {
     pub fn initial_data(mut self, initial_data: &'a [u8]) -> Self {
         self.inner.initial_data_size = initial_data.len() as _;
         self.inner.p_initial_data = initial_data.as_ptr() as *const c_void;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPipelineCacheCreateInfo>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -6582,7 +6426,6 @@ pub struct PipelineLayoutCreateInfoBuilder<'a> {
     inner: PipelineLayoutCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineLayoutCreateInfo {}
 impl<'a> ::std::ops::Deref for PipelineLayoutCreateInfoBuilder<'a> {
     type Target = PipelineLayoutCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -6607,20 +6450,6 @@ impl<'a> PipelineLayoutCreateInfoBuilder<'a> {
     pub fn push_constant_ranges(mut self, push_constant_ranges: &'a [PushConstantRange]) -> Self {
         self.inner.push_constant_range_count = push_constant_ranges.len() as _;
         self.inner.p_push_constant_ranges = push_constant_ranges.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPipelineLayoutCreateInfo>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -6820,7 +6649,6 @@ pub struct CommandPoolCreateInfoBuilder<'a> {
     inner: CommandPoolCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsCommandPoolCreateInfo {}
 impl<'a> ::std::ops::Deref for CommandPoolCreateInfoBuilder<'a> {
     type Target = CommandPoolCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -6839,20 +6667,6 @@ impl<'a> CommandPoolCreateInfoBuilder<'a> {
     }
     pub fn queue_family_index(mut self, queue_family_index: u32) -> Self {
         self.inner.queue_family_index = queue_family_index;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsCommandPoolCreateInfo>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -6896,7 +6710,6 @@ pub struct CommandBufferAllocateInfoBuilder<'a> {
     inner: CommandBufferAllocateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsCommandBufferAllocateInfo {}
 impl<'a> ::std::ops::Deref for CommandBufferAllocateInfoBuilder<'a> {
     type Target = CommandBufferAllocateInfo;
     fn deref(&self) -> &Self::Target {
@@ -6919,20 +6732,6 @@ impl<'a> CommandBufferAllocateInfoBuilder<'a> {
     }
     pub fn command_buffer_count(mut self, command_buffer_count: u32) -> Self {
         self.inner.command_buffer_count = command_buffer_count;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsCommandBufferAllocateInfo>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -7773,7 +7572,6 @@ pub struct EventCreateInfoBuilder<'a> {
     inner: EventCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsEventCreateInfo {}
 impl<'a> ::std::ops::Deref for EventCreateInfoBuilder<'a> {
     type Target = EventCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -7788,20 +7586,6 @@ impl<'a> ::std::ops::DerefMut for EventCreateInfoBuilder<'a> {
 impl<'a> EventCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: EventCreateFlags) -> Self {
         self.inner.flags = flags;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsEventCreateInfo>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -9901,7 +9685,6 @@ pub struct DisplayModeCreateInfoKHRBuilder<'a> {
     inner: DisplayModeCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDisplayModeCreateInfoKHR {}
 impl<'a> ::std::ops::Deref for DisplayModeCreateInfoKHRBuilder<'a> {
     type Target = DisplayModeCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -9920,20 +9703,6 @@ impl<'a> DisplayModeCreateInfoKHRBuilder<'a> {
     }
     pub fn parameters(mut self, parameters: DisplayModeParametersKHR) -> Self {
         self.inner.parameters = parameters;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDisplayModeCreateInfoKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -10069,7 +9838,6 @@ pub struct DisplaySurfaceCreateInfoKHRBuilder<'a> {
     inner: DisplaySurfaceCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDisplaySurfaceCreateInfoKHR {}
 impl<'a> ::std::ops::Deref for DisplaySurfaceCreateInfoKHRBuilder<'a> {
     type Target = DisplaySurfaceCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -10112,20 +9880,6 @@ impl<'a> DisplaySurfaceCreateInfoKHRBuilder<'a> {
     }
     pub fn image_extent(mut self, image_extent: Extent2D) -> Self {
         self.inner.image_extent = image_extent;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDisplaySurfaceCreateInfoKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -10324,7 +10078,6 @@ pub struct AndroidSurfaceCreateInfoKHRBuilder<'a> {
     inner: AndroidSurfaceCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsAndroidSurfaceCreateInfoKHR {}
 impl<'a> ::std::ops::Deref for AndroidSurfaceCreateInfoKHRBuilder<'a> {
     type Target = AndroidSurfaceCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -10343,20 +10096,6 @@ impl<'a> AndroidSurfaceCreateInfoKHRBuilder<'a> {
     }
     pub fn window(mut self, window: *mut ANativeWindow) -> Self {
         self.inner.window = window;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsAndroidSurfaceCreateInfoKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -10398,7 +10137,6 @@ pub struct ViSurfaceCreateInfoNNBuilder<'a> {
     inner: ViSurfaceCreateInfoNN,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsViSurfaceCreateInfoNN {}
 impl<'a> ::std::ops::Deref for ViSurfaceCreateInfoNNBuilder<'a> {
     type Target = ViSurfaceCreateInfoNN;
     fn deref(&self) -> &Self::Target {
@@ -10417,20 +10155,6 @@ impl<'a> ViSurfaceCreateInfoNNBuilder<'a> {
     }
     pub fn window(mut self, window: *mut c_void) -> Self {
         self.inner.window = window;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsViSurfaceCreateInfoNN>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -10474,7 +10198,6 @@ pub struct WaylandSurfaceCreateInfoKHRBuilder<'a> {
     inner: WaylandSurfaceCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsWaylandSurfaceCreateInfoKHR {}
 impl<'a> ::std::ops::Deref for WaylandSurfaceCreateInfoKHRBuilder<'a> {
     type Target = WaylandSurfaceCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -10497,20 +10220,6 @@ impl<'a> WaylandSurfaceCreateInfoKHRBuilder<'a> {
     }
     pub fn surface(mut self, surface: *mut wl_surface) -> Self {
         self.inner.surface = surface;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsWaylandSurfaceCreateInfoKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -10554,7 +10263,6 @@ pub struct Win32SurfaceCreateInfoKHRBuilder<'a> {
     inner: Win32SurfaceCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsWin32SurfaceCreateInfoKHR {}
 impl<'a> ::std::ops::Deref for Win32SurfaceCreateInfoKHRBuilder<'a> {
     type Target = Win32SurfaceCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -10577,20 +10285,6 @@ impl<'a> Win32SurfaceCreateInfoKHRBuilder<'a> {
     }
     pub fn hwnd(mut self, hwnd: HWND) -> Self {
         self.inner.hwnd = hwnd;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsWin32SurfaceCreateInfoKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -10634,7 +10328,6 @@ pub struct XlibSurfaceCreateInfoKHRBuilder<'a> {
     inner: XlibSurfaceCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsXlibSurfaceCreateInfoKHR {}
 impl<'a> ::std::ops::Deref for XlibSurfaceCreateInfoKHRBuilder<'a> {
     type Target = XlibSurfaceCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -10657,20 +10350,6 @@ impl<'a> XlibSurfaceCreateInfoKHRBuilder<'a> {
     }
     pub fn window(mut self, window: Window) -> Self {
         self.inner.window = window;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsXlibSurfaceCreateInfoKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -10714,7 +10393,6 @@ pub struct XcbSurfaceCreateInfoKHRBuilder<'a> {
     inner: XcbSurfaceCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsXcbSurfaceCreateInfoKHR {}
 impl<'a> ::std::ops::Deref for XcbSurfaceCreateInfoKHRBuilder<'a> {
     type Target = XcbSurfaceCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -10737,20 +10415,6 @@ impl<'a> XcbSurfaceCreateInfoKHRBuilder<'a> {
     }
     pub fn window(mut self, window: xcb_window_t) -> Self {
         self.inner.window = window;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsXcbSurfaceCreateInfoKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -10794,7 +10458,6 @@ pub struct DirectFBSurfaceCreateInfoEXTBuilder<'a> {
     inner: DirectFBSurfaceCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDirectFBSurfaceCreateInfoEXT {}
 impl<'a> ::std::ops::Deref for DirectFBSurfaceCreateInfoEXTBuilder<'a> {
     type Target = DirectFBSurfaceCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -10817,20 +10480,6 @@ impl<'a> DirectFBSurfaceCreateInfoEXTBuilder<'a> {
     }
     pub fn surface(mut self, surface: *mut IDirectFBSurface) -> Self {
         self.inner.surface = surface;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDirectFBSurfaceCreateInfoEXT>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -10872,7 +10521,6 @@ pub struct ImagePipeSurfaceCreateInfoFUCHSIABuilder<'a> {
     inner: ImagePipeSurfaceCreateInfoFUCHSIA,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImagePipeSurfaceCreateInfoFUCHSIA {}
 impl<'a> ::std::ops::Deref for ImagePipeSurfaceCreateInfoFUCHSIABuilder<'a> {
     type Target = ImagePipeSurfaceCreateInfoFUCHSIA;
     fn deref(&self) -> &Self::Target {
@@ -10891,23 +10539,6 @@ impl<'a> ImagePipeSurfaceCreateInfoFUCHSIABuilder<'a> {
     }
     pub fn image_pipe_handle(mut self, image_pipe_handle: zx_handle_t) -> Self {
         self.inner.image_pipe_handle = image_pipe_handle;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsImagePipeSurfaceCreateInfoFUCHSIA>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -10949,7 +10580,6 @@ pub struct StreamDescriptorSurfaceCreateInfoGGPBuilder<'a> {
     inner: StreamDescriptorSurfaceCreateInfoGGP,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsStreamDescriptorSurfaceCreateInfoGGP {}
 impl<'a> ::std::ops::Deref for StreamDescriptorSurfaceCreateInfoGGPBuilder<'a> {
     type Target = StreamDescriptorSurfaceCreateInfoGGP;
     fn deref(&self) -> &Self::Target {
@@ -10968,23 +10598,6 @@ impl<'a> StreamDescriptorSurfaceCreateInfoGGPBuilder<'a> {
     }
     pub fn stream_descriptor(mut self, stream_descriptor: GgpStreamDescriptor) -> Self {
         self.inner.stream_descriptor = stream_descriptor;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsStreamDescriptorSurfaceCreateInfoGGP>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -11028,7 +10641,6 @@ pub struct ScreenSurfaceCreateInfoQNXBuilder<'a> {
     inner: ScreenSurfaceCreateInfoQNX,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsScreenSurfaceCreateInfoQNX {}
 impl<'a> ::std::ops::Deref for ScreenSurfaceCreateInfoQNXBuilder<'a> {
     type Target = ScreenSurfaceCreateInfoQNX;
     fn deref(&self) -> &Self::Target {
@@ -11051,20 +10663,6 @@ impl<'a> ScreenSurfaceCreateInfoQNXBuilder<'a> {
     }
     pub fn window(mut self, window: &'a mut _screen_window) -> Self {
         self.inner.window = window;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsScreenSurfaceCreateInfoQNX>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -11677,7 +11275,6 @@ pub struct DebugMarkerObjectNameInfoEXTBuilder<'a> {
     inner: DebugMarkerObjectNameInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDebugMarkerObjectNameInfoEXT {}
 impl<'a> ::std::ops::Deref for DebugMarkerObjectNameInfoEXTBuilder<'a> {
     type Target = DebugMarkerObjectNameInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -11700,20 +11297,6 @@ impl<'a> DebugMarkerObjectNameInfoEXTBuilder<'a> {
     }
     pub fn object_name(mut self, object_name: &'a ::std::ffi::CStr) -> Self {
         self.inner.p_object_name = object_name.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDebugMarkerObjectNameInfoEXT>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -11761,7 +11344,6 @@ pub struct DebugMarkerObjectTagInfoEXTBuilder<'a> {
     inner: DebugMarkerObjectTagInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDebugMarkerObjectTagInfoEXT {}
 impl<'a> ::std::ops::Deref for DebugMarkerObjectTagInfoEXTBuilder<'a> {
     type Target = DebugMarkerObjectTagInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -11789,20 +11371,6 @@ impl<'a> DebugMarkerObjectTagInfoEXTBuilder<'a> {
     pub fn tag(mut self, tag: &'a [u8]) -> Self {
         self.inner.tag_size = tag.len() as _;
         self.inner.p_tag = tag.as_ptr() as *const c_void;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDebugMarkerObjectTagInfoEXT>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -11844,7 +11412,6 @@ pub struct DebugMarkerMarkerInfoEXTBuilder<'a> {
     inner: DebugMarkerMarkerInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDebugMarkerMarkerInfoEXT {}
 impl<'a> ::std::ops::Deref for DebugMarkerMarkerInfoEXTBuilder<'a> {
     type Target = DebugMarkerMarkerInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -11863,20 +11430,6 @@ impl<'a> DebugMarkerMarkerInfoEXTBuilder<'a> {
     }
     pub fn color(mut self, color: [f32; 4]) -> Self {
         self.inner.color = color;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDebugMarkerMarkerInfoEXT>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -12478,6 +12031,11 @@ pub struct PhysicalDeviceDeviceGeneratedCommandsFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceDeviceGeneratedCommandsFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceDeviceGeneratedCommandsFeaturesNVBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDeviceGeneratedCommandsFeaturesNVBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceDeviceGeneratedCommandsFeaturesNVBuilder<'a> {
@@ -12588,7 +12146,6 @@ pub struct PrivateDataSlotCreateInfoEXTBuilder<'a> {
     inner: PrivateDataSlotCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPrivateDataSlotCreateInfoEXT {}
 impl<'a> ::std::ops::Deref for PrivateDataSlotCreateInfoEXTBuilder<'a> {
     type Target = PrivateDataSlotCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -12603,20 +12160,6 @@ impl<'a> ::std::ops::DerefMut for PrivateDataSlotCreateInfoEXTBuilder<'a> {
 impl<'a> PrivateDataSlotCreateInfoEXTBuilder<'a> {
     pub fn flags(mut self, flags: PrivateDataSlotCreateFlagsEXT) -> Self {
         self.inner.flags = flags;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPrivateDataSlotCreateInfoEXT>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -12656,6 +12199,8 @@ pub struct PhysicalDevicePrivateDataFeaturesEXTBuilder<'a> {
     inner: PhysicalDevicePrivateDataFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePrivateDataFeaturesEXTBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePrivateDataFeaturesEXT {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePrivateDataFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePrivateDataFeaturesEXT {}
 impl<'a> ::std::ops::Deref for PhysicalDevicePrivateDataFeaturesEXTBuilder<'a> {
@@ -12847,7 +12392,6 @@ pub struct GraphicsShaderGroupCreateInfoNVBuilder<'a> {
     inner: GraphicsShaderGroupCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsGraphicsShaderGroupCreateInfoNV {}
 impl<'a> ::std::ops::Deref for GraphicsShaderGroupCreateInfoNVBuilder<'a> {
     type Target = GraphicsShaderGroupCreateInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -12877,20 +12421,6 @@ impl<'a> GraphicsShaderGroupCreateInfoNVBuilder<'a> {
         tessellation_state: &'a PipelineTessellationStateCreateInfo,
     ) -> Self {
         self.inner.p_tessellation_state = tessellation_state;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsGraphicsShaderGroupCreateInfoNV>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -13259,7 +12789,6 @@ pub struct IndirectCommandsLayoutTokenNVBuilder<'a> {
     inner: IndirectCommandsLayoutTokenNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsIndirectCommandsLayoutTokenNV {}
 impl<'a> ::std::ops::Deref for IndirectCommandsLayoutTokenNVBuilder<'a> {
     type Target = IndirectCommandsLayoutTokenNV;
     fn deref(&self) -> &Self::Target {
@@ -13328,20 +12857,6 @@ impl<'a> IndirectCommandsLayoutTokenNVBuilder<'a> {
         self.inner.p_index_type_values = index_type_values.as_ptr();
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsIndirectCommandsLayoutTokenNV>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
-        self
-    }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
@@ -13389,7 +12904,6 @@ pub struct IndirectCommandsLayoutCreateInfoNVBuilder<'a> {
     inner: IndirectCommandsLayoutCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsIndirectCommandsLayoutCreateInfoNV {}
 impl<'a> ::std::ops::Deref for IndirectCommandsLayoutCreateInfoNVBuilder<'a> {
     type Target = IndirectCommandsLayoutCreateInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -13418,23 +12932,6 @@ impl<'a> IndirectCommandsLayoutCreateInfoNVBuilder<'a> {
     pub fn stream_strides(mut self, stream_strides: &'a [u32]) -> Self {
         self.inner.stream_count = stream_strides.len() as _;
         self.inner.p_stream_strides = stream_strides.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsIndirectCommandsLayoutCreateInfoNV>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -13498,7 +12995,6 @@ pub struct GeneratedCommandsInfoNVBuilder<'a> {
     inner: GeneratedCommandsInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsGeneratedCommandsInfoNV {}
 impl<'a> ::std::ops::Deref for GeneratedCommandsInfoNVBuilder<'a> {
     type Target = GeneratedCommandsInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -13563,20 +13059,6 @@ impl<'a> GeneratedCommandsInfoNVBuilder<'a> {
         self.inner.sequences_index_offset = sequences_index_offset;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsGeneratedCommandsInfoNV>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
-        self
-    }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
@@ -13620,7 +13102,6 @@ pub struct GeneratedCommandsMemoryRequirementsInfoNVBuilder<'a> {
     inner: GeneratedCommandsMemoryRequirementsInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsGeneratedCommandsMemoryRequirementsInfoNV {}
 impl<'a> ::std::ops::Deref for GeneratedCommandsMemoryRequirementsInfoNVBuilder<'a> {
     type Target = GeneratedCommandsMemoryRequirementsInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -13650,23 +13131,6 @@ impl<'a> GeneratedCommandsMemoryRequirementsInfoNVBuilder<'a> {
     }
     pub fn max_sequences_count(mut self, max_sequences_count: u32) -> Self {
         self.inner.max_sequences_count = max_sequences_count;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsGeneratedCommandsMemoryRequirementsInfoNV>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -13708,6 +13172,7 @@ pub struct PhysicalDeviceFeatures2Builder<'a> {
 }
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFeatures2Builder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFeatures2 {}
+pub unsafe trait ExtendsPhysicalDeviceFeatures2 {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceFeatures2Builder<'a> {
     type Target = PhysicalDeviceFeatures2;
     fn deref(&self) -> &Self::Target {
@@ -13722,6 +13187,20 @@ impl<'a> ::std::ops::DerefMut for PhysicalDeviceFeatures2Builder<'a> {
 impl<'a> PhysicalDeviceFeatures2Builder<'a> {
     pub fn features(mut self, features: PhysicalDeviceFeatures) -> Self {
         self.inner.features = features;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsPhysicalDeviceFeatures2>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -14199,7 +13678,6 @@ pub struct SparseImageFormatProperties2Builder<'a> {
     inner: SparseImageFormatProperties2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSparseImageFormatProperties2 {}
 impl<'a> ::std::ops::Deref for SparseImageFormatProperties2Builder<'a> {
     type Target = SparseImageFormatProperties2;
     fn deref(&self) -> &Self::Target {
@@ -14214,20 +13692,6 @@ impl<'a> ::std::ops::DerefMut for SparseImageFormatProperties2Builder<'a> {
 impl<'a> SparseImageFormatProperties2Builder<'a> {
     pub fn properties(mut self, properties: SparseImageFormatProperties) -> Self {
         self.inner.properties = properties;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSparseImageFormatProperties2>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -14275,7 +13739,6 @@ pub struct PhysicalDeviceSparseImageFormatInfo2Builder<'a> {
     inner: PhysicalDeviceSparseImageFormatInfo2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceSparseImageFormatInfo2 {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceSparseImageFormatInfo2Builder<'a> {
     type Target = PhysicalDeviceSparseImageFormatInfo2;
     fn deref(&self) -> &Self::Target {
@@ -14306,23 +13769,6 @@ impl<'a> PhysicalDeviceSparseImageFormatInfo2Builder<'a> {
     }
     pub fn tiling(mut self, tiling: ImageTiling) -> Self {
         self.inner.tiling = tiling;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPhysicalDeviceSparseImageFormatInfo2>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -14730,6 +14176,8 @@ pub struct PhysicalDeviceVariablePointersFeaturesBuilder<'a> {
     inner: PhysicalDeviceVariablePointersFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVariablePointersFeaturesBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVariablePointersFeatures {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVariablePointersFeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVariablePointersFeatures {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceVariablePointersFeaturesBuilder<'a> {
@@ -14973,7 +14421,6 @@ pub struct PhysicalDeviceExternalBufferInfoBuilder<'a> {
     inner: PhysicalDeviceExternalBufferInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceExternalBufferInfo {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceExternalBufferInfoBuilder<'a> {
     type Target = PhysicalDeviceExternalBufferInfo;
     fn deref(&self) -> &Self::Target {
@@ -14996,23 +14443,6 @@ impl<'a> PhysicalDeviceExternalBufferInfoBuilder<'a> {
     }
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
         self.inner.handle_type = handle_type;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPhysicalDeviceExternalBufferInfo>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -15052,7 +14482,6 @@ pub struct ExternalBufferPropertiesBuilder<'a> {
     inner: ExternalBufferProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsExternalBufferProperties {}
 impl<'a> ::std::ops::Deref for ExternalBufferPropertiesBuilder<'a> {
     type Target = ExternalBufferProperties;
     fn deref(&self) -> &Self::Target {
@@ -15070,20 +14499,6 @@ impl<'a> ExternalBufferPropertiesBuilder<'a> {
         external_memory_properties: ExternalMemoryProperties,
     ) -> Self {
         self.inner.external_memory_properties = external_memory_properties;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsExternalBufferProperties>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -15562,7 +14977,6 @@ pub struct MemoryZirconHandlePropertiesFUCHSIABuilder<'a> {
     inner: MemoryZirconHandlePropertiesFUCHSIA,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsMemoryZirconHandlePropertiesFUCHSIA {}
 impl<'a> ::std::ops::Deref for MemoryZirconHandlePropertiesFUCHSIABuilder<'a> {
     type Target = MemoryZirconHandlePropertiesFUCHSIA;
     fn deref(&self) -> &Self::Target {
@@ -15577,23 +14991,6 @@ impl<'a> ::std::ops::DerefMut for MemoryZirconHandlePropertiesFUCHSIABuilder<'a>
 impl<'a> MemoryZirconHandlePropertiesFUCHSIABuilder<'a> {
     pub fn memory_type_bits(mut self, memory_type_bits: u32) -> Self {
         self.inner.memory_type_bits = memory_type_bits;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsMemoryZirconHandlePropertiesFUCHSIA>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -15635,7 +15032,6 @@ pub struct MemoryGetZirconHandleInfoFUCHSIABuilder<'a> {
     inner: MemoryGetZirconHandleInfoFUCHSIA,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsMemoryGetZirconHandleInfoFUCHSIA {}
 impl<'a> ::std::ops::Deref for MemoryGetZirconHandleInfoFUCHSIABuilder<'a> {
     type Target = MemoryGetZirconHandleInfoFUCHSIA;
     fn deref(&self) -> &Self::Target {
@@ -15654,23 +15050,6 @@ impl<'a> MemoryGetZirconHandleInfoFUCHSIABuilder<'a> {
     }
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
         self.inner.handle_type = handle_type;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsMemoryGetZirconHandleInfoFUCHSIA>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -15710,7 +15089,6 @@ pub struct MemoryWin32HandlePropertiesKHRBuilder<'a> {
     inner: MemoryWin32HandlePropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsMemoryWin32HandlePropertiesKHR {}
 impl<'a> ::std::ops::Deref for MemoryWin32HandlePropertiesKHRBuilder<'a> {
     type Target = MemoryWin32HandlePropertiesKHR;
     fn deref(&self) -> &Self::Target {
@@ -15725,20 +15103,6 @@ impl<'a> ::std::ops::DerefMut for MemoryWin32HandlePropertiesKHRBuilder<'a> {
 impl<'a> MemoryWin32HandlePropertiesKHRBuilder<'a> {
     pub fn memory_type_bits(mut self, memory_type_bits: u32) -> Self {
         self.inner.memory_type_bits = memory_type_bits;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsMemoryWin32HandlePropertiesKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -15780,7 +15144,6 @@ pub struct MemoryGetWin32HandleInfoKHRBuilder<'a> {
     inner: MemoryGetWin32HandleInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsMemoryGetWin32HandleInfoKHR {}
 impl<'a> ::std::ops::Deref for MemoryGetWin32HandleInfoKHRBuilder<'a> {
     type Target = MemoryGetWin32HandleInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -15799,20 +15162,6 @@ impl<'a> MemoryGetWin32HandleInfoKHRBuilder<'a> {
     }
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
         self.inner.handle_type = handle_type;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsMemoryGetWin32HandleInfoKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -15913,7 +15262,6 @@ pub struct MemoryFdPropertiesKHRBuilder<'a> {
     inner: MemoryFdPropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsMemoryFdPropertiesKHR {}
 impl<'a> ::std::ops::Deref for MemoryFdPropertiesKHRBuilder<'a> {
     type Target = MemoryFdPropertiesKHR;
     fn deref(&self) -> &Self::Target {
@@ -15928,20 +15276,6 @@ impl<'a> ::std::ops::DerefMut for MemoryFdPropertiesKHRBuilder<'a> {
 impl<'a> MemoryFdPropertiesKHRBuilder<'a> {
     pub fn memory_type_bits(mut self, memory_type_bits: u32) -> Self {
         self.inner.memory_type_bits = memory_type_bits;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsMemoryFdPropertiesKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -15983,7 +15317,6 @@ pub struct MemoryGetFdInfoKHRBuilder<'a> {
     inner: MemoryGetFdInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsMemoryGetFdInfoKHR {}
 impl<'a> ::std::ops::Deref for MemoryGetFdInfoKHRBuilder<'a> {
     type Target = MemoryGetFdInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -16002,20 +15335,6 @@ impl<'a> MemoryGetFdInfoKHRBuilder<'a> {
     }
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
         self.inner.handle_type = handle_type;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsMemoryGetFdInfoKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -16220,7 +15539,6 @@ pub struct ExternalSemaphorePropertiesBuilder<'a> {
     inner: ExternalSemaphoreProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsExternalSemaphoreProperties {}
 impl<'a> ::std::ops::Deref for ExternalSemaphorePropertiesBuilder<'a> {
     type Target = ExternalSemaphoreProperties;
     fn deref(&self) -> &Self::Target {
@@ -16252,20 +15570,6 @@ impl<'a> ExternalSemaphorePropertiesBuilder<'a> {
         external_semaphore_features: ExternalSemaphoreFeatureFlags,
     ) -> Self {
         self.inner.external_semaphore_features = external_semaphore_features;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsExternalSemaphoreProperties>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -16368,7 +15672,6 @@ pub struct ImportSemaphoreWin32HandleInfoKHRBuilder<'a> {
     inner: ImportSemaphoreWin32HandleInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImportSemaphoreWin32HandleInfoKHR {}
 impl<'a> ::std::ops::Deref for ImportSemaphoreWin32HandleInfoKHRBuilder<'a> {
     type Target = ImportSemaphoreWin32HandleInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -16399,23 +15702,6 @@ impl<'a> ImportSemaphoreWin32HandleInfoKHRBuilder<'a> {
     }
     pub fn name(mut self, name: LPCWSTR) -> Self {
         self.inner.name = name;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsImportSemaphoreWin32HandleInfoKHR>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -16591,7 +15877,6 @@ pub struct SemaphoreGetWin32HandleInfoKHRBuilder<'a> {
     inner: SemaphoreGetWin32HandleInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSemaphoreGetWin32HandleInfoKHR {}
 impl<'a> ::std::ops::Deref for SemaphoreGetWin32HandleInfoKHRBuilder<'a> {
     type Target = SemaphoreGetWin32HandleInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -16610,20 +15895,6 @@ impl<'a> SemaphoreGetWin32HandleInfoKHRBuilder<'a> {
     }
     pub fn handle_type(mut self, handle_type: ExternalSemaphoreHandleTypeFlags) -> Self {
         self.inner.handle_type = handle_type;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSemaphoreGetWin32HandleInfoKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -16669,7 +15940,6 @@ pub struct ImportSemaphoreFdInfoKHRBuilder<'a> {
     inner: ImportSemaphoreFdInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImportSemaphoreFdInfoKHR {}
 impl<'a> ::std::ops::Deref for ImportSemaphoreFdInfoKHRBuilder<'a> {
     type Target = ImportSemaphoreFdInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -16696,20 +15966,6 @@ impl<'a> ImportSemaphoreFdInfoKHRBuilder<'a> {
     }
     pub fn fd(mut self, fd: c_int) -> Self {
         self.inner.fd = fd;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsImportSemaphoreFdInfoKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -16751,7 +16007,6 @@ pub struct SemaphoreGetFdInfoKHRBuilder<'a> {
     inner: SemaphoreGetFdInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSemaphoreGetFdInfoKHR {}
 impl<'a> ::std::ops::Deref for SemaphoreGetFdInfoKHRBuilder<'a> {
     type Target = SemaphoreGetFdInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -16770,20 +16025,6 @@ impl<'a> SemaphoreGetFdInfoKHRBuilder<'a> {
     }
     pub fn handle_type(mut self, handle_type: ExternalSemaphoreHandleTypeFlags) -> Self {
         self.inner.handle_type = handle_type;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSemaphoreGetFdInfoKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -16829,7 +16070,6 @@ pub struct ImportSemaphoreZirconHandleInfoFUCHSIABuilder<'a> {
     inner: ImportSemaphoreZirconHandleInfoFUCHSIA,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImportSemaphoreZirconHandleInfoFUCHSIA {}
 impl<'a> ::std::ops::Deref for ImportSemaphoreZirconHandleInfoFUCHSIABuilder<'a> {
     type Target = ImportSemaphoreZirconHandleInfoFUCHSIA;
     fn deref(&self) -> &Self::Target {
@@ -16856,23 +16096,6 @@ impl<'a> ImportSemaphoreZirconHandleInfoFUCHSIABuilder<'a> {
     }
     pub fn zircon_handle(mut self, zircon_handle: zx_handle_t) -> Self {
         self.inner.zircon_handle = zircon_handle;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsImportSemaphoreZirconHandleInfoFUCHSIA>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -16914,7 +16137,6 @@ pub struct SemaphoreGetZirconHandleInfoFUCHSIABuilder<'a> {
     inner: SemaphoreGetZirconHandleInfoFUCHSIA,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSemaphoreGetZirconHandleInfoFUCHSIA {}
 impl<'a> ::std::ops::Deref for SemaphoreGetZirconHandleInfoFUCHSIABuilder<'a> {
     type Target = SemaphoreGetZirconHandleInfoFUCHSIA;
     fn deref(&self) -> &Self::Target {
@@ -16933,23 +16155,6 @@ impl<'a> SemaphoreGetZirconHandleInfoFUCHSIABuilder<'a> {
     }
     pub fn handle_type(mut self, handle_type: ExternalSemaphoreHandleTypeFlags) -> Self {
         self.inner.handle_type = handle_type;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSemaphoreGetZirconHandleInfoFUCHSIA>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -16989,7 +16194,6 @@ pub struct PhysicalDeviceExternalFenceInfoBuilder<'a> {
     inner: PhysicalDeviceExternalFenceInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceExternalFenceInfo {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceExternalFenceInfoBuilder<'a> {
     type Target = PhysicalDeviceExternalFenceInfo;
     fn deref(&self) -> &Self::Target {
@@ -17004,20 +16208,6 @@ impl<'a> ::std::ops::DerefMut for PhysicalDeviceExternalFenceInfoBuilder<'a> {
 impl<'a> PhysicalDeviceExternalFenceInfoBuilder<'a> {
     pub fn handle_type(mut self, handle_type: ExternalFenceHandleTypeFlags) -> Self {
         self.inner.handle_type = handle_type;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPhysicalDeviceExternalFenceInfo>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -17061,7 +16251,6 @@ pub struct ExternalFencePropertiesBuilder<'a> {
     inner: ExternalFenceProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsExternalFenceProperties {}
 impl<'a> ::std::ops::Deref for ExternalFencePropertiesBuilder<'a> {
     type Target = ExternalFenceProperties;
     fn deref(&self) -> &Self::Target {
@@ -17093,20 +16282,6 @@ impl<'a> ExternalFencePropertiesBuilder<'a> {
         external_fence_features: ExternalFenceFeatureFlags,
     ) -> Self {
         self.inner.external_fence_features = external_fence_features;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsExternalFenceProperties>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -17209,7 +16384,6 @@ pub struct ImportFenceWin32HandleInfoKHRBuilder<'a> {
     inner: ImportFenceWin32HandleInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImportFenceWin32HandleInfoKHR {}
 impl<'a> ::std::ops::Deref for ImportFenceWin32HandleInfoKHRBuilder<'a> {
     type Target = ImportFenceWin32HandleInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -17240,20 +16414,6 @@ impl<'a> ImportFenceWin32HandleInfoKHRBuilder<'a> {
     }
     pub fn name(mut self, name: LPCWSTR) -> Self {
         self.inner.name = name;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsImportFenceWin32HandleInfoKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -17362,7 +16522,6 @@ pub struct FenceGetWin32HandleInfoKHRBuilder<'a> {
     inner: FenceGetWin32HandleInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsFenceGetWin32HandleInfoKHR {}
 impl<'a> ::std::ops::Deref for FenceGetWin32HandleInfoKHRBuilder<'a> {
     type Target = FenceGetWin32HandleInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -17381,20 +16540,6 @@ impl<'a> FenceGetWin32HandleInfoKHRBuilder<'a> {
     }
     pub fn handle_type(mut self, handle_type: ExternalFenceHandleTypeFlags) -> Self {
         self.inner.handle_type = handle_type;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsFenceGetWin32HandleInfoKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -17440,7 +16585,6 @@ pub struct ImportFenceFdInfoKHRBuilder<'a> {
     inner: ImportFenceFdInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImportFenceFdInfoKHR {}
 impl<'a> ::std::ops::Deref for ImportFenceFdInfoKHRBuilder<'a> {
     type Target = ImportFenceFdInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -17467,20 +16611,6 @@ impl<'a> ImportFenceFdInfoKHRBuilder<'a> {
     }
     pub fn fd(mut self, fd: c_int) -> Self {
         self.inner.fd = fd;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsImportFenceFdInfoKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -17522,7 +16652,6 @@ pub struct FenceGetFdInfoKHRBuilder<'a> {
     inner: FenceGetFdInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsFenceGetFdInfoKHR {}
 impl<'a> ::std::ops::Deref for FenceGetFdInfoKHRBuilder<'a> {
     type Target = FenceGetFdInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -17541,20 +16670,6 @@ impl<'a> FenceGetFdInfoKHRBuilder<'a> {
     }
     pub fn handle_type(mut self, handle_type: ExternalFenceHandleTypeFlags) -> Self {
         self.inner.handle_type = handle_type;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsFenceGetFdInfoKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -17598,6 +16713,8 @@ pub struct PhysicalDeviceMultiviewFeaturesBuilder<'a> {
     inner: PhysicalDeviceMultiviewFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMultiviewFeaturesBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMultiviewFeatures {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMultiviewFeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMultiviewFeatures {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceMultiviewFeaturesBuilder<'a> {
@@ -17818,7 +16935,6 @@ pub struct SurfaceCapabilities2EXTBuilder<'a> {
     inner: SurfaceCapabilities2EXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSurfaceCapabilities2EXT {}
 impl<'a> ::std::ops::Deref for SurfaceCapabilities2EXTBuilder<'a> {
     type Target = SurfaceCapabilities2EXT;
     fn deref(&self) -> &Self::Target {
@@ -17881,20 +16997,6 @@ impl<'a> SurfaceCapabilities2EXTBuilder<'a> {
         self.inner.supported_surface_counters = supported_surface_counters;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSurfaceCapabilities2EXT>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
-        self
-    }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
@@ -17932,7 +17034,6 @@ pub struct DisplayPowerInfoEXTBuilder<'a> {
     inner: DisplayPowerInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDisplayPowerInfoEXT {}
 impl<'a> ::std::ops::Deref for DisplayPowerInfoEXTBuilder<'a> {
     type Target = DisplayPowerInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -17947,20 +17048,6 @@ impl<'a> ::std::ops::DerefMut for DisplayPowerInfoEXTBuilder<'a> {
 impl<'a> DisplayPowerInfoEXTBuilder<'a> {
     pub fn power_state(mut self, power_state: DisplayPowerStateEXT) -> Self {
         self.inner.power_state = power_state;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDisplayPowerInfoEXT>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -18000,7 +17087,6 @@ pub struct DeviceEventInfoEXTBuilder<'a> {
     inner: DeviceEventInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDeviceEventInfoEXT {}
 impl<'a> ::std::ops::Deref for DeviceEventInfoEXTBuilder<'a> {
     type Target = DeviceEventInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -18015,20 +17101,6 @@ impl<'a> ::std::ops::DerefMut for DeviceEventInfoEXTBuilder<'a> {
 impl<'a> DeviceEventInfoEXTBuilder<'a> {
     pub fn device_event(mut self, device_event: DeviceEventTypeEXT) -> Self {
         self.inner.device_event = device_event;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDeviceEventInfoEXT>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -18068,7 +17140,6 @@ pub struct DisplayEventInfoEXTBuilder<'a> {
     inner: DisplayEventInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDisplayEventInfoEXT {}
 impl<'a> ::std::ops::Deref for DisplayEventInfoEXTBuilder<'a> {
     type Target = DisplayEventInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -18083,20 +17154,6 @@ impl<'a> ::std::ops::DerefMut for DisplayEventInfoEXTBuilder<'a> {
 impl<'a> DisplayEventInfoEXTBuilder<'a> {
     pub fn display_event(mut self, display_event: DisplayEventTypeEXT) -> Self {
         self.inner.display_event = display_event;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDisplayEventInfoEXT>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -18195,7 +17252,6 @@ pub struct PhysicalDeviceGroupPropertiesBuilder<'a> {
     inner: PhysicalDeviceGroupProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceGroupProperties {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceGroupPropertiesBuilder<'a> {
     type Target = PhysicalDeviceGroupProperties;
     fn deref(&self) -> &Self::Target {
@@ -18221,20 +17277,6 @@ impl<'a> PhysicalDeviceGroupPropertiesBuilder<'a> {
     }
     pub fn subset_allocation(mut self, subset_allocation: bool) -> Self {
         self.inner.subset_allocation = subset_allocation.into();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPhysicalDeviceGroupProperties>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -18887,7 +17929,6 @@ pub struct DeviceGroupPresentCapabilitiesKHRBuilder<'a> {
     inner: DeviceGroupPresentCapabilitiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDeviceGroupPresentCapabilitiesKHR {}
 impl<'a> ::std::ops::Deref for DeviceGroupPresentCapabilitiesKHRBuilder<'a> {
     type Target = DeviceGroupPresentCapabilitiesKHR;
     fn deref(&self) -> &Self::Target {
@@ -18906,23 +17947,6 @@ impl<'a> DeviceGroupPresentCapabilitiesKHRBuilder<'a> {
     }
     pub fn modes(mut self, modes: DeviceGroupPresentModeFlagsKHR) -> Self {
         self.inner.modes = modes;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDeviceGroupPresentCapabilitiesKHR>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -19086,7 +18110,6 @@ pub struct AcquireNextImageInfoKHRBuilder<'a> {
     inner: AcquireNextImageInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsAcquireNextImageInfoKHR {}
 impl<'a> ::std::ops::Deref for AcquireNextImageInfoKHRBuilder<'a> {
     type Target = AcquireNextImageInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -19117,20 +18140,6 @@ impl<'a> AcquireNextImageInfoKHRBuilder<'a> {
     }
     pub fn device_mask(mut self, device_mask: u32) -> Self {
         self.inner.device_mask = device_mask;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsAcquireNextImageInfoKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -19428,7 +18437,6 @@ pub struct DescriptorUpdateTemplateCreateInfoBuilder<'a> {
     inner: DescriptorUpdateTemplateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDescriptorUpdateTemplateCreateInfo {}
 impl<'a> ::std::ops::Deref for DescriptorUpdateTemplateCreateInfoBuilder<'a> {
     type Target = DescriptorUpdateTemplateCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -19471,23 +18479,6 @@ impl<'a> DescriptorUpdateTemplateCreateInfoBuilder<'a> {
     }
     pub fn set(mut self, set: u32) -> Self {
         self.inner.set = set;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDescriptorUpdateTemplateCreateInfo>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -19588,7 +18579,6 @@ pub struct HdrMetadataEXTBuilder<'a> {
     inner: HdrMetadataEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsHdrMetadataEXT {}
 impl<'a> ::std::ops::Deref for HdrMetadataEXTBuilder<'a> {
     type Target = HdrMetadataEXT;
     fn deref(&self) -> &Self::Target {
@@ -19631,20 +18621,6 @@ impl<'a> HdrMetadataEXTBuilder<'a> {
     }
     pub fn max_frame_average_light_level(mut self, max_frame_average_light_level: f32) -> Self {
         self.inner.max_frame_average_light_level = max_frame_average_light_level;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsHdrMetadataEXT>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -20005,7 +18981,6 @@ pub struct IOSSurfaceCreateInfoMVKBuilder<'a> {
     inner: IOSSurfaceCreateInfoMVK,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsIOSSurfaceCreateInfoMVK {}
 impl<'a> ::std::ops::Deref for IOSSurfaceCreateInfoMVKBuilder<'a> {
     type Target = IOSSurfaceCreateInfoMVK;
     fn deref(&self) -> &Self::Target {
@@ -20024,20 +18999,6 @@ impl<'a> IOSSurfaceCreateInfoMVKBuilder<'a> {
     }
     pub fn view(mut self, view: *const c_void) -> Self {
         self.inner.p_view = view;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsIOSSurfaceCreateInfoMVK>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -20079,7 +19040,6 @@ pub struct MacOSSurfaceCreateInfoMVKBuilder<'a> {
     inner: MacOSSurfaceCreateInfoMVK,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsMacOSSurfaceCreateInfoMVK {}
 impl<'a> ::std::ops::Deref for MacOSSurfaceCreateInfoMVKBuilder<'a> {
     type Target = MacOSSurfaceCreateInfoMVK;
     fn deref(&self) -> &Self::Target {
@@ -20098,20 +19058,6 @@ impl<'a> MacOSSurfaceCreateInfoMVKBuilder<'a> {
     }
     pub fn view(mut self, view: *const c_void) -> Self {
         self.inner.p_view = view;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsMacOSSurfaceCreateInfoMVK>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -20153,7 +19099,6 @@ pub struct MetalSurfaceCreateInfoEXTBuilder<'a> {
     inner: MetalSurfaceCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsMetalSurfaceCreateInfoEXT {}
 impl<'a> ::std::ops::Deref for MetalSurfaceCreateInfoEXTBuilder<'a> {
     type Target = MetalSurfaceCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -20172,20 +19117,6 @@ impl<'a> MetalSurfaceCreateInfoEXTBuilder<'a> {
     }
     pub fn layer(mut self, layer: *const CAMetalLayer) -> Self {
         self.inner.p_layer = layer;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsMetalSurfaceCreateInfoEXT>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -20910,7 +19841,6 @@ pub struct SurfaceFormat2KHRBuilder<'a> {
     inner: SurfaceFormat2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSurfaceFormat2KHR {}
 impl<'a> ::std::ops::Deref for SurfaceFormat2KHRBuilder<'a> {
     type Target = SurfaceFormat2KHR;
     fn deref(&self) -> &Self::Target {
@@ -20925,20 +19855,6 @@ impl<'a> ::std::ops::DerefMut for SurfaceFormat2KHRBuilder<'a> {
 impl<'a> SurfaceFormat2KHRBuilder<'a> {
     pub fn surface_format(mut self, surface_format: SurfaceFormatKHR) -> Self {
         self.inner.surface_format = surface_format;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSurfaceFormat2KHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -20978,7 +19894,6 @@ pub struct DisplayProperties2KHRBuilder<'a> {
     inner: DisplayProperties2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDisplayProperties2KHR {}
 impl<'a> ::std::ops::Deref for DisplayProperties2KHRBuilder<'a> {
     type Target = DisplayProperties2KHR;
     fn deref(&self) -> &Self::Target {
@@ -20993,20 +19908,6 @@ impl<'a> ::std::ops::DerefMut for DisplayProperties2KHRBuilder<'a> {
 impl<'a> DisplayProperties2KHRBuilder<'a> {
     pub fn display_properties(mut self, display_properties: DisplayPropertiesKHR) -> Self {
         self.inner.display_properties = display_properties;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDisplayProperties2KHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -21046,7 +19947,6 @@ pub struct DisplayPlaneProperties2KHRBuilder<'a> {
     inner: DisplayPlaneProperties2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDisplayPlaneProperties2KHR {}
 impl<'a> ::std::ops::Deref for DisplayPlaneProperties2KHRBuilder<'a> {
     type Target = DisplayPlaneProperties2KHR;
     fn deref(&self) -> &Self::Target {
@@ -21064,20 +19964,6 @@ impl<'a> DisplayPlaneProperties2KHRBuilder<'a> {
         display_plane_properties: DisplayPlanePropertiesKHR,
     ) -> Self {
         self.inner.display_plane_properties = display_plane_properties;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDisplayPlaneProperties2KHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -21117,7 +20003,6 @@ pub struct DisplayModeProperties2KHRBuilder<'a> {
     inner: DisplayModeProperties2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDisplayModeProperties2KHR {}
 impl<'a> ::std::ops::Deref for DisplayModeProperties2KHRBuilder<'a> {
     type Target = DisplayModeProperties2KHR;
     fn deref(&self) -> &Self::Target {
@@ -21135,20 +20020,6 @@ impl<'a> DisplayModeProperties2KHRBuilder<'a> {
         display_mode_properties: DisplayModePropertiesKHR,
     ) -> Self {
         self.inner.display_mode_properties = display_mode_properties;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDisplayModeProperties2KHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -21190,7 +20061,6 @@ pub struct DisplayPlaneInfo2KHRBuilder<'a> {
     inner: DisplayPlaneInfo2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDisplayPlaneInfo2KHR {}
 impl<'a> ::std::ops::Deref for DisplayPlaneInfo2KHRBuilder<'a> {
     type Target = DisplayPlaneInfo2KHR;
     fn deref(&self) -> &Self::Target {
@@ -21209,20 +20079,6 @@ impl<'a> DisplayPlaneInfo2KHRBuilder<'a> {
     }
     pub fn plane_index(mut self, plane_index: u32) -> Self {
         self.inner.plane_index = plane_index;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDisplayPlaneInfo2KHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -21262,7 +20118,6 @@ pub struct DisplayPlaneCapabilities2KHRBuilder<'a> {
     inner: DisplayPlaneCapabilities2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDisplayPlaneCapabilities2KHR {}
 impl<'a> ::std::ops::Deref for DisplayPlaneCapabilities2KHRBuilder<'a> {
     type Target = DisplayPlaneCapabilities2KHR;
     fn deref(&self) -> &Self::Target {
@@ -21277,20 +20132,6 @@ impl<'a> ::std::ops::DerefMut for DisplayPlaneCapabilities2KHRBuilder<'a> {
 impl<'a> DisplayPlaneCapabilities2KHRBuilder<'a> {
     pub fn capabilities(mut self, capabilities: DisplayPlaneCapabilitiesKHR) -> Self {
         self.inner.capabilities = capabilities;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDisplayPlaneCapabilities2KHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -21394,6 +20235,8 @@ pub struct PhysicalDevice16BitStorageFeaturesBuilder<'a> {
     inner: PhysicalDevice16BitStorageFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevice16BitStorageFeaturesBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevice16BitStorageFeatures {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDevice16BitStorageFeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDevice16BitStorageFeatures {}
 impl<'a> ::std::ops::Deref for PhysicalDevice16BitStorageFeaturesBuilder<'a> {
@@ -21538,6 +20381,11 @@ pub struct PhysicalDeviceShaderSubgroupExtendedTypesFeaturesBuilder<'a> {
     inner: PhysicalDeviceShaderSubgroupExtendedTypesFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceShaderSubgroupExtendedTypesFeaturesBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderSubgroupExtendedTypesFeatures {}
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceShaderSubgroupExtendedTypesFeaturesBuilder<'_>
 {
@@ -21596,7 +20444,6 @@ pub struct BufferMemoryRequirementsInfo2Builder<'a> {
     inner: BufferMemoryRequirementsInfo2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsBufferMemoryRequirementsInfo2 {}
 impl<'a> ::std::ops::Deref for BufferMemoryRequirementsInfo2Builder<'a> {
     type Target = BufferMemoryRequirementsInfo2;
     fn deref(&self) -> &Self::Target {
@@ -21611,20 +20458,6 @@ impl<'a> ::std::ops::DerefMut for BufferMemoryRequirementsInfo2Builder<'a> {
 impl<'a> BufferMemoryRequirementsInfo2Builder<'a> {
     pub fn buffer(mut self, buffer: Buffer) -> Self {
         self.inner.buffer = buffer;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBufferMemoryRequirementsInfo2>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -21732,7 +20565,6 @@ pub struct ImageSparseMemoryRequirementsInfo2Builder<'a> {
     inner: ImageSparseMemoryRequirementsInfo2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImageSparseMemoryRequirementsInfo2 {}
 impl<'a> ::std::ops::Deref for ImageSparseMemoryRequirementsInfo2Builder<'a> {
     type Target = ImageSparseMemoryRequirementsInfo2;
     fn deref(&self) -> &Self::Target {
@@ -21747,23 +20579,6 @@ impl<'a> ::std::ops::DerefMut for ImageSparseMemoryRequirementsInfo2Builder<'a> 
 impl<'a> ImageSparseMemoryRequirementsInfo2Builder<'a> {
     pub fn image(mut self, image: Image) -> Self {
         self.inner.image = image;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsImageSparseMemoryRequirementsInfo2>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -21871,7 +20686,6 @@ pub struct SparseImageMemoryRequirements2Builder<'a> {
     inner: SparseImageMemoryRequirements2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSparseImageMemoryRequirements2 {}
 impl<'a> ::std::ops::Deref for SparseImageMemoryRequirements2Builder<'a> {
     type Target = SparseImageMemoryRequirements2;
     fn deref(&self) -> &Self::Target {
@@ -21889,20 +20703,6 @@ impl<'a> SparseImageMemoryRequirements2Builder<'a> {
         memory_requirements: SparseImageMemoryRequirements,
     ) -> Self {
         self.inner.memory_requirements = memory_requirements;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSparseImageMemoryRequirements2>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -22518,6 +21318,11 @@ pub struct PhysicalDeviceSamplerYcbcrConversionFeaturesBuilder<'a> {
     inner: PhysicalDeviceSamplerYcbcrConversionFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceSamplerYcbcrConversionFeaturesBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSamplerYcbcrConversionFeatures {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSamplerYcbcrConversionFeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSamplerYcbcrConversionFeatures {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceSamplerYcbcrConversionFeaturesBuilder<'a> {
@@ -22698,7 +21503,6 @@ pub struct ConditionalRenderingBeginInfoEXTBuilder<'a> {
     inner: ConditionalRenderingBeginInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsConditionalRenderingBeginInfoEXT {}
 impl<'a> ::std::ops::Deref for ConditionalRenderingBeginInfoEXTBuilder<'a> {
     type Target = ConditionalRenderingBeginInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -22721,23 +21525,6 @@ impl<'a> ConditionalRenderingBeginInfoEXTBuilder<'a> {
     }
     pub fn flags(mut self, flags: ConditionalRenderingFlagsEXT) -> Self {
         self.inner.flags = flags;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsConditionalRenderingBeginInfoEXT>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -22832,6 +21619,8 @@ pub struct PhysicalDeviceProtectedMemoryFeaturesBuilder<'a> {
     inner: PhysicalDeviceProtectedMemoryFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceProtectedMemoryFeaturesBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceProtectedMemoryFeatures {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceProtectedMemoryFeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceProtectedMemoryFeatures {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceProtectedMemoryFeaturesBuilder<'a> {
@@ -22949,7 +21738,6 @@ pub struct DeviceQueueInfo2Builder<'a> {
     inner: DeviceQueueInfo2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDeviceQueueInfo2 {}
 impl<'a> ::std::ops::Deref for DeviceQueueInfo2Builder<'a> {
     type Target = DeviceQueueInfo2;
     fn deref(&self) -> &Self::Target {
@@ -22972,20 +21760,6 @@ impl<'a> DeviceQueueInfo2Builder<'a> {
     }
     pub fn queue_index(mut self, queue_index: u32) -> Self {
         self.inner.queue_index = queue_index;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDeviceQueueInfo2>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -23616,7 +22390,6 @@ pub struct MultisamplePropertiesEXTBuilder<'a> {
     inner: MultisamplePropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsMultisamplePropertiesEXT {}
 impl<'a> ::std::ops::Deref for MultisamplePropertiesEXTBuilder<'a> {
     type Target = MultisamplePropertiesEXT;
     fn deref(&self) -> &Self::Target {
@@ -23634,20 +22407,6 @@ impl<'a> MultisamplePropertiesEXTBuilder<'a> {
         max_sample_location_grid_size: Extent2D,
     ) -> Self {
         self.inner.max_sample_location_grid_size = max_sample_location_grid_size;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsMultisamplePropertiesEXT>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -23742,6 +22501,11 @@ pub struct PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceBlendOperationAdvancedFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceBlendOperationAdvancedFeaturesEXT {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceBlendOperationAdvancedFeaturesEXT {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilder<'a> {
@@ -23980,6 +22744,11 @@ pub struct PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceInlineUniformBlockFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceInlineUniformBlockFeaturesEXT {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceInlineUniformBlockFeaturesEXT {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'a> {
@@ -24417,7 +23186,6 @@ pub struct ValidationCacheCreateInfoEXTBuilder<'a> {
     inner: ValidationCacheCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsValidationCacheCreateInfoEXT {}
 impl<'a> ::std::ops::Deref for ValidationCacheCreateInfoEXTBuilder<'a> {
     type Target = ValidationCacheCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -24437,20 +23205,6 @@ impl<'a> ValidationCacheCreateInfoEXTBuilder<'a> {
     pub fn initial_data(mut self, initial_data: &'a [u8]) -> Self {
         self.inner.initial_data_size = initial_data.len() as _;
         self.inner.p_initial_data = initial_data.as_ptr() as *const c_void;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsValidationCacheCreateInfoEXT>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -24674,6 +23428,11 @@ pub struct PhysicalDeviceShaderDrawParametersFeaturesBuilder<'a> {
     inner: PhysicalDeviceShaderDrawParametersFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceShaderDrawParametersFeaturesBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderDrawParametersFeatures {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderDrawParametersFeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderDrawParametersFeatures {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderDrawParametersFeaturesBuilder<'a> {
@@ -24731,6 +23490,8 @@ pub struct PhysicalDeviceShaderFloat16Int8FeaturesBuilder<'a> {
     inner: PhysicalDeviceShaderFloat16Int8Features,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderFloat16Int8FeaturesBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderFloat16Int8Features {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderFloat16Int8FeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderFloat16Int8Features {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderFloat16Int8FeaturesBuilder<'a> {
@@ -24986,6 +23747,8 @@ pub struct PhysicalDeviceHostQueryResetFeaturesBuilder<'a> {
     inner: PhysicalDeviceHostQueryResetFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceHostQueryResetFeaturesBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceHostQueryResetFeatures {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceHostQueryResetFeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceHostQueryResetFeatures {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceHostQueryResetFeaturesBuilder<'a> {
@@ -25096,7 +23859,6 @@ pub struct NativeBufferANDROIDBuilder<'a> {
     inner: NativeBufferANDROID,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsNativeBufferANDROID {}
 impl<'a> ::std::ops::Deref for NativeBufferANDROIDBuilder<'a> {
     type Target = NativeBufferANDROID;
     fn deref(&self) -> &Self::Target {
@@ -25127,20 +23889,6 @@ impl<'a> NativeBufferANDROIDBuilder<'a> {
     }
     pub fn usage2(mut self, usage2: NativeBufferUsage2ANDROID) -> Self {
         self.inner.usage2 = usage2;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsNativeBufferANDROID>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -25180,7 +23928,6 @@ pub struct SwapchainImageCreateInfoANDROIDBuilder<'a> {
     inner: SwapchainImageCreateInfoANDROID,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSwapchainImageCreateInfoANDROID {}
 impl<'a> ::std::ops::Deref for SwapchainImageCreateInfoANDROIDBuilder<'a> {
     type Target = SwapchainImageCreateInfoANDROID;
     fn deref(&self) -> &Self::Target {
@@ -25195,20 +23942,6 @@ impl<'a> ::std::ops::DerefMut for SwapchainImageCreateInfoANDROIDBuilder<'a> {
 impl<'a> SwapchainImageCreateInfoANDROIDBuilder<'a> {
     pub fn usage(mut self, usage: SwapchainImageUsageFlagsANDROID) -> Self {
         self.inner.usage = usage;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSwapchainImageCreateInfoANDROID>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -25248,7 +23981,6 @@ pub struct PhysicalDevicePresentationPropertiesANDROIDBuilder<'a> {
     inner: PhysicalDevicePresentationPropertiesANDROID,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDevicePresentationPropertiesANDROID {}
 impl<'a> ::std::ops::Deref for PhysicalDevicePresentationPropertiesANDROIDBuilder<'a> {
     type Target = PhysicalDevicePresentationPropertiesANDROID;
     fn deref(&self) -> &Self::Target {
@@ -25263,23 +23995,6 @@ impl<'a> ::std::ops::DerefMut for PhysicalDevicePresentationPropertiesANDROIDBui
 impl<'a> PhysicalDevicePresentationPropertiesANDROIDBuilder<'a> {
     pub fn shared_image(mut self, shared_image: bool) -> Self {
         self.inner.shared_image = shared_image.into();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPhysicalDevicePresentationPropertiesANDROID>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -25525,7 +24240,6 @@ pub struct DebugUtilsObjectNameInfoEXTBuilder<'a> {
     inner: DebugUtilsObjectNameInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDebugUtilsObjectNameInfoEXT {}
 impl<'a> ::std::ops::Deref for DebugUtilsObjectNameInfoEXTBuilder<'a> {
     type Target = DebugUtilsObjectNameInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -25548,20 +24262,6 @@ impl<'a> DebugUtilsObjectNameInfoEXTBuilder<'a> {
     }
     pub fn object_name(mut self, object_name: &'a ::std::ffi::CStr) -> Self {
         self.inner.p_object_name = object_name.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDebugUtilsObjectNameInfoEXT>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -25609,7 +24309,6 @@ pub struct DebugUtilsObjectTagInfoEXTBuilder<'a> {
     inner: DebugUtilsObjectTagInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDebugUtilsObjectTagInfoEXT {}
 impl<'a> ::std::ops::Deref for DebugUtilsObjectTagInfoEXTBuilder<'a> {
     type Target = DebugUtilsObjectTagInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -25637,20 +24336,6 @@ impl<'a> DebugUtilsObjectTagInfoEXTBuilder<'a> {
     pub fn tag(mut self, tag: &'a [u8]) -> Self {
         self.inner.tag_size = tag.len() as _;
         self.inner.p_tag = tag.as_ptr() as *const c_void;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDebugUtilsObjectTagInfoEXT>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -25692,7 +24377,6 @@ pub struct DebugUtilsLabelEXTBuilder<'a> {
     inner: DebugUtilsLabelEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDebugUtilsLabelEXT {}
 impl<'a> ::std::ops::Deref for DebugUtilsLabelEXTBuilder<'a> {
     type Target = DebugUtilsLabelEXT;
     fn deref(&self) -> &Self::Target {
@@ -25711,20 +24395,6 @@ impl<'a> DebugUtilsLabelEXTBuilder<'a> {
     }
     pub fn color(mut self, color: [f32; 4]) -> Self {
         self.inner.color = color;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDebugUtilsLabelEXT>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -25880,7 +24550,6 @@ pub struct DebugUtilsMessengerCallbackDataEXTBuilder<'a> {
     inner: DebugUtilsMessengerCallbackDataEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDebugUtilsMessengerCallbackDataEXT {}
 impl<'a> ::std::ops::Deref for DebugUtilsMessengerCallbackDataEXTBuilder<'a> {
     type Target = DebugUtilsMessengerCallbackDataEXT;
     fn deref(&self) -> &Self::Target {
@@ -25924,23 +24593,6 @@ impl<'a> DebugUtilsMessengerCallbackDataEXTBuilder<'a> {
         self.inner.p_objects = objects.as_ptr();
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDebugUtilsMessengerCallbackDataEXT>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
-        self
-    }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
@@ -25978,6 +24630,11 @@ pub struct PhysicalDeviceDeviceMemoryReportFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceDeviceMemoryReportFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceDeviceMemoryReportFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDeviceMemoryReportFeaturesEXT {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDeviceMemoryReportFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDeviceMemoryReportFeaturesEXT {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceDeviceMemoryReportFeaturesEXTBuilder<'a> {
@@ -26129,7 +24786,6 @@ pub struct DeviceMemoryReportCallbackDataEXTBuilder<'a> {
     inner: DeviceMemoryReportCallbackDataEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDeviceMemoryReportCallbackDataEXT {}
 impl<'a> ::std::ops::Deref for DeviceMemoryReportCallbackDataEXTBuilder<'a> {
     type Target = DeviceMemoryReportCallbackDataEXT;
     fn deref(&self) -> &Self::Target {
@@ -26168,23 +24824,6 @@ impl<'a> DeviceMemoryReportCallbackDataEXTBuilder<'a> {
     }
     pub fn heap_index(mut self, heap_index: u32) -> Self {
         self.inner.heap_index = heap_index;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDeviceMemoryReportCallbackDataEXT>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -26285,7 +24924,6 @@ pub struct MemoryHostPointerPropertiesEXTBuilder<'a> {
     inner: MemoryHostPointerPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsMemoryHostPointerPropertiesEXT {}
 impl<'a> ::std::ops::Deref for MemoryHostPointerPropertiesEXTBuilder<'a> {
     type Target = MemoryHostPointerPropertiesEXT;
     fn deref(&self) -> &Self::Target {
@@ -26300,20 +24938,6 @@ impl<'a> ::std::ops::DerefMut for MemoryHostPointerPropertiesEXTBuilder<'a> {
 impl<'a> MemoryHostPointerPropertiesEXTBuilder<'a> {
     pub fn memory_type_bits(mut self, memory_type_bits: u32) -> Self {
         self.inner.memory_type_bits = memory_type_bits;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsMemoryHostPointerPropertiesEXT>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -26546,7 +25170,6 @@ pub struct CalibratedTimestampInfoEXTBuilder<'a> {
     inner: CalibratedTimestampInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsCalibratedTimestampInfoEXT {}
 impl<'a> ::std::ops::Deref for CalibratedTimestampInfoEXTBuilder<'a> {
     type Target = CalibratedTimestampInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -26561,20 +25184,6 @@ impl<'a> ::std::ops::DerefMut for CalibratedTimestampInfoEXTBuilder<'a> {
 impl<'a> CalibratedTimestampInfoEXTBuilder<'a> {
     pub fn time_domain(mut self, time_domain: TimeDomainEXT) -> Self {
         self.inner.time_domain = time_domain;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsCalibratedTimestampInfoEXT>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -26928,6 +25537,8 @@ pub struct PhysicalDeviceDescriptorIndexingFeaturesBuilder<'a> {
     inner: PhysicalDeviceDescriptorIndexingFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDescriptorIndexingFeaturesBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDescriptorIndexingFeatures {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDescriptorIndexingFeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDescriptorIndexingFeatures {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceDescriptorIndexingFeaturesBuilder<'a> {
@@ -28157,7 +26768,6 @@ pub struct SubpassBeginInfoBuilder<'a> {
     inner: SubpassBeginInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSubpassBeginInfo {}
 impl<'a> ::std::ops::Deref for SubpassBeginInfoBuilder<'a> {
     type Target = SubpassBeginInfo;
     fn deref(&self) -> &Self::Target {
@@ -28172,20 +26782,6 @@ impl<'a> ::std::ops::DerefMut for SubpassBeginInfoBuilder<'a> {
 impl<'a> SubpassBeginInfoBuilder<'a> {
     pub fn contents(mut self, contents: SubpassContents) -> Self {
         self.inner.contents = contents;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSubpassBeginInfo>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -28223,7 +26819,6 @@ pub struct SubpassEndInfoBuilder<'a> {
     inner: SubpassEndInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSubpassEndInfo {}
 impl<'a> ::std::ops::Deref for SubpassEndInfoBuilder<'a> {
     type Target = SubpassEndInfo;
     fn deref(&self) -> &Self::Target {
@@ -28236,20 +26831,6 @@ impl<'a> ::std::ops::DerefMut for SubpassEndInfoBuilder<'a> {
     }
 }
 impl<'a> SubpassEndInfoBuilder<'a> {
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSubpassEndInfo>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
-        self
-    }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
@@ -28287,6 +26868,8 @@ pub struct PhysicalDeviceTimelineSemaphoreFeaturesBuilder<'a> {
     inner: PhysicalDeviceTimelineSemaphoreFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceTimelineSemaphoreFeaturesBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceTimelineSemaphoreFeatures {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceTimelineSemaphoreFeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceTimelineSemaphoreFeatures {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceTimelineSemaphoreFeaturesBuilder<'a> {
@@ -28542,7 +27125,6 @@ pub struct SemaphoreWaitInfoBuilder<'a> {
     inner: SemaphoreWaitInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSemaphoreWaitInfo {}
 impl<'a> ::std::ops::Deref for SemaphoreWaitInfoBuilder<'a> {
     type Target = SemaphoreWaitInfo;
     fn deref(&self) -> &Self::Target {
@@ -28567,20 +27149,6 @@ impl<'a> SemaphoreWaitInfoBuilder<'a> {
     pub fn values(mut self, values: &'a [u64]) -> Self {
         self.inner.semaphore_count = values.len() as _;
         self.inner.p_values = values.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSemaphoreWaitInfo>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -28622,7 +27190,6 @@ pub struct SemaphoreSignalInfoBuilder<'a> {
     inner: SemaphoreSignalInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSemaphoreSignalInfo {}
 impl<'a> ::std::ops::Deref for SemaphoreSignalInfoBuilder<'a> {
     type Target = SemaphoreSignalInfo;
     fn deref(&self) -> &Self::Target {
@@ -28641,20 +27208,6 @@ impl<'a> SemaphoreSignalInfoBuilder<'a> {
     }
     pub fn value(mut self, value: u64) -> Self {
         self.inner.value = value;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSemaphoreSignalInfo>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -29126,7 +27679,6 @@ pub struct MemoryGetAndroidHardwareBufferInfoANDROIDBuilder<'a> {
     inner: MemoryGetAndroidHardwareBufferInfoANDROID,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsMemoryGetAndroidHardwareBufferInfoANDROID {}
 impl<'a> ::std::ops::Deref for MemoryGetAndroidHardwareBufferInfoANDROIDBuilder<'a> {
     type Target = MemoryGetAndroidHardwareBufferInfoANDROID;
     fn deref(&self) -> &Self::Target {
@@ -29141,23 +27693,6 @@ impl<'a> ::std::ops::DerefMut for MemoryGetAndroidHardwareBufferInfoANDROIDBuild
 impl<'a> MemoryGetAndroidHardwareBufferInfoANDROIDBuilder<'a> {
     pub fn memory(mut self, memory: DeviceMemory) -> Self {
         self.inner.memory = memory;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsMemoryGetAndroidHardwareBufferInfoANDROID>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -29428,6 +27963,8 @@ pub struct PhysicalDevice8BitStorageFeaturesBuilder<'a> {
     inner: PhysicalDevice8BitStorageFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevice8BitStorageFeaturesBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevice8BitStorageFeatures {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDevice8BitStorageFeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDevice8BitStorageFeatures {}
 impl<'a> ::std::ops::Deref for PhysicalDevice8BitStorageFeaturesBuilder<'a> {
@@ -29497,6 +28034,11 @@ pub struct PhysicalDeviceConditionalRenderingFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceConditionalRenderingFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceConditionalRenderingFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceConditionalRenderingFeaturesEXT {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceConditionalRenderingFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceConditionalRenderingFeaturesEXT {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceConditionalRenderingFeaturesEXTBuilder<'a> {
@@ -29563,6 +28105,8 @@ pub struct PhysicalDeviceVulkanMemoryModelFeaturesBuilder<'a> {
     inner: PhysicalDeviceVulkanMemoryModelFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVulkanMemoryModelFeaturesBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVulkanMemoryModelFeatures {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVulkanMemoryModelFeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVulkanMemoryModelFeatures {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceVulkanMemoryModelFeaturesBuilder<'a> {
@@ -29636,6 +28180,8 @@ pub struct PhysicalDeviceShaderAtomicInt64FeaturesBuilder<'a> {
     inner: PhysicalDeviceShaderAtomicInt64Features,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderAtomicInt64FeaturesBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderAtomicInt64Features {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderAtomicInt64FeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderAtomicInt64Features {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderAtomicInt64FeaturesBuilder<'a> {
@@ -29717,6 +28263,11 @@ pub struct PhysicalDeviceShaderAtomicFloatFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceShaderAtomicFloatFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceShaderAtomicFloatFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderAtomicFloatFeaturesEXT {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderAtomicFloatFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderAtomicFloatFeaturesEXT {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderAtomicFloatFeaturesEXTBuilder<'a> {
@@ -29836,6 +28387,11 @@ pub struct PhysicalDeviceVertexAttributeDivisorFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceVertexAttributeDivisorFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceVertexAttributeDivisorFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVertexAttributeDivisorFeaturesEXT {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVertexAttributeDivisorFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVertexAttributeDivisorFeaturesEXT {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceVertexAttributeDivisorFeaturesEXTBuilder<'a> {
@@ -29963,7 +28519,6 @@ pub struct CheckpointDataNVBuilder<'a> {
     inner: CheckpointDataNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsCheckpointDataNV {}
 impl<'a> ::std::ops::Deref for CheckpointDataNVBuilder<'a> {
     type Target = CheckpointDataNV;
     fn deref(&self) -> &Self::Target {
@@ -29982,20 +28537,6 @@ impl<'a> CheckpointDataNVBuilder<'a> {
     }
     pub fn checkpoint_marker(mut self, checkpoint_marker: *mut c_void) -> Self {
         self.inner.p_checkpoint_marker = checkpoint_marker;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsCheckpointDataNV>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -30242,6 +28783,8 @@ pub struct PhysicalDeviceASTCDecodeFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceASTCDecodeFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceASTCDecodeFeaturesEXTBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceASTCDecodeFeaturesEXT {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceASTCDecodeFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceASTCDecodeFeaturesEXT {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceASTCDecodeFeaturesEXTBuilder<'a> {
@@ -30299,6 +28842,11 @@ pub struct PhysicalDeviceTransformFeedbackFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceTransformFeedbackFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceTransformFeedbackFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceTransformFeedbackFeaturesEXT {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceTransformFeedbackFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceTransformFeedbackFeaturesEXT {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceTransformFeedbackFeaturesEXTBuilder<'a> {
@@ -30560,6 +29108,11 @@ pub struct PhysicalDeviceRepresentativeFragmentTestFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceRepresentativeFragmentTestFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceRepresentativeFragmentTestFeaturesNVBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRepresentativeFragmentTestFeaturesNV {}
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceRepresentativeFragmentTestFeaturesNVBuilder<'_>
 {
@@ -30682,6 +29235,8 @@ pub struct PhysicalDeviceExclusiveScissorFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceExclusiveScissorFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceExclusiveScissorFeaturesNVBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceExclusiveScissorFeaturesNV {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExclusiveScissorFeaturesNVBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExclusiveScissorFeaturesNV {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceExclusiveScissorFeaturesNVBuilder<'a> {
@@ -30801,6 +29356,11 @@ pub struct PhysicalDeviceCornerSampledImageFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceCornerSampledImageFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceCornerSampledImageFeaturesNVBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCornerSampledImageFeaturesNV {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCornerSampledImageFeaturesNVBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCornerSampledImageFeaturesNV {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceCornerSampledImageFeaturesNVBuilder<'a> {
@@ -30858,6 +29418,11 @@ pub struct PhysicalDeviceComputeShaderDerivativesFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceComputeShaderDerivativesFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceComputeShaderDerivativesFeaturesNVBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceComputeShaderDerivativesFeaturesNV {}
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceComputeShaderDerivativesFeaturesNVBuilder<'_>
 {
@@ -30923,6 +29488,11 @@ pub struct PhysicalDeviceFragmentShaderBarycentricFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceFragmentShaderBarycentricFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceFragmentShaderBarycentricFeaturesNVBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceFragmentShaderBarycentricFeaturesNV {}
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceFragmentShaderBarycentricFeaturesNVBuilder<'_>
 {
@@ -30981,6 +29551,11 @@ pub struct PhysicalDeviceShaderImageFootprintFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceShaderImageFootprintFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceShaderImageFootprintFeaturesNVBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderImageFootprintFeaturesNV {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderImageFootprintFeaturesNVBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderImageFootprintFeaturesNV {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderImageFootprintFeaturesNVBuilder<'a> {
@@ -31035,6 +29610,14 @@ impl PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV {
 pub struct PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNVBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV
+{
 }
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNVBuilder<'_>
@@ -31229,6 +29812,8 @@ pub struct PhysicalDeviceShadingRateImageFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceShadingRateImageFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShadingRateImageFeaturesNVBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShadingRateImageFeaturesNV {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShadingRateImageFeaturesNVBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShadingRateImageFeaturesNV {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceShadingRateImageFeaturesNVBuilder<'a> {
@@ -31552,6 +30137,8 @@ pub struct PhysicalDeviceMeshShaderFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceMeshShaderFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMeshShaderFeaturesNVBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMeshShaderFeaturesNV {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMeshShaderFeaturesNVBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMeshShaderFeaturesNV {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceMeshShaderFeaturesNVBuilder<'a> {
@@ -31799,7 +30386,6 @@ pub struct RayTracingShaderGroupCreateInfoNVBuilder<'a> {
     inner: RayTracingShaderGroupCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsRayTracingShaderGroupCreateInfoNV {}
 impl<'a> ::std::ops::Deref for RayTracingShaderGroupCreateInfoNVBuilder<'a> {
     type Target = RayTracingShaderGroupCreateInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -31830,23 +30416,6 @@ impl<'a> RayTracingShaderGroupCreateInfoNVBuilder<'a> {
     }
     pub fn intersection_shader(mut self, intersection_shader: u32) -> Self {
         self.inner.intersection_shader = intersection_shader;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsRayTracingShaderGroupCreateInfoNV>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -31896,7 +30465,6 @@ pub struct RayTracingShaderGroupCreateInfoKHRBuilder<'a> {
     inner: RayTracingShaderGroupCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsRayTracingShaderGroupCreateInfoKHR {}
 impl<'a> ::std::ops::Deref for RayTracingShaderGroupCreateInfoKHRBuilder<'a> {
     type Target = RayTracingShaderGroupCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -31934,23 +30502,6 @@ impl<'a> RayTracingShaderGroupCreateInfoKHRBuilder<'a> {
         shader_group_capture_replay_handle: *const c_void,
     ) -> Self {
         self.inner.p_shader_group_capture_replay_handle = shader_group_capture_replay_handle;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsRayTracingShaderGroupCreateInfoKHR>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -32254,7 +30805,6 @@ pub struct GeometryTrianglesNVBuilder<'a> {
     inner: GeometryTrianglesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsGeometryTrianglesNV {}
 impl<'a> ::std::ops::Deref for GeometryTrianglesNVBuilder<'a> {
     type Target = GeometryTrianglesNV;
     fn deref(&self) -> &Self::Target {
@@ -32311,20 +30861,6 @@ impl<'a> GeometryTrianglesNVBuilder<'a> {
         self.inner.transform_offset = transform_offset;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsGeometryTrianglesNV>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
-        self
-    }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
@@ -32368,7 +30904,6 @@ pub struct GeometryAABBNVBuilder<'a> {
     inner: GeometryAABBNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsGeometryAABBNV {}
 impl<'a> ::std::ops::Deref for GeometryAABBNVBuilder<'a> {
     type Target = GeometryAABBNV;
     fn deref(&self) -> &Self::Target {
@@ -32395,20 +30930,6 @@ impl<'a> GeometryAABBNVBuilder<'a> {
     }
     pub fn offset(mut self, offset: DeviceSize) -> Self {
         self.inner.offset = offset;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsGeometryAABBNV>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -32499,7 +31020,6 @@ pub struct GeometryNVBuilder<'a> {
     inner: GeometryNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsGeometryNV {}
 impl<'a> ::std::ops::Deref for GeometryNVBuilder<'a> {
     type Target = GeometryNV;
     fn deref(&self) -> &Self::Target {
@@ -32522,20 +31042,6 @@ impl<'a> GeometryNVBuilder<'a> {
     }
     pub fn flags(mut self, flags: GeometryFlagsKHR) -> Self {
         self.inner.flags = flags;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsGeometryNV>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -32583,7 +31089,6 @@ pub struct AccelerationStructureInfoNVBuilder<'a> {
     inner: AccelerationStructureInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsAccelerationStructureInfoNV {}
 impl<'a> ::std::ops::Deref for AccelerationStructureInfoNVBuilder<'a> {
     type Target = AccelerationStructureInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -32611,20 +31116,6 @@ impl<'a> AccelerationStructureInfoNVBuilder<'a> {
     pub fn geometries(mut self, geometries: &'a [GeometryNV]) -> Self {
         self.inner.geometry_count = geometries.len() as _;
         self.inner.p_geometries = geometries.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsAccelerationStructureInfoNV>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -32666,7 +31157,6 @@ pub struct AccelerationStructureCreateInfoNVBuilder<'a> {
     inner: AccelerationStructureCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsAccelerationStructureCreateInfoNV {}
 impl<'a> ::std::ops::Deref for AccelerationStructureCreateInfoNVBuilder<'a> {
     type Target = AccelerationStructureCreateInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -32685,23 +31175,6 @@ impl<'a> AccelerationStructureCreateInfoNVBuilder<'a> {
     }
     pub fn info(mut self, info: AccelerationStructureInfoNV) -> Self {
         self.inner.info = info;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsAccelerationStructureCreateInfoNV>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -32749,7 +31222,6 @@ pub struct BindAccelerationStructureMemoryInfoNVBuilder<'a> {
     inner: BindAccelerationStructureMemoryInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsBindAccelerationStructureMemoryInfoNV {}
 impl<'a> ::std::ops::Deref for BindAccelerationStructureMemoryInfoNVBuilder<'a> {
     type Target = BindAccelerationStructureMemoryInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -32780,23 +31252,6 @@ impl<'a> BindAccelerationStructureMemoryInfoNVBuilder<'a> {
     pub fn device_indices(mut self, device_indices: &'a [u32]) -> Self {
         self.inner.device_index_count = device_indices.len() as _;
         self.inner.p_device_indices = device_indices.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBindAccelerationStructureMemoryInfoNV>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -32960,7 +31415,6 @@ pub struct AccelerationStructureMemoryRequirementsInfoNVBuilder<'a> {
     inner: AccelerationStructureMemoryRequirementsInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsAccelerationStructureMemoryRequirementsInfoNV {}
 impl<'a> ::std::ops::Deref for AccelerationStructureMemoryRequirementsInfoNVBuilder<'a> {
     type Target = AccelerationStructureMemoryRequirementsInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -32982,23 +31436,6 @@ impl<'a> AccelerationStructureMemoryRequirementsInfoNVBuilder<'a> {
         acceleration_structure: AccelerationStructureNV,
     ) -> Self {
         self.inner.acceleration_structure = acceleration_structure;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsAccelerationStructureMemoryRequirementsInfoNV>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -33046,6 +31483,11 @@ pub struct PhysicalDeviceAccelerationStructureFeaturesKHRBuilder<'a> {
     inner: PhysicalDeviceAccelerationStructureFeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceAccelerationStructureFeaturesKHRBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceAccelerationStructureFeaturesKHR {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceAccelerationStructureFeaturesKHRBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceAccelerationStructureFeaturesKHR {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceAccelerationStructureFeaturesKHRBuilder<'a> {
@@ -33142,6 +31584,11 @@ pub struct PhysicalDeviceRayTracingPipelineFeaturesKHRBuilder<'a> {
     inner: PhysicalDeviceRayTracingPipelineFeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceRayTracingPipelineFeaturesKHRBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRayTracingPipelineFeaturesKHR {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRayTracingPipelineFeaturesKHRBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRayTracingPipelineFeaturesKHR {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceRayTracingPipelineFeaturesKHRBuilder<'a> {
@@ -33230,6 +31677,8 @@ pub struct PhysicalDeviceRayQueryFeaturesKHRBuilder<'a> {
     inner: PhysicalDeviceRayQueryFeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRayQueryFeaturesKHRBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRayQueryFeaturesKHR {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRayQueryFeaturesKHRBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRayQueryFeaturesKHR {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceRayQueryFeaturesKHRBuilder<'a> {
@@ -34031,7 +32480,6 @@ pub struct ImageDrmFormatModifierPropertiesEXTBuilder<'a> {
     inner: ImageDrmFormatModifierPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImageDrmFormatModifierPropertiesEXT {}
 impl<'a> ::std::ops::Deref for ImageDrmFormatModifierPropertiesEXTBuilder<'a> {
     type Target = ImageDrmFormatModifierPropertiesEXT;
     fn deref(&self) -> &Self::Target {
@@ -34046,23 +32494,6 @@ impl<'a> ::std::ops::DerefMut for ImageDrmFormatModifierPropertiesEXTBuilder<'a>
 impl<'a> ImageDrmFormatModifierPropertiesEXTBuilder<'a> {
     pub fn drm_format_modifier(mut self, drm_format_modifier: u64) -> Self {
         self.inner.drm_format_modifier = drm_format_modifier;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsImageDrmFormatModifierPropertiesEXT>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -34221,6 +32652,11 @@ pub struct PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceFragmentDensityMapFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceFragmentDensityMapFeaturesEXT {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentDensityMapFeaturesEXT {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
@@ -34288,6 +32724,11 @@ pub struct PhysicalDeviceFragmentDensityMap2FeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceFragmentDensityMap2FeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceFragmentDensityMap2FeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceFragmentDensityMap2FeaturesEXT {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentDensityMap2FeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentDensityMap2FeaturesEXT {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceFragmentDensityMap2FeaturesEXTBuilder<'a> {
@@ -34562,6 +33003,8 @@ pub struct PhysicalDeviceScalarBlockLayoutFeaturesBuilder<'a> {
     inner: PhysicalDeviceScalarBlockLayoutFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceScalarBlockLayoutFeaturesBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceScalarBlockLayoutFeatures {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceScalarBlockLayoutFeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceScalarBlockLayoutFeatures {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceScalarBlockLayoutFeaturesBuilder<'a> {
@@ -34672,6 +33115,11 @@ pub struct PhysicalDeviceUniformBufferStandardLayoutFeaturesBuilder<'a> {
     inner: PhysicalDeviceUniformBufferStandardLayoutFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceUniformBufferStandardLayoutFeaturesBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceUniformBufferStandardLayoutFeatures {}
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceUniformBufferStandardLayoutFeaturesBuilder<'_>
 {
@@ -34730,6 +33178,8 @@ pub struct PhysicalDeviceDepthClipEnableFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceDepthClipEnableFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDepthClipEnableFeaturesEXTBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDepthClipEnableFeaturesEXT {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDepthClipEnableFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDepthClipEnableFeaturesEXT {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceDepthClipEnableFeaturesEXTBuilder<'a> {
@@ -34916,6 +33366,8 @@ pub struct PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceMemoryPriorityFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMemoryPriorityFeaturesEXT {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMemoryPriorityFeaturesEXT {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a> {
@@ -35030,6 +33482,11 @@ pub struct PhysicalDeviceBufferDeviceAddressFeaturesBuilder<'a> {
     inner: PhysicalDeviceBufferDeviceAddressFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceBufferDeviceAddressFeaturesBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceBufferDeviceAddressFeatures {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceBufferDeviceAddressFeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceBufferDeviceAddressFeatures {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceBufferDeviceAddressFeaturesBuilder<'a> {
@@ -35104,6 +33561,11 @@ pub struct PhysicalDeviceBufferDeviceAddressFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceBufferDeviceAddressFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceBufferDeviceAddressFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceBufferDeviceAddressFeaturesEXT {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceBufferDeviceAddressFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceBufferDeviceAddressFeaturesEXT {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceBufferDeviceAddressFeaturesEXTBuilder<'a> {
@@ -35174,7 +33636,6 @@ pub struct BufferDeviceAddressInfoBuilder<'a> {
     inner: BufferDeviceAddressInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsBufferDeviceAddressInfo {}
 impl<'a> ::std::ops::Deref for BufferDeviceAddressInfoBuilder<'a> {
     type Target = BufferDeviceAddressInfo;
     fn deref(&self) -> &Self::Target {
@@ -35189,20 +33650,6 @@ impl<'a> ::std::ops::DerefMut for BufferDeviceAddressInfoBuilder<'a> {
 impl<'a> BufferDeviceAddressInfoBuilder<'a> {
     pub fn buffer(mut self, buffer: Buffer) -> Self {
         self.inner.buffer = buffer;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBufferDeviceAddressInfo>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -35474,6 +33921,11 @@ pub struct PhysicalDeviceImagelessFramebufferFeaturesBuilder<'a> {
     inner: PhysicalDeviceImagelessFramebufferFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceImagelessFramebufferFeaturesBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImagelessFramebufferFeatures {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImagelessFramebufferFeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImagelessFramebufferFeatures {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceImagelessFramebufferFeaturesBuilder<'a> {
@@ -35602,7 +34054,6 @@ pub struct FramebufferAttachmentImageInfoBuilder<'a> {
     inner: FramebufferAttachmentImageInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsFramebufferAttachmentImageInfo {}
 impl<'a> ::std::ops::Deref for FramebufferAttachmentImageInfoBuilder<'a> {
     type Target = FramebufferAttachmentImageInfo;
     fn deref(&self) -> &Self::Target {
@@ -35638,20 +34089,6 @@ impl<'a> FramebufferAttachmentImageInfoBuilder<'a> {
     pub fn view_formats(mut self, view_formats: &'a [Format]) -> Self {
         self.inner.view_format_count = view_formats.len() as _;
         self.inner.p_view_formats = view_formats.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsFramebufferAttachmentImageInfo>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -35749,6 +34186,11 @@ pub struct PhysicalDeviceTextureCompressionASTCHDRFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceTextureCompressionASTCHDRFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceTextureCompressionASTCHDRFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceTextureCompressionASTCHDRFeaturesEXT {}
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceTextureCompressionASTCHDRFeaturesEXTBuilder<'_>
 {
@@ -35809,6 +34251,11 @@ pub struct PhysicalDeviceCooperativeMatrixFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceCooperativeMatrixFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceCooperativeMatrixFeaturesNVBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCooperativeMatrixFeaturesNV {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCooperativeMatrixFeaturesNVBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCooperativeMatrixFeaturesNV {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceCooperativeMatrixFeaturesNVBuilder<'a> {
@@ -35947,7 +34394,6 @@ pub struct CooperativeMatrixPropertiesNVBuilder<'a> {
     inner: CooperativeMatrixPropertiesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsCooperativeMatrixPropertiesNV {}
 impl<'a> ::std::ops::Deref for CooperativeMatrixPropertiesNVBuilder<'a> {
     type Target = CooperativeMatrixPropertiesNV;
     fn deref(&self) -> &Self::Target {
@@ -35992,20 +34438,6 @@ impl<'a> CooperativeMatrixPropertiesNVBuilder<'a> {
         self.inner.scope = scope;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsCooperativeMatrixPropertiesNV>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
-        self
-    }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
@@ -36043,6 +34475,11 @@ pub struct PhysicalDeviceYcbcrImageArraysFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceYcbcrImageArraysFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceYcbcrImageArraysFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceYcbcrImageArraysFeaturesEXT {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceYcbcrImageArraysFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceYcbcrImageArraysFeaturesEXT {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceYcbcrImageArraysFeaturesEXTBuilder<'a> {
@@ -36102,7 +34539,6 @@ pub struct ImageViewHandleInfoNVXBuilder<'a> {
     inner: ImageViewHandleInfoNVX,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImageViewHandleInfoNVX {}
 impl<'a> ::std::ops::Deref for ImageViewHandleInfoNVXBuilder<'a> {
     type Target = ImageViewHandleInfoNVX;
     fn deref(&self) -> &Self::Target {
@@ -36125,20 +34561,6 @@ impl<'a> ImageViewHandleInfoNVXBuilder<'a> {
     }
     pub fn sampler(mut self, sampler: Sampler) -> Self {
         self.inner.sampler = sampler;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsImageViewHandleInfoNVX>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -36180,7 +34602,6 @@ pub struct ImageViewAddressPropertiesNVXBuilder<'a> {
     inner: ImageViewAddressPropertiesNVX,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImageViewAddressPropertiesNVX {}
 impl<'a> ::std::ops::Deref for ImageViewAddressPropertiesNVXBuilder<'a> {
     type Target = ImageViewAddressPropertiesNVX;
     fn deref(&self) -> &Self::Target {
@@ -36199,20 +34620,6 @@ impl<'a> ImageViewAddressPropertiesNVXBuilder<'a> {
     }
     pub fn size(mut self, size: DeviceSize) -> Self {
         self.inner.size = size;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsImageViewAddressPropertiesNVX>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -36618,6 +35025,11 @@ pub struct PhysicalDevicePerformanceQueryFeaturesKHRBuilder<'a> {
     inner: PhysicalDevicePerformanceQueryFeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDevicePerformanceQueryFeaturesKHRBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePerformanceQueryFeaturesKHR {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePerformanceQueryFeaturesKHRBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePerformanceQueryFeaturesKHR {}
 impl<'a> ::std::ops::Deref for PhysicalDevicePerformanceQueryFeaturesKHRBuilder<'a> {
@@ -36751,7 +35163,6 @@ pub struct PerformanceCounterKHRBuilder<'a> {
     inner: PerformanceCounterKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPerformanceCounterKHR {}
 impl<'a> ::std::ops::Deref for PerformanceCounterKHRBuilder<'a> {
     type Target = PerformanceCounterKHR;
     fn deref(&self) -> &Self::Target {
@@ -36778,20 +35189,6 @@ impl<'a> PerformanceCounterKHRBuilder<'a> {
     }
     pub fn uuid(mut self, uuid: [u8; UUID_SIZE]) -> Self {
         self.inner.uuid = uuid;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPerformanceCounterKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -36855,7 +35252,6 @@ pub struct PerformanceCounterDescriptionKHRBuilder<'a> {
     inner: PerformanceCounterDescriptionKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPerformanceCounterDescriptionKHR {}
 impl<'a> ::std::ops::Deref for PerformanceCounterDescriptionKHRBuilder<'a> {
     type Target = PerformanceCounterDescriptionKHR;
     fn deref(&self) -> &Self::Target {
@@ -36882,23 +35278,6 @@ impl<'a> PerformanceCounterDescriptionKHRBuilder<'a> {
     }
     pub fn description(mut self, description: [c_char; MAX_DESCRIPTION_SIZE]) -> Self {
         self.inner.description = description;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPerformanceCounterDescriptionKHR>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -37020,7 +35399,6 @@ pub struct AcquireProfilingLockInfoKHRBuilder<'a> {
     inner: AcquireProfilingLockInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsAcquireProfilingLockInfoKHR {}
 impl<'a> ::std::ops::Deref for AcquireProfilingLockInfoKHRBuilder<'a> {
     type Target = AcquireProfilingLockInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -37039,20 +35417,6 @@ impl<'a> AcquireProfilingLockInfoKHRBuilder<'a> {
     }
     pub fn timeout(mut self, timeout: u64) -> Self {
         self.inner.timeout = timeout;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsAcquireProfilingLockInfoKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -37149,7 +35513,6 @@ pub struct HeadlessSurfaceCreateInfoEXTBuilder<'a> {
     inner: HeadlessSurfaceCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsHeadlessSurfaceCreateInfoEXT {}
 impl<'a> ::std::ops::Deref for HeadlessSurfaceCreateInfoEXTBuilder<'a> {
     type Target = HeadlessSurfaceCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -37164,20 +35527,6 @@ impl<'a> ::std::ops::DerefMut for HeadlessSurfaceCreateInfoEXTBuilder<'a> {
 impl<'a> HeadlessSurfaceCreateInfoEXTBuilder<'a> {
     pub fn flags(mut self, flags: HeadlessSurfaceCreateFlagsEXT) -> Self {
         self.inner.flags = flags;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsHeadlessSurfaceCreateInfoEXT>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -37217,6 +35566,11 @@ pub struct PhysicalDeviceCoverageReductionModeFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceCoverageReductionModeFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceCoverageReductionModeFeaturesNVBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCoverageReductionModeFeaturesNV {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCoverageReductionModeFeaturesNVBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCoverageReductionModeFeaturesNV {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceCoverageReductionModeFeaturesNVBuilder<'a> {
@@ -37348,7 +35702,6 @@ pub struct FramebufferMixedSamplesCombinationNVBuilder<'a> {
     inner: FramebufferMixedSamplesCombinationNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsFramebufferMixedSamplesCombinationNV {}
 impl<'a> ::std::ops::Deref for FramebufferMixedSamplesCombinationNVBuilder<'a> {
     type Target = FramebufferMixedSamplesCombinationNV;
     fn deref(&self) -> &Self::Target {
@@ -37378,23 +35731,6 @@ impl<'a> FramebufferMixedSamplesCombinationNVBuilder<'a> {
     }
     pub fn color_samples(mut self, color_samples: SampleCountFlags) -> Self {
         self.inner.color_samples = color_samples;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsFramebufferMixedSamplesCombinationNV>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -37434,6 +35770,11 @@ pub struct PhysicalDeviceShaderIntegerFunctions2FeaturesINTELBuilder<'a> {
     inner: PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceShaderIntegerFunctions2FeaturesINTELBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL {}
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceShaderIntegerFunctions2FeaturesINTELBuilder<'_>
 {
@@ -37562,7 +35903,6 @@ pub struct InitializePerformanceApiInfoINTELBuilder<'a> {
     inner: InitializePerformanceApiInfoINTEL,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsInitializePerformanceApiInfoINTEL {}
 impl<'a> ::std::ops::Deref for InitializePerformanceApiInfoINTELBuilder<'a> {
     type Target = InitializePerformanceApiInfoINTEL;
     fn deref(&self) -> &Self::Target {
@@ -37577,23 +35917,6 @@ impl<'a> ::std::ops::DerefMut for InitializePerformanceApiInfoINTELBuilder<'a> {
 impl<'a> InitializePerformanceApiInfoINTELBuilder<'a> {
     pub fn user_data(mut self, user_data: *mut c_void) -> Self {
         self.inner.p_user_data = user_data;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsInitializePerformanceApiInfoINTEL>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -37691,7 +36014,6 @@ pub struct PerformanceMarkerInfoINTELBuilder<'a> {
     inner: PerformanceMarkerInfoINTEL,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPerformanceMarkerInfoINTEL {}
 impl<'a> ::std::ops::Deref for PerformanceMarkerInfoINTELBuilder<'a> {
     type Target = PerformanceMarkerInfoINTEL;
     fn deref(&self) -> &Self::Target {
@@ -37706,20 +36028,6 @@ impl<'a> ::std::ops::DerefMut for PerformanceMarkerInfoINTELBuilder<'a> {
 impl<'a> PerformanceMarkerInfoINTELBuilder<'a> {
     pub fn marker(mut self, marker: u64) -> Self {
         self.inner.marker = marker;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPerformanceMarkerInfoINTEL>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -37759,7 +36067,6 @@ pub struct PerformanceStreamMarkerInfoINTELBuilder<'a> {
     inner: PerformanceStreamMarkerInfoINTEL,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPerformanceStreamMarkerInfoINTEL {}
 impl<'a> ::std::ops::Deref for PerformanceStreamMarkerInfoINTELBuilder<'a> {
     type Target = PerformanceStreamMarkerInfoINTEL;
     fn deref(&self) -> &Self::Target {
@@ -37774,23 +36081,6 @@ impl<'a> ::std::ops::DerefMut for PerformanceStreamMarkerInfoINTELBuilder<'a> {
 impl<'a> PerformanceStreamMarkerInfoINTELBuilder<'a> {
     pub fn marker(mut self, marker: u32) -> Self {
         self.inner.marker = marker;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPerformanceStreamMarkerInfoINTEL>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -37834,7 +36124,6 @@ pub struct PerformanceOverrideInfoINTELBuilder<'a> {
     inner: PerformanceOverrideInfoINTEL,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPerformanceOverrideInfoINTEL {}
 impl<'a> ::std::ops::Deref for PerformanceOverrideInfoINTELBuilder<'a> {
     type Target = PerformanceOverrideInfoINTEL;
     fn deref(&self) -> &Self::Target {
@@ -37857,20 +36146,6 @@ impl<'a> PerformanceOverrideInfoINTELBuilder<'a> {
     }
     pub fn parameter(mut self, parameter: u64) -> Self {
         self.inner.parameter = parameter;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPerformanceOverrideInfoINTEL>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -37910,7 +36185,6 @@ pub struct PerformanceConfigurationAcquireInfoINTELBuilder<'a> {
     inner: PerformanceConfigurationAcquireInfoINTEL,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPerformanceConfigurationAcquireInfoINTEL {}
 impl<'a> ::std::ops::Deref for PerformanceConfigurationAcquireInfoINTELBuilder<'a> {
     type Target = PerformanceConfigurationAcquireInfoINTEL;
     fn deref(&self) -> &Self::Target {
@@ -37925,23 +36199,6 @@ impl<'a> ::std::ops::DerefMut for PerformanceConfigurationAcquireInfoINTELBuilde
 impl<'a> PerformanceConfigurationAcquireInfoINTELBuilder<'a> {
     pub fn ty(mut self, ty: PerformanceConfigurationTypeINTEL) -> Self {
         self.inner.ty = ty;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPerformanceConfigurationAcquireInfoINTEL>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -37983,6 +36240,8 @@ pub struct PhysicalDeviceShaderClockFeaturesKHRBuilder<'a> {
     inner: PhysicalDeviceShaderClockFeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderClockFeaturesKHRBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderClockFeaturesKHR {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderClockFeaturesKHRBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderClockFeaturesKHR {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderClockFeaturesKHRBuilder<'a> {
@@ -38042,6 +36301,8 @@ pub struct PhysicalDeviceIndexTypeUint8FeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceIndexTypeUint8FeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceIndexTypeUint8FeaturesEXTBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceIndexTypeUint8FeaturesEXT {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceIndexTypeUint8FeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceIndexTypeUint8FeaturesEXT {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceIndexTypeUint8FeaturesEXTBuilder<'a> {
@@ -38161,6 +36422,8 @@ pub struct PhysicalDeviceShaderSMBuiltinsFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceShaderSMBuiltinsFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderSMBuiltinsFeaturesNVBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderSMBuiltinsFeaturesNV {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderSMBuiltinsFeaturesNVBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderSMBuiltinsFeaturesNV {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderSMBuiltinsFeaturesNVBuilder<'a> {
@@ -38220,6 +36483,11 @@ pub struct PhysicalDeviceFragmentShaderInterlockFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceFragmentShaderInterlockFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceFragmentShaderInterlockFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceFragmentShaderInterlockFeaturesEXT {}
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceFragmentShaderInterlockFeaturesEXTBuilder<'_>
 {
@@ -38296,6 +36564,11 @@ pub struct PhysicalDeviceSeparateDepthStencilLayoutsFeaturesBuilder<'a> {
     inner: PhysicalDeviceSeparateDepthStencilLayoutsFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceSeparateDepthStencilLayoutsFeaturesBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSeparateDepthStencilLayoutsFeatures {}
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceSeparateDepthStencilLayoutsFeaturesBuilder<'_>
 {
@@ -38470,6 +36743,14 @@ pub struct PhysicalDevicePipelineExecutablePropertiesFeaturesKHRBuilder<'a> {
     inner: PhysicalDevicePipelineExecutablePropertiesFeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDevicePipelineExecutablePropertiesFeaturesKHRBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR
+{
+}
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDevicePipelineExecutablePropertiesFeaturesKHRBuilder<'_>
 {
@@ -38528,7 +36809,6 @@ pub struct PipelineInfoKHRBuilder<'a> {
     inner: PipelineInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineInfoKHR {}
 impl<'a> ::std::ops::Deref for PipelineInfoKHRBuilder<'a> {
     type Target = PipelineInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -38543,20 +36823,6 @@ impl<'a> ::std::ops::DerefMut for PipelineInfoKHRBuilder<'a> {
 impl<'a> PipelineInfoKHRBuilder<'a> {
     pub fn pipeline(mut self, pipeline: Pipeline) -> Self {
         self.inner.pipeline = pipeline;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPipelineInfoKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -38618,7 +36884,6 @@ pub struct PipelineExecutablePropertiesKHRBuilder<'a> {
     inner: PipelineExecutablePropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineExecutablePropertiesKHR {}
 impl<'a> ::std::ops::Deref for PipelineExecutablePropertiesKHRBuilder<'a> {
     type Target = PipelineExecutablePropertiesKHR;
     fn deref(&self) -> &Self::Target {
@@ -38645,20 +36910,6 @@ impl<'a> PipelineExecutablePropertiesKHRBuilder<'a> {
     }
     pub fn subgroup_size(mut self, subgroup_size: u32) -> Self {
         self.inner.subgroup_size = subgroup_size;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPipelineExecutablePropertiesKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -38700,7 +36951,6 @@ pub struct PipelineExecutableInfoKHRBuilder<'a> {
     inner: PipelineExecutableInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineExecutableInfoKHR {}
 impl<'a> ::std::ops::Deref for PipelineExecutableInfoKHRBuilder<'a> {
     type Target = PipelineExecutableInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -38719,20 +36969,6 @@ impl<'a> PipelineExecutableInfoKHRBuilder<'a> {
     }
     pub fn executable_index(mut self, executable_index: u32) -> Self {
         self.inner.executable_index = executable_index;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPipelineExecutableInfoKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -38808,7 +37044,6 @@ pub struct PipelineExecutableStatisticKHRBuilder<'a> {
     inner: PipelineExecutableStatisticKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineExecutableStatisticKHR {}
 impl<'a> ::std::ops::Deref for PipelineExecutableStatisticKHRBuilder<'a> {
     type Target = PipelineExecutableStatisticKHR;
     fn deref(&self) -> &Self::Target {
@@ -38835,20 +37070,6 @@ impl<'a> PipelineExecutableStatisticKHRBuilder<'a> {
     }
     pub fn value(mut self, value: PipelineExecutableStatisticValueKHR) -> Self {
         self.inner.value = value;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPipelineExecutableStatisticKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -38913,7 +37134,6 @@ pub struct PipelineExecutableInternalRepresentationKHRBuilder<'a> {
     inner: PipelineExecutableInternalRepresentationKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineExecutableInternalRepresentationKHR {}
 impl<'a> ::std::ops::Deref for PipelineExecutableInternalRepresentationKHRBuilder<'a> {
     type Target = PipelineExecutableInternalRepresentationKHR;
     fn deref(&self) -> &Self::Target {
@@ -38941,23 +37161,6 @@ impl<'a> PipelineExecutableInternalRepresentationKHRBuilder<'a> {
     pub fn data(mut self, data: &'a mut [u8]) -> Self {
         self.inner.data_size = data.len() as _;
         self.inner.p_data = data.as_mut_ptr() as *mut c_void;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPipelineExecutableInternalRepresentationKHR>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -38996,6 +37199,14 @@ impl PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT {
 pub struct PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT
+{
 }
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXTBuilder<'_>
@@ -39060,6 +37271,11 @@ pub struct PhysicalDeviceTexelBufferAlignmentFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceTexelBufferAlignmentFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceTexelBufferAlignmentFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceTexelBufferAlignmentFeaturesEXT {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceTexelBufferAlignmentFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceTexelBufferAlignmentFeaturesEXT {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceTexelBufferAlignmentFeaturesEXTBuilder<'a> {
@@ -39211,6 +37427,11 @@ pub struct PhysicalDeviceSubgroupSizeControlFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceSubgroupSizeControlFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceSubgroupSizeControlFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSubgroupSizeControlFeaturesEXT {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSubgroupSizeControlFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSubgroupSizeControlFeaturesEXT {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceSubgroupSizeControlFeaturesEXTBuilder<'a> {
@@ -39465,7 +37686,6 @@ pub struct DeviceMemoryOpaqueCaptureAddressInfoBuilder<'a> {
     inner: DeviceMemoryOpaqueCaptureAddressInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDeviceMemoryOpaqueCaptureAddressInfo {}
 impl<'a> ::std::ops::Deref for DeviceMemoryOpaqueCaptureAddressInfoBuilder<'a> {
     type Target = DeviceMemoryOpaqueCaptureAddressInfo;
     fn deref(&self) -> &Self::Target {
@@ -39480,23 +37700,6 @@ impl<'a> ::std::ops::DerefMut for DeviceMemoryOpaqueCaptureAddressInfoBuilder<'a
 impl<'a> DeviceMemoryOpaqueCaptureAddressInfoBuilder<'a> {
     pub fn memory(mut self, memory: DeviceMemory) -> Self {
         self.inner.memory = memory;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDeviceMemoryOpaqueCaptureAddressInfo>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -39546,6 +37749,11 @@ pub struct PhysicalDeviceLineRasterizationFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceLineRasterizationFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceLineRasterizationFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceLineRasterizationFeaturesEXT {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceLineRasterizationFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceLineRasterizationFeaturesEXT {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceLineRasterizationFeaturesEXTBuilder<'a> {
@@ -39761,6 +37969,14 @@ pub struct PhysicalDevicePipelineCreationCacheControlFeaturesEXTBuilder<'a> {
     inner: PhysicalDevicePipelineCreationCacheControlFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDevicePipelineCreationCacheControlFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDevicePipelineCreationCacheControlFeaturesEXT
+{
+}
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDevicePipelineCreationCacheControlFeaturesEXTBuilder<'_>
 {
@@ -39844,6 +38060,8 @@ pub struct PhysicalDeviceVulkan11FeaturesBuilder<'a> {
     inner: PhysicalDeviceVulkan11Features,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVulkan11FeaturesBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVulkan11Features {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVulkan11FeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVulkan11Features {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceVulkan11FeaturesBuilder<'a> {
@@ -40194,6 +38412,8 @@ pub struct PhysicalDeviceVulkan12FeaturesBuilder<'a> {
     inner: PhysicalDeviceVulkan12Features,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVulkan12FeaturesBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVulkan12Features {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVulkan12FeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVulkan12Features {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceVulkan12FeaturesBuilder<'a> {
@@ -41334,6 +39554,8 @@ pub struct PhysicalDeviceCoherentMemoryFeaturesAMDBuilder<'a> {
     inner: PhysicalDeviceCoherentMemoryFeaturesAMD,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCoherentMemoryFeaturesAMDBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCoherentMemoryFeaturesAMD {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCoherentMemoryFeaturesAMDBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCoherentMemoryFeaturesAMD {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceCoherentMemoryFeaturesAMDBuilder<'a> {
@@ -41418,7 +39640,6 @@ pub struct PhysicalDeviceToolPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceToolPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceToolPropertiesEXT {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceToolPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceToolPropertiesEXT;
     fn deref(&self) -> &Self::Target {
@@ -41449,20 +39670,6 @@ impl<'a> PhysicalDeviceToolPropertiesEXTBuilder<'a> {
     }
     pub fn layer(mut self, layer: [c_char; MAX_EXTENSION_NAME_SIZE]) -> Self {
         self.inner.layer = layer;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPhysicalDeviceToolPropertiesEXT>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -41636,6 +39843,11 @@ pub struct PhysicalDeviceCustomBorderColorFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceCustomBorderColorFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceCustomBorderColorFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCustomBorderColorFeaturesEXT {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCustomBorderColorFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCustomBorderColorFeaturesEXT {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceCustomBorderColorFeaturesEXTBuilder<'a> {
@@ -41749,7 +39961,6 @@ pub struct AccelerationStructureGeometryTrianglesDataKHRBuilder<'a> {
     inner: AccelerationStructureGeometryTrianglesDataKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsAccelerationStructureGeometryTrianglesDataKHR {}
 impl<'a> ::std::ops::Deref for AccelerationStructureGeometryTrianglesDataKHRBuilder<'a> {
     type Target = AccelerationStructureGeometryTrianglesDataKHR;
     fn deref(&self) -> &Self::Target {
@@ -41788,23 +39999,6 @@ impl<'a> AccelerationStructureGeometryTrianglesDataKHRBuilder<'a> {
     }
     pub fn transform_data(mut self, transform_data: DeviceOrHostAddressConstKHR) -> Self {
         self.inner.transform_data = transform_data;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsAccelerationStructureGeometryTrianglesDataKHR>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -41856,7 +40050,6 @@ pub struct AccelerationStructureGeometryAabbsDataKHRBuilder<'a> {
     inner: AccelerationStructureGeometryAabbsDataKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsAccelerationStructureGeometryAabbsDataKHR {}
 impl<'a> ::std::ops::Deref for AccelerationStructureGeometryAabbsDataKHRBuilder<'a> {
     type Target = AccelerationStructureGeometryAabbsDataKHR;
     fn deref(&self) -> &Self::Target {
@@ -41875,23 +40068,6 @@ impl<'a> AccelerationStructureGeometryAabbsDataKHRBuilder<'a> {
     }
     pub fn stride(mut self, stride: DeviceSize) -> Self {
         self.inner.stride = stride;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsAccelerationStructureGeometryAabbsDataKHR>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -41943,7 +40119,6 @@ pub struct AccelerationStructureGeometryInstancesDataKHRBuilder<'a> {
     inner: AccelerationStructureGeometryInstancesDataKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsAccelerationStructureGeometryInstancesDataKHR {}
 impl<'a> ::std::ops::Deref for AccelerationStructureGeometryInstancesDataKHRBuilder<'a> {
     type Target = AccelerationStructureGeometryInstancesDataKHR;
     fn deref(&self) -> &Self::Target {
@@ -41962,23 +40137,6 @@ impl<'a> AccelerationStructureGeometryInstancesDataKHRBuilder<'a> {
     }
     pub fn data(mut self, data: DeviceOrHostAddressConstKHR) -> Self {
         self.inner.data = data;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsAccelerationStructureGeometryInstancesDataKHR>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -42046,7 +40204,6 @@ pub struct AccelerationStructureGeometryKHRBuilder<'a> {
     inner: AccelerationStructureGeometryKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsAccelerationStructureGeometryKHR {}
 impl<'a> ::std::ops::Deref for AccelerationStructureGeometryKHRBuilder<'a> {
     type Target = AccelerationStructureGeometryKHR;
     fn deref(&self) -> &Self::Target {
@@ -42069,23 +40226,6 @@ impl<'a> AccelerationStructureGeometryKHRBuilder<'a> {
     }
     pub fn flags(mut self, flags: GeometryFlagsKHR) -> Self {
         self.inner.flags = flags;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsAccelerationStructureGeometryKHR>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -42164,7 +40304,6 @@ pub struct AccelerationStructureBuildGeometryInfoKHRBuilder<'a> {
     inner: AccelerationStructureBuildGeometryInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsAccelerationStructureBuildGeometryInfoKHR {}
 impl<'a> ::std::ops::Deref for AccelerationStructureBuildGeometryInfoKHRBuilder<'a> {
     type Target = AccelerationStructureBuildGeometryInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -42218,23 +40357,6 @@ impl<'a> AccelerationStructureBuildGeometryInfoKHRBuilder<'a> {
     }
     pub fn scratch_data(mut self, scratch_data: DeviceOrHostAddressKHR) -> Self {
         self.inner.scratch_data = scratch_data;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsAccelerationStructureBuildGeometryInfoKHR>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -42341,7 +40463,6 @@ pub struct AccelerationStructureCreateInfoKHRBuilder<'a> {
     inner: AccelerationStructureCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsAccelerationStructureCreateInfoKHR {}
 impl<'a> ::std::ops::Deref for AccelerationStructureCreateInfoKHRBuilder<'a> {
     type Target = AccelerationStructureCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -42376,23 +40497,6 @@ impl<'a> AccelerationStructureCreateInfoKHRBuilder<'a> {
     }
     pub fn device_address(mut self, device_address: DeviceAddress) -> Self {
         self.inner.device_address = device_address;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsAccelerationStructureCreateInfoKHR>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -42518,7 +40622,6 @@ pub struct AccelerationStructureDeviceAddressInfoKHRBuilder<'a> {
     inner: AccelerationStructureDeviceAddressInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsAccelerationStructureDeviceAddressInfoKHR {}
 impl<'a> ::std::ops::Deref for AccelerationStructureDeviceAddressInfoKHRBuilder<'a> {
     type Target = AccelerationStructureDeviceAddressInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -42536,23 +40639,6 @@ impl<'a> AccelerationStructureDeviceAddressInfoKHRBuilder<'a> {
         acceleration_structure: AccelerationStructureKHR,
     ) -> Self {
         self.inner.acceleration_structure = acceleration_structure;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsAccelerationStructureDeviceAddressInfoKHR>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -42592,7 +40678,6 @@ pub struct AccelerationStructureVersionInfoKHRBuilder<'a> {
     inner: AccelerationStructureVersionInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsAccelerationStructureVersionInfoKHR {}
 impl<'a> ::std::ops::Deref for AccelerationStructureVersionInfoKHRBuilder<'a> {
     type Target = AccelerationStructureVersionInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -42607,23 +40692,6 @@ impl<'a> ::std::ops::DerefMut for AccelerationStructureVersionInfoKHRBuilder<'a>
 impl<'a> AccelerationStructureVersionInfoKHRBuilder<'a> {
     pub fn version_data(mut self, version_data: &'a [u8; 2 * UUID_SIZE]) -> Self {
         self.inner.p_version_data = version_data.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsAccelerationStructureVersionInfoKHR>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -42667,7 +40735,6 @@ pub struct CopyAccelerationStructureInfoKHRBuilder<'a> {
     inner: CopyAccelerationStructureInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsCopyAccelerationStructureInfoKHR {}
 impl<'a> ::std::ops::Deref for CopyAccelerationStructureInfoKHRBuilder<'a> {
     type Target = CopyAccelerationStructureInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -42690,23 +40757,6 @@ impl<'a> CopyAccelerationStructureInfoKHRBuilder<'a> {
     }
     pub fn mode(mut self, mode: CopyAccelerationStructureModeKHR) -> Self {
         self.inner.mode = mode;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsCopyAccelerationStructureInfoKHR>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -42761,7 +40811,6 @@ pub struct CopyAccelerationStructureToMemoryInfoKHRBuilder<'a> {
     inner: CopyAccelerationStructureToMemoryInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsCopyAccelerationStructureToMemoryInfoKHR {}
 impl<'a> ::std::ops::Deref for CopyAccelerationStructureToMemoryInfoKHRBuilder<'a> {
     type Target = CopyAccelerationStructureToMemoryInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -42784,23 +40833,6 @@ impl<'a> CopyAccelerationStructureToMemoryInfoKHRBuilder<'a> {
     }
     pub fn mode(mut self, mode: CopyAccelerationStructureModeKHR) -> Self {
         self.inner.mode = mode;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsCopyAccelerationStructureToMemoryInfoKHR>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -42855,7 +40887,6 @@ pub struct CopyMemoryToAccelerationStructureInfoKHRBuilder<'a> {
     inner: CopyMemoryToAccelerationStructureInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsCopyMemoryToAccelerationStructureInfoKHR {}
 impl<'a> ::std::ops::Deref for CopyMemoryToAccelerationStructureInfoKHRBuilder<'a> {
     type Target = CopyMemoryToAccelerationStructureInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -42878,23 +40909,6 @@ impl<'a> CopyMemoryToAccelerationStructureInfoKHRBuilder<'a> {
     }
     pub fn mode(mut self, mode: CopyAccelerationStructureModeKHR) -> Self {
         self.inner.mode = mode;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsCopyMemoryToAccelerationStructureInfoKHR>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -42936,7 +40950,6 @@ pub struct RayTracingPipelineInterfaceCreateInfoKHRBuilder<'a> {
     inner: RayTracingPipelineInterfaceCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsRayTracingPipelineInterfaceCreateInfoKHR {}
 impl<'a> ::std::ops::Deref for RayTracingPipelineInterfaceCreateInfoKHRBuilder<'a> {
     type Target = RayTracingPipelineInterfaceCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -42958,23 +40971,6 @@ impl<'a> RayTracingPipelineInterfaceCreateInfoKHRBuilder<'a> {
         max_pipeline_ray_hit_attribute_size: u32,
     ) -> Self {
         self.inner.max_pipeline_ray_hit_attribute_size = max_pipeline_ray_hit_attribute_size;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsRayTracingPipelineInterfaceCreateInfoKHR>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -43016,7 +41012,6 @@ pub struct PipelineLibraryCreateInfoKHRBuilder<'a> {
     inner: PipelineLibraryCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineLibraryCreateInfoKHR {}
 impl<'a> ::std::ops::Deref for PipelineLibraryCreateInfoKHRBuilder<'a> {
     type Target = PipelineLibraryCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -43032,20 +41027,6 @@ impl<'a> PipelineLibraryCreateInfoKHRBuilder<'a> {
     pub fn libraries(mut self, libraries: &'a [Pipeline]) -> Self {
         self.inner.library_count = libraries.len() as _;
         self.inner.p_libraries = libraries.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPipelineLibraryCreateInfoKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -43085,6 +41066,11 @@ pub struct PhysicalDeviceExtendedDynamicStateFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceExtendedDynamicStateFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceExtendedDynamicStateFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceExtendedDynamicStateFeaturesEXT {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExtendedDynamicStateFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExtendedDynamicStateFeaturesEXT {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceExtendedDynamicStateFeaturesEXTBuilder<'a> {
@@ -43319,6 +41305,11 @@ pub struct PhysicalDeviceDiagnosticsConfigFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceDiagnosticsConfigFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceDiagnosticsConfigFeaturesNVBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDiagnosticsConfigFeaturesNV {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDiagnosticsConfigFeaturesNVBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDiagnosticsConfigFeaturesNV {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceDiagnosticsConfigFeaturesNVBuilder<'a> {
@@ -43429,6 +41420,14 @@ pub struct PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHRBuilder<'a> {
     inner: PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHRBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHR
+{
+}
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHRBuilder<'_>
 {
@@ -43497,6 +41496,8 @@ pub struct PhysicalDeviceRobustness2FeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceRobustness2FeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRobustness2FeaturesEXTBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRobustness2FeaturesEXT {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRobustness2FeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRobustness2FeaturesEXT {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceRobustness2FeaturesEXTBuilder<'a> {
@@ -43629,6 +41630,8 @@ pub struct PhysicalDeviceImageRobustnessFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceImageRobustnessFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImageRobustnessFeaturesEXTBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImageRobustnessFeaturesEXT {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImageRobustnessFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImageRobustnessFeaturesEXT {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceImageRobustnessFeaturesEXTBuilder<'a> {
@@ -43689,6 +41692,14 @@ impl PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR {
 pub struct PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHRBuilder<'a> {
     inner: PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHRBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR
+{
 }
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHRBuilder<'_>
@@ -43806,6 +41817,11 @@ pub struct PhysicalDevicePortabilitySubsetFeaturesKHRBuilder<'a> {
     inner: PhysicalDevicePortabilitySubsetFeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDevicePortabilitySubsetFeaturesKHRBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePortabilitySubsetFeaturesKHR {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePortabilitySubsetFeaturesKHRBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePortabilitySubsetFeaturesKHR {}
 impl<'a> ::std::ops::Deref for PhysicalDevicePortabilitySubsetFeaturesKHRBuilder<'a> {
@@ -43995,6 +42011,8 @@ pub struct PhysicalDevice4444FormatsFeaturesEXTBuilder<'a> {
     inner: PhysicalDevice4444FormatsFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevice4444FormatsFeaturesEXTBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevice4444FormatsFeaturesEXT {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDevice4444FormatsFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDevice4444FormatsFeaturesEXT {}
 impl<'a> ::std::ops::Deref for PhysicalDevice4444FormatsFeaturesEXTBuilder<'a> {
@@ -44058,7 +42076,6 @@ pub struct BufferCopy2KHRBuilder<'a> {
     inner: BufferCopy2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsBufferCopy2KHR {}
 impl<'a> ::std::ops::Deref for BufferCopy2KHRBuilder<'a> {
     type Target = BufferCopy2KHR;
     fn deref(&self) -> &Self::Target {
@@ -44081,20 +42098,6 @@ impl<'a> BufferCopy2KHRBuilder<'a> {
     }
     pub fn size(mut self, size: DeviceSize) -> Self {
         self.inner.size = size;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBufferCopy2KHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -44142,7 +42145,6 @@ pub struct ImageCopy2KHRBuilder<'a> {
     inner: ImageCopy2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImageCopy2KHR {}
 impl<'a> ::std::ops::Deref for ImageCopy2KHRBuilder<'a> {
     type Target = ImageCopy2KHR;
     fn deref(&self) -> &Self::Target {
@@ -44173,20 +42175,6 @@ impl<'a> ImageCopy2KHRBuilder<'a> {
     }
     pub fn extent(mut self, extent: Extent3D) -> Self {
         self.inner.extent = extent;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsImageCopy2KHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -44418,7 +42406,6 @@ pub struct ImageResolve2KHRBuilder<'a> {
     inner: ImageResolve2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImageResolve2KHR {}
 impl<'a> ::std::ops::Deref for ImageResolve2KHRBuilder<'a> {
     type Target = ImageResolve2KHR;
     fn deref(&self) -> &Self::Target {
@@ -44449,20 +42436,6 @@ impl<'a> ImageResolve2KHRBuilder<'a> {
     }
     pub fn extent(mut self, extent: Extent3D) -> Self {
         self.inner.extent = extent;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsImageResolve2KHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -44508,7 +42481,6 @@ pub struct CopyBufferInfo2KHRBuilder<'a> {
     inner: CopyBufferInfo2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsCopyBufferInfo2KHR {}
 impl<'a> ::std::ops::Deref for CopyBufferInfo2KHRBuilder<'a> {
     type Target = CopyBufferInfo2KHR;
     fn deref(&self) -> &Self::Target {
@@ -44532,20 +42504,6 @@ impl<'a> CopyBufferInfo2KHRBuilder<'a> {
     pub fn regions(mut self, regions: &'a [BufferCopy2KHR]) -> Self {
         self.inner.region_count = regions.len() as _;
         self.inner.p_regions = regions.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsCopyBufferInfo2KHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -44595,7 +42553,6 @@ pub struct CopyImageInfo2KHRBuilder<'a> {
     inner: CopyImageInfo2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsCopyImageInfo2KHR {}
 impl<'a> ::std::ops::Deref for CopyImageInfo2KHRBuilder<'a> {
     type Target = CopyImageInfo2KHR;
     fn deref(&self) -> &Self::Target {
@@ -44627,20 +42584,6 @@ impl<'a> CopyImageInfo2KHRBuilder<'a> {
     pub fn regions(mut self, regions: &'a [ImageCopy2KHR]) -> Self {
         self.inner.region_count = regions.len() as _;
         self.inner.p_regions = regions.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsCopyImageInfo2KHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -44692,7 +42635,6 @@ pub struct BlitImageInfo2KHRBuilder<'a> {
     inner: BlitImageInfo2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsBlitImageInfo2KHR {}
 impl<'a> ::std::ops::Deref for BlitImageInfo2KHRBuilder<'a> {
     type Target = BlitImageInfo2KHR;
     fn deref(&self) -> &Self::Target {
@@ -44728,20 +42670,6 @@ impl<'a> BlitImageInfo2KHRBuilder<'a> {
     }
     pub fn filter(mut self, filter: Filter) -> Self {
         self.inner.filter = filter;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBlitImageInfo2KHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -44789,7 +42717,6 @@ pub struct CopyBufferToImageInfo2KHRBuilder<'a> {
     inner: CopyBufferToImageInfo2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsCopyBufferToImageInfo2KHR {}
 impl<'a> ::std::ops::Deref for CopyBufferToImageInfo2KHRBuilder<'a> {
     type Target = CopyBufferToImageInfo2KHR;
     fn deref(&self) -> &Self::Target {
@@ -44817,20 +42744,6 @@ impl<'a> CopyBufferToImageInfo2KHRBuilder<'a> {
     pub fn regions(mut self, regions: &'a [BufferImageCopy2KHR]) -> Self {
         self.inner.region_count = regions.len() as _;
         self.inner.p_regions = regions.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsCopyBufferToImageInfo2KHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -44878,7 +42791,6 @@ pub struct CopyImageToBufferInfo2KHRBuilder<'a> {
     inner: CopyImageToBufferInfo2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsCopyImageToBufferInfo2KHR {}
 impl<'a> ::std::ops::Deref for CopyImageToBufferInfo2KHRBuilder<'a> {
     type Target = CopyImageToBufferInfo2KHR;
     fn deref(&self) -> &Self::Target {
@@ -44906,20 +42818,6 @@ impl<'a> CopyImageToBufferInfo2KHRBuilder<'a> {
     pub fn regions(mut self, regions: &'a [BufferImageCopy2KHR]) -> Self {
         self.inner.region_count = regions.len() as _;
         self.inner.p_regions = regions.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsCopyImageToBufferInfo2KHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -44969,7 +42867,6 @@ pub struct ResolveImageInfo2KHRBuilder<'a> {
     inner: ResolveImageInfo2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsResolveImageInfo2KHR {}
 impl<'a> ::std::ops::Deref for ResolveImageInfo2KHRBuilder<'a> {
     type Target = ResolveImageInfo2KHR;
     fn deref(&self) -> &Self::Target {
@@ -45001,20 +42898,6 @@ impl<'a> ResolveImageInfo2KHRBuilder<'a> {
     pub fn regions(mut self, regions: &'a [ImageResolve2KHR]) -> Self {
         self.inner.region_count = regions.len() as _;
         self.inner.p_regions = regions.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsResolveImageInfo2KHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -45056,6 +42939,11 @@ pub struct PhysicalDeviceShaderImageAtomicInt64FeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceShaderImageAtomicInt64FeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceShaderImageAtomicInt64FeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderImageAtomicInt64FeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderImageAtomicInt64FeaturesEXTBuilder<'a> {
@@ -45250,6 +43138,11 @@ pub struct PhysicalDeviceFragmentShadingRateFeaturesKHRBuilder<'a> {
     inner: PhysicalDeviceFragmentShadingRateFeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceFragmentShadingRateFeaturesKHRBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceFragmentShadingRateFeaturesKHR {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentShadingRateFeaturesKHRBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentShadingRateFeaturesKHR {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceFragmentShadingRateFeaturesKHRBuilder<'a> {
@@ -45540,7 +43433,6 @@ pub struct PhysicalDeviceFragmentShadingRateKHRBuilder<'a> {
     inner: PhysicalDeviceFragmentShadingRateKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceFragmentShadingRateKHR {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceFragmentShadingRateKHRBuilder<'a> {
     type Target = PhysicalDeviceFragmentShadingRateKHR;
     fn deref(&self) -> &Self::Target {
@@ -45559,23 +43451,6 @@ impl<'a> PhysicalDeviceFragmentShadingRateKHRBuilder<'a> {
     }
     pub fn fragment_size(mut self, fragment_size: Extent2D) -> Self {
         self.inner.fragment_size = fragment_size;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPhysicalDeviceFragmentShadingRateKHR>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -45615,6 +43490,11 @@ pub struct PhysicalDeviceShaderTerminateInvocationFeaturesKHRBuilder<'a> {
     inner: PhysicalDeviceShaderTerminateInvocationFeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceShaderTerminateInvocationFeaturesKHRBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderTerminateInvocationFeaturesKHR {}
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceShaderTerminateInvocationFeaturesKHRBuilder<'_>
 {
@@ -45677,6 +43557,11 @@ pub struct PhysicalDeviceFragmentShadingRateEnumsFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceFragmentShadingRateEnumsFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceFragmentShadingRateEnumsFeaturesNVBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV {}
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceFragmentShadingRateEnumsFeaturesNVBuilder<'_>
 {
@@ -45889,7 +43774,6 @@ pub struct AccelerationStructureBuildSizesInfoKHRBuilder<'a> {
     inner: AccelerationStructureBuildSizesInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsAccelerationStructureBuildSizesInfoKHR {}
 impl<'a> ::std::ops::Deref for AccelerationStructureBuildSizesInfoKHRBuilder<'a> {
     type Target = AccelerationStructureBuildSizesInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -45912,23 +43796,6 @@ impl<'a> AccelerationStructureBuildSizesInfoKHRBuilder<'a> {
     }
     pub fn build_scratch_size(mut self, build_scratch_size: DeviceSize) -> Self {
         self.inner.build_scratch_size = build_scratch_size;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsAccelerationStructureBuildSizesInfoKHR>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -45968,6 +43835,11 @@ pub struct PhysicalDeviceMutableDescriptorTypeFeaturesVALVEBuilder<'a> {
     inner: PhysicalDeviceMutableDescriptorTypeFeaturesVALVE,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceMutableDescriptorTypeFeaturesVALVEBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMutableDescriptorTypeFeaturesVALVE {}
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceMutableDescriptorTypeFeaturesVALVEBuilder<'_>
 {
@@ -46144,6 +44016,11 @@ pub struct PhysicalDeviceVertexInputDynamicStateFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceVertexInputDynamicStateFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceVertexInputDynamicStateFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVertexInputDynamicStateFeaturesEXT {}
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceVertexInputDynamicStateFeaturesEXTBuilder<'_>
 {
@@ -46208,7 +44085,6 @@ pub struct VertexInputBindingDescription2EXTBuilder<'a> {
     inner: VertexInputBindingDescription2EXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsVertexInputBindingDescription2EXT {}
 impl<'a> ::std::ops::Deref for VertexInputBindingDescription2EXTBuilder<'a> {
     type Target = VertexInputBindingDescription2EXT;
     fn deref(&self) -> &Self::Target {
@@ -46235,23 +44111,6 @@ impl<'a> VertexInputBindingDescription2EXTBuilder<'a> {
     }
     pub fn divisor(mut self, divisor: u32) -> Self {
         self.inner.divisor = divisor;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVertexInputBindingDescription2EXT>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -46297,7 +44156,6 @@ pub struct VertexInputAttributeDescription2EXTBuilder<'a> {
     inner: VertexInputAttributeDescription2EXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsVertexInputAttributeDescription2EXT {}
 impl<'a> ::std::ops::Deref for VertexInputAttributeDescription2EXTBuilder<'a> {
     type Target = VertexInputAttributeDescription2EXT;
     fn deref(&self) -> &Self::Target {
@@ -46324,23 +44182,6 @@ impl<'a> VertexInputAttributeDescription2EXTBuilder<'a> {
     }
     pub fn offset(mut self, offset: u32) -> Self {
         self.inner.offset = offset;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVertexInputAttributeDescription2EXT>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -46380,6 +44221,11 @@ pub struct PhysicalDeviceColorWriteEnableFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceColorWriteEnableFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceColorWriteEnableFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceColorWriteEnableFeaturesEXT {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceColorWriteEnableFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceColorWriteEnableFeaturesEXT {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceColorWriteEnableFeaturesEXTBuilder<'a> {
@@ -46707,7 +44553,6 @@ pub struct BufferMemoryBarrier2KHRBuilder<'a> {
     inner: BufferMemoryBarrier2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsBufferMemoryBarrier2KHR {}
 impl<'a> ::std::ops::Deref for BufferMemoryBarrier2KHRBuilder<'a> {
     type Target = BufferMemoryBarrier2KHR;
     fn deref(&self) -> &Self::Target {
@@ -46754,20 +44599,6 @@ impl<'a> BufferMemoryBarrier2KHRBuilder<'a> {
     }
     pub fn size(mut self, size: DeviceSize) -> Self {
         self.inner.size = size;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBufferMemoryBarrier2KHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -46819,7 +44650,6 @@ pub struct DependencyInfoKHRBuilder<'a> {
     inner: DependencyInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDependencyInfoKHR {}
 impl<'a> ::std::ops::Deref for DependencyInfoKHRBuilder<'a> {
     type Target = DependencyInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -46855,20 +44685,6 @@ impl<'a> DependencyInfoKHRBuilder<'a> {
     ) -> Self {
         self.inner.image_memory_barrier_count = image_memory_barriers.len() as _;
         self.inner.p_image_memory_barriers = image_memory_barriers.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsDependencyInfoKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -46914,7 +44730,6 @@ pub struct SemaphoreSubmitInfoKHRBuilder<'a> {
     inner: SemaphoreSubmitInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSemaphoreSubmitInfoKHR {}
 impl<'a> ::std::ops::Deref for SemaphoreSubmitInfoKHRBuilder<'a> {
     type Target = SemaphoreSubmitInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -46941,20 +44756,6 @@ impl<'a> SemaphoreSubmitInfoKHRBuilder<'a> {
     }
     pub fn device_index(mut self, device_index: u32) -> Self {
         self.inner.device_index = device_index;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSemaphoreSubmitInfoKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -46996,7 +44797,6 @@ pub struct CommandBufferSubmitInfoKHRBuilder<'a> {
     inner: CommandBufferSubmitInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsCommandBufferSubmitInfoKHR {}
 impl<'a> ::std::ops::Deref for CommandBufferSubmitInfoKHRBuilder<'a> {
     type Target = CommandBufferSubmitInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -47015,20 +44815,6 @@ impl<'a> CommandBufferSubmitInfoKHRBuilder<'a> {
     }
     pub fn device_mask(mut self, device_mask: u32) -> Self {
         self.inner.device_mask = device_mask;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsCommandBufferSubmitInfoKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -47232,7 +45018,6 @@ pub struct CheckpointData2NVBuilder<'a> {
     inner: CheckpointData2NV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsCheckpointData2NV {}
 impl<'a> ::std::ops::Deref for CheckpointData2NVBuilder<'a> {
     type Target = CheckpointData2NV;
     fn deref(&self) -> &Self::Target {
@@ -47251,20 +45036,6 @@ impl<'a> CheckpointData2NVBuilder<'a> {
     }
     pub fn checkpoint_marker(mut self, checkpoint_marker: *mut c_void) -> Self {
         self.inner.p_checkpoint_marker = checkpoint_marker;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsCheckpointData2NV>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -47304,6 +45075,11 @@ pub struct PhysicalDeviceSynchronization2FeaturesKHRBuilder<'a> {
     inner: PhysicalDeviceSynchronization2FeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceSynchronization2FeaturesKHRBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSynchronization2FeaturesKHR {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSynchronization2FeaturesKHRBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSynchronization2FeaturesKHR {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceSynchronization2FeaturesKHRBuilder<'a> {
@@ -47486,7 +45262,6 @@ pub struct PhysicalDeviceVideoFormatInfoKHRBuilder<'a> {
     inner: PhysicalDeviceVideoFormatInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceVideoFormatInfoKHR {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceVideoFormatInfoKHRBuilder<'a> {
     type Target = PhysicalDeviceVideoFormatInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -47505,23 +45280,6 @@ impl<'a> PhysicalDeviceVideoFormatInfoKHRBuilder<'a> {
     }
     pub fn video_profiles(mut self, video_profiles: &'a VideoProfilesKHR) -> Self {
         self.inner.p_video_profiles = video_profiles;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPhysicalDeviceVideoFormatInfoKHR>(
-        mut self,
-        next: &'a mut T,
-    ) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -47561,7 +45319,6 @@ pub struct VideoFormatPropertiesKHRBuilder<'a> {
     inner: VideoFormatPropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsVideoFormatPropertiesKHR {}
 impl<'a> ::std::ops::Deref for VideoFormatPropertiesKHRBuilder<'a> {
     type Target = VideoFormatPropertiesKHR;
     fn deref(&self) -> &Self::Target {
@@ -47576,20 +45333,6 @@ impl<'a> ::std::ops::DerefMut for VideoFormatPropertiesKHRBuilder<'a> {
 impl<'a> VideoFormatPropertiesKHRBuilder<'a> {
     pub fn format(mut self, format: Format) -> Self {
         self.inner.format = format;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoFormatPropertiesKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -47645,6 +45388,7 @@ unsafe impl ExtendsImageViewCreateInfo for VideoProfileKHRBuilder<'_> {}
 unsafe impl ExtendsImageViewCreateInfo for VideoProfileKHR {}
 unsafe impl ExtendsBufferCreateInfo for VideoProfileKHRBuilder<'_> {}
 unsafe impl ExtendsBufferCreateInfo for VideoProfileKHR {}
+pub unsafe trait ExtendsVideoProfileKHR {}
 impl<'a> ::std::ops::Deref for VideoProfileKHRBuilder<'a> {
     type Target = VideoProfileKHR;
     fn deref(&self) -> &Self::Target {
@@ -47677,6 +45421,20 @@ impl<'a> VideoProfileKHRBuilder<'a> {
     }
     pub fn chroma_bit_depth(mut self, chroma_bit_depth: VideoComponentBitDepthFlagsKHR) -> Self {
         self.inner.chroma_bit_depth = chroma_bit_depth;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsVideoProfileKHR>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -47843,7 +45601,6 @@ pub struct VideoGetMemoryPropertiesKHRBuilder<'a> {
     inner: VideoGetMemoryPropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsVideoGetMemoryPropertiesKHR {}
 impl<'a> ::std::ops::Deref for VideoGetMemoryPropertiesKHRBuilder<'a> {
     type Target = VideoGetMemoryPropertiesKHR;
     fn deref(&self) -> &Self::Target {
@@ -47862,20 +45619,6 @@ impl<'a> VideoGetMemoryPropertiesKHRBuilder<'a> {
     }
     pub fn memory_requirements(mut self, memory_requirements: &'a mut MemoryRequirements2) -> Self {
         self.inner.p_memory_requirements = memory_requirements;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoGetMemoryPropertiesKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -47921,7 +45664,6 @@ pub struct VideoBindMemoryKHRBuilder<'a> {
     inner: VideoBindMemoryKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsVideoBindMemoryKHR {}
 impl<'a> ::std::ops::Deref for VideoBindMemoryKHRBuilder<'a> {
     type Target = VideoBindMemoryKHR;
     fn deref(&self) -> &Self::Target {
@@ -47948,20 +45690,6 @@ impl<'a> VideoBindMemoryKHRBuilder<'a> {
     }
     pub fn memory_size(mut self, memory_size: DeviceSize) -> Self {
         self.inner.memory_size = memory_size;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoBindMemoryKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -48007,7 +45735,6 @@ pub struct VideoPictureResourceKHRBuilder<'a> {
     inner: VideoPictureResourceKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsVideoPictureResourceKHR {}
 impl<'a> ::std::ops::Deref for VideoPictureResourceKHRBuilder<'a> {
     type Target = VideoPictureResourceKHR;
     fn deref(&self) -> &Self::Target {
@@ -48034,20 +45761,6 @@ impl<'a> VideoPictureResourceKHRBuilder<'a> {
     }
     pub fn image_view_binding(mut self, image_view_binding: ImageView) -> Self {
         self.inner.image_view_binding = image_view_binding;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoPictureResourceKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -48282,7 +45995,8 @@ pub struct VideoDecodeH264ProfileEXTBuilder<'a> {
     inner: VideoDecodeH264ProfileEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsVideoDecodeH264ProfileEXT {}
+unsafe impl ExtendsVideoProfileKHR for VideoDecodeH264ProfileEXTBuilder<'_> {}
+unsafe impl ExtendsVideoProfileKHR for VideoDecodeH264ProfileEXT {}
 impl<'a> ::std::ops::Deref for VideoDecodeH264ProfileEXTBuilder<'a> {
     type Target = VideoDecodeH264ProfileEXT;
     fn deref(&self) -> &Self::Target {
@@ -48301,20 +46015,6 @@ impl<'a> VideoDecodeH264ProfileEXTBuilder<'a> {
     }
     pub fn field_layout(mut self, field_layout: VideoDecodeH264FieldLayoutFlagsEXT) -> Self {
         self.inner.field_layout = field_layout;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoDecodeH264ProfileEXT>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -48637,6 +46337,7 @@ pub struct VideoDecodeH264PictureInfoEXTBuilder<'a> {
 }
 unsafe impl ExtendsVideoDecodeInfoKHR for VideoDecodeH264PictureInfoEXTBuilder<'_> {}
 unsafe impl ExtendsVideoDecodeInfoKHR for VideoDecodeH264PictureInfoEXT {}
+pub unsafe trait ExtendsVideoDecodeH264PictureInfoEXT {}
 impl<'a> ::std::ops::Deref for VideoDecodeH264PictureInfoEXTBuilder<'a> {
     type Target = VideoDecodeH264PictureInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -48656,6 +46357,20 @@ impl<'a> VideoDecodeH264PictureInfoEXTBuilder<'a> {
     pub fn slices_data_offsets(mut self, slices_data_offsets: &'a [u32]) -> Self {
         self.inner.slices_count = slices_data_offsets.len() as _;
         self.inner.p_slices_data_offsets = slices_data_offsets.as_ptr();
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsVideoDecodeH264PictureInfoEXT>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -48753,7 +46468,8 @@ pub struct VideoDecodeH264MvcEXTBuilder<'a> {
     inner: VideoDecodeH264MvcEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsVideoDecodeH264MvcEXT {}
+unsafe impl ExtendsVideoDecodeH264PictureInfoEXT for VideoDecodeH264MvcEXTBuilder<'_> {}
+unsafe impl ExtendsVideoDecodeH264PictureInfoEXT for VideoDecodeH264MvcEXT {}
 impl<'a> ::std::ops::Deref for VideoDecodeH264MvcEXTBuilder<'a> {
     type Target = VideoDecodeH264MvcEXT;
     fn deref(&self) -> &Self::Target {
@@ -48768,20 +46484,6 @@ impl<'a> ::std::ops::DerefMut for VideoDecodeH264MvcEXTBuilder<'a> {
 impl<'a> VideoDecodeH264MvcEXTBuilder<'a> {
     pub fn std_mvc(mut self, std_mvc: &'a StdVideoDecodeH264Mvc) -> Self {
         self.inner.p_std_mvc = std_mvc;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoDecodeH264MvcEXT>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -48821,7 +46523,8 @@ pub struct VideoDecodeH265ProfileEXTBuilder<'a> {
     inner: VideoDecodeH265ProfileEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsVideoDecodeH265ProfileEXT {}
+unsafe impl ExtendsVideoProfileKHR for VideoDecodeH265ProfileEXTBuilder<'_> {}
+unsafe impl ExtendsVideoProfileKHR for VideoDecodeH265ProfileEXT {}
 impl<'a> ::std::ops::Deref for VideoDecodeH265ProfileEXTBuilder<'a> {
     type Target = VideoDecodeH265ProfileEXT;
     fn deref(&self) -> &Self::Target {
@@ -48836,20 +46539,6 @@ impl<'a> ::std::ops::DerefMut for VideoDecodeH265ProfileEXTBuilder<'a> {
 impl<'a> VideoDecodeH265ProfileEXTBuilder<'a> {
     pub fn std_profile_idc(mut self, std_profile_idc: StdVideoH265ProfileIdc) -> Self {
         self.inner.std_profile_idc = std_profile_idc;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoDecodeH265ProfileEXT>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -49562,7 +47251,6 @@ pub struct VideoBeginCodingInfoKHRBuilder<'a> {
     inner: VideoBeginCodingInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsVideoBeginCodingInfoKHR {}
 impl<'a> ::std::ops::Deref for VideoBeginCodingInfoKHRBuilder<'a> {
     type Target = VideoBeginCodingInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -49602,20 +47290,6 @@ impl<'a> VideoBeginCodingInfoKHRBuilder<'a> {
         self.inner.p_reference_slots = reference_slots.as_ptr();
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoBeginCodingInfoKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
-        self
-    }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
@@ -49653,7 +47327,6 @@ pub struct VideoEndCodingInfoKHRBuilder<'a> {
     inner: VideoEndCodingInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsVideoEndCodingInfoKHR {}
 impl<'a> ::std::ops::Deref for VideoEndCodingInfoKHRBuilder<'a> {
     type Target = VideoEndCodingInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -49668,20 +47341,6 @@ impl<'a> ::std::ops::DerefMut for VideoEndCodingInfoKHRBuilder<'a> {
 impl<'a> VideoEndCodingInfoKHRBuilder<'a> {
     pub fn flags(mut self, flags: VideoEndCodingFlagsKHR) -> Self {
         self.inner.flags = flags;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoEndCodingInfoKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -50341,7 +48000,6 @@ pub struct VideoEncodeH264DpbSlotInfoEXTBuilder<'a> {
     inner: VideoEncodeH264DpbSlotInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsVideoEncodeH264DpbSlotInfoEXT {}
 impl<'a> ::std::ops::Deref for VideoEncodeH264DpbSlotInfoEXTBuilder<'a> {
     type Target = VideoEncodeH264DpbSlotInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -50360,20 +48018,6 @@ impl<'a> VideoEncodeH264DpbSlotInfoEXTBuilder<'a> {
     }
     pub fn std_picture_info(mut self, std_picture_info: &'a StdVideoEncodeH264PictureInfo) -> Self {
         self.inner.p_std_picture_info = std_picture_info;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoEncodeH264DpbSlotInfoEXT>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -50577,7 +48221,8 @@ pub struct VideoEncodeH264ProfileEXTBuilder<'a> {
     inner: VideoEncodeH264ProfileEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsVideoEncodeH264ProfileEXT {}
+unsafe impl ExtendsVideoProfileKHR for VideoEncodeH264ProfileEXTBuilder<'_> {}
+unsafe impl ExtendsVideoProfileKHR for VideoEncodeH264ProfileEXT {}
 impl<'a> ::std::ops::Deref for VideoEncodeH264ProfileEXTBuilder<'a> {
     type Target = VideoEncodeH264ProfileEXT;
     fn deref(&self) -> &Self::Target {
@@ -50592,20 +48237,6 @@ impl<'a> ::std::ops::DerefMut for VideoEncodeH264ProfileEXTBuilder<'a> {
 impl<'a> VideoEncodeH264ProfileEXTBuilder<'a> {
     pub fn std_profile_idc(mut self, std_profile_idc: StdVideoH264ProfileIdc) -> Self {
         self.inner.std_profile_idc = std_profile_idc;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoEncodeH264ProfileEXT>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -50661,7 +48292,6 @@ pub struct VideoEncodeH264NaluSliceEXTBuilder<'a> {
     inner: VideoEncodeH264NaluSliceEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsVideoEncodeH264NaluSliceEXT {}
 impl<'a> ::std::ops::Deref for VideoEncodeH264NaluSliceEXTBuilder<'a> {
     type Target = VideoEncodeH264NaluSliceEXT;
     fn deref(&self) -> &Self::Target {
@@ -50710,20 +48340,6 @@ impl<'a> VideoEncodeH264NaluSliceEXTBuilder<'a> {
         self.inner.max_qp = max_qp;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoEncodeH264NaluSliceEXT>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
-        }
-        self
-    }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
@@ -50761,6 +48377,11 @@ pub struct PhysicalDeviceInheritedViewportScissorFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceInheritedViewportScissorFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceInheritedViewportScissorFeaturesNVBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceInheritedViewportScissorFeaturesNV {}
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceInheritedViewportScissorFeaturesNVBuilder<'_>
 {
@@ -50889,6 +48510,11 @@ pub struct PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXTBuilder<'a> {
