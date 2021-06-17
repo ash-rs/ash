@@ -1251,6 +1251,7 @@ impl ValidationFeatureDisableEXT {
     pub const OBJECT_LIFETIMES: Self = Self(4);
     pub const CORE_CHECKS: Self = Self(5);
     pub const UNIQUE_HANDLES: Self = Self(6);
+    pub const SHADER_VALIDATION_CACHE: Self = Self(7);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
@@ -1652,6 +1653,8 @@ impl DriverId {
     pub const MOLTENVK: Self = Self(14);
     #[doc = "Core Avionics & Industrial Inc."]
     pub const COREAVI_PROPRIETARY: Self = Self(15);
+    #[doc = "Juice Technologies, Inc."]
+    pub const JUICE_PROPRIETARY: Self = Self(16);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
@@ -2187,6 +2190,22 @@ impl FragmentShadingRateTypeNV {
 impl FragmentShadingRateTypeNV {
     pub const FRAGMENT_SIZE: Self = Self(0);
     pub const ENUMS: Self = Self(1);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkProvokingVertexModeEXT.html>"]
+pub struct ProvokingVertexModeEXT(pub(crate) i32);
+impl ProvokingVertexModeEXT {
+    pub const fn from_raw(x: i32) -> Self {
+        ProvokingVertexModeEXT(x)
+    }
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl ProvokingVertexModeEXT {
+    pub const FIRST_VERTEX: Self = Self(0);
+    pub const LAST_VERTEX: Self = Self(1);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
