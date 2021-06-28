@@ -1916,7 +1916,7 @@ pub fn derive_setters(
                         };
 
                         // Interpret void array as byte array
-                        if field.basetype == "void" {
+                        if field.basetype == "void" && matches!(field.reference, Some(vkxml::ReferenceType::Pointer)) {
                             let mutable = if field.is_const { quote!(const) } else { quote!(mut) };
 
                             slice_param_ty_tokens = quote!([u8]);

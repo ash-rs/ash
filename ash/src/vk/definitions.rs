@@ -53,7 +53,7 @@ pub const API_VERSION_1_0: u32 = make_api_version(0, 1, 0, 0);
 pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_API_VERSION_1_2.html>"]
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
-pub const HEADER_VERSION: u32 = 182u32;
+pub const HEADER_VERSION: u32 = 183u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 2, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSampleMask.html>"]
@@ -18063,7 +18063,7 @@ impl<'a> DeviceGroupBindSparseInfoBuilder<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDeviceGroupPresentCapabilitiesKHR.html>"]
 pub struct DeviceGroupPresentCapabilitiesKHR {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub present_mask: [u32; MAX_DEVICE_GROUP_SIZE],
     pub modes: DeviceGroupPresentModeFlagsKHR,
 }
@@ -18071,7 +18071,7 @@ impl ::std::default::Default for DeviceGroupPresentCapabilitiesKHR {
     fn default() -> DeviceGroupPresentCapabilitiesKHR {
         DeviceGroupPresentCapabilitiesKHR {
             s_type: StructureType::DEVICE_GROUP_PRESENT_CAPABILITIES_KHR,
-            p_next: ::std::ptr::null(),
+            p_next: ::std::ptr::null_mut(),
             present_mask: unsafe { ::std::mem::zeroed() },
             modes: DeviceGroupPresentModeFlagsKHR::default(),
         }
@@ -24459,6 +24459,8 @@ unsafe impl ExtendsPhysicalDeviceFeatures2
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceGlobalPriorityQueryFeaturesEXT {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceGlobalPriorityQueryFeaturesEXTBuilder<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceGlobalPriorityQueryFeaturesEXT {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceGlobalPriorityQueryFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceGlobalPriorityQueryFeaturesEXT;
     fn deref(&self) -> &Self::Target {
@@ -25089,7 +25091,7 @@ impl<'a> DeviceDeviceMemoryReportCreateInfoEXTBuilder<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDeviceMemoryReportCallbackDataEXT.html>"]
 pub struct DeviceMemoryReportCallbackDataEXT {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub flags: DeviceMemoryReportFlagsEXT,
     pub ty: DeviceMemoryReportEventTypeEXT,
     pub memory_object_id: u64,
@@ -25102,7 +25104,7 @@ impl ::std::default::Default for DeviceMemoryReportCallbackDataEXT {
     fn default() -> DeviceMemoryReportCallbackDataEXT {
         DeviceMemoryReportCallbackDataEXT {
             s_type: StructureType::DEVICE_MEMORY_REPORT_CALLBACK_DATA_EXT,
-            p_next: ::std::ptr::null(),
+            p_next: ::std::ptr::null_mut(),
             flags: DeviceMemoryReportFlagsEXT::default(),
             ty: DeviceMemoryReportEventTypeEXT::default(),
             memory_object_id: u64::default(),
@@ -35472,7 +35474,7 @@ impl<'a> PhysicalDevicePerformanceQueryPropertiesKHRBuilder<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPerformanceCounterKHR.html>"]
 pub struct PerformanceCounterKHR {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub unit: PerformanceCounterUnitKHR,
     pub scope: PerformanceCounterScopeKHR,
     pub storage: PerformanceCounterStorageKHR,
@@ -35482,7 +35484,7 @@ impl ::std::default::Default for PerformanceCounterKHR {
     fn default() -> PerformanceCounterKHR {
         PerformanceCounterKHR {
             s_type: StructureType::PERFORMANCE_COUNTER_KHR,
-            p_next: ::std::ptr::null(),
+            p_next: ::std::ptr::null_mut(),
             unit: PerformanceCounterUnitKHR::default(),
             scope: PerformanceCounterScopeKHR::default(),
             storage: PerformanceCounterStorageKHR::default(),
@@ -35543,7 +35545,7 @@ impl<'a> PerformanceCounterKHRBuilder<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPerformanceCounterDescriptionKHR.html>"]
 pub struct PerformanceCounterDescriptionKHR {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub flags: PerformanceCounterDescriptionFlagsKHR,
     pub name: [c_char; MAX_DESCRIPTION_SIZE],
     pub category: [c_char; MAX_DESCRIPTION_SIZE],
@@ -35571,7 +35573,7 @@ impl ::std::default::Default for PerformanceCounterDescriptionKHR {
     fn default() -> PerformanceCounterDescriptionKHR {
         PerformanceCounterDescriptionKHR {
             s_type: StructureType::PERFORMANCE_COUNTER_DESCRIPTION_KHR,
-            p_next: ::std::ptr::null(),
+            p_next: ::std::ptr::null_mut(),
             flags: PerformanceCounterDescriptionFlagsKHR::default(),
             name: unsafe { ::std::mem::zeroed() },
             category: unsafe { ::std::mem::zeroed() },
@@ -37953,7 +37955,7 @@ pub struct SubpassShadingPipelineCreateInfoHUAWEI {
 impl ::std::default::Default for SubpassShadingPipelineCreateInfoHUAWEI {
     fn default() -> SubpassShadingPipelineCreateInfoHUAWEI {
         SubpassShadingPipelineCreateInfoHUAWEI {
-            s_type: StructureType::SUBPASSS_SHADING_PIPELINE_CREATE_INFO_HUAWEI,
+            s_type: StructureType::SUBPASS_SHADING_PIPELINE_CREATE_INFO_HUAWEI,
             p_next: ::std::ptr::null_mut(),
             render_pass: RenderPass::default(),
             subpass: u32::default(),
@@ -45949,7 +45951,7 @@ impl<'a> VideoProfilesKHRBuilder<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDeviceVideoFormatInfoKHR.html>"]
 pub struct PhysicalDeviceVideoFormatInfoKHR {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub image_usage: ImageUsageFlags,
     pub p_video_profiles: *const VideoProfilesKHR,
 }
@@ -45957,7 +45959,7 @@ impl ::std::default::Default for PhysicalDeviceVideoFormatInfoKHR {
     fn default() -> PhysicalDeviceVideoFormatInfoKHR {
         PhysicalDeviceVideoFormatInfoKHR {
             s_type: StructureType::PHYSICAL_DEVICE_VIDEO_FORMAT_INFO_KHR,
-            p_next: ::std::ptr::null(),
+            p_next: ::std::ptr::null_mut(),
             image_usage: ImageUsageFlags::default(),
             p_video_profiles: ::std::ptr::null(),
         }
@@ -49670,20 +49672,14 @@ impl<'a> CuLaunchInfoNVXBuilder<'a> {
         self.inner.shared_mem_bytes = shared_mem_bytes;
         self
     }
-    pub fn param_count(mut self, param_count: usize) -> Self {
-        self.inner.param_count = param_count;
+    pub fn params(mut self, params: &'a [*const c_void]) -> Self {
+        self.inner.param_count = params.len() as _;
+        self.inner.p_params = params.as_ptr();
         self
     }
-    pub fn params(mut self, params: *const *const c_void) -> Self {
-        self.inner.p_params = params;
-        self
-    }
-    pub fn extra_count(mut self, extra_count: usize) -> Self {
-        self.inner.extra_count = extra_count;
-        self
-    }
-    pub fn extras(mut self, extras: *const *const c_void) -> Self {
-        self.inner.p_extras = extras;
+    pub fn extras(mut self, extras: &'a [*const c_void]) -> Self {
+        self.inner.extra_count = extras.len() as _;
+        self.inner.p_extras = extras.as_ptr();
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -49783,7 +49779,7 @@ impl<'a> PhysicalDeviceDrmPropertiesEXTBuilder<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDeviceRayTracingMotionBlurFeaturesNV.html>"]
 pub struct PhysicalDeviceRayTracingMotionBlurFeaturesNV {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub ray_tracing_motion_blur: Bool32,
     pub ray_tracing_motion_blur_pipeline_trace_rays_indirect: Bool32,
 }
@@ -49791,7 +49787,7 @@ impl ::std::default::Default for PhysicalDeviceRayTracingMotionBlurFeaturesNV {
     fn default() -> PhysicalDeviceRayTracingMotionBlurFeaturesNV {
         PhysicalDeviceRayTracingMotionBlurFeaturesNV {
             s_type: StructureType::PHYSICAL_DEVICE_RAY_TRACING_MOTION_BLUR_FEATURES_NV,
-            p_next: ::std::ptr::null(),
+            p_next: ::std::ptr::null_mut(),
             ray_tracing_motion_blur: Bool32::default(),
             ray_tracing_motion_blur_pipeline_trace_rays_indirect: Bool32::default(),
         }
@@ -49810,11 +49806,11 @@ pub struct PhysicalDeviceRayTracingMotionBlurFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceRayTracingMotionBlurFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-unsafe impl ExtendsPhysicalDeviceProperties2
+unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceRayTracingMotionBlurFeaturesNVBuilder<'_>
 {
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceRayTracingMotionBlurFeaturesNV {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRayTracingMotionBlurFeaturesNV {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRayTracingMotionBlurFeaturesNVBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRayTracingMotionBlurFeaturesNV {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceRayTracingMotionBlurFeaturesNVBuilder<'a> {

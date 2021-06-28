@@ -23988,7 +23988,7 @@ impl HuaweiSubpassShadingFn {
 }
 #[doc = "Generated from 'VK_HUAWEI_subpass_shading'"]
 impl StructureType {
-    pub const SUBPASSS_SHADING_PIPELINE_CREATE_INFO_HUAWEI: Self = Self(1_000_369_000);
+    pub const SUBPASS_SHADING_PIPELINE_CREATE_INFO_HUAWEI: Self = Self(1_000_369_000);
 }
 #[doc = "Generated from 'VK_HUAWEI_subpass_shading'"]
 impl StructureType {
@@ -25366,5 +25366,43 @@ impl ArmExtension416Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         ArmExtension416Fn {}
+    }
+}
+impl KhrExtension417Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_417\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct KhrExtension417Fn {}
+unsafe impl Send for KhrExtension417Fn {}
+unsafe impl Sync for KhrExtension417Fn {}
+impl KhrExtension417Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        KhrExtension417Fn {}
+    }
+}
+impl ArmExtension418Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_ARM_extension_418\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct ArmExtension418Fn {}
+unsafe impl Send for ArmExtension418Fn {}
+unsafe impl Sync for ArmExtension418Fn {}
+impl ArmExtension418Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ArmExtension418Fn {}
     }
 }
