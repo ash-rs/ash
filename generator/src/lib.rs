@@ -2121,8 +2121,39 @@ pub fn generate_struct(
             }
             #[repr(C)]
             #[derive(Copy, Clone)]
+            #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAccelerationStructureInstanceKHR.html>"]
             pub struct AccelerationStructureInstanceKHR {
                 pub transform: TransformMatrixKHR,
+                pub instance_custom_index_and_mask: u32,
+                pub instance_shader_binding_table_record_offset_and_flags: u32,
+                pub acceleration_structure_reference: AccelerationStructureReferenceKHR,
+            }
+        };
+    }
+
+    if &_struct.name == "VkAccelerationStructureSRTMotionInstanceNV" {
+        return quote! {
+            #[repr(C)]
+            #[derive(Copy, Clone)]
+            #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAccelerationStructureSRTMotionInstanceNV.html>"]
+            pub struct AccelerationStructureSRTMotionInstanceNV {
+                pub transform_t0: SRTDataNV,
+                pub transform_t1: SRTDataNV,
+                pub instance_custom_index_and_mask: u32,
+                pub instance_shader_binding_table_record_offset_and_flags: u32,
+                pub acceleration_structure_reference: AccelerationStructureReferenceKHR,
+            }
+        };
+    }
+
+    if &_struct.name == "VkAccelerationStructureMatrixMotionInstanceNV" {
+        return quote! {
+            #[repr(C)]
+            #[derive(Copy, Clone)]
+            #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/AccelerationStructureMatrixMotionInstanceNV.html>"]
+            pub struct AccelerationStructureMatrixMotionInstanceNV {
+                pub transform_t0: TransformMatrixKHR,
+                pub transform_t1: TransformMatrixKHR,
                 pub instance_custom_index_and_mask: u32,
                 pub instance_shader_binding_table_record_offset_and_flags: u32,
                 pub acceleration_structure_reference: AccelerationStructureReferenceKHR,

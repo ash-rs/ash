@@ -53,7 +53,7 @@ pub const API_VERSION_1_0: u32 = make_api_version(0, 1, 0, 0);
 pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_API_VERSION_1_2.html>"]
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
-pub const HEADER_VERSION: u32 = 181u32;
+pub const HEADER_VERSION: u32 = 182u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 2, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSampleMask.html>"]
@@ -153,6 +153,16 @@ vk_bitflags_wrapped!(DescriptorPoolResetFlags, 0b0, Flags);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDescriptorUpdateTemplateCreateFlags.html>"]
 pub struct DescriptorUpdateTemplateCreateFlags(pub(crate) Flags);
 vk_bitflags_wrapped!(DescriptorUpdateTemplateCreateFlags, 0b0, Flags);
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAccelerationStructureMotionInfoFlagsNV.html>"]
+pub struct AccelerationStructureMotionInfoFlagsNV(pub(crate) Flags);
+vk_bitflags_wrapped!(AccelerationStructureMotionInfoFlagsNV, 0b0, Flags);
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAccelerationStructureMotionInstanceFlagsNV.html>"]
+pub struct AccelerationStructureMotionInstanceFlagsNV(pub(crate) Flags);
+vk_bitflags_wrapped!(AccelerationStructureMotionInstanceFlagsNV, 0b0, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDisplayModeCreateFlagsKHR.html>"]
@@ -9329,6 +9339,105 @@ impl<'a> DispatchIndirectCommandBuilder<'a> {
     }
 }
 #[repr(C)]
+#[derive(Copy, Clone, Default, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkMultiDrawInfoEXT.html>"]
+pub struct MultiDrawInfoEXT {
+    pub first_vertex: u32,
+    pub vertex_count: u32,
+}
+impl MultiDrawInfoEXT {
+    pub fn builder<'a>() -> MultiDrawInfoEXTBuilder<'a> {
+        MultiDrawInfoEXTBuilder {
+            inner: MultiDrawInfoEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct MultiDrawInfoEXTBuilder<'a> {
+    inner: MultiDrawInfoEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+impl<'a> ::std::ops::Deref for MultiDrawInfoEXTBuilder<'a> {
+    type Target = MultiDrawInfoEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for MultiDrawInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> MultiDrawInfoEXTBuilder<'a> {
+    pub fn first_vertex(mut self, first_vertex: u32) -> Self {
+        self.inner.first_vertex = first_vertex;
+        self
+    }
+    pub fn vertex_count(mut self, vertex_count: u32) -> Self {
+        self.inner.vertex_count = vertex_count;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> MultiDrawInfoEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Default, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkMultiDrawIndexedInfoEXT.html>"]
+pub struct MultiDrawIndexedInfoEXT {
+    pub first_index: u32,
+    pub index_count: u32,
+    pub vertex_offset: i32,
+}
+impl MultiDrawIndexedInfoEXT {
+    pub fn builder<'a>() -> MultiDrawIndexedInfoEXTBuilder<'a> {
+        MultiDrawIndexedInfoEXTBuilder {
+            inner: MultiDrawIndexedInfoEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct MultiDrawIndexedInfoEXTBuilder<'a> {
+    inner: MultiDrawIndexedInfoEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+impl<'a> ::std::ops::Deref for MultiDrawIndexedInfoEXTBuilder<'a> {
+    type Target = MultiDrawIndexedInfoEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for MultiDrawIndexedInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> MultiDrawIndexedInfoEXTBuilder<'a> {
+    pub fn first_index(mut self, first_index: u32) -> Self {
+        self.inner.first_index = first_index;
+        self
+    }
+    pub fn index_count(mut self, index_count: u32) -> Self {
+        self.inner.index_count = index_count;
+        self
+    }
+    pub fn vertex_offset(mut self, vertex_offset: i32) -> Self {
+        self.inner.vertex_offset = vertex_offset;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> MultiDrawIndexedInfoEXT {
+        self.inner
+    }
+}
+#[repr(C)]
 #[derive(Copy, Clone, Debug)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSubmitInfo.html>"]
 pub struct SubmitInfo {
@@ -12350,6 +12459,61 @@ impl<'a> PhysicalDeviceDeviceGeneratedCommandsPropertiesNVBuilder<'a> {
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceDeviceGeneratedCommandsPropertiesNV {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDeviceMultiDrawPropertiesEXT.html>"]
+pub struct PhysicalDeviceMultiDrawPropertiesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub max_multi_draw_count: u32,
+}
+impl ::std::default::Default for PhysicalDeviceMultiDrawPropertiesEXT {
+    fn default() -> PhysicalDeviceMultiDrawPropertiesEXT {
+        PhysicalDeviceMultiDrawPropertiesEXT {
+            s_type: StructureType::PHYSICAL_DEVICE_MULTI_DRAW_PROPERTIES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            max_multi_draw_count: u32::default(),
+        }
+    }
+}
+impl PhysicalDeviceMultiDrawPropertiesEXT {
+    pub fn builder<'a>() -> PhysicalDeviceMultiDrawPropertiesEXTBuilder<'a> {
+        PhysicalDeviceMultiDrawPropertiesEXTBuilder {
+            inner: PhysicalDeviceMultiDrawPropertiesEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceMultiDrawPropertiesEXTBuilder<'a> {
+    inner: PhysicalDeviceMultiDrawPropertiesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMultiDrawPropertiesEXTBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMultiDrawPropertiesEXT {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceMultiDrawPropertiesEXTBuilder<'a> {
+    type Target = PhysicalDeviceMultiDrawPropertiesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceMultiDrawPropertiesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceMultiDrawPropertiesEXTBuilder<'a> {
+    pub fn max_multi_draw_count(mut self, max_multi_draw_count: u32) -> Self {
+        self.inner.max_multi_draw_count = max_multi_draw_count;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceMultiDrawPropertiesEXT {
         self.inner
     }
 }
@@ -22528,6 +22692,63 @@ impl<'a> PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilder<'a> {
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceBlendOperationAdvancedFeaturesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDeviceMultiDrawFeaturesEXT.html>"]
+pub struct PhysicalDeviceMultiDrawFeaturesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub multi_draw: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceMultiDrawFeaturesEXT {
+    fn default() -> PhysicalDeviceMultiDrawFeaturesEXT {
+        PhysicalDeviceMultiDrawFeaturesEXT {
+            s_type: StructureType::PHYSICAL_DEVICE_MULTI_DRAW_FEATURES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            multi_draw: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceMultiDrawFeaturesEXT {
+    pub fn builder<'a>() -> PhysicalDeviceMultiDrawFeaturesEXTBuilder<'a> {
+        PhysicalDeviceMultiDrawFeaturesEXTBuilder {
+            inner: PhysicalDeviceMultiDrawFeaturesEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceMultiDrawFeaturesEXTBuilder<'a> {
+    inner: PhysicalDeviceMultiDrawFeaturesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMultiDrawFeaturesEXTBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMultiDrawFeaturesEXT {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMultiDrawFeaturesEXTBuilder<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMultiDrawFeaturesEXT {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceMultiDrawFeaturesEXTBuilder<'a> {
+    type Target = PhysicalDeviceMultiDrawFeaturesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceMultiDrawFeaturesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceMultiDrawFeaturesEXTBuilder<'a> {
+    pub fn multi_draw(mut self, multi_draw: bool) -> Self {
+        self.inner.multi_draw = multi_draw.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceMultiDrawFeaturesEXT {
         self.inner
     }
 }
@@ -37722,6 +37943,129 @@ impl<'a> PipelineShaderStageRequiredSubgroupSizeCreateInfoEXTBuilder<'a> {
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSubpassShadingPipelineCreateInfoHUAWEI.html>"]
+pub struct SubpassShadingPipelineCreateInfoHUAWEI {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub render_pass: RenderPass,
+    pub subpass: u32,
+}
+impl ::std::default::Default for SubpassShadingPipelineCreateInfoHUAWEI {
+    fn default() -> SubpassShadingPipelineCreateInfoHUAWEI {
+        SubpassShadingPipelineCreateInfoHUAWEI {
+            s_type: StructureType::SUBPASSS_SHADING_PIPELINE_CREATE_INFO_HUAWEI,
+            p_next: ::std::ptr::null_mut(),
+            render_pass: RenderPass::default(),
+            subpass: u32::default(),
+        }
+    }
+}
+impl SubpassShadingPipelineCreateInfoHUAWEI {
+    pub fn builder<'a>() -> SubpassShadingPipelineCreateInfoHUAWEIBuilder<'a> {
+        SubpassShadingPipelineCreateInfoHUAWEIBuilder {
+            inner: SubpassShadingPipelineCreateInfoHUAWEI::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct SubpassShadingPipelineCreateInfoHUAWEIBuilder<'a> {
+    inner: SubpassShadingPipelineCreateInfoHUAWEI,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsComputePipelineCreateInfo for SubpassShadingPipelineCreateInfoHUAWEIBuilder<'_> {}
+unsafe impl ExtendsComputePipelineCreateInfo for SubpassShadingPipelineCreateInfoHUAWEI {}
+impl<'a> ::std::ops::Deref for SubpassShadingPipelineCreateInfoHUAWEIBuilder<'a> {
+    type Target = SubpassShadingPipelineCreateInfoHUAWEI;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SubpassShadingPipelineCreateInfoHUAWEIBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> SubpassShadingPipelineCreateInfoHUAWEIBuilder<'a> {
+    pub fn render_pass(mut self, render_pass: RenderPass) -> Self {
+        self.inner.render_pass = render_pass;
+        self
+    }
+    pub fn subpass(mut self, subpass: u32) -> Self {
+        self.inner.subpass = subpass;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> SubpassShadingPipelineCreateInfoHUAWEI {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDeviceSubpassShadingPropertiesHUAWEI.html>"]
+pub struct PhysicalDeviceSubpassShadingPropertiesHUAWEI {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub max_subpass_shading_workgroup_size_aspect_ratio: u32,
+}
+impl ::std::default::Default for PhysicalDeviceSubpassShadingPropertiesHUAWEI {
+    fn default() -> PhysicalDeviceSubpassShadingPropertiesHUAWEI {
+        PhysicalDeviceSubpassShadingPropertiesHUAWEI {
+            s_type: StructureType::PHYSICAL_DEVICE_SUBPASS_SHADING_PROPERTIES_HUAWEI,
+            p_next: ::std::ptr::null_mut(),
+            max_subpass_shading_workgroup_size_aspect_ratio: u32::default(),
+        }
+    }
+}
+impl PhysicalDeviceSubpassShadingPropertiesHUAWEI {
+    pub fn builder<'a>() -> PhysicalDeviceSubpassShadingPropertiesHUAWEIBuilder<'a> {
+        PhysicalDeviceSubpassShadingPropertiesHUAWEIBuilder {
+            inner: PhysicalDeviceSubpassShadingPropertiesHUAWEI::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceSubpassShadingPropertiesHUAWEIBuilder<'a> {
+    inner: PhysicalDeviceSubpassShadingPropertiesHUAWEI,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceSubpassShadingPropertiesHUAWEIBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSubpassShadingPropertiesHUAWEI {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceSubpassShadingPropertiesHUAWEIBuilder<'a> {
+    type Target = PhysicalDeviceSubpassShadingPropertiesHUAWEI;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceSubpassShadingPropertiesHUAWEIBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceSubpassShadingPropertiesHUAWEIBuilder<'a> {
+    pub fn max_subpass_shading_workgroup_size_aspect_ratio(
+        mut self,
+        max_subpass_shading_workgroup_size_aspect_ratio: u32,
+    ) -> Self {
+        self.inner.max_subpass_shading_workgroup_size_aspect_ratio =
+            max_subpass_shading_workgroup_size_aspect_ratio;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceSubpassShadingPropertiesHUAWEI {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkMemoryOpaqueCaptureAddressAllocateInfo.html>"]
 pub struct MemoryOpaqueCaptureAddressAllocateInfo {
     pub s_type: StructureType,
@@ -40080,6 +40424,7 @@ pub struct AccelerationStructureGeometryTrianglesDataKHRBuilder<'a> {
     inner: AccelerationStructureGeometryTrianglesDataKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ExtendsAccelerationStructureGeometryTrianglesDataKHR {}
 impl<'a> ::std::ops::Deref for AccelerationStructureGeometryTrianglesDataKHRBuilder<'a> {
     type Target = AccelerationStructureGeometryTrianglesDataKHR;
     fn deref(&self) -> &Self::Target {
@@ -40118,6 +40463,23 @@ impl<'a> AccelerationStructureGeometryTrianglesDataKHRBuilder<'a> {
     }
     pub fn transform_data(mut self, transform_data: DeviceOrHostAddressConstKHR) -> Self {
         self.inner.transform_data = transform_data;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsAccelerationStructureGeometryTrianglesDataKHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        unsafe {
+            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -40582,6 +40944,7 @@ pub struct AccelerationStructureCreateInfoKHRBuilder<'a> {
     inner: AccelerationStructureCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ExtendsAccelerationStructureCreateInfoKHR {}
 impl<'a> ::std::ops::Deref for AccelerationStructureCreateInfoKHRBuilder<'a> {
     type Target = AccelerationStructureCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -40616,6 +40979,23 @@ impl<'a> AccelerationStructureCreateInfoKHRBuilder<'a> {
     }
     pub fn device_address(mut self, device_address: DeviceAddress) -> Self {
         self.inner.device_address = device_address;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsAccelerationStructureCreateInfoKHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        unsafe {
+            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -40705,6 +41085,7 @@ pub union AccelerationStructureReferenceKHR {
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAccelerationStructureInstanceKHR.html>"]
 pub struct AccelerationStructureInstanceKHR {
     pub transform: TransformMatrixKHR,
     pub instance_custom_index_and_mask: u32,
@@ -42312,6 +42693,66 @@ impl<'a> PhysicalDevice4444FormatsFeaturesEXTBuilder<'a> {
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDevice4444FormatsFeaturesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDeviceSubpassShadingFeaturesHUAWEI.html>"]
+pub struct PhysicalDeviceSubpassShadingFeaturesHUAWEI {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub subpass_shading: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceSubpassShadingFeaturesHUAWEI {
+    fn default() -> PhysicalDeviceSubpassShadingFeaturesHUAWEI {
+        PhysicalDeviceSubpassShadingFeaturesHUAWEI {
+            s_type: StructureType::PHYSICAL_DEVICE_SUBPASS_SHADING_FEATURES_HUAWEI,
+            p_next: ::std::ptr::null_mut(),
+            subpass_shading: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceSubpassShadingFeaturesHUAWEI {
+    pub fn builder<'a>() -> PhysicalDeviceSubpassShadingFeaturesHUAWEIBuilder<'a> {
+        PhysicalDeviceSubpassShadingFeaturesHUAWEIBuilder {
+            inner: PhysicalDeviceSubpassShadingFeaturesHUAWEI::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceSubpassShadingFeaturesHUAWEIBuilder<'a> {
+    inner: PhysicalDeviceSubpassShadingFeaturesHUAWEI,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceSubpassShadingFeaturesHUAWEIBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSubpassShadingFeaturesHUAWEI {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSubpassShadingFeaturesHUAWEIBuilder<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSubpassShadingFeaturesHUAWEI {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceSubpassShadingFeaturesHUAWEIBuilder<'a> {
+    type Target = PhysicalDeviceSubpassShadingFeaturesHUAWEI;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceSubpassShadingFeaturesHUAWEIBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceSubpassShadingFeaturesHUAWEIBuilder<'a> {
+    pub fn subpass_shading(mut self, subpass_shading: bool) -> Self {
+        self.inner.subpass_shading = subpass_shading.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceSubpassShadingFeaturesHUAWEI {
         self.inner
     }
 }
@@ -49249,6 +49690,507 @@ impl<'a> CuLaunchInfoNVXBuilder<'a> {
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> CuLaunchInfoNVX {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDeviceDrmPropertiesEXT.html>"]
+pub struct PhysicalDeviceDrmPropertiesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub has_primary: Bool32,
+    pub has_render: Bool32,
+    pub primary_major: i64,
+    pub primary_minor: i64,
+    pub render_major: i64,
+    pub render_minor: i64,
+}
+impl ::std::default::Default for PhysicalDeviceDrmPropertiesEXT {
+    fn default() -> PhysicalDeviceDrmPropertiesEXT {
+        PhysicalDeviceDrmPropertiesEXT {
+            s_type: StructureType::PHYSICAL_DEVICE_DRM_PROPERTIES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            has_primary: Bool32::default(),
+            has_render: Bool32::default(),
+            primary_major: i64::default(),
+            primary_minor: i64::default(),
+            render_major: i64::default(),
+            render_minor: i64::default(),
+        }
+    }
+}
+impl PhysicalDeviceDrmPropertiesEXT {
+    pub fn builder<'a>() -> PhysicalDeviceDrmPropertiesEXTBuilder<'a> {
+        PhysicalDeviceDrmPropertiesEXTBuilder {
+            inner: PhysicalDeviceDrmPropertiesEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceDrmPropertiesEXTBuilder<'a> {
+    inner: PhysicalDeviceDrmPropertiesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDrmPropertiesEXTBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDrmPropertiesEXT {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceDrmPropertiesEXTBuilder<'a> {
+    type Target = PhysicalDeviceDrmPropertiesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceDrmPropertiesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceDrmPropertiesEXTBuilder<'a> {
+    pub fn has_primary(mut self, has_primary: bool) -> Self {
+        self.inner.has_primary = has_primary.into();
+        self
+    }
+    pub fn has_render(mut self, has_render: bool) -> Self {
+        self.inner.has_render = has_render.into();
+        self
+    }
+    pub fn primary_major(mut self, primary_major: i64) -> Self {
+        self.inner.primary_major = primary_major;
+        self
+    }
+    pub fn primary_minor(mut self, primary_minor: i64) -> Self {
+        self.inner.primary_minor = primary_minor;
+        self
+    }
+    pub fn render_major(mut self, render_major: i64) -> Self {
+        self.inner.render_major = render_major;
+        self
+    }
+    pub fn render_minor(mut self, render_minor: i64) -> Self {
+        self.inner.render_minor = render_minor;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceDrmPropertiesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDeviceRayTracingMotionBlurFeaturesNV.html>"]
+pub struct PhysicalDeviceRayTracingMotionBlurFeaturesNV {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub ray_tracing_motion_blur: Bool32,
+    pub ray_tracing_motion_blur_pipeline_trace_rays_indirect: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceRayTracingMotionBlurFeaturesNV {
+    fn default() -> PhysicalDeviceRayTracingMotionBlurFeaturesNV {
+        PhysicalDeviceRayTracingMotionBlurFeaturesNV {
+            s_type: StructureType::PHYSICAL_DEVICE_RAY_TRACING_MOTION_BLUR_FEATURES_NV,
+            p_next: ::std::ptr::null(),
+            ray_tracing_motion_blur: Bool32::default(),
+            ray_tracing_motion_blur_pipeline_trace_rays_indirect: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceRayTracingMotionBlurFeaturesNV {
+    pub fn builder<'a>() -> PhysicalDeviceRayTracingMotionBlurFeaturesNVBuilder<'a> {
+        PhysicalDeviceRayTracingMotionBlurFeaturesNVBuilder {
+            inner: PhysicalDeviceRayTracingMotionBlurFeaturesNV::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceRayTracingMotionBlurFeaturesNVBuilder<'a> {
+    inner: PhysicalDeviceRayTracingMotionBlurFeaturesNV,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceRayTracingMotionBlurFeaturesNVBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceRayTracingMotionBlurFeaturesNV {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRayTracingMotionBlurFeaturesNVBuilder<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRayTracingMotionBlurFeaturesNV {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceRayTracingMotionBlurFeaturesNVBuilder<'a> {
+    type Target = PhysicalDeviceRayTracingMotionBlurFeaturesNV;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceRayTracingMotionBlurFeaturesNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceRayTracingMotionBlurFeaturesNVBuilder<'a> {
+    pub fn ray_tracing_motion_blur(mut self, ray_tracing_motion_blur: bool) -> Self {
+        self.inner.ray_tracing_motion_blur = ray_tracing_motion_blur.into();
+        self
+    }
+    pub fn ray_tracing_motion_blur_pipeline_trace_rays_indirect(
+        mut self,
+        ray_tracing_motion_blur_pipeline_trace_rays_indirect: bool,
+    ) -> Self {
+        self.inner
+            .ray_tracing_motion_blur_pipeline_trace_rays_indirect =
+            ray_tracing_motion_blur_pipeline_trace_rays_indirect.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceRayTracingMotionBlurFeaturesNV {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAccelerationStructureGeometryMotionTrianglesDataNV.html>"]
+pub struct AccelerationStructureGeometryMotionTrianglesDataNV {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub vertex_data: DeviceOrHostAddressConstKHR,
+}
+impl fmt::Debug for AccelerationStructureGeometryMotionTrianglesDataNV {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+        fmt.debug_struct("AccelerationStructureGeometryMotionTrianglesDataNV")
+            .field("s_type", &self.s_type)
+            .field("p_next", &self.p_next)
+            .field("vertex_data", &"union")
+            .finish()
+    }
+}
+impl ::std::default::Default for AccelerationStructureGeometryMotionTrianglesDataNV {
+    fn default() -> AccelerationStructureGeometryMotionTrianglesDataNV {
+        AccelerationStructureGeometryMotionTrianglesDataNV {
+            s_type: StructureType::ACCELERATION_STRUCTURE_GEOMETRY_MOTION_TRIANGLES_DATA_NV,
+            p_next: ::std::ptr::null(),
+            vertex_data: DeviceOrHostAddressConstKHR::default(),
+        }
+    }
+}
+impl AccelerationStructureGeometryMotionTrianglesDataNV {
+    pub fn builder<'a>() -> AccelerationStructureGeometryMotionTrianglesDataNVBuilder<'a> {
+        AccelerationStructureGeometryMotionTrianglesDataNVBuilder {
+            inner: AccelerationStructureGeometryMotionTrianglesDataNV::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct AccelerationStructureGeometryMotionTrianglesDataNVBuilder<'a> {
+    inner: AccelerationStructureGeometryMotionTrianglesDataNV,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsAccelerationStructureGeometryTrianglesDataKHR
+    for AccelerationStructureGeometryMotionTrianglesDataNVBuilder<'_>
+{
+}
+unsafe impl ExtendsAccelerationStructureGeometryTrianglesDataKHR
+    for AccelerationStructureGeometryMotionTrianglesDataNV
+{
+}
+impl<'a> ::std::ops::Deref for AccelerationStructureGeometryMotionTrianglesDataNVBuilder<'a> {
+    type Target = AccelerationStructureGeometryMotionTrianglesDataNV;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for AccelerationStructureGeometryMotionTrianglesDataNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> AccelerationStructureGeometryMotionTrianglesDataNVBuilder<'a> {
+    pub fn vertex_data(mut self, vertex_data: DeviceOrHostAddressConstKHR) -> Self {
+        self.inner.vertex_data = vertex_data;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> AccelerationStructureGeometryMotionTrianglesDataNV {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAccelerationStructureMotionInfoNV.html>"]
+pub struct AccelerationStructureMotionInfoNV {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub max_instances: u32,
+    pub flags: AccelerationStructureMotionInfoFlagsNV,
+}
+impl ::std::default::Default for AccelerationStructureMotionInfoNV {
+    fn default() -> AccelerationStructureMotionInfoNV {
+        AccelerationStructureMotionInfoNV {
+            s_type: StructureType::ACCELERATION_STRUCTURE_MOTION_INFO_NV,
+            p_next: ::std::ptr::null(),
+            max_instances: u32::default(),
+            flags: AccelerationStructureMotionInfoFlagsNV::default(),
+        }
+    }
+}
+impl AccelerationStructureMotionInfoNV {
+    pub fn builder<'a>() -> AccelerationStructureMotionInfoNVBuilder<'a> {
+        AccelerationStructureMotionInfoNVBuilder {
+            inner: AccelerationStructureMotionInfoNV::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct AccelerationStructureMotionInfoNVBuilder<'a> {
+    inner: AccelerationStructureMotionInfoNV,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsAccelerationStructureCreateInfoKHR
+    for AccelerationStructureMotionInfoNVBuilder<'_>
+{
+}
+unsafe impl ExtendsAccelerationStructureCreateInfoKHR for AccelerationStructureMotionInfoNV {}
+impl<'a> ::std::ops::Deref for AccelerationStructureMotionInfoNVBuilder<'a> {
+    type Target = AccelerationStructureMotionInfoNV;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for AccelerationStructureMotionInfoNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> AccelerationStructureMotionInfoNVBuilder<'a> {
+    pub fn max_instances(mut self, max_instances: u32) -> Self {
+        self.inner.max_instances = max_instances;
+        self
+    }
+    pub fn flags(mut self, flags: AccelerationStructureMotionInfoFlagsNV) -> Self {
+        self.inner.flags = flags;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> AccelerationStructureMotionInfoNV {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Default, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSRTDataNV.html>"]
+pub struct SRTDataNV {
+    pub sx: f32,
+    pub a: f32,
+    pub b: f32,
+    pub pvx: f32,
+    pub sy: f32,
+    pub c: f32,
+    pub pvy: f32,
+    pub sz: f32,
+    pub pvz: f32,
+    pub qx: f32,
+    pub qy: f32,
+    pub qz: f32,
+    pub qw: f32,
+    pub tx: f32,
+    pub ty: f32,
+    pub tz: f32,
+}
+impl SRTDataNV {
+    pub fn builder<'a>() -> SRTDataNVBuilder<'a> {
+        SRTDataNVBuilder {
+            inner: SRTDataNV::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct SRTDataNVBuilder<'a> {
+    inner: SRTDataNV,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+impl<'a> ::std::ops::Deref for SRTDataNVBuilder<'a> {
+    type Target = SRTDataNV;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SRTDataNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> SRTDataNVBuilder<'a> {
+    pub fn sx(mut self, sx: f32) -> Self {
+        self.inner.sx = sx;
+        self
+    }
+    pub fn a(mut self, a: f32) -> Self {
+        self.inner.a = a;
+        self
+    }
+    pub fn b(mut self, b: f32) -> Self {
+        self.inner.b = b;
+        self
+    }
+    pub fn pvx(mut self, pvx: f32) -> Self {
+        self.inner.pvx = pvx;
+        self
+    }
+    pub fn sy(mut self, sy: f32) -> Self {
+        self.inner.sy = sy;
+        self
+    }
+    pub fn c(mut self, c: f32) -> Self {
+        self.inner.c = c;
+        self
+    }
+    pub fn pvy(mut self, pvy: f32) -> Self {
+        self.inner.pvy = pvy;
+        self
+    }
+    pub fn sz(mut self, sz: f32) -> Self {
+        self.inner.sz = sz;
+        self
+    }
+    pub fn pvz(mut self, pvz: f32) -> Self {
+        self.inner.pvz = pvz;
+        self
+    }
+    pub fn qx(mut self, qx: f32) -> Self {
+        self.inner.qx = qx;
+        self
+    }
+    pub fn qy(mut self, qy: f32) -> Self {
+        self.inner.qy = qy;
+        self
+    }
+    pub fn qz(mut self, qz: f32) -> Self {
+        self.inner.qz = qz;
+        self
+    }
+    pub fn qw(mut self, qw: f32) -> Self {
+        self.inner.qw = qw;
+        self
+    }
+    pub fn tx(mut self, tx: f32) -> Self {
+        self.inner.tx = tx;
+        self
+    }
+    pub fn ty(mut self, ty: f32) -> Self {
+        self.inner.ty = ty;
+        self
+    }
+    pub fn tz(mut self, tz: f32) -> Self {
+        self.inner.tz = tz;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> SRTDataNV {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAccelerationStructureSRTMotionInstanceNV.html>"]
+pub struct AccelerationStructureSRTMotionInstanceNV {
+    pub transform_t0: SRTDataNV,
+    pub transform_t1: SRTDataNV,
+    pub instance_custom_index_and_mask: u32,
+    pub instance_shader_binding_table_record_offset_and_flags: u32,
+    pub acceleration_structure_reference: AccelerationStructureReferenceKHR,
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/AccelerationStructureMatrixMotionInstanceNV.html>"]
+pub struct AccelerationStructureMatrixMotionInstanceNV {
+    pub transform_t0: TransformMatrixKHR,
+    pub transform_t1: TransformMatrixKHR,
+    pub instance_custom_index_and_mask: u32,
+    pub instance_shader_binding_table_record_offset_and_flags: u32,
+    pub acceleration_structure_reference: AccelerationStructureReferenceKHR,
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAccelerationStructureMotionInstanceDataNV.html>"]
+pub union AccelerationStructureMotionInstanceDataNV {
+    pub static_instance: AccelerationStructureInstanceKHR,
+    pub matrix_motion_instance: AccelerationStructureMatrixMotionInstanceNV,
+    pub srt_motion_instance: AccelerationStructureSRTMotionInstanceNV,
+}
+impl ::std::default::Default for AccelerationStructureMotionInstanceDataNV {
+    fn default() -> AccelerationStructureMotionInstanceDataNV {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Default)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAccelerationStructureMotionInstanceNV.html>"]
+pub struct AccelerationStructureMotionInstanceNV {
+    pub ty: AccelerationStructureMotionInstanceTypeNV,
+    pub flags: AccelerationStructureMotionInstanceFlagsNV,
+    pub data: AccelerationStructureMotionInstanceDataNV,
+}
+impl fmt::Debug for AccelerationStructureMotionInstanceNV {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+        fmt.debug_struct("AccelerationStructureMotionInstanceNV")
+            .field("ty", &self.ty)
+            .field("flags", &self.flags)
+            .field("data", &"union")
+            .finish()
+    }
+}
+impl AccelerationStructureMotionInstanceNV {
+    pub fn builder<'a>() -> AccelerationStructureMotionInstanceNVBuilder<'a> {
+        AccelerationStructureMotionInstanceNVBuilder {
+            inner: AccelerationStructureMotionInstanceNV::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct AccelerationStructureMotionInstanceNVBuilder<'a> {
+    inner: AccelerationStructureMotionInstanceNV,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+impl<'a> ::std::ops::Deref for AccelerationStructureMotionInstanceNVBuilder<'a> {
+    type Target = AccelerationStructureMotionInstanceNV;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for AccelerationStructureMotionInstanceNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> AccelerationStructureMotionInstanceNVBuilder<'a> {
+    pub fn ty(mut self, ty: AccelerationStructureMotionInstanceTypeNV) -> Self {
+        self.inner.ty = ty;
+        self
+    }
+    pub fn flags(mut self, flags: AccelerationStructureMotionInstanceFlagsNV) -> Self {
+        self.inner.flags = flags;
+        self
+    }
+    pub fn data(mut self, data: AccelerationStructureMotionInstanceDataNV) -> Self {
+        self.inner.data = data;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> AccelerationStructureMotionInstanceNV {
         self.inner
     }
 }

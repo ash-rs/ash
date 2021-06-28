@@ -20497,23 +20497,97 @@ impl StructureType {
 impl StructureType {
     pub const DEVICE_MEMORY_REPORT_CALLBACK_DATA_EXT: Self = Self(1_000_284_002);
 }
-impl ExtExtension286Fn {
+impl ExtAcquireDrmDisplayFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_286\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_acquire_drm_display\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
+#[allow(non_camel_case_types)]
+pub type PFN_vkAcquireDrmDisplayEXT = unsafe extern "system" fn(
+    physical_device: PhysicalDevice,
+    drm_fd: i32,
+    display: DisplayKHR,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetDrmDisplayEXT = unsafe extern "system" fn(
+    physical_device: PhysicalDevice,
+    drm_fd: i32,
+    connector_id: u32,
+    display: *mut DisplayKHR,
+) -> Result;
 #[derive(Clone)]
-pub struct ExtExtension286Fn {}
-unsafe impl Send for ExtExtension286Fn {}
-unsafe impl Sync for ExtExtension286Fn {}
-impl ExtExtension286Fn {
+pub struct ExtAcquireDrmDisplayFn {
+    pub acquire_drm_display_ext: PFN_vkAcquireDrmDisplayEXT,
+    pub get_drm_display_ext: PFN_vkGetDrmDisplayEXT,
+}
+unsafe impl Send for ExtAcquireDrmDisplayFn {}
+unsafe impl Sync for ExtAcquireDrmDisplayFn {}
+impl ExtAcquireDrmDisplayFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension286Fn {}
+        ExtAcquireDrmDisplayFn {
+            acquire_drm_display_ext: unsafe {
+                unsafe extern "system" fn acquire_drm_display_ext(
+                    _physical_device: PhysicalDevice,
+                    _drm_fd: i32,
+                    _display: DisplayKHR,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(acquire_drm_display_ext)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkAcquireDrmDisplayEXT\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    acquire_drm_display_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_drm_display_ext: unsafe {
+                unsafe extern "system" fn get_drm_display_ext(
+                    _physical_device: PhysicalDevice,
+                    _drm_fd: i32,
+                    _connector_id: u32,
+                    _display: *mut DisplayKHR,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(get_drm_display_ext)))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkGetDrmDisplayEXT\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    get_drm_display_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkAcquireDrmDisplayEXT.html>"]
+    pub unsafe fn acquire_drm_display_ext(
+        &self,
+        physical_device: PhysicalDevice,
+        drm_fd: i32,
+        display: DisplayKHR,
+    ) -> Result {
+        (self.acquire_drm_display_ext)(physical_device, drm_fd, display)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDrmDisplayEXT.html>"]
+    pub unsafe fn get_drm_display_ext(
+        &self,
+        physical_device: PhysicalDevice,
+        drm_fd: i32,
+        connector_id: u32,
+        display: *mut DisplayKHR,
+    ) -> Result {
+        (self.get_drm_display_ext)(physical_device, drm_fd, connector_id, display)
     }
 }
 impl ExtRobustness2Fn {
@@ -22319,36 +22393,48 @@ impl StructureType {
 impl StructureType {
     pub const PIPELINE_FRAGMENT_SHADING_RATE_ENUM_STATE_CREATE_INFO_NV: Self = Self(1_000_326_002);
 }
-impl NvExtension328Fn {
+impl NvRayTracingMotionBlurFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_328\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_ray_tracing_motion_blur\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct NvExtension328Fn {}
-unsafe impl Send for NvExtension328Fn {}
-unsafe impl Sync for NvExtension328Fn {}
-impl NvExtension328Fn {
+pub struct NvRayTracingMotionBlurFn {}
+unsafe impl Send for NvRayTracingMotionBlurFn {}
+unsafe impl Sync for NvRayTracingMotionBlurFn {}
+impl NvRayTracingMotionBlurFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExtension328Fn {}
+        NvRayTracingMotionBlurFn {}
     }
 }
-#[doc = "Generated from 'VK_NV_extension_328'"]
+#[doc = "Generated from 'VK_NV_ray_tracing_motion_blur'"]
+impl StructureType {
+    pub const ACCELERATION_STRUCTURE_GEOMETRY_MOTION_TRIANGLES_DATA_NV: Self = Self(1_000_327_000);
+}
+#[doc = "Generated from 'VK_NV_ray_tracing_motion_blur'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_RAY_TRACING_MOTION_BLUR_FEATURES_NV: Self = Self(1_000_327_001);
+}
+#[doc = "Generated from 'VK_NV_ray_tracing_motion_blur'"]
+impl StructureType {
+    pub const ACCELERATION_STRUCTURE_MOTION_INFO_NV: Self = Self(1_000_327_002);
+}
+#[doc = "Generated from 'VK_NV_ray_tracing_motion_blur'"]
 impl BuildAccelerationStructureFlagsKHR {
-    pub const RESERVED_5_NV: Self = Self(0b10_0000);
+    pub const MOTION_NV: Self = Self(0b10_0000);
 }
-#[doc = "Generated from 'VK_NV_extension_328'"]
+#[doc = "Generated from 'VK_NV_ray_tracing_motion_blur'"]
 impl AccelerationStructureCreateFlagsKHR {
-    pub const RESERVED_2_NV: Self = Self(0b100);
+    pub const MOTION_NV: Self = Self(0b100);
 }
-#[doc = "Generated from 'VK_NV_extension_328'"]
+#[doc = "Generated from 'VK_NV_ray_tracing_motion_blur'"]
 impl PipelineCreateFlags {
-    pub const RESERVED_20_NV: Self = Self(0b1_0000_0000_0000_0000_0000);
+    pub const RAY_TRACING_ALLOW_MOTION_NV: Self = Self(0b1_0000_0000_0000_0000_0000);
 }
 impl NvExtension329Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -23322,24 +23408,28 @@ impl StructureType {
 impl DynamicState {
     pub const VERTEX_INPUT_EXT: Self = Self(1_000_352_000);
 }
-impl ExtExtension354Fn {
+impl ExtPhysicalDeviceDrmFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_354\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_physical_device_drm\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct ExtExtension354Fn {}
-unsafe impl Send for ExtExtension354Fn {}
-unsafe impl Sync for ExtExtension354Fn {}
-impl ExtExtension354Fn {
+pub struct ExtPhysicalDeviceDrmFn {}
+unsafe impl Send for ExtPhysicalDeviceDrmFn {}
+unsafe impl Sync for ExtPhysicalDeviceDrmFn {}
+impl ExtPhysicalDeviceDrmFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension354Fn {}
+        ExtPhysicalDeviceDrmFn {}
     }
+}
+#[doc = "Generated from 'VK_EXT_physical_device_drm'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_DRM_PROPERTIES_EXT: Self = Self(1_000_353_000);
 }
 impl ExtExtension355Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -23815,24 +23905,111 @@ impl QcomExtension369Fn {
 impl DescriptorBindingFlags {
     pub const RESERVED_4_QCOM: Self = Self(0b1_0000);
 }
-impl HuaweiExtension370Fn {
+impl HuaweiSubpassShadingFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_HUAWEI_extension_370\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_HUAWEI_subpass_shading\0")
             .expect("Wrong extension string")
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetSubpassShadingMaxWorkgroupSizeHUAWEI = unsafe extern "system" fn(
+    renderpass: RenderPass,
+    p_max_workgroup_size: *mut Extent2D,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSubpassShadingHUAWEI = unsafe extern "system" fn(command_buffer: CommandBuffer);
 #[derive(Clone)]
-pub struct HuaweiExtension370Fn {}
-unsafe impl Send for HuaweiExtension370Fn {}
-unsafe impl Sync for HuaweiExtension370Fn {}
-impl HuaweiExtension370Fn {
+pub struct HuaweiSubpassShadingFn {
+    pub get_subpass_shading_max_workgroup_size_huawei:
+        PFN_vkGetSubpassShadingMaxWorkgroupSizeHUAWEI,
+    pub cmd_subpass_shading_huawei: PFN_vkCmdSubpassShadingHUAWEI,
+}
+unsafe impl Send for HuaweiSubpassShadingFn {}
+unsafe impl Sync for HuaweiSubpassShadingFn {}
+impl HuaweiSubpassShadingFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        HuaweiExtension370Fn {}
+        HuaweiSubpassShadingFn {
+            get_subpass_shading_max_workgroup_size_huawei: unsafe {
+                unsafe extern "system" fn get_subpass_shading_max_workgroup_size_huawei(
+                    _renderpass: RenderPass,
+                    _p_max_workgroup_size: *mut Extent2D,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_subpass_shading_max_workgroup_size_huawei)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetSubpassShadingMaxWorkgroupSizeHUAWEI\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_subpass_shading_max_workgroup_size_huawei
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_subpass_shading_huawei: unsafe {
+                unsafe extern "system" fn cmd_subpass_shading_huawei(
+                    _command_buffer: CommandBuffer,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_subpass_shading_huawei)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSubpassShadingHUAWEI\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_subpass_shading_huawei
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetSubpassShadingMaxWorkgroupSizeHUAWEI.html>"]
+    pub unsafe fn get_subpass_shading_max_workgroup_size_huawei(
+        &self,
+        renderpass: RenderPass,
+        p_max_workgroup_size: *mut Extent2D,
+    ) -> Result {
+        (self.get_subpass_shading_max_workgroup_size_huawei)(renderpass, p_max_workgroup_size)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSubpassShadingHUAWEI.html>"]
+    pub unsafe fn cmd_subpass_shading_huawei(&self, command_buffer: CommandBuffer) {
+        (self.cmd_subpass_shading_huawei)(command_buffer)
+    }
+}
+#[doc = "Generated from 'VK_HUAWEI_subpass_shading'"]
+impl StructureType {
+    pub const SUBPASSS_SHADING_PIPELINE_CREATE_INFO_HUAWEI: Self = Self(1_000_369_000);
+}
+#[doc = "Generated from 'VK_HUAWEI_subpass_shading'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SUBPASS_SHADING_FEATURES_HUAWEI: Self = Self(1_000_369_001);
+}
+#[doc = "Generated from 'VK_HUAWEI_subpass_shading'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SUBPASS_SHADING_PROPERTIES_HUAWEI: Self = Self(1_000_369_002);
+}
+#[doc = "Generated from 'VK_HUAWEI_subpass_shading'"]
+impl PipelineBindPoint {
+    pub const SUBPASS_SHADING_HUAWEI: Self = Self(1_000_369_003);
+}
+#[doc = "Generated from 'VK_HUAWEI_subpass_shading'"]
+impl PipelineStageFlags2KHR {
+    pub const SUBPASS_SHADING_HUAWEI: Self =
+        Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_HUAWEI_subpass_shading'"]
+impl ShaderStageFlags {
+    pub const SUBPASS_SHADING_HUAWEI: Self = Self(0b100_0000_0000_0000);
 }
 impl HuaweiExtension371Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -24621,24 +24798,138 @@ impl ExtExtension392Fn {
         ExtExtension392Fn {}
     }
 }
-impl MesaMultiDrawFn {
+impl ExtMultiDrawFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_MESA_multi_draw\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_multi_draw\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDrawMultiEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    draw_count: u32,
+    p_vertex_info: *const MultiDrawInfoEXT,
+    instance_count: u32,
+    first_instance: u32,
+    stride: u32,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDrawMultiIndexedEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    draw_count: u32,
+    p_index_info: *const MultiDrawIndexedInfoEXT,
+    instance_count: u32,
+    first_instance: u32,
+    stride: u32,
+    p_vertex_offset: *const i32,
+);
 #[derive(Clone)]
-pub struct MesaMultiDrawFn {}
-unsafe impl Send for MesaMultiDrawFn {}
-unsafe impl Sync for MesaMultiDrawFn {}
-impl MesaMultiDrawFn {
+pub struct ExtMultiDrawFn {
+    pub cmd_draw_multi_ext: PFN_vkCmdDrawMultiEXT,
+    pub cmd_draw_multi_indexed_ext: PFN_vkCmdDrawMultiIndexedEXT,
+}
+unsafe impl Send for ExtMultiDrawFn {}
+unsafe impl Sync for ExtMultiDrawFn {}
+impl ExtMultiDrawFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        MesaMultiDrawFn {}
+        ExtMultiDrawFn {
+            cmd_draw_multi_ext: unsafe {
+                unsafe extern "system" fn cmd_draw_multi_ext(
+                    _command_buffer: CommandBuffer,
+                    _draw_count: u32,
+                    _p_vertex_info: *const MultiDrawInfoEXT,
+                    _instance_count: u32,
+                    _first_instance: u32,
+                    _stride: u32,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_draw_multi_ext)))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawMultiEXT\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_draw_multi_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_draw_multi_indexed_ext: unsafe {
+                unsafe extern "system" fn cmd_draw_multi_indexed_ext(
+                    _command_buffer: CommandBuffer,
+                    _draw_count: u32,
+                    _p_index_info: *const MultiDrawIndexedInfoEXT,
+                    _instance_count: u32,
+                    _first_instance: u32,
+                    _stride: u32,
+                    _p_vertex_offset: *const i32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_draw_multi_indexed_ext)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawMultiIndexedEXT\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_draw_multi_indexed_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDrawMultiEXT.html>"]
+    pub unsafe fn cmd_draw_multi_ext(
+        &self,
+        command_buffer: CommandBuffer,
+        draw_count: u32,
+        p_vertex_info: *const MultiDrawInfoEXT,
+        instance_count: u32,
+        first_instance: u32,
+        stride: u32,
+    ) {
+        (self.cmd_draw_multi_ext)(
+            command_buffer,
+            draw_count,
+            p_vertex_info,
+            instance_count,
+            first_instance,
+            stride,
+        )
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDrawMultiIndexedEXT.html>"]
+    pub unsafe fn cmd_draw_multi_indexed_ext(
+        &self,
+        command_buffer: CommandBuffer,
+        draw_count: u32,
+        p_index_info: *const MultiDrawIndexedInfoEXT,
+        instance_count: u32,
+        first_instance: u32,
+        stride: u32,
+        p_vertex_offset: *const i32,
+    ) {
+        (self.cmd_draw_multi_indexed_ext)(
+            command_buffer,
+            draw_count,
+            p_index_info,
+            instance_count,
+            first_instance,
+            stride,
+            p_vertex_offset,
+        )
+    }
+}
+#[doc = "Generated from 'VK_EXT_multi_draw'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_MULTI_DRAW_FEATURES_EXT: Self = Self(1_000_392_000);
+}
+#[doc = "Generated from 'VK_EXT_multi_draw'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_MULTI_DRAW_PROPERTIES_EXT: Self = Self(1_000_392_001);
 }
 impl ExtExtension394Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
