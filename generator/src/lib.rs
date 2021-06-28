@@ -2980,13 +2980,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     let (header_includes, header_types) = extract_native_types(&spec2);
 
     for (_name, path) in header_includes {
-        let path = if path == "vk_platform.h" {
-            // Fix broken path, https://github.com/KhronosGroup/Vulkan-Docs/pull/1538
-            vk_include.join("vulkan").join(path)
-        } else {
-            vk_include.join(path)
-        };
-        bindings = bindings.header(path.to_str().expect("Valid UTF8 string"));
+        bindings = bindings.header(vk_include.join(path).to_str().expect("Valid UTF8 string"));
     }
 
     for typ in header_types {
