@@ -29,7 +29,7 @@ pub enum CType {
 }
 
 impl CType {
-    fn to_string(&self) -> &'static str {
+    fn to_string(self) -> &'static str {
         match self {
             Self::USize => "usize",
             Self::U32 => "u32",
@@ -1101,7 +1101,7 @@ pub fn generate_extension_constants<'a>(
             vk_parse::ExtensionChild::Require { items, .. } => Some(items.iter()),
             _ => None,
         })
-        .flat_map(|iter| iter);
+        .flatten();
     let enum_tokens = items.filter_map(|item| match item {
         vk_parse::InterfaceItem::Enum(enum_) => {
             if !const_cache.insert(enum_.name.as_str()) {
