@@ -53,7 +53,7 @@ pub const API_VERSION_1_0: u32 = make_api_version(0, 1, 0, 0);
 pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_API_VERSION_1_2.html>"]
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
-pub const HEADER_VERSION: u32 = 183u32;
+pub const HEADER_VERSION: u32 = 184u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 2, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSampleMask.html>"]
@@ -6340,6 +6340,79 @@ impl<'a> PipelineCacheCreateInfoBuilder<'a> {
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PipelineCacheCreateInfo {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineCacheHeaderVersionOne.html>"]
+pub struct PipelineCacheHeaderVersionOne {
+    pub header_size: u32,
+    pub header_version: PipelineCacheHeaderVersion,
+    pub vendor_id: u32,
+    pub device_id: u32,
+    pub pipeline_cache_uuid: [u8; UUID_SIZE],
+}
+impl ::std::default::Default for PipelineCacheHeaderVersionOne {
+    fn default() -> PipelineCacheHeaderVersionOne {
+        PipelineCacheHeaderVersionOne {
+            header_size: u32::default(),
+            header_version: PipelineCacheHeaderVersion::default(),
+            vendor_id: u32::default(),
+            device_id: u32::default(),
+            pipeline_cache_uuid: unsafe { ::std::mem::zeroed() },
+        }
+    }
+}
+impl PipelineCacheHeaderVersionOne {
+    pub fn builder<'a>() -> PipelineCacheHeaderVersionOneBuilder<'a> {
+        PipelineCacheHeaderVersionOneBuilder {
+            inner: PipelineCacheHeaderVersionOne::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PipelineCacheHeaderVersionOneBuilder<'a> {
+    inner: PipelineCacheHeaderVersionOne,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+impl<'a> ::std::ops::Deref for PipelineCacheHeaderVersionOneBuilder<'a> {
+    type Target = PipelineCacheHeaderVersionOne;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PipelineCacheHeaderVersionOneBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PipelineCacheHeaderVersionOneBuilder<'a> {
+    pub fn header_size(mut self, header_size: u32) -> Self {
+        self.inner.header_size = header_size;
+        self
+    }
+    pub fn header_version(mut self, header_version: PipelineCacheHeaderVersion) -> Self {
+        self.inner.header_version = header_version;
+        self
+    }
+    pub fn vendor_id(mut self, vendor_id: u32) -> Self {
+        self.inner.vendor_id = vendor_id;
+        self
+    }
+    pub fn device_id(mut self, device_id: u32) -> Self {
+        self.inner.device_id = device_id;
+        self
+    }
+    pub fn pipeline_cache_uuid(mut self, pipeline_cache_uuid: [u8; UUID_SIZE]) -> Self {
+        self.inner.pipeline_cache_uuid = pipeline_cache_uuid;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PipelineCacheHeaderVersionOne {
         self.inner
     }
 }
@@ -44767,6 +44840,66 @@ impl<'a> PhysicalDeviceVertexInputDynamicStateFeaturesEXTBuilder<'a> {
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDeviceExternalMemoryRDMAFeaturesNV.html>"]
+pub struct PhysicalDeviceExternalMemoryRDMAFeaturesNV {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub external_memory_rdma: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceExternalMemoryRDMAFeaturesNV {
+    fn default() -> PhysicalDeviceExternalMemoryRDMAFeaturesNV {
+        PhysicalDeviceExternalMemoryRDMAFeaturesNV {
+            s_type: StructureType::PHYSICAL_DEVICE_EXTERNAL_MEMORY_RDMA_FEATURES_NV,
+            p_next: ::std::ptr::null_mut(),
+            external_memory_rdma: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceExternalMemoryRDMAFeaturesNV {
+    pub fn builder<'a>() -> PhysicalDeviceExternalMemoryRDMAFeaturesNVBuilder<'a> {
+        PhysicalDeviceExternalMemoryRDMAFeaturesNVBuilder {
+            inner: PhysicalDeviceExternalMemoryRDMAFeaturesNV::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceExternalMemoryRDMAFeaturesNVBuilder<'a> {
+    inner: PhysicalDeviceExternalMemoryRDMAFeaturesNV,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceExternalMemoryRDMAFeaturesNVBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceExternalMemoryRDMAFeaturesNV {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExternalMemoryRDMAFeaturesNVBuilder<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExternalMemoryRDMAFeaturesNV {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceExternalMemoryRDMAFeaturesNVBuilder<'a> {
+    type Target = PhysicalDeviceExternalMemoryRDMAFeaturesNV;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceExternalMemoryRDMAFeaturesNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceExternalMemoryRDMAFeaturesNVBuilder<'a> {
+    pub fn external_memory_rdma(mut self, external_memory_rdma: bool) -> Self {
+        self.inner.external_memory_rdma = external_memory_rdma.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceExternalMemoryRDMAFeaturesNV {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkVertexInputBindingDescription2EXT.html>"]
 pub struct VertexInputBindingDescription2EXT {
     pub s_type: StructureType,
@@ -50187,6 +50320,67 @@ impl<'a> AccelerationStructureMotionInstanceNVBuilder<'a> {
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> AccelerationStructureMotionInstanceNV {
+        self.inner
+    }
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkRemoteAddressNV.html>"]
+pub type RemoteAddressNV = c_void;
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkMemoryGetRemoteAddressInfoNV.html>"]
+pub struct MemoryGetRemoteAddressInfoNV {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub memory: DeviceMemory,
+    pub handle_type: ExternalMemoryHandleTypeFlags,
+}
+impl ::std::default::Default for MemoryGetRemoteAddressInfoNV {
+    fn default() -> MemoryGetRemoteAddressInfoNV {
+        MemoryGetRemoteAddressInfoNV {
+            s_type: StructureType::MEMORY_GET_REMOTE_ADDRESS_INFO_NV,
+            p_next: ::std::ptr::null(),
+            memory: DeviceMemory::default(),
+            handle_type: ExternalMemoryHandleTypeFlags::default(),
+        }
+    }
+}
+impl MemoryGetRemoteAddressInfoNV {
+    pub fn builder<'a>() -> MemoryGetRemoteAddressInfoNVBuilder<'a> {
+        MemoryGetRemoteAddressInfoNVBuilder {
+            inner: MemoryGetRemoteAddressInfoNV::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct MemoryGetRemoteAddressInfoNVBuilder<'a> {
+    inner: MemoryGetRemoteAddressInfoNV,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+impl<'a> ::std::ops::Deref for MemoryGetRemoteAddressInfoNVBuilder<'a> {
+    type Target = MemoryGetRemoteAddressInfoNV;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for MemoryGetRemoteAddressInfoNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> MemoryGetRemoteAddressInfoNVBuilder<'a> {
+    pub fn memory(mut self, memory: DeviceMemory) -> Self {
+        self.inner.memory = memory;
+        self
+    }
+    pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
+        self.inner.handle_type = handle_type;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> MemoryGetRemoteAddressInfoNV {
         self.inner
     }
 }

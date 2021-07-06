@@ -1487,8 +1487,8 @@ impl fmt::Debug for ExternalMemoryHandleTypeFlags {
                 "ZIRCON_VMO_FUCHSIA",
             ),
             (
-                ExternalMemoryHandleTypeFlags::RESERVED_12_NV.0,
-                "RESERVED_12_NV",
+                ExternalMemoryHandleTypeFlags::RDMA_ADDRESS_NV.0,
+                "RDMA_ADDRESS_NV",
             ),
             (
                 ExternalMemoryHandleTypeFlags::RESERVED_13_NV.0,
@@ -2481,7 +2481,7 @@ impl fmt::Debug for MemoryPropertyFlags {
                 MemoryPropertyFlags::DEVICE_UNCACHED_AMD.0,
                 "DEVICE_UNCACHED_AMD",
             ),
-            (MemoryPropertyFlags::RESERVED_8_NV.0, "RESERVED_8_NV"),
+            (MemoryPropertyFlags::RDMA_CAPABLE_NV.0, "RDMA_CAPABLE_NV"),
             (MemoryPropertyFlags::PROTECTED.0, "PROTECTED"),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -4835,6 +4835,10 @@ impl fmt::Debug for StructureType {
             }
             Self::PHYSICAL_DEVICE_SUBPASS_SHADING_PROPERTIES_HUAWEI => {
                 Some("PHYSICAL_DEVICE_SUBPASS_SHADING_PROPERTIES_HUAWEI")
+            }
+            Self::MEMORY_GET_REMOTE_ADDRESS_INFO_NV => Some("MEMORY_GET_REMOTE_ADDRESS_INFO_NV"),
+            Self::PHYSICAL_DEVICE_EXTERNAL_MEMORY_RDMA_FEATURES_NV => {
+                Some("PHYSICAL_DEVICE_EXTERNAL_MEMORY_RDMA_FEATURES_NV")
             }
             Self::PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_2_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_2_FEATURES_EXT")

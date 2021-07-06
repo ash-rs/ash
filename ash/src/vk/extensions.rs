@@ -23910,10 +23910,11 @@ impl HuaweiSubpassShadingFn {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_HUAWEI_subpass_shading\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetSubpassShadingMaxWorkgroupSizeHUAWEI = unsafe extern "system" fn(
+pub type PFN_vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI = unsafe extern "system" fn(
+    device: Device,
     renderpass: RenderPass,
     p_max_workgroup_size: *mut Extent2D,
 ) -> Result;
@@ -23921,8 +23922,8 @@ pub type PFN_vkGetSubpassShadingMaxWorkgroupSizeHUAWEI = unsafe extern "system" 
 pub type PFN_vkCmdSubpassShadingHUAWEI = unsafe extern "system" fn(command_buffer: CommandBuffer);
 #[derive(Clone)]
 pub struct HuaweiSubpassShadingFn {
-    pub get_subpass_shading_max_workgroup_size_huawei:
-        PFN_vkGetSubpassShadingMaxWorkgroupSizeHUAWEI,
+    pub get_device_subpass_shading_max_workgroup_size_huawei:
+        PFN_vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI,
     pub cmd_subpass_shading_huawei: PFN_vkCmdSubpassShadingHUAWEI,
 }
 unsafe impl Send for HuaweiSubpassShadingFn {}
@@ -23933,22 +23934,23 @@ impl HuaweiSubpassShadingFn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         HuaweiSubpassShadingFn {
-            get_subpass_shading_max_workgroup_size_huawei: unsafe {
-                unsafe extern "system" fn get_subpass_shading_max_workgroup_size_huawei(
+            get_device_subpass_shading_max_workgroup_size_huawei: unsafe {
+                unsafe extern "system" fn get_device_subpass_shading_max_workgroup_size_huawei(
+                    _device: Device,
                     _renderpass: RenderPass,
                     _p_max_workgroup_size: *mut Extent2D,
                 ) -> Result {
                     panic!(concat!(
                         "Unable to load ",
-                        stringify!(get_subpass_shading_max_workgroup_size_huawei)
+                        stringify!(get_device_subpass_shading_max_workgroup_size_huawei)
                     ))
                 }
                 let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkGetSubpassShadingMaxWorkgroupSizeHUAWEI\0",
+                    b"vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI\0",
                 );
                 let val = _f(cname);
                 if val.is_null() {
-                    get_subpass_shading_max_workgroup_size_huawei
+                    get_device_subpass_shading_max_workgroup_size_huawei
                 } else {
                     ::std::mem::transmute(val)
                 }
@@ -23973,13 +23975,18 @@ impl HuaweiSubpassShadingFn {
             },
         }
     }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetSubpassShadingMaxWorkgroupSizeHUAWEI.html>"]
-    pub unsafe fn get_subpass_shading_max_workgroup_size_huawei(
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI.html>"]
+    pub unsafe fn get_device_subpass_shading_max_workgroup_size_huawei(
         &self,
+        device: Device,
         renderpass: RenderPass,
         p_max_workgroup_size: *mut Extent2D,
     ) -> Result {
-        (self.get_subpass_shading_max_workgroup_size_huawei)(renderpass, p_max_workgroup_size)
+        (self.get_device_subpass_shading_max_workgroup_size_huawei)(
+            device,
+            renderpass,
+            p_max_workgroup_size,
+        )
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSubpassShadingHUAWEI.html>"]
     pub unsafe fn cmd_subpass_shading_huawei(&self, command_buffer: CommandBuffer) {
@@ -24043,32 +24050,79 @@ impl PipelineStageFlags2KHR {
     pub const RESERVED_40_HUAWEI: Self =
         Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
 }
-impl NvExtension372Fn {
+impl NvExternalMemoryRdmaFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_372\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_external_memory_rdma\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetMemoryRemoteAddressNV = unsafe extern "system" fn(
+    device: Device,
+    get_memory_remote_address_info: *const MemoryGetRemoteAddressInfoNV,
+    p_address: *mut RemoteAddressNV,
+) -> Result;
 #[derive(Clone)]
-pub struct NvExtension372Fn {}
-unsafe impl Send for NvExtension372Fn {}
-unsafe impl Sync for NvExtension372Fn {}
-impl NvExtension372Fn {
+pub struct NvExternalMemoryRdmaFn {
+    pub get_memory_remote_address_nv: PFN_vkGetMemoryRemoteAddressNV,
+}
+unsafe impl Send for NvExternalMemoryRdmaFn {}
+unsafe impl Sync for NvExternalMemoryRdmaFn {}
+impl NvExternalMemoryRdmaFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExtension372Fn {}
+        NvExternalMemoryRdmaFn {
+            get_memory_remote_address_nv: unsafe {
+                unsafe extern "system" fn get_memory_remote_address_nv(
+                    _device: Device,
+                    _get_memory_remote_address_info: *const MemoryGetRemoteAddressInfoNV,
+                    _p_address: *mut RemoteAddressNV,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_memory_remote_address_nv)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetMemoryRemoteAddressNV\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_memory_remote_address_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetMemoryRemoteAddressNV.html>"]
+    pub unsafe fn get_memory_remote_address_nv(
+        &self,
+        device: Device,
+        get_memory_remote_address_info: *const MemoryGetRemoteAddressInfoNV,
+        p_address: *mut RemoteAddressNV,
+    ) -> Result {
+        (self.get_memory_remote_address_nv)(device, get_memory_remote_address_info, p_address)
     }
 }
-#[doc = "Generated from 'VK_NV_extension_372'"]
-impl MemoryPropertyFlags {
-    pub const RESERVED_8_NV: Self = Self(0b1_0000_0000);
+#[doc = "Generated from 'VK_NV_external_memory_rdma'"]
+impl StructureType {
+    pub const MEMORY_GET_REMOTE_ADDRESS_INFO_NV: Self = Self(1_000_371_000);
 }
-#[doc = "Generated from 'VK_NV_extension_372'"]
+#[doc = "Generated from 'VK_NV_external_memory_rdma'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_EXTERNAL_MEMORY_RDMA_FEATURES_NV: Self = Self(1_000_371_001);
+}
+#[doc = "Generated from 'VK_NV_external_memory_rdma'"]
+impl MemoryPropertyFlags {
+    pub const RDMA_CAPABLE_NV: Self = Self(0b1_0000_0000);
+}
+#[doc = "Generated from 'VK_NV_external_memory_rdma'"]
 impl ExternalMemoryHandleTypeFlags {
-    pub const RESERVED_12_NV: Self = Self(0b1_0000_0000_0000);
+    pub const RDMA_ADDRESS_NV: Self = Self(0b1_0000_0000_0000);
 }
 impl NvExtension373Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -25404,5 +25458,43 @@ impl ArmExtension418Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         ArmExtension418Fn {}
+    }
+}
+impl ExtExtension419Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_419\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct ExtExtension419Fn {}
+unsafe impl Send for ExtExtension419Fn {}
+unsafe impl Sync for ExtExtension419Fn {}
+impl ExtExtension419Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ExtExtension419Fn {}
+    }
+}
+impl ExtExtension420Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_420\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct ExtExtension420Fn {}
+unsafe impl Send for ExtExtension420Fn {}
+unsafe impl Sync for ExtExtension420Fn {}
+impl ExtExtension420Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ExtExtension420Fn {}
     }
 }
