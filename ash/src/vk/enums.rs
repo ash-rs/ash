@@ -959,7 +959,7 @@ impl fmt::Display for Result {
         if let Some(x) = name {
             fmt.write_str(x)
         } else {
-            <Self as fmt::Debug>::fmt(&self, fmt)
+            <Self as fmt::Debug>::fmt(self, fmt)
         }
     }
 }

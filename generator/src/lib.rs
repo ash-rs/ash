@@ -494,7 +494,7 @@ impl Constant {
     pub fn value(&self) -> Option<ConstVal> {
         match *self {
             Constant::Number(n) => Some(ConstVal::U64(n as u64)),
-            Constant::Hex(ref hex) => u64::from_str_radix(&hex, 16).ok().map(ConstVal::U64),
+            Constant::Hex(ref hex) => u64::from_str_radix(hex, 16).ok().map(ConstVal::U64),
             Constant::BitPos(pos) => Some(ConstVal::U64(1u64 << pos)),
             _ => None,
         }
@@ -569,7 +569,7 @@ impl Constant {
             }
             EnumSpec::Alias { alias, extends } => {
                 let base_type = extends.as_deref().or(enum_name)?;
-                let key = variant_ident(base_type, &alias);
+                let key = variant_ident(base_type, alias);
                 if key == "DISPATCH_BASE" {
                     None
                 } else {
@@ -1265,7 +1265,7 @@ pub fn generate_define(
             let link = khronos_link(&define.name);
             let c_expr = c_expr.trim_start_matches('\\');
             let c_expr = c_expr.replace("(uint32_t)", "");
-            let c_expr = convert_c_expression(&c_expr, &identifier_renames);
+            let c_expr = convert_c_expression(&c_expr, identifier_renames);
             let c_expr = discard_outmost_delimiter(c_expr);
 
             let deprecated = define
@@ -1411,7 +1411,7 @@ pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
         });
 
     // Both of the above strip_prefix leave a leading `_`:
-    let new_variant_name = new_variant_name.strip_prefix("_").unwrap();
+    let new_variant_name = new_variant_name.strip_prefix('_').unwrap();
     // Replace _BIT anywhere in the string, also works when there's a trailing
     // vendor extension in the variant name that's not in the enum/type name:
     let new_variant_name = new_variant_name.replace("_BIT", "");
@@ -1592,7 +1592,7 @@ pub fn generate_result(ident: Ident, enum_: &vk_parse::Enums) -> TokenStream {
             }
         };
 
-        let variant_ident = variant_ident(&enum_.name.as_ref().unwrap(), variant_name);
+        let variant_ident = variant_ident(enum_.name.as_ref().unwrap(), variant_name);
         Some(quote! {
             #ident::#variant_ident => Some(#notation)
         })
@@ -1611,7 +1611,7 @@ pub fn generate_result(ident: Ident, enum_: &vk_parse::Enums) -> TokenStream {
                 } else {
                     // If we don't have a nice message to show, call the generated `Debug` impl
                     // which includes *all* enum variants, including those from extensions.
-                    <Self as fmt::Debug>::fmt(&self, fmt)
+                    <Self as fmt::Debug>::fmt(self, fmt)
                 }
             }
         }

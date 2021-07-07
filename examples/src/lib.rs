@@ -261,7 +261,7 @@ impl ExampleBase {
                         .get_physical_device_queue_family_properties(*pdevice)
                         .iter()
                         .enumerate()
-                        .filter_map(|(index, ref info)| {
+                        .filter_map(|(index, info)| {
                             let supports_graphic_and_surface =
                                 info.queue_flags.contains(vk::QueueFlags::GRAPHICS)
                                     && surface_loader
