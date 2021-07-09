@@ -1,13 +1,15 @@
-# Ash
+Ash
+=
 
 A very lightweight wrapper around Vulkan
+-
 
-[![LICENSE](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE-MIT)
-[![LICENSE](https://img.shields.io/badge/license-apache-blue.svg)](LICENSE-APACHE)
+[![Crates.io Version](https://img.shields.io/crates/v/ash.svg)](https://crates.io/crates/ash)
 [![Documentation](https://docs.rs/ash/badge.svg)](https://docs.rs/ash)
 [![Build Status](https://github.com/MaikKlein/ash/workflows/CI/badge.svg)](https://github.com/MaikKlein/ash/actions?workflow=CI)
+[![LICENSE](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE-MIT)
+[![LICENSE](https://img.shields.io/badge/license-apache-blue.svg)](LICENSE-APACHE)
 [![Join the chat at https://gitter.im/MaikKlein/ash](https://badges.gitter.im/MaikKlein/ash.svg)](https://gitter.im/MaikKlein/ash?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Crates.io Version](https://img.shields.io/crates/v/ash.svg)](https://crates.io/crates/ash)
 
 ## Overview
 - [x] A true Vulkan API without compromises
@@ -72,7 +74,7 @@ let desc_alloc_info = vk::DescriptorSetAllocateInfo {
 ### Builder pattern
 
 ```rust
-// We lose all lifetime information when we call `.build()`. Be carefull!
+// We lose all lifetime information when we call `.build()`. Be careful!
 let queue_info = [vk::DeviceQueueCreateInfo::builder()
     .queue_family_index(queue_family_index)
     .queue_priorities(&priorities)
@@ -259,7 +261,7 @@ cargo run --bin texture
 ### Utility libraries
 * [vk-sync](https://github.com/gwihlidal/vk-sync-rs) - Simplified Vulkan synchronization logic, written in rust.
 * [vk-mem-rs](https://github.com/gwihlidal/vk-mem-rs) - This crate provides an FFI layer and idiomatic rust wrappers for the excellent AMD Vulkan Memory Allocator (VMA) C/C++ library.
-* [gpu-alloactor](https://github.com/Traverse-Research/gpu-allocator) - Memory allocator written in pure Rust for GPU memory in Vulkan and in the future DirectX 12
+* [gpu-allocator](https://github.com/Traverse-Research/gpu-allocator) - Memory allocator written in pure Rust for GPU memory in Vulkan and in the future DirectX 12
 * [lahar](https://github.com/Ralith/lahar) - Tools for asynchronously uploading data to a Vulkan device.
 
 ### Libraries that use ash
