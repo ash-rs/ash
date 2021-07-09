@@ -65,8 +65,8 @@ impl fmt::Debug for AccelerationStructureCreateFlagsKHR {
                 "DEVICE_ADDRESS_CAPTURE_REPLAY",
             ),
             (
-                AccelerationStructureCreateFlagsKHR::RESERVED_2_NV.0,
-                "RESERVED_2_NV",
+                AccelerationStructureCreateFlagsKHR::MOTION_NV.0,
+                "MOTION_NV",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -78,6 +78,33 @@ impl fmt::Debug for AccelerationStructureMemoryRequirementsTypeNV {
             Self::OBJECT => Some("OBJECT"),
             Self::BUILD_SCRATCH => Some("BUILD_SCRATCH"),
             Self::UPDATE_SCRATCH => Some("UPDATE_SCRATCH"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
+impl fmt::Debug for AccelerationStructureMotionInfoFlagsNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for AccelerationStructureMotionInstanceFlagsNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for AccelerationStructureMotionInstanceTypeNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::STATIC => Some("STATIC"),
+            Self::MATRIX_MOTION => Some("MATRIX_MOTION"),
+            Self::SRT_MOTION => Some("SRT_MOTION"),
             _ => None,
         };
         if let Some(x) = name {
@@ -587,10 +614,7 @@ impl fmt::Debug for BuildAccelerationStructureFlagsKHR {
                 BuildAccelerationStructureFlagsKHR::LOW_MEMORY.0,
                 "LOW_MEMORY",
             ),
-            (
-                BuildAccelerationStructureFlagsKHR::RESERVED_5_NV.0,
-                "RESERVED_5_NV",
-            ),
+            (BuildAccelerationStructureFlagsKHR::MOTION_NV.0, "MOTION_NV"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -1463,8 +1487,8 @@ impl fmt::Debug for ExternalMemoryHandleTypeFlags {
                 "ZIRCON_VMO_FUCHSIA",
             ),
             (
-                ExternalMemoryHandleTypeFlags::RESERVED_12_NV.0,
-                "RESERVED_12_NV",
+                ExternalMemoryHandleTypeFlags::RDMA_ADDRESS_NV.0,
+                "RDMA_ADDRESS_NV",
             ),
             (
                 ExternalMemoryHandleTypeFlags::RESERVED_13_NV.0,
@@ -2457,7 +2481,7 @@ impl fmt::Debug for MemoryPropertyFlags {
                 MemoryPropertyFlags::DEVICE_UNCACHED_AMD.0,
                 "DEVICE_UNCACHED_AMD",
             ),
-            (MemoryPropertyFlags::RESERVED_8_NV.0, "RESERVED_8_NV"),
+            (MemoryPropertyFlags::RDMA_CAPABLE_NV.0, "RDMA_CAPABLE_NV"),
             (MemoryPropertyFlags::PROTECTED.0, "PROTECTED"),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -2691,6 +2715,7 @@ impl fmt::Debug for PipelineBindPoint {
             Self::GRAPHICS => Some("GRAPHICS"),
             Self::COMPUTE => Some("COMPUTE"),
             Self::RAY_TRACING_KHR => Some("RAY_TRACING_KHR"),
+            Self::SUBPASS_SHADING_HUAWEI => Some("SUBPASS_SHADING_HUAWEI"),
             _ => None,
         };
         if let Some(x) = name {
@@ -2822,7 +2847,10 @@ impl fmt::Debug for PipelineCreateFlags {
             ),
             (PipelineCreateFlags::RESERVED_23_AMD.0, "RESERVED_23_AMD"),
             (PipelineCreateFlags::RESERVED_10_AMD.0, "RESERVED_10_AMD"),
-            (PipelineCreateFlags::RESERVED_20_NV.0, "RESERVED_20_NV"),
+            (
+                PipelineCreateFlags::RAY_TRACING_ALLOW_MOTION_NV.0,
+                "RAY_TRACING_ALLOW_MOTION_NV",
+            ),
             (
                 PipelineCreateFlags::VIEW_INDEX_FROM_DEVICE_INDEX.0,
                 "VIEW_INDEX_FROM_DEVICE_INDEX",
@@ -3101,6 +3129,10 @@ impl fmt::Debug for PipelineStageFlags2KHR {
             ),
             (PipelineStageFlags2KHR::TASK_SHADER_NV.0, "TASK_SHADER_NV"),
             (PipelineStageFlags2KHR::MESH_SHADER_NV.0, "MESH_SHADER_NV"),
+            (
+                PipelineStageFlags2KHR::SUBPASS_SHADING_HUAWEI.0,
+                "SUBPASS_SHADING_HUAWEI",
+            ),
             (
                 PipelineStageFlags2KHR::RESERVED_40_HUAWEI.0,
                 "RESERVED_40_HUAWEI",
@@ -3735,6 +3767,10 @@ impl fmt::Debug for ShaderStageFlags {
             (ShaderStageFlags::CALLABLE_KHR.0, "CALLABLE_KHR"),
             (ShaderStageFlags::TASK_NV.0, "TASK_NV"),
             (ShaderStageFlags::MESH_NV.0, "MESH_NV"),
+            (
+                ShaderStageFlags::SUBPASS_SHADING_HUAWEI.0,
+                "SUBPASS_SHADING_HUAWEI",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -4720,6 +4756,15 @@ impl fmt::Debug for StructureType {
             Self::PIPELINE_FRAGMENT_SHADING_RATE_ENUM_STATE_CREATE_INFO_NV => {
                 Some("PIPELINE_FRAGMENT_SHADING_RATE_ENUM_STATE_CREATE_INFO_NV")
             }
+            Self::ACCELERATION_STRUCTURE_GEOMETRY_MOTION_TRIANGLES_DATA_NV => {
+                Some("ACCELERATION_STRUCTURE_GEOMETRY_MOTION_TRIANGLES_DATA_NV")
+            }
+            Self::PHYSICAL_DEVICE_RAY_TRACING_MOTION_BLUR_FEATURES_NV => {
+                Some("PHYSICAL_DEVICE_RAY_TRACING_MOTION_BLUR_FEATURES_NV")
+            }
+            Self::ACCELERATION_STRUCTURE_MOTION_INFO_NV => {
+                Some("ACCELERATION_STRUCTURE_MOTION_INFO_NV")
+            }
             Self::PHYSICAL_DEVICE_YCBCR_2_PLANE_444_FORMATS_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_YCBCR_2_PLANE_444_FORMATS_FEATURES_EXT")
             }
@@ -4766,6 +4811,7 @@ impl fmt::Debug for StructureType {
             Self::VERTEX_INPUT_ATTRIBUTE_DESCRIPTION_2_EXT => {
                 Some("VERTEX_INPUT_ATTRIBUTE_DESCRIPTION_2_EXT")
             }
+            Self::PHYSICAL_DEVICE_DRM_PROPERTIES_EXT => Some("PHYSICAL_DEVICE_DRM_PROPERTIES_EXT"),
             Self::IMPORT_MEMORY_ZIRCON_HANDLE_INFO_FUCHSIA => {
                 Some("IMPORT_MEMORY_ZIRCON_HANDLE_INFO_FUCHSIA")
             }
@@ -4780,6 +4826,19 @@ impl fmt::Debug for StructureType {
             }
             Self::SEMAPHORE_GET_ZIRCON_HANDLE_INFO_FUCHSIA => {
                 Some("SEMAPHORE_GET_ZIRCON_HANDLE_INFO_FUCHSIA")
+            }
+            Self::SUBPASS_SHADING_PIPELINE_CREATE_INFO_HUAWEI => {
+                Some("SUBPASS_SHADING_PIPELINE_CREATE_INFO_HUAWEI")
+            }
+            Self::PHYSICAL_DEVICE_SUBPASS_SHADING_FEATURES_HUAWEI => {
+                Some("PHYSICAL_DEVICE_SUBPASS_SHADING_FEATURES_HUAWEI")
+            }
+            Self::PHYSICAL_DEVICE_SUBPASS_SHADING_PROPERTIES_HUAWEI => {
+                Some("PHYSICAL_DEVICE_SUBPASS_SHADING_PROPERTIES_HUAWEI")
+            }
+            Self::MEMORY_GET_REMOTE_ADDRESS_INFO_NV => Some("MEMORY_GET_REMOTE_ADDRESS_INFO_NV"),
+            Self::PHYSICAL_DEVICE_EXTERNAL_MEMORY_RDMA_FEATURES_NV => {
+                Some("PHYSICAL_DEVICE_EXTERNAL_MEMORY_RDMA_FEATURES_NV")
             }
             Self::PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_2_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_2_FEATURES_EXT")
@@ -4796,6 +4855,12 @@ impl fmt::Debug for StructureType {
             }
             Self::QUEUE_FAMILY_GLOBAL_PRIORITY_PROPERTIES_EXT => {
                 Some("QUEUE_FAMILY_GLOBAL_PRIORITY_PROPERTIES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_MULTI_DRAW_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_MULTI_DRAW_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_MULTI_DRAW_PROPERTIES_EXT => {
+                Some("PHYSICAL_DEVICE_MULTI_DRAW_PROPERTIES_EXT")
             }
             Self::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES => {
                 Some("PHYSICAL_DEVICE_SUBGROUP_PROPERTIES")
