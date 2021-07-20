@@ -53,7 +53,7 @@ pub const API_VERSION_1_0: u32 = make_api_version(0, 1, 0, 0);
 pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_API_VERSION_1_2.html>"]
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
-pub const HEADER_VERSION: u32 = 184u32;
+pub const HEADER_VERSION: u32 = 185u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 2, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSampleMask.html>"]
@@ -18771,6 +18771,178 @@ impl<'a> XYColorEXTBuilder<'a> {
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDevicePresentIdFeaturesKHR.html>"]
+pub struct PhysicalDevicePresentIdFeaturesKHR {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub present_id: Bool32,
+}
+impl ::std::default::Default for PhysicalDevicePresentIdFeaturesKHR {
+    fn default() -> PhysicalDevicePresentIdFeaturesKHR {
+        PhysicalDevicePresentIdFeaturesKHR {
+            s_type: StructureType::PHYSICAL_DEVICE_PRESENT_ID_FEATURES_KHR,
+            p_next: ::std::ptr::null_mut(),
+            present_id: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDevicePresentIdFeaturesKHR {
+    pub fn builder<'a>() -> PhysicalDevicePresentIdFeaturesKHRBuilder<'a> {
+        PhysicalDevicePresentIdFeaturesKHRBuilder {
+            inner: PhysicalDevicePresentIdFeaturesKHR::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDevicePresentIdFeaturesKHRBuilder<'a> {
+    inner: PhysicalDevicePresentIdFeaturesKHR,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePresentIdFeaturesKHRBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePresentIdFeaturesKHR {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePresentIdFeaturesKHRBuilder<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePresentIdFeaturesKHR {}
+impl<'a> ::std::ops::Deref for PhysicalDevicePresentIdFeaturesKHRBuilder<'a> {
+    type Target = PhysicalDevicePresentIdFeaturesKHR;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDevicePresentIdFeaturesKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDevicePresentIdFeaturesKHRBuilder<'a> {
+    pub fn present_id(mut self, present_id: bool) -> Self {
+        self.inner.present_id = present_id.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDevicePresentIdFeaturesKHR {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPresentIdKHR.html>"]
+pub struct PresentIdKHR {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub swapchain_count: u32,
+    pub p_present_ids: *const u64,
+}
+impl ::std::default::Default for PresentIdKHR {
+    fn default() -> PresentIdKHR {
+        PresentIdKHR {
+            s_type: StructureType::PRESENT_ID_KHR,
+            p_next: ::std::ptr::null(),
+            swapchain_count: u32::default(),
+            p_present_ids: ::std::ptr::null(),
+        }
+    }
+}
+impl PresentIdKHR {
+    pub fn builder<'a>() -> PresentIdKHRBuilder<'a> {
+        PresentIdKHRBuilder {
+            inner: PresentIdKHR::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PresentIdKHRBuilder<'a> {
+    inner: PresentIdKHR,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPresentInfoKHR for PresentIdKHRBuilder<'_> {}
+unsafe impl ExtendsPresentInfoKHR for PresentIdKHR {}
+impl<'a> ::std::ops::Deref for PresentIdKHRBuilder<'a> {
+    type Target = PresentIdKHR;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PresentIdKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PresentIdKHRBuilder<'a> {
+    pub fn present_ids(mut self, present_ids: &'a [u64]) -> Self {
+        self.inner.swapchain_count = present_ids.len() as _;
+        self.inner.p_present_ids = present_ids.as_ptr();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PresentIdKHR {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDevicePresentWaitFeaturesKHR.html>"]
+pub struct PhysicalDevicePresentWaitFeaturesKHR {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub present_wait: Bool32,
+}
+impl ::std::default::Default for PhysicalDevicePresentWaitFeaturesKHR {
+    fn default() -> PhysicalDevicePresentWaitFeaturesKHR {
+        PhysicalDevicePresentWaitFeaturesKHR {
+            s_type: StructureType::PHYSICAL_DEVICE_PRESENT_WAIT_FEATURES_KHR,
+            p_next: ::std::ptr::null_mut(),
+            present_wait: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDevicePresentWaitFeaturesKHR {
+    pub fn builder<'a>() -> PhysicalDevicePresentWaitFeaturesKHRBuilder<'a> {
+        PhysicalDevicePresentWaitFeaturesKHRBuilder {
+            inner: PhysicalDevicePresentWaitFeaturesKHR::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDevicePresentWaitFeaturesKHRBuilder<'a> {
+    inner: PhysicalDevicePresentWaitFeaturesKHR,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePresentWaitFeaturesKHRBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePresentWaitFeaturesKHR {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePresentWaitFeaturesKHRBuilder<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePresentWaitFeaturesKHR {}
+impl<'a> ::std::ops::Deref for PhysicalDevicePresentWaitFeaturesKHRBuilder<'a> {
+    type Target = PhysicalDevicePresentWaitFeaturesKHR;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDevicePresentWaitFeaturesKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDevicePresentWaitFeaturesKHRBuilder<'a> {
+    pub fn present_wait(mut self, present_wait: bool) -> Self {
+        self.inner.present_wait = present_wait.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDevicePresentWaitFeaturesKHR {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkHdrMetadataEXT.html>"]
 pub struct HdrMetadataEXT {
     pub s_type: StructureType,
@@ -28772,6 +28944,168 @@ impl<'a> PhysicalDeviceShaderAtomicFloatFeaturesEXTBuilder<'a> {
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDeviceShaderAtomicFloat2FeaturesEXT.html>"]
+pub struct PhysicalDeviceShaderAtomicFloat2FeaturesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub shader_buffer_float16_atomics: Bool32,
+    pub shader_buffer_float16_atomic_add: Bool32,
+    pub shader_buffer_float16_atomic_min_max: Bool32,
+    pub shader_buffer_float32_atomic_min_max: Bool32,
+    pub shader_buffer_float64_atomic_min_max: Bool32,
+    pub shader_shared_float16_atomics: Bool32,
+    pub shader_shared_float16_atomic_add: Bool32,
+    pub shader_shared_float16_atomic_min_max: Bool32,
+    pub shader_shared_float32_atomic_min_max: Bool32,
+    pub shader_shared_float64_atomic_min_max: Bool32,
+    pub shader_image_float32_atomic_min_max: Bool32,
+    pub sparse_image_float32_atomic_min_max: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceShaderAtomicFloat2FeaturesEXT {
+    fn default() -> PhysicalDeviceShaderAtomicFloat2FeaturesEXT {
+        PhysicalDeviceShaderAtomicFloat2FeaturesEXT {
+            s_type: StructureType::PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_2_FEATURES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            shader_buffer_float16_atomics: Bool32::default(),
+            shader_buffer_float16_atomic_add: Bool32::default(),
+            shader_buffer_float16_atomic_min_max: Bool32::default(),
+            shader_buffer_float32_atomic_min_max: Bool32::default(),
+            shader_buffer_float64_atomic_min_max: Bool32::default(),
+            shader_shared_float16_atomics: Bool32::default(),
+            shader_shared_float16_atomic_add: Bool32::default(),
+            shader_shared_float16_atomic_min_max: Bool32::default(),
+            shader_shared_float32_atomic_min_max: Bool32::default(),
+            shader_shared_float64_atomic_min_max: Bool32::default(),
+            shader_image_float32_atomic_min_max: Bool32::default(),
+            sparse_image_float32_atomic_min_max: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceShaderAtomicFloat2FeaturesEXT {
+    pub fn builder<'a>() -> PhysicalDeviceShaderAtomicFloat2FeaturesEXTBuilder<'a> {
+        PhysicalDeviceShaderAtomicFloat2FeaturesEXTBuilder {
+            inner: PhysicalDeviceShaderAtomicFloat2FeaturesEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceShaderAtomicFloat2FeaturesEXTBuilder<'a> {
+    inner: PhysicalDeviceShaderAtomicFloat2FeaturesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceShaderAtomicFloat2FeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderAtomicFloat2FeaturesEXT {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderAtomicFloat2FeaturesEXTBuilder<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderAtomicFloat2FeaturesEXT {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceShaderAtomicFloat2FeaturesEXTBuilder<'a> {
+    type Target = PhysicalDeviceShaderAtomicFloat2FeaturesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderAtomicFloat2FeaturesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceShaderAtomicFloat2FeaturesEXTBuilder<'a> {
+    pub fn shader_buffer_float16_atomics(mut self, shader_buffer_float16_atomics: bool) -> Self {
+        self.inner.shader_buffer_float16_atomics = shader_buffer_float16_atomics.into();
+        self
+    }
+    pub fn shader_buffer_float16_atomic_add(
+        mut self,
+        shader_buffer_float16_atomic_add: bool,
+    ) -> Self {
+        self.inner.shader_buffer_float16_atomic_add = shader_buffer_float16_atomic_add.into();
+        self
+    }
+    pub fn shader_buffer_float16_atomic_min_max(
+        mut self,
+        shader_buffer_float16_atomic_min_max: bool,
+    ) -> Self {
+        self.inner.shader_buffer_float16_atomic_min_max =
+            shader_buffer_float16_atomic_min_max.into();
+        self
+    }
+    pub fn shader_buffer_float32_atomic_min_max(
+        mut self,
+        shader_buffer_float32_atomic_min_max: bool,
+    ) -> Self {
+        self.inner.shader_buffer_float32_atomic_min_max =
+            shader_buffer_float32_atomic_min_max.into();
+        self
+    }
+    pub fn shader_buffer_float64_atomic_min_max(
+        mut self,
+        shader_buffer_float64_atomic_min_max: bool,
+    ) -> Self {
+        self.inner.shader_buffer_float64_atomic_min_max =
+            shader_buffer_float64_atomic_min_max.into();
+        self
+    }
+    pub fn shader_shared_float16_atomics(mut self, shader_shared_float16_atomics: bool) -> Self {
+        self.inner.shader_shared_float16_atomics = shader_shared_float16_atomics.into();
+        self
+    }
+    pub fn shader_shared_float16_atomic_add(
+        mut self,
+        shader_shared_float16_atomic_add: bool,
+    ) -> Self {
+        self.inner.shader_shared_float16_atomic_add = shader_shared_float16_atomic_add.into();
+        self
+    }
+    pub fn shader_shared_float16_atomic_min_max(
+        mut self,
+        shader_shared_float16_atomic_min_max: bool,
+    ) -> Self {
+        self.inner.shader_shared_float16_atomic_min_max =
+            shader_shared_float16_atomic_min_max.into();
+        self
+    }
+    pub fn shader_shared_float32_atomic_min_max(
+        mut self,
+        shader_shared_float32_atomic_min_max: bool,
+    ) -> Self {
+        self.inner.shader_shared_float32_atomic_min_max =
+            shader_shared_float32_atomic_min_max.into();
+        self
+    }
+    pub fn shader_shared_float64_atomic_min_max(
+        mut self,
+        shader_shared_float64_atomic_min_max: bool,
+    ) -> Self {
+        self.inner.shader_shared_float64_atomic_min_max =
+            shader_shared_float64_atomic_min_max.into();
+        self
+    }
+    pub fn shader_image_float32_atomic_min_max(
+        mut self,
+        shader_image_float32_atomic_min_max: bool,
+    ) -> Self {
+        self.inner.shader_image_float32_atomic_min_max = shader_image_float32_atomic_min_max.into();
+        self
+    }
+    pub fn sparse_image_float32_atomic_min_max(
+        mut self,
+        sparse_image_float32_atomic_min_max: bool,
+    ) -> Self {
+        self.inner.sparse_image_float32_atomic_min_max = sparse_image_float32_atomic_min_max.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceShaderAtomicFloat2FeaturesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDeviceVertexAttributeDivisorFeaturesEXT.html>"]
 pub struct PhysicalDeviceVertexAttributeDivisorFeaturesEXT {
     pub s_type: StructureType,
@@ -30328,6 +30662,66 @@ impl<'a> PhysicalDeviceShadingRateImagePropertiesNVBuilder<'a> {
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceShadingRateImagePropertiesNV {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDeviceInvocationMaskFeaturesHUAWEI.html>"]
+pub struct PhysicalDeviceInvocationMaskFeaturesHUAWEI {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub invocation_mask: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceInvocationMaskFeaturesHUAWEI {
+    fn default() -> PhysicalDeviceInvocationMaskFeaturesHUAWEI {
+        PhysicalDeviceInvocationMaskFeaturesHUAWEI {
+            s_type: StructureType::PHYSICAL_DEVICE_INVOCATION_MASK_FEATURES_HUAWEI,
+            p_next: ::std::ptr::null_mut(),
+            invocation_mask: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceInvocationMaskFeaturesHUAWEI {
+    pub fn builder<'a>() -> PhysicalDeviceInvocationMaskFeaturesHUAWEIBuilder<'a> {
+        PhysicalDeviceInvocationMaskFeaturesHUAWEIBuilder {
+            inner: PhysicalDeviceInvocationMaskFeaturesHUAWEI::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceInvocationMaskFeaturesHUAWEIBuilder<'a> {
+    inner: PhysicalDeviceInvocationMaskFeaturesHUAWEI,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceInvocationMaskFeaturesHUAWEIBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceInvocationMaskFeaturesHUAWEI {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceInvocationMaskFeaturesHUAWEIBuilder<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceInvocationMaskFeaturesHUAWEI {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceInvocationMaskFeaturesHUAWEIBuilder<'a> {
+    type Target = PhysicalDeviceInvocationMaskFeaturesHUAWEI;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceInvocationMaskFeaturesHUAWEIBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceInvocationMaskFeaturesHUAWEIBuilder<'a> {
+    pub fn invocation_mask(mut self, invocation_mask: bool) -> Self {
+        self.inner.invocation_mask = invocation_mask.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceInvocationMaskFeaturesHUAWEI {
         self.inner
     }
 }
