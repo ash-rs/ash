@@ -321,7 +321,10 @@ impl fmt::Debug for AccessFlags2KHR {
                 AccessFlags2KHR::COLOR_ATTACHMENT_READ_NONCOHERENT_EXT.0,
                 "COLOR_ATTACHMENT_READ_NONCOHERENT_EXT",
             ),
-            (AccessFlags2KHR::RESERVED_39_HUAWEI.0, "RESERVED_39_HUAWEI"),
+            (
+                AccessFlags2KHR::INVOCATION_MASK_READ_HUAWEI.0,
+                "INVOCATION_MASK_READ_HUAWEI",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -2251,7 +2254,11 @@ impl fmt::Debug for ImageUsageFlags {
                 ImageUsageFlags::VIDEO_ENCODE_DPB_KHR.0,
                 "VIDEO_ENCODE_DPB_KHR",
             ),
-            (ImageUsageFlags::RESERVED_18_HUAWEI.0, "RESERVED_18_HUAWEI"),
+            (ImageUsageFlags::RESERVED_19_EXT.0, "RESERVED_19_EXT"),
+            (
+                ImageUsageFlags::INVOCATION_MASK_HUAWEI.0,
+                "INVOCATION_MASK_HUAWEI",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -3134,8 +3141,8 @@ impl fmt::Debug for PipelineStageFlags2KHR {
                 "SUBPASS_SHADING_HUAWEI",
             ),
             (
-                PipelineStageFlags2KHR::RESERVED_40_HUAWEI.0,
-                "RESERVED_40_HUAWEI",
+                PipelineStageFlags2KHR::INVOCATION_MASK_HUAWEI.0,
+                "INVOCATION_MASK_HUAWEI",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -4573,6 +4580,9 @@ impl fmt::Debug for StructureType {
                 Some("PHYSICAL_DEVICE_TOOL_PROPERTIES_EXT")
             }
             Self::VALIDATION_FEATURES_EXT => Some("VALIDATION_FEATURES_EXT"),
+            Self::PHYSICAL_DEVICE_PRESENT_WAIT_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_PRESENT_WAIT_FEATURES_KHR")
+            }
             Self::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_COOPERATIVE_MATRIX_FEATURES_NV")
             }
@@ -4642,6 +4652,9 @@ impl fmt::Debug for StructureType {
             Self::PIPELINE_EXECUTABLE_INTERNAL_REPRESENTATION_KHR => {
                 Some("PIPELINE_EXECUTABLE_INTERNAL_REPRESENTATION_KHR")
             }
+            Self::PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_2_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_2_FEATURES_EXT")
+            }
             Self::PHYSICAL_DEVICE_SHADER_DEMOTE_TO_HELPER_INVOCATION_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_SHADER_DEMOTE_TO_HELPER_INVOCATION_FEATURES_EXT")
             }
@@ -4708,6 +4721,10 @@ impl fmt::Debug for StructureType {
                 Some("PHYSICAL_DEVICE_CUSTOM_BORDER_COLOR_FEATURES_EXT")
             }
             Self::PIPELINE_LIBRARY_CREATE_INFO_KHR => Some("PIPELINE_LIBRARY_CREATE_INFO_KHR"),
+            Self::PRESENT_ID_KHR => Some("PRESENT_ID_KHR"),
+            Self::PHYSICAL_DEVICE_PRESENT_ID_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_PRESENT_ID_FEATURES_KHR")
+            }
             Self::PHYSICAL_DEVICE_PRIVATE_DATA_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_PRIVATE_DATA_FEATURES_EXT")
             }
@@ -4835,6 +4852,9 @@ impl fmt::Debug for StructureType {
             }
             Self::PHYSICAL_DEVICE_SUBPASS_SHADING_PROPERTIES_HUAWEI => {
                 Some("PHYSICAL_DEVICE_SUBPASS_SHADING_PROPERTIES_HUAWEI")
+            }
+            Self::PHYSICAL_DEVICE_INVOCATION_MASK_FEATURES_HUAWEI => {
+                Some("PHYSICAL_DEVICE_INVOCATION_MASK_FEATURES_HUAWEI")
             }
             Self::MEMORY_GET_REMOTE_ADDRESS_INFO_NV => Some("MEMORY_GET_REMOTE_ADDRESS_INFO_NV"),
             Self::PHYSICAL_DEVICE_EXTERNAL_MEMORY_RDMA_FEATURES_NV => {

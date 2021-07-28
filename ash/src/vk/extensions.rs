@@ -17996,24 +17996,66 @@ impl ExtValidationFeaturesFn {
 impl StructureType {
     pub const VALIDATION_FEATURES_EXT: Self = Self(1_000_247_000);
 }
-impl KhrExtension249Fn {
+impl KhrPresentWaitFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_249\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_present_wait\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
+#[allow(non_camel_case_types)]
+pub type PFN_vkWaitForPresentKHR = unsafe extern "system" fn(
+    device: Device,
+    swapchain: SwapchainKHR,
+    present_id: u64,
+    timeout: u64,
+) -> Result;
 #[derive(Clone)]
-pub struct KhrExtension249Fn {}
-unsafe impl Send for KhrExtension249Fn {}
-unsafe impl Sync for KhrExtension249Fn {}
-impl KhrExtension249Fn {
+pub struct KhrPresentWaitFn {
+    pub wait_for_present_khr: PFN_vkWaitForPresentKHR,
+}
+unsafe impl Send for KhrPresentWaitFn {}
+unsafe impl Sync for KhrPresentWaitFn {}
+impl KhrPresentWaitFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExtension249Fn {}
+        KhrPresentWaitFn {
+            wait_for_present_khr: unsafe {
+                unsafe extern "system" fn wait_for_present_khr(
+                    _device: Device,
+                    _swapchain: SwapchainKHR,
+                    _present_id: u64,
+                    _timeout: u64,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(wait_for_present_khr)))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkWaitForPresentKHR\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    wait_for_present_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkWaitForPresentKHR.html>"]
+    pub unsafe fn wait_for_present_khr(
+        &self,
+        device: Device,
+        swapchain: SwapchainKHR,
+        present_id: u64,
+        timeout: u64,
+    ) -> Result {
+        (self.wait_for_present_khr)(device, swapchain, present_id, timeout)
+    }
+}
+#[doc = "Generated from 'VK_KHR_present_wait'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_PRESENT_WAIT_FEATURES_KHR: Self = Self(1_000_248_000);
 }
 impl NvCooperativeMatrixFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -19929,24 +19971,28 @@ impl IntelExtension273Fn {
         IntelExtension273Fn {}
     }
 }
-impl IntelExtension274Fn {
+impl ExtShaderAtomicFloat2Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_INTEL_extension_274\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_shader_atomic_float2\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct IntelExtension274Fn {}
-unsafe impl Send for IntelExtension274Fn {}
-unsafe impl Sync for IntelExtension274Fn {}
-impl IntelExtension274Fn {
+pub struct ExtShaderAtomicFloat2Fn {}
+unsafe impl Send for ExtShaderAtomicFloat2Fn {}
+unsafe impl Sync for ExtShaderAtomicFloat2Fn {}
+impl ExtShaderAtomicFloat2Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        IntelExtension274Fn {}
+        ExtShaderAtomicFloat2Fn {}
     }
+}
+#[doc = "Generated from 'VK_EXT_shader_atomic_float2'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_2_FEATURES_EXT: Self = Self(1_000_273_000);
 }
 impl KhrExtension275Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -20898,24 +20944,32 @@ impl KhrShaderNonSemanticInfoFn {
         KhrShaderNonSemanticInfoFn {}
     }
 }
-impl KhrExtension295Fn {
+impl KhrPresentIdFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_295\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_present_id\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct KhrExtension295Fn {}
-unsafe impl Send for KhrExtension295Fn {}
-unsafe impl Sync for KhrExtension295Fn {}
-impl KhrExtension295Fn {
+pub struct KhrPresentIdFn {}
+unsafe impl Send for KhrPresentIdFn {}
+unsafe impl Sync for KhrPresentIdFn {}
+impl KhrPresentIdFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExtension295Fn {}
+        KhrPresentIdFn {}
     }
+}
+#[doc = "Generated from 'VK_KHR_present_id'"]
+impl StructureType {
+    pub const PRESENT_ID_KHR: Self = Self(1_000_294_000);
+}
+#[doc = "Generated from 'VK_KHR_present_id'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_PRESENT_ID_FEATURES_KHR: Self = Self(1_000_294_001);
 }
 impl ExtPrivateDataFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -22946,6 +23000,10 @@ impl ExtExtension340Fn {
         ExtExtension340Fn {}
     }
 }
+#[doc = "Generated from 'VK_EXT_extension_340'"]
+impl ImageUsageFlags {
+    pub const RESERVED_19_EXT: Self = Self(0b1000_0000_0000_0000_0000);
+}
 impl Ext4444FormatsFn {
     pub fn name() -> &'static ::std::ffi::CStr {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_4444_formats\0")
@@ -24018,36 +24076,80 @@ impl PipelineStageFlags2KHR {
 impl ShaderStageFlags {
     pub const SUBPASS_SHADING_HUAWEI: Self = Self(0b100_0000_0000_0000);
 }
-impl HuaweiExtension371Fn {
+impl HuaweiInvocationMaskFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_HUAWEI_extension_371\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_HUAWEI_invocation_mask\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBindInvocationMaskHUAWEI = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    image_view: ImageView,
+    image_layout: ImageLayout,
+);
 #[derive(Clone)]
-pub struct HuaweiExtension371Fn {}
-unsafe impl Send for HuaweiExtension371Fn {}
-unsafe impl Sync for HuaweiExtension371Fn {}
-impl HuaweiExtension371Fn {
+pub struct HuaweiInvocationMaskFn {
+    pub cmd_bind_invocation_mask_huawei: PFN_vkCmdBindInvocationMaskHUAWEI,
+}
+unsafe impl Send for HuaweiInvocationMaskFn {}
+unsafe impl Sync for HuaweiInvocationMaskFn {}
+impl HuaweiInvocationMaskFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        HuaweiExtension371Fn {}
+        HuaweiInvocationMaskFn {
+            cmd_bind_invocation_mask_huawei: unsafe {
+                unsafe extern "system" fn cmd_bind_invocation_mask_huawei(
+                    _command_buffer: CommandBuffer,
+                    _image_view: ImageView,
+                    _image_layout: ImageLayout,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_bind_invocation_mask_huawei)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdBindInvocationMaskHUAWEI\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_bind_invocation_mask_huawei
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBindInvocationMaskHUAWEI.html>"]
+    pub unsafe fn cmd_bind_invocation_mask_huawei(
+        &self,
+        command_buffer: CommandBuffer,
+        image_view: ImageView,
+        image_layout: ImageLayout,
+    ) {
+        (self.cmd_bind_invocation_mask_huawei)(command_buffer, image_view, image_layout)
     }
 }
-#[doc = "Generated from 'VK_HUAWEI_extension_371'"]
+#[doc = "Generated from 'VK_HUAWEI_invocation_mask'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_INVOCATION_MASK_FEATURES_HUAWEI: Self = Self(1_000_370_000);
+}
+#[doc = "Generated from 'VK_HUAWEI_invocation_mask'"]
 impl AccessFlags2KHR {
-    pub const RESERVED_39_HUAWEI: Self = Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const INVOCATION_MASK_READ_HUAWEI: Self =
+        Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from 'VK_HUAWEI_extension_371'"]
+#[doc = "Generated from 'VK_HUAWEI_invocation_mask'"]
 impl ImageUsageFlags {
-    pub const RESERVED_18_HUAWEI: Self = Self(0b100_0000_0000_0000_0000);
+    pub const INVOCATION_MASK_HUAWEI: Self = Self(0b100_0000_0000_0000_0000);
 }
-#[doc = "Generated from 'VK_HUAWEI_extension_371'"]
+#[doc = "Generated from 'VK_HUAWEI_invocation_mask'"]
 impl PipelineStageFlags2KHR {
-    pub const RESERVED_40_HUAWEI: Self =
+    pub const INVOCATION_MASK_HUAWEI: Self =
         Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
 }
 impl NvExternalMemoryRdmaFn {
@@ -24060,7 +24162,7 @@ impl NvExternalMemoryRdmaFn {
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetMemoryRemoteAddressNV = unsafe extern "system" fn(
     device: Device,
-    get_memory_remote_address_info: *const MemoryGetRemoteAddressInfoNV,
+    p_memory_get_remote_address_info: *const MemoryGetRemoteAddressInfoNV,
     p_address: *mut RemoteAddressNV,
 ) -> Result;
 #[derive(Clone)]
@@ -24078,7 +24180,7 @@ impl NvExternalMemoryRdmaFn {
             get_memory_remote_address_nv: unsafe {
                 unsafe extern "system" fn get_memory_remote_address_nv(
                     _device: Device,
-                    _get_memory_remote_address_info: *const MemoryGetRemoteAddressInfoNV,
+                    _p_memory_get_remote_address_info: *const MemoryGetRemoteAddressInfoNV,
                     _p_address: *mut RemoteAddressNV,
                 ) -> Result {
                     panic!(concat!(
@@ -24102,10 +24204,10 @@ impl NvExternalMemoryRdmaFn {
     pub unsafe fn get_memory_remote_address_nv(
         &self,
         device: Device,
-        get_memory_remote_address_info: *const MemoryGetRemoteAddressInfoNV,
+        p_memory_get_remote_address_info: *const MemoryGetRemoteAddressInfoNV,
         p_address: *mut RemoteAddressNV,
     ) -> Result {
-        (self.get_memory_remote_address_nv)(device, get_memory_remote_address_info, p_address)
+        (self.get_memory_remote_address_nv)(device, p_memory_get_remote_address_info, p_address)
     }
 }
 #[doc = "Generated from 'VK_NV_external_memory_rdma'"]
@@ -25496,5 +25598,24 @@ impl ExtExtension420Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         ExtExtension420Fn {}
+    }
+}
+impl KhrExtension421Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_421\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct KhrExtension421Fn {}
+unsafe impl Send for KhrExtension421Fn {}
+unsafe impl Sync for KhrExtension421Fn {}
+impl KhrExtension421Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        KhrExtension421Fn {}
     }
 }
