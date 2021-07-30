@@ -26,7 +26,7 @@ impl ToolingInfo {
         vk::ExtToolingInfoFn::name()
     }
 
-    #[doc = "https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceToolPropertiesEXT.html"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceToolPropertiesEXT.html>"]
     pub unsafe fn get_physical_device_tool_properties(
         &self,
         physical_device: vk::PhysicalDevice,
