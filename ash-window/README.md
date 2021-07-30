@@ -33,7 +33,7 @@ The library exposes two functions:
 
 ## Versions
 ```toml
-ash = "0.32.1"
+ash = "0.33"
 raw-window-handle = "0.3"
 ```
 

@@ -1,5 +1,11 @@
 ### Changelog
 
+## [0.7.0] - 2021-07-30
+
+### Changed
+
+- Bumped `ash` version to [`0.33`](https://github.com/MaikKlein/ash/releases/tag/0.33.0)
+
 ## [0.6.0]
 
 ### Changed

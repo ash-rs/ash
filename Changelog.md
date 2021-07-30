@@ -6,11 +6,52 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - ReleaseDate
 
+## [0.33.0] - 2021-07-30
+
+### Added
+
+- Regenerated with Vulkan-Headers 1.2.186 (#456, #454, #446, #429)
+- Generate `push_next` function for all extended structs (#305)
+- Vulkan 1.2.175: Provisional Video Extensions (#417)
+- Globally remove all `allow(dead_code)` exceptions and make extensions public (#430)
+- Add extension wrapper for `VK_KHR_synchronization2` (#403)
+- added missing functions to `V1_0` traits (#416)
+- extensions/khr: Add `VK_KHR_external_fence_fd` wrapper (#413)
+- Add `VK_EXT_extended_dynamic_state` extension (#421)
+- Add `VK_KHR_get_physical_device_properties2` extension (#400)
+- extensions/khr: Add `ExternalSemaphoreFd` safe wrapper (#395)
+- Add `VK_KHR_get_memory_requirements2` extension (#401)
+- Add `VK_EXT_full_screen_exclusive` extension (#399)
+- Add `VK_NN_vi_surface` extension (#398)
+- Add `merge_pipeline_caches`, `queue_bind_sparse`, `get_render_area_granularity` to `DeviceV1_0` (#397)
+- Add `VK_KHR`/`EXT_buffer_device_address` extension (#405)
+- Add `VK_KHR_maintenance` extensions (#406)
+
+### Changed
+
+- Use `PFN_` types for struct members instead of repeating function signature (#438)
+- Untangle mismatched parameter/return `fn` signatures in types (#437)
+- Mark all function pointer types as `unsafe` (#436)
+- `pSampleMask` setter should write `NULL` if slice is empty (#432)
+- vk/platform_types: Mark `SECURITY_ATTRIBUTES` as a true `ffi::c_void` (#433)
+- Impl trait functions directly on `EntryCustom`/`Instance`/`Device` (#412)
+- Improve `Result`'s `Display` impl for extension values (#424)
+- Use lifetime borrows instead of raw pointers in `pp_geometries` (#420)
+- `Entry::new` returns `Err` when entry point isn't found (#390)
+- Remove the `_mvk` suffix from the two extensions' functions (#407)
+
+### Fixed
+
+- ash/extensions: Fix missing and broken autolinks to Vulkan docs (#459)
+- Adds `LICENSE-*` files to crate subdirectories (#452)
+- external_memory_fd: Initialize output struct with proper `sType` (#394)
+- entry_libloading: Do not pass `AsRef` implementation by reference (#389)
+
 ## [0.32.1] - 2021-03-29
 
 ### Added
 
-- `VK_KHR_create_renderpass2` device extension
+- Add high-level extension wrapper for the 1.1 extension `VK_KHR_create_renderpass2` (#414)
 
 ## [0.32.0] - 2021-03-07
 
@@ -88,7 +129,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed a build issue on ARM.
 - -Breaking- Arrays are now passed by reference.
 - Builders are now marked as `#[transparent]`.
-- -Breaking-  Renamed `.next(..)` to `push_next`. `push_next` is only available on structs that are passed directly. Addtionally `push_next` only accepts structs that can be inserted into the pointer chain. Read the readme for more information.
+- -Breaking-  Renamed `.next(..)` to `push_next`. `push_next` is only available on structs that are passed directly. Additionally `push_next` only accepts structs that can be inserted into the pointer chain. Read the readme for more information.
 - New -experimental- extensions. Those do not follow the semver rules and can be removed at any time.
 - Added `AmdGpaInterface` extension.
 
