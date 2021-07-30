@@ -3,6 +3,7 @@
     clippy::missing_safety_doc,
     clippy::upper_case_acronyms
 )]
+#![cfg_attr(docsrs, feature(doc_cfg))]
 //! # Vulkan API
 //!
 //! <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/index.html>

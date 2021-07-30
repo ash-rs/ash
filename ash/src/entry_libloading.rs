@@ -53,6 +53,7 @@ impl From<MissingEntryPoint> for LoadingError {
 }
 
 /// Default function loader
+#[cfg_attr(docsrs, doc(cfg(feature = "libloading")))]
 pub type Entry = EntryCustom<Arc<Library>>;
 
 impl Entry {
