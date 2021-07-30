@@ -28,7 +28,12 @@ pub struct EntryCustom<L> {
 /// Vulkan core 1.0
 #[allow(non_camel_case_types)]
 impl<L> EntryCustom<L> {
-    pub fn new_custom<Load>(
+    /// Load entry points with a custom `dlopen`-like function
+    ///
+    /// # Safety
+    /// When supplied with appropriate function names, `load` must yield function pointers that
+    /// comply with the signature and semantics specified by Vukan 1.0.
+    pub unsafe fn new_custom<Load>(
         mut lib: L,
         mut load: Load,
     ) -> std::result::Result<Self, MissingEntryPoint>
