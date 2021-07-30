@@ -6,7 +6,11 @@ use ash::extensions::{
     khr::{Surface, Swapchain},
 };
 
-use ash::{vk, Entry};
+use ash::vk;
+#[cfg(not(feature = "linked"))]
+use ash::Entry;
+#[cfg(feature = "linked")]
+use ash::EntryLinked;
 pub use ash::{Device, EntryCustom, Instance};
 use std::borrow::Cow;
 use std::cell::RefCell;
@@ -133,6 +137,9 @@ pub fn find_memorytype_index(
 }
 
 pub struct ExampleBase {
+    #[cfg(feature = "linked")]
+    pub entry: EntryLinked,
+    #[cfg(not(feature = "linked"))]
     pub entry: Entry,
     pub instance: Instance,
     pub device: Device,
@@ -204,6 +211,9 @@ impl ExampleBase {
                 ))
                 .build(&events_loop)
                 .unwrap();
+            #[cfg(feature = "linked")]
+            let entry = EntryLinked::new();
+            #[cfg(not(feature = "linked"))]
             let entry = Entry::new().unwrap();
             let app_name = CString::new("VulkanTriangle").unwrap();
 

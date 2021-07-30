@@ -15,9 +15,12 @@ libloading = { version = "0.7", optional = true }
 
 [features]
 default = ["libloading"]
+# Link the Vulkan loader at compile time.
+linked = []
 
 [package.metadata.release]
 no-dev-version = true
 
 [package.metadata.docs.rs]
+all-features = true
 rustdoc-args = ["--cfg", "docsrs"]

@@ -52,7 +52,10 @@ impl From<MissingEntryPoint> for LoadingError {
     }
 }
 
-/// Default function loader
+/// Loads functions from an entry point found at runtime
+///
+/// Prefer [`EntryLinked`](crate::EntryLinked) in code that would would otherwise panic on
+/// [`Entry::new`] failing.
 #[cfg_attr(docsrs, doc(cfg(feature = "libloading")))]
 pub type Entry = EntryCustom<Arc<Library>>;
 

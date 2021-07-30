@@ -16,7 +16,7 @@ jobs:
       - uses: actions-rs/cargo@v1
         with:
           command: check
-          args: --workspace --all-targets
+          args: --workspace --all-targets --all-features
 
   generated:
     name: Generated

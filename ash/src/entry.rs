@@ -42,6 +42,15 @@ impl<L> EntryCustom<L> {
     {
         // Bypass the normal StaticFn::load so we can return an error
         let static_fn = vk::StaticFn::load_checked(|name| load(&mut lib, name))?;
+        Ok(Self::from_static_fn(lib, static_fn))
+    }
+
+    /// Load entry points based on an already-loaded [`vk::StaticFn`]
+    ///
+    /// # Safety
+    /// `static_fn` must contain valid function pointers that comply with the semantics specified by
+    /// Vulkan 1.0.
+    pub unsafe fn from_static_fn(lib: L, static_fn: vk::StaticFn) -> Self {
         let load_fn = |name: &std::ffi::CStr| unsafe {
             mem::transmute(static_fn.get_instance_proc_addr(vk::Instance::null(), name.as_ptr()))
         };
@@ -49,13 +58,13 @@ impl<L> EntryCustom<L> {
         let entry_fn_1_1 = vk::EntryFnV1_1::load(load_fn);
         let entry_fn_1_2 = vk::EntryFnV1_2::load(load_fn);
 
-        Ok(EntryCustom {
+        EntryCustom {
             static_fn,
             entry_fn_1_0,
             entry_fn_1_1,
             entry_fn_1_2,
             lib,
-        })
+        }
     }
 
     pub fn fp_v1_0(&self) -> &vk::EntryFnV1_0 {

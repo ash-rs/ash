@@ -37,12 +37,16 @@ pub use crate::device::Device;
 pub use crate::entry::{EntryCustom, InstanceError};
 #[cfg(feature = "libloading")]
 pub use crate::entry_libloading::{Entry, LoadingError};
+#[cfg(feature = "linked")]
+pub use crate::entry_linked::EntryLinked;
 pub use crate::instance::Instance;
 
 mod device;
 mod entry;
 #[cfg(feature = "libloading")]
 mod entry_libloading;
+#[cfg(feature = "linked")]
+mod entry_linked;
 mod instance;
 pub mod prelude;
 pub mod util;
