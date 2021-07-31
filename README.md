@@ -220,7 +220,7 @@ let pool = device.create_command_pool(&pool_create_info).unwrap();
 ### Optional linking
 
 Enable the `linked` cargo feature to link your binary with the Vulkan loader directly and expose the infallible `EntryLinked`.
-If your application can handle Vulkan being missing at runtime, you can instead use the default `libloading` feature to dynamically load Vulkan with `Entry`.
+If your application can handle Vulkan being missing at runtime, you can instead use the default `loaded` feature to dynamically load Vulkan with `Entry`.
 
 ## Example
 You can find the examples [here](https://github.com/MaikKlein/ash/tree/master/examples).

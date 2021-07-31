@@ -56,7 +56,7 @@ impl From<MissingEntryPoint> for LoadingError {
 ///
 /// Prefer [`EntryLinked`](crate::EntryLinked) in code that would would otherwise panic on
 /// [`Entry::new`] failing.
-#[cfg_attr(docsrs, doc(cfg(feature = "libloading")))]
+#[cfg_attr(docsrs, doc(cfg(feature = "loaded")))]
 pub type Entry = EntryCustom<Arc<Library>>;
 
 impl Entry {

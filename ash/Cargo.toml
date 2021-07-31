@@ -14,9 +14,11 @@ edition = "2018"
 libloading = { version = "0.7", optional = true }
 
 [features]
-default = ["libloading"]
+default = ["loaded"]
 # Link the Vulkan loader at compile time.
 linked = []
+# Support searching for the Vulkan loader manually at runtime.
+loaded = ["libloading"]
 
 [package.metadata.release]
 no-dev-version = true
