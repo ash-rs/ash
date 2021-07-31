@@ -32,7 +32,7 @@ impl PipelineExecutableProperties {
         vk::KhrPipelineExecutablePropertiesFn::name()
     }
 
-    #[doc = "https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPipelineExecutableInternalRepresentationsKHR.html"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPipelineExecutableInternalRepresentationsKHR.html>"]
     pub unsafe fn get_pipeline_executable_internal_representations(
         &self,
         device: vk::Device,
@@ -61,7 +61,7 @@ impl PipelineExecutableProperties {
             .result_with_success(v)
     }
 
-    #[doc = "https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPipelineExecutablePropertiesKHR.html"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPipelineExecutablePropertiesKHR.html>"]
     pub unsafe fn get_pipeline_executable_properties(
         &self,
         device: vk::Device,
@@ -90,7 +90,7 @@ impl PipelineExecutableProperties {
             .result_with_success(v)
     }
 
-    #[doc = "https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPipelineExecutableStatisticsKHR.html"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPipelineExecutableStatisticsKHR.html>"]
     pub unsafe fn get_pipeline_executable_statistics(
         &self,
         device: vk::Device,
