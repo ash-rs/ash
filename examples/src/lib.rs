@@ -6,7 +6,7 @@ use ash::extensions::{
     khr::{Surface, Swapchain},
 };
 
-use ash::{vk, EntryLinked};
+use ash::{vk, Entry};
 pub use ash::{Device, EntryCustom, Instance};
 use std::borrow::Cow;
 use std::cell::RefCell;
@@ -133,7 +133,7 @@ pub fn find_memorytype_index(
 }
 
 pub struct ExampleBase {
-    pub entry: EntryLinked,
+    pub entry: Entry,
     pub instance: Instance,
     pub device: Device,
     pub surface_loader: Surface,
@@ -204,7 +204,7 @@ impl ExampleBase {
                 ))
                 .build(&events_loop)
                 .unwrap();
-            let entry = EntryLinked::new();
+            let entry = Entry::new();
             let app_name = CString::new("VulkanTriangle").unwrap();
 
             let layer_names = [CString::new("VK_LAYER_KHRONOS_validation").unwrap()];

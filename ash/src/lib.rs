@@ -13,7 +13,7 @@
 //! ```no_run
 //! use ash::{vk, Entry};
 //! # fn main() -> Result<(), Box<dyn std::error::Error>> {
-//! let entry = unsafe { Entry::new() }?;
+//! let entry = Entry::new();
 //! let app_info = vk::ApplicationInfo {
 //!     api_version: vk::make_api_version(0, 1, 0, 0),
 //!     ..Default::default()
@@ -27,18 +27,18 @@
 //! ```
 //!
 //! ## Getting started
-//! Load the Vulkan library at the default location using [`Entry::new()`][EntryCustom<_>::new()],
-//! or at a custom location using [`Entry::with_library("path/to/vulkan")`][EntryCustom<_>::with_library()].
-//! These loaders use [`libloading`]. If you wish to perform function loading yourself
-//! call [`EntryCustom::new_custom()`] with a closure turning function names
-//! into function pointers.
+//!
+//! Load the Vulkan library linked at compile time using [`Entry::new`](EntryCustom<Linked>::new),
+//! or at load it at runtime using `RuntimeLoadedEntry`, which uses `libloading`. If you wish to
+//! perform function loading yourself call [`EntryCustom::new_custom()`] with a closure turning
+//! function names into function pointers.
 
 pub use crate::device::Device;
 pub use crate::entry::{EntryCustom, InstanceError};
 #[cfg(feature = "loaded")]
-pub use crate::entry_libloading::{Entry, LoadingError};
+pub use crate::entry_libloading::{LoadingError, RuntimeLoadedEntry};
 #[cfg(feature = "linked")]
-pub use crate::entry_linked::EntryLinked;
+pub use crate::entry_linked::Entry;
 pub use crate::instance::Instance;
 
 mod device;

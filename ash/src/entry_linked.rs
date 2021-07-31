@@ -7,12 +7,12 @@ pub struct Linked;
 
 /// Loads functions from an entry point linked at compile time
 ///
-/// Prefer this over [`Entry`](crate::Entry) in code that would otherwise panic on
-/// [`Entry::new`](crate::Entry::new) failing.
+/// Prefer this over [`RuntimeLoadedEntry`](crate::RuntimeLoadedEntry) in code that would otherwise
+/// panic on [`RuntimeLoadedEntry::new`](crate::Entry::new) failing.
 #[cfg_attr(docsrs, doc(cfg(feature = "linked")))]
-pub type EntryLinked = EntryCustom<Linked>;
+pub type Entry = EntryCustom<Linked>;
 
-impl EntryLinked {
+impl Entry {
     pub fn new() -> Self {
         // Sound because we're linking to Vulkan, which provides a vkGetInstanceProcAddr that has
         // defined behavior in this use.

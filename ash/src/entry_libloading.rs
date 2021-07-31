@@ -54,12 +54,12 @@ impl From<MissingEntryPoint> for LoadingError {
 
 /// Loads functions from an entry point found at runtime
 ///
-/// Prefer [`EntryLinked`](crate::EntryLinked) in code that would would otherwise panic on
-/// [`Entry::new`] failing.
+/// Prefer [`Entry`](crate::Entry) in code that would would otherwise panic on
+/// [`RuntimeLoadedEntry::new`] failing.
 #[cfg_attr(docsrs, doc(cfg(feature = "loaded")))]
-pub type Entry = EntryCustom<Arc<Library>>;
+pub type RuntimeLoadedEntry = EntryCustom<Arc<Library>>;
 
-impl Entry {
+impl RuntimeLoadedEntry {
     /// Load default Vulkan library for the current platform
     ///
     /// # Safety
@@ -81,7 +81,7 @@ impl Entry {
     /// let instance = unsafe { entry.create_instance(&create_info, None)? };
     /// # Ok(()) }
     /// ```
-    pub unsafe fn new() -> Result<Entry, LoadingError> {
+    pub unsafe fn new() -> Result<Self, LoadingError> {
         Self::with_library(LIB_PATH)
     }
 
@@ -90,7 +90,7 @@ impl Entry {
     /// # Safety
     /// `dlopen`ing native libraries is inherently unsafe. The safety guidelines
     /// for [`Library::new`] and [`Library::get`] apply here.
-    pub unsafe fn with_library(path: impl AsRef<OsStr>) -> Result<Entry, LoadingError> {
+    pub unsafe fn with_library(path: impl AsRef<OsStr>) -> Result<Self, LoadingError> {
         let lib = Library::new(path)
             .map_err(LoadingError::LibraryLoadFailure)
             .map(Arc::new)?;

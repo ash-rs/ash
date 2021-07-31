@@ -79,7 +79,7 @@ impl<L> EntryCustom<L> {
     /// ```no_run
     /// # use ash::{Entry, vk};
     /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
-    /// let entry = unsafe { Entry::new() }?;
+    /// let entry = Entry::new();
     /// match entry.try_enumerate_instance_version()? {
     ///     // Vulkan 1.1+
     ///     Some(version) => {
