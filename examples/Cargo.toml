@@ -9,6 +9,3 @@ winit = "0.19.5"
 image = "0.10.4"
 ash = { path = "../ash" }
 ash-window = { path = "../ash-window" }
-
-[features]
-linked = ["ash/linked"]

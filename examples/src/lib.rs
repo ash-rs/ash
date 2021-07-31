@@ -6,11 +6,7 @@ use ash::extensions::{
     khr::{Surface, Swapchain},
 };
 
-use ash::vk;
-#[cfg(not(feature = "linked"))]
-use ash::Entry;
-#[cfg(feature = "linked")]
-use ash::EntryLinked;
+use ash::{vk, EntryLinked};
 pub use ash::{Device, EntryCustom, Instance};
 use std::borrow::Cow;
 use std::cell::RefCell;
@@ -137,10 +133,7 @@ pub fn find_memorytype_index(
 }
 
 pub struct ExampleBase {
-    #[cfg(feature = "linked")]
     pub entry: EntryLinked,
-    #[cfg(not(feature = "linked"))]
-    pub entry: Entry,
     pub instance: Instance,
     pub device: Device,
     pub surface_loader: Surface,
@@ -211,10 +204,7 @@ impl ExampleBase {
                 ))
                 .build(&events_loop)
                 .unwrap();
-            #[cfg(feature = "linked")]
             let entry = EntryLinked::new();
-            #[cfg(not(feature = "linked"))]
-            let entry = Entry::new().unwrap();
             let app_name = CString::new("VulkanTriangle").unwrap();
 
             let layer_names = [CString::new("VK_LAYER_KHRONOS_validation").unwrap()];

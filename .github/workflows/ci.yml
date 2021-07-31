@@ -47,6 +47,8 @@ jobs:
     name: Test Suite
     runs-on: ubuntu-latest
     steps:
+      - name: Install Vulkan loader
+        run: sudo apt-get install libvulkan-dev
       - uses: actions/checkout@v1
       - uses: actions-rs/toolchain@v1
         with:
