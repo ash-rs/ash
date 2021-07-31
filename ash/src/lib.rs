@@ -28,25 +28,18 @@
 //!
 //! ## Getting started
 //!
-//! Load the Vulkan library linked at compile time using [`Entry::new`](EntryCustom<Linked>::new),
-//! or at load it at runtime using `RuntimeLoadedEntry`, which uses `libloading`. If you wish to
-//! perform function loading yourself call [`EntryCustom::new_custom()`] with a closure turning
-//! function names into function pointers.
+//! Load the Vulkan library linked at compile time using [`Entry::new()`], or load it at runtime
+//! using [`Entry::load()`], which uses `libloading`. If you want to perform entry point loading
+//! yourself, call [`Entry::from_static_fn()`].
 
 pub use crate::device::Device;
-pub use crate::entry::EntryCustom;
+pub use crate::entry::Entry;
 #[cfg(feature = "loaded")]
-pub use crate::entry_libloading::{LoadingError, RuntimeLoadedEntry};
-#[cfg(feature = "linked")]
-pub use crate::entry_linked::Entry;
+pub use crate::entry::LoadingError;
 pub use crate::instance::Instance;
 
 mod device;
 mod entry;
-#[cfg(feature = "loaded")]
-mod entry_libloading;
-#[cfg(feature = "linked")]
-mod entry_linked;
 mod instance;
 pub mod prelude;
 pub mod util;

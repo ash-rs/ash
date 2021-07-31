@@ -7,7 +7,7 @@ use ash::extensions::{
 };
 
 use ash::{vk, Entry};
-pub use ash::{Device, EntryCustom, Instance};
+pub use ash::{Device, Instance};
 use std::borrow::Cow;
 use std::cell::RefCell;
 use std::default::Default;

@@ -3,52 +3,136 @@ use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
 use std::ffi::CStr;
+#[cfg(feature = "loaded")]
+use std::ffi::OsStr;
 use std::mem;
 use std::os::raw::c_char;
 use std::os::raw::c_void;
 use std::ptr;
+#[cfg(feature = "loaded")]
+use std::sync::Arc;
 
-/// Holds a custom type `L` to load symbols from (usually a handle to a `dlopen`ed library),
-/// the [`vkGetInstanceProcAddr`][vk::StaticFn::get_instance_proc_addr()] loader function from
-/// this library (in [`vk::StaticFn`]), and Vulkan's "entry point" functions (resolved with `NULL`
-/// `instance`) as listed in [`vkGetInstanceProcAddr`'s description].
-///
-/// [`vkGetInstanceProcAddr`'s description]: https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetInstanceProcAddr.html#_description
+#[cfg(feature = "loaded")]
+use libloading::Library;
+
+/// Holds the Vulkan functions independent of a particular instance
 #[derive(Clone)]
-pub struct EntryCustom<L> {
+pub struct Entry {
     static_fn: vk::StaticFn,
     entry_fn_1_0: vk::EntryFnV1_0,
     entry_fn_1_1: vk::EntryFnV1_1,
     entry_fn_1_2: vk::EntryFnV1_2,
-    lib: L,
+    #[cfg(feature = "loaded")]
+    _lib_guard: Option<Arc<Library>>,
 }
 
 /// Vulkan core 1.0
 #[allow(non_camel_case_types)]
-impl<L> EntryCustom<L> {
-    /// Load entry points with a custom `dlopen`-like function
+impl Entry {
+    /// Load entry points from a Vulkan loader linked at compile time
+    ///
+    /// Note that instance/device functions are still fetched via `vkGetInstanceProcAddr` and
+    /// `vkGetDeviceProcAddr` for maximum performance.
+    ///
+    /// ```no_run
+    /// use ash::{vk, Entry};
+    /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
+    /// let entry = Entry::new();
+    /// let app_info = vk::ApplicationInfo {
+    ///     api_version: vk::make_api_version(0, 1, 0, 0),
+    ///     ..Default::default()
+    /// };
+    /// let create_info = vk::InstanceCreateInfo {
+    ///     p_application_info: &app_info,
+    ///     ..Default::default()
+    /// };
+    /// let instance = unsafe { entry.create_instance(&create_info, None)? };
+    /// # Ok(()) }
+    /// ```
+    #[cfg(feature = "linked")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "linked")))]
+    pub fn new() -> Self {
+        // Sound because we're linking to Vulkan, which provides a vkGetInstanceProcAddr that has
+        // defined behavior in this use.
+        unsafe {
+            Self::from_static_fn(vk::StaticFn {
+                get_instance_proc_addr: vkGetInstanceProcAddr,
+            })
+        }
+    }
+
+    /// Load default Vulkan library for the current platform
     ///
     /// # Safety
-    /// When supplied with appropriate function names, `load` must yield function pointers that
-    /// comply with the signature and semantics specified by Vukan 1.0.
-    pub unsafe fn new_custom<Load>(
-        mut lib: L,
-        mut load: Load,
-    ) -> std::result::Result<Self, MissingEntryPoint>
-    where
-        Load: FnMut(&mut L, &::std::ffi::CStr) -> *const c_void,
-    {
-        // Bypass the normal StaticFn::load so we can return an error
-        let static_fn = vk::StaticFn::load_checked(|name| load(&mut lib, name))?;
-        Ok(Self::from_static_fn(lib, static_fn))
+    /// `dlopen`ing native libraries is inherently unsafe. The safety guidelines
+    /// for [`Library::new()`] and [`Library::get()`] apply here.
+    ///
+    /// ```no_run
+    /// use ash::{vk, Entry};
+    /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
+    /// let entry = unsafe { Entry::load()? };
+    /// let app_info = vk::ApplicationInfo {
+    ///     api_version: vk::make_api_version(0, 1, 0, 0),
+    ///     ..Default::default()
+    /// };
+    /// let create_info = vk::InstanceCreateInfo {
+    ///     p_application_info: &app_info,
+    ///     ..Default::default()
+    /// };
+    /// let instance = unsafe { entry.create_instance(&create_info, None)? };
+    /// # Ok(()) }
+    /// ```
+    #[cfg(feature = "loaded")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "loaded")))]
+    pub unsafe fn load() -> Result<Self, LoadingError> {
+        #[cfg(windows)]
+        const LIB_PATH: &str = "vulkan-1.dll";
+
+        #[cfg(all(
+            unix,
+            not(any(target_os = "macos", target_os = "ios", target_os = "android"))
+        ))]
+        const LIB_PATH: &str = "libvulkan.so.1";
+
+        #[cfg(target_os = "android")]
+        const LIB_PATH: &str = "libvulkan.so";
+
+        #[cfg(any(target_os = "macos", target_os = "ios"))]
+        const LIB_PATH: &str = "libvulkan.dylib";
+
+        Self::load_from(LIB_PATH)
+    }
+
+    /// Load Vulkan library at `path`
+    ///
+    /// # Safety
+    /// `dlopen`ing native libraries is inherently unsafe. The safety guidelines
+    /// for [`Library::new()`] and [`Library::get()`] apply here.
+    #[cfg(feature = "loaded")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "loaded")))]
+    pub unsafe fn load_from(path: impl AsRef<OsStr>) -> Result<Self, LoadingError> {
+        let lib = Library::new(path)
+            .map_err(LoadingError::LibraryLoadFailure)
+            .map(Arc::new)?;
+
+        let static_fn = vk::StaticFn::load_checked(|name| {
+            lib.get(name.to_bytes_with_nul())
+                .map(|symbol| *symbol)
+                .unwrap_or(ptr::null_mut())
+        })?;
+
+        Ok(Self {
+            _lib_guard: Some(lib),
+            ..Self::from_static_fn(static_fn)
+        })
     }
 
     /// Load entry points based on an already-loaded [`vk::StaticFn`]
     ///
     /// # Safety
     /// `static_fn` must contain valid function pointers that comply with the semantics specified by
-    /// Vulkan 1.0.
-    pub unsafe fn from_static_fn(lib: L, static_fn: vk::StaticFn) -> Self {
+    /// Vulkan 1.0, which must remain valid for at least the lifetime of the returned [`Entry`].
+    pub unsafe fn from_static_fn(static_fn: vk::StaticFn) -> Self {
         let load_fn = |name: &std::ffi::CStr| unsafe {
             mem::transmute(static_fn.get_instance_proc_addr(vk::Instance::null(), name.as_ptr()))
         };
@@ -56,12 +140,13 @@ impl<L> EntryCustom<L> {
         let entry_fn_1_1 = vk::EntryFnV1_1::load(load_fn);
         let entry_fn_1_2 = vk::EntryFnV1_2::load(load_fn);
 
-        EntryCustom {
+        Self {
             static_fn,
             entry_fn_1_0,
             entry_fn_1_1,
             entry_fn_1_2,
-            lib,
+            #[cfg(feature = "loaded")]
+            _lib_guard: None,
         }
     }
 
@@ -179,7 +264,7 @@ impl<L> EntryCustom<L> {
 
 /// Vulkan core 1.1
 #[allow(non_camel_case_types)]
-impl<L> EntryCustom<L> {
+impl Entry {
     pub fn fp_v1_1(&self) -> &vk::EntryFnV1_1 {
         &self.entry_fn_1_1
     }
@@ -200,9 +285,16 @@ impl<L> EntryCustom<L> {
 
 /// Vulkan core 1.2
 #[allow(non_camel_case_types)]
-impl<L> EntryCustom<L> {
+impl Entry {
     pub fn fp_v1_2(&self) -> &vk::EntryFnV1_2 {
         &self.entry_fn_1_2
+    }
+}
+
+#[cfg(feature = "linked")]
+impl Default for Entry {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
@@ -236,3 +328,50 @@ impl std::fmt::Display for MissingEntryPoint {
     }
 }
 impl std::error::Error for MissingEntryPoint {}
+
+#[cfg(feature = "linked")]
+extern "system" {
+    fn vkGetInstanceProcAddr(instance: vk::Instance, name: *const c_char)
+        -> vk::PFN_vkVoidFunction;
+}
+
+#[cfg(feature = "loaded")]
+mod loaded {
+    use std::error::Error;
+    use std::fmt;
+
+    use super::*;
+
+    #[derive(Debug)]
+    #[cfg_attr(docsrs, doc(cfg(feature = "loaded")))]
+    pub enum LoadingError {
+        LibraryLoadFailure(libloading::Error),
+        MissingEntryPoint(MissingEntryPoint),
+    }
+
+    impl fmt::Display for LoadingError {
+        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+            match self {
+                LoadingError::LibraryLoadFailure(err) => fmt::Display::fmt(err, f),
+                LoadingError::MissingEntryPoint(err) => fmt::Display::fmt(err, f),
+            }
+        }
+    }
+
+    impl Error for LoadingError {
+        fn source(&self) -> Option<&(dyn Error + 'static)> {
+            Some(match self {
+                LoadingError::LibraryLoadFailure(err) => err,
+                LoadingError::MissingEntryPoint(err) => err,
+            })
+        }
+    }
+
+    impl From<MissingEntryPoint> for LoadingError {
+        fn from(err: MissingEntryPoint) -> Self {
+            LoadingError::MissingEntryPoint(err)
+        }
+    }
+}
+#[cfg(feature = "loaded")]
+pub use self::loaded::*;

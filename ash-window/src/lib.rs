@@ -1,4 +1,4 @@
-use ash::{extensions::khr, prelude::*, vk, EntryCustom, Instance};
+use ash::{extensions::khr, prelude::*, vk, Entry, Instance};
 use raw_window_handle::{HasRawWindowHandle, RawWindowHandle};
 use std::ffi::CStr;
 
@@ -14,8 +14,8 @@ use ash::extensions::ext; // portability extensions
 /// In order for the created [`vk::SurfaceKHR`] to be valid for the duration of its
 /// usage, the [`Instance`] this was called on must be dropped later than the
 /// resulting [`vk::SurfaceKHR`].
-pub unsafe fn create_surface<L>(
-    entry: &EntryCustom<L>,
+pub unsafe fn create_surface(
+    entry: &Entry,
     instance: &Instance,
     window_handle: &dyn HasRawWindowHandle,
     allocation_callbacks: Option<&vk::AllocationCallbacks>,
