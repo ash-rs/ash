@@ -34,7 +34,7 @@
 //! function names into function pointers.
 
 pub use crate::device::Device;
-pub use crate::entry::{EntryCustom, InstanceError};
+pub use crate::entry::EntryCustom;
 #[cfg(feature = "loaded")]
 pub use crate::entry_libloading::{LoadingError, RuntimeLoadedEntry};
 #[cfg(feature = "linked")]

@@ -2,9 +2,7 @@ use crate::instance::Instance;
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use std::error::Error;
 use std::ffi::CStr;
-use std::fmt;
 use std::mem;
 use std::os::raw::c_char;
 use std::os::raw::c_void;
@@ -121,7 +119,7 @@ impl<L> EntryCustom<L> {
         &self,
         create_info: &vk::InstanceCreateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
-    ) -> Result<Instance, InstanceError> {
+    ) -> VkResult<Instance> {
         let mut instance = mem::zeroed();
         self.entry_fn_1_0
             .create_instance(
@@ -129,8 +127,7 @@ impl<L> EntryCustom<L> {
                 allocation_callbacks.as_raw_ptr(),
                 &mut instance,
             )
-            .result()
-            .map_err(InstanceError::VkError)?;
+            .result()?;
         Ok(Instance::load(&self.static_fn, instance))
     }
 
@@ -208,23 +205,6 @@ impl<L> EntryCustom<L> {
         &self.entry_fn_1_2
     }
 }
-
-#[derive(Clone, Debug)]
-pub enum InstanceError {
-    LoadError(Vec<&'static str>),
-    VkError(vk::Result),
-}
-
-impl fmt::Display for InstanceError {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        match self {
-            InstanceError::LoadError(e) => write!(f, "{}", e.join("; ")),
-            InstanceError::VkError(e) => write!(f, "{}", e),
-        }
-    }
-}
-
-impl Error for InstanceError {}
 
 impl vk::StaticFn {
     pub fn load_checked<F>(mut _f: F) -> Result<Self, MissingEntryPoint>
