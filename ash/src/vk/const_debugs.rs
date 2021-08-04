@@ -5419,15 +5419,15 @@ impl fmt::Debug for VideoBeginCodingFlagsKHR {
         debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Debug for VideoCapabilitiesFlagsKHR {
+impl fmt::Debug for VideoCapabilityFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                VideoCapabilitiesFlagsKHR::PROTECTED_CONTENT.0,
+                VideoCapabilityFlagsKHR::PROTECTED_CONTENT.0,
                 "PROTECTED_CONTENT",
             ),
             (
-                VideoCapabilitiesFlagsKHR::SEPARATE_REFERENCE_IMAGES.0,
+                VideoCapabilityFlagsKHR::SEPARATE_REFERENCE_IMAGES.0,
                 "SEPARATE_REFERENCE_IMAGES",
             ),
         ];
@@ -5512,20 +5512,20 @@ impl fmt::Debug for VideoDecodeH264CreateFlagsEXT {
         debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Debug for VideoDecodeH264FieldLayoutFlagsEXT {
+impl fmt::Debug for VideoDecodeH264PictureLayoutFlagsEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                VideoDecodeH264FieldLayoutFlagsEXT::PROGRESSIVE_PICTURES_ONLY.0,
-                "PROGRESSIVE_PICTURES_ONLY",
+                VideoDecodeH264PictureLayoutFlagsEXT::PROGRESSIVE.0,
+                "PROGRESSIVE",
             ),
             (
-                VideoDecodeH264FieldLayoutFlagsEXT::LINE_INTERLACED_PLANE.0,
-                "LINE_INTERLACED_PLANE",
+                VideoDecodeH264PictureLayoutFlagsEXT::INTERLACED_INTERLEAVED_LINES.0,
+                "INTERLACED_INTERLEAVED_LINES",
             ),
             (
-                VideoDecodeH264FieldLayoutFlagsEXT::SEPARATE_INTERLACED_PLANE.0,
-                "SEPARATE_INTERLACED_PLANE",
+                VideoDecodeH264PictureLayoutFlagsEXT::INTERLACED_SEPARATE_PLANES.0,
+                "INTERLACED_SEPARATE_PLANES",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -5546,45 +5546,45 @@ impl fmt::Debug for VideoEncodeFlagsKHR {
         debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Debug for VideoEncodeH264CapabilitiesFlagsEXT {
+impl fmt::Debug for VideoEncodeH264CapabilityFlagsEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (VideoEncodeH264CapabilitiesFlagsEXT::CABAC.0, "CABAC"),
-            (VideoEncodeH264CapabilitiesFlagsEXT::CAVLC.0, "CAVLC"),
+            (VideoEncodeH264CapabilityFlagsEXT::CABAC.0, "CABAC"),
+            (VideoEncodeH264CapabilityFlagsEXT::CAVLC.0, "CAVLC"),
             (
-                VideoEncodeH264CapabilitiesFlagsEXT::WEIGHTED_BI_PRED_IMPLICIT.0,
+                VideoEncodeH264CapabilityFlagsEXT::WEIGHTED_BI_PRED_IMPLICIT.0,
                 "WEIGHTED_BI_PRED_IMPLICIT",
             ),
             (
-                VideoEncodeH264CapabilitiesFlagsEXT::TRANSFORM_8X8.0,
+                VideoEncodeH264CapabilityFlagsEXT::TRANSFORM_8X8.0,
                 "TRANSFORM_8X8",
             ),
             (
-                VideoEncodeH264CapabilitiesFlagsEXT::CHROMA_QP_OFFSET.0,
+                VideoEncodeH264CapabilityFlagsEXT::CHROMA_QP_OFFSET.0,
                 "CHROMA_QP_OFFSET",
             ),
             (
-                VideoEncodeH264CapabilitiesFlagsEXT::SECOND_CHROMA_QP_OFFSET.0,
+                VideoEncodeH264CapabilityFlagsEXT::SECOND_CHROMA_QP_OFFSET.0,
                 "SECOND_CHROMA_QP_OFFSET",
             ),
             (
-                VideoEncodeH264CapabilitiesFlagsEXT::DEBLOCKING_FILTER_DISABLED.0,
+                VideoEncodeH264CapabilityFlagsEXT::DEBLOCKING_FILTER_DISABLED.0,
                 "DEBLOCKING_FILTER_DISABLED",
             ),
             (
-                VideoEncodeH264CapabilitiesFlagsEXT::DEBLOCKING_FILTER_ENABLED.0,
+                VideoEncodeH264CapabilityFlagsEXT::DEBLOCKING_FILTER_ENABLED.0,
                 "DEBLOCKING_FILTER_ENABLED",
             ),
             (
-                VideoEncodeH264CapabilitiesFlagsEXT::DEBLOCKING_FILTER_PARTIAL.0,
+                VideoEncodeH264CapabilityFlagsEXT::DEBLOCKING_FILTER_PARTIAL.0,
                 "DEBLOCKING_FILTER_PARTIAL",
             ),
             (
-                VideoEncodeH264CapabilitiesFlagsEXT::MULTIPLE_SLICE_PER_FRAME.0,
+                VideoEncodeH264CapabilityFlagsEXT::MULTIPLE_SLICE_PER_FRAME.0,
                 "MULTIPLE_SLICE_PER_FRAME",
             ),
             (
-                VideoEncodeH264CapabilitiesFlagsEXT::EVENLY_DISTRIBUTED_SLICE_SIZE.0,
+                VideoEncodeH264CapabilityFlagsEXT::EVENLY_DISTRIBUTED_SLICE_SIZE.0,
                 "EVENLY_DISTRIBUTED_SLICE_SIZE",
             ),
         ];

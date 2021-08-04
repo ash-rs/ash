@@ -2398,7 +2398,7 @@ impl KhrVideoQueueFn {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_video_queue\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 1u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceVideoCapabilitiesKHR = unsafe extern "system" fn(
@@ -4072,7 +4072,7 @@ impl ExtVideoEncodeH264Fn {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_video_encode_h264\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 1u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
 pub struct ExtVideoEncodeH264Fn {}
@@ -4150,7 +4150,7 @@ impl ExtVideoDecodeH264Fn {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_video_decode_h264\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 1u32;
+    pub const SPEC_VERSION: u32 = 3u32;
 }
 #[derive(Clone)]
 pub struct ExtVideoDecodeH264Fn {}
@@ -25617,5 +25617,24 @@ impl KhrExtension421Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         KhrExtension421Fn {}
+    }
+}
+impl ExtExtension422Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_422\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct ExtExtension422Fn {}
+unsafe impl Send for ExtExtension422Fn {}
+unsafe impl Sync for ExtExtension422Fn {}
+impl ExtExtension422Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ExtExtension422Fn {}
     }
 }

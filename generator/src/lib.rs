@@ -1394,14 +1394,6 @@ pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
         .unwrap_or_else(|| {
             if enum_name == "VkResult" || is_enum_variant_with_typo(variant_name) {
                 variant_name.strip_prefix("VK").unwrap()
-            } else if variant_name == "VK_VIDEO_DECODE_H264_PROGRESSIVE_PICTURES_ONLY" {
-                // https://github.com/KhronosGroup/Vulkan-Docs/issues/1531
-                "_PROGRESSIVE_PICTURES_ONLY"
-            } else if struct_name == "VK_VIDEO_ENCODE_H264_CAPABILITIES" {
-                // https://github.com/KhronosGroup/Vulkan-Docs/issues/1531
-                variant_name
-                    .strip_prefix("VK_VIDEO_ENCODE_H264_CAPABILITY")
-                    .unwrap()
             } else {
                 panic!(
                     "Failed to strip {} prefix from enum variant {}",

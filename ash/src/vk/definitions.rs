@@ -53,7 +53,7 @@ pub const API_VERSION_1_0: u32 = make_api_version(0, 1, 0, 0);
 pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_API_VERSION_1_2.html>"]
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
-pub const HEADER_VERSION: u32 = 186u32;
+pub const HEADER_VERSION: u32 = 187u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 2, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSampleMask.html>"]
@@ -46693,7 +46693,7 @@ impl<'a> VideoProfileKHRBuilder<'a> {
 pub struct VideoCapabilitiesKHR {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
-    pub capability_flags: VideoCapabilitiesFlagsKHR,
+    pub capability_flags: VideoCapabilityFlagsKHR,
     pub min_bitstream_buffer_offset_alignment: DeviceSize,
     pub min_bitstream_buffer_size_alignment: DeviceSize,
     pub video_picture_extent_granularity: Extent2D,
@@ -46707,7 +46707,7 @@ impl ::std::default::Default for VideoCapabilitiesKHR {
         VideoCapabilitiesKHR {
             s_type: StructureType::VIDEO_CAPABILITIES_KHR,
             p_next: ::std::ptr::null_mut(),
-            capability_flags: VideoCapabilitiesFlagsKHR::default(),
+            capability_flags: VideoCapabilityFlagsKHR::default(),
             min_bitstream_buffer_offset_alignment: DeviceSize::default(),
             min_bitstream_buffer_size_alignment: DeviceSize::default(),
             video_picture_extent_granularity: Extent2D::default(),
@@ -46744,7 +46744,7 @@ impl<'a> ::std::ops::DerefMut for VideoCapabilitiesKHRBuilder<'a> {
     }
 }
 impl<'a> VideoCapabilitiesKHRBuilder<'a> {
-    pub fn capability_flags(mut self, capability_flags: VideoCapabilitiesFlagsKHR) -> Self {
+    pub fn capability_flags(mut self, capability_flags: VideoCapabilityFlagsKHR) -> Self {
         self.inner.capability_flags = capability_flags;
         self
     }
@@ -47213,7 +47213,7 @@ pub struct VideoDecodeH264ProfileEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub std_profile_idc: StdVideoH264ProfileIdc,
-    pub field_layout: VideoDecodeH264FieldLayoutFlagsEXT,
+    pub picture_layout: VideoDecodeH264PictureLayoutFlagsEXT,
 }
 impl ::std::default::Default for VideoDecodeH264ProfileEXT {
     fn default() -> VideoDecodeH264ProfileEXT {
@@ -47221,7 +47221,7 @@ impl ::std::default::Default for VideoDecodeH264ProfileEXT {
             s_type: StructureType::VIDEO_DECODE_H264_PROFILE_EXT,
             p_next: ::std::ptr::null(),
             std_profile_idc: StdVideoH264ProfileIdc::default(),
-            field_layout: VideoDecodeH264FieldLayoutFlagsEXT::default(),
+            picture_layout: VideoDecodeH264PictureLayoutFlagsEXT::default(),
         }
     }
 }
@@ -47256,8 +47256,8 @@ impl<'a> VideoDecodeH264ProfileEXTBuilder<'a> {
         self.inner.std_profile_idc = std_profile_idc;
         self
     }
-    pub fn field_layout(mut self, field_layout: VideoDecodeH264FieldLayoutFlagsEXT) -> Self {
-        self.inner.field_layout = field_layout;
+    pub fn picture_layout(mut self, picture_layout: VideoDecodeH264PictureLayoutFlagsEXT) -> Self {
+        self.inner.picture_layout = picture_layout;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -48883,7 +48883,7 @@ impl<'a> VideoEncodeRateControlInfoKHRBuilder<'a> {
 pub struct VideoEncodeH264CapabilitiesEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: VideoEncodeH264CapabilitiesFlagsEXT,
+    pub flags: VideoEncodeH264CapabilityFlagsEXT,
     pub input_mode_flags: VideoEncodeH264InputModeFlagsEXT,
     pub output_mode_flags: VideoEncodeH264OutputModeFlagsEXT,
     pub min_picture_size_in_mbs: Extent2D,
@@ -48900,7 +48900,7 @@ impl ::std::default::Default for VideoEncodeH264CapabilitiesEXT {
         VideoEncodeH264CapabilitiesEXT {
             s_type: StructureType::VIDEO_ENCODE_H264_CAPABILITIES_EXT,
             p_next: ::std::ptr::null(),
-            flags: VideoEncodeH264CapabilitiesFlagsEXT::default(),
+            flags: VideoEncodeH264CapabilityFlagsEXT::default(),
             input_mode_flags: VideoEncodeH264InputModeFlagsEXT::default(),
             output_mode_flags: VideoEncodeH264OutputModeFlagsEXT::default(),
             min_picture_size_in_mbs: Extent2D::default(),
@@ -48941,7 +48941,7 @@ impl<'a> ::std::ops::DerefMut for VideoEncodeH264CapabilitiesEXTBuilder<'a> {
     }
 }
 impl<'a> VideoEncodeH264CapabilitiesEXTBuilder<'a> {
-    pub fn flags(mut self, flags: VideoEncodeH264CapabilitiesFlagsEXT) -> Self {
+    pub fn flags(mut self, flags: VideoEncodeH264CapabilityFlagsEXT) -> Self {
         self.inner.flags = flags;
         self
     }
