@@ -353,6 +353,7 @@ impl fmt::Debug for AttachmentLoadOp {
             Self::LOAD => Some("LOAD"),
             Self::CLEAR => Some("CLEAR"),
             Self::DONT_CARE => Some("DONT_CARE"),
+            Self::NONE_EXT => Some("NONE_EXT"),
             _ => None,
         };
         if let Some(x) = name {
@@ -367,7 +368,7 @@ impl fmt::Debug for AttachmentStoreOp {
         let name = match *self {
             Self::STORE => Some("STORE"),
             Self::DONT_CARE => Some("DONT_CARE"),
-            Self::NONE_QCOM => Some("NONE_QCOM"),
+            Self::NONE_EXT => Some("NONE_EXT"),
             _ => None,
         };
         if let Some(x) = name {
@@ -1324,6 +1325,7 @@ impl fmt::Debug for DriverId {
             Self::MOLTENVK => Some("MOLTENVK"),
             Self::COREAVI_PROPRIETARY => Some("COREAVI_PROPRIETARY"),
             Self::JUICE_PROPRIETARY => Some("JUICE_PROPRIETARY"),
+            Self::VERISILICON_PROPRIETARY => Some("VERISILICON_PROPRIETARY"),
             _ => None,
         };
         if let Some(x) = name {
@@ -2031,8 +2033,8 @@ impl fmt::Debug for GeometryInstanceFlagsKHR {
                 "TRIANGLE_FACING_CULL_DISABLE",
             ),
             (
-                GeometryInstanceFlagsKHR::TRIANGLE_FRONT_COUNTERCLOCKWISE.0,
-                "TRIANGLE_FRONT_COUNTERCLOCKWISE",
+                GeometryInstanceFlagsKHR::TRIANGLE_FLIP_FACING.0,
+                "TRIANGLE_FLIP_FACING",
             ),
             (GeometryInstanceFlagsKHR::FORCE_OPAQUE.0, "FORCE_OPAQUE"),
             (

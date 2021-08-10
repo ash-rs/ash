@@ -11198,7 +11198,7 @@ impl KhrAccelerationStructureFn {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_acceleration_structure\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 11u32;
+    pub const SPEC_VERSION: u32 = 12u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateAccelerationStructureKHR = unsafe extern "system" fn(
@@ -21434,7 +21434,7 @@ impl QcomRenderPassStoreOpsFn {
 }
 #[doc = "Generated from 'VK_QCOM_render_pass_store_ops'"]
 impl AttachmentStoreOp {
-    pub const NONE_QCOM: Self = Self(1_000_301_000);
+    pub const NONE_QCOM: Self = Self::NONE_EXT;
 }
 impl QcomExtension303Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -25220,24 +25220,32 @@ impl JuiceExtension400Fn {
         JuiceExtension400Fn {}
     }
 }
-impl KhrExtension401Fn {
+impl ExtLoadStoreOpNoneFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_401\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_load_store_op_none\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct KhrExtension401Fn {}
-unsafe impl Send for KhrExtension401Fn {}
-unsafe impl Sync for KhrExtension401Fn {}
-impl KhrExtension401Fn {
+pub struct ExtLoadStoreOpNoneFn {}
+unsafe impl Send for ExtLoadStoreOpNoneFn {}
+unsafe impl Sync for ExtLoadStoreOpNoneFn {}
+impl ExtLoadStoreOpNoneFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExtension401Fn {}
+        ExtLoadStoreOpNoneFn {}
     }
+}
+#[doc = "Generated from 'VK_EXT_load_store_op_none'"]
+impl AttachmentLoadOp {
+    pub const NONE_EXT: Self = Self(1_000_400_000);
+}
+#[doc = "Generated from 'VK_EXT_load_store_op_none'"]
+impl AttachmentStoreOp {
+    pub const NONE_EXT: Self = Self(1_000_301_000);
 }
 impl FbExtension402Fn {
     pub fn name() -> &'static ::std::ffi::CStr {

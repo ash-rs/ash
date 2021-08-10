@@ -857,9 +857,10 @@ pub struct GeometryInstanceFlagsKHR(pub(crate) Flags);
 vk_bitflags_wrapped!(GeometryInstanceFlagsKHR, 0b1111, Flags);
 impl GeometryInstanceFlagsKHR {
     pub const TRIANGLE_FACING_CULL_DISABLE: Self = Self(0b1);
-    pub const TRIANGLE_FRONT_COUNTERCLOCKWISE: Self = Self(0b10);
+    pub const TRIANGLE_FLIP_FACING: Self = Self(0b10);
     pub const FORCE_OPAQUE: Self = Self(0b100);
     pub const FORCE_NO_OPAQUE: Self = Self(0b1000);
+    pub const TRIANGLE_FRONT_COUNTERCLOCKWISE: Self = Self::TRIANGLE_FLIP_FACING;
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]

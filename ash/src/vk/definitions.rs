@@ -41659,8 +41659,8 @@ impl<'a> ::std::ops::DerefMut for AccelerationStructureVersionInfoKHRBuilder<'a>
     }
 }
 impl<'a> AccelerationStructureVersionInfoKHRBuilder<'a> {
-    pub fn version_data(mut self, version_data: &'a [u8; 2 * UUID_SIZE]) -> Self {
-        self.inner.p_version_data = version_data.as_ptr();
+    pub fn version_data(mut self, version_data: [u8]) -> Self {
+        self.inner.p_version_data = version_data;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
