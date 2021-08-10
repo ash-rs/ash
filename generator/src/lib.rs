@@ -671,6 +671,10 @@ pub trait FieldExt {
 
     /// Whether this is C's `void` type (not to be mistaken with a void _pointer_!)
     fn is_void(&self) -> bool;
+
+    /// Exceptions for pointers to static-sized arrays,
+    /// `vk.xml` does not annotate this.
+    fn is_pointer_to_static_sized_array(&self) -> bool;
 }
 
 pub trait ToTokens {
@@ -856,7 +860,7 @@ impl FieldExt for vkxml::Field {
                     .expect("Should have size");
                 // Make sure we also rename the constant, that is
                 // used inside the static array
-                let size: TokenStream = constant_name(size).parse().unwrap();
+                let size = convert_c_expression(size, &BTreeMap::new());
                 // arrays in c are always passed as a pointer
                 if is_ffi_param {
                     quote!(*const [#ty; #size])
@@ -866,13 +870,24 @@ impl FieldExt for vkxml::Field {
             }
             _ => {
                 let pointer = self.reference.as_ref().map(|r| r.to_tokens(self.is_const));
-                quote!(#pointer #ty)
+                if self.is_pointer_to_static_sized_array() {
+                    let size = self.c_size.as_ref().expect("Should have c_size");
+                    let size = convert_c_expression(size, &BTreeMap::new());
+                    quote!(#pointer [#ty; #size])
+                } else {
+                    quote!(#pointer #ty)
+                }
             }
         }
     }
 
     fn is_void(&self) -> bool {
         self.basetype == "void" && self.reference.is_none()
+    }
+
+    fn is_pointer_to_static_sized_array(&self) -> bool {
+        matches!(self.array, Some(vkxml::ArrayType::Dynamic))
+            && self.name.as_deref() == Some("pVersionData")
     }
 }
 
@@ -1769,21 +1784,21 @@ pub fn derive_debug(
 }
 
 pub fn derive_setters(
-    _struct: &vkxml::Struct,
+    struct_: &vkxml::Struct,
     root_structs: &HashSet<Ident, impl BuildHasher>,
 ) -> Option<TokenStream> {
-    if &_struct.name == "VkBaseInStructure"
-        || &_struct.name == "VkBaseOutStructure"
-        || &_struct.name == "VkTransformMatrixKHR"
-        || &_struct.name == "VkAccelerationStructureInstanceKHR"
+    if &struct_.name == "VkBaseInStructure"
+        || &struct_.name == "VkBaseOutStructure"
+        || &struct_.name == "VkTransformMatrixKHR"
+        || &struct_.name == "VkAccelerationStructureInstanceKHR"
     {
         return None;
     }
 
-    let name = name_to_tokens(&_struct.name);
-    let name_builder = name_to_tokens(&(_struct.name.clone() + "Builder"));
+    let name = name_to_tokens(&struct_.name);
+    let name_builder = name_to_tokens(&(struct_.name.clone() + "Builder"));
 
-    let members = _struct.elements.iter().filter_map(|elem| match *elem {
+    let members = struct_.elements.iter().filter_map(|elem| match *elem {
         vkxml::StructElement::Member(ref field) => Some(field),
         _ => None,
     });
@@ -1803,17 +1818,16 @@ pub fn derive_setters(
             // Associated _count members
             if field.array.is_some() {
                 if let Some(ref array_size) = field.size {
-                    if !array_size.starts_with("latexmath")
-                        && !nofilter_count_members
-                            .iter()
-                            .any(|&n| n == (_struct.name.clone() + "." + field_name))
+                    if !nofilter_count_members
+                        .iter()
+                        .any(|&n| n == (struct_.name.clone() + "." + field_name))
                     {
                         return Some((*array_size).clone());
                     }
                 }
             }
 
-            // VkShaderModuleCreateInfo requiers a custom setter
+            // VkShaderModuleCreateInfo requires a custom setter
             if field_name == "codeSize" {
                 return Some(field_name.clone());
             }
@@ -1838,7 +1852,7 @@ pub fn derive_setters(
         let param_ident_short = format_ident!("{}", &param_ident_short);
 
         if let Some(name) = field.name.as_ref() {
-            // Fiter
+            // Filter
             if filter_members.iter().any(|n| *n == *name) {
                 return None;
             }
@@ -1898,49 +1912,47 @@ pub fn derive_setters(
 
             if matches!(field.array, Some(vkxml::ArrayType::Dynamic)) {
                 if let Some(ref array_size) = field.size {
-                    if !array_size.starts_with("latexmath") {
-                        let mut slice_param_ty_tokens = field.safe_type_tokens(quote!('a));
+                    let mut slice_param_ty_tokens = field.safe_type_tokens(quote!('a));
 
-                        let mut ptr = if field.is_const {
-                            quote!(.as_ptr())
-                        } else {
-                            quote!(.as_mut_ptr())
-                        };
+                    let mut ptr = if field.is_const {
+                        quote!(.as_ptr())
+                    } else {
+                        quote!(.as_mut_ptr())
+                    };
 
-                        // Interpret void array as byte array
-                        if field.basetype == "void" && matches!(field.reference, Some(vkxml::ReferenceType::Pointer)) {
-                            let mutable = if field.is_const { quote!(const) } else { quote!(mut) };
+                    // Interpret void array as byte array
+                    if field.basetype == "void" && matches!(field.reference, Some(vkxml::ReferenceType::Pointer)) {
+                        let mutable = if field.is_const { quote!(const) } else { quote!(mut) };
 
-                            slice_param_ty_tokens = quote!([u8]);
-                            ptr = quote!(#ptr as *#mutable c_void);
-                        };
+                        slice_param_ty_tokens = quote!([u8]);
+                        ptr = quote!(#ptr as *#mutable c_void);
+                    };
 
-                        let mutable = if field.is_const { quote!() } else { quote!(mut) };
+                    let set_size_stmt = if field.is_pointer_to_static_sized_array() {
+                        // this is a pointer to a piece of memory with statically known size.
+                        let array_size = field.c_size.as_ref().unwrap();
+                        let c_size = convert_c_expression(array_size, &BTreeMap::new());
+                        let inner_type = field.inner_type_tokens();
+                        let mutable = if field.is_const { quote!(const) } else { quote!(mut) };
 
-                        // Apply some heuristics to determine whether the size is an expression.
-                        // If so, this is a pointer to a piece of memory with statically known size.
-                        let set_size_stmt = if array_size.contains("ename:") || array_size.contains('*') {
-                            // c_size should contain the same minus `ename:`-prefixed identifiers
-                            let array_size = field.c_size.as_ref().unwrap_or(array_size);
-                            let c_size = convert_c_expression(array_size, &BTreeMap::new());
-                            let inner_type = field.inner_type_tokens();
+                        slice_param_ty_tokens = quote!([#inner_type; #c_size]);
+                        ptr = quote!(as *#mutable #slice_param_ty_tokens);
 
-                            slice_param_ty_tokens = quote!([#inner_type; #c_size]);
+                        quote!()
+                    } else {
+                        let array_size_ident = format_ident!("{}", array_size.to_snake_case().as_str());
+                        quote!(self.inner.#array_size_ident = #param_ident_short.len() as _;)
+                    };
 
-                            quote!()
-                        } else {
-                            let array_size_ident = format_ident!("{}", array_size.to_snake_case().as_str());
-                            quote!(self.inner.#array_size_ident = #param_ident_short.len() as _;)
-                        };
+                    let mutable = if field.is_const { quote!() } else { quote!(mut) };
 
-                        return Some(quote! {
-                            pub fn #param_ident_short(mut self, #param_ident_short: &'a #mutable #slice_param_ty_tokens) -> Self {
-                                #set_size_stmt
-                                self.inner.#param_ident = #param_ident_short#ptr;
-                                self
-                            }
-                        });
-                    }
+                    return Some(quote! {
+                        pub fn #param_ident_short(mut self, #param_ident_short: &'a #mutable #slice_param_ty_tokens) -> Self {
+                            #set_size_stmt
+                            self.inner.#param_ident = #param_ident_short#ptr;
+                            self
+                        }
+                    });
                 }
             }
         }
@@ -2013,7 +2025,7 @@ pub fn derive_setters(
     };
 
     // If the struct extends something we need to implement the traits.
-    let impl_extend_trait = _struct
+    let impl_extend_trait = struct_
         .extends
         .iter()
         .flat_map(|extends| extends.split(','))
