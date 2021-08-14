@@ -219,7 +219,10 @@ impl ExampleBase {
                 .map(|ext| ext.as_ptr())
                 .collect::<Vec<_>>();
             extension_names_raw.push(DebugUtils::name().as_ptr());
-
+            #[cfg(any(target_os = "macos", target_os = "ios"))]
+            {
+                extension_names_raw.push(vk::KhrGetPhysicalDeviceProperties2Fn::name().as_ptr());
+            }
             let appinfo = vk::ApplicationInfo::builder()
                 .application_name(&app_name)
                 .application_version(0)
@@ -283,11 +286,31 @@ impl ExampleBase {
                 .next()
                 .expect("Couldn't find suitable device.");
             let queue_family_index = queue_family_index as u32;
-            let device_extension_names_raw = [Swapchain::name().as_ptr()];
+            let device_extension_names_raw = [
+                Swapchain::name().as_ptr(),
+                #[cfg(any(target_os = "macos", target_os = "ios"))]
+                {
+                    vk::KhrPortabilitySubsetFn::name().as_ptr()
+                },
+            ];
             let features = vk::PhysicalDeviceFeatures {
                 shader_clip_distance: 1,
                 ..Default::default()
             };
+
+            let mut _physical_device_portability_subset_features =
+                vk::PhysicalDevicePortabilitySubsetFeaturesKHR::default();
+            #[cfg(any(target_os = "macos", target_os = "ios"))]
+            {
+                let mut physical_device_portability_features =
+                    vk::PhysicalDeviceFeatures2::builder()
+                        .push_next(&mut _physical_device_portability_subset_features);
+                instance.get_physical_device_features2(
+                    pdevice,
+                    &mut physical_device_portability_features,
+                );
+            }
+
             let priorities = [1.0];
 
             let queue_info = [vk::DeviceQueueCreateInfo::builder()
@@ -295,11 +318,15 @@ impl ExampleBase {
                 .queue_priorities(&priorities)
                 .build()];
 
-            let device_create_info = vk::DeviceCreateInfo::builder()
+            let mut device_create_info = vk::DeviceCreateInfo::builder()
                 .queue_create_infos(&queue_info)
                 .enabled_extension_names(&device_extension_names_raw)
                 .enabled_features(&features);
-
+            #[cfg(any(target_os = "macos", target_os = "ios"))]
+            {
+                device_create_info =
+                    device_create_info.push_next(&mut _physical_device_portability_subset_features);
+            }
             let device: Device = instance
                 .create_device(pdevice, &device_create_info, None)
                 .unwrap();
