@@ -35,7 +35,7 @@
 pub use crate::device::Device;
 pub use crate::entry::{EntryCustom, InstanceError};
 #[cfg(feature = "libloading")]
-pub use crate::entry_libloading::{Entry, LoadingError};
+pub use crate::entry_libloading::{Entry, LoadingError, LIB_PATH};
 pub use crate::instance::Instance;
 
 mod device;

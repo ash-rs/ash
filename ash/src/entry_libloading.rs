@@ -8,19 +8,19 @@ use std::ptr;
 use std::sync::Arc;
 
 #[cfg(windows)]
-const LIB_PATH: &str = "vulkan-1.dll";
+pub const LIB_PATH: &str = "vulkan-1.dll";
 
 #[cfg(all(
     unix,
     not(any(target_os = "macos", target_os = "ios", target_os = "android"))
 ))]
-const LIB_PATH: &str = "libvulkan.so.1";
+pub const LIB_PATH: &str = "libvulkan.so.1";
 
 #[cfg(target_os = "android")]
-const LIB_PATH: &str = "libvulkan.so";
+pub const LIB_PATH: &str = "libvulkan.so";
 
 #[cfg(any(target_os = "macos", target_os = "ios"))]
-const LIB_PATH: &str = "libvulkan.dylib";
+pub const LIB_PATH: &str = "libvulkan.dylib";
 
 #[derive(Debug)]
 pub enum LoadingError {
