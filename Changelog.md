@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - ReleaseDate
 
+## [0.33.1] - 2021-08-23
+
 ### Fixed
 
 - util: Zero-initialize result to prevent possible uninit memory read (#470)
