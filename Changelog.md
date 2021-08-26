@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - ReleaseDate
 
+## [0.33.2] - 2021-08-26
+
+### Fixed
+
+- `tooling_info`: Initialize `sType`/`pNext` in `get_physical_device_tool_properties` (#465)
+- Repeatedly call enumeration functions when `VK_INCOMPLETE` is returned (#465)
+
 ## [0.33.1] - 2021-08-23
 
 ### Fixed
