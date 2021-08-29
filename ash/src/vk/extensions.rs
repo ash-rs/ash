@@ -20415,24 +20415,32 @@ impl KhrExtension280Fn {
         KhrExtension280Fn {}
     }
 }
-impl ArmExtension281Fn {
+impl KhrShaderIntegerDotProductFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_ARM_extension_281\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_shader_integer_dot_product\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct ArmExtension281Fn {}
-unsafe impl Send for ArmExtension281Fn {}
-unsafe impl Sync for ArmExtension281Fn {}
-impl ArmExtension281Fn {
+pub struct KhrShaderIntegerDotProductFn {}
+unsafe impl Send for KhrShaderIntegerDotProductFn {}
+unsafe impl Sync for KhrShaderIntegerDotProductFn {}
+impl KhrShaderIntegerDotProductFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ArmExtension281Fn {}
+        KhrShaderIntegerDotProductFn {}
     }
+}
+#[doc = "Generated from 'VK_KHR_shader_integer_dot_product'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_INTEGER_DOT_PRODUCT_FEATURES_KHR: Self = Self(1_000_280_000);
+}
+#[doc = "Generated from 'VK_KHR_shader_integer_dot_product'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_INTEGER_DOT_PRODUCT_PROPERTIES_KHR: Self = Self(1_000_280_001);
 }
 impl ExtTexelBufferAlignmentFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -23527,23 +23535,29 @@ impl ExtVertexAttributeAliasingFn {
         ExtVertexAttributeAliasingFn {}
     }
 }
-impl ExtExtension357Fn {
+impl ExtPrimitiveTopologyListRestartFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_357\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_primitive_topology_list_restart\0")
             .expect("Wrong extension string")
     }
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct ExtExtension357Fn {}
-unsafe impl Send for ExtExtension357Fn {}
-unsafe impl Sync for ExtExtension357Fn {}
-impl ExtExtension357Fn {
+pub struct ExtPrimitiveTopologyListRestartFn {}
+unsafe impl Send for ExtPrimitiveTopologyListRestartFn {}
+unsafe impl Sync for ExtPrimitiveTopologyListRestartFn {}
+impl ExtPrimitiveTopologyListRestartFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension357Fn {}
+        ExtPrimitiveTopologyListRestartFn {}
     }
+}
+#[doc = "Generated from 'VK_EXT_primitive_topology_list_restart'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_PRIMITIVE_TOPOLOGY_LIST_RESTART_FEATURES_EXT: Self =
+        Self(1_000_356_000);
 }
 impl KhrExtension358Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -25645,4 +25659,27 @@ impl ExtExtension422Fn {
     {
         ExtExtension422Fn {}
     }
+}
+impl ExtDisableCubeMapWrapFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_disable_cube_map_wrap\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct ExtDisableCubeMapWrapFn {}
+unsafe impl Send for ExtDisableCubeMapWrapFn {}
+unsafe impl Sync for ExtDisableCubeMapWrapFn {}
+impl ExtDisableCubeMapWrapFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ExtDisableCubeMapWrapFn {}
+    }
+}
+#[doc = "Generated from 'VK_EXT_disable_cube_map_wrap'"]
+impl SamplerCreateFlags {
+    pub const RESERVED_2_EXT: Self = Self(0b100);
 }
