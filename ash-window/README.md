@@ -14,7 +14,7 @@ Interoperability between [`ash`](https://github.com/MaikKlein/ash) and [`raw-win
 ## Usage
 
 ```toml
-ash-window = "0.6"
+ash-window = "0.7"
 ```
 
 The library exposes two functions:
