@@ -53,7 +53,7 @@ pub const API_VERSION_1_0: u32 = make_api_version(0, 1, 0, 0);
 pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_API_VERSION_1_2.html>"]
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
-pub const HEADER_VERSION: u32 = 190u32;
+pub const HEADER_VERSION: u32 = 191u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 2, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSampleMask.html>"]
@@ -34249,6 +34249,69 @@ impl<'a> MemoryPriorityAllocateInfoEXTBuilder<'a> {
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> MemoryPriorityAllocateInfoEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDevicePageableDeviceLocalMemoryFeaturesEXT.html>"]
+pub struct PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub pageable_device_local_memory: Bool32,
+}
+impl ::std::default::Default for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT {
+    fn default() -> PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT {
+        PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT {
+            s_type: StructureType::PHYSICAL_DEVICE_PAGEABLE_DEVICE_LOCAL_MEMORY_FEATURES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            pageable_device_local_memory: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT {
+    pub fn builder<'a>() -> PhysicalDevicePageableDeviceLocalMemoryFeaturesEXTBuilder<'a> {
+        PhysicalDevicePageableDeviceLocalMemoryFeaturesEXTBuilder {
+            inner: PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDevicePageableDeviceLocalMemoryFeaturesEXTBuilder<'a> {
+    inner: PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT {}
+unsafe impl ExtendsDeviceCreateInfo
+    for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT {}
+impl<'a> ::std::ops::Deref for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXTBuilder<'a> {
+    type Target = PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDevicePageableDeviceLocalMemoryFeaturesEXTBuilder<'a> {
+    pub fn pageable_device_local_memory(mut self, pageable_device_local_memory: bool) -> Self {
+        self.inner.pageable_device_local_memory = pageable_device_local_memory.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT {
         self.inner
     }
 }

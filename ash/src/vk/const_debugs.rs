@@ -4894,6 +4894,9 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_MULTI_DRAW_PROPERTIES_EXT => {
                 Some("PHYSICAL_DEVICE_MULTI_DRAW_PROPERTIES_EXT")
             }
+            Self::PHYSICAL_DEVICE_PAGEABLE_DEVICE_LOCAL_MEMORY_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_PAGEABLE_DEVICE_LOCAL_MEMORY_FEATURES_EXT")
+            }
             Self::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES => {
                 Some("PHYSICAL_DEVICE_SUBGROUP_PROPERTIES")
             }
@@ -5490,7 +5493,6 @@ impl fmt::Debug for VideoCodingControlFlagsKHR {
 impl fmt::Debug for VideoCodingQualityPresetFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (VideoCodingQualityPresetFlagsKHR::DEFAULT.0, "DEFAULT"),
             (VideoCodingQualityPresetFlagsKHR::NORMAL.0, "NORMAL"),
             (VideoCodingQualityPresetFlagsKHR::POWER.0, "POWER"),
             (VideoCodingQualityPresetFlagsKHR::QUALITY.0, "QUALITY"),

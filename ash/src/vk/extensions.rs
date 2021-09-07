@@ -23583,6 +23583,7 @@ impl ExtExtension359Fn {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_359\0")
             .expect("Wrong extension string")
     }
+    pub const SPEC_VERSION: u32 = 0u32;
 }
 #[derive(Clone)]
 pub struct ExtExtension359Fn {}
@@ -23601,6 +23602,7 @@ impl ExtExtension360Fn {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_360\0")
             .expect("Wrong extension string")
     }
+    pub const SPEC_VERSION: u32 = 0u32;
 }
 #[derive(Clone)]
 pub struct ExtExtension360Fn {}
@@ -23619,6 +23621,7 @@ impl KhrExtension361Fn {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_361\0")
             .expect("Wrong extension string")
     }
+    pub const SPEC_VERSION: u32 = 0u32;
 }
 #[derive(Clone)]
 pub struct KhrExtension361Fn {}
@@ -25470,24 +25473,64 @@ impl NvExtension412Fn {
         NvExtension412Fn {}
     }
 }
-impl NvExtension413Fn {
+impl ExtPageableDeviceLocalMemoryFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_413\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_pageable_device_local_memory\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
+#[allow(non_camel_case_types)]
+pub type PFN_vkSetDeviceMemoryPriorityEXT =
+    unsafe extern "system" fn(device: Device, memory: DeviceMemory, priority: f32);
 #[derive(Clone)]
-pub struct NvExtension413Fn {}
-unsafe impl Send for NvExtension413Fn {}
-unsafe impl Sync for NvExtension413Fn {}
-impl NvExtension413Fn {
+pub struct ExtPageableDeviceLocalMemoryFn {
+    pub set_device_memory_priority_ext: PFN_vkSetDeviceMemoryPriorityEXT,
+}
+unsafe impl Send for ExtPageableDeviceLocalMemoryFn {}
+unsafe impl Sync for ExtPageableDeviceLocalMemoryFn {}
+impl ExtPageableDeviceLocalMemoryFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExtension413Fn {}
+        ExtPageableDeviceLocalMemoryFn {
+            set_device_memory_priority_ext: unsafe {
+                unsafe extern "system" fn set_device_memory_priority_ext(
+                    _device: Device,
+                    _memory: DeviceMemory,
+                    _priority: f32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(set_device_memory_priority_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkSetDeviceMemoryPriorityEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    set_device_memory_priority_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkSetDeviceMemoryPriorityEXT.html>"]
+    pub unsafe fn set_device_memory_priority_ext(
+        &self,
+        device: Device,
+        memory: DeviceMemory,
+        priority: f32,
+    ) {
+        (self.set_device_memory_priority_ext)(device, memory, priority)
+    }
+}
+#[doc = "Generated from 'VK_EXT_pageable_device_local_memory'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_PAGEABLE_DEVICE_LOCAL_MEMORY_FEATURES_EXT: Self = Self(1_000_412_000);
 }
 impl NvExtension414Fn {
     pub fn name() -> &'static ::std::ffi::CStr {

@@ -1114,7 +1114,6 @@ impl VideoSessionCreateFlagsKHR {
 pub struct VideoCodingQualityPresetFlagsKHR(pub(crate) Flags);
 vk_bitflags_wrapped!(VideoCodingQualityPresetFlagsKHR, 0b111, Flags);
 impl VideoCodingQualityPresetFlagsKHR {
-    pub const DEFAULT: Self = Self(0);
     pub const NORMAL: Self = Self(0b1);
     pub const POWER: Self = Self(0b10);
     pub const QUALITY: Self = Self(0b100);
