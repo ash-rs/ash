@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - ReleaseDate
 
+## [0.33.3] - 2021-09-08
+
+### Added
+
+- Regenerated with Vulkan-Headers 1.2.191 (#463)
+
 ## [0.33.2] - 2021-08-26
 
 ### Fixed
@@ -209,7 +215,11 @@ flags: vk::CommandPoolCreateFlags::RESET_COMMAND_BUFFER_BIT,
 can write to aligned memory.
 
 
-[Unreleased]: https://github.com/MaikKlein/ash/compare/0.32.0...HEAD
+[Unreleased]: https://github.com/MaikKlein/ash/compare/0.33.3...HEAD
+[0.33.3]: https://github.com/MaikKlein/ash/releases/tag/0.33.3
+[0.33.2]: https://github.com/MaikKlein/ash/releases/tag/0.33.2
+[0.33.1]: https://github.com/MaikKlein/ash/releases/tag/0.33.1
+[0.33.0]: https://github.com/MaikKlein/ash/releases/tag/0.33.0
 [0.32.1]: https://github.com/MaikKlein/ash/releases/tag/0.32.1
 [0.32.0]: https://github.com/MaikKlein/ash/releases/tag/0.32.0
 [0.31.0]: https://github.com/MaikKlein/ash/releases/tag/0.31.0
