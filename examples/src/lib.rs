@@ -7,7 +7,7 @@ use ash::extensions::{
 };
 
 use ash::{vk, Entry};
-pub use ash::{Device, EntryCustom, Instance};
+pub use ash::{Device, Instance};
 use std::borrow::Cow;
 use std::cell::RefCell;
 use std::default::Default;
@@ -204,7 +204,7 @@ impl ExampleBase {
                 ))
                 .build(&events_loop)
                 .unwrap();
-            let entry = Entry::new().unwrap();
+            let entry = Entry::new();
             let app_name = CString::new("VulkanTriangle").unwrap();
 
             let layer_names = [CString::new("VK_LAYER_KHRONOS_validation").unwrap()];

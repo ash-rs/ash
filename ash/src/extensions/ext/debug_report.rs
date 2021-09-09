@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use crate::{EntryCustom, Instance};
+use crate::{Entry, Instance};
 use std::ffi::CStr;
 use std::mem;
 
@@ -12,7 +12,7 @@ pub struct DebugReport {
 }
 
 impl DebugReport {
-    pub fn new<L>(entry: &EntryCustom<L>, instance: &Instance) -> Self {
+    pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let debug_report_fn = vk::ExtDebugReportFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });

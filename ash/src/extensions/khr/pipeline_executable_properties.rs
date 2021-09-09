@@ -1,6 +1,6 @@
 use crate::prelude::*;
 use crate::vk;
-use crate::{EntryCustom, Instance};
+use crate::{Entry, Instance};
 use std::ffi::CStr;
 use std::mem;
 
@@ -11,7 +11,7 @@ pub struct PipelineExecutableProperties {
 }
 
 impl PipelineExecutableProperties {
-    pub fn new<L>(entry: &EntryCustom<L>, instance: &Instance) -> Self {
+    pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let pipeline_executable_properties_fn =
             vk::KhrPipelineExecutablePropertiesFn::load(|name| unsafe {
                 mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))

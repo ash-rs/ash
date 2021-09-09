@@ -16,7 +16,7 @@ jobs:
       - uses: actions-rs/cargo@v1
         with:
           command: check
-          args: --workspace --all-targets
+          args: --workspace --all-targets --all-features
 
   generated:
     name: Generated
@@ -47,6 +47,8 @@ jobs:
     name: Test Suite
     runs-on: ubuntu-latest
     steps:
+      - name: Install Vulkan loader
+        run: sudo apt-get install libvulkan-dev
       - uses: actions/checkout@v1
       - uses: actions-rs/toolchain@v1
         with:

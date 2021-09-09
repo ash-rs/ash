@@ -219,6 +219,11 @@ pub fn create_command_pool(&self,
 let pool = device.create_command_pool(&pool_create_info).unwrap();
 ```
 
+### Optional linking
+
+The default `linked` cargo feature will link your binary with the Vulkan loader directly and expose the infallible `Entry::new`.
+If your application can handle Vulkan being missing at runtime, you can instead enable the `loaded` feature to dynamically load Vulkan with `Entry::load`.
+
 ## Example
 You can find the examples [here](https://github.com/MaikKlein/ash/tree/master/examples).
 All examples currently require: the LunarG Validation layers and a Vulkan library that is visible in your `PATH`. An easy way to get started is to use the [LunarG Vulkan SDK](https://lunarg.com/vulkan-sdk/)
