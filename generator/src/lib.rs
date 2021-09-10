@@ -1860,7 +1860,7 @@ pub fn derive_setters(
             // Unique cases
             if name == "pCode" {
                 return Some(quote!{
-                    pub fn code(mut self, code: &'a [u32]) -> Self {
+                    pub const fn code(mut self, code: &'a [u32]) -> Self {
                         self.inner.code_size = code.len() * 4;
                         self.inner.p_code = code.as_ptr() as *const u32;
                         self
@@ -1875,7 +1875,7 @@ pub fn derive_setters(
                     ///
                     /// See <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineMultisampleStateCreateInfo.html#_description>
                     /// for more details.
-                    pub fn sample_mask(mut self, sample_mask: &'a [SampleMask]) -> Self {
+                    pub const fn sample_mask(mut self, sample_mask: &'a [SampleMask]) -> Self {
                         self.inner.p_sample_mask = if sample_mask.is_empty() {
                             std::ptr::null()
                         } else {
@@ -1888,7 +1888,7 @@ pub fn derive_setters(
 
             if name == "ppGeometries" {
                 return Some(quote!{
-                    pub fn geometries_ptrs(mut self, geometries: &'a [&'a AccelerationStructureGeometryKHR]) -> Self {
+                    pub const fn geometries_ptrs(mut self, geometries: &'a [&'a AccelerationStructureGeometryKHR]) -> Self {
                         self.inner.geometry_count = geometries.len() as _;
                         self.inner.pp_geometries = geometries.as_ptr() as *const *const _;
                         self
@@ -1903,7 +1903,7 @@ pub fn derive_setters(
                 assert!(field.null_terminate);
                 assert_eq!(field.size, None);
                 return Some(quote!{
-                    pub fn #param_ident_short(mut self, #param_ident_short: &'a ::std::ffi::CStr) -> Self {
+                    pub const fn #param_ident_short(mut self, #param_ident_short: &'a ::std::ffi::CStr) -> Self {
                         self.inner.#param_ident = #param_ident_short.as_ptr();
                         self
                     }
@@ -1944,10 +1944,11 @@ pub fn derive_setters(
                         quote!(self.inner.#array_size_ident = #param_ident_short.len() as _;)
                     };
 
+                    let const_fn = if field.is_const { quote!(const) } else { quote!() };
                     let mutable = if field.is_const { quote!() } else { quote!(mut) };
 
                     return Some(quote! {
-                        pub fn #param_ident_short(mut self, #param_ident_short: &'a #mutable #slice_param_ty_tokens) -> Self {
+                        pub #const_fn fn #param_ident_short(mut self, #param_ident_short: &'a #mutable #slice_param_ty_tokens) -> Self {
                             #set_size_stmt
                             self.inner.#param_ident = #param_ident_short#ptr;
                             self
@@ -1959,8 +1960,8 @@ pub fn derive_setters(
 
         if field.basetype == "VkBool32" {
             return Some(quote!{
-                pub fn #param_ident_short(mut self, #param_ident_short: bool) -> Self {
-                    self.inner.#param_ident = #param_ident_short.into();
+                pub const fn #param_ident_short(mut self, #param_ident_short: bool) -> Self {
+                    self.inner.#param_ident = #param_ident_short as _;
                     self
                 }
             });
@@ -1973,8 +1974,15 @@ pub fn derive_setters(
             param_ty_tokens
         };
 
+        let is_pfn = field.basetype.starts_with("PFN_");
+        let const_fn = if (field.reference.is_none() && !is_pfn) || (field.reference.is_some() && field.is_const) {
+            quote!(const)
+        } else {
+            quote!()
+        };
+
         Some(quote!{
-            pub fn #param_ident_short(mut self, #param_ident_short: #param_ty_tokens) -> Self {
+            pub #const_fn fn #param_ident_short(mut self, #param_ident_short: #param_ty_tokens) -> Self {
                 self.inner.#param_ident = #param_ident_short;
                 self
             }
@@ -2079,7 +2087,7 @@ pub fn derive_setters(
             /// Calling build will **discard** all the lifetime information. Only call this if
             /// necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,
             /// so references to builders can be passed directly to Vulkan functions.
-            pub fn build(self) -> #name {
+            pub const fn build(self) -> #name {
                 self.inner
             }
         }
