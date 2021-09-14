@@ -24868,6 +24868,14 @@ impl KhrExtension387Fn {
         Self {}
     }
 }
+#[doc = "Generated from 'VK_KHR_extension_387'"]
+impl PipelineStageFlags2KHR {
+    pub const RESERVED_387: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_extension_387'"]
+impl AccessFlags2KHR {
+    pub const RESERVED_387: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
 impl ExtExtension388Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_388\0")
@@ -25725,4 +25733,42 @@ impl ExtDisableCubeMapWrapFn {
 #[doc = "Generated from 'VK_EXT_disable_cube_map_wrap'"]
 impl SamplerCreateFlags {
     pub const RESERVED_2_EXT: Self = Self(0b100);
+}
+impl ArmExtension424Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_ARM_extension_424\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct ArmExtension424Fn {}
+unsafe impl Send for ArmExtension424Fn {}
+unsafe impl Sync for ArmExtension424Fn {}
+impl ArmExtension424Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl ArmExtension425Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_ARM_extension_425\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct ArmExtension425Fn {}
+unsafe impl Send for ArmExtension425Fn {}
+unsafe impl Sync for ArmExtension425Fn {}
+impl ArmExtension425Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
 }

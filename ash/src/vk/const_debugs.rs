@@ -325,6 +325,7 @@ impl fmt::Debug for AccessFlags2KHR {
                 AccessFlags2KHR::INVOCATION_MASK_READ_HUAWEI.0,
                 "INVOCATION_MASK_READ_HUAWEI",
             ),
+            (AccessFlags2KHR::RESERVED_387.0, "RESERVED_387"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -3146,6 +3147,7 @@ impl fmt::Debug for PipelineStageFlags2KHR {
                 PipelineStageFlags2KHR::INVOCATION_MASK_HUAWEI.0,
                 "INVOCATION_MASK_HUAWEI",
             ),
+            (PipelineStageFlags2KHR::RESERVED_387.0, "RESERVED_387"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
