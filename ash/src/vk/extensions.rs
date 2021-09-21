@@ -25772,3 +25772,26 @@ impl ArmExtension425Fn {
         Self {}
     }
 }
+impl QcomExtension426Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_extension_426\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct QcomExtension426Fn {}
+unsafe impl Send for QcomExtension426Fn {}
+unsafe impl Sync for QcomExtension426Fn {}
+impl QcomExtension426Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+#[doc = "Generated from 'VK_QCOM_extension_426'"]
+impl ImageCreateFlags {
+    pub const RESERVED_426_QCOM: Self = Self(0b1000_0000_0000_0000);
+}

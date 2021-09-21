@@ -1327,6 +1327,9 @@ impl fmt::Debug for DriverId {
             Self::COREAVI_PROPRIETARY => Some("COREAVI_PROPRIETARY"),
             Self::JUICE_PROPRIETARY => Some("JUICE_PROPRIETARY"),
             Self::VERISILICON_PROPRIETARY => Some("VERISILICON_PROPRIETARY"),
+            Self::MESA_TURNIP => Some("MESA_TURNIP"),
+            Self::MESA_V3DV => Some("MESA_V3DV"),
+            Self::MESA_PANVK => Some("MESA_PANVK"),
             _ => None,
         };
         if let Some(x) = name {
@@ -2105,6 +2108,7 @@ impl fmt::Debug for ImageCreateFlags {
                 "SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_EXT",
             ),
             (ImageCreateFlags::SUBSAMPLED_EXT.0, "SUBSAMPLED_EXT"),
+            (ImageCreateFlags::RESERVED_426_QCOM.0, "RESERVED_426_QCOM"),
             (ImageCreateFlags::ALIAS.0, "ALIAS"),
             (
                 ImageCreateFlags::SPLIT_INSTANCE_BIND_REGIONS.0,

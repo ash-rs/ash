@@ -1657,6 +1657,12 @@ impl DriverId {
     pub const JUICE_PROPRIETARY: Self = Self(16);
     #[doc = "Verisilicon, Inc."]
     pub const VERISILICON_PROPRIETARY: Self = Self(17);
+    #[doc = "Mesa open source project"]
+    pub const MESA_TURNIP: Self = Self(18);
+    #[doc = "Mesa open source project"]
+    pub const MESA_V3DV: Self = Self(19);
+    #[doc = "Mesa open source project"]
+    pub const MESA_PANVK: Self = Self(20);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
