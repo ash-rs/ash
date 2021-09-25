@@ -2128,8 +2128,10 @@ pub fn generate_struct(
             #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAccelerationStructureInstanceKHR.html>"]
             pub struct AccelerationStructureInstanceKHR {
                 pub transform: TransformMatrixKHR,
-                pub instance_custom_index_and_mask: u32,
-                pub instance_shader_binding_table_record_offset_and_flags: u32,
+                /// Use [`Packed24_8::new(instance_custom_index, mask)`][Packed24_8::new()] to construct this field
+                pub instance_custom_index_and_mask: Packed24_8,
+                /// Use [`Packed24_8::new(instance_shader_binding_table_record_offset, flags)`][Packed24_8::new()] to construct this field
+                pub instance_shader_binding_table_record_offset_and_flags: Packed24_8,
                 pub acceleration_structure_reference: AccelerationStructureReferenceKHR,
             }
         };
@@ -2143,8 +2145,10 @@ pub fn generate_struct(
             pub struct AccelerationStructureSRTMotionInstanceNV {
                 pub transform_t0: SRTDataNV,
                 pub transform_t1: SRTDataNV,
-                pub instance_custom_index_and_mask: u32,
-                pub instance_shader_binding_table_record_offset_and_flags: u32,
+                /// Use [`Packed24_8::new(instance_custom_index, mask)`][Packed24_8::new()] to construct this field
+                pub instance_custom_index_and_mask: Packed24_8,
+                /// Use [`Packed24_8::new(instance_shader_binding_table_record_offset, flags)`][Packed24_8::new()] to construct this field
+                pub instance_shader_binding_table_record_offset_and_flags: Packed24_8,
                 pub acceleration_structure_reference: AccelerationStructureReferenceKHR,
             }
         };
@@ -2158,8 +2162,10 @@ pub fn generate_struct(
             pub struct AccelerationStructureMatrixMotionInstanceNV {
                 pub transform_t0: TransformMatrixKHR,
                 pub transform_t1: TransformMatrixKHR,
-                pub instance_custom_index_and_mask: u32,
-                pub instance_shader_binding_table_record_offset_and_flags: u32,
+                /// Use [`Packed24_8::new(instance_custom_index, mask)`][Packed24_8::new()] to construct this field
+                pub instance_custom_index_and_mask: Packed24_8,
+                /// Use [`Packed24_8::new(instance_shader_binding_table_record_offset, flags)`][Packed24_8::new()] to construct this field
+                pub instance_shader_binding_table_record_offset_and_flags: Packed24_8,
                 pub acceleration_structure_reference: AccelerationStructureReferenceKHR,
             }
         };
@@ -2828,6 +2834,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         use crate::vk::enums::*;
         use crate::vk::native::*;
         use crate::vk::platform_types::*;
+        use crate::vk::prelude::*;
         #(#definition_code)*
     };
 
