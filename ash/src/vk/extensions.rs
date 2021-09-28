@@ -23919,24 +23919,272 @@ impl StructureType {
 impl ExternalSemaphoreHandleTypeFlags {
     pub const ZIRCON_EVENT_FUCHSIA: Self = Self(0b1000_0000);
 }
-impl FuchsiaExtension367Fn {
+impl FuchsiaBufferCollectionFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_FUCHSIA_extension_367\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_FUCHSIA_buffer_collection\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
+#[allow(non_camel_case_types)]
+pub type PFN_vkCreateBufferCollectionFUCHSIA = unsafe extern "system" fn(
+    device: Device,
+    p_create_info: *const BufferCollectionCreateInfoFUCHSIA,
+    p_allocator: *const AllocationCallbacks,
+    p_collection: *mut BufferCollectionFUCHSIA,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkSetBufferCollectionImageConstraintsFUCHSIA = unsafe extern "system" fn(
+    device: Device,
+    collection: BufferCollectionFUCHSIA,
+    p_image_constraints_info: *const ImageConstraintsInfoFUCHSIA,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkSetBufferCollectionBufferConstraintsFUCHSIA = unsafe extern "system" fn(
+    device: Device,
+    collection: BufferCollectionFUCHSIA,
+    p_buffer_constraints_info: *const BufferConstraintsInfoFUCHSIA,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkDestroyBufferCollectionFUCHSIA = unsafe extern "system" fn(
+    device: Device,
+    collection: BufferCollectionFUCHSIA,
+    p_allocator: *const AllocationCallbacks,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetBufferCollectionPropertiesFUCHSIA = unsafe extern "system" fn(
+    device: Device,
+    collection: BufferCollectionFUCHSIA,
+    p_properties: *mut BufferCollectionPropertiesFUCHSIA,
+) -> Result;
 #[derive(Clone)]
-pub struct FuchsiaExtension367Fn {}
-unsafe impl Send for FuchsiaExtension367Fn {}
-unsafe impl Sync for FuchsiaExtension367Fn {}
-impl FuchsiaExtension367Fn {
+pub struct FuchsiaBufferCollectionFn {
+    pub create_buffer_collection_fuchsia: PFN_vkCreateBufferCollectionFUCHSIA,
+    pub set_buffer_collection_image_constraints_fuchsia:
+        PFN_vkSetBufferCollectionImageConstraintsFUCHSIA,
+    pub set_buffer_collection_buffer_constraints_fuchsia:
+        PFN_vkSetBufferCollectionBufferConstraintsFUCHSIA,
+    pub destroy_buffer_collection_fuchsia: PFN_vkDestroyBufferCollectionFUCHSIA,
+    pub get_buffer_collection_properties_fuchsia: PFN_vkGetBufferCollectionPropertiesFUCHSIA,
+}
+unsafe impl Send for FuchsiaBufferCollectionFn {}
+unsafe impl Sync for FuchsiaBufferCollectionFn {}
+impl FuchsiaBufferCollectionFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        Self {}
+        Self {
+            create_buffer_collection_fuchsia: unsafe {
+                unsafe extern "system" fn create_buffer_collection_fuchsia(
+                    _device: Device,
+                    _p_create_info: *const BufferCollectionCreateInfoFUCHSIA,
+                    _p_allocator: *const AllocationCallbacks,
+                    _p_collection: *mut BufferCollectionFUCHSIA,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(create_buffer_collection_fuchsia)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCreateBufferCollectionFUCHSIA\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    create_buffer_collection_fuchsia
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            set_buffer_collection_image_constraints_fuchsia: unsafe {
+                unsafe extern "system" fn set_buffer_collection_image_constraints_fuchsia(
+                    _device: Device,
+                    _collection: BufferCollectionFUCHSIA,
+                    _p_image_constraints_info: *const ImageConstraintsInfoFUCHSIA,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(set_buffer_collection_image_constraints_fuchsia)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkSetBufferCollectionImageConstraintsFUCHSIA\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    set_buffer_collection_image_constraints_fuchsia
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            set_buffer_collection_buffer_constraints_fuchsia: unsafe {
+                unsafe extern "system" fn set_buffer_collection_buffer_constraints_fuchsia(
+                    _device: Device,
+                    _collection: BufferCollectionFUCHSIA,
+                    _p_buffer_constraints_info: *const BufferConstraintsInfoFUCHSIA,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(set_buffer_collection_buffer_constraints_fuchsia)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkSetBufferCollectionBufferConstraintsFUCHSIA\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    set_buffer_collection_buffer_constraints_fuchsia
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            destroy_buffer_collection_fuchsia: unsafe {
+                unsafe extern "system" fn destroy_buffer_collection_fuchsia(
+                    _device: Device,
+                    _collection: BufferCollectionFUCHSIA,
+                    _p_allocator: *const AllocationCallbacks,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(destroy_buffer_collection_fuchsia)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkDestroyBufferCollectionFUCHSIA\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    destroy_buffer_collection_fuchsia
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_buffer_collection_properties_fuchsia: unsafe {
+                unsafe extern "system" fn get_buffer_collection_properties_fuchsia(
+                    _device: Device,
+                    _collection: BufferCollectionFUCHSIA,
+                    _p_properties: *mut BufferCollectionPropertiesFUCHSIA,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_buffer_collection_properties_fuchsia)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetBufferCollectionPropertiesFUCHSIA\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_buffer_collection_properties_fuchsia
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateBufferCollectionFUCHSIA.html>"]
+    pub unsafe fn create_buffer_collection_fuchsia(
+        &self,
+        device: Device,
+        p_create_info: *const BufferCollectionCreateInfoFUCHSIA,
+        p_allocator: *const AllocationCallbacks,
+        p_collection: *mut BufferCollectionFUCHSIA,
+    ) -> Result {
+        (self.create_buffer_collection_fuchsia)(device, p_create_info, p_allocator, p_collection)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkSetBufferCollectionImageConstraintsFUCHSIA.html>"]
+    pub unsafe fn set_buffer_collection_image_constraints_fuchsia(
+        &self,
+        device: Device,
+        collection: BufferCollectionFUCHSIA,
+        p_image_constraints_info: *const ImageConstraintsInfoFUCHSIA,
+    ) -> Result {
+        (self.set_buffer_collection_image_constraints_fuchsia)(
+            device,
+            collection,
+            p_image_constraints_info,
+        )
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkSetBufferCollectionBufferConstraintsFUCHSIA.html>"]
+    pub unsafe fn set_buffer_collection_buffer_constraints_fuchsia(
+        &self,
+        device: Device,
+        collection: BufferCollectionFUCHSIA,
+        p_buffer_constraints_info: *const BufferConstraintsInfoFUCHSIA,
+    ) -> Result {
+        (self.set_buffer_collection_buffer_constraints_fuchsia)(
+            device,
+            collection,
+            p_buffer_constraints_info,
+        )
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyBufferCollectionFUCHSIA.html>"]
+    pub unsafe fn destroy_buffer_collection_fuchsia(
+        &self,
+        device: Device,
+        collection: BufferCollectionFUCHSIA,
+        p_allocator: *const AllocationCallbacks,
+    ) {
+        (self.destroy_buffer_collection_fuchsia)(device, collection, p_allocator)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetBufferCollectionPropertiesFUCHSIA.html>"]
+    pub unsafe fn get_buffer_collection_properties_fuchsia(
+        &self,
+        device: Device,
+        collection: BufferCollectionFUCHSIA,
+        p_properties: *mut BufferCollectionPropertiesFUCHSIA,
+    ) -> Result {
+        (self.get_buffer_collection_properties_fuchsia)(device, collection, p_properties)
+    }
+}
+#[doc = "Generated from 'VK_FUCHSIA_buffer_collection'"]
+impl StructureType {
+    pub const BUFFER_COLLECTION_CREATE_INFO_FUCHSIA: Self = Self(1_000_366_000);
+}
+#[doc = "Generated from 'VK_FUCHSIA_buffer_collection'"]
+impl ObjectType {
+    pub const BUFFER_COLLECTION_FUCHSIA: Self = Self(1_000_366_000);
+}
+#[doc = "Generated from 'VK_FUCHSIA_buffer_collection'"]
+impl DebugReportObjectTypeEXT {
+    pub const BUFFER_COLLECTION_FUCHSIA: Self = Self(1_000_366_000);
+}
+#[doc = "Generated from 'VK_FUCHSIA_buffer_collection'"]
+impl StructureType {
+    pub const IMPORT_MEMORY_BUFFER_COLLECTION_FUCHSIA: Self = Self(1_000_366_001);
+}
+#[doc = "Generated from 'VK_FUCHSIA_buffer_collection'"]
+impl StructureType {
+    pub const BUFFER_COLLECTION_IMAGE_CREATE_INFO_FUCHSIA: Self = Self(1_000_366_002);
+}
+#[doc = "Generated from 'VK_FUCHSIA_buffer_collection'"]
+impl StructureType {
+    pub const BUFFER_COLLECTION_PROPERTIES_FUCHSIA: Self = Self(1_000_366_003);
+}
+#[doc = "Generated from 'VK_FUCHSIA_buffer_collection'"]
+impl StructureType {
+    pub const BUFFER_CONSTRAINTS_INFO_FUCHSIA: Self = Self(1_000_366_004);
+}
+#[doc = "Generated from 'VK_FUCHSIA_buffer_collection'"]
+impl StructureType {
+    pub const BUFFER_COLLECTION_BUFFER_CREATE_INFO_FUCHSIA: Self = Self(1_000_366_005);
+}
+#[doc = "Generated from 'VK_FUCHSIA_buffer_collection'"]
+impl StructureType {
+    pub const IMAGE_CONSTRAINTS_INFO_FUCHSIA: Self = Self(1_000_366_006);
+}
+#[doc = "Generated from 'VK_FUCHSIA_buffer_collection'"]
+impl StructureType {
+    pub const IMAGE_FORMAT_CONSTRAINTS_INFO_FUCHSIA: Self = Self(1_000_366_007);
+}
+#[doc = "Generated from 'VK_FUCHSIA_buffer_collection'"]
+impl StructureType {
+    pub const SYSMEM_COLOR_SPACE_FUCHSIA: Self = Self(1_000_366_008);
+}
+#[doc = "Generated from 'VK_FUCHSIA_buffer_collection'"]
+impl StructureType {
+    pub const BUFFER_COLLECTION_CONSTRAINTS_INFO_FUCHSIA: Self = Self(1_000_366_009);
 }
 impl FuchsiaExtension368Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -25794,4 +26042,80 @@ impl QcomExtension426Fn {
 #[doc = "Generated from 'VK_QCOM_extension_426'"]
 impl ImageCreateFlags {
     pub const RESERVED_426_QCOM: Self = Self(0b1000_0000_0000_0000);
+}
+impl NvExtension427Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_427\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct NvExtension427Fn {}
+unsafe impl Send for NvExtension427Fn {}
+unsafe impl Sync for NvExtension427Fn {}
+impl NvExtension427Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl NvExtension428Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_428\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct NvExtension428Fn {}
+unsafe impl Send for NvExtension428Fn {}
+unsafe impl Sync for NvExtension428Fn {}
+impl NvExtension428Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl NvExtension429Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_429\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct NvExtension429Fn {}
+unsafe impl Send for NvExtension429Fn {}
+unsafe impl Sync for NvExtension429Fn {}
+impl NvExtension429Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl NvExtension430Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_430\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct NvExtension430Fn {}
+unsafe impl Send for NvExtension430Fn {}
+unsafe impl Sync for NvExtension430Fn {}
+impl NvExtension430Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
 }

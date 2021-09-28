@@ -1221,3 +1221,21 @@ impl VideoEncodeH264CreateFlagsEXT {
     pub const DEFAULT: Self = Self(0);
     pub const RESERVED_0: Self = Self(0b1);
 }
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkImageFormatConstraintsFlagBitsFUCHSIA.html>"]
+pub struct ImageFormatConstraintsFlagsFUCHSIA(pub(crate) Flags);
+vk_bitflags_wrapped!(ImageFormatConstraintsFlagsFUCHSIA, 0b0, Flags);
+impl ImageFormatConstraintsFlagsFUCHSIA {}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkImageConstraintsInfoFlagBitsFUCHSIA.html>"]
+pub struct ImageConstraintsInfoFlagsFUCHSIA(pub(crate) Flags);
+vk_bitflags_wrapped!(ImageConstraintsInfoFlagsFUCHSIA, 0b1_1111, Flags);
+impl ImageConstraintsInfoFlagsFUCHSIA {
+    pub const CPU_READ_RARELY: Self = Self(0b1);
+    pub const CPU_READ_OFTEN: Self = Self(0b10);
+    pub const CPU_WRITE_RARELY: Self = Self(0b100);
+    pub const CPU_WRITE_OFTEN: Self = Self(0b1000);
+    pub const PROTECTED_OPTIONAL: Self = Self(0b1_0000);
+}

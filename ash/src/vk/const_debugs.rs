@@ -984,6 +984,7 @@ impl fmt::Debug for DebugReportObjectTypeEXT {
             Self::CU_FUNCTION_NVX => Some("CU_FUNCTION_NVX"),
             Self::ACCELERATION_STRUCTURE_KHR => Some("ACCELERATION_STRUCTURE_KHR"),
             Self::ACCELERATION_STRUCTURE_NV => Some("ACCELERATION_STRUCTURE_NV"),
+            Self::BUFFER_COLLECTION_FUCHSIA => Some("BUFFER_COLLECTION_FUCHSIA"),
             _ => None,
         };
         if let Some(x) = name {
@@ -2094,6 +2095,33 @@ impl fmt::Debug for ImageAspectFlags {
         debug_flags(f, KNOWN, self.0)
     }
 }
+impl fmt::Debug for ImageConstraintsInfoFlagsFUCHSIA {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                ImageConstraintsInfoFlagsFUCHSIA::CPU_READ_RARELY.0,
+                "CPU_READ_RARELY",
+            ),
+            (
+                ImageConstraintsInfoFlagsFUCHSIA::CPU_READ_OFTEN.0,
+                "CPU_READ_OFTEN",
+            ),
+            (
+                ImageConstraintsInfoFlagsFUCHSIA::CPU_WRITE_RARELY.0,
+                "CPU_WRITE_RARELY",
+            ),
+            (
+                ImageConstraintsInfoFlagsFUCHSIA::CPU_WRITE_OFTEN.0,
+                "CPU_WRITE_OFTEN",
+            ),
+            (
+                ImageConstraintsInfoFlagsFUCHSIA::PROTECTED_OPTIONAL.0,
+                "PROTECTED_OPTIONAL",
+            ),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
 impl fmt::Debug for ImageCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
@@ -2126,6 +2154,12 @@ impl fmt::Debug for ImageCreateFlags {
             (ImageCreateFlags::PROTECTED.0, "PROTECTED"),
             (ImageCreateFlags::DISJOINT.0, "DISJOINT"),
         ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for ImageFormatConstraintsFlagsFUCHSIA {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -2553,6 +2587,7 @@ impl fmt::Debug for ObjectType {
             Self::DEFERRED_OPERATION_KHR => Some("DEFERRED_OPERATION_KHR"),
             Self::INDIRECT_COMMANDS_LAYOUT_NV => Some("INDIRECT_COMMANDS_LAYOUT_NV"),
             Self::PRIVATE_DATA_SLOT_EXT => Some("PRIVATE_DATA_SLOT_EXT"),
+            Self::BUFFER_COLLECTION_FUCHSIA => Some("BUFFER_COLLECTION_FUCHSIA"),
             Self::SAMPLER_YCBCR_CONVERSION => Some("SAMPLER_YCBCR_CONVERSION"),
             Self::DESCRIPTOR_UPDATE_TEMPLATE => Some("DESCRIPTOR_UPDATE_TEMPLATE"),
             _ => None,
@@ -4861,6 +4896,30 @@ impl fmt::Debug for StructureType {
             }
             Self::SEMAPHORE_GET_ZIRCON_HANDLE_INFO_FUCHSIA => {
                 Some("SEMAPHORE_GET_ZIRCON_HANDLE_INFO_FUCHSIA")
+            }
+            Self::BUFFER_COLLECTION_CREATE_INFO_FUCHSIA => {
+                Some("BUFFER_COLLECTION_CREATE_INFO_FUCHSIA")
+            }
+            Self::IMPORT_MEMORY_BUFFER_COLLECTION_FUCHSIA => {
+                Some("IMPORT_MEMORY_BUFFER_COLLECTION_FUCHSIA")
+            }
+            Self::BUFFER_COLLECTION_IMAGE_CREATE_INFO_FUCHSIA => {
+                Some("BUFFER_COLLECTION_IMAGE_CREATE_INFO_FUCHSIA")
+            }
+            Self::BUFFER_COLLECTION_PROPERTIES_FUCHSIA => {
+                Some("BUFFER_COLLECTION_PROPERTIES_FUCHSIA")
+            }
+            Self::BUFFER_CONSTRAINTS_INFO_FUCHSIA => Some("BUFFER_CONSTRAINTS_INFO_FUCHSIA"),
+            Self::BUFFER_COLLECTION_BUFFER_CREATE_INFO_FUCHSIA => {
+                Some("BUFFER_COLLECTION_BUFFER_CREATE_INFO_FUCHSIA")
+            }
+            Self::IMAGE_CONSTRAINTS_INFO_FUCHSIA => Some("IMAGE_CONSTRAINTS_INFO_FUCHSIA"),
+            Self::IMAGE_FORMAT_CONSTRAINTS_INFO_FUCHSIA => {
+                Some("IMAGE_FORMAT_CONSTRAINTS_INFO_FUCHSIA")
+            }
+            Self::SYSMEM_COLOR_SPACE_FUCHSIA => Some("SYSMEM_COLOR_SPACE_FUCHSIA"),
+            Self::BUFFER_COLLECTION_CONSTRAINTS_INFO_FUCHSIA => {
+                Some("BUFFER_COLLECTION_CONSTRAINTS_INFO_FUCHSIA")
             }
             Self::SUBPASS_SHADING_PIPELINE_CREATE_INFO_HUAWEI => {
                 Some("SUBPASS_SHADING_PIPELINE_CREATE_INFO_HUAWEI")

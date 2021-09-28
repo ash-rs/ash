@@ -1390,7 +1390,7 @@ pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
     // TODO: Also needs to be more robust, vendor names can be substrings from itself, id:4
     // like NVX and NV
     let vendors = [
-        "_NVX", "_KHR", "_EXT", "_NV", "_AMD", "_ANDROID", "_GOOGLE", "_INTEL",
+        "_NVX", "_KHR", "_EXT", "_NV", "_AMD", "_ANDROID", "_GOOGLE", "_INTEL", "_FUCHSIA",
     ];
     let struct_name = _name.to_shouty_snake_case();
     let vendor = vendors

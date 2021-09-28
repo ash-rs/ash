@@ -54,7 +54,7 @@ pub const API_VERSION_1_0: u32 = make_api_version(0, 1, 0, 0);
 pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_API_VERSION_1_2.html>"]
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
-pub const HEADER_VERSION: u32 = 193u32;
+pub const HEADER_VERSION: u32 = 194u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 2, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSampleMask.html>"]
@@ -425,6 +425,7 @@ handle_nondispatchable ! (ValidationCacheEXT , VALIDATION_CACHE_EXT , doc = "<ht
 handle_nondispatchable ! (AccelerationStructureKHR , ACCELERATION_STRUCTURE_KHR , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAccelerationStructureKHR.html>") ;
 handle_nondispatchable ! (AccelerationStructureNV , ACCELERATION_STRUCTURE_NV , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAccelerationStructureNV.html>") ;
 handle_nondispatchable ! (PerformanceConfigurationINTEL , PERFORMANCE_CONFIGURATION_INTEL , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPerformanceConfigurationINTEL.html>") ;
+handle_nondispatchable ! (BufferCollectionFUCHSIA , BUFFER_COLLECTION_FUCHSIA , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkBufferCollectionFUCHSIA.html>") ;
 handle_nondispatchable ! (DeferredOperationKHR , DEFERRED_OPERATION_KHR , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDeferredOperationKHR.html>") ;
 handle_nondispatchable ! (PrivateDataSlotEXT , PRIVATE_DATA_SLOT_EXT , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPrivateDataSlotEXT.html>") ;
 handle_nondispatchable ! (CuModuleNVX , CU_MODULE_NVX , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkCuModuleNVX.html>") ;
@@ -50169,12 +50170,9 @@ impl<'a> ::std::ops::DerefMut for CuModuleCreateInfoNVXBuilder<'a> {
     }
 }
 impl<'a> CuModuleCreateInfoNVXBuilder<'a> {
-    pub fn data_size(mut self, data_size: usize) -> Self {
-        self.inner.data_size = data_size;
-        self
-    }
-    pub fn data(mut self, data: *const c_void) -> Self {
-        self.inner.p_data = data;
+    pub fn data(mut self, data: &'a [u8]) -> Self {
+        self.inner.data_size = data.len() as _;
+        self.inner.p_data = data.as_ptr() as *const c_void;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -51325,6 +51323,731 @@ impl<'a> MemoryGetRemoteAddressInfoNVBuilder<'a> {
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> MemoryGetRemoteAddressInfoNV {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkImportMemoryBufferCollectionFUCHSIA.html>"]
+pub struct ImportMemoryBufferCollectionFUCHSIA {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub collection: BufferCollectionFUCHSIA,
+    pub index: u32,
+}
+impl ::std::default::Default for ImportMemoryBufferCollectionFUCHSIA {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::IMPORT_MEMORY_BUFFER_COLLECTION_FUCHSIA,
+            p_next: ::std::ptr::null(),
+            collection: BufferCollectionFUCHSIA::default(),
+            index: u32::default(),
+        }
+    }
+}
+impl ImportMemoryBufferCollectionFUCHSIA {
+    pub fn builder<'a>() -> ImportMemoryBufferCollectionFUCHSIABuilder<'a> {
+        ImportMemoryBufferCollectionFUCHSIABuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct ImportMemoryBufferCollectionFUCHSIABuilder<'a> {
+    inner: ImportMemoryBufferCollectionFUCHSIA,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryBufferCollectionFUCHSIABuilder<'_> {}
+unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryBufferCollectionFUCHSIA {}
+impl<'a> ::std::ops::Deref for ImportMemoryBufferCollectionFUCHSIABuilder<'a> {
+    type Target = ImportMemoryBufferCollectionFUCHSIA;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImportMemoryBufferCollectionFUCHSIABuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> ImportMemoryBufferCollectionFUCHSIABuilder<'a> {
+    pub fn collection(mut self, collection: BufferCollectionFUCHSIA) -> Self {
+        self.inner.collection = collection;
+        self
+    }
+    pub fn index(mut self, index: u32) -> Self {
+        self.inner.index = index;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> ImportMemoryBufferCollectionFUCHSIA {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkBufferCollectionImageCreateInfoFUCHSIA.html>"]
+pub struct BufferCollectionImageCreateInfoFUCHSIA {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub collection: BufferCollectionFUCHSIA,
+    pub index: u32,
+}
+impl ::std::default::Default for BufferCollectionImageCreateInfoFUCHSIA {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::BUFFER_COLLECTION_IMAGE_CREATE_INFO_FUCHSIA,
+            p_next: ::std::ptr::null(),
+            collection: BufferCollectionFUCHSIA::default(),
+            index: u32::default(),
+        }
+    }
+}
+impl BufferCollectionImageCreateInfoFUCHSIA {
+    pub fn builder<'a>() -> BufferCollectionImageCreateInfoFUCHSIABuilder<'a> {
+        BufferCollectionImageCreateInfoFUCHSIABuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct BufferCollectionImageCreateInfoFUCHSIABuilder<'a> {
+    inner: BufferCollectionImageCreateInfoFUCHSIA,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsImageCreateInfo for BufferCollectionImageCreateInfoFUCHSIABuilder<'_> {}
+unsafe impl ExtendsImageCreateInfo for BufferCollectionImageCreateInfoFUCHSIA {}
+impl<'a> ::std::ops::Deref for BufferCollectionImageCreateInfoFUCHSIABuilder<'a> {
+    type Target = BufferCollectionImageCreateInfoFUCHSIA;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for BufferCollectionImageCreateInfoFUCHSIABuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> BufferCollectionImageCreateInfoFUCHSIABuilder<'a> {
+    pub fn collection(mut self, collection: BufferCollectionFUCHSIA) -> Self {
+        self.inner.collection = collection;
+        self
+    }
+    pub fn index(mut self, index: u32) -> Self {
+        self.inner.index = index;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> BufferCollectionImageCreateInfoFUCHSIA {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkBufferCollectionBufferCreateInfoFUCHSIA.html>"]
+pub struct BufferCollectionBufferCreateInfoFUCHSIA {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub collection: BufferCollectionFUCHSIA,
+    pub index: u32,
+}
+impl ::std::default::Default for BufferCollectionBufferCreateInfoFUCHSIA {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::BUFFER_COLLECTION_BUFFER_CREATE_INFO_FUCHSIA,
+            p_next: ::std::ptr::null(),
+            collection: BufferCollectionFUCHSIA::default(),
+            index: u32::default(),
+        }
+    }
+}
+impl BufferCollectionBufferCreateInfoFUCHSIA {
+    pub fn builder<'a>() -> BufferCollectionBufferCreateInfoFUCHSIABuilder<'a> {
+        BufferCollectionBufferCreateInfoFUCHSIABuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct BufferCollectionBufferCreateInfoFUCHSIABuilder<'a> {
+    inner: BufferCollectionBufferCreateInfoFUCHSIA,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsBufferCreateInfo for BufferCollectionBufferCreateInfoFUCHSIABuilder<'_> {}
+unsafe impl ExtendsBufferCreateInfo for BufferCollectionBufferCreateInfoFUCHSIA {}
+impl<'a> ::std::ops::Deref for BufferCollectionBufferCreateInfoFUCHSIABuilder<'a> {
+    type Target = BufferCollectionBufferCreateInfoFUCHSIA;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for BufferCollectionBufferCreateInfoFUCHSIABuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> BufferCollectionBufferCreateInfoFUCHSIABuilder<'a> {
+    pub fn collection(mut self, collection: BufferCollectionFUCHSIA) -> Self {
+        self.inner.collection = collection;
+        self
+    }
+    pub fn index(mut self, index: u32) -> Self {
+        self.inner.index = index;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> BufferCollectionBufferCreateInfoFUCHSIA {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkBufferCollectionCreateInfoFUCHSIA.html>"]
+pub struct BufferCollectionCreateInfoFUCHSIA {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub collection_token: zx_handle_t,
+}
+impl ::std::default::Default for BufferCollectionCreateInfoFUCHSIA {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::BUFFER_COLLECTION_CREATE_INFO_FUCHSIA,
+            p_next: ::std::ptr::null(),
+            collection_token: zx_handle_t::default(),
+        }
+    }
+}
+impl BufferCollectionCreateInfoFUCHSIA {
+    pub fn builder<'a>() -> BufferCollectionCreateInfoFUCHSIABuilder<'a> {
+        BufferCollectionCreateInfoFUCHSIABuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct BufferCollectionCreateInfoFUCHSIABuilder<'a> {
+    inner: BufferCollectionCreateInfoFUCHSIA,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+impl<'a> ::std::ops::Deref for BufferCollectionCreateInfoFUCHSIABuilder<'a> {
+    type Target = BufferCollectionCreateInfoFUCHSIA;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for BufferCollectionCreateInfoFUCHSIABuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> BufferCollectionCreateInfoFUCHSIABuilder<'a> {
+    pub fn collection_token(mut self, collection_token: zx_handle_t) -> Self {
+        self.inner.collection_token = collection_token;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> BufferCollectionCreateInfoFUCHSIA {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkBufferCollectionPropertiesFUCHSIA.html>"]
+pub struct BufferCollectionPropertiesFUCHSIA {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub memory_type_bits: u32,
+    pub buffer_count: u32,
+    pub create_info_index: u32,
+    pub sysmem_pixel_format: u64,
+    pub format_features: FormatFeatureFlags,
+    pub sysmem_color_space_index: SysmemColorSpaceFUCHSIA,
+    pub sampler_ycbcr_conversion_components: ComponentMapping,
+    pub suggested_ycbcr_model: SamplerYcbcrModelConversion,
+    pub suggested_ycbcr_range: SamplerYcbcrRange,
+    pub suggested_x_chroma_offset: ChromaLocation,
+    pub suggested_y_chroma_offset: ChromaLocation,
+}
+impl ::std::default::Default for BufferCollectionPropertiesFUCHSIA {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::BUFFER_COLLECTION_PROPERTIES_FUCHSIA,
+            p_next: ::std::ptr::null_mut(),
+            memory_type_bits: u32::default(),
+            buffer_count: u32::default(),
+            create_info_index: u32::default(),
+            sysmem_pixel_format: u64::default(),
+            format_features: FormatFeatureFlags::default(),
+            sysmem_color_space_index: SysmemColorSpaceFUCHSIA::default(),
+            sampler_ycbcr_conversion_components: ComponentMapping::default(),
+            suggested_ycbcr_model: SamplerYcbcrModelConversion::default(),
+            suggested_ycbcr_range: SamplerYcbcrRange::default(),
+            suggested_x_chroma_offset: ChromaLocation::default(),
+            suggested_y_chroma_offset: ChromaLocation::default(),
+        }
+    }
+}
+impl BufferCollectionPropertiesFUCHSIA {
+    pub fn builder<'a>() -> BufferCollectionPropertiesFUCHSIABuilder<'a> {
+        BufferCollectionPropertiesFUCHSIABuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct BufferCollectionPropertiesFUCHSIABuilder<'a> {
+    inner: BufferCollectionPropertiesFUCHSIA,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+impl<'a> ::std::ops::Deref for BufferCollectionPropertiesFUCHSIABuilder<'a> {
+    type Target = BufferCollectionPropertiesFUCHSIA;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for BufferCollectionPropertiesFUCHSIABuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> BufferCollectionPropertiesFUCHSIABuilder<'a> {
+    pub fn memory_type_bits(mut self, memory_type_bits: u32) -> Self {
+        self.inner.memory_type_bits = memory_type_bits;
+        self
+    }
+    pub fn buffer_count(mut self, buffer_count: u32) -> Self {
+        self.inner.buffer_count = buffer_count;
+        self
+    }
+    pub fn create_info_index(mut self, create_info_index: u32) -> Self {
+        self.inner.create_info_index = create_info_index;
+        self
+    }
+    pub fn sysmem_pixel_format(mut self, sysmem_pixel_format: u64) -> Self {
+        self.inner.sysmem_pixel_format = sysmem_pixel_format;
+        self
+    }
+    pub fn format_features(mut self, format_features: FormatFeatureFlags) -> Self {
+        self.inner.format_features = format_features;
+        self
+    }
+    pub fn sysmem_color_space_index(
+        mut self,
+        sysmem_color_space_index: SysmemColorSpaceFUCHSIA,
+    ) -> Self {
+        self.inner.sysmem_color_space_index = sysmem_color_space_index;
+        self
+    }
+    pub fn sampler_ycbcr_conversion_components(
+        mut self,
+        sampler_ycbcr_conversion_components: ComponentMapping,
+    ) -> Self {
+        self.inner.sampler_ycbcr_conversion_components = sampler_ycbcr_conversion_components;
+        self
+    }
+    pub fn suggested_ycbcr_model(
+        mut self,
+        suggested_ycbcr_model: SamplerYcbcrModelConversion,
+    ) -> Self {
+        self.inner.suggested_ycbcr_model = suggested_ycbcr_model;
+        self
+    }
+    pub fn suggested_ycbcr_range(mut self, suggested_ycbcr_range: SamplerYcbcrRange) -> Self {
+        self.inner.suggested_ycbcr_range = suggested_ycbcr_range;
+        self
+    }
+    pub fn suggested_x_chroma_offset(mut self, suggested_x_chroma_offset: ChromaLocation) -> Self {
+        self.inner.suggested_x_chroma_offset = suggested_x_chroma_offset;
+        self
+    }
+    pub fn suggested_y_chroma_offset(mut self, suggested_y_chroma_offset: ChromaLocation) -> Self {
+        self.inner.suggested_y_chroma_offset = suggested_y_chroma_offset;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> BufferCollectionPropertiesFUCHSIA {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkBufferConstraintsInfoFUCHSIA.html>"]
+pub struct BufferConstraintsInfoFUCHSIA {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub create_info: BufferCreateInfo,
+    pub required_format_features: FormatFeatureFlags,
+    pub buffer_collection_constraints: BufferCollectionConstraintsInfoFUCHSIA,
+}
+impl ::std::default::Default for BufferConstraintsInfoFUCHSIA {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::BUFFER_CONSTRAINTS_INFO_FUCHSIA,
+            p_next: ::std::ptr::null(),
+            create_info: BufferCreateInfo::default(),
+            required_format_features: FormatFeatureFlags::default(),
+            buffer_collection_constraints: BufferCollectionConstraintsInfoFUCHSIA::default(),
+        }
+    }
+}
+impl BufferConstraintsInfoFUCHSIA {
+    pub fn builder<'a>() -> BufferConstraintsInfoFUCHSIABuilder<'a> {
+        BufferConstraintsInfoFUCHSIABuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct BufferConstraintsInfoFUCHSIABuilder<'a> {
+    inner: BufferConstraintsInfoFUCHSIA,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+impl<'a> ::std::ops::Deref for BufferConstraintsInfoFUCHSIABuilder<'a> {
+    type Target = BufferConstraintsInfoFUCHSIA;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for BufferConstraintsInfoFUCHSIABuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> BufferConstraintsInfoFUCHSIABuilder<'a> {
+    pub fn create_info(mut self, create_info: BufferCreateInfo) -> Self {
+        self.inner.create_info = create_info;
+        self
+    }
+    pub fn required_format_features(
+        mut self,
+        required_format_features: FormatFeatureFlags,
+    ) -> Self {
+        self.inner.required_format_features = required_format_features;
+        self
+    }
+    pub fn buffer_collection_constraints(
+        mut self,
+        buffer_collection_constraints: BufferCollectionConstraintsInfoFUCHSIA,
+    ) -> Self {
+        self.inner.buffer_collection_constraints = buffer_collection_constraints;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> BufferConstraintsInfoFUCHSIA {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSysmemColorSpaceFUCHSIA.html>"]
+pub struct SysmemColorSpaceFUCHSIA {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub color_space: u32,
+}
+impl ::std::default::Default for SysmemColorSpaceFUCHSIA {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::SYSMEM_COLOR_SPACE_FUCHSIA,
+            p_next: ::std::ptr::null(),
+            color_space: u32::default(),
+        }
+    }
+}
+impl SysmemColorSpaceFUCHSIA {
+    pub fn builder<'a>() -> SysmemColorSpaceFUCHSIABuilder<'a> {
+        SysmemColorSpaceFUCHSIABuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct SysmemColorSpaceFUCHSIABuilder<'a> {
+    inner: SysmemColorSpaceFUCHSIA,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+impl<'a> ::std::ops::Deref for SysmemColorSpaceFUCHSIABuilder<'a> {
+    type Target = SysmemColorSpaceFUCHSIA;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SysmemColorSpaceFUCHSIABuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> SysmemColorSpaceFUCHSIABuilder<'a> {
+    pub fn color_space(mut self, color_space: u32) -> Self {
+        self.inner.color_space = color_space;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> SysmemColorSpaceFUCHSIA {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkImageFormatConstraintsInfoFUCHSIA.html>"]
+pub struct ImageFormatConstraintsInfoFUCHSIA {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub image_create_info: ImageCreateInfo,
+    pub required_format_features: FormatFeatureFlags,
+    pub flags: ImageFormatConstraintsFlagsFUCHSIA,
+    pub sysmem_pixel_format: u64,
+    pub color_space_count: u32,
+    pub p_color_spaces: *const SysmemColorSpaceFUCHSIA,
+}
+impl ::std::default::Default for ImageFormatConstraintsInfoFUCHSIA {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::IMAGE_FORMAT_CONSTRAINTS_INFO_FUCHSIA,
+            p_next: ::std::ptr::null(),
+            image_create_info: ImageCreateInfo::default(),
+            required_format_features: FormatFeatureFlags::default(),
+            flags: ImageFormatConstraintsFlagsFUCHSIA::default(),
+            sysmem_pixel_format: u64::default(),
+            color_space_count: u32::default(),
+            p_color_spaces: ::std::ptr::null(),
+        }
+    }
+}
+impl ImageFormatConstraintsInfoFUCHSIA {
+    pub fn builder<'a>() -> ImageFormatConstraintsInfoFUCHSIABuilder<'a> {
+        ImageFormatConstraintsInfoFUCHSIABuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct ImageFormatConstraintsInfoFUCHSIABuilder<'a> {
+    inner: ImageFormatConstraintsInfoFUCHSIA,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+impl<'a> ::std::ops::Deref for ImageFormatConstraintsInfoFUCHSIABuilder<'a> {
+    type Target = ImageFormatConstraintsInfoFUCHSIA;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImageFormatConstraintsInfoFUCHSIABuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> ImageFormatConstraintsInfoFUCHSIABuilder<'a> {
+    pub fn image_create_info(mut self, image_create_info: ImageCreateInfo) -> Self {
+        self.inner.image_create_info = image_create_info;
+        self
+    }
+    pub fn required_format_features(
+        mut self,
+        required_format_features: FormatFeatureFlags,
+    ) -> Self {
+        self.inner.required_format_features = required_format_features;
+        self
+    }
+    pub fn flags(mut self, flags: ImageFormatConstraintsFlagsFUCHSIA) -> Self {
+        self.inner.flags = flags;
+        self
+    }
+    pub fn sysmem_pixel_format(mut self, sysmem_pixel_format: u64) -> Self {
+        self.inner.sysmem_pixel_format = sysmem_pixel_format;
+        self
+    }
+    pub fn color_space_count(mut self, color_space_count: u32) -> Self {
+        self.inner.color_space_count = color_space_count;
+        self
+    }
+    pub fn color_spaces(mut self, color_spaces: &'a SysmemColorSpaceFUCHSIA) -> Self {
+        self.inner.p_color_spaces = color_spaces;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> ImageFormatConstraintsInfoFUCHSIA {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkImageConstraintsInfoFUCHSIA.html>"]
+pub struct ImageConstraintsInfoFUCHSIA {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub format_constraints_count: u32,
+    pub p_format_constraints: *const ImageFormatConstraintsInfoFUCHSIA,
+    pub buffer_collection_constraints: BufferCollectionConstraintsInfoFUCHSIA,
+    pub flags: ImageConstraintsInfoFlagsFUCHSIA,
+}
+impl ::std::default::Default for ImageConstraintsInfoFUCHSIA {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::IMAGE_CONSTRAINTS_INFO_FUCHSIA,
+            p_next: ::std::ptr::null(),
+            format_constraints_count: u32::default(),
+            p_format_constraints: ::std::ptr::null(),
+            buffer_collection_constraints: BufferCollectionConstraintsInfoFUCHSIA::default(),
+            flags: ImageConstraintsInfoFlagsFUCHSIA::default(),
+        }
+    }
+}
+impl ImageConstraintsInfoFUCHSIA {
+    pub fn builder<'a>() -> ImageConstraintsInfoFUCHSIABuilder<'a> {
+        ImageConstraintsInfoFUCHSIABuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct ImageConstraintsInfoFUCHSIABuilder<'a> {
+    inner: ImageConstraintsInfoFUCHSIA,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+impl<'a> ::std::ops::Deref for ImageConstraintsInfoFUCHSIABuilder<'a> {
+    type Target = ImageConstraintsInfoFUCHSIA;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImageConstraintsInfoFUCHSIABuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> ImageConstraintsInfoFUCHSIABuilder<'a> {
+    pub fn format_constraints(
+        mut self,
+        format_constraints: &'a [ImageFormatConstraintsInfoFUCHSIA],
+    ) -> Self {
+        self.inner.format_constraints_count = format_constraints.len() as _;
+        self.inner.p_format_constraints = format_constraints.as_ptr();
+        self
+    }
+    pub fn buffer_collection_constraints(
+        mut self,
+        buffer_collection_constraints: BufferCollectionConstraintsInfoFUCHSIA,
+    ) -> Self {
+        self.inner.buffer_collection_constraints = buffer_collection_constraints;
+        self
+    }
+    pub fn flags(mut self, flags: ImageConstraintsInfoFlagsFUCHSIA) -> Self {
+        self.inner.flags = flags;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> ImageConstraintsInfoFUCHSIA {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkBufferCollectionConstraintsInfoFUCHSIA.html>"]
+pub struct BufferCollectionConstraintsInfoFUCHSIA {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub min_buffer_count: u32,
+    pub max_buffer_count: u32,
+    pub min_buffer_count_for_camping: u32,
+    pub min_buffer_count_for_dedicated_slack: u32,
+    pub min_buffer_count_for_shared_slack: u32,
+}
+impl ::std::default::Default for BufferCollectionConstraintsInfoFUCHSIA {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::BUFFER_COLLECTION_CONSTRAINTS_INFO_FUCHSIA,
+            p_next: ::std::ptr::null(),
+            min_buffer_count: u32::default(),
+            max_buffer_count: u32::default(),
+            min_buffer_count_for_camping: u32::default(),
+            min_buffer_count_for_dedicated_slack: u32::default(),
+            min_buffer_count_for_shared_slack: u32::default(),
+        }
+    }
+}
+impl BufferCollectionConstraintsInfoFUCHSIA {
+    pub fn builder<'a>() -> BufferCollectionConstraintsInfoFUCHSIABuilder<'a> {
+        BufferCollectionConstraintsInfoFUCHSIABuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct BufferCollectionConstraintsInfoFUCHSIABuilder<'a> {
+    inner: BufferCollectionConstraintsInfoFUCHSIA,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+impl<'a> ::std::ops::Deref for BufferCollectionConstraintsInfoFUCHSIABuilder<'a> {
+    type Target = BufferCollectionConstraintsInfoFUCHSIA;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for BufferCollectionConstraintsInfoFUCHSIABuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> BufferCollectionConstraintsInfoFUCHSIABuilder<'a> {
+    pub fn min_buffer_count(mut self, min_buffer_count: u32) -> Self {
+        self.inner.min_buffer_count = min_buffer_count;
+        self
+    }
+    pub fn max_buffer_count(mut self, max_buffer_count: u32) -> Self {
+        self.inner.max_buffer_count = max_buffer_count;
+        self
+    }
+    pub fn min_buffer_count_for_camping(mut self, min_buffer_count_for_camping: u32) -> Self {
+        self.inner.min_buffer_count_for_camping = min_buffer_count_for_camping;
+        self
+    }
+    pub fn min_buffer_count_for_dedicated_slack(
+        mut self,
+        min_buffer_count_for_dedicated_slack: u32,
+    ) -> Self {
+        self.inner.min_buffer_count_for_dedicated_slack = min_buffer_count_for_dedicated_slack;
+        self
+    }
+    pub fn min_buffer_count_for_shared_slack(
+        mut self,
+        min_buffer_count_for_shared_slack: u32,
+    ) -> Self {
+        self.inner.min_buffer_count_for_shared_slack = min_buffer_count_for_shared_slack;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> BufferCollectionConstraintsInfoFUCHSIA {
         self.inner
     }
 }
