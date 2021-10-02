@@ -2128,8 +2128,10 @@ pub fn generate_struct(
             #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAccelerationStructureInstanceKHR.html>"]
             pub struct AccelerationStructureInstanceKHR {
                 pub transform: TransformMatrixKHR,
-                pub instance_custom_index_and_mask: u32,
-                pub instance_shader_binding_table_record_offset_and_flags: u32,
+                /// Use [`Packed24_8::new(instance_custom_index, mask)`][Packed24_8::new()] to construct this field
+                pub instance_custom_index_and_mask: Packed24_8,
+                /// Use [`Packed24_8::new(instance_shader_binding_table_record_offset, flags)`][Packed24_8::new()] to construct this field
+                pub instance_shader_binding_table_record_offset_and_flags: Packed24_8,
                 pub acceleration_structure_reference: AccelerationStructureReferenceKHR,
             }
         };
@@ -2143,8 +2145,10 @@ pub fn generate_struct(
             pub struct AccelerationStructureSRTMotionInstanceNV {
                 pub transform_t0: SRTDataNV,
                 pub transform_t1: SRTDataNV,
-                pub instance_custom_index_and_mask: u32,
-                pub instance_shader_binding_table_record_offset_and_flags: u32,
+                /// Use [`Packed24_8::new(instance_custom_index, mask)`][Packed24_8::new()] to construct this field
+                pub instance_custom_index_and_mask: Packed24_8,
+                /// Use [`Packed24_8::new(instance_shader_binding_table_record_offset, flags)`][Packed24_8::new()] to construct this field
+                pub instance_shader_binding_table_record_offset_and_flags: Packed24_8,
                 pub acceleration_structure_reference: AccelerationStructureReferenceKHR,
             }
         };
@@ -2158,8 +2162,10 @@ pub fn generate_struct(
             pub struct AccelerationStructureMatrixMotionInstanceNV {
                 pub transform_t0: TransformMatrixKHR,
                 pub transform_t1: TransformMatrixKHR,
-                pub instance_custom_index_and_mask: u32,
-                pub instance_shader_binding_table_record_offset_and_flags: u32,
+                /// Use [`Packed24_8::new(instance_custom_index, mask)`][Packed24_8::new()] to construct this field
+                pub instance_custom_index_and_mask: Packed24_8,
+                /// Use [`Packed24_8::new(instance_shader_binding_table_record_offset, flags)`][Packed24_8::new()] to construct this field
+                pub instance_shader_binding_table_record_offset_and_flags: Packed24_8,
                 pub acceleration_structure_reference: AccelerationStructureReferenceKHR,
             }
         };
@@ -2784,25 +2790,6 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     let handle_nondispatchable_macro = handle_nondispatchable_macro();
     let define_handle_macro = define_handle_macro();
 
-    let ptr_chain_code = quote! {
-        /// Iterates through the pointer chain. Includes the item that is passed into the function.
-        /// Stops at the last `BaseOutStructure` that has a null `p_next` field.
-        pub(crate) unsafe fn ptr_chain_iter<T>(
-            ptr: &mut T,
-        ) -> impl Iterator<Item = *mut BaseOutStructure> {
-            let ptr: *mut BaseOutStructure = ptr as *mut T as _;
-            (0..).scan(ptr, |p_ptr, _| {
-                if p_ptr.is_null() {
-                    return None;
-                }
-                let n_ptr = (**p_ptr).p_next as *mut BaseOutStructure;
-                let old = *p_ptr;
-                *p_ptr = n_ptr;
-                Some(old)
-            })
-        }
-    };
-
     let macros_code = quote! {
         #bitflags_macro
         #handle_nondispatchable_macro
@@ -2813,8 +2800,6 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
 
     let vk_dir = src_dir.join("vk");
     std::fs::create_dir_all(&vk_dir).expect("failed to create vk dir");
-
-    let mut vk_rs_file = File::create(src_dir.join("vk.rs")).expect("vk.rs");
 
     let mut vk_macros_file = File::create(vk_dir.join("macros.rs")).expect("vk/macros.rs");
     let mut vk_features_file = File::create(vk_dir.join("features.rs")).expect("vk/features.rs");
@@ -2849,6 +2834,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         use crate::vk::enums::*;
         use crate::vk::native::*;
         use crate::vk::platform_types::*;
+        use crate::vk::prelude::*;
         #(#definition_code)*
     };
 
@@ -2898,53 +2884,6 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         #(#aliases)*
     };
 
-    // These are defined outside of `quote!` because rustfmt doesn't seem
-    // to format them correctly when they contain extra spaces.
-    let vk_rs_clippy_lints = r#"
-#![allow(clippy::too_many_arguments, clippy::cognitive_complexity, clippy::wrong_self_convention)]
-"#;
-
-    let vk_rs_code = quote! {
-        #[macro_use]
-        mod macros;
-        pub use macros::*;
-        mod aliases;
-        pub use aliases::*;
-        mod bitflags;
-        pub use bitflags::*;
-        mod const_debugs;
-        pub(crate) use const_debugs::*;
-        mod constants;
-        pub use constants::*;
-        mod definitions;
-        pub use definitions::*;
-        mod enums;
-        pub use enums::*;
-        mod extensions;
-        pub use extensions::*;
-        mod feature_extensions;
-        pub use feature_extensions::*;
-        mod features;
-        pub use features::*;
-        /// Native bindings from Vulkan headers, generated by bindgen
-        #[allow(nonstandard_style)]
-        // Temporarily allow UB nullptr dereference in bindgen layout tests until fixed upstream:
-        // https://github.com/rust-lang/rust-bindgen/pull/2055
-        // https://github.com/rust-lang/rust-bindgen/pull/2064
-        #[allow(deref_nullptr)]
-        pub mod native;
-        mod platform_types;
-        pub use platform_types::*;
-
-        #ptr_chain_code
-
-        pub trait Handle {
-            const TYPE: ObjectType;
-            fn as_raw(self) -> u64;
-            fn from_raw(_: u64) -> Self;
-        }
-    };
-
     write!(&mut vk_macros_file, "{}", macros_code).expect("Unable to write vk/macros.rs");
     write!(&mut vk_features_file, "{}", feature_code).expect("Unable to write vk/features.rs");
     write!(&mut vk_definitions_file, "{}", definition_code)
@@ -2963,8 +2902,6 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     write!(&mut vk_const_debugs_file, "{}", const_debugs)
         .expect("Unable to write vk/const_debugs.rs");
     write!(&mut vk_aliases_file, "{}", aliases).expect("Unable to write vk/aliases.rs");
-    write!(&mut vk_rs_file, "{} {}", vk_rs_clippy_lints, vk_rs_code)
-        .expect("Unable to write vk.rs");
 
     let vk_include = vk_headers_dir.join("include");
 
