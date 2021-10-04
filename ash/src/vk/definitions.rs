@@ -73,275 +73,267 @@ pub type DeviceAddress = u64;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkQueryPoolCreateFlags.html>"]
 pub struct QueryPoolCreateFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(QueryPoolCreateFlags, 0b0, Flags);
+vk_bitflags_wrapped!(QueryPoolCreateFlags, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineDepthStencilStateCreateFlags.html>"]
 pub struct PipelineDepthStencilStateCreateFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(PipelineDepthStencilStateCreateFlags, 0b0, Flags);
+vk_bitflags_wrapped!(PipelineDepthStencilStateCreateFlags, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineDynamicStateCreateFlags.html>"]
 pub struct PipelineDynamicStateCreateFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(PipelineDynamicStateCreateFlags, 0b0, Flags);
+vk_bitflags_wrapped!(PipelineDynamicStateCreateFlags, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineColorBlendStateCreateFlags.html>"]
 pub struct PipelineColorBlendStateCreateFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(PipelineColorBlendStateCreateFlags, 0b0, Flags);
+vk_bitflags_wrapped!(PipelineColorBlendStateCreateFlags, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineMultisampleStateCreateFlags.html>"]
 pub struct PipelineMultisampleStateCreateFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(PipelineMultisampleStateCreateFlags, 0b0, Flags);
+vk_bitflags_wrapped!(PipelineMultisampleStateCreateFlags, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineRasterizationStateCreateFlags.html>"]
 pub struct PipelineRasterizationStateCreateFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(PipelineRasterizationStateCreateFlags, 0b0, Flags);
+vk_bitflags_wrapped!(PipelineRasterizationStateCreateFlags, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineViewportStateCreateFlags.html>"]
 pub struct PipelineViewportStateCreateFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(PipelineViewportStateCreateFlags, 0b0, Flags);
+vk_bitflags_wrapped!(PipelineViewportStateCreateFlags, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineTessellationStateCreateFlags.html>"]
 pub struct PipelineTessellationStateCreateFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(PipelineTessellationStateCreateFlags, 0b0, Flags);
+vk_bitflags_wrapped!(PipelineTessellationStateCreateFlags, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineInputAssemblyStateCreateFlags.html>"]
 pub struct PipelineInputAssemblyStateCreateFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(PipelineInputAssemblyStateCreateFlags, 0b0, Flags);
+vk_bitflags_wrapped!(PipelineInputAssemblyStateCreateFlags, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineVertexInputStateCreateFlags.html>"]
 pub struct PipelineVertexInputStateCreateFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(PipelineVertexInputStateCreateFlags, 0b0, Flags);
+vk_bitflags_wrapped!(PipelineVertexInputStateCreateFlags, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkBufferViewCreateFlags.html>"]
 pub struct BufferViewCreateFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(BufferViewCreateFlags, 0b0, Flags);
+vk_bitflags_wrapped!(BufferViewCreateFlags, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkInstanceCreateFlags.html>"]
 pub struct InstanceCreateFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(InstanceCreateFlags, 0b0, Flags);
+vk_bitflags_wrapped!(InstanceCreateFlags, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDeviceCreateFlags.html>"]
 pub struct DeviceCreateFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(DeviceCreateFlags, 0b0, Flags);
+vk_bitflags_wrapped!(DeviceCreateFlags, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkMemoryMapFlags.html>"]
 pub struct MemoryMapFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(MemoryMapFlags, 0b0, Flags);
+vk_bitflags_wrapped!(MemoryMapFlags, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDescriptorPoolResetFlags.html>"]
 pub struct DescriptorPoolResetFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(DescriptorPoolResetFlags, 0b0, Flags);
+vk_bitflags_wrapped!(DescriptorPoolResetFlags, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDescriptorUpdateTemplateCreateFlags.html>"]
 pub struct DescriptorUpdateTemplateCreateFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(DescriptorUpdateTemplateCreateFlags, 0b0, Flags);
+vk_bitflags_wrapped!(DescriptorUpdateTemplateCreateFlags, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAccelerationStructureMotionInfoFlagsNV.html>"]
 pub struct AccelerationStructureMotionInfoFlagsNV(pub(crate) Flags);
-vk_bitflags_wrapped!(AccelerationStructureMotionInfoFlagsNV, 0b0, Flags);
+vk_bitflags_wrapped!(AccelerationStructureMotionInfoFlagsNV, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAccelerationStructureMotionInstanceFlagsNV.html>"]
 pub struct AccelerationStructureMotionInstanceFlagsNV(pub(crate) Flags);
-vk_bitflags_wrapped!(AccelerationStructureMotionInstanceFlagsNV, 0b0, Flags);
+vk_bitflags_wrapped!(AccelerationStructureMotionInstanceFlagsNV, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDisplayModeCreateFlagsKHR.html>"]
 pub struct DisplayModeCreateFlagsKHR(pub(crate) Flags);
-vk_bitflags_wrapped!(DisplayModeCreateFlagsKHR, 0b0, Flags);
+vk_bitflags_wrapped!(DisplayModeCreateFlagsKHR, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDisplaySurfaceCreateFlagsKHR.html>"]
 pub struct DisplaySurfaceCreateFlagsKHR(pub(crate) Flags);
-vk_bitflags_wrapped!(DisplaySurfaceCreateFlagsKHR, 0b0, Flags);
+vk_bitflags_wrapped!(DisplaySurfaceCreateFlagsKHR, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAndroidSurfaceCreateFlagsKHR.html>"]
 pub struct AndroidSurfaceCreateFlagsKHR(pub(crate) Flags);
-vk_bitflags_wrapped!(AndroidSurfaceCreateFlagsKHR, 0b0, Flags);
+vk_bitflags_wrapped!(AndroidSurfaceCreateFlagsKHR, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkViSurfaceCreateFlagsNN.html>"]
 pub struct ViSurfaceCreateFlagsNN(pub(crate) Flags);
-vk_bitflags_wrapped!(ViSurfaceCreateFlagsNN, 0b0, Flags);
+vk_bitflags_wrapped!(ViSurfaceCreateFlagsNN, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkWaylandSurfaceCreateFlagsKHR.html>"]
 pub struct WaylandSurfaceCreateFlagsKHR(pub(crate) Flags);
-vk_bitflags_wrapped!(WaylandSurfaceCreateFlagsKHR, 0b0, Flags);
+vk_bitflags_wrapped!(WaylandSurfaceCreateFlagsKHR, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkWin32SurfaceCreateFlagsKHR.html>"]
 pub struct Win32SurfaceCreateFlagsKHR(pub(crate) Flags);
-vk_bitflags_wrapped!(Win32SurfaceCreateFlagsKHR, 0b0, Flags);
+vk_bitflags_wrapped!(Win32SurfaceCreateFlagsKHR, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkXlibSurfaceCreateFlagsKHR.html>"]
 pub struct XlibSurfaceCreateFlagsKHR(pub(crate) Flags);
-vk_bitflags_wrapped!(XlibSurfaceCreateFlagsKHR, 0b0, Flags);
+vk_bitflags_wrapped!(XlibSurfaceCreateFlagsKHR, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkXcbSurfaceCreateFlagsKHR.html>"]
 pub struct XcbSurfaceCreateFlagsKHR(pub(crate) Flags);
-vk_bitflags_wrapped!(XcbSurfaceCreateFlagsKHR, 0b0, Flags);
+vk_bitflags_wrapped!(XcbSurfaceCreateFlagsKHR, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDirectFBSurfaceCreateFlagsEXT.html>"]
 pub struct DirectFBSurfaceCreateFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(DirectFBSurfaceCreateFlagsEXT, 0b0, Flags);
+vk_bitflags_wrapped!(DirectFBSurfaceCreateFlagsEXT, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkIOSSurfaceCreateFlagsMVK.html>"]
 pub struct IOSSurfaceCreateFlagsMVK(pub(crate) Flags);
-vk_bitflags_wrapped!(IOSSurfaceCreateFlagsMVK, 0b0, Flags);
+vk_bitflags_wrapped!(IOSSurfaceCreateFlagsMVK, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkMacOSSurfaceCreateFlagsMVK.html>"]
 pub struct MacOSSurfaceCreateFlagsMVK(pub(crate) Flags);
-vk_bitflags_wrapped!(MacOSSurfaceCreateFlagsMVK, 0b0, Flags);
+vk_bitflags_wrapped!(MacOSSurfaceCreateFlagsMVK, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkMetalSurfaceCreateFlagsEXT.html>"]
 pub struct MetalSurfaceCreateFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(MetalSurfaceCreateFlagsEXT, 0b0, Flags);
+vk_bitflags_wrapped!(MetalSurfaceCreateFlagsEXT, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkImagePipeSurfaceCreateFlagsFUCHSIA.html>"]
 pub struct ImagePipeSurfaceCreateFlagsFUCHSIA(pub(crate) Flags);
-vk_bitflags_wrapped!(ImagePipeSurfaceCreateFlagsFUCHSIA, 0b0, Flags);
+vk_bitflags_wrapped!(ImagePipeSurfaceCreateFlagsFUCHSIA, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkStreamDescriptorSurfaceCreateFlagsGGP.html>"]
 pub struct StreamDescriptorSurfaceCreateFlagsGGP(pub(crate) Flags);
-vk_bitflags_wrapped!(StreamDescriptorSurfaceCreateFlagsGGP, 0b0, Flags);
+vk_bitflags_wrapped!(StreamDescriptorSurfaceCreateFlagsGGP, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkHeadlessSurfaceCreateFlagsEXT.html>"]
 pub struct HeadlessSurfaceCreateFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(HeadlessSurfaceCreateFlagsEXT, 0b0, Flags);
+vk_bitflags_wrapped!(HeadlessSurfaceCreateFlagsEXT, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkScreenSurfaceCreateFlagsQNX.html>"]
 pub struct ScreenSurfaceCreateFlagsQNX(pub(crate) Flags);
-vk_bitflags_wrapped!(ScreenSurfaceCreateFlagsQNX, 0b0, Flags);
+vk_bitflags_wrapped!(ScreenSurfaceCreateFlagsQNX, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkCommandPoolTrimFlags.html>"]
 pub struct CommandPoolTrimFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(CommandPoolTrimFlags, 0b0, Flags);
+vk_bitflags_wrapped!(CommandPoolTrimFlags, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineViewportSwizzleStateCreateFlagsNV.html>"]
 pub struct PipelineViewportSwizzleStateCreateFlagsNV(pub(crate) Flags);
-vk_bitflags_wrapped!(PipelineViewportSwizzleStateCreateFlagsNV, 0b0, Flags);
+vk_bitflags_wrapped!(PipelineViewportSwizzleStateCreateFlagsNV, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineDiscardRectangleStateCreateFlagsEXT.html>"]
 pub struct PipelineDiscardRectangleStateCreateFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(PipelineDiscardRectangleStateCreateFlagsEXT, 0b0, Flags);
+vk_bitflags_wrapped!(PipelineDiscardRectangleStateCreateFlagsEXT, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineCoverageToColorStateCreateFlagsNV.html>"]
 pub struct PipelineCoverageToColorStateCreateFlagsNV(pub(crate) Flags);
-vk_bitflags_wrapped!(PipelineCoverageToColorStateCreateFlagsNV, 0b0, Flags);
+vk_bitflags_wrapped!(PipelineCoverageToColorStateCreateFlagsNV, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineCoverageModulationStateCreateFlagsNV.html>"]
 pub struct PipelineCoverageModulationStateCreateFlagsNV(pub(crate) Flags);
-vk_bitflags_wrapped!(PipelineCoverageModulationStateCreateFlagsNV, 0b0, Flags);
+vk_bitflags_wrapped!(PipelineCoverageModulationStateCreateFlagsNV, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineCoverageReductionStateCreateFlagsNV.html>"]
 pub struct PipelineCoverageReductionStateCreateFlagsNV(pub(crate) Flags);
-vk_bitflags_wrapped!(PipelineCoverageReductionStateCreateFlagsNV, 0b0, Flags);
+vk_bitflags_wrapped!(PipelineCoverageReductionStateCreateFlagsNV, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkValidationCacheCreateFlagsEXT.html>"]
 pub struct ValidationCacheCreateFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(ValidationCacheCreateFlagsEXT, 0b0, Flags);
+vk_bitflags_wrapped!(ValidationCacheCreateFlagsEXT, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDebugUtilsMessengerCreateFlagsEXT.html>"]
 pub struct DebugUtilsMessengerCreateFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(DebugUtilsMessengerCreateFlagsEXT, 0b0, Flags);
+vk_bitflags_wrapped!(DebugUtilsMessengerCreateFlagsEXT, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDebugUtilsMessengerCallbackDataFlagsEXT.html>"]
 pub struct DebugUtilsMessengerCallbackDataFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(DebugUtilsMessengerCallbackDataFlagsEXT, 0b0, Flags);
+vk_bitflags_wrapped!(DebugUtilsMessengerCallbackDataFlagsEXT, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDeviceMemoryReportFlagsEXT.html>"]
 pub struct DeviceMemoryReportFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(DeviceMemoryReportFlagsEXT, 0b0, Flags);
+vk_bitflags_wrapped!(DeviceMemoryReportFlagsEXT, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineRasterizationConservativeStateCreateFlagsEXT.html>"]
 pub struct PipelineRasterizationConservativeStateCreateFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(
-    PipelineRasterizationConservativeStateCreateFlagsEXT,
-    0b0,
-    Flags
-);
+vk_bitflags_wrapped!(PipelineRasterizationConservativeStateCreateFlagsEXT, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineRasterizationStateStreamCreateFlagsEXT.html>"]
 pub struct PipelineRasterizationStateStreamCreateFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(PipelineRasterizationStateStreamCreateFlagsEXT, 0b0, Flags);
+vk_bitflags_wrapped!(PipelineRasterizationStateStreamCreateFlagsEXT, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineRasterizationDepthClipStateCreateFlagsEXT.html>"]
 pub struct PipelineRasterizationDepthClipStateCreateFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(
-    PipelineRasterizationDepthClipStateCreateFlagsEXT,
-    0b0,
-    Flags
-);
+vk_bitflags_wrapped!(PipelineRasterizationDepthClipStateCreateFlagsEXT, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkVideoBeginCodingFlagsKHR.html>"]
 pub struct VideoBeginCodingFlagsKHR(pub(crate) Flags);
-vk_bitflags_wrapped!(VideoBeginCodingFlagsKHR, 0b0, Flags);
+vk_bitflags_wrapped!(VideoBeginCodingFlagsKHR, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkVideoEndCodingFlagsKHR.html>"]
 pub struct VideoEndCodingFlagsKHR(pub(crate) Flags);
-vk_bitflags_wrapped!(VideoEndCodingFlagsKHR, 0b0, Flags);
+vk_bitflags_wrapped!(VideoEndCodingFlagsKHR, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkVideoDecodeH264CreateFlagsEXT.html>"]
 pub struct VideoDecodeH264CreateFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(VideoDecodeH264CreateFlagsEXT, 0b0, Flags);
+vk_bitflags_wrapped!(VideoDecodeH264CreateFlagsEXT, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkVideoDecodeH265CreateFlagsEXT.html>"]
 pub struct VideoDecodeH265CreateFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(VideoDecodeH265CreateFlagsEXT, 0b0, Flags);
+vk_bitflags_wrapped!(VideoDecodeH265CreateFlagsEXT, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkVideoEncodeH265CapabilityFlagsEXT.html>"]
 pub struct VideoEncodeH265CapabilityFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(VideoEncodeH265CapabilityFlagsEXT, 0b0, Flags);
+vk_bitflags_wrapped!(VideoEncodeH265CapabilityFlagsEXT, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkVideoEncodeH265CreateFlagsEXT.html>"]
 pub struct VideoEncodeH265CreateFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(VideoEncodeH265CreateFlagsEXT, 0b0, Flags);
+vk_bitflags_wrapped!(VideoEncodeH265CreateFlagsEXT, Flags);
 define_handle!(
     Instance,
     INSTANCE,

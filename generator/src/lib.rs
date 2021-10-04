@@ -224,7 +224,7 @@ pub fn vk_bitflags_wrapped_macro() -> TokenStream {
     quote! {
         #[macro_export]
         macro_rules! vk_bitflags_wrapped {
-            ($name: ident, $all: expr, $flag_type: ty) => {
+            ($name: ident, $flag_type: ty) => {
 
                 impl Default for $name {
                     fn default() -> Self {
@@ -239,11 +239,6 @@ pub fn vk_bitflags_wrapped_macro() -> TokenStream {
                     }
 
                     #[inline]
-                    pub const fn all() -> Self {
-                        Self($all)
-                    }
-
-                    #[inline]
                     pub const fn from_raw(x: $flag_type) -> Self { Self(x) }
 
                     #[inline]
@@ -252,11 +247,6 @@ pub fn vk_bitflags_wrapped_macro() -> TokenStream {
                     #[inline]
                     pub fn is_empty(self) -> bool {
                         self == Self::empty()
-                    }
-
-                    #[inline]
-                    pub fn is_all(self) -> bool {
-                        self & Self::all() == Self::all()
                     }
 
                     #[inline]
@@ -319,28 +309,12 @@ pub fn vk_bitflags_wrapped_macro() -> TokenStream {
                     }
                 }
 
-                impl ::std::ops::Sub for $name {
-                    type Output = Self;
-
-                    #[inline]
-                    fn sub(self, rhs: Self) -> Self {
-                        self & !rhs
-                    }
-                }
-
-                impl ::std::ops::SubAssign for $name {
-                    #[inline]
-                    fn sub_assign(&mut self, rhs: Self) {
-                        *self = *self - rhs
-                    }
-                }
-
                 impl ::std::ops::Not for $name {
                     type Output = Self;
 
                     #[inline]
                     fn not(self) -> Self {
-                        self ^ Self::all()
+                        Self(!self.0)
                     }
                 }
             }
@@ -1359,7 +1333,7 @@ pub fn generate_bitmask(
         #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
         #[doc = #khronos_link]
         pub struct #ident(pub(crate) #type_);
-        vk_bitflags_wrapped!(#ident, 0b0, #type_);
+        vk_bitflags_wrapped!(#ident, #type_);
     })
 }
 
@@ -1538,19 +1512,12 @@ pub fn generate_enum<'a>(
 
     if clean_name.contains("Bit") {
         let ident = format_ident!("{}", _name.as_str());
-        let all_bits = constants
-            .iter()
-            .filter_map(|constant| constant.constant(name).value())
-            .fold(0, |acc, next| acc | next.bits());
 
         let type_ = if enum_.bitwidth == Some(64u32) {
             quote!(Flags64)
         } else {
             quote!(Flags)
         };
-        let bit_string = format!("{:b}", all_bits);
-        let bit_string = interleave_number('_', 4, &bit_string);
-        let all_bits_term = syn::LitInt::new(&format!("0b{}", bit_string), Span::call_site());
 
         if !bitflags_cache.insert(ident.clone()) {
             EnumType::Bitflags(quote! {})
@@ -1561,7 +1528,7 @@ pub fn generate_enum<'a>(
                 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
                 #[doc = #khronos_link]
                 pub struct #ident(pub(crate) #type_);
-                vk_bitflags_wrapped!(#ident, #all_bits_term, #type_);
+                vk_bitflags_wrapped!(#ident, #type_);
                 #impl_bitflags
             };
             EnumType::Bitflags(q)
