@@ -54,7 +54,7 @@ pub const API_VERSION_1_0: u32 = make_api_version(0, 1, 0, 0);
 pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_API_VERSION_1_2.html>"]
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
-pub const HEADER_VERSION: u32 = 194u32;
+pub const HEADER_VERSION: u32 = 195u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 2, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSampleMask.html>"]
@@ -20872,6 +20872,59 @@ impl<'a> BufferMemoryRequirementsInfo2Builder<'a> {
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDeviceBufferMemoryRequirementsKHR.html>"]
+pub struct DeviceBufferMemoryRequirementsKHR {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub p_create_info: *const BufferCreateInfo,
+}
+impl ::std::default::Default for DeviceBufferMemoryRequirementsKHR {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::DEVICE_BUFFER_MEMORY_REQUIREMENTS_KHR,
+            p_next: ::std::ptr::null(),
+            p_create_info: ::std::ptr::null(),
+        }
+    }
+}
+impl DeviceBufferMemoryRequirementsKHR {
+    pub fn builder<'a>() -> DeviceBufferMemoryRequirementsKHRBuilder<'a> {
+        DeviceBufferMemoryRequirementsKHRBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct DeviceBufferMemoryRequirementsKHRBuilder<'a> {
+    inner: DeviceBufferMemoryRequirementsKHR,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+impl<'a> ::std::ops::Deref for DeviceBufferMemoryRequirementsKHRBuilder<'a> {
+    type Target = DeviceBufferMemoryRequirementsKHR;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DeviceBufferMemoryRequirementsKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> DeviceBufferMemoryRequirementsKHRBuilder<'a> {
+    pub fn create_info(mut self, create_info: &'a BufferCreateInfo) -> Self {
+        self.inner.p_create_info = create_info;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> DeviceBufferMemoryRequirementsKHR {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkImageMemoryRequirementsInfo2.html>"]
 pub struct ImageMemoryRequirementsInfo2 {
     pub s_type: StructureType,
@@ -20988,6 +21041,65 @@ impl<'a> ImageSparseMemoryRequirementsInfo2Builder<'a> {
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImageSparseMemoryRequirementsInfo2 {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDeviceImageMemoryRequirementsKHR.html>"]
+pub struct DeviceImageMemoryRequirementsKHR {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub p_create_info: *const ImageCreateInfo,
+    pub plane_aspect: ImageAspectFlags,
+}
+impl ::std::default::Default for DeviceImageMemoryRequirementsKHR {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::DEVICE_IMAGE_MEMORY_REQUIREMENTS_KHR,
+            p_next: ::std::ptr::null(),
+            p_create_info: ::std::ptr::null(),
+            plane_aspect: ImageAspectFlags::default(),
+        }
+    }
+}
+impl DeviceImageMemoryRequirementsKHR {
+    pub fn builder<'a>() -> DeviceImageMemoryRequirementsKHRBuilder<'a> {
+        DeviceImageMemoryRequirementsKHRBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct DeviceImageMemoryRequirementsKHRBuilder<'a> {
+    inner: DeviceImageMemoryRequirementsKHR,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+impl<'a> ::std::ops::Deref for DeviceImageMemoryRequirementsKHRBuilder<'a> {
+    type Target = DeviceImageMemoryRequirementsKHR;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DeviceImageMemoryRequirementsKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> DeviceImageMemoryRequirementsKHRBuilder<'a> {
+    pub fn create_info(mut self, create_info: &'a ImageCreateInfo) -> Self {
+        self.inner.p_create_info = create_info;
+        self
+    }
+    pub fn plane_aspect(mut self, plane_aspect: ImageAspectFlags) -> Self {
+        self.inner.plane_aspect = plane_aspect;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> DeviceImageMemoryRequirementsKHR {
         self.inner
     }
 }
@@ -23787,6 +23899,121 @@ impl<'a> PhysicalDeviceMaintenance3PropertiesBuilder<'a> {
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceMaintenance3Properties {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDeviceMaintenance4FeaturesKHR.html>"]
+pub struct PhysicalDeviceMaintenance4FeaturesKHR {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub maintenance4: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceMaintenance4FeaturesKHR {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PHYSICAL_DEVICE_MAINTENANCE_4_FEATURES_KHR,
+            p_next: ::std::ptr::null_mut(),
+            maintenance4: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceMaintenance4FeaturesKHR {
+    pub fn builder<'a>() -> PhysicalDeviceMaintenance4FeaturesKHRBuilder<'a> {
+        PhysicalDeviceMaintenance4FeaturesKHRBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceMaintenance4FeaturesKHRBuilder<'a> {
+    inner: PhysicalDeviceMaintenance4FeaturesKHR,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMaintenance4FeaturesKHRBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMaintenance4FeaturesKHR {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMaintenance4FeaturesKHRBuilder<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMaintenance4FeaturesKHR {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceMaintenance4FeaturesKHRBuilder<'a> {
+    type Target = PhysicalDeviceMaintenance4FeaturesKHR;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceMaintenance4FeaturesKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceMaintenance4FeaturesKHRBuilder<'a> {
+    pub fn maintenance4(mut self, maintenance4: bool) -> Self {
+        self.inner.maintenance4 = maintenance4.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceMaintenance4FeaturesKHR {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDeviceMaintenance4PropertiesKHR.html>"]
+pub struct PhysicalDeviceMaintenance4PropertiesKHR {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub max_buffer_size: DeviceSize,
+}
+impl ::std::default::Default for PhysicalDeviceMaintenance4PropertiesKHR {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PHYSICAL_DEVICE_MAINTENANCE_4_PROPERTIES_KHR,
+            p_next: ::std::ptr::null_mut(),
+            max_buffer_size: DeviceSize::default(),
+        }
+    }
+}
+impl PhysicalDeviceMaintenance4PropertiesKHR {
+    pub fn builder<'a>() -> PhysicalDeviceMaintenance4PropertiesKHRBuilder<'a> {
+        PhysicalDeviceMaintenance4PropertiesKHRBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceMaintenance4PropertiesKHRBuilder<'a> {
+    inner: PhysicalDeviceMaintenance4PropertiesKHR,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceMaintenance4PropertiesKHRBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMaintenance4PropertiesKHR {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceMaintenance4PropertiesKHRBuilder<'a> {
+    type Target = PhysicalDeviceMaintenance4PropertiesKHR;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceMaintenance4PropertiesKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceMaintenance4PropertiesKHRBuilder<'a> {
+    pub fn max_buffer_size(mut self, max_buffer_size: DeviceSize) -> Self {
+        self.inner.max_buffer_size = max_buffer_size;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceMaintenance4PropertiesKHR {
         self.inner
     }
 }
@@ -52048,6 +52275,365 @@ impl<'a> BufferCollectionConstraintsInfoFUCHSIABuilder<'a> {
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> BufferCollectionConstraintsInfoFUCHSIA {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDeviceRGBA10X6FormatsFeaturesEXT.html>"]
+pub struct PhysicalDeviceRGBA10X6FormatsFeaturesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub format_rgba10x6_without_y_cb_cr_sampler: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceRGBA10X6FormatsFeaturesEXT {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PHYSICAL_DEVICE_RGBA10X6_FORMATS_FEATURES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            format_rgba10x6_without_y_cb_cr_sampler: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceRGBA10X6FormatsFeaturesEXT {
+    pub fn builder<'a>() -> PhysicalDeviceRGBA10X6FormatsFeaturesEXTBuilder<'a> {
+        PhysicalDeviceRGBA10X6FormatsFeaturesEXTBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceRGBA10X6FormatsFeaturesEXTBuilder<'a> {
+    inner: PhysicalDeviceRGBA10X6FormatsFeaturesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRGBA10X6FormatsFeaturesEXTBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRGBA10X6FormatsFeaturesEXT {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRGBA10X6FormatsFeaturesEXTBuilder<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRGBA10X6FormatsFeaturesEXT {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceRGBA10X6FormatsFeaturesEXTBuilder<'a> {
+    type Target = PhysicalDeviceRGBA10X6FormatsFeaturesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceRGBA10X6FormatsFeaturesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceRGBA10X6FormatsFeaturesEXTBuilder<'a> {
+    pub fn format_rgba10x6_without_y_cb_cr_sampler(
+        mut self,
+        format_rgba10x6_without_y_cb_cr_sampler: bool,
+    ) -> Self {
+        self.inner.format_rgba10x6_without_y_cb_cr_sampler =
+            format_rgba10x6_without_y_cb_cr_sampler.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceRGBA10X6FormatsFeaturesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkFormatProperties3KHR.html>"]
+pub struct FormatProperties3KHR {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub linear_tiling_features: FormatFeatureFlags2KHR,
+    pub optimal_tiling_features: FormatFeatureFlags2KHR,
+    pub buffer_features: FormatFeatureFlags2KHR,
+}
+impl ::std::default::Default for FormatProperties3KHR {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::FORMAT_PROPERTIES_3_KHR,
+            p_next: ::std::ptr::null_mut(),
+            linear_tiling_features: FormatFeatureFlags2KHR::default(),
+            optimal_tiling_features: FormatFeatureFlags2KHR::default(),
+            buffer_features: FormatFeatureFlags2KHR::default(),
+        }
+    }
+}
+impl FormatProperties3KHR {
+    pub fn builder<'a>() -> FormatProperties3KHRBuilder<'a> {
+        FormatProperties3KHRBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct FormatProperties3KHRBuilder<'a> {
+    inner: FormatProperties3KHR,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsFormatProperties2 for FormatProperties3KHRBuilder<'_> {}
+unsafe impl ExtendsFormatProperties2 for FormatProperties3KHR {}
+impl<'a> ::std::ops::Deref for FormatProperties3KHRBuilder<'a> {
+    type Target = FormatProperties3KHR;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for FormatProperties3KHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> FormatProperties3KHRBuilder<'a> {
+    pub fn linear_tiling_features(
+        mut self,
+        linear_tiling_features: FormatFeatureFlags2KHR,
+    ) -> Self {
+        self.inner.linear_tiling_features = linear_tiling_features;
+        self
+    }
+    pub fn optimal_tiling_features(
+        mut self,
+        optimal_tiling_features: FormatFeatureFlags2KHR,
+    ) -> Self {
+        self.inner.optimal_tiling_features = optimal_tiling_features;
+        self
+    }
+    pub fn buffer_features(mut self, buffer_features: FormatFeatureFlags2KHR) -> Self {
+        self.inner.buffer_features = buffer_features;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> FormatProperties3KHR {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDrmFormatModifierPropertiesList2EXT.html>"]
+pub struct DrmFormatModifierPropertiesList2EXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub drm_format_modifier_count: u32,
+    pub p_drm_format_modifier_properties: *mut DrmFormatModifierProperties2EXT,
+}
+impl ::std::default::Default for DrmFormatModifierPropertiesList2EXT {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::DRM_FORMAT_MODIFIER_PROPERTIES_LIST_2_EXT,
+            p_next: ::std::ptr::null_mut(),
+            drm_format_modifier_count: u32::default(),
+            p_drm_format_modifier_properties: ::std::ptr::null_mut(),
+        }
+    }
+}
+impl DrmFormatModifierPropertiesList2EXT {
+    pub fn builder<'a>() -> DrmFormatModifierPropertiesList2EXTBuilder<'a> {
+        DrmFormatModifierPropertiesList2EXTBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct DrmFormatModifierPropertiesList2EXTBuilder<'a> {
+    inner: DrmFormatModifierPropertiesList2EXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsFormatProperties2 for DrmFormatModifierPropertiesList2EXTBuilder<'_> {}
+unsafe impl ExtendsFormatProperties2 for DrmFormatModifierPropertiesList2EXT {}
+impl<'a> ::std::ops::Deref for DrmFormatModifierPropertiesList2EXTBuilder<'a> {
+    type Target = DrmFormatModifierPropertiesList2EXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DrmFormatModifierPropertiesList2EXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> DrmFormatModifierPropertiesList2EXTBuilder<'a> {
+    pub fn drm_format_modifier_properties(
+        mut self,
+        drm_format_modifier_properties: &'a mut [DrmFormatModifierProperties2EXT],
+    ) -> Self {
+        self.inner.drm_format_modifier_count = drm_format_modifier_properties.len() as _;
+        self.inner.p_drm_format_modifier_properties = drm_format_modifier_properties.as_mut_ptr();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> DrmFormatModifierPropertiesList2EXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Default, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDrmFormatModifierProperties2EXT.html>"]
+pub struct DrmFormatModifierProperties2EXT {
+    pub drm_format_modifier: u64,
+    pub drm_format_modifier_plane_count: u32,
+    pub drm_format_modifier_tiling_features: FormatFeatureFlags2KHR,
+}
+impl DrmFormatModifierProperties2EXT {
+    pub fn builder<'a>() -> DrmFormatModifierProperties2EXTBuilder<'a> {
+        DrmFormatModifierProperties2EXTBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct DrmFormatModifierProperties2EXTBuilder<'a> {
+    inner: DrmFormatModifierProperties2EXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+impl<'a> ::std::ops::Deref for DrmFormatModifierProperties2EXTBuilder<'a> {
+    type Target = DrmFormatModifierProperties2EXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DrmFormatModifierProperties2EXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> DrmFormatModifierProperties2EXTBuilder<'a> {
+    pub fn drm_format_modifier(mut self, drm_format_modifier: u64) -> Self {
+        self.inner.drm_format_modifier = drm_format_modifier;
+        self
+    }
+    pub fn drm_format_modifier_plane_count(mut self, drm_format_modifier_plane_count: u32) -> Self {
+        self.inner.drm_format_modifier_plane_count = drm_format_modifier_plane_count;
+        self
+    }
+    pub fn drm_format_modifier_tiling_features(
+        mut self,
+        drm_format_modifier_tiling_features: FormatFeatureFlags2KHR,
+    ) -> Self {
+        self.inner.drm_format_modifier_tiling_features = drm_format_modifier_tiling_features;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> DrmFormatModifierProperties2EXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAndroidHardwareBufferFormatProperties2ANDROID.html>"]
+pub struct AndroidHardwareBufferFormatProperties2ANDROID {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub format: Format,
+    pub external_format: u64,
+    pub format_features: FormatFeatureFlags2KHR,
+    pub sampler_ycbcr_conversion_components: ComponentMapping,
+    pub suggested_ycbcr_model: SamplerYcbcrModelConversion,
+    pub suggested_ycbcr_range: SamplerYcbcrRange,
+    pub suggested_x_chroma_offset: ChromaLocation,
+    pub suggested_y_chroma_offset: ChromaLocation,
+}
+impl ::std::default::Default for AndroidHardwareBufferFormatProperties2ANDROID {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::ANDROID_HARDWARE_BUFFER_FORMAT_PROPERTIES_2_ANDROID,
+            p_next: ::std::ptr::null_mut(),
+            format: Format::default(),
+            external_format: u64::default(),
+            format_features: FormatFeatureFlags2KHR::default(),
+            sampler_ycbcr_conversion_components: ComponentMapping::default(),
+            suggested_ycbcr_model: SamplerYcbcrModelConversion::default(),
+            suggested_ycbcr_range: SamplerYcbcrRange::default(),
+            suggested_x_chroma_offset: ChromaLocation::default(),
+            suggested_y_chroma_offset: ChromaLocation::default(),
+        }
+    }
+}
+impl AndroidHardwareBufferFormatProperties2ANDROID {
+    pub fn builder<'a>() -> AndroidHardwareBufferFormatProperties2ANDROIDBuilder<'a> {
+        AndroidHardwareBufferFormatProperties2ANDROIDBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct AndroidHardwareBufferFormatProperties2ANDROIDBuilder<'a> {
+    inner: AndroidHardwareBufferFormatProperties2ANDROID,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsAndroidHardwareBufferPropertiesANDROID
+    for AndroidHardwareBufferFormatProperties2ANDROIDBuilder<'_>
+{
+}
+unsafe impl ExtendsAndroidHardwareBufferPropertiesANDROID
+    for AndroidHardwareBufferFormatProperties2ANDROID
+{
+}
+impl<'a> ::std::ops::Deref for AndroidHardwareBufferFormatProperties2ANDROIDBuilder<'a> {
+    type Target = AndroidHardwareBufferFormatProperties2ANDROID;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for AndroidHardwareBufferFormatProperties2ANDROIDBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> AndroidHardwareBufferFormatProperties2ANDROIDBuilder<'a> {
+    pub fn format(mut self, format: Format) -> Self {
+        self.inner.format = format;
+        self
+    }
+    pub fn external_format(mut self, external_format: u64) -> Self {
+        self.inner.external_format = external_format;
+        self
+    }
+    pub fn format_features(mut self, format_features: FormatFeatureFlags2KHR) -> Self {
+        self.inner.format_features = format_features;
+        self
+    }
+    pub fn sampler_ycbcr_conversion_components(
+        mut self,
+        sampler_ycbcr_conversion_components: ComponentMapping,
+    ) -> Self {
+        self.inner.sampler_ycbcr_conversion_components = sampler_ycbcr_conversion_components;
+        self
+    }
+    pub fn suggested_ycbcr_model(
+        mut self,
+        suggested_ycbcr_model: SamplerYcbcrModelConversion,
+    ) -> Self {
+        self.inner.suggested_ycbcr_model = suggested_ycbcr_model;
+        self
+    }
+    pub fn suggested_ycbcr_range(mut self, suggested_ycbcr_range: SamplerYcbcrRange) -> Self {
+        self.inner.suggested_ycbcr_range = suggested_ycbcr_range;
+        self
+    }
+    pub fn suggested_x_chroma_offset(mut self, suggested_x_chroma_offset: ChromaLocation) -> Self {
+        self.inner.suggested_x_chroma_offset = suggested_x_chroma_offset;
+        self
+    }
+    pub fn suggested_y_chroma_offset(mut self, suggested_y_chroma_offset: ChromaLocation) -> Self {
+        self.inner.suggested_y_chroma_offset = suggested_y_chroma_offset;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> AndroidHardwareBufferFormatProperties2ANDROID {
         self.inner
     }
 }

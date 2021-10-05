@@ -1239,3 +1239,46 @@ impl ImageConstraintsInfoFlagsFUCHSIA {
     pub const CPU_WRITE_OFTEN: Self = Self(0b1000);
     pub const PROTECTED_OPTIONAL: Self = Self(0b1_0000);
 }
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkFormatFeatureFlagBits2KHR.html>"]
+pub struct FormatFeatureFlags2KHR(pub(crate) Flags64);
+vk_bitflags_wrapped!(
+    FormatFeatureFlags2KHR,
+    0b11_1000_0000_1111_1111_1111_1111_1111_1111,
+    Flags64
+);
+impl FormatFeatureFlags2KHR {
+    pub const SAMPLED_IMAGE: Self = Self(0b1);
+    pub const STORAGE_IMAGE: Self = Self(0b10);
+    pub const STORAGE_IMAGE_ATOMIC: Self = Self(0b100);
+    pub const UNIFORM_TEXEL_BUFFER: Self = Self(0b1000);
+    pub const STORAGE_TEXEL_BUFFER: Self = Self(0b1_0000);
+    pub const STORAGE_TEXEL_BUFFER_ATOMIC: Self = Self(0b10_0000);
+    pub const VERTEX_BUFFER: Self = Self(0b100_0000);
+    pub const COLOR_ATTACHMENT: Self = Self(0b1000_0000);
+    pub const COLOR_ATTACHMENT_BLEND: Self = Self(0b1_0000_0000);
+    pub const DEPTH_STENCIL_ATTACHMENT: Self = Self(0b10_0000_0000);
+    pub const BLIT_SRC: Self = Self(0b100_0000_0000);
+    pub const BLIT_DST: Self = Self(0b1000_0000_0000);
+    pub const SAMPLED_IMAGE_FILTER_LINEAR: Self = Self(0b1_0000_0000_0000);
+    pub const SAMPLED_IMAGE_FILTER_CUBIC_EXT: Self = Self(0b10_0000_0000_0000);
+    pub const TRANSFER_SRC: Self = Self(0b100_0000_0000_0000);
+    pub const TRANSFER_DST: Self = Self(0b1000_0000_0000_0000);
+    pub const SAMPLED_IMAGE_FILTER_MINMAX: Self = Self(0b1_0000_0000_0000_0000);
+    pub const MIDPOINT_CHROMA_SAMPLES: Self = Self(0b10_0000_0000_0000_0000);
+    pub const SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER: Self = Self(0b100_0000_0000_0000_0000);
+    pub const SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER: Self =
+        Self(0b1000_0000_0000_0000_0000);
+    pub const SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT: Self =
+        Self(0b1_0000_0000_0000_0000_0000);
+    pub const SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE: Self =
+        Self(0b10_0000_0000_0000_0000_0000);
+    pub const DISJOINT: Self = Self(0b100_0000_0000_0000_0000_0000);
+    pub const COSITED_CHROMA_SAMPLES: Self = Self(0b1000_0000_0000_0000_0000_0000);
+    pub const STORAGE_READ_WITHOUT_FORMAT: Self = Self(0b1000_0000_0000_0000_0000_0000_0000_0000);
+    pub const STORAGE_WRITE_WITHOUT_FORMAT: Self =
+        Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const SAMPLED_IMAGE_DEPTH_COMPARISON: Self =
+        Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000);
+}

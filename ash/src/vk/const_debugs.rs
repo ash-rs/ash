@@ -514,6 +514,7 @@ impl fmt::Debug for BufferCreateFlags {
             (BufferCreateFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
             (BufferCreateFlags::SPARSE_RESIDENCY.0, "SPARSE_RESIDENCY"),
             (BufferCreateFlags::SPARSE_ALIASED.0, "SPARSE_ALIASED"),
+            (BufferCreateFlags::RESERVED_5_AMD.0, "RESERVED_5_AMD"),
             (BufferCreateFlags::PROTECTED.0, "PROTECTED"),
             (
                 BufferCreateFlags::DEVICE_ADDRESS_CAPTURE_REPLAY.0,
@@ -582,6 +583,8 @@ impl fmt::Debug for BufferUsageFlags {
                 BufferUsageFlags::VIDEO_ENCODE_SRC_KHR.0,
                 "VIDEO_ENCODE_SRC_KHR",
             ),
+            (BufferUsageFlags::RESERVED_21_AMD.0, "RESERVED_21_AMD"),
+            (BufferUsageFlags::RESERVED_22_AMD.0, "RESERVED_22_AMD"),
             (
                 BufferUsageFlags::SHADER_DEVICE_ADDRESS.0,
                 "SHADER_DEVICE_ADDRESS",
@@ -1089,6 +1092,10 @@ impl fmt::Debug for DescriptorSetLayoutCreateFlags {
             (
                 DescriptorSetLayoutCreateFlags::PUSH_DESCRIPTOR_KHR.0,
                 "PUSH_DESCRIPTOR_KHR",
+            ),
+            (
+                DescriptorSetLayoutCreateFlags::RESERVED_4_AMD.0,
+                "RESERVED_4_AMD",
             ),
             (
                 DescriptorSetLayoutCreateFlags::RESERVED_3_AMD.0,
@@ -1927,6 +1934,12 @@ impl fmt::Debug for FormatFeatureFlags {
         debug_flags(f, KNOWN, self.0)
     }
 }
+impl fmt::Debug for FormatFeatureFlags2KHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN : & [(Flags64 , & str)] = & [(FormatFeatureFlags2KHR :: SAMPLED_IMAGE . 0 , "SAMPLED_IMAGE") , (FormatFeatureFlags2KHR :: STORAGE_IMAGE . 0 , "STORAGE_IMAGE") , (FormatFeatureFlags2KHR :: STORAGE_IMAGE_ATOMIC . 0 , "STORAGE_IMAGE_ATOMIC") , (FormatFeatureFlags2KHR :: UNIFORM_TEXEL_BUFFER . 0 , "UNIFORM_TEXEL_BUFFER") , (FormatFeatureFlags2KHR :: STORAGE_TEXEL_BUFFER . 0 , "STORAGE_TEXEL_BUFFER") , (FormatFeatureFlags2KHR :: STORAGE_TEXEL_BUFFER_ATOMIC . 0 , "STORAGE_TEXEL_BUFFER_ATOMIC") , (FormatFeatureFlags2KHR :: VERTEX_BUFFER . 0 , "VERTEX_BUFFER") , (FormatFeatureFlags2KHR :: COLOR_ATTACHMENT . 0 , "COLOR_ATTACHMENT") , (FormatFeatureFlags2KHR :: COLOR_ATTACHMENT_BLEND . 0 , "COLOR_ATTACHMENT_BLEND") , (FormatFeatureFlags2KHR :: DEPTH_STENCIL_ATTACHMENT . 0 , "DEPTH_STENCIL_ATTACHMENT") , (FormatFeatureFlags2KHR :: BLIT_SRC . 0 , "BLIT_SRC") , (FormatFeatureFlags2KHR :: BLIT_DST . 0 , "BLIT_DST") , (FormatFeatureFlags2KHR :: SAMPLED_IMAGE_FILTER_LINEAR . 0 , "SAMPLED_IMAGE_FILTER_LINEAR") , (FormatFeatureFlags2KHR :: SAMPLED_IMAGE_FILTER_CUBIC_EXT . 0 , "SAMPLED_IMAGE_FILTER_CUBIC_EXT") , (FormatFeatureFlags2KHR :: TRANSFER_SRC . 0 , "TRANSFER_SRC") , (FormatFeatureFlags2KHR :: TRANSFER_DST . 0 , "TRANSFER_DST") , (FormatFeatureFlags2KHR :: SAMPLED_IMAGE_FILTER_MINMAX . 0 , "SAMPLED_IMAGE_FILTER_MINMAX") , (FormatFeatureFlags2KHR :: MIDPOINT_CHROMA_SAMPLES . 0 , "MIDPOINT_CHROMA_SAMPLES") , (FormatFeatureFlags2KHR :: SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER") , (FormatFeatureFlags2KHR :: SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER") , (FormatFeatureFlags2KHR :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT") , (FormatFeatureFlags2KHR :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE") , (FormatFeatureFlags2KHR :: DISJOINT . 0 , "DISJOINT") , (FormatFeatureFlags2KHR :: COSITED_CHROMA_SAMPLES . 0 , "COSITED_CHROMA_SAMPLES") , (FormatFeatureFlags2KHR :: STORAGE_READ_WITHOUT_FORMAT . 0 , "STORAGE_READ_WITHOUT_FORMAT") , (FormatFeatureFlags2KHR :: STORAGE_WRITE_WITHOUT_FORMAT . 0 , "STORAGE_WRITE_WITHOUT_FORMAT") , (FormatFeatureFlags2KHR :: SAMPLED_IMAGE_DEPTH_COMPARISON . 0 , "SAMPLED_IMAGE_DEPTH_COMPARISON") , (FormatFeatureFlags2KHR :: VIDEO_DECODE_OUTPUT . 0 , "VIDEO_DECODE_OUTPUT") , (FormatFeatureFlags2KHR :: VIDEO_DECODE_DPB . 0 , "VIDEO_DECODE_DPB") , (FormatFeatureFlags2KHR :: ACCELERATION_STRUCTURE_VERTEX_BUFFER . 0 , "ACCELERATION_STRUCTURE_VERTEX_BUFFER") , (FormatFeatureFlags2KHR :: FRAGMENT_DENSITY_MAP_EXT . 0 , "FRAGMENT_DENSITY_MAP_EXT") , (FormatFeatureFlags2KHR :: FRAGMENT_SHADING_RATE_ATTACHMENT . 0 , "FRAGMENT_SHADING_RATE_ATTACHMENT") , (FormatFeatureFlags2KHR :: VIDEO_ENCODE_INPUT . 0 , "VIDEO_ENCODE_INPUT") , (FormatFeatureFlags2KHR :: VIDEO_ENCODE_DPB . 0 , "VIDEO_ENCODE_DPB")] ;
+        debug_flags(f, KNOWN, self.0)
+    }
+}
 impl fmt::Debug for FragmentShadingRateCombinerOpKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
@@ -2136,6 +2149,7 @@ impl fmt::Debug for ImageCreateFlags {
                 "SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_EXT",
             ),
             (ImageCreateFlags::SUBSAMPLED_EXT.0, "SUBSAMPLED_EXT"),
+            (ImageCreateFlags::RESERVED_16_AMD.0, "RESERVED_16_AMD"),
             (ImageCreateFlags::RESERVED_426_QCOM.0, "RESERVED_426_QCOM"),
             (ImageCreateFlags::ALIAS.0, "ALIAS"),
             (
@@ -2967,10 +2981,16 @@ impl fmt::Debug for PipelineInputAssemblyStateCreateFlags {
 }
 impl fmt::Debug for PipelineLayoutCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(
-            PipelineLayoutCreateFlags::RESERVED_0_AMD.0,
-            "RESERVED_0_AMD",
-        )];
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                PipelineLayoutCreateFlags::RESERVED_0_AMD.0,
+                "RESERVED_0_AMD",
+            ),
+            (
+                PipelineLayoutCreateFlags::RESERVED_1_AMD.0,
+                "RESERVED_1_AMD",
+            ),
+        ];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -3615,6 +3635,7 @@ impl fmt::Debug for SamplerCreateFlags {
                 SamplerCreateFlags::SUBSAMPLED_COARSE_RECONSTRUCTION_EXT.0,
                 "SUBSAMPLED_COARSE_RECONSTRUCTION_EXT",
             ),
+            (SamplerCreateFlags::RESERVED_3_AMD.0, "RESERVED_3_AMD"),
             (SamplerCreateFlags::RESERVED_2_EXT.0, "RESERVED_2_EXT"),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -4271,6 +4292,9 @@ impl fmt::Debug for StructureType {
                 Some("MEMORY_GET_ANDROID_HARDWARE_BUFFER_INFO_ANDROID")
             }
             Self::EXTERNAL_FORMAT_ANDROID => Some("EXTERNAL_FORMAT_ANDROID"),
+            Self::ANDROID_HARDWARE_BUFFER_FORMAT_PROPERTIES_2_ANDROID => {
+                Some("ANDROID_HARDWARE_BUFFER_FORMAT_PROPERTIES_2_ANDROID")
+            }
             Self::PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_FEATURES_EXT")
             }
@@ -4392,6 +4416,9 @@ impl fmt::Debug for StructureType {
             }
             Self::IMAGE_DRM_FORMAT_MODIFIER_PROPERTIES_EXT => {
                 Some("IMAGE_DRM_FORMAT_MODIFIER_PROPERTIES_EXT")
+            }
+            Self::DRM_FORMAT_MODIFIER_PROPERTIES_LIST_2_EXT => {
+                Some("DRM_FORMAT_MODIFIER_PROPERTIES_LIST_2_EXT")
             }
             Self::VALIDATION_CACHE_CREATE_INFO_EXT => Some("VALIDATION_CACHE_CREATE_INFO_EXT"),
             Self::SHADER_MODULE_VALIDATION_CACHE_CREATE_INFO_EXT => {
@@ -4862,6 +4889,9 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT")
             }
+            Self::PHYSICAL_DEVICE_RGBA10X6_FORMATS_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_RGBA10X6_FORMATS_FEATURES_EXT")
+            }
             Self::DIRECTFB_SURFACE_CREATE_INFO_EXT => Some("DIRECTFB_SURFACE_CREATE_INFO_EXT"),
             Self::PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_VALVE => {
                 Some("PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_VALVE")
@@ -4882,6 +4912,7 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_PRIMITIVE_TOPOLOGY_LIST_RESTART_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_PRIMITIVE_TOPOLOGY_LIST_RESTART_FEATURES_EXT")
             }
+            Self::FORMAT_PROPERTIES_3_KHR => Some("FORMAT_PROPERTIES_3_KHR"),
             Self::IMPORT_MEMORY_ZIRCON_HANDLE_INFO_FUCHSIA => {
                 Some("IMPORT_MEMORY_ZIRCON_HANDLE_INFO_FUCHSIA")
             }
@@ -4961,6 +4992,18 @@ impl fmt::Debug for StructureType {
             }
             Self::PHYSICAL_DEVICE_PAGEABLE_DEVICE_LOCAL_MEMORY_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_PAGEABLE_DEVICE_LOCAL_MEMORY_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_MAINTENANCE_4_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_MAINTENANCE_4_FEATURES_KHR")
+            }
+            Self::PHYSICAL_DEVICE_MAINTENANCE_4_PROPERTIES_KHR => {
+                Some("PHYSICAL_DEVICE_MAINTENANCE_4_PROPERTIES_KHR")
+            }
+            Self::DEVICE_BUFFER_MEMORY_REQUIREMENTS_KHR => {
+                Some("DEVICE_BUFFER_MEMORY_REQUIREMENTS_KHR")
+            }
+            Self::DEVICE_IMAGE_MEMORY_REQUIREMENTS_KHR => {
+                Some("DEVICE_IMAGE_MEMORY_REQUIREMENTS_KHR")
             }
             Self::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES => {
                 Some("PHYSICAL_DEVICE_SUBGROUP_PROPERTIES")

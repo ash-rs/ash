@@ -2970,7 +2970,7 @@ impl KhrVideoDecodeQueueFn {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_video_decode_queue\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 1u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDecodeVideoKHR = unsafe extern "system" fn(
@@ -3075,6 +3075,14 @@ impl ImageLayout {
 #[doc = "Generated from 'VK_KHR_video_decode_queue'"]
 impl ImageLayout {
     pub const VIDEO_DECODE_DPB_KHR: Self = Self(1_000_024_002);
+}
+#[doc = "Generated from 'VK_KHR_video_decode_queue'"]
+impl FormatFeatureFlags2KHR {
+    pub const VIDEO_DECODE_OUTPUT: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_video_decode_queue'"]
+impl FormatFeatureFlags2KHR {
+    pub const VIDEO_DECODE_DPB: Self = Self(0b100_0000_0000_0000_0000_0000_0000);
 }
 impl AmdGcnShaderFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -10210,7 +10218,7 @@ impl AndroidExternalMemoryAndroidHardwareBufferFn {
         )
         .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 3u32;
+    pub const SPEC_VERSION: u32 = 4u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetAndroidHardwareBufferPropertiesANDROID = unsafe extern "system" fn(
@@ -10328,6 +10336,10 @@ impl StructureType {
 #[doc = "Generated from 'VK_ANDROID_external_memory_android_hardware_buffer'"]
 impl StructureType {
     pub const EXTERNAL_FORMAT_ANDROID: Self = Self(1_000_129_005);
+}
+#[doc = "Generated from 'VK_ANDROID_external_memory_android_hardware_buffer'"]
+impl StructureType {
+    pub const ANDROID_HARDWARE_BUFFER_FORMAT_PROPERTIES_2_ANDROID: Self = Self(1_000_129_006);
 }
 impl ExtSamplerFilterMinmaxFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -11198,7 +11210,7 @@ impl KhrAccelerationStructureFn {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_acceleration_structure\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 12u32;
+    pub const SPEC_VERSION: u32 = 13u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateAccelerationStructureKHR = unsafe extern "system" fn(
@@ -12007,6 +12019,11 @@ impl BufferUsageFlags {
 #[doc = "Generated from 'VK_KHR_acceleration_structure'"]
 impl BufferUsageFlags {
     pub const ACCELERATION_STRUCTURE_STORAGE_KHR: Self = Self(0b1_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_acceleration_structure'"]
+impl FormatFeatureFlags2KHR {
+    pub const ACCELERATION_STRUCTURE_VERTEX_BUFFER: Self =
+        Self(0b10_0000_0000_0000_0000_0000_0000_0000);
 }
 impl KhrRayTracingPipelineFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -13082,7 +13099,7 @@ impl ExtImageDrmFormatModifierFn {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_image_drm_format_modifier\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 1u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetImageDrmFormatModifierPropertiesEXT = unsafe extern "system" fn(
@@ -13178,6 +13195,10 @@ impl ImageAspectFlags {
 #[doc = "Generated from 'VK_EXT_image_drm_format_modifier'"]
 impl ImageAspectFlags {
     pub const MEMORY_PLANE_3_EXT: Self = Self(0b100_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_image_drm_format_modifier'"]
+impl StructureType {
+    pub const DRM_FORMAT_MODIFIER_PROPERTIES_LIST_2_EXT: Self = Self(1_000_158_006);
 }
 impl ExtExtension160Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -17026,7 +17047,7 @@ impl ExtFragmentDensityMapFn {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_fragment_density_map\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 1u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
 pub struct ExtFragmentDensityMapFn {}
@@ -17087,6 +17108,10 @@ impl SamplerCreateFlags {
 #[doc = "Generated from 'VK_EXT_fragment_density_map'"]
 impl SamplerCreateFlags {
     pub const SUBSAMPLED_COARSE_RECONSTRUCTION_EXT: Self = Self(0b10);
+}
+#[doc = "Generated from 'VK_EXT_fragment_density_map'"]
+impl FormatFeatureFlags2KHR {
+    pub const FRAGMENT_DENSITY_MAP_EXT: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
 }
 impl ExtExtension220Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -17256,7 +17281,7 @@ impl KhrFragmentShadingRateFn {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_fragment_shading_rate\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 1u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceFragmentShadingRatesKHR = unsafe extern "system" fn(
@@ -17395,6 +17420,11 @@ impl PipelineStageFlags {
 #[doc = "Generated from 'VK_KHR_fragment_shading_rate'"]
 impl FormatFeatureFlags {
     pub const FRAGMENT_SHADING_RATE_ATTACHMENT_KHR: Self =
+        Self(0b100_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_fragment_shading_rate'"]
+impl FormatFeatureFlags2KHR {
+    pub const FRAGMENT_SHADING_RATE_ATTACHMENT: Self =
         Self(0b100_0000_0000_0000_0000_0000_0000_0000);
 }
 impl AmdShaderCoreProperties2Fn {
@@ -21280,7 +21310,7 @@ impl KhrVideoEncodeQueueFn {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_video_encode_queue\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 2u32;
+    pub const SPEC_VERSION: u32 = 3u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdEncodeVideoKHR = unsafe extern "system" fn(
@@ -21393,6 +21423,14 @@ impl ImageLayout {
 #[doc = "Generated from 'VK_KHR_video_encode_queue'"]
 impl QueryType {
     pub const VIDEO_ENCODESTREAM_BUFFER_RANGE_KHR: Self = Self(1_000_299_000);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl FormatFeatureFlags2KHR {
+    pub const VIDEO_ENCODE_INPUT: Self = Self(0b1000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl FormatFeatureFlags2KHR {
+    pub const VIDEO_ENCODE_DPB: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000);
 }
 impl NvDeviceDiagnosticsConfigFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -22188,6 +22226,30 @@ impl AmdExtension317Fn {
         Self {}
     }
 }
+#[doc = "Generated from 'VK_AMD_extension_317'"]
+impl DescriptorSetLayoutCreateFlags {
+    pub const RESERVED_4_AMD: Self = Self(0b1_0000);
+}
+#[doc = "Generated from 'VK_AMD_extension_317'"]
+impl BufferUsageFlags {
+    pub const RESERVED_21_AMD: Self = Self(0b10_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_AMD_extension_317'"]
+impl BufferUsageFlags {
+    pub const RESERVED_22_AMD: Self = Self(0b100_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_AMD_extension_317'"]
+impl BufferCreateFlags {
+    pub const RESERVED_5_AMD: Self = Self(0b10_0000);
+}
+#[doc = "Generated from 'VK_AMD_extension_317'"]
+impl ImageCreateFlags {
+    pub const RESERVED_16_AMD: Self = Self(0b1_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_AMD_extension_317'"]
+impl SamplerCreateFlags {
+    pub const RESERVED_3_AMD: Self = Self(0b1000);
+}
 impl AmdExtension318Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_318\0")
@@ -22279,6 +22341,10 @@ impl PipelineCreateFlags {
 #[doc = "Generated from 'VK_AMD_extension_321'"]
 impl PipelineCreateFlags {
     pub const RESERVED_10_AMD: Self = Self(0b100_0000_0000);
+}
+#[doc = "Generated from 'VK_AMD_extension_321'"]
+impl PipelineLayoutCreateFlags {
+    pub const RESERVED_1_AMD: Self = Self(0b10);
 }
 impl AmdExtension322Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -23100,24 +23166,28 @@ impl ArmExtension344Fn {
         Self {}
     }
 }
-impl ArmExtension345Fn {
+impl ExtRgba10x6FormatsFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_ARM_extension_345\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_rgba10x6_formats\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct ArmExtension345Fn {}
-unsafe impl Send for ArmExtension345Fn {}
-unsafe impl Sync for ArmExtension345Fn {}
-impl ArmExtension345Fn {
+pub struct ExtRgba10x6FormatsFn {}
+unsafe impl Send for ExtRgba10x6FormatsFn {}
+unsafe impl Sync for ExtRgba10x6FormatsFn {}
+impl ExtRgba10x6FormatsFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         Self {}
     }
+}
+#[doc = "Generated from 'VK_EXT_rgba10x6_formats'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_RGBA10X6_FORMATS_FEATURES_EXT: Self = Self(1_000_344_000);
 }
 impl NvAcquireWinrtDisplayFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -23616,24 +23686,28 @@ impl ExtExtension360Fn {
         Self {}
     }
 }
-impl KhrExtension361Fn {
+impl KhrFormatFeatureFlags2Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_361\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_format_feature_flags2\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct KhrExtension361Fn {}
-unsafe impl Send for KhrExtension361Fn {}
-unsafe impl Sync for KhrExtension361Fn {}
-impl KhrExtension361Fn {
+pub struct KhrFormatFeatureFlags2Fn {}
+unsafe impl Send for KhrFormatFeatureFlags2Fn {}
+unsafe impl Sync for KhrFormatFeatureFlags2Fn {}
+impl KhrFormatFeatureFlags2Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         Self {}
     }
+}
+#[doc = "Generated from 'VK_KHR_format_feature_flags2'"]
+impl StructureType {
+    pub const FORMAT_PROPERTIES_3_KHR: Self = Self(1_000_360_000);
 }
 impl ExtExtension362Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -25788,24 +25862,162 @@ impl ExtPageableDeviceLocalMemoryFn {
 impl StructureType {
     pub const PHYSICAL_DEVICE_PAGEABLE_DEVICE_LOCAL_MEMORY_FEATURES_EXT: Self = Self(1_000_412_000);
 }
-impl NvExtension414Fn {
+impl KhrMaintenance4Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_414\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_maintenance4\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetDeviceBufferMemoryRequirementsKHR = unsafe extern "system" fn(
+    device: Device,
+    p_info: *const DeviceBufferMemoryRequirementsKHR,
+    p_memory_requirements: *mut MemoryRequirements2,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetDeviceImageMemoryRequirementsKHR = unsafe extern "system" fn(
+    device: Device,
+    p_info: *const DeviceImageMemoryRequirementsKHR,
+    p_memory_requirements: *mut MemoryRequirements2,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetDeviceImageSparseMemoryRequirementsKHR = unsafe extern "system" fn(
+    device: Device,
+    p_info: *const DeviceImageMemoryRequirementsKHR,
+    p_sparse_memory_requirement_count: *mut u32,
+    p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2,
+);
 #[derive(Clone)]
-pub struct NvExtension414Fn {}
-unsafe impl Send for NvExtension414Fn {}
-unsafe impl Sync for NvExtension414Fn {}
-impl NvExtension414Fn {
+pub struct KhrMaintenance4Fn {
+    pub get_device_buffer_memory_requirements_khr: PFN_vkGetDeviceBufferMemoryRequirementsKHR,
+    pub get_device_image_memory_requirements_khr: PFN_vkGetDeviceImageMemoryRequirementsKHR,
+    pub get_device_image_sparse_memory_requirements_khr:
+        PFN_vkGetDeviceImageSparseMemoryRequirementsKHR,
+}
+unsafe impl Send for KhrMaintenance4Fn {}
+unsafe impl Sync for KhrMaintenance4Fn {}
+impl KhrMaintenance4Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        Self {}
+        Self {
+            get_device_buffer_memory_requirements_khr: unsafe {
+                unsafe extern "system" fn get_device_buffer_memory_requirements_khr(
+                    _device: Device,
+                    _p_info: *const DeviceBufferMemoryRequirementsKHR,
+                    _p_memory_requirements: *mut MemoryRequirements2,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_device_buffer_memory_requirements_khr)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetDeviceBufferMemoryRequirementsKHR\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_device_buffer_memory_requirements_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_device_image_memory_requirements_khr: unsafe {
+                unsafe extern "system" fn get_device_image_memory_requirements_khr(
+                    _device: Device,
+                    _p_info: *const DeviceImageMemoryRequirementsKHR,
+                    _p_memory_requirements: *mut MemoryRequirements2,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_device_image_memory_requirements_khr)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetDeviceImageMemoryRequirementsKHR\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_device_image_memory_requirements_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_device_image_sparse_memory_requirements_khr: unsafe {
+                unsafe extern "system" fn get_device_image_sparse_memory_requirements_khr(
+                    _device: Device,
+                    _p_info: *const DeviceImageMemoryRequirementsKHR,
+                    _p_sparse_memory_requirement_count: *mut u32,
+                    _p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_device_image_sparse_memory_requirements_khr)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetDeviceImageSparseMemoryRequirementsKHR\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_device_image_sparse_memory_requirements_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDeviceBufferMemoryRequirementsKHR.html>"]
+    pub unsafe fn get_device_buffer_memory_requirements_khr(
+        &self,
+        device: Device,
+        p_info: *const DeviceBufferMemoryRequirementsKHR,
+        p_memory_requirements: *mut MemoryRequirements2,
+    ) {
+        (self.get_device_buffer_memory_requirements_khr)(device, p_info, p_memory_requirements)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDeviceImageMemoryRequirementsKHR.html>"]
+    pub unsafe fn get_device_image_memory_requirements_khr(
+        &self,
+        device: Device,
+        p_info: *const DeviceImageMemoryRequirementsKHR,
+        p_memory_requirements: *mut MemoryRequirements2,
+    ) {
+        (self.get_device_image_memory_requirements_khr)(device, p_info, p_memory_requirements)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDeviceImageSparseMemoryRequirementsKHR.html>"]
+    pub unsafe fn get_device_image_sparse_memory_requirements_khr(
+        &self,
+        device: Device,
+        p_info: *const DeviceImageMemoryRequirementsKHR,
+        p_sparse_memory_requirement_count: *mut u32,
+        p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2,
+    ) {
+        (self.get_device_image_sparse_memory_requirements_khr)(
+            device,
+            p_info,
+            p_sparse_memory_requirement_count,
+            p_sparse_memory_requirements,
+        )
+    }
+}
+#[doc = "Generated from 'VK_KHR_maintenance4'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_MAINTENANCE_4_FEATURES_KHR: Self = Self(1_000_413_000);
+}
+#[doc = "Generated from 'VK_KHR_maintenance4'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_MAINTENANCE_4_PROPERTIES_KHR: Self = Self(1_000_413_001);
+}
+#[doc = "Generated from 'VK_KHR_maintenance4'"]
+impl StructureType {
+    pub const DEVICE_BUFFER_MEMORY_REQUIREMENTS_KHR: Self = Self(1_000_413_002);
+}
+#[doc = "Generated from 'VK_KHR_maintenance4'"]
+impl StructureType {
+    pub const DEVICE_IMAGE_MEMORY_REQUIREMENTS_KHR: Self = Self(1_000_413_003);
 }
 impl HuaweiExtension415Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
