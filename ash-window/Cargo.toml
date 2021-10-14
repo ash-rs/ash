@@ -21,4 +21,4 @@ raw-window-handle = "0.3"
 raw-window-metal = "0.1"
 
 [dev-dependencies]
-winit = "0.19.4"
+winit = "0.25.0"

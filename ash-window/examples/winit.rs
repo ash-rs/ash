@@ -7,11 +7,12 @@
 
 use ash::vk;
 use std::error::Error;
+use winit::dpi::LogicalSize;
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let mut events_loop = winit::EventsLoop::new();
-    let window = winit::WindowBuilder::new()
-        .with_dimensions((800, 600).into())
+    let mut events_loop = winit::event_loop::EventLoop::new();
+    let window = winit::window::WindowBuilder::new()
+        .with_inner_size(LogicalSize::new(800, 600))
         .build(&events_loop)?;
 
     unsafe {
@@ -33,18 +34,15 @@ fn main() -> Result<(), Box<dyn Error>> {
         let surface_fn = ash::extensions::khr::Surface::new(&entry, &instance);
         println!("surface: {:?}", surface);
 
-        let mut running = true;
-        while running {
-            events_loop.poll_events(|event| {
-                if let winit::Event::WindowEvent {
-                    event: winit::WindowEvent::CloseRequested,
-                    ..
-                } = event
-                {
-                    running = false;
-                }
-            });
-        }
+        events_loop.run(|event, _, control_flow| {
+            if let winit::event::Event::WindowEvent {
+                event: winit::event::WindowEvent::CloseRequested,
+                ..
+            } = event
+            {
+                *control_flow = winit::event_loop::ControlFlow::Exit;
+            }
+        });
 
         surface_fn.destroy_surface(surface, None);
     }
