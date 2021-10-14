@@ -4139,7 +4139,7 @@ impl ExtVideoEncodeH265Fn {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_video_encode_h265\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
 pub struct ExtVideoEncodeH265Fn {}
@@ -4152,6 +4152,50 @@ impl ExtVideoEncodeH265Fn {
     {
         Self {}
     }
+}
+#[doc = "Generated from 'VK_EXT_video_encode_h265'"]
+impl StructureType {
+    pub const VIDEO_ENCODE_H265_CAPABILITIES_EXT: Self = Self(1_000_039_000);
+}
+#[doc = "Generated from 'VK_EXT_video_encode_h265'"]
+impl StructureType {
+    pub const VIDEO_ENCODE_H265_SESSION_CREATE_INFO_EXT: Self = Self(1_000_039_001);
+}
+#[doc = "Generated from 'VK_EXT_video_encode_h265'"]
+impl StructureType {
+    pub const VIDEO_ENCODE_H265_SESSION_PARAMETERS_CREATE_INFO_EXT: Self = Self(1_000_039_002);
+}
+#[doc = "Generated from 'VK_EXT_video_encode_h265'"]
+impl StructureType {
+    pub const VIDEO_ENCODE_H265_SESSION_PARAMETERS_ADD_INFO_EXT: Self = Self(1_000_039_003);
+}
+#[doc = "Generated from 'VK_EXT_video_encode_h265'"]
+impl StructureType {
+    pub const VIDEO_ENCODE_H265_VCL_FRAME_INFO_EXT: Self = Self(1_000_039_004);
+}
+#[doc = "Generated from 'VK_EXT_video_encode_h265'"]
+impl StructureType {
+    pub const VIDEO_ENCODE_H265_DPB_SLOT_INFO_EXT: Self = Self(1_000_039_005);
+}
+#[doc = "Generated from 'VK_EXT_video_encode_h265'"]
+impl StructureType {
+    pub const VIDEO_ENCODE_H265_NALU_SLICE_EXT: Self = Self(1_000_039_006);
+}
+#[doc = "Generated from 'VK_EXT_video_encode_h265'"]
+impl StructureType {
+    pub const VIDEO_ENCODE_H265_EMIT_PICTURE_PARAMETERS_EXT: Self = Self(1_000_039_007);
+}
+#[doc = "Generated from 'VK_EXT_video_encode_h265'"]
+impl StructureType {
+    pub const VIDEO_ENCODE_H265_PROFILE_EXT: Self = Self(1_000_039_008);
+}
+#[doc = "Generated from 'VK_EXT_video_encode_h265'"]
+impl StructureType {
+    pub const VIDEO_ENCODE_H265_REFERENCE_LISTS_EXT: Self = Self(1_000_039_009);
+}
+#[doc = "Generated from 'VK_EXT_video_encode_h265'"]
+impl VideoCodecOperationFlagsKHR {
+    pub const ENCODE_H265_EXT: Self = Self(0b10_0000_0000_0000_0000);
 }
 impl ExtVideoDecodeH264Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -25453,6 +25497,10 @@ impl ExtExtension394Fn {
         Self {}
     }
 }
+#[doc = "Generated from 'VK_EXT_extension_394'"]
+impl ImageCreateFlags {
+    pub const RESERVED_394_EXT: Self = Self(0b10_0000_0000_0000_0000);
+}
 impl KhrExtension395Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_395\0")
@@ -25784,24 +25832,32 @@ impl GgpExtension411Fn {
         Self {}
     }
 }
-impl NvExtension412Fn {
+impl ExtBorderColorSwizzleFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_412\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_border_color_swizzle\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct NvExtension412Fn {}
-unsafe impl Send for NvExtension412Fn {}
-unsafe impl Sync for NvExtension412Fn {}
-impl NvExtension412Fn {
+pub struct ExtBorderColorSwizzleFn {}
+unsafe impl Send for ExtBorderColorSwizzleFn {}
+unsafe impl Sync for ExtBorderColorSwizzleFn {}
+impl ExtBorderColorSwizzleFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         Self {}
     }
+}
+#[doc = "Generated from 'VK_EXT_border_color_swizzle'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_BORDER_COLOR_SWIZZLE_FEATURES_EXT: Self = Self(1_000_411_000);
+}
+#[doc = "Generated from 'VK_EXT_border_color_swizzle'"]
+impl StructureType {
+    pub const SAMPLER_BORDER_COLOR_COMPONENT_MAPPING_CREATE_INFO_EXT: Self = Self(1_000_411_001);
 }
 impl ExtPageableDeviceLocalMemoryFn {
     pub fn name() -> &'static ::std::ffi::CStr {

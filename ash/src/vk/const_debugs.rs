@@ -2150,6 +2150,7 @@ impl fmt::Debug for ImageCreateFlags {
             ),
             (ImageCreateFlags::SUBSAMPLED_EXT.0, "SUBSAMPLED_EXT"),
             (ImageCreateFlags::RESERVED_16_AMD.0, "RESERVED_16_AMD"),
+            (ImageCreateFlags::RESERVED_394_EXT.0, "RESERVED_394_EXT"),
             (ImageCreateFlags::RESERVED_426_QCOM.0, "RESERVED_426_QCOM"),
             (ImageCreateFlags::ALIAS.0, "ALIAS"),
             (
@@ -4118,6 +4119,30 @@ impl fmt::Debug for StructureType {
                 Some("VIDEO_ENCODE_H264_EMIT_PICTURE_PARAMETERS_EXT")
             }
             Self::VIDEO_ENCODE_H264_PROFILE_EXT => Some("VIDEO_ENCODE_H264_PROFILE_EXT"),
+            Self::VIDEO_ENCODE_H265_CAPABILITIES_EXT => Some("VIDEO_ENCODE_H265_CAPABILITIES_EXT"),
+            Self::VIDEO_ENCODE_H265_SESSION_CREATE_INFO_EXT => {
+                Some("VIDEO_ENCODE_H265_SESSION_CREATE_INFO_EXT")
+            }
+            Self::VIDEO_ENCODE_H265_SESSION_PARAMETERS_CREATE_INFO_EXT => {
+                Some("VIDEO_ENCODE_H265_SESSION_PARAMETERS_CREATE_INFO_EXT")
+            }
+            Self::VIDEO_ENCODE_H265_SESSION_PARAMETERS_ADD_INFO_EXT => {
+                Some("VIDEO_ENCODE_H265_SESSION_PARAMETERS_ADD_INFO_EXT")
+            }
+            Self::VIDEO_ENCODE_H265_VCL_FRAME_INFO_EXT => {
+                Some("VIDEO_ENCODE_H265_VCL_FRAME_INFO_EXT")
+            }
+            Self::VIDEO_ENCODE_H265_DPB_SLOT_INFO_EXT => {
+                Some("VIDEO_ENCODE_H265_DPB_SLOT_INFO_EXT")
+            }
+            Self::VIDEO_ENCODE_H265_NALU_SLICE_EXT => Some("VIDEO_ENCODE_H265_NALU_SLICE_EXT"),
+            Self::VIDEO_ENCODE_H265_EMIT_PICTURE_PARAMETERS_EXT => {
+                Some("VIDEO_ENCODE_H265_EMIT_PICTURE_PARAMETERS_EXT")
+            }
+            Self::VIDEO_ENCODE_H265_PROFILE_EXT => Some("VIDEO_ENCODE_H265_PROFILE_EXT"),
+            Self::VIDEO_ENCODE_H265_REFERENCE_LISTS_EXT => {
+                Some("VIDEO_ENCODE_H265_REFERENCE_LISTS_EXT")
+            }
             Self::VIDEO_DECODE_H264_CAPABILITIES_EXT => Some("VIDEO_DECODE_H264_CAPABILITIES_EXT"),
             Self::VIDEO_DECODE_H264_SESSION_CREATE_INFO_EXT => {
                 Some("VIDEO_DECODE_H264_SESSION_CREATE_INFO_EXT")
@@ -4990,6 +5015,12 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_MULTI_DRAW_PROPERTIES_EXT => {
                 Some("PHYSICAL_DEVICE_MULTI_DRAW_PROPERTIES_EXT")
             }
+            Self::PHYSICAL_DEVICE_BORDER_COLOR_SWIZZLE_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_BORDER_COLOR_SWIZZLE_FEATURES_EXT")
+            }
+            Self::SAMPLER_BORDER_COLOR_COMPONENT_MAPPING_CREATE_INFO_EXT => {
+                Some("SAMPLER_BORDER_COLOR_COMPONENT_MAPPING_CREATE_INFO_EXT")
+            }
             Self::PHYSICAL_DEVICE_PAGEABLE_DEVICE_LOCAL_MEMORY_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_PAGEABLE_DEVICE_LOCAL_MEMORY_FEATURES_EXT")
             }
@@ -5578,6 +5609,10 @@ impl fmt::Debug for VideoCodecOperationFlagsKHR {
                 "ENCODE_H264_EXT",
             ),
             (
+                VideoCodecOperationFlagsKHR::ENCODE_H265_EXT.0,
+                "ENCODE_H265_EXT",
+            ),
+            (
                 VideoCodecOperationFlagsKHR::DECODE_H264_EXT.0,
                 "DECODE_H264_EXT",
             ),
@@ -5738,6 +5773,86 @@ impl fmt::Debug for VideoEncodeH264OutputModeFlagsEXT {
             (VideoEncodeH264OutputModeFlagsEXT::FRAME.0, "FRAME"),
             (VideoEncodeH264OutputModeFlagsEXT::SLICE.0, "SLICE"),
             (VideoEncodeH264OutputModeFlagsEXT::NON_VCL.0, "NON_VCL"),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for VideoEncodeH265CapabilityFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                VideoEncodeH265CapabilityFlagsEXT::WEIGHTED_BI_PRED_IMPLICIT.0,
+                "WEIGHTED_BI_PRED_IMPLICIT",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsEXT::TRANSFORM_8X8.0,
+                "TRANSFORM_8X8",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsEXT::CHROMA_QP_OFFSET.0,
+                "CHROMA_QP_OFFSET",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsEXT::SECOND_CHROMA_QP_OFFSET.0,
+                "SECOND_CHROMA_QP_OFFSET",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsEXT::DEBLOCKING_FILTER_DISABLED.0,
+                "DEBLOCKING_FILTER_DISABLED",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsEXT::DEBLOCKING_FILTER_ENABLED.0,
+                "DEBLOCKING_FILTER_ENABLED",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsEXT::DEBLOCKING_FILTER_PARTIAL.0,
+                "DEBLOCKING_FILTER_PARTIAL",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsEXT::MULTIPLE_SLICE_PER_FRAME.0,
+                "MULTIPLE_SLICE_PER_FRAME",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsEXT::EVENLY_DISTRIBUTED_SLICE_SIZE.0,
+                "EVENLY_DISTRIBUTED_SLICE_SIZE",
+            ),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for VideoEncodeH265CreateFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for VideoEncodeH265CtbSizeFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (VideoEncodeH265CtbSizeFlagsEXT::TYPE_8.0, "TYPE_8"),
+            (VideoEncodeH265CtbSizeFlagsEXT::TYPE_16.0, "TYPE_16"),
+            (VideoEncodeH265CtbSizeFlagsEXT::TYPE_32.0, "TYPE_32"),
+            (VideoEncodeH265CtbSizeFlagsEXT::TYPE_64.0, "TYPE_64"),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for VideoEncodeH265InputModeFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (VideoEncodeH265InputModeFlagsEXT::FRAME.0, "FRAME"),
+            (VideoEncodeH265InputModeFlagsEXT::SLICE.0, "SLICE"),
+            (VideoEncodeH265InputModeFlagsEXT::NON_VCL.0, "NON_VCL"),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for VideoEncodeH265OutputModeFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (VideoEncodeH265OutputModeFlagsEXT::FRAME.0, "FRAME"),
+            (VideoEncodeH265OutputModeFlagsEXT::SLICE.0, "SLICE"),
+            (VideoEncodeH265OutputModeFlagsEXT::NON_VCL.0, "NON_VCL"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
