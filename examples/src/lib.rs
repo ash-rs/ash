@@ -12,7 +12,9 @@ use std::borrow::Cow;
 use std::cell::RefCell;
 use std::default::Default;
 use std::ffi::{CStr, CString};
-use std::ops::Drop;
+use std::ops::{Drop};
+use winit::dpi::LogicalSize;
+use winit::event::{Event, VirtualKeyCode, WindowEvent};
 
 // Simple offset_of macro akin to C++ offsetof
 #[macro_export]
@@ -139,8 +141,8 @@ pub struct ExampleBase {
     pub surface_loader: Surface,
     pub swapchain_loader: Swapchain,
     pub debug_utils_loader: DebugUtils,
-    pub window: winit::Window,
-    pub events_loop: RefCell<winit::EventsLoop>,
+    pub window: winit::window::Window,
+    pub event_loop: RefCell<winit::event_loop::EventLoop<()>>,
     pub debug_call_back: vk::DebugUtilsMessengerEXT,
 
     pub pdevice: vk::PhysicalDevice,
@@ -172,37 +174,34 @@ pub struct ExampleBase {
 }
 
 impl ExampleBase {
-    pub fn render_loop<F: Fn()>(&self, f: F) {
-        use winit::*;
-        self.events_loop.borrow_mut().run_forever(|event| {
+    pub fn render_loop<F: Fn() + 'static>(&self, f: F) {
+        self.event_loop.borrow_mut().run(move |event, _, control_flow| {
             f();
             match event {
                 Event::WindowEvent { event, .. } => match event {
                     WindowEvent::KeyboardInput { input, .. } => {
                         if let Some(VirtualKeyCode::Escape) = input.virtual_keycode {
-                            ControlFlow::Break
-                        } else {
-                            ControlFlow::Continue
+                            *control_flow = winit::event_loop::ControlFlow::Exit
                         }
                     }
-                    WindowEvent::CloseRequested => winit::ControlFlow::Break,
-                    _ => ControlFlow::Continue,
+                    WindowEvent::CloseRequested => *control_flow = winit::event_loop::ControlFlow::Exit,
+                    _ => {},
                 },
-                _ => ControlFlow::Continue,
-            }
+                _ => {},
+            };
         });
     }
 
     pub fn new(window_width: u32, window_height: u32) -> Self {
         unsafe {
-            let events_loop = winit::EventsLoop::new();
-            let window = winit::WindowBuilder::new()
+            let event_loop = winit::event_loop::EventLoop::new();
+            let window = winit::window::WindowBuilder::new()
                 .with_title("Ash - Example")
-                .with_dimensions(winit::dpi::LogicalSize::new(
+                .with_inner_size(winit::dpi::LogicalSize::new(
                     f64::from(window_width),
                     f64::from(window_height),
                 ))
-                .build(&events_loop)
+                .build(&event_loop)
                 .unwrap();
             let entry = Entry::new();
             let app_name = CString::new("VulkanTriangle").unwrap();
@@ -513,7 +512,7 @@ impl ExampleBase {
                 .unwrap();
 
             ExampleBase {
-                events_loop: RefCell::new(events_loop),
+                event_loop: RefCell::new(event_loop),
                 entry,
                 instance,
                 device,
