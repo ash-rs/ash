@@ -565,6 +565,7 @@ pub struct Offset2D {
     pub y: i32,
 }
 impl Offset2D {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> Offset2DBuilder<'a> {
         Offset2DBuilder {
             inner: Offset2D::default(),
@@ -572,22 +573,26 @@ impl Offset2D {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct Offset2DBuilder<'a> {
     inner: Offset2D,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for Offset2DBuilder<'a> {
     type Target = Offset2D;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for Offset2DBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> Offset2DBuilder<'a> {
     pub fn x(mut self, x: i32) -> Self {
         self.inner.x = x;
@@ -613,6 +618,7 @@ pub struct Offset3D {
     pub z: i32,
 }
 impl Offset3D {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> Offset3DBuilder<'a> {
         Offset3DBuilder {
             inner: Offset3D::default(),
@@ -620,22 +626,26 @@ impl Offset3D {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct Offset3DBuilder<'a> {
     inner: Offset3D,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for Offset3DBuilder<'a> {
     type Target = Offset3D;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for Offset3DBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> Offset3DBuilder<'a> {
     pub fn x(mut self, x: i32) -> Self {
         self.inner.x = x;
@@ -664,6 +674,7 @@ pub struct Extent2D {
     pub height: u32,
 }
 impl Extent2D {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> Extent2DBuilder<'a> {
         Extent2DBuilder {
             inner: Extent2D::default(),
@@ -671,22 +682,26 @@ impl Extent2D {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct Extent2DBuilder<'a> {
     inner: Extent2D,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for Extent2DBuilder<'a> {
     type Target = Extent2D;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for Extent2DBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> Extent2DBuilder<'a> {
     pub fn width(mut self, width: u32) -> Self {
         self.inner.width = width;
@@ -712,6 +727,7 @@ pub struct Extent3D {
     pub depth: u32,
 }
 impl Extent3D {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> Extent3DBuilder<'a> {
         Extent3DBuilder {
             inner: Extent3D::default(),
@@ -719,22 +735,26 @@ impl Extent3D {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct Extent3DBuilder<'a> {
     inner: Extent3D,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for Extent3DBuilder<'a> {
     type Target = Extent3D;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for Extent3DBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> Extent3DBuilder<'a> {
     pub fn width(mut self, width: u32) -> Self {
         self.inner.width = width;
@@ -767,6 +787,7 @@ pub struct Viewport {
     pub max_depth: f32,
 }
 impl Viewport {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ViewportBuilder<'a> {
         ViewportBuilder {
             inner: Viewport::default(),
@@ -774,22 +795,26 @@ impl Viewport {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ViewportBuilder<'a> {
     inner: Viewport,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ViewportBuilder<'a> {
     type Target = Viewport;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ViewportBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ViewportBuilder<'a> {
     pub fn x(mut self, x: f32) -> Self {
         self.inner.x = x;
@@ -830,6 +855,7 @@ pub struct Rect2D {
     pub extent: Extent2D,
 }
 impl Rect2D {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> Rect2DBuilder<'a> {
         Rect2DBuilder {
             inner: Rect2D::default(),
@@ -837,22 +863,26 @@ impl Rect2D {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct Rect2DBuilder<'a> {
     inner: Rect2D,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for Rect2DBuilder<'a> {
     type Target = Rect2D;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for Rect2DBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> Rect2DBuilder<'a> {
     pub fn offset(mut self, offset: Offset2D) -> Self {
         self.inner.offset = offset;
@@ -878,6 +908,7 @@ pub struct ClearRect {
     pub layer_count: u32,
 }
 impl ClearRect {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ClearRectBuilder<'a> {
         ClearRectBuilder {
             inner: ClearRect::default(),
@@ -885,22 +916,26 @@ impl ClearRect {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ClearRectBuilder<'a> {
     inner: ClearRect,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ClearRectBuilder<'a> {
     type Target = ClearRect;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ClearRectBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ClearRectBuilder<'a> {
     pub fn rect(mut self, rect: Rect2D) -> Self {
         self.inner.rect = rect;
@@ -931,6 +966,7 @@ pub struct ComponentMapping {
     pub a: ComponentSwizzle,
 }
 impl ComponentMapping {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ComponentMappingBuilder<'a> {
         ComponentMappingBuilder {
             inner: ComponentMapping::default(),
@@ -938,22 +974,26 @@ impl ComponentMapping {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ComponentMappingBuilder<'a> {
     inner: ComponentMapping,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ComponentMappingBuilder<'a> {
     type Target = ComponentMapping;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ComponentMappingBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ComponentMappingBuilder<'a> {
     pub fn r(mut self, r: ComponentSwizzle) -> Self {
         self.inner.r = r;
@@ -1025,6 +1065,7 @@ impl ::std::default::Default for PhysicalDeviceProperties {
     }
 }
 impl PhysicalDeviceProperties {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDevicePropertiesBuilder<'a> {
         PhysicalDevicePropertiesBuilder {
             inner: PhysicalDeviceProperties::default(),
@@ -1032,22 +1073,26 @@ impl PhysicalDeviceProperties {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDevicePropertiesBuilder<'a> {
     inner: PhysicalDeviceProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDevicePropertiesBuilder<'a> {
     type Target = PhysicalDeviceProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDevicePropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDevicePropertiesBuilder<'a> {
     pub fn api_version(mut self, api_version: u32) -> Self {
         self.inner.api_version = api_version;
@@ -1118,6 +1163,7 @@ impl ::std::default::Default for ExtensionProperties {
     }
 }
 impl ExtensionProperties {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ExtensionPropertiesBuilder<'a> {
         ExtensionPropertiesBuilder {
             inner: ExtensionProperties::default(),
@@ -1125,22 +1171,26 @@ impl ExtensionProperties {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ExtensionPropertiesBuilder<'a> {
     inner: ExtensionProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ExtensionPropertiesBuilder<'a> {
     type Target = ExtensionProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ExtensionPropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ExtensionPropertiesBuilder<'a> {
     pub fn extension_name(mut self, extension_name: [c_char; MAX_EXTENSION_NAME_SIZE]) -> Self {
         self.inner.extension_name = extension_name;
@@ -1191,6 +1241,7 @@ impl ::std::default::Default for LayerProperties {
     }
 }
 impl LayerProperties {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> LayerPropertiesBuilder<'a> {
         LayerPropertiesBuilder {
             inner: LayerProperties::default(),
@@ -1198,22 +1249,26 @@ impl LayerProperties {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct LayerPropertiesBuilder<'a> {
     inner: LayerProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for LayerPropertiesBuilder<'a> {
     type Target = LayerProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for LayerPropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> LayerPropertiesBuilder<'a> {
     pub fn layer_name(mut self, layer_name: [c_char; MAX_EXTENSION_NAME_SIZE]) -> Self {
         self.inner.layer_name = layer_name;
@@ -1264,6 +1319,7 @@ impl ::std::default::Default for ApplicationInfo {
     }
 }
 impl ApplicationInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ApplicationInfoBuilder<'a> {
         ApplicationInfoBuilder {
             inner: ApplicationInfo::default(),
@@ -1271,22 +1327,26 @@ impl ApplicationInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ApplicationInfoBuilder<'a> {
     inner: ApplicationInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ApplicationInfoBuilder<'a> {
     type Target = ApplicationInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ApplicationInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ApplicationInfoBuilder<'a> {
     pub fn application_name(mut self, application_name: &'a ::std::ffi::CStr) -> Self {
         self.inner.p_application_name = application_name.as_ptr();
@@ -1363,6 +1423,7 @@ impl ::std::default::Default for AllocationCallbacks {
     }
 }
 impl AllocationCallbacks {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> AllocationCallbacksBuilder<'a> {
         AllocationCallbacksBuilder {
             inner: AllocationCallbacks::default(),
@@ -1370,22 +1431,26 @@ impl AllocationCallbacks {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct AllocationCallbacksBuilder<'a> {
     inner: AllocationCallbacks,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for AllocationCallbacksBuilder<'a> {
     type Target = AllocationCallbacks;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for AllocationCallbacksBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> AllocationCallbacksBuilder<'a> {
     pub fn user_data(mut self, user_data: *mut c_void) -> Self {
         self.inner.p_user_data = user_data;
@@ -1445,6 +1510,7 @@ impl ::std::default::Default for DeviceQueueCreateInfo {
     }
 }
 impl DeviceQueueCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DeviceQueueCreateInfoBuilder<'a> {
         DeviceQueueCreateInfoBuilder {
             inner: DeviceQueueCreateInfo::default(),
@@ -1452,23 +1518,27 @@ impl DeviceQueueCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DeviceQueueCreateInfoBuilder<'a> {
     inner: DeviceQueueCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsDeviceQueueCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DeviceQueueCreateInfoBuilder<'a> {
     type Target = DeviceQueueCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DeviceQueueCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DeviceQueueCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: DeviceQueueCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -1536,6 +1606,7 @@ impl ::std::default::Default for DeviceCreateInfo {
     }
 }
 impl DeviceCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DeviceCreateInfoBuilder<'a> {
         DeviceCreateInfoBuilder {
             inner: DeviceCreateInfo::default(),
@@ -1543,23 +1614,27 @@ impl DeviceCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DeviceCreateInfoBuilder<'a> {
     inner: DeviceCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsDeviceCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DeviceCreateInfoBuilder<'a> {
     type Target = DeviceCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DeviceCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DeviceCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: DeviceCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -1633,6 +1708,7 @@ impl ::std::default::Default for InstanceCreateInfo {
     }
 }
 impl InstanceCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> InstanceCreateInfoBuilder<'a> {
         InstanceCreateInfoBuilder {
             inner: InstanceCreateInfo::default(),
@@ -1640,23 +1716,27 @@ impl InstanceCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct InstanceCreateInfoBuilder<'a> {
     inner: InstanceCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsInstanceCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for InstanceCreateInfoBuilder<'a> {
     type Target = InstanceCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for InstanceCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> InstanceCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: InstanceCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -1707,6 +1787,7 @@ pub struct QueueFamilyProperties {
     pub min_image_transfer_granularity: Extent3D,
 }
 impl QueueFamilyProperties {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> QueueFamilyPropertiesBuilder<'a> {
         QueueFamilyPropertiesBuilder {
             inner: QueueFamilyProperties::default(),
@@ -1714,22 +1795,26 @@ impl QueueFamilyProperties {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct QueueFamilyPropertiesBuilder<'a> {
     inner: QueueFamilyProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for QueueFamilyPropertiesBuilder<'a> {
     type Target = QueueFamilyProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for QueueFamilyPropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> QueueFamilyPropertiesBuilder<'a> {
     pub fn queue_flags(mut self, queue_flags: QueueFlags) -> Self {
         self.inner.queue_flags = queue_flags;
@@ -1777,6 +1862,7 @@ impl ::std::default::Default for PhysicalDeviceMemoryProperties {
     }
 }
 impl PhysicalDeviceMemoryProperties {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceMemoryPropertiesBuilder<'a> {
         PhysicalDeviceMemoryPropertiesBuilder {
             inner: PhysicalDeviceMemoryProperties::default(),
@@ -1784,22 +1870,26 @@ impl PhysicalDeviceMemoryProperties {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceMemoryPropertiesBuilder<'a> {
     inner: PhysicalDeviceMemoryProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceMemoryPropertiesBuilder<'a> {
     type Target = PhysicalDeviceMemoryProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceMemoryPropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceMemoryPropertiesBuilder<'a> {
     pub fn memory_type_count(mut self, memory_type_count: u32) -> Self {
         self.inner.memory_type_count = memory_type_count;
@@ -1844,6 +1934,7 @@ impl ::std::default::Default for MemoryAllocateInfo {
     }
 }
 impl MemoryAllocateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> MemoryAllocateInfoBuilder<'a> {
         MemoryAllocateInfoBuilder {
             inner: MemoryAllocateInfo::default(),
@@ -1851,23 +1942,27 @@ impl MemoryAllocateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct MemoryAllocateInfoBuilder<'a> {
     inner: MemoryAllocateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsMemoryAllocateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for MemoryAllocateInfoBuilder<'a> {
     type Target = MemoryAllocateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for MemoryAllocateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> MemoryAllocateInfoBuilder<'a> {
     pub fn allocation_size(mut self, allocation_size: DeviceSize) -> Self {
         self.inner.allocation_size = allocation_size;
@@ -1907,6 +2002,7 @@ pub struct MemoryRequirements {
     pub memory_type_bits: u32,
 }
 impl MemoryRequirements {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> MemoryRequirementsBuilder<'a> {
         MemoryRequirementsBuilder {
             inner: MemoryRequirements::default(),
@@ -1914,22 +2010,26 @@ impl MemoryRequirements {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct MemoryRequirementsBuilder<'a> {
     inner: MemoryRequirements,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for MemoryRequirementsBuilder<'a> {
     type Target = MemoryRequirements;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for MemoryRequirementsBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> MemoryRequirementsBuilder<'a> {
     pub fn size(mut self, size: DeviceSize) -> Self {
         self.inner.size = size;
@@ -1959,6 +2059,7 @@ pub struct SparseImageFormatProperties {
     pub flags: SparseImageFormatFlags,
 }
 impl SparseImageFormatProperties {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SparseImageFormatPropertiesBuilder<'a> {
         SparseImageFormatPropertiesBuilder {
             inner: SparseImageFormatProperties::default(),
@@ -1966,22 +2067,26 @@ impl SparseImageFormatProperties {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SparseImageFormatPropertiesBuilder<'a> {
     inner: SparseImageFormatProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SparseImageFormatPropertiesBuilder<'a> {
     type Target = SparseImageFormatProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SparseImageFormatPropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SparseImageFormatPropertiesBuilder<'a> {
     pub fn aspect_mask(mut self, aspect_mask: ImageAspectFlags) -> Self {
         self.inner.aspect_mask = aspect_mask;
@@ -2013,6 +2118,7 @@ pub struct SparseImageMemoryRequirements {
     pub image_mip_tail_stride: DeviceSize,
 }
 impl SparseImageMemoryRequirements {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SparseImageMemoryRequirementsBuilder<'a> {
         SparseImageMemoryRequirementsBuilder {
             inner: SparseImageMemoryRequirements::default(),
@@ -2020,22 +2126,26 @@ impl SparseImageMemoryRequirements {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SparseImageMemoryRequirementsBuilder<'a> {
     inner: SparseImageMemoryRequirements,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SparseImageMemoryRequirementsBuilder<'a> {
     type Target = SparseImageMemoryRequirements;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SparseImageMemoryRequirementsBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SparseImageMemoryRequirementsBuilder<'a> {
     pub fn format_properties(mut self, format_properties: SparseImageFormatProperties) -> Self {
         self.inner.format_properties = format_properties;
@@ -2072,6 +2182,7 @@ pub struct MemoryType {
     pub heap_index: u32,
 }
 impl MemoryType {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> MemoryTypeBuilder<'a> {
         MemoryTypeBuilder {
             inner: MemoryType::default(),
@@ -2079,22 +2190,26 @@ impl MemoryType {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct MemoryTypeBuilder<'a> {
     inner: MemoryType,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for MemoryTypeBuilder<'a> {
     type Target = MemoryType;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for MemoryTypeBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> MemoryTypeBuilder<'a> {
     pub fn property_flags(mut self, property_flags: MemoryPropertyFlags) -> Self {
         self.inner.property_flags = property_flags;
@@ -2119,6 +2234,7 @@ pub struct MemoryHeap {
     pub flags: MemoryHeapFlags,
 }
 impl MemoryHeap {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> MemoryHeapBuilder<'a> {
         MemoryHeapBuilder {
             inner: MemoryHeap::default(),
@@ -2126,22 +2242,26 @@ impl MemoryHeap {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct MemoryHeapBuilder<'a> {
     inner: MemoryHeap,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for MemoryHeapBuilder<'a> {
     type Target = MemoryHeap;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for MemoryHeapBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> MemoryHeapBuilder<'a> {
     pub fn size(mut self, size: DeviceSize) -> Self {
         self.inner.size = size;
@@ -2180,6 +2300,7 @@ impl ::std::default::Default for MappedMemoryRange {
     }
 }
 impl MappedMemoryRange {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> MappedMemoryRangeBuilder<'a> {
         MappedMemoryRangeBuilder {
             inner: MappedMemoryRange::default(),
@@ -2187,22 +2308,26 @@ impl MappedMemoryRange {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct MappedMemoryRangeBuilder<'a> {
     inner: MappedMemoryRange,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for MappedMemoryRangeBuilder<'a> {
     type Target = MappedMemoryRange;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for MappedMemoryRangeBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> MappedMemoryRangeBuilder<'a> {
     pub fn memory(mut self, memory: DeviceMemory) -> Self {
         self.inner.memory = memory;
@@ -2232,6 +2357,7 @@ pub struct FormatProperties {
     pub buffer_features: FormatFeatureFlags,
 }
 impl FormatProperties {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> FormatPropertiesBuilder<'a> {
         FormatPropertiesBuilder {
             inner: FormatProperties::default(),
@@ -2239,22 +2365,26 @@ impl FormatProperties {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct FormatPropertiesBuilder<'a> {
     inner: FormatProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for FormatPropertiesBuilder<'a> {
     type Target = FormatProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for FormatPropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> FormatPropertiesBuilder<'a> {
     pub fn linear_tiling_features(mut self, linear_tiling_features: FormatFeatureFlags) -> Self {
         self.inner.linear_tiling_features = linear_tiling_features;
@@ -2286,6 +2416,7 @@ pub struct ImageFormatProperties {
     pub max_resource_size: DeviceSize,
 }
 impl ImageFormatProperties {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImageFormatPropertiesBuilder<'a> {
         ImageFormatPropertiesBuilder {
             inner: ImageFormatProperties::default(),
@@ -2293,22 +2424,26 @@ impl ImageFormatProperties {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImageFormatPropertiesBuilder<'a> {
     inner: ImageFormatProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImageFormatPropertiesBuilder<'a> {
     type Target = ImageFormatProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImageFormatPropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImageFormatPropertiesBuilder<'a> {
     pub fn max_extent(mut self, max_extent: Extent3D) -> Self {
         self.inner.max_extent = max_extent;
@@ -2346,6 +2481,7 @@ pub struct DescriptorBufferInfo {
     pub range: DeviceSize,
 }
 impl DescriptorBufferInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DescriptorBufferInfoBuilder<'a> {
         DescriptorBufferInfoBuilder {
             inner: DescriptorBufferInfo::default(),
@@ -2353,22 +2489,26 @@ impl DescriptorBufferInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DescriptorBufferInfoBuilder<'a> {
     inner: DescriptorBufferInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DescriptorBufferInfoBuilder<'a> {
     type Target = DescriptorBufferInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DescriptorBufferInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DescriptorBufferInfoBuilder<'a> {
     pub fn buffer(mut self, buffer: Buffer) -> Self {
         self.inner.buffer = buffer;
@@ -2398,6 +2538,7 @@ pub struct DescriptorImageInfo {
     pub image_layout: ImageLayout,
 }
 impl DescriptorImageInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DescriptorImageInfoBuilder<'a> {
         DescriptorImageInfoBuilder {
             inner: DescriptorImageInfo::default(),
@@ -2405,22 +2546,26 @@ impl DescriptorImageInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DescriptorImageInfoBuilder<'a> {
     inner: DescriptorImageInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DescriptorImageInfoBuilder<'a> {
     type Target = DescriptorImageInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DescriptorImageInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DescriptorImageInfoBuilder<'a> {
     pub fn sampler(mut self, sampler: Sampler) -> Self {
         self.inner.sampler = sampler;
@@ -2473,6 +2618,7 @@ impl ::std::default::Default for WriteDescriptorSet {
     }
 }
 impl WriteDescriptorSet {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> WriteDescriptorSetBuilder<'a> {
         WriteDescriptorSetBuilder {
             inner: WriteDescriptorSet::default(),
@@ -2480,23 +2626,27 @@ impl WriteDescriptorSet {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct WriteDescriptorSetBuilder<'a> {
     inner: WriteDescriptorSet,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsWriteDescriptorSet {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for WriteDescriptorSetBuilder<'a> {
     type Target = WriteDescriptorSet;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for WriteDescriptorSetBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> WriteDescriptorSetBuilder<'a> {
     pub fn dst_set(mut self, dst_set: DescriptorSet) -> Self {
         self.inner.dst_set = dst_set;
@@ -2580,6 +2730,7 @@ impl ::std::default::Default for CopyDescriptorSet {
     }
 }
 impl CopyDescriptorSet {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> CopyDescriptorSetBuilder<'a> {
         CopyDescriptorSetBuilder {
             inner: CopyDescriptorSet::default(),
@@ -2587,22 +2738,26 @@ impl CopyDescriptorSet {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct CopyDescriptorSetBuilder<'a> {
     inner: CopyDescriptorSet,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for CopyDescriptorSetBuilder<'a> {
     type Target = CopyDescriptorSet;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for CopyDescriptorSetBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> CopyDescriptorSetBuilder<'a> {
     pub fn src_set(mut self, src_set: DescriptorSet) -> Self {
         self.inner.src_set = src_set;
@@ -2667,6 +2822,7 @@ impl ::std::default::Default for BufferCreateInfo {
     }
 }
 impl BufferCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> BufferCreateInfoBuilder<'a> {
         BufferCreateInfoBuilder {
             inner: BufferCreateInfo::default(),
@@ -2674,23 +2830,27 @@ impl BufferCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct BufferCreateInfoBuilder<'a> {
     inner: BufferCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsBufferCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for BufferCreateInfoBuilder<'a> {
     type Target = BufferCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for BufferCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> BufferCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: BufferCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -2760,6 +2920,7 @@ impl ::std::default::Default for BufferViewCreateInfo {
     }
 }
 impl BufferViewCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> BufferViewCreateInfoBuilder<'a> {
         BufferViewCreateInfoBuilder {
             inner: BufferViewCreateInfo::default(),
@@ -2767,22 +2928,26 @@ impl BufferViewCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct BufferViewCreateInfoBuilder<'a> {
     inner: BufferViewCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for BufferViewCreateInfoBuilder<'a> {
     type Target = BufferViewCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for BufferViewCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> BufferViewCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: BufferViewCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -2820,6 +2985,7 @@ pub struct ImageSubresource {
     pub array_layer: u32,
 }
 impl ImageSubresource {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImageSubresourceBuilder<'a> {
         ImageSubresourceBuilder {
             inner: ImageSubresource::default(),
@@ -2827,22 +2993,26 @@ impl ImageSubresource {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImageSubresourceBuilder<'a> {
     inner: ImageSubresource,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImageSubresourceBuilder<'a> {
     type Target = ImageSubresource;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImageSubresourceBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImageSubresourceBuilder<'a> {
     pub fn aspect_mask(mut self, aspect_mask: ImageAspectFlags) -> Self {
         self.inner.aspect_mask = aspect_mask;
@@ -2873,6 +3043,7 @@ pub struct ImageSubresourceLayers {
     pub layer_count: u32,
 }
 impl ImageSubresourceLayers {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImageSubresourceLayersBuilder<'a> {
         ImageSubresourceLayersBuilder {
             inner: ImageSubresourceLayers::default(),
@@ -2880,22 +3051,26 @@ impl ImageSubresourceLayers {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImageSubresourceLayersBuilder<'a> {
     inner: ImageSubresourceLayers,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImageSubresourceLayersBuilder<'a> {
     type Target = ImageSubresourceLayers;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImageSubresourceLayersBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImageSubresourceLayersBuilder<'a> {
     pub fn aspect_mask(mut self, aspect_mask: ImageAspectFlags) -> Self {
         self.inner.aspect_mask = aspect_mask;
@@ -2931,6 +3106,7 @@ pub struct ImageSubresourceRange {
     pub layer_count: u32,
 }
 impl ImageSubresourceRange {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImageSubresourceRangeBuilder<'a> {
         ImageSubresourceRangeBuilder {
             inner: ImageSubresourceRange::default(),
@@ -2938,22 +3114,26 @@ impl ImageSubresourceRange {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImageSubresourceRangeBuilder<'a> {
     inner: ImageSubresourceRange,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImageSubresourceRangeBuilder<'a> {
     type Target = ImageSubresourceRange;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImageSubresourceRangeBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImageSubresourceRangeBuilder<'a> {
     pub fn aspect_mask(mut self, aspect_mask: ImageAspectFlags) -> Self {
         self.inner.aspect_mask = aspect_mask;
@@ -3002,6 +3182,7 @@ impl ::std::default::Default for MemoryBarrier {
     }
 }
 impl MemoryBarrier {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> MemoryBarrierBuilder<'a> {
         MemoryBarrierBuilder {
             inner: MemoryBarrier::default(),
@@ -3009,22 +3190,26 @@ impl MemoryBarrier {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct MemoryBarrierBuilder<'a> {
     inner: MemoryBarrier,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for MemoryBarrierBuilder<'a> {
     type Target = MemoryBarrier;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for MemoryBarrierBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> MemoryBarrierBuilder<'a> {
     pub fn src_access_mask(mut self, src_access_mask: AccessFlags) -> Self {
         self.inner.src_access_mask = src_access_mask;
@@ -3071,6 +3256,7 @@ impl ::std::default::Default for BufferMemoryBarrier {
     }
 }
 impl BufferMemoryBarrier {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> BufferMemoryBarrierBuilder<'a> {
         BufferMemoryBarrierBuilder {
             inner: BufferMemoryBarrier::default(),
@@ -3078,22 +3264,26 @@ impl BufferMemoryBarrier {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct BufferMemoryBarrierBuilder<'a> {
     inner: BufferMemoryBarrier,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for BufferMemoryBarrierBuilder<'a> {
     type Target = BufferMemoryBarrier;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for BufferMemoryBarrierBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> BufferMemoryBarrierBuilder<'a> {
     pub fn src_access_mask(mut self, src_access_mask: AccessFlags) -> Self {
         self.inner.src_access_mask = src_access_mask;
@@ -3162,6 +3352,7 @@ impl ::std::default::Default for ImageMemoryBarrier {
     }
 }
 impl ImageMemoryBarrier {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImageMemoryBarrierBuilder<'a> {
         ImageMemoryBarrierBuilder {
             inner: ImageMemoryBarrier::default(),
@@ -3169,23 +3360,27 @@ impl ImageMemoryBarrier {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImageMemoryBarrierBuilder<'a> {
     inner: ImageMemoryBarrier,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsImageMemoryBarrier {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImageMemoryBarrierBuilder<'a> {
     type Target = ImageMemoryBarrier;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImageMemoryBarrierBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImageMemoryBarrierBuilder<'a> {
     pub fn src_access_mask(mut self, src_access_mask: AccessFlags) -> Self {
         self.inner.src_access_mask = src_access_mask;
@@ -3282,6 +3477,7 @@ impl ::std::default::Default for ImageCreateInfo {
     }
 }
 impl ImageCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImageCreateInfoBuilder<'a> {
         ImageCreateInfoBuilder {
             inner: ImageCreateInfo::default(),
@@ -3289,23 +3485,27 @@ impl ImageCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImageCreateInfoBuilder<'a> {
     inner: ImageCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsImageCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImageCreateInfoBuilder<'a> {
     type Target = ImageCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImageCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImageCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: ImageCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -3388,6 +3588,7 @@ pub struct SubresourceLayout {
     pub depth_pitch: DeviceSize,
 }
 impl SubresourceLayout {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SubresourceLayoutBuilder<'a> {
         SubresourceLayoutBuilder {
             inner: SubresourceLayout::default(),
@@ -3395,22 +3596,26 @@ impl SubresourceLayout {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SubresourceLayoutBuilder<'a> {
     inner: SubresourceLayout,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SubresourceLayoutBuilder<'a> {
     type Target = SubresourceLayout;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SubresourceLayoutBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SubresourceLayoutBuilder<'a> {
     pub fn offset(mut self, offset: DeviceSize) -> Self {
         self.inner.offset = offset;
@@ -3467,6 +3672,7 @@ impl ::std::default::Default for ImageViewCreateInfo {
     }
 }
 impl ImageViewCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImageViewCreateInfoBuilder<'a> {
         ImageViewCreateInfoBuilder {
             inner: ImageViewCreateInfo::default(),
@@ -3474,23 +3680,27 @@ impl ImageViewCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImageViewCreateInfoBuilder<'a> {
     inner: ImageViewCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsImageViewCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImageViewCreateInfoBuilder<'a> {
     type Target = ImageViewCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImageViewCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImageViewCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: ImageViewCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -3546,6 +3756,7 @@ pub struct BufferCopy {
     pub size: DeviceSize,
 }
 impl BufferCopy {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> BufferCopyBuilder<'a> {
         BufferCopyBuilder {
             inner: BufferCopy::default(),
@@ -3553,22 +3764,26 @@ impl BufferCopy {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct BufferCopyBuilder<'a> {
     inner: BufferCopy,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for BufferCopyBuilder<'a> {
     type Target = BufferCopy;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for BufferCopyBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> BufferCopyBuilder<'a> {
     pub fn src_offset(mut self, src_offset: DeviceSize) -> Self {
         self.inner.src_offset = src_offset;
@@ -3600,6 +3815,7 @@ pub struct SparseMemoryBind {
     pub flags: SparseMemoryBindFlags,
 }
 impl SparseMemoryBind {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SparseMemoryBindBuilder<'a> {
         SparseMemoryBindBuilder {
             inner: SparseMemoryBind::default(),
@@ -3607,22 +3823,26 @@ impl SparseMemoryBind {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SparseMemoryBindBuilder<'a> {
     inner: SparseMemoryBind,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SparseMemoryBindBuilder<'a> {
     type Target = SparseMemoryBind;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SparseMemoryBindBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SparseMemoryBindBuilder<'a> {
     pub fn resource_offset(mut self, resource_offset: DeviceSize) -> Self {
         self.inner.resource_offset = resource_offset;
@@ -3663,6 +3883,7 @@ pub struct SparseImageMemoryBind {
     pub flags: SparseMemoryBindFlags,
 }
 impl SparseImageMemoryBind {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SparseImageMemoryBindBuilder<'a> {
         SparseImageMemoryBindBuilder {
             inner: SparseImageMemoryBind::default(),
@@ -3670,22 +3891,26 @@ impl SparseImageMemoryBind {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SparseImageMemoryBindBuilder<'a> {
     inner: SparseImageMemoryBind,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SparseImageMemoryBindBuilder<'a> {
     type Target = SparseImageMemoryBind;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SparseImageMemoryBindBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SparseImageMemoryBindBuilder<'a> {
     pub fn subresource(mut self, subresource: ImageSubresource) -> Self {
         self.inner.subresource = subresource;
@@ -3736,6 +3961,7 @@ impl ::std::default::Default for SparseBufferMemoryBindInfo {
     }
 }
 impl SparseBufferMemoryBindInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SparseBufferMemoryBindInfoBuilder<'a> {
         SparseBufferMemoryBindInfoBuilder {
             inner: SparseBufferMemoryBindInfo::default(),
@@ -3743,22 +3969,26 @@ impl SparseBufferMemoryBindInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SparseBufferMemoryBindInfoBuilder<'a> {
     inner: SparseBufferMemoryBindInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SparseBufferMemoryBindInfoBuilder<'a> {
     type Target = SparseBufferMemoryBindInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SparseBufferMemoryBindInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SparseBufferMemoryBindInfoBuilder<'a> {
     pub fn buffer(mut self, buffer: Buffer) -> Self {
         self.inner.buffer = buffer;
@@ -3794,6 +4024,7 @@ impl ::std::default::Default for SparseImageOpaqueMemoryBindInfo {
     }
 }
 impl SparseImageOpaqueMemoryBindInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SparseImageOpaqueMemoryBindInfoBuilder<'a> {
         SparseImageOpaqueMemoryBindInfoBuilder {
             inner: SparseImageOpaqueMemoryBindInfo::default(),
@@ -3801,22 +4032,26 @@ impl SparseImageOpaqueMemoryBindInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SparseImageOpaqueMemoryBindInfoBuilder<'a> {
     inner: SparseImageOpaqueMemoryBindInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SparseImageOpaqueMemoryBindInfoBuilder<'a> {
     type Target = SparseImageOpaqueMemoryBindInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SparseImageOpaqueMemoryBindInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SparseImageOpaqueMemoryBindInfoBuilder<'a> {
     pub fn image(mut self, image: Image) -> Self {
         self.inner.image = image;
@@ -3852,6 +4087,7 @@ impl ::std::default::Default for SparseImageMemoryBindInfo {
     }
 }
 impl SparseImageMemoryBindInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SparseImageMemoryBindInfoBuilder<'a> {
         SparseImageMemoryBindInfoBuilder {
             inner: SparseImageMemoryBindInfo::default(),
@@ -3859,22 +4095,26 @@ impl SparseImageMemoryBindInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SparseImageMemoryBindInfoBuilder<'a> {
     inner: SparseImageMemoryBindInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SparseImageMemoryBindInfoBuilder<'a> {
     type Target = SparseImageMemoryBindInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SparseImageMemoryBindInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SparseImageMemoryBindInfoBuilder<'a> {
     pub fn image(mut self, image: Image) -> Self {
         self.inner.image = image;
@@ -3928,6 +4168,7 @@ impl ::std::default::Default for BindSparseInfo {
     }
 }
 impl BindSparseInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> BindSparseInfoBuilder<'a> {
         BindSparseInfoBuilder {
             inner: BindSparseInfo::default(),
@@ -3935,23 +4176,27 @@ impl BindSparseInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct BindSparseInfoBuilder<'a> {
     inner: BindSparseInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsBindSparseInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for BindSparseInfoBuilder<'a> {
     type Target = BindSparseInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for BindSparseInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> BindSparseInfoBuilder<'a> {
     pub fn wait_semaphores(mut self, wait_semaphores: &'a [Semaphore]) -> Self {
         self.inner.wait_semaphore_count = wait_semaphores.len() as _;
@@ -4013,6 +4258,7 @@ pub struct ImageCopy {
     pub extent: Extent3D,
 }
 impl ImageCopy {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImageCopyBuilder<'a> {
         ImageCopyBuilder {
             inner: ImageCopy::default(),
@@ -4020,22 +4266,26 @@ impl ImageCopy {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImageCopyBuilder<'a> {
     inner: ImageCopy,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImageCopyBuilder<'a> {
     type Target = ImageCopy;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImageCopyBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImageCopyBuilder<'a> {
     pub fn src_subresource(mut self, src_subresource: ImageSubresourceLayers) -> Self {
         self.inner.src_subresource = src_subresource;
@@ -4084,6 +4334,7 @@ impl ::std::default::Default for ImageBlit {
     }
 }
 impl ImageBlit {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImageBlitBuilder<'a> {
         ImageBlitBuilder {
             inner: ImageBlit::default(),
@@ -4091,22 +4342,26 @@ impl ImageBlit {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImageBlitBuilder<'a> {
     inner: ImageBlit,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImageBlitBuilder<'a> {
     type Target = ImageBlit;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImageBlitBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImageBlitBuilder<'a> {
     pub fn src_subresource(mut self, src_subresource: ImageSubresourceLayers) -> Self {
         self.inner.src_subresource = src_subresource;
@@ -4143,6 +4398,7 @@ pub struct BufferImageCopy {
     pub image_extent: Extent3D,
 }
 impl BufferImageCopy {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> BufferImageCopyBuilder<'a> {
         BufferImageCopyBuilder {
             inner: BufferImageCopy::default(),
@@ -4150,22 +4406,26 @@ impl BufferImageCopy {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct BufferImageCopyBuilder<'a> {
     inner: BufferImageCopy,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for BufferImageCopyBuilder<'a> {
     type Target = BufferImageCopy;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for BufferImageCopyBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> BufferImageCopyBuilder<'a> {
     pub fn buffer_offset(mut self, buffer_offset: DeviceSize) -> Self {
         self.inner.buffer_offset = buffer_offset;
@@ -4209,6 +4469,7 @@ pub struct ImageResolve {
     pub extent: Extent3D,
 }
 impl ImageResolve {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImageResolveBuilder<'a> {
         ImageResolveBuilder {
             inner: ImageResolve::default(),
@@ -4216,22 +4477,26 @@ impl ImageResolve {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImageResolveBuilder<'a> {
     inner: ImageResolve,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImageResolveBuilder<'a> {
     type Target = ImageResolve;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImageResolveBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImageResolveBuilder<'a> {
     pub fn src_subresource(mut self, src_subresource: ImageSubresourceLayers) -> Self {
         self.inner.src_subresource = src_subresource;
@@ -4282,6 +4547,7 @@ impl ::std::default::Default for ShaderModuleCreateInfo {
     }
 }
 impl ShaderModuleCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ShaderModuleCreateInfoBuilder<'a> {
         ShaderModuleCreateInfoBuilder {
             inner: ShaderModuleCreateInfo::default(),
@@ -4289,23 +4555,27 @@ impl ShaderModuleCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ShaderModuleCreateInfoBuilder<'a> {
     inner: ShaderModuleCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsShaderModuleCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ShaderModuleCreateInfoBuilder<'a> {
     type Target = ShaderModuleCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ShaderModuleCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ShaderModuleCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: ShaderModuleCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -4359,6 +4629,7 @@ impl ::std::default::Default for DescriptorSetLayoutBinding {
     }
 }
 impl DescriptorSetLayoutBinding {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DescriptorSetLayoutBindingBuilder<'a> {
         DescriptorSetLayoutBindingBuilder {
             inner: DescriptorSetLayoutBinding::default(),
@@ -4366,22 +4637,26 @@ impl DescriptorSetLayoutBinding {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DescriptorSetLayoutBindingBuilder<'a> {
     inner: DescriptorSetLayoutBinding,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DescriptorSetLayoutBindingBuilder<'a> {
     type Target = DescriptorSetLayoutBinding;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DescriptorSetLayoutBindingBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DescriptorSetLayoutBindingBuilder<'a> {
     pub fn binding(mut self, binding: u32) -> Self {
         self.inner.binding = binding;
@@ -4433,6 +4708,7 @@ impl ::std::default::Default for DescriptorSetLayoutCreateInfo {
     }
 }
 impl DescriptorSetLayoutCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DescriptorSetLayoutCreateInfoBuilder<'a> {
         DescriptorSetLayoutCreateInfoBuilder {
             inner: DescriptorSetLayoutCreateInfo::default(),
@@ -4440,23 +4716,27 @@ impl DescriptorSetLayoutCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DescriptorSetLayoutCreateInfoBuilder<'a> {
     inner: DescriptorSetLayoutCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsDescriptorSetLayoutCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DescriptorSetLayoutCreateInfoBuilder<'a> {
     type Target = DescriptorSetLayoutCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DescriptorSetLayoutCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DescriptorSetLayoutCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: DescriptorSetLayoutCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -4496,6 +4776,7 @@ pub struct DescriptorPoolSize {
     pub descriptor_count: u32,
 }
 impl DescriptorPoolSize {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DescriptorPoolSizeBuilder<'a> {
         DescriptorPoolSizeBuilder {
             inner: DescriptorPoolSize::default(),
@@ -4503,22 +4784,26 @@ impl DescriptorPoolSize {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DescriptorPoolSizeBuilder<'a> {
     inner: DescriptorPoolSize,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DescriptorPoolSizeBuilder<'a> {
     type Target = DescriptorPoolSize;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DescriptorPoolSizeBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DescriptorPoolSizeBuilder<'a> {
     pub fn ty(mut self, ty: DescriptorType) -> Self {
         self.inner.ty = ty;
@@ -4559,6 +4844,7 @@ impl ::std::default::Default for DescriptorPoolCreateInfo {
     }
 }
 impl DescriptorPoolCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DescriptorPoolCreateInfoBuilder<'a> {
         DescriptorPoolCreateInfoBuilder {
             inner: DescriptorPoolCreateInfo::default(),
@@ -4566,23 +4852,27 @@ impl DescriptorPoolCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DescriptorPoolCreateInfoBuilder<'a> {
     inner: DescriptorPoolCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsDescriptorPoolCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DescriptorPoolCreateInfoBuilder<'a> {
     type Target = DescriptorPoolCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DescriptorPoolCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DescriptorPoolCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: DescriptorPoolCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -4640,6 +4930,7 @@ impl ::std::default::Default for DescriptorSetAllocateInfo {
     }
 }
 impl DescriptorSetAllocateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DescriptorSetAllocateInfoBuilder<'a> {
         DescriptorSetAllocateInfoBuilder {
             inner: DescriptorSetAllocateInfo::default(),
@@ -4647,23 +4938,27 @@ impl DescriptorSetAllocateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DescriptorSetAllocateInfoBuilder<'a> {
     inner: DescriptorSetAllocateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsDescriptorSetAllocateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DescriptorSetAllocateInfoBuilder<'a> {
     type Target = DescriptorSetAllocateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DescriptorSetAllocateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DescriptorSetAllocateInfoBuilder<'a> {
     pub fn descriptor_pool(mut self, descriptor_pool: DescriptorPool) -> Self {
         self.inner.descriptor_pool = descriptor_pool;
@@ -4704,6 +4999,7 @@ pub struct SpecializationMapEntry {
     pub size: usize,
 }
 impl SpecializationMapEntry {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SpecializationMapEntryBuilder<'a> {
         SpecializationMapEntryBuilder {
             inner: SpecializationMapEntry::default(),
@@ -4711,22 +5007,26 @@ impl SpecializationMapEntry {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SpecializationMapEntryBuilder<'a> {
     inner: SpecializationMapEntry,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SpecializationMapEntryBuilder<'a> {
     type Target = SpecializationMapEntry;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SpecializationMapEntryBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SpecializationMapEntryBuilder<'a> {
     pub fn constant_id(mut self, constant_id: u32) -> Self {
         self.inner.constant_id = constant_id;
@@ -4767,6 +5067,7 @@ impl ::std::default::Default for SpecializationInfo {
     }
 }
 impl SpecializationInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SpecializationInfoBuilder<'a> {
         SpecializationInfoBuilder {
             inner: SpecializationInfo::default(),
@@ -4774,22 +5075,26 @@ impl SpecializationInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SpecializationInfoBuilder<'a> {
     inner: SpecializationInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SpecializationInfoBuilder<'a> {
     type Target = SpecializationInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SpecializationInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SpecializationInfoBuilder<'a> {
     pub fn map_entries(mut self, map_entries: &'a [SpecializationMapEntry]) -> Self {
         self.inner.map_entry_count = map_entries.len() as _;
@@ -4834,6 +5139,7 @@ impl ::std::default::Default for PipelineShaderStageCreateInfo {
     }
 }
 impl PipelineShaderStageCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineShaderStageCreateInfoBuilder<'a> {
         PipelineShaderStageCreateInfoBuilder {
             inner: PipelineShaderStageCreateInfo::default(),
@@ -4841,23 +5147,27 @@ impl PipelineShaderStageCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineShaderStageCreateInfoBuilder<'a> {
     inner: PipelineShaderStageCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsPipelineShaderStageCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineShaderStageCreateInfoBuilder<'a> {
     type Target = PipelineShaderStageCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineShaderStageCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineShaderStageCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: PipelineShaderStageCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -4926,6 +5236,7 @@ impl ::std::default::Default for ComputePipelineCreateInfo {
     }
 }
 impl ComputePipelineCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ComputePipelineCreateInfoBuilder<'a> {
         ComputePipelineCreateInfoBuilder {
             inner: ComputePipelineCreateInfo::default(),
@@ -4933,23 +5244,27 @@ impl ComputePipelineCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ComputePipelineCreateInfoBuilder<'a> {
     inner: ComputePipelineCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsComputePipelineCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ComputePipelineCreateInfoBuilder<'a> {
     type Target = ComputePipelineCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ComputePipelineCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ComputePipelineCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: PipelineCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -5001,6 +5316,7 @@ pub struct VertexInputBindingDescription {
     pub input_rate: VertexInputRate,
 }
 impl VertexInputBindingDescription {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VertexInputBindingDescriptionBuilder<'a> {
         VertexInputBindingDescriptionBuilder {
             inner: VertexInputBindingDescription::default(),
@@ -5008,22 +5324,26 @@ impl VertexInputBindingDescription {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VertexInputBindingDescriptionBuilder<'a> {
     inner: VertexInputBindingDescription,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VertexInputBindingDescriptionBuilder<'a> {
     type Target = VertexInputBindingDescription;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VertexInputBindingDescriptionBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VertexInputBindingDescriptionBuilder<'a> {
     pub fn binding(mut self, binding: u32) -> Self {
         self.inner.binding = binding;
@@ -5054,6 +5374,7 @@ pub struct VertexInputAttributeDescription {
     pub offset: u32,
 }
 impl VertexInputAttributeDescription {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VertexInputAttributeDescriptionBuilder<'a> {
         VertexInputAttributeDescriptionBuilder {
             inner: VertexInputAttributeDescription::default(),
@@ -5061,22 +5382,26 @@ impl VertexInputAttributeDescription {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VertexInputAttributeDescriptionBuilder<'a> {
     inner: VertexInputAttributeDescription,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VertexInputAttributeDescriptionBuilder<'a> {
     type Target = VertexInputAttributeDescription;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VertexInputAttributeDescriptionBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VertexInputAttributeDescriptionBuilder<'a> {
     pub fn location(mut self, location: u32) -> Self {
         self.inner.location = location;
@@ -5127,6 +5452,7 @@ impl ::std::default::Default for PipelineVertexInputStateCreateInfo {
     }
 }
 impl PipelineVertexInputStateCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineVertexInputStateCreateInfoBuilder<'a> {
         PipelineVertexInputStateCreateInfoBuilder {
             inner: PipelineVertexInputStateCreateInfo::default(),
@@ -5134,23 +5460,27 @@ impl PipelineVertexInputStateCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineVertexInputStateCreateInfoBuilder<'a> {
     inner: PipelineVertexInputStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsPipelineVertexInputStateCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineVertexInputStateCreateInfoBuilder<'a> {
     type Target = PipelineVertexInputStateCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineVertexInputStateCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineVertexInputStateCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: PipelineVertexInputStateCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -5218,6 +5548,7 @@ impl ::std::default::Default for PipelineInputAssemblyStateCreateInfo {
     }
 }
 impl PipelineInputAssemblyStateCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineInputAssemblyStateCreateInfoBuilder<'a> {
         PipelineInputAssemblyStateCreateInfoBuilder {
             inner: PipelineInputAssemblyStateCreateInfo::default(),
@@ -5225,22 +5556,26 @@ impl PipelineInputAssemblyStateCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineInputAssemblyStateCreateInfoBuilder<'a> {
     inner: PipelineInputAssemblyStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineInputAssemblyStateCreateInfoBuilder<'a> {
     type Target = PipelineInputAssemblyStateCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineInputAssemblyStateCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineInputAssemblyStateCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: PipelineInputAssemblyStateCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -5281,6 +5616,7 @@ impl ::std::default::Default for PipelineTessellationStateCreateInfo {
     }
 }
 impl PipelineTessellationStateCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineTessellationStateCreateInfoBuilder<'a> {
         PipelineTessellationStateCreateInfoBuilder {
             inner: PipelineTessellationStateCreateInfo::default(),
@@ -5288,23 +5624,27 @@ impl PipelineTessellationStateCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineTessellationStateCreateInfoBuilder<'a> {
     inner: PipelineTessellationStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsPipelineTessellationStateCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineTessellationStateCreateInfoBuilder<'a> {
     type Target = PipelineTessellationStateCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineTessellationStateCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineTessellationStateCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: PipelineTessellationStateCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -5364,6 +5704,7 @@ impl ::std::default::Default for PipelineViewportStateCreateInfo {
     }
 }
 impl PipelineViewportStateCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineViewportStateCreateInfoBuilder<'a> {
         PipelineViewportStateCreateInfoBuilder {
             inner: PipelineViewportStateCreateInfo::default(),
@@ -5371,23 +5712,27 @@ impl PipelineViewportStateCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineViewportStateCreateInfoBuilder<'a> {
     inner: PipelineViewportStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsPipelineViewportStateCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineViewportStateCreateInfoBuilder<'a> {
     type Target = PipelineViewportStateCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineViewportStateCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineViewportStateCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: PipelineViewportStateCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -5470,6 +5815,7 @@ impl ::std::default::Default for PipelineRasterizationStateCreateInfo {
     }
 }
 impl PipelineRasterizationStateCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineRasterizationStateCreateInfoBuilder<'a> {
         PipelineRasterizationStateCreateInfoBuilder {
             inner: PipelineRasterizationStateCreateInfo::default(),
@@ -5477,23 +5823,27 @@ impl PipelineRasterizationStateCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineRasterizationStateCreateInfoBuilder<'a> {
     inner: PipelineRasterizationStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsPipelineRasterizationStateCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineRasterizationStateCreateInfoBuilder<'a> {
     type Target = PipelineRasterizationStateCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineRasterizationStateCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineRasterizationStateCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: PipelineRasterizationStateCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -5593,6 +5943,7 @@ impl ::std::default::Default for PipelineMultisampleStateCreateInfo {
     }
 }
 impl PipelineMultisampleStateCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineMultisampleStateCreateInfoBuilder<'a> {
         PipelineMultisampleStateCreateInfoBuilder {
             inner: PipelineMultisampleStateCreateInfo::default(),
@@ -5600,23 +5951,27 @@ impl PipelineMultisampleStateCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineMultisampleStateCreateInfoBuilder<'a> {
     inner: PipelineMultisampleStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsPipelineMultisampleStateCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineMultisampleStateCreateInfoBuilder<'a> {
     type Target = PipelineMultisampleStateCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineMultisampleStateCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineMultisampleStateCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: PipelineMultisampleStateCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -5693,6 +6048,7 @@ pub struct PipelineColorBlendAttachmentState {
     pub color_write_mask: ColorComponentFlags,
 }
 impl PipelineColorBlendAttachmentState {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineColorBlendAttachmentStateBuilder<'a> {
         PipelineColorBlendAttachmentStateBuilder {
             inner: PipelineColorBlendAttachmentState::default(),
@@ -5700,22 +6056,26 @@ impl PipelineColorBlendAttachmentState {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineColorBlendAttachmentStateBuilder<'a> {
     inner: PipelineColorBlendAttachmentState,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineColorBlendAttachmentStateBuilder<'a> {
     type Target = PipelineColorBlendAttachmentState;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineColorBlendAttachmentStateBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineColorBlendAttachmentStateBuilder<'a> {
     pub fn blend_enable(mut self, blend_enable: bool) -> Self {
         self.inner.blend_enable = blend_enable.into();
@@ -5784,6 +6144,7 @@ impl ::std::default::Default for PipelineColorBlendStateCreateInfo {
     }
 }
 impl PipelineColorBlendStateCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineColorBlendStateCreateInfoBuilder<'a> {
         PipelineColorBlendStateCreateInfoBuilder {
             inner: PipelineColorBlendStateCreateInfo::default(),
@@ -5791,23 +6152,27 @@ impl PipelineColorBlendStateCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineColorBlendStateCreateInfoBuilder<'a> {
     inner: PipelineColorBlendStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsPipelineColorBlendStateCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineColorBlendStateCreateInfoBuilder<'a> {
     type Target = PipelineColorBlendStateCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineColorBlendStateCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineColorBlendStateCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: PipelineColorBlendStateCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -5876,6 +6241,7 @@ impl ::std::default::Default for PipelineDynamicStateCreateInfo {
     }
 }
 impl PipelineDynamicStateCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineDynamicStateCreateInfoBuilder<'a> {
         PipelineDynamicStateCreateInfoBuilder {
             inner: PipelineDynamicStateCreateInfo::default(),
@@ -5883,22 +6249,26 @@ impl PipelineDynamicStateCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineDynamicStateCreateInfoBuilder<'a> {
     inner: PipelineDynamicStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineDynamicStateCreateInfoBuilder<'a> {
     type Target = PipelineDynamicStateCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineDynamicStateCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineDynamicStateCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: PipelineDynamicStateCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -5929,6 +6299,7 @@ pub struct StencilOpState {
     pub reference: u32,
 }
 impl StencilOpState {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> StencilOpStateBuilder<'a> {
         StencilOpStateBuilder {
             inner: StencilOpState::default(),
@@ -5936,22 +6307,26 @@ impl StencilOpState {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct StencilOpStateBuilder<'a> {
     inner: StencilOpState,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for StencilOpStateBuilder<'a> {
     type Target = StencilOpState;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for StencilOpStateBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> StencilOpStateBuilder<'a> {
     pub fn fail_op(mut self, fail_op: StencilOp) -> Self {
         self.inner.fail_op = fail_op;
@@ -6024,6 +6399,7 @@ impl ::std::default::Default for PipelineDepthStencilStateCreateInfo {
     }
 }
 impl PipelineDepthStencilStateCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineDepthStencilStateCreateInfoBuilder<'a> {
         PipelineDepthStencilStateCreateInfoBuilder {
             inner: PipelineDepthStencilStateCreateInfo::default(),
@@ -6031,22 +6407,26 @@ impl PipelineDepthStencilStateCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineDepthStencilStateCreateInfoBuilder<'a> {
     inner: PipelineDepthStencilStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineDepthStencilStateCreateInfoBuilder<'a> {
     type Target = PipelineDepthStencilStateCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineDepthStencilStateCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineDepthStencilStateCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: PipelineDepthStencilStateCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -6145,6 +6525,7 @@ impl ::std::default::Default for GraphicsPipelineCreateInfo {
     }
 }
 impl GraphicsPipelineCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> GraphicsPipelineCreateInfoBuilder<'a> {
         GraphicsPipelineCreateInfoBuilder {
             inner: GraphicsPipelineCreateInfo::default(),
@@ -6152,23 +6533,27 @@ impl GraphicsPipelineCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct GraphicsPipelineCreateInfoBuilder<'a> {
     inner: GraphicsPipelineCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsGraphicsPipelineCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for GraphicsPipelineCreateInfoBuilder<'a> {
     type Target = GraphicsPipelineCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for GraphicsPipelineCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> GraphicsPipelineCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: PipelineCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -6299,6 +6684,7 @@ impl ::std::default::Default for PipelineCacheCreateInfo {
     }
 }
 impl PipelineCacheCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineCacheCreateInfoBuilder<'a> {
         PipelineCacheCreateInfoBuilder {
             inner: PipelineCacheCreateInfo::default(),
@@ -6306,22 +6692,26 @@ impl PipelineCacheCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineCacheCreateInfoBuilder<'a> {
     inner: PipelineCacheCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineCacheCreateInfoBuilder<'a> {
     type Target = PipelineCacheCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineCacheCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineCacheCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: PipelineCacheCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -6361,6 +6751,7 @@ impl ::std::default::Default for PipelineCacheHeaderVersionOne {
     }
 }
 impl PipelineCacheHeaderVersionOne {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineCacheHeaderVersionOneBuilder<'a> {
         PipelineCacheHeaderVersionOneBuilder {
             inner: PipelineCacheHeaderVersionOne::default(),
@@ -6368,22 +6759,26 @@ impl PipelineCacheHeaderVersionOne {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineCacheHeaderVersionOneBuilder<'a> {
     inner: PipelineCacheHeaderVersionOne,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineCacheHeaderVersionOneBuilder<'a> {
     type Target = PipelineCacheHeaderVersionOne;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineCacheHeaderVersionOneBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineCacheHeaderVersionOneBuilder<'a> {
     pub fn header_size(mut self, header_size: u32) -> Self {
         self.inner.header_size = header_size;
@@ -6421,6 +6816,7 @@ pub struct PushConstantRange {
     pub size: u32,
 }
 impl PushConstantRange {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PushConstantRangeBuilder<'a> {
         PushConstantRangeBuilder {
             inner: PushConstantRange::default(),
@@ -6428,22 +6824,26 @@ impl PushConstantRange {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PushConstantRangeBuilder<'a> {
     inner: PushConstantRange,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PushConstantRangeBuilder<'a> {
     type Target = PushConstantRange;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PushConstantRangeBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PushConstantRangeBuilder<'a> {
     pub fn stage_flags(mut self, stage_flags: ShaderStageFlags) -> Self {
         self.inner.stage_flags = stage_flags;
@@ -6490,6 +6890,7 @@ impl ::std::default::Default for PipelineLayoutCreateInfo {
     }
 }
 impl PipelineLayoutCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineLayoutCreateInfoBuilder<'a> {
         PipelineLayoutCreateInfoBuilder {
             inner: PipelineLayoutCreateInfo::default(),
@@ -6497,22 +6898,26 @@ impl PipelineLayoutCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineLayoutCreateInfoBuilder<'a> {
     inner: PipelineLayoutCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineLayoutCreateInfoBuilder<'a> {
     type Target = PipelineLayoutCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineLayoutCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineLayoutCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: PipelineLayoutCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -6583,6 +6988,7 @@ impl ::std::default::Default for SamplerCreateInfo {
     }
 }
 impl SamplerCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SamplerCreateInfoBuilder<'a> {
         SamplerCreateInfoBuilder {
             inner: SamplerCreateInfo::default(),
@@ -6590,23 +6996,27 @@ impl SamplerCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SamplerCreateInfoBuilder<'a> {
     inner: SamplerCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsSamplerCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SamplerCreateInfoBuilder<'a> {
     type Target = SamplerCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SamplerCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SamplerCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: SamplerCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -6713,6 +7123,7 @@ impl ::std::default::Default for CommandPoolCreateInfo {
     }
 }
 impl CommandPoolCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> CommandPoolCreateInfoBuilder<'a> {
         CommandPoolCreateInfoBuilder {
             inner: CommandPoolCreateInfo::default(),
@@ -6720,22 +7131,26 @@ impl CommandPoolCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct CommandPoolCreateInfoBuilder<'a> {
     inner: CommandPoolCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for CommandPoolCreateInfoBuilder<'a> {
     type Target = CommandPoolCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for CommandPoolCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> CommandPoolCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: CommandPoolCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -6774,6 +7189,7 @@ impl ::std::default::Default for CommandBufferAllocateInfo {
     }
 }
 impl CommandBufferAllocateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> CommandBufferAllocateInfoBuilder<'a> {
         CommandBufferAllocateInfoBuilder {
             inner: CommandBufferAllocateInfo::default(),
@@ -6781,22 +7197,26 @@ impl CommandBufferAllocateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct CommandBufferAllocateInfoBuilder<'a> {
     inner: CommandBufferAllocateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for CommandBufferAllocateInfoBuilder<'a> {
     type Target = CommandBufferAllocateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for CommandBufferAllocateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> CommandBufferAllocateInfoBuilder<'a> {
     pub fn command_pool(mut self, command_pool: CommandPool) -> Self {
         self.inner.command_pool = command_pool;
@@ -6845,6 +7265,7 @@ impl ::std::default::Default for CommandBufferInheritanceInfo {
     }
 }
 impl CommandBufferInheritanceInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> CommandBufferInheritanceInfoBuilder<'a> {
         CommandBufferInheritanceInfoBuilder {
             inner: CommandBufferInheritanceInfo::default(),
@@ -6852,23 +7273,27 @@ impl CommandBufferInheritanceInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct CommandBufferInheritanceInfoBuilder<'a> {
     inner: CommandBufferInheritanceInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsCommandBufferInheritanceInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for CommandBufferInheritanceInfoBuilder<'a> {
     type Target = CommandBufferInheritanceInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for CommandBufferInheritanceInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> CommandBufferInheritanceInfoBuilder<'a> {
     pub fn render_pass(mut self, render_pass: RenderPass) -> Self {
         self.inner.render_pass = render_pass;
@@ -6935,6 +7360,7 @@ impl ::std::default::Default for CommandBufferBeginInfo {
     }
 }
 impl CommandBufferBeginInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> CommandBufferBeginInfoBuilder<'a> {
         CommandBufferBeginInfoBuilder {
             inner: CommandBufferBeginInfo::default(),
@@ -6942,23 +7368,27 @@ impl CommandBufferBeginInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct CommandBufferBeginInfoBuilder<'a> {
     inner: CommandBufferBeginInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsCommandBufferBeginInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for CommandBufferBeginInfoBuilder<'a> {
     type Target = CommandBufferBeginInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for CommandBufferBeginInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> CommandBufferBeginInfoBuilder<'a> {
     pub fn flags(mut self, flags: CommandBufferUsageFlags) -> Self {
         self.inner.flags = flags;
@@ -7028,6 +7458,7 @@ impl ::std::default::Default for RenderPassBeginInfo {
     }
 }
 impl RenderPassBeginInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> RenderPassBeginInfoBuilder<'a> {
         RenderPassBeginInfoBuilder {
             inner: RenderPassBeginInfo::default(),
@@ -7035,23 +7466,27 @@ impl RenderPassBeginInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct RenderPassBeginInfoBuilder<'a> {
     inner: RenderPassBeginInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsRenderPassBeginInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for RenderPassBeginInfoBuilder<'a> {
     type Target = RenderPassBeginInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for RenderPassBeginInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> RenderPassBeginInfoBuilder<'a> {
     pub fn render_pass(mut self, render_pass: RenderPass) -> Self {
         self.inner.render_pass = render_pass;
@@ -7112,6 +7547,7 @@ pub struct ClearDepthStencilValue {
     pub stencil: u32,
 }
 impl ClearDepthStencilValue {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ClearDepthStencilValueBuilder<'a> {
         ClearDepthStencilValueBuilder {
             inner: ClearDepthStencilValue::default(),
@@ -7119,22 +7555,26 @@ impl ClearDepthStencilValue {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ClearDepthStencilValueBuilder<'a> {
     inner: ClearDepthStencilValue,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ClearDepthStencilValueBuilder<'a> {
     type Target = ClearDepthStencilValue;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ClearDepthStencilValueBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ClearDepthStencilValueBuilder<'a> {
     pub fn depth(mut self, depth: f32) -> Self {
         self.inner.depth = depth;
@@ -7181,6 +7621,7 @@ impl fmt::Debug for ClearAttachment {
     }
 }
 impl ClearAttachment {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ClearAttachmentBuilder<'a> {
         ClearAttachmentBuilder {
             inner: ClearAttachment::default(),
@@ -7188,22 +7629,26 @@ impl ClearAttachment {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ClearAttachmentBuilder<'a> {
     inner: ClearAttachment,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ClearAttachmentBuilder<'a> {
     type Target = ClearAttachment;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ClearAttachmentBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ClearAttachmentBuilder<'a> {
     pub fn aspect_mask(mut self, aspect_mask: ImageAspectFlags) -> Self {
         self.inner.aspect_mask = aspect_mask;
@@ -7239,6 +7684,7 @@ pub struct AttachmentDescription {
     pub final_layout: ImageLayout,
 }
 impl AttachmentDescription {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> AttachmentDescriptionBuilder<'a> {
         AttachmentDescriptionBuilder {
             inner: AttachmentDescription::default(),
@@ -7246,22 +7692,26 @@ impl AttachmentDescription {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct AttachmentDescriptionBuilder<'a> {
     inner: AttachmentDescription,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for AttachmentDescriptionBuilder<'a> {
     type Target = AttachmentDescription;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for AttachmentDescriptionBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> AttachmentDescriptionBuilder<'a> {
     pub fn flags(mut self, flags: AttachmentDescriptionFlags) -> Self {
         self.inner.flags = flags;
@@ -7314,6 +7764,7 @@ pub struct AttachmentReference {
     pub layout: ImageLayout,
 }
 impl AttachmentReference {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> AttachmentReferenceBuilder<'a> {
         AttachmentReferenceBuilder {
             inner: AttachmentReference::default(),
@@ -7321,22 +7772,26 @@ impl AttachmentReference {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct AttachmentReferenceBuilder<'a> {
     inner: AttachmentReference,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for AttachmentReferenceBuilder<'a> {
     type Target = AttachmentReference;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for AttachmentReferenceBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> AttachmentReferenceBuilder<'a> {
     pub fn attachment(mut self, attachment: u32) -> Self {
         self.inner.attachment = attachment;
@@ -7385,6 +7840,7 @@ impl ::std::default::Default for SubpassDescription {
     }
 }
 impl SubpassDescription {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SubpassDescriptionBuilder<'a> {
         SubpassDescriptionBuilder {
             inner: SubpassDescription::default(),
@@ -7392,22 +7848,26 @@ impl SubpassDescription {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SubpassDescriptionBuilder<'a> {
     inner: SubpassDescription,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SubpassDescriptionBuilder<'a> {
     type Target = SubpassDescription;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SubpassDescriptionBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SubpassDescriptionBuilder<'a> {
     pub fn flags(mut self, flags: SubpassDescriptionFlags) -> Self {
         self.inner.flags = flags;
@@ -7464,6 +7924,7 @@ pub struct SubpassDependency {
     pub dependency_flags: DependencyFlags,
 }
 impl SubpassDependency {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SubpassDependencyBuilder<'a> {
         SubpassDependencyBuilder {
             inner: SubpassDependency::default(),
@@ -7471,22 +7932,26 @@ impl SubpassDependency {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SubpassDependencyBuilder<'a> {
     inner: SubpassDependency,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SubpassDependencyBuilder<'a> {
     type Target = SubpassDependency;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SubpassDependencyBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SubpassDependencyBuilder<'a> {
     pub fn src_subpass(mut self, src_subpass: u32) -> Self {
         self.inner.src_subpass = src_subpass;
@@ -7553,6 +8018,7 @@ impl ::std::default::Default for RenderPassCreateInfo {
     }
 }
 impl RenderPassCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> RenderPassCreateInfoBuilder<'a> {
         RenderPassCreateInfoBuilder {
             inner: RenderPassCreateInfo::default(),
@@ -7560,23 +8026,27 @@ impl RenderPassCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct RenderPassCreateInfoBuilder<'a> {
     inner: RenderPassCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsRenderPassCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for RenderPassCreateInfoBuilder<'a> {
     type Target = RenderPassCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for RenderPassCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> RenderPassCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: RenderPassCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -7636,6 +8106,7 @@ impl ::std::default::Default for EventCreateInfo {
     }
 }
 impl EventCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> EventCreateInfoBuilder<'a> {
         EventCreateInfoBuilder {
             inner: EventCreateInfo::default(),
@@ -7643,22 +8114,26 @@ impl EventCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct EventCreateInfoBuilder<'a> {
     inner: EventCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for EventCreateInfoBuilder<'a> {
     type Target = EventCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for EventCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> EventCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: EventCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -7689,6 +8164,7 @@ impl ::std::default::Default for FenceCreateInfo {
     }
 }
 impl FenceCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> FenceCreateInfoBuilder<'a> {
         FenceCreateInfoBuilder {
             inner: FenceCreateInfo::default(),
@@ -7696,23 +8172,27 @@ impl FenceCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct FenceCreateInfoBuilder<'a> {
     inner: FenceCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsFenceCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for FenceCreateInfoBuilder<'a> {
     type Target = FenceCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for FenceCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> FenceCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: FenceCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -7800,6 +8280,7 @@ pub struct PhysicalDeviceFeatures {
     pub inherited_queries: Bool32,
 }
 impl PhysicalDeviceFeatures {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceFeaturesBuilder<'a> {
         PhysicalDeviceFeaturesBuilder {
             inner: PhysicalDeviceFeatures::default(),
@@ -7807,22 +8288,26 @@ impl PhysicalDeviceFeatures {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceFeaturesBuilder<'a> {
     inner: PhysicalDeviceFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceFeaturesBuilder<'a> {
     type Target = PhysicalDeviceFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceFeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceFeaturesBuilder<'a> {
     pub fn robust_buffer_access(mut self, robust_buffer_access: bool) -> Self {
         self.inner.robust_buffer_access = robust_buffer_access.into();
@@ -8100,6 +8585,7 @@ pub struct PhysicalDeviceSparseProperties {
     pub residency_non_resident_strict: Bool32,
 }
 impl PhysicalDeviceSparseProperties {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceSparsePropertiesBuilder<'a> {
         PhysicalDeviceSparsePropertiesBuilder {
             inner: PhysicalDeviceSparseProperties::default(),
@@ -8107,22 +8593,26 @@ impl PhysicalDeviceSparseProperties {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceSparsePropertiesBuilder<'a> {
     inner: PhysicalDeviceSparseProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceSparsePropertiesBuilder<'a> {
     type Target = PhysicalDeviceSparseProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceSparsePropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceSparsePropertiesBuilder<'a> {
     pub fn residency_standard2_d_block_shape(
         mut self,
@@ -8385,6 +8875,7 @@ impl ::std::default::Default for PhysicalDeviceLimits {
     }
 }
 impl PhysicalDeviceLimits {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceLimitsBuilder<'a> {
         PhysicalDeviceLimitsBuilder {
             inner: PhysicalDeviceLimits::default(),
@@ -8392,22 +8883,26 @@ impl PhysicalDeviceLimits {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceLimitsBuilder<'a> {
     inner: PhysicalDeviceLimits,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceLimitsBuilder<'a> {
     type Target = PhysicalDeviceLimits;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceLimitsBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceLimitsBuilder<'a> {
     pub fn max_image_dimension1_d(mut self, max_image_dimension1_d: u32) -> Self {
         self.inner.max_image_dimension1_d = max_image_dimension1_d;
@@ -8999,6 +9494,7 @@ impl ::std::default::Default for SemaphoreCreateInfo {
     }
 }
 impl SemaphoreCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SemaphoreCreateInfoBuilder<'a> {
         SemaphoreCreateInfoBuilder {
             inner: SemaphoreCreateInfo::default(),
@@ -9006,23 +9502,27 @@ impl SemaphoreCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SemaphoreCreateInfoBuilder<'a> {
     inner: SemaphoreCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsSemaphoreCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SemaphoreCreateInfoBuilder<'a> {
     type Target = SemaphoreCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SemaphoreCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SemaphoreCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: SemaphoreCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -9073,6 +9573,7 @@ impl ::std::default::Default for QueryPoolCreateInfo {
     }
 }
 impl QueryPoolCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> QueryPoolCreateInfoBuilder<'a> {
         QueryPoolCreateInfoBuilder {
             inner: QueryPoolCreateInfo::default(),
@@ -9080,23 +9581,27 @@ impl QueryPoolCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct QueryPoolCreateInfoBuilder<'a> {
     inner: QueryPoolCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsQueryPoolCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for QueryPoolCreateInfoBuilder<'a> {
     type Target = QueryPoolCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for QueryPoolCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> QueryPoolCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: QueryPoolCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -9165,6 +9670,7 @@ impl ::std::default::Default for FramebufferCreateInfo {
     }
 }
 impl FramebufferCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> FramebufferCreateInfoBuilder<'a> {
         FramebufferCreateInfoBuilder {
             inner: FramebufferCreateInfo::default(),
@@ -9172,23 +9678,27 @@ impl FramebufferCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct FramebufferCreateInfoBuilder<'a> {
     inner: FramebufferCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsFramebufferCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for FramebufferCreateInfoBuilder<'a> {
     type Target = FramebufferCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for FramebufferCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> FramebufferCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: FramebufferCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -9246,6 +9756,7 @@ pub struct DrawIndirectCommand {
     pub first_instance: u32,
 }
 impl DrawIndirectCommand {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DrawIndirectCommandBuilder<'a> {
         DrawIndirectCommandBuilder {
             inner: DrawIndirectCommand::default(),
@@ -9253,22 +9764,26 @@ impl DrawIndirectCommand {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DrawIndirectCommandBuilder<'a> {
     inner: DrawIndirectCommand,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DrawIndirectCommandBuilder<'a> {
     type Target = DrawIndirectCommand;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DrawIndirectCommandBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DrawIndirectCommandBuilder<'a> {
     pub fn vertex_count(mut self, vertex_count: u32) -> Self {
         self.inner.vertex_count = vertex_count;
@@ -9304,6 +9819,7 @@ pub struct DrawIndexedIndirectCommand {
     pub first_instance: u32,
 }
 impl DrawIndexedIndirectCommand {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DrawIndexedIndirectCommandBuilder<'a> {
         DrawIndexedIndirectCommandBuilder {
             inner: DrawIndexedIndirectCommand::default(),
@@ -9311,22 +9827,26 @@ impl DrawIndexedIndirectCommand {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DrawIndexedIndirectCommandBuilder<'a> {
     inner: DrawIndexedIndirectCommand,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DrawIndexedIndirectCommandBuilder<'a> {
     type Target = DrawIndexedIndirectCommand;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DrawIndexedIndirectCommandBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DrawIndexedIndirectCommandBuilder<'a> {
     pub fn index_count(mut self, index_count: u32) -> Self {
         self.inner.index_count = index_count;
@@ -9364,6 +9884,7 @@ pub struct DispatchIndirectCommand {
     pub z: u32,
 }
 impl DispatchIndirectCommand {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DispatchIndirectCommandBuilder<'a> {
         DispatchIndirectCommandBuilder {
             inner: DispatchIndirectCommand::default(),
@@ -9371,22 +9892,26 @@ impl DispatchIndirectCommand {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DispatchIndirectCommandBuilder<'a> {
     inner: DispatchIndirectCommand,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DispatchIndirectCommandBuilder<'a> {
     type Target = DispatchIndirectCommand;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DispatchIndirectCommandBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DispatchIndirectCommandBuilder<'a> {
     pub fn x(mut self, x: u32) -> Self {
         self.inner.x = x;
@@ -9415,6 +9940,7 @@ pub struct MultiDrawInfoEXT {
     pub vertex_count: u32,
 }
 impl MultiDrawInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> MultiDrawInfoEXTBuilder<'a> {
         MultiDrawInfoEXTBuilder {
             inner: MultiDrawInfoEXT::default(),
@@ -9422,22 +9948,26 @@ impl MultiDrawInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct MultiDrawInfoEXTBuilder<'a> {
     inner: MultiDrawInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for MultiDrawInfoEXTBuilder<'a> {
     type Target = MultiDrawInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for MultiDrawInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> MultiDrawInfoEXTBuilder<'a> {
     pub fn first_vertex(mut self, first_vertex: u32) -> Self {
         self.inner.first_vertex = first_vertex;
@@ -9463,6 +9993,7 @@ pub struct MultiDrawIndexedInfoEXT {
     pub vertex_offset: i32,
 }
 impl MultiDrawIndexedInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> MultiDrawIndexedInfoEXTBuilder<'a> {
         MultiDrawIndexedInfoEXTBuilder {
             inner: MultiDrawIndexedInfoEXT::default(),
@@ -9470,22 +10001,26 @@ impl MultiDrawIndexedInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct MultiDrawIndexedInfoEXTBuilder<'a> {
     inner: MultiDrawIndexedInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for MultiDrawIndexedInfoEXTBuilder<'a> {
     type Target = MultiDrawIndexedInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for MultiDrawIndexedInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> MultiDrawIndexedInfoEXTBuilder<'a> {
     pub fn first_index(mut self, first_index: u32) -> Self {
         self.inner.first_index = first_index;
@@ -9536,6 +10071,7 @@ impl ::std::default::Default for SubmitInfo {
     }
 }
 impl SubmitInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SubmitInfoBuilder<'a> {
         SubmitInfoBuilder {
             inner: SubmitInfo::default(),
@@ -9543,23 +10079,27 @@ impl SubmitInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SubmitInfoBuilder<'a> {
     inner: SubmitInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsSubmitInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SubmitInfoBuilder<'a> {
     type Target = SubmitInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SubmitInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SubmitInfoBuilder<'a> {
     pub fn wait_semaphores(mut self, wait_semaphores: &'a [Semaphore]) -> Self {
         self.inner.wait_semaphore_count = wait_semaphores.len() as _;
@@ -9628,6 +10168,7 @@ impl ::std::default::Default for DisplayPropertiesKHR {
     }
 }
 impl DisplayPropertiesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DisplayPropertiesKHRBuilder<'a> {
         DisplayPropertiesKHRBuilder {
             inner: DisplayPropertiesKHR::default(),
@@ -9635,22 +10176,26 @@ impl DisplayPropertiesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DisplayPropertiesKHRBuilder<'a> {
     inner: DisplayPropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DisplayPropertiesKHRBuilder<'a> {
     type Target = DisplayPropertiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DisplayPropertiesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DisplayPropertiesKHRBuilder<'a> {
     pub fn display(mut self, display: DisplayKHR) -> Self {
         self.inner.display = display;
@@ -9695,6 +10240,7 @@ pub struct DisplayPlanePropertiesKHR {
     pub current_stack_index: u32,
 }
 impl DisplayPlanePropertiesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DisplayPlanePropertiesKHRBuilder<'a> {
         DisplayPlanePropertiesKHRBuilder {
             inner: DisplayPlanePropertiesKHR::default(),
@@ -9702,22 +10248,26 @@ impl DisplayPlanePropertiesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DisplayPlanePropertiesKHRBuilder<'a> {
     inner: DisplayPlanePropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DisplayPlanePropertiesKHRBuilder<'a> {
     type Target = DisplayPlanePropertiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DisplayPlanePropertiesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DisplayPlanePropertiesKHRBuilder<'a> {
     pub fn current_display(mut self, current_display: DisplayKHR) -> Self {
         self.inner.current_display = current_display;
@@ -9742,6 +10292,7 @@ pub struct DisplayModeParametersKHR {
     pub refresh_rate: u32,
 }
 impl DisplayModeParametersKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DisplayModeParametersKHRBuilder<'a> {
         DisplayModeParametersKHRBuilder {
             inner: DisplayModeParametersKHR::default(),
@@ -9749,22 +10300,26 @@ impl DisplayModeParametersKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DisplayModeParametersKHRBuilder<'a> {
     inner: DisplayModeParametersKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DisplayModeParametersKHRBuilder<'a> {
     type Target = DisplayModeParametersKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DisplayModeParametersKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DisplayModeParametersKHRBuilder<'a> {
     pub fn visible_region(mut self, visible_region: Extent2D) -> Self {
         self.inner.visible_region = visible_region;
@@ -9789,6 +10344,7 @@ pub struct DisplayModePropertiesKHR {
     pub parameters: DisplayModeParametersKHR,
 }
 impl DisplayModePropertiesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DisplayModePropertiesKHRBuilder<'a> {
         DisplayModePropertiesKHRBuilder {
             inner: DisplayModePropertiesKHR::default(),
@@ -9796,22 +10352,26 @@ impl DisplayModePropertiesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DisplayModePropertiesKHRBuilder<'a> {
     inner: DisplayModePropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DisplayModePropertiesKHRBuilder<'a> {
     type Target = DisplayModePropertiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DisplayModePropertiesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DisplayModePropertiesKHRBuilder<'a> {
     pub fn display_mode(mut self, display_mode: DisplayModeKHR) -> Self {
         self.inner.display_mode = display_mode;
@@ -9848,6 +10408,7 @@ impl ::std::default::Default for DisplayModeCreateInfoKHR {
     }
 }
 impl DisplayModeCreateInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DisplayModeCreateInfoKHRBuilder<'a> {
         DisplayModeCreateInfoKHRBuilder {
             inner: DisplayModeCreateInfoKHR::default(),
@@ -9855,22 +10416,26 @@ impl DisplayModeCreateInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DisplayModeCreateInfoKHRBuilder<'a> {
     inner: DisplayModeCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DisplayModeCreateInfoKHRBuilder<'a> {
     type Target = DisplayModeCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DisplayModeCreateInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DisplayModeCreateInfoKHRBuilder<'a> {
     pub fn flags(mut self, flags: DisplayModeCreateFlagsKHR) -> Self {
         self.inner.flags = flags;
@@ -9902,6 +10467,7 @@ pub struct DisplayPlaneCapabilitiesKHR {
     pub max_dst_extent: Extent2D,
 }
 impl DisplayPlaneCapabilitiesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DisplayPlaneCapabilitiesKHRBuilder<'a> {
         DisplayPlaneCapabilitiesKHRBuilder {
             inner: DisplayPlaneCapabilitiesKHR::default(),
@@ -9909,22 +10475,26 @@ impl DisplayPlaneCapabilitiesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DisplayPlaneCapabilitiesKHRBuilder<'a> {
     inner: DisplayPlaneCapabilitiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DisplayPlaneCapabilitiesKHRBuilder<'a> {
     type Target = DisplayPlaneCapabilitiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DisplayPlaneCapabilitiesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DisplayPlaneCapabilitiesKHRBuilder<'a> {
     pub fn supported_alpha(mut self, supported_alpha: DisplayPlaneAlphaFlagsKHR) -> Self {
         self.inner.supported_alpha = supported_alpha;
@@ -10001,6 +10571,7 @@ impl ::std::default::Default for DisplaySurfaceCreateInfoKHR {
     }
 }
 impl DisplaySurfaceCreateInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DisplaySurfaceCreateInfoKHRBuilder<'a> {
         DisplaySurfaceCreateInfoKHRBuilder {
             inner: DisplaySurfaceCreateInfoKHR::default(),
@@ -10008,22 +10579,26 @@ impl DisplaySurfaceCreateInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DisplaySurfaceCreateInfoKHRBuilder<'a> {
     inner: DisplaySurfaceCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DisplaySurfaceCreateInfoKHRBuilder<'a> {
     type Target = DisplaySurfaceCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DisplaySurfaceCreateInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DisplaySurfaceCreateInfoKHRBuilder<'a> {
     pub fn flags(mut self, flags: DisplaySurfaceCreateFlagsKHR) -> Self {
         self.inner.flags = flags;
@@ -10086,6 +10661,7 @@ impl ::std::default::Default for DisplayPresentInfoKHR {
     }
 }
 impl DisplayPresentInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DisplayPresentInfoKHRBuilder<'a> {
         DisplayPresentInfoKHRBuilder {
             inner: DisplayPresentInfoKHR::default(),
@@ -10093,24 +10669,29 @@ impl DisplayPresentInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DisplayPresentInfoKHRBuilder<'a> {
     inner: DisplayPresentInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPresentInfoKHR for DisplayPresentInfoKHRBuilder<'_> {}
 unsafe impl ExtendsPresentInfoKHR for DisplayPresentInfoKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DisplayPresentInfoKHRBuilder<'a> {
     type Target = DisplayPresentInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DisplayPresentInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DisplayPresentInfoKHRBuilder<'a> {
     pub fn src_rect(mut self, src_rect: Rect2D) -> Self {
         self.inner.src_rect = src_rect;
@@ -10147,6 +10728,7 @@ pub struct SurfaceCapabilitiesKHR {
     pub supported_usage_flags: ImageUsageFlags,
 }
 impl SurfaceCapabilitiesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SurfaceCapabilitiesKHRBuilder<'a> {
         SurfaceCapabilitiesKHRBuilder {
             inner: SurfaceCapabilitiesKHR::default(),
@@ -10154,22 +10736,26 @@ impl SurfaceCapabilitiesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SurfaceCapabilitiesKHRBuilder<'a> {
     inner: SurfaceCapabilitiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SurfaceCapabilitiesKHRBuilder<'a> {
     type Target = SurfaceCapabilitiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SurfaceCapabilitiesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SurfaceCapabilitiesKHRBuilder<'a> {
     pub fn min_image_count(mut self, min_image_count: u32) -> Self {
         self.inner.min_image_count = min_image_count;
@@ -10241,6 +10827,7 @@ impl ::std::default::Default for AndroidSurfaceCreateInfoKHR {
     }
 }
 impl AndroidSurfaceCreateInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> AndroidSurfaceCreateInfoKHRBuilder<'a> {
         AndroidSurfaceCreateInfoKHRBuilder {
             inner: AndroidSurfaceCreateInfoKHR::default(),
@@ -10248,22 +10835,26 @@ impl AndroidSurfaceCreateInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct AndroidSurfaceCreateInfoKHRBuilder<'a> {
     inner: AndroidSurfaceCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for AndroidSurfaceCreateInfoKHRBuilder<'a> {
     type Target = AndroidSurfaceCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for AndroidSurfaceCreateInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> AndroidSurfaceCreateInfoKHRBuilder<'a> {
     pub fn flags(mut self, flags: AndroidSurfaceCreateFlagsKHR) -> Self {
         self.inner.flags = flags;
@@ -10300,6 +10891,7 @@ impl ::std::default::Default for ViSurfaceCreateInfoNN {
     }
 }
 impl ViSurfaceCreateInfoNN {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ViSurfaceCreateInfoNNBuilder<'a> {
         ViSurfaceCreateInfoNNBuilder {
             inner: ViSurfaceCreateInfoNN::default(),
@@ -10307,22 +10899,26 @@ impl ViSurfaceCreateInfoNN {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ViSurfaceCreateInfoNNBuilder<'a> {
     inner: ViSurfaceCreateInfoNN,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ViSurfaceCreateInfoNNBuilder<'a> {
     type Target = ViSurfaceCreateInfoNN;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ViSurfaceCreateInfoNNBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ViSurfaceCreateInfoNNBuilder<'a> {
     pub fn flags(mut self, flags: ViSurfaceCreateFlagsNN) -> Self {
         self.inner.flags = flags;
@@ -10361,6 +10957,7 @@ impl ::std::default::Default for WaylandSurfaceCreateInfoKHR {
     }
 }
 impl WaylandSurfaceCreateInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> WaylandSurfaceCreateInfoKHRBuilder<'a> {
         WaylandSurfaceCreateInfoKHRBuilder {
             inner: WaylandSurfaceCreateInfoKHR::default(),
@@ -10368,22 +10965,26 @@ impl WaylandSurfaceCreateInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct WaylandSurfaceCreateInfoKHRBuilder<'a> {
     inner: WaylandSurfaceCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for WaylandSurfaceCreateInfoKHRBuilder<'a> {
     type Target = WaylandSurfaceCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for WaylandSurfaceCreateInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> WaylandSurfaceCreateInfoKHRBuilder<'a> {
     pub fn flags(mut self, flags: WaylandSurfaceCreateFlagsKHR) -> Self {
         self.inner.flags = flags;
@@ -10426,6 +11027,7 @@ impl ::std::default::Default for Win32SurfaceCreateInfoKHR {
     }
 }
 impl Win32SurfaceCreateInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> Win32SurfaceCreateInfoKHRBuilder<'a> {
         Win32SurfaceCreateInfoKHRBuilder {
             inner: Win32SurfaceCreateInfoKHR::default(),
@@ -10433,22 +11035,26 @@ impl Win32SurfaceCreateInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct Win32SurfaceCreateInfoKHRBuilder<'a> {
     inner: Win32SurfaceCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for Win32SurfaceCreateInfoKHRBuilder<'a> {
     type Target = Win32SurfaceCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for Win32SurfaceCreateInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> Win32SurfaceCreateInfoKHRBuilder<'a> {
     pub fn flags(mut self, flags: Win32SurfaceCreateFlagsKHR) -> Self {
         self.inner.flags = flags;
@@ -10491,6 +11097,7 @@ impl ::std::default::Default for XlibSurfaceCreateInfoKHR {
     }
 }
 impl XlibSurfaceCreateInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> XlibSurfaceCreateInfoKHRBuilder<'a> {
         XlibSurfaceCreateInfoKHRBuilder {
             inner: XlibSurfaceCreateInfoKHR::default(),
@@ -10498,22 +11105,26 @@ impl XlibSurfaceCreateInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct XlibSurfaceCreateInfoKHRBuilder<'a> {
     inner: XlibSurfaceCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for XlibSurfaceCreateInfoKHRBuilder<'a> {
     type Target = XlibSurfaceCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for XlibSurfaceCreateInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> XlibSurfaceCreateInfoKHRBuilder<'a> {
     pub fn flags(mut self, flags: XlibSurfaceCreateFlagsKHR) -> Self {
         self.inner.flags = flags;
@@ -10556,6 +11167,7 @@ impl ::std::default::Default for XcbSurfaceCreateInfoKHR {
     }
 }
 impl XcbSurfaceCreateInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> XcbSurfaceCreateInfoKHRBuilder<'a> {
         XcbSurfaceCreateInfoKHRBuilder {
             inner: XcbSurfaceCreateInfoKHR::default(),
@@ -10563,22 +11175,26 @@ impl XcbSurfaceCreateInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct XcbSurfaceCreateInfoKHRBuilder<'a> {
     inner: XcbSurfaceCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for XcbSurfaceCreateInfoKHRBuilder<'a> {
     type Target = XcbSurfaceCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for XcbSurfaceCreateInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> XcbSurfaceCreateInfoKHRBuilder<'a> {
     pub fn flags(mut self, flags: XcbSurfaceCreateFlagsKHR) -> Self {
         self.inner.flags = flags;
@@ -10621,6 +11237,7 @@ impl ::std::default::Default for DirectFBSurfaceCreateInfoEXT {
     }
 }
 impl DirectFBSurfaceCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DirectFBSurfaceCreateInfoEXTBuilder<'a> {
         DirectFBSurfaceCreateInfoEXTBuilder {
             inner: DirectFBSurfaceCreateInfoEXT::default(),
@@ -10628,22 +11245,26 @@ impl DirectFBSurfaceCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DirectFBSurfaceCreateInfoEXTBuilder<'a> {
     inner: DirectFBSurfaceCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DirectFBSurfaceCreateInfoEXTBuilder<'a> {
     type Target = DirectFBSurfaceCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DirectFBSurfaceCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DirectFBSurfaceCreateInfoEXTBuilder<'a> {
     pub fn flags(mut self, flags: DirectFBSurfaceCreateFlagsEXT) -> Self {
         self.inner.flags = flags;
@@ -10684,6 +11305,7 @@ impl ::std::default::Default for ImagePipeSurfaceCreateInfoFUCHSIA {
     }
 }
 impl ImagePipeSurfaceCreateInfoFUCHSIA {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImagePipeSurfaceCreateInfoFUCHSIABuilder<'a> {
         ImagePipeSurfaceCreateInfoFUCHSIABuilder {
             inner: ImagePipeSurfaceCreateInfoFUCHSIA::default(),
@@ -10691,22 +11313,26 @@ impl ImagePipeSurfaceCreateInfoFUCHSIA {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImagePipeSurfaceCreateInfoFUCHSIABuilder<'a> {
     inner: ImagePipeSurfaceCreateInfoFUCHSIA,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImagePipeSurfaceCreateInfoFUCHSIABuilder<'a> {
     type Target = ImagePipeSurfaceCreateInfoFUCHSIA;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImagePipeSurfaceCreateInfoFUCHSIABuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImagePipeSurfaceCreateInfoFUCHSIABuilder<'a> {
     pub fn flags(mut self, flags: ImagePipeSurfaceCreateFlagsFUCHSIA) -> Self {
         self.inner.flags = flags;
@@ -10743,6 +11369,7 @@ impl ::std::default::Default for StreamDescriptorSurfaceCreateInfoGGP {
     }
 }
 impl StreamDescriptorSurfaceCreateInfoGGP {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> StreamDescriptorSurfaceCreateInfoGGPBuilder<'a> {
         StreamDescriptorSurfaceCreateInfoGGPBuilder {
             inner: StreamDescriptorSurfaceCreateInfoGGP::default(),
@@ -10750,22 +11377,26 @@ impl StreamDescriptorSurfaceCreateInfoGGP {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct StreamDescriptorSurfaceCreateInfoGGPBuilder<'a> {
     inner: StreamDescriptorSurfaceCreateInfoGGP,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for StreamDescriptorSurfaceCreateInfoGGPBuilder<'a> {
     type Target = StreamDescriptorSurfaceCreateInfoGGP;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for StreamDescriptorSurfaceCreateInfoGGPBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> StreamDescriptorSurfaceCreateInfoGGPBuilder<'a> {
     pub fn flags(mut self, flags: StreamDescriptorSurfaceCreateFlagsGGP) -> Self {
         self.inner.flags = flags;
@@ -10804,6 +11435,7 @@ impl ::std::default::Default for ScreenSurfaceCreateInfoQNX {
     }
 }
 impl ScreenSurfaceCreateInfoQNX {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ScreenSurfaceCreateInfoQNXBuilder<'a> {
         ScreenSurfaceCreateInfoQNXBuilder {
             inner: ScreenSurfaceCreateInfoQNX::default(),
@@ -10811,22 +11443,26 @@ impl ScreenSurfaceCreateInfoQNX {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ScreenSurfaceCreateInfoQNXBuilder<'a> {
     inner: ScreenSurfaceCreateInfoQNX,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ScreenSurfaceCreateInfoQNXBuilder<'a> {
     type Target = ScreenSurfaceCreateInfoQNX;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ScreenSurfaceCreateInfoQNXBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ScreenSurfaceCreateInfoQNXBuilder<'a> {
     pub fn flags(mut self, flags: ScreenSurfaceCreateFlagsQNX) -> Self {
         self.inner.flags = flags;
@@ -10855,6 +11491,7 @@ pub struct SurfaceFormatKHR {
     pub color_space: ColorSpaceKHR,
 }
 impl SurfaceFormatKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SurfaceFormatKHRBuilder<'a> {
         SurfaceFormatKHRBuilder {
             inner: SurfaceFormatKHR::default(),
@@ -10862,22 +11499,26 @@ impl SurfaceFormatKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SurfaceFormatKHRBuilder<'a> {
     inner: SurfaceFormatKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SurfaceFormatKHRBuilder<'a> {
     type Target = SurfaceFormatKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SurfaceFormatKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SurfaceFormatKHRBuilder<'a> {
     pub fn format(mut self, format: Format) -> Self {
         self.inner.format = format;
@@ -10942,6 +11583,7 @@ impl ::std::default::Default for SwapchainCreateInfoKHR {
     }
 }
 impl SwapchainCreateInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SwapchainCreateInfoKHRBuilder<'a> {
         SwapchainCreateInfoKHRBuilder {
             inner: SwapchainCreateInfoKHR::default(),
@@ -10949,23 +11591,27 @@ impl SwapchainCreateInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SwapchainCreateInfoKHRBuilder<'a> {
     inner: SwapchainCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsSwapchainCreateInfoKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SwapchainCreateInfoKHRBuilder<'a> {
     type Target = SwapchainCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SwapchainCreateInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SwapchainCreateInfoKHRBuilder<'a> {
     pub fn flags(mut self, flags: SwapchainCreateFlagsKHR) -> Self {
         self.inner.flags = flags;
@@ -11077,6 +11723,7 @@ impl ::std::default::Default for PresentInfoKHR {
     }
 }
 impl PresentInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PresentInfoKHRBuilder<'a> {
         PresentInfoKHRBuilder {
             inner: PresentInfoKHR::default(),
@@ -11084,23 +11731,27 @@ impl PresentInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PresentInfoKHRBuilder<'a> {
     inner: PresentInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsPresentInfoKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PresentInfoKHRBuilder<'a> {
     type Target = PresentInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PresentInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PresentInfoKHRBuilder<'a> {
     pub fn wait_semaphores(mut self, wait_semaphores: &'a [Semaphore]) -> Self {
         self.inner.wait_semaphore_count = wait_semaphores.len() as _;
@@ -11176,6 +11827,7 @@ impl ::std::default::Default for DebugReportCallbackCreateInfoEXT {
     }
 }
 impl DebugReportCallbackCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DebugReportCallbackCreateInfoEXTBuilder<'a> {
         DebugReportCallbackCreateInfoEXTBuilder {
             inner: DebugReportCallbackCreateInfoEXT::default(),
@@ -11183,24 +11835,29 @@ impl DebugReportCallbackCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DebugReportCallbackCreateInfoEXTBuilder<'a> {
     inner: DebugReportCallbackCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsInstanceCreateInfo for DebugReportCallbackCreateInfoEXTBuilder<'_> {}
 unsafe impl ExtendsInstanceCreateInfo for DebugReportCallbackCreateInfoEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DebugReportCallbackCreateInfoEXTBuilder<'a> {
     type Target = DebugReportCallbackCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DebugReportCallbackCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DebugReportCallbackCreateInfoEXTBuilder<'a> {
     pub fn flags(mut self, flags: DebugReportFlagsEXT) -> Self {
         self.inner.flags = flags;
@@ -11241,6 +11898,7 @@ impl ::std::default::Default for ValidationFlagsEXT {
     }
 }
 impl ValidationFlagsEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ValidationFlagsEXTBuilder<'a> {
         ValidationFlagsEXTBuilder {
             inner: ValidationFlagsEXT::default(),
@@ -11248,24 +11906,29 @@ impl ValidationFlagsEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ValidationFlagsEXTBuilder<'a> {
     inner: ValidationFlagsEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsInstanceCreateInfo for ValidationFlagsEXTBuilder<'_> {}
 unsafe impl ExtendsInstanceCreateInfo for ValidationFlagsEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ValidationFlagsEXTBuilder<'a> {
     type Target = ValidationFlagsEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ValidationFlagsEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ValidationFlagsEXTBuilder<'a> {
     pub fn disabled_validation_checks(
         mut self,
@@ -11306,6 +11969,7 @@ impl ::std::default::Default for ValidationFeaturesEXT {
     }
 }
 impl ValidationFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ValidationFeaturesEXTBuilder<'a> {
         ValidationFeaturesEXTBuilder {
             inner: ValidationFeaturesEXT::default(),
@@ -11313,24 +11977,29 @@ impl ValidationFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ValidationFeaturesEXTBuilder<'a> {
     inner: ValidationFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsInstanceCreateInfo for ValidationFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsInstanceCreateInfo for ValidationFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ValidationFeaturesEXTBuilder<'a> {
     type Target = ValidationFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ValidationFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ValidationFeaturesEXTBuilder<'a> {
     pub fn enabled_validation_features(
         mut self,
@@ -11373,6 +12042,7 @@ impl ::std::default::Default for PipelineRasterizationStateRasterizationOrderAMD
     }
 }
 impl PipelineRasterizationStateRasterizationOrderAMD {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineRasterizationStateRasterizationOrderAMDBuilder<'a> {
         PipelineRasterizationStateRasterizationOrderAMDBuilder {
             inner: PipelineRasterizationStateRasterizationOrderAMD::default(),
@@ -11380,11 +12050,13 @@ impl PipelineRasterizationStateRasterizationOrderAMD {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineRasterizationStateRasterizationOrderAMDBuilder<'a> {
     inner: PipelineRasterizationStateRasterizationOrderAMD,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPipelineRasterizationStateCreateInfo
     for PipelineRasterizationStateRasterizationOrderAMDBuilder<'_>
 {
@@ -11393,17 +12065,20 @@ unsafe impl ExtendsPipelineRasterizationStateCreateInfo
     for PipelineRasterizationStateRasterizationOrderAMD
 {
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineRasterizationStateRasterizationOrderAMDBuilder<'a> {
     type Target = PipelineRasterizationStateRasterizationOrderAMD;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineRasterizationStateRasterizationOrderAMDBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineRasterizationStateRasterizationOrderAMDBuilder<'a> {
     pub fn rasterization_order(mut self, rasterization_order: RasterizationOrderAMD) -> Self {
         self.inner.rasterization_order = rasterization_order;
@@ -11438,6 +12113,7 @@ impl ::std::default::Default for DebugMarkerObjectNameInfoEXT {
     }
 }
 impl DebugMarkerObjectNameInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DebugMarkerObjectNameInfoEXTBuilder<'a> {
         DebugMarkerObjectNameInfoEXTBuilder {
             inner: DebugMarkerObjectNameInfoEXT::default(),
@@ -11445,22 +12121,26 @@ impl DebugMarkerObjectNameInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DebugMarkerObjectNameInfoEXTBuilder<'a> {
     inner: DebugMarkerObjectNameInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DebugMarkerObjectNameInfoEXTBuilder<'a> {
     type Target = DebugMarkerObjectNameInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DebugMarkerObjectNameInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DebugMarkerObjectNameInfoEXTBuilder<'a> {
     pub fn object_type(mut self, object_type: DebugReportObjectTypeEXT) -> Self {
         self.inner.object_type = object_type;
@@ -11507,6 +12187,7 @@ impl ::std::default::Default for DebugMarkerObjectTagInfoEXT {
     }
 }
 impl DebugMarkerObjectTagInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DebugMarkerObjectTagInfoEXTBuilder<'a> {
         DebugMarkerObjectTagInfoEXTBuilder {
             inner: DebugMarkerObjectTagInfoEXT::default(),
@@ -11514,22 +12195,26 @@ impl DebugMarkerObjectTagInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DebugMarkerObjectTagInfoEXTBuilder<'a> {
     inner: DebugMarkerObjectTagInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DebugMarkerObjectTagInfoEXTBuilder<'a> {
     type Target = DebugMarkerObjectTagInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DebugMarkerObjectTagInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DebugMarkerObjectTagInfoEXTBuilder<'a> {
     pub fn object_type(mut self, object_type: DebugReportObjectTypeEXT) -> Self {
         self.inner.object_type = object_type;
@@ -11575,6 +12260,7 @@ impl ::std::default::Default for DebugMarkerMarkerInfoEXT {
     }
 }
 impl DebugMarkerMarkerInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DebugMarkerMarkerInfoEXTBuilder<'a> {
         DebugMarkerMarkerInfoEXTBuilder {
             inner: DebugMarkerMarkerInfoEXT::default(),
@@ -11582,22 +12268,26 @@ impl DebugMarkerMarkerInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DebugMarkerMarkerInfoEXTBuilder<'a> {
     inner: DebugMarkerMarkerInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DebugMarkerMarkerInfoEXTBuilder<'a> {
     type Target = DebugMarkerMarkerInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DebugMarkerMarkerInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DebugMarkerMarkerInfoEXTBuilder<'a> {
     pub fn marker_name(mut self, marker_name: &'a ::std::ffi::CStr) -> Self {
         self.inner.p_marker_name = marker_name.as_ptr();
@@ -11632,6 +12322,7 @@ impl ::std::default::Default for DedicatedAllocationImageCreateInfoNV {
     }
 }
 impl DedicatedAllocationImageCreateInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DedicatedAllocationImageCreateInfoNVBuilder<'a> {
         DedicatedAllocationImageCreateInfoNVBuilder {
             inner: DedicatedAllocationImageCreateInfoNV::default(),
@@ -11639,24 +12330,29 @@ impl DedicatedAllocationImageCreateInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DedicatedAllocationImageCreateInfoNVBuilder<'a> {
     inner: DedicatedAllocationImageCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsImageCreateInfo for DedicatedAllocationImageCreateInfoNVBuilder<'_> {}
 unsafe impl ExtendsImageCreateInfo for DedicatedAllocationImageCreateInfoNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DedicatedAllocationImageCreateInfoNVBuilder<'a> {
     type Target = DedicatedAllocationImageCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DedicatedAllocationImageCreateInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DedicatedAllocationImageCreateInfoNVBuilder<'a> {
     pub fn dedicated_allocation(mut self, dedicated_allocation: bool) -> Self {
         self.inner.dedicated_allocation = dedicated_allocation.into();
@@ -11687,6 +12383,7 @@ impl ::std::default::Default for DedicatedAllocationBufferCreateInfoNV {
     }
 }
 impl DedicatedAllocationBufferCreateInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DedicatedAllocationBufferCreateInfoNVBuilder<'a> {
         DedicatedAllocationBufferCreateInfoNVBuilder {
             inner: DedicatedAllocationBufferCreateInfoNV::default(),
@@ -11694,24 +12391,29 @@ impl DedicatedAllocationBufferCreateInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DedicatedAllocationBufferCreateInfoNVBuilder<'a> {
     inner: DedicatedAllocationBufferCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsBufferCreateInfo for DedicatedAllocationBufferCreateInfoNVBuilder<'_> {}
 unsafe impl ExtendsBufferCreateInfo for DedicatedAllocationBufferCreateInfoNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DedicatedAllocationBufferCreateInfoNVBuilder<'a> {
     type Target = DedicatedAllocationBufferCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DedicatedAllocationBufferCreateInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DedicatedAllocationBufferCreateInfoNVBuilder<'a> {
     pub fn dedicated_allocation(mut self, dedicated_allocation: bool) -> Self {
         self.inner.dedicated_allocation = dedicated_allocation.into();
@@ -11744,6 +12446,7 @@ impl ::std::default::Default for DedicatedAllocationMemoryAllocateInfoNV {
     }
 }
 impl DedicatedAllocationMemoryAllocateInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DedicatedAllocationMemoryAllocateInfoNVBuilder<'a> {
         DedicatedAllocationMemoryAllocateInfoNVBuilder {
             inner: DedicatedAllocationMemoryAllocateInfoNV::default(),
@@ -11751,24 +12454,29 @@ impl DedicatedAllocationMemoryAllocateInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DedicatedAllocationMemoryAllocateInfoNVBuilder<'a> {
     inner: DedicatedAllocationMemoryAllocateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsMemoryAllocateInfo for DedicatedAllocationMemoryAllocateInfoNVBuilder<'_> {}
 unsafe impl ExtendsMemoryAllocateInfo for DedicatedAllocationMemoryAllocateInfoNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DedicatedAllocationMemoryAllocateInfoNVBuilder<'a> {
     type Target = DedicatedAllocationMemoryAllocateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DedicatedAllocationMemoryAllocateInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DedicatedAllocationMemoryAllocateInfoNVBuilder<'a> {
     pub fn image(mut self, image: Image) -> Self {
         self.inner.image = image;
@@ -11795,6 +12503,7 @@ pub struct ExternalImageFormatPropertiesNV {
     pub compatible_handle_types: ExternalMemoryHandleTypeFlagsNV,
 }
 impl ExternalImageFormatPropertiesNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ExternalImageFormatPropertiesNVBuilder<'a> {
         ExternalImageFormatPropertiesNVBuilder {
             inner: ExternalImageFormatPropertiesNV::default(),
@@ -11802,22 +12511,26 @@ impl ExternalImageFormatPropertiesNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ExternalImageFormatPropertiesNVBuilder<'a> {
     inner: ExternalImageFormatPropertiesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ExternalImageFormatPropertiesNVBuilder<'a> {
     type Target = ExternalImageFormatPropertiesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ExternalImageFormatPropertiesNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ExternalImageFormatPropertiesNVBuilder<'a> {
     pub fn image_format_properties(
         mut self,
@@ -11872,6 +12585,7 @@ impl ::std::default::Default for ExternalMemoryImageCreateInfoNV {
     }
 }
 impl ExternalMemoryImageCreateInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ExternalMemoryImageCreateInfoNVBuilder<'a> {
         ExternalMemoryImageCreateInfoNVBuilder {
             inner: ExternalMemoryImageCreateInfoNV::default(),
@@ -11879,24 +12593,29 @@ impl ExternalMemoryImageCreateInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ExternalMemoryImageCreateInfoNVBuilder<'a> {
     inner: ExternalMemoryImageCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsImageCreateInfo for ExternalMemoryImageCreateInfoNVBuilder<'_> {}
 unsafe impl ExtendsImageCreateInfo for ExternalMemoryImageCreateInfoNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ExternalMemoryImageCreateInfoNVBuilder<'a> {
     type Target = ExternalMemoryImageCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ExternalMemoryImageCreateInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ExternalMemoryImageCreateInfoNVBuilder<'a> {
     pub fn handle_types(mut self, handle_types: ExternalMemoryHandleTypeFlagsNV) -> Self {
         self.inner.handle_types = handle_types;
@@ -11927,6 +12646,7 @@ impl ::std::default::Default for ExportMemoryAllocateInfoNV {
     }
 }
 impl ExportMemoryAllocateInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ExportMemoryAllocateInfoNVBuilder<'a> {
         ExportMemoryAllocateInfoNVBuilder {
             inner: ExportMemoryAllocateInfoNV::default(),
@@ -11934,24 +12654,29 @@ impl ExportMemoryAllocateInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ExportMemoryAllocateInfoNVBuilder<'a> {
     inner: ExportMemoryAllocateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsMemoryAllocateInfo for ExportMemoryAllocateInfoNVBuilder<'_> {}
 unsafe impl ExtendsMemoryAllocateInfo for ExportMemoryAllocateInfoNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ExportMemoryAllocateInfoNVBuilder<'a> {
     type Target = ExportMemoryAllocateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ExportMemoryAllocateInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ExportMemoryAllocateInfoNVBuilder<'a> {
     pub fn handle_types(mut self, handle_types: ExternalMemoryHandleTypeFlagsNV) -> Self {
         self.inner.handle_types = handle_types;
@@ -11984,6 +12709,7 @@ impl ::std::default::Default for ImportMemoryWin32HandleInfoNV {
     }
 }
 impl ImportMemoryWin32HandleInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImportMemoryWin32HandleInfoNVBuilder<'a> {
         ImportMemoryWin32HandleInfoNVBuilder {
             inner: ImportMemoryWin32HandleInfoNV::default(),
@@ -11991,24 +12717,29 @@ impl ImportMemoryWin32HandleInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImportMemoryWin32HandleInfoNVBuilder<'a> {
     inner: ImportMemoryWin32HandleInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryWin32HandleInfoNVBuilder<'_> {}
 unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryWin32HandleInfoNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImportMemoryWin32HandleInfoNVBuilder<'a> {
     type Target = ImportMemoryWin32HandleInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImportMemoryWin32HandleInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImportMemoryWin32HandleInfoNVBuilder<'a> {
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlagsNV) -> Self {
         self.inner.handle_type = handle_type;
@@ -12045,6 +12776,7 @@ impl ::std::default::Default for ExportMemoryWin32HandleInfoNV {
     }
 }
 impl ExportMemoryWin32HandleInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ExportMemoryWin32HandleInfoNVBuilder<'a> {
         ExportMemoryWin32HandleInfoNVBuilder {
             inner: ExportMemoryWin32HandleInfoNV::default(),
@@ -12052,24 +12784,29 @@ impl ExportMemoryWin32HandleInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ExportMemoryWin32HandleInfoNVBuilder<'a> {
     inner: ExportMemoryWin32HandleInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsMemoryAllocateInfo for ExportMemoryWin32HandleInfoNVBuilder<'_> {}
 unsafe impl ExtendsMemoryAllocateInfo for ExportMemoryWin32HandleInfoNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ExportMemoryWin32HandleInfoNVBuilder<'a> {
     type Target = ExportMemoryWin32HandleInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ExportMemoryWin32HandleInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ExportMemoryWin32HandleInfoNVBuilder<'a> {
     pub fn attributes(mut self, attributes: &'a SECURITY_ATTRIBUTES) -> Self {
         self.inner.p_attributes = attributes;
@@ -12116,6 +12853,7 @@ impl ::std::default::Default for Win32KeyedMutexAcquireReleaseInfoNV {
     }
 }
 impl Win32KeyedMutexAcquireReleaseInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> Win32KeyedMutexAcquireReleaseInfoNVBuilder<'a> {
         Win32KeyedMutexAcquireReleaseInfoNVBuilder {
             inner: Win32KeyedMutexAcquireReleaseInfoNV::default(),
@@ -12123,26 +12861,32 @@ impl Win32KeyedMutexAcquireReleaseInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct Win32KeyedMutexAcquireReleaseInfoNVBuilder<'a> {
     inner: Win32KeyedMutexAcquireReleaseInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsSubmitInfo for Win32KeyedMutexAcquireReleaseInfoNVBuilder<'_> {}
 unsafe impl ExtendsSubmitInfo for Win32KeyedMutexAcquireReleaseInfoNV {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsSubmitInfo2KHR for Win32KeyedMutexAcquireReleaseInfoNVBuilder<'_> {}
 unsafe impl ExtendsSubmitInfo2KHR for Win32KeyedMutexAcquireReleaseInfoNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for Win32KeyedMutexAcquireReleaseInfoNVBuilder<'a> {
     type Target = Win32KeyedMutexAcquireReleaseInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for Win32KeyedMutexAcquireReleaseInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> Win32KeyedMutexAcquireReleaseInfoNVBuilder<'a> {
     pub fn acquire_syncs(mut self, acquire_syncs: &'a [DeviceMemory]) -> Self {
         self.inner.acquire_count = acquire_syncs.len() as _;
@@ -12194,6 +12938,7 @@ impl ::std::default::Default for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV
     }
 }
 impl PhysicalDeviceDeviceGeneratedCommandsFeaturesNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceDeviceGeneratedCommandsFeaturesNVBuilder<'a> {
         PhysicalDeviceDeviceGeneratedCommandsFeaturesNVBuilder {
             inner: PhysicalDeviceDeviceGeneratedCommandsFeaturesNV::default(),
@@ -12201,29 +12946,35 @@ impl PhysicalDeviceDeviceGeneratedCommandsFeaturesNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceDeviceGeneratedCommandsFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceDeviceGeneratedCommandsFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceDeviceGeneratedCommandsFeaturesNVBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDeviceGeneratedCommandsFeaturesNVBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceDeviceGeneratedCommandsFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceDeviceGeneratedCommandsFeaturesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceDeviceGeneratedCommandsFeaturesNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceDeviceGeneratedCommandsFeaturesNVBuilder<'a> {
     pub fn device_generated_commands(mut self, device_generated_commands: bool) -> Self {
         self.inner.device_generated_commands = device_generated_commands.into();
@@ -12254,6 +13005,7 @@ impl ::std::default::Default for DevicePrivateDataCreateInfoEXT {
     }
 }
 impl DevicePrivateDataCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DevicePrivateDataCreateInfoEXTBuilder<'a> {
         DevicePrivateDataCreateInfoEXTBuilder {
             inner: DevicePrivateDataCreateInfoEXT::default(),
@@ -12261,24 +13013,29 @@ impl DevicePrivateDataCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DevicePrivateDataCreateInfoEXTBuilder<'a> {
     inner: DevicePrivateDataCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for DevicePrivateDataCreateInfoEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for DevicePrivateDataCreateInfoEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DevicePrivateDataCreateInfoEXTBuilder<'a> {
     type Target = DevicePrivateDataCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DevicePrivateDataCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DevicePrivateDataCreateInfoEXTBuilder<'a> {
     pub fn private_data_slot_request_count(mut self, private_data_slot_request_count: u32) -> Self {
         self.inner.private_data_slot_request_count = private_data_slot_request_count;
@@ -12309,6 +13066,7 @@ impl ::std::default::Default for PrivateDataSlotCreateInfoEXT {
     }
 }
 impl PrivateDataSlotCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PrivateDataSlotCreateInfoEXTBuilder<'a> {
         PrivateDataSlotCreateInfoEXTBuilder {
             inner: PrivateDataSlotCreateInfoEXT::default(),
@@ -12316,22 +13074,26 @@ impl PrivateDataSlotCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PrivateDataSlotCreateInfoEXTBuilder<'a> {
     inner: PrivateDataSlotCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PrivateDataSlotCreateInfoEXTBuilder<'a> {
     type Target = PrivateDataSlotCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PrivateDataSlotCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PrivateDataSlotCreateInfoEXTBuilder<'a> {
     pub fn flags(mut self, flags: PrivateDataSlotCreateFlagsEXT) -> Self {
         self.inner.flags = flags;
@@ -12362,6 +13124,7 @@ impl ::std::default::Default for PhysicalDevicePrivateDataFeaturesEXT {
     }
 }
 impl PhysicalDevicePrivateDataFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDevicePrivateDataFeaturesEXTBuilder<'a> {
         PhysicalDevicePrivateDataFeaturesEXTBuilder {
             inner: PhysicalDevicePrivateDataFeaturesEXT::default(),
@@ -12369,26 +13132,32 @@ impl PhysicalDevicePrivateDataFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDevicePrivateDataFeaturesEXTBuilder<'a> {
     inner: PhysicalDevicePrivateDataFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePrivateDataFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePrivateDataFeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePrivateDataFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePrivateDataFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDevicePrivateDataFeaturesEXTBuilder<'a> {
     type Target = PhysicalDevicePrivateDataFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDevicePrivateDataFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDevicePrivateDataFeaturesEXTBuilder<'a> {
     pub fn private_data(mut self, private_data: bool) -> Self {
         self.inner.private_data = private_data.into();
@@ -12435,6 +13204,7 @@ impl ::std::default::Default for PhysicalDeviceDeviceGeneratedCommandsProperties
     }
 }
 impl PhysicalDeviceDeviceGeneratedCommandsPropertiesNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceDeviceGeneratedCommandsPropertiesNVBuilder<'a> {
         PhysicalDeviceDeviceGeneratedCommandsPropertiesNVBuilder {
             inner: PhysicalDeviceDeviceGeneratedCommandsPropertiesNV::default(),
@@ -12442,27 +13212,32 @@ impl PhysicalDeviceDeviceGeneratedCommandsPropertiesNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceDeviceGeneratedCommandsPropertiesNVBuilder<'a> {
     inner: PhysicalDeviceDeviceGeneratedCommandsPropertiesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceDeviceGeneratedCommandsPropertiesNVBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDeviceGeneratedCommandsPropertiesNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceDeviceGeneratedCommandsPropertiesNVBuilder<'a> {
     type Target = PhysicalDeviceDeviceGeneratedCommandsPropertiesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceDeviceGeneratedCommandsPropertiesNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceDeviceGeneratedCommandsPropertiesNVBuilder<'a> {
     pub fn max_graphics_shader_group_count(mut self, max_graphics_shader_group_count: u32) -> Self {
         self.inner.max_graphics_shader_group_count = max_graphics_shader_group_count;
@@ -12549,6 +13324,7 @@ impl ::std::default::Default for PhysicalDeviceMultiDrawPropertiesEXT {
     }
 }
 impl PhysicalDeviceMultiDrawPropertiesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceMultiDrawPropertiesEXTBuilder<'a> {
         PhysicalDeviceMultiDrawPropertiesEXTBuilder {
             inner: PhysicalDeviceMultiDrawPropertiesEXT::default(),
@@ -12556,24 +13332,29 @@ impl PhysicalDeviceMultiDrawPropertiesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceMultiDrawPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceMultiDrawPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMultiDrawPropertiesEXTBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMultiDrawPropertiesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceMultiDrawPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceMultiDrawPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceMultiDrawPropertiesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceMultiDrawPropertiesEXTBuilder<'a> {
     pub fn max_multi_draw_count(mut self, max_multi_draw_count: u32) -> Self {
         self.inner.max_multi_draw_count = max_multi_draw_count;
@@ -12610,6 +13391,7 @@ impl ::std::default::Default for GraphicsShaderGroupCreateInfoNV {
     }
 }
 impl GraphicsShaderGroupCreateInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> GraphicsShaderGroupCreateInfoNVBuilder<'a> {
         GraphicsShaderGroupCreateInfoNVBuilder {
             inner: GraphicsShaderGroupCreateInfoNV::default(),
@@ -12617,22 +13399,26 @@ impl GraphicsShaderGroupCreateInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct GraphicsShaderGroupCreateInfoNVBuilder<'a> {
     inner: GraphicsShaderGroupCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for GraphicsShaderGroupCreateInfoNVBuilder<'a> {
     type Target = GraphicsShaderGroupCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for GraphicsShaderGroupCreateInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> GraphicsShaderGroupCreateInfoNVBuilder<'a> {
     pub fn stages(mut self, stages: &'a [PipelineShaderStageCreateInfo]) -> Self {
         self.inner.stage_count = stages.len() as _;
@@ -12684,6 +13470,7 @@ impl ::std::default::Default for GraphicsPipelineShaderGroupsCreateInfoNV {
     }
 }
 impl GraphicsPipelineShaderGroupsCreateInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> GraphicsPipelineShaderGroupsCreateInfoNVBuilder<'a> {
         GraphicsPipelineShaderGroupsCreateInfoNVBuilder {
             inner: GraphicsPipelineShaderGroupsCreateInfoNV::default(),
@@ -12691,27 +13478,32 @@ impl GraphicsPipelineShaderGroupsCreateInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct GraphicsPipelineShaderGroupsCreateInfoNVBuilder<'a> {
     inner: GraphicsPipelineShaderGroupsCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsGraphicsPipelineCreateInfo
     for GraphicsPipelineShaderGroupsCreateInfoNVBuilder<'_>
 {
 }
 unsafe impl ExtendsGraphicsPipelineCreateInfo for GraphicsPipelineShaderGroupsCreateInfoNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for GraphicsPipelineShaderGroupsCreateInfoNVBuilder<'a> {
     type Target = GraphicsPipelineShaderGroupsCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for GraphicsPipelineShaderGroupsCreateInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> GraphicsPipelineShaderGroupsCreateInfoNVBuilder<'a> {
     pub fn groups(mut self, groups: &'a [GraphicsShaderGroupCreateInfoNV]) -> Self {
         self.inner.group_count = groups.len() as _;
@@ -12737,6 +13529,7 @@ pub struct BindShaderGroupIndirectCommandNV {
     pub group_index: u32,
 }
 impl BindShaderGroupIndirectCommandNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> BindShaderGroupIndirectCommandNVBuilder<'a> {
         BindShaderGroupIndirectCommandNVBuilder {
             inner: BindShaderGroupIndirectCommandNV::default(),
@@ -12744,22 +13537,26 @@ impl BindShaderGroupIndirectCommandNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct BindShaderGroupIndirectCommandNVBuilder<'a> {
     inner: BindShaderGroupIndirectCommandNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for BindShaderGroupIndirectCommandNVBuilder<'a> {
     type Target = BindShaderGroupIndirectCommandNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for BindShaderGroupIndirectCommandNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> BindShaderGroupIndirectCommandNVBuilder<'a> {
     pub fn group_index(mut self, group_index: u32) -> Self {
         self.inner.group_index = group_index;
@@ -12781,6 +13578,7 @@ pub struct BindIndexBufferIndirectCommandNV {
     pub index_type: IndexType,
 }
 impl BindIndexBufferIndirectCommandNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> BindIndexBufferIndirectCommandNVBuilder<'a> {
         BindIndexBufferIndirectCommandNVBuilder {
             inner: BindIndexBufferIndirectCommandNV::default(),
@@ -12788,22 +13586,26 @@ impl BindIndexBufferIndirectCommandNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct BindIndexBufferIndirectCommandNVBuilder<'a> {
     inner: BindIndexBufferIndirectCommandNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for BindIndexBufferIndirectCommandNVBuilder<'a> {
     type Target = BindIndexBufferIndirectCommandNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for BindIndexBufferIndirectCommandNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> BindIndexBufferIndirectCommandNVBuilder<'a> {
     pub fn buffer_address(mut self, buffer_address: DeviceAddress) -> Self {
         self.inner.buffer_address = buffer_address;
@@ -12833,6 +13635,7 @@ pub struct BindVertexBufferIndirectCommandNV {
     pub stride: u32,
 }
 impl BindVertexBufferIndirectCommandNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> BindVertexBufferIndirectCommandNVBuilder<'a> {
         BindVertexBufferIndirectCommandNVBuilder {
             inner: BindVertexBufferIndirectCommandNV::default(),
@@ -12840,22 +13643,26 @@ impl BindVertexBufferIndirectCommandNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct BindVertexBufferIndirectCommandNVBuilder<'a> {
     inner: BindVertexBufferIndirectCommandNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for BindVertexBufferIndirectCommandNVBuilder<'a> {
     type Target = BindVertexBufferIndirectCommandNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for BindVertexBufferIndirectCommandNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> BindVertexBufferIndirectCommandNVBuilder<'a> {
     pub fn buffer_address(mut self, buffer_address: DeviceAddress) -> Self {
         self.inner.buffer_address = buffer_address;
@@ -12883,6 +13690,7 @@ pub struct SetStateFlagsIndirectCommandNV {
     pub data: u32,
 }
 impl SetStateFlagsIndirectCommandNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SetStateFlagsIndirectCommandNVBuilder<'a> {
         SetStateFlagsIndirectCommandNVBuilder {
             inner: SetStateFlagsIndirectCommandNV::default(),
@@ -12890,22 +13698,26 @@ impl SetStateFlagsIndirectCommandNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SetStateFlagsIndirectCommandNVBuilder<'a> {
     inner: SetStateFlagsIndirectCommandNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SetStateFlagsIndirectCommandNVBuilder<'a> {
     type Target = SetStateFlagsIndirectCommandNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SetStateFlagsIndirectCommandNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SetStateFlagsIndirectCommandNVBuilder<'a> {
     pub fn data(mut self, data: u32) -> Self {
         self.inner.data = data;
@@ -12926,6 +13738,7 @@ pub struct IndirectCommandsStreamNV {
     pub offset: DeviceSize,
 }
 impl IndirectCommandsStreamNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> IndirectCommandsStreamNVBuilder<'a> {
         IndirectCommandsStreamNVBuilder {
             inner: IndirectCommandsStreamNV::default(),
@@ -12933,22 +13746,26 @@ impl IndirectCommandsStreamNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct IndirectCommandsStreamNVBuilder<'a> {
     inner: IndirectCommandsStreamNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for IndirectCommandsStreamNVBuilder<'a> {
     type Target = IndirectCommandsStreamNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for IndirectCommandsStreamNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> IndirectCommandsStreamNVBuilder<'a> {
     pub fn buffer(mut self, buffer: Buffer) -> Self {
         self.inner.buffer = buffer;
@@ -13007,6 +13824,7 @@ impl ::std::default::Default for IndirectCommandsLayoutTokenNV {
     }
 }
 impl IndirectCommandsLayoutTokenNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> IndirectCommandsLayoutTokenNVBuilder<'a> {
         IndirectCommandsLayoutTokenNVBuilder {
             inner: IndirectCommandsLayoutTokenNV::default(),
@@ -13014,22 +13832,26 @@ impl IndirectCommandsLayoutTokenNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct IndirectCommandsLayoutTokenNVBuilder<'a> {
     inner: IndirectCommandsLayoutTokenNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for IndirectCommandsLayoutTokenNVBuilder<'a> {
     type Target = IndirectCommandsLayoutTokenNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for IndirectCommandsLayoutTokenNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> IndirectCommandsLayoutTokenNVBuilder<'a> {
     pub fn token_type(mut self, token_type: IndirectCommandsTokenTypeNV) -> Self {
         self.inner.token_type = token_type;
@@ -13122,6 +13944,7 @@ impl ::std::default::Default for IndirectCommandsLayoutCreateInfoNV {
     }
 }
 impl IndirectCommandsLayoutCreateInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> IndirectCommandsLayoutCreateInfoNVBuilder<'a> {
         IndirectCommandsLayoutCreateInfoNVBuilder {
             inner: IndirectCommandsLayoutCreateInfoNV::default(),
@@ -13129,22 +13952,26 @@ impl IndirectCommandsLayoutCreateInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct IndirectCommandsLayoutCreateInfoNVBuilder<'a> {
     inner: IndirectCommandsLayoutCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for IndirectCommandsLayoutCreateInfoNVBuilder<'a> {
     type Target = IndirectCommandsLayoutCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for IndirectCommandsLayoutCreateInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> IndirectCommandsLayoutCreateInfoNVBuilder<'a> {
     pub fn flags(mut self, flags: IndirectCommandsLayoutUsageFlagsNV) -> Self {
         self.inner.flags = flags;
@@ -13213,6 +14040,7 @@ impl ::std::default::Default for GeneratedCommandsInfoNV {
     }
 }
 impl GeneratedCommandsInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> GeneratedCommandsInfoNVBuilder<'a> {
         GeneratedCommandsInfoNVBuilder {
             inner: GeneratedCommandsInfoNV::default(),
@@ -13220,22 +14048,26 @@ impl GeneratedCommandsInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct GeneratedCommandsInfoNVBuilder<'a> {
     inner: GeneratedCommandsInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for GeneratedCommandsInfoNVBuilder<'a> {
     type Target = GeneratedCommandsInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for GeneratedCommandsInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> GeneratedCommandsInfoNVBuilder<'a> {
     pub fn pipeline_bind_point(mut self, pipeline_bind_point: PipelineBindPoint) -> Self {
         self.inner.pipeline_bind_point = pipeline_bind_point;
@@ -13320,6 +14152,7 @@ impl ::std::default::Default for GeneratedCommandsMemoryRequirementsInfoNV {
     }
 }
 impl GeneratedCommandsMemoryRequirementsInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> GeneratedCommandsMemoryRequirementsInfoNVBuilder<'a> {
         GeneratedCommandsMemoryRequirementsInfoNVBuilder {
             inner: GeneratedCommandsMemoryRequirementsInfoNV::default(),
@@ -13327,22 +14160,26 @@ impl GeneratedCommandsMemoryRequirementsInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct GeneratedCommandsMemoryRequirementsInfoNVBuilder<'a> {
     inner: GeneratedCommandsMemoryRequirementsInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for GeneratedCommandsMemoryRequirementsInfoNVBuilder<'a> {
     type Target = GeneratedCommandsMemoryRequirementsInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for GeneratedCommandsMemoryRequirementsInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> GeneratedCommandsMemoryRequirementsInfoNVBuilder<'a> {
     pub fn pipeline_bind_point(mut self, pipeline_bind_point: PipelineBindPoint) -> Self {
         self.inner.pipeline_bind_point = pipeline_bind_point;
@@ -13388,6 +14225,7 @@ impl ::std::default::Default for PhysicalDeviceFeatures2 {
     }
 }
 impl PhysicalDeviceFeatures2 {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceFeatures2Builder<'a> {
         PhysicalDeviceFeatures2Builder {
             inner: PhysicalDeviceFeatures2::default(),
@@ -13395,25 +14233,30 @@ impl PhysicalDeviceFeatures2 {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceFeatures2Builder<'a> {
     inner: PhysicalDeviceFeatures2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFeatures2Builder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFeatures2 {}
 pub unsafe trait ExtendsPhysicalDeviceFeatures2 {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceFeatures2Builder<'a> {
     type Target = PhysicalDeviceFeatures2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceFeatures2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceFeatures2Builder<'a> {
     pub fn features(mut self, features: PhysicalDeviceFeatures) -> Self {
         self.inner.features = features;
@@ -13458,6 +14301,7 @@ impl ::std::default::Default for PhysicalDeviceProperties2 {
     }
 }
 impl PhysicalDeviceProperties2 {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceProperties2Builder<'a> {
         PhysicalDeviceProperties2Builder {
             inner: PhysicalDeviceProperties2::default(),
@@ -13465,23 +14309,27 @@ impl PhysicalDeviceProperties2 {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceProperties2Builder<'a> {
     inner: PhysicalDeviceProperties2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsPhysicalDeviceProperties2 {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceProperties2Builder<'a> {
     type Target = PhysicalDeviceProperties2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceProperties2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceProperties2Builder<'a> {
     pub fn properties(mut self, properties: PhysicalDeviceProperties) -> Self {
         self.inner.properties = properties;
@@ -13526,6 +14374,7 @@ impl ::std::default::Default for FormatProperties2 {
     }
 }
 impl FormatProperties2 {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> FormatProperties2Builder<'a> {
         FormatProperties2Builder {
             inner: FormatProperties2::default(),
@@ -13533,23 +14382,27 @@ impl FormatProperties2 {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct FormatProperties2Builder<'a> {
     inner: FormatProperties2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsFormatProperties2 {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for FormatProperties2Builder<'a> {
     type Target = FormatProperties2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for FormatProperties2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> FormatProperties2Builder<'a> {
     pub fn format_properties(mut self, format_properties: FormatProperties) -> Self {
         self.inner.format_properties = format_properties;
@@ -13594,6 +14447,7 @@ impl ::std::default::Default for ImageFormatProperties2 {
     }
 }
 impl ImageFormatProperties2 {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImageFormatProperties2Builder<'a> {
         ImageFormatProperties2Builder {
             inner: ImageFormatProperties2::default(),
@@ -13601,23 +14455,27 @@ impl ImageFormatProperties2 {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImageFormatProperties2Builder<'a> {
     inner: ImageFormatProperties2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsImageFormatProperties2 {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImageFormatProperties2Builder<'a> {
     type Target = ImageFormatProperties2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImageFormatProperties2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImageFormatProperties2Builder<'a> {
     pub fn image_format_properties(
         mut self,
@@ -13673,6 +14531,7 @@ impl ::std::default::Default for PhysicalDeviceImageFormatInfo2 {
     }
 }
 impl PhysicalDeviceImageFormatInfo2 {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceImageFormatInfo2Builder<'a> {
         PhysicalDeviceImageFormatInfo2Builder {
             inner: PhysicalDeviceImageFormatInfo2::default(),
@@ -13680,23 +14539,27 @@ impl PhysicalDeviceImageFormatInfo2 {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceImageFormatInfo2Builder<'a> {
     inner: PhysicalDeviceImageFormatInfo2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsPhysicalDeviceImageFormatInfo2 {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceImageFormatInfo2Builder<'a> {
     type Target = PhysicalDeviceImageFormatInfo2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceImageFormatInfo2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceImageFormatInfo2Builder<'a> {
     pub fn format(mut self, format: Format) -> Self {
         self.inner.format = format;
@@ -13757,6 +14620,7 @@ impl ::std::default::Default for QueueFamilyProperties2 {
     }
 }
 impl QueueFamilyProperties2 {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> QueueFamilyProperties2Builder<'a> {
         QueueFamilyProperties2Builder {
             inner: QueueFamilyProperties2::default(),
@@ -13764,23 +14628,27 @@ impl QueueFamilyProperties2 {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct QueueFamilyProperties2Builder<'a> {
     inner: QueueFamilyProperties2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsQueueFamilyProperties2 {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for QueueFamilyProperties2Builder<'a> {
     type Target = QueueFamilyProperties2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for QueueFamilyProperties2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> QueueFamilyProperties2Builder<'a> {
     pub fn queue_family_properties(
         mut self,
@@ -13828,6 +14696,7 @@ impl ::std::default::Default for PhysicalDeviceMemoryProperties2 {
     }
 }
 impl PhysicalDeviceMemoryProperties2 {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceMemoryProperties2Builder<'a> {
         PhysicalDeviceMemoryProperties2Builder {
             inner: PhysicalDeviceMemoryProperties2::default(),
@@ -13835,23 +14704,27 @@ impl PhysicalDeviceMemoryProperties2 {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceMemoryProperties2Builder<'a> {
     inner: PhysicalDeviceMemoryProperties2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsPhysicalDeviceMemoryProperties2 {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceMemoryProperties2Builder<'a> {
     type Target = PhysicalDeviceMemoryProperties2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceMemoryProperties2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceMemoryProperties2Builder<'a> {
     pub fn memory_properties(mut self, memory_properties: PhysicalDeviceMemoryProperties) -> Self {
         self.inner.memory_properties = memory_properties;
@@ -13896,6 +14769,7 @@ impl ::std::default::Default for SparseImageFormatProperties2 {
     }
 }
 impl SparseImageFormatProperties2 {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SparseImageFormatProperties2Builder<'a> {
         SparseImageFormatProperties2Builder {
             inner: SparseImageFormatProperties2::default(),
@@ -13903,22 +14777,26 @@ impl SparseImageFormatProperties2 {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SparseImageFormatProperties2Builder<'a> {
     inner: SparseImageFormatProperties2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SparseImageFormatProperties2Builder<'a> {
     type Target = SparseImageFormatProperties2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SparseImageFormatProperties2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SparseImageFormatProperties2Builder<'a> {
     pub fn properties(mut self, properties: SparseImageFormatProperties) -> Self {
         self.inner.properties = properties;
@@ -13957,6 +14835,7 @@ impl ::std::default::Default for PhysicalDeviceSparseImageFormatInfo2 {
     }
 }
 impl PhysicalDeviceSparseImageFormatInfo2 {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceSparseImageFormatInfo2Builder<'a> {
         PhysicalDeviceSparseImageFormatInfo2Builder {
             inner: PhysicalDeviceSparseImageFormatInfo2::default(),
@@ -13964,22 +14843,26 @@ impl PhysicalDeviceSparseImageFormatInfo2 {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceSparseImageFormatInfo2Builder<'a> {
     inner: PhysicalDeviceSparseImageFormatInfo2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceSparseImageFormatInfo2Builder<'a> {
     type Target = PhysicalDeviceSparseImageFormatInfo2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceSparseImageFormatInfo2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceSparseImageFormatInfo2Builder<'a> {
     pub fn format(mut self, format: Format) -> Self {
         self.inner.format = format;
@@ -14026,6 +14909,7 @@ impl ::std::default::Default for PhysicalDevicePushDescriptorPropertiesKHR {
     }
 }
 impl PhysicalDevicePushDescriptorPropertiesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDevicePushDescriptorPropertiesKHRBuilder<'a> {
         PhysicalDevicePushDescriptorPropertiesKHRBuilder {
             inner: PhysicalDevicePushDescriptorPropertiesKHR::default(),
@@ -14033,27 +14917,32 @@ impl PhysicalDevicePushDescriptorPropertiesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDevicePushDescriptorPropertiesKHRBuilder<'a> {
     inner: PhysicalDevicePushDescriptorPropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDevicePushDescriptorPropertiesKHRBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePushDescriptorPropertiesKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDevicePushDescriptorPropertiesKHRBuilder<'a> {
     type Target = PhysicalDevicePushDescriptorPropertiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDevicePushDescriptorPropertiesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDevicePushDescriptorPropertiesKHRBuilder<'a> {
     pub fn max_push_descriptors(mut self, max_push_descriptors: u32) -> Self {
         self.inner.max_push_descriptors = max_push_descriptors;
@@ -14076,6 +14965,7 @@ pub struct ConformanceVersion {
     pub patch: u8,
 }
 impl ConformanceVersion {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ConformanceVersionBuilder<'a> {
         ConformanceVersionBuilder {
             inner: ConformanceVersion::default(),
@@ -14083,22 +14973,26 @@ impl ConformanceVersion {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ConformanceVersionBuilder<'a> {
     inner: ConformanceVersion,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ConformanceVersionBuilder<'a> {
     type Target = ConformanceVersion;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ConformanceVersionBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ConformanceVersionBuilder<'a> {
     pub fn major(mut self, major: u8) -> Self {
         self.inner.major = major;
@@ -14163,6 +15057,7 @@ impl ::std::default::Default for PhysicalDeviceDriverProperties {
     }
 }
 impl PhysicalDeviceDriverProperties {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceDriverPropertiesBuilder<'a> {
         PhysicalDeviceDriverPropertiesBuilder {
             inner: PhysicalDeviceDriverProperties::default(),
@@ -14170,24 +15065,29 @@ impl PhysicalDeviceDriverProperties {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceDriverPropertiesBuilder<'a> {
     inner: PhysicalDeviceDriverProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDriverPropertiesBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDriverProperties {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceDriverPropertiesBuilder<'a> {
     type Target = PhysicalDeviceDriverProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceDriverPropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceDriverPropertiesBuilder<'a> {
     pub fn driver_id(mut self, driver_id: DriverId) -> Self {
         self.inner.driver_id = driver_id;
@@ -14232,6 +15132,7 @@ impl ::std::default::Default for PresentRegionsKHR {
     }
 }
 impl PresentRegionsKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PresentRegionsKHRBuilder<'a> {
         PresentRegionsKHRBuilder {
             inner: PresentRegionsKHR::default(),
@@ -14239,24 +15140,29 @@ impl PresentRegionsKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PresentRegionsKHRBuilder<'a> {
     inner: PresentRegionsKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPresentInfoKHR for PresentRegionsKHRBuilder<'_> {}
 unsafe impl ExtendsPresentInfoKHR for PresentRegionsKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PresentRegionsKHRBuilder<'a> {
     type Target = PresentRegionsKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PresentRegionsKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PresentRegionsKHRBuilder<'a> {
     pub fn regions(mut self, regions: &'a [PresentRegionKHR]) -> Self {
         self.inner.swapchain_count = regions.len() as _;
@@ -14286,6 +15192,7 @@ impl ::std::default::Default for PresentRegionKHR {
     }
 }
 impl PresentRegionKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PresentRegionKHRBuilder<'a> {
         PresentRegionKHRBuilder {
             inner: PresentRegionKHR::default(),
@@ -14293,22 +15200,26 @@ impl PresentRegionKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PresentRegionKHRBuilder<'a> {
     inner: PresentRegionKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PresentRegionKHRBuilder<'a> {
     type Target = PresentRegionKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PresentRegionKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PresentRegionKHRBuilder<'a> {
     pub fn rectangles(mut self, rectangles: &'a [RectLayerKHR]) -> Self {
         self.inner.rectangle_count = rectangles.len() as _;
@@ -14331,6 +15242,7 @@ pub struct RectLayerKHR {
     pub layer: u32,
 }
 impl RectLayerKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> RectLayerKHRBuilder<'a> {
         RectLayerKHRBuilder {
             inner: RectLayerKHR::default(),
@@ -14338,22 +15250,26 @@ impl RectLayerKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct RectLayerKHRBuilder<'a> {
     inner: RectLayerKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for RectLayerKHRBuilder<'a> {
     type Target = RectLayerKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for RectLayerKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> RectLayerKHRBuilder<'a> {
     pub fn offset(mut self, offset: Offset2D) -> Self {
         self.inner.offset = offset;
@@ -14394,6 +15310,7 @@ impl ::std::default::Default for PhysicalDeviceVariablePointersFeatures {
     }
 }
 impl PhysicalDeviceVariablePointersFeatures {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceVariablePointersFeaturesBuilder<'a> {
         PhysicalDeviceVariablePointersFeaturesBuilder {
             inner: PhysicalDeviceVariablePointersFeatures::default(),
@@ -14401,26 +15318,32 @@ impl PhysicalDeviceVariablePointersFeatures {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceVariablePointersFeaturesBuilder<'a> {
     inner: PhysicalDeviceVariablePointersFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVariablePointersFeaturesBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVariablePointersFeatures {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVariablePointersFeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVariablePointersFeatures {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceVariablePointersFeaturesBuilder<'a> {
     type Target = PhysicalDeviceVariablePointersFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceVariablePointersFeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceVariablePointersFeaturesBuilder<'a> {
     pub fn variable_pointers_storage_buffer(
         mut self,
@@ -14449,6 +15372,7 @@ pub struct ExternalMemoryProperties {
     pub compatible_handle_types: ExternalMemoryHandleTypeFlags,
 }
 impl ExternalMemoryProperties {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ExternalMemoryPropertiesBuilder<'a> {
         ExternalMemoryPropertiesBuilder {
             inner: ExternalMemoryProperties::default(),
@@ -14456,22 +15380,26 @@ impl ExternalMemoryProperties {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ExternalMemoryPropertiesBuilder<'a> {
     inner: ExternalMemoryProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ExternalMemoryPropertiesBuilder<'a> {
     type Target = ExternalMemoryProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ExternalMemoryPropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ExternalMemoryPropertiesBuilder<'a> {
     pub fn external_memory_features(
         mut self,
@@ -14519,6 +15447,7 @@ impl ::std::default::Default for PhysicalDeviceExternalImageFormatInfo {
     }
 }
 impl PhysicalDeviceExternalImageFormatInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceExternalImageFormatInfoBuilder<'a> {
         PhysicalDeviceExternalImageFormatInfoBuilder {
             inner: PhysicalDeviceExternalImageFormatInfo::default(),
@@ -14526,27 +15455,32 @@ impl PhysicalDeviceExternalImageFormatInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceExternalImageFormatInfoBuilder<'a> {
     inner: PhysicalDeviceExternalImageFormatInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceImageFormatInfo2
     for PhysicalDeviceExternalImageFormatInfoBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceImageFormatInfo2 for PhysicalDeviceExternalImageFormatInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceExternalImageFormatInfoBuilder<'a> {
     type Target = PhysicalDeviceExternalImageFormatInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceExternalImageFormatInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceExternalImageFormatInfoBuilder<'a> {
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
         self.inner.handle_type = handle_type;
@@ -14577,6 +15511,7 @@ impl ::std::default::Default for ExternalImageFormatProperties {
     }
 }
 impl ExternalImageFormatProperties {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ExternalImageFormatPropertiesBuilder<'a> {
         ExternalImageFormatPropertiesBuilder {
             inner: ExternalImageFormatProperties::default(),
@@ -14584,24 +15519,29 @@ impl ExternalImageFormatProperties {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ExternalImageFormatPropertiesBuilder<'a> {
     inner: ExternalImageFormatProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsImageFormatProperties2 for ExternalImageFormatPropertiesBuilder<'_> {}
 unsafe impl ExtendsImageFormatProperties2 for ExternalImageFormatProperties {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ExternalImageFormatPropertiesBuilder<'a> {
     type Target = ExternalImageFormatProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ExternalImageFormatPropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ExternalImageFormatPropertiesBuilder<'a> {
     pub fn external_memory_properties(
         mut self,
@@ -14639,6 +15579,7 @@ impl ::std::default::Default for PhysicalDeviceExternalBufferInfo {
     }
 }
 impl PhysicalDeviceExternalBufferInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceExternalBufferInfoBuilder<'a> {
         PhysicalDeviceExternalBufferInfoBuilder {
             inner: PhysicalDeviceExternalBufferInfo::default(),
@@ -14646,22 +15587,26 @@ impl PhysicalDeviceExternalBufferInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceExternalBufferInfoBuilder<'a> {
     inner: PhysicalDeviceExternalBufferInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceExternalBufferInfoBuilder<'a> {
     type Target = PhysicalDeviceExternalBufferInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceExternalBufferInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceExternalBufferInfoBuilder<'a> {
     pub fn flags(mut self, flags: BufferCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -14700,6 +15645,7 @@ impl ::std::default::Default for ExternalBufferProperties {
     }
 }
 impl ExternalBufferProperties {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ExternalBufferPropertiesBuilder<'a> {
         ExternalBufferPropertiesBuilder {
             inner: ExternalBufferProperties::default(),
@@ -14707,22 +15653,26 @@ impl ExternalBufferProperties {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ExternalBufferPropertiesBuilder<'a> {
     inner: ExternalBufferProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ExternalBufferPropertiesBuilder<'a> {
     type Target = ExternalBufferProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ExternalBufferPropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ExternalBufferPropertiesBuilder<'a> {
     pub fn external_memory_properties(
         mut self,
@@ -14764,6 +15714,7 @@ impl ::std::default::Default for PhysicalDeviceIDProperties {
     }
 }
 impl PhysicalDeviceIDProperties {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceIDPropertiesBuilder<'a> {
         PhysicalDeviceIDPropertiesBuilder {
             inner: PhysicalDeviceIDProperties::default(),
@@ -14771,24 +15722,29 @@ impl PhysicalDeviceIDProperties {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceIDPropertiesBuilder<'a> {
     inner: PhysicalDeviceIDProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceIDPropertiesBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceIDProperties {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceIDPropertiesBuilder<'a> {
     type Target = PhysicalDeviceIDProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceIDPropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceIDPropertiesBuilder<'a> {
     pub fn device_uuid(mut self, device_uuid: [u8; UUID_SIZE]) -> Self {
         self.inner.device_uuid = device_uuid;
@@ -14835,6 +15791,7 @@ impl ::std::default::Default for ExternalMemoryImageCreateInfo {
     }
 }
 impl ExternalMemoryImageCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ExternalMemoryImageCreateInfoBuilder<'a> {
         ExternalMemoryImageCreateInfoBuilder {
             inner: ExternalMemoryImageCreateInfo::default(),
@@ -14842,24 +15799,29 @@ impl ExternalMemoryImageCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ExternalMemoryImageCreateInfoBuilder<'a> {
     inner: ExternalMemoryImageCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsImageCreateInfo for ExternalMemoryImageCreateInfoBuilder<'_> {}
 unsafe impl ExtendsImageCreateInfo for ExternalMemoryImageCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ExternalMemoryImageCreateInfoBuilder<'a> {
     type Target = ExternalMemoryImageCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ExternalMemoryImageCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ExternalMemoryImageCreateInfoBuilder<'a> {
     pub fn handle_types(mut self, handle_types: ExternalMemoryHandleTypeFlags) -> Self {
         self.inner.handle_types = handle_types;
@@ -14890,6 +15852,7 @@ impl ::std::default::Default for ExternalMemoryBufferCreateInfo {
     }
 }
 impl ExternalMemoryBufferCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ExternalMemoryBufferCreateInfoBuilder<'a> {
         ExternalMemoryBufferCreateInfoBuilder {
             inner: ExternalMemoryBufferCreateInfo::default(),
@@ -14897,24 +15860,29 @@ impl ExternalMemoryBufferCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ExternalMemoryBufferCreateInfoBuilder<'a> {
     inner: ExternalMemoryBufferCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsBufferCreateInfo for ExternalMemoryBufferCreateInfoBuilder<'_> {}
 unsafe impl ExtendsBufferCreateInfo for ExternalMemoryBufferCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ExternalMemoryBufferCreateInfoBuilder<'a> {
     type Target = ExternalMemoryBufferCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ExternalMemoryBufferCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ExternalMemoryBufferCreateInfoBuilder<'a> {
     pub fn handle_types(mut self, handle_types: ExternalMemoryHandleTypeFlags) -> Self {
         self.inner.handle_types = handle_types;
@@ -14945,6 +15913,7 @@ impl ::std::default::Default for ExportMemoryAllocateInfo {
     }
 }
 impl ExportMemoryAllocateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ExportMemoryAllocateInfoBuilder<'a> {
         ExportMemoryAllocateInfoBuilder {
             inner: ExportMemoryAllocateInfo::default(),
@@ -14952,24 +15921,29 @@ impl ExportMemoryAllocateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ExportMemoryAllocateInfoBuilder<'a> {
     inner: ExportMemoryAllocateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsMemoryAllocateInfo for ExportMemoryAllocateInfoBuilder<'_> {}
 unsafe impl ExtendsMemoryAllocateInfo for ExportMemoryAllocateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ExportMemoryAllocateInfoBuilder<'a> {
     type Target = ExportMemoryAllocateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ExportMemoryAllocateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ExportMemoryAllocateInfoBuilder<'a> {
     pub fn handle_types(mut self, handle_types: ExternalMemoryHandleTypeFlags) -> Self {
         self.inner.handle_types = handle_types;
@@ -15004,6 +15978,7 @@ impl ::std::default::Default for ImportMemoryWin32HandleInfoKHR {
     }
 }
 impl ImportMemoryWin32HandleInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImportMemoryWin32HandleInfoKHRBuilder<'a> {
         ImportMemoryWin32HandleInfoKHRBuilder {
             inner: ImportMemoryWin32HandleInfoKHR::default(),
@@ -15011,24 +15986,29 @@ impl ImportMemoryWin32HandleInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImportMemoryWin32HandleInfoKHRBuilder<'a> {
     inner: ImportMemoryWin32HandleInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryWin32HandleInfoKHRBuilder<'_> {}
 unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryWin32HandleInfoKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImportMemoryWin32HandleInfoKHRBuilder<'a> {
     type Target = ImportMemoryWin32HandleInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImportMemoryWin32HandleInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImportMemoryWin32HandleInfoKHRBuilder<'a> {
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
         self.inner.handle_type = handle_type;
@@ -15071,6 +16051,7 @@ impl ::std::default::Default for ExportMemoryWin32HandleInfoKHR {
     }
 }
 impl ExportMemoryWin32HandleInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ExportMemoryWin32HandleInfoKHRBuilder<'a> {
         ExportMemoryWin32HandleInfoKHRBuilder {
             inner: ExportMemoryWin32HandleInfoKHR::default(),
@@ -15078,24 +16059,29 @@ impl ExportMemoryWin32HandleInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ExportMemoryWin32HandleInfoKHRBuilder<'a> {
     inner: ExportMemoryWin32HandleInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsMemoryAllocateInfo for ExportMemoryWin32HandleInfoKHRBuilder<'_> {}
 unsafe impl ExtendsMemoryAllocateInfo for ExportMemoryWin32HandleInfoKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ExportMemoryWin32HandleInfoKHRBuilder<'a> {
     type Target = ExportMemoryWin32HandleInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ExportMemoryWin32HandleInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ExportMemoryWin32HandleInfoKHRBuilder<'a> {
     pub fn attributes(mut self, attributes: &'a SECURITY_ATTRIBUTES) -> Self {
         self.inner.p_attributes = attributes;
@@ -15136,6 +16122,7 @@ impl ::std::default::Default for ImportMemoryZirconHandleInfoFUCHSIA {
     }
 }
 impl ImportMemoryZirconHandleInfoFUCHSIA {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImportMemoryZirconHandleInfoFUCHSIABuilder<'a> {
         ImportMemoryZirconHandleInfoFUCHSIABuilder {
             inner: ImportMemoryZirconHandleInfoFUCHSIA::default(),
@@ -15143,24 +16130,29 @@ impl ImportMemoryZirconHandleInfoFUCHSIA {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImportMemoryZirconHandleInfoFUCHSIABuilder<'a> {
     inner: ImportMemoryZirconHandleInfoFUCHSIA,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryZirconHandleInfoFUCHSIABuilder<'_> {}
 unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryZirconHandleInfoFUCHSIA {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImportMemoryZirconHandleInfoFUCHSIABuilder<'a> {
     type Target = ImportMemoryZirconHandleInfoFUCHSIA;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImportMemoryZirconHandleInfoFUCHSIABuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImportMemoryZirconHandleInfoFUCHSIABuilder<'a> {
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
         self.inner.handle_type = handle_type;
@@ -15195,6 +16187,7 @@ impl ::std::default::Default for MemoryZirconHandlePropertiesFUCHSIA {
     }
 }
 impl MemoryZirconHandlePropertiesFUCHSIA {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> MemoryZirconHandlePropertiesFUCHSIABuilder<'a> {
         MemoryZirconHandlePropertiesFUCHSIABuilder {
             inner: MemoryZirconHandlePropertiesFUCHSIA::default(),
@@ -15202,22 +16195,26 @@ impl MemoryZirconHandlePropertiesFUCHSIA {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct MemoryZirconHandlePropertiesFUCHSIABuilder<'a> {
     inner: MemoryZirconHandlePropertiesFUCHSIA,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for MemoryZirconHandlePropertiesFUCHSIABuilder<'a> {
     type Target = MemoryZirconHandlePropertiesFUCHSIA;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for MemoryZirconHandlePropertiesFUCHSIABuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> MemoryZirconHandlePropertiesFUCHSIABuilder<'a> {
     pub fn memory_type_bits(mut self, memory_type_bits: u32) -> Self {
         self.inner.memory_type_bits = memory_type_bits;
@@ -15250,6 +16247,7 @@ impl ::std::default::Default for MemoryGetZirconHandleInfoFUCHSIA {
     }
 }
 impl MemoryGetZirconHandleInfoFUCHSIA {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> MemoryGetZirconHandleInfoFUCHSIABuilder<'a> {
         MemoryGetZirconHandleInfoFUCHSIABuilder {
             inner: MemoryGetZirconHandleInfoFUCHSIA::default(),
@@ -15257,22 +16255,26 @@ impl MemoryGetZirconHandleInfoFUCHSIA {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct MemoryGetZirconHandleInfoFUCHSIABuilder<'a> {
     inner: MemoryGetZirconHandleInfoFUCHSIA,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for MemoryGetZirconHandleInfoFUCHSIABuilder<'a> {
     type Target = MemoryGetZirconHandleInfoFUCHSIA;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for MemoryGetZirconHandleInfoFUCHSIABuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> MemoryGetZirconHandleInfoFUCHSIABuilder<'a> {
     pub fn memory(mut self, memory: DeviceMemory) -> Self {
         self.inner.memory = memory;
@@ -15307,6 +16309,7 @@ impl ::std::default::Default for MemoryWin32HandlePropertiesKHR {
     }
 }
 impl MemoryWin32HandlePropertiesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> MemoryWin32HandlePropertiesKHRBuilder<'a> {
         MemoryWin32HandlePropertiesKHRBuilder {
             inner: MemoryWin32HandlePropertiesKHR::default(),
@@ -15314,22 +16317,26 @@ impl MemoryWin32HandlePropertiesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct MemoryWin32HandlePropertiesKHRBuilder<'a> {
     inner: MemoryWin32HandlePropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for MemoryWin32HandlePropertiesKHRBuilder<'a> {
     type Target = MemoryWin32HandlePropertiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for MemoryWin32HandlePropertiesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> MemoryWin32HandlePropertiesKHRBuilder<'a> {
     pub fn memory_type_bits(mut self, memory_type_bits: u32) -> Self {
         self.inner.memory_type_bits = memory_type_bits;
@@ -15362,6 +16369,7 @@ impl ::std::default::Default for MemoryGetWin32HandleInfoKHR {
     }
 }
 impl MemoryGetWin32HandleInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> MemoryGetWin32HandleInfoKHRBuilder<'a> {
         MemoryGetWin32HandleInfoKHRBuilder {
             inner: MemoryGetWin32HandleInfoKHR::default(),
@@ -15369,22 +16377,26 @@ impl MemoryGetWin32HandleInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct MemoryGetWin32HandleInfoKHRBuilder<'a> {
     inner: MemoryGetWin32HandleInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for MemoryGetWin32HandleInfoKHRBuilder<'a> {
     type Target = MemoryGetWin32HandleInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for MemoryGetWin32HandleInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> MemoryGetWin32HandleInfoKHRBuilder<'a> {
     pub fn memory(mut self, memory: DeviceMemory) -> Self {
         self.inner.memory = memory;
@@ -15421,6 +16433,7 @@ impl ::std::default::Default for ImportMemoryFdInfoKHR {
     }
 }
 impl ImportMemoryFdInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImportMemoryFdInfoKHRBuilder<'a> {
         ImportMemoryFdInfoKHRBuilder {
             inner: ImportMemoryFdInfoKHR::default(),
@@ -15428,24 +16441,29 @@ impl ImportMemoryFdInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImportMemoryFdInfoKHRBuilder<'a> {
     inner: ImportMemoryFdInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryFdInfoKHRBuilder<'_> {}
 unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryFdInfoKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImportMemoryFdInfoKHRBuilder<'a> {
     type Target = ImportMemoryFdInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImportMemoryFdInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImportMemoryFdInfoKHRBuilder<'a> {
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
         self.inner.handle_type = handle_type;
@@ -15480,6 +16498,7 @@ impl ::std::default::Default for MemoryFdPropertiesKHR {
     }
 }
 impl MemoryFdPropertiesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> MemoryFdPropertiesKHRBuilder<'a> {
         MemoryFdPropertiesKHRBuilder {
             inner: MemoryFdPropertiesKHR::default(),
@@ -15487,22 +16506,26 @@ impl MemoryFdPropertiesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct MemoryFdPropertiesKHRBuilder<'a> {
     inner: MemoryFdPropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for MemoryFdPropertiesKHRBuilder<'a> {
     type Target = MemoryFdPropertiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for MemoryFdPropertiesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> MemoryFdPropertiesKHRBuilder<'a> {
     pub fn memory_type_bits(mut self, memory_type_bits: u32) -> Self {
         self.inner.memory_type_bits = memory_type_bits;
@@ -15535,6 +16558,7 @@ impl ::std::default::Default for MemoryGetFdInfoKHR {
     }
 }
 impl MemoryGetFdInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> MemoryGetFdInfoKHRBuilder<'a> {
         MemoryGetFdInfoKHRBuilder {
             inner: MemoryGetFdInfoKHR::default(),
@@ -15542,22 +16566,26 @@ impl MemoryGetFdInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct MemoryGetFdInfoKHRBuilder<'a> {
     inner: MemoryGetFdInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for MemoryGetFdInfoKHRBuilder<'a> {
     type Target = MemoryGetFdInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for MemoryGetFdInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> MemoryGetFdInfoKHRBuilder<'a> {
     pub fn memory(mut self, memory: DeviceMemory) -> Self {
         self.inner.memory = memory;
@@ -15604,6 +16632,7 @@ impl ::std::default::Default for Win32KeyedMutexAcquireReleaseInfoKHR {
     }
 }
 impl Win32KeyedMutexAcquireReleaseInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'a> {
         Win32KeyedMutexAcquireReleaseInfoKHRBuilder {
             inner: Win32KeyedMutexAcquireReleaseInfoKHR::default(),
@@ -15611,26 +16640,32 @@ impl Win32KeyedMutexAcquireReleaseInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'a> {
     inner: Win32KeyedMutexAcquireReleaseInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsSubmitInfo for Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'_> {}
 unsafe impl ExtendsSubmitInfo for Win32KeyedMutexAcquireReleaseInfoKHR {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsSubmitInfo2KHR for Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'_> {}
 unsafe impl ExtendsSubmitInfo2KHR for Win32KeyedMutexAcquireReleaseInfoKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'a> {
     type Target = Win32KeyedMutexAcquireReleaseInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'a> {
     pub fn acquire_syncs(mut self, acquire_syncs: &'a [DeviceMemory]) -> Self {
         self.inner.acquire_count = acquire_syncs.len() as _;
@@ -15682,6 +16717,7 @@ impl ::std::default::Default for PhysicalDeviceExternalSemaphoreInfo {
     }
 }
 impl PhysicalDeviceExternalSemaphoreInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceExternalSemaphoreInfoBuilder<'a> {
         PhysicalDeviceExternalSemaphoreInfoBuilder {
             inner: PhysicalDeviceExternalSemaphoreInfo::default(),
@@ -15689,23 +16725,27 @@ impl PhysicalDeviceExternalSemaphoreInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceExternalSemaphoreInfoBuilder<'a> {
     inner: PhysicalDeviceExternalSemaphoreInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsPhysicalDeviceExternalSemaphoreInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceExternalSemaphoreInfoBuilder<'a> {
     type Target = PhysicalDeviceExternalSemaphoreInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceExternalSemaphoreInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceExternalSemaphoreInfoBuilder<'a> {
     pub fn handle_type(mut self, handle_type: ExternalSemaphoreHandleTypeFlags) -> Self {
         self.inner.handle_type = handle_type;
@@ -15757,6 +16797,7 @@ impl ::std::default::Default for ExternalSemaphoreProperties {
     }
 }
 impl ExternalSemaphoreProperties {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ExternalSemaphorePropertiesBuilder<'a> {
         ExternalSemaphorePropertiesBuilder {
             inner: ExternalSemaphoreProperties::default(),
@@ -15764,22 +16805,26 @@ impl ExternalSemaphoreProperties {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ExternalSemaphorePropertiesBuilder<'a> {
     inner: ExternalSemaphoreProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ExternalSemaphorePropertiesBuilder<'a> {
     type Target = ExternalSemaphoreProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ExternalSemaphorePropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ExternalSemaphorePropertiesBuilder<'a> {
     pub fn export_from_imported_handle_types(
         mut self,
@@ -15827,6 +16872,7 @@ impl ::std::default::Default for ExportSemaphoreCreateInfo {
     }
 }
 impl ExportSemaphoreCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ExportSemaphoreCreateInfoBuilder<'a> {
         ExportSemaphoreCreateInfoBuilder {
             inner: ExportSemaphoreCreateInfo::default(),
@@ -15834,24 +16880,29 @@ impl ExportSemaphoreCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ExportSemaphoreCreateInfoBuilder<'a> {
     inner: ExportSemaphoreCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsSemaphoreCreateInfo for ExportSemaphoreCreateInfoBuilder<'_> {}
 unsafe impl ExtendsSemaphoreCreateInfo for ExportSemaphoreCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ExportSemaphoreCreateInfoBuilder<'a> {
     type Target = ExportSemaphoreCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ExportSemaphoreCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ExportSemaphoreCreateInfoBuilder<'a> {
     pub fn handle_types(mut self, handle_types: ExternalSemaphoreHandleTypeFlags) -> Self {
         self.inner.handle_types = handle_types;
@@ -15890,6 +16941,7 @@ impl ::std::default::Default for ImportSemaphoreWin32HandleInfoKHR {
     }
 }
 impl ImportSemaphoreWin32HandleInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImportSemaphoreWin32HandleInfoKHRBuilder<'a> {
         ImportSemaphoreWin32HandleInfoKHRBuilder {
             inner: ImportSemaphoreWin32HandleInfoKHR::default(),
@@ -15897,22 +16949,26 @@ impl ImportSemaphoreWin32HandleInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImportSemaphoreWin32HandleInfoKHRBuilder<'a> {
     inner: ImportSemaphoreWin32HandleInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImportSemaphoreWin32HandleInfoKHRBuilder<'a> {
     type Target = ImportSemaphoreWin32HandleInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImportSemaphoreWin32HandleInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImportSemaphoreWin32HandleInfoKHRBuilder<'a> {
     pub fn semaphore(mut self, semaphore: Semaphore) -> Self {
         self.inner.semaphore = semaphore;
@@ -15963,6 +17019,7 @@ impl ::std::default::Default for ExportSemaphoreWin32HandleInfoKHR {
     }
 }
 impl ExportSemaphoreWin32HandleInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ExportSemaphoreWin32HandleInfoKHRBuilder<'a> {
         ExportSemaphoreWin32HandleInfoKHRBuilder {
             inner: ExportSemaphoreWin32HandleInfoKHR::default(),
@@ -15970,24 +17027,29 @@ impl ExportSemaphoreWin32HandleInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ExportSemaphoreWin32HandleInfoKHRBuilder<'a> {
     inner: ExportSemaphoreWin32HandleInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsSemaphoreCreateInfo for ExportSemaphoreWin32HandleInfoKHRBuilder<'_> {}
 unsafe impl ExtendsSemaphoreCreateInfo for ExportSemaphoreWin32HandleInfoKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ExportSemaphoreWin32HandleInfoKHRBuilder<'a> {
     type Target = ExportSemaphoreWin32HandleInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ExportSemaphoreWin32HandleInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ExportSemaphoreWin32HandleInfoKHRBuilder<'a> {
     pub fn attributes(mut self, attributes: &'a SECURITY_ATTRIBUTES) -> Self {
         self.inner.p_attributes = attributes;
@@ -16032,6 +17094,7 @@ impl ::std::default::Default for D3D12FenceSubmitInfoKHR {
     }
 }
 impl D3D12FenceSubmitInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> D3D12FenceSubmitInfoKHRBuilder<'a> {
         D3D12FenceSubmitInfoKHRBuilder {
             inner: D3D12FenceSubmitInfoKHR::default(),
@@ -16039,24 +17102,29 @@ impl D3D12FenceSubmitInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct D3D12FenceSubmitInfoKHRBuilder<'a> {
     inner: D3D12FenceSubmitInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsSubmitInfo for D3D12FenceSubmitInfoKHRBuilder<'_> {}
 unsafe impl ExtendsSubmitInfo for D3D12FenceSubmitInfoKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for D3D12FenceSubmitInfoKHRBuilder<'a> {
     type Target = D3D12FenceSubmitInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for D3D12FenceSubmitInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> D3D12FenceSubmitInfoKHRBuilder<'a> {
     pub fn wait_semaphore_values(mut self, wait_semaphore_values: &'a [u64]) -> Self {
         self.inner.wait_semaphore_values_count = wait_semaphore_values.len() as _;
@@ -16095,6 +17163,7 @@ impl ::std::default::Default for SemaphoreGetWin32HandleInfoKHR {
     }
 }
 impl SemaphoreGetWin32HandleInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SemaphoreGetWin32HandleInfoKHRBuilder<'a> {
         SemaphoreGetWin32HandleInfoKHRBuilder {
             inner: SemaphoreGetWin32HandleInfoKHR::default(),
@@ -16102,22 +17171,26 @@ impl SemaphoreGetWin32HandleInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SemaphoreGetWin32HandleInfoKHRBuilder<'a> {
     inner: SemaphoreGetWin32HandleInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SemaphoreGetWin32HandleInfoKHRBuilder<'a> {
     type Target = SemaphoreGetWin32HandleInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SemaphoreGetWin32HandleInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SemaphoreGetWin32HandleInfoKHRBuilder<'a> {
     pub fn semaphore(mut self, semaphore: Semaphore) -> Self {
         self.inner.semaphore = semaphore;
@@ -16158,6 +17231,7 @@ impl ::std::default::Default for ImportSemaphoreFdInfoKHR {
     }
 }
 impl ImportSemaphoreFdInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImportSemaphoreFdInfoKHRBuilder<'a> {
         ImportSemaphoreFdInfoKHRBuilder {
             inner: ImportSemaphoreFdInfoKHR::default(),
@@ -16165,22 +17239,26 @@ impl ImportSemaphoreFdInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImportSemaphoreFdInfoKHRBuilder<'a> {
     inner: ImportSemaphoreFdInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImportSemaphoreFdInfoKHRBuilder<'a> {
     type Target = ImportSemaphoreFdInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImportSemaphoreFdInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImportSemaphoreFdInfoKHRBuilder<'a> {
     pub fn semaphore(mut self, semaphore: Semaphore) -> Self {
         self.inner.semaphore = semaphore;
@@ -16225,6 +17303,7 @@ impl ::std::default::Default for SemaphoreGetFdInfoKHR {
     }
 }
 impl SemaphoreGetFdInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SemaphoreGetFdInfoKHRBuilder<'a> {
         SemaphoreGetFdInfoKHRBuilder {
             inner: SemaphoreGetFdInfoKHR::default(),
@@ -16232,22 +17311,26 @@ impl SemaphoreGetFdInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SemaphoreGetFdInfoKHRBuilder<'a> {
     inner: SemaphoreGetFdInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SemaphoreGetFdInfoKHRBuilder<'a> {
     type Target = SemaphoreGetFdInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SemaphoreGetFdInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SemaphoreGetFdInfoKHRBuilder<'a> {
     pub fn semaphore(mut self, semaphore: Semaphore) -> Self {
         self.inner.semaphore = semaphore;
@@ -16288,6 +17371,7 @@ impl ::std::default::Default for ImportSemaphoreZirconHandleInfoFUCHSIA {
     }
 }
 impl ImportSemaphoreZirconHandleInfoFUCHSIA {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImportSemaphoreZirconHandleInfoFUCHSIABuilder<'a> {
         ImportSemaphoreZirconHandleInfoFUCHSIABuilder {
             inner: ImportSemaphoreZirconHandleInfoFUCHSIA::default(),
@@ -16295,22 +17379,26 @@ impl ImportSemaphoreZirconHandleInfoFUCHSIA {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImportSemaphoreZirconHandleInfoFUCHSIABuilder<'a> {
     inner: ImportSemaphoreZirconHandleInfoFUCHSIA,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImportSemaphoreZirconHandleInfoFUCHSIABuilder<'a> {
     type Target = ImportSemaphoreZirconHandleInfoFUCHSIA;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImportSemaphoreZirconHandleInfoFUCHSIABuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImportSemaphoreZirconHandleInfoFUCHSIABuilder<'a> {
     pub fn semaphore(mut self, semaphore: Semaphore) -> Self {
         self.inner.semaphore = semaphore;
@@ -16355,6 +17443,7 @@ impl ::std::default::Default for SemaphoreGetZirconHandleInfoFUCHSIA {
     }
 }
 impl SemaphoreGetZirconHandleInfoFUCHSIA {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SemaphoreGetZirconHandleInfoFUCHSIABuilder<'a> {
         SemaphoreGetZirconHandleInfoFUCHSIABuilder {
             inner: SemaphoreGetZirconHandleInfoFUCHSIA::default(),
@@ -16362,22 +17451,26 @@ impl SemaphoreGetZirconHandleInfoFUCHSIA {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SemaphoreGetZirconHandleInfoFUCHSIABuilder<'a> {
     inner: SemaphoreGetZirconHandleInfoFUCHSIA,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SemaphoreGetZirconHandleInfoFUCHSIABuilder<'a> {
     type Target = SemaphoreGetZirconHandleInfoFUCHSIA;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SemaphoreGetZirconHandleInfoFUCHSIABuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SemaphoreGetZirconHandleInfoFUCHSIABuilder<'a> {
     pub fn semaphore(mut self, semaphore: Semaphore) -> Self {
         self.inner.semaphore = semaphore;
@@ -16412,6 +17505,7 @@ impl ::std::default::Default for PhysicalDeviceExternalFenceInfo {
     }
 }
 impl PhysicalDeviceExternalFenceInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceExternalFenceInfoBuilder<'a> {
         PhysicalDeviceExternalFenceInfoBuilder {
             inner: PhysicalDeviceExternalFenceInfo::default(),
@@ -16419,22 +17513,26 @@ impl PhysicalDeviceExternalFenceInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceExternalFenceInfoBuilder<'a> {
     inner: PhysicalDeviceExternalFenceInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceExternalFenceInfoBuilder<'a> {
     type Target = PhysicalDeviceExternalFenceInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceExternalFenceInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceExternalFenceInfoBuilder<'a> {
     pub fn handle_type(mut self, handle_type: ExternalFenceHandleTypeFlags) -> Self {
         self.inner.handle_type = handle_type;
@@ -16469,6 +17567,7 @@ impl ::std::default::Default for ExternalFenceProperties {
     }
 }
 impl ExternalFenceProperties {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ExternalFencePropertiesBuilder<'a> {
         ExternalFencePropertiesBuilder {
             inner: ExternalFenceProperties::default(),
@@ -16476,22 +17575,26 @@ impl ExternalFenceProperties {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ExternalFencePropertiesBuilder<'a> {
     inner: ExternalFenceProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ExternalFencePropertiesBuilder<'a> {
     type Target = ExternalFenceProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ExternalFencePropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ExternalFencePropertiesBuilder<'a> {
     pub fn export_from_imported_handle_types(
         mut self,
@@ -16539,6 +17642,7 @@ impl ::std::default::Default for ExportFenceCreateInfo {
     }
 }
 impl ExportFenceCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ExportFenceCreateInfoBuilder<'a> {
         ExportFenceCreateInfoBuilder {
             inner: ExportFenceCreateInfo::default(),
@@ -16546,24 +17650,29 @@ impl ExportFenceCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ExportFenceCreateInfoBuilder<'a> {
     inner: ExportFenceCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsFenceCreateInfo for ExportFenceCreateInfoBuilder<'_> {}
 unsafe impl ExtendsFenceCreateInfo for ExportFenceCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ExportFenceCreateInfoBuilder<'a> {
     type Target = ExportFenceCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ExportFenceCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ExportFenceCreateInfoBuilder<'a> {
     pub fn handle_types(mut self, handle_types: ExternalFenceHandleTypeFlags) -> Self {
         self.inner.handle_types = handle_types;
@@ -16602,6 +17711,7 @@ impl ::std::default::Default for ImportFenceWin32HandleInfoKHR {
     }
 }
 impl ImportFenceWin32HandleInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImportFenceWin32HandleInfoKHRBuilder<'a> {
         ImportFenceWin32HandleInfoKHRBuilder {
             inner: ImportFenceWin32HandleInfoKHR::default(),
@@ -16609,22 +17719,26 @@ impl ImportFenceWin32HandleInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImportFenceWin32HandleInfoKHRBuilder<'a> {
     inner: ImportFenceWin32HandleInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImportFenceWin32HandleInfoKHRBuilder<'a> {
     type Target = ImportFenceWin32HandleInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImportFenceWin32HandleInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImportFenceWin32HandleInfoKHRBuilder<'a> {
     pub fn fence(mut self, fence: Fence) -> Self {
         self.inner.fence = fence;
@@ -16675,6 +17789,7 @@ impl ::std::default::Default for ExportFenceWin32HandleInfoKHR {
     }
 }
 impl ExportFenceWin32HandleInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ExportFenceWin32HandleInfoKHRBuilder<'a> {
         ExportFenceWin32HandleInfoKHRBuilder {
             inner: ExportFenceWin32HandleInfoKHR::default(),
@@ -16682,24 +17797,29 @@ impl ExportFenceWin32HandleInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ExportFenceWin32HandleInfoKHRBuilder<'a> {
     inner: ExportFenceWin32HandleInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsFenceCreateInfo for ExportFenceWin32HandleInfoKHRBuilder<'_> {}
 unsafe impl ExtendsFenceCreateInfo for ExportFenceWin32HandleInfoKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ExportFenceWin32HandleInfoKHRBuilder<'a> {
     type Target = ExportFenceWin32HandleInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ExportFenceWin32HandleInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ExportFenceWin32HandleInfoKHRBuilder<'a> {
     pub fn attributes(mut self, attributes: &'a SECURITY_ATTRIBUTES) -> Self {
         self.inner.p_attributes = attributes;
@@ -16740,6 +17860,7 @@ impl ::std::default::Default for FenceGetWin32HandleInfoKHR {
     }
 }
 impl FenceGetWin32HandleInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> FenceGetWin32HandleInfoKHRBuilder<'a> {
         FenceGetWin32HandleInfoKHRBuilder {
             inner: FenceGetWin32HandleInfoKHR::default(),
@@ -16747,22 +17868,26 @@ impl FenceGetWin32HandleInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct FenceGetWin32HandleInfoKHRBuilder<'a> {
     inner: FenceGetWin32HandleInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for FenceGetWin32HandleInfoKHRBuilder<'a> {
     type Target = FenceGetWin32HandleInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for FenceGetWin32HandleInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> FenceGetWin32HandleInfoKHRBuilder<'a> {
     pub fn fence(mut self, fence: Fence) -> Self {
         self.inner.fence = fence;
@@ -16803,6 +17928,7 @@ impl ::std::default::Default for ImportFenceFdInfoKHR {
     }
 }
 impl ImportFenceFdInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImportFenceFdInfoKHRBuilder<'a> {
         ImportFenceFdInfoKHRBuilder {
             inner: ImportFenceFdInfoKHR::default(),
@@ -16810,22 +17936,26 @@ impl ImportFenceFdInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImportFenceFdInfoKHRBuilder<'a> {
     inner: ImportFenceFdInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImportFenceFdInfoKHRBuilder<'a> {
     type Target = ImportFenceFdInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImportFenceFdInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImportFenceFdInfoKHRBuilder<'a> {
     pub fn fence(mut self, fence: Fence) -> Self {
         self.inner.fence = fence;
@@ -16870,6 +18000,7 @@ impl ::std::default::Default for FenceGetFdInfoKHR {
     }
 }
 impl FenceGetFdInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> FenceGetFdInfoKHRBuilder<'a> {
         FenceGetFdInfoKHRBuilder {
             inner: FenceGetFdInfoKHR::default(),
@@ -16877,22 +18008,26 @@ impl FenceGetFdInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct FenceGetFdInfoKHRBuilder<'a> {
     inner: FenceGetFdInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for FenceGetFdInfoKHRBuilder<'a> {
     type Target = FenceGetFdInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for FenceGetFdInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> FenceGetFdInfoKHRBuilder<'a> {
     pub fn fence(mut self, fence: Fence) -> Self {
         self.inner.fence = fence;
@@ -16931,6 +18066,7 @@ impl ::std::default::Default for PhysicalDeviceMultiviewFeatures {
     }
 }
 impl PhysicalDeviceMultiviewFeatures {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceMultiviewFeaturesBuilder<'a> {
         PhysicalDeviceMultiviewFeaturesBuilder {
             inner: PhysicalDeviceMultiviewFeatures::default(),
@@ -16938,26 +18074,32 @@ impl PhysicalDeviceMultiviewFeatures {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceMultiviewFeaturesBuilder<'a> {
     inner: PhysicalDeviceMultiviewFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMultiviewFeaturesBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMultiviewFeatures {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMultiviewFeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMultiviewFeatures {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceMultiviewFeaturesBuilder<'a> {
     type Target = PhysicalDeviceMultiviewFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceMultiviewFeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceMultiviewFeaturesBuilder<'a> {
     pub fn multiview(mut self, multiview: bool) -> Self {
         self.inner.multiview = multiview.into();
@@ -16998,6 +18140,7 @@ impl ::std::default::Default for PhysicalDeviceMultiviewProperties {
     }
 }
 impl PhysicalDeviceMultiviewProperties {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceMultiviewPropertiesBuilder<'a> {
         PhysicalDeviceMultiviewPropertiesBuilder {
             inner: PhysicalDeviceMultiviewProperties::default(),
@@ -17005,24 +18148,29 @@ impl PhysicalDeviceMultiviewProperties {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceMultiviewPropertiesBuilder<'a> {
     inner: PhysicalDeviceMultiviewProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMultiviewPropertiesBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMultiviewProperties {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceMultiviewPropertiesBuilder<'a> {
     type Target = PhysicalDeviceMultiviewProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceMultiviewPropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceMultiviewPropertiesBuilder<'a> {
     pub fn max_multiview_view_count(mut self, max_multiview_view_count: u32) -> Self {
         self.inner.max_multiview_view_count = max_multiview_view_count;
@@ -17067,6 +18215,7 @@ impl ::std::default::Default for RenderPassMultiviewCreateInfo {
     }
 }
 impl RenderPassMultiviewCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> RenderPassMultiviewCreateInfoBuilder<'a> {
         RenderPassMultiviewCreateInfoBuilder {
             inner: RenderPassMultiviewCreateInfo::default(),
@@ -17074,24 +18223,29 @@ impl RenderPassMultiviewCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct RenderPassMultiviewCreateInfoBuilder<'a> {
     inner: RenderPassMultiviewCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsRenderPassCreateInfo for RenderPassMultiviewCreateInfoBuilder<'_> {}
 unsafe impl ExtendsRenderPassCreateInfo for RenderPassMultiviewCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for RenderPassMultiviewCreateInfoBuilder<'a> {
     type Target = RenderPassMultiviewCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for RenderPassMultiviewCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> RenderPassMultiviewCreateInfoBuilder<'a> {
     pub fn view_masks(mut self, view_masks: &'a [u32]) -> Self {
         self.inner.subpass_count = view_masks.len() as _;
@@ -17153,6 +18307,7 @@ impl ::std::default::Default for SurfaceCapabilities2EXT {
     }
 }
 impl SurfaceCapabilities2EXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SurfaceCapabilities2EXTBuilder<'a> {
         SurfaceCapabilities2EXTBuilder {
             inner: SurfaceCapabilities2EXT::default(),
@@ -17160,22 +18315,26 @@ impl SurfaceCapabilities2EXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SurfaceCapabilities2EXTBuilder<'a> {
     inner: SurfaceCapabilities2EXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SurfaceCapabilities2EXTBuilder<'a> {
     type Target = SurfaceCapabilities2EXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SurfaceCapabilities2EXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SurfaceCapabilities2EXTBuilder<'a> {
     pub fn min_image_count(mut self, min_image_count: u32) -> Self {
         self.inner.min_image_count = min_image_count;
@@ -17252,6 +18411,7 @@ impl ::std::default::Default for DisplayPowerInfoEXT {
     }
 }
 impl DisplayPowerInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DisplayPowerInfoEXTBuilder<'a> {
         DisplayPowerInfoEXTBuilder {
             inner: DisplayPowerInfoEXT::default(),
@@ -17259,22 +18419,26 @@ impl DisplayPowerInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DisplayPowerInfoEXTBuilder<'a> {
     inner: DisplayPowerInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DisplayPowerInfoEXTBuilder<'a> {
     type Target = DisplayPowerInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DisplayPowerInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DisplayPowerInfoEXTBuilder<'a> {
     pub fn power_state(mut self, power_state: DisplayPowerStateEXT) -> Self {
         self.inner.power_state = power_state;
@@ -17305,6 +18469,7 @@ impl ::std::default::Default for DeviceEventInfoEXT {
     }
 }
 impl DeviceEventInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DeviceEventInfoEXTBuilder<'a> {
         DeviceEventInfoEXTBuilder {
             inner: DeviceEventInfoEXT::default(),
@@ -17312,22 +18477,26 @@ impl DeviceEventInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DeviceEventInfoEXTBuilder<'a> {
     inner: DeviceEventInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DeviceEventInfoEXTBuilder<'a> {
     type Target = DeviceEventInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DeviceEventInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DeviceEventInfoEXTBuilder<'a> {
     pub fn device_event(mut self, device_event: DeviceEventTypeEXT) -> Self {
         self.inner.device_event = device_event;
@@ -17358,6 +18527,7 @@ impl ::std::default::Default for DisplayEventInfoEXT {
     }
 }
 impl DisplayEventInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DisplayEventInfoEXTBuilder<'a> {
         DisplayEventInfoEXTBuilder {
             inner: DisplayEventInfoEXT::default(),
@@ -17365,22 +18535,26 @@ impl DisplayEventInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DisplayEventInfoEXTBuilder<'a> {
     inner: DisplayEventInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DisplayEventInfoEXTBuilder<'a> {
     type Target = DisplayEventInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DisplayEventInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DisplayEventInfoEXTBuilder<'a> {
     pub fn display_event(mut self, display_event: DisplayEventTypeEXT) -> Self {
         self.inner.display_event = display_event;
@@ -17411,6 +18585,7 @@ impl ::std::default::Default for SwapchainCounterCreateInfoEXT {
     }
 }
 impl SwapchainCounterCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SwapchainCounterCreateInfoEXTBuilder<'a> {
         SwapchainCounterCreateInfoEXTBuilder {
             inner: SwapchainCounterCreateInfoEXT::default(),
@@ -17418,24 +18593,29 @@ impl SwapchainCounterCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SwapchainCounterCreateInfoEXTBuilder<'a> {
     inner: SwapchainCounterCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsSwapchainCreateInfoKHR for SwapchainCounterCreateInfoEXTBuilder<'_> {}
 unsafe impl ExtendsSwapchainCreateInfoKHR for SwapchainCounterCreateInfoEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SwapchainCounterCreateInfoEXTBuilder<'a> {
     type Target = SwapchainCounterCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SwapchainCounterCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SwapchainCounterCreateInfoEXTBuilder<'a> {
     pub fn surface_counters(mut self, surface_counters: SurfaceCounterFlagsEXT) -> Self {
         self.inner.surface_counters = surface_counters;
@@ -17470,6 +18650,7 @@ impl ::std::default::Default for PhysicalDeviceGroupProperties {
     }
 }
 impl PhysicalDeviceGroupProperties {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceGroupPropertiesBuilder<'a> {
         PhysicalDeviceGroupPropertiesBuilder {
             inner: PhysicalDeviceGroupProperties::default(),
@@ -17477,22 +18658,26 @@ impl PhysicalDeviceGroupProperties {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceGroupPropertiesBuilder<'a> {
     inner: PhysicalDeviceGroupProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceGroupPropertiesBuilder<'a> {
     type Target = PhysicalDeviceGroupProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceGroupPropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceGroupPropertiesBuilder<'a> {
     pub fn physical_device_count(mut self, physical_device_count: u32) -> Self {
         self.inner.physical_device_count = physical_device_count;
@@ -17536,6 +18721,7 @@ impl ::std::default::Default for MemoryAllocateFlagsInfo {
     }
 }
 impl MemoryAllocateFlagsInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> MemoryAllocateFlagsInfoBuilder<'a> {
         MemoryAllocateFlagsInfoBuilder {
             inner: MemoryAllocateFlagsInfo::default(),
@@ -17543,24 +18729,29 @@ impl MemoryAllocateFlagsInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct MemoryAllocateFlagsInfoBuilder<'a> {
     inner: MemoryAllocateFlagsInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsMemoryAllocateInfo for MemoryAllocateFlagsInfoBuilder<'_> {}
 unsafe impl ExtendsMemoryAllocateInfo for MemoryAllocateFlagsInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for MemoryAllocateFlagsInfoBuilder<'a> {
     type Target = MemoryAllocateFlagsInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for MemoryAllocateFlagsInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> MemoryAllocateFlagsInfoBuilder<'a> {
     pub fn flags(mut self, flags: MemoryAllocateFlags) -> Self {
         self.inner.flags = flags;
@@ -17599,6 +18790,7 @@ impl ::std::default::Default for BindBufferMemoryInfo {
     }
 }
 impl BindBufferMemoryInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> BindBufferMemoryInfoBuilder<'a> {
         BindBufferMemoryInfoBuilder {
             inner: BindBufferMemoryInfo::default(),
@@ -17606,23 +18798,27 @@ impl BindBufferMemoryInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct BindBufferMemoryInfoBuilder<'a> {
     inner: BindBufferMemoryInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsBindBufferMemoryInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for BindBufferMemoryInfoBuilder<'a> {
     type Target = BindBufferMemoryInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for BindBufferMemoryInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> BindBufferMemoryInfoBuilder<'a> {
     pub fn buffer(mut self, buffer: Buffer) -> Self {
         self.inner.buffer = buffer;
@@ -17677,6 +18873,7 @@ impl ::std::default::Default for BindBufferMemoryDeviceGroupInfo {
     }
 }
 impl BindBufferMemoryDeviceGroupInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> BindBufferMemoryDeviceGroupInfoBuilder<'a> {
         BindBufferMemoryDeviceGroupInfoBuilder {
             inner: BindBufferMemoryDeviceGroupInfo::default(),
@@ -17684,24 +18881,29 @@ impl BindBufferMemoryDeviceGroupInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct BindBufferMemoryDeviceGroupInfoBuilder<'a> {
     inner: BindBufferMemoryDeviceGroupInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsBindBufferMemoryInfo for BindBufferMemoryDeviceGroupInfoBuilder<'_> {}
 unsafe impl ExtendsBindBufferMemoryInfo for BindBufferMemoryDeviceGroupInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for BindBufferMemoryDeviceGroupInfoBuilder<'a> {
     type Target = BindBufferMemoryDeviceGroupInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for BindBufferMemoryDeviceGroupInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> BindBufferMemoryDeviceGroupInfoBuilder<'a> {
     pub fn device_indices(mut self, device_indices: &'a [u32]) -> Self {
         self.inner.device_index_count = device_indices.len() as _;
@@ -17737,6 +18939,7 @@ impl ::std::default::Default for BindImageMemoryInfo {
     }
 }
 impl BindImageMemoryInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> BindImageMemoryInfoBuilder<'a> {
         BindImageMemoryInfoBuilder {
             inner: BindImageMemoryInfo::default(),
@@ -17744,23 +18947,27 @@ impl BindImageMemoryInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct BindImageMemoryInfoBuilder<'a> {
     inner: BindImageMemoryInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsBindImageMemoryInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for BindImageMemoryInfoBuilder<'a> {
     type Target = BindImageMemoryInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for BindImageMemoryInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> BindImageMemoryInfoBuilder<'a> {
     pub fn image(mut self, image: Image) -> Self {
         self.inner.image = image;
@@ -17819,6 +19026,7 @@ impl ::std::default::Default for BindImageMemoryDeviceGroupInfo {
     }
 }
 impl BindImageMemoryDeviceGroupInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> BindImageMemoryDeviceGroupInfoBuilder<'a> {
         BindImageMemoryDeviceGroupInfoBuilder {
             inner: BindImageMemoryDeviceGroupInfo::default(),
@@ -17826,24 +19034,29 @@ impl BindImageMemoryDeviceGroupInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct BindImageMemoryDeviceGroupInfoBuilder<'a> {
     inner: BindImageMemoryDeviceGroupInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsBindImageMemoryInfo for BindImageMemoryDeviceGroupInfoBuilder<'_> {}
 unsafe impl ExtendsBindImageMemoryInfo for BindImageMemoryDeviceGroupInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for BindImageMemoryDeviceGroupInfoBuilder<'a> {
     type Target = BindImageMemoryDeviceGroupInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for BindImageMemoryDeviceGroupInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> BindImageMemoryDeviceGroupInfoBuilder<'a> {
     pub fn device_indices(mut self, device_indices: &'a [u32]) -> Self {
         self.inner.device_index_count = device_indices.len() as _;
@@ -17887,6 +19100,7 @@ impl ::std::default::Default for DeviceGroupRenderPassBeginInfo {
     }
 }
 impl DeviceGroupRenderPassBeginInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DeviceGroupRenderPassBeginInfoBuilder<'a> {
         DeviceGroupRenderPassBeginInfoBuilder {
             inner: DeviceGroupRenderPassBeginInfo::default(),
@@ -17894,24 +19108,29 @@ impl DeviceGroupRenderPassBeginInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DeviceGroupRenderPassBeginInfoBuilder<'a> {
     inner: DeviceGroupRenderPassBeginInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsRenderPassBeginInfo for DeviceGroupRenderPassBeginInfoBuilder<'_> {}
 unsafe impl ExtendsRenderPassBeginInfo for DeviceGroupRenderPassBeginInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DeviceGroupRenderPassBeginInfoBuilder<'a> {
     type Target = DeviceGroupRenderPassBeginInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DeviceGroupRenderPassBeginInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DeviceGroupRenderPassBeginInfoBuilder<'a> {
     pub fn device_mask(mut self, device_mask: u32) -> Self {
         self.inner.device_mask = device_mask;
@@ -17947,6 +19166,7 @@ impl ::std::default::Default for DeviceGroupCommandBufferBeginInfo {
     }
 }
 impl DeviceGroupCommandBufferBeginInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DeviceGroupCommandBufferBeginInfoBuilder<'a> {
         DeviceGroupCommandBufferBeginInfoBuilder {
             inner: DeviceGroupCommandBufferBeginInfo::default(),
@@ -17954,24 +19174,29 @@ impl DeviceGroupCommandBufferBeginInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DeviceGroupCommandBufferBeginInfoBuilder<'a> {
     inner: DeviceGroupCommandBufferBeginInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsCommandBufferBeginInfo for DeviceGroupCommandBufferBeginInfoBuilder<'_> {}
 unsafe impl ExtendsCommandBufferBeginInfo for DeviceGroupCommandBufferBeginInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DeviceGroupCommandBufferBeginInfoBuilder<'a> {
     type Target = DeviceGroupCommandBufferBeginInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DeviceGroupCommandBufferBeginInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DeviceGroupCommandBufferBeginInfoBuilder<'a> {
     pub fn device_mask(mut self, device_mask: u32) -> Self {
         self.inner.device_mask = device_mask;
@@ -18012,6 +19237,7 @@ impl ::std::default::Default for DeviceGroupSubmitInfo {
     }
 }
 impl DeviceGroupSubmitInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DeviceGroupSubmitInfoBuilder<'a> {
         DeviceGroupSubmitInfoBuilder {
             inner: DeviceGroupSubmitInfo::default(),
@@ -18019,24 +19245,29 @@ impl DeviceGroupSubmitInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DeviceGroupSubmitInfoBuilder<'a> {
     inner: DeviceGroupSubmitInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsSubmitInfo for DeviceGroupSubmitInfoBuilder<'_> {}
 unsafe impl ExtendsSubmitInfo for DeviceGroupSubmitInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DeviceGroupSubmitInfoBuilder<'a> {
     type Target = DeviceGroupSubmitInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DeviceGroupSubmitInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DeviceGroupSubmitInfoBuilder<'a> {
     pub fn wait_semaphore_device_indices(
         mut self,
@@ -18086,6 +19317,7 @@ impl ::std::default::Default for DeviceGroupBindSparseInfo {
     }
 }
 impl DeviceGroupBindSparseInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DeviceGroupBindSparseInfoBuilder<'a> {
         DeviceGroupBindSparseInfoBuilder {
             inner: DeviceGroupBindSparseInfo::default(),
@@ -18093,24 +19325,29 @@ impl DeviceGroupBindSparseInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DeviceGroupBindSparseInfoBuilder<'a> {
     inner: DeviceGroupBindSparseInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsBindSparseInfo for DeviceGroupBindSparseInfoBuilder<'_> {}
 unsafe impl ExtendsBindSparseInfo for DeviceGroupBindSparseInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DeviceGroupBindSparseInfoBuilder<'a> {
     type Target = DeviceGroupBindSparseInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DeviceGroupBindSparseInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DeviceGroupBindSparseInfoBuilder<'a> {
     pub fn resource_device_index(mut self, resource_device_index: u32) -> Self {
         self.inner.resource_device_index = resource_device_index;
@@ -18147,6 +19384,7 @@ impl ::std::default::Default for DeviceGroupPresentCapabilitiesKHR {
     }
 }
 impl DeviceGroupPresentCapabilitiesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DeviceGroupPresentCapabilitiesKHRBuilder<'a> {
         DeviceGroupPresentCapabilitiesKHRBuilder {
             inner: DeviceGroupPresentCapabilitiesKHR::default(),
@@ -18154,22 +19392,26 @@ impl DeviceGroupPresentCapabilitiesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DeviceGroupPresentCapabilitiesKHRBuilder<'a> {
     inner: DeviceGroupPresentCapabilitiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DeviceGroupPresentCapabilitiesKHRBuilder<'a> {
     type Target = DeviceGroupPresentCapabilitiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DeviceGroupPresentCapabilitiesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DeviceGroupPresentCapabilitiesKHRBuilder<'a> {
     pub fn present_mask(mut self, present_mask: [u32; MAX_DEVICE_GROUP_SIZE]) -> Self {
         self.inner.present_mask = present_mask;
@@ -18204,6 +19446,7 @@ impl ::std::default::Default for ImageSwapchainCreateInfoKHR {
     }
 }
 impl ImageSwapchainCreateInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImageSwapchainCreateInfoKHRBuilder<'a> {
         ImageSwapchainCreateInfoKHRBuilder {
             inner: ImageSwapchainCreateInfoKHR::default(),
@@ -18211,24 +19454,29 @@ impl ImageSwapchainCreateInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImageSwapchainCreateInfoKHRBuilder<'a> {
     inner: ImageSwapchainCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsImageCreateInfo for ImageSwapchainCreateInfoKHRBuilder<'_> {}
 unsafe impl ExtendsImageCreateInfo for ImageSwapchainCreateInfoKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImageSwapchainCreateInfoKHRBuilder<'a> {
     type Target = ImageSwapchainCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImageSwapchainCreateInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImageSwapchainCreateInfoKHRBuilder<'a> {
     pub fn swapchain(mut self, swapchain: SwapchainKHR) -> Self {
         self.inner.swapchain = swapchain;
@@ -18261,6 +19509,7 @@ impl ::std::default::Default for BindImageMemorySwapchainInfoKHR {
     }
 }
 impl BindImageMemorySwapchainInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> BindImageMemorySwapchainInfoKHRBuilder<'a> {
         BindImageMemorySwapchainInfoKHRBuilder {
             inner: BindImageMemorySwapchainInfoKHR::default(),
@@ -18268,24 +19517,29 @@ impl BindImageMemorySwapchainInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct BindImageMemorySwapchainInfoKHRBuilder<'a> {
     inner: BindImageMemorySwapchainInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsBindImageMemoryInfo for BindImageMemorySwapchainInfoKHRBuilder<'_> {}
 unsafe impl ExtendsBindImageMemoryInfo for BindImageMemorySwapchainInfoKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for BindImageMemorySwapchainInfoKHRBuilder<'a> {
     type Target = BindImageMemorySwapchainInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for BindImageMemorySwapchainInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> BindImageMemorySwapchainInfoKHRBuilder<'a> {
     pub fn swapchain(mut self, swapchain: SwapchainKHR) -> Self {
         self.inner.swapchain = swapchain;
@@ -18328,6 +19582,7 @@ impl ::std::default::Default for AcquireNextImageInfoKHR {
     }
 }
 impl AcquireNextImageInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> AcquireNextImageInfoKHRBuilder<'a> {
         AcquireNextImageInfoKHRBuilder {
             inner: AcquireNextImageInfoKHR::default(),
@@ -18335,22 +19590,26 @@ impl AcquireNextImageInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct AcquireNextImageInfoKHRBuilder<'a> {
     inner: AcquireNextImageInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for AcquireNextImageInfoKHRBuilder<'a> {
     type Target = AcquireNextImageInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for AcquireNextImageInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> AcquireNextImageInfoKHRBuilder<'a> {
     pub fn swapchain(mut self, swapchain: SwapchainKHR) -> Self {
         self.inner.swapchain = swapchain;
@@ -18401,6 +19660,7 @@ impl ::std::default::Default for DeviceGroupPresentInfoKHR {
     }
 }
 impl DeviceGroupPresentInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DeviceGroupPresentInfoKHRBuilder<'a> {
         DeviceGroupPresentInfoKHRBuilder {
             inner: DeviceGroupPresentInfoKHR::default(),
@@ -18408,24 +19668,29 @@ impl DeviceGroupPresentInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DeviceGroupPresentInfoKHRBuilder<'a> {
     inner: DeviceGroupPresentInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPresentInfoKHR for DeviceGroupPresentInfoKHRBuilder<'_> {}
 unsafe impl ExtendsPresentInfoKHR for DeviceGroupPresentInfoKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DeviceGroupPresentInfoKHRBuilder<'a> {
     type Target = DeviceGroupPresentInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DeviceGroupPresentInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DeviceGroupPresentInfoKHRBuilder<'a> {
     pub fn device_masks(mut self, device_masks: &'a [u32]) -> Self {
         self.inner.swapchain_count = device_masks.len() as _;
@@ -18463,6 +19728,7 @@ impl ::std::default::Default for DeviceGroupDeviceCreateInfo {
     }
 }
 impl DeviceGroupDeviceCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DeviceGroupDeviceCreateInfoBuilder<'a> {
         DeviceGroupDeviceCreateInfoBuilder {
             inner: DeviceGroupDeviceCreateInfo::default(),
@@ -18470,24 +19736,29 @@ impl DeviceGroupDeviceCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DeviceGroupDeviceCreateInfoBuilder<'a> {
     inner: DeviceGroupDeviceCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for DeviceGroupDeviceCreateInfoBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for DeviceGroupDeviceCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DeviceGroupDeviceCreateInfoBuilder<'a> {
     type Target = DeviceGroupDeviceCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DeviceGroupDeviceCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DeviceGroupDeviceCreateInfoBuilder<'a> {
     pub fn physical_devices(mut self, physical_devices: &'a [PhysicalDevice]) -> Self {
         self.inner.physical_device_count = physical_devices.len() as _;
@@ -18519,6 +19790,7 @@ impl ::std::default::Default for DeviceGroupSwapchainCreateInfoKHR {
     }
 }
 impl DeviceGroupSwapchainCreateInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DeviceGroupSwapchainCreateInfoKHRBuilder<'a> {
         DeviceGroupSwapchainCreateInfoKHRBuilder {
             inner: DeviceGroupSwapchainCreateInfoKHR::default(),
@@ -18526,24 +19798,29 @@ impl DeviceGroupSwapchainCreateInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DeviceGroupSwapchainCreateInfoKHRBuilder<'a> {
     inner: DeviceGroupSwapchainCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsSwapchainCreateInfoKHR for DeviceGroupSwapchainCreateInfoKHRBuilder<'_> {}
 unsafe impl ExtendsSwapchainCreateInfoKHR for DeviceGroupSwapchainCreateInfoKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DeviceGroupSwapchainCreateInfoKHRBuilder<'a> {
     type Target = DeviceGroupSwapchainCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DeviceGroupSwapchainCreateInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DeviceGroupSwapchainCreateInfoKHRBuilder<'a> {
     pub fn modes(mut self, modes: DeviceGroupPresentModeFlagsKHR) -> Self {
         self.inner.modes = modes;
@@ -18568,6 +19845,7 @@ pub struct DescriptorUpdateTemplateEntry {
     pub stride: usize,
 }
 impl DescriptorUpdateTemplateEntry {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DescriptorUpdateTemplateEntryBuilder<'a> {
         DescriptorUpdateTemplateEntryBuilder {
             inner: DescriptorUpdateTemplateEntry::default(),
@@ -18575,22 +19853,26 @@ impl DescriptorUpdateTemplateEntry {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DescriptorUpdateTemplateEntryBuilder<'a> {
     inner: DescriptorUpdateTemplateEntry,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DescriptorUpdateTemplateEntryBuilder<'a> {
     type Target = DescriptorUpdateTemplateEntry;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DescriptorUpdateTemplateEntryBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DescriptorUpdateTemplateEntryBuilder<'a> {
     pub fn dst_binding(mut self, dst_binding: u32) -> Self {
         self.inner.dst_binding = dst_binding;
@@ -18655,6 +19937,7 @@ impl ::std::default::Default for DescriptorUpdateTemplateCreateInfo {
     }
 }
 impl DescriptorUpdateTemplateCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DescriptorUpdateTemplateCreateInfoBuilder<'a> {
         DescriptorUpdateTemplateCreateInfoBuilder {
             inner: DescriptorUpdateTemplateCreateInfo::default(),
@@ -18662,22 +19945,26 @@ impl DescriptorUpdateTemplateCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DescriptorUpdateTemplateCreateInfoBuilder<'a> {
     inner: DescriptorUpdateTemplateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DescriptorUpdateTemplateCreateInfoBuilder<'a> {
     type Target = DescriptorUpdateTemplateCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DescriptorUpdateTemplateCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DescriptorUpdateTemplateCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: DescriptorUpdateTemplateCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -18726,6 +20013,7 @@ pub struct XYColorEXT {
     pub y: f32,
 }
 impl XYColorEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> XYColorEXTBuilder<'a> {
         XYColorEXTBuilder {
             inner: XYColorEXT::default(),
@@ -18733,22 +20021,26 @@ impl XYColorEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct XYColorEXTBuilder<'a> {
     inner: XYColorEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for XYColorEXTBuilder<'a> {
     type Target = XYColorEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for XYColorEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> XYColorEXTBuilder<'a> {
     pub fn x(mut self, x: f32) -> Self {
         self.inner.x = x;
@@ -18783,6 +20075,7 @@ impl ::std::default::Default for PhysicalDevicePresentIdFeaturesKHR {
     }
 }
 impl PhysicalDevicePresentIdFeaturesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDevicePresentIdFeaturesKHRBuilder<'a> {
         PhysicalDevicePresentIdFeaturesKHRBuilder {
             inner: PhysicalDevicePresentIdFeaturesKHR::default(),
@@ -18790,26 +20083,32 @@ impl PhysicalDevicePresentIdFeaturesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDevicePresentIdFeaturesKHRBuilder<'a> {
     inner: PhysicalDevicePresentIdFeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePresentIdFeaturesKHRBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePresentIdFeaturesKHR {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePresentIdFeaturesKHRBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePresentIdFeaturesKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDevicePresentIdFeaturesKHRBuilder<'a> {
     type Target = PhysicalDevicePresentIdFeaturesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDevicePresentIdFeaturesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDevicePresentIdFeaturesKHRBuilder<'a> {
     pub fn present_id(mut self, present_id: bool) -> Self {
         self.inner.present_id = present_id.into();
@@ -18842,6 +20141,7 @@ impl ::std::default::Default for PresentIdKHR {
     }
 }
 impl PresentIdKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PresentIdKHRBuilder<'a> {
         PresentIdKHRBuilder {
             inner: PresentIdKHR::default(),
@@ -18849,24 +20149,29 @@ impl PresentIdKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PresentIdKHRBuilder<'a> {
     inner: PresentIdKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPresentInfoKHR for PresentIdKHRBuilder<'_> {}
 unsafe impl ExtendsPresentInfoKHR for PresentIdKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PresentIdKHRBuilder<'a> {
     type Target = PresentIdKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PresentIdKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PresentIdKHRBuilder<'a> {
     pub fn present_ids(mut self, present_ids: &'a [u64]) -> Self {
         self.inner.swapchain_count = present_ids.len() as _;
@@ -18898,6 +20203,7 @@ impl ::std::default::Default for PhysicalDevicePresentWaitFeaturesKHR {
     }
 }
 impl PhysicalDevicePresentWaitFeaturesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDevicePresentWaitFeaturesKHRBuilder<'a> {
         PhysicalDevicePresentWaitFeaturesKHRBuilder {
             inner: PhysicalDevicePresentWaitFeaturesKHR::default(),
@@ -18905,26 +20211,32 @@ impl PhysicalDevicePresentWaitFeaturesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDevicePresentWaitFeaturesKHRBuilder<'a> {
     inner: PhysicalDevicePresentWaitFeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePresentWaitFeaturesKHRBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePresentWaitFeaturesKHR {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePresentWaitFeaturesKHRBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePresentWaitFeaturesKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDevicePresentWaitFeaturesKHRBuilder<'a> {
     type Target = PhysicalDevicePresentWaitFeaturesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDevicePresentWaitFeaturesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDevicePresentWaitFeaturesKHRBuilder<'a> {
     pub fn present_wait(mut self, present_wait: bool) -> Self {
         self.inner.present_wait = present_wait.into();
@@ -18969,6 +20281,7 @@ impl ::std::default::Default for HdrMetadataEXT {
     }
 }
 impl HdrMetadataEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> HdrMetadataEXTBuilder<'a> {
         HdrMetadataEXTBuilder {
             inner: HdrMetadataEXT::default(),
@@ -18976,22 +20289,26 @@ impl HdrMetadataEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct HdrMetadataEXTBuilder<'a> {
     inner: HdrMetadataEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for HdrMetadataEXTBuilder<'a> {
     type Target = HdrMetadataEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for HdrMetadataEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> HdrMetadataEXTBuilder<'a> {
     pub fn display_primary_red(mut self, display_primary_red: XYColorEXT) -> Self {
         self.inner.display_primary_red = display_primary_red;
@@ -19050,6 +20367,7 @@ impl ::std::default::Default for DisplayNativeHdrSurfaceCapabilitiesAMD {
     }
 }
 impl DisplayNativeHdrSurfaceCapabilitiesAMD {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DisplayNativeHdrSurfaceCapabilitiesAMDBuilder<'a> {
         DisplayNativeHdrSurfaceCapabilitiesAMDBuilder {
             inner: DisplayNativeHdrSurfaceCapabilitiesAMD::default(),
@@ -19057,24 +20375,29 @@ impl DisplayNativeHdrSurfaceCapabilitiesAMD {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DisplayNativeHdrSurfaceCapabilitiesAMDBuilder<'a> {
     inner: DisplayNativeHdrSurfaceCapabilitiesAMD,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsSurfaceCapabilities2KHR for DisplayNativeHdrSurfaceCapabilitiesAMDBuilder<'_> {}
 unsafe impl ExtendsSurfaceCapabilities2KHR for DisplayNativeHdrSurfaceCapabilitiesAMD {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DisplayNativeHdrSurfaceCapabilitiesAMDBuilder<'a> {
     type Target = DisplayNativeHdrSurfaceCapabilitiesAMD;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DisplayNativeHdrSurfaceCapabilitiesAMDBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DisplayNativeHdrSurfaceCapabilitiesAMDBuilder<'a> {
     pub fn local_dimming_support(mut self, local_dimming_support: bool) -> Self {
         self.inner.local_dimming_support = local_dimming_support.into();
@@ -19105,6 +20428,7 @@ impl ::std::default::Default for SwapchainDisplayNativeHdrCreateInfoAMD {
     }
 }
 impl SwapchainDisplayNativeHdrCreateInfoAMD {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SwapchainDisplayNativeHdrCreateInfoAMDBuilder<'a> {
         SwapchainDisplayNativeHdrCreateInfoAMDBuilder {
             inner: SwapchainDisplayNativeHdrCreateInfoAMD::default(),
@@ -19112,24 +20436,29 @@ impl SwapchainDisplayNativeHdrCreateInfoAMD {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SwapchainDisplayNativeHdrCreateInfoAMDBuilder<'a> {
     inner: SwapchainDisplayNativeHdrCreateInfoAMD,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsSwapchainCreateInfoKHR for SwapchainDisplayNativeHdrCreateInfoAMDBuilder<'_> {}
 unsafe impl ExtendsSwapchainCreateInfoKHR for SwapchainDisplayNativeHdrCreateInfoAMD {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SwapchainDisplayNativeHdrCreateInfoAMDBuilder<'a> {
     type Target = SwapchainDisplayNativeHdrCreateInfoAMD;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SwapchainDisplayNativeHdrCreateInfoAMDBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SwapchainDisplayNativeHdrCreateInfoAMDBuilder<'a> {
     pub fn local_dimming_enable(mut self, local_dimming_enable: bool) -> Self {
         self.inner.local_dimming_enable = local_dimming_enable.into();
@@ -19149,6 +20478,7 @@ pub struct RefreshCycleDurationGOOGLE {
     pub refresh_duration: u64,
 }
 impl RefreshCycleDurationGOOGLE {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> RefreshCycleDurationGOOGLEBuilder<'a> {
         RefreshCycleDurationGOOGLEBuilder {
             inner: RefreshCycleDurationGOOGLE::default(),
@@ -19156,22 +20486,26 @@ impl RefreshCycleDurationGOOGLE {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct RefreshCycleDurationGOOGLEBuilder<'a> {
     inner: RefreshCycleDurationGOOGLE,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for RefreshCycleDurationGOOGLEBuilder<'a> {
     type Target = RefreshCycleDurationGOOGLE;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for RefreshCycleDurationGOOGLEBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> RefreshCycleDurationGOOGLEBuilder<'a> {
     pub fn refresh_duration(mut self, refresh_duration: u64) -> Self {
         self.inner.refresh_duration = refresh_duration;
@@ -19195,6 +20529,7 @@ pub struct PastPresentationTimingGOOGLE {
     pub present_margin: u64,
 }
 impl PastPresentationTimingGOOGLE {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PastPresentationTimingGOOGLEBuilder<'a> {
         PastPresentationTimingGOOGLEBuilder {
             inner: PastPresentationTimingGOOGLE::default(),
@@ -19202,22 +20537,26 @@ impl PastPresentationTimingGOOGLE {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PastPresentationTimingGOOGLEBuilder<'a> {
     inner: PastPresentationTimingGOOGLE,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PastPresentationTimingGOOGLEBuilder<'a> {
     type Target = PastPresentationTimingGOOGLE;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PastPresentationTimingGOOGLEBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PastPresentationTimingGOOGLEBuilder<'a> {
     pub fn present_id(mut self, present_id: u32) -> Self {
         self.inner.present_id = present_id;
@@ -19266,6 +20605,7 @@ impl ::std::default::Default for PresentTimesInfoGOOGLE {
     }
 }
 impl PresentTimesInfoGOOGLE {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PresentTimesInfoGOOGLEBuilder<'a> {
         PresentTimesInfoGOOGLEBuilder {
             inner: PresentTimesInfoGOOGLE::default(),
@@ -19273,24 +20613,29 @@ impl PresentTimesInfoGOOGLE {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PresentTimesInfoGOOGLEBuilder<'a> {
     inner: PresentTimesInfoGOOGLE,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPresentInfoKHR for PresentTimesInfoGOOGLEBuilder<'_> {}
 unsafe impl ExtendsPresentInfoKHR for PresentTimesInfoGOOGLE {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PresentTimesInfoGOOGLEBuilder<'a> {
     type Target = PresentTimesInfoGOOGLE;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PresentTimesInfoGOOGLEBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PresentTimesInfoGOOGLEBuilder<'a> {
     pub fn times(mut self, times: &'a [PresentTimeGOOGLE]) -> Self {
         self.inner.swapchain_count = times.len() as _;
@@ -19312,6 +20657,7 @@ pub struct PresentTimeGOOGLE {
     pub desired_present_time: u64,
 }
 impl PresentTimeGOOGLE {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PresentTimeGOOGLEBuilder<'a> {
         PresentTimeGOOGLEBuilder {
             inner: PresentTimeGOOGLE::default(),
@@ -19319,22 +20665,26 @@ impl PresentTimeGOOGLE {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PresentTimeGOOGLEBuilder<'a> {
     inner: PresentTimeGOOGLE,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PresentTimeGOOGLEBuilder<'a> {
     type Target = PresentTimeGOOGLE;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PresentTimeGOOGLEBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PresentTimeGOOGLEBuilder<'a> {
     pub fn present_id(mut self, present_id: u32) -> Self {
         self.inner.present_id = present_id;
@@ -19371,6 +20721,7 @@ impl ::std::default::Default for IOSSurfaceCreateInfoMVK {
     }
 }
 impl IOSSurfaceCreateInfoMVK {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> IOSSurfaceCreateInfoMVKBuilder<'a> {
         IOSSurfaceCreateInfoMVKBuilder {
             inner: IOSSurfaceCreateInfoMVK::default(),
@@ -19378,22 +20729,26 @@ impl IOSSurfaceCreateInfoMVK {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct IOSSurfaceCreateInfoMVKBuilder<'a> {
     inner: IOSSurfaceCreateInfoMVK,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for IOSSurfaceCreateInfoMVKBuilder<'a> {
     type Target = IOSSurfaceCreateInfoMVK;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for IOSSurfaceCreateInfoMVKBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> IOSSurfaceCreateInfoMVKBuilder<'a> {
     pub fn flags(mut self, flags: IOSSurfaceCreateFlagsMVK) -> Self {
         self.inner.flags = flags;
@@ -19430,6 +20785,7 @@ impl ::std::default::Default for MacOSSurfaceCreateInfoMVK {
     }
 }
 impl MacOSSurfaceCreateInfoMVK {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> MacOSSurfaceCreateInfoMVKBuilder<'a> {
         MacOSSurfaceCreateInfoMVKBuilder {
             inner: MacOSSurfaceCreateInfoMVK::default(),
@@ -19437,22 +20793,26 @@ impl MacOSSurfaceCreateInfoMVK {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct MacOSSurfaceCreateInfoMVKBuilder<'a> {
     inner: MacOSSurfaceCreateInfoMVK,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for MacOSSurfaceCreateInfoMVKBuilder<'a> {
     type Target = MacOSSurfaceCreateInfoMVK;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for MacOSSurfaceCreateInfoMVKBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> MacOSSurfaceCreateInfoMVKBuilder<'a> {
     pub fn flags(mut self, flags: MacOSSurfaceCreateFlagsMVK) -> Self {
         self.inner.flags = flags;
@@ -19489,6 +20849,7 @@ impl ::std::default::Default for MetalSurfaceCreateInfoEXT {
     }
 }
 impl MetalSurfaceCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> MetalSurfaceCreateInfoEXTBuilder<'a> {
         MetalSurfaceCreateInfoEXTBuilder {
             inner: MetalSurfaceCreateInfoEXT::default(),
@@ -19496,22 +20857,26 @@ impl MetalSurfaceCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct MetalSurfaceCreateInfoEXTBuilder<'a> {
     inner: MetalSurfaceCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for MetalSurfaceCreateInfoEXTBuilder<'a> {
     type Target = MetalSurfaceCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for MetalSurfaceCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> MetalSurfaceCreateInfoEXTBuilder<'a> {
     pub fn flags(mut self, flags: MetalSurfaceCreateFlagsEXT) -> Self {
         self.inner.flags = flags;
@@ -19536,6 +20901,7 @@ pub struct ViewportWScalingNV {
     pub ycoeff: f32,
 }
 impl ViewportWScalingNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ViewportWScalingNVBuilder<'a> {
         ViewportWScalingNVBuilder {
             inner: ViewportWScalingNV::default(),
@@ -19543,22 +20909,26 @@ impl ViewportWScalingNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ViewportWScalingNVBuilder<'a> {
     inner: ViewportWScalingNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ViewportWScalingNVBuilder<'a> {
     type Target = ViewportWScalingNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ViewportWScalingNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ViewportWScalingNVBuilder<'a> {
     pub fn xcoeff(mut self, xcoeff: f32) -> Self {
         self.inner.xcoeff = xcoeff;
@@ -19597,6 +20967,7 @@ impl ::std::default::Default for PipelineViewportWScalingStateCreateInfoNV {
     }
 }
 impl PipelineViewportWScalingStateCreateInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineViewportWScalingStateCreateInfoNVBuilder<'a> {
         PipelineViewportWScalingStateCreateInfoNVBuilder {
             inner: PipelineViewportWScalingStateCreateInfoNV::default(),
@@ -19604,27 +20975,32 @@ impl PipelineViewportWScalingStateCreateInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineViewportWScalingStateCreateInfoNVBuilder<'a> {
     inner: PipelineViewportWScalingStateCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPipelineViewportStateCreateInfo
     for PipelineViewportWScalingStateCreateInfoNVBuilder<'_>
 {
 }
 unsafe impl ExtendsPipelineViewportStateCreateInfo for PipelineViewportWScalingStateCreateInfoNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineViewportWScalingStateCreateInfoNVBuilder<'a> {
     type Target = PipelineViewportWScalingStateCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineViewportWScalingStateCreateInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineViewportWScalingStateCreateInfoNVBuilder<'a> {
     pub fn viewport_w_scaling_enable(mut self, viewport_w_scaling_enable: bool) -> Self {
         self.inner.viewport_w_scaling_enable = viewport_w_scaling_enable.into();
@@ -19652,6 +21028,7 @@ pub struct ViewportSwizzleNV {
     pub w: ViewportCoordinateSwizzleNV,
 }
 impl ViewportSwizzleNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ViewportSwizzleNVBuilder<'a> {
         ViewportSwizzleNVBuilder {
             inner: ViewportSwizzleNV::default(),
@@ -19659,22 +21036,26 @@ impl ViewportSwizzleNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ViewportSwizzleNVBuilder<'a> {
     inner: ViewportSwizzleNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ViewportSwizzleNVBuilder<'a> {
     type Target = ViewportSwizzleNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ViewportSwizzleNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ViewportSwizzleNVBuilder<'a> {
     pub fn x(mut self, x: ViewportCoordinateSwizzleNV) -> Self {
         self.inner.x = x;
@@ -19721,6 +21102,7 @@ impl ::std::default::Default for PipelineViewportSwizzleStateCreateInfoNV {
     }
 }
 impl PipelineViewportSwizzleStateCreateInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineViewportSwizzleStateCreateInfoNVBuilder<'a> {
         PipelineViewportSwizzleStateCreateInfoNVBuilder {
             inner: PipelineViewportSwizzleStateCreateInfoNV::default(),
@@ -19728,27 +21110,32 @@ impl PipelineViewportSwizzleStateCreateInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineViewportSwizzleStateCreateInfoNVBuilder<'a> {
     inner: PipelineViewportSwizzleStateCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPipelineViewportStateCreateInfo
     for PipelineViewportSwizzleStateCreateInfoNVBuilder<'_>
 {
 }
 unsafe impl ExtendsPipelineViewportStateCreateInfo for PipelineViewportSwizzleStateCreateInfoNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineViewportSwizzleStateCreateInfoNVBuilder<'a> {
     type Target = PipelineViewportSwizzleStateCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineViewportSwizzleStateCreateInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineViewportSwizzleStateCreateInfoNVBuilder<'a> {
     pub fn flags(mut self, flags: PipelineViewportSwizzleStateCreateFlagsNV) -> Self {
         self.inner.flags = flags;
@@ -19784,6 +21171,7 @@ impl ::std::default::Default for PhysicalDeviceDiscardRectanglePropertiesEXT {
     }
 }
 impl PhysicalDeviceDiscardRectanglePropertiesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceDiscardRectanglePropertiesEXTBuilder<'a> {
         PhysicalDeviceDiscardRectanglePropertiesEXTBuilder {
             inner: PhysicalDeviceDiscardRectanglePropertiesEXT::default(),
@@ -19791,27 +21179,32 @@ impl PhysicalDeviceDiscardRectanglePropertiesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceDiscardRectanglePropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceDiscardRectanglePropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceDiscardRectanglePropertiesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDiscardRectanglePropertiesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceDiscardRectanglePropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceDiscardRectanglePropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceDiscardRectanglePropertiesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceDiscardRectanglePropertiesEXTBuilder<'a> {
     pub fn max_discard_rectangles(mut self, max_discard_rectangles: u32) -> Self {
         self.inner.max_discard_rectangles = max_discard_rectangles;
@@ -19848,6 +21241,7 @@ impl ::std::default::Default for PipelineDiscardRectangleStateCreateInfoEXT {
     }
 }
 impl PipelineDiscardRectangleStateCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineDiscardRectangleStateCreateInfoEXTBuilder<'a> {
         PipelineDiscardRectangleStateCreateInfoEXTBuilder {
             inner: PipelineDiscardRectangleStateCreateInfoEXT::default(),
@@ -19855,27 +21249,32 @@ impl PipelineDiscardRectangleStateCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineDiscardRectangleStateCreateInfoEXTBuilder<'a> {
     inner: PipelineDiscardRectangleStateCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsGraphicsPipelineCreateInfo
     for PipelineDiscardRectangleStateCreateInfoEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineDiscardRectangleStateCreateInfoEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineDiscardRectangleStateCreateInfoEXTBuilder<'a> {
     type Target = PipelineDiscardRectangleStateCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineDiscardRectangleStateCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineDiscardRectangleStateCreateInfoEXTBuilder<'a> {
     pub fn flags(mut self, flags: PipelineDiscardRectangleStateCreateFlagsEXT) -> Self {
         self.inner.flags = flags;
@@ -19918,6 +21317,7 @@ impl ::std::default::Default for PhysicalDeviceMultiviewPerViewAttributesPropert
     }
 }
 impl PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceMultiviewPerViewAttributesPropertiesNVXBuilder<'a> {
         PhysicalDeviceMultiviewPerViewAttributesPropertiesNVXBuilder {
             inner: PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX::default(),
@@ -19925,11 +21325,13 @@ impl PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceMultiviewPerViewAttributesPropertiesNVXBuilder<'a> {
     inner: PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVXBuilder<'_>
 {
@@ -19938,17 +21340,20 @@ unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
 {
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVXBuilder<'a> {
     type Target = PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVXBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceMultiviewPerViewAttributesPropertiesNVXBuilder<'a> {
     pub fn per_view_position_all_components(
         mut self,
@@ -19973,6 +21378,7 @@ pub struct InputAttachmentAspectReference {
     pub aspect_mask: ImageAspectFlags,
 }
 impl InputAttachmentAspectReference {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> InputAttachmentAspectReferenceBuilder<'a> {
         InputAttachmentAspectReferenceBuilder {
             inner: InputAttachmentAspectReference::default(),
@@ -19980,22 +21386,26 @@ impl InputAttachmentAspectReference {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct InputAttachmentAspectReferenceBuilder<'a> {
     inner: InputAttachmentAspectReference,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for InputAttachmentAspectReferenceBuilder<'a> {
     type Target = InputAttachmentAspectReference;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for InputAttachmentAspectReferenceBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> InputAttachmentAspectReferenceBuilder<'a> {
     pub fn subpass(mut self, subpass: u32) -> Self {
         self.inner.subpass = subpass;
@@ -20036,6 +21446,7 @@ impl ::std::default::Default for RenderPassInputAttachmentAspectCreateInfo {
     }
 }
 impl RenderPassInputAttachmentAspectCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> RenderPassInputAttachmentAspectCreateInfoBuilder<'a> {
         RenderPassInputAttachmentAspectCreateInfoBuilder {
             inner: RenderPassInputAttachmentAspectCreateInfo::default(),
@@ -20043,24 +21454,29 @@ impl RenderPassInputAttachmentAspectCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct RenderPassInputAttachmentAspectCreateInfoBuilder<'a> {
     inner: RenderPassInputAttachmentAspectCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsRenderPassCreateInfo for RenderPassInputAttachmentAspectCreateInfoBuilder<'_> {}
 unsafe impl ExtendsRenderPassCreateInfo for RenderPassInputAttachmentAspectCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for RenderPassInputAttachmentAspectCreateInfoBuilder<'a> {
     type Target = RenderPassInputAttachmentAspectCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for RenderPassInputAttachmentAspectCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> RenderPassInputAttachmentAspectCreateInfoBuilder<'a> {
     pub fn aspect_references(
         mut self,
@@ -20095,6 +21511,7 @@ impl ::std::default::Default for PhysicalDeviceSurfaceInfo2KHR {
     }
 }
 impl PhysicalDeviceSurfaceInfo2KHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceSurfaceInfo2KHRBuilder<'a> {
         PhysicalDeviceSurfaceInfo2KHRBuilder {
             inner: PhysicalDeviceSurfaceInfo2KHR::default(),
@@ -20102,23 +21519,27 @@ impl PhysicalDeviceSurfaceInfo2KHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceSurfaceInfo2KHRBuilder<'a> {
     inner: PhysicalDeviceSurfaceInfo2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsPhysicalDeviceSurfaceInfo2KHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceSurfaceInfo2KHRBuilder<'a> {
     type Target = PhysicalDeviceSurfaceInfo2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceSurfaceInfo2KHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceSurfaceInfo2KHRBuilder<'a> {
     pub fn surface(mut self, surface: SurfaceKHR) -> Self {
         self.inner.surface = surface;
@@ -20163,6 +21584,7 @@ impl ::std::default::Default for SurfaceCapabilities2KHR {
     }
 }
 impl SurfaceCapabilities2KHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SurfaceCapabilities2KHRBuilder<'a> {
         SurfaceCapabilities2KHRBuilder {
             inner: SurfaceCapabilities2KHR::default(),
@@ -20170,23 +21592,27 @@ impl SurfaceCapabilities2KHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SurfaceCapabilities2KHRBuilder<'a> {
     inner: SurfaceCapabilities2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsSurfaceCapabilities2KHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SurfaceCapabilities2KHRBuilder<'a> {
     type Target = SurfaceCapabilities2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SurfaceCapabilities2KHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SurfaceCapabilities2KHRBuilder<'a> {
     pub fn surface_capabilities(mut self, surface_capabilities: SurfaceCapabilitiesKHR) -> Self {
         self.inner.surface_capabilities = surface_capabilities;
@@ -20231,6 +21657,7 @@ impl ::std::default::Default for SurfaceFormat2KHR {
     }
 }
 impl SurfaceFormat2KHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SurfaceFormat2KHRBuilder<'a> {
         SurfaceFormat2KHRBuilder {
             inner: SurfaceFormat2KHR::default(),
@@ -20238,22 +21665,26 @@ impl SurfaceFormat2KHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SurfaceFormat2KHRBuilder<'a> {
     inner: SurfaceFormat2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SurfaceFormat2KHRBuilder<'a> {
     type Target = SurfaceFormat2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SurfaceFormat2KHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SurfaceFormat2KHRBuilder<'a> {
     pub fn surface_format(mut self, surface_format: SurfaceFormatKHR) -> Self {
         self.inner.surface_format = surface_format;
@@ -20284,6 +21715,7 @@ impl ::std::default::Default for DisplayProperties2KHR {
     }
 }
 impl DisplayProperties2KHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DisplayProperties2KHRBuilder<'a> {
         DisplayProperties2KHRBuilder {
             inner: DisplayProperties2KHR::default(),
@@ -20291,22 +21723,26 @@ impl DisplayProperties2KHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DisplayProperties2KHRBuilder<'a> {
     inner: DisplayProperties2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DisplayProperties2KHRBuilder<'a> {
     type Target = DisplayProperties2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DisplayProperties2KHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DisplayProperties2KHRBuilder<'a> {
     pub fn display_properties(mut self, display_properties: DisplayPropertiesKHR) -> Self {
         self.inner.display_properties = display_properties;
@@ -20337,6 +21773,7 @@ impl ::std::default::Default for DisplayPlaneProperties2KHR {
     }
 }
 impl DisplayPlaneProperties2KHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DisplayPlaneProperties2KHRBuilder<'a> {
         DisplayPlaneProperties2KHRBuilder {
             inner: DisplayPlaneProperties2KHR::default(),
@@ -20344,22 +21781,26 @@ impl DisplayPlaneProperties2KHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DisplayPlaneProperties2KHRBuilder<'a> {
     inner: DisplayPlaneProperties2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DisplayPlaneProperties2KHRBuilder<'a> {
     type Target = DisplayPlaneProperties2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DisplayPlaneProperties2KHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DisplayPlaneProperties2KHRBuilder<'a> {
     pub fn display_plane_properties(
         mut self,
@@ -20393,6 +21834,7 @@ impl ::std::default::Default for DisplayModeProperties2KHR {
     }
 }
 impl DisplayModeProperties2KHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DisplayModeProperties2KHRBuilder<'a> {
         DisplayModeProperties2KHRBuilder {
             inner: DisplayModeProperties2KHR::default(),
@@ -20400,22 +21842,26 @@ impl DisplayModeProperties2KHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DisplayModeProperties2KHRBuilder<'a> {
     inner: DisplayModeProperties2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DisplayModeProperties2KHRBuilder<'a> {
     type Target = DisplayModeProperties2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DisplayModeProperties2KHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DisplayModeProperties2KHRBuilder<'a> {
     pub fn display_mode_properties(
         mut self,
@@ -20451,6 +21897,7 @@ impl ::std::default::Default for DisplayPlaneInfo2KHR {
     }
 }
 impl DisplayPlaneInfo2KHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DisplayPlaneInfo2KHRBuilder<'a> {
         DisplayPlaneInfo2KHRBuilder {
             inner: DisplayPlaneInfo2KHR::default(),
@@ -20458,22 +21905,26 @@ impl DisplayPlaneInfo2KHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DisplayPlaneInfo2KHRBuilder<'a> {
     inner: DisplayPlaneInfo2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DisplayPlaneInfo2KHRBuilder<'a> {
     type Target = DisplayPlaneInfo2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DisplayPlaneInfo2KHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DisplayPlaneInfo2KHRBuilder<'a> {
     pub fn mode(mut self, mode: DisplayModeKHR) -> Self {
         self.inner.mode = mode;
@@ -20508,6 +21959,7 @@ impl ::std::default::Default for DisplayPlaneCapabilities2KHR {
     }
 }
 impl DisplayPlaneCapabilities2KHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DisplayPlaneCapabilities2KHRBuilder<'a> {
         DisplayPlaneCapabilities2KHRBuilder {
             inner: DisplayPlaneCapabilities2KHR::default(),
@@ -20515,22 +21967,26 @@ impl DisplayPlaneCapabilities2KHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DisplayPlaneCapabilities2KHRBuilder<'a> {
     inner: DisplayPlaneCapabilities2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DisplayPlaneCapabilities2KHRBuilder<'a> {
     type Target = DisplayPlaneCapabilities2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DisplayPlaneCapabilities2KHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DisplayPlaneCapabilities2KHRBuilder<'a> {
     pub fn capabilities(mut self, capabilities: DisplayPlaneCapabilitiesKHR) -> Self {
         self.inner.capabilities = capabilities;
@@ -20561,6 +22017,7 @@ impl ::std::default::Default for SharedPresentSurfaceCapabilitiesKHR {
     }
 }
 impl SharedPresentSurfaceCapabilitiesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SharedPresentSurfaceCapabilitiesKHRBuilder<'a> {
         SharedPresentSurfaceCapabilitiesKHRBuilder {
             inner: SharedPresentSurfaceCapabilitiesKHR::default(),
@@ -20568,24 +22025,29 @@ impl SharedPresentSurfaceCapabilitiesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SharedPresentSurfaceCapabilitiesKHRBuilder<'a> {
     inner: SharedPresentSurfaceCapabilitiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsSurfaceCapabilities2KHR for SharedPresentSurfaceCapabilitiesKHRBuilder<'_> {}
 unsafe impl ExtendsSurfaceCapabilities2KHR for SharedPresentSurfaceCapabilitiesKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SharedPresentSurfaceCapabilitiesKHRBuilder<'a> {
     type Target = SharedPresentSurfaceCapabilitiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SharedPresentSurfaceCapabilitiesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SharedPresentSurfaceCapabilitiesKHRBuilder<'a> {
     pub fn shared_present_supported_usage_flags(
         mut self,
@@ -20625,6 +22087,7 @@ impl ::std::default::Default for PhysicalDevice16BitStorageFeatures {
     }
 }
 impl PhysicalDevice16BitStorageFeatures {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDevice16BitStorageFeaturesBuilder<'a> {
         PhysicalDevice16BitStorageFeaturesBuilder {
             inner: PhysicalDevice16BitStorageFeatures::default(),
@@ -20632,26 +22095,32 @@ impl PhysicalDevice16BitStorageFeatures {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDevice16BitStorageFeaturesBuilder<'a> {
     inner: PhysicalDevice16BitStorageFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevice16BitStorageFeaturesBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevice16BitStorageFeatures {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDevice16BitStorageFeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDevice16BitStorageFeatures {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDevice16BitStorageFeaturesBuilder<'a> {
     type Target = PhysicalDevice16BitStorageFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDevice16BitStorageFeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDevice16BitStorageFeaturesBuilder<'a> {
     pub fn storage_buffer16_bit_access(mut self, storage_buffer16_bit_access: bool) -> Self {
         self.inner.storage_buffer16_bit_access = storage_buffer16_bit_access.into();
@@ -20704,6 +22173,7 @@ impl ::std::default::Default for PhysicalDeviceSubgroupProperties {
     }
 }
 impl PhysicalDeviceSubgroupProperties {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceSubgroupPropertiesBuilder<'a> {
         PhysicalDeviceSubgroupPropertiesBuilder {
             inner: PhysicalDeviceSubgroupProperties::default(),
@@ -20711,24 +22181,29 @@ impl PhysicalDeviceSubgroupProperties {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceSubgroupPropertiesBuilder<'a> {
     inner: PhysicalDeviceSubgroupProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSubgroupPropertiesBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSubgroupProperties {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceSubgroupPropertiesBuilder<'a> {
     type Target = PhysicalDeviceSubgroupProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceSubgroupPropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceSubgroupPropertiesBuilder<'a> {
     pub fn subgroup_size(mut self, subgroup_size: u32) -> Self {
         self.inner.subgroup_size = subgroup_size;
@@ -20771,6 +22246,7 @@ impl ::std::default::Default for PhysicalDeviceShaderSubgroupExtendedTypesFeatur
     }
 }
 impl PhysicalDeviceShaderSubgroupExtendedTypesFeatures {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceShaderSubgroupExtendedTypesFeaturesBuilder<'a> {
         PhysicalDeviceShaderSubgroupExtendedTypesFeaturesBuilder {
             inner: PhysicalDeviceShaderSubgroupExtendedTypesFeatures::default(),
@@ -20778,32 +22254,38 @@ impl PhysicalDeviceShaderSubgroupExtendedTypesFeatures {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceShaderSubgroupExtendedTypesFeaturesBuilder<'a> {
     inner: PhysicalDeviceShaderSubgroupExtendedTypesFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceShaderSubgroupExtendedTypesFeaturesBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderSubgroupExtendedTypesFeatures {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceShaderSubgroupExtendedTypesFeaturesBuilder<'_>
 {
 }
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderSubgroupExtendedTypesFeatures {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderSubgroupExtendedTypesFeaturesBuilder<'a> {
     type Target = PhysicalDeviceShaderSubgroupExtendedTypesFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderSubgroupExtendedTypesFeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceShaderSubgroupExtendedTypesFeaturesBuilder<'a> {
     pub fn shader_subgroup_extended_types(mut self, shader_subgroup_extended_types: bool) -> Self {
         self.inner.shader_subgroup_extended_types = shader_subgroup_extended_types.into();
@@ -20834,6 +22316,7 @@ impl ::std::default::Default for BufferMemoryRequirementsInfo2 {
     }
 }
 impl BufferMemoryRequirementsInfo2 {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> BufferMemoryRequirementsInfo2Builder<'a> {
         BufferMemoryRequirementsInfo2Builder {
             inner: BufferMemoryRequirementsInfo2::default(),
@@ -20841,22 +22324,26 @@ impl BufferMemoryRequirementsInfo2 {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct BufferMemoryRequirementsInfo2Builder<'a> {
     inner: BufferMemoryRequirementsInfo2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for BufferMemoryRequirementsInfo2Builder<'a> {
     type Target = BufferMemoryRequirementsInfo2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for BufferMemoryRequirementsInfo2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> BufferMemoryRequirementsInfo2Builder<'a> {
     pub fn buffer(mut self, buffer: Buffer) -> Self {
         self.inner.buffer = buffer;
@@ -20887,6 +22374,7 @@ impl ::std::default::Default for ImageMemoryRequirementsInfo2 {
     }
 }
 impl ImageMemoryRequirementsInfo2 {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImageMemoryRequirementsInfo2Builder<'a> {
         ImageMemoryRequirementsInfo2Builder {
             inner: ImageMemoryRequirementsInfo2::default(),
@@ -20894,23 +22382,27 @@ impl ImageMemoryRequirementsInfo2 {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImageMemoryRequirementsInfo2Builder<'a> {
     inner: ImageMemoryRequirementsInfo2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsImageMemoryRequirementsInfo2 {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImageMemoryRequirementsInfo2Builder<'a> {
     type Target = ImageMemoryRequirementsInfo2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImageMemoryRequirementsInfo2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImageMemoryRequirementsInfo2Builder<'a> {
     pub fn image(mut self, image: Image) -> Self {
         self.inner.image = image;
@@ -20955,6 +22447,7 @@ impl ::std::default::Default for ImageSparseMemoryRequirementsInfo2 {
     }
 }
 impl ImageSparseMemoryRequirementsInfo2 {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImageSparseMemoryRequirementsInfo2Builder<'a> {
         ImageSparseMemoryRequirementsInfo2Builder {
             inner: ImageSparseMemoryRequirementsInfo2::default(),
@@ -20962,22 +22455,26 @@ impl ImageSparseMemoryRequirementsInfo2 {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImageSparseMemoryRequirementsInfo2Builder<'a> {
     inner: ImageSparseMemoryRequirementsInfo2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImageSparseMemoryRequirementsInfo2Builder<'a> {
     type Target = ImageSparseMemoryRequirementsInfo2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImageSparseMemoryRequirementsInfo2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImageSparseMemoryRequirementsInfo2Builder<'a> {
     pub fn image(mut self, image: Image) -> Self {
         self.inner.image = image;
@@ -21008,6 +22505,7 @@ impl ::std::default::Default for MemoryRequirements2 {
     }
 }
 impl MemoryRequirements2 {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> MemoryRequirements2Builder<'a> {
         MemoryRequirements2Builder {
             inner: MemoryRequirements2::default(),
@@ -21015,23 +22513,27 @@ impl MemoryRequirements2 {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct MemoryRequirements2Builder<'a> {
     inner: MemoryRequirements2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsMemoryRequirements2 {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for MemoryRequirements2Builder<'a> {
     type Target = MemoryRequirements2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for MemoryRequirements2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> MemoryRequirements2Builder<'a> {
     pub fn memory_requirements(mut self, memory_requirements: MemoryRequirements) -> Self {
         self.inner.memory_requirements = memory_requirements;
@@ -21076,6 +22578,7 @@ impl ::std::default::Default for SparseImageMemoryRequirements2 {
     }
 }
 impl SparseImageMemoryRequirements2 {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SparseImageMemoryRequirements2Builder<'a> {
         SparseImageMemoryRequirements2Builder {
             inner: SparseImageMemoryRequirements2::default(),
@@ -21083,22 +22586,26 @@ impl SparseImageMemoryRequirements2 {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SparseImageMemoryRequirements2Builder<'a> {
     inner: SparseImageMemoryRequirements2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SparseImageMemoryRequirements2Builder<'a> {
     type Target = SparseImageMemoryRequirements2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SparseImageMemoryRequirements2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SparseImageMemoryRequirements2Builder<'a> {
     pub fn memory_requirements(
         mut self,
@@ -21132,6 +22639,7 @@ impl ::std::default::Default for PhysicalDevicePointClippingProperties {
     }
 }
 impl PhysicalDevicePointClippingProperties {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDevicePointClippingPropertiesBuilder<'a> {
         PhysicalDevicePointClippingPropertiesBuilder {
             inner: PhysicalDevicePointClippingProperties::default(),
@@ -21139,24 +22647,29 @@ impl PhysicalDevicePointClippingProperties {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDevicePointClippingPropertiesBuilder<'a> {
     inner: PhysicalDevicePointClippingProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePointClippingPropertiesBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePointClippingProperties {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDevicePointClippingPropertiesBuilder<'a> {
     type Target = PhysicalDevicePointClippingProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDevicePointClippingPropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDevicePointClippingPropertiesBuilder<'a> {
     pub fn point_clipping_behavior(
         mut self,
@@ -21192,6 +22705,7 @@ impl ::std::default::Default for MemoryDedicatedRequirements {
     }
 }
 impl MemoryDedicatedRequirements {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> MemoryDedicatedRequirementsBuilder<'a> {
         MemoryDedicatedRequirementsBuilder {
             inner: MemoryDedicatedRequirements::default(),
@@ -21199,24 +22713,29 @@ impl MemoryDedicatedRequirements {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct MemoryDedicatedRequirementsBuilder<'a> {
     inner: MemoryDedicatedRequirements,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsMemoryRequirements2 for MemoryDedicatedRequirementsBuilder<'_> {}
 unsafe impl ExtendsMemoryRequirements2 for MemoryDedicatedRequirements {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for MemoryDedicatedRequirementsBuilder<'a> {
     type Target = MemoryDedicatedRequirements;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for MemoryDedicatedRequirementsBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> MemoryDedicatedRequirementsBuilder<'a> {
     pub fn prefers_dedicated_allocation(mut self, prefers_dedicated_allocation: bool) -> Self {
         self.inner.prefers_dedicated_allocation = prefers_dedicated_allocation.into();
@@ -21253,6 +22772,7 @@ impl ::std::default::Default for MemoryDedicatedAllocateInfo {
     }
 }
 impl MemoryDedicatedAllocateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> MemoryDedicatedAllocateInfoBuilder<'a> {
         MemoryDedicatedAllocateInfoBuilder {
             inner: MemoryDedicatedAllocateInfo::default(),
@@ -21260,24 +22780,29 @@ impl MemoryDedicatedAllocateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct MemoryDedicatedAllocateInfoBuilder<'a> {
     inner: MemoryDedicatedAllocateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsMemoryAllocateInfo for MemoryDedicatedAllocateInfoBuilder<'_> {}
 unsafe impl ExtendsMemoryAllocateInfo for MemoryDedicatedAllocateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for MemoryDedicatedAllocateInfoBuilder<'a> {
     type Target = MemoryDedicatedAllocateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for MemoryDedicatedAllocateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> MemoryDedicatedAllocateInfoBuilder<'a> {
     pub fn image(mut self, image: Image) -> Self {
         self.inner.image = image;
@@ -21312,6 +22837,7 @@ impl ::std::default::Default for ImageViewUsageCreateInfo {
     }
 }
 impl ImageViewUsageCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImageViewUsageCreateInfoBuilder<'a> {
         ImageViewUsageCreateInfoBuilder {
             inner: ImageViewUsageCreateInfo::default(),
@@ -21319,24 +22845,29 @@ impl ImageViewUsageCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImageViewUsageCreateInfoBuilder<'a> {
     inner: ImageViewUsageCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsImageViewCreateInfo for ImageViewUsageCreateInfoBuilder<'_> {}
 unsafe impl ExtendsImageViewCreateInfo for ImageViewUsageCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImageViewUsageCreateInfoBuilder<'a> {
     type Target = ImageViewUsageCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImageViewUsageCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImageViewUsageCreateInfoBuilder<'a> {
     pub fn usage(mut self, usage: ImageUsageFlags) -> Self {
         self.inner.usage = usage;
@@ -21367,6 +22898,7 @@ impl ::std::default::Default for PipelineTessellationDomainOriginStateCreateInfo
     }
 }
 impl PipelineTessellationDomainOriginStateCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineTessellationDomainOriginStateCreateInfoBuilder<'a> {
         PipelineTessellationDomainOriginStateCreateInfoBuilder {
             inner: PipelineTessellationDomainOriginStateCreateInfo::default(),
@@ -21374,11 +22906,13 @@ impl PipelineTessellationDomainOriginStateCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineTessellationDomainOriginStateCreateInfoBuilder<'a> {
     inner: PipelineTessellationDomainOriginStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPipelineTessellationStateCreateInfo
     for PipelineTessellationDomainOriginStateCreateInfoBuilder<'_>
 {
@@ -21387,17 +22921,20 @@ unsafe impl ExtendsPipelineTessellationStateCreateInfo
     for PipelineTessellationDomainOriginStateCreateInfo
 {
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineTessellationDomainOriginStateCreateInfoBuilder<'a> {
     type Target = PipelineTessellationDomainOriginStateCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineTessellationDomainOriginStateCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineTessellationDomainOriginStateCreateInfoBuilder<'a> {
     pub fn domain_origin(mut self, domain_origin: TessellationDomainOrigin) -> Self {
         self.inner.domain_origin = domain_origin;
@@ -21428,6 +22965,7 @@ impl ::std::default::Default for SamplerYcbcrConversionInfo {
     }
 }
 impl SamplerYcbcrConversionInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SamplerYcbcrConversionInfoBuilder<'a> {
         SamplerYcbcrConversionInfoBuilder {
             inner: SamplerYcbcrConversionInfo::default(),
@@ -21435,26 +22973,32 @@ impl SamplerYcbcrConversionInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SamplerYcbcrConversionInfoBuilder<'a> {
     inner: SamplerYcbcrConversionInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsSamplerCreateInfo for SamplerYcbcrConversionInfoBuilder<'_> {}
 unsafe impl ExtendsSamplerCreateInfo for SamplerYcbcrConversionInfo {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsImageViewCreateInfo for SamplerYcbcrConversionInfoBuilder<'_> {}
 unsafe impl ExtendsImageViewCreateInfo for SamplerYcbcrConversionInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SamplerYcbcrConversionInfoBuilder<'a> {
     type Target = SamplerYcbcrConversionInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SamplerYcbcrConversionInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SamplerYcbcrConversionInfoBuilder<'a> {
     pub fn conversion(mut self, conversion: SamplerYcbcrConversion) -> Self {
         self.inner.conversion = conversion;
@@ -21499,6 +23043,7 @@ impl ::std::default::Default for SamplerYcbcrConversionCreateInfo {
     }
 }
 impl SamplerYcbcrConversionCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SamplerYcbcrConversionCreateInfoBuilder<'a> {
         SamplerYcbcrConversionCreateInfoBuilder {
             inner: SamplerYcbcrConversionCreateInfo::default(),
@@ -21506,23 +23051,27 @@ impl SamplerYcbcrConversionCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SamplerYcbcrConversionCreateInfoBuilder<'a> {
     inner: SamplerYcbcrConversionCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsSamplerYcbcrConversionCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SamplerYcbcrConversionCreateInfoBuilder<'a> {
     type Target = SamplerYcbcrConversionCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SamplerYcbcrConversionCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SamplerYcbcrConversionCreateInfoBuilder<'a> {
     pub fn format(mut self, format: Format) -> Self {
         self.inner.format = format;
@@ -21598,6 +23147,7 @@ impl ::std::default::Default for BindImagePlaneMemoryInfo {
     }
 }
 impl BindImagePlaneMemoryInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> BindImagePlaneMemoryInfoBuilder<'a> {
         BindImagePlaneMemoryInfoBuilder {
             inner: BindImagePlaneMemoryInfo::default(),
@@ -21605,24 +23155,29 @@ impl BindImagePlaneMemoryInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct BindImagePlaneMemoryInfoBuilder<'a> {
     inner: BindImagePlaneMemoryInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsBindImageMemoryInfo for BindImagePlaneMemoryInfoBuilder<'_> {}
 unsafe impl ExtendsBindImageMemoryInfo for BindImagePlaneMemoryInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for BindImagePlaneMemoryInfoBuilder<'a> {
     type Target = BindImagePlaneMemoryInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for BindImagePlaneMemoryInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> BindImagePlaneMemoryInfoBuilder<'a> {
     pub fn plane_aspect(mut self, plane_aspect: ImageAspectFlags) -> Self {
         self.inner.plane_aspect = plane_aspect;
@@ -21653,6 +23208,7 @@ impl ::std::default::Default for ImagePlaneMemoryRequirementsInfo {
     }
 }
 impl ImagePlaneMemoryRequirementsInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImagePlaneMemoryRequirementsInfoBuilder<'a> {
         ImagePlaneMemoryRequirementsInfoBuilder {
             inner: ImagePlaneMemoryRequirementsInfo::default(),
@@ -21660,24 +23216,29 @@ impl ImagePlaneMemoryRequirementsInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImagePlaneMemoryRequirementsInfoBuilder<'a> {
     inner: ImagePlaneMemoryRequirementsInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsImageMemoryRequirementsInfo2 for ImagePlaneMemoryRequirementsInfoBuilder<'_> {}
 unsafe impl ExtendsImageMemoryRequirementsInfo2 for ImagePlaneMemoryRequirementsInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImagePlaneMemoryRequirementsInfoBuilder<'a> {
     type Target = ImagePlaneMemoryRequirementsInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImagePlaneMemoryRequirementsInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImagePlaneMemoryRequirementsInfoBuilder<'a> {
     pub fn plane_aspect(mut self, plane_aspect: ImageAspectFlags) -> Self {
         self.inner.plane_aspect = plane_aspect;
@@ -21708,6 +23269,7 @@ impl ::std::default::Default for PhysicalDeviceSamplerYcbcrConversionFeatures {
     }
 }
 impl PhysicalDeviceSamplerYcbcrConversionFeatures {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceSamplerYcbcrConversionFeaturesBuilder<'a> {
         PhysicalDeviceSamplerYcbcrConversionFeaturesBuilder {
             inner: PhysicalDeviceSamplerYcbcrConversionFeatures::default(),
@@ -21715,29 +23277,35 @@ impl PhysicalDeviceSamplerYcbcrConversionFeatures {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceSamplerYcbcrConversionFeaturesBuilder<'a> {
     inner: PhysicalDeviceSamplerYcbcrConversionFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceSamplerYcbcrConversionFeaturesBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSamplerYcbcrConversionFeatures {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSamplerYcbcrConversionFeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSamplerYcbcrConversionFeatures {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceSamplerYcbcrConversionFeaturesBuilder<'a> {
     type Target = PhysicalDeviceSamplerYcbcrConversionFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceSamplerYcbcrConversionFeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceSamplerYcbcrConversionFeaturesBuilder<'a> {
     pub fn sampler_ycbcr_conversion(mut self, sampler_ycbcr_conversion: bool) -> Self {
         self.inner.sampler_ycbcr_conversion = sampler_ycbcr_conversion.into();
@@ -21768,6 +23336,7 @@ impl ::std::default::Default for SamplerYcbcrConversionImageFormatProperties {
     }
 }
 impl SamplerYcbcrConversionImageFormatProperties {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SamplerYcbcrConversionImageFormatPropertiesBuilder<'a> {
         SamplerYcbcrConversionImageFormatPropertiesBuilder {
             inner: SamplerYcbcrConversionImageFormatProperties::default(),
@@ -21775,27 +23344,32 @@ impl SamplerYcbcrConversionImageFormatProperties {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SamplerYcbcrConversionImageFormatPropertiesBuilder<'a> {
     inner: SamplerYcbcrConversionImageFormatProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsImageFormatProperties2
     for SamplerYcbcrConversionImageFormatPropertiesBuilder<'_>
 {
 }
 unsafe impl ExtendsImageFormatProperties2 for SamplerYcbcrConversionImageFormatProperties {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SamplerYcbcrConversionImageFormatPropertiesBuilder<'a> {
     type Target = SamplerYcbcrConversionImageFormatProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SamplerYcbcrConversionImageFormatPropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SamplerYcbcrConversionImageFormatPropertiesBuilder<'a> {
     pub fn combined_image_sampler_descriptor_count(
         mut self,
@@ -21830,6 +23404,7 @@ impl ::std::default::Default for TextureLODGatherFormatPropertiesAMD {
     }
 }
 impl TextureLODGatherFormatPropertiesAMD {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> TextureLODGatherFormatPropertiesAMDBuilder<'a> {
         TextureLODGatherFormatPropertiesAMDBuilder {
             inner: TextureLODGatherFormatPropertiesAMD::default(),
@@ -21837,24 +23412,29 @@ impl TextureLODGatherFormatPropertiesAMD {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct TextureLODGatherFormatPropertiesAMDBuilder<'a> {
     inner: TextureLODGatherFormatPropertiesAMD,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsImageFormatProperties2 for TextureLODGatherFormatPropertiesAMDBuilder<'_> {}
 unsafe impl ExtendsImageFormatProperties2 for TextureLODGatherFormatPropertiesAMD {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for TextureLODGatherFormatPropertiesAMDBuilder<'a> {
     type Target = TextureLODGatherFormatPropertiesAMD;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for TextureLODGatherFormatPropertiesAMDBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> TextureLODGatherFormatPropertiesAMDBuilder<'a> {
     pub fn supports_texture_gather_lod_bias_amd(
         mut self,
@@ -21893,6 +23473,7 @@ impl ::std::default::Default for ConditionalRenderingBeginInfoEXT {
     }
 }
 impl ConditionalRenderingBeginInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ConditionalRenderingBeginInfoEXTBuilder<'a> {
         ConditionalRenderingBeginInfoEXTBuilder {
             inner: ConditionalRenderingBeginInfoEXT::default(),
@@ -21900,22 +23481,26 @@ impl ConditionalRenderingBeginInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ConditionalRenderingBeginInfoEXTBuilder<'a> {
     inner: ConditionalRenderingBeginInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ConditionalRenderingBeginInfoEXTBuilder<'a> {
     type Target = ConditionalRenderingBeginInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ConditionalRenderingBeginInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ConditionalRenderingBeginInfoEXTBuilder<'a> {
     pub fn buffer(mut self, buffer: Buffer) -> Self {
         self.inner.buffer = buffer;
@@ -21954,6 +23539,7 @@ impl ::std::default::Default for ProtectedSubmitInfo {
     }
 }
 impl ProtectedSubmitInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ProtectedSubmitInfoBuilder<'a> {
         ProtectedSubmitInfoBuilder {
             inner: ProtectedSubmitInfo::default(),
@@ -21961,24 +23547,29 @@ impl ProtectedSubmitInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ProtectedSubmitInfoBuilder<'a> {
     inner: ProtectedSubmitInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsSubmitInfo for ProtectedSubmitInfoBuilder<'_> {}
 unsafe impl ExtendsSubmitInfo for ProtectedSubmitInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ProtectedSubmitInfoBuilder<'a> {
     type Target = ProtectedSubmitInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ProtectedSubmitInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ProtectedSubmitInfoBuilder<'a> {
     pub fn protected_submit(mut self, protected_submit: bool) -> Self {
         self.inner.protected_submit = protected_submit.into();
@@ -22009,6 +23600,7 @@ impl ::std::default::Default for PhysicalDeviceProtectedMemoryFeatures {
     }
 }
 impl PhysicalDeviceProtectedMemoryFeatures {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceProtectedMemoryFeaturesBuilder<'a> {
         PhysicalDeviceProtectedMemoryFeaturesBuilder {
             inner: PhysicalDeviceProtectedMemoryFeatures::default(),
@@ -22016,26 +23608,32 @@ impl PhysicalDeviceProtectedMemoryFeatures {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceProtectedMemoryFeaturesBuilder<'a> {
     inner: PhysicalDeviceProtectedMemoryFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceProtectedMemoryFeaturesBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceProtectedMemoryFeatures {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceProtectedMemoryFeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceProtectedMemoryFeatures {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceProtectedMemoryFeaturesBuilder<'a> {
     type Target = PhysicalDeviceProtectedMemoryFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceProtectedMemoryFeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceProtectedMemoryFeaturesBuilder<'a> {
     pub fn protected_memory(mut self, protected_memory: bool) -> Self {
         self.inner.protected_memory = protected_memory.into();
@@ -22066,6 +23664,7 @@ impl ::std::default::Default for PhysicalDeviceProtectedMemoryProperties {
     }
 }
 impl PhysicalDeviceProtectedMemoryProperties {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceProtectedMemoryPropertiesBuilder<'a> {
         PhysicalDeviceProtectedMemoryPropertiesBuilder {
             inner: PhysicalDeviceProtectedMemoryProperties::default(),
@@ -22073,27 +23672,32 @@ impl PhysicalDeviceProtectedMemoryProperties {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceProtectedMemoryPropertiesBuilder<'a> {
     inner: PhysicalDeviceProtectedMemoryProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceProtectedMemoryPropertiesBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceProtectedMemoryProperties {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceProtectedMemoryPropertiesBuilder<'a> {
     type Target = PhysicalDeviceProtectedMemoryProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceProtectedMemoryPropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceProtectedMemoryPropertiesBuilder<'a> {
     pub fn protected_no_fault(mut self, protected_no_fault: bool) -> Self {
         self.inner.protected_no_fault = protected_no_fault.into();
@@ -22128,6 +23732,7 @@ impl ::std::default::Default for DeviceQueueInfo2 {
     }
 }
 impl DeviceQueueInfo2 {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DeviceQueueInfo2Builder<'a> {
         DeviceQueueInfo2Builder {
             inner: DeviceQueueInfo2::default(),
@@ -22135,22 +23740,26 @@ impl DeviceQueueInfo2 {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DeviceQueueInfo2Builder<'a> {
     inner: DeviceQueueInfo2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DeviceQueueInfo2Builder<'a> {
     type Target = DeviceQueueInfo2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DeviceQueueInfo2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DeviceQueueInfo2Builder<'a> {
     pub fn flags(mut self, flags: DeviceQueueCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -22193,6 +23802,7 @@ impl ::std::default::Default for PipelineCoverageToColorStateCreateInfoNV {
     }
 }
 impl PipelineCoverageToColorStateCreateInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineCoverageToColorStateCreateInfoNVBuilder<'a> {
         PipelineCoverageToColorStateCreateInfoNVBuilder {
             inner: PipelineCoverageToColorStateCreateInfoNV::default(),
@@ -22200,27 +23810,32 @@ impl PipelineCoverageToColorStateCreateInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineCoverageToColorStateCreateInfoNVBuilder<'a> {
     inner: PipelineCoverageToColorStateCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPipelineMultisampleStateCreateInfo
     for PipelineCoverageToColorStateCreateInfoNVBuilder<'_>
 {
 }
 unsafe impl ExtendsPipelineMultisampleStateCreateInfo for PipelineCoverageToColorStateCreateInfoNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineCoverageToColorStateCreateInfoNVBuilder<'a> {
     type Target = PipelineCoverageToColorStateCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineCoverageToColorStateCreateInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineCoverageToColorStateCreateInfoNVBuilder<'a> {
     pub fn flags(mut self, flags: PipelineCoverageToColorStateCreateFlagsNV) -> Self {
         self.inner.flags = flags;
@@ -22261,6 +23876,7 @@ impl ::std::default::Default for PhysicalDeviceSamplerFilterMinmaxProperties {
     }
 }
 impl PhysicalDeviceSamplerFilterMinmaxProperties {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceSamplerFilterMinmaxPropertiesBuilder<'a> {
         PhysicalDeviceSamplerFilterMinmaxPropertiesBuilder {
             inner: PhysicalDeviceSamplerFilterMinmaxProperties::default(),
@@ -22268,27 +23884,32 @@ impl PhysicalDeviceSamplerFilterMinmaxProperties {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceSamplerFilterMinmaxPropertiesBuilder<'a> {
     inner: PhysicalDeviceSamplerFilterMinmaxProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceSamplerFilterMinmaxPropertiesBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSamplerFilterMinmaxProperties {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceSamplerFilterMinmaxPropertiesBuilder<'a> {
     type Target = PhysicalDeviceSamplerFilterMinmaxProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceSamplerFilterMinmaxPropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceSamplerFilterMinmaxPropertiesBuilder<'a> {
     pub fn filter_minmax_single_component_formats(
         mut self,
@@ -22321,6 +23942,7 @@ pub struct SampleLocationEXT {
     pub y: f32,
 }
 impl SampleLocationEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SampleLocationEXTBuilder<'a> {
         SampleLocationEXTBuilder {
             inner: SampleLocationEXT::default(),
@@ -22328,22 +23950,26 @@ impl SampleLocationEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SampleLocationEXTBuilder<'a> {
     inner: SampleLocationEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SampleLocationEXTBuilder<'a> {
     type Target = SampleLocationEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SampleLocationEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SampleLocationEXTBuilder<'a> {
     pub fn x(mut self, x: f32) -> Self {
         self.inner.x = x;
@@ -22384,6 +24010,7 @@ impl ::std::default::Default for SampleLocationsInfoEXT {
     }
 }
 impl SampleLocationsInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SampleLocationsInfoEXTBuilder<'a> {
         SampleLocationsInfoEXTBuilder {
             inner: SampleLocationsInfoEXT::default(),
@@ -22391,26 +24018,32 @@ impl SampleLocationsInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SampleLocationsInfoEXTBuilder<'a> {
     inner: SampleLocationsInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsImageMemoryBarrier for SampleLocationsInfoEXTBuilder<'_> {}
 unsafe impl ExtendsImageMemoryBarrier for SampleLocationsInfoEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsImageMemoryBarrier2KHR for SampleLocationsInfoEXTBuilder<'_> {}
 unsafe impl ExtendsImageMemoryBarrier2KHR for SampleLocationsInfoEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SampleLocationsInfoEXTBuilder<'a> {
     type Target = SampleLocationsInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SampleLocationsInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SampleLocationsInfoEXTBuilder<'a> {
     pub fn sample_locations_per_pixel(
         mut self,
@@ -22443,6 +24076,7 @@ pub struct AttachmentSampleLocationsEXT {
     pub sample_locations_info: SampleLocationsInfoEXT,
 }
 impl AttachmentSampleLocationsEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> AttachmentSampleLocationsEXTBuilder<'a> {
         AttachmentSampleLocationsEXTBuilder {
             inner: AttachmentSampleLocationsEXT::default(),
@@ -22450,22 +24084,26 @@ impl AttachmentSampleLocationsEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct AttachmentSampleLocationsEXTBuilder<'a> {
     inner: AttachmentSampleLocationsEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for AttachmentSampleLocationsEXTBuilder<'a> {
     type Target = AttachmentSampleLocationsEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for AttachmentSampleLocationsEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> AttachmentSampleLocationsEXTBuilder<'a> {
     pub fn attachment_index(mut self, attachment_index: u32) -> Self {
         self.inner.attachment_index = attachment_index;
@@ -22490,6 +24128,7 @@ pub struct SubpassSampleLocationsEXT {
     pub sample_locations_info: SampleLocationsInfoEXT,
 }
 impl SubpassSampleLocationsEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SubpassSampleLocationsEXTBuilder<'a> {
         SubpassSampleLocationsEXTBuilder {
             inner: SubpassSampleLocationsEXT::default(),
@@ -22497,22 +24136,26 @@ impl SubpassSampleLocationsEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SubpassSampleLocationsEXTBuilder<'a> {
     inner: SubpassSampleLocationsEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SubpassSampleLocationsEXTBuilder<'a> {
     type Target = SubpassSampleLocationsEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SubpassSampleLocationsEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SubpassSampleLocationsEXTBuilder<'a> {
     pub fn subpass_index(mut self, subpass_index: u32) -> Self {
         self.inner.subpass_index = subpass_index;
@@ -22553,6 +24196,7 @@ impl ::std::default::Default for RenderPassSampleLocationsBeginInfoEXT {
     }
 }
 impl RenderPassSampleLocationsBeginInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> RenderPassSampleLocationsBeginInfoEXTBuilder<'a> {
         RenderPassSampleLocationsBeginInfoEXTBuilder {
             inner: RenderPassSampleLocationsBeginInfoEXT::default(),
@@ -22560,24 +24204,29 @@ impl RenderPassSampleLocationsBeginInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct RenderPassSampleLocationsBeginInfoEXTBuilder<'a> {
     inner: RenderPassSampleLocationsBeginInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsRenderPassBeginInfo for RenderPassSampleLocationsBeginInfoEXTBuilder<'_> {}
 unsafe impl ExtendsRenderPassBeginInfo for RenderPassSampleLocationsBeginInfoEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for RenderPassSampleLocationsBeginInfoEXTBuilder<'a> {
     type Target = RenderPassSampleLocationsBeginInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for RenderPassSampleLocationsBeginInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> RenderPassSampleLocationsBeginInfoEXTBuilder<'a> {
     pub fn attachment_initial_sample_locations(
         mut self,
@@ -22624,6 +24273,7 @@ impl ::std::default::Default for PipelineSampleLocationsStateCreateInfoEXT {
     }
 }
 impl PipelineSampleLocationsStateCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineSampleLocationsStateCreateInfoEXTBuilder<'a> {
         PipelineSampleLocationsStateCreateInfoEXTBuilder {
             inner: PipelineSampleLocationsStateCreateInfoEXT::default(),
@@ -22631,11 +24281,13 @@ impl PipelineSampleLocationsStateCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineSampleLocationsStateCreateInfoEXTBuilder<'a> {
     inner: PipelineSampleLocationsStateCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPipelineMultisampleStateCreateInfo
     for PipelineSampleLocationsStateCreateInfoEXTBuilder<'_>
 {
@@ -22644,17 +24296,20 @@ unsafe impl ExtendsPipelineMultisampleStateCreateInfo
     for PipelineSampleLocationsStateCreateInfoEXT
 {
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineSampleLocationsStateCreateInfoEXTBuilder<'a> {
     type Target = PipelineSampleLocationsStateCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineSampleLocationsStateCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineSampleLocationsStateCreateInfoEXTBuilder<'a> {
     pub fn sample_locations_enable(mut self, sample_locations_enable: bool) -> Self {
         self.inner.sample_locations_enable = sample_locations_enable.into();
@@ -22697,6 +24352,7 @@ impl ::std::default::Default for PhysicalDeviceSampleLocationsPropertiesEXT {
     }
 }
 impl PhysicalDeviceSampleLocationsPropertiesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceSampleLocationsPropertiesEXTBuilder<'a> {
         PhysicalDeviceSampleLocationsPropertiesEXTBuilder {
             inner: PhysicalDeviceSampleLocationsPropertiesEXT::default(),
@@ -22704,27 +24360,32 @@ impl PhysicalDeviceSampleLocationsPropertiesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceSampleLocationsPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceSampleLocationsPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceSampleLocationsPropertiesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSampleLocationsPropertiesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceSampleLocationsPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceSampleLocationsPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceSampleLocationsPropertiesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceSampleLocationsPropertiesEXTBuilder<'a> {
     pub fn sample_location_sample_counts(
         mut self,
@@ -22780,6 +24441,7 @@ impl ::std::default::Default for MultisamplePropertiesEXT {
     }
 }
 impl MultisamplePropertiesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> MultisamplePropertiesEXTBuilder<'a> {
         MultisamplePropertiesEXTBuilder {
             inner: MultisamplePropertiesEXT::default(),
@@ -22787,22 +24449,26 @@ impl MultisamplePropertiesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct MultisamplePropertiesEXTBuilder<'a> {
     inner: MultisamplePropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for MultisamplePropertiesEXTBuilder<'a> {
     type Target = MultisamplePropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for MultisamplePropertiesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> MultisamplePropertiesEXTBuilder<'a> {
     pub fn max_sample_location_grid_size(
         mut self,
@@ -22836,6 +24502,7 @@ impl ::std::default::Default for SamplerReductionModeCreateInfo {
     }
 }
 impl SamplerReductionModeCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SamplerReductionModeCreateInfoBuilder<'a> {
         SamplerReductionModeCreateInfoBuilder {
             inner: SamplerReductionModeCreateInfo::default(),
@@ -22843,24 +24510,29 @@ impl SamplerReductionModeCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SamplerReductionModeCreateInfoBuilder<'a> {
     inner: SamplerReductionModeCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsSamplerCreateInfo for SamplerReductionModeCreateInfoBuilder<'_> {}
 unsafe impl ExtendsSamplerCreateInfo for SamplerReductionModeCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SamplerReductionModeCreateInfoBuilder<'a> {
     type Target = SamplerReductionModeCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SamplerReductionModeCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SamplerReductionModeCreateInfoBuilder<'a> {
     pub fn reduction_mode(mut self, reduction_mode: SamplerReductionMode) -> Self {
         self.inner.reduction_mode = reduction_mode;
@@ -22891,6 +24563,7 @@ impl ::std::default::Default for PhysicalDeviceBlendOperationAdvancedFeaturesEXT
     }
 }
 impl PhysicalDeviceBlendOperationAdvancedFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilder<'a> {
         PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilder {
             inner: PhysicalDeviceBlendOperationAdvancedFeaturesEXT::default(),
@@ -22898,29 +24571,35 @@ impl PhysicalDeviceBlendOperationAdvancedFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceBlendOperationAdvancedFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceBlendOperationAdvancedFeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceBlendOperationAdvancedFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceBlendOperationAdvancedFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilder<'a> {
     pub fn advanced_blend_coherent_operations(
         mut self,
@@ -22954,6 +24633,7 @@ impl ::std::default::Default for PhysicalDeviceMultiDrawFeaturesEXT {
     }
 }
 impl PhysicalDeviceMultiDrawFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceMultiDrawFeaturesEXTBuilder<'a> {
         PhysicalDeviceMultiDrawFeaturesEXTBuilder {
             inner: PhysicalDeviceMultiDrawFeaturesEXT::default(),
@@ -22961,26 +24641,32 @@ impl PhysicalDeviceMultiDrawFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceMultiDrawFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceMultiDrawFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMultiDrawFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMultiDrawFeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMultiDrawFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMultiDrawFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceMultiDrawFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceMultiDrawFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceMultiDrawFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceMultiDrawFeaturesEXTBuilder<'a> {
     pub fn multi_draw(mut self, multi_draw: bool) -> Self {
         self.inner.multi_draw = multi_draw.into();
@@ -23021,6 +24707,7 @@ impl ::std::default::Default for PhysicalDeviceBlendOperationAdvancedPropertiesE
     }
 }
 impl PhysicalDeviceBlendOperationAdvancedPropertiesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceBlendOperationAdvancedPropertiesEXTBuilder<'a> {
         PhysicalDeviceBlendOperationAdvancedPropertiesEXTBuilder {
             inner: PhysicalDeviceBlendOperationAdvancedPropertiesEXT::default(),
@@ -23028,27 +24715,32 @@ impl PhysicalDeviceBlendOperationAdvancedPropertiesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceBlendOperationAdvancedPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceBlendOperationAdvancedPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceBlendOperationAdvancedPropertiesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceBlendOperationAdvancedPropertiesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceBlendOperationAdvancedPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceBlendOperationAdvancedPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceBlendOperationAdvancedPropertiesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceBlendOperationAdvancedPropertiesEXTBuilder<'a> {
     pub fn advanced_blend_max_color_attachments(
         mut self,
@@ -23120,6 +24812,7 @@ impl ::std::default::Default for PipelineColorBlendAdvancedStateCreateInfoEXT {
     }
 }
 impl PipelineColorBlendAdvancedStateCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineColorBlendAdvancedStateCreateInfoEXTBuilder<'a> {
         PipelineColorBlendAdvancedStateCreateInfoEXTBuilder {
             inner: PipelineColorBlendAdvancedStateCreateInfoEXT::default(),
@@ -23127,11 +24820,13 @@ impl PipelineColorBlendAdvancedStateCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineColorBlendAdvancedStateCreateInfoEXTBuilder<'a> {
     inner: PipelineColorBlendAdvancedStateCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPipelineColorBlendStateCreateInfo
     for PipelineColorBlendAdvancedStateCreateInfoEXTBuilder<'_>
 {
@@ -23140,17 +24835,20 @@ unsafe impl ExtendsPipelineColorBlendStateCreateInfo
     for PipelineColorBlendAdvancedStateCreateInfoEXT
 {
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineColorBlendAdvancedStateCreateInfoEXTBuilder<'a> {
     type Target = PipelineColorBlendAdvancedStateCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineColorBlendAdvancedStateCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineColorBlendAdvancedStateCreateInfoEXTBuilder<'a> {
     pub fn src_premultiplied(mut self, src_premultiplied: bool) -> Self {
         self.inner.src_premultiplied = src_premultiplied.into();
@@ -23191,6 +24889,7 @@ impl ::std::default::Default for PhysicalDeviceInlineUniformBlockFeaturesEXT {
     }
 }
 impl PhysicalDeviceInlineUniformBlockFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'a> {
         PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder {
             inner: PhysicalDeviceInlineUniformBlockFeaturesEXT::default(),
@@ -23198,29 +24897,35 @@ impl PhysicalDeviceInlineUniformBlockFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceInlineUniformBlockFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceInlineUniformBlockFeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceInlineUniformBlockFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceInlineUniformBlockFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'a> {
     pub fn inline_uniform_block(mut self, inline_uniform_block: bool) -> Self {
         self.inner.inline_uniform_block = inline_uniform_block.into();
@@ -23268,6 +24973,7 @@ impl ::std::default::Default for PhysicalDeviceInlineUniformBlockPropertiesEXT {
     }
 }
 impl PhysicalDeviceInlineUniformBlockPropertiesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceInlineUniformBlockPropertiesEXTBuilder<'a> {
         PhysicalDeviceInlineUniformBlockPropertiesEXTBuilder {
             inner: PhysicalDeviceInlineUniformBlockPropertiesEXT::default(),
@@ -23275,27 +24981,32 @@ impl PhysicalDeviceInlineUniformBlockPropertiesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceInlineUniformBlockPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceInlineUniformBlockPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceInlineUniformBlockPropertiesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceInlineUniformBlockPropertiesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceInlineUniformBlockPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceInlineUniformBlockPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceInlineUniformBlockPropertiesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceInlineUniformBlockPropertiesEXTBuilder<'a> {
     pub fn max_inline_uniform_block_size(mut self, max_inline_uniform_block_size: u32) -> Self {
         self.inner.max_inline_uniform_block_size = max_inline_uniform_block_size;
@@ -23362,6 +25073,7 @@ impl ::std::default::Default for WriteDescriptorSetInlineUniformBlockEXT {
     }
 }
 impl WriteDescriptorSetInlineUniformBlockEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> WriteDescriptorSetInlineUniformBlockEXTBuilder<'a> {
         WriteDescriptorSetInlineUniformBlockEXTBuilder {
             inner: WriteDescriptorSetInlineUniformBlockEXT::default(),
@@ -23369,24 +25081,29 @@ impl WriteDescriptorSetInlineUniformBlockEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct WriteDescriptorSetInlineUniformBlockEXTBuilder<'a> {
     inner: WriteDescriptorSetInlineUniformBlockEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsWriteDescriptorSet for WriteDescriptorSetInlineUniformBlockEXTBuilder<'_> {}
 unsafe impl ExtendsWriteDescriptorSet for WriteDescriptorSetInlineUniformBlockEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for WriteDescriptorSetInlineUniformBlockEXTBuilder<'a> {
     type Target = WriteDescriptorSetInlineUniformBlockEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for WriteDescriptorSetInlineUniformBlockEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> WriteDescriptorSetInlineUniformBlockEXTBuilder<'a> {
     pub fn data(mut self, data: &'a [u8]) -> Self {
         self.inner.data_size = data.len() as _;
@@ -23418,6 +25135,7 @@ impl ::std::default::Default for DescriptorPoolInlineUniformBlockCreateInfoEXT {
     }
 }
 impl DescriptorPoolInlineUniformBlockCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DescriptorPoolInlineUniformBlockCreateInfoEXTBuilder<'a> {
         DescriptorPoolInlineUniformBlockCreateInfoEXTBuilder {
             inner: DescriptorPoolInlineUniformBlockCreateInfoEXT::default(),
@@ -23425,27 +25143,32 @@ impl DescriptorPoolInlineUniformBlockCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DescriptorPoolInlineUniformBlockCreateInfoEXTBuilder<'a> {
     inner: DescriptorPoolInlineUniformBlockCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDescriptorPoolCreateInfo
     for DescriptorPoolInlineUniformBlockCreateInfoEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsDescriptorPoolCreateInfo for DescriptorPoolInlineUniformBlockCreateInfoEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DescriptorPoolInlineUniformBlockCreateInfoEXTBuilder<'a> {
     type Target = DescriptorPoolInlineUniformBlockCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DescriptorPoolInlineUniformBlockCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DescriptorPoolInlineUniformBlockCreateInfoEXTBuilder<'a> {
     pub fn max_inline_uniform_block_bindings(
         mut self,
@@ -23487,6 +25210,7 @@ impl ::std::default::Default for PipelineCoverageModulationStateCreateInfoNV {
     }
 }
 impl PipelineCoverageModulationStateCreateInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineCoverageModulationStateCreateInfoNVBuilder<'a> {
         PipelineCoverageModulationStateCreateInfoNVBuilder {
             inner: PipelineCoverageModulationStateCreateInfoNV::default(),
@@ -23494,11 +25218,13 @@ impl PipelineCoverageModulationStateCreateInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineCoverageModulationStateCreateInfoNVBuilder<'a> {
     inner: PipelineCoverageModulationStateCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPipelineMultisampleStateCreateInfo
     for PipelineCoverageModulationStateCreateInfoNVBuilder<'_>
 {
@@ -23507,17 +25233,20 @@ unsafe impl ExtendsPipelineMultisampleStateCreateInfo
     for PipelineCoverageModulationStateCreateInfoNV
 {
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineCoverageModulationStateCreateInfoNVBuilder<'a> {
     type Target = PipelineCoverageModulationStateCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineCoverageModulationStateCreateInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineCoverageModulationStateCreateInfoNVBuilder<'a> {
     pub fn flags(mut self, flags: PipelineCoverageModulationStateCreateFlagsNV) -> Self {
         self.inner.flags = flags;
@@ -23569,6 +25298,7 @@ impl ::std::default::Default for ImageFormatListCreateInfo {
     }
 }
 impl ImageFormatListCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImageFormatListCreateInfoBuilder<'a> {
         ImageFormatListCreateInfoBuilder {
             inner: ImageFormatListCreateInfo::default(),
@@ -23576,28 +25306,35 @@ impl ImageFormatListCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImageFormatListCreateInfoBuilder<'a> {
     inner: ImageFormatListCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsImageCreateInfo for ImageFormatListCreateInfoBuilder<'_> {}
 unsafe impl ExtendsImageCreateInfo for ImageFormatListCreateInfo {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsSwapchainCreateInfoKHR for ImageFormatListCreateInfoBuilder<'_> {}
 unsafe impl ExtendsSwapchainCreateInfoKHR for ImageFormatListCreateInfo {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceImageFormatInfo2 for ImageFormatListCreateInfoBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceImageFormatInfo2 for ImageFormatListCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImageFormatListCreateInfoBuilder<'a> {
     type Target = ImageFormatListCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImageFormatListCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImageFormatListCreateInfoBuilder<'a> {
     pub fn view_formats(mut self, view_formats: &'a [Format]) -> Self {
         self.inner.view_format_count = view_formats.len() as _;
@@ -23633,6 +25370,7 @@ impl ::std::default::Default for ValidationCacheCreateInfoEXT {
     }
 }
 impl ValidationCacheCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ValidationCacheCreateInfoEXTBuilder<'a> {
         ValidationCacheCreateInfoEXTBuilder {
             inner: ValidationCacheCreateInfoEXT::default(),
@@ -23640,22 +25378,26 @@ impl ValidationCacheCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ValidationCacheCreateInfoEXTBuilder<'a> {
     inner: ValidationCacheCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ValidationCacheCreateInfoEXTBuilder<'a> {
     type Target = ValidationCacheCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ValidationCacheCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ValidationCacheCreateInfoEXTBuilder<'a> {
     pub fn flags(mut self, flags: ValidationCacheCreateFlagsEXT) -> Self {
         self.inner.flags = flags;
@@ -23691,6 +25433,7 @@ impl ::std::default::Default for ShaderModuleValidationCacheCreateInfoEXT {
     }
 }
 impl ShaderModuleValidationCacheCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ShaderModuleValidationCacheCreateInfoEXTBuilder<'a> {
         ShaderModuleValidationCacheCreateInfoEXTBuilder {
             inner: ShaderModuleValidationCacheCreateInfoEXT::default(),
@@ -23698,24 +25441,29 @@ impl ShaderModuleValidationCacheCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ShaderModuleValidationCacheCreateInfoEXTBuilder<'a> {
     inner: ShaderModuleValidationCacheCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsShaderModuleCreateInfo for ShaderModuleValidationCacheCreateInfoEXTBuilder<'_> {}
 unsafe impl ExtendsShaderModuleCreateInfo for ShaderModuleValidationCacheCreateInfoEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ShaderModuleValidationCacheCreateInfoEXTBuilder<'a> {
     type Target = ShaderModuleValidationCacheCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ShaderModuleValidationCacheCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ShaderModuleValidationCacheCreateInfoEXTBuilder<'a> {
     pub fn validation_cache(mut self, validation_cache: ValidationCacheEXT) -> Self {
         self.inner.validation_cache = validation_cache;
@@ -23748,6 +25496,7 @@ impl ::std::default::Default for PhysicalDeviceMaintenance3Properties {
     }
 }
 impl PhysicalDeviceMaintenance3Properties {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceMaintenance3PropertiesBuilder<'a> {
         PhysicalDeviceMaintenance3PropertiesBuilder {
             inner: PhysicalDeviceMaintenance3Properties::default(),
@@ -23755,24 +25504,29 @@ impl PhysicalDeviceMaintenance3Properties {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceMaintenance3PropertiesBuilder<'a> {
     inner: PhysicalDeviceMaintenance3Properties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMaintenance3PropertiesBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMaintenance3Properties {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceMaintenance3PropertiesBuilder<'a> {
     type Target = PhysicalDeviceMaintenance3Properties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceMaintenance3PropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceMaintenance3PropertiesBuilder<'a> {
     pub fn max_per_set_descriptors(mut self, max_per_set_descriptors: u32) -> Self {
         self.inner.max_per_set_descriptors = max_per_set_descriptors;
@@ -23807,6 +25561,7 @@ impl ::std::default::Default for DescriptorSetLayoutSupport {
     }
 }
 impl DescriptorSetLayoutSupport {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DescriptorSetLayoutSupportBuilder<'a> {
         DescriptorSetLayoutSupportBuilder {
             inner: DescriptorSetLayoutSupport::default(),
@@ -23814,23 +25569,27 @@ impl DescriptorSetLayoutSupport {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DescriptorSetLayoutSupportBuilder<'a> {
     inner: DescriptorSetLayoutSupport,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsDescriptorSetLayoutSupport {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DescriptorSetLayoutSupportBuilder<'a> {
     type Target = DescriptorSetLayoutSupport;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DescriptorSetLayoutSupportBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DescriptorSetLayoutSupportBuilder<'a> {
     pub fn supported(mut self, supported: bool) -> Self {
         self.inner.supported = supported.into();
@@ -23875,6 +25634,7 @@ impl ::std::default::Default for PhysicalDeviceShaderDrawParametersFeatures {
     }
 }
 impl PhysicalDeviceShaderDrawParametersFeatures {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceShaderDrawParametersFeaturesBuilder<'a> {
         PhysicalDeviceShaderDrawParametersFeaturesBuilder {
             inner: PhysicalDeviceShaderDrawParametersFeatures::default(),
@@ -23882,29 +25642,35 @@ impl PhysicalDeviceShaderDrawParametersFeatures {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceShaderDrawParametersFeaturesBuilder<'a> {
     inner: PhysicalDeviceShaderDrawParametersFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceShaderDrawParametersFeaturesBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderDrawParametersFeatures {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderDrawParametersFeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderDrawParametersFeatures {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderDrawParametersFeaturesBuilder<'a> {
     type Target = PhysicalDeviceShaderDrawParametersFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderDrawParametersFeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceShaderDrawParametersFeaturesBuilder<'a> {
     pub fn shader_draw_parameters(mut self, shader_draw_parameters: bool) -> Self {
         self.inner.shader_draw_parameters = shader_draw_parameters.into();
@@ -23937,6 +25703,7 @@ impl ::std::default::Default for PhysicalDeviceShaderFloat16Int8Features {
     }
 }
 impl PhysicalDeviceShaderFloat16Int8Features {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceShaderFloat16Int8FeaturesBuilder<'a> {
         PhysicalDeviceShaderFloat16Int8FeaturesBuilder {
             inner: PhysicalDeviceShaderFloat16Int8Features::default(),
@@ -23944,26 +25711,32 @@ impl PhysicalDeviceShaderFloat16Int8Features {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceShaderFloat16Int8FeaturesBuilder<'a> {
     inner: PhysicalDeviceShaderFloat16Int8Features,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderFloat16Int8FeaturesBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderFloat16Int8Features {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderFloat16Int8FeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderFloat16Int8Features {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderFloat16Int8FeaturesBuilder<'a> {
     type Target = PhysicalDeviceShaderFloat16Int8Features;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderFloat16Int8FeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceShaderFloat16Int8FeaturesBuilder<'a> {
     pub fn shader_float16(mut self, shader_float16: bool) -> Self {
         self.inner.shader_float16 = shader_float16.into();
@@ -24030,6 +25803,7 @@ impl ::std::default::Default for PhysicalDeviceFloatControlsProperties {
     }
 }
 impl PhysicalDeviceFloatControlsProperties {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceFloatControlsPropertiesBuilder<'a> {
         PhysicalDeviceFloatControlsPropertiesBuilder {
             inner: PhysicalDeviceFloatControlsProperties::default(),
@@ -24037,24 +25811,29 @@ impl PhysicalDeviceFloatControlsProperties {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceFloatControlsPropertiesBuilder<'a> {
     inner: PhysicalDeviceFloatControlsProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceFloatControlsPropertiesBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceFloatControlsProperties {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceFloatControlsPropertiesBuilder<'a> {
     type Target = PhysicalDeviceFloatControlsProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceFloatControlsPropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceFloatControlsPropertiesBuilder<'a> {
     pub fn denorm_behavior_independence(
         mut self,
@@ -24194,6 +25973,7 @@ impl ::std::default::Default for PhysicalDeviceHostQueryResetFeatures {
     }
 }
 impl PhysicalDeviceHostQueryResetFeatures {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceHostQueryResetFeaturesBuilder<'a> {
         PhysicalDeviceHostQueryResetFeaturesBuilder {
             inner: PhysicalDeviceHostQueryResetFeatures::default(),
@@ -24201,26 +25981,32 @@ impl PhysicalDeviceHostQueryResetFeatures {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceHostQueryResetFeaturesBuilder<'a> {
     inner: PhysicalDeviceHostQueryResetFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceHostQueryResetFeaturesBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceHostQueryResetFeatures {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceHostQueryResetFeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceHostQueryResetFeatures {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceHostQueryResetFeaturesBuilder<'a> {
     type Target = PhysicalDeviceHostQueryResetFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceHostQueryResetFeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceHostQueryResetFeaturesBuilder<'a> {
     pub fn host_query_reset(mut self, host_query_reset: bool) -> Self {
         self.inner.host_query_reset = host_query_reset.into();
@@ -24241,6 +26027,7 @@ pub struct NativeBufferUsage2ANDROID {
     pub producer: u64,
 }
 impl NativeBufferUsage2ANDROID {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> NativeBufferUsage2ANDROIDBuilder<'a> {
         NativeBufferUsage2ANDROIDBuilder {
             inner: NativeBufferUsage2ANDROID::default(),
@@ -24248,22 +26035,26 @@ impl NativeBufferUsage2ANDROID {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct NativeBufferUsage2ANDROIDBuilder<'a> {
     inner: NativeBufferUsage2ANDROID,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for NativeBufferUsage2ANDROIDBuilder<'a> {
     type Target = NativeBufferUsage2ANDROID;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for NativeBufferUsage2ANDROIDBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> NativeBufferUsage2ANDROIDBuilder<'a> {
     pub fn consumer(mut self, consumer: u64) -> Self {
         self.inner.consumer = consumer;
@@ -24306,6 +26097,7 @@ impl ::std::default::Default for NativeBufferANDROID {
     }
 }
 impl NativeBufferANDROID {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> NativeBufferANDROIDBuilder<'a> {
         NativeBufferANDROIDBuilder {
             inner: NativeBufferANDROID::default(),
@@ -24313,22 +26105,26 @@ impl NativeBufferANDROID {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct NativeBufferANDROIDBuilder<'a> {
     inner: NativeBufferANDROID,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for NativeBufferANDROIDBuilder<'a> {
     type Target = NativeBufferANDROID;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for NativeBufferANDROIDBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> NativeBufferANDROIDBuilder<'a> {
     pub fn handle(mut self, handle: *const c_void) -> Self {
         self.inner.handle = handle;
@@ -24375,6 +26171,7 @@ impl ::std::default::Default for SwapchainImageCreateInfoANDROID {
     }
 }
 impl SwapchainImageCreateInfoANDROID {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SwapchainImageCreateInfoANDROIDBuilder<'a> {
         SwapchainImageCreateInfoANDROIDBuilder {
             inner: SwapchainImageCreateInfoANDROID::default(),
@@ -24382,22 +26179,26 @@ impl SwapchainImageCreateInfoANDROID {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SwapchainImageCreateInfoANDROIDBuilder<'a> {
     inner: SwapchainImageCreateInfoANDROID,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SwapchainImageCreateInfoANDROIDBuilder<'a> {
     type Target = SwapchainImageCreateInfoANDROID;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SwapchainImageCreateInfoANDROIDBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SwapchainImageCreateInfoANDROIDBuilder<'a> {
     pub fn usage(mut self, usage: SwapchainImageUsageFlagsANDROID) -> Self {
         self.inner.usage = usage;
@@ -24428,6 +26229,7 @@ impl ::std::default::Default for PhysicalDevicePresentationPropertiesANDROID {
     }
 }
 impl PhysicalDevicePresentationPropertiesANDROID {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDevicePresentationPropertiesANDROIDBuilder<'a> {
         PhysicalDevicePresentationPropertiesANDROIDBuilder {
             inner: PhysicalDevicePresentationPropertiesANDROID::default(),
@@ -24435,22 +26237,26 @@ impl PhysicalDevicePresentationPropertiesANDROID {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDevicePresentationPropertiesANDROIDBuilder<'a> {
     inner: PhysicalDevicePresentationPropertiesANDROID,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDevicePresentationPropertiesANDROIDBuilder<'a> {
     type Target = PhysicalDevicePresentationPropertiesANDROID;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDevicePresentationPropertiesANDROIDBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDevicePresentationPropertiesANDROIDBuilder<'a> {
     pub fn shared_image(mut self, shared_image: bool) -> Self {
         self.inner.shared_image = shared_image.into();
@@ -24474,6 +26280,7 @@ pub struct ShaderResourceUsageAMD {
     pub scratch_mem_usage_in_bytes: usize,
 }
 impl ShaderResourceUsageAMD {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ShaderResourceUsageAMDBuilder<'a> {
         ShaderResourceUsageAMDBuilder {
             inner: ShaderResourceUsageAMD::default(),
@@ -24481,22 +26288,26 @@ impl ShaderResourceUsageAMD {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ShaderResourceUsageAMDBuilder<'a> {
     inner: ShaderResourceUsageAMD,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ShaderResourceUsageAMDBuilder<'a> {
     type Target = ShaderResourceUsageAMD;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ShaderResourceUsageAMDBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ShaderResourceUsageAMDBuilder<'a> {
     pub fn num_used_vgprs(mut self, num_used_vgprs: u32) -> Self {
         self.inner.num_used_vgprs = num_used_vgprs;
@@ -24551,6 +26362,7 @@ impl ::std::default::Default for ShaderStatisticsInfoAMD {
     }
 }
 impl ShaderStatisticsInfoAMD {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ShaderStatisticsInfoAMDBuilder<'a> {
         ShaderStatisticsInfoAMDBuilder {
             inner: ShaderStatisticsInfoAMD::default(),
@@ -24558,22 +26370,26 @@ impl ShaderStatisticsInfoAMD {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ShaderStatisticsInfoAMDBuilder<'a> {
     inner: ShaderStatisticsInfoAMD,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ShaderStatisticsInfoAMDBuilder<'a> {
     type Target = ShaderStatisticsInfoAMD;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ShaderStatisticsInfoAMDBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ShaderStatisticsInfoAMDBuilder<'a> {
     pub fn shader_stage_mask(mut self, shader_stage_mask: ShaderStageFlags) -> Self {
         self.inner.shader_stage_mask = shader_stage_mask;
@@ -24628,6 +26444,7 @@ impl ::std::default::Default for DeviceQueueGlobalPriorityCreateInfoEXT {
     }
 }
 impl DeviceQueueGlobalPriorityCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DeviceQueueGlobalPriorityCreateInfoEXTBuilder<'a> {
         DeviceQueueGlobalPriorityCreateInfoEXTBuilder {
             inner: DeviceQueueGlobalPriorityCreateInfoEXT::default(),
@@ -24635,24 +26452,29 @@ impl DeviceQueueGlobalPriorityCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DeviceQueueGlobalPriorityCreateInfoEXTBuilder<'a> {
     inner: DeviceQueueGlobalPriorityCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceQueueCreateInfo for DeviceQueueGlobalPriorityCreateInfoEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceQueueCreateInfo for DeviceQueueGlobalPriorityCreateInfoEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DeviceQueueGlobalPriorityCreateInfoEXTBuilder<'a> {
     type Target = DeviceQueueGlobalPriorityCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DeviceQueueGlobalPriorityCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DeviceQueueGlobalPriorityCreateInfoEXTBuilder<'a> {
     pub fn global_priority(mut self, global_priority: QueueGlobalPriorityEXT) -> Self {
         self.inner.global_priority = global_priority;
@@ -24683,6 +26505,7 @@ impl ::std::default::Default for PhysicalDeviceGlobalPriorityQueryFeaturesEXT {
     }
 }
 impl PhysicalDeviceGlobalPriorityQueryFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceGlobalPriorityQueryFeaturesEXTBuilder<'a> {
         PhysicalDeviceGlobalPriorityQueryFeaturesEXTBuilder {
             inner: PhysicalDeviceGlobalPriorityQueryFeaturesEXT::default(),
@@ -24690,29 +26513,35 @@ impl PhysicalDeviceGlobalPriorityQueryFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceGlobalPriorityQueryFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceGlobalPriorityQueryFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceGlobalPriorityQueryFeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceGlobalPriorityQueryFeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceGlobalPriorityQueryFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceGlobalPriorityQueryFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceGlobalPriorityQueryFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceGlobalPriorityQueryFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceGlobalPriorityQueryFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceGlobalPriorityQueryFeaturesEXTBuilder<'a> {
     pub fn global_priority_query(mut self, global_priority_query: bool) -> Self {
         self.inner.global_priority_query = global_priority_query.into();
@@ -24745,6 +26574,7 @@ impl ::std::default::Default for QueueFamilyGlobalPriorityPropertiesEXT {
     }
 }
 impl QueueFamilyGlobalPriorityPropertiesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> QueueFamilyGlobalPriorityPropertiesEXTBuilder<'a> {
         QueueFamilyGlobalPriorityPropertiesEXTBuilder {
             inner: QueueFamilyGlobalPriorityPropertiesEXT::default(),
@@ -24752,24 +26582,29 @@ impl QueueFamilyGlobalPriorityPropertiesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct QueueFamilyGlobalPriorityPropertiesEXTBuilder<'a> {
     inner: QueueFamilyGlobalPriorityPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsQueueFamilyProperties2 for QueueFamilyGlobalPriorityPropertiesEXTBuilder<'_> {}
 unsafe impl ExtendsQueueFamilyProperties2 for QueueFamilyGlobalPriorityPropertiesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for QueueFamilyGlobalPriorityPropertiesEXTBuilder<'a> {
     type Target = QueueFamilyGlobalPriorityPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for QueueFamilyGlobalPriorityPropertiesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> QueueFamilyGlobalPriorityPropertiesEXTBuilder<'a> {
     pub fn priority_count(mut self, priority_count: u32) -> Self {
         self.inner.priority_count = priority_count;
@@ -24811,6 +26646,7 @@ impl ::std::default::Default for DebugUtilsObjectNameInfoEXT {
     }
 }
 impl DebugUtilsObjectNameInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DebugUtilsObjectNameInfoEXTBuilder<'a> {
         DebugUtilsObjectNameInfoEXTBuilder {
             inner: DebugUtilsObjectNameInfoEXT::default(),
@@ -24818,22 +26654,26 @@ impl DebugUtilsObjectNameInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DebugUtilsObjectNameInfoEXTBuilder<'a> {
     inner: DebugUtilsObjectNameInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DebugUtilsObjectNameInfoEXTBuilder<'a> {
     type Target = DebugUtilsObjectNameInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DebugUtilsObjectNameInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DebugUtilsObjectNameInfoEXTBuilder<'a> {
     pub fn object_type(mut self, object_type: ObjectType) -> Self {
         self.inner.object_type = object_type;
@@ -24880,6 +26720,7 @@ impl ::std::default::Default for DebugUtilsObjectTagInfoEXT {
     }
 }
 impl DebugUtilsObjectTagInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DebugUtilsObjectTagInfoEXTBuilder<'a> {
         DebugUtilsObjectTagInfoEXTBuilder {
             inner: DebugUtilsObjectTagInfoEXT::default(),
@@ -24887,22 +26728,26 @@ impl DebugUtilsObjectTagInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DebugUtilsObjectTagInfoEXTBuilder<'a> {
     inner: DebugUtilsObjectTagInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DebugUtilsObjectTagInfoEXTBuilder<'a> {
     type Target = DebugUtilsObjectTagInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DebugUtilsObjectTagInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DebugUtilsObjectTagInfoEXTBuilder<'a> {
     pub fn object_type(mut self, object_type: ObjectType) -> Self {
         self.inner.object_type = object_type;
@@ -24948,6 +26793,7 @@ impl ::std::default::Default for DebugUtilsLabelEXT {
     }
 }
 impl DebugUtilsLabelEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DebugUtilsLabelEXTBuilder<'a> {
         DebugUtilsLabelEXTBuilder {
             inner: DebugUtilsLabelEXT::default(),
@@ -24955,22 +26801,26 @@ impl DebugUtilsLabelEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DebugUtilsLabelEXTBuilder<'a> {
     inner: DebugUtilsLabelEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DebugUtilsLabelEXTBuilder<'a> {
     type Target = DebugUtilsLabelEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DebugUtilsLabelEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DebugUtilsLabelEXTBuilder<'a> {
     pub fn label_name(mut self, label_name: &'a ::std::ffi::CStr) -> Self {
         self.inner.p_label_name = label_name.as_ptr();
@@ -25029,6 +26879,7 @@ impl ::std::default::Default for DebugUtilsMessengerCreateInfoEXT {
     }
 }
 impl DebugUtilsMessengerCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DebugUtilsMessengerCreateInfoEXTBuilder<'a> {
         DebugUtilsMessengerCreateInfoEXTBuilder {
             inner: DebugUtilsMessengerCreateInfoEXT::default(),
@@ -25036,24 +26887,29 @@ impl DebugUtilsMessengerCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DebugUtilsMessengerCreateInfoEXTBuilder<'a> {
     inner: DebugUtilsMessengerCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsInstanceCreateInfo for DebugUtilsMessengerCreateInfoEXTBuilder<'_> {}
 unsafe impl ExtendsInstanceCreateInfo for DebugUtilsMessengerCreateInfoEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DebugUtilsMessengerCreateInfoEXTBuilder<'a> {
     type Target = DebugUtilsMessengerCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DebugUtilsMessengerCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DebugUtilsMessengerCreateInfoEXTBuilder<'a> {
     pub fn flags(mut self, flags: DebugUtilsMessengerCreateFlagsEXT) -> Self {
         self.inner.flags = flags;
@@ -25121,6 +26977,7 @@ impl ::std::default::Default for DebugUtilsMessengerCallbackDataEXT {
     }
 }
 impl DebugUtilsMessengerCallbackDataEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DebugUtilsMessengerCallbackDataEXTBuilder<'a> {
         DebugUtilsMessengerCallbackDataEXTBuilder {
             inner: DebugUtilsMessengerCallbackDataEXT::default(),
@@ -25128,22 +26985,26 @@ impl DebugUtilsMessengerCallbackDataEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DebugUtilsMessengerCallbackDataEXTBuilder<'a> {
     inner: DebugUtilsMessengerCallbackDataEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DebugUtilsMessengerCallbackDataEXTBuilder<'a> {
     type Target = DebugUtilsMessengerCallbackDataEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DebugUtilsMessengerCallbackDataEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DebugUtilsMessengerCallbackDataEXTBuilder<'a> {
     pub fn flags(mut self, flags: DebugUtilsMessengerCallbackDataFlagsEXT) -> Self {
         self.inner.flags = flags;
@@ -25201,6 +27062,7 @@ impl ::std::default::Default for PhysicalDeviceDeviceMemoryReportFeaturesEXT {
     }
 }
 impl PhysicalDeviceDeviceMemoryReportFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceDeviceMemoryReportFeaturesEXTBuilder<'a> {
         PhysicalDeviceDeviceMemoryReportFeaturesEXTBuilder {
             inner: PhysicalDeviceDeviceMemoryReportFeaturesEXT::default(),
@@ -25208,29 +27070,35 @@ impl PhysicalDeviceDeviceMemoryReportFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceDeviceMemoryReportFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceDeviceMemoryReportFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceDeviceMemoryReportFeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDeviceMemoryReportFeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDeviceMemoryReportFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDeviceMemoryReportFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceDeviceMemoryReportFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceDeviceMemoryReportFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceDeviceMemoryReportFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceDeviceMemoryReportFeaturesEXTBuilder<'a> {
     pub fn device_memory_report(mut self, device_memory_report: bool) -> Self {
         self.inner.device_memory_report = device_memory_report.into();
@@ -25279,6 +27147,7 @@ impl ::std::default::Default for DeviceDeviceMemoryReportCreateInfoEXT {
     }
 }
 impl DeviceDeviceMemoryReportCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DeviceDeviceMemoryReportCreateInfoEXTBuilder<'a> {
         DeviceDeviceMemoryReportCreateInfoEXTBuilder {
             inner: DeviceDeviceMemoryReportCreateInfoEXT::default(),
@@ -25286,24 +27155,29 @@ impl DeviceDeviceMemoryReportCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DeviceDeviceMemoryReportCreateInfoEXTBuilder<'a> {
     inner: DeviceDeviceMemoryReportCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for DeviceDeviceMemoryReportCreateInfoEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for DeviceDeviceMemoryReportCreateInfoEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DeviceDeviceMemoryReportCreateInfoEXTBuilder<'a> {
     type Target = DeviceDeviceMemoryReportCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DeviceDeviceMemoryReportCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DeviceDeviceMemoryReportCreateInfoEXTBuilder<'a> {
     pub fn flags(mut self, flags: DeviceMemoryReportFlagsEXT) -> Self {
         self.inner.flags = flags;
@@ -25357,6 +27231,7 @@ impl ::std::default::Default for DeviceMemoryReportCallbackDataEXT {
     }
 }
 impl DeviceMemoryReportCallbackDataEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DeviceMemoryReportCallbackDataEXTBuilder<'a> {
         DeviceMemoryReportCallbackDataEXTBuilder {
             inner: DeviceMemoryReportCallbackDataEXT::default(),
@@ -25364,22 +27239,26 @@ impl DeviceMemoryReportCallbackDataEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DeviceMemoryReportCallbackDataEXTBuilder<'a> {
     inner: DeviceMemoryReportCallbackDataEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DeviceMemoryReportCallbackDataEXTBuilder<'a> {
     type Target = DeviceMemoryReportCallbackDataEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DeviceMemoryReportCallbackDataEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DeviceMemoryReportCallbackDataEXTBuilder<'a> {
     pub fn flags(mut self, flags: DeviceMemoryReportFlagsEXT) -> Self {
         self.inner.flags = flags;
@@ -25436,6 +27315,7 @@ impl ::std::default::Default for ImportMemoryHostPointerInfoEXT {
     }
 }
 impl ImportMemoryHostPointerInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImportMemoryHostPointerInfoEXTBuilder<'a> {
         ImportMemoryHostPointerInfoEXTBuilder {
             inner: ImportMemoryHostPointerInfoEXT::default(),
@@ -25443,24 +27323,29 @@ impl ImportMemoryHostPointerInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImportMemoryHostPointerInfoEXTBuilder<'a> {
     inner: ImportMemoryHostPointerInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryHostPointerInfoEXTBuilder<'_> {}
 unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryHostPointerInfoEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImportMemoryHostPointerInfoEXTBuilder<'a> {
     type Target = ImportMemoryHostPointerInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImportMemoryHostPointerInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImportMemoryHostPointerInfoEXTBuilder<'a> {
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
         self.inner.handle_type = handle_type;
@@ -25495,6 +27380,7 @@ impl ::std::default::Default for MemoryHostPointerPropertiesEXT {
     }
 }
 impl MemoryHostPointerPropertiesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> MemoryHostPointerPropertiesEXTBuilder<'a> {
         MemoryHostPointerPropertiesEXTBuilder {
             inner: MemoryHostPointerPropertiesEXT::default(),
@@ -25502,22 +27388,26 @@ impl MemoryHostPointerPropertiesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct MemoryHostPointerPropertiesEXTBuilder<'a> {
     inner: MemoryHostPointerPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for MemoryHostPointerPropertiesEXTBuilder<'a> {
     type Target = MemoryHostPointerPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for MemoryHostPointerPropertiesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> MemoryHostPointerPropertiesEXTBuilder<'a> {
     pub fn memory_type_bits(mut self, memory_type_bits: u32) -> Self {
         self.inner.memory_type_bits = memory_type_bits;
@@ -25548,6 +27438,7 @@ impl ::std::default::Default for PhysicalDeviceExternalMemoryHostPropertiesEXT {
     }
 }
 impl PhysicalDeviceExternalMemoryHostPropertiesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceExternalMemoryHostPropertiesEXTBuilder<'a> {
         PhysicalDeviceExternalMemoryHostPropertiesEXTBuilder {
             inner: PhysicalDeviceExternalMemoryHostPropertiesEXT::default(),
@@ -25555,27 +27446,32 @@ impl PhysicalDeviceExternalMemoryHostPropertiesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceExternalMemoryHostPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceExternalMemoryHostPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceExternalMemoryHostPropertiesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceExternalMemoryHostPropertiesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceExternalMemoryHostPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceExternalMemoryHostPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceExternalMemoryHostPropertiesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceExternalMemoryHostPropertiesEXTBuilder<'a> {
     pub fn min_imported_host_pointer_alignment(
         mut self,
@@ -25625,6 +27521,7 @@ impl ::std::default::Default for PhysicalDeviceConservativeRasterizationProperti
     }
 }
 impl PhysicalDeviceConservativeRasterizationPropertiesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceConservativeRasterizationPropertiesEXTBuilder<'a> {
         PhysicalDeviceConservativeRasterizationPropertiesEXTBuilder {
             inner: PhysicalDeviceConservativeRasterizationPropertiesEXT::default(),
@@ -25632,11 +27529,13 @@ impl PhysicalDeviceConservativeRasterizationPropertiesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceConservativeRasterizationPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceConservativeRasterizationPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceConservativeRasterizationPropertiesEXTBuilder<'_>
 {
@@ -25645,17 +27544,20 @@ unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceConservativeRasterizationPropertiesEXT
 {
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceConservativeRasterizationPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceConservativeRasterizationPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceConservativeRasterizationPropertiesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceConservativeRasterizationPropertiesEXTBuilder<'a> {
     pub fn primitive_overestimation_size(mut self, primitive_overestimation_size: f32) -> Self {
         self.inner.primitive_overestimation_size = primitive_overestimation_size;
@@ -25741,6 +27643,7 @@ impl ::std::default::Default for CalibratedTimestampInfoEXT {
     }
 }
 impl CalibratedTimestampInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> CalibratedTimestampInfoEXTBuilder<'a> {
         CalibratedTimestampInfoEXTBuilder {
             inner: CalibratedTimestampInfoEXT::default(),
@@ -25748,22 +27651,26 @@ impl CalibratedTimestampInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct CalibratedTimestampInfoEXTBuilder<'a> {
     inner: CalibratedTimestampInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for CalibratedTimestampInfoEXTBuilder<'a> {
     type Target = CalibratedTimestampInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for CalibratedTimestampInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> CalibratedTimestampInfoEXTBuilder<'a> {
     pub fn time_domain(mut self, time_domain: TimeDomainEXT) -> Self {
         self.inner.time_domain = time_domain;
@@ -25820,6 +27727,7 @@ impl ::std::default::Default for PhysicalDeviceShaderCorePropertiesAMD {
     }
 }
 impl PhysicalDeviceShaderCorePropertiesAMD {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceShaderCorePropertiesAMDBuilder<'a> {
         PhysicalDeviceShaderCorePropertiesAMDBuilder {
             inner: PhysicalDeviceShaderCorePropertiesAMD::default(),
@@ -25827,24 +27735,29 @@ impl PhysicalDeviceShaderCorePropertiesAMD {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceShaderCorePropertiesAMDBuilder<'a> {
     inner: PhysicalDeviceShaderCorePropertiesAMD,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderCorePropertiesAMDBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderCorePropertiesAMD {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderCorePropertiesAMDBuilder<'a> {
     type Target = PhysicalDeviceShaderCorePropertiesAMD;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderCorePropertiesAMDBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceShaderCorePropertiesAMDBuilder<'a> {
     pub fn shader_engine_count(mut self, shader_engine_count: u32) -> Self {
         self.inner.shader_engine_count = shader_engine_count;
@@ -25929,6 +27842,7 @@ impl ::std::default::Default for PhysicalDeviceShaderCoreProperties2AMD {
     }
 }
 impl PhysicalDeviceShaderCoreProperties2AMD {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceShaderCoreProperties2AMDBuilder<'a> {
         PhysicalDeviceShaderCoreProperties2AMDBuilder {
             inner: PhysicalDeviceShaderCoreProperties2AMD::default(),
@@ -25936,24 +27850,29 @@ impl PhysicalDeviceShaderCoreProperties2AMD {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceShaderCoreProperties2AMDBuilder<'a> {
     inner: PhysicalDeviceShaderCoreProperties2AMD,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderCoreProperties2AMDBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderCoreProperties2AMD {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderCoreProperties2AMDBuilder<'a> {
     type Target = PhysicalDeviceShaderCoreProperties2AMD;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderCoreProperties2AMDBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceShaderCoreProperties2AMDBuilder<'a> {
     pub fn shader_core_features(
         mut self,
@@ -25995,6 +27914,7 @@ impl ::std::default::Default for PipelineRasterizationConservativeStateCreateInf
     }
 }
 impl PipelineRasterizationConservativeStateCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineRasterizationConservativeStateCreateInfoEXTBuilder<'a> {
         PipelineRasterizationConservativeStateCreateInfoEXTBuilder {
             inner: PipelineRasterizationConservativeStateCreateInfoEXT::default(),
@@ -26002,11 +27922,13 @@ impl PipelineRasterizationConservativeStateCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineRasterizationConservativeStateCreateInfoEXTBuilder<'a> {
     inner: PipelineRasterizationConservativeStateCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPipelineRasterizationStateCreateInfo
     for PipelineRasterizationConservativeStateCreateInfoEXTBuilder<'_>
 {
@@ -26015,17 +27937,20 @@ unsafe impl ExtendsPipelineRasterizationStateCreateInfo
     for PipelineRasterizationConservativeStateCreateInfoEXT
 {
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineRasterizationConservativeStateCreateInfoEXTBuilder<'a> {
     type Target = PipelineRasterizationConservativeStateCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineRasterizationConservativeStateCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineRasterizationConservativeStateCreateInfoEXTBuilder<'a> {
     pub fn flags(mut self, flags: PipelineRasterizationConservativeStateCreateFlagsEXT) -> Self {
         self.inner.flags = flags;
@@ -26108,6 +28033,7 @@ impl ::std::default::Default for PhysicalDeviceDescriptorIndexingFeatures {
     }
 }
 impl PhysicalDeviceDescriptorIndexingFeatures {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceDescriptorIndexingFeaturesBuilder<'a> {
         PhysicalDeviceDescriptorIndexingFeaturesBuilder {
             inner: PhysicalDeviceDescriptorIndexingFeatures::default(),
@@ -26115,26 +28041,32 @@ impl PhysicalDeviceDescriptorIndexingFeatures {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceDescriptorIndexingFeaturesBuilder<'a> {
     inner: PhysicalDeviceDescriptorIndexingFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDescriptorIndexingFeaturesBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDescriptorIndexingFeatures {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDescriptorIndexingFeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDescriptorIndexingFeatures {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceDescriptorIndexingFeaturesBuilder<'a> {
     type Target = PhysicalDeviceDescriptorIndexingFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceDescriptorIndexingFeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceDescriptorIndexingFeaturesBuilder<'a> {
     pub fn shader_input_attachment_array_dynamic_indexing(
         mut self,
@@ -26371,6 +28303,7 @@ impl ::std::default::Default for PhysicalDeviceDescriptorIndexingProperties {
     }
 }
 impl PhysicalDeviceDescriptorIndexingProperties {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceDescriptorIndexingPropertiesBuilder<'a> {
         PhysicalDeviceDescriptorIndexingPropertiesBuilder {
             inner: PhysicalDeviceDescriptorIndexingProperties::default(),
@@ -26378,27 +28311,32 @@ impl PhysicalDeviceDescriptorIndexingProperties {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceDescriptorIndexingPropertiesBuilder<'a> {
     inner: PhysicalDeviceDescriptorIndexingProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceDescriptorIndexingPropertiesBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDescriptorIndexingProperties {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceDescriptorIndexingPropertiesBuilder<'a> {
     type Target = PhysicalDeviceDescriptorIndexingProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceDescriptorIndexingPropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceDescriptorIndexingPropertiesBuilder<'a> {
     pub fn max_update_after_bind_descriptors_in_all_pools(
         mut self,
@@ -26625,6 +28563,7 @@ impl ::std::default::Default for DescriptorSetLayoutBindingFlagsCreateInfo {
     }
 }
 impl DescriptorSetLayoutBindingFlagsCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DescriptorSetLayoutBindingFlagsCreateInfoBuilder<'a> {
         DescriptorSetLayoutBindingFlagsCreateInfoBuilder {
             inner: DescriptorSetLayoutBindingFlagsCreateInfo::default(),
@@ -26632,27 +28571,32 @@ impl DescriptorSetLayoutBindingFlagsCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DescriptorSetLayoutBindingFlagsCreateInfoBuilder<'a> {
     inner: DescriptorSetLayoutBindingFlagsCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDescriptorSetLayoutCreateInfo
     for DescriptorSetLayoutBindingFlagsCreateInfoBuilder<'_>
 {
 }
 unsafe impl ExtendsDescriptorSetLayoutCreateInfo for DescriptorSetLayoutBindingFlagsCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DescriptorSetLayoutBindingFlagsCreateInfoBuilder<'a> {
     type Target = DescriptorSetLayoutBindingFlagsCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DescriptorSetLayoutBindingFlagsCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DescriptorSetLayoutBindingFlagsCreateInfoBuilder<'a> {
     pub fn binding_flags(mut self, binding_flags: &'a [DescriptorBindingFlags]) -> Self {
         self.inner.binding_count = binding_flags.len() as _;
@@ -26686,6 +28630,7 @@ impl ::std::default::Default for DescriptorSetVariableDescriptorCountAllocateInf
     }
 }
 impl DescriptorSetVariableDescriptorCountAllocateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DescriptorSetVariableDescriptorCountAllocateInfoBuilder<'a> {
         DescriptorSetVariableDescriptorCountAllocateInfoBuilder {
             inner: DescriptorSetVariableDescriptorCountAllocateInfo::default(),
@@ -26693,27 +28638,32 @@ impl DescriptorSetVariableDescriptorCountAllocateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DescriptorSetVariableDescriptorCountAllocateInfoBuilder<'a> {
     inner: DescriptorSetVariableDescriptorCountAllocateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDescriptorSetAllocateInfo
     for DescriptorSetVariableDescriptorCountAllocateInfoBuilder<'_>
 {
 }
 unsafe impl ExtendsDescriptorSetAllocateInfo for DescriptorSetVariableDescriptorCountAllocateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DescriptorSetVariableDescriptorCountAllocateInfoBuilder<'a> {
     type Target = DescriptorSetVariableDescriptorCountAllocateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DescriptorSetVariableDescriptorCountAllocateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DescriptorSetVariableDescriptorCountAllocateInfoBuilder<'a> {
     pub fn descriptor_counts(mut self, descriptor_counts: &'a [u32]) -> Self {
         self.inner.descriptor_set_count = descriptor_counts.len() as _;
@@ -26745,6 +28695,7 @@ impl ::std::default::Default for DescriptorSetVariableDescriptorCountLayoutSuppo
     }
 }
 impl DescriptorSetVariableDescriptorCountLayoutSupport {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DescriptorSetVariableDescriptorCountLayoutSupportBuilder<'a> {
         DescriptorSetVariableDescriptorCountLayoutSupportBuilder {
             inner: DescriptorSetVariableDescriptorCountLayoutSupport::default(),
@@ -26752,11 +28703,13 @@ impl DescriptorSetVariableDescriptorCountLayoutSupport {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DescriptorSetVariableDescriptorCountLayoutSupportBuilder<'a> {
     inner: DescriptorSetVariableDescriptorCountLayoutSupport,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDescriptorSetLayoutSupport
     for DescriptorSetVariableDescriptorCountLayoutSupportBuilder<'_>
 {
@@ -26765,17 +28718,20 @@ unsafe impl ExtendsDescriptorSetLayoutSupport
     for DescriptorSetVariableDescriptorCountLayoutSupport
 {
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DescriptorSetVariableDescriptorCountLayoutSupportBuilder<'a> {
     type Target = DescriptorSetVariableDescriptorCountLayoutSupport;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DescriptorSetVariableDescriptorCountLayoutSupportBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DescriptorSetVariableDescriptorCountLayoutSupportBuilder<'a> {
     pub fn max_variable_descriptor_count(mut self, max_variable_descriptor_count: u32) -> Self {
         self.inner.max_variable_descriptor_count = max_variable_descriptor_count;
@@ -26822,6 +28778,7 @@ impl ::std::default::Default for AttachmentDescription2 {
     }
 }
 impl AttachmentDescription2 {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> AttachmentDescription2Builder<'a> {
         AttachmentDescription2Builder {
             inner: AttachmentDescription2::default(),
@@ -26829,23 +28786,27 @@ impl AttachmentDescription2 {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct AttachmentDescription2Builder<'a> {
     inner: AttachmentDescription2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsAttachmentDescription2 {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for AttachmentDescription2Builder<'a> {
     type Target = AttachmentDescription2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for AttachmentDescription2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> AttachmentDescription2Builder<'a> {
     pub fn flags(mut self, flags: AttachmentDescriptionFlags) -> Self {
         self.inner.flags = flags;
@@ -26926,6 +28887,7 @@ impl ::std::default::Default for AttachmentReference2 {
     }
 }
 impl AttachmentReference2 {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> AttachmentReference2Builder<'a> {
         AttachmentReference2Builder {
             inner: AttachmentReference2::default(),
@@ -26933,23 +28895,27 @@ impl AttachmentReference2 {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct AttachmentReference2Builder<'a> {
     inner: AttachmentReference2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsAttachmentReference2 {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for AttachmentReference2Builder<'a> {
     type Target = AttachmentReference2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for AttachmentReference2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> AttachmentReference2Builder<'a> {
     pub fn attachment(mut self, attachment: u32) -> Self {
         self.inner.attachment = attachment;
@@ -27022,6 +28988,7 @@ impl ::std::default::Default for SubpassDescription2 {
     }
 }
 impl SubpassDescription2 {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SubpassDescription2Builder<'a> {
         SubpassDescription2Builder {
             inner: SubpassDescription2::default(),
@@ -27029,23 +28996,27 @@ impl SubpassDescription2 {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SubpassDescription2Builder<'a> {
     inner: SubpassDescription2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsSubpassDescription2 {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SubpassDescription2Builder<'a> {
     type Target = SubpassDescription2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SubpassDescription2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SubpassDescription2Builder<'a> {
     pub fn flags(mut self, flags: SubpassDescriptionFlags) -> Self {
         self.inner.flags = flags;
@@ -27139,6 +29110,7 @@ impl ::std::default::Default for SubpassDependency2 {
     }
 }
 impl SubpassDependency2 {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SubpassDependency2Builder<'a> {
         SubpassDependency2Builder {
             inner: SubpassDependency2::default(),
@@ -27146,23 +29118,27 @@ impl SubpassDependency2 {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SubpassDependency2Builder<'a> {
     inner: SubpassDependency2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsSubpassDependency2 {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SubpassDependency2Builder<'a> {
     type Target = SubpassDependency2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SubpassDependency2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SubpassDependency2Builder<'a> {
     pub fn src_subpass(mut self, src_subpass: u32) -> Self {
         self.inner.src_subpass = src_subpass;
@@ -27251,6 +29227,7 @@ impl ::std::default::Default for RenderPassCreateInfo2 {
     }
 }
 impl RenderPassCreateInfo2 {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> RenderPassCreateInfo2Builder<'a> {
         RenderPassCreateInfo2Builder {
             inner: RenderPassCreateInfo2::default(),
@@ -27258,23 +29235,27 @@ impl RenderPassCreateInfo2 {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct RenderPassCreateInfo2Builder<'a> {
     inner: RenderPassCreateInfo2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsRenderPassCreateInfo2 {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for RenderPassCreateInfo2Builder<'a> {
     type Target = RenderPassCreateInfo2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for RenderPassCreateInfo2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> RenderPassCreateInfo2Builder<'a> {
     pub fn flags(mut self, flags: RenderPassCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -27339,6 +29320,7 @@ impl ::std::default::Default for SubpassBeginInfo {
     }
 }
 impl SubpassBeginInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SubpassBeginInfoBuilder<'a> {
         SubpassBeginInfoBuilder {
             inner: SubpassBeginInfo::default(),
@@ -27346,22 +29328,26 @@ impl SubpassBeginInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SubpassBeginInfoBuilder<'a> {
     inner: SubpassBeginInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SubpassBeginInfoBuilder<'a> {
     type Target = SubpassBeginInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SubpassBeginInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SubpassBeginInfoBuilder<'a> {
     pub fn contents(mut self, contents: SubpassContents) -> Self {
         self.inner.contents = contents;
@@ -27390,6 +29376,7 @@ impl ::std::default::Default for SubpassEndInfo {
     }
 }
 impl SubpassEndInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SubpassEndInfoBuilder<'a> {
         SubpassEndInfoBuilder {
             inner: SubpassEndInfo::default(),
@@ -27397,22 +29384,26 @@ impl SubpassEndInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SubpassEndInfoBuilder<'a> {
     inner: SubpassEndInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SubpassEndInfoBuilder<'a> {
     type Target = SubpassEndInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SubpassEndInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SubpassEndInfoBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
@@ -27439,6 +29430,7 @@ impl ::std::default::Default for PhysicalDeviceTimelineSemaphoreFeatures {
     }
 }
 impl PhysicalDeviceTimelineSemaphoreFeatures {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceTimelineSemaphoreFeaturesBuilder<'a> {
         PhysicalDeviceTimelineSemaphoreFeaturesBuilder {
             inner: PhysicalDeviceTimelineSemaphoreFeatures::default(),
@@ -27446,26 +29438,32 @@ impl PhysicalDeviceTimelineSemaphoreFeatures {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceTimelineSemaphoreFeaturesBuilder<'a> {
     inner: PhysicalDeviceTimelineSemaphoreFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceTimelineSemaphoreFeaturesBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceTimelineSemaphoreFeatures {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceTimelineSemaphoreFeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceTimelineSemaphoreFeatures {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceTimelineSemaphoreFeaturesBuilder<'a> {
     type Target = PhysicalDeviceTimelineSemaphoreFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceTimelineSemaphoreFeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceTimelineSemaphoreFeaturesBuilder<'a> {
     pub fn timeline_semaphore(mut self, timeline_semaphore: bool) -> Self {
         self.inner.timeline_semaphore = timeline_semaphore.into();
@@ -27496,6 +29494,7 @@ impl ::std::default::Default for PhysicalDeviceTimelineSemaphoreProperties {
     }
 }
 impl PhysicalDeviceTimelineSemaphoreProperties {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceTimelineSemaphorePropertiesBuilder<'a> {
         PhysicalDeviceTimelineSemaphorePropertiesBuilder {
             inner: PhysicalDeviceTimelineSemaphoreProperties::default(),
@@ -27503,27 +29502,32 @@ impl PhysicalDeviceTimelineSemaphoreProperties {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceTimelineSemaphorePropertiesBuilder<'a> {
     inner: PhysicalDeviceTimelineSemaphoreProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceTimelineSemaphorePropertiesBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceTimelineSemaphoreProperties {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceTimelineSemaphorePropertiesBuilder<'a> {
     type Target = PhysicalDeviceTimelineSemaphoreProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceTimelineSemaphorePropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceTimelineSemaphorePropertiesBuilder<'a> {
     pub fn max_timeline_semaphore_value_difference(
         mut self,
@@ -27560,6 +29564,7 @@ impl ::std::default::Default for SemaphoreTypeCreateInfo {
     }
 }
 impl SemaphoreTypeCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SemaphoreTypeCreateInfoBuilder<'a> {
         SemaphoreTypeCreateInfoBuilder {
             inner: SemaphoreTypeCreateInfo::default(),
@@ -27567,26 +29572,32 @@ impl SemaphoreTypeCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SemaphoreTypeCreateInfoBuilder<'a> {
     inner: SemaphoreTypeCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsSemaphoreCreateInfo for SemaphoreTypeCreateInfoBuilder<'_> {}
 unsafe impl ExtendsSemaphoreCreateInfo for SemaphoreTypeCreateInfo {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceExternalSemaphoreInfo for SemaphoreTypeCreateInfoBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceExternalSemaphoreInfo for SemaphoreTypeCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SemaphoreTypeCreateInfoBuilder<'a> {
     type Target = SemaphoreTypeCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SemaphoreTypeCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SemaphoreTypeCreateInfoBuilder<'a> {
     pub fn semaphore_type(mut self, semaphore_type: SemaphoreType) -> Self {
         self.inner.semaphore_type = semaphore_type;
@@ -27627,6 +29638,7 @@ impl ::std::default::Default for TimelineSemaphoreSubmitInfo {
     }
 }
 impl TimelineSemaphoreSubmitInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> TimelineSemaphoreSubmitInfoBuilder<'a> {
         TimelineSemaphoreSubmitInfoBuilder {
             inner: TimelineSemaphoreSubmitInfo::default(),
@@ -27634,26 +29646,32 @@ impl TimelineSemaphoreSubmitInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct TimelineSemaphoreSubmitInfoBuilder<'a> {
     inner: TimelineSemaphoreSubmitInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsSubmitInfo for TimelineSemaphoreSubmitInfoBuilder<'_> {}
 unsafe impl ExtendsSubmitInfo for TimelineSemaphoreSubmitInfo {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsBindSparseInfo for TimelineSemaphoreSubmitInfoBuilder<'_> {}
 unsafe impl ExtendsBindSparseInfo for TimelineSemaphoreSubmitInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for TimelineSemaphoreSubmitInfoBuilder<'a> {
     type Target = TimelineSemaphoreSubmitInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for TimelineSemaphoreSubmitInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> TimelineSemaphoreSubmitInfoBuilder<'a> {
     pub fn wait_semaphore_values(mut self, wait_semaphore_values: &'a [u64]) -> Self {
         self.inner.wait_semaphore_value_count = wait_semaphore_values.len() as _;
@@ -27696,6 +29714,7 @@ impl ::std::default::Default for SemaphoreWaitInfo {
     }
 }
 impl SemaphoreWaitInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SemaphoreWaitInfoBuilder<'a> {
         SemaphoreWaitInfoBuilder {
             inner: SemaphoreWaitInfo::default(),
@@ -27703,22 +29722,26 @@ impl SemaphoreWaitInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SemaphoreWaitInfoBuilder<'a> {
     inner: SemaphoreWaitInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SemaphoreWaitInfoBuilder<'a> {
     type Target = SemaphoreWaitInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SemaphoreWaitInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SemaphoreWaitInfoBuilder<'a> {
     pub fn flags(mut self, flags: SemaphoreWaitFlags) -> Self {
         self.inner.flags = flags;
@@ -27761,6 +29784,7 @@ impl ::std::default::Default for SemaphoreSignalInfo {
     }
 }
 impl SemaphoreSignalInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SemaphoreSignalInfoBuilder<'a> {
         SemaphoreSignalInfoBuilder {
             inner: SemaphoreSignalInfo::default(),
@@ -27768,22 +29792,26 @@ impl SemaphoreSignalInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SemaphoreSignalInfoBuilder<'a> {
     inner: SemaphoreSignalInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SemaphoreSignalInfoBuilder<'a> {
     type Target = SemaphoreSignalInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SemaphoreSignalInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SemaphoreSignalInfoBuilder<'a> {
     pub fn semaphore(mut self, semaphore: Semaphore) -> Self {
         self.inner.semaphore = semaphore;
@@ -27808,6 +29836,7 @@ pub struct VertexInputBindingDivisorDescriptionEXT {
     pub divisor: u32,
 }
 impl VertexInputBindingDivisorDescriptionEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VertexInputBindingDivisorDescriptionEXTBuilder<'a> {
         VertexInputBindingDivisorDescriptionEXTBuilder {
             inner: VertexInputBindingDivisorDescriptionEXT::default(),
@@ -27815,22 +29844,26 @@ impl VertexInputBindingDivisorDescriptionEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VertexInputBindingDivisorDescriptionEXTBuilder<'a> {
     inner: VertexInputBindingDivisorDescriptionEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VertexInputBindingDivisorDescriptionEXTBuilder<'a> {
     type Target = VertexInputBindingDivisorDescriptionEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VertexInputBindingDivisorDescriptionEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VertexInputBindingDivisorDescriptionEXTBuilder<'a> {
     pub fn binding(mut self, binding: u32) -> Self {
         self.inner.binding = binding;
@@ -27867,6 +29900,7 @@ impl ::std::default::Default for PipelineVertexInputDivisorStateCreateInfoEXT {
     }
 }
 impl PipelineVertexInputDivisorStateCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineVertexInputDivisorStateCreateInfoEXTBuilder<'a> {
         PipelineVertexInputDivisorStateCreateInfoEXTBuilder {
             inner: PipelineVertexInputDivisorStateCreateInfoEXT::default(),
@@ -27874,11 +29908,13 @@ impl PipelineVertexInputDivisorStateCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineVertexInputDivisorStateCreateInfoEXTBuilder<'a> {
     inner: PipelineVertexInputDivisorStateCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPipelineVertexInputStateCreateInfo
     for PipelineVertexInputDivisorStateCreateInfoEXTBuilder<'_>
 {
@@ -27887,17 +29923,20 @@ unsafe impl ExtendsPipelineVertexInputStateCreateInfo
     for PipelineVertexInputDivisorStateCreateInfoEXT
 {
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineVertexInputDivisorStateCreateInfoEXTBuilder<'a> {
     type Target = PipelineVertexInputDivisorStateCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineVertexInputDivisorStateCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineVertexInputDivisorStateCreateInfoEXTBuilder<'a> {
     pub fn vertex_binding_divisors(
         mut self,
@@ -27932,6 +29971,7 @@ impl ::std::default::Default for PhysicalDeviceVertexAttributeDivisorPropertiesE
     }
 }
 impl PhysicalDeviceVertexAttributeDivisorPropertiesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceVertexAttributeDivisorPropertiesEXTBuilder<'a> {
         PhysicalDeviceVertexAttributeDivisorPropertiesEXTBuilder {
             inner: PhysicalDeviceVertexAttributeDivisorPropertiesEXT::default(),
@@ -27939,27 +29979,32 @@ impl PhysicalDeviceVertexAttributeDivisorPropertiesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceVertexAttributeDivisorPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceVertexAttributeDivisorPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceVertexAttributeDivisorPropertiesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceVertexAttributeDivisorPropertiesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceVertexAttributeDivisorPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceVertexAttributeDivisorPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceVertexAttributeDivisorPropertiesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceVertexAttributeDivisorPropertiesEXTBuilder<'a> {
     pub fn max_vertex_attrib_divisor(mut self, max_vertex_attrib_divisor: u32) -> Self {
         self.inner.max_vertex_attrib_divisor = max_vertex_attrib_divisor;
@@ -27996,6 +30041,7 @@ impl ::std::default::Default for PhysicalDevicePCIBusInfoPropertiesEXT {
     }
 }
 impl PhysicalDevicePCIBusInfoPropertiesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDevicePCIBusInfoPropertiesEXTBuilder<'a> {
         PhysicalDevicePCIBusInfoPropertiesEXTBuilder {
             inner: PhysicalDevicePCIBusInfoPropertiesEXT::default(),
@@ -28003,24 +30049,29 @@ impl PhysicalDevicePCIBusInfoPropertiesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDevicePCIBusInfoPropertiesEXTBuilder<'a> {
     inner: PhysicalDevicePCIBusInfoPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePCIBusInfoPropertiesEXTBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePCIBusInfoPropertiesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDevicePCIBusInfoPropertiesEXTBuilder<'a> {
     type Target = PhysicalDevicePCIBusInfoPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDevicePCIBusInfoPropertiesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDevicePCIBusInfoPropertiesEXTBuilder<'a> {
     pub fn pci_domain(mut self, pci_domain: u32) -> Self {
         self.inner.pci_domain = pci_domain;
@@ -28063,6 +30114,7 @@ impl ::std::default::Default for ImportAndroidHardwareBufferInfoANDROID {
     }
 }
 impl ImportAndroidHardwareBufferInfoANDROID {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImportAndroidHardwareBufferInfoANDROIDBuilder<'a> {
         ImportAndroidHardwareBufferInfoANDROIDBuilder {
             inner: ImportAndroidHardwareBufferInfoANDROID::default(),
@@ -28070,24 +30122,29 @@ impl ImportAndroidHardwareBufferInfoANDROID {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImportAndroidHardwareBufferInfoANDROIDBuilder<'a> {
     inner: ImportAndroidHardwareBufferInfoANDROID,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsMemoryAllocateInfo for ImportAndroidHardwareBufferInfoANDROIDBuilder<'_> {}
 unsafe impl ExtendsMemoryAllocateInfo for ImportAndroidHardwareBufferInfoANDROID {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImportAndroidHardwareBufferInfoANDROIDBuilder<'a> {
     type Target = ImportAndroidHardwareBufferInfoANDROID;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImportAndroidHardwareBufferInfoANDROIDBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImportAndroidHardwareBufferInfoANDROIDBuilder<'a> {
     pub fn buffer(mut self, buffer: *mut AHardwareBuffer) -> Self {
         self.inner.buffer = buffer;
@@ -28118,6 +30175,7 @@ impl ::std::default::Default for AndroidHardwareBufferUsageANDROID {
     }
 }
 impl AndroidHardwareBufferUsageANDROID {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> AndroidHardwareBufferUsageANDROIDBuilder<'a> {
         AndroidHardwareBufferUsageANDROIDBuilder {
             inner: AndroidHardwareBufferUsageANDROID::default(),
@@ -28125,24 +30183,29 @@ impl AndroidHardwareBufferUsageANDROID {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct AndroidHardwareBufferUsageANDROIDBuilder<'a> {
     inner: AndroidHardwareBufferUsageANDROID,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsImageFormatProperties2 for AndroidHardwareBufferUsageANDROIDBuilder<'_> {}
 unsafe impl ExtendsImageFormatProperties2 for AndroidHardwareBufferUsageANDROID {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for AndroidHardwareBufferUsageANDROIDBuilder<'a> {
     type Target = AndroidHardwareBufferUsageANDROID;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for AndroidHardwareBufferUsageANDROIDBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> AndroidHardwareBufferUsageANDROIDBuilder<'a> {
     pub fn android_hardware_buffer_usage(mut self, android_hardware_buffer_usage: u64) -> Self {
         self.inner.android_hardware_buffer_usage = android_hardware_buffer_usage;
@@ -28175,6 +30238,7 @@ impl ::std::default::Default for AndroidHardwareBufferPropertiesANDROID {
     }
 }
 impl AndroidHardwareBufferPropertiesANDROID {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> AndroidHardwareBufferPropertiesANDROIDBuilder<'a> {
         AndroidHardwareBufferPropertiesANDROIDBuilder {
             inner: AndroidHardwareBufferPropertiesANDROID::default(),
@@ -28182,23 +30246,27 @@ impl AndroidHardwareBufferPropertiesANDROID {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct AndroidHardwareBufferPropertiesANDROIDBuilder<'a> {
     inner: AndroidHardwareBufferPropertiesANDROID,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsAndroidHardwareBufferPropertiesANDROID {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for AndroidHardwareBufferPropertiesANDROIDBuilder<'a> {
     type Target = AndroidHardwareBufferPropertiesANDROID;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for AndroidHardwareBufferPropertiesANDROIDBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> AndroidHardwareBufferPropertiesANDROIDBuilder<'a> {
     pub fn allocation_size(mut self, allocation_size: DeviceSize) -> Self {
         self.inner.allocation_size = allocation_size;
@@ -28250,6 +30318,7 @@ impl ::std::default::Default for MemoryGetAndroidHardwareBufferInfoANDROID {
     }
 }
 impl MemoryGetAndroidHardwareBufferInfoANDROID {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> MemoryGetAndroidHardwareBufferInfoANDROIDBuilder<'a> {
         MemoryGetAndroidHardwareBufferInfoANDROIDBuilder {
             inner: MemoryGetAndroidHardwareBufferInfoANDROID::default(),
@@ -28257,22 +30326,26 @@ impl MemoryGetAndroidHardwareBufferInfoANDROID {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct MemoryGetAndroidHardwareBufferInfoANDROIDBuilder<'a> {
     inner: MemoryGetAndroidHardwareBufferInfoANDROID,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for MemoryGetAndroidHardwareBufferInfoANDROIDBuilder<'a> {
     type Target = MemoryGetAndroidHardwareBufferInfoANDROID;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for MemoryGetAndroidHardwareBufferInfoANDROIDBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> MemoryGetAndroidHardwareBufferInfoANDROIDBuilder<'a> {
     pub fn memory(mut self, memory: DeviceMemory) -> Self {
         self.inner.memory = memory;
@@ -28317,6 +30390,7 @@ impl ::std::default::Default for AndroidHardwareBufferFormatPropertiesANDROID {
     }
 }
 impl AndroidHardwareBufferFormatPropertiesANDROID {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> AndroidHardwareBufferFormatPropertiesANDROIDBuilder<'a> {
         AndroidHardwareBufferFormatPropertiesANDROIDBuilder {
             inner: AndroidHardwareBufferFormatPropertiesANDROID::default(),
@@ -28324,11 +30398,13 @@ impl AndroidHardwareBufferFormatPropertiesANDROID {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct AndroidHardwareBufferFormatPropertiesANDROIDBuilder<'a> {
     inner: AndroidHardwareBufferFormatPropertiesANDROID,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsAndroidHardwareBufferPropertiesANDROID
     for AndroidHardwareBufferFormatPropertiesANDROIDBuilder<'_>
 {
@@ -28337,17 +30413,20 @@ unsafe impl ExtendsAndroidHardwareBufferPropertiesANDROID
     for AndroidHardwareBufferFormatPropertiesANDROID
 {
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for AndroidHardwareBufferFormatPropertiesANDROIDBuilder<'a> {
     type Target = AndroidHardwareBufferFormatPropertiesANDROID;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for AndroidHardwareBufferFormatPropertiesANDROIDBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> AndroidHardwareBufferFormatPropertiesANDROIDBuilder<'a> {
     pub fn format(mut self, format: Format) -> Self {
         self.inner.format = format;
@@ -28412,6 +30491,7 @@ impl ::std::default::Default for CommandBufferInheritanceConditionalRenderingInf
     }
 }
 impl CommandBufferInheritanceConditionalRenderingInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> CommandBufferInheritanceConditionalRenderingInfoEXTBuilder<'a> {
         CommandBufferInheritanceConditionalRenderingInfoEXTBuilder {
             inner: CommandBufferInheritanceConditionalRenderingInfoEXT::default(),
@@ -28419,11 +30499,13 @@ impl CommandBufferInheritanceConditionalRenderingInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct CommandBufferInheritanceConditionalRenderingInfoEXTBuilder<'a> {
     inner: CommandBufferInheritanceConditionalRenderingInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsCommandBufferInheritanceInfo
     for CommandBufferInheritanceConditionalRenderingInfoEXTBuilder<'_>
 {
@@ -28432,17 +30514,20 @@ unsafe impl ExtendsCommandBufferInheritanceInfo
     for CommandBufferInheritanceConditionalRenderingInfoEXT
 {
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for CommandBufferInheritanceConditionalRenderingInfoEXTBuilder<'a> {
     type Target = CommandBufferInheritanceConditionalRenderingInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for CommandBufferInheritanceConditionalRenderingInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> CommandBufferInheritanceConditionalRenderingInfoEXTBuilder<'a> {
     pub fn conditional_rendering_enable(mut self, conditional_rendering_enable: bool) -> Self {
         self.inner.conditional_rendering_enable = conditional_rendering_enable.into();
@@ -28473,6 +30558,7 @@ impl ::std::default::Default for ExternalFormatANDROID {
     }
 }
 impl ExternalFormatANDROID {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ExternalFormatANDROIDBuilder<'a> {
         ExternalFormatANDROIDBuilder {
             inner: ExternalFormatANDROID::default(),
@@ -28480,26 +30566,32 @@ impl ExternalFormatANDROID {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ExternalFormatANDROIDBuilder<'a> {
     inner: ExternalFormatANDROID,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsImageCreateInfo for ExternalFormatANDROIDBuilder<'_> {}
 unsafe impl ExtendsImageCreateInfo for ExternalFormatANDROID {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsSamplerYcbcrConversionCreateInfo for ExternalFormatANDROIDBuilder<'_> {}
 unsafe impl ExtendsSamplerYcbcrConversionCreateInfo for ExternalFormatANDROID {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ExternalFormatANDROIDBuilder<'a> {
     type Target = ExternalFormatANDROID;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ExternalFormatANDROIDBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ExternalFormatANDROIDBuilder<'a> {
     pub fn external_format(mut self, external_format: u64) -> Self {
         self.inner.external_format = external_format;
@@ -28534,6 +30626,7 @@ impl ::std::default::Default for PhysicalDevice8BitStorageFeatures {
     }
 }
 impl PhysicalDevice8BitStorageFeatures {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDevice8BitStorageFeaturesBuilder<'a> {
         PhysicalDevice8BitStorageFeaturesBuilder {
             inner: PhysicalDevice8BitStorageFeatures::default(),
@@ -28541,26 +30634,32 @@ impl PhysicalDevice8BitStorageFeatures {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDevice8BitStorageFeaturesBuilder<'a> {
     inner: PhysicalDevice8BitStorageFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevice8BitStorageFeaturesBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevice8BitStorageFeatures {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDevice8BitStorageFeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDevice8BitStorageFeatures {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDevice8BitStorageFeaturesBuilder<'a> {
     type Target = PhysicalDevice8BitStorageFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDevice8BitStorageFeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDevice8BitStorageFeaturesBuilder<'a> {
     pub fn storage_buffer8_bit_access(mut self, storage_buffer8_bit_access: bool) -> Self {
         self.inner.storage_buffer8_bit_access = storage_buffer8_bit_access.into();
@@ -28605,6 +30704,7 @@ impl ::std::default::Default for PhysicalDeviceConditionalRenderingFeaturesEXT {
     }
 }
 impl PhysicalDeviceConditionalRenderingFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceConditionalRenderingFeaturesEXTBuilder<'a> {
         PhysicalDeviceConditionalRenderingFeaturesEXTBuilder {
             inner: PhysicalDeviceConditionalRenderingFeaturesEXT::default(),
@@ -28612,29 +30712,35 @@ impl PhysicalDeviceConditionalRenderingFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceConditionalRenderingFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceConditionalRenderingFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceConditionalRenderingFeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceConditionalRenderingFeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceConditionalRenderingFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceConditionalRenderingFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceConditionalRenderingFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceConditionalRenderingFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceConditionalRenderingFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceConditionalRenderingFeaturesEXTBuilder<'a> {
     pub fn conditional_rendering(mut self, conditional_rendering: bool) -> Self {
         self.inner.conditional_rendering = conditional_rendering.into();
@@ -28676,6 +30782,7 @@ impl ::std::default::Default for PhysicalDeviceVulkanMemoryModelFeatures {
     }
 }
 impl PhysicalDeviceVulkanMemoryModelFeatures {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceVulkanMemoryModelFeaturesBuilder<'a> {
         PhysicalDeviceVulkanMemoryModelFeaturesBuilder {
             inner: PhysicalDeviceVulkanMemoryModelFeatures::default(),
@@ -28683,26 +30790,32 @@ impl PhysicalDeviceVulkanMemoryModelFeatures {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceVulkanMemoryModelFeaturesBuilder<'a> {
     inner: PhysicalDeviceVulkanMemoryModelFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVulkanMemoryModelFeaturesBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVulkanMemoryModelFeatures {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVulkanMemoryModelFeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVulkanMemoryModelFeatures {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceVulkanMemoryModelFeaturesBuilder<'a> {
     type Target = PhysicalDeviceVulkanMemoryModelFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceVulkanMemoryModelFeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceVulkanMemoryModelFeaturesBuilder<'a> {
     pub fn vulkan_memory_model(mut self, vulkan_memory_model: bool) -> Self {
         self.inner.vulkan_memory_model = vulkan_memory_model.into();
@@ -28751,6 +30864,7 @@ impl ::std::default::Default for PhysicalDeviceShaderAtomicInt64Features {
     }
 }
 impl PhysicalDeviceShaderAtomicInt64Features {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceShaderAtomicInt64FeaturesBuilder<'a> {
         PhysicalDeviceShaderAtomicInt64FeaturesBuilder {
             inner: PhysicalDeviceShaderAtomicInt64Features::default(),
@@ -28758,26 +30872,32 @@ impl PhysicalDeviceShaderAtomicInt64Features {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceShaderAtomicInt64FeaturesBuilder<'a> {
     inner: PhysicalDeviceShaderAtomicInt64Features,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderAtomicInt64FeaturesBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderAtomicInt64Features {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderAtomicInt64FeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderAtomicInt64Features {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderAtomicInt64FeaturesBuilder<'a> {
     type Target = PhysicalDeviceShaderAtomicInt64Features;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderAtomicInt64FeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceShaderAtomicInt64FeaturesBuilder<'a> {
     pub fn shader_buffer_int64_atomics(mut self, shader_buffer_int64_atomics: bool) -> Self {
         self.inner.shader_buffer_int64_atomics = shader_buffer_int64_atomics.into();
@@ -28834,6 +30954,7 @@ impl ::std::default::Default for PhysicalDeviceShaderAtomicFloatFeaturesEXT {
     }
 }
 impl PhysicalDeviceShaderAtomicFloatFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceShaderAtomicFloatFeaturesEXTBuilder<'a> {
         PhysicalDeviceShaderAtomicFloatFeaturesEXTBuilder {
             inner: PhysicalDeviceShaderAtomicFloatFeaturesEXT::default(),
@@ -28841,29 +30962,35 @@ impl PhysicalDeviceShaderAtomicFloatFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceShaderAtomicFloatFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceShaderAtomicFloatFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceShaderAtomicFloatFeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderAtomicFloatFeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderAtomicFloatFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderAtomicFloatFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderAtomicFloatFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceShaderAtomicFloatFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderAtomicFloatFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceShaderAtomicFloatFeaturesEXTBuilder<'a> {
     pub fn shader_buffer_float32_atomics(mut self, shader_buffer_float32_atomics: bool) -> Self {
         self.inner.shader_buffer_float32_atomics = shader_buffer_float32_atomics.into();
@@ -28978,6 +31105,7 @@ impl ::std::default::Default for PhysicalDeviceShaderAtomicFloat2FeaturesEXT {
     }
 }
 impl PhysicalDeviceShaderAtomicFloat2FeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceShaderAtomicFloat2FeaturesEXTBuilder<'a> {
         PhysicalDeviceShaderAtomicFloat2FeaturesEXTBuilder {
             inner: PhysicalDeviceShaderAtomicFloat2FeaturesEXT::default(),
@@ -28985,29 +31113,35 @@ impl PhysicalDeviceShaderAtomicFloat2FeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceShaderAtomicFloat2FeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceShaderAtomicFloat2FeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceShaderAtomicFloat2FeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderAtomicFloat2FeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderAtomicFloat2FeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderAtomicFloat2FeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderAtomicFloat2FeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceShaderAtomicFloat2FeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderAtomicFloat2FeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceShaderAtomicFloat2FeaturesEXTBuilder<'a> {
     pub fn shader_buffer_float16_atomics(mut self, shader_buffer_float16_atomics: bool) -> Self {
         self.inner.shader_buffer_float16_atomics = shader_buffer_float16_atomics.into();
@@ -29120,6 +31254,7 @@ impl ::std::default::Default for PhysicalDeviceVertexAttributeDivisorFeaturesEXT
     }
 }
 impl PhysicalDeviceVertexAttributeDivisorFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceVertexAttributeDivisorFeaturesEXTBuilder<'a> {
         PhysicalDeviceVertexAttributeDivisorFeaturesEXTBuilder {
             inner: PhysicalDeviceVertexAttributeDivisorFeaturesEXT::default(),
@@ -29127,29 +31262,35 @@ impl PhysicalDeviceVertexAttributeDivisorFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceVertexAttributeDivisorFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceVertexAttributeDivisorFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceVertexAttributeDivisorFeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVertexAttributeDivisorFeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVertexAttributeDivisorFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVertexAttributeDivisorFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceVertexAttributeDivisorFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceVertexAttributeDivisorFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceVertexAttributeDivisorFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceVertexAttributeDivisorFeaturesEXTBuilder<'a> {
     pub fn vertex_attribute_instance_rate_divisor(
         mut self,
@@ -29192,6 +31333,7 @@ impl ::std::default::Default for QueueFamilyCheckpointPropertiesNV {
     }
 }
 impl QueueFamilyCheckpointPropertiesNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> QueueFamilyCheckpointPropertiesNVBuilder<'a> {
         QueueFamilyCheckpointPropertiesNVBuilder {
             inner: QueueFamilyCheckpointPropertiesNV::default(),
@@ -29199,24 +31341,29 @@ impl QueueFamilyCheckpointPropertiesNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct QueueFamilyCheckpointPropertiesNVBuilder<'a> {
     inner: QueueFamilyCheckpointPropertiesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsQueueFamilyProperties2 for QueueFamilyCheckpointPropertiesNVBuilder<'_> {}
 unsafe impl ExtendsQueueFamilyProperties2 for QueueFamilyCheckpointPropertiesNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for QueueFamilyCheckpointPropertiesNVBuilder<'a> {
     type Target = QueueFamilyCheckpointPropertiesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for QueueFamilyCheckpointPropertiesNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> QueueFamilyCheckpointPropertiesNVBuilder<'a> {
     pub fn checkpoint_execution_stage_mask(
         mut self,
@@ -29252,6 +31399,7 @@ impl ::std::default::Default for CheckpointDataNV {
     }
 }
 impl CheckpointDataNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> CheckpointDataNVBuilder<'a> {
         CheckpointDataNVBuilder {
             inner: CheckpointDataNV::default(),
@@ -29259,22 +31407,26 @@ impl CheckpointDataNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct CheckpointDataNVBuilder<'a> {
     inner: CheckpointDataNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for CheckpointDataNVBuilder<'a> {
     type Target = CheckpointDataNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for CheckpointDataNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> CheckpointDataNVBuilder<'a> {
     pub fn stage(mut self, stage: PipelineStageFlags) -> Self {
         self.inner.stage = stage;
@@ -29315,6 +31467,7 @@ impl ::std::default::Default for PhysicalDeviceDepthStencilResolveProperties {
     }
 }
 impl PhysicalDeviceDepthStencilResolveProperties {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceDepthStencilResolvePropertiesBuilder<'a> {
         PhysicalDeviceDepthStencilResolvePropertiesBuilder {
             inner: PhysicalDeviceDepthStencilResolveProperties::default(),
@@ -29322,27 +31475,32 @@ impl PhysicalDeviceDepthStencilResolveProperties {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceDepthStencilResolvePropertiesBuilder<'a> {
     inner: PhysicalDeviceDepthStencilResolveProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceDepthStencilResolvePropertiesBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDepthStencilResolveProperties {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceDepthStencilResolvePropertiesBuilder<'a> {
     type Target = PhysicalDeviceDepthStencilResolveProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceDepthStencilResolvePropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceDepthStencilResolvePropertiesBuilder<'a> {
     pub fn supported_depth_resolve_modes(
         mut self,
@@ -29395,6 +31553,7 @@ impl ::std::default::Default for SubpassDescriptionDepthStencilResolve {
     }
 }
 impl SubpassDescriptionDepthStencilResolve {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SubpassDescriptionDepthStencilResolveBuilder<'a> {
         SubpassDescriptionDepthStencilResolveBuilder {
             inner: SubpassDescriptionDepthStencilResolve::default(),
@@ -29402,24 +31561,29 @@ impl SubpassDescriptionDepthStencilResolve {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SubpassDescriptionDepthStencilResolveBuilder<'a> {
     inner: SubpassDescriptionDepthStencilResolve,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsSubpassDescription2 for SubpassDescriptionDepthStencilResolveBuilder<'_> {}
 unsafe impl ExtendsSubpassDescription2 for SubpassDescriptionDepthStencilResolve {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SubpassDescriptionDepthStencilResolveBuilder<'a> {
     type Target = SubpassDescriptionDepthStencilResolve;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SubpassDescriptionDepthStencilResolveBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SubpassDescriptionDepthStencilResolveBuilder<'a> {
     pub fn depth_resolve_mode(mut self, depth_resolve_mode: ResolveModeFlags) -> Self {
         self.inner.depth_resolve_mode = depth_resolve_mode;
@@ -29461,6 +31625,7 @@ impl ::std::default::Default for ImageViewASTCDecodeModeEXT {
     }
 }
 impl ImageViewASTCDecodeModeEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImageViewASTCDecodeModeEXTBuilder<'a> {
         ImageViewASTCDecodeModeEXTBuilder {
             inner: ImageViewASTCDecodeModeEXT::default(),
@@ -29468,24 +31633,29 @@ impl ImageViewASTCDecodeModeEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImageViewASTCDecodeModeEXTBuilder<'a> {
     inner: ImageViewASTCDecodeModeEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsImageViewCreateInfo for ImageViewASTCDecodeModeEXTBuilder<'_> {}
 unsafe impl ExtendsImageViewCreateInfo for ImageViewASTCDecodeModeEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImageViewASTCDecodeModeEXTBuilder<'a> {
     type Target = ImageViewASTCDecodeModeEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImageViewASTCDecodeModeEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImageViewASTCDecodeModeEXTBuilder<'a> {
     pub fn decode_mode(mut self, decode_mode: Format) -> Self {
         self.inner.decode_mode = decode_mode;
@@ -29516,6 +31686,7 @@ impl ::std::default::Default for PhysicalDeviceASTCDecodeFeaturesEXT {
     }
 }
 impl PhysicalDeviceASTCDecodeFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceASTCDecodeFeaturesEXTBuilder<'a> {
         PhysicalDeviceASTCDecodeFeaturesEXTBuilder {
             inner: PhysicalDeviceASTCDecodeFeaturesEXT::default(),
@@ -29523,26 +31694,32 @@ impl PhysicalDeviceASTCDecodeFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceASTCDecodeFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceASTCDecodeFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceASTCDecodeFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceASTCDecodeFeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceASTCDecodeFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceASTCDecodeFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceASTCDecodeFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceASTCDecodeFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceASTCDecodeFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceASTCDecodeFeaturesEXTBuilder<'a> {
     pub fn decode_mode_shared_exponent(mut self, decode_mode_shared_exponent: bool) -> Self {
         self.inner.decode_mode_shared_exponent = decode_mode_shared_exponent.into();
@@ -29575,6 +31752,7 @@ impl ::std::default::Default for PhysicalDeviceTransformFeedbackFeaturesEXT {
     }
 }
 impl PhysicalDeviceTransformFeedbackFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceTransformFeedbackFeaturesEXTBuilder<'a> {
         PhysicalDeviceTransformFeedbackFeaturesEXTBuilder {
             inner: PhysicalDeviceTransformFeedbackFeaturesEXT::default(),
@@ -29582,29 +31760,35 @@ impl PhysicalDeviceTransformFeedbackFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceTransformFeedbackFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceTransformFeedbackFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceTransformFeedbackFeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceTransformFeedbackFeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceTransformFeedbackFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceTransformFeedbackFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceTransformFeedbackFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceTransformFeedbackFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceTransformFeedbackFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceTransformFeedbackFeaturesEXTBuilder<'a> {
     pub fn transform_feedback(mut self, transform_feedback: bool) -> Self {
         self.inner.transform_feedback = transform_feedback.into();
@@ -29657,6 +31841,7 @@ impl ::std::default::Default for PhysicalDeviceTransformFeedbackPropertiesEXT {
     }
 }
 impl PhysicalDeviceTransformFeedbackPropertiesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceTransformFeedbackPropertiesEXTBuilder<'a> {
         PhysicalDeviceTransformFeedbackPropertiesEXTBuilder {
             inner: PhysicalDeviceTransformFeedbackPropertiesEXT::default(),
@@ -29664,27 +31849,32 @@ impl PhysicalDeviceTransformFeedbackPropertiesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceTransformFeedbackPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceTransformFeedbackPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceTransformFeedbackPropertiesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceTransformFeedbackPropertiesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceTransformFeedbackPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceTransformFeedbackPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceTransformFeedbackPropertiesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceTransformFeedbackPropertiesEXTBuilder<'a> {
     pub fn max_transform_feedback_streams(mut self, max_transform_feedback_streams: u32) -> Self {
         self.inner.max_transform_feedback_streams = max_transform_feedback_streams;
@@ -29776,6 +31966,7 @@ impl ::std::default::Default for PipelineRasterizationStateStreamCreateInfoEXT {
     }
 }
 impl PipelineRasterizationStateStreamCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineRasterizationStateStreamCreateInfoEXTBuilder<'a> {
         PipelineRasterizationStateStreamCreateInfoEXTBuilder {
             inner: PipelineRasterizationStateStreamCreateInfoEXT::default(),
@@ -29783,11 +31974,13 @@ impl PipelineRasterizationStateStreamCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineRasterizationStateStreamCreateInfoEXTBuilder<'a> {
     inner: PipelineRasterizationStateStreamCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPipelineRasterizationStateCreateInfo
     for PipelineRasterizationStateStreamCreateInfoEXTBuilder<'_>
 {
@@ -29796,17 +31989,20 @@ unsafe impl ExtendsPipelineRasterizationStateCreateInfo
     for PipelineRasterizationStateStreamCreateInfoEXT
 {
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineRasterizationStateStreamCreateInfoEXTBuilder<'a> {
     type Target = PipelineRasterizationStateStreamCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineRasterizationStateStreamCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineRasterizationStateStreamCreateInfoEXTBuilder<'a> {
     pub fn flags(mut self, flags: PipelineRasterizationStateStreamCreateFlagsEXT) -> Self {
         self.inner.flags = flags;
@@ -29841,6 +32037,7 @@ impl ::std::default::Default for PhysicalDeviceRepresentativeFragmentTestFeature
     }
 }
 impl PhysicalDeviceRepresentativeFragmentTestFeaturesNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceRepresentativeFragmentTestFeaturesNVBuilder<'a> {
         PhysicalDeviceRepresentativeFragmentTestFeaturesNVBuilder {
             inner: PhysicalDeviceRepresentativeFragmentTestFeaturesNV::default(),
@@ -29848,32 +32045,38 @@ impl PhysicalDeviceRepresentativeFragmentTestFeaturesNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceRepresentativeFragmentTestFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceRepresentativeFragmentTestFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceRepresentativeFragmentTestFeaturesNVBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRepresentativeFragmentTestFeaturesNV {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceRepresentativeFragmentTestFeaturesNVBuilder<'_>
 {
 }
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRepresentativeFragmentTestFeaturesNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceRepresentativeFragmentTestFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceRepresentativeFragmentTestFeaturesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceRepresentativeFragmentTestFeaturesNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceRepresentativeFragmentTestFeaturesNVBuilder<'a> {
     pub fn representative_fragment_test(mut self, representative_fragment_test: bool) -> Self {
         self.inner.representative_fragment_test = representative_fragment_test.into();
@@ -29904,6 +32107,7 @@ impl ::std::default::Default for PipelineRepresentativeFragmentTestStateCreateIn
     }
 }
 impl PipelineRepresentativeFragmentTestStateCreateInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineRepresentativeFragmentTestStateCreateInfoNVBuilder<'a> {
         PipelineRepresentativeFragmentTestStateCreateInfoNVBuilder {
             inner: PipelineRepresentativeFragmentTestStateCreateInfoNV::default(),
@@ -29911,11 +32115,13 @@ impl PipelineRepresentativeFragmentTestStateCreateInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineRepresentativeFragmentTestStateCreateInfoNVBuilder<'a> {
     inner: PipelineRepresentativeFragmentTestStateCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsGraphicsPipelineCreateInfo
     for PipelineRepresentativeFragmentTestStateCreateInfoNVBuilder<'_>
 {
@@ -29924,17 +32130,20 @@ unsafe impl ExtendsGraphicsPipelineCreateInfo
     for PipelineRepresentativeFragmentTestStateCreateInfoNV
 {
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineRepresentativeFragmentTestStateCreateInfoNVBuilder<'a> {
     type Target = PipelineRepresentativeFragmentTestStateCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineRepresentativeFragmentTestStateCreateInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineRepresentativeFragmentTestStateCreateInfoNVBuilder<'a> {
     pub fn representative_fragment_test_enable(
         mut self,
@@ -29968,6 +32177,7 @@ impl ::std::default::Default for PhysicalDeviceExclusiveScissorFeaturesNV {
     }
 }
 impl PhysicalDeviceExclusiveScissorFeaturesNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceExclusiveScissorFeaturesNVBuilder<'a> {
         PhysicalDeviceExclusiveScissorFeaturesNVBuilder {
             inner: PhysicalDeviceExclusiveScissorFeaturesNV::default(),
@@ -29975,26 +32185,32 @@ impl PhysicalDeviceExclusiveScissorFeaturesNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceExclusiveScissorFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceExclusiveScissorFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceExclusiveScissorFeaturesNVBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceExclusiveScissorFeaturesNV {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExclusiveScissorFeaturesNVBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExclusiveScissorFeaturesNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceExclusiveScissorFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceExclusiveScissorFeaturesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceExclusiveScissorFeaturesNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceExclusiveScissorFeaturesNVBuilder<'a> {
     pub fn exclusive_scissor(mut self, exclusive_scissor: bool) -> Self {
         self.inner.exclusive_scissor = exclusive_scissor.into();
@@ -30027,6 +32243,7 @@ impl ::std::default::Default for PipelineViewportExclusiveScissorStateCreateInfo
     }
 }
 impl PipelineViewportExclusiveScissorStateCreateInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineViewportExclusiveScissorStateCreateInfoNVBuilder<'a> {
         PipelineViewportExclusiveScissorStateCreateInfoNVBuilder {
             inner: PipelineViewportExclusiveScissorStateCreateInfoNV::default(),
@@ -30034,11 +32251,13 @@ impl PipelineViewportExclusiveScissorStateCreateInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineViewportExclusiveScissorStateCreateInfoNVBuilder<'a> {
     inner: PipelineViewportExclusiveScissorStateCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPipelineViewportStateCreateInfo
     for PipelineViewportExclusiveScissorStateCreateInfoNVBuilder<'_>
 {
@@ -30047,17 +32266,20 @@ unsafe impl ExtendsPipelineViewportStateCreateInfo
     for PipelineViewportExclusiveScissorStateCreateInfoNV
 {
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineViewportExclusiveScissorStateCreateInfoNVBuilder<'a> {
     type Target = PipelineViewportExclusiveScissorStateCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineViewportExclusiveScissorStateCreateInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineViewportExclusiveScissorStateCreateInfoNVBuilder<'a> {
     pub fn exclusive_scissors(mut self, exclusive_scissors: &'a [Rect2D]) -> Self {
         self.inner.exclusive_scissor_count = exclusive_scissors.len() as _;
@@ -30089,6 +32311,7 @@ impl ::std::default::Default for PhysicalDeviceCornerSampledImageFeaturesNV {
     }
 }
 impl PhysicalDeviceCornerSampledImageFeaturesNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceCornerSampledImageFeaturesNVBuilder<'a> {
         PhysicalDeviceCornerSampledImageFeaturesNVBuilder {
             inner: PhysicalDeviceCornerSampledImageFeaturesNV::default(),
@@ -30096,29 +32319,35 @@ impl PhysicalDeviceCornerSampledImageFeaturesNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceCornerSampledImageFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceCornerSampledImageFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceCornerSampledImageFeaturesNVBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCornerSampledImageFeaturesNV {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCornerSampledImageFeaturesNVBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCornerSampledImageFeaturesNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceCornerSampledImageFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceCornerSampledImageFeaturesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceCornerSampledImageFeaturesNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceCornerSampledImageFeaturesNVBuilder<'a> {
     pub fn corner_sampled_image(mut self, corner_sampled_image: bool) -> Self {
         self.inner.corner_sampled_image = corner_sampled_image.into();
@@ -30151,6 +32380,7 @@ impl ::std::default::Default for PhysicalDeviceComputeShaderDerivativesFeaturesN
     }
 }
 impl PhysicalDeviceComputeShaderDerivativesFeaturesNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceComputeShaderDerivativesFeaturesNVBuilder<'a> {
         PhysicalDeviceComputeShaderDerivativesFeaturesNVBuilder {
             inner: PhysicalDeviceComputeShaderDerivativesFeaturesNV::default(),
@@ -30158,32 +32388,38 @@ impl PhysicalDeviceComputeShaderDerivativesFeaturesNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceComputeShaderDerivativesFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceComputeShaderDerivativesFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceComputeShaderDerivativesFeaturesNVBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceComputeShaderDerivativesFeaturesNV {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceComputeShaderDerivativesFeaturesNVBuilder<'_>
 {
 }
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceComputeShaderDerivativesFeaturesNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceComputeShaderDerivativesFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceComputeShaderDerivativesFeaturesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceComputeShaderDerivativesFeaturesNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceComputeShaderDerivativesFeaturesNVBuilder<'a> {
     pub fn compute_derivative_group_quads(mut self, compute_derivative_group_quads: bool) -> Self {
         self.inner.compute_derivative_group_quads = compute_derivative_group_quads.into();
@@ -30221,6 +32457,7 @@ impl ::std::default::Default for PhysicalDeviceFragmentShaderBarycentricFeatures
     }
 }
 impl PhysicalDeviceFragmentShaderBarycentricFeaturesNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceFragmentShaderBarycentricFeaturesNVBuilder<'a> {
         PhysicalDeviceFragmentShaderBarycentricFeaturesNVBuilder {
             inner: PhysicalDeviceFragmentShaderBarycentricFeaturesNV::default(),
@@ -30228,32 +32465,38 @@ impl PhysicalDeviceFragmentShaderBarycentricFeaturesNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceFragmentShaderBarycentricFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceFragmentShaderBarycentricFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceFragmentShaderBarycentricFeaturesNVBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceFragmentShaderBarycentricFeaturesNV {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceFragmentShaderBarycentricFeaturesNVBuilder<'_>
 {
 }
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentShaderBarycentricFeaturesNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceFragmentShaderBarycentricFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceFragmentShaderBarycentricFeaturesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceFragmentShaderBarycentricFeaturesNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceFragmentShaderBarycentricFeaturesNVBuilder<'a> {
     pub fn fragment_shader_barycentric(mut self, fragment_shader_barycentric: bool) -> Self {
         self.inner.fragment_shader_barycentric = fragment_shader_barycentric.into();
@@ -30284,6 +32527,7 @@ impl ::std::default::Default for PhysicalDeviceShaderImageFootprintFeaturesNV {
     }
 }
 impl PhysicalDeviceShaderImageFootprintFeaturesNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceShaderImageFootprintFeaturesNVBuilder<'a> {
         PhysicalDeviceShaderImageFootprintFeaturesNVBuilder {
             inner: PhysicalDeviceShaderImageFootprintFeaturesNV::default(),
@@ -30291,29 +32535,35 @@ impl PhysicalDeviceShaderImageFootprintFeaturesNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceShaderImageFootprintFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceShaderImageFootprintFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceShaderImageFootprintFeaturesNVBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderImageFootprintFeaturesNV {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderImageFootprintFeaturesNVBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderImageFootprintFeaturesNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderImageFootprintFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceShaderImageFootprintFeaturesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderImageFootprintFeaturesNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceShaderImageFootprintFeaturesNVBuilder<'a> {
     pub fn image_footprint(mut self, image_footprint: bool) -> Self {
         self.inner.image_footprint = image_footprint.into();
@@ -30344,6 +32594,7 @@ impl ::std::default::Default for PhysicalDeviceDedicatedAllocationImageAliasingF
     }
 }
 impl PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNVBuilder<'a> {
         PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNVBuilder {
             inner: PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV::default(),
@@ -30351,11 +32602,13 @@ impl PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNVBuilder<'_>
 {
@@ -30364,17 +32617,20 @@ unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV
 {
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNVBuilder<'_>
 {
 }
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut
     for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNVBuilder<'a>
 {
@@ -30382,6 +32638,7 @@ impl<'a> ::std::ops::DerefMut
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNVBuilder<'a> {
     pub fn dedicated_allocation_image_aliasing(
         mut self,
@@ -30413,6 +32670,7 @@ impl ::std::default::Default for ShadingRatePaletteNV {
     }
 }
 impl ShadingRatePaletteNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ShadingRatePaletteNVBuilder<'a> {
         ShadingRatePaletteNVBuilder {
             inner: ShadingRatePaletteNV::default(),
@@ -30420,22 +32678,26 @@ impl ShadingRatePaletteNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ShadingRatePaletteNVBuilder<'a> {
     inner: ShadingRatePaletteNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ShadingRatePaletteNVBuilder<'a> {
     type Target = ShadingRatePaletteNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ShadingRatePaletteNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ShadingRatePaletteNVBuilder<'a> {
     pub fn shading_rate_palette_entries(
         mut self,
@@ -30474,6 +32736,7 @@ impl ::std::default::Default for PipelineViewportShadingRateImageStateCreateInfo
     }
 }
 impl PipelineViewportShadingRateImageStateCreateInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineViewportShadingRateImageStateCreateInfoNVBuilder<'a> {
         PipelineViewportShadingRateImageStateCreateInfoNVBuilder {
             inner: PipelineViewportShadingRateImageStateCreateInfoNV::default(),
@@ -30481,11 +32744,13 @@ impl PipelineViewportShadingRateImageStateCreateInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineViewportShadingRateImageStateCreateInfoNVBuilder<'a> {
     inner: PipelineViewportShadingRateImageStateCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPipelineViewportStateCreateInfo
     for PipelineViewportShadingRateImageStateCreateInfoNVBuilder<'_>
 {
@@ -30494,17 +32759,20 @@ unsafe impl ExtendsPipelineViewportStateCreateInfo
     for PipelineViewportShadingRateImageStateCreateInfoNV
 {
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineViewportShadingRateImageStateCreateInfoNVBuilder<'a> {
     type Target = PipelineViewportShadingRateImageStateCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineViewportShadingRateImageStateCreateInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineViewportShadingRateImageStateCreateInfoNVBuilder<'a> {
     pub fn shading_rate_image_enable(mut self, shading_rate_image_enable: bool) -> Self {
         self.inner.shading_rate_image_enable = shading_rate_image_enable.into();
@@ -30545,6 +32813,7 @@ impl ::std::default::Default for PhysicalDeviceShadingRateImageFeaturesNV {
     }
 }
 impl PhysicalDeviceShadingRateImageFeaturesNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceShadingRateImageFeaturesNVBuilder<'a> {
         PhysicalDeviceShadingRateImageFeaturesNVBuilder {
             inner: PhysicalDeviceShadingRateImageFeaturesNV::default(),
@@ -30552,26 +32821,32 @@ impl PhysicalDeviceShadingRateImageFeaturesNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceShadingRateImageFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceShadingRateImageFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShadingRateImageFeaturesNVBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShadingRateImageFeaturesNV {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShadingRateImageFeaturesNVBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShadingRateImageFeaturesNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceShadingRateImageFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceShadingRateImageFeaturesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceShadingRateImageFeaturesNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceShadingRateImageFeaturesNVBuilder<'a> {
     pub fn shading_rate_image(mut self, shading_rate_image: bool) -> Self {
         self.inner.shading_rate_image = shading_rate_image.into();
@@ -30613,6 +32888,7 @@ impl ::std::default::Default for PhysicalDeviceShadingRateImagePropertiesNV {
     }
 }
 impl PhysicalDeviceShadingRateImagePropertiesNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceShadingRateImagePropertiesNVBuilder<'a> {
         PhysicalDeviceShadingRateImagePropertiesNVBuilder {
             inner: PhysicalDeviceShadingRateImagePropertiesNV::default(),
@@ -30620,27 +32896,32 @@ impl PhysicalDeviceShadingRateImagePropertiesNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceShadingRateImagePropertiesNVBuilder<'a> {
     inner: PhysicalDeviceShadingRateImagePropertiesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceShadingRateImagePropertiesNVBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShadingRateImagePropertiesNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceShadingRateImagePropertiesNVBuilder<'a> {
     type Target = PhysicalDeviceShadingRateImagePropertiesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceShadingRateImagePropertiesNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceShadingRateImagePropertiesNVBuilder<'a> {
     pub fn shading_rate_texel_size(mut self, shading_rate_texel_size: Extent2D) -> Self {
         self.inner.shading_rate_texel_size = shading_rate_texel_size;
@@ -30679,6 +32960,7 @@ impl ::std::default::Default for PhysicalDeviceInvocationMaskFeaturesHUAWEI {
     }
 }
 impl PhysicalDeviceInvocationMaskFeaturesHUAWEI {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceInvocationMaskFeaturesHUAWEIBuilder<'a> {
         PhysicalDeviceInvocationMaskFeaturesHUAWEIBuilder {
             inner: PhysicalDeviceInvocationMaskFeaturesHUAWEI::default(),
@@ -30686,29 +32968,35 @@ impl PhysicalDeviceInvocationMaskFeaturesHUAWEI {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceInvocationMaskFeaturesHUAWEIBuilder<'a> {
     inner: PhysicalDeviceInvocationMaskFeaturesHUAWEI,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceInvocationMaskFeaturesHUAWEIBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceInvocationMaskFeaturesHUAWEI {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceInvocationMaskFeaturesHUAWEIBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceInvocationMaskFeaturesHUAWEI {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceInvocationMaskFeaturesHUAWEIBuilder<'a> {
     type Target = PhysicalDeviceInvocationMaskFeaturesHUAWEI;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceInvocationMaskFeaturesHUAWEIBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceInvocationMaskFeaturesHUAWEIBuilder<'a> {
     pub fn invocation_mask(mut self, invocation_mask: bool) -> Self {
         self.inner.invocation_mask = invocation_mask.into();
@@ -30730,6 +33018,7 @@ pub struct CoarseSampleLocationNV {
     pub sample: u32,
 }
 impl CoarseSampleLocationNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> CoarseSampleLocationNVBuilder<'a> {
         CoarseSampleLocationNVBuilder {
             inner: CoarseSampleLocationNV::default(),
@@ -30737,22 +33026,26 @@ impl CoarseSampleLocationNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct CoarseSampleLocationNVBuilder<'a> {
     inner: CoarseSampleLocationNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for CoarseSampleLocationNVBuilder<'a> {
     type Target = CoarseSampleLocationNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for CoarseSampleLocationNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> CoarseSampleLocationNVBuilder<'a> {
     pub fn pixel_x(mut self, pixel_x: u32) -> Self {
         self.inner.pixel_x = pixel_x;
@@ -30793,6 +33086,7 @@ impl ::std::default::Default for CoarseSampleOrderCustomNV {
     }
 }
 impl CoarseSampleOrderCustomNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> CoarseSampleOrderCustomNVBuilder<'a> {
         CoarseSampleOrderCustomNVBuilder {
             inner: CoarseSampleOrderCustomNV::default(),
@@ -30800,22 +33094,26 @@ impl CoarseSampleOrderCustomNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct CoarseSampleOrderCustomNVBuilder<'a> {
     inner: CoarseSampleOrderCustomNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for CoarseSampleOrderCustomNVBuilder<'a> {
     type Target = CoarseSampleOrderCustomNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for CoarseSampleOrderCustomNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> CoarseSampleOrderCustomNVBuilder<'a> {
     pub fn shading_rate(mut self, shading_rate: ShadingRatePaletteEntryNV) -> Self {
         self.inner.shading_rate = shading_rate;
@@ -30859,6 +33157,7 @@ impl ::std::default::Default for PipelineViewportCoarseSampleOrderStateCreateInf
     }
 }
 impl PipelineViewportCoarseSampleOrderStateCreateInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineViewportCoarseSampleOrderStateCreateInfoNVBuilder<'a> {
         PipelineViewportCoarseSampleOrderStateCreateInfoNVBuilder {
             inner: PipelineViewportCoarseSampleOrderStateCreateInfoNV::default(),
@@ -30866,11 +33165,13 @@ impl PipelineViewportCoarseSampleOrderStateCreateInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineViewportCoarseSampleOrderStateCreateInfoNVBuilder<'a> {
     inner: PipelineViewportCoarseSampleOrderStateCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPipelineViewportStateCreateInfo
     for PipelineViewportCoarseSampleOrderStateCreateInfoNVBuilder<'_>
 {
@@ -30879,17 +33180,20 @@ unsafe impl ExtendsPipelineViewportStateCreateInfo
     for PipelineViewportCoarseSampleOrderStateCreateInfoNV
 {
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineViewportCoarseSampleOrderStateCreateInfoNVBuilder<'a> {
     type Target = PipelineViewportCoarseSampleOrderStateCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineViewportCoarseSampleOrderStateCreateInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineViewportCoarseSampleOrderStateCreateInfoNVBuilder<'a> {
     pub fn sample_order_type(mut self, sample_order_type: CoarseSampleOrderTypeNV) -> Self {
         self.inner.sample_order_type = sample_order_type;
@@ -30930,6 +33234,7 @@ impl ::std::default::Default for PhysicalDeviceMeshShaderFeaturesNV {
     }
 }
 impl PhysicalDeviceMeshShaderFeaturesNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceMeshShaderFeaturesNVBuilder<'a> {
         PhysicalDeviceMeshShaderFeaturesNVBuilder {
             inner: PhysicalDeviceMeshShaderFeaturesNV::default(),
@@ -30937,26 +33242,32 @@ impl PhysicalDeviceMeshShaderFeaturesNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceMeshShaderFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceMeshShaderFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMeshShaderFeaturesNVBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMeshShaderFeaturesNV {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMeshShaderFeaturesNVBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMeshShaderFeaturesNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceMeshShaderFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceMeshShaderFeaturesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceMeshShaderFeaturesNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceMeshShaderFeaturesNVBuilder<'a> {
     pub fn task_shader(mut self, task_shader: bool) -> Self {
         self.inner.task_shader = task_shader.into();
@@ -31015,6 +33326,7 @@ impl ::std::default::Default for PhysicalDeviceMeshShaderPropertiesNV {
     }
 }
 impl PhysicalDeviceMeshShaderPropertiesNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceMeshShaderPropertiesNVBuilder<'a> {
         PhysicalDeviceMeshShaderPropertiesNVBuilder {
             inner: PhysicalDeviceMeshShaderPropertiesNV::default(),
@@ -31022,24 +33334,29 @@ impl PhysicalDeviceMeshShaderPropertiesNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceMeshShaderPropertiesNVBuilder<'a> {
     inner: PhysicalDeviceMeshShaderPropertiesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMeshShaderPropertiesNVBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMeshShaderPropertiesNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceMeshShaderPropertiesNVBuilder<'a> {
     type Target = PhysicalDeviceMeshShaderPropertiesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceMeshShaderPropertiesNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceMeshShaderPropertiesNVBuilder<'a> {
     pub fn max_draw_mesh_tasks_count(mut self, max_draw_mesh_tasks_count: u32) -> Self {
         self.inner.max_draw_mesh_tasks_count = max_draw_mesh_tasks_count;
@@ -31114,6 +33431,7 @@ pub struct DrawMeshTasksIndirectCommandNV {
     pub first_task: u32,
 }
 impl DrawMeshTasksIndirectCommandNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DrawMeshTasksIndirectCommandNVBuilder<'a> {
         DrawMeshTasksIndirectCommandNVBuilder {
             inner: DrawMeshTasksIndirectCommandNV::default(),
@@ -31121,22 +33439,26 @@ impl DrawMeshTasksIndirectCommandNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DrawMeshTasksIndirectCommandNVBuilder<'a> {
     inner: DrawMeshTasksIndirectCommandNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DrawMeshTasksIndirectCommandNVBuilder<'a> {
     type Target = DrawMeshTasksIndirectCommandNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DrawMeshTasksIndirectCommandNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DrawMeshTasksIndirectCommandNVBuilder<'a> {
     pub fn task_count(mut self, task_count: u32) -> Self {
         self.inner.task_count = task_count;
@@ -31179,6 +33501,7 @@ impl ::std::default::Default for RayTracingShaderGroupCreateInfoNV {
     }
 }
 impl RayTracingShaderGroupCreateInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> RayTracingShaderGroupCreateInfoNVBuilder<'a> {
         RayTracingShaderGroupCreateInfoNVBuilder {
             inner: RayTracingShaderGroupCreateInfoNV::default(),
@@ -31186,22 +33509,26 @@ impl RayTracingShaderGroupCreateInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct RayTracingShaderGroupCreateInfoNVBuilder<'a> {
     inner: RayTracingShaderGroupCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for RayTracingShaderGroupCreateInfoNVBuilder<'a> {
     type Target = RayTracingShaderGroupCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for RayTracingShaderGroupCreateInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> RayTracingShaderGroupCreateInfoNVBuilder<'a> {
     pub fn ty(mut self, ty: RayTracingShaderGroupTypeKHR) -> Self {
         self.inner.ty = ty;
@@ -31258,6 +33585,7 @@ impl ::std::default::Default for RayTracingShaderGroupCreateInfoKHR {
     }
 }
 impl RayTracingShaderGroupCreateInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> RayTracingShaderGroupCreateInfoKHRBuilder<'a> {
         RayTracingShaderGroupCreateInfoKHRBuilder {
             inner: RayTracingShaderGroupCreateInfoKHR::default(),
@@ -31265,22 +33593,26 @@ impl RayTracingShaderGroupCreateInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct RayTracingShaderGroupCreateInfoKHRBuilder<'a> {
     inner: RayTracingShaderGroupCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for RayTracingShaderGroupCreateInfoKHRBuilder<'a> {
     type Target = RayTracingShaderGroupCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for RayTracingShaderGroupCreateInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> RayTracingShaderGroupCreateInfoKHRBuilder<'a> {
     pub fn ty(mut self, ty: RayTracingShaderGroupTypeKHR) -> Self {
         self.inner.ty = ty;
@@ -31350,6 +33682,7 @@ impl ::std::default::Default for RayTracingPipelineCreateInfoNV {
     }
 }
 impl RayTracingPipelineCreateInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> RayTracingPipelineCreateInfoNVBuilder<'a> {
         RayTracingPipelineCreateInfoNVBuilder {
             inner: RayTracingPipelineCreateInfoNV::default(),
@@ -31357,23 +33690,27 @@ impl RayTracingPipelineCreateInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct RayTracingPipelineCreateInfoNVBuilder<'a> {
     inner: RayTracingPipelineCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsRayTracingPipelineCreateInfoNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for RayTracingPipelineCreateInfoNVBuilder<'a> {
     type Target = RayTracingPipelineCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for RayTracingPipelineCreateInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> RayTracingPipelineCreateInfoNVBuilder<'a> {
     pub fn flags(mut self, flags: PipelineCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -31466,6 +33803,7 @@ impl ::std::default::Default for RayTracingPipelineCreateInfoKHR {
     }
 }
 impl RayTracingPipelineCreateInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> RayTracingPipelineCreateInfoKHRBuilder<'a> {
         RayTracingPipelineCreateInfoKHRBuilder {
             inner: RayTracingPipelineCreateInfoKHR::default(),
@@ -31473,23 +33811,27 @@ impl RayTracingPipelineCreateInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct RayTracingPipelineCreateInfoKHRBuilder<'a> {
     inner: RayTracingPipelineCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsRayTracingPipelineCreateInfoKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for RayTracingPipelineCreateInfoKHRBuilder<'a> {
     type Target = RayTracingPipelineCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for RayTracingPipelineCreateInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> RayTracingPipelineCreateInfoKHRBuilder<'a> {
     pub fn flags(mut self, flags: PipelineCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -31598,6 +33940,7 @@ impl ::std::default::Default for GeometryTrianglesNV {
     }
 }
 impl GeometryTrianglesNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> GeometryTrianglesNVBuilder<'a> {
         GeometryTrianglesNVBuilder {
             inner: GeometryTrianglesNV::default(),
@@ -31605,22 +33948,26 @@ impl GeometryTrianglesNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct GeometryTrianglesNVBuilder<'a> {
     inner: GeometryTrianglesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for GeometryTrianglesNVBuilder<'a> {
     type Target = GeometryTrianglesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for GeometryTrianglesNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> GeometryTrianglesNVBuilder<'a> {
     pub fn vertex_data(mut self, vertex_data: Buffer) -> Self {
         self.inner.vertex_data = vertex_data;
@@ -31697,6 +34044,7 @@ impl ::std::default::Default for GeometryAABBNV {
     }
 }
 impl GeometryAABBNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> GeometryAABBNVBuilder<'a> {
         GeometryAABBNVBuilder {
             inner: GeometryAABBNV::default(),
@@ -31704,22 +34052,26 @@ impl GeometryAABBNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct GeometryAABBNVBuilder<'a> {
     inner: GeometryAABBNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for GeometryAABBNVBuilder<'a> {
     type Target = GeometryAABBNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for GeometryAABBNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> GeometryAABBNVBuilder<'a> {
     pub fn aabb_data(mut self, aabb_data: Buffer) -> Self {
         self.inner.aabb_data = aabb_data;
@@ -31752,6 +34104,7 @@ pub struct GeometryDataNV {
     pub aabbs: GeometryAABBNV,
 }
 impl GeometryDataNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> GeometryDataNVBuilder<'a> {
         GeometryDataNVBuilder {
             inner: GeometryDataNV::default(),
@@ -31759,22 +34112,26 @@ impl GeometryDataNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct GeometryDataNVBuilder<'a> {
     inner: GeometryDataNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for GeometryDataNVBuilder<'a> {
     type Target = GeometryDataNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for GeometryDataNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> GeometryDataNVBuilder<'a> {
     pub fn triangles(mut self, triangles: GeometryTrianglesNV) -> Self {
         self.inner.triangles = triangles;
@@ -31813,6 +34170,7 @@ impl ::std::default::Default for GeometryNV {
     }
 }
 impl GeometryNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> GeometryNVBuilder<'a> {
         GeometryNVBuilder {
             inner: GeometryNV::default(),
@@ -31820,22 +34178,26 @@ impl GeometryNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct GeometryNVBuilder<'a> {
     inner: GeometryNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for GeometryNVBuilder<'a> {
     type Target = GeometryNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for GeometryNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> GeometryNVBuilder<'a> {
     pub fn geometry_type(mut self, geometry_type: GeometryTypeKHR) -> Self {
         self.inner.geometry_type = geometry_type;
@@ -31882,6 +34244,7 @@ impl ::std::default::Default for AccelerationStructureInfoNV {
     }
 }
 impl AccelerationStructureInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> AccelerationStructureInfoNVBuilder<'a> {
         AccelerationStructureInfoNVBuilder {
             inner: AccelerationStructureInfoNV::default(),
@@ -31889,22 +34252,26 @@ impl AccelerationStructureInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct AccelerationStructureInfoNVBuilder<'a> {
     inner: AccelerationStructureInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for AccelerationStructureInfoNVBuilder<'a> {
     type Target = AccelerationStructureInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for AccelerationStructureInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> AccelerationStructureInfoNVBuilder<'a> {
     pub fn ty(mut self, ty: AccelerationStructureTypeNV) -> Self {
         self.inner.ty = ty;
@@ -31950,6 +34317,7 @@ impl ::std::default::Default for AccelerationStructureCreateInfoNV {
     }
 }
 impl AccelerationStructureCreateInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> AccelerationStructureCreateInfoNVBuilder<'a> {
         AccelerationStructureCreateInfoNVBuilder {
             inner: AccelerationStructureCreateInfoNV::default(),
@@ -31957,22 +34325,26 @@ impl AccelerationStructureCreateInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct AccelerationStructureCreateInfoNVBuilder<'a> {
     inner: AccelerationStructureCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for AccelerationStructureCreateInfoNVBuilder<'a> {
     type Target = AccelerationStructureCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for AccelerationStructureCreateInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> AccelerationStructureCreateInfoNVBuilder<'a> {
     pub fn compacted_size(mut self, compacted_size: DeviceSize) -> Self {
         self.inner.compacted_size = compacted_size;
@@ -32015,6 +34387,7 @@ impl ::std::default::Default for BindAccelerationStructureMemoryInfoNV {
     }
 }
 impl BindAccelerationStructureMemoryInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> BindAccelerationStructureMemoryInfoNVBuilder<'a> {
         BindAccelerationStructureMemoryInfoNVBuilder {
             inner: BindAccelerationStructureMemoryInfoNV::default(),
@@ -32022,22 +34395,26 @@ impl BindAccelerationStructureMemoryInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct BindAccelerationStructureMemoryInfoNVBuilder<'a> {
     inner: BindAccelerationStructureMemoryInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for BindAccelerationStructureMemoryInfoNVBuilder<'a> {
     type Target = BindAccelerationStructureMemoryInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for BindAccelerationStructureMemoryInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> BindAccelerationStructureMemoryInfoNVBuilder<'a> {
     pub fn acceleration_structure(
         mut self,
@@ -32086,6 +34463,7 @@ impl ::std::default::Default for WriteDescriptorSetAccelerationStructureKHR {
     }
 }
 impl WriteDescriptorSetAccelerationStructureKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> WriteDescriptorSetAccelerationStructureKHRBuilder<'a> {
         WriteDescriptorSetAccelerationStructureKHRBuilder {
             inner: WriteDescriptorSetAccelerationStructureKHR::default(),
@@ -32093,24 +34471,29 @@ impl WriteDescriptorSetAccelerationStructureKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct WriteDescriptorSetAccelerationStructureKHRBuilder<'a> {
     inner: WriteDescriptorSetAccelerationStructureKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsWriteDescriptorSet for WriteDescriptorSetAccelerationStructureKHRBuilder<'_> {}
 unsafe impl ExtendsWriteDescriptorSet for WriteDescriptorSetAccelerationStructureKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for WriteDescriptorSetAccelerationStructureKHRBuilder<'a> {
     type Target = WriteDescriptorSetAccelerationStructureKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for WriteDescriptorSetAccelerationStructureKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> WriteDescriptorSetAccelerationStructureKHRBuilder<'a> {
     pub fn acceleration_structures(
         mut self,
@@ -32147,6 +34530,7 @@ impl ::std::default::Default for WriteDescriptorSetAccelerationStructureNV {
     }
 }
 impl WriteDescriptorSetAccelerationStructureNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> WriteDescriptorSetAccelerationStructureNVBuilder<'a> {
         WriteDescriptorSetAccelerationStructureNVBuilder {
             inner: WriteDescriptorSetAccelerationStructureNV::default(),
@@ -32154,24 +34538,29 @@ impl WriteDescriptorSetAccelerationStructureNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct WriteDescriptorSetAccelerationStructureNVBuilder<'a> {
     inner: WriteDescriptorSetAccelerationStructureNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsWriteDescriptorSet for WriteDescriptorSetAccelerationStructureNVBuilder<'_> {}
 unsafe impl ExtendsWriteDescriptorSet for WriteDescriptorSetAccelerationStructureNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for WriteDescriptorSetAccelerationStructureNVBuilder<'a> {
     type Target = WriteDescriptorSetAccelerationStructureNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for WriteDescriptorSetAccelerationStructureNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> WriteDescriptorSetAccelerationStructureNVBuilder<'a> {
     pub fn acceleration_structures(
         mut self,
@@ -32208,6 +34597,7 @@ impl ::std::default::Default for AccelerationStructureMemoryRequirementsInfoNV {
     }
 }
 impl AccelerationStructureMemoryRequirementsInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> AccelerationStructureMemoryRequirementsInfoNVBuilder<'a> {
         AccelerationStructureMemoryRequirementsInfoNVBuilder {
             inner: AccelerationStructureMemoryRequirementsInfoNV::default(),
@@ -32215,22 +34605,26 @@ impl AccelerationStructureMemoryRequirementsInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct AccelerationStructureMemoryRequirementsInfoNVBuilder<'a> {
     inner: AccelerationStructureMemoryRequirementsInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for AccelerationStructureMemoryRequirementsInfoNVBuilder<'a> {
     type Target = AccelerationStructureMemoryRequirementsInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for AccelerationStructureMemoryRequirementsInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> AccelerationStructureMemoryRequirementsInfoNVBuilder<'a> {
     pub fn ty(mut self, ty: AccelerationStructureMemoryRequirementsTypeNV) -> Self {
         self.inner.ty = ty;
@@ -32276,6 +34670,7 @@ impl ::std::default::Default for PhysicalDeviceAccelerationStructureFeaturesKHR 
     }
 }
 impl PhysicalDeviceAccelerationStructureFeaturesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceAccelerationStructureFeaturesKHRBuilder<'a> {
         PhysicalDeviceAccelerationStructureFeaturesKHRBuilder {
             inner: PhysicalDeviceAccelerationStructureFeaturesKHR::default(),
@@ -32283,29 +34678,35 @@ impl PhysicalDeviceAccelerationStructureFeaturesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceAccelerationStructureFeaturesKHRBuilder<'a> {
     inner: PhysicalDeviceAccelerationStructureFeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceAccelerationStructureFeaturesKHRBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceAccelerationStructureFeaturesKHR {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceAccelerationStructureFeaturesKHRBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceAccelerationStructureFeaturesKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceAccelerationStructureFeaturesKHRBuilder<'a> {
     type Target = PhysicalDeviceAccelerationStructureFeaturesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceAccelerationStructureFeaturesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceAccelerationStructureFeaturesKHRBuilder<'a> {
     pub fn acceleration_structure(mut self, acceleration_structure: bool) -> Self {
         self.inner.acceleration_structure = acceleration_structure.into();
@@ -32377,6 +34778,7 @@ impl ::std::default::Default for PhysicalDeviceRayTracingPipelineFeaturesKHR {
     }
 }
 impl PhysicalDeviceRayTracingPipelineFeaturesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceRayTracingPipelineFeaturesKHRBuilder<'a> {
         PhysicalDeviceRayTracingPipelineFeaturesKHRBuilder {
             inner: PhysicalDeviceRayTracingPipelineFeaturesKHR::default(),
@@ -32384,29 +34786,35 @@ impl PhysicalDeviceRayTracingPipelineFeaturesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceRayTracingPipelineFeaturesKHRBuilder<'a> {
     inner: PhysicalDeviceRayTracingPipelineFeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceRayTracingPipelineFeaturesKHRBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRayTracingPipelineFeaturesKHR {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRayTracingPipelineFeaturesKHRBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRayTracingPipelineFeaturesKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceRayTracingPipelineFeaturesKHRBuilder<'a> {
     type Target = PhysicalDeviceRayTracingPipelineFeaturesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceRayTracingPipelineFeaturesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceRayTracingPipelineFeaturesKHRBuilder<'a> {
     pub fn ray_tracing_pipeline(mut self, ray_tracing_pipeline: bool) -> Self {
         self.inner.ray_tracing_pipeline = ray_tracing_pipeline.into();
@@ -32470,6 +34878,7 @@ impl ::std::default::Default for PhysicalDeviceRayQueryFeaturesKHR {
     }
 }
 impl PhysicalDeviceRayQueryFeaturesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceRayQueryFeaturesKHRBuilder<'a> {
         PhysicalDeviceRayQueryFeaturesKHRBuilder {
             inner: PhysicalDeviceRayQueryFeaturesKHR::default(),
@@ -32477,26 +34886,32 @@ impl PhysicalDeviceRayQueryFeaturesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceRayQueryFeaturesKHRBuilder<'a> {
     inner: PhysicalDeviceRayQueryFeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRayQueryFeaturesKHRBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRayQueryFeaturesKHR {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRayQueryFeaturesKHRBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRayQueryFeaturesKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceRayQueryFeaturesKHRBuilder<'a> {
     type Target = PhysicalDeviceRayQueryFeaturesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceRayQueryFeaturesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceRayQueryFeaturesKHRBuilder<'a> {
     pub fn ray_query(mut self, ray_query: bool) -> Self {
         self.inner.ray_query = ray_query.into();
@@ -32541,6 +34956,7 @@ impl ::std::default::Default for PhysicalDeviceAccelerationStructurePropertiesKH
     }
 }
 impl PhysicalDeviceAccelerationStructurePropertiesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceAccelerationStructurePropertiesKHRBuilder<'a> {
         PhysicalDeviceAccelerationStructurePropertiesKHRBuilder {
             inner: PhysicalDeviceAccelerationStructurePropertiesKHR::default(),
@@ -32548,27 +34964,32 @@ impl PhysicalDeviceAccelerationStructurePropertiesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceAccelerationStructurePropertiesKHRBuilder<'a> {
     inner: PhysicalDeviceAccelerationStructurePropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceAccelerationStructurePropertiesKHRBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceAccelerationStructurePropertiesKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceAccelerationStructurePropertiesKHRBuilder<'a> {
     type Target = PhysicalDeviceAccelerationStructurePropertiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceAccelerationStructurePropertiesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceAccelerationStructurePropertiesKHRBuilder<'a> {
     pub fn max_geometry_count(mut self, max_geometry_count: u64) -> Self {
         self.inner.max_geometry_count = max_geometry_count;
@@ -32664,6 +35085,7 @@ impl ::std::default::Default for PhysicalDeviceRayTracingPipelinePropertiesKHR {
     }
 }
 impl PhysicalDeviceRayTracingPipelinePropertiesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceRayTracingPipelinePropertiesKHRBuilder<'a> {
         PhysicalDeviceRayTracingPipelinePropertiesKHRBuilder {
             inner: PhysicalDeviceRayTracingPipelinePropertiesKHR::default(),
@@ -32671,27 +35093,32 @@ impl PhysicalDeviceRayTracingPipelinePropertiesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceRayTracingPipelinePropertiesKHRBuilder<'a> {
     inner: PhysicalDeviceRayTracingPipelinePropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceRayTracingPipelinePropertiesKHRBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceRayTracingPipelinePropertiesKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceRayTracingPipelinePropertiesKHRBuilder<'a> {
     type Target = PhysicalDeviceRayTracingPipelinePropertiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceRayTracingPipelinePropertiesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceRayTracingPipelinePropertiesKHRBuilder<'a> {
     pub fn shader_group_handle_size(mut self, shader_group_handle_size: u32) -> Self {
         self.inner.shader_group_handle_size = shader_group_handle_size;
@@ -32771,6 +35198,7 @@ impl ::std::default::Default for PhysicalDeviceRayTracingPropertiesNV {
     }
 }
 impl PhysicalDeviceRayTracingPropertiesNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceRayTracingPropertiesNVBuilder<'a> {
         PhysicalDeviceRayTracingPropertiesNVBuilder {
             inner: PhysicalDeviceRayTracingPropertiesNV::default(),
@@ -32778,24 +35206,29 @@ impl PhysicalDeviceRayTracingPropertiesNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceRayTracingPropertiesNVBuilder<'a> {
     inner: PhysicalDeviceRayTracingPropertiesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceRayTracingPropertiesNVBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceRayTracingPropertiesNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceRayTracingPropertiesNVBuilder<'a> {
     type Target = PhysicalDeviceRayTracingPropertiesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceRayTracingPropertiesNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceRayTracingPropertiesNVBuilder<'a> {
     pub fn shader_group_handle_size(mut self, shader_group_handle_size: u32) -> Self {
         self.inner.shader_group_handle_size = shader_group_handle_size;
@@ -32849,6 +35282,7 @@ pub struct StridedDeviceAddressRegionKHR {
     pub size: DeviceSize,
 }
 impl StridedDeviceAddressRegionKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> StridedDeviceAddressRegionKHRBuilder<'a> {
         StridedDeviceAddressRegionKHRBuilder {
             inner: StridedDeviceAddressRegionKHR::default(),
@@ -32856,22 +35290,26 @@ impl StridedDeviceAddressRegionKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct StridedDeviceAddressRegionKHRBuilder<'a> {
     inner: StridedDeviceAddressRegionKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for StridedDeviceAddressRegionKHRBuilder<'a> {
     type Target = StridedDeviceAddressRegionKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for StridedDeviceAddressRegionKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> StridedDeviceAddressRegionKHRBuilder<'a> {
     pub fn device_address(mut self, device_address: DeviceAddress) -> Self {
         self.inner.device_address = device_address;
@@ -32901,6 +35339,7 @@ pub struct TraceRaysIndirectCommandKHR {
     pub depth: u32,
 }
 impl TraceRaysIndirectCommandKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> TraceRaysIndirectCommandKHRBuilder<'a> {
         TraceRaysIndirectCommandKHRBuilder {
             inner: TraceRaysIndirectCommandKHR::default(),
@@ -32908,22 +35347,26 @@ impl TraceRaysIndirectCommandKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct TraceRaysIndirectCommandKHRBuilder<'a> {
     inner: TraceRaysIndirectCommandKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for TraceRaysIndirectCommandKHRBuilder<'a> {
     type Target = TraceRaysIndirectCommandKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for TraceRaysIndirectCommandKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> TraceRaysIndirectCommandKHRBuilder<'a> {
     pub fn width(mut self, width: u32) -> Self {
         self.inner.width = width;
@@ -32964,6 +35407,7 @@ impl ::std::default::Default for DrmFormatModifierPropertiesListEXT {
     }
 }
 impl DrmFormatModifierPropertiesListEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DrmFormatModifierPropertiesListEXTBuilder<'a> {
         DrmFormatModifierPropertiesListEXTBuilder {
             inner: DrmFormatModifierPropertiesListEXT::default(),
@@ -32971,24 +35415,29 @@ impl DrmFormatModifierPropertiesListEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DrmFormatModifierPropertiesListEXTBuilder<'a> {
     inner: DrmFormatModifierPropertiesListEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsFormatProperties2 for DrmFormatModifierPropertiesListEXTBuilder<'_> {}
 unsafe impl ExtendsFormatProperties2 for DrmFormatModifierPropertiesListEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DrmFormatModifierPropertiesListEXTBuilder<'a> {
     type Target = DrmFormatModifierPropertiesListEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DrmFormatModifierPropertiesListEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DrmFormatModifierPropertiesListEXTBuilder<'a> {
     pub fn drm_format_modifier_properties(
         mut self,
@@ -33014,6 +35463,7 @@ pub struct DrmFormatModifierPropertiesEXT {
     pub drm_format_modifier_tiling_features: FormatFeatureFlags,
 }
 impl DrmFormatModifierPropertiesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DrmFormatModifierPropertiesEXTBuilder<'a> {
         DrmFormatModifierPropertiesEXTBuilder {
             inner: DrmFormatModifierPropertiesEXT::default(),
@@ -33021,22 +35471,26 @@ impl DrmFormatModifierPropertiesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DrmFormatModifierPropertiesEXTBuilder<'a> {
     inner: DrmFormatModifierPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DrmFormatModifierPropertiesEXTBuilder<'a> {
     type Target = DrmFormatModifierPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DrmFormatModifierPropertiesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DrmFormatModifierPropertiesEXTBuilder<'a> {
     pub fn drm_format_modifier(mut self, drm_format_modifier: u64) -> Self {
         self.inner.drm_format_modifier = drm_format_modifier;
@@ -33084,6 +35538,7 @@ impl ::std::default::Default for PhysicalDeviceImageDrmFormatModifierInfoEXT {
     }
 }
 impl PhysicalDeviceImageDrmFormatModifierInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceImageDrmFormatModifierInfoEXTBuilder<'a> {
         PhysicalDeviceImageDrmFormatModifierInfoEXTBuilder {
             inner: PhysicalDeviceImageDrmFormatModifierInfoEXT::default(),
@@ -33091,27 +35546,32 @@ impl PhysicalDeviceImageDrmFormatModifierInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceImageDrmFormatModifierInfoEXTBuilder<'a> {
     inner: PhysicalDeviceImageDrmFormatModifierInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceImageFormatInfo2
     for PhysicalDeviceImageDrmFormatModifierInfoEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceImageFormatInfo2 for PhysicalDeviceImageDrmFormatModifierInfoEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceImageDrmFormatModifierInfoEXTBuilder<'a> {
     type Target = PhysicalDeviceImageDrmFormatModifierInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceImageDrmFormatModifierInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceImageDrmFormatModifierInfoEXTBuilder<'a> {
     pub fn drm_format_modifier(mut self, drm_format_modifier: u64) -> Self {
         self.inner.drm_format_modifier = drm_format_modifier;
@@ -33153,6 +35613,7 @@ impl ::std::default::Default for ImageDrmFormatModifierListCreateInfoEXT {
     }
 }
 impl ImageDrmFormatModifierListCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImageDrmFormatModifierListCreateInfoEXTBuilder<'a> {
         ImageDrmFormatModifierListCreateInfoEXTBuilder {
             inner: ImageDrmFormatModifierListCreateInfoEXT::default(),
@@ -33160,24 +35621,29 @@ impl ImageDrmFormatModifierListCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImageDrmFormatModifierListCreateInfoEXTBuilder<'a> {
     inner: ImageDrmFormatModifierListCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsImageCreateInfo for ImageDrmFormatModifierListCreateInfoEXTBuilder<'_> {}
 unsafe impl ExtendsImageCreateInfo for ImageDrmFormatModifierListCreateInfoEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImageDrmFormatModifierListCreateInfoEXTBuilder<'a> {
     type Target = ImageDrmFormatModifierListCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImageDrmFormatModifierListCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImageDrmFormatModifierListCreateInfoEXTBuilder<'a> {
     pub fn drm_format_modifiers(mut self, drm_format_modifiers: &'a [u64]) -> Self {
         self.inner.drm_format_modifier_count = drm_format_modifiers.len() as _;
@@ -33213,6 +35679,7 @@ impl ::std::default::Default for ImageDrmFormatModifierExplicitCreateInfoEXT {
     }
 }
 impl ImageDrmFormatModifierExplicitCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImageDrmFormatModifierExplicitCreateInfoEXTBuilder<'a> {
         ImageDrmFormatModifierExplicitCreateInfoEXTBuilder {
             inner: ImageDrmFormatModifierExplicitCreateInfoEXT::default(),
@@ -33220,24 +35687,29 @@ impl ImageDrmFormatModifierExplicitCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImageDrmFormatModifierExplicitCreateInfoEXTBuilder<'a> {
     inner: ImageDrmFormatModifierExplicitCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsImageCreateInfo for ImageDrmFormatModifierExplicitCreateInfoEXTBuilder<'_> {}
 unsafe impl ExtendsImageCreateInfo for ImageDrmFormatModifierExplicitCreateInfoEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImageDrmFormatModifierExplicitCreateInfoEXTBuilder<'a> {
     type Target = ImageDrmFormatModifierExplicitCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImageDrmFormatModifierExplicitCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImageDrmFormatModifierExplicitCreateInfoEXTBuilder<'a> {
     pub fn drm_format_modifier(mut self, drm_format_modifier: u64) -> Self {
         self.inner.drm_format_modifier = drm_format_modifier;
@@ -33273,6 +35745,7 @@ impl ::std::default::Default for ImageDrmFormatModifierPropertiesEXT {
     }
 }
 impl ImageDrmFormatModifierPropertiesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImageDrmFormatModifierPropertiesEXTBuilder<'a> {
         ImageDrmFormatModifierPropertiesEXTBuilder {
             inner: ImageDrmFormatModifierPropertiesEXT::default(),
@@ -33280,22 +35753,26 @@ impl ImageDrmFormatModifierPropertiesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImageDrmFormatModifierPropertiesEXTBuilder<'a> {
     inner: ImageDrmFormatModifierPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImageDrmFormatModifierPropertiesEXTBuilder<'a> {
     type Target = ImageDrmFormatModifierPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImageDrmFormatModifierPropertiesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImageDrmFormatModifierPropertiesEXTBuilder<'a> {
     pub fn drm_format_modifier(mut self, drm_format_modifier: u64) -> Self {
         self.inner.drm_format_modifier = drm_format_modifier;
@@ -33326,6 +35803,7 @@ impl ::std::default::Default for ImageStencilUsageCreateInfo {
     }
 }
 impl ImageStencilUsageCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImageStencilUsageCreateInfoBuilder<'a> {
         ImageStencilUsageCreateInfoBuilder {
             inner: ImageStencilUsageCreateInfo::default(),
@@ -33333,26 +35811,32 @@ impl ImageStencilUsageCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImageStencilUsageCreateInfoBuilder<'a> {
     inner: ImageStencilUsageCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsImageCreateInfo for ImageStencilUsageCreateInfoBuilder<'_> {}
 unsafe impl ExtendsImageCreateInfo for ImageStencilUsageCreateInfo {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceImageFormatInfo2 for ImageStencilUsageCreateInfoBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceImageFormatInfo2 for ImageStencilUsageCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImageStencilUsageCreateInfoBuilder<'a> {
     type Target = ImageStencilUsageCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImageStencilUsageCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImageStencilUsageCreateInfoBuilder<'a> {
     pub fn stencil_usage(mut self, stencil_usage: ImageUsageFlags) -> Self {
         self.inner.stencil_usage = stencil_usage;
@@ -33383,6 +35867,7 @@ impl ::std::default::Default for DeviceMemoryOverallocationCreateInfoAMD {
     }
 }
 impl DeviceMemoryOverallocationCreateInfoAMD {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DeviceMemoryOverallocationCreateInfoAMDBuilder<'a> {
         DeviceMemoryOverallocationCreateInfoAMDBuilder {
             inner: DeviceMemoryOverallocationCreateInfoAMD::default(),
@@ -33390,24 +35875,29 @@ impl DeviceMemoryOverallocationCreateInfoAMD {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DeviceMemoryOverallocationCreateInfoAMDBuilder<'a> {
     inner: DeviceMemoryOverallocationCreateInfoAMD,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for DeviceMemoryOverallocationCreateInfoAMDBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for DeviceMemoryOverallocationCreateInfoAMD {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DeviceMemoryOverallocationCreateInfoAMDBuilder<'a> {
     type Target = DeviceMemoryOverallocationCreateInfoAMD;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DeviceMemoryOverallocationCreateInfoAMDBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DeviceMemoryOverallocationCreateInfoAMDBuilder<'a> {
     pub fn overallocation_behavior(
         mut self,
@@ -33445,6 +35935,7 @@ impl ::std::default::Default for PhysicalDeviceFragmentDensityMapFeaturesEXT {
     }
 }
 impl PhysicalDeviceFragmentDensityMapFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
         PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder {
             inner: PhysicalDeviceFragmentDensityMapFeaturesEXT::default(),
@@ -33452,29 +35943,35 @@ impl PhysicalDeviceFragmentDensityMapFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceFragmentDensityMapFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceFragmentDensityMapFeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentDensityMapFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceFragmentDensityMapFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
     pub fn fragment_density_map(mut self, fragment_density_map: bool) -> Self {
         self.inner.fragment_density_map = fragment_density_map.into();
@@ -33517,6 +36014,7 @@ impl ::std::default::Default for PhysicalDeviceFragmentDensityMap2FeaturesEXT {
     }
 }
 impl PhysicalDeviceFragmentDensityMap2FeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceFragmentDensityMap2FeaturesEXTBuilder<'a> {
         PhysicalDeviceFragmentDensityMap2FeaturesEXTBuilder {
             inner: PhysicalDeviceFragmentDensityMap2FeaturesEXT::default(),
@@ -33524,29 +36022,35 @@ impl PhysicalDeviceFragmentDensityMap2FeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceFragmentDensityMap2FeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceFragmentDensityMap2FeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceFragmentDensityMap2FeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceFragmentDensityMap2FeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentDensityMap2FeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentDensityMap2FeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceFragmentDensityMap2FeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceFragmentDensityMap2FeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceFragmentDensityMap2FeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceFragmentDensityMap2FeaturesEXTBuilder<'a> {
     pub fn fragment_density_map_deferred(mut self, fragment_density_map_deferred: bool) -> Self {
         self.inner.fragment_density_map_deferred = fragment_density_map_deferred.into();
@@ -33581,6 +36085,7 @@ impl ::std::default::Default for PhysicalDeviceFragmentDensityMapPropertiesEXT {
     }
 }
 impl PhysicalDeviceFragmentDensityMapPropertiesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
         PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder {
             inner: PhysicalDeviceFragmentDensityMapPropertiesEXT::default(),
@@ -33588,27 +36093,32 @@ impl PhysicalDeviceFragmentDensityMapPropertiesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceFragmentDensityMapPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceFragmentDensityMapPropertiesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceFragmentDensityMapPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
     pub fn min_fragment_density_texel_size(
         mut self,
@@ -33659,6 +36169,7 @@ impl ::std::default::Default for PhysicalDeviceFragmentDensityMap2PropertiesEXT 
     }
 }
 impl PhysicalDeviceFragmentDensityMap2PropertiesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceFragmentDensityMap2PropertiesEXTBuilder<'a> {
         PhysicalDeviceFragmentDensityMap2PropertiesEXTBuilder {
             inner: PhysicalDeviceFragmentDensityMap2PropertiesEXT::default(),
@@ -33666,27 +36177,32 @@ impl PhysicalDeviceFragmentDensityMap2PropertiesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceFragmentDensityMap2PropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceFragmentDensityMap2PropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceFragmentDensityMap2PropertiesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceFragmentDensityMap2PropertiesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceFragmentDensityMap2PropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceFragmentDensityMap2PropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceFragmentDensityMap2PropertiesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceFragmentDensityMap2PropertiesEXTBuilder<'a> {
     pub fn subsampled_loads(mut self, subsampled_loads: bool) -> Self {
         self.inner.subsampled_loads = subsampled_loads.into();
@@ -33736,6 +36252,7 @@ impl ::std::default::Default for RenderPassFragmentDensityMapCreateInfoEXT {
     }
 }
 impl RenderPassFragmentDensityMapCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> RenderPassFragmentDensityMapCreateInfoEXTBuilder<'a> {
         RenderPassFragmentDensityMapCreateInfoEXTBuilder {
             inner: RenderPassFragmentDensityMapCreateInfoEXT::default(),
@@ -33743,26 +36260,32 @@ impl RenderPassFragmentDensityMapCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct RenderPassFragmentDensityMapCreateInfoEXTBuilder<'a> {
     inner: RenderPassFragmentDensityMapCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsRenderPassCreateInfo for RenderPassFragmentDensityMapCreateInfoEXTBuilder<'_> {}
 unsafe impl ExtendsRenderPassCreateInfo for RenderPassFragmentDensityMapCreateInfoEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsRenderPassCreateInfo2 for RenderPassFragmentDensityMapCreateInfoEXTBuilder<'_> {}
 unsafe impl ExtendsRenderPassCreateInfo2 for RenderPassFragmentDensityMapCreateInfoEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for RenderPassFragmentDensityMapCreateInfoEXTBuilder<'a> {
     type Target = RenderPassFragmentDensityMapCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for RenderPassFragmentDensityMapCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> RenderPassFragmentDensityMapCreateInfoEXTBuilder<'a> {
     pub fn fragment_density_map_attachment(
         mut self,
@@ -33796,6 +36319,7 @@ impl ::std::default::Default for PhysicalDeviceScalarBlockLayoutFeatures {
     }
 }
 impl PhysicalDeviceScalarBlockLayoutFeatures {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceScalarBlockLayoutFeaturesBuilder<'a> {
         PhysicalDeviceScalarBlockLayoutFeaturesBuilder {
             inner: PhysicalDeviceScalarBlockLayoutFeatures::default(),
@@ -33803,26 +36327,32 @@ impl PhysicalDeviceScalarBlockLayoutFeatures {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceScalarBlockLayoutFeaturesBuilder<'a> {
     inner: PhysicalDeviceScalarBlockLayoutFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceScalarBlockLayoutFeaturesBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceScalarBlockLayoutFeatures {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceScalarBlockLayoutFeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceScalarBlockLayoutFeatures {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceScalarBlockLayoutFeaturesBuilder<'a> {
     type Target = PhysicalDeviceScalarBlockLayoutFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceScalarBlockLayoutFeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceScalarBlockLayoutFeaturesBuilder<'a> {
     pub fn scalar_block_layout(mut self, scalar_block_layout: bool) -> Self {
         self.inner.scalar_block_layout = scalar_block_layout.into();
@@ -33853,6 +36383,7 @@ impl ::std::default::Default for SurfaceProtectedCapabilitiesKHR {
     }
 }
 impl SurfaceProtectedCapabilitiesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SurfaceProtectedCapabilitiesKHRBuilder<'a> {
         SurfaceProtectedCapabilitiesKHRBuilder {
             inner: SurfaceProtectedCapabilitiesKHR::default(),
@@ -33860,24 +36391,29 @@ impl SurfaceProtectedCapabilitiesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SurfaceProtectedCapabilitiesKHRBuilder<'a> {
     inner: SurfaceProtectedCapabilitiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsSurfaceCapabilities2KHR for SurfaceProtectedCapabilitiesKHRBuilder<'_> {}
 unsafe impl ExtendsSurfaceCapabilities2KHR for SurfaceProtectedCapabilitiesKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SurfaceProtectedCapabilitiesKHRBuilder<'a> {
     type Target = SurfaceProtectedCapabilitiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SurfaceProtectedCapabilitiesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SurfaceProtectedCapabilitiesKHRBuilder<'a> {
     pub fn supports_protected(mut self, supports_protected: bool) -> Self {
         self.inner.supports_protected = supports_protected.into();
@@ -33908,6 +36444,7 @@ impl ::std::default::Default for PhysicalDeviceUniformBufferStandardLayoutFeatur
     }
 }
 impl PhysicalDeviceUniformBufferStandardLayoutFeatures {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceUniformBufferStandardLayoutFeaturesBuilder<'a> {
         PhysicalDeviceUniformBufferStandardLayoutFeaturesBuilder {
             inner: PhysicalDeviceUniformBufferStandardLayoutFeatures::default(),
@@ -33915,32 +36452,38 @@ impl PhysicalDeviceUniformBufferStandardLayoutFeatures {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceUniformBufferStandardLayoutFeaturesBuilder<'a> {
     inner: PhysicalDeviceUniformBufferStandardLayoutFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceUniformBufferStandardLayoutFeaturesBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceUniformBufferStandardLayoutFeatures {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceUniformBufferStandardLayoutFeaturesBuilder<'_>
 {
 }
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceUniformBufferStandardLayoutFeatures {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceUniformBufferStandardLayoutFeaturesBuilder<'a> {
     type Target = PhysicalDeviceUniformBufferStandardLayoutFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceUniformBufferStandardLayoutFeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceUniformBufferStandardLayoutFeaturesBuilder<'a> {
     pub fn uniform_buffer_standard_layout(mut self, uniform_buffer_standard_layout: bool) -> Self {
         self.inner.uniform_buffer_standard_layout = uniform_buffer_standard_layout.into();
@@ -33971,6 +36514,7 @@ impl ::std::default::Default for PhysicalDeviceDepthClipEnableFeaturesEXT {
     }
 }
 impl PhysicalDeviceDepthClipEnableFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceDepthClipEnableFeaturesEXTBuilder<'a> {
         PhysicalDeviceDepthClipEnableFeaturesEXTBuilder {
             inner: PhysicalDeviceDepthClipEnableFeaturesEXT::default(),
@@ -33978,26 +36522,32 @@ impl PhysicalDeviceDepthClipEnableFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceDepthClipEnableFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceDepthClipEnableFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDepthClipEnableFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDepthClipEnableFeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDepthClipEnableFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDepthClipEnableFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceDepthClipEnableFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceDepthClipEnableFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceDepthClipEnableFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceDepthClipEnableFeaturesEXTBuilder<'a> {
     pub fn depth_clip_enable(mut self, depth_clip_enable: bool) -> Self {
         self.inner.depth_clip_enable = depth_clip_enable.into();
@@ -34030,6 +36580,7 @@ impl ::std::default::Default for PipelineRasterizationDepthClipStateCreateInfoEX
     }
 }
 impl PipelineRasterizationDepthClipStateCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineRasterizationDepthClipStateCreateInfoEXTBuilder<'a> {
         PipelineRasterizationDepthClipStateCreateInfoEXTBuilder {
             inner: PipelineRasterizationDepthClipStateCreateInfoEXT::default(),
@@ -34037,11 +36588,13 @@ impl PipelineRasterizationDepthClipStateCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineRasterizationDepthClipStateCreateInfoEXTBuilder<'a> {
     inner: PipelineRasterizationDepthClipStateCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPipelineRasterizationStateCreateInfo
     for PipelineRasterizationDepthClipStateCreateInfoEXTBuilder<'_>
 {
@@ -34050,17 +36603,20 @@ unsafe impl ExtendsPipelineRasterizationStateCreateInfo
     for PipelineRasterizationDepthClipStateCreateInfoEXT
 {
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineRasterizationDepthClipStateCreateInfoEXTBuilder<'a> {
     type Target = PipelineRasterizationDepthClipStateCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineRasterizationDepthClipStateCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineRasterizationDepthClipStateCreateInfoEXTBuilder<'a> {
     pub fn flags(mut self, flags: PipelineRasterizationDepthClipStateCreateFlagsEXT) -> Self {
         self.inner.flags = flags;
@@ -34097,6 +36653,7 @@ impl ::std::default::Default for PhysicalDeviceMemoryBudgetPropertiesEXT {
     }
 }
 impl PhysicalDeviceMemoryBudgetPropertiesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
         PhysicalDeviceMemoryBudgetPropertiesEXTBuilder {
             inner: PhysicalDeviceMemoryBudgetPropertiesEXT::default(),
@@ -34104,27 +36661,32 @@ impl PhysicalDeviceMemoryBudgetPropertiesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceMemoryBudgetPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceMemoryProperties2
     for PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceMemoryProperties2 for PhysicalDeviceMemoryBudgetPropertiesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceMemoryBudgetPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
     pub fn heap_budget(mut self, heap_budget: [DeviceSize; MAX_MEMORY_HEAPS]) -> Self {
         self.inner.heap_budget = heap_budget;
@@ -34159,6 +36721,7 @@ impl ::std::default::Default for PhysicalDeviceMemoryPriorityFeaturesEXT {
     }
 }
 impl PhysicalDeviceMemoryPriorityFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a> {
         PhysicalDeviceMemoryPriorityFeaturesEXTBuilder {
             inner: PhysicalDeviceMemoryPriorityFeaturesEXT::default(),
@@ -34166,26 +36729,32 @@ impl PhysicalDeviceMemoryPriorityFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceMemoryPriorityFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMemoryPriorityFeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMemoryPriorityFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceMemoryPriorityFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a> {
     pub fn memory_priority(mut self, memory_priority: bool) -> Self {
         self.inner.memory_priority = memory_priority.into();
@@ -34216,6 +36785,7 @@ impl ::std::default::Default for MemoryPriorityAllocateInfoEXT {
     }
 }
 impl MemoryPriorityAllocateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> MemoryPriorityAllocateInfoEXTBuilder<'a> {
         MemoryPriorityAllocateInfoEXTBuilder {
             inner: MemoryPriorityAllocateInfoEXT::default(),
@@ -34223,24 +36793,29 @@ impl MemoryPriorityAllocateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct MemoryPriorityAllocateInfoEXTBuilder<'a> {
     inner: MemoryPriorityAllocateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsMemoryAllocateInfo for MemoryPriorityAllocateInfoEXTBuilder<'_> {}
 unsafe impl ExtendsMemoryAllocateInfo for MemoryPriorityAllocateInfoEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for MemoryPriorityAllocateInfoEXTBuilder<'a> {
     type Target = MemoryPriorityAllocateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for MemoryPriorityAllocateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> MemoryPriorityAllocateInfoEXTBuilder<'a> {
     pub fn priority(mut self, priority: f32) -> Self {
         self.inner.priority = priority;
@@ -34271,6 +36846,7 @@ impl ::std::default::Default for PhysicalDevicePageableDeviceLocalMemoryFeatures
     }
 }
 impl PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDevicePageableDeviceLocalMemoryFeaturesEXTBuilder<'a> {
         PhysicalDevicePageableDeviceLocalMemoryFeaturesEXTBuilder {
             inner: PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT::default(),
@@ -34278,32 +36854,38 @@ impl PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDevicePageableDeviceLocalMemoryFeaturesEXTBuilder<'a> {
     inner: PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXTBuilder<'a> {
     type Target = PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDevicePageableDeviceLocalMemoryFeaturesEXTBuilder<'a> {
     pub fn pageable_device_local_memory(mut self, pageable_device_local_memory: bool) -> Self {
         self.inner.pageable_device_local_memory = pageable_device_local_memory.into();
@@ -34338,6 +36920,7 @@ impl ::std::default::Default for PhysicalDeviceBufferDeviceAddressFeatures {
     }
 }
 impl PhysicalDeviceBufferDeviceAddressFeatures {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceBufferDeviceAddressFeaturesBuilder<'a> {
         PhysicalDeviceBufferDeviceAddressFeaturesBuilder {
             inner: PhysicalDeviceBufferDeviceAddressFeatures::default(),
@@ -34345,29 +36928,35 @@ impl PhysicalDeviceBufferDeviceAddressFeatures {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceBufferDeviceAddressFeaturesBuilder<'a> {
     inner: PhysicalDeviceBufferDeviceAddressFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceBufferDeviceAddressFeaturesBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceBufferDeviceAddressFeatures {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceBufferDeviceAddressFeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceBufferDeviceAddressFeatures {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceBufferDeviceAddressFeaturesBuilder<'a> {
     type Target = PhysicalDeviceBufferDeviceAddressFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceBufferDeviceAddressFeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceBufferDeviceAddressFeaturesBuilder<'a> {
     pub fn buffer_device_address(mut self, buffer_device_address: bool) -> Self {
         self.inner.buffer_device_address = buffer_device_address.into();
@@ -34417,6 +37006,7 @@ impl ::std::default::Default for PhysicalDeviceBufferDeviceAddressFeaturesEXT {
     }
 }
 impl PhysicalDeviceBufferDeviceAddressFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceBufferDeviceAddressFeaturesEXTBuilder<'a> {
         PhysicalDeviceBufferDeviceAddressFeaturesEXTBuilder {
             inner: PhysicalDeviceBufferDeviceAddressFeaturesEXT::default(),
@@ -34424,29 +37014,35 @@ impl PhysicalDeviceBufferDeviceAddressFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceBufferDeviceAddressFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceBufferDeviceAddressFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceBufferDeviceAddressFeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceBufferDeviceAddressFeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceBufferDeviceAddressFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceBufferDeviceAddressFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceBufferDeviceAddressFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceBufferDeviceAddressFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceBufferDeviceAddressFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceBufferDeviceAddressFeaturesEXTBuilder<'a> {
     pub fn buffer_device_address(mut self, buffer_device_address: bool) -> Self {
         self.inner.buffer_device_address = buffer_device_address.into();
@@ -34492,6 +37088,7 @@ impl ::std::default::Default for BufferDeviceAddressInfo {
     }
 }
 impl BufferDeviceAddressInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> BufferDeviceAddressInfoBuilder<'a> {
         BufferDeviceAddressInfoBuilder {
             inner: BufferDeviceAddressInfo::default(),
@@ -34499,22 +37096,26 @@ impl BufferDeviceAddressInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct BufferDeviceAddressInfoBuilder<'a> {
     inner: BufferDeviceAddressInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for BufferDeviceAddressInfoBuilder<'a> {
     type Target = BufferDeviceAddressInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for BufferDeviceAddressInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> BufferDeviceAddressInfoBuilder<'a> {
     pub fn buffer(mut self, buffer: Buffer) -> Self {
         self.inner.buffer = buffer;
@@ -34545,6 +37146,7 @@ impl ::std::default::Default for BufferOpaqueCaptureAddressCreateInfo {
     }
 }
 impl BufferOpaqueCaptureAddressCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> BufferOpaqueCaptureAddressCreateInfoBuilder<'a> {
         BufferOpaqueCaptureAddressCreateInfoBuilder {
             inner: BufferOpaqueCaptureAddressCreateInfo::default(),
@@ -34552,24 +37154,29 @@ impl BufferOpaqueCaptureAddressCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct BufferOpaqueCaptureAddressCreateInfoBuilder<'a> {
     inner: BufferOpaqueCaptureAddressCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsBufferCreateInfo for BufferOpaqueCaptureAddressCreateInfoBuilder<'_> {}
 unsafe impl ExtendsBufferCreateInfo for BufferOpaqueCaptureAddressCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for BufferOpaqueCaptureAddressCreateInfoBuilder<'a> {
     type Target = BufferOpaqueCaptureAddressCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for BufferOpaqueCaptureAddressCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> BufferOpaqueCaptureAddressCreateInfoBuilder<'a> {
     pub fn opaque_capture_address(mut self, opaque_capture_address: u64) -> Self {
         self.inner.opaque_capture_address = opaque_capture_address;
@@ -34600,6 +37207,7 @@ impl ::std::default::Default for BufferDeviceAddressCreateInfoEXT {
     }
 }
 impl BufferDeviceAddressCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> BufferDeviceAddressCreateInfoEXTBuilder<'a> {
         BufferDeviceAddressCreateInfoEXTBuilder {
             inner: BufferDeviceAddressCreateInfoEXT::default(),
@@ -34607,24 +37215,29 @@ impl BufferDeviceAddressCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct BufferDeviceAddressCreateInfoEXTBuilder<'a> {
     inner: BufferDeviceAddressCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsBufferCreateInfo for BufferDeviceAddressCreateInfoEXTBuilder<'_> {}
 unsafe impl ExtendsBufferCreateInfo for BufferDeviceAddressCreateInfoEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for BufferDeviceAddressCreateInfoEXTBuilder<'a> {
     type Target = BufferDeviceAddressCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for BufferDeviceAddressCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> BufferDeviceAddressCreateInfoEXTBuilder<'a> {
     pub fn device_address(mut self, device_address: DeviceAddress) -> Self {
         self.inner.device_address = device_address;
@@ -34655,6 +37268,7 @@ impl ::std::default::Default for PhysicalDeviceImageViewImageFormatInfoEXT {
     }
 }
 impl PhysicalDeviceImageViewImageFormatInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceImageViewImageFormatInfoEXTBuilder<'a> {
         PhysicalDeviceImageViewImageFormatInfoEXTBuilder {
             inner: PhysicalDeviceImageViewImageFormatInfoEXT::default(),
@@ -34662,27 +37276,32 @@ impl PhysicalDeviceImageViewImageFormatInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceImageViewImageFormatInfoEXTBuilder<'a> {
     inner: PhysicalDeviceImageViewImageFormatInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceImageFormatInfo2
     for PhysicalDeviceImageViewImageFormatInfoEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceImageFormatInfo2 for PhysicalDeviceImageViewImageFormatInfoEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceImageViewImageFormatInfoEXTBuilder<'a> {
     type Target = PhysicalDeviceImageViewImageFormatInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceImageViewImageFormatInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceImageViewImageFormatInfoEXTBuilder<'a> {
     pub fn image_view_type(mut self, image_view_type: ImageViewType) -> Self {
         self.inner.image_view_type = image_view_type;
@@ -34715,6 +37334,7 @@ impl ::std::default::Default for FilterCubicImageViewImageFormatPropertiesEXT {
     }
 }
 impl FilterCubicImageViewImageFormatPropertiesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> FilterCubicImageViewImageFormatPropertiesEXTBuilder<'a> {
         FilterCubicImageViewImageFormatPropertiesEXTBuilder {
             inner: FilterCubicImageViewImageFormatPropertiesEXT::default(),
@@ -34722,27 +37342,32 @@ impl FilterCubicImageViewImageFormatPropertiesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct FilterCubicImageViewImageFormatPropertiesEXTBuilder<'a> {
     inner: FilterCubicImageViewImageFormatPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsImageFormatProperties2
     for FilterCubicImageViewImageFormatPropertiesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsImageFormatProperties2 for FilterCubicImageViewImageFormatPropertiesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for FilterCubicImageViewImageFormatPropertiesEXTBuilder<'a> {
     type Target = FilterCubicImageViewImageFormatPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for FilterCubicImageViewImageFormatPropertiesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> FilterCubicImageViewImageFormatPropertiesEXTBuilder<'a> {
     pub fn filter_cubic(mut self, filter_cubic: bool) -> Self {
         self.inner.filter_cubic = filter_cubic.into();
@@ -34777,6 +37402,7 @@ impl ::std::default::Default for PhysicalDeviceImagelessFramebufferFeatures {
     }
 }
 impl PhysicalDeviceImagelessFramebufferFeatures {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceImagelessFramebufferFeaturesBuilder<'a> {
         PhysicalDeviceImagelessFramebufferFeaturesBuilder {
             inner: PhysicalDeviceImagelessFramebufferFeatures::default(),
@@ -34784,29 +37410,35 @@ impl PhysicalDeviceImagelessFramebufferFeatures {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceImagelessFramebufferFeaturesBuilder<'a> {
     inner: PhysicalDeviceImagelessFramebufferFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceImagelessFramebufferFeaturesBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImagelessFramebufferFeatures {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImagelessFramebufferFeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImagelessFramebufferFeatures {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceImagelessFramebufferFeaturesBuilder<'a> {
     type Target = PhysicalDeviceImagelessFramebufferFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceImagelessFramebufferFeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceImagelessFramebufferFeaturesBuilder<'a> {
     pub fn imageless_framebuffer(mut self, imageless_framebuffer: bool) -> Self {
         self.inner.imageless_framebuffer = imageless_framebuffer.into();
@@ -34839,6 +37471,7 @@ impl ::std::default::Default for FramebufferAttachmentsCreateInfo {
     }
 }
 impl FramebufferAttachmentsCreateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> FramebufferAttachmentsCreateInfoBuilder<'a> {
         FramebufferAttachmentsCreateInfoBuilder {
             inner: FramebufferAttachmentsCreateInfo::default(),
@@ -34846,24 +37479,29 @@ impl FramebufferAttachmentsCreateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct FramebufferAttachmentsCreateInfoBuilder<'a> {
     inner: FramebufferAttachmentsCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsFramebufferCreateInfo for FramebufferAttachmentsCreateInfoBuilder<'_> {}
 unsafe impl ExtendsFramebufferCreateInfo for FramebufferAttachmentsCreateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for FramebufferAttachmentsCreateInfoBuilder<'a> {
     type Target = FramebufferAttachmentsCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for FramebufferAttachmentsCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> FramebufferAttachmentsCreateInfoBuilder<'a> {
     pub fn attachment_image_infos(
         mut self,
@@ -34910,6 +37548,7 @@ impl ::std::default::Default for FramebufferAttachmentImageInfo {
     }
 }
 impl FramebufferAttachmentImageInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> FramebufferAttachmentImageInfoBuilder<'a> {
         FramebufferAttachmentImageInfoBuilder {
             inner: FramebufferAttachmentImageInfo::default(),
@@ -34917,22 +37556,26 @@ impl FramebufferAttachmentImageInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct FramebufferAttachmentImageInfoBuilder<'a> {
     inner: FramebufferAttachmentImageInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for FramebufferAttachmentImageInfoBuilder<'a> {
     type Target = FramebufferAttachmentImageInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for FramebufferAttachmentImageInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> FramebufferAttachmentImageInfoBuilder<'a> {
     pub fn flags(mut self, flags: ImageCreateFlags) -> Self {
         self.inner.flags = flags;
@@ -34986,6 +37629,7 @@ impl ::std::default::Default for RenderPassAttachmentBeginInfo {
     }
 }
 impl RenderPassAttachmentBeginInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> RenderPassAttachmentBeginInfoBuilder<'a> {
         RenderPassAttachmentBeginInfoBuilder {
             inner: RenderPassAttachmentBeginInfo::default(),
@@ -34993,24 +37637,29 @@ impl RenderPassAttachmentBeginInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct RenderPassAttachmentBeginInfoBuilder<'a> {
     inner: RenderPassAttachmentBeginInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsRenderPassBeginInfo for RenderPassAttachmentBeginInfoBuilder<'_> {}
 unsafe impl ExtendsRenderPassBeginInfo for RenderPassAttachmentBeginInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for RenderPassAttachmentBeginInfoBuilder<'a> {
     type Target = RenderPassAttachmentBeginInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for RenderPassAttachmentBeginInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> RenderPassAttachmentBeginInfoBuilder<'a> {
     pub fn attachments(mut self, attachments: &'a [ImageView]) -> Self {
         self.inner.attachment_count = attachments.len() as _;
@@ -35042,6 +37691,7 @@ impl ::std::default::Default for PhysicalDeviceTextureCompressionASTCHDRFeatures
     }
 }
 impl PhysicalDeviceTextureCompressionASTCHDRFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceTextureCompressionASTCHDRFeaturesEXTBuilder<'a> {
         PhysicalDeviceTextureCompressionASTCHDRFeaturesEXTBuilder {
             inner: PhysicalDeviceTextureCompressionASTCHDRFeaturesEXT::default(),
@@ -35049,32 +37699,38 @@ impl PhysicalDeviceTextureCompressionASTCHDRFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceTextureCompressionASTCHDRFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceTextureCompressionASTCHDRFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceTextureCompressionASTCHDRFeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceTextureCompressionASTCHDRFeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceTextureCompressionASTCHDRFeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceTextureCompressionASTCHDRFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceTextureCompressionASTCHDRFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceTextureCompressionASTCHDRFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceTextureCompressionASTCHDRFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceTextureCompressionASTCHDRFeaturesEXTBuilder<'a> {
     pub fn texture_compression_astc_hdr(mut self, texture_compression_astc_hdr: bool) -> Self {
         self.inner.texture_compression_astc_hdr = texture_compression_astc_hdr.into();
@@ -35107,6 +37763,7 @@ impl ::std::default::Default for PhysicalDeviceCooperativeMatrixFeaturesNV {
     }
 }
 impl PhysicalDeviceCooperativeMatrixFeaturesNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceCooperativeMatrixFeaturesNVBuilder<'a> {
         PhysicalDeviceCooperativeMatrixFeaturesNVBuilder {
             inner: PhysicalDeviceCooperativeMatrixFeaturesNV::default(),
@@ -35114,29 +37771,35 @@ impl PhysicalDeviceCooperativeMatrixFeaturesNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceCooperativeMatrixFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceCooperativeMatrixFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceCooperativeMatrixFeaturesNVBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCooperativeMatrixFeaturesNV {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCooperativeMatrixFeaturesNVBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCooperativeMatrixFeaturesNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceCooperativeMatrixFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceCooperativeMatrixFeaturesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceCooperativeMatrixFeaturesNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceCooperativeMatrixFeaturesNVBuilder<'a> {
     pub fn cooperative_matrix(mut self, cooperative_matrix: bool) -> Self {
         self.inner.cooperative_matrix = cooperative_matrix.into();
@@ -35175,6 +37838,7 @@ impl ::std::default::Default for PhysicalDeviceCooperativeMatrixPropertiesNV {
     }
 }
 impl PhysicalDeviceCooperativeMatrixPropertiesNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceCooperativeMatrixPropertiesNVBuilder<'a> {
         PhysicalDeviceCooperativeMatrixPropertiesNVBuilder {
             inner: PhysicalDeviceCooperativeMatrixPropertiesNV::default(),
@@ -35182,27 +37846,32 @@ impl PhysicalDeviceCooperativeMatrixPropertiesNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceCooperativeMatrixPropertiesNVBuilder<'a> {
     inner: PhysicalDeviceCooperativeMatrixPropertiesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceCooperativeMatrixPropertiesNVBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceCooperativeMatrixPropertiesNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceCooperativeMatrixPropertiesNVBuilder<'a> {
     type Target = PhysicalDeviceCooperativeMatrixPropertiesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceCooperativeMatrixPropertiesNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceCooperativeMatrixPropertiesNVBuilder<'a> {
     pub fn cooperative_matrix_supported_stages(
         mut self,
@@ -35250,6 +37919,7 @@ impl ::std::default::Default for CooperativeMatrixPropertiesNV {
     }
 }
 impl CooperativeMatrixPropertiesNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> CooperativeMatrixPropertiesNVBuilder<'a> {
         CooperativeMatrixPropertiesNVBuilder {
             inner: CooperativeMatrixPropertiesNV::default(),
@@ -35257,22 +37927,26 @@ impl CooperativeMatrixPropertiesNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct CooperativeMatrixPropertiesNVBuilder<'a> {
     inner: CooperativeMatrixPropertiesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for CooperativeMatrixPropertiesNVBuilder<'a> {
     type Target = CooperativeMatrixPropertiesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for CooperativeMatrixPropertiesNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> CooperativeMatrixPropertiesNVBuilder<'a> {
     pub fn m_size(mut self, m_size: u32) -> Self {
         self.inner.m_size = m_size;
@@ -35331,6 +38005,7 @@ impl ::std::default::Default for PhysicalDeviceYcbcrImageArraysFeaturesEXT {
     }
 }
 impl PhysicalDeviceYcbcrImageArraysFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceYcbcrImageArraysFeaturesEXTBuilder<'a> {
         PhysicalDeviceYcbcrImageArraysFeaturesEXTBuilder {
             inner: PhysicalDeviceYcbcrImageArraysFeaturesEXT::default(),
@@ -35338,29 +38013,35 @@ impl PhysicalDeviceYcbcrImageArraysFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceYcbcrImageArraysFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceYcbcrImageArraysFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceYcbcrImageArraysFeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceYcbcrImageArraysFeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceYcbcrImageArraysFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceYcbcrImageArraysFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceYcbcrImageArraysFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceYcbcrImageArraysFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceYcbcrImageArraysFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceYcbcrImageArraysFeaturesEXTBuilder<'a> {
     pub fn ycbcr_image_arrays(mut self, ycbcr_image_arrays: bool) -> Self {
         self.inner.ycbcr_image_arrays = ycbcr_image_arrays.into();
@@ -35395,6 +38076,7 @@ impl ::std::default::Default for ImageViewHandleInfoNVX {
     }
 }
 impl ImageViewHandleInfoNVX {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImageViewHandleInfoNVXBuilder<'a> {
         ImageViewHandleInfoNVXBuilder {
             inner: ImageViewHandleInfoNVX::default(),
@@ -35402,22 +38084,26 @@ impl ImageViewHandleInfoNVX {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImageViewHandleInfoNVXBuilder<'a> {
     inner: ImageViewHandleInfoNVX,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImageViewHandleInfoNVXBuilder<'a> {
     type Target = ImageViewHandleInfoNVX;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImageViewHandleInfoNVXBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImageViewHandleInfoNVXBuilder<'a> {
     pub fn image_view(mut self, image_view: ImageView) -> Self {
         self.inner.image_view = image_view;
@@ -35458,6 +38144,7 @@ impl ::std::default::Default for ImageViewAddressPropertiesNVX {
     }
 }
 impl ImageViewAddressPropertiesNVX {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImageViewAddressPropertiesNVXBuilder<'a> {
         ImageViewAddressPropertiesNVXBuilder {
             inner: ImageViewAddressPropertiesNVX::default(),
@@ -35465,22 +38152,26 @@ impl ImageViewAddressPropertiesNVX {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImageViewAddressPropertiesNVXBuilder<'a> {
     inner: ImageViewAddressPropertiesNVX,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImageViewAddressPropertiesNVXBuilder<'a> {
     type Target = ImageViewAddressPropertiesNVX;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImageViewAddressPropertiesNVXBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImageViewAddressPropertiesNVXBuilder<'a> {
     pub fn device_address(mut self, device_address: DeviceAddress) -> Self {
         self.inner.device_address = device_address;
@@ -35515,6 +38206,7 @@ impl ::std::default::Default for PresentFrameTokenGGP {
     }
 }
 impl PresentFrameTokenGGP {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PresentFrameTokenGGPBuilder<'a> {
         PresentFrameTokenGGPBuilder {
             inner: PresentFrameTokenGGP::default(),
@@ -35522,24 +38214,29 @@ impl PresentFrameTokenGGP {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PresentFrameTokenGGPBuilder<'a> {
     inner: PresentFrameTokenGGP,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPresentInfoKHR for PresentFrameTokenGGPBuilder<'_> {}
 unsafe impl ExtendsPresentInfoKHR for PresentFrameTokenGGP {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PresentFrameTokenGGPBuilder<'a> {
     type Target = PresentFrameTokenGGP;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PresentFrameTokenGGPBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PresentFrameTokenGGPBuilder<'a> {
     pub fn frame_token(mut self, frame_token: GgpFrameToken) -> Self {
         self.inner.frame_token = frame_token;
@@ -35560,6 +38257,7 @@ pub struct PipelineCreationFeedbackEXT {
     pub duration: u64,
 }
 impl PipelineCreationFeedbackEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineCreationFeedbackEXTBuilder<'a> {
         PipelineCreationFeedbackEXTBuilder {
             inner: PipelineCreationFeedbackEXT::default(),
@@ -35567,22 +38265,26 @@ impl PipelineCreationFeedbackEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineCreationFeedbackEXTBuilder<'a> {
     inner: PipelineCreationFeedbackEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineCreationFeedbackEXTBuilder<'a> {
     type Target = PipelineCreationFeedbackEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineCreationFeedbackEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineCreationFeedbackEXTBuilder<'a> {
     pub fn flags(mut self, flags: PipelineCreationFeedbackFlagsEXT) -> Self {
         self.inner.flags = flags;
@@ -35621,6 +38323,7 @@ impl ::std::default::Default for PipelineCreationFeedbackCreateInfoEXT {
     }
 }
 impl PipelineCreationFeedbackCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineCreationFeedbackCreateInfoEXTBuilder<'a> {
         PipelineCreationFeedbackCreateInfoEXTBuilder {
             inner: PipelineCreationFeedbackCreateInfoEXT::default(),
@@ -35628,36 +38331,44 @@ impl PipelineCreationFeedbackCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineCreationFeedbackCreateInfoEXTBuilder<'a> {
     inner: PipelineCreationFeedbackCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineCreationFeedbackCreateInfoEXTBuilder<'_> {}
 unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineCreationFeedbackCreateInfoEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsComputePipelineCreateInfo for PipelineCreationFeedbackCreateInfoEXTBuilder<'_> {}
 unsafe impl ExtendsComputePipelineCreateInfo for PipelineCreationFeedbackCreateInfoEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsRayTracingPipelineCreateInfoNV
     for PipelineCreationFeedbackCreateInfoEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsRayTracingPipelineCreateInfoNV for PipelineCreationFeedbackCreateInfoEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsRayTracingPipelineCreateInfoKHR
     for PipelineCreationFeedbackCreateInfoEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsRayTracingPipelineCreateInfoKHR for PipelineCreationFeedbackCreateInfoEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineCreationFeedbackCreateInfoEXTBuilder<'a> {
     type Target = PipelineCreationFeedbackCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineCreationFeedbackCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineCreationFeedbackCreateInfoEXTBuilder<'a> {
     pub fn pipeline_creation_feedback(
         mut self,
@@ -35701,6 +38412,7 @@ impl ::std::default::Default for SurfaceFullScreenExclusiveInfoEXT {
     }
 }
 impl SurfaceFullScreenExclusiveInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SurfaceFullScreenExclusiveInfoEXTBuilder<'a> {
         SurfaceFullScreenExclusiveInfoEXTBuilder {
             inner: SurfaceFullScreenExclusiveInfoEXT::default(),
@@ -35708,26 +38420,32 @@ impl SurfaceFullScreenExclusiveInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SurfaceFullScreenExclusiveInfoEXTBuilder<'a> {
     inner: SurfaceFullScreenExclusiveInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceSurfaceInfo2KHR for SurfaceFullScreenExclusiveInfoEXTBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceSurfaceInfo2KHR for SurfaceFullScreenExclusiveInfoEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsSwapchainCreateInfoKHR for SurfaceFullScreenExclusiveInfoEXTBuilder<'_> {}
 unsafe impl ExtendsSwapchainCreateInfoKHR for SurfaceFullScreenExclusiveInfoEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SurfaceFullScreenExclusiveInfoEXTBuilder<'a> {
     type Target = SurfaceFullScreenExclusiveInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SurfaceFullScreenExclusiveInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SurfaceFullScreenExclusiveInfoEXTBuilder<'a> {
     pub fn full_screen_exclusive(mut self, full_screen_exclusive: FullScreenExclusiveEXT) -> Self {
         self.inner.full_screen_exclusive = full_screen_exclusive;
@@ -35758,6 +38476,7 @@ impl ::std::default::Default for SurfaceFullScreenExclusiveWin32InfoEXT {
     }
 }
 impl SurfaceFullScreenExclusiveWin32InfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SurfaceFullScreenExclusiveWin32InfoEXTBuilder<'a> {
         SurfaceFullScreenExclusiveWin32InfoEXTBuilder {
             inner: SurfaceFullScreenExclusiveWin32InfoEXT::default(),
@@ -35765,29 +38484,35 @@ impl SurfaceFullScreenExclusiveWin32InfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SurfaceFullScreenExclusiveWin32InfoEXTBuilder<'a> {
     inner: SurfaceFullScreenExclusiveWin32InfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceSurfaceInfo2KHR
     for SurfaceFullScreenExclusiveWin32InfoEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceSurfaceInfo2KHR for SurfaceFullScreenExclusiveWin32InfoEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsSwapchainCreateInfoKHR for SurfaceFullScreenExclusiveWin32InfoEXTBuilder<'_> {}
 unsafe impl ExtendsSwapchainCreateInfoKHR for SurfaceFullScreenExclusiveWin32InfoEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SurfaceFullScreenExclusiveWin32InfoEXTBuilder<'a> {
     type Target = SurfaceFullScreenExclusiveWin32InfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SurfaceFullScreenExclusiveWin32InfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SurfaceFullScreenExclusiveWin32InfoEXTBuilder<'a> {
     pub fn hmonitor(mut self, hmonitor: HMONITOR) -> Self {
         self.inner.hmonitor = hmonitor;
@@ -35818,6 +38543,7 @@ impl ::std::default::Default for SurfaceCapabilitiesFullScreenExclusiveEXT {
     }
 }
 impl SurfaceCapabilitiesFullScreenExclusiveEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SurfaceCapabilitiesFullScreenExclusiveEXTBuilder<'a> {
         SurfaceCapabilitiesFullScreenExclusiveEXTBuilder {
             inner: SurfaceCapabilitiesFullScreenExclusiveEXT::default(),
@@ -35825,27 +38551,32 @@ impl SurfaceCapabilitiesFullScreenExclusiveEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SurfaceCapabilitiesFullScreenExclusiveEXTBuilder<'a> {
     inner: SurfaceCapabilitiesFullScreenExclusiveEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsSurfaceCapabilities2KHR
     for SurfaceCapabilitiesFullScreenExclusiveEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsSurfaceCapabilities2KHR for SurfaceCapabilitiesFullScreenExclusiveEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SurfaceCapabilitiesFullScreenExclusiveEXTBuilder<'a> {
     type Target = SurfaceCapabilitiesFullScreenExclusiveEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SurfaceCapabilitiesFullScreenExclusiveEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SurfaceCapabilitiesFullScreenExclusiveEXTBuilder<'a> {
     pub fn full_screen_exclusive_supported(
         mut self,
@@ -35881,6 +38612,7 @@ impl ::std::default::Default for PhysicalDevicePerformanceQueryFeaturesKHR {
     }
 }
 impl PhysicalDevicePerformanceQueryFeaturesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDevicePerformanceQueryFeaturesKHRBuilder<'a> {
         PhysicalDevicePerformanceQueryFeaturesKHRBuilder {
             inner: PhysicalDevicePerformanceQueryFeaturesKHR::default(),
@@ -35888,29 +38620,35 @@ impl PhysicalDevicePerformanceQueryFeaturesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDevicePerformanceQueryFeaturesKHRBuilder<'a> {
     inner: PhysicalDevicePerformanceQueryFeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDevicePerformanceQueryFeaturesKHRBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePerformanceQueryFeaturesKHR {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePerformanceQueryFeaturesKHRBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePerformanceQueryFeaturesKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDevicePerformanceQueryFeaturesKHRBuilder<'a> {
     type Target = PhysicalDevicePerformanceQueryFeaturesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDevicePerformanceQueryFeaturesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDevicePerformanceQueryFeaturesKHRBuilder<'a> {
     pub fn performance_counter_query_pools(
         mut self,
@@ -35952,6 +38690,7 @@ impl ::std::default::Default for PhysicalDevicePerformanceQueryPropertiesKHR {
     }
 }
 impl PhysicalDevicePerformanceQueryPropertiesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDevicePerformanceQueryPropertiesKHRBuilder<'a> {
         PhysicalDevicePerformanceQueryPropertiesKHRBuilder {
             inner: PhysicalDevicePerformanceQueryPropertiesKHR::default(),
@@ -35959,27 +38698,32 @@ impl PhysicalDevicePerformanceQueryPropertiesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDevicePerformanceQueryPropertiesKHRBuilder<'a> {
     inner: PhysicalDevicePerformanceQueryPropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDevicePerformanceQueryPropertiesKHRBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePerformanceQueryPropertiesKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDevicePerformanceQueryPropertiesKHRBuilder<'a> {
     type Target = PhysicalDevicePerformanceQueryPropertiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDevicePerformanceQueryPropertiesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDevicePerformanceQueryPropertiesKHRBuilder<'a> {
     pub fn allow_command_buffer_query_copies(
         mut self,
@@ -36019,6 +38763,7 @@ impl ::std::default::Default for PerformanceCounterKHR {
     }
 }
 impl PerformanceCounterKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PerformanceCounterKHRBuilder<'a> {
         PerformanceCounterKHRBuilder {
             inner: PerformanceCounterKHR::default(),
@@ -36026,22 +38771,26 @@ impl PerformanceCounterKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PerformanceCounterKHRBuilder<'a> {
     inner: PerformanceCounterKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PerformanceCounterKHRBuilder<'a> {
     type Target = PerformanceCounterKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PerformanceCounterKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PerformanceCounterKHRBuilder<'a> {
     pub fn unit(mut self, unit: PerformanceCounterUnitKHR) -> Self {
         self.inner.unit = unit;
@@ -36108,6 +38857,7 @@ impl ::std::default::Default for PerformanceCounterDescriptionKHR {
     }
 }
 impl PerformanceCounterDescriptionKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PerformanceCounterDescriptionKHRBuilder<'a> {
         PerformanceCounterDescriptionKHRBuilder {
             inner: PerformanceCounterDescriptionKHR::default(),
@@ -36115,22 +38865,26 @@ impl PerformanceCounterDescriptionKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PerformanceCounterDescriptionKHRBuilder<'a> {
     inner: PerformanceCounterDescriptionKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PerformanceCounterDescriptionKHRBuilder<'a> {
     type Target = PerformanceCounterDescriptionKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PerformanceCounterDescriptionKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PerformanceCounterDescriptionKHRBuilder<'a> {
     pub fn flags(mut self, flags: PerformanceCounterDescriptionFlagsKHR) -> Self {
         self.inner.flags = flags;
@@ -36177,6 +38931,7 @@ impl ::std::default::Default for QueryPoolPerformanceCreateInfoKHR {
     }
 }
 impl QueryPoolPerformanceCreateInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> QueryPoolPerformanceCreateInfoKHRBuilder<'a> {
         QueryPoolPerformanceCreateInfoKHRBuilder {
             inner: QueryPoolPerformanceCreateInfoKHR::default(),
@@ -36184,24 +38939,29 @@ impl QueryPoolPerformanceCreateInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct QueryPoolPerformanceCreateInfoKHRBuilder<'a> {
     inner: QueryPoolPerformanceCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsQueryPoolCreateInfo for QueryPoolPerformanceCreateInfoKHRBuilder<'_> {}
 unsafe impl ExtendsQueryPoolCreateInfo for QueryPoolPerformanceCreateInfoKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for QueryPoolPerformanceCreateInfoKHRBuilder<'a> {
     type Target = QueryPoolPerformanceCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for QueryPoolPerformanceCreateInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> QueryPoolPerformanceCreateInfoKHRBuilder<'a> {
     pub fn queue_family_index(mut self, queue_family_index: u32) -> Self {
         self.inner.queue_family_index = queue_family_index;
@@ -36255,6 +39015,7 @@ impl ::std::default::Default for AcquireProfilingLockInfoKHR {
     }
 }
 impl AcquireProfilingLockInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> AcquireProfilingLockInfoKHRBuilder<'a> {
         AcquireProfilingLockInfoKHRBuilder {
             inner: AcquireProfilingLockInfoKHR::default(),
@@ -36262,22 +39023,26 @@ impl AcquireProfilingLockInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct AcquireProfilingLockInfoKHRBuilder<'a> {
     inner: AcquireProfilingLockInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for AcquireProfilingLockInfoKHRBuilder<'a> {
     type Target = AcquireProfilingLockInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for AcquireProfilingLockInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> AcquireProfilingLockInfoKHRBuilder<'a> {
     pub fn flags(mut self, flags: AcquireProfilingLockFlagsKHR) -> Self {
         self.inner.flags = flags;
@@ -36312,6 +39077,7 @@ impl ::std::default::Default for PerformanceQuerySubmitInfoKHR {
     }
 }
 impl PerformanceQuerySubmitInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PerformanceQuerySubmitInfoKHRBuilder<'a> {
         PerformanceQuerySubmitInfoKHRBuilder {
             inner: PerformanceQuerySubmitInfoKHR::default(),
@@ -36319,26 +39085,32 @@ impl PerformanceQuerySubmitInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PerformanceQuerySubmitInfoKHRBuilder<'a> {
     inner: PerformanceQuerySubmitInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsSubmitInfo for PerformanceQuerySubmitInfoKHRBuilder<'_> {}
 unsafe impl ExtendsSubmitInfo for PerformanceQuerySubmitInfoKHR {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsSubmitInfo2KHR for PerformanceQuerySubmitInfoKHRBuilder<'_> {}
 unsafe impl ExtendsSubmitInfo2KHR for PerformanceQuerySubmitInfoKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PerformanceQuerySubmitInfoKHRBuilder<'a> {
     type Target = PerformanceQuerySubmitInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PerformanceQuerySubmitInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PerformanceQuerySubmitInfoKHRBuilder<'a> {
     pub fn counter_pass_index(mut self, counter_pass_index: u32) -> Self {
         self.inner.counter_pass_index = counter_pass_index;
@@ -36369,6 +39141,7 @@ impl ::std::default::Default for HeadlessSurfaceCreateInfoEXT {
     }
 }
 impl HeadlessSurfaceCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> HeadlessSurfaceCreateInfoEXTBuilder<'a> {
         HeadlessSurfaceCreateInfoEXTBuilder {
             inner: HeadlessSurfaceCreateInfoEXT::default(),
@@ -36376,22 +39149,26 @@ impl HeadlessSurfaceCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct HeadlessSurfaceCreateInfoEXTBuilder<'a> {
     inner: HeadlessSurfaceCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for HeadlessSurfaceCreateInfoEXTBuilder<'a> {
     type Target = HeadlessSurfaceCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for HeadlessSurfaceCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> HeadlessSurfaceCreateInfoEXTBuilder<'a> {
     pub fn flags(mut self, flags: HeadlessSurfaceCreateFlagsEXT) -> Self {
         self.inner.flags = flags;
@@ -36422,6 +39199,7 @@ impl ::std::default::Default for PhysicalDeviceCoverageReductionModeFeaturesNV {
     }
 }
 impl PhysicalDeviceCoverageReductionModeFeaturesNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceCoverageReductionModeFeaturesNVBuilder<'a> {
         PhysicalDeviceCoverageReductionModeFeaturesNVBuilder {
             inner: PhysicalDeviceCoverageReductionModeFeaturesNV::default(),
@@ -36429,29 +39207,35 @@ impl PhysicalDeviceCoverageReductionModeFeaturesNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceCoverageReductionModeFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceCoverageReductionModeFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceCoverageReductionModeFeaturesNVBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCoverageReductionModeFeaturesNV {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCoverageReductionModeFeaturesNVBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCoverageReductionModeFeaturesNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceCoverageReductionModeFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceCoverageReductionModeFeaturesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceCoverageReductionModeFeaturesNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceCoverageReductionModeFeaturesNVBuilder<'a> {
     pub fn coverage_reduction_mode(mut self, coverage_reduction_mode: bool) -> Self {
         self.inner.coverage_reduction_mode = coverage_reduction_mode.into();
@@ -36484,6 +39268,7 @@ impl ::std::default::Default for PipelineCoverageReductionStateCreateInfoNV {
     }
 }
 impl PipelineCoverageReductionStateCreateInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineCoverageReductionStateCreateInfoNVBuilder<'a> {
         PipelineCoverageReductionStateCreateInfoNVBuilder {
             inner: PipelineCoverageReductionStateCreateInfoNV::default(),
@@ -36491,11 +39276,13 @@ impl PipelineCoverageReductionStateCreateInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineCoverageReductionStateCreateInfoNVBuilder<'a> {
     inner: PipelineCoverageReductionStateCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPipelineMultisampleStateCreateInfo
     for PipelineCoverageReductionStateCreateInfoNVBuilder<'_>
 {
@@ -36504,17 +39291,20 @@ unsafe impl ExtendsPipelineMultisampleStateCreateInfo
     for PipelineCoverageReductionStateCreateInfoNV
 {
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineCoverageReductionStateCreateInfoNVBuilder<'a> {
     type Target = PipelineCoverageReductionStateCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineCoverageReductionStateCreateInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineCoverageReductionStateCreateInfoNVBuilder<'a> {
     pub fn flags(mut self, flags: PipelineCoverageReductionStateCreateFlagsNV) -> Self {
         self.inner.flags = flags;
@@ -36558,6 +39348,7 @@ impl ::std::default::Default for FramebufferMixedSamplesCombinationNV {
     }
 }
 impl FramebufferMixedSamplesCombinationNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> FramebufferMixedSamplesCombinationNVBuilder<'a> {
         FramebufferMixedSamplesCombinationNVBuilder {
             inner: FramebufferMixedSamplesCombinationNV::default(),
@@ -36565,22 +39356,26 @@ impl FramebufferMixedSamplesCombinationNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct FramebufferMixedSamplesCombinationNVBuilder<'a> {
     inner: FramebufferMixedSamplesCombinationNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for FramebufferMixedSamplesCombinationNVBuilder<'a> {
     type Target = FramebufferMixedSamplesCombinationNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for FramebufferMixedSamplesCombinationNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> FramebufferMixedSamplesCombinationNVBuilder<'a> {
     pub fn coverage_reduction_mode(
         mut self,
@@ -36626,6 +39421,7 @@ impl ::std::default::Default for PhysicalDeviceShaderIntegerFunctions2FeaturesIN
     }
 }
 impl PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceShaderIntegerFunctions2FeaturesINTELBuilder<'a> {
         PhysicalDeviceShaderIntegerFunctions2FeaturesINTELBuilder {
             inner: PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL::default(),
@@ -36633,32 +39429,38 @@ impl PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceShaderIntegerFunctions2FeaturesINTELBuilder<'a> {
     inner: PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceShaderIntegerFunctions2FeaturesINTELBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceShaderIntegerFunctions2FeaturesINTELBuilder<'_>
 {
 }
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderIntegerFunctions2FeaturesINTELBuilder<'a> {
     type Target = PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderIntegerFunctions2FeaturesINTELBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceShaderIntegerFunctions2FeaturesINTELBuilder<'a> {
     pub fn shader_integer_functions2(mut self, shader_integer_functions2: bool) -> Self {
         self.inner.shader_integer_functions2 = shader_integer_functions2.into();
@@ -36702,6 +39504,7 @@ impl fmt::Debug for PerformanceValueINTEL {
     }
 }
 impl PerformanceValueINTEL {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PerformanceValueINTELBuilder<'a> {
         PerformanceValueINTELBuilder {
             inner: PerformanceValueINTEL::default(),
@@ -36709,22 +39512,26 @@ impl PerformanceValueINTEL {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PerformanceValueINTELBuilder<'a> {
     inner: PerformanceValueINTEL,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PerformanceValueINTELBuilder<'a> {
     type Target = PerformanceValueINTEL;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PerformanceValueINTELBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PerformanceValueINTELBuilder<'a> {
     pub fn ty(mut self, ty: PerformanceValueTypeINTEL) -> Self {
         self.inner.ty = ty;
@@ -36759,6 +39566,7 @@ impl ::std::default::Default for InitializePerformanceApiInfoINTEL {
     }
 }
 impl InitializePerformanceApiInfoINTEL {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> InitializePerformanceApiInfoINTELBuilder<'a> {
         InitializePerformanceApiInfoINTELBuilder {
             inner: InitializePerformanceApiInfoINTEL::default(),
@@ -36766,22 +39574,26 @@ impl InitializePerformanceApiInfoINTEL {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct InitializePerformanceApiInfoINTELBuilder<'a> {
     inner: InitializePerformanceApiInfoINTEL,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for InitializePerformanceApiInfoINTELBuilder<'a> {
     type Target = InitializePerformanceApiInfoINTEL;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for InitializePerformanceApiInfoINTELBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> InitializePerformanceApiInfoINTELBuilder<'a> {
     pub fn user_data(mut self, user_data: *mut c_void) -> Self {
         self.inner.p_user_data = user_data;
@@ -36812,6 +39624,7 @@ impl ::std::default::Default for QueryPoolPerformanceQueryCreateInfoINTEL {
     }
 }
 impl QueryPoolPerformanceQueryCreateInfoINTEL {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> QueryPoolPerformanceQueryCreateInfoINTELBuilder<'a> {
         QueryPoolPerformanceQueryCreateInfoINTELBuilder {
             inner: QueryPoolPerformanceQueryCreateInfoINTEL::default(),
@@ -36819,24 +39632,29 @@ impl QueryPoolPerformanceQueryCreateInfoINTEL {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct QueryPoolPerformanceQueryCreateInfoINTELBuilder<'a> {
     inner: QueryPoolPerformanceQueryCreateInfoINTEL,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsQueryPoolCreateInfo for QueryPoolPerformanceQueryCreateInfoINTELBuilder<'_> {}
 unsafe impl ExtendsQueryPoolCreateInfo for QueryPoolPerformanceQueryCreateInfoINTEL {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for QueryPoolPerformanceQueryCreateInfoINTELBuilder<'a> {
     type Target = QueryPoolPerformanceQueryCreateInfoINTEL;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for QueryPoolPerformanceQueryCreateInfoINTELBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> QueryPoolPerformanceQueryCreateInfoINTELBuilder<'a> {
     pub fn performance_counters_sampling(
         mut self,
@@ -36870,6 +39688,7 @@ impl ::std::default::Default for PerformanceMarkerInfoINTEL {
     }
 }
 impl PerformanceMarkerInfoINTEL {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PerformanceMarkerInfoINTELBuilder<'a> {
         PerformanceMarkerInfoINTELBuilder {
             inner: PerformanceMarkerInfoINTEL::default(),
@@ -36877,22 +39696,26 @@ impl PerformanceMarkerInfoINTEL {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PerformanceMarkerInfoINTELBuilder<'a> {
     inner: PerformanceMarkerInfoINTEL,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PerformanceMarkerInfoINTELBuilder<'a> {
     type Target = PerformanceMarkerInfoINTEL;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PerformanceMarkerInfoINTELBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PerformanceMarkerInfoINTELBuilder<'a> {
     pub fn marker(mut self, marker: u64) -> Self {
         self.inner.marker = marker;
@@ -36923,6 +39746,7 @@ impl ::std::default::Default for PerformanceStreamMarkerInfoINTEL {
     }
 }
 impl PerformanceStreamMarkerInfoINTEL {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PerformanceStreamMarkerInfoINTELBuilder<'a> {
         PerformanceStreamMarkerInfoINTELBuilder {
             inner: PerformanceStreamMarkerInfoINTEL::default(),
@@ -36930,22 +39754,26 @@ impl PerformanceStreamMarkerInfoINTEL {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PerformanceStreamMarkerInfoINTELBuilder<'a> {
     inner: PerformanceStreamMarkerInfoINTEL,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PerformanceStreamMarkerInfoINTELBuilder<'a> {
     type Target = PerformanceStreamMarkerInfoINTEL;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PerformanceStreamMarkerInfoINTELBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PerformanceStreamMarkerInfoINTELBuilder<'a> {
     pub fn marker(mut self, marker: u32) -> Self {
         self.inner.marker = marker;
@@ -36980,6 +39808,7 @@ impl ::std::default::Default for PerformanceOverrideInfoINTEL {
     }
 }
 impl PerformanceOverrideInfoINTEL {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PerformanceOverrideInfoINTELBuilder<'a> {
         PerformanceOverrideInfoINTELBuilder {
             inner: PerformanceOverrideInfoINTEL::default(),
@@ -36987,22 +39816,26 @@ impl PerformanceOverrideInfoINTEL {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PerformanceOverrideInfoINTELBuilder<'a> {
     inner: PerformanceOverrideInfoINTEL,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PerformanceOverrideInfoINTELBuilder<'a> {
     type Target = PerformanceOverrideInfoINTEL;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PerformanceOverrideInfoINTELBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PerformanceOverrideInfoINTELBuilder<'a> {
     pub fn ty(mut self, ty: PerformanceOverrideTypeINTEL) -> Self {
         self.inner.ty = ty;
@@ -37041,6 +39874,7 @@ impl ::std::default::Default for PerformanceConfigurationAcquireInfoINTEL {
     }
 }
 impl PerformanceConfigurationAcquireInfoINTEL {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PerformanceConfigurationAcquireInfoINTELBuilder<'a> {
         PerformanceConfigurationAcquireInfoINTELBuilder {
             inner: PerformanceConfigurationAcquireInfoINTEL::default(),
@@ -37048,22 +39882,26 @@ impl PerformanceConfigurationAcquireInfoINTEL {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PerformanceConfigurationAcquireInfoINTELBuilder<'a> {
     inner: PerformanceConfigurationAcquireInfoINTEL,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PerformanceConfigurationAcquireInfoINTELBuilder<'a> {
     type Target = PerformanceConfigurationAcquireInfoINTEL;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PerformanceConfigurationAcquireInfoINTELBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PerformanceConfigurationAcquireInfoINTELBuilder<'a> {
     pub fn ty(mut self, ty: PerformanceConfigurationTypeINTEL) -> Self {
         self.inner.ty = ty;
@@ -37096,6 +39934,7 @@ impl ::std::default::Default for PhysicalDeviceShaderClockFeaturesKHR {
     }
 }
 impl PhysicalDeviceShaderClockFeaturesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceShaderClockFeaturesKHRBuilder<'a> {
         PhysicalDeviceShaderClockFeaturesKHRBuilder {
             inner: PhysicalDeviceShaderClockFeaturesKHR::default(),
@@ -37103,26 +39942,32 @@ impl PhysicalDeviceShaderClockFeaturesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceShaderClockFeaturesKHRBuilder<'a> {
     inner: PhysicalDeviceShaderClockFeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderClockFeaturesKHRBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderClockFeaturesKHR {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderClockFeaturesKHRBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderClockFeaturesKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderClockFeaturesKHRBuilder<'a> {
     type Target = PhysicalDeviceShaderClockFeaturesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderClockFeaturesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceShaderClockFeaturesKHRBuilder<'a> {
     pub fn shader_subgroup_clock(mut self, shader_subgroup_clock: bool) -> Self {
         self.inner.shader_subgroup_clock = shader_subgroup_clock.into();
@@ -37157,6 +40002,7 @@ impl ::std::default::Default for PhysicalDeviceIndexTypeUint8FeaturesEXT {
     }
 }
 impl PhysicalDeviceIndexTypeUint8FeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceIndexTypeUint8FeaturesEXTBuilder<'a> {
         PhysicalDeviceIndexTypeUint8FeaturesEXTBuilder {
             inner: PhysicalDeviceIndexTypeUint8FeaturesEXT::default(),
@@ -37164,26 +40010,32 @@ impl PhysicalDeviceIndexTypeUint8FeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceIndexTypeUint8FeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceIndexTypeUint8FeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceIndexTypeUint8FeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceIndexTypeUint8FeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceIndexTypeUint8FeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceIndexTypeUint8FeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceIndexTypeUint8FeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceIndexTypeUint8FeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceIndexTypeUint8FeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceIndexTypeUint8FeaturesEXTBuilder<'a> {
     pub fn index_type_uint8(mut self, index_type_uint8: bool) -> Self {
         self.inner.index_type_uint8 = index_type_uint8.into();
@@ -37216,6 +40068,7 @@ impl ::std::default::Default for PhysicalDeviceShaderSMBuiltinsPropertiesNV {
     }
 }
 impl PhysicalDeviceShaderSMBuiltinsPropertiesNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceShaderSMBuiltinsPropertiesNVBuilder<'a> {
         PhysicalDeviceShaderSMBuiltinsPropertiesNVBuilder {
             inner: PhysicalDeviceShaderSMBuiltinsPropertiesNV::default(),
@@ -37223,27 +40076,32 @@ impl PhysicalDeviceShaderSMBuiltinsPropertiesNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceShaderSMBuiltinsPropertiesNVBuilder<'a> {
     inner: PhysicalDeviceShaderSMBuiltinsPropertiesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceShaderSMBuiltinsPropertiesNVBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderSMBuiltinsPropertiesNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderSMBuiltinsPropertiesNVBuilder<'a> {
     type Target = PhysicalDeviceShaderSMBuiltinsPropertiesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderSMBuiltinsPropertiesNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceShaderSMBuiltinsPropertiesNVBuilder<'a> {
     pub fn shader_sm_count(mut self, shader_sm_count: u32) -> Self {
         self.inner.shader_sm_count = shader_sm_count;
@@ -37278,6 +40136,7 @@ impl ::std::default::Default for PhysicalDeviceShaderSMBuiltinsFeaturesNV {
     }
 }
 impl PhysicalDeviceShaderSMBuiltinsFeaturesNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceShaderSMBuiltinsFeaturesNVBuilder<'a> {
         PhysicalDeviceShaderSMBuiltinsFeaturesNVBuilder {
             inner: PhysicalDeviceShaderSMBuiltinsFeaturesNV::default(),
@@ -37285,26 +40144,32 @@ impl PhysicalDeviceShaderSMBuiltinsFeaturesNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceShaderSMBuiltinsFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceShaderSMBuiltinsFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderSMBuiltinsFeaturesNVBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderSMBuiltinsFeaturesNV {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderSMBuiltinsFeaturesNVBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderSMBuiltinsFeaturesNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderSMBuiltinsFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceShaderSMBuiltinsFeaturesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderSMBuiltinsFeaturesNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceShaderSMBuiltinsFeaturesNVBuilder<'a> {
     pub fn shader_sm_builtins(mut self, shader_sm_builtins: bool) -> Self {
         self.inner.shader_sm_builtins = shader_sm_builtins.into();
@@ -37339,6 +40204,7 @@ impl ::std::default::Default for PhysicalDeviceFragmentShaderInterlockFeaturesEX
     }
 }
 impl PhysicalDeviceFragmentShaderInterlockFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceFragmentShaderInterlockFeaturesEXTBuilder<'a> {
         PhysicalDeviceFragmentShaderInterlockFeaturesEXTBuilder {
             inner: PhysicalDeviceFragmentShaderInterlockFeaturesEXT::default(),
@@ -37346,32 +40212,38 @@ impl PhysicalDeviceFragmentShaderInterlockFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceFragmentShaderInterlockFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceFragmentShaderInterlockFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceFragmentShaderInterlockFeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceFragmentShaderInterlockFeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceFragmentShaderInterlockFeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentShaderInterlockFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceFragmentShaderInterlockFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceFragmentShaderInterlockFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceFragmentShaderInterlockFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceFragmentShaderInterlockFeaturesEXTBuilder<'a> {
     pub fn fragment_shader_sample_interlock(
         mut self,
@@ -37420,6 +40292,7 @@ impl ::std::default::Default for PhysicalDeviceSeparateDepthStencilLayoutsFeatur
     }
 }
 impl PhysicalDeviceSeparateDepthStencilLayoutsFeatures {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceSeparateDepthStencilLayoutsFeaturesBuilder<'a> {
         PhysicalDeviceSeparateDepthStencilLayoutsFeaturesBuilder {
             inner: PhysicalDeviceSeparateDepthStencilLayoutsFeatures::default(),
@@ -37427,32 +40300,38 @@ impl PhysicalDeviceSeparateDepthStencilLayoutsFeatures {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceSeparateDepthStencilLayoutsFeaturesBuilder<'a> {
     inner: PhysicalDeviceSeparateDepthStencilLayoutsFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceSeparateDepthStencilLayoutsFeaturesBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSeparateDepthStencilLayoutsFeatures {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceSeparateDepthStencilLayoutsFeaturesBuilder<'_>
 {
 }
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSeparateDepthStencilLayoutsFeatures {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceSeparateDepthStencilLayoutsFeaturesBuilder<'a> {
     type Target = PhysicalDeviceSeparateDepthStencilLayoutsFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceSeparateDepthStencilLayoutsFeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceSeparateDepthStencilLayoutsFeaturesBuilder<'a> {
     pub fn separate_depth_stencil_layouts(mut self, separate_depth_stencil_layouts: bool) -> Self {
         self.inner.separate_depth_stencil_layouts = separate_depth_stencil_layouts.into();
@@ -37483,6 +40362,7 @@ impl ::std::default::Default for AttachmentReferenceStencilLayout {
     }
 }
 impl AttachmentReferenceStencilLayout {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> AttachmentReferenceStencilLayoutBuilder<'a> {
         AttachmentReferenceStencilLayoutBuilder {
             inner: AttachmentReferenceStencilLayout::default(),
@@ -37490,24 +40370,29 @@ impl AttachmentReferenceStencilLayout {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct AttachmentReferenceStencilLayoutBuilder<'a> {
     inner: AttachmentReferenceStencilLayout,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsAttachmentReference2 for AttachmentReferenceStencilLayoutBuilder<'_> {}
 unsafe impl ExtendsAttachmentReference2 for AttachmentReferenceStencilLayout {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for AttachmentReferenceStencilLayoutBuilder<'a> {
     type Target = AttachmentReferenceStencilLayout;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for AttachmentReferenceStencilLayoutBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> AttachmentReferenceStencilLayoutBuilder<'a> {
     pub fn stencil_layout(mut self, stencil_layout: ImageLayout) -> Self {
         self.inner.stencil_layout = stencil_layout;
@@ -37540,6 +40425,7 @@ impl ::std::default::Default for PhysicalDevicePrimitiveTopologyListRestartFeatu
     }
 }
 impl PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDevicePrimitiveTopologyListRestartFeaturesEXTBuilder<'a> {
         PhysicalDevicePrimitiveTopologyListRestartFeaturesEXTBuilder {
             inner: PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT::default(),
@@ -37547,11 +40433,13 @@ impl PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDevicePrimitiveTopologyListRestartFeaturesEXTBuilder<'a> {
     inner: PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXTBuilder<'_>
 {
@@ -37560,22 +40448,26 @@ unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT
 {
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXTBuilder<'a> {
     type Target = PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDevicePrimitiveTopologyListRestartFeaturesEXTBuilder<'a> {
     pub fn primitive_topology_list_restart(
         mut self,
@@ -37619,6 +40511,7 @@ impl ::std::default::Default for AttachmentDescriptionStencilLayout {
     }
 }
 impl AttachmentDescriptionStencilLayout {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> AttachmentDescriptionStencilLayoutBuilder<'a> {
         AttachmentDescriptionStencilLayoutBuilder {
             inner: AttachmentDescriptionStencilLayout::default(),
@@ -37626,24 +40519,29 @@ impl AttachmentDescriptionStencilLayout {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct AttachmentDescriptionStencilLayoutBuilder<'a> {
     inner: AttachmentDescriptionStencilLayout,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsAttachmentDescription2 for AttachmentDescriptionStencilLayoutBuilder<'_> {}
 unsafe impl ExtendsAttachmentDescription2 for AttachmentDescriptionStencilLayout {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for AttachmentDescriptionStencilLayoutBuilder<'a> {
     type Target = AttachmentDescriptionStencilLayout;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for AttachmentDescriptionStencilLayoutBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> AttachmentDescriptionStencilLayoutBuilder<'a> {
     pub fn stencil_initial_layout(mut self, stencil_initial_layout: ImageLayout) -> Self {
         self.inner.stencil_initial_layout = stencil_initial_layout;
@@ -37678,6 +40576,7 @@ impl ::std::default::Default for PhysicalDevicePipelineExecutablePropertiesFeatu
     }
 }
 impl PhysicalDevicePipelineExecutablePropertiesFeaturesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDevicePipelineExecutablePropertiesFeaturesKHRBuilder<'a> {
         PhysicalDevicePipelineExecutablePropertiesFeaturesKHRBuilder {
             inner: PhysicalDevicePipelineExecutablePropertiesFeaturesKHR::default(),
@@ -37685,11 +40584,13 @@ impl PhysicalDevicePipelineExecutablePropertiesFeaturesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDevicePipelineExecutablePropertiesFeaturesKHRBuilder<'a> {
     inner: PhysicalDevicePipelineExecutablePropertiesFeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDevicePipelineExecutablePropertiesFeaturesKHRBuilder<'_>
 {
@@ -37698,22 +40599,26 @@ unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR
 {
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDevicePipelineExecutablePropertiesFeaturesKHRBuilder<'_>
 {
 }
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDevicePipelineExecutablePropertiesFeaturesKHRBuilder<'a> {
     type Target = PhysicalDevicePipelineExecutablePropertiesFeaturesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDevicePipelineExecutablePropertiesFeaturesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDevicePipelineExecutablePropertiesFeaturesKHRBuilder<'a> {
     pub fn pipeline_executable_info(mut self, pipeline_executable_info: bool) -> Self {
         self.inner.pipeline_executable_info = pipeline_executable_info.into();
@@ -37744,6 +40649,7 @@ impl ::std::default::Default for PipelineInfoKHR {
     }
 }
 impl PipelineInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineInfoKHRBuilder<'a> {
         PipelineInfoKHRBuilder {
             inner: PipelineInfoKHR::default(),
@@ -37751,22 +40657,26 @@ impl PipelineInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineInfoKHRBuilder<'a> {
     inner: PipelineInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineInfoKHRBuilder<'a> {
     type Target = PipelineInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineInfoKHRBuilder<'a> {
     pub fn pipeline(mut self, pipeline: Pipeline) -> Self {
         self.inner.pipeline = pipeline;
@@ -37819,6 +40729,7 @@ impl ::std::default::Default for PipelineExecutablePropertiesKHR {
     }
 }
 impl PipelineExecutablePropertiesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineExecutablePropertiesKHRBuilder<'a> {
         PipelineExecutablePropertiesKHRBuilder {
             inner: PipelineExecutablePropertiesKHR::default(),
@@ -37826,22 +40737,26 @@ impl PipelineExecutablePropertiesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineExecutablePropertiesKHRBuilder<'a> {
     inner: PipelineExecutablePropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineExecutablePropertiesKHRBuilder<'a> {
     type Target = PipelineExecutablePropertiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineExecutablePropertiesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineExecutablePropertiesKHRBuilder<'a> {
     pub fn stages(mut self, stages: ShaderStageFlags) -> Self {
         self.inner.stages = stages;
@@ -37886,6 +40801,7 @@ impl ::std::default::Default for PipelineExecutableInfoKHR {
     }
 }
 impl PipelineExecutableInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineExecutableInfoKHRBuilder<'a> {
         PipelineExecutableInfoKHRBuilder {
             inner: PipelineExecutableInfoKHR::default(),
@@ -37893,22 +40809,26 @@ impl PipelineExecutableInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineExecutableInfoKHRBuilder<'a> {
     inner: PipelineExecutableInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineExecutableInfoKHRBuilder<'a> {
     type Target = PipelineExecutableInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineExecutableInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineExecutableInfoKHRBuilder<'a> {
     pub fn pipeline(mut self, pipeline: Pipeline) -> Self {
         self.inner.pipeline = pipeline;
@@ -37979,6 +40899,7 @@ impl ::std::default::Default for PipelineExecutableStatisticKHR {
     }
 }
 impl PipelineExecutableStatisticKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineExecutableStatisticKHRBuilder<'a> {
         PipelineExecutableStatisticKHRBuilder {
             inner: PipelineExecutableStatisticKHR::default(),
@@ -37986,22 +40907,26 @@ impl PipelineExecutableStatisticKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineExecutableStatisticKHRBuilder<'a> {
     inner: PipelineExecutableStatisticKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineExecutableStatisticKHRBuilder<'a> {
     type Target = PipelineExecutableStatisticKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineExecutableStatisticKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineExecutableStatisticKHRBuilder<'a> {
     pub fn name(mut self, name: [c_char; MAX_DESCRIPTION_SIZE]) -> Self {
         self.inner.name = name;
@@ -38069,6 +40994,7 @@ impl ::std::default::Default for PipelineExecutableInternalRepresentationKHR {
     }
 }
 impl PipelineExecutableInternalRepresentationKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineExecutableInternalRepresentationKHRBuilder<'a> {
         PipelineExecutableInternalRepresentationKHRBuilder {
             inner: PipelineExecutableInternalRepresentationKHR::default(),
@@ -38076,22 +41002,26 @@ impl PipelineExecutableInternalRepresentationKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineExecutableInternalRepresentationKHRBuilder<'a> {
     inner: PipelineExecutableInternalRepresentationKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineExecutableInternalRepresentationKHRBuilder<'a> {
     type Target = PipelineExecutableInternalRepresentationKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineExecutableInternalRepresentationKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineExecutableInternalRepresentationKHRBuilder<'a> {
     pub fn name(mut self, name: [c_char; MAX_DESCRIPTION_SIZE]) -> Self {
         self.inner.name = name;
@@ -38135,6 +41065,7 @@ impl ::std::default::Default for PhysicalDeviceShaderDemoteToHelperInvocationFea
     }
 }
 impl PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXTBuilder<'a> {
         PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXTBuilder {
             inner: PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT::default(),
@@ -38142,11 +41073,13 @@ impl PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXTBuilder<'_>
 {
@@ -38155,17 +41088,20 @@ unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT
 {
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut
     for PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXTBuilder<'a>
 {
@@ -38173,6 +41109,7 @@ impl<'a> ::std::ops::DerefMut
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXTBuilder<'a> {
     pub fn shader_demote_to_helper_invocation(
         mut self,
@@ -38206,6 +41143,7 @@ impl ::std::default::Default for PhysicalDeviceTexelBufferAlignmentFeaturesEXT {
     }
 }
 impl PhysicalDeviceTexelBufferAlignmentFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceTexelBufferAlignmentFeaturesEXTBuilder<'a> {
         PhysicalDeviceTexelBufferAlignmentFeaturesEXTBuilder {
             inner: PhysicalDeviceTexelBufferAlignmentFeaturesEXT::default(),
@@ -38213,29 +41151,35 @@ impl PhysicalDeviceTexelBufferAlignmentFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceTexelBufferAlignmentFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceTexelBufferAlignmentFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceTexelBufferAlignmentFeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceTexelBufferAlignmentFeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceTexelBufferAlignmentFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceTexelBufferAlignmentFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceTexelBufferAlignmentFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceTexelBufferAlignmentFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceTexelBufferAlignmentFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceTexelBufferAlignmentFeaturesEXTBuilder<'a> {
     pub fn texel_buffer_alignment(mut self, texel_buffer_alignment: bool) -> Self {
         self.inner.texel_buffer_alignment = texel_buffer_alignment.into();
@@ -38272,6 +41216,7 @@ impl ::std::default::Default for PhysicalDeviceTexelBufferAlignmentPropertiesEXT
     }
 }
 impl PhysicalDeviceTexelBufferAlignmentPropertiesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceTexelBufferAlignmentPropertiesEXTBuilder<'a> {
         PhysicalDeviceTexelBufferAlignmentPropertiesEXTBuilder {
             inner: PhysicalDeviceTexelBufferAlignmentPropertiesEXT::default(),
@@ -38279,27 +41224,32 @@ impl PhysicalDeviceTexelBufferAlignmentPropertiesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceTexelBufferAlignmentPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceTexelBufferAlignmentPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceTexelBufferAlignmentPropertiesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceTexelBufferAlignmentPropertiesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceTexelBufferAlignmentPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceTexelBufferAlignmentPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceTexelBufferAlignmentPropertiesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceTexelBufferAlignmentPropertiesEXTBuilder<'a> {
     pub fn storage_texel_buffer_offset_alignment_bytes(
         mut self,
@@ -38362,6 +41312,7 @@ impl ::std::default::Default for PhysicalDeviceSubgroupSizeControlFeaturesEXT {
     }
 }
 impl PhysicalDeviceSubgroupSizeControlFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceSubgroupSizeControlFeaturesEXTBuilder<'a> {
         PhysicalDeviceSubgroupSizeControlFeaturesEXTBuilder {
             inner: PhysicalDeviceSubgroupSizeControlFeaturesEXT::default(),
@@ -38369,29 +41320,35 @@ impl PhysicalDeviceSubgroupSizeControlFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceSubgroupSizeControlFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceSubgroupSizeControlFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceSubgroupSizeControlFeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSubgroupSizeControlFeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSubgroupSizeControlFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSubgroupSizeControlFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceSubgroupSizeControlFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceSubgroupSizeControlFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceSubgroupSizeControlFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceSubgroupSizeControlFeaturesEXTBuilder<'a> {
     pub fn subgroup_size_control(mut self, subgroup_size_control: bool) -> Self {
         self.inner.subgroup_size_control = subgroup_size_control.into();
@@ -38432,6 +41389,7 @@ impl ::std::default::Default for PhysicalDeviceSubgroupSizeControlPropertiesEXT 
     }
 }
 impl PhysicalDeviceSubgroupSizeControlPropertiesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceSubgroupSizeControlPropertiesEXTBuilder<'a> {
         PhysicalDeviceSubgroupSizeControlPropertiesEXTBuilder {
             inner: PhysicalDeviceSubgroupSizeControlPropertiesEXT::default(),
@@ -38439,27 +41397,32 @@ impl PhysicalDeviceSubgroupSizeControlPropertiesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceSubgroupSizeControlPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceSubgroupSizeControlPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceSubgroupSizeControlPropertiesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSubgroupSizeControlPropertiesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceSubgroupSizeControlPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceSubgroupSizeControlPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceSubgroupSizeControlPropertiesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceSubgroupSizeControlPropertiesEXTBuilder<'a> {
     pub fn min_subgroup_size(mut self, min_subgroup_size: u32) -> Self {
         self.inner.min_subgroup_size = min_subgroup_size;
@@ -38505,6 +41468,7 @@ impl ::std::default::Default for PipelineShaderStageRequiredSubgroupSizeCreateIn
     }
 }
 impl PipelineShaderStageRequiredSubgroupSizeCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineShaderStageRequiredSubgroupSizeCreateInfoEXTBuilder<'a> {
         PipelineShaderStageRequiredSubgroupSizeCreateInfoEXTBuilder {
             inner: PipelineShaderStageRequiredSubgroupSizeCreateInfoEXT::default(),
@@ -38512,11 +41476,13 @@ impl PipelineShaderStageRequiredSubgroupSizeCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineShaderStageRequiredSubgroupSizeCreateInfoEXTBuilder<'a> {
     inner: PipelineShaderStageRequiredSubgroupSizeCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPipelineShaderStageCreateInfo
     for PipelineShaderStageRequiredSubgroupSizeCreateInfoEXTBuilder<'_>
 {
@@ -38525,17 +41491,20 @@ unsafe impl ExtendsPipelineShaderStageCreateInfo
     for PipelineShaderStageRequiredSubgroupSizeCreateInfoEXT
 {
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineShaderStageRequiredSubgroupSizeCreateInfoEXTBuilder<'a> {
     type Target = PipelineShaderStageRequiredSubgroupSizeCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineShaderStageRequiredSubgroupSizeCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineShaderStageRequiredSubgroupSizeCreateInfoEXTBuilder<'a> {
     pub fn required_subgroup_size(mut self, required_subgroup_size: u32) -> Self {
         self.inner.required_subgroup_size = required_subgroup_size;
@@ -38568,6 +41537,7 @@ impl ::std::default::Default for SubpassShadingPipelineCreateInfoHUAWEI {
     }
 }
 impl SubpassShadingPipelineCreateInfoHUAWEI {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SubpassShadingPipelineCreateInfoHUAWEIBuilder<'a> {
         SubpassShadingPipelineCreateInfoHUAWEIBuilder {
             inner: SubpassShadingPipelineCreateInfoHUAWEI::default(),
@@ -38575,24 +41545,29 @@ impl SubpassShadingPipelineCreateInfoHUAWEI {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SubpassShadingPipelineCreateInfoHUAWEIBuilder<'a> {
     inner: SubpassShadingPipelineCreateInfoHUAWEI,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsComputePipelineCreateInfo for SubpassShadingPipelineCreateInfoHUAWEIBuilder<'_> {}
 unsafe impl ExtendsComputePipelineCreateInfo for SubpassShadingPipelineCreateInfoHUAWEI {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SubpassShadingPipelineCreateInfoHUAWEIBuilder<'a> {
     type Target = SubpassShadingPipelineCreateInfoHUAWEI;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SubpassShadingPipelineCreateInfoHUAWEIBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SubpassShadingPipelineCreateInfoHUAWEIBuilder<'a> {
     pub fn render_pass(mut self, render_pass: RenderPass) -> Self {
         self.inner.render_pass = render_pass;
@@ -38627,6 +41602,7 @@ impl ::std::default::Default for PhysicalDeviceSubpassShadingPropertiesHUAWEI {
     }
 }
 impl PhysicalDeviceSubpassShadingPropertiesHUAWEI {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceSubpassShadingPropertiesHUAWEIBuilder<'a> {
         PhysicalDeviceSubpassShadingPropertiesHUAWEIBuilder {
             inner: PhysicalDeviceSubpassShadingPropertiesHUAWEI::default(),
@@ -38634,27 +41610,32 @@ impl PhysicalDeviceSubpassShadingPropertiesHUAWEI {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceSubpassShadingPropertiesHUAWEIBuilder<'a> {
     inner: PhysicalDeviceSubpassShadingPropertiesHUAWEI,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceSubpassShadingPropertiesHUAWEIBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSubpassShadingPropertiesHUAWEI {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceSubpassShadingPropertiesHUAWEIBuilder<'a> {
     type Target = PhysicalDeviceSubpassShadingPropertiesHUAWEI;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceSubpassShadingPropertiesHUAWEIBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceSubpassShadingPropertiesHUAWEIBuilder<'a> {
     pub fn max_subpass_shading_workgroup_size_aspect_ratio(
         mut self,
@@ -38689,6 +41670,7 @@ impl ::std::default::Default for MemoryOpaqueCaptureAddressAllocateInfo {
     }
 }
 impl MemoryOpaqueCaptureAddressAllocateInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> MemoryOpaqueCaptureAddressAllocateInfoBuilder<'a> {
         MemoryOpaqueCaptureAddressAllocateInfoBuilder {
             inner: MemoryOpaqueCaptureAddressAllocateInfo::default(),
@@ -38696,24 +41678,29 @@ impl MemoryOpaqueCaptureAddressAllocateInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct MemoryOpaqueCaptureAddressAllocateInfoBuilder<'a> {
     inner: MemoryOpaqueCaptureAddressAllocateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsMemoryAllocateInfo for MemoryOpaqueCaptureAddressAllocateInfoBuilder<'_> {}
 unsafe impl ExtendsMemoryAllocateInfo for MemoryOpaqueCaptureAddressAllocateInfo {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for MemoryOpaqueCaptureAddressAllocateInfoBuilder<'a> {
     type Target = MemoryOpaqueCaptureAddressAllocateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for MemoryOpaqueCaptureAddressAllocateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> MemoryOpaqueCaptureAddressAllocateInfoBuilder<'a> {
     pub fn opaque_capture_address(mut self, opaque_capture_address: u64) -> Self {
         self.inner.opaque_capture_address = opaque_capture_address;
@@ -38744,6 +41731,7 @@ impl ::std::default::Default for DeviceMemoryOpaqueCaptureAddressInfo {
     }
 }
 impl DeviceMemoryOpaqueCaptureAddressInfo {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DeviceMemoryOpaqueCaptureAddressInfoBuilder<'a> {
         DeviceMemoryOpaqueCaptureAddressInfoBuilder {
             inner: DeviceMemoryOpaqueCaptureAddressInfo::default(),
@@ -38751,22 +41739,26 @@ impl DeviceMemoryOpaqueCaptureAddressInfo {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DeviceMemoryOpaqueCaptureAddressInfoBuilder<'a> {
     inner: DeviceMemoryOpaqueCaptureAddressInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DeviceMemoryOpaqueCaptureAddressInfoBuilder<'a> {
     type Target = DeviceMemoryOpaqueCaptureAddressInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DeviceMemoryOpaqueCaptureAddressInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DeviceMemoryOpaqueCaptureAddressInfoBuilder<'a> {
     pub fn memory(mut self, memory: DeviceMemory) -> Self {
         self.inner.memory = memory;
@@ -38807,6 +41799,7 @@ impl ::std::default::Default for PhysicalDeviceLineRasterizationFeaturesEXT {
     }
 }
 impl PhysicalDeviceLineRasterizationFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceLineRasterizationFeaturesEXTBuilder<'a> {
         PhysicalDeviceLineRasterizationFeaturesEXTBuilder {
             inner: PhysicalDeviceLineRasterizationFeaturesEXT::default(),
@@ -38814,29 +41807,35 @@ impl PhysicalDeviceLineRasterizationFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceLineRasterizationFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceLineRasterizationFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceLineRasterizationFeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceLineRasterizationFeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceLineRasterizationFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceLineRasterizationFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceLineRasterizationFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceLineRasterizationFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceLineRasterizationFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceLineRasterizationFeaturesEXTBuilder<'a> {
     pub fn rectangular_lines(mut self, rectangular_lines: bool) -> Self {
         self.inner.rectangular_lines = rectangular_lines.into();
@@ -38887,6 +41886,7 @@ impl ::std::default::Default for PhysicalDeviceLineRasterizationPropertiesEXT {
     }
 }
 impl PhysicalDeviceLineRasterizationPropertiesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceLineRasterizationPropertiesEXTBuilder<'a> {
         PhysicalDeviceLineRasterizationPropertiesEXTBuilder {
             inner: PhysicalDeviceLineRasterizationPropertiesEXT::default(),
@@ -38894,27 +41894,32 @@ impl PhysicalDeviceLineRasterizationPropertiesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceLineRasterizationPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceLineRasterizationPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceLineRasterizationPropertiesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceLineRasterizationPropertiesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceLineRasterizationPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceLineRasterizationPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceLineRasterizationPropertiesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceLineRasterizationPropertiesEXTBuilder<'a> {
     pub fn line_sub_pixel_precision_bits(mut self, line_sub_pixel_precision_bits: u32) -> Self {
         self.inner.line_sub_pixel_precision_bits = line_sub_pixel_precision_bits;
@@ -38951,6 +41956,7 @@ impl ::std::default::Default for PipelineRasterizationLineStateCreateInfoEXT {
     }
 }
 impl PipelineRasterizationLineStateCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineRasterizationLineStateCreateInfoEXTBuilder<'a> {
         PipelineRasterizationLineStateCreateInfoEXTBuilder {
             inner: PipelineRasterizationLineStateCreateInfoEXT::default(),
@@ -38958,11 +41964,13 @@ impl PipelineRasterizationLineStateCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineRasterizationLineStateCreateInfoEXTBuilder<'a> {
     inner: PipelineRasterizationLineStateCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPipelineRasterizationStateCreateInfo
     for PipelineRasterizationLineStateCreateInfoEXTBuilder<'_>
 {
@@ -38971,17 +41979,20 @@ unsafe impl ExtendsPipelineRasterizationStateCreateInfo
     for PipelineRasterizationLineStateCreateInfoEXT
 {
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineRasterizationLineStateCreateInfoEXTBuilder<'a> {
     type Target = PipelineRasterizationLineStateCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineRasterizationLineStateCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineRasterizationLineStateCreateInfoEXTBuilder<'a> {
     pub fn line_rasterization_mode(
         mut self,
@@ -39027,6 +42038,7 @@ impl ::std::default::Default for PhysicalDevicePipelineCreationCacheControlFeatu
     }
 }
 impl PhysicalDevicePipelineCreationCacheControlFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDevicePipelineCreationCacheControlFeaturesEXTBuilder<'a> {
         PhysicalDevicePipelineCreationCacheControlFeaturesEXTBuilder {
             inner: PhysicalDevicePipelineCreationCacheControlFeaturesEXT::default(),
@@ -39034,11 +42046,13 @@ impl PhysicalDevicePipelineCreationCacheControlFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDevicePipelineCreationCacheControlFeaturesEXTBuilder<'a> {
     inner: PhysicalDevicePipelineCreationCacheControlFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDevicePipelineCreationCacheControlFeaturesEXTBuilder<'_>
 {
@@ -39047,22 +42061,26 @@ unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDevicePipelineCreationCacheControlFeaturesEXT
 {
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDevicePipelineCreationCacheControlFeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePipelineCreationCacheControlFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDevicePipelineCreationCacheControlFeaturesEXTBuilder<'a> {
     type Target = PhysicalDevicePipelineCreationCacheControlFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDevicePipelineCreationCacheControlFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDevicePipelineCreationCacheControlFeaturesEXTBuilder<'a> {
     pub fn pipeline_creation_cache_control(
         mut self,
@@ -39118,6 +42136,7 @@ impl ::std::default::Default for PhysicalDeviceVulkan11Features {
     }
 }
 impl PhysicalDeviceVulkan11Features {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceVulkan11FeaturesBuilder<'a> {
         PhysicalDeviceVulkan11FeaturesBuilder {
             inner: PhysicalDeviceVulkan11Features::default(),
@@ -39125,26 +42144,32 @@ impl PhysicalDeviceVulkan11Features {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceVulkan11FeaturesBuilder<'a> {
     inner: PhysicalDeviceVulkan11Features,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVulkan11FeaturesBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVulkan11Features {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVulkan11FeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVulkan11Features {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceVulkan11FeaturesBuilder<'a> {
     type Target = PhysicalDeviceVulkan11Features;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceVulkan11FeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceVulkan11FeaturesBuilder<'a> {
     pub fn storage_buffer16_bit_access(mut self, storage_buffer16_bit_access: bool) -> Self {
         self.inner.storage_buffer16_bit_access = storage_buffer16_bit_access.into();
@@ -39254,6 +42279,7 @@ impl ::std::default::Default for PhysicalDeviceVulkan11Properties {
     }
 }
 impl PhysicalDeviceVulkan11Properties {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceVulkan11PropertiesBuilder<'a> {
         PhysicalDeviceVulkan11PropertiesBuilder {
             inner: PhysicalDeviceVulkan11Properties::default(),
@@ -39261,24 +42287,29 @@ impl PhysicalDeviceVulkan11Properties {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceVulkan11PropertiesBuilder<'a> {
     inner: PhysicalDeviceVulkan11Properties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceVulkan11PropertiesBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceVulkan11Properties {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceVulkan11PropertiesBuilder<'a> {
     type Target = PhysicalDeviceVulkan11Properties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceVulkan11PropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceVulkan11PropertiesBuilder<'a> {
     pub fn device_uuid(mut self, device_uuid: [u8; UUID_SIZE]) -> Self {
         self.inner.device_uuid = device_uuid;
@@ -39470,6 +42501,7 @@ impl ::std::default::Default for PhysicalDeviceVulkan12Features {
     }
 }
 impl PhysicalDeviceVulkan12Features {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceVulkan12FeaturesBuilder<'a> {
         PhysicalDeviceVulkan12FeaturesBuilder {
             inner: PhysicalDeviceVulkan12Features::default(),
@@ -39477,26 +42509,32 @@ impl PhysicalDeviceVulkan12Features {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceVulkan12FeaturesBuilder<'a> {
     inner: PhysicalDeviceVulkan12Features,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVulkan12FeaturesBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVulkan12Features {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVulkan12FeaturesBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVulkan12Features {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceVulkan12FeaturesBuilder<'a> {
     type Target = PhysicalDeviceVulkan12Features;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceVulkan12FeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceVulkan12FeaturesBuilder<'a> {
     pub fn sampler_mirror_clamp_to_edge(mut self, sampler_mirror_clamp_to_edge: bool) -> Self {
         self.inner.sampler_mirror_clamp_to_edge = sampler_mirror_clamp_to_edge.into();
@@ -40120,6 +43158,7 @@ impl ::std::default::Default for PhysicalDeviceVulkan12Properties {
     }
 }
 impl PhysicalDeviceVulkan12Properties {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceVulkan12PropertiesBuilder<'a> {
         PhysicalDeviceVulkan12PropertiesBuilder {
             inner: PhysicalDeviceVulkan12Properties::default(),
@@ -40127,24 +43166,29 @@ impl PhysicalDeviceVulkan12Properties {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceVulkan12PropertiesBuilder<'a> {
     inner: PhysicalDeviceVulkan12Properties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceVulkan12PropertiesBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceVulkan12Properties {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceVulkan12PropertiesBuilder<'a> {
     type Target = PhysicalDeviceVulkan12Properties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceVulkan12PropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceVulkan12PropertiesBuilder<'a> {
     pub fn driver_id(mut self, driver_id: DriverId) -> Self {
         self.inner.driver_id = driver_id;
@@ -40552,6 +43596,7 @@ impl ::std::default::Default for PipelineCompilerControlCreateInfoAMD {
     }
 }
 impl PipelineCompilerControlCreateInfoAMD {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineCompilerControlCreateInfoAMDBuilder<'a> {
         PipelineCompilerControlCreateInfoAMDBuilder {
             inner: PipelineCompilerControlCreateInfoAMD::default(),
@@ -40559,26 +43604,32 @@ impl PipelineCompilerControlCreateInfoAMD {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineCompilerControlCreateInfoAMDBuilder<'a> {
     inner: PipelineCompilerControlCreateInfoAMD,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineCompilerControlCreateInfoAMDBuilder<'_> {}
 unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineCompilerControlCreateInfoAMD {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsComputePipelineCreateInfo for PipelineCompilerControlCreateInfoAMDBuilder<'_> {}
 unsafe impl ExtendsComputePipelineCreateInfo for PipelineCompilerControlCreateInfoAMD {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineCompilerControlCreateInfoAMDBuilder<'a> {
     type Target = PipelineCompilerControlCreateInfoAMD;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineCompilerControlCreateInfoAMDBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineCompilerControlCreateInfoAMDBuilder<'a> {
     pub fn compiler_control_flags(
         mut self,
@@ -40612,6 +43663,7 @@ impl ::std::default::Default for PhysicalDeviceCoherentMemoryFeaturesAMD {
     }
 }
 impl PhysicalDeviceCoherentMemoryFeaturesAMD {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceCoherentMemoryFeaturesAMDBuilder<'a> {
         PhysicalDeviceCoherentMemoryFeaturesAMDBuilder {
             inner: PhysicalDeviceCoherentMemoryFeaturesAMD::default(),
@@ -40619,26 +43671,32 @@ impl PhysicalDeviceCoherentMemoryFeaturesAMD {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceCoherentMemoryFeaturesAMDBuilder<'a> {
     inner: PhysicalDeviceCoherentMemoryFeaturesAMD,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCoherentMemoryFeaturesAMDBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCoherentMemoryFeaturesAMD {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCoherentMemoryFeaturesAMDBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCoherentMemoryFeaturesAMD {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceCoherentMemoryFeaturesAMDBuilder<'a> {
     type Target = PhysicalDeviceCoherentMemoryFeaturesAMD;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceCoherentMemoryFeaturesAMDBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceCoherentMemoryFeaturesAMDBuilder<'a> {
     pub fn device_coherent_memory(mut self, device_coherent_memory: bool) -> Self {
         self.inner.device_coherent_memory = device_coherent_memory.into();
@@ -40698,6 +43756,7 @@ impl ::std::default::Default for PhysicalDeviceToolPropertiesEXT {
     }
 }
 impl PhysicalDeviceToolPropertiesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceToolPropertiesEXTBuilder<'a> {
         PhysicalDeviceToolPropertiesEXTBuilder {
             inner: PhysicalDeviceToolPropertiesEXT::default(),
@@ -40705,22 +43764,26 @@ impl PhysicalDeviceToolPropertiesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceToolPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceToolPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceToolPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceToolPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceToolPropertiesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceToolPropertiesEXTBuilder<'a> {
     pub fn name(mut self, name: [c_char; MAX_EXTENSION_NAME_SIZE]) -> Self {
         self.inner.name = name;
@@ -40779,6 +43842,7 @@ impl ::std::default::Default for SamplerCustomBorderColorCreateInfoEXT {
     }
 }
 impl SamplerCustomBorderColorCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SamplerCustomBorderColorCreateInfoEXTBuilder<'a> {
         SamplerCustomBorderColorCreateInfoEXTBuilder {
             inner: SamplerCustomBorderColorCreateInfoEXT::default(),
@@ -40786,24 +43850,29 @@ impl SamplerCustomBorderColorCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SamplerCustomBorderColorCreateInfoEXTBuilder<'a> {
     inner: SamplerCustomBorderColorCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsSamplerCreateInfo for SamplerCustomBorderColorCreateInfoEXTBuilder<'_> {}
 unsafe impl ExtendsSamplerCreateInfo for SamplerCustomBorderColorCreateInfoEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SamplerCustomBorderColorCreateInfoEXTBuilder<'a> {
     type Target = SamplerCustomBorderColorCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SamplerCustomBorderColorCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SamplerCustomBorderColorCreateInfoEXTBuilder<'a> {
     pub fn custom_border_color(mut self, custom_border_color: ClearColorValue) -> Self {
         self.inner.custom_border_color = custom_border_color;
@@ -40838,6 +43907,7 @@ impl ::std::default::Default for PhysicalDeviceCustomBorderColorPropertiesEXT {
     }
 }
 impl PhysicalDeviceCustomBorderColorPropertiesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceCustomBorderColorPropertiesEXTBuilder<'a> {
         PhysicalDeviceCustomBorderColorPropertiesEXTBuilder {
             inner: PhysicalDeviceCustomBorderColorPropertiesEXT::default(),
@@ -40845,27 +43915,32 @@ impl PhysicalDeviceCustomBorderColorPropertiesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceCustomBorderColorPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceCustomBorderColorPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceCustomBorderColorPropertiesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceCustomBorderColorPropertiesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceCustomBorderColorPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceCustomBorderColorPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceCustomBorderColorPropertiesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceCustomBorderColorPropertiesEXTBuilder<'a> {
     pub fn max_custom_border_color_samplers(
         mut self,
@@ -40901,6 +43976,7 @@ impl ::std::default::Default for PhysicalDeviceCustomBorderColorFeaturesEXT {
     }
 }
 impl PhysicalDeviceCustomBorderColorFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceCustomBorderColorFeaturesEXTBuilder<'a> {
         PhysicalDeviceCustomBorderColorFeaturesEXTBuilder {
             inner: PhysicalDeviceCustomBorderColorFeaturesEXT::default(),
@@ -40908,29 +43984,35 @@ impl PhysicalDeviceCustomBorderColorFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceCustomBorderColorFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceCustomBorderColorFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceCustomBorderColorFeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCustomBorderColorFeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCustomBorderColorFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCustomBorderColorFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceCustomBorderColorFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceCustomBorderColorFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceCustomBorderColorFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceCustomBorderColorFeaturesEXTBuilder<'a> {
     pub fn custom_border_colors(mut self, custom_border_colors: bool) -> Self {
         self.inner.custom_border_colors = custom_border_colors.into();
@@ -41019,6 +44101,7 @@ impl ::std::default::Default for AccelerationStructureGeometryTrianglesDataKHR {
     }
 }
 impl AccelerationStructureGeometryTrianglesDataKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> AccelerationStructureGeometryTrianglesDataKHRBuilder<'a> {
         AccelerationStructureGeometryTrianglesDataKHRBuilder {
             inner: AccelerationStructureGeometryTrianglesDataKHR::default(),
@@ -41026,23 +44109,27 @@ impl AccelerationStructureGeometryTrianglesDataKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct AccelerationStructureGeometryTrianglesDataKHRBuilder<'a> {
     inner: AccelerationStructureGeometryTrianglesDataKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsAccelerationStructureGeometryTrianglesDataKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for AccelerationStructureGeometryTrianglesDataKHRBuilder<'a> {
     type Target = AccelerationStructureGeometryTrianglesDataKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for AccelerationStructureGeometryTrianglesDataKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> AccelerationStructureGeometryTrianglesDataKHRBuilder<'a> {
     pub fn vertex_format(mut self, vertex_format: Format) -> Self {
         self.inner.vertex_format = vertex_format;
@@ -41126,6 +44213,7 @@ impl ::std::default::Default for AccelerationStructureGeometryAabbsDataKHR {
     }
 }
 impl AccelerationStructureGeometryAabbsDataKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> AccelerationStructureGeometryAabbsDataKHRBuilder<'a> {
         AccelerationStructureGeometryAabbsDataKHRBuilder {
             inner: AccelerationStructureGeometryAabbsDataKHR::default(),
@@ -41133,22 +44221,26 @@ impl AccelerationStructureGeometryAabbsDataKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct AccelerationStructureGeometryAabbsDataKHRBuilder<'a> {
     inner: AccelerationStructureGeometryAabbsDataKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for AccelerationStructureGeometryAabbsDataKHRBuilder<'a> {
     type Target = AccelerationStructureGeometryAabbsDataKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for AccelerationStructureGeometryAabbsDataKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> AccelerationStructureGeometryAabbsDataKHRBuilder<'a> {
     pub fn data(mut self, data: DeviceOrHostAddressConstKHR) -> Self {
         self.inner.data = data;
@@ -41195,6 +44287,7 @@ impl ::std::default::Default for AccelerationStructureGeometryInstancesDataKHR {
     }
 }
 impl AccelerationStructureGeometryInstancesDataKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> AccelerationStructureGeometryInstancesDataKHRBuilder<'a> {
         AccelerationStructureGeometryInstancesDataKHRBuilder {
             inner: AccelerationStructureGeometryInstancesDataKHR::default(),
@@ -41202,22 +44295,26 @@ impl AccelerationStructureGeometryInstancesDataKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct AccelerationStructureGeometryInstancesDataKHRBuilder<'a> {
     inner: AccelerationStructureGeometryInstancesDataKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for AccelerationStructureGeometryInstancesDataKHRBuilder<'a> {
     type Target = AccelerationStructureGeometryInstancesDataKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for AccelerationStructureGeometryInstancesDataKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> AccelerationStructureGeometryInstancesDataKHRBuilder<'a> {
     pub fn array_of_pointers(mut self, array_of_pointers: bool) -> Self {
         self.inner.array_of_pointers = array_of_pointers.into();
@@ -41280,6 +44377,7 @@ impl ::std::default::Default for AccelerationStructureGeometryKHR {
     }
 }
 impl AccelerationStructureGeometryKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> AccelerationStructureGeometryKHRBuilder<'a> {
         AccelerationStructureGeometryKHRBuilder {
             inner: AccelerationStructureGeometryKHR::default(),
@@ -41287,22 +44385,26 @@ impl AccelerationStructureGeometryKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct AccelerationStructureGeometryKHRBuilder<'a> {
     inner: AccelerationStructureGeometryKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for AccelerationStructureGeometryKHRBuilder<'a> {
     type Target = AccelerationStructureGeometryKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for AccelerationStructureGeometryKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> AccelerationStructureGeometryKHRBuilder<'a> {
     pub fn geometry_type(mut self, geometry_type: GeometryTypeKHR) -> Self {
         self.inner.geometry_type = geometry_type;
@@ -41380,6 +44482,7 @@ impl ::std::default::Default for AccelerationStructureBuildGeometryInfoKHR {
     }
 }
 impl AccelerationStructureBuildGeometryInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> AccelerationStructureBuildGeometryInfoKHRBuilder<'a> {
         AccelerationStructureBuildGeometryInfoKHRBuilder {
             inner: AccelerationStructureBuildGeometryInfoKHR::default(),
@@ -41387,22 +44490,26 @@ impl AccelerationStructureBuildGeometryInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct AccelerationStructureBuildGeometryInfoKHRBuilder<'a> {
     inner: AccelerationStructureBuildGeometryInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for AccelerationStructureBuildGeometryInfoKHRBuilder<'a> {
     type Target = AccelerationStructureBuildGeometryInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for AccelerationStructureBuildGeometryInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> AccelerationStructureBuildGeometryInfoKHRBuilder<'a> {
     pub fn ty(mut self, ty: AccelerationStructureTypeKHR) -> Self {
         self.inner.ty = ty;
@@ -41464,6 +44571,7 @@ pub struct AccelerationStructureBuildRangeInfoKHR {
     pub transform_offset: u32,
 }
 impl AccelerationStructureBuildRangeInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> AccelerationStructureBuildRangeInfoKHRBuilder<'a> {
         AccelerationStructureBuildRangeInfoKHRBuilder {
             inner: AccelerationStructureBuildRangeInfoKHR::default(),
@@ -41471,22 +44579,26 @@ impl AccelerationStructureBuildRangeInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct AccelerationStructureBuildRangeInfoKHRBuilder<'a> {
     inner: AccelerationStructureBuildRangeInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for AccelerationStructureBuildRangeInfoKHRBuilder<'a> {
     type Target = AccelerationStructureBuildRangeInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for AccelerationStructureBuildRangeInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> AccelerationStructureBuildRangeInfoKHRBuilder<'a> {
     pub fn primitive_count(mut self, primitive_count: u32) -> Self {
         self.inner.primitive_count = primitive_count;
@@ -41539,6 +44651,7 @@ impl ::std::default::Default for AccelerationStructureCreateInfoKHR {
     }
 }
 impl AccelerationStructureCreateInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> AccelerationStructureCreateInfoKHRBuilder<'a> {
         AccelerationStructureCreateInfoKHRBuilder {
             inner: AccelerationStructureCreateInfoKHR::default(),
@@ -41546,23 +44659,27 @@ impl AccelerationStructureCreateInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct AccelerationStructureCreateInfoKHRBuilder<'a> {
     inner: AccelerationStructureCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsAccelerationStructureCreateInfoKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for AccelerationStructureCreateInfoKHRBuilder<'a> {
     type Target = AccelerationStructureCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for AccelerationStructureCreateInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> AccelerationStructureCreateInfoKHRBuilder<'a> {
     pub fn create_flags(mut self, create_flags: AccelerationStructureCreateFlagsKHR) -> Self {
         self.inner.create_flags = create_flags;
@@ -41624,6 +44741,7 @@ pub struct AabbPositionsKHR {
     pub max_z: f32,
 }
 impl AabbPositionsKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> AabbPositionsKHRBuilder<'a> {
         AabbPositionsKHRBuilder {
             inner: AabbPositionsKHR::default(),
@@ -41631,22 +44749,26 @@ impl AabbPositionsKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct AabbPositionsKHRBuilder<'a> {
     inner: AabbPositionsKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for AabbPositionsKHRBuilder<'a> {
     type Target = AabbPositionsKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for AabbPositionsKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> AabbPositionsKHRBuilder<'a> {
     pub fn min_x(mut self, min_x: f32) -> Self {
         self.inner.min_x = min_x;
@@ -41719,6 +44841,7 @@ impl ::std::default::Default for AccelerationStructureDeviceAddressInfoKHR {
     }
 }
 impl AccelerationStructureDeviceAddressInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> AccelerationStructureDeviceAddressInfoKHRBuilder<'a> {
         AccelerationStructureDeviceAddressInfoKHRBuilder {
             inner: AccelerationStructureDeviceAddressInfoKHR::default(),
@@ -41726,22 +44849,26 @@ impl AccelerationStructureDeviceAddressInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct AccelerationStructureDeviceAddressInfoKHRBuilder<'a> {
     inner: AccelerationStructureDeviceAddressInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for AccelerationStructureDeviceAddressInfoKHRBuilder<'a> {
     type Target = AccelerationStructureDeviceAddressInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for AccelerationStructureDeviceAddressInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> AccelerationStructureDeviceAddressInfoKHRBuilder<'a> {
     pub fn acceleration_structure(
         mut self,
@@ -41775,6 +44902,7 @@ impl ::std::default::Default for AccelerationStructureVersionInfoKHR {
     }
 }
 impl AccelerationStructureVersionInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> AccelerationStructureVersionInfoKHRBuilder<'a> {
         AccelerationStructureVersionInfoKHRBuilder {
             inner: AccelerationStructureVersionInfoKHR::default(),
@@ -41782,22 +44910,26 @@ impl AccelerationStructureVersionInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct AccelerationStructureVersionInfoKHRBuilder<'a> {
     inner: AccelerationStructureVersionInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for AccelerationStructureVersionInfoKHRBuilder<'a> {
     type Target = AccelerationStructureVersionInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for AccelerationStructureVersionInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> AccelerationStructureVersionInfoKHRBuilder<'a> {
     pub fn version_data(mut self, version_data: &'a [u8; 2 * UUID_SIZE]) -> Self {
         self.inner.p_version_data = version_data as *const [u8; 2 * UUID_SIZE];
@@ -41832,6 +44964,7 @@ impl ::std::default::Default for CopyAccelerationStructureInfoKHR {
     }
 }
 impl CopyAccelerationStructureInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> CopyAccelerationStructureInfoKHRBuilder<'a> {
         CopyAccelerationStructureInfoKHRBuilder {
             inner: CopyAccelerationStructureInfoKHR::default(),
@@ -41839,22 +44972,26 @@ impl CopyAccelerationStructureInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct CopyAccelerationStructureInfoKHRBuilder<'a> {
     inner: CopyAccelerationStructureInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for CopyAccelerationStructureInfoKHRBuilder<'a> {
     type Target = CopyAccelerationStructureInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for CopyAccelerationStructureInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> CopyAccelerationStructureInfoKHRBuilder<'a> {
     pub fn src(mut self, src: AccelerationStructureKHR) -> Self {
         self.inner.src = src;
@@ -41908,6 +45045,7 @@ impl ::std::default::Default for CopyAccelerationStructureToMemoryInfoKHR {
     }
 }
 impl CopyAccelerationStructureToMemoryInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> CopyAccelerationStructureToMemoryInfoKHRBuilder<'a> {
         CopyAccelerationStructureToMemoryInfoKHRBuilder {
             inner: CopyAccelerationStructureToMemoryInfoKHR::default(),
@@ -41915,22 +45053,26 @@ impl CopyAccelerationStructureToMemoryInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct CopyAccelerationStructureToMemoryInfoKHRBuilder<'a> {
     inner: CopyAccelerationStructureToMemoryInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for CopyAccelerationStructureToMemoryInfoKHRBuilder<'a> {
     type Target = CopyAccelerationStructureToMemoryInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for CopyAccelerationStructureToMemoryInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> CopyAccelerationStructureToMemoryInfoKHRBuilder<'a> {
     pub fn src(mut self, src: AccelerationStructureKHR) -> Self {
         self.inner.src = src;
@@ -41984,6 +45126,7 @@ impl ::std::default::Default for CopyMemoryToAccelerationStructureInfoKHR {
     }
 }
 impl CopyMemoryToAccelerationStructureInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> CopyMemoryToAccelerationStructureInfoKHRBuilder<'a> {
         CopyMemoryToAccelerationStructureInfoKHRBuilder {
             inner: CopyMemoryToAccelerationStructureInfoKHR::default(),
@@ -41991,22 +45134,26 @@ impl CopyMemoryToAccelerationStructureInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct CopyMemoryToAccelerationStructureInfoKHRBuilder<'a> {
     inner: CopyMemoryToAccelerationStructureInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for CopyMemoryToAccelerationStructureInfoKHRBuilder<'a> {
     type Target = CopyMemoryToAccelerationStructureInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for CopyMemoryToAccelerationStructureInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> CopyMemoryToAccelerationStructureInfoKHRBuilder<'a> {
     pub fn src(mut self, src: DeviceOrHostAddressConstKHR) -> Self {
         self.inner.src = src;
@@ -42047,6 +45194,7 @@ impl ::std::default::Default for RayTracingPipelineInterfaceCreateInfoKHR {
     }
 }
 impl RayTracingPipelineInterfaceCreateInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> RayTracingPipelineInterfaceCreateInfoKHRBuilder<'a> {
         RayTracingPipelineInterfaceCreateInfoKHRBuilder {
             inner: RayTracingPipelineInterfaceCreateInfoKHR::default(),
@@ -42054,22 +45202,26 @@ impl RayTracingPipelineInterfaceCreateInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct RayTracingPipelineInterfaceCreateInfoKHRBuilder<'a> {
     inner: RayTracingPipelineInterfaceCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for RayTracingPipelineInterfaceCreateInfoKHRBuilder<'a> {
     type Target = RayTracingPipelineInterfaceCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for RayTracingPipelineInterfaceCreateInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> RayTracingPipelineInterfaceCreateInfoKHRBuilder<'a> {
     pub fn max_pipeline_ray_payload_size(mut self, max_pipeline_ray_payload_size: u32) -> Self {
         self.inner.max_pipeline_ray_payload_size = max_pipeline_ray_payload_size;
@@ -42109,6 +45261,7 @@ impl ::std::default::Default for PipelineLibraryCreateInfoKHR {
     }
 }
 impl PipelineLibraryCreateInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineLibraryCreateInfoKHRBuilder<'a> {
         PipelineLibraryCreateInfoKHRBuilder {
             inner: PipelineLibraryCreateInfoKHR::default(),
@@ -42116,22 +45269,26 @@ impl PipelineLibraryCreateInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineLibraryCreateInfoKHRBuilder<'a> {
     inner: PipelineLibraryCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineLibraryCreateInfoKHRBuilder<'a> {
     type Target = PipelineLibraryCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineLibraryCreateInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineLibraryCreateInfoKHRBuilder<'a> {
     pub fn libraries(mut self, libraries: &'a [Pipeline]) -> Self {
         self.inner.library_count = libraries.len() as _;
@@ -42163,6 +45320,7 @@ impl ::std::default::Default for PhysicalDeviceExtendedDynamicStateFeaturesEXT {
     }
 }
 impl PhysicalDeviceExtendedDynamicStateFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceExtendedDynamicStateFeaturesEXTBuilder<'a> {
         PhysicalDeviceExtendedDynamicStateFeaturesEXTBuilder {
             inner: PhysicalDeviceExtendedDynamicStateFeaturesEXT::default(),
@@ -42170,29 +45328,35 @@ impl PhysicalDeviceExtendedDynamicStateFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceExtendedDynamicStateFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceExtendedDynamicStateFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceExtendedDynamicStateFeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceExtendedDynamicStateFeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExtendedDynamicStateFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExtendedDynamicStateFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceExtendedDynamicStateFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceExtendedDynamicStateFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceExtendedDynamicStateFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceExtendedDynamicStateFeaturesEXTBuilder<'a> {
     pub fn extended_dynamic_state(mut self, extended_dynamic_state: bool) -> Self {
         self.inner.extended_dynamic_state = extended_dynamic_state.into();
@@ -42227,6 +45391,7 @@ impl ::std::default::Default for PhysicalDeviceExtendedDynamicState2FeaturesEXT 
     }
 }
 impl PhysicalDeviceExtendedDynamicState2FeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceExtendedDynamicState2FeaturesEXTBuilder<'a> {
         PhysicalDeviceExtendedDynamicState2FeaturesEXTBuilder {
             inner: PhysicalDeviceExtendedDynamicState2FeaturesEXT::default(),
@@ -42234,29 +45399,35 @@ impl PhysicalDeviceExtendedDynamicState2FeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceExtendedDynamicState2FeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceExtendedDynamicState2FeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceExtendedDynamicState2FeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceExtendedDynamicState2FeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExtendedDynamicState2FeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExtendedDynamicState2FeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceExtendedDynamicState2FeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceExtendedDynamicState2FeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceExtendedDynamicState2FeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceExtendedDynamicState2FeaturesEXTBuilder<'a> {
     pub fn extended_dynamic_state2(mut self, extended_dynamic_state2: bool) -> Self {
         self.inner.extended_dynamic_state2 = extended_dynamic_state2.into();
@@ -42302,6 +45473,7 @@ impl ::std::default::Default for RenderPassTransformBeginInfoQCOM {
     }
 }
 impl RenderPassTransformBeginInfoQCOM {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> RenderPassTransformBeginInfoQCOMBuilder<'a> {
         RenderPassTransformBeginInfoQCOMBuilder {
             inner: RenderPassTransformBeginInfoQCOM::default(),
@@ -42309,24 +45481,29 @@ impl RenderPassTransformBeginInfoQCOM {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct RenderPassTransformBeginInfoQCOMBuilder<'a> {
     inner: RenderPassTransformBeginInfoQCOM,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsRenderPassBeginInfo for RenderPassTransformBeginInfoQCOMBuilder<'_> {}
 unsafe impl ExtendsRenderPassBeginInfo for RenderPassTransformBeginInfoQCOM {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for RenderPassTransformBeginInfoQCOMBuilder<'a> {
     type Target = RenderPassTransformBeginInfoQCOM;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for RenderPassTransformBeginInfoQCOMBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> RenderPassTransformBeginInfoQCOMBuilder<'a> {
     pub fn transform(mut self, transform: SurfaceTransformFlagsKHR) -> Self {
         self.inner.transform = transform;
@@ -42357,6 +45534,7 @@ impl ::std::default::Default for CopyCommandTransformInfoQCOM {
     }
 }
 impl CopyCommandTransformInfoQCOM {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> CopyCommandTransformInfoQCOMBuilder<'a> {
         CopyCommandTransformInfoQCOMBuilder {
             inner: CopyCommandTransformInfoQCOM::default(),
@@ -42364,26 +45542,32 @@ impl CopyCommandTransformInfoQCOM {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct CopyCommandTransformInfoQCOMBuilder<'a> {
     inner: CopyCommandTransformInfoQCOM,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsBufferImageCopy2KHR for CopyCommandTransformInfoQCOMBuilder<'_> {}
 unsafe impl ExtendsBufferImageCopy2KHR for CopyCommandTransformInfoQCOM {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsImageBlit2KHR for CopyCommandTransformInfoQCOMBuilder<'_> {}
 unsafe impl ExtendsImageBlit2KHR for CopyCommandTransformInfoQCOM {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for CopyCommandTransformInfoQCOMBuilder<'a> {
     type Target = CopyCommandTransformInfoQCOM;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for CopyCommandTransformInfoQCOMBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> CopyCommandTransformInfoQCOMBuilder<'a> {
     pub fn transform(mut self, transform: SurfaceTransformFlagsKHR) -> Self {
         self.inner.transform = transform;
@@ -42416,6 +45600,7 @@ impl ::std::default::Default for CommandBufferInheritanceRenderPassTransformInfo
     }
 }
 impl CommandBufferInheritanceRenderPassTransformInfoQCOM {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> CommandBufferInheritanceRenderPassTransformInfoQCOMBuilder<'a> {
         CommandBufferInheritanceRenderPassTransformInfoQCOMBuilder {
             inner: CommandBufferInheritanceRenderPassTransformInfoQCOM::default(),
@@ -42423,11 +45608,13 @@ impl CommandBufferInheritanceRenderPassTransformInfoQCOM {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct CommandBufferInheritanceRenderPassTransformInfoQCOMBuilder<'a> {
     inner: CommandBufferInheritanceRenderPassTransformInfoQCOM,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsCommandBufferInheritanceInfo
     for CommandBufferInheritanceRenderPassTransformInfoQCOMBuilder<'_>
 {
@@ -42436,17 +45623,20 @@ unsafe impl ExtendsCommandBufferInheritanceInfo
     for CommandBufferInheritanceRenderPassTransformInfoQCOM
 {
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for CommandBufferInheritanceRenderPassTransformInfoQCOMBuilder<'a> {
     type Target = CommandBufferInheritanceRenderPassTransformInfoQCOM;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for CommandBufferInheritanceRenderPassTransformInfoQCOMBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> CommandBufferInheritanceRenderPassTransformInfoQCOMBuilder<'a> {
     pub fn transform(mut self, transform: SurfaceTransformFlagsKHR) -> Self {
         self.inner.transform = transform;
@@ -42481,6 +45671,7 @@ impl ::std::default::Default for PhysicalDeviceDiagnosticsConfigFeaturesNV {
     }
 }
 impl PhysicalDeviceDiagnosticsConfigFeaturesNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceDiagnosticsConfigFeaturesNVBuilder<'a> {
         PhysicalDeviceDiagnosticsConfigFeaturesNVBuilder {
             inner: PhysicalDeviceDiagnosticsConfigFeaturesNV::default(),
@@ -42488,29 +45679,35 @@ impl PhysicalDeviceDiagnosticsConfigFeaturesNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceDiagnosticsConfigFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceDiagnosticsConfigFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceDiagnosticsConfigFeaturesNVBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDiagnosticsConfigFeaturesNV {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDiagnosticsConfigFeaturesNVBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDiagnosticsConfigFeaturesNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceDiagnosticsConfigFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceDiagnosticsConfigFeaturesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceDiagnosticsConfigFeaturesNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceDiagnosticsConfigFeaturesNVBuilder<'a> {
     pub fn diagnostics_config(mut self, diagnostics_config: bool) -> Self {
         self.inner.diagnostics_config = diagnostics_config.into();
@@ -42541,6 +45738,7 @@ impl ::std::default::Default for DeviceDiagnosticsConfigCreateInfoNV {
     }
 }
 impl DeviceDiagnosticsConfigCreateInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DeviceDiagnosticsConfigCreateInfoNVBuilder<'a> {
         DeviceDiagnosticsConfigCreateInfoNVBuilder {
             inner: DeviceDiagnosticsConfigCreateInfoNV::default(),
@@ -42548,24 +45746,29 @@ impl DeviceDiagnosticsConfigCreateInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DeviceDiagnosticsConfigCreateInfoNVBuilder<'a> {
     inner: DeviceDiagnosticsConfigCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for DeviceDiagnosticsConfigCreateInfoNVBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for DeviceDiagnosticsConfigCreateInfoNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DeviceDiagnosticsConfigCreateInfoNVBuilder<'a> {
     type Target = DeviceDiagnosticsConfigCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DeviceDiagnosticsConfigCreateInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DeviceDiagnosticsConfigCreateInfoNVBuilder<'a> {
     pub fn flags(mut self, flags: DeviceDiagnosticsConfigFlagsNV) -> Self {
         self.inner.flags = flags;
@@ -42596,6 +45799,7 @@ impl ::std::default::Default for PhysicalDeviceZeroInitializeWorkgroupMemoryFeat
     }
 }
 impl PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHRBuilder<'a> {
         PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHRBuilder {
             inner: PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHR::default(),
@@ -42603,11 +45807,13 @@ impl PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHRBuilder<'a> {
     inner: PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHRBuilder<'_>
 {
@@ -42616,17 +45822,20 @@ unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHR
 {
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHRBuilder<'_>
 {
 }
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHRBuilder<'a> {
     type Target = PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut
     for PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHRBuilder<'a>
 {
@@ -42634,6 +45843,7 @@ impl<'a> ::std::ops::DerefMut
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHRBuilder<'a> {
     pub fn shader_zero_initialize_workgroup_memory(
         mut self,
@@ -42669,6 +45879,7 @@ impl ::std::default::Default for PhysicalDeviceShaderSubgroupUniformControlFlowF
     }
 }
 impl PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHRBuilder<'a> {
         PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHRBuilder {
             inner: PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR::default(),
@@ -42676,11 +45887,13 @@ impl PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHRBuilder<'a> {
     inner: PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHRBuilder<'_>
 {
@@ -42689,11 +45902,13 @@ unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR
 {
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHRBuilder<'_>
 {
 }
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref
     for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHRBuilder<'a>
 {
@@ -42702,6 +45917,7 @@ impl<'a> ::std::ops::Deref
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut
     for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHRBuilder<'a>
 {
@@ -42709,6 +45925,7 @@ impl<'a> ::std::ops::DerefMut
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHRBuilder<'a> {
     pub fn shader_subgroup_uniform_control_flow(
         mut self,
@@ -42747,6 +45964,7 @@ impl ::std::default::Default for PhysicalDeviceRobustness2FeaturesEXT {
     }
 }
 impl PhysicalDeviceRobustness2FeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceRobustness2FeaturesEXTBuilder<'a> {
         PhysicalDeviceRobustness2FeaturesEXTBuilder {
             inner: PhysicalDeviceRobustness2FeaturesEXT::default(),
@@ -42754,26 +45972,32 @@ impl PhysicalDeviceRobustness2FeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceRobustness2FeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceRobustness2FeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRobustness2FeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRobustness2FeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRobustness2FeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRobustness2FeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceRobustness2FeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceRobustness2FeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceRobustness2FeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceRobustness2FeaturesEXTBuilder<'a> {
     pub fn robust_buffer_access2(mut self, robust_buffer_access2: bool) -> Self {
         self.inner.robust_buffer_access2 = robust_buffer_access2.into();
@@ -42814,6 +46038,7 @@ impl ::std::default::Default for PhysicalDeviceRobustness2PropertiesEXT {
     }
 }
 impl PhysicalDeviceRobustness2PropertiesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceRobustness2PropertiesEXTBuilder<'a> {
         PhysicalDeviceRobustness2PropertiesEXTBuilder {
             inner: PhysicalDeviceRobustness2PropertiesEXT::default(),
@@ -42821,24 +46046,29 @@ impl PhysicalDeviceRobustness2PropertiesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceRobustness2PropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceRobustness2PropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceRobustness2PropertiesEXTBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceRobustness2PropertiesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceRobustness2PropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceRobustness2PropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceRobustness2PropertiesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceRobustness2PropertiesEXTBuilder<'a> {
     pub fn robust_storage_buffer_access_size_alignment(
         mut self,
@@ -42881,6 +46111,7 @@ impl ::std::default::Default for PhysicalDeviceImageRobustnessFeaturesEXT {
     }
 }
 impl PhysicalDeviceImageRobustnessFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceImageRobustnessFeaturesEXTBuilder<'a> {
         PhysicalDeviceImageRobustnessFeaturesEXTBuilder {
             inner: PhysicalDeviceImageRobustnessFeaturesEXT::default(),
@@ -42888,26 +46119,32 @@ impl PhysicalDeviceImageRobustnessFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceImageRobustnessFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceImageRobustnessFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImageRobustnessFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImageRobustnessFeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImageRobustnessFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImageRobustnessFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceImageRobustnessFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceImageRobustnessFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceImageRobustnessFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceImageRobustnessFeaturesEXTBuilder<'a> {
     pub fn robust_image_access(mut self, robust_image_access: bool) -> Self {
         self.inner.robust_image_access = robust_image_access.into();
@@ -42944,6 +46181,7 @@ impl ::std::default::Default for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeat
     }
 }
 impl PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHRBuilder<'a> {
         PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHRBuilder {
             inner: PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR::default(),
@@ -42951,11 +46189,13 @@ impl PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHRBuilder<'a> {
     inner: PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHRBuilder<'_>
 {
@@ -42964,17 +46204,20 @@ unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR
 {
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHRBuilder<'_>
 {
 }
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHRBuilder<'a> {
     type Target = PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut
     for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHRBuilder<'a>
 {
@@ -42982,6 +46225,7 @@ impl<'a> ::std::ops::DerefMut
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHRBuilder<'a> {
     pub fn workgroup_memory_explicit_layout(
         mut self,
@@ -43068,6 +46312,7 @@ impl ::std::default::Default for PhysicalDevicePortabilitySubsetFeaturesKHR {
     }
 }
 impl PhysicalDevicePortabilitySubsetFeaturesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDevicePortabilitySubsetFeaturesKHRBuilder<'a> {
         PhysicalDevicePortabilitySubsetFeaturesKHRBuilder {
             inner: PhysicalDevicePortabilitySubsetFeaturesKHR::default(),
@@ -43075,29 +46320,35 @@ impl PhysicalDevicePortabilitySubsetFeaturesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDevicePortabilitySubsetFeaturesKHRBuilder<'a> {
     inner: PhysicalDevicePortabilitySubsetFeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDevicePortabilitySubsetFeaturesKHRBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePortabilitySubsetFeaturesKHR {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePortabilitySubsetFeaturesKHRBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePortabilitySubsetFeaturesKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDevicePortabilitySubsetFeaturesKHRBuilder<'a> {
     type Target = PhysicalDevicePortabilitySubsetFeaturesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDevicePortabilitySubsetFeaturesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDevicePortabilitySubsetFeaturesKHRBuilder<'a> {
     pub fn constant_alpha_color_blend_factors(
         mut self,
@@ -43198,6 +46449,7 @@ impl ::std::default::Default for PhysicalDevicePortabilitySubsetPropertiesKHR {
     }
 }
 impl PhysicalDevicePortabilitySubsetPropertiesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDevicePortabilitySubsetPropertiesKHRBuilder<'a> {
         PhysicalDevicePortabilitySubsetPropertiesKHRBuilder {
             inner: PhysicalDevicePortabilitySubsetPropertiesKHR::default(),
@@ -43205,27 +46457,32 @@ impl PhysicalDevicePortabilitySubsetPropertiesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDevicePortabilitySubsetPropertiesKHRBuilder<'a> {
     inner: PhysicalDevicePortabilitySubsetPropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDevicePortabilitySubsetPropertiesKHRBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePortabilitySubsetPropertiesKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDevicePortabilitySubsetPropertiesKHRBuilder<'a> {
     type Target = PhysicalDevicePortabilitySubsetPropertiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDevicePortabilitySubsetPropertiesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDevicePortabilitySubsetPropertiesKHRBuilder<'a> {
     pub fn min_vertex_input_binding_stride_alignment(
         mut self,
@@ -43262,6 +46519,7 @@ impl ::std::default::Default for PhysicalDevice4444FormatsFeaturesEXT {
     }
 }
 impl PhysicalDevice4444FormatsFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDevice4444FormatsFeaturesEXTBuilder<'a> {
         PhysicalDevice4444FormatsFeaturesEXTBuilder {
             inner: PhysicalDevice4444FormatsFeaturesEXT::default(),
@@ -43269,26 +46527,32 @@ impl PhysicalDevice4444FormatsFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDevice4444FormatsFeaturesEXTBuilder<'a> {
     inner: PhysicalDevice4444FormatsFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevice4444FormatsFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevice4444FormatsFeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDevice4444FormatsFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDevice4444FormatsFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDevice4444FormatsFeaturesEXTBuilder<'a> {
     type Target = PhysicalDevice4444FormatsFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDevice4444FormatsFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDevice4444FormatsFeaturesEXTBuilder<'a> {
     pub fn format_a4r4g4b4(mut self, format_a4r4g4b4: bool) -> Self {
         self.inner.format_a4r4g4b4 = format_a4r4g4b4.into();
@@ -43323,6 +46587,7 @@ impl ::std::default::Default for PhysicalDeviceSubpassShadingFeaturesHUAWEI {
     }
 }
 impl PhysicalDeviceSubpassShadingFeaturesHUAWEI {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceSubpassShadingFeaturesHUAWEIBuilder<'a> {
         PhysicalDeviceSubpassShadingFeaturesHUAWEIBuilder {
             inner: PhysicalDeviceSubpassShadingFeaturesHUAWEI::default(),
@@ -43330,29 +46595,35 @@ impl PhysicalDeviceSubpassShadingFeaturesHUAWEI {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceSubpassShadingFeaturesHUAWEIBuilder<'a> {
     inner: PhysicalDeviceSubpassShadingFeaturesHUAWEI,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceSubpassShadingFeaturesHUAWEIBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSubpassShadingFeaturesHUAWEI {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSubpassShadingFeaturesHUAWEIBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSubpassShadingFeaturesHUAWEI {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceSubpassShadingFeaturesHUAWEIBuilder<'a> {
     type Target = PhysicalDeviceSubpassShadingFeaturesHUAWEI;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceSubpassShadingFeaturesHUAWEIBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceSubpassShadingFeaturesHUAWEIBuilder<'a> {
     pub fn subpass_shading(mut self, subpass_shading: bool) -> Self {
         self.inner.subpass_shading = subpass_shading.into();
@@ -43387,6 +46658,7 @@ impl ::std::default::Default for BufferCopy2KHR {
     }
 }
 impl BufferCopy2KHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> BufferCopy2KHRBuilder<'a> {
         BufferCopy2KHRBuilder {
             inner: BufferCopy2KHR::default(),
@@ -43394,22 +46666,26 @@ impl BufferCopy2KHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct BufferCopy2KHRBuilder<'a> {
     inner: BufferCopy2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for BufferCopy2KHRBuilder<'a> {
     type Target = BufferCopy2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for BufferCopy2KHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> BufferCopy2KHRBuilder<'a> {
     pub fn src_offset(mut self, src_offset: DeviceSize) -> Self {
         self.inner.src_offset = src_offset;
@@ -43456,6 +46732,7 @@ impl ::std::default::Default for ImageCopy2KHR {
     }
 }
 impl ImageCopy2KHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImageCopy2KHRBuilder<'a> {
         ImageCopy2KHRBuilder {
             inner: ImageCopy2KHR::default(),
@@ -43463,22 +46740,26 @@ impl ImageCopy2KHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImageCopy2KHRBuilder<'a> {
     inner: ImageCopy2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImageCopy2KHRBuilder<'a> {
     type Target = ImageCopy2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImageCopy2KHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImageCopy2KHRBuilder<'a> {
     pub fn src_subresource(mut self, src_subresource: ImageSubresourceLayers) -> Self {
         self.inner.src_subresource = src_subresource;
@@ -43531,6 +46812,7 @@ impl ::std::default::Default for ImageBlit2KHR {
     }
 }
 impl ImageBlit2KHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImageBlit2KHRBuilder<'a> {
         ImageBlit2KHRBuilder {
             inner: ImageBlit2KHR::default(),
@@ -43538,23 +46820,27 @@ impl ImageBlit2KHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImageBlit2KHRBuilder<'a> {
     inner: ImageBlit2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsImageBlit2KHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImageBlit2KHRBuilder<'a> {
     type Target = ImageBlit2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImageBlit2KHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImageBlit2KHRBuilder<'a> {
     pub fn src_subresource(mut self, src_subresource: ImageSubresourceLayers) -> Self {
         self.inner.src_subresource = src_subresource;
@@ -43621,6 +46907,7 @@ impl ::std::default::Default for BufferImageCopy2KHR {
     }
 }
 impl BufferImageCopy2KHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> BufferImageCopy2KHRBuilder<'a> {
         BufferImageCopy2KHRBuilder {
             inner: BufferImageCopy2KHR::default(),
@@ -43628,23 +46915,27 @@ impl BufferImageCopy2KHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct BufferImageCopy2KHRBuilder<'a> {
     inner: BufferImageCopy2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsBufferImageCopy2KHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for BufferImageCopy2KHRBuilder<'a> {
     type Target = BufferImageCopy2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for BufferImageCopy2KHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> BufferImageCopy2KHRBuilder<'a> {
     pub fn buffer_offset(mut self, buffer_offset: DeviceSize) -> Self {
         self.inner.buffer_offset = buffer_offset;
@@ -43717,6 +47008,7 @@ impl ::std::default::Default for ImageResolve2KHR {
     }
 }
 impl ImageResolve2KHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImageResolve2KHRBuilder<'a> {
         ImageResolve2KHRBuilder {
             inner: ImageResolve2KHR::default(),
@@ -43724,22 +47016,26 @@ impl ImageResolve2KHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImageResolve2KHRBuilder<'a> {
     inner: ImageResolve2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImageResolve2KHRBuilder<'a> {
     type Target = ImageResolve2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImageResolve2KHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImageResolve2KHRBuilder<'a> {
     pub fn src_subresource(mut self, src_subresource: ImageSubresourceLayers) -> Self {
         self.inner.src_subresource = src_subresource;
@@ -43792,6 +47088,7 @@ impl ::std::default::Default for CopyBufferInfo2KHR {
     }
 }
 impl CopyBufferInfo2KHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> CopyBufferInfo2KHRBuilder<'a> {
         CopyBufferInfo2KHRBuilder {
             inner: CopyBufferInfo2KHR::default(),
@@ -43799,22 +47096,26 @@ impl CopyBufferInfo2KHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct CopyBufferInfo2KHRBuilder<'a> {
     inner: CopyBufferInfo2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for CopyBufferInfo2KHRBuilder<'a> {
     type Target = CopyBufferInfo2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for CopyBufferInfo2KHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> CopyBufferInfo2KHRBuilder<'a> {
     pub fn src_buffer(mut self, src_buffer: Buffer) -> Self {
         self.inner.src_buffer = src_buffer;
@@ -43864,6 +47165,7 @@ impl ::std::default::Default for CopyImageInfo2KHR {
     }
 }
 impl CopyImageInfo2KHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> CopyImageInfo2KHRBuilder<'a> {
         CopyImageInfo2KHRBuilder {
             inner: CopyImageInfo2KHR::default(),
@@ -43871,22 +47173,26 @@ impl CopyImageInfo2KHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct CopyImageInfo2KHRBuilder<'a> {
     inner: CopyImageInfo2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for CopyImageInfo2KHRBuilder<'a> {
     type Target = CopyImageInfo2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for CopyImageInfo2KHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> CopyImageInfo2KHRBuilder<'a> {
     pub fn src_image(mut self, src_image: Image) -> Self {
         self.inner.src_image = src_image;
@@ -43946,6 +47252,7 @@ impl ::std::default::Default for BlitImageInfo2KHR {
     }
 }
 impl BlitImageInfo2KHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> BlitImageInfo2KHRBuilder<'a> {
         BlitImageInfo2KHRBuilder {
             inner: BlitImageInfo2KHR::default(),
@@ -43953,22 +47260,26 @@ impl BlitImageInfo2KHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct BlitImageInfo2KHRBuilder<'a> {
     inner: BlitImageInfo2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for BlitImageInfo2KHRBuilder<'a> {
     type Target = BlitImageInfo2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for BlitImageInfo2KHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> BlitImageInfo2KHRBuilder<'a> {
     pub fn src_image(mut self, src_image: Image) -> Self {
         self.inner.src_image = src_image;
@@ -44028,6 +47339,7 @@ impl ::std::default::Default for CopyBufferToImageInfo2KHR {
     }
 }
 impl CopyBufferToImageInfo2KHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> CopyBufferToImageInfo2KHRBuilder<'a> {
         CopyBufferToImageInfo2KHRBuilder {
             inner: CopyBufferToImageInfo2KHR::default(),
@@ -44035,22 +47347,26 @@ impl CopyBufferToImageInfo2KHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct CopyBufferToImageInfo2KHRBuilder<'a> {
     inner: CopyBufferToImageInfo2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for CopyBufferToImageInfo2KHRBuilder<'a> {
     type Target = CopyBufferToImageInfo2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for CopyBufferToImageInfo2KHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> CopyBufferToImageInfo2KHRBuilder<'a> {
     pub fn src_buffer(mut self, src_buffer: Buffer) -> Self {
         self.inner.src_buffer = src_buffer;
@@ -44102,6 +47418,7 @@ impl ::std::default::Default for CopyImageToBufferInfo2KHR {
     }
 }
 impl CopyImageToBufferInfo2KHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> CopyImageToBufferInfo2KHRBuilder<'a> {
         CopyImageToBufferInfo2KHRBuilder {
             inner: CopyImageToBufferInfo2KHR::default(),
@@ -44109,22 +47426,26 @@ impl CopyImageToBufferInfo2KHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct CopyImageToBufferInfo2KHRBuilder<'a> {
     inner: CopyImageToBufferInfo2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for CopyImageToBufferInfo2KHRBuilder<'a> {
     type Target = CopyImageToBufferInfo2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for CopyImageToBufferInfo2KHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> CopyImageToBufferInfo2KHRBuilder<'a> {
     pub fn src_image(mut self, src_image: Image) -> Self {
         self.inner.src_image = src_image;
@@ -44178,6 +47499,7 @@ impl ::std::default::Default for ResolveImageInfo2KHR {
     }
 }
 impl ResolveImageInfo2KHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ResolveImageInfo2KHRBuilder<'a> {
         ResolveImageInfo2KHRBuilder {
             inner: ResolveImageInfo2KHR::default(),
@@ -44185,22 +47507,26 @@ impl ResolveImageInfo2KHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ResolveImageInfo2KHRBuilder<'a> {
     inner: ResolveImageInfo2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ResolveImageInfo2KHRBuilder<'a> {
     type Target = ResolveImageInfo2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ResolveImageInfo2KHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ResolveImageInfo2KHRBuilder<'a> {
     pub fn src_image(mut self, src_image: Image) -> Self {
         self.inner.src_image = src_image;
@@ -44250,6 +47576,7 @@ impl ::std::default::Default for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT
     }
 }
 impl PhysicalDeviceShaderImageAtomicInt64FeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceShaderImageAtomicInt64FeaturesEXTBuilder<'a> {
         PhysicalDeviceShaderImageAtomicInt64FeaturesEXTBuilder {
             inner: PhysicalDeviceShaderImageAtomicInt64FeaturesEXT::default(),
@@ -44257,29 +47584,35 @@ impl PhysicalDeviceShaderImageAtomicInt64FeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceShaderImageAtomicInt64FeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceShaderImageAtomicInt64FeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceShaderImageAtomicInt64FeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderImageAtomicInt64FeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderImageAtomicInt64FeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceShaderImageAtomicInt64FeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderImageAtomicInt64FeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceShaderImageAtomicInt64FeaturesEXTBuilder<'a> {
     pub fn shader_image_int64_atomics(mut self, shader_image_int64_atomics: bool) -> Self {
         self.inner.shader_image_int64_atomics = shader_image_int64_atomics.into();
@@ -44316,6 +47649,7 @@ impl ::std::default::Default for FragmentShadingRateAttachmentInfoKHR {
     }
 }
 impl FragmentShadingRateAttachmentInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> FragmentShadingRateAttachmentInfoKHRBuilder<'a> {
         FragmentShadingRateAttachmentInfoKHRBuilder {
             inner: FragmentShadingRateAttachmentInfoKHR::default(),
@@ -44323,24 +47657,29 @@ impl FragmentShadingRateAttachmentInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct FragmentShadingRateAttachmentInfoKHRBuilder<'a> {
     inner: FragmentShadingRateAttachmentInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsSubpassDescription2 for FragmentShadingRateAttachmentInfoKHRBuilder<'_> {}
 unsafe impl ExtendsSubpassDescription2 for FragmentShadingRateAttachmentInfoKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for FragmentShadingRateAttachmentInfoKHRBuilder<'a> {
     type Target = FragmentShadingRateAttachmentInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for FragmentShadingRateAttachmentInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> FragmentShadingRateAttachmentInfoKHRBuilder<'a> {
     pub fn fragment_shading_rate_attachment(
         mut self,
@@ -44383,6 +47722,7 @@ impl ::std::default::Default for PipelineFragmentShadingRateStateCreateInfoKHR {
     }
 }
 impl PipelineFragmentShadingRateStateCreateInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineFragmentShadingRateStateCreateInfoKHRBuilder<'a> {
         PipelineFragmentShadingRateStateCreateInfoKHRBuilder {
             inner: PipelineFragmentShadingRateStateCreateInfoKHR::default(),
@@ -44390,27 +47730,32 @@ impl PipelineFragmentShadingRateStateCreateInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineFragmentShadingRateStateCreateInfoKHRBuilder<'a> {
     inner: PipelineFragmentShadingRateStateCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsGraphicsPipelineCreateInfo
     for PipelineFragmentShadingRateStateCreateInfoKHRBuilder<'_>
 {
 }
 unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineFragmentShadingRateStateCreateInfoKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineFragmentShadingRateStateCreateInfoKHRBuilder<'a> {
     type Target = PipelineFragmentShadingRateStateCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineFragmentShadingRateStateCreateInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineFragmentShadingRateStateCreateInfoKHRBuilder<'a> {
     pub fn fragment_size(mut self, fragment_size: Extent2D) -> Self {
         self.inner.fragment_size = fragment_size;
@@ -44449,6 +47794,7 @@ impl ::std::default::Default for PhysicalDeviceFragmentShadingRateFeaturesKHR {
     }
 }
 impl PhysicalDeviceFragmentShadingRateFeaturesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceFragmentShadingRateFeaturesKHRBuilder<'a> {
         PhysicalDeviceFragmentShadingRateFeaturesKHRBuilder {
             inner: PhysicalDeviceFragmentShadingRateFeaturesKHR::default(),
@@ -44456,29 +47802,35 @@ impl PhysicalDeviceFragmentShadingRateFeaturesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceFragmentShadingRateFeaturesKHRBuilder<'a> {
     inner: PhysicalDeviceFragmentShadingRateFeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceFragmentShadingRateFeaturesKHRBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceFragmentShadingRateFeaturesKHR {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentShadingRateFeaturesKHRBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentShadingRateFeaturesKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceFragmentShadingRateFeaturesKHRBuilder<'a> {
     type Target = PhysicalDeviceFragmentShadingRateFeaturesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceFragmentShadingRateFeaturesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceFragmentShadingRateFeaturesKHRBuilder<'a> {
     pub fn pipeline_fragment_shading_rate(mut self, pipeline_fragment_shading_rate: bool) -> Self {
         self.inner.pipeline_fragment_shading_rate = pipeline_fragment_shading_rate.into();
@@ -44555,6 +47907,7 @@ impl ::std::default::Default for PhysicalDeviceFragmentShadingRatePropertiesKHR 
     }
 }
 impl PhysicalDeviceFragmentShadingRatePropertiesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceFragmentShadingRatePropertiesKHRBuilder<'a> {
         PhysicalDeviceFragmentShadingRatePropertiesKHRBuilder {
             inner: PhysicalDeviceFragmentShadingRatePropertiesKHR::default(),
@@ -44562,27 +47915,32 @@ impl PhysicalDeviceFragmentShadingRatePropertiesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceFragmentShadingRatePropertiesKHRBuilder<'a> {
     inner: PhysicalDeviceFragmentShadingRatePropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceFragmentShadingRatePropertiesKHRBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceFragmentShadingRatePropertiesKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceFragmentShadingRatePropertiesKHRBuilder<'a> {
     type Target = PhysicalDeviceFragmentShadingRatePropertiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceFragmentShadingRatePropertiesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceFragmentShadingRatePropertiesKHRBuilder<'a> {
     pub fn min_fragment_shading_rate_attachment_texel_size(
         mut self,
@@ -44744,6 +48102,7 @@ impl ::std::default::Default for PhysicalDeviceFragmentShadingRateKHR {
     }
 }
 impl PhysicalDeviceFragmentShadingRateKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceFragmentShadingRateKHRBuilder<'a> {
         PhysicalDeviceFragmentShadingRateKHRBuilder {
             inner: PhysicalDeviceFragmentShadingRateKHR::default(),
@@ -44751,22 +48110,26 @@ impl PhysicalDeviceFragmentShadingRateKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceFragmentShadingRateKHRBuilder<'a> {
     inner: PhysicalDeviceFragmentShadingRateKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceFragmentShadingRateKHRBuilder<'a> {
     type Target = PhysicalDeviceFragmentShadingRateKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceFragmentShadingRateKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceFragmentShadingRateKHRBuilder<'a> {
     pub fn sample_counts(mut self, sample_counts: SampleCountFlags) -> Self {
         self.inner.sample_counts = sample_counts;
@@ -44801,6 +48164,7 @@ impl ::std::default::Default for PhysicalDeviceShaderTerminateInvocationFeatures
     }
 }
 impl PhysicalDeviceShaderTerminateInvocationFeaturesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceShaderTerminateInvocationFeaturesKHRBuilder<'a> {
         PhysicalDeviceShaderTerminateInvocationFeaturesKHRBuilder {
             inner: PhysicalDeviceShaderTerminateInvocationFeaturesKHR::default(),
@@ -44808,32 +48172,38 @@ impl PhysicalDeviceShaderTerminateInvocationFeaturesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceShaderTerminateInvocationFeaturesKHRBuilder<'a> {
     inner: PhysicalDeviceShaderTerminateInvocationFeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceShaderTerminateInvocationFeaturesKHRBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderTerminateInvocationFeaturesKHR {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceShaderTerminateInvocationFeaturesKHRBuilder<'_>
 {
 }
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderTerminateInvocationFeaturesKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderTerminateInvocationFeaturesKHRBuilder<'a> {
     type Target = PhysicalDeviceShaderTerminateInvocationFeaturesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderTerminateInvocationFeaturesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceShaderTerminateInvocationFeaturesKHRBuilder<'a> {
     pub fn shader_terminate_invocation(mut self, shader_terminate_invocation: bool) -> Self {
         self.inner.shader_terminate_invocation = shader_terminate_invocation.into();
@@ -44868,6 +48238,7 @@ impl ::std::default::Default for PhysicalDeviceFragmentShadingRateEnumsFeaturesN
     }
 }
 impl PhysicalDeviceFragmentShadingRateEnumsFeaturesNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceFragmentShadingRateEnumsFeaturesNVBuilder<'a> {
         PhysicalDeviceFragmentShadingRateEnumsFeaturesNVBuilder {
             inner: PhysicalDeviceFragmentShadingRateEnumsFeaturesNV::default(),
@@ -44875,32 +48246,38 @@ impl PhysicalDeviceFragmentShadingRateEnumsFeaturesNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceFragmentShadingRateEnumsFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceFragmentShadingRateEnumsFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceFragmentShadingRateEnumsFeaturesNVBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceFragmentShadingRateEnumsFeaturesNVBuilder<'_>
 {
 }
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceFragmentShadingRateEnumsFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceFragmentShadingRateEnumsFeaturesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceFragmentShadingRateEnumsFeaturesNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceFragmentShadingRateEnumsFeaturesNVBuilder<'a> {
     pub fn fragment_shading_rate_enums(mut self, fragment_shading_rate_enums: bool) -> Self {
         self.inner.fragment_shading_rate_enums = fragment_shading_rate_enums.into();
@@ -44946,6 +48323,7 @@ impl ::std::default::Default for PhysicalDeviceFragmentShadingRateEnumsPropertie
     }
 }
 impl PhysicalDeviceFragmentShadingRateEnumsPropertiesNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceFragmentShadingRateEnumsPropertiesNVBuilder<'a> {
         PhysicalDeviceFragmentShadingRateEnumsPropertiesNVBuilder {
             inner: PhysicalDeviceFragmentShadingRateEnumsPropertiesNV::default(),
@@ -44953,11 +48331,13 @@ impl PhysicalDeviceFragmentShadingRateEnumsPropertiesNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceFragmentShadingRateEnumsPropertiesNVBuilder<'a> {
     inner: PhysicalDeviceFragmentShadingRateEnumsPropertiesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceFragmentShadingRateEnumsPropertiesNVBuilder<'_>
 {
@@ -44966,17 +48346,20 @@ unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceFragmentShadingRateEnumsPropertiesNV
 {
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceFragmentShadingRateEnumsPropertiesNVBuilder<'a> {
     type Target = PhysicalDeviceFragmentShadingRateEnumsPropertiesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceFragmentShadingRateEnumsPropertiesNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceFragmentShadingRateEnumsPropertiesNVBuilder<'a> {
     pub fn max_fragment_shading_rate_invocation_count(
         mut self,
@@ -45015,6 +48398,7 @@ impl ::std::default::Default for PipelineFragmentShadingRateEnumStateCreateInfoN
     }
 }
 impl PipelineFragmentShadingRateEnumStateCreateInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineFragmentShadingRateEnumStateCreateInfoNVBuilder<'a> {
         PipelineFragmentShadingRateEnumStateCreateInfoNVBuilder {
             inner: PipelineFragmentShadingRateEnumStateCreateInfoNV::default(),
@@ -45022,27 +48406,32 @@ impl PipelineFragmentShadingRateEnumStateCreateInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineFragmentShadingRateEnumStateCreateInfoNVBuilder<'a> {
     inner: PipelineFragmentShadingRateEnumStateCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsGraphicsPipelineCreateInfo
     for PipelineFragmentShadingRateEnumStateCreateInfoNVBuilder<'_>
 {
 }
 unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineFragmentShadingRateEnumStateCreateInfoNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineFragmentShadingRateEnumStateCreateInfoNVBuilder<'a> {
     type Target = PipelineFragmentShadingRateEnumStateCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineFragmentShadingRateEnumStateCreateInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineFragmentShadingRateEnumStateCreateInfoNVBuilder<'a> {
     pub fn shading_rate_type(mut self, shading_rate_type: FragmentShadingRateTypeNV) -> Self {
         self.inner.shading_rate_type = shading_rate_type;
@@ -45085,6 +48474,7 @@ impl ::std::default::Default for AccelerationStructureBuildSizesInfoKHR {
     }
 }
 impl AccelerationStructureBuildSizesInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> AccelerationStructureBuildSizesInfoKHRBuilder<'a> {
         AccelerationStructureBuildSizesInfoKHRBuilder {
             inner: AccelerationStructureBuildSizesInfoKHR::default(),
@@ -45092,22 +48482,26 @@ impl AccelerationStructureBuildSizesInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct AccelerationStructureBuildSizesInfoKHRBuilder<'a> {
     inner: AccelerationStructureBuildSizesInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for AccelerationStructureBuildSizesInfoKHRBuilder<'a> {
     type Target = AccelerationStructureBuildSizesInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for AccelerationStructureBuildSizesInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> AccelerationStructureBuildSizesInfoKHRBuilder<'a> {
     pub fn acceleration_structure_size(mut self, acceleration_structure_size: DeviceSize) -> Self {
         self.inner.acceleration_structure_size = acceleration_structure_size;
@@ -45146,6 +48540,7 @@ impl ::std::default::Default for PhysicalDeviceMutableDescriptorTypeFeaturesVALV
     }
 }
 impl PhysicalDeviceMutableDescriptorTypeFeaturesVALVE {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceMutableDescriptorTypeFeaturesVALVEBuilder<'a> {
         PhysicalDeviceMutableDescriptorTypeFeaturesVALVEBuilder {
             inner: PhysicalDeviceMutableDescriptorTypeFeaturesVALVE::default(),
@@ -45153,32 +48548,38 @@ impl PhysicalDeviceMutableDescriptorTypeFeaturesVALVE {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceMutableDescriptorTypeFeaturesVALVEBuilder<'a> {
     inner: PhysicalDeviceMutableDescriptorTypeFeaturesVALVE,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceMutableDescriptorTypeFeaturesVALVEBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMutableDescriptorTypeFeaturesVALVE {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceMutableDescriptorTypeFeaturesVALVEBuilder<'_>
 {
 }
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMutableDescriptorTypeFeaturesVALVE {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceMutableDescriptorTypeFeaturesVALVEBuilder<'a> {
     type Target = PhysicalDeviceMutableDescriptorTypeFeaturesVALVE;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceMutableDescriptorTypeFeaturesVALVEBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceMutableDescriptorTypeFeaturesVALVEBuilder<'a> {
     pub fn mutable_descriptor_type(mut self, mutable_descriptor_type: bool) -> Self {
         self.inner.mutable_descriptor_type = mutable_descriptor_type.into();
@@ -45207,6 +48608,7 @@ impl ::std::default::Default for MutableDescriptorTypeListVALVE {
     }
 }
 impl MutableDescriptorTypeListVALVE {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> MutableDescriptorTypeListVALVEBuilder<'a> {
         MutableDescriptorTypeListVALVEBuilder {
             inner: MutableDescriptorTypeListVALVE::default(),
@@ -45214,22 +48616,26 @@ impl MutableDescriptorTypeListVALVE {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct MutableDescriptorTypeListVALVEBuilder<'a> {
     inner: MutableDescriptorTypeListVALVE,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for MutableDescriptorTypeListVALVEBuilder<'a> {
     type Target = MutableDescriptorTypeListVALVE;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for MutableDescriptorTypeListVALVEBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> MutableDescriptorTypeListVALVEBuilder<'a> {
     pub fn descriptor_types(mut self, descriptor_types: &'a [DescriptorType]) -> Self {
         self.inner.descriptor_type_count = descriptor_types.len() as _;
@@ -45263,6 +48669,7 @@ impl ::std::default::Default for MutableDescriptorTypeCreateInfoVALVE {
     }
 }
 impl MutableDescriptorTypeCreateInfoVALVE {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> MutableDescriptorTypeCreateInfoVALVEBuilder<'a> {
         MutableDescriptorTypeCreateInfoVALVEBuilder {
             inner: MutableDescriptorTypeCreateInfoVALVE::default(),
@@ -45270,29 +48677,35 @@ impl MutableDescriptorTypeCreateInfoVALVE {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct MutableDescriptorTypeCreateInfoVALVEBuilder<'a> {
     inner: MutableDescriptorTypeCreateInfoVALVE,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDescriptorSetLayoutCreateInfo
     for MutableDescriptorTypeCreateInfoVALVEBuilder<'_>
 {
 }
 unsafe impl ExtendsDescriptorSetLayoutCreateInfo for MutableDescriptorTypeCreateInfoVALVE {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDescriptorPoolCreateInfo for MutableDescriptorTypeCreateInfoVALVEBuilder<'_> {}
 unsafe impl ExtendsDescriptorPoolCreateInfo for MutableDescriptorTypeCreateInfoVALVE {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for MutableDescriptorTypeCreateInfoVALVEBuilder<'a> {
     type Target = MutableDescriptorTypeCreateInfoVALVE;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for MutableDescriptorTypeCreateInfoVALVEBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> MutableDescriptorTypeCreateInfoVALVEBuilder<'a> {
     pub fn mutable_descriptor_type_lists(
         mut self,
@@ -45327,6 +48740,7 @@ impl ::std::default::Default for PhysicalDeviceVertexInputDynamicStateFeaturesEX
     }
 }
 impl PhysicalDeviceVertexInputDynamicStateFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceVertexInputDynamicStateFeaturesEXTBuilder<'a> {
         PhysicalDeviceVertexInputDynamicStateFeaturesEXTBuilder {
             inner: PhysicalDeviceVertexInputDynamicStateFeaturesEXT::default(),
@@ -45334,32 +48748,38 @@ impl PhysicalDeviceVertexInputDynamicStateFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceVertexInputDynamicStateFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceVertexInputDynamicStateFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceVertexInputDynamicStateFeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVertexInputDynamicStateFeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceVertexInputDynamicStateFeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVertexInputDynamicStateFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceVertexInputDynamicStateFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceVertexInputDynamicStateFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceVertexInputDynamicStateFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceVertexInputDynamicStateFeaturesEXTBuilder<'a> {
     pub fn vertex_input_dynamic_state(mut self, vertex_input_dynamic_state: bool) -> Self {
         self.inner.vertex_input_dynamic_state = vertex_input_dynamic_state.into();
@@ -45390,6 +48810,7 @@ impl ::std::default::Default for PhysicalDeviceExternalMemoryRDMAFeaturesNV {
     }
 }
 impl PhysicalDeviceExternalMemoryRDMAFeaturesNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceExternalMemoryRDMAFeaturesNVBuilder<'a> {
         PhysicalDeviceExternalMemoryRDMAFeaturesNVBuilder {
             inner: PhysicalDeviceExternalMemoryRDMAFeaturesNV::default(),
@@ -45397,29 +48818,35 @@ impl PhysicalDeviceExternalMemoryRDMAFeaturesNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceExternalMemoryRDMAFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceExternalMemoryRDMAFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceExternalMemoryRDMAFeaturesNVBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceExternalMemoryRDMAFeaturesNV {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExternalMemoryRDMAFeaturesNVBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExternalMemoryRDMAFeaturesNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceExternalMemoryRDMAFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceExternalMemoryRDMAFeaturesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceExternalMemoryRDMAFeaturesNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceExternalMemoryRDMAFeaturesNVBuilder<'a> {
     pub fn external_memory_rdma(mut self, external_memory_rdma: bool) -> Self {
         self.inner.external_memory_rdma = external_memory_rdma.into();
@@ -45456,6 +48883,7 @@ impl ::std::default::Default for VertexInputBindingDescription2EXT {
     }
 }
 impl VertexInputBindingDescription2EXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VertexInputBindingDescription2EXTBuilder<'a> {
         VertexInputBindingDescription2EXTBuilder {
             inner: VertexInputBindingDescription2EXT::default(),
@@ -45463,22 +48891,26 @@ impl VertexInputBindingDescription2EXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VertexInputBindingDescription2EXTBuilder<'a> {
     inner: VertexInputBindingDescription2EXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VertexInputBindingDescription2EXTBuilder<'a> {
     type Target = VertexInputBindingDescription2EXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VertexInputBindingDescription2EXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VertexInputBindingDescription2EXTBuilder<'a> {
     pub fn binding(mut self, binding: u32) -> Self {
         self.inner.binding = binding;
@@ -45527,6 +48959,7 @@ impl ::std::default::Default for VertexInputAttributeDescription2EXT {
     }
 }
 impl VertexInputAttributeDescription2EXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VertexInputAttributeDescription2EXTBuilder<'a> {
         VertexInputAttributeDescription2EXTBuilder {
             inner: VertexInputAttributeDescription2EXT::default(),
@@ -45534,22 +48967,26 @@ impl VertexInputAttributeDescription2EXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VertexInputAttributeDescription2EXTBuilder<'a> {
     inner: VertexInputAttributeDescription2EXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VertexInputAttributeDescription2EXTBuilder<'a> {
     type Target = VertexInputAttributeDescription2EXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VertexInputAttributeDescription2EXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VertexInputAttributeDescription2EXTBuilder<'a> {
     pub fn location(mut self, location: u32) -> Self {
         self.inner.location = location;
@@ -45592,6 +49029,7 @@ impl ::std::default::Default for PhysicalDeviceColorWriteEnableFeaturesEXT {
     }
 }
 impl PhysicalDeviceColorWriteEnableFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceColorWriteEnableFeaturesEXTBuilder<'a> {
         PhysicalDeviceColorWriteEnableFeaturesEXTBuilder {
             inner: PhysicalDeviceColorWriteEnableFeaturesEXT::default(),
@@ -45599,29 +49037,35 @@ impl PhysicalDeviceColorWriteEnableFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceColorWriteEnableFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceColorWriteEnableFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceColorWriteEnableFeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceColorWriteEnableFeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceColorWriteEnableFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceColorWriteEnableFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceColorWriteEnableFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceColorWriteEnableFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceColorWriteEnableFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceColorWriteEnableFeaturesEXTBuilder<'a> {
     pub fn color_write_enable(mut self, color_write_enable: bool) -> Self {
         self.inner.color_write_enable = color_write_enable.into();
@@ -45654,6 +49098,7 @@ impl ::std::default::Default for PipelineColorWriteCreateInfoEXT {
     }
 }
 impl PipelineColorWriteCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineColorWriteCreateInfoEXTBuilder<'a> {
         PipelineColorWriteCreateInfoEXTBuilder {
             inner: PipelineColorWriteCreateInfoEXT::default(),
@@ -45661,27 +49106,32 @@ impl PipelineColorWriteCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineColorWriteCreateInfoEXTBuilder<'a> {
     inner: PipelineColorWriteCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPipelineColorBlendStateCreateInfo
     for PipelineColorWriteCreateInfoEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPipelineColorBlendStateCreateInfo for PipelineColorWriteCreateInfoEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineColorWriteCreateInfoEXTBuilder<'a> {
     type Target = PipelineColorWriteCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PipelineColorWriteCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineColorWriteCreateInfoEXTBuilder<'a> {
     pub fn color_write_enables(mut self, color_write_enables: &'a [Bool32]) -> Self {
         self.inner.attachment_count = color_write_enables.len() as _;
@@ -45719,6 +49169,7 @@ impl ::std::default::Default for MemoryBarrier2KHR {
     }
 }
 impl MemoryBarrier2KHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> MemoryBarrier2KHRBuilder<'a> {
         MemoryBarrier2KHRBuilder {
             inner: MemoryBarrier2KHR::default(),
@@ -45726,24 +49177,29 @@ impl MemoryBarrier2KHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct MemoryBarrier2KHRBuilder<'a> {
     inner: MemoryBarrier2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsSubpassDependency2 for MemoryBarrier2KHRBuilder<'_> {}
 unsafe impl ExtendsSubpassDependency2 for MemoryBarrier2KHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for MemoryBarrier2KHRBuilder<'a> {
     type Target = MemoryBarrier2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for MemoryBarrier2KHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> MemoryBarrier2KHRBuilder<'a> {
     pub fn src_stage_mask(mut self, src_stage_mask: PipelineStageFlags2KHR) -> Self {
         self.inner.src_stage_mask = src_stage_mask;
@@ -45804,6 +49260,7 @@ impl ::std::default::Default for ImageMemoryBarrier2KHR {
     }
 }
 impl ImageMemoryBarrier2KHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> ImageMemoryBarrier2KHRBuilder<'a> {
         ImageMemoryBarrier2KHRBuilder {
             inner: ImageMemoryBarrier2KHR::default(),
@@ -45811,23 +49268,27 @@ impl ImageMemoryBarrier2KHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct ImageMemoryBarrier2KHRBuilder<'a> {
     inner: ImageMemoryBarrier2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsImageMemoryBarrier2KHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for ImageMemoryBarrier2KHRBuilder<'a> {
     type Target = ImageMemoryBarrier2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for ImageMemoryBarrier2KHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ImageMemoryBarrier2KHRBuilder<'a> {
     pub fn src_stage_mask(mut self, src_stage_mask: PipelineStageFlags2KHR) -> Self {
         self.inner.src_stage_mask = src_stage_mask;
@@ -45924,6 +49385,7 @@ impl ::std::default::Default for BufferMemoryBarrier2KHR {
     }
 }
 impl BufferMemoryBarrier2KHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> BufferMemoryBarrier2KHRBuilder<'a> {
         BufferMemoryBarrier2KHRBuilder {
             inner: BufferMemoryBarrier2KHR::default(),
@@ -45931,22 +49393,26 @@ impl BufferMemoryBarrier2KHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct BufferMemoryBarrier2KHRBuilder<'a> {
     inner: BufferMemoryBarrier2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for BufferMemoryBarrier2KHRBuilder<'a> {
     type Target = BufferMemoryBarrier2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for BufferMemoryBarrier2KHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> BufferMemoryBarrier2KHRBuilder<'a> {
     pub fn src_stage_mask(mut self, src_stage_mask: PipelineStageFlags2KHR) -> Self {
         self.inner.src_stage_mask = src_stage_mask;
@@ -46021,6 +49487,7 @@ impl ::std::default::Default for DependencyInfoKHR {
     }
 }
 impl DependencyInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> DependencyInfoKHRBuilder<'a> {
         DependencyInfoKHRBuilder {
             inner: DependencyInfoKHR::default(),
@@ -46028,22 +49495,26 @@ impl DependencyInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct DependencyInfoKHRBuilder<'a> {
     inner: DependencyInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for DependencyInfoKHRBuilder<'a> {
     type Target = DependencyInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for DependencyInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> DependencyInfoKHRBuilder<'a> {
     pub fn dependency_flags(mut self, dependency_flags: DependencyFlags) -> Self {
         self.inner.dependency_flags = dependency_flags;
@@ -46101,6 +49572,7 @@ impl ::std::default::Default for SemaphoreSubmitInfoKHR {
     }
 }
 impl SemaphoreSubmitInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SemaphoreSubmitInfoKHRBuilder<'a> {
         SemaphoreSubmitInfoKHRBuilder {
             inner: SemaphoreSubmitInfoKHR::default(),
@@ -46108,22 +49580,26 @@ impl SemaphoreSubmitInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SemaphoreSubmitInfoKHRBuilder<'a> {
     inner: SemaphoreSubmitInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SemaphoreSubmitInfoKHRBuilder<'a> {
     type Target = SemaphoreSubmitInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SemaphoreSubmitInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SemaphoreSubmitInfoKHRBuilder<'a> {
     pub fn semaphore(mut self, semaphore: Semaphore) -> Self {
         self.inner.semaphore = semaphore;
@@ -46168,6 +49644,7 @@ impl ::std::default::Default for CommandBufferSubmitInfoKHR {
     }
 }
 impl CommandBufferSubmitInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> CommandBufferSubmitInfoKHRBuilder<'a> {
         CommandBufferSubmitInfoKHRBuilder {
             inner: CommandBufferSubmitInfoKHR::default(),
@@ -46175,22 +49652,26 @@ impl CommandBufferSubmitInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct CommandBufferSubmitInfoKHRBuilder<'a> {
     inner: CommandBufferSubmitInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for CommandBufferSubmitInfoKHRBuilder<'a> {
     type Target = CommandBufferSubmitInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for CommandBufferSubmitInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> CommandBufferSubmitInfoKHRBuilder<'a> {
     pub fn command_buffer(mut self, command_buffer: CommandBuffer) -> Self {
         self.inner.command_buffer = command_buffer;
@@ -46237,6 +49718,7 @@ impl ::std::default::Default for SubmitInfo2KHR {
     }
 }
 impl SubmitInfo2KHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SubmitInfo2KHRBuilder<'a> {
         SubmitInfo2KHRBuilder {
             inner: SubmitInfo2KHR::default(),
@@ -46244,23 +49726,27 @@ impl SubmitInfo2KHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SubmitInfo2KHRBuilder<'a> {
     inner: SubmitInfo2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsSubmitInfo2KHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SubmitInfo2KHRBuilder<'a> {
     type Target = SubmitInfo2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SubmitInfo2KHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SubmitInfo2KHRBuilder<'a> {
     pub fn flags(mut self, flags: SubmitFlagsKHR) -> Self {
         self.inner.flags = flags;
@@ -46329,6 +49815,7 @@ impl ::std::default::Default for QueueFamilyCheckpointProperties2NV {
     }
 }
 impl QueueFamilyCheckpointProperties2NV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> QueueFamilyCheckpointProperties2NVBuilder<'a> {
         QueueFamilyCheckpointProperties2NVBuilder {
             inner: QueueFamilyCheckpointProperties2NV::default(),
@@ -46336,24 +49823,29 @@ impl QueueFamilyCheckpointProperties2NV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct QueueFamilyCheckpointProperties2NVBuilder<'a> {
     inner: QueueFamilyCheckpointProperties2NV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsQueueFamilyProperties2 for QueueFamilyCheckpointProperties2NVBuilder<'_> {}
 unsafe impl ExtendsQueueFamilyProperties2 for QueueFamilyCheckpointProperties2NV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for QueueFamilyCheckpointProperties2NVBuilder<'a> {
     type Target = QueueFamilyCheckpointProperties2NV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for QueueFamilyCheckpointProperties2NVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> QueueFamilyCheckpointProperties2NVBuilder<'a> {
     pub fn checkpoint_execution_stage_mask(
         mut self,
@@ -46389,6 +49881,7 @@ impl ::std::default::Default for CheckpointData2NV {
     }
 }
 impl CheckpointData2NV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> CheckpointData2NVBuilder<'a> {
         CheckpointData2NVBuilder {
             inner: CheckpointData2NV::default(),
@@ -46396,22 +49889,26 @@ impl CheckpointData2NV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct CheckpointData2NVBuilder<'a> {
     inner: CheckpointData2NV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for CheckpointData2NVBuilder<'a> {
     type Target = CheckpointData2NV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for CheckpointData2NVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> CheckpointData2NVBuilder<'a> {
     pub fn stage(mut self, stage: PipelineStageFlags2KHR) -> Self {
         self.inner.stage = stage;
@@ -46446,6 +49943,7 @@ impl ::std::default::Default for PhysicalDeviceSynchronization2FeaturesKHR {
     }
 }
 impl PhysicalDeviceSynchronization2FeaturesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceSynchronization2FeaturesKHRBuilder<'a> {
         PhysicalDeviceSynchronization2FeaturesKHRBuilder {
             inner: PhysicalDeviceSynchronization2FeaturesKHR::default(),
@@ -46453,29 +49951,35 @@ impl PhysicalDeviceSynchronization2FeaturesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceSynchronization2FeaturesKHRBuilder<'a> {
     inner: PhysicalDeviceSynchronization2FeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceSynchronization2FeaturesKHRBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSynchronization2FeaturesKHR {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSynchronization2FeaturesKHRBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSynchronization2FeaturesKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceSynchronization2FeaturesKHRBuilder<'a> {
     type Target = PhysicalDeviceSynchronization2FeaturesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceSynchronization2FeaturesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceSynchronization2FeaturesKHRBuilder<'a> {
     pub fn synchronization2(mut self, synchronization2: bool) -> Self {
         self.inner.synchronization2 = synchronization2.into();
@@ -46506,6 +50010,7 @@ impl ::std::default::Default for VideoQueueFamilyProperties2KHR {
     }
 }
 impl VideoQueueFamilyProperties2KHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoQueueFamilyProperties2KHRBuilder<'a> {
         VideoQueueFamilyProperties2KHRBuilder {
             inner: VideoQueueFamilyProperties2KHR::default(),
@@ -46513,24 +50018,29 @@ impl VideoQueueFamilyProperties2KHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoQueueFamilyProperties2KHRBuilder<'a> {
     inner: VideoQueueFamilyProperties2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsQueueFamilyProperties2 for VideoQueueFamilyProperties2KHRBuilder<'_> {}
 unsafe impl ExtendsQueueFamilyProperties2 for VideoQueueFamilyProperties2KHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoQueueFamilyProperties2KHRBuilder<'a> {
     type Target = VideoQueueFamilyProperties2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoQueueFamilyProperties2KHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoQueueFamilyProperties2KHRBuilder<'a> {
     pub fn video_codec_operations(
         mut self,
@@ -46566,6 +50076,7 @@ impl ::std::default::Default for VideoProfilesKHR {
     }
 }
 impl VideoProfilesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoProfilesKHRBuilder<'a> {
         VideoProfilesKHRBuilder {
             inner: VideoProfilesKHR::default(),
@@ -46573,30 +50084,38 @@ impl VideoProfilesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoProfilesKHRBuilder<'a> {
     inner: VideoProfilesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsFormatProperties2 for VideoProfilesKHRBuilder<'_> {}
 unsafe impl ExtendsFormatProperties2 for VideoProfilesKHR {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsImageCreateInfo for VideoProfilesKHRBuilder<'_> {}
 unsafe impl ExtendsImageCreateInfo for VideoProfilesKHR {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsImageViewCreateInfo for VideoProfilesKHRBuilder<'_> {}
 unsafe impl ExtendsImageViewCreateInfo for VideoProfilesKHR {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsBufferCreateInfo for VideoProfilesKHRBuilder<'_> {}
 unsafe impl ExtendsBufferCreateInfo for VideoProfilesKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoProfilesKHRBuilder<'a> {
     type Target = VideoProfilesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoProfilesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoProfilesKHRBuilder<'a> {
     pub fn profile_count(mut self, profile_count: u32) -> Self {
         self.inner.profile_count = profile_count;
@@ -46633,6 +50152,7 @@ impl ::std::default::Default for PhysicalDeviceVideoFormatInfoKHR {
     }
 }
 impl PhysicalDeviceVideoFormatInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceVideoFormatInfoKHRBuilder<'a> {
         PhysicalDeviceVideoFormatInfoKHRBuilder {
             inner: PhysicalDeviceVideoFormatInfoKHR::default(),
@@ -46640,22 +50160,26 @@ impl PhysicalDeviceVideoFormatInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceVideoFormatInfoKHRBuilder<'a> {
     inner: PhysicalDeviceVideoFormatInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceVideoFormatInfoKHRBuilder<'a> {
     type Target = PhysicalDeviceVideoFormatInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceVideoFormatInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceVideoFormatInfoKHRBuilder<'a> {
     pub fn image_usage(mut self, image_usage: ImageUsageFlags) -> Self {
         self.inner.image_usage = image_usage;
@@ -46690,6 +50214,7 @@ impl ::std::default::Default for VideoFormatPropertiesKHR {
     }
 }
 impl VideoFormatPropertiesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoFormatPropertiesKHRBuilder<'a> {
         VideoFormatPropertiesKHRBuilder {
             inner: VideoFormatPropertiesKHR::default(),
@@ -46697,22 +50222,26 @@ impl VideoFormatPropertiesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoFormatPropertiesKHRBuilder<'a> {
     inner: VideoFormatPropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoFormatPropertiesKHRBuilder<'a> {
     type Target = VideoFormatPropertiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoFormatPropertiesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoFormatPropertiesKHRBuilder<'a> {
     pub fn format(mut self, format: Format) -> Self {
         self.inner.format = format;
@@ -46749,6 +50278,7 @@ impl ::std::default::Default for VideoProfileKHR {
     }
 }
 impl VideoProfileKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoProfileKHRBuilder<'a> {
         VideoProfileKHRBuilder {
             inner: VideoProfileKHR::default(),
@@ -46756,33 +50286,42 @@ impl VideoProfileKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoProfileKHRBuilder<'a> {
     inner: VideoProfileKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsQueryPoolCreateInfo for VideoProfileKHRBuilder<'_> {}
 unsafe impl ExtendsQueryPoolCreateInfo for VideoProfileKHR {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsFormatProperties2 for VideoProfileKHRBuilder<'_> {}
 unsafe impl ExtendsFormatProperties2 for VideoProfileKHR {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsImageCreateInfo for VideoProfileKHRBuilder<'_> {}
 unsafe impl ExtendsImageCreateInfo for VideoProfileKHR {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsImageViewCreateInfo for VideoProfileKHRBuilder<'_> {}
 unsafe impl ExtendsImageViewCreateInfo for VideoProfileKHR {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsBufferCreateInfo for VideoProfileKHRBuilder<'_> {}
 unsafe impl ExtendsBufferCreateInfo for VideoProfileKHR {}
 pub unsafe trait ExtendsVideoProfileKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoProfileKHRBuilder<'a> {
     type Target = VideoProfileKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoProfileKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoProfileKHRBuilder<'a> {
     pub fn video_codec_operation(
         mut self,
@@ -46859,6 +50398,7 @@ impl ::std::default::Default for VideoCapabilitiesKHR {
     }
 }
 impl VideoCapabilitiesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoCapabilitiesKHRBuilder<'a> {
         VideoCapabilitiesKHRBuilder {
             inner: VideoCapabilitiesKHR::default(),
@@ -46866,23 +50406,27 @@ impl VideoCapabilitiesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoCapabilitiesKHRBuilder<'a> {
     inner: VideoCapabilitiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsVideoCapabilitiesKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoCapabilitiesKHRBuilder<'a> {
     type Target = VideoCapabilitiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoCapabilitiesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoCapabilitiesKHRBuilder<'a> {
     pub fn capability_flags(mut self, capability_flags: VideoCapabilityFlagsKHR) -> Self {
         self.inner.capability_flags = capability_flags;
@@ -46972,6 +50516,7 @@ impl ::std::default::Default for VideoGetMemoryPropertiesKHR {
     }
 }
 impl VideoGetMemoryPropertiesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoGetMemoryPropertiesKHRBuilder<'a> {
         VideoGetMemoryPropertiesKHRBuilder {
             inner: VideoGetMemoryPropertiesKHR::default(),
@@ -46979,22 +50524,26 @@ impl VideoGetMemoryPropertiesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoGetMemoryPropertiesKHRBuilder<'a> {
     inner: VideoGetMemoryPropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoGetMemoryPropertiesKHRBuilder<'a> {
     type Target = VideoGetMemoryPropertiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoGetMemoryPropertiesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoGetMemoryPropertiesKHRBuilder<'a> {
     pub fn memory_bind_index(mut self, memory_bind_index: u32) -> Self {
         self.inner.memory_bind_index = memory_bind_index;
@@ -47035,6 +50584,7 @@ impl ::std::default::Default for VideoBindMemoryKHR {
     }
 }
 impl VideoBindMemoryKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoBindMemoryKHRBuilder<'a> {
         VideoBindMemoryKHRBuilder {
             inner: VideoBindMemoryKHR::default(),
@@ -47042,22 +50592,26 @@ impl VideoBindMemoryKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoBindMemoryKHRBuilder<'a> {
     inner: VideoBindMemoryKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoBindMemoryKHRBuilder<'a> {
     type Target = VideoBindMemoryKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoBindMemoryKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoBindMemoryKHRBuilder<'a> {
     pub fn memory_bind_index(mut self, memory_bind_index: u32) -> Self {
         self.inner.memory_bind_index = memory_bind_index;
@@ -47106,6 +50660,7 @@ impl ::std::default::Default for VideoPictureResourceKHR {
     }
 }
 impl VideoPictureResourceKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoPictureResourceKHRBuilder<'a> {
         VideoPictureResourceKHRBuilder {
             inner: VideoPictureResourceKHR::default(),
@@ -47113,22 +50668,26 @@ impl VideoPictureResourceKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoPictureResourceKHRBuilder<'a> {
     inner: VideoPictureResourceKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoPictureResourceKHRBuilder<'a> {
     type Target = VideoPictureResourceKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoPictureResourceKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoPictureResourceKHRBuilder<'a> {
     pub fn coded_offset(mut self, coded_offset: Offset2D) -> Self {
         self.inner.coded_offset = coded_offset;
@@ -47173,6 +50732,7 @@ impl ::std::default::Default for VideoReferenceSlotKHR {
     }
 }
 impl VideoReferenceSlotKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoReferenceSlotKHRBuilder<'a> {
         VideoReferenceSlotKHRBuilder {
             inner: VideoReferenceSlotKHR::default(),
@@ -47180,23 +50740,27 @@ impl VideoReferenceSlotKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoReferenceSlotKHRBuilder<'a> {
     inner: VideoReferenceSlotKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsVideoReferenceSlotKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoReferenceSlotKHRBuilder<'a> {
     type Target = VideoReferenceSlotKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoReferenceSlotKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoReferenceSlotKHRBuilder<'a> {
     pub fn slot_index(mut self, slot_index: i8) -> Self {
         self.inner.slot_index = slot_index;
@@ -47263,6 +50827,7 @@ impl ::std::default::Default for VideoDecodeInfoKHR {
     }
 }
 impl VideoDecodeInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoDecodeInfoKHRBuilder<'a> {
         VideoDecodeInfoKHRBuilder {
             inner: VideoDecodeInfoKHR::default(),
@@ -47270,23 +50835,27 @@ impl VideoDecodeInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoDecodeInfoKHRBuilder<'a> {
     inner: VideoDecodeInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsVideoDecodeInfoKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoDecodeInfoKHRBuilder<'a> {
     type Target = VideoDecodeInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoDecodeInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoDecodeInfoKHRBuilder<'a> {
     pub fn flags(mut self, flags: VideoDecodeFlagsKHR) -> Self {
         self.inner.flags = flags;
@@ -47366,6 +50935,7 @@ impl ::std::default::Default for VideoDecodeH264ProfileEXT {
     }
 }
 impl VideoDecodeH264ProfileEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoDecodeH264ProfileEXTBuilder<'a> {
         VideoDecodeH264ProfileEXTBuilder {
             inner: VideoDecodeH264ProfileEXT::default(),
@@ -47373,24 +50943,29 @@ impl VideoDecodeH264ProfileEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoDecodeH264ProfileEXTBuilder<'a> {
     inner: VideoDecodeH264ProfileEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsVideoProfileKHR for VideoDecodeH264ProfileEXTBuilder<'_> {}
 unsafe impl ExtendsVideoProfileKHR for VideoDecodeH264ProfileEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoDecodeH264ProfileEXTBuilder<'a> {
     type Target = VideoDecodeH264ProfileEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoDecodeH264ProfileEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoDecodeH264ProfileEXTBuilder<'a> {
     pub fn std_profile_idc(mut self, std_profile_idc: StdVideoH264ProfileIdc) -> Self {
         self.inner.std_profile_idc = std_profile_idc;
@@ -47429,6 +51004,7 @@ impl ::std::default::Default for VideoDecodeH264CapabilitiesEXT {
     }
 }
 impl VideoDecodeH264CapabilitiesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoDecodeH264CapabilitiesEXTBuilder<'a> {
         VideoDecodeH264CapabilitiesEXTBuilder {
             inner: VideoDecodeH264CapabilitiesEXT::default(),
@@ -47436,24 +51012,29 @@ impl VideoDecodeH264CapabilitiesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoDecodeH264CapabilitiesEXTBuilder<'a> {
     inner: VideoDecodeH264CapabilitiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsVideoCapabilitiesKHR for VideoDecodeH264CapabilitiesEXTBuilder<'_> {}
 unsafe impl ExtendsVideoCapabilitiesKHR for VideoDecodeH264CapabilitiesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoDecodeH264CapabilitiesEXTBuilder<'a> {
     type Target = VideoDecodeH264CapabilitiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoDecodeH264CapabilitiesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoDecodeH264CapabilitiesEXTBuilder<'a> {
     pub fn max_level(mut self, max_level: u32) -> Self {
         self.inner.max_level = max_level;
@@ -47494,6 +51075,7 @@ impl ::std::default::Default for VideoDecodeH264SessionCreateInfoEXT {
     }
 }
 impl VideoDecodeH264SessionCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoDecodeH264SessionCreateInfoEXTBuilder<'a> {
         VideoDecodeH264SessionCreateInfoEXTBuilder {
             inner: VideoDecodeH264SessionCreateInfoEXT::default(),
@@ -47501,24 +51083,29 @@ impl VideoDecodeH264SessionCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoDecodeH264SessionCreateInfoEXTBuilder<'a> {
     inner: VideoDecodeH264SessionCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsVideoSessionCreateInfoKHR for VideoDecodeH264SessionCreateInfoEXTBuilder<'_> {}
 unsafe impl ExtendsVideoSessionCreateInfoKHR for VideoDecodeH264SessionCreateInfoEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoDecodeH264SessionCreateInfoEXTBuilder<'a> {
     type Target = VideoDecodeH264SessionCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoDecodeH264SessionCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoDecodeH264SessionCreateInfoEXTBuilder<'a> {
     pub fn flags(mut self, flags: VideoDecodeH264CreateFlagsEXT) -> Self {
         self.inner.flags = flags;
@@ -47559,6 +51146,7 @@ impl ::std::default::Default for VideoDecodeH264SessionParametersAddInfoEXT {
     }
 }
 impl VideoDecodeH264SessionParametersAddInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoDecodeH264SessionParametersAddInfoEXTBuilder<'a> {
         VideoDecodeH264SessionParametersAddInfoEXTBuilder {
             inner: VideoDecodeH264SessionParametersAddInfoEXT::default(),
@@ -47566,11 +51154,13 @@ impl VideoDecodeH264SessionParametersAddInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoDecodeH264SessionParametersAddInfoEXTBuilder<'a> {
     inner: VideoDecodeH264SessionParametersAddInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsVideoSessionParametersUpdateInfoKHR
     for VideoDecodeH264SessionParametersAddInfoEXTBuilder<'_>
 {
@@ -47579,17 +51169,20 @@ unsafe impl ExtendsVideoSessionParametersUpdateInfoKHR
     for VideoDecodeH264SessionParametersAddInfoEXT
 {
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoDecodeH264SessionParametersAddInfoEXTBuilder<'a> {
     type Target = VideoDecodeH264SessionParametersAddInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoDecodeH264SessionParametersAddInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoDecodeH264SessionParametersAddInfoEXTBuilder<'a> {
     pub fn sps_std(mut self, sps_std: &'a [StdVideoH264SequenceParameterSet]) -> Self {
         self.inner.sps_std_count = sps_std.len() as _;
@@ -47630,6 +51223,7 @@ impl ::std::default::Default for VideoDecodeH264SessionParametersCreateInfoEXT {
     }
 }
 impl VideoDecodeH264SessionParametersCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoDecodeH264SessionParametersCreateInfoEXTBuilder<'a> {
         VideoDecodeH264SessionParametersCreateInfoEXTBuilder {
             inner: VideoDecodeH264SessionParametersCreateInfoEXT::default(),
@@ -47637,11 +51231,13 @@ impl VideoDecodeH264SessionParametersCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoDecodeH264SessionParametersCreateInfoEXTBuilder<'a> {
     inner: VideoDecodeH264SessionParametersCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsVideoSessionParametersCreateInfoKHR
     for VideoDecodeH264SessionParametersCreateInfoEXTBuilder<'_>
 {
@@ -47650,17 +51246,20 @@ unsafe impl ExtendsVideoSessionParametersCreateInfoKHR
     for VideoDecodeH264SessionParametersCreateInfoEXT
 {
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoDecodeH264SessionParametersCreateInfoEXTBuilder<'a> {
     type Target = VideoDecodeH264SessionParametersCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoDecodeH264SessionParametersCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoDecodeH264SessionParametersCreateInfoEXTBuilder<'a> {
     pub fn max_sps_std_count(mut self, max_sps_std_count: u32) -> Self {
         self.inner.max_sps_std_count = max_sps_std_count;
@@ -47706,6 +51305,7 @@ impl ::std::default::Default for VideoDecodeH264PictureInfoEXT {
     }
 }
 impl VideoDecodeH264PictureInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoDecodeH264PictureInfoEXTBuilder<'a> {
         VideoDecodeH264PictureInfoEXTBuilder {
             inner: VideoDecodeH264PictureInfoEXT::default(),
@@ -47713,25 +51313,30 @@ impl VideoDecodeH264PictureInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoDecodeH264PictureInfoEXTBuilder<'a> {
     inner: VideoDecodeH264PictureInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsVideoDecodeInfoKHR for VideoDecodeH264PictureInfoEXTBuilder<'_> {}
 unsafe impl ExtendsVideoDecodeInfoKHR for VideoDecodeH264PictureInfoEXT {}
 pub unsafe trait ExtendsVideoDecodeH264PictureInfoEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoDecodeH264PictureInfoEXTBuilder<'a> {
     type Target = VideoDecodeH264PictureInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoDecodeH264PictureInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoDecodeH264PictureInfoEXTBuilder<'a> {
     pub fn std_picture_info(mut self, std_picture_info: &'a StdVideoDecodeH264PictureInfo) -> Self {
         self.inner.p_std_picture_info = std_picture_info;
@@ -47781,6 +51386,7 @@ impl ::std::default::Default for VideoDecodeH264DpbSlotInfoEXT {
     }
 }
 impl VideoDecodeH264DpbSlotInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoDecodeH264DpbSlotInfoEXTBuilder<'a> {
         VideoDecodeH264DpbSlotInfoEXTBuilder {
             inner: VideoDecodeH264DpbSlotInfoEXT::default(),
@@ -47788,24 +51394,29 @@ impl VideoDecodeH264DpbSlotInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoDecodeH264DpbSlotInfoEXTBuilder<'a> {
     inner: VideoDecodeH264DpbSlotInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsVideoReferenceSlotKHR for VideoDecodeH264DpbSlotInfoEXTBuilder<'_> {}
 unsafe impl ExtendsVideoReferenceSlotKHR for VideoDecodeH264DpbSlotInfoEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoDecodeH264DpbSlotInfoEXTBuilder<'a> {
     type Target = VideoDecodeH264DpbSlotInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoDecodeH264DpbSlotInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoDecodeH264DpbSlotInfoEXTBuilder<'a> {
     pub fn std_reference_info(
         mut self,
@@ -47839,6 +51450,7 @@ impl ::std::default::Default for VideoDecodeH264MvcEXT {
     }
 }
 impl VideoDecodeH264MvcEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoDecodeH264MvcEXTBuilder<'a> {
         VideoDecodeH264MvcEXTBuilder {
             inner: VideoDecodeH264MvcEXT::default(),
@@ -47846,24 +51458,29 @@ impl VideoDecodeH264MvcEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoDecodeH264MvcEXTBuilder<'a> {
     inner: VideoDecodeH264MvcEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsVideoDecodeH264PictureInfoEXT for VideoDecodeH264MvcEXTBuilder<'_> {}
 unsafe impl ExtendsVideoDecodeH264PictureInfoEXT for VideoDecodeH264MvcEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoDecodeH264MvcEXTBuilder<'a> {
     type Target = VideoDecodeH264MvcEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoDecodeH264MvcEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoDecodeH264MvcEXTBuilder<'a> {
     pub fn std_mvc(mut self, std_mvc: &'a StdVideoDecodeH264Mvc) -> Self {
         self.inner.p_std_mvc = std_mvc;
@@ -47894,6 +51511,7 @@ impl ::std::default::Default for VideoDecodeH265ProfileEXT {
     }
 }
 impl VideoDecodeH265ProfileEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoDecodeH265ProfileEXTBuilder<'a> {
         VideoDecodeH265ProfileEXTBuilder {
             inner: VideoDecodeH265ProfileEXT::default(),
@@ -47901,24 +51519,29 @@ impl VideoDecodeH265ProfileEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoDecodeH265ProfileEXTBuilder<'a> {
     inner: VideoDecodeH265ProfileEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsVideoProfileKHR for VideoDecodeH265ProfileEXTBuilder<'_> {}
 unsafe impl ExtendsVideoProfileKHR for VideoDecodeH265ProfileEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoDecodeH265ProfileEXTBuilder<'a> {
     type Target = VideoDecodeH265ProfileEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoDecodeH265ProfileEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoDecodeH265ProfileEXTBuilder<'a> {
     pub fn std_profile_idc(mut self, std_profile_idc: StdVideoH265ProfileIdc) -> Self {
         self.inner.std_profile_idc = std_profile_idc;
@@ -47951,6 +51574,7 @@ impl ::std::default::Default for VideoDecodeH265CapabilitiesEXT {
     }
 }
 impl VideoDecodeH265CapabilitiesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoDecodeH265CapabilitiesEXTBuilder<'a> {
         VideoDecodeH265CapabilitiesEXTBuilder {
             inner: VideoDecodeH265CapabilitiesEXT::default(),
@@ -47958,24 +51582,29 @@ impl VideoDecodeH265CapabilitiesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoDecodeH265CapabilitiesEXTBuilder<'a> {
     inner: VideoDecodeH265CapabilitiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsVideoCapabilitiesKHR for VideoDecodeH265CapabilitiesEXTBuilder<'_> {}
 unsafe impl ExtendsVideoCapabilitiesKHR for VideoDecodeH265CapabilitiesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoDecodeH265CapabilitiesEXTBuilder<'a> {
     type Target = VideoDecodeH265CapabilitiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoDecodeH265CapabilitiesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoDecodeH265CapabilitiesEXTBuilder<'a> {
     pub fn max_level(mut self, max_level: u32) -> Self {
         self.inner.max_level = max_level;
@@ -48012,6 +51641,7 @@ impl ::std::default::Default for VideoDecodeH265SessionCreateInfoEXT {
     }
 }
 impl VideoDecodeH265SessionCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoDecodeH265SessionCreateInfoEXTBuilder<'a> {
         VideoDecodeH265SessionCreateInfoEXTBuilder {
             inner: VideoDecodeH265SessionCreateInfoEXT::default(),
@@ -48019,24 +51649,29 @@ impl VideoDecodeH265SessionCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoDecodeH265SessionCreateInfoEXTBuilder<'a> {
     inner: VideoDecodeH265SessionCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsVideoSessionCreateInfoKHR for VideoDecodeH265SessionCreateInfoEXTBuilder<'_> {}
 unsafe impl ExtendsVideoSessionCreateInfoKHR for VideoDecodeH265SessionCreateInfoEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoDecodeH265SessionCreateInfoEXTBuilder<'a> {
     type Target = VideoDecodeH265SessionCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoDecodeH265SessionCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoDecodeH265SessionCreateInfoEXTBuilder<'a> {
     pub fn flags(mut self, flags: VideoDecodeH265CreateFlagsEXT) -> Self {
         self.inner.flags = flags;
@@ -48077,6 +51712,7 @@ impl ::std::default::Default for VideoDecodeH265SessionParametersAddInfoEXT {
     }
 }
 impl VideoDecodeH265SessionParametersAddInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoDecodeH265SessionParametersAddInfoEXTBuilder<'a> {
         VideoDecodeH265SessionParametersAddInfoEXTBuilder {
             inner: VideoDecodeH265SessionParametersAddInfoEXT::default(),
@@ -48084,11 +51720,13 @@ impl VideoDecodeH265SessionParametersAddInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoDecodeH265SessionParametersAddInfoEXTBuilder<'a> {
     inner: VideoDecodeH265SessionParametersAddInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsVideoSessionParametersUpdateInfoKHR
     for VideoDecodeH265SessionParametersAddInfoEXTBuilder<'_>
 {
@@ -48097,17 +51735,20 @@ unsafe impl ExtendsVideoSessionParametersUpdateInfoKHR
     for VideoDecodeH265SessionParametersAddInfoEXT
 {
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoDecodeH265SessionParametersAddInfoEXTBuilder<'a> {
     type Target = VideoDecodeH265SessionParametersAddInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoDecodeH265SessionParametersAddInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoDecodeH265SessionParametersAddInfoEXTBuilder<'a> {
     pub fn sps_std(mut self, sps_std: &'a [StdVideoH265SequenceParameterSet]) -> Self {
         self.inner.sps_std_count = sps_std.len() as _;
@@ -48148,6 +51789,7 @@ impl ::std::default::Default for VideoDecodeH265SessionParametersCreateInfoEXT {
     }
 }
 impl VideoDecodeH265SessionParametersCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoDecodeH265SessionParametersCreateInfoEXTBuilder<'a> {
         VideoDecodeH265SessionParametersCreateInfoEXTBuilder {
             inner: VideoDecodeH265SessionParametersCreateInfoEXT::default(),
@@ -48155,11 +51797,13 @@ impl VideoDecodeH265SessionParametersCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoDecodeH265SessionParametersCreateInfoEXTBuilder<'a> {
     inner: VideoDecodeH265SessionParametersCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsVideoSessionParametersCreateInfoKHR
     for VideoDecodeH265SessionParametersCreateInfoEXTBuilder<'_>
 {
@@ -48168,17 +51812,20 @@ unsafe impl ExtendsVideoSessionParametersCreateInfoKHR
     for VideoDecodeH265SessionParametersCreateInfoEXT
 {
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoDecodeH265SessionParametersCreateInfoEXTBuilder<'a> {
     type Target = VideoDecodeH265SessionParametersCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoDecodeH265SessionParametersCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoDecodeH265SessionParametersCreateInfoEXTBuilder<'a> {
     pub fn max_sps_std_count(mut self, max_sps_std_count: u32) -> Self {
         self.inner.max_sps_std_count = max_sps_std_count;
@@ -48224,6 +51871,7 @@ impl ::std::default::Default for VideoDecodeH265PictureInfoEXT {
     }
 }
 impl VideoDecodeH265PictureInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoDecodeH265PictureInfoEXTBuilder<'a> {
         VideoDecodeH265PictureInfoEXTBuilder {
             inner: VideoDecodeH265PictureInfoEXT::default(),
@@ -48231,24 +51879,29 @@ impl VideoDecodeH265PictureInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoDecodeH265PictureInfoEXTBuilder<'a> {
     inner: VideoDecodeH265PictureInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsVideoDecodeInfoKHR for VideoDecodeH265PictureInfoEXTBuilder<'_> {}
 unsafe impl ExtendsVideoDecodeInfoKHR for VideoDecodeH265PictureInfoEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoDecodeH265PictureInfoEXTBuilder<'a> {
     type Target = VideoDecodeH265PictureInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoDecodeH265PictureInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoDecodeH265PictureInfoEXTBuilder<'a> {
     pub fn std_picture_info(
         mut self,
@@ -48287,6 +51940,7 @@ impl ::std::default::Default for VideoDecodeH265DpbSlotInfoEXT {
     }
 }
 impl VideoDecodeH265DpbSlotInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoDecodeH265DpbSlotInfoEXTBuilder<'a> {
         VideoDecodeH265DpbSlotInfoEXTBuilder {
             inner: VideoDecodeH265DpbSlotInfoEXT::default(),
@@ -48294,24 +51948,29 @@ impl VideoDecodeH265DpbSlotInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoDecodeH265DpbSlotInfoEXTBuilder<'a> {
     inner: VideoDecodeH265DpbSlotInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsVideoReferenceSlotKHR for VideoDecodeH265DpbSlotInfoEXTBuilder<'_> {}
 unsafe impl ExtendsVideoReferenceSlotKHR for VideoDecodeH265DpbSlotInfoEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoDecodeH265DpbSlotInfoEXTBuilder<'a> {
     type Target = VideoDecodeH265DpbSlotInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoDecodeH265DpbSlotInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoDecodeH265DpbSlotInfoEXTBuilder<'a> {
     pub fn std_reference_info(
         mut self,
@@ -48359,6 +52018,7 @@ impl ::std::default::Default for VideoSessionCreateInfoKHR {
     }
 }
 impl VideoSessionCreateInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoSessionCreateInfoKHRBuilder<'a> {
         VideoSessionCreateInfoKHRBuilder {
             inner: VideoSessionCreateInfoKHR::default(),
@@ -48366,23 +52026,27 @@ impl VideoSessionCreateInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoSessionCreateInfoKHRBuilder<'a> {
     inner: VideoSessionCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsVideoSessionCreateInfoKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoSessionCreateInfoKHRBuilder<'a> {
     type Target = VideoSessionCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoSessionCreateInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoSessionCreateInfoKHRBuilder<'a> {
     pub fn queue_family_index(mut self, queue_family_index: u32) -> Self {
         self.inner.queue_family_index = queue_family_index;
@@ -48463,6 +52127,7 @@ impl ::std::default::Default for VideoSessionParametersCreateInfoKHR {
     }
 }
 impl VideoSessionParametersCreateInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoSessionParametersCreateInfoKHRBuilder<'a> {
         VideoSessionParametersCreateInfoKHRBuilder {
             inner: VideoSessionParametersCreateInfoKHR::default(),
@@ -48470,23 +52135,27 @@ impl VideoSessionParametersCreateInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoSessionParametersCreateInfoKHRBuilder<'a> {
     inner: VideoSessionParametersCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsVideoSessionParametersCreateInfoKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoSessionParametersCreateInfoKHRBuilder<'a> {
     type Target = VideoSessionParametersCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoSessionParametersCreateInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoSessionParametersCreateInfoKHRBuilder<'a> {
     pub fn video_session_parameters_template(
         mut self,
@@ -48541,6 +52210,7 @@ impl ::std::default::Default for VideoSessionParametersUpdateInfoKHR {
     }
 }
 impl VideoSessionParametersUpdateInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoSessionParametersUpdateInfoKHRBuilder<'a> {
         VideoSessionParametersUpdateInfoKHRBuilder {
             inner: VideoSessionParametersUpdateInfoKHR::default(),
@@ -48548,23 +52218,27 @@ impl VideoSessionParametersUpdateInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoSessionParametersUpdateInfoKHRBuilder<'a> {
     inner: VideoSessionParametersUpdateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsVideoSessionParametersUpdateInfoKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoSessionParametersUpdateInfoKHRBuilder<'a> {
     type Target = VideoSessionParametersUpdateInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoSessionParametersUpdateInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoSessionParametersUpdateInfoKHRBuilder<'a> {
     pub fn update_sequence_count(mut self, update_sequence_count: u32) -> Self {
         self.inner.update_sequence_count = update_sequence_count;
@@ -48622,6 +52296,7 @@ impl ::std::default::Default for VideoBeginCodingInfoKHR {
     }
 }
 impl VideoBeginCodingInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoBeginCodingInfoKHRBuilder<'a> {
         VideoBeginCodingInfoKHRBuilder {
             inner: VideoBeginCodingInfoKHR::default(),
@@ -48629,22 +52304,26 @@ impl VideoBeginCodingInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoBeginCodingInfoKHRBuilder<'a> {
     inner: VideoBeginCodingInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoBeginCodingInfoKHRBuilder<'a> {
     type Target = VideoBeginCodingInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoBeginCodingInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoBeginCodingInfoKHRBuilder<'a> {
     pub fn flags(mut self, flags: VideoBeginCodingFlagsKHR) -> Self {
         self.inner.flags = flags;
@@ -48698,6 +52377,7 @@ impl ::std::default::Default for VideoEndCodingInfoKHR {
     }
 }
 impl VideoEndCodingInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoEndCodingInfoKHRBuilder<'a> {
         VideoEndCodingInfoKHRBuilder {
             inner: VideoEndCodingInfoKHR::default(),
@@ -48705,22 +52385,26 @@ impl VideoEndCodingInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoEndCodingInfoKHRBuilder<'a> {
     inner: VideoEndCodingInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoEndCodingInfoKHRBuilder<'a> {
     type Target = VideoEndCodingInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoEndCodingInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoEndCodingInfoKHRBuilder<'a> {
     pub fn flags(mut self, flags: VideoEndCodingFlagsKHR) -> Self {
         self.inner.flags = flags;
@@ -48751,6 +52435,7 @@ impl ::std::default::Default for VideoCodingControlInfoKHR {
     }
 }
 impl VideoCodingControlInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoCodingControlInfoKHRBuilder<'a> {
         VideoCodingControlInfoKHRBuilder {
             inner: VideoCodingControlInfoKHR::default(),
@@ -48758,23 +52443,27 @@ impl VideoCodingControlInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoCodingControlInfoKHRBuilder<'a> {
     inner: VideoCodingControlInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsVideoCodingControlInfoKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoCodingControlInfoKHRBuilder<'a> {
     type Target = VideoCodingControlInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoCodingControlInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoCodingControlInfoKHRBuilder<'a> {
     pub fn flags(mut self, flags: VideoCodingControlFlagsKHR) -> Self {
         self.inner.flags = flags;
@@ -48837,6 +52526,7 @@ impl ::std::default::Default for VideoEncodeInfoKHR {
     }
 }
 impl VideoEncodeInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoEncodeInfoKHRBuilder<'a> {
         VideoEncodeInfoKHRBuilder {
             inner: VideoEncodeInfoKHR::default(),
@@ -48844,23 +52534,27 @@ impl VideoEncodeInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoEncodeInfoKHRBuilder<'a> {
     inner: VideoEncodeInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsVideoEncodeInfoKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoEncodeInfoKHRBuilder<'a> {
     type Target = VideoEncodeInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoEncodeInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoEncodeInfoKHRBuilder<'a> {
     pub fn flags(mut self, flags: VideoEncodeFlagsKHR) -> Self {
         self.inner.flags = flags;
@@ -48953,6 +52647,7 @@ impl ::std::default::Default for VideoEncodeRateControlInfoKHR {
     }
 }
 impl VideoEncodeRateControlInfoKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoEncodeRateControlInfoKHRBuilder<'a> {
         VideoEncodeRateControlInfoKHRBuilder {
             inner: VideoEncodeRateControlInfoKHR::default(),
@@ -48960,24 +52655,29 @@ impl VideoEncodeRateControlInfoKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoEncodeRateControlInfoKHRBuilder<'a> {
     inner: VideoEncodeRateControlInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsVideoCodingControlInfoKHR for VideoEncodeRateControlInfoKHRBuilder<'_> {}
 unsafe impl ExtendsVideoCodingControlInfoKHR for VideoEncodeRateControlInfoKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoEncodeRateControlInfoKHRBuilder<'a> {
     type Target = VideoEncodeRateControlInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoEncodeRateControlInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoEncodeRateControlInfoKHRBuilder<'a> {
     pub fn flags(mut self, flags: VideoEncodeRateControlFlagsKHR) -> Self {
         self.inner.flags = flags;
@@ -49055,6 +52755,7 @@ impl ::std::default::Default for VideoEncodeH264CapabilitiesEXT {
     }
 }
 impl VideoEncodeH264CapabilitiesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoEncodeH264CapabilitiesEXTBuilder<'a> {
         VideoEncodeH264CapabilitiesEXTBuilder {
             inner: VideoEncodeH264CapabilitiesEXT::default(),
@@ -49062,24 +52763,29 @@ impl VideoEncodeH264CapabilitiesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoEncodeH264CapabilitiesEXTBuilder<'a> {
     inner: VideoEncodeH264CapabilitiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsVideoCapabilitiesKHR for VideoEncodeH264CapabilitiesEXTBuilder<'_> {}
 unsafe impl ExtendsVideoCapabilitiesKHR for VideoEncodeH264CapabilitiesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoEncodeH264CapabilitiesEXTBuilder<'a> {
     type Target = VideoEncodeH264CapabilitiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoEncodeH264CapabilitiesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoEncodeH264CapabilitiesEXTBuilder<'a> {
     pub fn flags(mut self, flags: VideoEncodeH264CapabilityFlagsEXT) -> Self {
         self.inner.flags = flags;
@@ -49157,6 +52863,7 @@ impl ::std::default::Default for VideoEncodeH264SessionCreateInfoEXT {
     }
 }
 impl VideoEncodeH264SessionCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoEncodeH264SessionCreateInfoEXTBuilder<'a> {
         VideoEncodeH264SessionCreateInfoEXTBuilder {
             inner: VideoEncodeH264SessionCreateInfoEXT::default(),
@@ -49164,24 +52871,29 @@ impl VideoEncodeH264SessionCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoEncodeH264SessionCreateInfoEXTBuilder<'a> {
     inner: VideoEncodeH264SessionCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsVideoSessionCreateInfoKHR for VideoEncodeH264SessionCreateInfoEXTBuilder<'_> {}
 unsafe impl ExtendsVideoSessionCreateInfoKHR for VideoEncodeH264SessionCreateInfoEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoEncodeH264SessionCreateInfoEXTBuilder<'a> {
     type Target = VideoEncodeH264SessionCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoEncodeH264SessionCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoEncodeH264SessionCreateInfoEXTBuilder<'a> {
     pub fn flags(mut self, flags: VideoEncodeH264CreateFlagsEXT) -> Self {
         self.inner.flags = flags;
@@ -49226,6 +52938,7 @@ impl ::std::default::Default for VideoEncodeH264SessionParametersAddInfoEXT {
     }
 }
 impl VideoEncodeH264SessionParametersAddInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoEncodeH264SessionParametersAddInfoEXTBuilder<'a> {
         VideoEncodeH264SessionParametersAddInfoEXTBuilder {
             inner: VideoEncodeH264SessionParametersAddInfoEXT::default(),
@@ -49233,11 +52946,13 @@ impl VideoEncodeH264SessionParametersAddInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoEncodeH264SessionParametersAddInfoEXTBuilder<'a> {
     inner: VideoEncodeH264SessionParametersAddInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsVideoSessionParametersUpdateInfoKHR
     for VideoEncodeH264SessionParametersAddInfoEXTBuilder<'_>
 {
@@ -49246,17 +52961,20 @@ unsafe impl ExtendsVideoSessionParametersUpdateInfoKHR
     for VideoEncodeH264SessionParametersAddInfoEXT
 {
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoEncodeH264SessionParametersAddInfoEXTBuilder<'a> {
     type Target = VideoEncodeH264SessionParametersAddInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoEncodeH264SessionParametersAddInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoEncodeH264SessionParametersAddInfoEXTBuilder<'a> {
     pub fn sps_std(mut self, sps_std: &'a [StdVideoH264SequenceParameterSet]) -> Self {
         self.inner.sps_std_count = sps_std.len() as _;
@@ -49297,6 +53015,7 @@ impl ::std::default::Default for VideoEncodeH264SessionParametersCreateInfoEXT {
     }
 }
 impl VideoEncodeH264SessionParametersCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoEncodeH264SessionParametersCreateInfoEXTBuilder<'a> {
         VideoEncodeH264SessionParametersCreateInfoEXTBuilder {
             inner: VideoEncodeH264SessionParametersCreateInfoEXT::default(),
@@ -49304,11 +53023,13 @@ impl VideoEncodeH264SessionParametersCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoEncodeH264SessionParametersCreateInfoEXTBuilder<'a> {
     inner: VideoEncodeH264SessionParametersCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsVideoSessionParametersCreateInfoKHR
     for VideoEncodeH264SessionParametersCreateInfoEXTBuilder<'_>
 {
@@ -49317,17 +53038,20 @@ unsafe impl ExtendsVideoSessionParametersCreateInfoKHR
     for VideoEncodeH264SessionParametersCreateInfoEXT
 {
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoEncodeH264SessionParametersCreateInfoEXTBuilder<'a> {
     type Target = VideoEncodeH264SessionParametersCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoEncodeH264SessionParametersCreateInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoEncodeH264SessionParametersCreateInfoEXTBuilder<'a> {
     pub fn max_sps_std_count(mut self, max_sps_std_count: u32) -> Self {
         self.inner.max_sps_std_count = max_sps_std_count;
@@ -49371,6 +53095,7 @@ impl ::std::default::Default for VideoEncodeH264DpbSlotInfoEXT {
     }
 }
 impl VideoEncodeH264DpbSlotInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoEncodeH264DpbSlotInfoEXTBuilder<'a> {
         VideoEncodeH264DpbSlotInfoEXTBuilder {
             inner: VideoEncodeH264DpbSlotInfoEXT::default(),
@@ -49378,22 +53103,26 @@ impl VideoEncodeH264DpbSlotInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoEncodeH264DpbSlotInfoEXTBuilder<'a> {
     inner: VideoEncodeH264DpbSlotInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoEncodeH264DpbSlotInfoEXTBuilder<'a> {
     type Target = VideoEncodeH264DpbSlotInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoEncodeH264DpbSlotInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoEncodeH264DpbSlotInfoEXTBuilder<'a> {
     pub fn slot_index(mut self, slot_index: i8) -> Self {
         self.inner.slot_index = slot_index;
@@ -49440,6 +53169,7 @@ impl ::std::default::Default for VideoEncodeH264VclFrameInfoEXT {
     }
 }
 impl VideoEncodeH264VclFrameInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoEncodeH264VclFrameInfoEXTBuilder<'a> {
         VideoEncodeH264VclFrameInfoEXTBuilder {
             inner: VideoEncodeH264VclFrameInfoEXT::default(),
@@ -49447,24 +53177,29 @@ impl VideoEncodeH264VclFrameInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoEncodeH264VclFrameInfoEXTBuilder<'a> {
     inner: VideoEncodeH264VclFrameInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsVideoEncodeInfoKHR for VideoEncodeH264VclFrameInfoEXTBuilder<'_> {}
 unsafe impl ExtendsVideoEncodeInfoKHR for VideoEncodeH264VclFrameInfoEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoEncodeH264VclFrameInfoEXTBuilder<'a> {
     type Target = VideoEncodeH264VclFrameInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoEncodeH264VclFrameInfoEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoEncodeH264VclFrameInfoEXTBuilder<'a> {
     pub fn ref_default_final_list0_entries(
         mut self,
@@ -49528,6 +53263,7 @@ impl ::std::default::Default for VideoEncodeH264EmitPictureParametersEXT {
     }
 }
 impl VideoEncodeH264EmitPictureParametersEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoEncodeH264EmitPictureParametersEXTBuilder<'a> {
         VideoEncodeH264EmitPictureParametersEXTBuilder {
             inner: VideoEncodeH264EmitPictureParametersEXT::default(),
@@ -49535,24 +53271,29 @@ impl VideoEncodeH264EmitPictureParametersEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoEncodeH264EmitPictureParametersEXTBuilder<'a> {
     inner: VideoEncodeH264EmitPictureParametersEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsVideoEncodeInfoKHR for VideoEncodeH264EmitPictureParametersEXTBuilder<'_> {}
 unsafe impl ExtendsVideoEncodeInfoKHR for VideoEncodeH264EmitPictureParametersEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoEncodeH264EmitPictureParametersEXTBuilder<'a> {
     type Target = VideoEncodeH264EmitPictureParametersEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoEncodeH264EmitPictureParametersEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoEncodeH264EmitPictureParametersEXTBuilder<'a> {
     pub fn sps_id(mut self, sps_id: u8) -> Self {
         self.inner.sps_id = sps_id;
@@ -49592,6 +53333,7 @@ impl ::std::default::Default for VideoEncodeH264ProfileEXT {
     }
 }
 impl VideoEncodeH264ProfileEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoEncodeH264ProfileEXTBuilder<'a> {
         VideoEncodeH264ProfileEXTBuilder {
             inner: VideoEncodeH264ProfileEXT::default(),
@@ -49599,24 +53341,29 @@ impl VideoEncodeH264ProfileEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoEncodeH264ProfileEXTBuilder<'a> {
     inner: VideoEncodeH264ProfileEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsVideoProfileKHR for VideoEncodeH264ProfileEXTBuilder<'_> {}
 unsafe impl ExtendsVideoProfileKHR for VideoEncodeH264ProfileEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoEncodeH264ProfileEXTBuilder<'a> {
     type Target = VideoEncodeH264ProfileEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoEncodeH264ProfileEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoEncodeH264ProfileEXTBuilder<'a> {
     pub fn std_profile_idc(mut self, std_profile_idc: StdVideoH264ProfileIdc) -> Self {
         self.inner.std_profile_idc = std_profile_idc;
@@ -49663,6 +53410,7 @@ impl ::std::default::Default for VideoEncodeH264NaluSliceEXT {
     }
 }
 impl VideoEncodeH264NaluSliceEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> VideoEncodeH264NaluSliceEXTBuilder<'a> {
         VideoEncodeH264NaluSliceEXTBuilder {
             inner: VideoEncodeH264NaluSliceEXT::default(),
@@ -49670,22 +53418,26 @@ impl VideoEncodeH264NaluSliceEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct VideoEncodeH264NaluSliceEXTBuilder<'a> {
     inner: VideoEncodeH264NaluSliceEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for VideoEncodeH264NaluSliceEXTBuilder<'a> {
     type Target = VideoEncodeH264NaluSliceEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for VideoEncodeH264NaluSliceEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> VideoEncodeH264NaluSliceEXTBuilder<'a> {
     pub fn slice_header_std(mut self, slice_header_std: &'a StdVideoEncodeH264SliceHeader) -> Self {
         self.inner.p_slice_header_std = slice_header_std;
@@ -49748,6 +53500,7 @@ impl ::std::default::Default for PhysicalDeviceInheritedViewportScissorFeaturesN
     }
 }
 impl PhysicalDeviceInheritedViewportScissorFeaturesNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceInheritedViewportScissorFeaturesNVBuilder<'a> {
         PhysicalDeviceInheritedViewportScissorFeaturesNVBuilder {
             inner: PhysicalDeviceInheritedViewportScissorFeaturesNV::default(),
@@ -49755,32 +53508,38 @@ impl PhysicalDeviceInheritedViewportScissorFeaturesNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceInheritedViewportScissorFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceInheritedViewportScissorFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceInheritedViewportScissorFeaturesNVBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceInheritedViewportScissorFeaturesNV {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceInheritedViewportScissorFeaturesNVBuilder<'_>
 {
 }
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceInheritedViewportScissorFeaturesNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceInheritedViewportScissorFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceInheritedViewportScissorFeaturesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceInheritedViewportScissorFeaturesNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceInheritedViewportScissorFeaturesNVBuilder<'a> {
     pub fn inherited_viewport_scissor2_d(mut self, inherited_viewport_scissor2_d: bool) -> Self {
         self.inner.inherited_viewport_scissor2_d = inherited_viewport_scissor2_d.into();
@@ -49815,6 +53574,7 @@ impl ::std::default::Default for CommandBufferInheritanceViewportScissorInfoNV {
     }
 }
 impl CommandBufferInheritanceViewportScissorInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> CommandBufferInheritanceViewportScissorInfoNVBuilder<'a> {
         CommandBufferInheritanceViewportScissorInfoNVBuilder {
             inner: CommandBufferInheritanceViewportScissorInfoNV::default(),
@@ -49822,27 +53582,32 @@ impl CommandBufferInheritanceViewportScissorInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct CommandBufferInheritanceViewportScissorInfoNVBuilder<'a> {
     inner: CommandBufferInheritanceViewportScissorInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsCommandBufferInheritanceInfo
     for CommandBufferInheritanceViewportScissorInfoNVBuilder<'_>
 {
 }
 unsafe impl ExtendsCommandBufferInheritanceInfo for CommandBufferInheritanceViewportScissorInfoNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for CommandBufferInheritanceViewportScissorInfoNVBuilder<'a> {
     type Target = CommandBufferInheritanceViewportScissorInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for CommandBufferInheritanceViewportScissorInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> CommandBufferInheritanceViewportScissorInfoNVBuilder<'a> {
     pub fn viewport_scissor2_d(mut self, viewport_scissor2_d: bool) -> Self {
         self.inner.viewport_scissor2_d = viewport_scissor2_d.into();
@@ -49881,6 +53646,7 @@ impl ::std::default::Default for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT 
     }
 }
 impl PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXTBuilder<'a> {
         PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXTBuilder {
             inner: PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT::default(),
@@ -49888,29 +53654,35 @@ impl PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXTBuilder<'a> {
     pub fn ycbcr2plane444_formats(mut self, ycbcr2plane444_formats: bool) -> Self {
         self.inner.ycbcr2plane444_formats = ycbcr2plane444_formats.into();
@@ -49943,6 +53715,7 @@ impl ::std::default::Default for PhysicalDeviceProvokingVertexFeaturesEXT {
     }
 }
 impl PhysicalDeviceProvokingVertexFeaturesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceProvokingVertexFeaturesEXTBuilder<'a> {
         PhysicalDeviceProvokingVertexFeaturesEXTBuilder {
             inner: PhysicalDeviceProvokingVertexFeaturesEXT::default(),
@@ -49950,26 +53723,32 @@ impl PhysicalDeviceProvokingVertexFeaturesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceProvokingVertexFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceProvokingVertexFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceProvokingVertexFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceProvokingVertexFeaturesEXT {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceProvokingVertexFeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceProvokingVertexFeaturesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceProvokingVertexFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceProvokingVertexFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceProvokingVertexFeaturesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceProvokingVertexFeaturesEXTBuilder<'a> {
     pub fn provoking_vertex_last(mut self, provoking_vertex_last: bool) -> Self {
         self.inner.provoking_vertex_last = provoking_vertex_last.into();
@@ -50010,6 +53789,7 @@ impl ::std::default::Default for PhysicalDeviceProvokingVertexPropertiesEXT {
     }
 }
 impl PhysicalDeviceProvokingVertexPropertiesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceProvokingVertexPropertiesEXTBuilder<'a> {
         PhysicalDeviceProvokingVertexPropertiesEXTBuilder {
             inner: PhysicalDeviceProvokingVertexPropertiesEXT::default(),
@@ -50017,27 +53797,32 @@ impl PhysicalDeviceProvokingVertexPropertiesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceProvokingVertexPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceProvokingVertexPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceProvokingVertexPropertiesEXTBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceProvokingVertexPropertiesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceProvokingVertexPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceProvokingVertexPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceProvokingVertexPropertiesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceProvokingVertexPropertiesEXTBuilder<'a> {
     pub fn provoking_vertex_mode_per_pipeline(
         mut self,
@@ -50080,6 +53865,7 @@ impl ::std::default::Default for PipelineRasterizationProvokingVertexStateCreate
     }
 }
 impl PipelineRasterizationProvokingVertexStateCreateInfoEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PipelineRasterizationProvokingVertexStateCreateInfoEXTBuilder<'a> {
         PipelineRasterizationProvokingVertexStateCreateInfoEXTBuilder {
             inner: PipelineRasterizationProvokingVertexStateCreateInfoEXT::default(),
@@ -50087,11 +53873,13 @@ impl PipelineRasterizationProvokingVertexStateCreateInfoEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PipelineRasterizationProvokingVertexStateCreateInfoEXTBuilder<'a> {
     inner: PipelineRasterizationProvokingVertexStateCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPipelineRasterizationStateCreateInfo
     for PipelineRasterizationProvokingVertexStateCreateInfoEXTBuilder<'_>
 {
@@ -50100,12 +53888,14 @@ unsafe impl ExtendsPipelineRasterizationStateCreateInfo
     for PipelineRasterizationProvokingVertexStateCreateInfoEXT
 {
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PipelineRasterizationProvokingVertexStateCreateInfoEXTBuilder<'a> {
     type Target = PipelineRasterizationProvokingVertexStateCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut
     for PipelineRasterizationProvokingVertexStateCreateInfoEXTBuilder<'a>
 {
@@ -50113,6 +53903,7 @@ impl<'a> ::std::ops::DerefMut
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PipelineRasterizationProvokingVertexStateCreateInfoEXTBuilder<'a> {
     pub fn provoking_vertex_mode(mut self, provoking_vertex_mode: ProvokingVertexModeEXT) -> Self {
         self.inner.provoking_vertex_mode = provoking_vertex_mode;
@@ -50145,6 +53936,7 @@ impl ::std::default::Default for CuModuleCreateInfoNVX {
     }
 }
 impl CuModuleCreateInfoNVX {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> CuModuleCreateInfoNVXBuilder<'a> {
         CuModuleCreateInfoNVXBuilder {
             inner: CuModuleCreateInfoNVX::default(),
@@ -50152,22 +53944,26 @@ impl CuModuleCreateInfoNVX {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct CuModuleCreateInfoNVXBuilder<'a> {
     inner: CuModuleCreateInfoNVX,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for CuModuleCreateInfoNVXBuilder<'a> {
     type Target = CuModuleCreateInfoNVX;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for CuModuleCreateInfoNVXBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> CuModuleCreateInfoNVXBuilder<'a> {
     pub fn data_size(mut self, data_size: usize) -> Self {
         self.inner.data_size = data_size;
@@ -50204,6 +54000,7 @@ impl ::std::default::Default for CuFunctionCreateInfoNVX {
     }
 }
 impl CuFunctionCreateInfoNVX {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> CuFunctionCreateInfoNVXBuilder<'a> {
         CuFunctionCreateInfoNVXBuilder {
             inner: CuFunctionCreateInfoNVX::default(),
@@ -50211,22 +54008,26 @@ impl CuFunctionCreateInfoNVX {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct CuFunctionCreateInfoNVXBuilder<'a> {
     inner: CuFunctionCreateInfoNVX,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for CuFunctionCreateInfoNVXBuilder<'a> {
     type Target = CuFunctionCreateInfoNVX;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for CuFunctionCreateInfoNVXBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> CuFunctionCreateInfoNVXBuilder<'a> {
     pub fn module(mut self, module: CuModuleNVX) -> Self {
         self.inner.module = module;
@@ -50283,6 +54084,7 @@ impl ::std::default::Default for CuLaunchInfoNVX {
     }
 }
 impl CuLaunchInfoNVX {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> CuLaunchInfoNVXBuilder<'a> {
         CuLaunchInfoNVXBuilder {
             inner: CuLaunchInfoNVX::default(),
@@ -50290,22 +54092,26 @@ impl CuLaunchInfoNVX {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct CuLaunchInfoNVXBuilder<'a> {
     inner: CuLaunchInfoNVX,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for CuLaunchInfoNVXBuilder<'a> {
     type Target = CuLaunchInfoNVX;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for CuLaunchInfoNVXBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> CuLaunchInfoNVXBuilder<'a> {
     pub fn function(mut self, function: CuFunctionNVX) -> Self {
         self.inner.function = function;
@@ -50374,6 +54180,7 @@ impl ::std::default::Default for PhysicalDeviceShaderIntegerDotProductFeaturesKH
     }
 }
 impl PhysicalDeviceShaderIntegerDotProductFeaturesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceShaderIntegerDotProductFeaturesKHRBuilder<'a> {
         PhysicalDeviceShaderIntegerDotProductFeaturesKHRBuilder {
             inner: PhysicalDeviceShaderIntegerDotProductFeaturesKHR::default(),
@@ -50381,32 +54188,38 @@ impl PhysicalDeviceShaderIntegerDotProductFeaturesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceShaderIntegerDotProductFeaturesKHRBuilder<'a> {
     inner: PhysicalDeviceShaderIntegerDotProductFeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceShaderIntegerDotProductFeaturesKHRBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderIntegerDotProductFeaturesKHR {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo
     for PhysicalDeviceShaderIntegerDotProductFeaturesKHRBuilder<'_>
 {
 }
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderIntegerDotProductFeaturesKHR {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderIntegerDotProductFeaturesKHRBuilder<'a> {
     type Target = PhysicalDeviceShaderIntegerDotProductFeaturesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderIntegerDotProductFeaturesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceShaderIntegerDotProductFeaturesKHRBuilder<'a> {
     pub fn shader_integer_dot_product(mut self, shader_integer_dot_product: bool) -> Self {
         self.inner.shader_integer_dot_product = shader_integer_dot_product.into();
@@ -50463,6 +54276,7 @@ impl ::std::default::Default for PhysicalDeviceShaderIntegerDotProductProperties
     }
 }
 impl PhysicalDeviceShaderIntegerDotProductPropertiesKHR {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceShaderIntegerDotProductPropertiesKHRBuilder<'a> {
         PhysicalDeviceShaderIntegerDotProductPropertiesKHRBuilder {
             inner: PhysicalDeviceShaderIntegerDotProductPropertiesKHR::default(),
@@ -50470,11 +54284,13 @@ impl PhysicalDeviceShaderIntegerDotProductPropertiesKHR {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceShaderIntegerDotProductPropertiesKHRBuilder<'a> {
     inner: PhysicalDeviceShaderIntegerDotProductPropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceShaderIntegerDotProductPropertiesKHRBuilder<'_>
 {
@@ -50483,17 +54299,20 @@ unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceShaderIntegerDotProductPropertiesKHR
 {
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderIntegerDotProductPropertiesKHRBuilder<'a> {
     type Target = PhysicalDeviceShaderIntegerDotProductPropertiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderIntegerDotProductPropertiesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceShaderIntegerDotProductPropertiesKHRBuilder<'a> {
     pub fn integer_dot_product8_bit_unsigned_accelerated(
         mut self,
@@ -50790,6 +54609,7 @@ impl ::std::default::Default for PhysicalDeviceDrmPropertiesEXT {
     }
 }
 impl PhysicalDeviceDrmPropertiesEXT {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceDrmPropertiesEXTBuilder<'a> {
         PhysicalDeviceDrmPropertiesEXTBuilder {
             inner: PhysicalDeviceDrmPropertiesEXT::default(),
@@ -50797,24 +54617,29 @@ impl PhysicalDeviceDrmPropertiesEXT {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceDrmPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceDrmPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDrmPropertiesEXTBuilder<'_> {}
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDrmPropertiesEXT {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceDrmPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceDrmPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceDrmPropertiesEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceDrmPropertiesEXTBuilder<'a> {
     pub fn has_primary(mut self, has_primary: bool) -> Self {
         self.inner.has_primary = has_primary.into();
@@ -50867,6 +54692,7 @@ impl ::std::default::Default for PhysicalDeviceRayTracingMotionBlurFeaturesNV {
     }
 }
 impl PhysicalDeviceRayTracingMotionBlurFeaturesNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> PhysicalDeviceRayTracingMotionBlurFeaturesNVBuilder<'a> {
         PhysicalDeviceRayTracingMotionBlurFeaturesNVBuilder {
             inner: PhysicalDeviceRayTracingMotionBlurFeaturesNV::default(),
@@ -50874,29 +54700,35 @@ impl PhysicalDeviceRayTracingMotionBlurFeaturesNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct PhysicalDeviceRayTracingMotionBlurFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceRayTracingMotionBlurFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsPhysicalDeviceFeatures2
     for PhysicalDeviceRayTracingMotionBlurFeaturesNVBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRayTracingMotionBlurFeaturesNV {}
+#[cfg(feature = "builders")]
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRayTracingMotionBlurFeaturesNVBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRayTracingMotionBlurFeaturesNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for PhysicalDeviceRayTracingMotionBlurFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceRayTracingMotionBlurFeaturesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for PhysicalDeviceRayTracingMotionBlurFeaturesNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> PhysicalDeviceRayTracingMotionBlurFeaturesNVBuilder<'a> {
     pub fn ray_tracing_motion_blur(mut self, ray_tracing_motion_blur: bool) -> Self {
         self.inner.ray_tracing_motion_blur = ray_tracing_motion_blur.into();
@@ -50945,6 +54777,7 @@ impl ::std::default::Default for AccelerationStructureGeometryMotionTrianglesDat
     }
 }
 impl AccelerationStructureGeometryMotionTrianglesDataNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> AccelerationStructureGeometryMotionTrianglesDataNVBuilder<'a> {
         AccelerationStructureGeometryMotionTrianglesDataNVBuilder {
             inner: AccelerationStructureGeometryMotionTrianglesDataNV::default(),
@@ -50952,11 +54785,13 @@ impl AccelerationStructureGeometryMotionTrianglesDataNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct AccelerationStructureGeometryMotionTrianglesDataNVBuilder<'a> {
     inner: AccelerationStructureGeometryMotionTrianglesDataNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsAccelerationStructureGeometryTrianglesDataKHR
     for AccelerationStructureGeometryMotionTrianglesDataNVBuilder<'_>
 {
@@ -50965,17 +54800,20 @@ unsafe impl ExtendsAccelerationStructureGeometryTrianglesDataKHR
     for AccelerationStructureGeometryMotionTrianglesDataNV
 {
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for AccelerationStructureGeometryMotionTrianglesDataNVBuilder<'a> {
     type Target = AccelerationStructureGeometryMotionTrianglesDataNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for AccelerationStructureGeometryMotionTrianglesDataNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> AccelerationStructureGeometryMotionTrianglesDataNVBuilder<'a> {
     pub fn vertex_data(mut self, vertex_data: DeviceOrHostAddressConstKHR) -> Self {
         self.inner.vertex_data = vertex_data;
@@ -51008,6 +54846,7 @@ impl ::std::default::Default for AccelerationStructureMotionInfoNV {
     }
 }
 impl AccelerationStructureMotionInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> AccelerationStructureMotionInfoNVBuilder<'a> {
         AccelerationStructureMotionInfoNVBuilder {
             inner: AccelerationStructureMotionInfoNV::default(),
@@ -51015,27 +54854,32 @@ impl AccelerationStructureMotionInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct AccelerationStructureMotionInfoNVBuilder<'a> {
     inner: AccelerationStructureMotionInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 unsafe impl ExtendsAccelerationStructureCreateInfoKHR
     for AccelerationStructureMotionInfoNVBuilder<'_>
 {
 }
 unsafe impl ExtendsAccelerationStructureCreateInfoKHR for AccelerationStructureMotionInfoNV {}
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for AccelerationStructureMotionInfoNVBuilder<'a> {
     type Target = AccelerationStructureMotionInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for AccelerationStructureMotionInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> AccelerationStructureMotionInfoNVBuilder<'a> {
     pub fn max_instances(mut self, max_instances: u32) -> Self {
         self.inner.max_instances = max_instances;
@@ -51074,6 +54918,7 @@ pub struct SRTDataNV {
     pub tz: f32,
 }
 impl SRTDataNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> SRTDataNVBuilder<'a> {
         SRTDataNVBuilder {
             inner: SRTDataNV::default(),
@@ -51081,22 +54926,26 @@ impl SRTDataNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct SRTDataNVBuilder<'a> {
     inner: SRTDataNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for SRTDataNVBuilder<'a> {
     type Target = SRTDataNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for SRTDataNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> SRTDataNVBuilder<'a> {
     pub fn sx(mut self, sx: f32) -> Self {
         self.inner.sx = sx;
@@ -51224,6 +55073,7 @@ impl fmt::Debug for AccelerationStructureMotionInstanceNV {
     }
 }
 impl AccelerationStructureMotionInstanceNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> AccelerationStructureMotionInstanceNVBuilder<'a> {
         AccelerationStructureMotionInstanceNVBuilder {
             inner: AccelerationStructureMotionInstanceNV::default(),
@@ -51231,22 +55081,26 @@ impl AccelerationStructureMotionInstanceNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct AccelerationStructureMotionInstanceNVBuilder<'a> {
     inner: AccelerationStructureMotionInstanceNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for AccelerationStructureMotionInstanceNVBuilder<'a> {
     type Target = AccelerationStructureMotionInstanceNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for AccelerationStructureMotionInstanceNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> AccelerationStructureMotionInstanceNVBuilder<'a> {
     pub fn ty(mut self, ty: AccelerationStructureMotionInstanceTypeNV) -> Self {
         self.inner.ty = ty;
@@ -51289,6 +55143,7 @@ impl ::std::default::Default for MemoryGetRemoteAddressInfoNV {
     }
 }
 impl MemoryGetRemoteAddressInfoNV {
+    #[cfg(feature = "builders")]
     pub fn builder<'a>() -> MemoryGetRemoteAddressInfoNVBuilder<'a> {
         MemoryGetRemoteAddressInfoNVBuilder {
             inner: MemoryGetRemoteAddressInfoNV::default(),
@@ -51296,22 +55151,26 @@ impl MemoryGetRemoteAddressInfoNV {
         }
     }
 }
+#[cfg(feature = "builders")]
 #[repr(transparent)]
 pub struct MemoryGetRemoteAddressInfoNVBuilder<'a> {
     inner: MemoryGetRemoteAddressInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::Deref for MemoryGetRemoteAddressInfoNVBuilder<'a> {
     type Target = MemoryGetRemoteAddressInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> ::std::ops::DerefMut for MemoryGetRemoteAddressInfoNVBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
+#[cfg(feature = "builders")]
 impl<'a> MemoryGetRemoteAddressInfoNVBuilder<'a> {
     pub fn memory(mut self, memory: DeviceMemory) -> Self {
         self.inner.memory = memory;

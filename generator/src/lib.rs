@@ -2032,6 +2032,7 @@ pub fn derive_setters(
         .map(|extends| format_ident!("Extends{}", name_to_tokens(extends)))
         .map(|extends| {
             quote! {
+                #[cfg(feature = "builders")]
                 unsafe impl #extends for #name_builder<'_> {}
                 unsafe impl #extends for #name {}
             }
@@ -2039,6 +2040,7 @@ pub fn derive_setters(
 
     let q = quote! {
         impl #name {
+            #[cfg(feature = "builders")]
             pub fn builder<'a>() -> #name_builder<'a> {
                 #name_builder {
                     inner: #name::default(),
@@ -2047,6 +2049,7 @@ pub fn derive_setters(
             }
         }
 
+        #[cfg(feature = "builders")]
         #[repr(transparent)]
         pub struct #name_builder<'a> {
             inner: #name,
@@ -2057,6 +2060,7 @@ pub fn derive_setters(
         #next_trait
 
 
+        #[cfg(feature = "builders")]
         impl<'a> ::std::ops::Deref for #name_builder<'a> {
             type Target = #name;
 
@@ -2065,12 +2069,14 @@ pub fn derive_setters(
             }
         }
 
+        #[cfg(feature = "builders")]
         impl<'a> ::std::ops::DerefMut for #name_builder<'a> {
             fn deref_mut(&mut self) -> &mut Self::Target {
                 &mut self.inner
             }
         }
 
+        #[cfg(feature = "builders")]
         impl<'a> #name_builder<'a> {
             #(#setters)*
 
