@@ -1711,6 +1711,7 @@ pub fn derive_debug(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Opt
     });
     let name_str = name.to_string();
     let q = quote! {
+        #[cfg(feature = "debug")]
         impl fmt::Debug for #name {
             fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
                 fmt.debug_struct(#name_str)
@@ -2134,7 +2135,7 @@ pub fn generate_struct(
     let setter_tokens = derive_setters(_struct, root_structs);
     let manual_derive_tokens = manual_derives(_struct);
     let dbg_str = if debug_tokens.is_none() {
-        quote!(Debug,)
+        quote!(#[cfg_attr(feature = "debug", derive(Debug))])
     } else {
         quote!()
     };
@@ -2146,7 +2147,8 @@ pub fn generate_struct(
     let khronos_link = khronos_link(&_struct.name);
     quote! {
         #[repr(C)]
-        #[derive(Copy, Clone, #default_str #dbg_str #manual_derive_tokens)]
+        #dbg_str
+        #[derive(Copy, Clone, #default_str #manual_derive_tokens)]
         #[doc = #khronos_link]
         pub struct #name {
             #(#params,)*
