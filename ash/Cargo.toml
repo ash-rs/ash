@@ -14,11 +14,13 @@ edition = "2018"
 libloading = { version = "0.7", optional = true }
 
 [features]
-default = ["linked"]
+default = ["linked", "debug"]
 # Link the Vulkan loader at compile time.
 linked = []
 # Support searching for the Vulkan loader manually at runtime.
 loaded = ["libloading"]
+# Whether Vulkan structs should implement Debug
+debug = []
 
 [package.metadata.release]
 no-dev-version = true
