@@ -9,12 +9,10 @@ use ash::extensions::{
 use ash::{vk, Entry};
 pub use ash::{Device, Instance};
 use std::borrow::Cow;
-use std::cell::RefCell;
 use std::default::Default;
 use std::ffi::{CStr, CString};
-use std::ops::{Drop};
-use winit::dpi::LogicalSize;
-use winit::event::{Event, VirtualKeyCode, WindowEvent};
+use std::ops::Drop;
+use winit::event::{Event, WindowEvent};
 
 // Simple offset_of macro akin to C++ offsetof
 #[macro_export]
@@ -142,7 +140,6 @@ pub struct ExampleBase {
     pub swapchain_loader: Swapchain,
     pub debug_utils_loader: DebugUtils,
     pub window: winit::window::Window,
-    pub event_loop: RefCell<winit::event_loop::EventLoop<()>>,
     pub debug_call_back: vk::DebugUtilsMessengerEXT,
 
     pub pdevice: vk::PhysicalDevice,
@@ -174,25 +171,47 @@ pub struct ExampleBase {
 }
 
 impl ExampleBase {
-    pub fn render_loop<F: Fn() + 'static>(&self, f: F) {
-        self.event_loop.borrow_mut().run(move |event, _, control_flow| {
-            f();
+    pub fn run<F, D, T>(
+        event_loop: winit::event_loop::EventLoop<()>,
+        mut base: ExampleBase,
+        mut state: T,
+        render_fn: F,
+        destructor: D,
+    ) -> !
+    where
+        T: 'static,
+        F: Fn(&mut ExampleBase, &mut T) + 'static,
+        D: Fn(&mut ExampleBase, &mut T) + 'static,
+    {
+        event_loop.run(move |event, _, control_flow| {
             match event {
                 Event::WindowEvent { event, .. } => match event {
                     WindowEvent::KeyboardInput { input, .. } => {
-                        if let Some(VirtualKeyCode::Escape) = input.virtual_keycode {
+                        if let Some(winit::event::VirtualKeyCode::Escape) = input.virtual_keycode {
                             *control_flow = winit::event_loop::ControlFlow::Exit
                         }
                     }
-                    WindowEvent::CloseRequested => *control_flow = winit::event_loop::ControlFlow::Exit,
-                    _ => {},
+
+                    WindowEvent::CloseRequested => {
+                        *control_flow = winit::event_loop::ControlFlow::Exit
+                    }
+
+                    _ => (),
                 },
-                _ => {},
+
+                Event::RedrawRequested(_) => {
+                    render_fn(&mut base, &mut state);
+                    base.window.request_redraw(); // Request a redraw for the next frame.
+                }
+
+                Event::LoopDestroyed => destructor(&mut base, &mut state),
+
+                _ => (),
             };
         });
     }
 
-    pub fn new(window_width: u32, window_height: u32) -> Self {
+    pub fn new(window_width: u32, window_height: u32) -> (winit::event_loop::EventLoop<()>, Self) {
         unsafe {
             let event_loop = winit::event_loop::EventLoop::new();
             let window = winit::window::WindowBuilder::new()
@@ -511,8 +530,7 @@ impl ExampleBase {
                 .create_semaphore(&semaphore_create_info, None)
                 .unwrap();
 
-            ExampleBase {
-                event_loop: RefCell::new(event_loop),
+            let base = ExampleBase {
                 entry,
                 instance,
                 device,
@@ -541,7 +559,9 @@ impl ExampleBase {
                 debug_call_back,
                 debug_utils_loader,
                 depth_image_memory,
-            }
+            };
+
+            (event_loop, base)
         }
     }
 }

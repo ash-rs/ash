@@ -35,22 +35,20 @@ fn main() -> Result<(), Box<dyn Error>> {
         let surface_fn = ash::extensions::khr::Surface::new(&entry, &instance);
         println!("surface: {:?}", surface);
 
-        event_loop.run(move |event, _, control_flow| {
-            match event {
-                winit::event::Event::WindowEvent {
-                    event: winit::event::WindowEvent::CloseRequested,
-                    ..
-                } => {
-                    *control_flow = winit::event_loop::ControlFlow::Exit;
-                }
-                winit::event::Event::WindowEvent {
-                    event: winit::event::WindowEvent::Destroyed,
-                    ..
-                } => {
-                    surface_fn.destroy_surface(surface, None);
-                }
-                _ => {}
+        event_loop.run(move |event, _, control_flow| match event {
+            winit::event::Event::WindowEvent {
+                event: winit::event::WindowEvent::CloseRequested,
+                ..
+            } => {
+                *control_flow = winit::event_loop::ControlFlow::Exit;
             }
+            winit::event::Event::WindowEvent {
+                event: winit::event::WindowEvent::Destroyed,
+                ..
+            } => {
+                surface_fn.destroy_surface(surface, None);
+            }
+            _ => {}
         });
     }
 }

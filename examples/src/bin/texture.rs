@@ -23,9 +23,15 @@ pub struct Vector3 {
     pub _pad: f32,
 }
 
+#[derive(Debug)]
+struct TextureState {
+    framebuffers: Vec<vk::Framebuffer>,
+    graphics_pipelines: Vec<vk::Pipeline>,
+}
+
 fn main() {
     unsafe {
-        let base = ExampleBase::new(1920, 1080);
+        let (event_loop, base) = ExampleBase::new(1920, 1080);
 
         let renderpass_attachments = [
             vk::AttachmentDescription {
@@ -701,136 +707,148 @@ fn main() {
 
         let graphic_pipeline = graphics_pipelines[0];
 
-        base.render_loop(|| {
-            let (present_index, _) = base
-                .swapchain_loader
-                .acquire_next_image(
-                    base.swapchain,
-                    std::u64::MAX,
-                    base.present_complete_semaphore,
-                    vk::Fence::null(),
-                )
-                .unwrap();
-            let clear_values = [
-                vk::ClearValue {
-                    color: vk::ClearColorValue {
-                        float32: [0.0, 0.0, 0.0, 0.0],
+        let texture_state = TextureState {
+            framebuffers,
+            graphics_pipelines,
+        };
+
+        ExampleBase::run(
+            event_loop,
+            base,
+            texture_state,
+            move |base, state| {
+                let (present_index, _) = base
+                    .swapchain_loader
+                    .acquire_next_image(
+                        base.swapchain,
+                        std::u64::MAX,
+                        base.present_complete_semaphore,
+                        vk::Fence::null(),
+                    )
+                    .unwrap();
+                let clear_values = [
+                    vk::ClearValue {
+                        color: vk::ClearColorValue {
+                            float32: [0.0, 0.0, 0.0, 0.0],
+                        },
                     },
-                },
-                vk::ClearValue {
-                    depth_stencil: vk::ClearDepthStencilValue {
-                        depth: 1.0,
-                        stencil: 0,
+                    vk::ClearValue {
+                        depth_stencil: vk::ClearDepthStencilValue {
+                            depth: 1.0,
+                            stencil: 0,
+                        },
                     },
-                },
-            ];
+                ];
 
-            let render_pass_begin_info = vk::RenderPassBeginInfo::builder()
-                .render_pass(renderpass)
-                .framebuffer(framebuffers[present_index as usize])
-                .render_area(vk::Rect2D {
-                    offset: vk::Offset2D { x: 0, y: 0 },
-                    extent: base.surface_resolution,
-                })
-                .clear_values(&clear_values);
+                let render_pass_begin_info = vk::RenderPassBeginInfo::builder()
+                    .render_pass(renderpass)
+                    .framebuffer(state.framebuffers[present_index as usize])
+                    .render_area(vk::Rect2D {
+                        offset: vk::Offset2D { x: 0, y: 0 },
+                        extent: base.surface_resolution,
+                    })
+                    .clear_values(&clear_values);
 
-            record_submit_commandbuffer(
-                &base.device,
-                base.draw_command_buffer,
-                base.draw_commands_reuse_fence,
-                base.present_queue,
-                &[vk::PipelineStageFlags::BOTTOM_OF_PIPE],
-                &[base.present_complete_semaphore],
-                &[base.rendering_complete_semaphore],
-                |device, draw_command_buffer| {
-                    device.cmd_begin_render_pass(
-                        draw_command_buffer,
-                        &render_pass_begin_info,
-                        vk::SubpassContents::INLINE,
-                    );
-                    device.cmd_bind_descriptor_sets(
-                        draw_command_buffer,
-                        vk::PipelineBindPoint::GRAPHICS,
-                        pipeline_layout,
-                        0,
-                        &descriptor_sets[..],
-                        &[],
-                    );
-                    device.cmd_bind_pipeline(
-                        draw_command_buffer,
-                        vk::PipelineBindPoint::GRAPHICS,
-                        graphic_pipeline,
-                    );
-                    device.cmd_set_viewport(draw_command_buffer, 0, &viewports);
-                    device.cmd_set_scissor(draw_command_buffer, 0, &scissors);
-                    device.cmd_bind_vertex_buffers(
-                        draw_command_buffer,
-                        0,
-                        &[vertex_input_buffer],
-                        &[0],
-                    );
-                    device.cmd_bind_index_buffer(
-                        draw_command_buffer,
-                        index_buffer,
-                        0,
-                        vk::IndexType::UINT32,
-                    );
-                    device.cmd_draw_indexed(
-                        draw_command_buffer,
-                        index_buffer_data.len() as u32,
-                        1,
-                        0,
-                        0,
-                        1,
-                    );
-                    // Or draw without the index buffer
-                    // device.cmd_draw(draw_command_buffer, 3, 1, 0, 0);
-                    device.cmd_end_render_pass(draw_command_buffer);
-                },
-            );
-            //let mut present_info_err = mem::zeroed();
-            let present_info = vk::PresentInfoKHR {
-                wait_semaphore_count: 1,
-                p_wait_semaphores: &base.rendering_complete_semaphore,
-                swapchain_count: 1,
-                p_swapchains: &base.swapchain,
-                p_image_indices: &present_index,
-                ..Default::default()
-            };
-            base.swapchain_loader
-                .queue_present(base.present_queue, &present_info)
-                .unwrap();
-        });
-        base.device.device_wait_idle().unwrap();
+                record_submit_commandbuffer(
+                    &base.device,
+                    base.draw_command_buffer,
+                    base.draw_commands_reuse_fence,
+                    base.present_queue,
+                    &[vk::PipelineStageFlags::BOTTOM_OF_PIPE],
+                    &[base.present_complete_semaphore],
+                    &[base.rendering_complete_semaphore],
+                    |device, draw_command_buffer| {
+                        device.cmd_begin_render_pass(
+                            draw_command_buffer,
+                            &render_pass_begin_info,
+                            vk::SubpassContents::INLINE,
+                        );
+                        device.cmd_bind_descriptor_sets(
+                            draw_command_buffer,
+                            vk::PipelineBindPoint::GRAPHICS,
+                            pipeline_layout,
+                            0,
+                            &descriptor_sets[..],
+                            &[],
+                        );
+                        device.cmd_bind_pipeline(
+                            draw_command_buffer,
+                            vk::PipelineBindPoint::GRAPHICS,
+                            graphic_pipeline,
+                        );
+                        device.cmd_set_viewport(draw_command_buffer, 0, &viewports);
+                        device.cmd_set_scissor(draw_command_buffer, 0, &scissors);
+                        device.cmd_bind_vertex_buffers(
+                            draw_command_buffer,
+                            0,
+                            &[vertex_input_buffer],
+                            &[0],
+                        );
+                        device.cmd_bind_index_buffer(
+                            draw_command_buffer,
+                            index_buffer,
+                            0,
+                            vk::IndexType::UINT32,
+                        );
+                        device.cmd_draw_indexed(
+                            draw_command_buffer,
+                            index_buffer_data.len() as u32,
+                            1,
+                            0,
+                            0,
+                            1,
+                        );
+                        // Or draw without the index buffer
+                        // device.cmd_draw(draw_command_buffer, 3, 1, 0, 0);
+                        device.cmd_end_render_pass(draw_command_buffer);
+                    },
+                );
+                //let mut present_info_err = mem::zeroed();
+                let present_info = vk::PresentInfoKHR {
+                    wait_semaphore_count: 1,
+                    p_wait_semaphores: &base.rendering_complete_semaphore,
+                    swapchain_count: 1,
+                    p_swapchains: &base.swapchain,
+                    p_image_indices: &present_index,
+                    ..Default::default()
+                };
+                base.swapchain_loader
+                    .queue_present(base.present_queue, &present_info)
+                    .unwrap();
+            },
+            move |base, state| {
+                base.device.device_wait_idle().unwrap();
 
-        for pipeline in graphics_pipelines {
-            base.device.destroy_pipeline(pipeline, None);
-        }
-        base.device.destroy_pipeline_layout(pipeline_layout, None);
-        base.device
-            .destroy_shader_module(vertex_shader_module, None);
-        base.device
-            .destroy_shader_module(fragment_shader_module, None);
-        base.device.free_memory(image_buffer_memory, None);
-        base.device.destroy_buffer(image_buffer, None);
-        base.device.free_memory(texture_memory, None);
-        base.device.destroy_image_view(tex_image_view, None);
-        base.device.destroy_image(texture_image, None);
-        base.device.free_memory(index_buffer_memory, None);
-        base.device.destroy_buffer(index_buffer, None);
-        base.device.free_memory(uniform_color_buffer_memory, None);
-        base.device.destroy_buffer(uniform_color_buffer, None);
-        base.device.free_memory(vertex_input_buffer_memory, None);
-        base.device.destroy_buffer(vertex_input_buffer, None);
-        for &descriptor_set_layout in desc_set_layouts.iter() {
-            base.device
-                .destroy_descriptor_set_layout(descriptor_set_layout, None);
-        }
-        base.device.destroy_descriptor_pool(descriptor_pool, None);
-        base.device.destroy_sampler(sampler, None);
-        for framebuffer in framebuffers {
-            base.device.destroy_framebuffer(framebuffer, None);
-        }
-        base.device.destroy_render_pass(renderpass, None);
+                for pipeline in &mut state.graphics_pipelines.drain(..) {
+                    base.device.destroy_pipeline(pipeline, None);
+                }
+                base.device.destroy_pipeline_layout(pipeline_layout, None);
+                base.device
+                    .destroy_shader_module(vertex_shader_module, None);
+                base.device
+                    .destroy_shader_module(fragment_shader_module, None);
+                base.device.free_memory(image_buffer_memory, None);
+                base.device.destroy_buffer(image_buffer, None);
+                base.device.free_memory(texture_memory, None);
+                base.device.destroy_image_view(tex_image_view, None);
+                base.device.destroy_image(texture_image, None);
+                base.device.free_memory(index_buffer_memory, None);
+                base.device.destroy_buffer(index_buffer, None);
+                base.device.free_memory(uniform_color_buffer_memory, None);
+                base.device.destroy_buffer(uniform_color_buffer, None);
+                base.device.free_memory(vertex_input_buffer_memory, None);
+                base.device.destroy_buffer(vertex_input_buffer, None);
+                for &descriptor_set_layout in desc_set_layouts.iter() {
+                    base.device
+                        .destroy_descriptor_set_layout(descriptor_set_layout, None);
+                }
+                base.device.destroy_descriptor_pool(descriptor_pool, None);
+                base.device.destroy_sampler(sampler, None);
+                for framebuffer in &mut state.framebuffers.drain(..) {
+                    base.device.destroy_framebuffer(framebuffer, None);
+                }
+                base.device.destroy_render_pass(renderpass, None);
+            },
+        );
     }
 }

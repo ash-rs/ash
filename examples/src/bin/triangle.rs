@@ -13,9 +13,22 @@ struct Vertex {
     color: [f32; 4],
 }
 
+#[derive(Debug)]
+struct TriangleState {
+    renderpass: vk::RenderPass,
+    framebuffers: Vec<vk::Framebuffer>,
+    graphics_pipelines: Vec<vk::Pipeline>,
+    graphic_pipeline: vk::Pipeline,
+    viewports: [vk::Viewport; 1],
+    scissors: [vk::Rect2D; 1],
+    vertex_input_buffer: vk::Buffer,
+    index_buffer: vk::Buffer,
+    index_buffer_data: [u32; 3],
+}
+
 fn main() {
     unsafe {
-        let base = ExampleBase::new(1920, 1080);
+        let (event_loop, base) = ExampleBase::new(1920, 1080);
         let renderpass_attachments = [
             vk::AttachmentDescription {
                 format: base.surface_format.format,
@@ -358,115 +371,133 @@ fn main() {
 
         let graphic_pipeline = graphics_pipelines[0];
 
-        base.render_loop(|| {
-            let (present_index, _) = base
-                .swapchain_loader
-                .acquire_next_image(
-                    base.swapchain,
-                    std::u64::MAX,
-                    base.present_complete_semaphore,
-                    vk::Fence::null(),
-                )
-                .unwrap();
-            let clear_values = [
-                vk::ClearValue {
-                    color: vk::ClearColorValue {
-                        float32: [0.0, 0.0, 0.0, 0.0],
+        let triangle_state = TriangleState {
+            renderpass,
+            framebuffers,
+            graphics_pipelines,
+            graphic_pipeline,
+            viewports,
+            scissors,
+            vertex_input_buffer,
+            index_buffer,
+            index_buffer_data,
+        };
+
+        ExampleBase::run(
+            event_loop,
+            base,
+            triangle_state,
+            move |base, triangle_state| {
+                let (present_index, _) = base
+                    .swapchain_loader
+                    .acquire_next_image(
+                        base.swapchain,
+                        std::u64::MAX,
+                        base.present_complete_semaphore,
+                        vk::Fence::null(),
+                    )
+                    .unwrap();
+                let clear_values = [
+                    vk::ClearValue {
+                        color: vk::ClearColorValue {
+                            float32: [0.0, 0.0, 0.0, 0.0],
+                        },
                     },
-                },
-                vk::ClearValue {
-                    depth_stencil: vk::ClearDepthStencilValue {
-                        depth: 1.0,
-                        stencil: 0,
+                    vk::ClearValue {
+                        depth_stencil: vk::ClearDepthStencilValue {
+                            depth: 1.0,
+                            stencil: 0,
+                        },
                     },
-                },
-            ];
+                ];
 
-            let render_pass_begin_info = vk::RenderPassBeginInfo::builder()
-                .render_pass(renderpass)
-                .framebuffer(framebuffers[present_index as usize])
-                .render_area(vk::Rect2D {
-                    offset: vk::Offset2D { x: 0, y: 0 },
-                    extent: base.surface_resolution,
-                })
-                .clear_values(&clear_values);
+                let render_pass_begin_info = vk::RenderPassBeginInfo::builder()
+                    .render_pass(triangle_state.renderpass)
+                    .framebuffer(triangle_state.framebuffers[present_index as usize])
+                    .render_area(vk::Rect2D {
+                        offset: vk::Offset2D { x: 0, y: 0 },
+                        extent: base.surface_resolution,
+                    })
+                    .clear_values(&clear_values);
 
-            record_submit_commandbuffer(
-                &base.device,
-                base.draw_command_buffer,
-                base.draw_commands_reuse_fence,
-                base.present_queue,
-                &[vk::PipelineStageFlags::COLOR_ATTACHMENT_OUTPUT],
-                &[base.present_complete_semaphore],
-                &[base.rendering_complete_semaphore],
-                |device, draw_command_buffer| {
-                    device.cmd_begin_render_pass(
-                        draw_command_buffer,
-                        &render_pass_begin_info,
-                        vk::SubpassContents::INLINE,
-                    );
-                    device.cmd_bind_pipeline(
-                        draw_command_buffer,
-                        vk::PipelineBindPoint::GRAPHICS,
-                        graphic_pipeline,
-                    );
-                    device.cmd_set_viewport(draw_command_buffer, 0, &viewports);
-                    device.cmd_set_scissor(draw_command_buffer, 0, &scissors);
-                    device.cmd_bind_vertex_buffers(
-                        draw_command_buffer,
-                        0,
-                        &[vertex_input_buffer],
-                        &[0],
-                    );
-                    device.cmd_bind_index_buffer(
-                        draw_command_buffer,
-                        index_buffer,
-                        0,
-                        vk::IndexType::UINT32,
-                    );
-                    device.cmd_draw_indexed(
-                        draw_command_buffer,
-                        index_buffer_data.len() as u32,
-                        1,
-                        0,
-                        0,
-                        1,
-                    );
-                    // Or draw without the index buffer
-                    // device.cmd_draw(draw_command_buffer, 3, 1, 0, 0);
-                    device.cmd_end_render_pass(draw_command_buffer);
-                },
-            );
-            //let mut present_info_err = mem::zeroed();
-            let wait_semaphors = [base.rendering_complete_semaphore];
-            let swapchains = [base.swapchain];
-            let image_indices = [present_index];
-            let present_info = vk::PresentInfoKHR::builder()
-                .wait_semaphores(&wait_semaphors) // &base.rendering_complete_semaphore)
-                .swapchains(&swapchains)
-                .image_indices(&image_indices);
+                record_submit_commandbuffer(
+                    &base.device,
+                    base.draw_command_buffer,
+                    base.draw_commands_reuse_fence,
+                    base.present_queue,
+                    &[vk::PipelineStageFlags::COLOR_ATTACHMENT_OUTPUT],
+                    &[base.present_complete_semaphore],
+                    &[base.rendering_complete_semaphore],
+                    |device, draw_command_buffer| {
+                        device.cmd_begin_render_pass(
+                            draw_command_buffer,
+                            &render_pass_begin_info,
+                            vk::SubpassContents::INLINE,
+                        );
+                        device.cmd_bind_pipeline(
+                            draw_command_buffer,
+                            vk::PipelineBindPoint::GRAPHICS,
+                            triangle_state.graphic_pipeline,
+                        );
+                        device.cmd_set_viewport(draw_command_buffer, 0, &triangle_state.viewports);
+                        device.cmd_set_scissor(draw_command_buffer, 0, &triangle_state.scissors);
+                        device.cmd_bind_vertex_buffers(
+                            draw_command_buffer,
+                            0,
+                            &[triangle_state.vertex_input_buffer],
+                            &[0],
+                        );
+                        device.cmd_bind_index_buffer(
+                            draw_command_buffer,
+                            triangle_state.index_buffer,
+                            0,
+                            vk::IndexType::UINT32,
+                        );
+                        device.cmd_draw_indexed(
+                            draw_command_buffer,
+                            triangle_state.index_buffer_data.len() as u32,
+                            1,
+                            0,
+                            0,
+                            1,
+                        );
+                        // Or draw without the index buffer
+                        // device.cmd_draw(draw_command_buffer, 3, 1, 0, 0);
+                        device.cmd_end_render_pass(draw_command_buffer);
+                    },
+                );
+                //let mut present_info_err = mem::zeroed();
+                let wait_semaphors = [base.rendering_complete_semaphore];
+                let swapchains = [base.swapchain];
+                let image_indices = [present_index];
+                let present_info = vk::PresentInfoKHR::builder()
+                    .wait_semaphores(&wait_semaphors) // &base.rendering_complete_semaphore)
+                    .swapchains(&swapchains)
+                    .image_indices(&image_indices);
 
-            base.swapchain_loader
-                .queue_present(base.present_queue, &present_info)
-                .unwrap();
-        });
-
-        base.device.device_wait_idle().unwrap();
-        for pipeline in graphics_pipelines {
-            base.device.destroy_pipeline(pipeline, None);
-        }
-        base.device.destroy_pipeline_layout(pipeline_layout, None);
-        base.device
-            .destroy_shader_module(vertex_shader_module, None);
-        base.device
-            .destroy_shader_module(fragment_shader_module, None);
-        base.device.free_memory(index_buffer_memory, None);
-        base.device.destroy_buffer(index_buffer, None);
-        base.device.free_memory(vertex_input_buffer_memory, None);
-        base.device.destroy_buffer(vertex_input_buffer, None);
-        for framebuffer in framebuffers {
-            base.device.destroy_framebuffer(framebuffer, None);
-        }
-        base.device.destroy_render_pass(renderpass, None);
+                base.swapchain_loader
+                    .queue_present(base.present_queue, &present_info)
+                    .unwrap();
+            },
+            move |base, triangle_state| {
+                base.device.device_wait_idle().unwrap();
+                for pipeline in &mut triangle_state.graphics_pipelines.drain(..) {
+                    base.device.destroy_pipeline(pipeline, None);
+                }
+                base.device.destroy_pipeline_layout(pipeline_layout, None);
+                base.device
+                    .destroy_shader_module(vertex_shader_module, None);
+                base.device
+                    .destroy_shader_module(fragment_shader_module, None);
+                base.device.free_memory(index_buffer_memory, None);
+                base.device.destroy_buffer(index_buffer, None);
+                base.device.free_memory(vertex_input_buffer_memory, None);
+                base.device.destroy_buffer(vertex_input_buffer, None);
+                for framebuffer in &mut triangle_state.framebuffers.drain(..) {
+                    base.device.destroy_framebuffer(framebuffer, None);
+                }
+                base.device.destroy_render_pass(renderpass, None);
+            },
+        );
     }
 }
