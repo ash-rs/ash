@@ -1667,35 +1667,11 @@ pub fn derive_default(_struct: &vkxml::Struct) -> Option<TokenStream> {
                     #param_ident: unsafe { ::std::mem::zeroed() }
                 }
             }
-        } else if let Some(ref reference) = field.reference {
-            match reference {
-                vkxml::ReferenceType::Pointer => {
-                    if field.is_const {
-                        quote! {
-                            #param_ident: ::std::ptr::null()
-                        }
-                    } else {
-                        quote! {
-                            #param_ident: ::std::ptr::null_mut()
-                        }
-                    }
-                }
-                vkxml::ReferenceType::PointerToPointer => {
-                    quote! {
-                        #param_ident: ::std::ptr::null_mut()
-                    }
-                }
-                vkxml::ReferenceType::PointerToConstPointer => {
-                    if field.is_const {
-                        quote! {
-                            #param_ident: ::std::ptr::null()
-                        }
-                    } else {
-                        quote! {
-                            #param_ident: ::std::ptr::null_mut()
-                        }
-                    }
-                }
+        } else if field.reference.is_some() {
+            if field.is_const {
+                quote!(#param_ident: ::std::ptr::null())
+            } else {
+                quote!(#param_ident: ::std::ptr::null_mut())
             }
         } else if is_static_array(field) || handles.contains(&field.basetype.as_str()) {
             quote! {
