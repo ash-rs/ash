@@ -22,7 +22,7 @@ impl Device {
             mem::transmute(instance_fn.get_device_proc_addr(device, name.as_ptr()))
         };
 
-        Device {
+        Self {
             handle: device,
 
             device_fn_1_0: vk::DeviceFnV1_0::load(load_fn),

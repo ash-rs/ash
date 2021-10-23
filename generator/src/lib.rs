@@ -1079,7 +1079,7 @@ fn generate_function_pointers<'a>(
             pub fn load<F>(mut _f: F) -> Self
                 where F: FnMut(&::std::ffi::CStr) -> *const c_void
             {
-                #ident {
+                Self {
                     #(#loaders,)*
                 }
             }
@@ -1573,7 +1573,7 @@ pub fn generate_enum<'a>(
             #struct_attribute
             pub struct #ident(pub(crate) i32);
             impl #ident {
-                pub const fn from_raw(x: i32) -> Self { #ident(x) }
+                pub const fn from_raw(x: i32) -> Self { Self(x) }
                 pub const fn as_raw(self) -> i32 { self.0 }
             }
             #impl_block
@@ -1601,7 +1601,7 @@ pub fn generate_result(ident: Ident, enum_: &vk_parse::Enums) -> TokenStream {
 
         let variant_ident = variant_ident(enum_.name.as_ref().unwrap(), variant_name);
         Some(quote! {
-            #ident::#variant_ident => Some(#notation)
+            Self::#variant_ident => Some(#notation)
         })
     });
 
@@ -1710,8 +1710,8 @@ pub fn derive_default(_struct: &vkxml::Struct) -> Option<TokenStream> {
     });
     let q = quote! {
         impl ::std::default::Default for #name {
-            fn default() -> #name {
-                #name {
+            fn default() -> Self {
+                Self {
                     #(
                         #default_fields
                     ),*
@@ -2041,7 +2041,7 @@ pub fn derive_setters(
         impl #name {
             pub fn builder<'a>() -> #name_builder<'a> {
                 #name_builder {
-                    inner: #name::default(),
+                    inner: Self::default(),
                     marker: ::std::marker::PhantomData,
                 }
             }
@@ -2178,7 +2178,15 @@ pub fn generate_struct(
 
     let params = members.clone().map(|field| {
         let param_ident = field.param_ident();
-        let param_ty_tokens = field.type_tokens(false);
+        let param_ty_tokens = if field.basetype == _struct.name {
+            let pointer = field
+                .reference
+                .as_ref()
+                .map(|r| r.to_tokens(field.is_const));
+            quote!(#pointer Self)
+        } else {
+            field.type_tokens(false)
+        };
         quote! {pub #param_ident: #param_ty_tokens}
     });
 
@@ -2276,7 +2284,7 @@ fn generate_union(union: &vkxml::Union) -> TokenStream {
             #(#fields),*
         }
         impl ::std::default::Default for #name {
-            fn default() -> #name {
+            fn default() -> Self {
                 unsafe { ::std::mem::zeroed() }
             }
         }

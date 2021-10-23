@@ -1,3 +1,4 @@
+#![deny(clippy::use_self)]
 #![allow(
     clippy::too_many_arguments,
     clippy::missing_safety_doc,

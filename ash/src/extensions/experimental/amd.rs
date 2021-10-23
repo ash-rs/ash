@@ -39,10 +39,6 @@ vk_bitflags_wrapped!(
     0b1111111111111111111111111111111,
     Flags
 );
-// ignore clippy::use_self false positives
-// changing GpaSqShaderStageFlags::PS.0 to Self::PS.0 as suggested by clippy generates:
-// error[E0401]: can't use generic parameters from outer function
-#[allow(clippy::use_self)]
 impl fmt::Debug for GpaSqShaderStageFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[

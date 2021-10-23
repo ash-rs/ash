@@ -292,7 +292,7 @@ impl vk::StaticFn {
         // TODO: Make this a &'static CStr once CStr::from_bytes_with_nul_unchecked is const
         static ENTRY_POINT: &[u8] = b"vkGetInstanceProcAddr\0";
 
-        Ok(vk::StaticFn {
+        Ok(Self {
             get_instance_proc_addr: unsafe {
                 let cname = CStr::from_bytes_with_nul_unchecked(ENTRY_POINT);
                 let val = _f(cname);
