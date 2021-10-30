@@ -236,11 +236,11 @@ impl KhrSurfaceFn {
 }
 #[doc = "Generated from 'VK_KHR_surface'"]
 impl Result {
-    pub const ERROR_SURFACE_LOST_KHR: Self = Self(-1000000000);
+    pub const ERROR_SURFACE_LOST_KHR: Self = Self(-1_000_000_000);
 }
 #[doc = "Generated from 'VK_KHR_surface'"]
 impl Result {
-    pub const ERROR_NATIVE_WINDOW_IN_USE_KHR: Self = Self(-1000000001);
+    pub const ERROR_NATIVE_WINDOW_IN_USE_KHR: Self = Self(-1_000_000_001);
 }
 #[doc = "Generated from 'VK_KHR_surface'"]
 impl ObjectType {
@@ -628,7 +628,7 @@ impl Result {
 }
 #[doc = "Generated from 'VK_KHR_swapchain'"]
 impl Result {
-    pub const ERROR_OUT_OF_DATE_KHR: Self = Self(-1000001004);
+    pub const ERROR_OUT_OF_DATE_KHR: Self = Self(-1_000_001_004);
 }
 #[doc = "Generated from 'VK_KHR_swapchain'"]
 impl ObjectType {
@@ -1078,7 +1078,7 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_KHR_display_swapchain'"]
 impl Result {
-    pub const ERROR_INCOMPATIBLE_DISPLAY_KHR: Self = Self(-1000003001);
+    pub const ERROR_INCOMPATIBLE_DISPLAY_KHR: Self = Self(-1_000_003_001);
 }
 impl KhrXlibSurfaceFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -1975,7 +1975,7 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_EXT_debug_report'"]
 impl Result {
-    pub const ERROR_VALIDATION_FAILED_EXT: Self = Self(-1000011001);
+    pub const ERROR_VALIDATION_FAILED_EXT: Self = Self(-1_000_011_001);
 }
 #[doc = "Generated from 'VK_EXT_debug_report'"]
 impl ObjectType {
@@ -2010,7 +2010,7 @@ impl NvGlslShaderFn {
 }
 #[doc = "Generated from 'VK_NV_glsl_shader'"]
 impl Result {
-    pub const ERROR_INVALID_SHADER_NV: Self = Self(-1000012000);
+    pub const ERROR_INVALID_SHADER_NV: Self = Self(-1_000_012_000);
 }
 impl ExtDepthRangeUnrestrictedFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -13137,7 +13137,7 @@ impl ExtImageDrmFormatModifierFn {
 }
 #[doc = "Generated from 'VK_EXT_image_drm_format_modifier'"]
 impl Result {
-    pub const ERROR_INVALID_DRM_FORMAT_MODIFIER_PLANE_LAYOUT_EXT: Self = Self(-1000158000);
+    pub const ERROR_INVALID_DRM_FORMAT_MODIFIER_PLANE_LAYOUT_EXT: Self = Self(-1_000_158_000);
 }
 #[doc = "Generated from 'VK_EXT_image_drm_format_modifier'"]
 impl StructureType {
@@ -14854,7 +14854,7 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_EXT_global_priority'"]
 impl Result {
-    pub const ERROR_NOT_PERMITTED_EXT: Self = Self(-1000174001);
+    pub const ERROR_NOT_PERMITTED_EXT: Self = Self(-1_000_174_001);
 }
 impl KhrShaderSubgroupExtendedTypesFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -18491,7 +18491,7 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_EXT_full_screen_exclusive'"]
 impl Result {
-    pub const ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT: Self = Self(-1000255000);
+    pub const ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT: Self = Self(-1_000_255_000);
 }
 #[doc = "Generated from 'VK_EXT_full_screen_exclusive'"]
 impl StructureType {
