@@ -144,23 +144,23 @@ pub fn define_handle_macro() -> TokenStream {
                 #[$doc_link]
                 pub struct $name(*mut u8);
                 impl Default for $name {
-                    fn default() -> $name {
-                        $name::null()
+                    fn default() -> Self {
+                        Self::null()
                     }
                 }
 
                 impl Handle for $name {
                     const TYPE: ObjectType = ObjectType::$ty;
                     fn as_raw(self) -> u64 { self.0 as u64 }
-                    fn from_raw(x: u64) -> Self { $name(x as _) }
+                    fn from_raw(x: u64) -> Self { Self(x as _) }
                 }
 
                 unsafe impl Send for $name {}
                 unsafe impl Sync for $name {}
 
-                impl $name{
-                    pub const fn null() -> Self{
-                        $name(::std::ptr::null_mut())
+                impl $name {
+                    pub const fn null() -> Self {
+                        Self(::std::ptr::null_mut())
                     }
                 }
 
@@ -196,12 +196,12 @@ pub fn handle_nondispatchable_macro() -> TokenStream {
                 impl Handle for $name {
                     const TYPE: ObjectType = ObjectType::$ty;
                     fn as_raw(self) -> u64 { self.0 as u64 }
-                    fn from_raw(x: u64) -> Self { $name(x as _) }
+                    fn from_raw(x: u64) -> Self { Self(x as _) }
                 }
 
                 impl $name{
-                    pub const fn null() -> $name{
-                        $name(0)
+                    pub const fn null() -> Self {
+                        Self(0)
                     }
                 }
 
@@ -226,121 +226,121 @@ pub fn vk_bitflags_wrapped_macro() -> TokenStream {
         macro_rules! vk_bitflags_wrapped {
             ($name: ident, $all: expr, $flag_type: ty) => {
 
-                impl Default for $name{
-                    fn default() -> $name {
-                        $name(0)
+                impl Default for $name {
+                    fn default() -> Self {
+                        Self(0)
                     }
                 }
 
                 impl $name {
                     #[inline]
-                    pub const fn empty() -> $name {
-                        $name(0)
+                    pub const fn empty() -> Self {
+                        Self(0)
                     }
 
                     #[inline]
-                    pub const fn all() -> $name {
-                        $name($all)
+                    pub const fn all() -> Self {
+                        Self($all)
                     }
 
                     #[inline]
-                    pub const fn from_raw(x: $flag_type) -> Self { $name(x) }
+                    pub const fn from_raw(x: $flag_type) -> Self { Self(x) }
 
                     #[inline]
                     pub const fn as_raw(self) -> $flag_type { self.0 }
 
                     #[inline]
                     pub fn is_empty(self) -> bool {
-                        self == $name::empty()
+                        self == Self::empty()
                     }
 
                     #[inline]
                     pub fn is_all(self) -> bool {
-                        self & $name::all() == $name::all()
+                        self & Self::all() == Self::all()
                     }
 
                     #[inline]
-                    pub fn intersects(self, other: $name) -> bool {
-                        self & other != $name::empty()
+                    pub fn intersects(self, other: Self) -> bool {
+                        self & other != Self::empty()
                     }
 
                     /// Returns whether `other` is a subset of `self`
                     #[inline]
-                    pub fn contains(self, other: $name) -> bool {
+                    pub fn contains(self, other: Self) -> bool {
                         self & other == other
                     }
                 }
 
                 impl ::std::ops::BitOr for $name {
-                    type Output = $name;
+                    type Output = Self;
 
                     #[inline]
-                    fn bitor(self, rhs: $name) -> $name {
-                        $name (self.0 | rhs.0 )
+                    fn bitor(self, rhs: Self) -> Self {
+                        Self(self.0 | rhs.0)
                     }
                 }
 
                 impl ::std::ops::BitOrAssign for $name {
                     #[inline]
-                    fn bitor_assign(&mut self, rhs: $name) {
+                    fn bitor_assign(&mut self, rhs: Self) {
                         *self = *self | rhs
                     }
                 }
 
                 impl ::std::ops::BitAnd for $name {
-                    type Output = $name;
+                    type Output = Self;
 
                     #[inline]
-                    fn bitand(self, rhs: $name) -> $name {
-                        $name (self.0 & rhs.0)
+                    fn bitand(self, rhs: Self) -> Self {
+                        Self(self.0 & rhs.0)
                     }
                 }
 
                 impl ::std::ops::BitAndAssign for $name {
                     #[inline]
-                    fn bitand_assign(&mut self, rhs: $name) {
+                    fn bitand_assign(&mut self, rhs: Self) {
                         *self = *self & rhs
                     }
                 }
 
                 impl ::std::ops::BitXor for $name {
-                    type Output = $name;
+                    type Output = Self;
 
                     #[inline]
-                    fn bitxor(self, rhs: $name) -> $name {
-                        $name (self.0 ^ rhs.0 )
+                    fn bitxor(self, rhs: Self) -> Self {
+                        Self(self.0 ^ rhs.0)
                     }
                 }
 
                 impl ::std::ops::BitXorAssign for $name {
                     #[inline]
-                    fn bitxor_assign(&mut self, rhs: $name) {
+                    fn bitxor_assign(&mut self, rhs: Self) {
                         *self = *self ^ rhs
                     }
                 }
 
                 impl ::std::ops::Sub for $name {
-                    type Output = $name;
+                    type Output = Self;
 
                     #[inline]
-                    fn sub(self, rhs: $name) -> $name {
+                    fn sub(self, rhs: Self) -> Self {
                         self & !rhs
                     }
                 }
 
                 impl ::std::ops::SubAssign for $name {
                     #[inline]
-                    fn sub_assign(&mut self, rhs: $name) {
+                    fn sub_assign(&mut self, rhs: Self) {
                         *self = *self - rhs
                     }
                 }
 
                 impl ::std::ops::Not for $name {
-                    type Output = $name;
+                    type Output = Self;
 
                     #[inline]
-                    fn not(self) -> $name {
-                        self ^ $name::all()
+                    fn not(self) -> Self {
+                        self ^ Self::all()
                     }
                 }
             }
@@ -1079,7 +1079,7 @@ fn generate_function_pointers<'a>(
             pub fn load<F>(mut _f: F) -> Self
                 where F: FnMut(&::std::ffi::CStr) -> *const c_void
             {
-                #ident {
+                Self {
                     #(#loaders,)*
                 }
             }
@@ -1573,7 +1573,7 @@ pub fn generate_enum<'a>(
             #struct_attribute
             pub struct #ident(pub(crate) i32);
             impl #ident {
-                pub const fn from_raw(x: i32) -> Self { #ident(x) }
+                pub const fn from_raw(x: i32) -> Self { Self(x) }
                 pub const fn as_raw(self) -> i32 { self.0 }
             }
             #impl_block
@@ -1601,7 +1601,7 @@ pub fn generate_result(ident: Ident, enum_: &vk_parse::Enums) -> TokenStream {
 
         let variant_ident = variant_ident(enum_.name.as_ref().unwrap(), variant_name);
         Some(quote! {
-            #ident::#variant_ident => Some(#notation)
+            Self::#variant_ident => Some(#notation)
         })
     });
 
@@ -1667,35 +1667,11 @@ pub fn derive_default(_struct: &vkxml::Struct) -> Option<TokenStream> {
                     #param_ident: unsafe { ::std::mem::zeroed() }
                 }
             }
-        } else if let Some(ref reference) = field.reference {
-            match reference {
-                vkxml::ReferenceType::Pointer => {
-                    if field.is_const {
-                        quote! {
-                            #param_ident: ::std::ptr::null()
-                        }
-                    } else {
-                        quote! {
-                            #param_ident: ::std::ptr::null_mut()
-                        }
-                    }
-                }
-                vkxml::ReferenceType::PointerToPointer => {
-                    quote! {
-                        #param_ident: ::std::ptr::null_mut()
-                    }
-                }
-                vkxml::ReferenceType::PointerToConstPointer => {
-                    if field.is_const {
-                        quote! {
-                            #param_ident: ::std::ptr::null()
-                        }
-                    } else {
-                        quote! {
-                            #param_ident: ::std::ptr::null_mut()
-                        }
-                    }
-                }
+        } else if field.reference.is_some() {
+            if field.is_const {
+                quote!(#param_ident: ::std::ptr::null())
+            } else {
+                quote!(#param_ident: ::std::ptr::null_mut())
             }
         } else if is_static_array(field) || handles.contains(&field.basetype.as_str()) {
             quote! {
@@ -1710,8 +1686,8 @@ pub fn derive_default(_struct: &vkxml::Struct) -> Option<TokenStream> {
     });
     let q = quote! {
         impl ::std::default::Default for #name {
-            fn default() -> #name {
-                #name {
+            fn default() -> Self {
+                Self {
                     #(
                         #default_fields
                     ),*
@@ -2041,7 +2017,7 @@ pub fn derive_setters(
         impl #name {
             pub fn builder<'a>() -> #name_builder<'a> {
                 #name_builder {
-                    inner: #name::default(),
+                    inner: Self::default(),
                     marker: ::std::marker::PhantomData,
                 }
             }
@@ -2178,7 +2154,15 @@ pub fn generate_struct(
 
     let params = members.clone().map(|field| {
         let param_ident = field.param_ident();
-        let param_ty_tokens = field.type_tokens(false);
+        let param_ty_tokens = if field.basetype == _struct.name {
+            let pointer = field
+                .reference
+                .as_ref()
+                .map(|r| r.to_tokens(field.is_const));
+            quote!(#pointer Self)
+        } else {
+            field.type_tokens(false)
+        };
         quote! {pub #param_ident: #param_ty_tokens}
     });
 
@@ -2276,7 +2260,7 @@ fn generate_union(union: &vkxml::Union) -> TokenStream {
             #(#fields),*
         }
         impl ::std::default::Default for #name {
-            fn default() -> #name {
+            fn default() -> Self {
                 unsafe { ::std::mem::zeroed() }
             }
         }

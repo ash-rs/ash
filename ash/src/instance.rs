@@ -22,7 +22,7 @@ impl Instance {
             mem::transmute(static_fn.get_instance_proc_addr(instance, name.as_ptr()))
         };
 
-        Instance {
+        Self {
             handle: instance,
 
             instance_fn_1_0: vk::InstanceFnV1_0::load(load_fn),

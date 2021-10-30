@@ -16,7 +16,7 @@ impl vk::Result {
 
     pub fn result_with_success<T>(self, v: T) -> VkResult<T> {
         match self {
-            vk::Result::SUCCESS => Ok(v),
+            Self::SUCCESS => Ok(v),
             _ => Err(self),
         }
     }

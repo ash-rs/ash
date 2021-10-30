@@ -59,7 +59,7 @@ impl KhrSurfaceFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrSurfaceFn {
+        Self {
             destroy_surface_khr: unsafe {
                 unsafe extern "system" fn destroy_surface_khr(
                     _instance: Instance,
@@ -328,7 +328,7 @@ impl KhrSwapchainFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrSwapchainFn {
+        Self {
             create_swapchain_khr: unsafe {
                 unsafe extern "system" fn create_swapchain_khr(
                     _device: Device,
@@ -738,7 +738,7 @@ impl KhrDisplayFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrDisplayFn {
+        Self {
             get_physical_device_display_properties_khr: unsafe {
                 unsafe extern "system" fn get_physical_device_display_properties_khr(
                     _physical_device: PhysicalDevice,
@@ -1028,7 +1028,7 @@ impl KhrDisplaySwapchainFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrDisplaySwapchainFn {
+        Self {
             create_shared_swapchains_khr: unsafe {
                 unsafe extern "system" fn create_shared_swapchains_khr(
                     _device: Device,
@@ -1114,7 +1114,7 @@ impl KhrXlibSurfaceFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrXlibSurfaceFn {
+        Self {
             create_xlib_surface_khr: unsafe {
                 unsafe extern "system" fn create_xlib_surface_khr(
                     _instance: Instance,
@@ -1224,7 +1224,7 @@ impl KhrXcbSurfaceFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrXcbSurfaceFn {
+        Self {
             create_xcb_surface_khr: unsafe {
                 unsafe extern "system" fn create_xcb_surface_khr(
                     _instance: Instance,
@@ -1334,7 +1334,7 @@ impl KhrWaylandSurfaceFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrWaylandSurfaceFn {
+        Self {
             create_wayland_surface_khr: unsafe {
                 unsafe extern "system" fn create_wayland_surface_khr(
                     _instance: Instance,
@@ -1423,7 +1423,7 @@ impl KhrMirSurfaceFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrMirSurfaceFn {}
+        Self {}
     }
 }
 impl KhrAndroidSurfaceFn {
@@ -1451,7 +1451,7 @@ impl KhrAndroidSurfaceFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrAndroidSurfaceFn {
+        Self {
             create_android_surface_khr: unsafe {
                 unsafe extern "system" fn create_android_surface_khr(
                     _instance: Instance,
@@ -1520,7 +1520,7 @@ impl KhrWin32SurfaceFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrWin32SurfaceFn {
+        Self {
             create_win32_surface_khr: unsafe {
                 unsafe extern "system" fn create_win32_surface_khr(
                     _instance: Instance,
@@ -1643,7 +1643,7 @@ impl AndroidNativeBufferFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AndroidNativeBufferFn {
+        Self {
             get_swapchain_gralloc_usage_android: unsafe {
                 unsafe extern "system" fn get_swapchain_gralloc_usage_android(
                     _device: Device,
@@ -1851,7 +1851,7 @@ impl ExtDebugReportFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtDebugReportFn {
+        Self {
             create_debug_report_callback_ext: unsafe {
                 unsafe extern "system" fn create_debug_report_callback_ext(
                     _instance: Instance,
@@ -2005,7 +2005,7 @@ impl NvGlslShaderFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvGlslShaderFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_NV_glsl_shader'"]
@@ -2028,7 +2028,7 @@ impl ExtDepthRangeUnrestrictedFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtDepthRangeUnrestrictedFn {}
+        Self {}
     }
 }
 impl KhrSamplerMirrorClampToEdgeFn {
@@ -2047,7 +2047,7 @@ impl KhrSamplerMirrorClampToEdgeFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrSamplerMirrorClampToEdgeFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_sampler_mirror_clamp_to_edge'"]
@@ -2074,7 +2074,7 @@ impl ImgFilterCubicFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ImgFilterCubicFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_IMG_filter_cubic'"]
@@ -2101,7 +2101,7 @@ impl AmdExtension17Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension17Fn {}
+        Self {}
     }
 }
 impl AmdExtension18Fn {
@@ -2120,7 +2120,7 @@ impl AmdExtension18Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension18Fn {}
+        Self {}
     }
 }
 impl AmdRasterizationOrderFn {
@@ -2139,7 +2139,7 @@ impl AmdRasterizationOrderFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdRasterizationOrderFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_AMD_rasterization_order'"]
@@ -2162,7 +2162,7 @@ impl AmdExtension20Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension20Fn {}
+        Self {}
     }
 }
 impl AmdShaderTrinaryMinmaxFn {
@@ -2181,7 +2181,7 @@ impl AmdShaderTrinaryMinmaxFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdShaderTrinaryMinmaxFn {}
+        Self {}
     }
 }
 impl AmdShaderExplicitVertexParameterFn {
@@ -2200,7 +2200,7 @@ impl AmdShaderExplicitVertexParameterFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdShaderExplicitVertexParameterFn {}
+        Self {}
     }
 }
 impl ExtDebugMarkerFn {
@@ -2247,7 +2247,7 @@ impl ExtDebugMarkerFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtDebugMarkerFn {
+        Self {
             debug_marker_set_object_tag_ext: unsafe {
                 unsafe extern "system" fn debug_marker_set_object_tag_ext(
                     _device: Device,
@@ -2497,7 +2497,7 @@ impl KhrVideoQueueFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrVideoQueueFn {
+        Self {
             get_physical_device_video_capabilities_khr: unsafe {
                 unsafe extern "system" fn get_physical_device_video_capabilities_khr(
                     _physical_device: PhysicalDevice,
@@ -2988,7 +2988,7 @@ impl KhrVideoDecodeQueueFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrVideoDecodeQueueFn {
+        Self {
             cmd_decode_video_khr: unsafe {
                 unsafe extern "system" fn cmd_decode_video_khr(
                     _command_buffer: CommandBuffer,
@@ -3092,7 +3092,7 @@ impl AmdGcnShaderFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdGcnShaderFn {}
+        Self {}
     }
 }
 impl NvDedicatedAllocationFn {
@@ -3111,7 +3111,7 @@ impl NvDedicatedAllocationFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvDedicatedAllocationFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_NV_dedicated_allocation'"]
@@ -3142,7 +3142,7 @@ impl ExtExtension28Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension28Fn {}
+        Self {}
     }
 }
 impl ExtTransformFeedbackFn {
@@ -3218,7 +3218,7 @@ impl ExtTransformFeedbackFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtTransformFeedbackFn {
+        Self {
             cmd_bind_transform_feedback_buffers_ext: unsafe {
                 unsafe extern "system" fn cmd_bind_transform_feedback_buffers_ext(
                     _command_buffer: CommandBuffer,
@@ -3547,7 +3547,7 @@ impl NvxBinaryImportFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvxBinaryImportFn {
+        Self {
             create_cu_module_nvx: unsafe {
                 unsafe extern "system" fn create_cu_module_nvx(
                     _device: Device,
@@ -3751,7 +3751,7 @@ impl NvxImageViewHandleFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvxImageViewHandleFn {
+        Self {
             get_image_view_handle_nvx: unsafe {
                 unsafe extern "system" fn get_image_view_handle_nvx(
                     _device: Device,
@@ -3835,7 +3835,7 @@ impl AmdExtension32Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension32Fn {}
+        Self {}
     }
 }
 impl AmdExtension33Fn {
@@ -3854,7 +3854,7 @@ impl AmdExtension33Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension33Fn {}
+        Self {}
     }
 }
 impl AmdDrawIndirectCountFn {
@@ -3896,7 +3896,7 @@ impl AmdDrawIndirectCountFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdDrawIndirectCountFn {
+        Self {
             cmd_draw_indirect_count_amd: unsafe {
                 unsafe extern "system" fn cmd_draw_indirect_count_amd(
                     _command_buffer: CommandBuffer,
@@ -4007,7 +4007,7 @@ impl AmdExtension35Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension35Fn {}
+        Self {}
     }
 }
 impl AmdNegativeViewportHeightFn {
@@ -4026,7 +4026,7 @@ impl AmdNegativeViewportHeightFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdNegativeViewportHeightFn {}
+        Self {}
     }
 }
 impl AmdGpuShaderHalfFloatFn {
@@ -4045,7 +4045,7 @@ impl AmdGpuShaderHalfFloatFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdGpuShaderHalfFloatFn {}
+        Self {}
     }
 }
 impl AmdShaderBallotFn {
@@ -4064,7 +4064,7 @@ impl AmdShaderBallotFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdShaderBallotFn {}
+        Self {}
     }
 }
 impl ExtVideoEncodeH264Fn {
@@ -4083,7 +4083,7 @@ impl ExtVideoEncodeH264Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtVideoEncodeH264Fn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_video_encode_h264'"]
@@ -4142,7 +4142,7 @@ impl ExtVideoEncodeH265Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtVideoEncodeH265Fn {}
+        Self {}
     }
 }
 impl ExtVideoDecodeH264Fn {
@@ -4161,7 +4161,7 @@ impl ExtVideoDecodeH264Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtVideoDecodeH264Fn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_video_decode_h264'"]
@@ -4216,7 +4216,7 @@ impl AmdTextureGatherBiasLodFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdTextureGatherBiasLodFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_AMD_texture_gather_bias_lod'"]
@@ -4250,7 +4250,7 @@ impl AmdShaderInfoFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdShaderInfoFn {
+        Self {
             get_shader_info_amd: unsafe {
                 unsafe extern "system" fn get_shader_info_amd(
                     _device: Device,
@@ -4309,7 +4309,7 @@ impl AmdExtension44Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension44Fn {}
+        Self {}
     }
 }
 impl AmdExtension45Fn {
@@ -4328,7 +4328,7 @@ impl AmdExtension45Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension45Fn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_AMD_extension_45'"]
@@ -4355,7 +4355,7 @@ impl AmdExtension46Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension46Fn {}
+        Self {}
     }
 }
 impl AmdShaderImageLoadStoreLodFn {
@@ -4374,7 +4374,7 @@ impl AmdShaderImageLoadStoreLodFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdShaderImageLoadStoreLodFn {}
+        Self {}
     }
 }
 impl NvxExtension48Fn {
@@ -4393,7 +4393,7 @@ impl NvxExtension48Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvxExtension48Fn {}
+        Self {}
     }
 }
 impl GoogleExtension49Fn {
@@ -4412,7 +4412,7 @@ impl GoogleExtension49Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        GoogleExtension49Fn {}
+        Self {}
     }
 }
 impl GgpStreamDescriptorSurfaceFn {
@@ -4440,7 +4440,7 @@ impl GgpStreamDescriptorSurfaceFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        GgpStreamDescriptorSurfaceFn {
+        Self {
             create_stream_descriptor_surface_ggp: unsafe {
                 unsafe extern "system" fn create_stream_descriptor_surface_ggp(
                     _instance: Instance,
@@ -4496,7 +4496,7 @@ impl NvCornerSampledImageFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvCornerSampledImageFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_NV_corner_sampled_image'"]
@@ -4523,7 +4523,7 @@ impl NvExtension52Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExtension52Fn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_NV_extension_52'"]
@@ -4550,7 +4550,7 @@ impl NvExtension53Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExtension53Fn {}
+        Self {}
     }
 }
 impl KhrMultiviewFn {
@@ -4569,7 +4569,7 @@ impl KhrMultiviewFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrMultiviewFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_multiview'"]
@@ -4606,7 +4606,7 @@ impl ImgFormatPvrtcFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ImgFormatPvrtcFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_IMG_format_pvrtc'"]
@@ -4672,7 +4672,7 @@ impl NvExternalMemoryCapabilitiesFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExternalMemoryCapabilitiesFn {
+        Self {
             get_physical_device_external_image_format_properties_nv: unsafe {
                 unsafe extern "system" fn get_physical_device_external_image_format_properties_nv(
                     _physical_device: PhysicalDevice,
@@ -4741,7 +4741,7 @@ impl NvExternalMemoryFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExternalMemoryFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_NV_external_memory'"]
@@ -4777,7 +4777,7 @@ impl NvExternalMemoryWin32Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExternalMemoryWin32Fn {
+        Self {
             get_memory_win32_handle_nv: unsafe {
                 unsafe extern "system" fn get_memory_win32_handle_nv(
                     _device: Device,
@@ -4836,7 +4836,7 @@ impl NvWin32KeyedMutexFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvWin32KeyedMutexFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_NV_win32_keyed_mutex'"]
@@ -4910,7 +4910,7 @@ impl KhrGetPhysicalDeviceProperties2Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrGetPhysicalDeviceProperties2Fn {
+        Self {
             get_physical_device_features2_khr: unsafe {
                 unsafe extern "system" fn get_physical_device_features2_khr(
                     _physical_device: PhysicalDevice,
@@ -5224,7 +5224,7 @@ impl KhrDeviceGroupFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrDeviceGroupFn {
+        Self {
             get_device_group_peer_memory_features_khr: unsafe {
                 unsafe extern "system" fn get_device_group_peer_memory_features_khr(
                     _device: Device,
@@ -5543,7 +5543,7 @@ impl ExtValidationFlagsFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtValidationFlagsFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_validation_flags'"]
@@ -5575,7 +5575,7 @@ impl NnViSurfaceFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NnViSurfaceFn {
+        Self {
             create_vi_surface_nn: unsafe {
                 unsafe extern "system" fn create_vi_surface_nn(
                     _instance: Instance,
@@ -5627,7 +5627,7 @@ impl KhrShaderDrawParametersFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrShaderDrawParametersFn {}
+        Self {}
     }
 }
 impl ExtShaderSubgroupBallotFn {
@@ -5646,7 +5646,7 @@ impl ExtShaderSubgroupBallotFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtShaderSubgroupBallotFn {}
+        Self {}
     }
 }
 impl ExtShaderSubgroupVoteFn {
@@ -5665,7 +5665,7 @@ impl ExtShaderSubgroupVoteFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtShaderSubgroupVoteFn {}
+        Self {}
     }
 }
 impl ExtTextureCompressionAstcHdrFn {
@@ -5684,7 +5684,7 @@ impl ExtTextureCompressionAstcHdrFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtTextureCompressionAstcHdrFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_texture_compression_astc_hdr'"]
@@ -5763,7 +5763,7 @@ impl ExtAstcDecodeModeFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtAstcDecodeModeFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_astc_decode_mode'"]
@@ -5790,7 +5790,7 @@ impl ImgExtension69Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ImgExtension69Fn {}
+        Self {}
     }
 }
 impl KhrMaintenance1Fn {
@@ -5817,7 +5817,7 @@ impl KhrMaintenance1Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrMaintenance1Fn {
+        Self {
             trim_command_pool_khr: unsafe {
                 unsafe extern "system" fn trim_command_pool_khr(
                     _device: Device,
@@ -5890,7 +5890,7 @@ impl KhrDeviceGroupCreationFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrDeviceGroupCreationFn {
+        Self {
             enumerate_physical_device_groups_khr: unsafe {
                 unsafe extern "system" fn enumerate_physical_device_groups_khr(
                     _instance: Instance,
@@ -5965,7 +5965,7 @@ impl KhrExternalMemoryCapabilitiesFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExternalMemoryCapabilitiesFn {
+        Self {
             get_physical_device_external_buffer_properties_khr: unsafe {
                 unsafe extern "system" fn get_physical_device_external_buffer_properties_khr(
                     _physical_device: PhysicalDevice,
@@ -6081,7 +6081,7 @@ impl KhrExternalMemoryFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExternalMemoryFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_external_memory'"]
@@ -6133,7 +6133,7 @@ impl KhrExternalMemoryWin32Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExternalMemoryWin32Fn {
+        Self {
             get_memory_win32_handle_khr: unsafe {
                 unsafe extern "system" fn get_memory_win32_handle_khr(
                     _device: Device,
@@ -6251,7 +6251,7 @@ impl KhrExternalMemoryFdFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExternalMemoryFdFn {
+        Self {
             get_memory_fd_khr: unsafe {
                 unsafe extern "system" fn get_memory_fd_khr(
                     _device: Device,
@@ -6340,7 +6340,7 @@ impl KhrWin32KeyedMutexFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrWin32KeyedMutexFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_win32_keyed_mutex'"]
@@ -6372,7 +6372,7 @@ impl KhrExternalSemaphoreCapabilitiesFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExternalSemaphoreCapabilitiesFn {
+        Self {
             get_physical_device_external_semaphore_properties_khr: unsafe {
                 unsafe extern "system" fn get_physical_device_external_semaphore_properties_khr(
                     _physical_device: PhysicalDevice,
@@ -6463,7 +6463,7 @@ impl KhrExternalSemaphoreFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExternalSemaphoreFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_external_semaphore'"]
@@ -6504,7 +6504,7 @@ impl KhrExternalSemaphoreWin32Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExternalSemaphoreWin32Fn {
+        Self {
             import_semaphore_win32_handle_khr: unsafe {
                 unsafe extern "system" fn import_semaphore_win32_handle_khr(
                     _device: Device,
@@ -6612,7 +6612,7 @@ impl KhrExternalSemaphoreFdFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExternalSemaphoreFdFn {
+        Self {
             import_semaphore_fd_khr: unsafe {
                 unsafe extern "system" fn import_semaphore_fd_khr(
                     _device: Device,
@@ -6713,7 +6713,7 @@ impl KhrPushDescriptorFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrPushDescriptorFn {
+        Self {
             cmd_push_descriptor_set_khr: unsafe {
                 unsafe extern "system" fn cmd_push_descriptor_set_khr(
                     _command_buffer: CommandBuffer,
@@ -6838,7 +6838,7 @@ impl ExtConditionalRenderingFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtConditionalRenderingFn {
+        Self {
             cmd_begin_conditional_rendering_ext: unsafe {
                 unsafe extern "system" fn cmd_begin_conditional_rendering_ext(
                     _command_buffer: CommandBuffer,
@@ -6933,7 +6933,7 @@ impl KhrShaderFloat16Int8Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrShaderFloat16Int8Fn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_shader_float16_int8'"]
@@ -6962,7 +6962,7 @@ impl Khr16bitStorageFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        Khr16bitStorageFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_16bit_storage'"]
@@ -6986,7 +6986,7 @@ impl KhrIncrementalPresentFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrIncrementalPresentFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_incremental_present'"]
@@ -7035,7 +7035,7 @@ impl KhrDescriptorUpdateTemplateFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrDescriptorUpdateTemplateFn {
+        Self {
             create_descriptor_update_template_khr: unsafe {
                 unsafe extern "system" fn create_descriptor_update_template_khr(
                     _device: Device,
@@ -7220,7 +7220,7 @@ impl NvxDeviceGeneratedCommandsFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvxDeviceGeneratedCommandsFn {}
+        Self {}
     }
 }
 impl NvClipSpaceWScalingFn {
@@ -7248,7 +7248,7 @@ impl NvClipSpaceWScalingFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvClipSpaceWScalingFn {
+        Self {
             cmd_set_viewport_w_scaling_nv: unsafe {
                 unsafe extern "system" fn cmd_set_viewport_w_scaling_nv(
                     _command_buffer: CommandBuffer,
@@ -7318,7 +7318,7 @@ impl ExtDirectModeDisplayFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtDirectModeDisplayFn {
+        Self {
             release_display_ext: unsafe {
                 unsafe extern "system" fn release_display_ext(
                     _physical_device: PhysicalDevice,
@@ -7378,7 +7378,7 @@ impl ExtAcquireXlibDisplayFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtAcquireXlibDisplayFn {
+        Self {
             acquire_xlib_display_ext: unsafe {
                 unsafe extern "system" fn acquire_xlib_display_ext(
                     _physical_device: PhysicalDevice,
@@ -7468,7 +7468,7 @@ impl ExtDisplaySurfaceCounterFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtDisplaySurfaceCounterFn {
+        Self {
             get_physical_device_surface_capabilities2_ext: unsafe {
                 unsafe extern "system" fn get_physical_device_surface_capabilities2_ext(
                     _physical_device: PhysicalDevice,
@@ -7563,7 +7563,7 @@ impl ExtDisplayControlFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtDisplayControlFn {
+        Self {
             display_power_control_ext: unsafe {
                 unsafe extern "system" fn display_power_control_ext(
                     _device: Device,
@@ -7745,7 +7745,7 @@ impl GoogleDisplayTimingFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        GoogleDisplayTimingFn {
+        Self {
             get_refresh_cycle_duration_google: unsafe {
                 unsafe extern "system" fn get_refresh_cycle_duration_google(
                     _device: Device,
@@ -7836,7 +7836,7 @@ impl NvSampleMaskOverrideCoverageFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvSampleMaskOverrideCoverageFn {}
+        Self {}
     }
 }
 impl NvGeometryShaderPassthroughFn {
@@ -7855,7 +7855,7 @@ impl NvGeometryShaderPassthroughFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvGeometryShaderPassthroughFn {}
+        Self {}
     }
 }
 impl NvViewportArray2Fn {
@@ -7874,7 +7874,7 @@ impl NvViewportArray2Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvViewportArray2Fn {}
+        Self {}
     }
 }
 impl NvxMultiviewPerViewAttributesFn {
@@ -7893,7 +7893,7 @@ impl NvxMultiviewPerViewAttributesFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvxMultiviewPerViewAttributesFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_NVX_multiview_per_view_attributes'"]
@@ -7925,7 +7925,7 @@ impl NvViewportSwizzleFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvViewportSwizzleFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_NV_viewport_swizzle'"]
@@ -7957,7 +7957,7 @@ impl ExtDiscardRectanglesFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtDiscardRectanglesFn {
+        Self {
             cmd_set_discard_rectangle_ext: unsafe {
                 unsafe extern "system" fn cmd_set_discard_rectangle_ext(
                     _command_buffer: CommandBuffer,
@@ -8026,7 +8026,7 @@ impl NvExtension101Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExtension101Fn {}
+        Self {}
     }
 }
 impl ExtConservativeRasterizationFn {
@@ -8045,7 +8045,7 @@ impl ExtConservativeRasterizationFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtConservativeRasterizationFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_conservative_rasterization'"]
@@ -8072,7 +8072,7 @@ impl ExtDepthClipEnableFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtDepthClipEnableFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_depth_clip_enable'"]
@@ -8099,7 +8099,7 @@ impl NvExtension104Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExtension104Fn {}
+        Self {}
     }
 }
 impl ExtSwapchainColorspaceFn {
@@ -8118,7 +8118,7 @@ impl ExtSwapchainColorspaceFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtSwapchainColorspaceFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_swapchain_colorspace'"]
@@ -8206,7 +8206,7 @@ impl ExtHdrMetadataFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtHdrMetadataFn {
+        Self {
             set_hdr_metadata_ext: unsafe {
                 unsafe extern "system" fn set_hdr_metadata_ext(
                     _device: Device,
@@ -8258,7 +8258,7 @@ impl ImgExtension107Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ImgExtension107Fn {}
+        Self {}
     }
 }
 impl ImgExtension108Fn {
@@ -8277,7 +8277,7 @@ impl ImgExtension108Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ImgExtension108Fn {}
+        Self {}
     }
 }
 impl KhrImagelessFramebufferFn {
@@ -8296,7 +8296,7 @@ impl KhrImagelessFramebufferFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrImagelessFramebufferFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_imageless_framebuffer'"]
@@ -8366,7 +8366,7 @@ impl KhrCreateRenderpass2Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrCreateRenderpass2Fn {
+        Self {
             create_render_pass2_khr: unsafe {
                 unsafe extern "system" fn create_render_pass2_khr(
                     _device: Device,
@@ -8530,7 +8530,7 @@ impl ImgExtension111Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ImgExtension111Fn {}
+        Self {}
     }
 }
 impl KhrSharedPresentableImageFn {
@@ -8554,7 +8554,7 @@ impl KhrSharedPresentableImageFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrSharedPresentableImageFn {
+        Self {
             get_swapchain_status_khr: unsafe {
                 unsafe extern "system" fn get_swapchain_status_khr(
                     _device: Device,
@@ -8626,7 +8626,7 @@ impl KhrExternalFenceCapabilitiesFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExternalFenceCapabilitiesFn {
+        Self {
             get_physical_device_external_fence_properties_khr: unsafe {
                 unsafe extern "system" fn get_physical_device_external_fence_properties_khr(
                     _physical_device: PhysicalDevice,
@@ -8713,7 +8713,7 @@ impl KhrExternalFenceFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExternalFenceFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_external_fence'"]
@@ -8754,7 +8754,7 @@ impl KhrExternalFenceWin32Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExternalFenceWin32Fn {
+        Self {
             import_fence_win32_handle_khr: unsafe {
                 unsafe extern "system" fn import_fence_win32_handle_khr(
                     _device: Device,
@@ -8857,7 +8857,7 @@ impl KhrExternalFenceFdFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExternalFenceFdFn {
+        Self {
             import_fence_fd_khr: unsafe {
                 unsafe extern "system" fn import_fence_fd_khr(
                     _device: Device,
@@ -8962,7 +8962,7 @@ impl KhrPerformanceQueryFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrPerformanceQueryFn {
+        Self {
             enumerate_physical_device_queue_family_performance_query_counters_khr: unsafe {
                 unsafe extern "system" fn enumerate_physical_device_queue_family_performance_query_counters_khr(
                     _physical_device: PhysicalDevice,
@@ -9137,7 +9137,7 @@ impl KhrMaintenance2Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrMaintenance2Fn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_maintenance2'"]
@@ -9209,7 +9209,7 @@ impl KhrExtension119Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExtension119Fn {}
+        Self {}
     }
 }
 impl KhrGetSurfaceCapabilities2Fn {
@@ -9245,7 +9245,7 @@ impl KhrGetSurfaceCapabilities2Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrGetSurfaceCapabilities2Fn {
+        Self {
             get_physical_device_surface_capabilities2_khr: unsafe {
                 unsafe extern "system" fn get_physical_device_surface_capabilities2_khr(
                     _physical_device: PhysicalDevice,
@@ -9348,7 +9348,7 @@ impl KhrVariablePointersFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrVariablePointersFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_variable_pointers'"]
@@ -9408,7 +9408,7 @@ impl KhrGetDisplayProperties2Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrGetDisplayProperties2Fn {
+        Self {
             get_physical_device_display_properties2_khr: unsafe {
                 unsafe extern "system" fn get_physical_device_display_properties2_khr(
                     _physical_device: PhysicalDevice,
@@ -9596,7 +9596,7 @@ impl MvkIosSurfaceFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        MvkIosSurfaceFn {
+        Self {
             create_ios_surface_mvk: unsafe {
                 unsafe extern "system" fn create_ios_surface_mvk(
                     _instance: Instance,
@@ -9660,7 +9660,7 @@ impl MvkMacosSurfaceFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        MvkMacosSurfaceFn {
+        Self {
             create_mac_os_surface_mvk: unsafe {
                 unsafe extern "system" fn create_mac_os_surface_mvk(
                     _instance: Instance,
@@ -9714,7 +9714,7 @@ impl MvkMoltenvkFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        MvkMoltenvkFn {}
+        Self {}
     }
 }
 impl ExtExternalMemoryDmaBufFn {
@@ -9733,7 +9733,7 @@ impl ExtExternalMemoryDmaBufFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExternalMemoryDmaBufFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_external_memory_dma_buf'"]
@@ -9756,7 +9756,7 @@ impl ExtQueueFamilyForeignFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtQueueFamilyForeignFn {}
+        Self {}
     }
 }
 impl KhrDedicatedAllocationFn {
@@ -9775,7 +9775,7 @@ impl KhrDedicatedAllocationFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrDedicatedAllocationFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_dedicated_allocation'"]
@@ -9864,7 +9864,7 @@ impl ExtDebugUtilsFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtDebugUtilsFn {
+        Self {
             set_debug_utils_object_name_ext: unsafe {
                 unsafe extern "system" fn set_debug_utils_object_name_ext(
                     _device: Device,
@@ -10237,7 +10237,7 @@ impl AndroidExternalMemoryAndroidHardwareBufferFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AndroidExternalMemoryAndroidHardwareBufferFn {
+        Self {
             get_android_hardware_buffer_properties_android: unsafe {
                 unsafe extern "system" fn get_android_hardware_buffer_properties_android(
                     _device: Device,
@@ -10345,7 +10345,7 @@ impl ExtSamplerFilterMinmaxFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtSamplerFilterMinmaxFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_sampler_filter_minmax'"]
@@ -10390,7 +10390,7 @@ impl KhrStorageBufferStorageClassFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrStorageBufferStorageClassFn {}
+        Self {}
     }
 }
 impl AmdGpuShaderInt16Fn {
@@ -10409,7 +10409,7 @@ impl AmdGpuShaderInt16Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdGpuShaderInt16Fn {}
+        Self {}
     }
 }
 impl AmdExtension134Fn {
@@ -10428,7 +10428,7 @@ impl AmdExtension134Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension134Fn {}
+        Self {}
     }
 }
 impl AmdExtension135Fn {
@@ -10447,7 +10447,7 @@ impl AmdExtension135Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension135Fn {}
+        Self {}
     }
 }
 impl AmdExtension136Fn {
@@ -10466,7 +10466,7 @@ impl AmdExtension136Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension136Fn {}
+        Self {}
     }
 }
 impl AmdMixedAttachmentSamplesFn {
@@ -10485,7 +10485,7 @@ impl AmdMixedAttachmentSamplesFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdMixedAttachmentSamplesFn {}
+        Self {}
     }
 }
 impl AmdShaderFragmentMaskFn {
@@ -10504,7 +10504,7 @@ impl AmdShaderFragmentMaskFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdShaderFragmentMaskFn {}
+        Self {}
     }
 }
 impl ExtInlineUniformBlockFn {
@@ -10523,7 +10523,7 @@ impl ExtInlineUniformBlockFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtInlineUniformBlockFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_inline_uniform_block'"]
@@ -10562,7 +10562,7 @@ impl AmdExtension140Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension140Fn {}
+        Self {}
     }
 }
 impl ExtShaderStencilExportFn {
@@ -10581,7 +10581,7 @@ impl ExtShaderStencilExportFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtShaderStencilExportFn {}
+        Self {}
     }
 }
 impl AmdExtension142Fn {
@@ -10600,7 +10600,7 @@ impl AmdExtension142Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension142Fn {}
+        Self {}
     }
 }
 impl AmdExtension143Fn {
@@ -10619,7 +10619,7 @@ impl AmdExtension143Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension143Fn {}
+        Self {}
     }
 }
 impl ExtSampleLocationsFn {
@@ -10653,7 +10653,7 @@ impl ExtSampleLocationsFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtSampleLocationsFn {
+        Self {
             cmd_set_sample_locations_ext: unsafe {
                 unsafe extern "system" fn cmd_set_sample_locations_ext(
                     _command_buffer: CommandBuffer,
@@ -10763,7 +10763,7 @@ impl KhrRelaxedBlockLayoutFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrRelaxedBlockLayoutFn {}
+        Self {}
     }
 }
 impl KhrGetMemoryRequirements2Fn {
@@ -10805,7 +10805,7 @@ impl KhrGetMemoryRequirements2Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrGetMemoryRequirements2Fn {
+        Self {
             get_image_memory_requirements2_khr: unsafe {
                 unsafe extern "system" fn get_image_memory_requirements2_khr(
                     _device: Device,
@@ -10944,7 +10944,7 @@ impl KhrImageFormatListFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrImageFormatListFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_image_format_list'"]
@@ -10967,7 +10967,7 @@ impl ExtBlendOperationAdvancedFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtBlendOperationAdvancedFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
@@ -11186,7 +11186,7 @@ impl NvFragmentCoverageToColorFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvFragmentCoverageToColorFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_NV_fragment_coverage_to_color'"]
@@ -11342,7 +11342,7 @@ impl KhrAccelerationStructureFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrAccelerationStructureFn {
+        Self {
             create_acceleration_structure_khr: unsafe {
                 unsafe extern "system" fn create_acceleration_structure_khr(
                     _device: Device,
@@ -12092,7 +12092,7 @@ impl KhrRayTracingPipelineFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrRayTracingPipelineFn {
+        Self {
             cmd_trace_rays_khr: unsafe {
                 unsafe extern "system" fn cmd_trace_rays_khr(
                     _command_buffer: CommandBuffer,
@@ -12479,7 +12479,7 @@ impl KhrRayQueryFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrRayQueryFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_ray_query'"]
@@ -12502,7 +12502,7 @@ impl NvExtension152Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExtension152Fn {}
+        Self {}
     }
 }
 impl NvFramebufferMixedSamplesFn {
@@ -12521,7 +12521,7 @@ impl NvFramebufferMixedSamplesFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvFramebufferMixedSamplesFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_NV_framebuffer_mixed_samples'"]
@@ -12544,7 +12544,7 @@ impl NvFillRectangleFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvFillRectangleFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_NV_fill_rectangle'"]
@@ -12567,7 +12567,7 @@ impl NvShaderSmBuiltinsFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvShaderSmBuiltinsFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_NV_shader_sm_builtins'"]
@@ -12594,7 +12594,7 @@ impl ExtPostDepthCoverageFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtPostDepthCoverageFn {}
+        Self {}
     }
 }
 impl KhrSamplerYcbcrConversionFn {
@@ -12629,7 +12629,7 @@ impl KhrSamplerYcbcrConversionFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrSamplerYcbcrConversionFn {
+        Self {
             create_sampler_ycbcr_conversion_khr: unsafe {
                 unsafe extern "system" fn create_sampler_ycbcr_conversion_khr(
                     _device: Device,
@@ -13003,7 +13003,7 @@ impl KhrBindMemory2Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrBindMemory2Fn {
+        Self {
             bind_buffer_memory2_khr: unsafe {
                 unsafe extern "system" fn bind_buffer_memory2_khr(
                     _device: Device,
@@ -13101,7 +13101,7 @@ impl ExtImageDrmFormatModifierFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtImageDrmFormatModifierFn {
+        Self {
             get_image_drm_format_modifier_properties_ext: unsafe {
                 unsafe extern "system" fn get_image_drm_format_modifier_properties_ext(
                     _device: Device,
@@ -13195,7 +13195,7 @@ impl ExtExtension160Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension160Fn {}
+        Self {}
     }
 }
 impl ExtValidationCacheFn {
@@ -13246,7 +13246,7 @@ impl ExtValidationCacheFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtValidationCacheFn {
+        Self {
             create_validation_cache_ext: unsafe {
                 unsafe extern "system" fn create_validation_cache_ext(
                     _device: Device,
@@ -13404,7 +13404,7 @@ impl ExtDescriptorIndexingFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtDescriptorIndexingFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_descriptor_indexing'"]
@@ -13476,7 +13476,7 @@ impl ExtShaderViewportIndexLayerFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtShaderViewportIndexLayerFn {}
+        Self {}
     }
 }
 impl KhrPortabilitySubsetFn {
@@ -13495,7 +13495,7 @@ impl KhrPortabilitySubsetFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrPortabilitySubsetFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_portability_subset'"]
@@ -13546,7 +13546,7 @@ impl NvShadingRateImageFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvShadingRateImageFn {
+        Self {
             cmd_bind_shading_rate_image_nv: unsafe {
                 unsafe extern "system" fn cmd_bind_shading_rate_image_nv(
                     _command_buffer: CommandBuffer,
@@ -13817,7 +13817,7 @@ impl NvRayTracingFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvRayTracingFn {
+        Self {
             create_acceleration_structure_nv: unsafe {
                 unsafe extern "system" fn create_acceleration_structure_nv(
                     _device: Device,
@@ -14505,7 +14505,7 @@ impl NvRepresentativeFragmentTestFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvRepresentativeFragmentTestFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_NV_representative_fragment_test'"]
@@ -14533,7 +14533,7 @@ impl NvExtension168Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExtension168Fn {}
+        Self {}
     }
 }
 impl KhrMaintenance3Fn {
@@ -14560,7 +14560,7 @@ impl KhrMaintenance3Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrMaintenance3Fn {
+        Self {
             get_descriptor_set_layout_support_khr: unsafe {
                 unsafe extern "system" fn get_descriptor_set_layout_support_khr(
                     _device: Device,
@@ -14622,7 +14622,7 @@ impl KhrDrawIndirectCountFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrDrawIndirectCountFn {
+        Self {
             cmd_draw_indirect_count_khr: unsafe {
                 unsafe extern "system" fn cmd_draw_indirect_count_khr(
                     _command_buffer: CommandBuffer,
@@ -14733,7 +14733,7 @@ impl ExtFilterCubicFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtFilterCubicFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_filter_cubic'"]
@@ -14768,7 +14768,7 @@ impl QcomRenderPassShaderResolveFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        QcomRenderPassShaderResolveFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_QCOM_render_pass_shader_resolve'"]
@@ -14795,7 +14795,7 @@ impl QcomExtension173Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        QcomExtension173Fn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_QCOM_extension_173'"]
@@ -14826,7 +14826,7 @@ impl QcomExtension174Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        QcomExtension174Fn {}
+        Self {}
     }
 }
 impl ExtGlobalPriorityFn {
@@ -14845,7 +14845,7 @@ impl ExtGlobalPriorityFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtGlobalPriorityFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_global_priority'"]
@@ -14872,7 +14872,7 @@ impl KhrShaderSubgroupExtendedTypesFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrShaderSubgroupExtendedTypesFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_shader_subgroup_extended_types'"]
@@ -14896,7 +14896,7 @@ impl ExtExtension177Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension177Fn {}
+        Self {}
     }
 }
 impl Khr8bitStorageFn {
@@ -14915,7 +14915,7 @@ impl Khr8bitStorageFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        Khr8bitStorageFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_8bit_storage'"]
@@ -14948,7 +14948,7 @@ impl ExtExternalMemoryHostFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExternalMemoryHostFn {
+        Self {
             get_memory_host_pointer_properties_ext: unsafe {
                 unsafe extern "system" fn get_memory_host_pointer_properties_ext(
                     _device: Device,
@@ -15035,7 +15035,7 @@ impl AmdBufferMarkerFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdBufferMarkerFn {
+        Self {
             cmd_write_buffer_marker_amd: unsafe {
                 unsafe extern "system" fn cmd_write_buffer_marker_amd(
                     _command_buffer: CommandBuffer,
@@ -15094,7 +15094,7 @@ impl KhrShaderAtomicInt64Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrShaderAtomicInt64Fn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_shader_atomic_int64'"]
@@ -15118,7 +15118,7 @@ impl KhrShaderClockFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrShaderClockFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_shader_clock'"]
@@ -15141,7 +15141,7 @@ impl AmdExtension183Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension183Fn {}
+        Self {}
     }
 }
 impl AmdPipelineCompilerControlFn {
@@ -15160,7 +15160,7 @@ impl AmdPipelineCompilerControlFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdPipelineCompilerControlFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_AMD_pipeline_compiler_control'"]
@@ -15201,7 +15201,7 @@ impl ExtCalibratedTimestampsFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtCalibratedTimestampsFn {
+        Self {
             get_physical_device_calibrateable_time_domains_ext: unsafe {
                 unsafe extern "system" fn get_physical_device_calibrateable_time_domains_ext(
                     _physical_device: PhysicalDevice,
@@ -15299,7 +15299,7 @@ impl AmdShaderCorePropertiesFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdShaderCorePropertiesFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_AMD_shader_core_properties'"]
@@ -15322,7 +15322,7 @@ impl AmdExtension187Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension187Fn {}
+        Self {}
     }
 }
 impl ExtVideoDecodeH265Fn {
@@ -15341,7 +15341,7 @@ impl ExtVideoDecodeH265Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtVideoDecodeH265Fn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_video_decode_h265'"]
@@ -15392,7 +15392,7 @@ impl AmdExtension189Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension189Fn {}
+        Self {}
     }
 }
 impl AmdMemoryOverallocationBehaviorFn {
@@ -15411,7 +15411,7 @@ impl AmdMemoryOverallocationBehaviorFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdMemoryOverallocationBehaviorFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_AMD_memory_overallocation_behavior'"]
@@ -15434,7 +15434,7 @@ impl ExtVertexAttributeDivisorFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtVertexAttributeDivisorFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_vertex_attribute_divisor'"]
@@ -15465,7 +15465,7 @@ impl GgpFrameTokenFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        GgpFrameTokenFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_GGP_frame_token'"]
@@ -15488,7 +15488,7 @@ impl ExtPipelineCreationFeedbackFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtPipelineCreationFeedbackFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_pipeline_creation_feedback'"]
@@ -15511,7 +15511,7 @@ impl GoogleExtension194Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        GoogleExtension194Fn {}
+        Self {}
     }
 }
 impl GoogleExtension195Fn {
@@ -15530,7 +15530,7 @@ impl GoogleExtension195Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        GoogleExtension195Fn {}
+        Self {}
     }
 }
 impl GoogleExtension196Fn {
@@ -15549,7 +15549,7 @@ impl GoogleExtension196Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        GoogleExtension196Fn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_GOOGLE_extension_196'"]
@@ -15572,7 +15572,7 @@ impl KhrDriverPropertiesFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrDriverPropertiesFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_driver_properties'"]
@@ -15643,7 +15643,7 @@ impl KhrShaderFloatControlsFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrShaderFloatControlsFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_shader_float_controls'"]
@@ -15679,7 +15679,7 @@ impl NvShaderSubgroupPartitionedFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvShaderSubgroupPartitionedFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_NV_shader_subgroup_partitioned'"]
@@ -15702,7 +15702,7 @@ impl KhrDepthStencilResolveFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrDepthStencilResolveFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_depth_stencil_resolve'"]
@@ -15751,7 +15751,7 @@ impl KhrSwapchainMutableFormatFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrSwapchainMutableFormatFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_swapchain_mutable_format'"]
@@ -15774,7 +15774,7 @@ impl NvComputeShaderDerivativesFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvComputeShaderDerivativesFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_NV_compute_shader_derivatives'"]
@@ -15822,7 +15822,7 @@ impl NvMeshShaderFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvMeshShaderFn {
+        Self {
             cmd_draw_mesh_tasks_nv: unsafe {
                 unsafe extern "system" fn cmd_draw_mesh_tasks_nv(
                     _command_buffer: CommandBuffer,
@@ -15975,7 +15975,7 @@ impl NvFragmentShaderBarycentricFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvFragmentShaderBarycentricFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_NV_fragment_shader_barycentric'"]
@@ -15998,7 +15998,7 @@ impl NvShaderImageFootprintFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvShaderImageFootprintFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_NV_shader_image_footprint'"]
@@ -16030,7 +16030,7 @@ impl NvScissorExclusiveFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvScissorExclusiveFn {
+        Self {
             cmd_set_exclusive_scissor_nv: unsafe {
                 unsafe extern "system" fn cmd_set_exclusive_scissor_nv(
                     _command_buffer: CommandBuffer,
@@ -16111,7 +16111,7 @@ impl NvDeviceDiagnosticCheckpointsFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvDeviceDiagnosticCheckpointsFn {
+        Self {
             cmd_set_checkpoint_nv: unsafe {
                 unsafe extern "system" fn cmd_set_checkpoint_nv(
                     _command_buffer: CommandBuffer,
@@ -16212,7 +16212,7 @@ impl KhrTimelineSemaphoreFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrTimelineSemaphoreFn {
+        Self {
             get_semaphore_counter_value_khr: unsafe {
                 unsafe extern "system" fn get_semaphore_counter_value_khr(
                     _device: Device,
@@ -16350,7 +16350,7 @@ impl KhrExtension209Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExtension209Fn {}
+        Self {}
     }
 }
 impl IntelShaderIntegerFunctions2Fn {
@@ -16369,7 +16369,7 @@ impl IntelShaderIntegerFunctions2Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        IntelShaderIntegerFunctions2Fn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_INTEL_shader_integer_functions2'"]
@@ -16444,7 +16444,7 @@ impl IntelPerformanceQueryFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        IntelPerformanceQueryFn {
+        Self {
             initialize_performance_api_intel: unsafe {
                 unsafe extern "system" fn initialize_performance_api_intel(
                     _device: Device,
@@ -16750,7 +16750,7 @@ impl KhrVulkanMemoryModelFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrVulkanMemoryModelFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_vulkan_memory_model'"]
@@ -16774,7 +16774,7 @@ impl ExtPciBusInfoFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtPciBusInfoFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_pci_bus_info'"]
@@ -16805,7 +16805,7 @@ impl AmdDisplayNativeHdrFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdDisplayNativeHdrFn {
+        Self {
             set_local_dimming_amd: unsafe {
                 unsafe extern "system" fn set_local_dimming_amd(
                     _device: Device,
@@ -16875,7 +16875,7 @@ impl FuchsiaImagepipeSurfaceFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        FuchsiaImagepipeSurfaceFn {
+        Self {
             create_image_pipe_surface_fuchsia: unsafe {
                 unsafe extern "system" fn create_image_pipe_surface_fuchsia(
                     _instance: Instance,
@@ -16931,7 +16931,7 @@ impl KhrShaderTerminateInvocationFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrShaderTerminateInvocationFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_shader_terminate_invocation'"]
@@ -16954,7 +16954,7 @@ impl GoogleExtension217Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        GoogleExtension217Fn {}
+        Self {}
     }
 }
 impl ExtMetalSurfaceFn {
@@ -16982,7 +16982,7 @@ impl ExtMetalSurfaceFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtMetalSurfaceFn {
+        Self {
             create_metal_surface_ext: unsafe {
                 unsafe extern "system" fn create_metal_surface_ext(
                     _instance: Instance,
@@ -17037,7 +17037,7 @@ impl ExtFragmentDensityMapFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtFragmentDensityMapFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_fragment_density_map'"]
@@ -17104,7 +17104,7 @@ impl ExtExtension220Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension220Fn {}
+        Self {}
     }
 }
 impl KhrExtension221Fn {
@@ -17123,7 +17123,7 @@ impl KhrExtension221Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExtension221Fn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_extension_221'"]
@@ -17146,7 +17146,7 @@ impl ExtScalarBlockLayoutFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtScalarBlockLayoutFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_scalar_block_layout'"]
@@ -17170,7 +17170,7 @@ impl ExtExtension223Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension223Fn {}
+        Self {}
     }
 }
 impl GoogleHlslFunctionality1Fn {
@@ -17189,7 +17189,7 @@ impl GoogleHlslFunctionality1Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        GoogleHlslFunctionality1Fn {}
+        Self {}
     }
 }
 impl GoogleDecorateStringFn {
@@ -17208,7 +17208,7 @@ impl GoogleDecorateStringFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        GoogleDecorateStringFn {}
+        Self {}
     }
 }
 impl ExtSubgroupSizeControlFn {
@@ -17227,7 +17227,7 @@ impl ExtSubgroupSizeControlFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtSubgroupSizeControlFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_subgroup_size_control'"]
@@ -17283,7 +17283,7 @@ impl KhrFragmentShadingRateFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrFragmentShadingRateFn {
+        Self {
             get_physical_device_fragment_shading_rates_khr: unsafe {
                 unsafe extern "system" fn get_physical_device_fragment_shading_rates_khr(
                     _physical_device: PhysicalDevice,
@@ -17413,7 +17413,7 @@ impl AmdShaderCoreProperties2Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdShaderCoreProperties2Fn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_AMD_shader_core_properties2'"]
@@ -17436,7 +17436,7 @@ impl AmdExtension229Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension229Fn {}
+        Self {}
     }
 }
 impl AmdDeviceCoherentMemoryFn {
@@ -17455,7 +17455,7 @@ impl AmdDeviceCoherentMemoryFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdDeviceCoherentMemoryFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_AMD_device_coherent_memory'"]
@@ -17486,7 +17486,7 @@ impl AmdExtension231Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension231Fn {}
+        Self {}
     }
 }
 impl AmdExtension232Fn {
@@ -17505,7 +17505,7 @@ impl AmdExtension232Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension232Fn {}
+        Self {}
     }
 }
 impl AmdExtension233Fn {
@@ -17524,7 +17524,7 @@ impl AmdExtension233Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension233Fn {}
+        Self {}
     }
 }
 impl AmdExtension234Fn {
@@ -17543,7 +17543,7 @@ impl AmdExtension234Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension234Fn {}
+        Self {}
     }
 }
 impl ExtShaderImageAtomicInt64Fn {
@@ -17562,7 +17562,7 @@ impl ExtShaderImageAtomicInt64Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtShaderImageAtomicInt64Fn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_shader_image_atomic_int64'"]
@@ -17585,7 +17585,7 @@ impl AmdExtension236Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension236Fn {}
+        Self {}
     }
 }
 impl KhrSpirv14Fn {
@@ -17604,7 +17604,7 @@ impl KhrSpirv14Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrSpirv14Fn {}
+        Self {}
     }
 }
 impl ExtMemoryBudgetFn {
@@ -17623,7 +17623,7 @@ impl ExtMemoryBudgetFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtMemoryBudgetFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_memory_budget'"]
@@ -17646,7 +17646,7 @@ impl ExtMemoryPriorityFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtMemoryPriorityFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_memory_priority'"]
@@ -17673,7 +17673,7 @@ impl KhrSurfaceProtectedCapabilitiesFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrSurfaceProtectedCapabilitiesFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_surface_protected_capabilities'"]
@@ -17696,7 +17696,7 @@ impl NvDedicatedAllocationImageAliasingFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvDedicatedAllocationImageAliasingFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_NV_dedicated_allocation_image_aliasing'"]
@@ -17720,7 +17720,7 @@ impl KhrSeparateDepthStencilLayoutsFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrSeparateDepthStencilLayoutsFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_separate_depth_stencil_layouts'"]
@@ -17770,7 +17770,7 @@ impl IntelExtension243Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        IntelExtension243Fn {}
+        Self {}
     }
 }
 impl MesaExtension244Fn {
@@ -17789,7 +17789,7 @@ impl MesaExtension244Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        MesaExtension244Fn {}
+        Self {}
     }
 }
 impl ExtBufferDeviceAddressFn {
@@ -17815,7 +17815,7 @@ impl ExtBufferDeviceAddressFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtBufferDeviceAddressFn {
+        Self {
             get_buffer_device_address_ext: unsafe {
                 unsafe extern "system" fn get_buffer_device_address_ext(
                     _device: Device,
@@ -17900,7 +17900,7 @@ impl ExtToolingInfoFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtToolingInfoFn {
+        Self {
             get_physical_device_tool_properties_ext: unsafe {
                 unsafe extern "system" fn get_physical_device_tool_properties_ext(
                     _physical_device: PhysicalDevice,
@@ -17966,7 +17966,7 @@ impl ExtSeparateStencilUsageFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtSeparateStencilUsageFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_separate_stencil_usage'"]
@@ -17989,7 +17989,7 @@ impl ExtValidationFeaturesFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtValidationFeaturesFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_validation_features'"]
@@ -18021,7 +18021,7 @@ impl KhrPresentWaitFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrPresentWaitFn {
+        Self {
             wait_for_present_khr: unsafe {
                 unsafe extern "system" fn wait_for_present_khr(
                     _device: Device,
@@ -18083,7 +18083,7 @@ impl NvCooperativeMatrixFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvCooperativeMatrixFn {
+        Self {
             get_physical_device_cooperative_matrix_properties_nv: unsafe {
                 unsafe extern "system" fn get_physical_device_cooperative_matrix_properties_nv(
                     _physical_device: PhysicalDevice,
@@ -18159,7 +18159,7 @@ impl NvCoverageReductionModeFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvCoverageReductionModeFn {
+        Self {
             get_physical_device_supported_framebuffer_mixed_samples_combinations_nv: unsafe {
                 unsafe extern "system" fn get_physical_device_supported_framebuffer_mixed_samples_combinations_nv(
                     _physical_device: PhysicalDevice,
@@ -18227,7 +18227,7 @@ impl ExtFragmentShaderInterlockFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtFragmentShaderInterlockFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_fragment_shader_interlock'"]
@@ -18250,7 +18250,7 @@ impl ExtYcbcrImageArraysFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtYcbcrImageArraysFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_ycbcr_image_arrays'"]
@@ -18273,7 +18273,7 @@ impl KhrUniformBufferStandardLayoutFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrUniformBufferStandardLayoutFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_uniform_buffer_standard_layout'"]
@@ -18297,7 +18297,7 @@ impl ExtProvokingVertexFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtProvokingVertexFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_provoking_vertex'"]
@@ -18354,7 +18354,7 @@ impl ExtFullScreenExclusiveFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtFullScreenExclusiveFn {
+        Self {
             get_physical_device_surface_present_modes2_ext: unsafe {
                 unsafe extern "system" fn get_physical_device_surface_present_modes2_ext(
                     _physical_device: PhysicalDevice,
@@ -18522,7 +18522,7 @@ impl ExtHeadlessSurfaceFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtHeadlessSurfaceFn {
+        Self {
             create_headless_surface_ext: unsafe {
                 unsafe extern "system" fn create_headless_surface_ext(
                     _instance: Instance,
@@ -18590,7 +18590,7 @@ impl KhrBufferDeviceAddressFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrBufferDeviceAddressFn {
+        Self {
             get_buffer_device_address_khr: unsafe {
                 unsafe extern "system" fn get_buffer_device_address_khr(
                     _device: Device,
@@ -18739,7 +18739,7 @@ impl ExtExtension259Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension259Fn {}
+        Self {}
     }
 }
 impl ExtLineRasterizationFn {
@@ -18766,7 +18766,7 @@ impl ExtLineRasterizationFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtLineRasterizationFn {
+        Self {
             cmd_set_line_stipple_ext: unsafe {
                 unsafe extern "system" fn cmd_set_line_stipple_ext(
                     _command_buffer: CommandBuffer,
@@ -18831,7 +18831,7 @@ impl ExtShaderAtomicFloatFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtShaderAtomicFloatFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_shader_atomic_float'"]
@@ -18863,7 +18863,7 @@ impl ExtHostQueryResetFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtHostQueryResetFn {
+        Self {
             reset_query_pool_ext: unsafe {
                 unsafe extern "system" fn reset_query_pool_ext(
                     _device: Device,
@@ -18916,7 +18916,7 @@ impl GgpExtension263Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        GgpExtension263Fn {}
+        Self {}
     }
 }
 impl BrcmExtension264Fn {
@@ -18935,7 +18935,7 @@ impl BrcmExtension264Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        BrcmExtension264Fn {}
+        Self {}
     }
 }
 impl BrcmExtension265Fn {
@@ -18954,7 +18954,7 @@ impl BrcmExtension265Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        BrcmExtension265Fn {}
+        Self {}
     }
 }
 impl ExtIndexTypeUint8Fn {
@@ -18973,7 +18973,7 @@ impl ExtIndexTypeUint8Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtIndexTypeUint8Fn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_index_type_uint8'"]
@@ -19000,7 +19000,7 @@ impl ExtExtension267Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension267Fn {}
+        Self {}
     }
 }
 impl ExtExtendedDynamicStateFn {
@@ -19087,7 +19087,7 @@ impl ExtExtendedDynamicStateFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtendedDynamicStateFn {
+        Self {
             cmd_set_cull_mode_ext: unsafe {
                 unsafe extern "system" fn cmd_set_cull_mode_ext(
                     _command_buffer: CommandBuffer,
@@ -19555,7 +19555,7 @@ impl KhrDeferredHostOperationsFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrDeferredHostOperationsFn {
+        Self {
             create_deferred_operation_khr: unsafe {
                 unsafe extern "system" fn create_deferred_operation_khr(
                     _device: Device,
@@ -19766,7 +19766,7 @@ impl KhrPipelineExecutablePropertiesFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrPipelineExecutablePropertiesFn {
+        Self {
             get_pipeline_executable_properties_khr: unsafe {
                 unsafe extern "system" fn get_pipeline_executable_properties_khr(
                     _device: Device,
@@ -19930,7 +19930,7 @@ impl IntelExtension271Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        IntelExtension271Fn {}
+        Self {}
     }
 }
 impl IntelExtension272Fn {
@@ -19949,7 +19949,7 @@ impl IntelExtension272Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        IntelExtension272Fn {}
+        Self {}
     }
 }
 impl IntelExtension273Fn {
@@ -19968,7 +19968,7 @@ impl IntelExtension273Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        IntelExtension273Fn {}
+        Self {}
     }
 }
 impl ExtShaderAtomicFloat2Fn {
@@ -19987,7 +19987,7 @@ impl ExtShaderAtomicFloat2Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtShaderAtomicFloat2Fn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_shader_atomic_float2'"]
@@ -20010,7 +20010,7 @@ impl KhrExtension275Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExtension275Fn {}
+        Self {}
     }
 }
 impl KhrExtension276Fn {
@@ -20029,7 +20029,7 @@ impl KhrExtension276Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExtension276Fn {}
+        Self {}
     }
 }
 impl ExtShaderDemoteToHelperInvocationFn {
@@ -20048,7 +20048,7 @@ impl ExtShaderDemoteToHelperInvocationFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtShaderDemoteToHelperInvocationFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_shader_demote_to_helper_invocation'"]
@@ -20117,7 +20117,7 @@ impl NvDeviceGeneratedCommandsFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvDeviceGeneratedCommandsFn {
+        Self {
             get_generated_commands_memory_requirements_nv: unsafe {
                 unsafe extern "system" fn get_generated_commands_memory_requirements_nv(
                     _device: Device,
@@ -20385,7 +20385,7 @@ impl NvInheritedViewportScissorFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvInheritedViewportScissorFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_NV_inherited_viewport_scissor'"]
@@ -20412,7 +20412,7 @@ impl KhrExtension280Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExtension280Fn {}
+        Self {}
     }
 }
 impl KhrShaderIntegerDotProductFn {
@@ -20431,7 +20431,7 @@ impl KhrShaderIntegerDotProductFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrShaderIntegerDotProductFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_shader_integer_dot_product'"]
@@ -20458,7 +20458,7 @@ impl ExtTexelBufferAlignmentFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtTexelBufferAlignmentFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_texel_buffer_alignment'"]
@@ -20485,7 +20485,7 @@ impl QcomRenderPassTransformFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        QcomRenderPassTransformFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_QCOM_render_pass_transform'"]
@@ -20517,7 +20517,7 @@ impl ExtExtension284Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension284Fn {}
+        Self {}
     }
 }
 impl ExtDeviceMemoryReportFn {
@@ -20536,7 +20536,7 @@ impl ExtDeviceMemoryReportFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtDeviceMemoryReportFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_device_memory_report'"]
@@ -20583,7 +20583,7 @@ impl ExtAcquireDrmDisplayFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtAcquireDrmDisplayFn {
+        Self {
             acquire_drm_display_ext: unsafe {
                 unsafe extern "system" fn acquire_drm_display_ext(
                     _physical_device: PhysicalDevice,
@@ -20660,7 +20660,7 @@ impl ExtRobustness2Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtRobustness2Fn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_robustness2'"]
@@ -20687,7 +20687,7 @@ impl ExtCustomBorderColorFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtCustomBorderColorFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_custom_border_color'"]
@@ -20726,7 +20726,7 @@ impl ExtExtension289Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension289Fn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_extension_289'"]
@@ -20865,7 +20865,7 @@ impl GoogleUserTypeFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        GoogleUserTypeFn {}
+        Self {}
     }
 }
 impl KhrPipelineLibraryFn {
@@ -20884,7 +20884,7 @@ impl KhrPipelineLibraryFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrPipelineLibraryFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_pipeline_library'"]
@@ -20911,7 +20911,7 @@ impl NvExtension292Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExtension292Fn {}
+        Self {}
     }
 }
 impl NvExtension293Fn {
@@ -20930,7 +20930,7 @@ impl NvExtension293Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExtension293Fn {}
+        Self {}
     }
 }
 impl KhrShaderNonSemanticInfoFn {
@@ -20949,7 +20949,7 @@ impl KhrShaderNonSemanticInfoFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrShaderNonSemanticInfoFn {}
+        Self {}
     }
 }
 impl KhrPresentIdFn {
@@ -20968,7 +20968,7 @@ impl KhrPresentIdFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrPresentIdFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_present_id'"]
@@ -21029,7 +21029,7 @@ impl ExtPrivateDataFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtPrivateDataFn {
+        Self {
             create_private_data_slot_ext: unsafe {
                 unsafe extern "system" fn create_private_data_slot_ext(
                     _device: Device,
@@ -21193,7 +21193,7 @@ impl KhrExtension297Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExtension297Fn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_extension_297'"]
@@ -21216,7 +21216,7 @@ impl ExtPipelineCreationCacheControlFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtPipelineCreationCacheControlFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_pipeline_creation_cache_control'"]
@@ -21260,7 +21260,7 @@ impl KhrExtension299Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExtension299Fn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_extension_299'"]
@@ -21298,7 +21298,7 @@ impl KhrVideoEncodeQueueFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrVideoEncodeQueueFn {
+        Self {
             cmd_encode_video_khr: unsafe {
                 unsafe extern "system" fn cmd_encode_video_khr(
                     _command_buffer: CommandBuffer,
@@ -21410,7 +21410,7 @@ impl NvDeviceDiagnosticsConfigFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvDeviceDiagnosticsConfigFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_NV_device_diagnostics_config'"]
@@ -21437,7 +21437,7 @@ impl QcomRenderPassStoreOpsFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        QcomRenderPassStoreOpsFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_QCOM_render_pass_store_ops'"]
@@ -21460,7 +21460,7 @@ impl QcomExtension303Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        QcomExtension303Fn {}
+        Self {}
     }
 }
 impl QcomExtension304Fn {
@@ -21479,7 +21479,7 @@ impl QcomExtension304Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        QcomExtension304Fn {}
+        Self {}
     }
 }
 impl QcomExtension305Fn {
@@ -21498,7 +21498,7 @@ impl QcomExtension305Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        QcomExtension305Fn {}
+        Self {}
     }
 }
 impl QcomExtension306Fn {
@@ -21517,7 +21517,7 @@ impl QcomExtension306Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        QcomExtension306Fn {}
+        Self {}
     }
 }
 impl QcomExtension307Fn {
@@ -21536,7 +21536,7 @@ impl QcomExtension307Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        QcomExtension307Fn {}
+        Self {}
     }
 }
 impl NvExtension308Fn {
@@ -21555,7 +21555,7 @@ impl NvExtension308Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExtension308Fn {}
+        Self {}
     }
 }
 impl KhrExtension309Fn {
@@ -21574,7 +21574,7 @@ impl KhrExtension309Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExtension309Fn {}
+        Self {}
     }
 }
 impl QcomExtension310Fn {
@@ -21593,7 +21593,7 @@ impl QcomExtension310Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        QcomExtension310Fn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_QCOM_extension_310'"]
@@ -21616,7 +21616,7 @@ impl NvExtension311Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExtension311Fn {}
+        Self {}
     }
 }
 impl ExtExtension312Fn {
@@ -21635,7 +21635,7 @@ impl ExtExtension312Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension312Fn {}
+        Self {}
     }
 }
 impl ExtExtension313Fn {
@@ -21654,7 +21654,7 @@ impl ExtExtension313Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension313Fn {}
+        Self {}
     }
 }
 impl AmdExtension314Fn {
@@ -21673,7 +21673,7 @@ impl AmdExtension314Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension314Fn {}
+        Self {}
     }
 }
 impl KhrSynchronization2Fn {
@@ -21753,7 +21753,7 @@ impl KhrSynchronization2Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrSynchronization2Fn {
+        Self {
             cmd_set_event2_khr: unsafe {
                 unsafe extern "system" fn cmd_set_event2_khr(
                     _command_buffer: CommandBuffer,
@@ -22166,7 +22166,7 @@ impl AmdExtension316Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension316Fn {}
+        Self {}
     }
 }
 impl AmdExtension317Fn {
@@ -22185,7 +22185,7 @@ impl AmdExtension317Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension317Fn {}
+        Self {}
     }
 }
 impl AmdExtension318Fn {
@@ -22204,7 +22204,7 @@ impl AmdExtension318Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension318Fn {}
+        Self {}
     }
 }
 impl AmdExtension319Fn {
@@ -22223,7 +22223,7 @@ impl AmdExtension319Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension319Fn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_AMD_extension_319'"]
@@ -22250,7 +22250,7 @@ impl AmdExtension320Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension320Fn {}
+        Self {}
     }
 }
 impl AmdExtension321Fn {
@@ -22269,7 +22269,7 @@ impl AmdExtension321Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension321Fn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_AMD_extension_321'"]
@@ -22296,7 +22296,7 @@ impl AmdExtension322Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension322Fn {}
+        Self {}
     }
 }
 impl AmdExtension323Fn {
@@ -22315,7 +22315,7 @@ impl AmdExtension323Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension323Fn {}
+        Self {}
     }
 }
 impl KhrShaderSubgroupUniformControlFlowFn {
@@ -22334,7 +22334,7 @@ impl KhrShaderSubgroupUniformControlFlowFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrShaderSubgroupUniformControlFlowFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_shader_subgroup_uniform_control_flow'"]
@@ -22358,7 +22358,7 @@ impl KhrExtension325Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExtension325Fn {}
+        Self {}
     }
 }
 impl KhrZeroInitializeWorkgroupMemoryFn {
@@ -22377,7 +22377,7 @@ impl KhrZeroInitializeWorkgroupMemoryFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrZeroInitializeWorkgroupMemoryFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_zero_initialize_workgroup_memory'"]
@@ -22409,7 +22409,7 @@ impl NvFragmentShadingRateEnumsFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvFragmentShadingRateEnumsFn {
+        Self {
             cmd_set_fragment_shading_rate_enum_nv: unsafe {
                 unsafe extern "system" fn cmd_set_fragment_shading_rate_enum_nv(
                     _command_buffer: CommandBuffer,
@@ -22471,7 +22471,7 @@ impl NvRayTracingMotionBlurFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvRayTracingMotionBlurFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_NV_ray_tracing_motion_blur'"]
@@ -22514,7 +22514,7 @@ impl NvExtension329Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExtension329Fn {}
+        Self {}
     }
 }
 impl NvExtension330Fn {
@@ -22533,7 +22533,7 @@ impl NvExtension330Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExtension330Fn {}
+        Self {}
     }
 }
 impl ExtYcbcr2plane444FormatsFn {
@@ -22552,7 +22552,7 @@ impl ExtYcbcr2plane444FormatsFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtYcbcr2plane444FormatsFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_ycbcr_2plane_444_formats'"]
@@ -22591,7 +22591,7 @@ impl NvExtension332Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExtension332Fn {}
+        Self {}
     }
 }
 impl ExtFragmentDensityMap2Fn {
@@ -22610,7 +22610,7 @@ impl ExtFragmentDensityMap2Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtFragmentDensityMap2Fn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_fragment_density_map2'"]
@@ -22641,7 +22641,7 @@ impl QcomRotatedCopyCommandsFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        QcomRotatedCopyCommandsFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_QCOM_rotated_copy_commands'"]
@@ -22664,7 +22664,7 @@ impl KhrExtension335Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExtension335Fn {}
+        Self {}
     }
 }
 impl ExtImageRobustnessFn {
@@ -22683,7 +22683,7 @@ impl ExtImageRobustnessFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtImageRobustnessFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_image_robustness'"]
@@ -22706,7 +22706,7 @@ impl KhrWorkgroupMemoryExplicitLayoutFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrWorkgroupMemoryExplicitLayoutFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_KHR_workgroup_memory_explicit_layout'"]
@@ -22767,7 +22767,7 @@ impl KhrCopyCommands2Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrCopyCommands2Fn {
+        Self {
             cmd_copy_buffer2_khr: unsafe {
                 unsafe extern "system" fn cmd_copy_buffer2_khr(
                     _command_buffer: CommandBuffer,
@@ -22986,7 +22986,7 @@ impl ArmExtension339Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ArmExtension339Fn {}
+        Self {}
     }
 }
 impl ExtExtension340Fn {
@@ -23005,7 +23005,7 @@ impl ExtExtension340Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension340Fn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_extension_340'"]
@@ -23028,7 +23028,7 @@ impl Ext4444FormatsFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        Ext4444FormatsFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_4444_formats'"]
@@ -23059,7 +23059,7 @@ impl ExtExtension342Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension342Fn {}
+        Self {}
     }
 }
 impl ArmExtension343Fn {
@@ -23078,7 +23078,7 @@ impl ArmExtension343Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ArmExtension343Fn {}
+        Self {}
     }
 }
 impl ArmExtension344Fn {
@@ -23097,7 +23097,7 @@ impl ArmExtension344Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ArmExtension344Fn {}
+        Self {}
     }
 }
 impl ArmExtension345Fn {
@@ -23116,7 +23116,7 @@ impl ArmExtension345Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ArmExtension345Fn {}
+        Self {}
     }
 }
 impl NvAcquireWinrtDisplayFn {
@@ -23147,7 +23147,7 @@ impl NvAcquireWinrtDisplayFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvAcquireWinrtDisplayFn {
+        Self {
             acquire_winrt_display_nv: unsafe {
                 unsafe extern "system" fn acquire_winrt_display_nv(
                     _physical_device: PhysicalDevice,
@@ -23238,7 +23238,7 @@ impl ExtDirectfbSurfaceFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtDirectfbSurfaceFn {
+        Self {
             create_direct_fb_surface_ext: unsafe {
                 unsafe extern "system" fn create_direct_fb_surface_ext(
                     _instance: Instance,
@@ -23328,7 +23328,7 @@ impl KhrExtension350Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExtension350Fn {}
+        Self {}
     }
 }
 impl NvExtension351Fn {
@@ -23347,7 +23347,7 @@ impl NvExtension351Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExtension351Fn {}
+        Self {}
     }
 }
 impl ValveMutableDescriptorTypeFn {
@@ -23366,7 +23366,7 @@ impl ValveMutableDescriptorTypeFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ValveMutableDescriptorTypeFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_VALVE_mutable_descriptor_type'"]
@@ -23415,7 +23415,7 @@ impl ExtVertexInputDynamicStateFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtVertexInputDynamicStateFn {
+        Self {
             cmd_set_vertex_input_ext: unsafe {
                 unsafe extern "system" fn cmd_set_vertex_input_ext(
                     _command_buffer: CommandBuffer,
@@ -23490,7 +23490,7 @@ impl ExtPhysicalDeviceDrmFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtPhysicalDeviceDrmFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_physical_device_drm'"]
@@ -23513,7 +23513,7 @@ impl ExtExtension355Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension355Fn {}
+        Self {}
     }
 }
 impl ExtVertexAttributeAliasingFn {
@@ -23532,7 +23532,7 @@ impl ExtVertexAttributeAliasingFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtVertexAttributeAliasingFn {}
+        Self {}
     }
 }
 impl ExtPrimitiveTopologyListRestartFn {
@@ -23551,7 +23551,7 @@ impl ExtPrimitiveTopologyListRestartFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtPrimitiveTopologyListRestartFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_primitive_topology_list_restart'"]
@@ -23575,7 +23575,7 @@ impl KhrExtension358Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExtension358Fn {}
+        Self {}
     }
 }
 impl ExtExtension359Fn {
@@ -23594,7 +23594,7 @@ impl ExtExtension359Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension359Fn {}
+        Self {}
     }
 }
 impl ExtExtension360Fn {
@@ -23613,7 +23613,7 @@ impl ExtExtension360Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension360Fn {}
+        Self {}
     }
 }
 impl KhrExtension361Fn {
@@ -23632,7 +23632,7 @@ impl KhrExtension361Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExtension361Fn {}
+        Self {}
     }
 }
 impl ExtExtension362Fn {
@@ -23651,7 +23651,7 @@ impl ExtExtension362Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension362Fn {}
+        Self {}
     }
 }
 impl ExtExtension363Fn {
@@ -23670,7 +23670,7 @@ impl ExtExtension363Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension363Fn {}
+        Self {}
     }
 }
 impl FuchsiaExtension364Fn {
@@ -23689,7 +23689,7 @@ impl FuchsiaExtension364Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        FuchsiaExtension364Fn {}
+        Self {}
     }
 }
 impl FuchsiaExternalMemoryFn {
@@ -23724,7 +23724,7 @@ impl FuchsiaExternalMemoryFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        FuchsiaExternalMemoryFn {
+        Self {
             get_memory_zircon_handle_fuchsia: unsafe {
                 unsafe extern "system" fn get_memory_zircon_handle_fuchsia(
                     _device: Device,
@@ -23841,7 +23841,7 @@ impl FuchsiaExternalSemaphoreFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        FuchsiaExternalSemaphoreFn {
+        Self {
             import_semaphore_zircon_handle_fuchsia: unsafe {
                 unsafe extern "system" fn import_semaphore_zircon_handle_fuchsia(
                     _device: Device,
@@ -23935,7 +23935,7 @@ impl FuchsiaExtension367Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        FuchsiaExtension367Fn {}
+        Self {}
     }
 }
 impl FuchsiaExtension368Fn {
@@ -23954,7 +23954,7 @@ impl FuchsiaExtension368Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        FuchsiaExtension368Fn {}
+        Self {}
     }
 }
 impl QcomExtension369Fn {
@@ -23973,7 +23973,7 @@ impl QcomExtension369Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        QcomExtension369Fn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_QCOM_extension_369'"]
@@ -24008,7 +24008,7 @@ impl HuaweiSubpassShadingFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        HuaweiSubpassShadingFn {
+        Self {
             get_device_subpass_shading_max_workgroup_size_huawei: unsafe {
                 unsafe extern "system" fn get_device_subpass_shading_max_workgroup_size_huawei(
                     _device: Device,
@@ -24117,7 +24117,7 @@ impl HuaweiInvocationMaskFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        HuaweiInvocationMaskFn {
+        Self {
             cmd_bind_invocation_mask_huawei: unsafe {
                 unsafe extern "system" fn cmd_bind_invocation_mask_huawei(
                     _command_buffer: CommandBuffer,
@@ -24193,7 +24193,7 @@ impl NvExternalMemoryRdmaFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExternalMemoryRdmaFn {
+        Self {
             get_memory_remote_address_nv: unsafe {
                 unsafe extern "system" fn get_memory_remote_address_nv(
                     _device: Device,
@@ -24259,7 +24259,7 @@ impl NvExtension373Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExtension373Fn {}
+        Self {}
     }
 }
 impl NvExtension374Fn {
@@ -24278,7 +24278,7 @@ impl NvExtension374Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExtension374Fn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_NV_extension_374'"]
@@ -24313,7 +24313,7 @@ impl NvExtension375Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExtension375Fn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_NV_extension_375'"]
@@ -24336,7 +24336,7 @@ impl ExtExtension376Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension376Fn {}
+        Self {}
     }
 }
 impl ExtExtension377Fn {
@@ -24355,7 +24355,7 @@ impl ExtExtension377Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension377Fn {}
+        Self {}
     }
 }
 impl ExtExtendedDynamicState2Fn {
@@ -24395,7 +24395,7 @@ impl ExtExtendedDynamicState2Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtendedDynamicState2Fn {
+        Self {
             cmd_set_patch_control_points_ext: unsafe {
                 unsafe extern "system" fn cmd_set_patch_control_points_ext(
                     _command_buffer: CommandBuffer,
@@ -24588,7 +24588,7 @@ impl QnxScreenSurfaceFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        QnxScreenSurfaceFn {
+        Self {
             create_screen_surface_qnx: unsafe {
                 unsafe extern "system" fn create_screen_surface_qnx(
                     _instance: Instance,
@@ -24677,7 +24677,7 @@ impl KhrExtension380Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExtension380Fn {}
+        Self {}
     }
 }
 impl KhrExtension381Fn {
@@ -24696,7 +24696,7 @@ impl KhrExtension381Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExtension381Fn {}
+        Self {}
     }
 }
 impl ExtColorWriteEnableFn {
@@ -24723,7 +24723,7 @@ impl ExtColorWriteEnableFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtColorWriteEnableFn {
+        Self {
             cmd_set_color_write_enable_ext: unsafe {
                 unsafe extern "system" fn cmd_set_color_write_enable_ext(
                     _command_buffer: CommandBuffer,
@@ -24789,7 +24789,7 @@ impl ExtExtension383Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension383Fn {}
+        Self {}
     }
 }
 impl ExtExtension384Fn {
@@ -24808,7 +24808,7 @@ impl ExtExtension384Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension384Fn {}
+        Self {}
     }
 }
 impl MesaExtension385Fn {
@@ -24827,7 +24827,7 @@ impl MesaExtension385Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        MesaExtension385Fn {}
+        Self {}
     }
 }
 impl GoogleExtension386Fn {
@@ -24846,7 +24846,7 @@ impl GoogleExtension386Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        GoogleExtension386Fn {}
+        Self {}
     }
 }
 impl KhrExtension387Fn {
@@ -24865,7 +24865,7 @@ impl KhrExtension387Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExtension387Fn {}
+        Self {}
     }
 }
 impl ExtExtension388Fn {
@@ -24884,7 +24884,7 @@ impl ExtExtension388Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension388Fn {}
+        Self {}
     }
 }
 impl ExtGlobalPriorityQueryFn {
@@ -24903,7 +24903,7 @@ impl ExtGlobalPriorityQueryFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtGlobalPriorityQueryFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_global_priority_query'"]
@@ -24930,7 +24930,7 @@ impl ExtExtension390Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension390Fn {}
+        Self {}
     }
 }
 impl ExtExtension391Fn {
@@ -24949,7 +24949,7 @@ impl ExtExtension391Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension391Fn {}
+        Self {}
     }
 }
 impl ExtExtension392Fn {
@@ -24968,7 +24968,7 @@ impl ExtExtension392Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension392Fn {}
+        Self {}
     }
 }
 impl ExtMultiDrawFn {
@@ -25009,7 +25009,7 @@ impl ExtMultiDrawFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtMultiDrawFn {
+        Self {
             cmd_draw_multi_ext: unsafe {
                 unsafe extern "system" fn cmd_draw_multi_ext(
                     _command_buffer: CommandBuffer,
@@ -25120,7 +25120,7 @@ impl ExtExtension394Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension394Fn {}
+        Self {}
     }
 }
 impl KhrExtension395Fn {
@@ -25139,7 +25139,7 @@ impl KhrExtension395Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExtension395Fn {}
+        Self {}
     }
 }
 impl KhrExtension396Fn {
@@ -25158,7 +25158,7 @@ impl KhrExtension396Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExtension396Fn {}
+        Self {}
     }
 }
 impl NvExtension397Fn {
@@ -25177,7 +25177,7 @@ impl NvExtension397Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExtension397Fn {}
+        Self {}
     }
 }
 impl NvExtension398Fn {
@@ -25196,7 +25196,7 @@ impl NvExtension398Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExtension398Fn {}
+        Self {}
     }
 }
 impl JuiceExtension399Fn {
@@ -25215,7 +25215,7 @@ impl JuiceExtension399Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        JuiceExtension399Fn {}
+        Self {}
     }
 }
 impl JuiceExtension400Fn {
@@ -25234,7 +25234,7 @@ impl JuiceExtension400Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        JuiceExtension400Fn {}
+        Self {}
     }
 }
 impl ExtLoadStoreOpNoneFn {
@@ -25253,7 +25253,7 @@ impl ExtLoadStoreOpNoneFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtLoadStoreOpNoneFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_load_store_op_none'"]
@@ -25280,7 +25280,7 @@ impl FbExtension402Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        FbExtension402Fn {}
+        Self {}
     }
 }
 impl FbExtension403Fn {
@@ -25299,7 +25299,7 @@ impl FbExtension403Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        FbExtension403Fn {}
+        Self {}
     }
 }
 impl FbExtension404Fn {
@@ -25318,7 +25318,7 @@ impl FbExtension404Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        FbExtension404Fn {}
+        Self {}
     }
 }
 impl HuaweiExtension405Fn {
@@ -25337,7 +25337,7 @@ impl HuaweiExtension405Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        HuaweiExtension405Fn {}
+        Self {}
     }
 }
 impl HuaweiExtension406Fn {
@@ -25356,7 +25356,7 @@ impl HuaweiExtension406Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        HuaweiExtension406Fn {}
+        Self {}
     }
 }
 impl GgpExtension407Fn {
@@ -25375,7 +25375,7 @@ impl GgpExtension407Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        GgpExtension407Fn {}
+        Self {}
     }
 }
 impl GgpExtension408Fn {
@@ -25394,7 +25394,7 @@ impl GgpExtension408Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        GgpExtension408Fn {}
+        Self {}
     }
 }
 impl GgpExtension409Fn {
@@ -25413,7 +25413,7 @@ impl GgpExtension409Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        GgpExtension409Fn {}
+        Self {}
     }
 }
 impl GgpExtension410Fn {
@@ -25432,7 +25432,7 @@ impl GgpExtension410Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        GgpExtension410Fn {}
+        Self {}
     }
 }
 impl GgpExtension411Fn {
@@ -25451,7 +25451,7 @@ impl GgpExtension411Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        GgpExtension411Fn {}
+        Self {}
     }
 }
 impl NvExtension412Fn {
@@ -25470,7 +25470,7 @@ impl NvExtension412Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExtension412Fn {}
+        Self {}
     }
 }
 impl ExtPageableDeviceLocalMemoryFn {
@@ -25494,7 +25494,7 @@ impl ExtPageableDeviceLocalMemoryFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtPageableDeviceLocalMemoryFn {
+        Self {
             set_device_memory_priority_ext: unsafe {
                 unsafe extern "system" fn set_device_memory_priority_ext(
                     _device: Device,
@@ -25548,7 +25548,7 @@ impl NvExtension414Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExtension414Fn {}
+        Self {}
     }
 }
 impl HuaweiExtension415Fn {
@@ -25567,7 +25567,7 @@ impl HuaweiExtension415Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        HuaweiExtension415Fn {}
+        Self {}
     }
 }
 impl ArmExtension416Fn {
@@ -25586,7 +25586,7 @@ impl ArmExtension416Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ArmExtension416Fn {}
+        Self {}
     }
 }
 impl KhrExtension417Fn {
@@ -25605,7 +25605,7 @@ impl KhrExtension417Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExtension417Fn {}
+        Self {}
     }
 }
 impl ArmExtension418Fn {
@@ -25624,7 +25624,7 @@ impl ArmExtension418Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ArmExtension418Fn {}
+        Self {}
     }
 }
 impl ExtExtension419Fn {
@@ -25643,7 +25643,7 @@ impl ExtExtension419Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension419Fn {}
+        Self {}
     }
 }
 impl ExtExtension420Fn {
@@ -25662,7 +25662,7 @@ impl ExtExtension420Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension420Fn {}
+        Self {}
     }
 }
 impl KhrExtension421Fn {
@@ -25681,7 +25681,7 @@ impl KhrExtension421Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExtension421Fn {}
+        Self {}
     }
 }
 impl ExtExtension422Fn {
@@ -25700,7 +25700,7 @@ impl ExtExtension422Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension422Fn {}
+        Self {}
     }
 }
 impl ExtDisableCubeMapWrapFn {
@@ -25719,7 +25719,7 @@ impl ExtDisableCubeMapWrapFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtDisableCubeMapWrapFn {}
+        Self {}
     }
 }
 #[doc = "Generated from 'VK_EXT_disable_cube_map_wrap'"]
