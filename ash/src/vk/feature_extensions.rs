@@ -142,7 +142,7 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_VERSION_1_1'"]
 impl Result {
-    pub const ERROR_OUT_OF_POOL_MEMORY: Self = Self(-1000069000);
+    pub const ERROR_OUT_OF_POOL_MEMORY: Self = Self(-1_000_069_000);
 }
 #[doc = "Generated from 'VK_VERSION_1_1'"]
 impl FormatFeatureFlags {
@@ -506,7 +506,7 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_VERSION_1_1'"]
 impl Result {
-    pub const ERROR_INVALID_EXTERNAL_HANDLE: Self = Self(-1000072003);
+    pub const ERROR_INVALID_EXTERNAL_HANDLE: Self = Self(-1_000_072_003);
 }
 #[doc = "Generated from 'VK_VERSION_1_1'"]
 impl StructureType {
@@ -647,7 +647,7 @@ impl DescriptorSetLayoutCreateFlags {
 }
 #[doc = "Generated from 'VK_VERSION_1_2'"]
 impl Result {
-    pub const ERROR_FRAGMENTATION: Self = Self(-1000161000);
+    pub const ERROR_FRAGMENTATION: Self = Self(-1_000_161_000);
 }
 #[doc = "Generated from 'VK_VERSION_1_2'"]
 impl StructureType {
@@ -803,5 +803,5 @@ impl MemoryAllocateFlags {
 }
 #[doc = "Generated from 'VK_VERSION_1_2'"]
 impl Result {
-    pub const ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS: Self = Self(-1000257000);
+    pub const ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS: Self = Self(-1_000_257_000);
 }
