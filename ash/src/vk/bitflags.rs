@@ -1284,22 +1284,6 @@ impl FormatFeatureFlags2KHR {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkVideoEncodeH265CapabilityFlagBitsEXT.html>"]
-pub struct VideoEncodeH265CapabilityFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(VideoEncodeH265CapabilityFlagsEXT, 0b1_1111_1111, Flags);
-impl VideoEncodeH265CapabilityFlagsEXT {
-    pub const WEIGHTED_BI_PRED_IMPLICIT: Self = Self(0b1);
-    pub const TRANSFORM_8X8: Self = Self(0b10);
-    pub const CHROMA_QP_OFFSET: Self = Self(0b100);
-    pub const SECOND_CHROMA_QP_OFFSET: Self = Self(0b1000);
-    pub const DEBLOCKING_FILTER_DISABLED: Self = Self(0b1_0000);
-    pub const DEBLOCKING_FILTER_ENABLED: Self = Self(0b10_0000);
-    pub const DEBLOCKING_FILTER_PARTIAL: Self = Self(0b100_0000);
-    pub const MULTIPLE_SLICE_PER_FRAME: Self = Self(0b1000_0000);
-    pub const EVENLY_DISTRIBUTED_SLICE_SIZE: Self = Self(0b1_0000_0000);
-}
-#[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkVideoEncodeH265InputModeFlagBitsEXT.html>"]
 pub struct VideoEncodeH265InputModeFlagsEXT(pub(crate) Flags);
 vk_bitflags_wrapped!(VideoEncodeH265InputModeFlagsEXT, 0b111, Flags);
@@ -1328,4 +1312,14 @@ impl VideoEncodeH265CtbSizeFlagsEXT {
     pub const TYPE_16: Self = Self(0b10);
     pub const TYPE_32: Self = Self(0b100);
     pub const TYPE_64: Self = Self(0b1000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkRenderingFlagBitsKHR.html>"]
+pub struct RenderingFlagsKHR(pub(crate) Flags);
+vk_bitflags_wrapped!(RenderingFlagsKHR, 0b111, Flags);
+impl RenderingFlagsKHR {
+    pub const CONTENTS_SECONDARY_COMMAND_BUFFERS: Self = Self(0b1);
+    pub const SUSPENDING: Self = Self(0b10);
+    pub const RESUMING: Self = Self(0b100);
 }

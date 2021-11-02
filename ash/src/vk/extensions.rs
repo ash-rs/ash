@@ -4364,32 +4364,136 @@ impl AmdExtension44Fn {
         Self {}
     }
 }
-impl AmdExtension45Fn {
+impl KhrDynamicRenderingFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_45\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_dynamic_rendering\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBeginRenderingKHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_rendering_info: *const RenderingInfoKHR,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdEndRenderingKHR = unsafe extern "system" fn(command_buffer: CommandBuffer);
 #[derive(Clone)]
-pub struct AmdExtension45Fn {}
-unsafe impl Send for AmdExtension45Fn {}
-unsafe impl Sync for AmdExtension45Fn {}
-impl AmdExtension45Fn {
+pub struct KhrDynamicRenderingFn {
+    pub cmd_begin_rendering_khr: PFN_vkCmdBeginRenderingKHR,
+    pub cmd_end_rendering_khr: PFN_vkCmdEndRenderingKHR,
+}
+unsafe impl Send for KhrDynamicRenderingFn {}
+unsafe impl Sync for KhrDynamicRenderingFn {}
+impl KhrDynamicRenderingFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        Self {}
+        Self {
+            cmd_begin_rendering_khr: unsafe {
+                unsafe extern "system" fn cmd_begin_rendering_khr(
+                    _command_buffer: CommandBuffer,
+                    _p_rendering_info: *const RenderingInfoKHR,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_begin_rendering_khr)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdBeginRenderingKHR\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_begin_rendering_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_end_rendering_khr: unsafe {
+                unsafe extern "system" fn cmd_end_rendering_khr(_command_buffer: CommandBuffer) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_end_rendering_khr)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdEndRenderingKHR\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_end_rendering_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBeginRenderingKHR.html>"]
+    pub unsafe fn cmd_begin_rendering_khr(
+        &self,
+        command_buffer: CommandBuffer,
+        p_rendering_info: *const RenderingInfoKHR,
+    ) {
+        (self.cmd_begin_rendering_khr)(command_buffer, p_rendering_info)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdEndRenderingKHR.html>"]
+    pub unsafe fn cmd_end_rendering_khr(&self, command_buffer: CommandBuffer) {
+        (self.cmd_end_rendering_khr)(command_buffer)
     }
 }
-#[doc = "Generated from 'VK_AMD_extension_45'"]
-impl PipelineCreateFlags {
-    pub const RESERVED_21_AMD: Self = Self(0b10_0000_0000_0000_0000_0000);
+#[doc = "Generated from 'VK_KHR_dynamic_rendering'"]
+impl StructureType {
+    pub const RENDERING_INFO_KHR: Self = Self(1_000_044_000);
 }
-#[doc = "Generated from 'VK_AMD_extension_45'"]
+#[doc = "Generated from 'VK_KHR_dynamic_rendering'"]
+impl StructureType {
+    pub const RENDERING_ATTACHMENT_INFO_KHR: Self = Self(1_000_044_001);
+}
+#[doc = "Generated from 'VK_KHR_dynamic_rendering'"]
+impl StructureType {
+    pub const PIPELINE_RENDERING_CREATE_INFO_KHR: Self = Self(1_000_044_002);
+}
+#[doc = "Generated from 'VK_KHR_dynamic_rendering'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_DYNAMIC_RENDERING_FEATURES_KHR: Self = Self(1_000_044_003);
+}
+#[doc = "Generated from 'VK_KHR_dynamic_rendering'"]
+impl StructureType {
+    pub const COMMAND_BUFFER_INHERITANCE_RENDERING_INFO_KHR: Self = Self(1_000_044_004);
+}
+#[doc = "Generated from 'VK_KHR_dynamic_rendering'"]
+impl AttachmentStoreOp {
+    pub const NONE_KHR: Self = Self(1_000_301_000);
+}
+#[doc = "Generated from 'VK_KHR_dynamic_rendering'"]
 impl PipelineCreateFlags {
-    pub const RESERVED_22_AMD: Self = Self(0b100_0000_0000_0000_0000_0000);
+    pub const RASTERIZATION_STATE_FRAGMENT_SHADING_RATE_ATTACHMENT_KHR: Self =
+        Self(0b10_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_dynamic_rendering'"]
+impl StructureType {
+    pub const RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT_INFO_KHR: Self = Self(1_000_044_006);
+}
+#[doc = "Generated from 'VK_KHR_dynamic_rendering'"]
+impl PipelineCreateFlags {
+    pub const RASTERIZATION_STATE_FRAGMENT_DENSITY_MAP_ATTACHMENT_EXT: Self =
+        Self(0b100_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_dynamic_rendering'"]
+impl StructureType {
+    pub const RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_INFO_EXT: Self = Self(1_000_044_007);
+}
+#[doc = "Generated from 'VK_KHR_dynamic_rendering'"]
+impl StructureType {
+    pub const ATTACHMENT_SAMPLE_COUNT_INFO_AMD: Self = Self(1_000_044_008);
+}
+#[doc = "Generated from 'VK_KHR_dynamic_rendering'"]
+impl StructureType {
+    pub const ATTACHMENT_SAMPLE_COUNT_INFO_NV: Self = Self::ATTACHMENT_SAMPLE_COUNT_INFO_AMD;
+}
+#[doc = "Generated from 'VK_KHR_dynamic_rendering'"]
+impl StructureType {
+    pub const MULTIVIEW_PER_VIEW_ATTRIBUTES_INFO_NVX: Self = Self(1_000_044_009);
 }
 impl AmdExtension46Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -21524,7 +21628,7 @@ impl QcomRenderPassStoreOpsFn {
 }
 #[doc = "Generated from 'VK_QCOM_render_pass_store_ops'"]
 impl AttachmentStoreOp {
-    pub const NONE_QCOM: Self = Self::NONE_EXT;
+    pub const NONE_QCOM: Self = Self::NONE_KHR;
 }
 impl QcomExtension303Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -25640,7 +25744,7 @@ impl AttachmentLoadOp {
 }
 #[doc = "Generated from 'VK_EXT_load_store_op_none'"]
 impl AttachmentStoreOp {
-    pub const NONE_EXT: Self = Self(1_000_301_000);
+    pub const NONE_EXT: Self = Self::NONE_KHR;
 }
 impl FbExtension402Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -26380,6 +26484,63 @@ pub struct NvExtension430Fn {}
 unsafe impl Send for NvExtension430Fn {}
 unsafe impl Sync for NvExtension430Fn {}
 impl NvExtension430Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl NvExtension431Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_431\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct NvExtension431Fn {}
+unsafe impl Send for NvExtension431Fn {}
+unsafe impl Sync for NvExtension431Fn {}
+impl NvExtension431Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl NvExtension432Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_432\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct NvExtension432Fn {}
+unsafe impl Send for NvExtension432Fn {}
+unsafe impl Sync for NvExtension432Fn {}
+impl NvExtension432Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl NvExtension433Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_433\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct NvExtension433Fn {}
+unsafe impl Send for NvExtension433Fn {}
+unsafe impl Sync for NvExtension433Fn {}
+impl NvExtension433Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,

@@ -369,7 +369,7 @@ impl fmt::Debug for AttachmentStoreOp {
         let name = match *self {
             Self::STORE => Some("STORE"),
             Self::DONT_CARE => Some("DONT_CARE"),
-            Self::NONE_EXT => Some("NONE_EXT"),
+            Self::NONE_KHR => Some("NONE_KHR"),
             _ => None,
         };
         if let Some(x) = name {
@@ -2857,8 +2857,14 @@ impl fmt::Debug for PipelineCreateFlags {
                 "ALLOW_DERIVATIVES",
             ),
             (PipelineCreateFlags::DERIVATIVE.0, "DERIVATIVE"),
-            (PipelineCreateFlags::RESERVED_21_AMD.0, "RESERVED_21_AMD"),
-            (PipelineCreateFlags::RESERVED_22_AMD.0, "RESERVED_22_AMD"),
+            (
+                PipelineCreateFlags::RASTERIZATION_STATE_FRAGMENT_SHADING_RATE_ATTACHMENT_KHR.0,
+                "RASTERIZATION_STATE_FRAGMENT_SHADING_RATE_ATTACHMENT_KHR",
+            ),
+            (
+                PipelineCreateFlags::RASTERIZATION_STATE_FRAGMENT_DENSITY_MAP_ATTACHMENT_EXT.0,
+                "RASTERIZATION_STATE_FRAGMENT_DENSITY_MAP_ATTACHMENT_EXT",
+            ),
             (
                 PipelineCreateFlags::RAY_TRACING_NO_NULL_ANY_HIT_SHADERS_KHR.0,
                 "RAY_TRACING_NO_NULL_ANY_HIT_SHADERS_KHR",
@@ -3529,6 +3535,19 @@ impl fmt::Debug for RenderPassCreateFlags {
         debug_flags(f, KNOWN, self.0)
     }
 }
+impl fmt::Debug for RenderingFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                RenderingFlagsKHR::CONTENTS_SECONDARY_COMMAND_BUFFERS.0,
+                "CONTENTS_SECONDARY_COMMAND_BUFFERS",
+            ),
+            (RenderingFlagsKHR::SUSPENDING.0, "SUSPENDING"),
+            (RenderingFlagsKHR::RESUMING.0, "RESUMING"),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
 impl fmt::Debug for ResolveModeFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
@@ -4161,6 +4180,25 @@ impl fmt::Debug for StructureType {
             }
             Self::TEXTURE_LOD_GATHER_FORMAT_PROPERTIES_AMD => {
                 Some("TEXTURE_LOD_GATHER_FORMAT_PROPERTIES_AMD")
+            }
+            Self::RENDERING_INFO_KHR => Some("RENDERING_INFO_KHR"),
+            Self::RENDERING_ATTACHMENT_INFO_KHR => Some("RENDERING_ATTACHMENT_INFO_KHR"),
+            Self::PIPELINE_RENDERING_CREATE_INFO_KHR => Some("PIPELINE_RENDERING_CREATE_INFO_KHR"),
+            Self::PHYSICAL_DEVICE_DYNAMIC_RENDERING_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_DYNAMIC_RENDERING_FEATURES_KHR")
+            }
+            Self::COMMAND_BUFFER_INHERITANCE_RENDERING_INFO_KHR => {
+                Some("COMMAND_BUFFER_INHERITANCE_RENDERING_INFO_KHR")
+            }
+            Self::RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT_INFO_KHR => {
+                Some("RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT_INFO_KHR")
+            }
+            Self::RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_INFO_EXT => {
+                Some("RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_INFO_EXT")
+            }
+            Self::ATTACHMENT_SAMPLE_COUNT_INFO_AMD => Some("ATTACHMENT_SAMPLE_COUNT_INFO_AMD"),
+            Self::MULTIVIEW_PER_VIEW_ATTRIBUTES_INFO_NVX => {
+                Some("MULTIVIEW_PER_VIEW_ATTRIBUTES_INFO_NVX")
             }
             Self::STREAM_DESCRIPTOR_SURFACE_CREATE_INFO_GGP => {
                 Some("STREAM_DESCRIPTOR_SURFACE_CREATE_INFO_GGP")
@@ -5779,44 +5817,7 @@ impl fmt::Debug for VideoEncodeH264OutputModeFlagsEXT {
 }
 impl fmt::Debug for VideoEncodeH265CapabilityFlagsEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                VideoEncodeH265CapabilityFlagsEXT::WEIGHTED_BI_PRED_IMPLICIT.0,
-                "WEIGHTED_BI_PRED_IMPLICIT",
-            ),
-            (
-                VideoEncodeH265CapabilityFlagsEXT::TRANSFORM_8X8.0,
-                "TRANSFORM_8X8",
-            ),
-            (
-                VideoEncodeH265CapabilityFlagsEXT::CHROMA_QP_OFFSET.0,
-                "CHROMA_QP_OFFSET",
-            ),
-            (
-                VideoEncodeH265CapabilityFlagsEXT::SECOND_CHROMA_QP_OFFSET.0,
-                "SECOND_CHROMA_QP_OFFSET",
-            ),
-            (
-                VideoEncodeH265CapabilityFlagsEXT::DEBLOCKING_FILTER_DISABLED.0,
-                "DEBLOCKING_FILTER_DISABLED",
-            ),
-            (
-                VideoEncodeH265CapabilityFlagsEXT::DEBLOCKING_FILTER_ENABLED.0,
-                "DEBLOCKING_FILTER_ENABLED",
-            ),
-            (
-                VideoEncodeH265CapabilityFlagsEXT::DEBLOCKING_FILTER_PARTIAL.0,
-                "DEBLOCKING_FILTER_PARTIAL",
-            ),
-            (
-                VideoEncodeH265CapabilityFlagsEXT::MULTIPLE_SLICE_PER_FRAME.0,
-                "MULTIPLE_SLICE_PER_FRAME",
-            ),
-            (
-                VideoEncodeH265CapabilityFlagsEXT::EVENLY_DISTRIBUTED_SLICE_SIZE.0,
-                "EVENLY_DISTRIBUTED_SLICE_SIZE",
-            ),
-        ];
+        const KNOWN: &[(Flags, &str)] = &[];
         debug_flags(f, KNOWN, self.0)
     }
 }
