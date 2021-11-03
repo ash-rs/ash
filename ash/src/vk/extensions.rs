@@ -1972,11 +1972,6 @@ impl StructureType {
     pub const DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT: Self = Self(1_000_011_000);
 }
 #[doc = "Generated from 'VK_EXT_debug_report'"]
-impl StructureType {
-    #[deprecated = "Backwards-compatible alias containing a typo"]
-    pub const DEBUG_REPORT_CREATE_INFO_EXT: Self = Self::DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT;
-}
-#[doc = "Generated from 'VK_EXT_debug_report'"]
 impl Result {
     pub const ERROR_VALIDATION_FAILED_EXT: Self = Self(-1_000_011_001);
 }
@@ -4479,12 +4474,6 @@ impl PipelineCreateFlags {
         Self(0b10_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_dynamic_rendering'"]
-impl PipelineCreateFlags {
-    #[deprecated = "Backwards-compatible alias containing a typo"]
-    pub const RASTERIZATION_STATE_FRAGMENT_SHADING_RATE_ATTACHMENT_KHR: Self =
-        Self::RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT_KHR;
-}
-#[doc = "Generated from 'VK_KHR_dynamic_rendering'"]
 impl StructureType {
     pub const RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT_INFO_KHR: Self = Self(1_000_044_006);
 }
@@ -4492,12 +4481,6 @@ impl StructureType {
 impl PipelineCreateFlags {
     pub const RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_EXT: Self =
         Self(0b100_0000_0000_0000_0000_0000);
-}
-#[doc = "Generated from 'VK_KHR_dynamic_rendering'"]
-impl PipelineCreateFlags {
-    #[deprecated = "Backwards-compatible alias containing a typo"]
-    pub const RASTERIZATION_STATE_FRAGMENT_DENSITY_MAP_ATTACHMENT_EXT: Self =
-        Self::RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_EXT;
 }
 #[doc = "Generated from 'VK_KHR_dynamic_rendering'"]
 impl StructureType {
@@ -7691,11 +7674,6 @@ impl ExtDisplaySurfaceCounterFn {
 impl StructureType {
     pub const SURFACE_CAPABILITIES_2_EXT: Self = Self(1_000_090_000);
 }
-#[doc = "Generated from 'VK_EXT_display_surface_counter'"]
-impl StructureType {
-    #[deprecated = "Backwards-compatible alias containing a typo"]
-    pub const SURFACE_CAPABILITIES2_EXT: Self = Self::SURFACE_CAPABILITIES_2_EXT;
-}
 impl ExtDisplayControlFn {
     pub fn name() -> &'static ::std::ffi::CStr {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_display_control\0")
@@ -8358,11 +8336,6 @@ impl ColorSpaceKHR {
 #[doc = "Generated from 'VK_EXT_swapchain_colorspace'"]
 impl ColorSpaceKHR {
     pub const EXTENDED_SRGB_NONLINEAR_EXT: Self = Self(1_000_104_014);
-}
-#[doc = "Generated from 'VK_EXT_swapchain_colorspace'"]
-impl ColorSpaceKHR {
-    #[deprecated = "Backwards-compatible alias containing a typo"]
-    pub const DCI_P3_LINEAR_EXT: Self = Self::DISPLAY_P3_LINEAR_EXT;
 }
 impl ExtHdrMetadataFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -16896,12 +16869,6 @@ impl IntelPerformanceQueryFn {
 #[doc = "Generated from 'VK_INTEL_performance_query'"]
 impl StructureType {
     pub const QUERY_POOL_PERFORMANCE_QUERY_CREATE_INFO_INTEL: Self = Self(1_000_210_000);
-}
-#[doc = "Generated from 'VK_INTEL_performance_query'"]
-impl StructureType {
-    #[deprecated = "Backwards-compatible alias containing a typo"]
-    pub const QUERY_POOL_CREATE_INFO_INTEL: Self =
-        Self::QUERY_POOL_PERFORMANCE_QUERY_CREATE_INFO_INTEL;
 }
 #[doc = "Generated from 'VK_INTEL_performance_query'"]
 impl StructureType {

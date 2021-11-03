@@ -1090,8 +1090,6 @@ impl ColorSpaceKHR {
 }
 impl ColorSpaceKHR {
     pub const SRGB_NONLINEAR: Self = Self(0);
-    #[deprecated = "Backwards-compatible alias containing a typo"]
-    pub const COLORSPACE_SRGB_NONLINEAR: Self = Self::SRGB_NONLINEAR;
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
@@ -1153,13 +1151,9 @@ impl DebugReportObjectTypeEXT {
     pub const SURFACE_KHR: Self = Self(26);
     pub const SWAPCHAIN_KHR: Self = Self(27);
     pub const DEBUG_REPORT_CALLBACK_EXT: Self = Self(28);
-    #[deprecated = "Backwards-compatible alias containing a typo"]
-    pub const DEBUG_REPORT: Self = Self::DEBUG_REPORT_CALLBACK_EXT;
     pub const DISPLAY_KHR: Self = Self(29);
     pub const DISPLAY_MODE_KHR: Self = Self(30);
     pub const VALIDATION_CACHE_EXT: Self = Self(33);
-    #[deprecated = "Backwards-compatible alias containing a typo"]
-    pub const VALIDATION_CACHE: Self = Self::VALIDATION_CACHE_EXT;
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
@@ -1957,12 +1951,6 @@ impl PerformanceCounterScopeKHR {
     pub const COMMAND_BUFFER: Self = Self(0);
     pub const RENDER_PASS: Self = Self(1);
     pub const COMMAND: Self = Self(2);
-    #[deprecated = "Backwards-compatible alias containing a typo"]
-    pub const QUERY_SCOPE_COMMAND_BUFFER: Self = Self::COMMAND_BUFFER;
-    #[deprecated = "Backwards-compatible alias containing a typo"]
-    pub const QUERY_SCOPE_RENDER_PASS: Self = Self::RENDER_PASS;
-    #[deprecated = "Backwards-compatible alias containing a typo"]
-    pub const QUERY_SCOPE_COMMAND: Self = Self::COMMAND;
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
