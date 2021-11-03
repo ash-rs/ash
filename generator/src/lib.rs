@@ -18,6 +18,8 @@ use std::hash::BuildHasher;
 use std::path::Path;
 use syn::Ident;
 
+const BACKWARDS_COMPATIBLE_ALIAS_COMMENT: &str = "Backwards-compatible alias containing a typo";
+
 pub trait ExtensionExt {}
 #[derive(Copy, Clone, Debug)]
 pub enum CType {
@@ -360,8 +362,13 @@ pub trait ConstantExt {
         false
     }
     fn doc_attribute(&self) -> TokenStream {
+        assert_ne!(
+            self.notation(),
+            Some(BACKWARDS_COMPATIBLE_ALIAS_COMMENT),
+            "Backwards-compatible constants should not be emitted"
+        );
         match self.notation() {
-            Some(n) if n.starts_with("Backwards") || n.starts_with("Alias") => {
+            Some(n) if n.starts_with("Alias") => {
                 quote!(#[deprecated = #n])
             }
             Some(n) => quote!(#[doc = #n]),
@@ -384,7 +391,7 @@ impl ConstantExt for vkxml::ExtensionEnum {
 
 impl ConstantExt for vk_parse::Enum {
     fn constant(&self, enum_name: &str) -> Constant {
-        Constant::from_vk_parse_enum_spec(&self.spec, Some(enum_name), None)
+        Constant::from_vk_parse_enum(self, Some(enum_name), None)
             .unwrap()
             .0
     }
@@ -517,14 +524,14 @@ impl Constant {
     }
 
     /// Returns (Constant, optional base type, is_alias)
-    pub fn from_vk_parse_enum_spec(
-        spec: &vk_parse::EnumSpec,
+    pub fn from_vk_parse_enum(
+        enum_: &vk_parse::Enum,
         enum_name: Option<&str>,
         extension_number: Option<i64>,
     ) -> Option<(Self, Option<String>, bool)> {
         use vk_parse::EnumSpec;
 
-        match spec {
+        match &enum_.spec {
             EnumSpec::Bitpos { bitpos, extends } => {
                 Some((Self::BitPos(*bitpos as u32), extends.clone(), false))
             }
@@ -1107,8 +1114,12 @@ pub fn generate_extension_constants<'a>(
                 return None;
             }
 
+            if enum_.comment.as_deref() == Some(BACKWARDS_COMPATIBLE_ALIAS_COMMENT) {
+                return None;
+            }
+
             let (constant, extends, is_alias) =
-                Constant::from_vk_parse_enum_spec(&enum_.spec, None, Some(extension_number))?;
+                Constant::from_vk_parse_enum(enum_, None, Some(extension_number))?;
             let extends = extends?;
             let ext_constant = ExtensionConstant {
                 name: &enum_.name,
@@ -1353,19 +1364,6 @@ pub enum EnumType {
     Enum(TokenStream),
 }
 
-fn is_enum_variant_with_typo(variant_name: &str) -> bool {
-    // All these names are aliases and make little sense in our
-    // enum structure, they are better omitted entirely.
-    matches!(
-        variant_name,
-        "VK_STENCIL_FRONT_AND_BACK"
-            | "VK_COLORSPACE_SRGB_NONLINEAR"
-            | "VK_QUERY_SCOPE_COMMAND_BUFFER"
-            | "VK_QUERY_SCOPE_RENDER_PASS"
-            | "VK_QUERY_SCOPE_COMMAND"
-    )
-}
-
 static TRAILING_NUMBER: Lazy<Regex> = Lazy::new(|| Regex::new("(\\d+)$").unwrap());
 
 pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
@@ -1392,16 +1390,8 @@ pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
     let new_variant_name = variant_name
         .strip_prefix(struct_name.as_ref())
         .unwrap_or_else(|| {
-            if enum_name == "VkResult" || is_enum_variant_with_typo(variant_name) {
+            if enum_name == "VkResult" {
                 variant_name.strip_prefix("VK").unwrap()
-            } else if variant_name
-                == "VK_PIPELINE_RASTERIZATION_STATE_CREATE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR"
-            {
-                "_RASTERIZATION_STATE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR"
-            } else if variant_name
-                == "VK_PIPELINE_RASTERIZATION_STATE_CREATE_FRAGMENT_DENSITY_MAP_ATTACHMENT_BIT_EXT"
-            {
-                "_RASTERIZATION_STATE_FRAGMENT_DENSITY_MAP_ATTACHMENT_BIT_EXT"
             } else {
                 panic!(
                     "Failed to strip {} prefix from enum variant {}",
@@ -1434,6 +1424,7 @@ pub fn bitflags_impl_block(
 ) -> TokenStream {
     let variants = constants
         .iter()
+        .filter(|constant| constant.notation() != Some(BACKWARDS_COMPATIBLE_ALIAS_COMMENT))
         .map(|constant| {
             let variant_ident = constant.variant_ident(enum_name);
             let constant = constant.constant(enum_name);
@@ -1482,6 +1473,7 @@ pub fn generate_enum<'a>(
             vk_parse::EnumsChild::Enum(ref constant) => Some(constant),
             _ => None,
         })
+        .filter(|constant| constant.notation() != Some(BACKWARDS_COMPATIBLE_ALIAS_COMMENT))
         .filter(|constant| match &constant.spec {
             vk_parse::EnumSpec::Alias { alias, .. } => {
                 // Remove any alias whose name is identical after name de-mangling. For example

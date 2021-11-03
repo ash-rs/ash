@@ -498,8 +498,6 @@ impl StencilFaceFlags {
     pub const BACK: Self = Self(0b10);
     #[doc = "Front and back faces"]
     pub const FRONT_AND_BACK: Self = Self(0x0000_0003);
-    #[deprecated = "Backwards-compatible alias containing a typo"]
-    pub const STENCIL_FRONT_AND_BACK: Self = Self::FRONT_AND_BACK;
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
