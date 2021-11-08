@@ -14,6 +14,13 @@ use std::default::Default;
 use std::ffi::{CStr, CString};
 use std::ops::Drop;
 
+use winit::{
+    event::{DeviceEvent, ElementState, Event, KeyboardInput, VirtualKeyCode, WindowEvent},
+    event_loop::{ControlFlow, EventLoop},
+    platform::run_return::EventLoopExtRunReturn,
+    window::WindowBuilder,
+};
+
 // Simple offset_of macro akin to C++ offsetof
 #[macro_export]
 macro_rules! offset_of {
@@ -139,8 +146,8 @@ pub struct ExampleBase {
     pub surface_loader: Surface,
     pub swapchain_loader: Swapchain,
     pub debug_utils_loader: DebugUtils,
-    pub window: winit::Window,
-    pub events_loop: RefCell<winit::EventsLoop>,
+    pub window: winit::window::Window,
+    pub events_loop: RefCell<EventLoop<()>>,
     pub debug_call_back: vk::DebugUtilsMessengerEXT,
 
     pub pdevice: vk::PhysicalDevice,
@@ -173,32 +180,42 @@ pub struct ExampleBase {
 
 impl ExampleBase {
     pub fn render_loop<F: Fn()>(&self, f: F) {
-        use winit::*;
-        self.events_loop.borrow_mut().run_forever(|event| {
-            f();
-            match event {
-                Event::WindowEvent { event, .. } => match event {
-                    WindowEvent::KeyboardInput { input, .. } => {
-                        if let Some(VirtualKeyCode::Escape) = input.virtual_keycode {
-                            ControlFlow::Break
-                        } else {
-                            ControlFlow::Continue
-                        }
-                    }
-                    WindowEvent::CloseRequested => winit::ControlFlow::Break,
-                    _ => ControlFlow::Continue,
-                },
-                _ => ControlFlow::Continue,
-            }
-        });
+        self.events_loop
+            .borrow_mut()
+            .run_return(|event, _, control_flow| {
+                *control_flow = ControlFlow::Wait;
+                f();
+                match event {
+                    Event::WindowEvent {
+                        event: WindowEvent::CloseRequested,
+                        window_id,
+                    } if window_id == self.window.id() => *control_flow = ControlFlow::Exit,
+
+                    Event::DeviceEvent { event, .. } => match event {
+                        DeviceEvent::Key(KeyboardInput {
+                            virtual_keycode: Some(keycode),
+                            state,
+                            ..
+                        }) => match (keycode, state) {
+                            (VirtualKeyCode::Escape, ElementState::Released) => {
+                                *control_flow = ControlFlow::Exit
+                            }
+                            _ => (),
+                        },
+                        _ => (),
+                    },
+
+                    _ => (),
+                }
+            });
     }
 
     pub fn new(window_width: u32, window_height: u32) -> Self {
         unsafe {
-            let events_loop = winit::EventsLoop::new();
-            let window = winit::WindowBuilder::new()
+            let events_loop = EventLoop::new();
+            let window = WindowBuilder::new()
                 .with_title("Ash - Example")
-                .with_dimensions(winit::dpi::LogicalSize::new(
+                .with_inner_size(winit::dpi::LogicalSize::new(
                     f64::from(window_width),
                     f64::from(window_height),
                 ))
