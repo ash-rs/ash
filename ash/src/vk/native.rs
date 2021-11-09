@@ -1923,42 +1923,54 @@ impl StdVideoDecodeH264PictureInfoFlags {
         }
     }
     #[inline]
-    pub fn bottom_field_flag(&self) -> u32 {
+    pub fn IdrPicFlag(&self) -> u32 {
         unsafe { ::std::mem::transmute(self._bitfield_1.get(2usize, 1u8) as u32) }
     }
     #[inline]
-    pub fn set_bottom_field_flag(&mut self, val: u32) {
+    pub fn set_IdrPicFlag(&mut self, val: u32) {
         unsafe {
             let val: u32 = ::std::mem::transmute(val);
             self._bitfield_1.set(2usize, 1u8, val as u64)
         }
     }
     #[inline]
-    pub fn is_reference(&self) -> u32 {
+    pub fn bottom_field_flag(&self) -> u32 {
         unsafe { ::std::mem::transmute(self._bitfield_1.get(3usize, 1u8) as u32) }
     }
     #[inline]
-    pub fn set_is_reference(&mut self, val: u32) {
+    pub fn set_bottom_field_flag(&mut self, val: u32) {
         unsafe {
             let val: u32 = ::std::mem::transmute(val);
             self._bitfield_1.set(3usize, 1u8, val as u64)
         }
     }
     #[inline]
-    pub fn complementary_field_pair(&self) -> u32 {
+    pub fn is_reference(&self) -> u32 {
         unsafe { ::std::mem::transmute(self._bitfield_1.get(4usize, 1u8) as u32) }
     }
     #[inline]
-    pub fn set_complementary_field_pair(&mut self, val: u32) {
+    pub fn set_is_reference(&mut self, val: u32) {
         unsafe {
             let val: u32 = ::std::mem::transmute(val);
             self._bitfield_1.set(4usize, 1u8, val as u64)
         }
     }
     #[inline]
+    pub fn complementary_field_pair(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(5usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_complementary_field_pair(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(5usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
     pub fn new_bitfield_1(
         field_pic_flag: u32,
         is_intra: u32,
+        IdrPicFlag: u32,
         bottom_field_flag: u32,
         is_reference: u32,
         complementary_field_pair: u32,
@@ -1973,14 +1985,18 @@ impl StdVideoDecodeH264PictureInfoFlags {
             is_intra as u64
         });
         __bindgen_bitfield_unit.set(2usize, 1u8, {
+            let IdrPicFlag: u32 = unsafe { ::std::mem::transmute(IdrPicFlag) };
+            IdrPicFlag as u64
+        });
+        __bindgen_bitfield_unit.set(3usize, 1u8, {
             let bottom_field_flag: u32 = unsafe { ::std::mem::transmute(bottom_field_flag) };
             bottom_field_flag as u64
         });
-        __bindgen_bitfield_unit.set(3usize, 1u8, {
+        __bindgen_bitfield_unit.set(4usize, 1u8, {
             let is_reference: u32 = unsafe { ::std::mem::transmute(is_reference) };
             is_reference as u64
         });
-        __bindgen_bitfield_unit.set(4usize, 1u8, {
+        __bindgen_bitfield_unit.set(5usize, 1u8, {
             let complementary_field_pair: u32 =
                 unsafe { ::std::mem::transmute(complementary_field_pair) };
             complementary_field_pair as u64
