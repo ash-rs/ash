@@ -15,7 +15,7 @@ use std::ffi::{CStr, CString};
 use std::ops::Drop;
 
 use winit::{
-    event::{DeviceEvent, ElementState, Event, KeyboardInput, VirtualKeyCode, WindowEvent},
+    event::{ElementState, Event, KeyboardInput, VirtualKeyCode, WindowEvent},
     event_loop::{ControlFlow, EventLoop},
     platform::run_return::EventLoopExtRunReturn,
     window::WindowBuilder,
@@ -187,25 +187,22 @@ impl ExampleBase {
                 f();
                 match event {
                     Event::WindowEvent {
-                        event: WindowEvent::CloseRequested,
+                        ref event,
                         window_id,
-                    } if window_id == self.window.id() => *control_flow = ControlFlow::Exit,
-
-                    Event::DeviceEvent { event, .. } => match event {
-                        DeviceEvent::Key(KeyboardInput {
-                            virtual_keycode: Some(keycode),
-                            state,
+                    } if window_id == self.window.id() => match event {
+                        WindowEvent::CloseRequested
+                        | WindowEvent::KeyboardInput {
+                            input:
+                                KeyboardInput {
+                                    state: ElementState::Pressed,
+                                    virtual_keycode: Some(VirtualKeyCode::Escape),
+                                    ..
+                                },
                             ..
-                        }) => match (keycode, state) {
-                            (VirtualKeyCode::Escape, ElementState::Released) => {
-                                *control_flow = ControlFlow::Exit
-                            }
-                            _ => (),
-                        },
-                        _ => (),
+                        } => *control_flow = ControlFlow::Exit,
+                        _ => {}
                     },
-
-                    _ => (),
+                    _ => {}
                 }
             });
     }
