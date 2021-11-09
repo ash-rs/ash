@@ -1390,7 +1390,7 @@ pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
     // TODO: Also needs to be more robust, vendor names can be substrings from itself, id:4
     // like NVX and NV
     let vendors = [
-        "_NVX", "_KHR", "_EXT", "_NV", "_AMD", "_ANDROID", "_GOOGLE", "_INTEL",
+        "_NVX", "_KHR", "_EXT", "_NV", "_AMD", "_ANDROID", "_GOOGLE", "_INTEL", "_FUCHSIA",
     ];
     let struct_name = _name.to_shouty_snake_case();
     let vendor = vendors
@@ -1409,6 +1409,14 @@ pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
         .unwrap_or_else(|| {
             if enum_name == "VkResult" || is_enum_variant_with_typo(variant_name) {
                 variant_name.strip_prefix("VK").unwrap()
+            } else if variant_name
+                == "VK_PIPELINE_RASTERIZATION_STATE_CREATE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR"
+            {
+                "_RASTERIZATION_STATE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR"
+            } else if variant_name
+                == "VK_PIPELINE_RASTERIZATION_STATE_CREATE_FRAGMENT_DENSITY_MAP_ATTACHMENT_BIT_EXT"
+            {
+                "_RASTERIZATION_STATE_FRAGMENT_DENSITY_MAP_ATTACHMENT_BIT_EXT"
             } else {
                 panic!(
                     "Failed to strip {} prefix from enum variant {}",
