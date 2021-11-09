@@ -1,6 +1,6 @@
 #[macro_export]
 macro_rules! vk_bitflags_wrapped {
-    ($ name : ident , $ all : expr , $ flag_type : ty) => {
+    ($ name : ident , $ flag_type : ty) => {
         impl Default for $name {
             fn default() -> Self {
                 Self(0)
@@ -10,10 +10,6 @@ macro_rules! vk_bitflags_wrapped {
             #[inline]
             pub const fn empty() -> Self {
                 Self(0)
-            }
-            #[inline]
-            pub const fn all() -> Self {
-                Self($all)
             }
             #[inline]
             pub const fn from_raw(x: $flag_type) -> Self {
@@ -26,10 +22,6 @@ macro_rules! vk_bitflags_wrapped {
             #[inline]
             pub fn is_empty(self) -> bool {
                 self == Self::empty()
-            }
-            #[inline]
-            pub fn is_all(self) -> bool {
-                self & Self::all() == Self::all()
             }
             #[inline]
             pub fn intersects(self, other: Self) -> bool {
@@ -80,24 +72,11 @@ macro_rules! vk_bitflags_wrapped {
                 *self = *self ^ rhs
             }
         }
-        impl ::std::ops::Sub for $name {
-            type Output = Self;
-            #[inline]
-            fn sub(self, rhs: Self) -> Self {
-                self & !rhs
-            }
-        }
-        impl ::std::ops::SubAssign for $name {
-            #[inline]
-            fn sub_assign(&mut self, rhs: Self) {
-                *self = *self - rhs
-            }
-        }
         impl ::std::ops::Not for $name {
             type Output = Self;
             #[inline]
             fn not(self) -> Self {
-                self ^ Self::all()
+                Self(!self.0)
             }
         }
     };

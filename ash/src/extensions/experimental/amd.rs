@@ -34,11 +34,7 @@ use std::os::raw::*;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct GpaSqShaderStageFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(
-    GpaSqShaderStageFlags,
-    0b1111111111111111111111111111111,
-    Flags
-);
+vk_bitflags_wrapped!(GpaSqShaderStageFlags, Flags);
 impl fmt::Debug for GpaSqShaderStageFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
