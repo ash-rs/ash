@@ -45,6 +45,7 @@ impl GetMemoryRequirements2 {
             .get_image_memory_requirements2_khr(self.handle, info, memory_requirements);
     }
 
+    /// Retrieve the number of elements to pass to [`Self::get_image_sparse_memory_requirements2()`]
     pub unsafe fn get_image_sparse_memory_requirements2_len(
         &self,
         info: &vk::ImageSparseMemoryRequirementsInfo2KHR,
@@ -61,18 +62,21 @@ impl GetMemoryRequirements2 {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetImageSparseMemoryRequirements2KHR.html>"]
+    ///
+    /// Call [`Self::get_image_sparse_memory_requirements2_len()`] to query the number of elements to pass to `out`.
+    /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.
     pub unsafe fn get_image_sparse_memory_requirements2(
         &self,
         info: &vk::ImageSparseMemoryRequirementsInfo2KHR,
-        sparse_memory_requirements: &mut [vk::SparseImageMemoryRequirements2KHR],
+        out: &mut [vk::SparseImageMemoryRequirements2KHR],
     ) {
-        let mut count = sparse_memory_requirements.len() as u32;
+        let mut count = out.len() as u32;
         self.get_memory_requirements2_fn
             .get_image_sparse_memory_requirements2_khr(
                 self.handle,
                 info,
                 &mut count,
-                sparse_memory_requirements.as_mut_ptr(),
+                out.as_mut_ptr(),
             );
     }
 

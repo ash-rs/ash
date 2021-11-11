@@ -84,6 +84,7 @@ impl GetPhysicalDeviceProperties2 {
             .get_physical_device_properties2_khr(physical_device, properties);
     }
 
+    /// Retrieve the number of elements to pass to [`Self::get_physical_device_queue_family_properties2()`]
     pub unsafe fn get_physical_device_queue_family_properties2_len(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -99,20 +100,24 @@ impl GetPhysicalDeviceProperties2 {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceQueueFamilyProperties2KHR.html>"]
+    ///
+    /// Call [`Self::get_physical_device_queue_family_properties2_len()`] to query the number of elements to pass to `out`.
+    /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.
     pub unsafe fn get_physical_device_queue_family_properties2(
         &self,
         physical_device: vk::PhysicalDevice,
-        queue_family_properties: &mut [vk::QueueFamilyProperties2KHR],
+        out: &mut [vk::QueueFamilyProperties2KHR],
     ) {
-        let mut count = queue_family_properties.len() as u32;
+        let mut count = out.len() as u32;
         self.get_physical_device_properties2_fn
             .get_physical_device_queue_family_properties2_khr(
                 physical_device,
                 &mut count,
-                queue_family_properties.as_mut_ptr(),
+                out.as_mut_ptr(),
             );
     }
 
+    /// Retrieve the number of elements to pass to [`Self::get_physical_device_sparse_image_format_properties2()`]
     pub unsafe fn get_physical_device_sparse_image_format_properties2_len(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -130,19 +135,22 @@ impl GetPhysicalDeviceProperties2 {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceSparseImageFormatProperties2KHR.html>"]
+    ///
+    /// Call [`Self::get_physical_device_sparse_image_format_properties2_len()`] to query the number of elements to pass to `out`.
+    /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.
     pub unsafe fn get_physical_device_sparse_image_format_properties2(
         &self,
         physical_device: vk::PhysicalDevice,
         format_info: &vk::PhysicalDeviceSparseImageFormatInfo2KHR,
-        properties: &mut [vk::SparseImageFormatProperties2KHR],
+        out: &mut [vk::SparseImageFormatProperties2KHR],
     ) {
-        let mut count = properties.len() as u32;
+        let mut count = out.len() as u32;
         self.get_physical_device_properties2_fn
             .get_physical_device_sparse_image_format_properties2_khr(
                 physical_device,
                 format_info,
                 &mut count,
-                properties.as_mut_ptr(),
+                out.as_mut_ptr(),
             );
     }
 
