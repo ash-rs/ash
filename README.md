@@ -259,7 +259,7 @@ cargo run --bin texture
 
 ### Examples
 
-* [vulkan-tutorial-rust](https://github.com/Usami-Renko/vulkan-tutorial-rust) - A port of [vulkan-tutorial.com](vulkan-tutorial.com).
+* [vulkan-tutorial-rust](https://github.com/Usami-Renko/vulkan-tutorial-rust) - A port of [vulkan-tutorial.com](https://vulkan-tutorial.com).
 * [ash-sample-progression](https://github.com/bzm3r/ash-sample-progression) - A port of the LunarG examples.
 * [ash-nv-rt](https://github.com/gwihlidal/ash-nv-rt) A raytracing example for ash.
 
