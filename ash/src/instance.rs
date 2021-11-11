@@ -59,16 +59,14 @@ impl Instance {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumeratePhysicalDeviceGroups.html>"]
-    pub fn enumerate_physical_device_groups(
+    pub unsafe fn enumerate_physical_device_groups(
         &self,
         out: &mut [vk::PhysicalDeviceGroupProperties],
     ) -> VkResult<()> {
-        unsafe {
-            let mut group_count = out.len() as u32;
-            self.instance_fn_1_1
-                .enumerate_physical_device_groups(self.handle(), &mut group_count, out.as_mut_ptr())
-                .into()
-        }
+        let mut group_count = out.len() as u32;
+        self.instance_fn_1_1
+            .enumerate_physical_device_groups(self.handle(), &mut group_count, out.as_mut_ptr())
+            .into()
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceFeatures2.html>"]
