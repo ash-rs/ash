@@ -11,13 +11,11 @@ pub struct Maintenance4 {
 
 impl Maintenance4 {
     pub fn new(instance: &Instance, device: &Device) -> Self {
+        let handle = device.handle();
         let fns = vk::KhrMaintenance4Fn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
+            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
-        Self {
-            handle: device.handle(),
-            fns,
-        }
+        Self { handle, fns }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDeviceBufferMemoryRequirementsKHR.html>"]

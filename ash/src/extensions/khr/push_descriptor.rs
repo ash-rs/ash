@@ -6,23 +6,17 @@ use std::mem;
 
 #[derive(Clone)]
 pub struct PushDescriptor {
-    handle: vk::Instance,
-    push_descriptors_fn: vk::KhrPushDescriptorFn,
+    handle: vk::Device,
+    fns: vk::KhrPushDescriptorFn,
 }
 
 impl PushDescriptor {
     pub fn new(instance: &Instance, device: &Device) -> Self {
-        let push_descriptors_fn = vk::KhrPushDescriptorFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
+        let handle = device.handle();
+        let fns = vk::KhrPushDescriptorFn::load(|name| unsafe {
+            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
-        Self {
-            handle: instance.handle(),
-            push_descriptors_fn,
-        }
-    }
-
-    pub fn name() -> &'static CStr {
-        vk::KhrPushDescriptorFn::name()
+        Self { handle, fns }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdPushDescriptorSetKHR.html>"]
@@ -34,7 +28,7 @@ impl PushDescriptor {
         set: u32,
         descriptor_writes: &[vk::WriteDescriptorSet],
     ) {
-        self.push_descriptors_fn.cmd_push_descriptor_set_khr(
+        self.fns.cmd_push_descriptor_set_khr(
             command_buffer,
             pipeline_bind_point,
             layout,
@@ -53,21 +47,24 @@ impl PushDescriptor {
         set: u32,
         p_data: *const c_void,
     ) {
-        self.push_descriptors_fn
-            .cmd_push_descriptor_set_with_template_khr(
-                command_buffer,
-                descriptor_update_template,
-                layout,
-                set,
-                p_data,
-            );
+        self.fns.cmd_push_descriptor_set_with_template_khr(
+            command_buffer,
+            descriptor_update_template,
+            layout,
+            set,
+            p_data,
+        );
+    }
+
+    pub fn name() -> &'static CStr {
+        vk::KhrPushDescriptorFn::name()
     }
 
     pub fn fp(&self) -> &vk::KhrPushDescriptorFn {
-        &self.push_descriptors_fn
+        &self.fns
     }
 
-    pub fn instance(&self) -> vk::Instance {
+    pub fn device(&self) -> vk::Device {
         self.handle
     }
 }

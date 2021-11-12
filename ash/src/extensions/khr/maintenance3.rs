@@ -11,17 +11,11 @@ pub struct Maintenance3 {
 
 impl Maintenance3 {
     pub fn new(instance: &Instance, device: &Device) -> Self {
+        let handle = device.handle();
         let fns = vk::KhrMaintenance3Fn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
+            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
-        Self {
-            handle: device.handle(),
-            fns,
-        }
-    }
-
-    pub fn name() -> &'static CStr {
-        vk::KhrMaintenance3Fn::name()
+        Self { handle, fns }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDescriptorSetLayoutSupportKHR.html>"]
@@ -32,6 +26,10 @@ impl Maintenance3 {
     ) {
         self.fns
             .get_descriptor_set_layout_support_khr(self.handle, create_info, out);
+    }
+
+    pub fn name() -> &'static CStr {
+        vk::KhrMaintenance3Fn::name()
     }
 
     pub fn fp(&self) -> &vk::KhrMaintenance3Fn {

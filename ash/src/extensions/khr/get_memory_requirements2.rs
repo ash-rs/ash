@@ -7,22 +7,16 @@ use std::ptr;
 #[derive(Clone)]
 pub struct GetMemoryRequirements2 {
     handle: vk::Device,
-    get_memory_requirements2_fn: vk::KhrGetMemoryRequirements2Fn,
+    fns: vk::KhrGetMemoryRequirements2Fn,
 }
 
 impl GetMemoryRequirements2 {
     pub fn new(instance: &Instance, device: &Device) -> Self {
-        let get_memory_requirements2_fn = vk::KhrGetMemoryRequirements2Fn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
+        let handle = device.handle();
+        let fns = vk::KhrGetMemoryRequirements2Fn::load(|name| unsafe {
+            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
-        Self {
-            handle: device.handle(),
-            get_memory_requirements2_fn,
-        }
-    }
-
-    pub fn name() -> &'static CStr {
-        vk::KhrGetMemoryRequirements2Fn::name()
+        Self { handle, fns }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetBufferMemoryRequirements2KHR.html>"]
@@ -31,7 +25,7 @@ impl GetMemoryRequirements2 {
         info: &vk::BufferMemoryRequirementsInfo2KHR,
         memory_requirements: &mut vk::MemoryRequirements2KHR,
     ) {
-        self.get_memory_requirements2_fn
+        self.fns
             .get_buffer_memory_requirements2_khr(self.handle, info, memory_requirements);
     }
 
@@ -41,7 +35,7 @@ impl GetMemoryRequirements2 {
         info: &vk::ImageMemoryRequirementsInfo2KHR,
         memory_requirements: &mut vk::MemoryRequirements2KHR,
     ) {
-        self.get_memory_requirements2_fn
+        self.fns
             .get_image_memory_requirements2_khr(self.handle, info, memory_requirements);
     }
 
@@ -51,13 +45,12 @@ impl GetMemoryRequirements2 {
         info: &vk::ImageSparseMemoryRequirementsInfo2KHR,
     ) -> usize {
         let mut count = 0;
-        self.get_memory_requirements2_fn
-            .get_image_sparse_memory_requirements2_khr(
-                self.handle,
-                info,
-                &mut count,
-                ptr::null_mut(),
-            );
+        self.fns.get_image_sparse_memory_requirements2_khr(
+            self.handle,
+            info,
+            &mut count,
+            ptr::null_mut(),
+        );
         count as usize
     }
 
@@ -71,17 +64,20 @@ impl GetMemoryRequirements2 {
         out: &mut [vk::SparseImageMemoryRequirements2KHR],
     ) {
         let mut count = out.len() as u32;
-        self.get_memory_requirements2_fn
-            .get_image_sparse_memory_requirements2_khr(
-                self.handle,
-                info,
-                &mut count,
-                out.as_mut_ptr(),
-            );
+        self.fns.get_image_sparse_memory_requirements2_khr(
+            self.handle,
+            info,
+            &mut count,
+            out.as_mut_ptr(),
+        );
+    }
+
+    pub fn name() -> &'static CStr {
+        vk::KhrGetMemoryRequirements2Fn::name()
     }
 
     pub fn fp(&self) -> &vk::KhrGetMemoryRequirements2Fn {
-        &self.get_memory_requirements2_fn
+        &self.fns
     }
 
     pub fn device(&self) -> vk::Device {

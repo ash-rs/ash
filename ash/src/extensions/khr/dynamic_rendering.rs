@@ -5,25 +5,17 @@ use std::mem;
 
 #[derive(Clone)]
 pub struct DynamicRendering {
+    handle: vk::Device,
     fns: vk::KhrDynamicRenderingFn,
 }
 
 impl DynamicRendering {
     pub fn new(instance: &Instance, device: &Device) -> Self {
-        let dynamic_rendering_fn = vk::KhrDynamicRenderingFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
+        let handle = device.handle();
+        let fns = vk::KhrDynamicRenderingFn::load(|name| unsafe {
+            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
-        Self {
-            fns: dynamic_rendering_fn,
-        }
-    }
-
-    pub fn name() -> &'static CStr {
-        vk::KhrDynamicRenderingFn::name()
-    }
-
-    pub fn fp(&self) -> &vk::KhrDynamicRenderingFn {
-        &self.fns
+        Self { handle, fns }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBeginRenderingKHR.html>"]
@@ -39,5 +31,17 @@ impl DynamicRendering {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdEndRenderingKHR.html>"]
     pub unsafe fn cmd_end_rendering(&self, command_buffer: vk::CommandBuffer) {
         self.fns.cmd_end_rendering_khr(command_buffer)
+    }
+
+    pub fn name() -> &'static CStr {
+        vk::KhrDynamicRenderingFn::name()
+    }
+
+    pub fn fp(&self) -> &vk::KhrDynamicRenderingFn {
+        &self.fns
+    }
+
+    pub fn device(&self) -> vk::Device {
+        self.handle
     }
 }

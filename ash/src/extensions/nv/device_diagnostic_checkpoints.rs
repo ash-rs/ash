@@ -6,18 +6,17 @@ use std::os::raw::c_void;
 
 #[derive(Clone)]
 pub struct DeviceDiagnosticCheckpoints {
-    device_diagnostic_checkpoints_fn: vk::NvDeviceDiagnosticCheckpointsFn,
+    handle: vk::Device,
+    fns: vk::NvDeviceDiagnosticCheckpointsFn,
 }
 
 impl DeviceDiagnosticCheckpoints {
     pub fn new(instance: &Instance, device: &Device) -> Self {
-        let device_diagnostic_checkpoints_fn =
-            vk::NvDeviceDiagnosticCheckpointsFn::load(|name| unsafe {
-                mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
-            });
-        Self {
-            device_diagnostic_checkpoints_fn,
-        }
+        let handle = device.handle();
+        let fns = vk::NvDeviceDiagnosticCheckpointsFn::load(|name| unsafe {
+            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+        });
+        Self { handle, fns }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetCheckpointNV.html>"]
@@ -26,23 +25,25 @@ impl DeviceDiagnosticCheckpoints {
         command_buffer: vk::CommandBuffer,
         p_checkpoint_marker: *const c_void,
     ) {
-        self.device_diagnostic_checkpoints_fn
+        self.fns
             .cmd_set_checkpoint_nv(command_buffer, p_checkpoint_marker);
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetQueueCheckpointDataNV.html>"]
     pub unsafe fn get_queue_checkpoint_data(&self, queue: vk::Queue) -> Vec<vk::CheckpointDataNV> {
         let mut checkpoint_data_count: u32 = 0;
-        self.device_diagnostic_checkpoints_fn
-            .get_queue_checkpoint_data_nv(queue, &mut checkpoint_data_count, std::ptr::null_mut());
+        self.fns.get_queue_checkpoint_data_nv(
+            queue,
+            &mut checkpoint_data_count,
+            std::ptr::null_mut(),
+        );
         let mut checkpoint_data: Vec<vk::CheckpointDataNV> =
             vec![vk::CheckpointDataNV::default(); checkpoint_data_count as _];
-        self.device_diagnostic_checkpoints_fn
-            .get_queue_checkpoint_data_nv(
-                queue,
-                &mut checkpoint_data_count,
-                checkpoint_data.as_mut_ptr(),
-            );
+        self.fns.get_queue_checkpoint_data_nv(
+            queue,
+            &mut checkpoint_data_count,
+            checkpoint_data.as_mut_ptr(),
+        );
         checkpoint_data
     }
 
@@ -51,6 +52,10 @@ impl DeviceDiagnosticCheckpoints {
     }
 
     pub fn fp(&self) -> &vk::NvDeviceDiagnosticCheckpointsFn {
-        &self.device_diagnostic_checkpoints_fn
+        &self.fns
+    }
+
+    pub fn device(&self) -> vk::Device {
+        self.handle
     }
 }

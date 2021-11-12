@@ -8,22 +8,16 @@ use std::mem;
 #[derive(Clone)]
 pub struct XcbSurface {
     handle: vk::Instance,
-    xcb_surface_fn: vk::KhrXcbSurfaceFn,
+    fns: vk::KhrXcbSurfaceFn,
 }
 
 impl XcbSurface {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
-        let surface_fn = vk::KhrXcbSurfaceFn::load(|name| unsafe {
-            mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
+        let handle = instance.handle();
+        let fns = vk::KhrXcbSurfaceFn::load(|name| unsafe {
+            mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
-        Self {
-            handle: instance.handle(),
-            xcb_surface_fn: surface_fn,
-        }
-    }
-
-    pub fn name() -> &'static CStr {
-        vk::KhrXcbSurfaceFn::name()
+        Self { handle, fns }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateXcbSurfaceKHR.html>"]
@@ -33,7 +27,7 @@ impl XcbSurface {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::zeroed();
-        self.xcb_surface_fn
+        self.fns
             .create_xcb_surface_khr(
                 self.handle,
                 create_info,
@@ -51,20 +45,22 @@ impl XcbSurface {
         connection: &mut vk::xcb_connection_t,
         visual_id: vk::xcb_visualid_t,
     ) -> bool {
-        let b = self
-            .xcb_surface_fn
-            .get_physical_device_xcb_presentation_support_khr(
-                physical_device,
-                queue_family_index,
-                connection,
-                visual_id,
-            );
+        let b = self.fns.get_physical_device_xcb_presentation_support_khr(
+            physical_device,
+            queue_family_index,
+            connection,
+            visual_id,
+        );
 
         b > 0
     }
 
+    pub fn name() -> &'static CStr {
+        vk::KhrXcbSurfaceFn::name()
+    }
+
     pub fn fp(&self) -> &vk::KhrXcbSurfaceFn {
-        &self.xcb_surface_fn
+        &self.fns
     }
 
     pub fn instance(&self) -> vk::Instance {

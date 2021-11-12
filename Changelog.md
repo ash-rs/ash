@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add `VK_KHR_present_wait` extension (#493)
 
+### Changed
+
+- Removed `instance` function from `extensions::ext::ExtendedDynamicState` and `extensions::khr::PushDescriptor` (#494)
+
 ## [0.33.3] - 2021-09-08
 
 ### Added
