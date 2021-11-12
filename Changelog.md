@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - ReleaseDate
 
+### Added
+
+- Add `VK_KHR_present_wait` extension (#493)
+
 ## [0.33.3] - 2021-09-08
 
 ### Added
