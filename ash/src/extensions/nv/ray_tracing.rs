@@ -90,7 +90,7 @@ impl RayTracing {
                 bind_info.len() as u32,
                 bind_info.as_ptr(),
             )
-            .into()
+            .result()
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBuildAccelerationStructureNV.html>"]
@@ -206,7 +206,7 @@ impl RayTracing {
                 data.len(),
                 data.as_mut_ptr() as *mut std::ffi::c_void,
             )
-            .into()
+            .result()
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetAccelerationStructureHandleNV.html>"]
@@ -250,7 +250,7 @@ impl RayTracing {
     pub unsafe fn compile_deferred(&self, pipeline: vk::Pipeline, shader: u32) -> VkResult<()> {
         self.ray_tracing_fn
             .compile_deferred_nv(self.handle, pipeline, shader)
-            .into()
+            .result()
     }
 
     pub fn name() -> &'static CStr {

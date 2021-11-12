@@ -70,7 +70,7 @@ impl Instance {
         let mut group_count = out.len() as u32;
         self.instance_fn_1_1
             .enumerate_physical_device_groups(self.handle(), &mut group_count, out.as_mut_ptr())
-            .into()
+            .result()
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceFeatures2.html>"]
@@ -117,7 +117,7 @@ impl Instance {
                 format_info,
                 image_format_prop,
             )
-            .into()
+            .result()
     }
 
     /// Retrieve the number of elements to pass to [`Self::get_physical_device_queue_family_properties2()`]
