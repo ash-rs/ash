@@ -46,7 +46,7 @@ impl TimelineSemaphore {
     ) -> VkResult<()> {
         self.timeline_semaphore_fn
             .wait_semaphores_khr(device, wait_info, timeout)
-            .into()
+            .result()
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkSignalSemaphore.html>"]
@@ -57,7 +57,7 @@ impl TimelineSemaphore {
     ) -> VkResult<()> {
         self.timeline_semaphore_fn
             .signal_semaphore_khr(device, signal_info)
-            .into()
+            .result()
     }
 
     pub fn fp(&self) -> &vk::KhrTimelineSemaphoreFn {

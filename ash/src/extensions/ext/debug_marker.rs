@@ -29,7 +29,7 @@ impl DebugMarker {
     ) -> VkResult<()> {
         self.debug_marker_fn
             .debug_marker_set_object_name_ext(device, name_info)
-            .into()
+            .result()
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDebugMarkerBeginEXT.html>"]

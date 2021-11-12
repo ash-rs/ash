@@ -151,7 +151,7 @@ impl AccelerationStructure {
                 infos.as_ptr(),
                 build_range_infos.as_ptr(),
             )
-            .into()
+            .result()
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCopyAccelerationStructureKHR.html>"]
@@ -162,7 +162,7 @@ impl AccelerationStructure {
     ) -> VkResult<()> {
         self.acceleration_structure_fn
             .copy_acceleration_structure_khr(self.handle, deferred_operation, info as *const _)
-            .into()
+            .result()
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCopyAccelerationStructureToMemoryKHR.html>"]
@@ -177,7 +177,7 @@ impl AccelerationStructure {
                 deferred_operation,
                 info as *const _,
             )
-            .into()
+            .result()
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCopyMemoryToAccelerationStructureKHR.html>"]
@@ -192,7 +192,7 @@ impl AccelerationStructure {
                 deferred_operation,
                 info as *const _,
             )
-            .into()
+            .result()
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkWriteAccelerationStructuresPropertiesKHR.html>"]
@@ -213,7 +213,7 @@ impl AccelerationStructure {
                 data.as_mut_ptr() as *mut std::ffi::c_void,
                 stride,
             )
-            .into()
+            .result()
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdCopyAccelerationStructureKHR.html>"]
