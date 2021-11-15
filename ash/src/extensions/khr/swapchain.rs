@@ -2,8 +2,10 @@ use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
 use crate::{Device, Instance};
+use std::convert::TryInto;
 use std::ffi::CStr;
 use std::mem;
+use std::time::Duration;
 
 #[derive(Clone)]
 pub struct Swapchain {
@@ -44,15 +46,16 @@ impl Swapchain {
     pub unsafe fn acquire_next_image(
         &self,
         swapchain: vk::SwapchainKHR,
-        timeout: u64,
+        timeout: Duration,
         semaphore: vk::Semaphore,
         fence: vk::Fence,
     ) -> VkResult<(u32, bool)> {
+        let timeout_ns = timeout.as_nanos().try_into().unwrap();
         let mut index = 0;
         let err_code = self.swapchain_fn.acquire_next_image_khr(
             self.handle,
             swapchain,
-            timeout,
+            timeout_ns,
             semaphore,
             fence,
             &mut index,

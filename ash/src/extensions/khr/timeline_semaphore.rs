@@ -1,8 +1,10 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::{Entry, Instance};
+use std::convert::TryInto;
 use std::ffi::CStr;
 use std::mem;
+use std::time::Duration;
 
 #[derive(Clone)]
 pub struct TimelineSemaphore {
@@ -42,11 +44,12 @@ impl TimelineSemaphore {
         &self,
         device: vk::Device,
         wait_info: &vk::SemaphoreWaitInfo,
-        timeout: u64,
+        timeout: Duration,
     ) -> VkResult<()> {
+        let timeout_ns = timeout.as_nanos().try_into().unwrap();
         self.timeline_semaphore_fn
-            .wait_semaphores_khr(device, wait_info, timeout)
-            .into()
+            .wait_semaphores_khr(device, wait_info, timeout_ns)
+            .result()
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkSignalSemaphore.html>"]
