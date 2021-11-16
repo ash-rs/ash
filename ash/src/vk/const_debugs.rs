@@ -321,6 +321,7 @@ impl fmt::Debug for AccessFlags2KHR {
                 AccessFlags2KHR::COLOR_ATTACHMENT_READ_NONCOHERENT_EXT.0,
                 "COLOR_ATTACHMENT_READ_NONCOHERENT_EXT",
             ),
+            (AccessFlags2KHR::RESERVED_41_AMD.0, "RESERVED_41_AMD"),
             (
                 AccessFlags2KHR::INVOCATION_MASK_READ_HUAWEI.0,
                 "INVOCATION_MASK_READ_HUAWEI",
@@ -1338,6 +1339,7 @@ impl fmt::Debug for DriverId {
             Self::MESA_TURNIP => Some("MESA_TURNIP"),
             Self::MESA_V3DV => Some("MESA_V3DV"),
             Self::MESA_PANVK => Some("MESA_PANVK"),
+            Self::SAMSUNG_PROPRIETARY => Some("SAMSUNG_PROPRIETARY"),
             _ => None,
         };
         if let Some(x) = name {
@@ -5047,6 +5049,10 @@ impl fmt::Debug for StructureType {
             Self::QUEUE_FAMILY_GLOBAL_PRIORITY_PROPERTIES_EXT => {
                 Some("QUEUE_FAMILY_GLOBAL_PRIORITY_PROPERTIES_EXT")
             }
+            Self::PHYSICAL_DEVICE_IMAGE_VIEW_MIN_LOD_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_IMAGE_VIEW_MIN_LOD_FEATURES_EXT")
+            }
+            Self::IMAGE_VIEW_MIN_LOD_CREATE_INFO_EXT => Some("IMAGE_VIEW_MIN_LOD_CREATE_INFO_EXT"),
             Self::PHYSICAL_DEVICE_MULTI_DRAW_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_MULTI_DRAW_FEATURES_EXT")
             }

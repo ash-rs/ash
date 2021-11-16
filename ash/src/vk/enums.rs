@@ -1663,6 +1663,8 @@ impl DriverId {
     pub const MESA_V3DV: Self = Self(19);
     #[doc = "Mesa open source project"]
     pub const MESA_PANVK: Self = Self(20);
+    #[doc = "Samsung Electronics Co., Ltd."]
+    pub const SAMSUNG_PROPRIETARY: Self = Self(21);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]

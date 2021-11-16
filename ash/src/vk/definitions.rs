@@ -54,7 +54,7 @@ pub const API_VERSION_1_0: u32 = make_api_version(0, 1, 0, 0);
 pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_API_VERSION_1_2.html>"]
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
-pub const HEADER_VERSION: u32 = 198u32;
+pub const HEADER_VERSION: u32 = 199u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 2, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSampleMask.html>"]
@@ -54302,6 +54302,118 @@ impl<'a> MultiviewPerViewAttributesInfoNVXBuilder<'a> {
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> MultiviewPerViewAttributesInfoNVX {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDeviceImageViewMinLodFeaturesEXT.html>"]
+pub struct PhysicalDeviceImageViewMinLodFeaturesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub min_lod: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceImageViewMinLodFeaturesEXT {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PHYSICAL_DEVICE_IMAGE_VIEW_MIN_LOD_FEATURES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            min_lod: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceImageViewMinLodFeaturesEXT {
+    pub fn builder<'a>() -> PhysicalDeviceImageViewMinLodFeaturesEXTBuilder<'a> {
+        PhysicalDeviceImageViewMinLodFeaturesEXTBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceImageViewMinLodFeaturesEXTBuilder<'a> {
+    inner: PhysicalDeviceImageViewMinLodFeaturesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImageViewMinLodFeaturesEXTBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImageViewMinLodFeaturesEXT {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImageViewMinLodFeaturesEXTBuilder<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImageViewMinLodFeaturesEXT {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceImageViewMinLodFeaturesEXTBuilder<'a> {
+    type Target = PhysicalDeviceImageViewMinLodFeaturesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceImageViewMinLodFeaturesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceImageViewMinLodFeaturesEXTBuilder<'a> {
+    pub fn min_lod(mut self, min_lod: bool) -> Self {
+        self.inner.min_lod = min_lod.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceImageViewMinLodFeaturesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkImageViewMinLodCreateInfoEXT.html>"]
+pub struct ImageViewMinLodCreateInfoEXT {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub min_lod: f32,
+}
+impl ::std::default::Default for ImageViewMinLodCreateInfoEXT {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::IMAGE_VIEW_MIN_LOD_CREATE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            min_lod: f32::default(),
+        }
+    }
+}
+impl ImageViewMinLodCreateInfoEXT {
+    pub fn builder<'a>() -> ImageViewMinLodCreateInfoEXTBuilder<'a> {
+        ImageViewMinLodCreateInfoEXTBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct ImageViewMinLodCreateInfoEXTBuilder<'a> {
+    inner: ImageViewMinLodCreateInfoEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsImageViewCreateInfo for ImageViewMinLodCreateInfoEXTBuilder<'_> {}
+unsafe impl ExtendsImageViewCreateInfo for ImageViewMinLodCreateInfoEXT {}
+impl<'a> ::std::ops::Deref for ImageViewMinLodCreateInfoEXTBuilder<'a> {
+    type Target = ImageViewMinLodCreateInfoEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImageViewMinLodCreateInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> ImageViewMinLodCreateInfoEXTBuilder<'a> {
+    pub fn min_lod(mut self, min_lod: f32) -> Self {
+        self.inner.min_lod = min_lod;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> ImageViewMinLodCreateInfoEXT {
         self.inner
     }
 }

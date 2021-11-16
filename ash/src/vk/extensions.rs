@@ -22398,6 +22398,10 @@ impl ImageCreateFlags {
 impl SamplerCreateFlags {
     pub const RESERVED_3_AMD: Self = Self(0b1000);
 }
+#[doc = "Generated from 'VK_AMD_extension_317'"]
+impl AccessFlags2KHR {
+    pub const RESERVED_41_AMD: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
 impl AmdExtension318Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_318\0")
@@ -25430,24 +25434,32 @@ impl ExtExtension391Fn {
         Self {}
     }
 }
-impl ExtExtension392Fn {
+impl ExtImageViewMinLodFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_392\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_image_view_min_lod\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct ExtExtension392Fn {}
-unsafe impl Send for ExtExtension392Fn {}
-unsafe impl Sync for ExtExtension392Fn {}
-impl ExtExtension392Fn {
+pub struct ExtImageViewMinLodFn {}
+unsafe impl Send for ExtImageViewMinLodFn {}
+unsafe impl Sync for ExtImageViewMinLodFn {}
+impl ExtImageViewMinLodFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         Self {}
     }
+}
+#[doc = "Generated from 'VK_EXT_image_view_min_lod'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_IMAGE_VIEW_MIN_LOD_FEATURES_EXT: Self = Self(1_000_391_000);
+}
+#[doc = "Generated from 'VK_EXT_image_view_min_lod'"]
+impl StructureType {
+    pub const IMAGE_VIEW_MIN_LOD_CREATE_INFO_EXT: Self = Self(1_000_391_001);
 }
 impl ExtMultiDrawFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -26541,6 +26553,44 @@ pub struct NvExtension433Fn {}
 unsafe impl Send for NvExtension433Fn {}
 unsafe impl Sync for NvExtension433Fn {}
 impl NvExtension433Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl ExtExtension434Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_434\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct ExtExtension434Fn {}
+unsafe impl Send for ExtExtension434Fn {}
+unsafe impl Sync for ExtExtension434Fn {}
+impl ExtExtension434Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl KhrExtension435Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_435\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct KhrExtension435Fn {}
+unsafe impl Send for KhrExtension435Fn {}
+unsafe impl Sync for KhrExtension435Fn {}
+impl KhrExtension435Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
