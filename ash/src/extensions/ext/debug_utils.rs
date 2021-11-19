@@ -131,13 +131,12 @@ impl DebugUtils {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkSubmitDebugUtilsMessageEXT.html>"]
     pub unsafe fn submit_debug_utils_message(
         &self,
-        instance: vk::Instance,
         message_severity: vk::DebugUtilsMessageSeverityFlagsEXT,
         message_types: vk::DebugUtilsMessageTypeFlagsEXT,
         callback_data: &vk::DebugUtilsMessengerCallbackDataEXT,
     ) {
         self.debug_utils_fn.submit_debug_utils_message_ext(
-            instance,
+            self.handle,
             message_severity,
             message_types,
             callback_data,
