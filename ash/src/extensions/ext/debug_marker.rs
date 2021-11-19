@@ -22,11 +22,10 @@ impl DebugMarker {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDebugMarkerSetObjectNameEXT.html>"]
     pub unsafe fn debug_marker_set_object_name(
         &self,
-        device: vk::Device,
         name_info: &vk::DebugMarkerObjectNameInfoEXT,
     ) -> VkResult<()> {
         self.fns
-            .debug_marker_set_object_name_ext(device, name_info)
+            .debug_marker_set_object_name_ext(self.handle, name_info)
             .result()
     }
 
