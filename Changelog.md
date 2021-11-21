@@ -8,11 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add `VK_KHR_present_wait` extension (#493)
+- Added `VK_KHR_present_wait` device extension (#493)
 
 ### Changed
 
-- Removed `instance` function from `extensions::ext::ExtendedDynamicState` and `extensions::khr::PushDescriptor` (#494)
+- Device extension `ext::ExtendedDynamicState`, `khr::PushDescriptor`, `khr::PipelineExecutableProperties` and `khr::TimelineSemaphore` now expose `fn device()` instead of `fn instance()` (#494, #499)
+- Changed `khr::PipelineExecutableProperties::new()` and `khr::TimelineSemaphore::new()` to take `instance` and `device` as arguments (#499)
+
+### Removed
+
+- Removed `From<vk::Result>` trait for `VkResult` (#495)
+- Removed `device` argument from `ext::DebugMarkers::debug_marker_set_object_name` function (#494)
+- Removed `instance` argument from `ext::DebugUtils::submit_debug_utils_message` function (#499)
 
 ## [0.33.3] - 2021-09-08
 
