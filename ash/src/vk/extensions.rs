@@ -4467,8 +4467,13 @@ impl AttachmentStoreOp {
 }
 #[doc = "Generated from 'VK_KHR_dynamic_rendering'"]
 impl PipelineCreateFlags {
-    pub const RASTERIZATION_STATE_FRAGMENT_SHADING_RATE_ATTACHMENT_KHR: Self =
+    pub const RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT_KHR: Self =
         Self(0b10_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_dynamic_rendering'"]
+impl PipelineCreateFlags {
+    pub const RASTERIZATION_STATE_FRAGMENT_SHADING_RATE_ATTACHMENT_KHR: Self =
+        Self::RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT_KHR;
 }
 #[doc = "Generated from 'VK_KHR_dynamic_rendering'"]
 impl StructureType {
@@ -4476,8 +4481,13 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_KHR_dynamic_rendering'"]
 impl PipelineCreateFlags {
-    pub const RASTERIZATION_STATE_FRAGMENT_DENSITY_MAP_ATTACHMENT_EXT: Self =
+    pub const RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_EXT: Self =
         Self(0b100_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_dynamic_rendering'"]
+impl PipelineCreateFlags {
+    pub const RASTERIZATION_STATE_FRAGMENT_DENSITY_MAP_ATTACHMENT_EXT: Self =
+        Self::RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_EXT;
 }
 #[doc = "Generated from 'VK_KHR_dynamic_rendering'"]
 impl StructureType {
@@ -23280,24 +23290,53 @@ impl ExtExtension342Fn {
         Self {}
     }
 }
-impl ArmExtension343Fn {
+impl ArmRasterizationOrderAttachmentAccessFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_ARM_extension_343\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_ARM_rasterization_order_attachment_access\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct ArmExtension343Fn {}
-unsafe impl Send for ArmExtension343Fn {}
-unsafe impl Sync for ArmExtension343Fn {}
-impl ArmExtension343Fn {
+pub struct ArmRasterizationOrderAttachmentAccessFn {}
+unsafe impl Send for ArmRasterizationOrderAttachmentAccessFn {}
+unsafe impl Sync for ArmRasterizationOrderAttachmentAccessFn {}
+impl ArmRasterizationOrderAttachmentAccessFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         Self {}
     }
+}
+#[doc = "Generated from 'VK_ARM_rasterization_order_attachment_access'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_FEATURES_ARM: Self =
+        Self(1_000_342_000);
+}
+#[doc = "Generated from 'VK_ARM_rasterization_order_attachment_access'"]
+impl PipelineColorBlendStateCreateFlags {
+    pub const RASTERIZATION_ORDER_ATTACHMENT_ACCESS_ARM: Self = Self(0b1);
+}
+#[doc = "Generated from 'VK_ARM_rasterization_order_attachment_access'"]
+impl PipelineDepthStencilStateCreateFlags {
+    pub const RASTERIZATION_ORDER_ATTACHMENT_DEPTH_ACCESS_ARM: Self = Self(0b1);
+}
+#[doc = "Generated from 'VK_ARM_rasterization_order_attachment_access'"]
+impl PipelineDepthStencilStateCreateFlags {
+    pub const RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_ARM: Self = Self(0b10);
+}
+#[doc = "Generated from 'VK_ARM_rasterization_order_attachment_access'"]
+impl SubpassDescriptionFlags {
+    pub const RASTERIZATION_ORDER_ATTACHMENT_COLOR_ACCESS_ARM: Self = Self(0b1_0000);
+}
+#[doc = "Generated from 'VK_ARM_rasterization_order_attachment_access'"]
+impl SubpassDescriptionFlags {
+    pub const RASTERIZATION_ORDER_ATTACHMENT_DEPTH_ACCESS_ARM: Self = Self(0b10_0000);
+}
+#[doc = "Generated from 'VK_ARM_rasterization_order_attachment_access'"]
+impl SubpassDescriptionFlags {
+    pub const RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_ARM: Self = Self(0b100_0000);
 }
 impl ArmExtension344Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -23738,24 +23777,32 @@ impl ExtExtension355Fn {
         Self {}
     }
 }
-impl ExtVertexAttributeAliasingFn {
+impl ExtDepthClipControlFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_vertex_attribute_aliasing\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_depth_clip_control\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct ExtVertexAttributeAliasingFn {}
-unsafe impl Send for ExtVertexAttributeAliasingFn {}
-unsafe impl Sync for ExtVertexAttributeAliasingFn {}
-impl ExtVertexAttributeAliasingFn {
+pub struct ExtDepthClipControlFn {}
+unsafe impl Send for ExtDepthClipControlFn {}
+unsafe impl Sync for ExtDepthClipControlFn {}
+impl ExtDepthClipControlFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         Self {}
     }
+}
+#[doc = "Generated from 'VK_EXT_depth_clip_control'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_DEPTH_CLIP_CONTROL_FEATURES_EXT: Self = Self(1_000_355_000);
+}
+#[doc = "Generated from 'VK_EXT_depth_clip_control'"]
+impl StructureType {
+    pub const PIPELINE_VIEWPORT_DEPTH_CLIP_CONTROL_CREATE_INFO_EXT: Self = Self(1_000_355_001);
 }
 impl ExtPrimitiveTopologyListRestartFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -26039,7 +26086,7 @@ impl KhrMaintenance4Fn {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_maintenance4\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 1u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDeviceBufferMemoryRequirementsKHR = unsafe extern "system" fn(
@@ -26591,6 +26638,44 @@ pub struct KhrExtension435Fn {}
 unsafe impl Send for KhrExtension435Fn {}
 unsafe impl Sync for KhrExtension435Fn {}
 impl KhrExtension435Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl NvExtension436Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_436\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct NvExtension436Fn {}
+unsafe impl Send for NvExtension436Fn {}
+unsafe impl Sync for NvExtension436Fn {}
+impl NvExtension436Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl ExtExtension437Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_437\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct ExtExtension437Fn {}
+unsafe impl Send for ExtExtension437Fn {}
+unsafe impl Sync for ExtExtension437Fn {}
+impl ExtExtension437Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,

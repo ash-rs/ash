@@ -1957,8 +1957,11 @@ impl PerformanceCounterScopeKHR {
     pub const COMMAND_BUFFER: Self = Self(0);
     pub const RENDER_PASS: Self = Self(1);
     pub const COMMAND: Self = Self(2);
+    #[deprecated = "Backwards-compatible alias containing a typo"]
     pub const QUERY_SCOPE_COMMAND_BUFFER: Self = Self::COMMAND_BUFFER;
+    #[deprecated = "Backwards-compatible alias containing a typo"]
     pub const QUERY_SCOPE_RENDER_PASS: Self = Self::RENDER_PASS;
+    #[deprecated = "Backwards-compatible alias containing a typo"]
     pub const QUERY_SCOPE_COMMAND: Self = Self::COMMAND;
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]

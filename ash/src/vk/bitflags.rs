@@ -498,7 +498,7 @@ impl StencilFaceFlags {
     pub const BACK: Self = Self(0b10);
     #[doc = "Front and back faces"]
     pub const FRONT_AND_BACK: Self = Self(0x0000_0003);
-    #[deprecated = "Alias for backwards compatibility"]
+    #[deprecated = "Backwards-compatible alias containing a typo"]
     pub const STENCIL_FRONT_AND_BACK: Self = Self::FRONT_AND_BACK;
 }
 #[repr(transparent)]
@@ -1047,6 +1047,18 @@ impl EventCreateFlags {}
 pub struct PipelineLayoutCreateFlags(pub(crate) Flags);
 vk_bitflags_wrapped!(PipelineLayoutCreateFlags, Flags);
 impl PipelineLayoutCreateFlags {}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineColorBlendStateCreateFlagBits.html>"]
+pub struct PipelineColorBlendStateCreateFlags(pub(crate) Flags);
+vk_bitflags_wrapped!(PipelineColorBlendStateCreateFlags, Flags);
+impl PipelineColorBlendStateCreateFlags {}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineDepthStencilStateCreateFlagBits.html>"]
+pub struct PipelineDepthStencilStateCreateFlags(pub(crate) Flags);
+vk_bitflags_wrapped!(PipelineDepthStencilStateCreateFlags, Flags);
+impl PipelineDepthStencilStateCreateFlags {}
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkVideoCodecOperationFlagBitsKHR.html>"]

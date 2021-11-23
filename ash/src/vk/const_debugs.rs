@@ -2819,7 +2819,10 @@ impl fmt::Debug for PipelineCacheHeaderVersion {
 }
 impl fmt::Debug for PipelineColorBlendStateCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[];
+        const KNOWN: &[(Flags, &str)] = &[(
+            PipelineColorBlendStateCreateFlags::RASTERIZATION_ORDER_ATTACHMENT_ACCESS_ARM.0,
+            "RASTERIZATION_ORDER_ATTACHMENT_ACCESS_ARM",
+        )];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -2860,12 +2863,12 @@ impl fmt::Debug for PipelineCreateFlags {
             ),
             (PipelineCreateFlags::DERIVATIVE.0, "DERIVATIVE"),
             (
-                PipelineCreateFlags::RASTERIZATION_STATE_FRAGMENT_SHADING_RATE_ATTACHMENT_KHR.0,
-                "RASTERIZATION_STATE_FRAGMENT_SHADING_RATE_ATTACHMENT_KHR",
+                PipelineCreateFlags::RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT_KHR.0,
+                "RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT_KHR",
             ),
             (
-                PipelineCreateFlags::RASTERIZATION_STATE_FRAGMENT_DENSITY_MAP_ATTACHMENT_EXT.0,
-                "RASTERIZATION_STATE_FRAGMENT_DENSITY_MAP_ATTACHMENT_EXT",
+                PipelineCreateFlags::RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_EXT.0,
+                "RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_EXT",
             ),
             (
                 PipelineCreateFlags::RAY_TRACING_NO_NULL_ANY_HIT_SHADERS_KHR.0,
@@ -2950,7 +2953,7 @@ impl fmt::Debug for PipelineCreationFeedbackFlagsEXT {
 }
 impl fmt::Debug for PipelineDepthStencilStateCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[];
+        const KNOWN : & [(Flags , & str)] = & [(PipelineDepthStencilStateCreateFlags :: RASTERIZATION_ORDER_ATTACHMENT_DEPTH_ACCESS_ARM . 0 , "RASTERIZATION_ORDER_ATTACHMENT_DEPTH_ACCESS_ARM") , (PipelineDepthStencilStateCreateFlags :: RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_ARM . 0 , "RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_ARM")] ;
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -4954,6 +4957,9 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT")
             }
+            Self::PHYSICAL_DEVICE_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_FEATURES_ARM => {
+                Some("PHYSICAL_DEVICE_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_FEATURES_ARM")
+            }
             Self::PHYSICAL_DEVICE_RGBA10X6_FORMATS_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_RGBA10X6_FORMATS_FEATURES_EXT")
             }
@@ -4974,6 +4980,12 @@ impl fmt::Debug for StructureType {
                 Some("VERTEX_INPUT_ATTRIBUTE_DESCRIPTION_2_EXT")
             }
             Self::PHYSICAL_DEVICE_DRM_PROPERTIES_EXT => Some("PHYSICAL_DEVICE_DRM_PROPERTIES_EXT"),
+            Self::PHYSICAL_DEVICE_DEPTH_CLIP_CONTROL_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_DEPTH_CLIP_CONTROL_FEATURES_EXT")
+            }
+            Self::PIPELINE_VIEWPORT_DEPTH_CLIP_CONTROL_CREATE_INFO_EXT => {
+                Some("PIPELINE_VIEWPORT_DEPTH_CLIP_CONTROL_CREATE_INFO_EXT")
+            }
             Self::PHYSICAL_DEVICE_PRIMITIVE_TOPOLOGY_LIST_RESTART_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_PRIMITIVE_TOPOLOGY_LIST_RESTART_FEATURES_EXT")
             }
@@ -5378,6 +5390,18 @@ impl fmt::Debug for SubpassDescriptionFlags {
             (
                 SubpassDescriptionFlags::SHADER_RESOLVE_QCOM.0,
                 "SHADER_RESOLVE_QCOM",
+            ),
+            (
+                SubpassDescriptionFlags::RASTERIZATION_ORDER_ATTACHMENT_COLOR_ACCESS_ARM.0,
+                "RASTERIZATION_ORDER_ATTACHMENT_COLOR_ACCESS_ARM",
+            ),
+            (
+                SubpassDescriptionFlags::RASTERIZATION_ORDER_ATTACHMENT_DEPTH_ACCESS_ARM.0,
+                "RASTERIZATION_ORDER_ATTACHMENT_DEPTH_ACCESS_ARM",
+            ),
+            (
+                SubpassDescriptionFlags::RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_ARM.0,
+                "RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_ARM",
             ),
         ];
         debug_flags(f, KNOWN, self.0)

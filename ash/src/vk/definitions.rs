@@ -54,7 +54,7 @@ pub const API_VERSION_1_0: u32 = make_api_version(0, 1, 0, 0);
 pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_API_VERSION_1_2.html>"]
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
-pub const HEADER_VERSION: u32 = 199u32;
+pub const HEADER_VERSION: u32 = 200u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 2, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSampleMask.html>"]
@@ -76,19 +76,9 @@ pub struct QueryPoolCreateFlags(pub(crate) Flags);
 vk_bitflags_wrapped!(QueryPoolCreateFlags, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineDepthStencilStateCreateFlags.html>"]
-pub struct PipelineDepthStencilStateCreateFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(PipelineDepthStencilStateCreateFlags, Flags);
-#[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineDynamicStateCreateFlags.html>"]
 pub struct PipelineDynamicStateCreateFlags(pub(crate) Flags);
 vk_bitflags_wrapped!(PipelineDynamicStateCreateFlags, Flags);
-#[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineColorBlendStateCreateFlags.html>"]
-pub struct PipelineColorBlendStateCreateFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(PipelineColorBlendStateCreateFlags, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineMultisampleStateCreateFlags.html>"]
@@ -45676,6 +45666,127 @@ impl<'a> MutableDescriptorTypeCreateInfoVALVEBuilder<'a> {
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDeviceDepthClipControlFeaturesEXT.html>"]
+pub struct PhysicalDeviceDepthClipControlFeaturesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub depth_clip_control: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceDepthClipControlFeaturesEXT {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PHYSICAL_DEVICE_DEPTH_CLIP_CONTROL_FEATURES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            depth_clip_control: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceDepthClipControlFeaturesEXT {
+    pub fn builder<'a>() -> PhysicalDeviceDepthClipControlFeaturesEXTBuilder<'a> {
+        PhysicalDeviceDepthClipControlFeaturesEXTBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceDepthClipControlFeaturesEXTBuilder<'a> {
+    inner: PhysicalDeviceDepthClipControlFeaturesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceDepthClipControlFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDepthClipControlFeaturesEXT {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDepthClipControlFeaturesEXTBuilder<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDepthClipControlFeaturesEXT {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceDepthClipControlFeaturesEXTBuilder<'a> {
+    type Target = PhysicalDeviceDepthClipControlFeaturesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceDepthClipControlFeaturesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceDepthClipControlFeaturesEXTBuilder<'a> {
+    pub fn depth_clip_control(mut self, depth_clip_control: bool) -> Self {
+        self.inner.depth_clip_control = depth_clip_control.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceDepthClipControlFeaturesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineViewportDepthClipControlCreateInfoEXT.html>"]
+pub struct PipelineViewportDepthClipControlCreateInfoEXT {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub negative_one_to_one: Bool32,
+}
+impl ::std::default::Default for PipelineViewportDepthClipControlCreateInfoEXT {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PIPELINE_VIEWPORT_DEPTH_CLIP_CONTROL_CREATE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            negative_one_to_one: Bool32::default(),
+        }
+    }
+}
+impl PipelineViewportDepthClipControlCreateInfoEXT {
+    pub fn builder<'a>() -> PipelineViewportDepthClipControlCreateInfoEXTBuilder<'a> {
+        PipelineViewportDepthClipControlCreateInfoEXTBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PipelineViewportDepthClipControlCreateInfoEXTBuilder<'a> {
+    inner: PipelineViewportDepthClipControlCreateInfoEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPipelineViewportStateCreateInfo
+    for PipelineViewportDepthClipControlCreateInfoEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPipelineViewportStateCreateInfo
+    for PipelineViewportDepthClipControlCreateInfoEXT
+{
+}
+impl<'a> ::std::ops::Deref for PipelineViewportDepthClipControlCreateInfoEXTBuilder<'a> {
+    type Target = PipelineViewportDepthClipControlCreateInfoEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PipelineViewportDepthClipControlCreateInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PipelineViewportDepthClipControlCreateInfoEXTBuilder<'a> {
+    pub fn negative_one_to_one(mut self, negative_one_to_one: bool) -> Self {
+        self.inner.negative_one_to_one = negative_one_to_one.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PipelineViewportDepthClipControlCreateInfoEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDeviceVertexInputDynamicStateFeaturesEXT.html>"]
 pub struct PhysicalDeviceVertexInputDynamicStateFeaturesEXT {
     pub s_type: StructureType,
@@ -54414,6 +54525,88 @@ impl<'a> ImageViewMinLodCreateInfoEXTBuilder<'a> {
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImageViewMinLodCreateInfoEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARM.html>"]
+pub struct PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARM {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub rasterization_order_color_attachment_access: Bool32,
+    pub rasterization_order_depth_attachment_access: Bool32,
+    pub rasterization_order_stencil_attachment_access: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARM {
+    fn default() -> Self {
+        Self {
+            s_type:
+                StructureType::PHYSICAL_DEVICE_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_FEATURES_ARM,
+            p_next: ::std::ptr::null(),
+            rasterization_order_color_attachment_access: Bool32::default(),
+            rasterization_order_depth_attachment_access: Bool32::default(),
+            rasterization_order_stencil_attachment_access: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARM {
+    pub fn builder<'a>() -> PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARMBuilder<'a> {
+        PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARMBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARMBuilder<'a> {
+    inner: PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARM,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+impl<'a> ::std::ops::Deref
+    for PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARMBuilder<'a>
+{
+    type Target = PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARM;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut
+    for PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARMBuilder<'a>
+{
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARMBuilder<'a> {
+    pub fn rasterization_order_color_attachment_access(
+        mut self,
+        rasterization_order_color_attachment_access: bool,
+    ) -> Self {
+        self.inner.rasterization_order_color_attachment_access =
+            rasterization_order_color_attachment_access.into();
+        self
+    }
+    pub fn rasterization_order_depth_attachment_access(
+        mut self,
+        rasterization_order_depth_attachment_access: bool,
+    ) -> Self {
+        self.inner.rasterization_order_depth_attachment_access =
+            rasterization_order_depth_attachment_access.into();
+        self
+    }
+    pub fn rasterization_order_stencil_attachment_access(
+        mut self,
+        rasterization_order_stencil_attachment_access: bool,
+    ) -> Self {
+        self.inner.rasterization_order_stencil_attachment_access =
+            rasterization_order_stencil_attachment_access.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARM {
         self.inner
     }
 }
