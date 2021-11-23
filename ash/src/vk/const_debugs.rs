@@ -321,6 +321,7 @@ impl fmt::Debug for AccessFlags2KHR {
                 AccessFlags2KHR::COLOR_ATTACHMENT_READ_NONCOHERENT_EXT.0,
                 "COLOR_ATTACHMENT_READ_NONCOHERENT_EXT",
             ),
+            (AccessFlags2KHR::RESERVED_41_AMD.0, "RESERVED_41_AMD"),
             (
                 AccessFlags2KHR::INVOCATION_MASK_READ_HUAWEI.0,
                 "INVOCATION_MASK_READ_HUAWEI",
@@ -1338,6 +1339,7 @@ impl fmt::Debug for DriverId {
             Self::MESA_TURNIP => Some("MESA_TURNIP"),
             Self::MESA_V3DV => Some("MESA_V3DV"),
             Self::MESA_PANVK => Some("MESA_PANVK"),
+            Self::SAMSUNG_PROPRIETARY => Some("SAMSUNG_PROPRIETARY"),
             _ => None,
         };
         if let Some(x) = name {
@@ -2817,7 +2819,10 @@ impl fmt::Debug for PipelineCacheHeaderVersion {
 }
 impl fmt::Debug for PipelineColorBlendStateCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[];
+        const KNOWN: &[(Flags, &str)] = &[(
+            PipelineColorBlendStateCreateFlags::RASTERIZATION_ORDER_ATTACHMENT_ACCESS_ARM.0,
+            "RASTERIZATION_ORDER_ATTACHMENT_ACCESS_ARM",
+        )];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -2858,12 +2863,12 @@ impl fmt::Debug for PipelineCreateFlags {
             ),
             (PipelineCreateFlags::DERIVATIVE.0, "DERIVATIVE"),
             (
-                PipelineCreateFlags::RASTERIZATION_STATE_FRAGMENT_SHADING_RATE_ATTACHMENT_KHR.0,
-                "RASTERIZATION_STATE_FRAGMENT_SHADING_RATE_ATTACHMENT_KHR",
+                PipelineCreateFlags::RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT_KHR.0,
+                "RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT_KHR",
             ),
             (
-                PipelineCreateFlags::RASTERIZATION_STATE_FRAGMENT_DENSITY_MAP_ATTACHMENT_EXT.0,
-                "RASTERIZATION_STATE_FRAGMENT_DENSITY_MAP_ATTACHMENT_EXT",
+                PipelineCreateFlags::RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_EXT.0,
+                "RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_EXT",
             ),
             (
                 PipelineCreateFlags::RAY_TRACING_NO_NULL_ANY_HIT_SHADERS_KHR.0,
@@ -2948,7 +2953,7 @@ impl fmt::Debug for PipelineCreationFeedbackFlagsEXT {
 }
 impl fmt::Debug for PipelineDepthStencilStateCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[];
+        const KNOWN : & [(Flags , & str)] = & [(PipelineDepthStencilStateCreateFlags :: RASTERIZATION_ORDER_ATTACHMENT_DEPTH_ACCESS_ARM . 0 , "RASTERIZATION_ORDER_ATTACHMENT_DEPTH_ACCESS_ARM") , (PipelineDepthStencilStateCreateFlags :: RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_ARM . 0 , "RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_ARM")] ;
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -4952,6 +4957,9 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT")
             }
+            Self::PHYSICAL_DEVICE_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_FEATURES_ARM => {
+                Some("PHYSICAL_DEVICE_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_FEATURES_ARM")
+            }
             Self::PHYSICAL_DEVICE_RGBA10X6_FORMATS_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_RGBA10X6_FORMATS_FEATURES_EXT")
             }
@@ -4972,6 +4980,12 @@ impl fmt::Debug for StructureType {
                 Some("VERTEX_INPUT_ATTRIBUTE_DESCRIPTION_2_EXT")
             }
             Self::PHYSICAL_DEVICE_DRM_PROPERTIES_EXT => Some("PHYSICAL_DEVICE_DRM_PROPERTIES_EXT"),
+            Self::PHYSICAL_DEVICE_DEPTH_CLIP_CONTROL_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_DEPTH_CLIP_CONTROL_FEATURES_EXT")
+            }
+            Self::PIPELINE_VIEWPORT_DEPTH_CLIP_CONTROL_CREATE_INFO_EXT => {
+                Some("PIPELINE_VIEWPORT_DEPTH_CLIP_CONTROL_CREATE_INFO_EXT")
+            }
             Self::PHYSICAL_DEVICE_PRIMITIVE_TOPOLOGY_LIST_RESTART_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_PRIMITIVE_TOPOLOGY_LIST_RESTART_FEATURES_EXT")
             }
@@ -5047,6 +5061,10 @@ impl fmt::Debug for StructureType {
             Self::QUEUE_FAMILY_GLOBAL_PRIORITY_PROPERTIES_EXT => {
                 Some("QUEUE_FAMILY_GLOBAL_PRIORITY_PROPERTIES_EXT")
             }
+            Self::PHYSICAL_DEVICE_IMAGE_VIEW_MIN_LOD_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_IMAGE_VIEW_MIN_LOD_FEATURES_EXT")
+            }
+            Self::IMAGE_VIEW_MIN_LOD_CREATE_INFO_EXT => Some("IMAGE_VIEW_MIN_LOD_CREATE_INFO_EXT"),
             Self::PHYSICAL_DEVICE_MULTI_DRAW_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_MULTI_DRAW_FEATURES_EXT")
             }
@@ -5372,6 +5390,18 @@ impl fmt::Debug for SubpassDescriptionFlags {
             (
                 SubpassDescriptionFlags::SHADER_RESOLVE_QCOM.0,
                 "SHADER_RESOLVE_QCOM",
+            ),
+            (
+                SubpassDescriptionFlags::RASTERIZATION_ORDER_ATTACHMENT_COLOR_ACCESS_ARM.0,
+                "RASTERIZATION_ORDER_ATTACHMENT_COLOR_ACCESS_ARM",
+            ),
+            (
+                SubpassDescriptionFlags::RASTERIZATION_ORDER_ATTACHMENT_DEPTH_ACCESS_ARM.0,
+                "RASTERIZATION_ORDER_ATTACHMENT_DEPTH_ACCESS_ARM",
+            ),
+            (
+                SubpassDescriptionFlags::RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_ARM.0,
+                "RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_ARM",
             ),
         ];
         debug_flags(f, KNOWN, self.0)

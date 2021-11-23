@@ -1663,6 +1663,8 @@ impl DriverId {
     pub const MESA_V3DV: Self = Self(19);
     #[doc = "Mesa open source project"]
     pub const MESA_PANVK: Self = Self(20);
+    #[doc = "Samsung Electronics Co., Ltd."]
+    pub const SAMSUNG_PROPRIETARY: Self = Self(21);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
@@ -1955,8 +1957,11 @@ impl PerformanceCounterScopeKHR {
     pub const COMMAND_BUFFER: Self = Self(0);
     pub const RENDER_PASS: Self = Self(1);
     pub const COMMAND: Self = Self(2);
+    #[deprecated = "Backwards-compatible alias containing a typo"]
     pub const QUERY_SCOPE_COMMAND_BUFFER: Self = Self::COMMAND_BUFFER;
+    #[deprecated = "Backwards-compatible alias containing a typo"]
     pub const QUERY_SCOPE_RENDER_PASS: Self = Self::RENDER_PASS;
+    #[deprecated = "Backwards-compatible alias containing a typo"]
     pub const QUERY_SCOPE_COMMAND: Self = Self::COMMAND;
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
