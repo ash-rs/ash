@@ -359,6 +359,15 @@ pub trait ConstantExt {
     fn is_alias(&self) -> bool {
         false
     }
+    fn doc_attribute(&self) -> TokenStream {
+        match self.notation() {
+            Some(n) if n.starts_with("Backwards") || n.starts_with("Alias") => {
+                quote!(#[deprecated = #n])
+            }
+            Some(n) => quote!(#[doc = #n]),
+            None => quote!(),
+        }
+    }
 }
 
 impl ConstantExt for vkxml::ExtensionEnum {
@@ -1064,6 +1073,7 @@ fn generate_function_pointers<'a>(
 pub struct ExtensionConstant<'a> {
     pub name: &'a str,
     pub constant: Constant,
+    pub notation: Option<&'a str>,
 }
 impl<'a> ConstantExt for ExtensionConstant<'a> {
     fn constant(&self, _enum_name: &str) -> Constant {
@@ -1073,7 +1083,7 @@ impl<'a> ConstantExt for ExtensionConstant<'a> {
         variant_ident(enum_name, self.name)
     }
     fn notation(&self) -> Option<&str> {
-        None
+        self.notation
     }
 }
 
@@ -1103,6 +1113,7 @@ pub fn generate_extension_constants<'a>(
             let ext_constant = ExtensionConstant {
                 name: &enum_.name,
                 constant,
+                notation: enum_.comment.as_deref(),
             };
             let ident = name_to_tokens(&extends);
             const_values
@@ -1435,15 +1446,7 @@ pub fn bitflags_impl_block(
         })
         .collect_vec();
 
-    let notations = constants.iter().map(|constant| {
-        constant.notation().map(|n| {
-            if n.to_lowercase().contains("backwards") {
-                quote!(#[deprecated = #n])
-            } else {
-                quote!(#[doc = #n])
-            }
-        })
-    });
+    let notations = constants.iter().map(|constant| constant.doc_attribute());
 
     let variants =
         variants
@@ -2374,12 +2377,15 @@ pub fn generate_constant<'a>(
     let c = Constant::from_constant(constant);
     let name = constant_name(&constant.name);
     let ident = format_ident!("{}", name);
+    let notation = constant.doc_attribute();
+
     let ty = if name == "TRUE" || name == "FALSE" {
         CType::Bool32
     } else {
         c.ty()
     };
     quote! {
+        #notation
         pub const #ident: #ty = #c;
     }
 }

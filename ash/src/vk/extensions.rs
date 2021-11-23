@@ -660,10 +660,12 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_KHR_swapchain'"]
 impl SwapchainCreateFlagsKHR {
+    #[doc = "Allow images with VK_IMAGE_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT"]
     pub const SPLIT_INSTANCE_BIND_REGIONS: Self = Self(0b1);
 }
 #[doc = "Generated from 'VK_KHR_swapchain'"]
 impl SwapchainCreateFlagsKHR {
+    #[doc = "Swapchain is protected"]
     pub const PROTECTED: Self = Self(0b10);
 }
 impl KhrDisplayFn {
@@ -1971,6 +1973,7 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_EXT_debug_report'"]
 impl StructureType {
+    #[deprecated = "Backwards-compatible alias containing a typo"]
     pub const DEBUG_REPORT_CREATE_INFO_EXT: Self = Self::DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT;
 }
 #[doc = "Generated from 'VK_EXT_debug_report'"]
@@ -2052,10 +2055,12 @@ impl KhrSamplerMirrorClampToEdgeFn {
 }
 #[doc = "Generated from 'VK_KHR_sampler_mirror_clamp_to_edge'"]
 impl SamplerAddressMode {
+    #[doc = "Note that this defines what was previously a core enum, and so uses the 'value' attribute rather than 'offset', and does not have a suffix. This is a special case, and should not be repeated"]
     pub const MIRROR_CLAMP_TO_EDGE: Self = Self(4);
 }
 #[doc = "Generated from 'VK_KHR_sampler_mirror_clamp_to_edge'"]
 impl SamplerAddressMode {
+    #[deprecated = "Alias introduced for consistency with extension suffixing rules"]
     pub const MIRROR_CLAMP_TO_EDGE_KHR: Self = Self::MIRROR_CLAMP_TO_EDGE;
 }
 impl ImgFilterCubicFn {
@@ -2083,6 +2088,7 @@ impl Filter {
 }
 #[doc = "Generated from 'VK_IMG_filter_cubic'"]
 impl FormatFeatureFlags {
+    #[doc = "Format can be filtered with VK_FILTER_CUBIC_IMG when being sampled"]
     pub const SAMPLED_IMAGE_FILTER_CUBIC_IMG: Self = Self(0b10_0000_0000_0000);
 }
 impl AmdExtension17Fn {
@@ -2951,10 +2957,12 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_KHR_video_queue'"]
 impl ObjectType {
+    #[doc = "VkVideoSessionKHR"]
     pub const VIDEO_SESSION_KHR: Self = Self(1_000_023_000);
 }
 #[doc = "Generated from 'VK_KHR_video_queue'"]
 impl ObjectType {
+    #[doc = "VkVideoSessionParametersKHR"]
     pub const VIDEO_SESSION_PARAMETERS_KHR: Self = Self(1_000_023_001);
 }
 #[doc = "Generated from 'VK_KHR_video_queue'"]
@@ -4472,6 +4480,7 @@ impl PipelineCreateFlags {
 }
 #[doc = "Generated from 'VK_KHR_dynamic_rendering'"]
 impl PipelineCreateFlags {
+    #[deprecated = "Backwards-compatible alias containing a typo"]
     pub const RASTERIZATION_STATE_FRAGMENT_SHADING_RATE_ATTACHMENT_KHR: Self =
         Self::RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT_KHR;
 }
@@ -4486,6 +4495,7 @@ impl PipelineCreateFlags {
 }
 #[doc = "Generated from 'VK_KHR_dynamic_rendering'"]
 impl PipelineCreateFlags {
+    #[deprecated = "Backwards-compatible alias containing a typo"]
     pub const RASTERIZATION_STATE_FRAGMENT_DENSITY_MAP_ATTACHMENT_EXT: Self =
         Self::RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_EXT;
 }
@@ -6971,10 +6981,12 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_KHR_push_descriptor'"]
 impl DescriptorSetLayoutCreateFlags {
+    #[doc = "Descriptors are pushed via flink:vkCmdPushDescriptorSetKHR"]
     pub const PUSH_DESCRIPTOR_KHR: Self = Self(0b1);
 }
 #[doc = "Generated from 'VK_KHR_push_descriptor'"]
 impl DescriptorUpdateTemplateType {
+    #[doc = "Create descriptor update template for pushed descriptor updates"]
     pub const PUSH_DESCRIPTORS_KHR: Self = Self(1);
 }
 impl ExtConditionalRenderingFn {
@@ -7073,14 +7085,17 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_EXT_conditional_rendering'"]
 impl AccessFlags {
+    #[doc = "read access flag for reading conditional rendering predicate"]
     pub const CONDITIONAL_RENDERING_READ_EXT: Self = Self(0b1_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_EXT_conditional_rendering'"]
 impl BufferUsageFlags {
+    #[doc = "Specifies the buffer can be used as predicate in conditional rendering"]
     pub const CONDITIONAL_RENDERING_EXT: Self = Self(0b10_0000_0000);
 }
 #[doc = "Generated from 'VK_EXT_conditional_rendering'"]
 impl PipelineStageFlags {
+    #[doc = "A pipeline stage for conditional rendering predicate fetch"]
     pub const CONDITIONAL_RENDERING_EXT: Self = Self(0b100_0000_0000_0000_0000);
 }
 impl KhrShaderFloat16Int8Fn {
@@ -7678,6 +7693,7 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_EXT_display_surface_counter'"]
 impl StructureType {
+    #[deprecated = "Backwards-compatible alias containing a typo"]
     pub const SURFACE_CAPABILITIES2_EXT: Self = Self::SURFACE_CAPABILITIES_2_EXT;
 }
 impl ExtDisplayControlFn {
@@ -8345,6 +8361,7 @@ impl ColorSpaceKHR {
 }
 #[doc = "Generated from 'VK_EXT_swapchain_colorspace'"]
 impl ColorSpaceKHR {
+    #[deprecated = "Backwards-compatible alias containing a typo"]
     pub const DCI_P3_LINEAR_EXT: Self = Self::DISPLAY_P3_LINEAR_EXT;
 }
 impl ExtHdrMetadataFn {
@@ -16882,6 +16899,7 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_INTEL_performance_query'"]
 impl StructureType {
+    #[deprecated = "Backwards-compatible alias containing a typo"]
     pub const QUERY_POOL_CREATE_INFO_INTEL: Self =
         Self::QUERY_POOL_PERFORMANCE_QUERY_CREATE_INFO_INTEL;
 }
@@ -22252,10 +22270,12 @@ impl AccessFlags2KHR {
 }
 #[doc = "Generated from 'VK_KHR_synchronization2'"]
 impl PipelineStageFlags2KHR {
+    #[doc = "A pipeline stage for conditional rendering predicate fetch"]
     pub const CONDITIONAL_RENDERING_EXT: Self = Self(0b100_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_synchronization2'"]
 impl AccessFlags2KHR {
+    #[doc = "read access flag for reading conditional rendering predicate"]
     pub const CONDITIONAL_RENDERING_READ_EXT: Self = Self(0b1_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_synchronization2'"]
@@ -24417,6 +24437,7 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_FUCHSIA_buffer_collection'"]
 impl ObjectType {
+    #[doc = "VkBufferCollectionFUCHSIA"]
     pub const BUFFER_COLLECTION_FUCHSIA: Self = Self(1_000_366_000);
 }
 #[doc = "Generated from 'VK_FUCHSIA_buffer_collection'"]

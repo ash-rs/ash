@@ -58,6 +58,7 @@ impl PipelineCreateFlags {
 }
 #[doc = "Generated from 'VK_VERSION_1_1'"]
 impl DependencyFlags {
+    #[doc = "Dependency is across devices"]
     pub const DEVICE_GROUP: Self = Self(0b100);
 }
 #[doc = "Generated from 'VK_VERSION_1_1'"]
@@ -70,6 +71,7 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_VERSION_1_1'"]
 impl ImageCreateFlags {
+    #[doc = "Allows using VkBindImageMemoryDeviceGroupInfo::pSplitInstanceBindRegions when binding memory to the image"]
     pub const SPLIT_INSTANCE_BIND_REGIONS: Self = Self(0b100_0000);
 }
 #[doc = "Generated from 'VK_VERSION_1_1'"]
@@ -82,6 +84,7 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_VERSION_1_1'"]
 impl MemoryHeapFlags {
+    #[doc = "If set, heap allocations allocate multiple instances by default"]
     pub const MULTI_INSTANCE: Self = Self(0b10);
 }
 #[doc = "Generated from 'VK_VERSION_1_1'"]
@@ -146,14 +149,17 @@ impl Result {
 }
 #[doc = "Generated from 'VK_VERSION_1_1'"]
 impl FormatFeatureFlags {
+    #[doc = "Format can be used as the source image of image transfer commands"]
     pub const TRANSFER_SRC: Self = Self(0b100_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_VERSION_1_1'"]
 impl FormatFeatureFlags {
+    #[doc = "Format can be used as the destination image of image transfer commands"]
     pub const TRANSFER_DST: Self = Self(0b1000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_VERSION_1_1'"]
 impl ImageCreateFlags {
+    #[doc = "The 3D image can be viewed as a 2D or 2D array image"]
     pub const TYPE_2D_ARRAY_COMPATIBLE: Self = Self(0b10_0000);
 }
 #[doc = "Generated from 'VK_VERSION_1_1'"]
@@ -231,26 +237,32 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_VERSION_1_1'"]
 impl QueueFlags {
+    #[doc = "Queues may support protected operations"]
     pub const PROTECTED: Self = Self(0b1_0000);
 }
 #[doc = "Generated from 'VK_VERSION_1_1'"]
 impl DeviceQueueCreateFlags {
+    #[doc = "Queue is a protected-capable device queue"]
     pub const PROTECTED: Self = Self(0b1);
 }
 #[doc = "Generated from 'VK_VERSION_1_1'"]
 impl MemoryPropertyFlags {
+    #[doc = "Memory is protected"]
     pub const PROTECTED: Self = Self(0b10_0000);
 }
 #[doc = "Generated from 'VK_VERSION_1_1'"]
 impl BufferCreateFlags {
+    #[doc = "Buffer requires protected memory"]
     pub const PROTECTED: Self = Self(0b1000);
 }
 #[doc = "Generated from 'VK_VERSION_1_1'"]
 impl ImageCreateFlags {
+    #[doc = "Image requires protected memory"]
     pub const PROTECTED: Self = Self(0b1000_0000_0000);
 }
 #[doc = "Generated from 'VK_VERSION_1_1'"]
 impl CommandPoolCreateFlags {
+    #[doc = "Command buffers allocated from pool are protected command buffers"]
     pub const PROTECTED: Self = Self(0b100);
 }
 #[doc = "Generated from 'VK_VERSION_1_1'"]
@@ -435,14 +447,17 @@ impl ImageCreateFlags {
 }
 #[doc = "Generated from 'VK_VERSION_1_1'"]
 impl FormatFeatureFlags {
+    #[doc = "Format can have midpoint rather than cosited chroma samples"]
     pub const MIDPOINT_CHROMA_SAMPLES: Self = Self(0b10_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_VERSION_1_1'"]
 impl FormatFeatureFlags {
+    #[doc = "Format can be used with linear filtering whilst color conversion is enabled"]
     pub const SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER: Self = Self(0b100_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_VERSION_1_1'"]
 impl FormatFeatureFlags {
+    #[doc = "Format can have different chroma, min and mag filters"]
     pub const SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER: Self =
         Self(0b1000_0000_0000_0000_0000);
 }
@@ -458,10 +473,12 @@ impl FormatFeatureFlags {
 }
 #[doc = "Generated from 'VK_VERSION_1_1'"]
 impl FormatFeatureFlags {
+    #[doc = "Format supports disjoint planes"]
     pub const DISJOINT: Self = Self(0b100_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_VERSION_1_1'"]
 impl FormatFeatureFlags {
+    #[doc = "Format can have cosited rather than midpoint chroma samples"]
     pub const COSITED_CHROMA_SAMPLES: Self = Self(0b1000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_VERSION_1_1'"]
@@ -675,6 +692,7 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_VERSION_1_2'"]
 impl FormatFeatureFlags {
+    #[doc = "Format can be used with min/max reduction filtering"]
     pub const SAMPLED_IMAGE_FILTER_MINMAX: Self = Self(0b1_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_VERSION_1_2'"]
