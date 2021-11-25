@@ -1,6 +1,10 @@
 extern crate ash;
 extern crate winit;
 
+use winit::event::Event;
+use winit::window::Window;
+use winit::window::WindowBuilder;
+use winit::event_loop::{ControlFlow, EventLoop};
 use ash::extensions::{
     ext::DebugUtils,
     khr::{Surface, Swapchain},
@@ -8,6 +12,7 @@ use ash::extensions::{
 
 use ash::{vk, Entry};
 pub use ash::{Device, Instance};
+use std::borrow::BorrowMut;
 use std::borrow::Cow;
 use std::cell::RefCell;
 use std::default::Default;
@@ -139,8 +144,6 @@ pub struct ExampleBase {
     pub surface_loader: Surface,
     pub swapchain_loader: Swapchain,
     pub debug_utils_loader: DebugUtils,
-    pub window: winit::Window,
-    pub events_loop: RefCell<winit::EventsLoop>,
     pub debug_call_back: vk::DebugUtilsMessengerEXT,
 
     pub pdevice: vk::PhysicalDevice,
@@ -172,38 +175,46 @@ pub struct ExampleBase {
 }
 
 impl ExampleBase {
-    pub fn render_loop<F: Fn()>(&self, f: F) {
+
+    pub fn build_window(window_width: u32, window_height: u32) -> (EventLoop<()>, Window) {
+        let events_loop = EventLoop::new();
+        let window = WindowBuilder::new()
+            .with_title("Ash - Example")
+            .with_inner_size(winit::dpi::LogicalSize::new(
+                f64::from(window_width),
+                f64::from(window_height),
+            ))
+            .build(&events_loop)
+            .unwrap();
+        return (events_loop, window);
+    }
+
+    pub fn render_loop<F: Fn() + 'static>(event_loop: EventLoop<()>, f: F) {
         use winit::*;
-        self.events_loop.borrow_mut().run_forever(|event| {
+        
+        event_loop.run(move |event, _, control_flow| {
             f();
-            match event {
+            *control_flow = match event {
                 Event::WindowEvent { event, .. } => match event {
-                    WindowEvent::KeyboardInput { input, .. } => {
-                        if let Some(VirtualKeyCode::Escape) = input.virtual_keycode {
-                            ControlFlow::Break
+                    event::WindowEvent::KeyboardInput { input, .. } => {
+                        if let Some(event::VirtualKeyCode::Escape) = input.virtual_keycode {
+                            ControlFlow::Exit
                         } else {
-                            ControlFlow::Continue
+                            ControlFlow::Poll
                         }
                     }
-                    WindowEvent::CloseRequested => winit::ControlFlow::Break,
-                    _ => ControlFlow::Continue,
+                    event::WindowEvent::CloseRequested => ControlFlow::Exit,
+                    _ => ControlFlow::Poll,
                 },
-                _ => ControlFlow::Continue,
-            }
+                _ => ControlFlow::Poll,
+            };
+            
         });
     }
 
-    pub fn new(window_width: u32, window_height: u32) -> Self {
+    pub fn new(window: &Window) -> Self {
         unsafe {
-            let events_loop = winit::EventsLoop::new();
-            let window = winit::WindowBuilder::new()
-                .with_title("Ash - Example")
-                .with_dimensions(winit::dpi::LogicalSize::new(
-                    f64::from(window_width),
-                    f64::from(window_height),
-                ))
-                .build(&events_loop)
-                .unwrap();
+
             let entry = Entry::new();
             let app_name = CString::new("VulkanTriangle").unwrap();
 
@@ -213,7 +224,7 @@ impl ExampleBase {
                 .map(|raw_name| raw_name.as_ptr())
                 .collect();
 
-            let surface_extensions = ash_window::enumerate_required_extensions(&window).unwrap();
+            let surface_extensions = ash_window::enumerate_required_extensions(window).unwrap();
             let mut extension_names_raw = surface_extensions
                 .iter()
                 .map(|ext| ext.as_ptr())
@@ -253,7 +264,7 @@ impl ExampleBase {
             let debug_call_back = debug_utils_loader
                 .create_debug_utils_messenger(&debug_info, None)
                 .unwrap();
-            let surface = ash_window::create_surface(&entry, &instance, &window, None).unwrap();
+            let surface = ash_window::create_surface(&entry, &instance, window, None).unwrap();
             let pdevices = instance
                 .enumerate_physical_devices()
                 .expect("Physical device error");
@@ -323,10 +334,11 @@ impl ExampleBase {
             {
                 desired_image_count = surface_capabilities.max_image_count;
             }
+            let window_size = window.inner_size();
             let surface_resolution = match surface_capabilities.current_extent.width {
                 std::u32::MAX => vk::Extent2D {
-                    width: window_width,
-                    height: window_height,
+                    width: window_size.width,
+                    height: window_size.height,
                 },
                 _ => surface_capabilities.current_extent,
             };
@@ -517,14 +529,12 @@ impl ExampleBase {
                 .unwrap();
 
             ExampleBase {
-                events_loop: RefCell::new(events_loop),
                 entry,
                 instance,
                 device,
                 queue_family_index,
                 pdevice,
                 device_memory_properties,
-                window,
                 surface_loader,
                 surface_format,
                 present_queue,
