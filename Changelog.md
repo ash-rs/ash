@@ -12,13 +12,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Device extension `ext::ExtendedDynamicState`, `khr::PushDescriptor`, `khr::PipelineExecutableProperties` and `khr::TimelineSemaphore` now expose `fn device()` instead of `fn instance()` (#494, #499)
+- Device extension `khr::PipelineExecutableProperties` and `khr::TimelineSemaphore` now expose `fn device()` instead of `fn instance()` (#499)
 - Changed `khr::PipelineExecutableProperties::new()` and `khr::TimelineSemaphore::new()` to take `instance` and `device` as arguments (#499)
 
 ### Removed
 
-- Removed `From<vk::Result>` trait for `VkResult` (#495)
+- Removed `device()` function from `khr::Synchronization2` device extension (#494)
+- Removed `instance()` function from `ext::ExtendedDynamicState`, `khr::PushDescriptor`, `ext::ToolingInfo` and `khr::GetPhysicalDeviceProperties2` instance extensions (#494)
 - Removed `device` argument from `ext::DebugMarkers::debug_marker_set_object_name` function (#494)
+- Removed `From<vk::Result>` trait for `VkResult` (#495)
 - Removed `instance` argument from `ext::DebugUtils::submit_debug_utils_message` function (#499)
 
 ## [0.33.3] - 2021-09-08

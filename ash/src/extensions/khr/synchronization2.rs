@@ -6,17 +6,15 @@ use std::mem;
 
 #[derive(Clone)]
 pub struct Synchronization2 {
-    handle: vk::Device,
     fns: vk::KhrSynchronization2Fn,
 }
 
 impl Synchronization2 {
     pub fn new(instance: &Instance, device: &Device) -> Self {
-        let handle = device.handle();
         let fns = vk::KhrSynchronization2Fn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+            mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
-        Self { handle, fns }
+        Self { fns }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdPipelineBarrier2KHR.html>"]
@@ -97,9 +95,5 @@ impl Synchronization2 {
 
     pub fn fp(&self) -> &vk::KhrSynchronization2Fn {
         &self.fns
-    }
-
-    pub fn device(&self) -> vk::Device {
-        self.handle
     }
 }

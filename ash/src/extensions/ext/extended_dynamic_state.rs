@@ -6,17 +6,15 @@ use std::ptr;
 
 #[derive(Clone)]
 pub struct ExtendedDynamicState {
-    handle: vk::Device,
     fns: vk::ExtExtendedDynamicStateFn,
 }
 
 impl ExtendedDynamicState {
     pub fn new(instance: &Instance, device: &Device) -> Self {
-        let handle = device.handle();
         let fns = vk::ExtExtendedDynamicStateFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+            mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
-        Self { handle, fns }
+        Self { fns }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetCullModeEXT.html>"]
@@ -183,9 +181,5 @@ impl ExtendedDynamicState {
 
     pub fn fp(&self) -> &vk::ExtExtendedDynamicStateFn {
         &self.fns
-    }
-
-    pub fn device(&self) -> vk::Device {
-        self.handle
     }
 }

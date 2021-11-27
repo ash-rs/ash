@@ -5,17 +5,15 @@ use std::mem;
 
 #[derive(Clone)]
 pub struct MeshShader {
-    handle: vk::Device,
     fns: vk::NvMeshShaderFn,
 }
 
 impl MeshShader {
     pub fn new(instance: &Instance, device: &Device) -> Self {
-        let handle = device.handle();
         let fns = vk::NvMeshShaderFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+            mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
-        Self { handle, fns }
+        Self { fns }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDrawMeshTasksNV.html>"]
@@ -75,9 +73,5 @@ impl MeshShader {
 
     pub fn fp(&self) -> &vk::NvMeshShaderFn {
         &self.fns
-    }
-
-    pub fn device(&self) -> vk::Device {
-        self.handle
     }
 }

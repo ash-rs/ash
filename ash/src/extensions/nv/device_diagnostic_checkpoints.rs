@@ -6,17 +6,15 @@ use std::os::raw::c_void;
 
 #[derive(Clone)]
 pub struct DeviceDiagnosticCheckpoints {
-    handle: vk::Device,
     fns: vk::NvDeviceDiagnosticCheckpointsFn,
 }
 
 impl DeviceDiagnosticCheckpoints {
     pub fn new(instance: &Instance, device: &Device) -> Self {
-        let handle = device.handle();
         let fns = vk::NvDeviceDiagnosticCheckpointsFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+            mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
-        Self { handle, fns }
+        Self { fns }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetCheckpointNV.html>"]
@@ -53,9 +51,5 @@ impl DeviceDiagnosticCheckpoints {
 
     pub fn fp(&self) -> &vk::NvDeviceDiagnosticCheckpointsFn {
         &self.fns
-    }
-
-    pub fn device(&self) -> vk::Device {
-        self.handle
     }
 }
