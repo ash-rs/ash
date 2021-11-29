@@ -8,16 +8,16 @@ use std::mem;
 #[derive(Clone)]
 pub struct DisplaySwapchain {
     handle: vk::Device,
-    fns: vk::KhrDisplaySwapchainFn,
+    fp: vk::KhrDisplaySwapchainFn,
 }
 
 impl DisplaySwapchain {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fns = vk::KhrDisplaySwapchainFn::load(|name| unsafe {
+        let fp = vk::KhrDisplaySwapchainFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
-        Self { handle, fns }
+        Self { handle, fp }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateSharedSwapchainsKHR.html>"]
@@ -27,7 +27,7 @@ impl DisplaySwapchain {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<Vec<vk::SwapchainKHR>> {
         let mut swapchains = Vec::with_capacity(create_infos.len());
-        let err_code = self.fns.create_shared_swapchains_khr(
+        let err_code = self.fp.create_shared_swapchains_khr(
             self.handle,
             create_infos.len() as u32,
             create_infos.as_ptr(),
@@ -43,7 +43,7 @@ impl DisplaySwapchain {
     }
 
     pub fn fp(&self) -> &vk::KhrDisplaySwapchainFn {
-        &self.fns
+        &self.fp
     }
 
     pub fn device(&self) -> vk::Device {

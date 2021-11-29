@@ -8,16 +8,16 @@ use std::mem;
 #[derive(Clone)]
 pub struct AndroidSurface {
     handle: vk::Instance,
-    fns: vk::KhrAndroidSurfaceFn,
+    fp: vk::KhrAndroidSurfaceFn,
 }
 
 impl AndroidSurface {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let handle = instance.handle();
-        let fns = vk::KhrAndroidSurfaceFn::load(|name| unsafe {
+        let fp = vk::KhrAndroidSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
-        Self { handle, fns }
+        Self { handle, fp }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateAndroidSurfaceKHR.html>"]
@@ -27,7 +27,7 @@ impl AndroidSurface {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::zeroed();
-        self.fns
+        self.fp
             .create_android_surface_khr(
                 self.handle,
                 create_info,
@@ -42,7 +42,7 @@ impl AndroidSurface {
     }
 
     pub fn fp(&self) -> &vk::KhrAndroidSurfaceFn {
-        &self.fns
+        &self.fp
     }
 
     pub fn instance(&self) -> vk::Instance {

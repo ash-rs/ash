@@ -7,15 +7,15 @@ use std::ptr;
 
 #[derive(Clone)]
 pub struct GetPhysicalDeviceProperties2 {
-    fns: vk::KhrGetPhysicalDeviceProperties2Fn,
+    fp: vk::KhrGetPhysicalDeviceProperties2Fn,
 }
 
 impl GetPhysicalDeviceProperties2 {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
-        let fns = vk::KhrGetPhysicalDeviceProperties2Fn::load(|name| unsafe {
+        let fp = vk::KhrGetPhysicalDeviceProperties2Fn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
-        Self { fns }
+        Self { fp }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceFeatures2KHR.html>"]
@@ -24,7 +24,7 @@ impl GetPhysicalDeviceProperties2 {
         physical_device: vk::PhysicalDevice,
         features: &mut vk::PhysicalDeviceFeatures2KHR,
     ) {
-        self.fns
+        self.fp
             .get_physical_device_features2_khr(physical_device, features);
     }
 
@@ -35,7 +35,7 @@ impl GetPhysicalDeviceProperties2 {
         format: vk::Format,
         format_properties: &mut vk::FormatProperties2KHR,
     ) {
-        self.fns.get_physical_device_format_properties2_khr(
+        self.fp.get_physical_device_format_properties2_khr(
             physical_device,
             format,
             format_properties,
@@ -49,7 +49,7 @@ impl GetPhysicalDeviceProperties2 {
         image_format_info: &vk::PhysicalDeviceImageFormatInfo2KHR,
         image_format_properties: &mut vk::ImageFormatProperties2KHR,
     ) -> VkResult<()> {
-        self.fns
+        self.fp
             .get_physical_device_image_format_properties2_khr(
                 physical_device,
                 image_format_info,
@@ -64,7 +64,7 @@ impl GetPhysicalDeviceProperties2 {
         physical_device: vk::PhysicalDevice,
         memory_properties: &mut vk::PhysicalDeviceMemoryProperties2KHR,
     ) {
-        self.fns
+        self.fp
             .get_physical_device_memory_properties2_khr(physical_device, memory_properties);
     }
 
@@ -74,7 +74,7 @@ impl GetPhysicalDeviceProperties2 {
         physical_device: vk::PhysicalDevice,
         properties: &mut vk::PhysicalDeviceProperties2KHR,
     ) {
-        self.fns
+        self.fp
             .get_physical_device_properties2_khr(physical_device, properties);
     }
 
@@ -84,7 +84,7 @@ impl GetPhysicalDeviceProperties2 {
         physical_device: vk::PhysicalDevice,
     ) -> usize {
         let mut count = 0;
-        self.fns.get_physical_device_queue_family_properties2_khr(
+        self.fp.get_physical_device_queue_family_properties2_khr(
             physical_device,
             &mut count,
             ptr::null_mut(),
@@ -102,7 +102,7 @@ impl GetPhysicalDeviceProperties2 {
         out: &mut [vk::QueueFamilyProperties2KHR],
     ) {
         let mut count = out.len() as u32;
-        self.fns.get_physical_device_queue_family_properties2_khr(
+        self.fp.get_physical_device_queue_family_properties2_khr(
             physical_device,
             &mut count,
             out.as_mut_ptr(),
@@ -116,7 +116,7 @@ impl GetPhysicalDeviceProperties2 {
         format_info: &vk::PhysicalDeviceSparseImageFormatInfo2KHR,
     ) -> usize {
         let mut count = 0;
-        self.fns
+        self.fp
             .get_physical_device_sparse_image_format_properties2_khr(
                 physical_device,
                 format_info,
@@ -137,7 +137,7 @@ impl GetPhysicalDeviceProperties2 {
         out: &mut [vk::SparseImageFormatProperties2KHR],
     ) {
         let mut count = out.len() as u32;
-        self.fns
+        self.fp
             .get_physical_device_sparse_image_format_properties2_khr(
                 physical_device,
                 format_info,
@@ -151,6 +151,6 @@ impl GetPhysicalDeviceProperties2 {
     }
 
     pub fn fp(&self) -> &vk::KhrGetPhysicalDeviceProperties2Fn {
-        &self.fns
+        &self.fp
     }
 }

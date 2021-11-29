@@ -8,16 +8,16 @@ use std::mem;
 #[derive(Clone)]
 pub struct IOSSurface {
     handle: vk::Instance,
-    fns: vk::MvkIosSurfaceFn,
+    fp: vk::MvkIosSurfaceFn,
 }
 
 impl IOSSurface {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let handle = instance.handle();
-        let fns = vk::MvkIosSurfaceFn::load(|name| unsafe {
+        let fp = vk::MvkIosSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
-        Self { handle, fns }
+        Self { handle, fp }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateIOSSurfaceMVK.html>"]
@@ -27,7 +27,7 @@ impl IOSSurface {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::zeroed();
-        self.fns
+        self.fp
             .create_ios_surface_mvk(
                 self.handle,
                 create_info,
@@ -42,7 +42,7 @@ impl IOSSurface {
     }
 
     pub fn fp(&self) -> &vk::MvkIosSurfaceFn {
-        &self.fns
+        &self.fp
     }
 
     pub fn instance(&self) -> vk::Instance {

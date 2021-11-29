@@ -8,16 +8,16 @@ use std::mem;
 #[derive(Clone)]
 pub struct XlibSurface {
     handle: vk::Instance,
-    fns: vk::KhrXlibSurfaceFn,
+    fp: vk::KhrXlibSurfaceFn,
 }
 
 impl XlibSurface {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let handle = instance.handle();
-        let fns = vk::KhrXlibSurfaceFn::load(|name| unsafe {
+        let fp = vk::KhrXlibSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
-        Self { handle, fns }
+        Self { handle, fp }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateXlibSurfaceKHR.html>"]
@@ -27,7 +27,7 @@ impl XlibSurface {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::zeroed();
-        self.fns
+        self.fp
             .create_xlib_surface_khr(
                 self.handle,
                 create_info,
@@ -45,7 +45,7 @@ impl XlibSurface {
         display: &mut vk::Display,
         visual_id: vk::VisualID,
     ) -> bool {
-        let b = self.fns.get_physical_device_xlib_presentation_support_khr(
+        let b = self.fp.get_physical_device_xlib_presentation_support_khr(
             physical_device,
             queue_family_index,
             display,
@@ -60,7 +60,7 @@ impl XlibSurface {
     }
 
     pub fn fp(&self) -> &vk::KhrXlibSurfaceFn {
-        &self.fns
+        &self.fp
     }
 
     pub fn instance(&self) -> vk::Instance {

@@ -8,16 +8,16 @@ use std::mem;
 #[derive(Clone)]
 pub struct DebugReport {
     handle: vk::Instance,
-    fns: vk::ExtDebugReportFn,
+    fp: vk::ExtDebugReportFn,
 }
 
 impl DebugReport {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let handle = instance.handle();
-        let fns = vk::ExtDebugReportFn::load(|name| unsafe {
+        let fp = vk::ExtDebugReportFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
-        Self { handle, fns }
+        Self { handle, fp }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyDebugReportCallbackEXT.html>"]
@@ -26,7 +26,7 @@ impl DebugReport {
         debug: vk::DebugReportCallbackEXT,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
-        self.fns.destroy_debug_report_callback_ext(
+        self.fp.destroy_debug_report_callback_ext(
             self.handle,
             debug,
             allocation_callbacks.as_raw_ptr(),
@@ -40,7 +40,7 @@ impl DebugReport {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::DebugReportCallbackEXT> {
         let mut debug_cb = mem::zeroed();
-        self.fns
+        self.fp
             .create_debug_report_callback_ext(
                 self.handle,
                 create_info,
@@ -55,7 +55,7 @@ impl DebugReport {
     }
 
     pub fn fp(&self) -> &vk::ExtDebugReportFn {
-        &self.fns
+        &self.fp
     }
 
     pub fn instance(&self) -> vk::Instance {

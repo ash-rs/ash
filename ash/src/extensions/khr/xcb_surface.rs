@@ -8,16 +8,16 @@ use std::mem;
 #[derive(Clone)]
 pub struct XcbSurface {
     handle: vk::Instance,
-    fns: vk::KhrXcbSurfaceFn,
+    fp: vk::KhrXcbSurfaceFn,
 }
 
 impl XcbSurface {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let handle = instance.handle();
-        let fns = vk::KhrXcbSurfaceFn::load(|name| unsafe {
+        let fp = vk::KhrXcbSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
-        Self { handle, fns }
+        Self { handle, fp }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateXcbSurfaceKHR.html>"]
@@ -27,7 +27,7 @@ impl XcbSurface {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::zeroed();
-        self.fns
+        self.fp
             .create_xcb_surface_khr(
                 self.handle,
                 create_info,
@@ -45,7 +45,7 @@ impl XcbSurface {
         connection: &mut vk::xcb_connection_t,
         visual_id: vk::xcb_visualid_t,
     ) -> bool {
-        let b = self.fns.get_physical_device_xcb_presentation_support_khr(
+        let b = self.fp.get_physical_device_xcb_presentation_support_khr(
             physical_device,
             queue_family_index,
             connection,
@@ -60,7 +60,7 @@ impl XcbSurface {
     }
 
     pub fn fp(&self) -> &vk::KhrXcbSurfaceFn {
-        &self.fns
+        &self.fp
     }
 
     pub fn instance(&self) -> vk::Instance {

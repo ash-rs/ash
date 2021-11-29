@@ -8,16 +8,16 @@ use std::mem;
 #[derive(Clone)]
 pub struct WaylandSurface {
     handle: vk::Instance,
-    fns: vk::KhrWaylandSurfaceFn,
+    fp: vk::KhrWaylandSurfaceFn,
 }
 
 impl WaylandSurface {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let handle = instance.handle();
-        let fns = vk::KhrWaylandSurfaceFn::load(|name| unsafe {
+        let fp = vk::KhrWaylandSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
-        Self { handle, fns }
+        Self { handle, fp }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateWaylandSurfaceKHR.html>"]
@@ -27,7 +27,7 @@ impl WaylandSurface {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::zeroed();
-        self.fns
+        self.fp
             .create_wayland_surface_khr(
                 self.handle,
                 create_info,
@@ -45,7 +45,7 @@ impl WaylandSurface {
         wl_display: &mut vk::wl_display,
     ) -> bool {
         let b = self
-            .fns
+            .fp
             .get_physical_device_wayland_presentation_support_khr(
                 physical_device,
                 queue_family_index,
@@ -60,7 +60,7 @@ impl WaylandSurface {
     }
 
     pub fn fp(&self) -> &vk::KhrWaylandSurfaceFn {
-        &self.fns
+        &self.fp
     }
 
     pub fn instance(&self) -> vk::Instance {

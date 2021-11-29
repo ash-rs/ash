@@ -6,15 +6,15 @@ use std::mem;
 
 #[derive(Clone)]
 pub struct ToolingInfo {
-    fns: vk::ExtToolingInfoFn,
+    fp: vk::ExtToolingInfoFn,
 }
 
 impl ToolingInfo {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
-        let fns = vk::ExtToolingInfoFn::load(|name| unsafe {
+        let fp = vk::ExtToolingInfoFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
-        Self { fns }
+        Self { fp }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceToolPropertiesEXT.html>"]
@@ -23,7 +23,7 @@ impl ToolingInfo {
         physical_device: vk::PhysicalDevice,
     ) -> VkResult<Vec<vk::PhysicalDeviceToolPropertiesEXT>> {
         read_into_defaulted_vector(|count, data| {
-            self.fns
+            self.fp
                 .get_physical_device_tool_properties_ext(physical_device, count, data)
         })
     }
@@ -33,6 +33,6 @@ impl ToolingInfo {
     }
 
     pub fn fp(&self) -> &vk::ExtToolingInfoFn {
-        &self.fns
+        &self.fp
     }
 }

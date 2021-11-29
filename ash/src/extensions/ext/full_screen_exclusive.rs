@@ -7,16 +7,16 @@ use std::mem;
 #[derive(Clone)]
 pub struct FullScreenExclusive {
     handle: vk::Device,
-    fns: vk::ExtFullScreenExclusiveFn,
+    fp: vk::ExtFullScreenExclusiveFn,
 }
 
 impl FullScreenExclusive {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fns = vk::ExtFullScreenExclusiveFn::load(|name| unsafe {
+        let fp = vk::ExtFullScreenExclusiveFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
-        Self { handle, fns }
+        Self { handle, fp }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkAcquireFullScreenExclusiveModeEXT.html>"]
@@ -24,7 +24,7 @@ impl FullScreenExclusive {
         &self,
         swapchain: vk::SwapchainKHR,
     ) -> VkResult<()> {
-        self.fns
+        self.fp
             .acquire_full_screen_exclusive_mode_ext(self.handle, swapchain)
             .result()
     }
@@ -36,7 +36,7 @@ impl FullScreenExclusive {
         surface_info: &vk::PhysicalDeviceSurfaceInfo2KHR,
     ) -> VkResult<Vec<vk::PresentModeKHR>> {
         read_into_uninitialized_vector(|count, data| {
-            self.fns.get_physical_device_surface_present_modes2_ext(
+            self.fp.get_physical_device_surface_present_modes2_ext(
                 physical_device,
                 surface_info,
                 count,
@@ -50,7 +50,7 @@ impl FullScreenExclusive {
         &self,
         swapchain: vk::SwapchainKHR,
     ) -> VkResult<()> {
-        self.fns
+        self.fp
             .release_full_screen_exclusive_mode_ext(self.handle, swapchain)
             .result()
     }
@@ -61,7 +61,7 @@ impl FullScreenExclusive {
         surface_info: &vk::PhysicalDeviceSurfaceInfo2KHR,
     ) -> VkResult<vk::DeviceGroupPresentModeFlagsKHR> {
         let mut present_modes = mem::zeroed();
-        self.fns
+        self.fp
             .get_device_group_surface_present_modes2_ext(
                 self.handle,
                 surface_info,
@@ -75,7 +75,7 @@ impl FullScreenExclusive {
     }
 
     pub fn fp(&self) -> &vk::ExtFullScreenExclusiveFn {
-        &self.fns
+        &self.fp
     }
 
     pub fn device(&self) -> vk::Device {

@@ -8,16 +8,16 @@ use std::mem;
 #[derive(Clone)]
 pub struct AccelerationStructure {
     handle: vk::Device,
-    fns: vk::KhrAccelerationStructureFn,
+    fp: vk::KhrAccelerationStructureFn,
 }
 
 impl AccelerationStructure {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fns = vk::KhrAccelerationStructureFn::load(|name| unsafe {
+        let fp = vk::KhrAccelerationStructureFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
-        Self { handle, fns }
+        Self { handle, fp }
     }
 
     pub unsafe fn get_properties(
@@ -39,7 +39,7 @@ impl AccelerationStructure {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::AccelerationStructureKHR> {
         let mut accel_struct = mem::zeroed();
-        self.fns
+        self.fp
             .create_acceleration_structure_khr(
                 self.handle,
                 create_info,
@@ -55,7 +55,7 @@ impl AccelerationStructure {
         accel_struct: vk::AccelerationStructureKHR,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
-        self.fns.destroy_acceleration_structure_khr(
+        self.fp.destroy_acceleration_structure_khr(
             self.handle,
             accel_struct,
             allocation_callbacks.as_raw_ptr(),
@@ -80,7 +80,7 @@ impl AccelerationStructure {
             })
             .collect::<Vec<_>>();
 
-        self.fns.cmd_build_acceleration_structures_khr(
+        self.fp.cmd_build_acceleration_structures_khr(
             command_buffer,
             infos.len() as _,
             infos.as_ptr(),
@@ -110,7 +110,7 @@ impl AccelerationStructure {
             })
             .collect::<Vec<_>>();
 
-        self.fns.cmd_build_acceleration_structures_indirect_khr(
+        self.fp.cmd_build_acceleration_structures_indirect_khr(
             command_buffer,
             infos.len() as _,
             infos.as_ptr(),
@@ -138,7 +138,7 @@ impl AccelerationStructure {
             })
             .collect::<Vec<_>>();
 
-        self.fns
+        self.fp
             .build_acceleration_structures_khr(
                 self.handle,
                 deferred_operation,
@@ -155,7 +155,7 @@ impl AccelerationStructure {
         deferred_operation: vk::DeferredOperationKHR,
         info: &vk::CopyAccelerationStructureInfoKHR,
     ) -> VkResult<()> {
-        self.fns
+        self.fp
             .copy_acceleration_structure_khr(self.handle, deferred_operation, info as *const _)
             .result()
     }
@@ -166,7 +166,7 @@ impl AccelerationStructure {
         deferred_operation: vk::DeferredOperationKHR,
         info: &vk::CopyAccelerationStructureToMemoryInfoKHR,
     ) -> VkResult<()> {
-        self.fns
+        self.fp
             .copy_acceleration_structure_to_memory_khr(
                 self.handle,
                 deferred_operation,
@@ -181,7 +181,7 @@ impl AccelerationStructure {
         deferred_operation: vk::DeferredOperationKHR,
         info: &vk::CopyMemoryToAccelerationStructureInfoKHR,
     ) -> VkResult<()> {
-        self.fns
+        self.fp
             .copy_memory_to_acceleration_structure_khr(
                 self.handle,
                 deferred_operation,
@@ -198,7 +198,7 @@ impl AccelerationStructure {
         data: &mut [u8],
         stride: usize,
     ) -> VkResult<()> {
-        self.fns
+        self.fp
             .write_acceleration_structures_properties_khr(
                 self.handle,
                 acceleration_structures.len() as _,
@@ -217,7 +217,7 @@ impl AccelerationStructure {
         command_buffer: vk::CommandBuffer,
         info: &vk::CopyAccelerationStructureInfoKHR,
     ) {
-        self.fns
+        self.fp
             .cmd_copy_acceleration_structure_khr(command_buffer, info);
     }
 
@@ -227,7 +227,7 @@ impl AccelerationStructure {
         command_buffer: vk::CommandBuffer,
         info: &vk::CopyAccelerationStructureToMemoryInfoKHR,
     ) {
-        self.fns
+        self.fp
             .cmd_copy_acceleration_structure_to_memory_khr(command_buffer, info as *const _);
     }
 
@@ -237,7 +237,7 @@ impl AccelerationStructure {
         command_buffer: vk::CommandBuffer,
         info: &vk::CopyMemoryToAccelerationStructureInfoKHR,
     ) {
-        self.fns
+        self.fp
             .cmd_copy_memory_to_acceleration_structure_khr(command_buffer, info as *const _);
     }
 
@@ -246,7 +246,7 @@ impl AccelerationStructure {
         &self,
         info: &vk::AccelerationStructureDeviceAddressInfoKHR,
     ) -> vk::DeviceAddress {
-        self.fns
+        self.fp
             .get_acceleration_structure_device_address_khr(self.handle, info as *const _)
     }
 
@@ -259,7 +259,7 @@ impl AccelerationStructure {
         query_pool: vk::QueryPool,
         first_query: u32,
     ) {
-        self.fns.cmd_write_acceleration_structures_properties_khr(
+        self.fp.cmd_write_acceleration_structures_properties_khr(
             command_buffer,
             structures.len() as _,
             structures.as_ptr(),
@@ -276,12 +276,11 @@ impl AccelerationStructure {
     ) -> vk::AccelerationStructureCompatibilityKHR {
         let mut compatibility = vk::AccelerationStructureCompatibilityKHR::default();
 
-        self.fns
-            .get_device_acceleration_structure_compatibility_khr(
-                self.handle,
-                version,
-                &mut compatibility as *mut _,
-            );
+        self.fp.get_device_acceleration_structure_compatibility_khr(
+            self.handle,
+            version,
+            &mut compatibility as *mut _,
+        );
 
         compatibility
     }
@@ -297,7 +296,7 @@ impl AccelerationStructure {
 
         let mut size_info = vk::AccelerationStructureBuildSizesInfoKHR::default();
 
-        self.fns.get_acceleration_structure_build_sizes_khr(
+        self.fp.get_acceleration_structure_build_sizes_khr(
             self.handle,
             build_type,
             build_info as *const _,
@@ -313,7 +312,7 @@ impl AccelerationStructure {
     }
 
     pub fn fp(&self) -> &vk::KhrAccelerationStructureFn {
-        &self.fns
+        &self.fp
     }
 
     pub fn device(&self) -> vk::Device {

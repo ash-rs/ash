@@ -8,16 +8,16 @@ use std::mem;
 #[derive(Clone)]
 pub struct Win32Surface {
     handle: vk::Instance,
-    fns: vk::KhrWin32SurfaceFn,
+    fp: vk::KhrWin32SurfaceFn,
 }
 
 impl Win32Surface {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let handle = instance.handle();
-        let fns = vk::KhrWin32SurfaceFn::load(|name| unsafe {
+        let fp = vk::KhrWin32SurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
-        Self { handle, fns }
+        Self { handle, fp }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateWin32SurfaceKHR.html>"]
@@ -27,7 +27,7 @@ impl Win32Surface {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::zeroed();
-        self.fns
+        self.fp
             .create_win32_surface_khr(
                 self.handle,
                 create_info,
@@ -43,7 +43,7 @@ impl Win32Surface {
         physical_device: vk::PhysicalDevice,
         queue_family_index: u32,
     ) -> bool {
-        let b = self.fns.get_physical_device_win32_presentation_support_khr(
+        let b = self.fp.get_physical_device_win32_presentation_support_khr(
             physical_device,
             queue_family_index,
         );
@@ -56,7 +56,7 @@ impl Win32Surface {
     }
 
     pub fn fp(&self) -> &vk::KhrWin32SurfaceFn {
-        &self.fns
+        &self.fp
     }
 
     pub fn instance(&self) -> vk::Instance {

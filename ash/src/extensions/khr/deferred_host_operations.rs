@@ -8,16 +8,16 @@ use std::mem;
 #[derive(Clone)]
 pub struct DeferredHostOperations {
     handle: vk::Device,
-    fns: vk::KhrDeferredHostOperationsFn,
+    fp: vk::KhrDeferredHostOperationsFn,
 }
 
 impl DeferredHostOperations {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fns = vk::KhrDeferredHostOperationsFn::load(|name| unsafe {
+        let fp = vk::KhrDeferredHostOperationsFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
-        Self { handle, fns }
+        Self { handle, fp }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateDeferredOperationKHR.html>"]
@@ -26,7 +26,7 @@ impl DeferredHostOperations {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::DeferredOperationKHR> {
         let mut operation = mem::zeroed();
-        self.fns
+        self.fp
             .create_deferred_operation_khr(
                 self.handle,
                 allocation_callbacks.as_raw_ptr(),
@@ -40,7 +40,7 @@ impl DeferredHostOperations {
         &self,
         operation: vk::DeferredOperationKHR,
     ) -> VkResult<()> {
-        self.fns
+        self.fp
             .deferred_operation_join_khr(self.handle, operation)
             .result()
     }
@@ -51,7 +51,7 @@ impl DeferredHostOperations {
         operation: vk::DeferredOperationKHR,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
-        self.fns.destroy_deferred_operation_khr(
+        self.fp.destroy_deferred_operation_khr(
             self.handle,
             operation,
             allocation_callbacks.as_raw_ptr(),
@@ -63,7 +63,7 @@ impl DeferredHostOperations {
         &self,
         operation: vk::DeferredOperationKHR,
     ) -> u32 {
-        self.fns
+        self.fp
             .get_deferred_operation_max_concurrency_khr(self.handle, operation)
     }
 
@@ -72,7 +72,7 @@ impl DeferredHostOperations {
         &self,
         operation: vk::DeferredOperationKHR,
     ) -> VkResult<()> {
-        self.fns
+        self.fp
             .get_deferred_operation_result_khr(self.handle, operation)
             .result()
     }
@@ -82,7 +82,7 @@ impl DeferredHostOperations {
     }
 
     pub fn fp(&self) -> &vk::KhrDeferredHostOperationsFn {
-        &self.fns
+        &self.fp
     }
 
     pub fn device(&self) -> vk::Device {

@@ -8,16 +8,16 @@ use std::mem;
 #[derive(Clone)]
 pub struct Swapchain {
     handle: vk::Device,
-    fns: vk::KhrSwapchainFn,
+    fp: vk::KhrSwapchainFn,
 }
 
 impl Swapchain {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fns = vk::KhrSwapchainFn::load(|name| unsafe {
+        let fp = vk::KhrSwapchainFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
-        Self { handle, fns }
+        Self { handle, fp }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroySwapchainKHR.html>"]
@@ -26,7 +26,7 @@ impl Swapchain {
         swapchain: vk::SwapchainKHR,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
-        self.fns
+        self.fp
             .destroy_swapchain_khr(self.handle, swapchain, allocation_callbacks.as_raw_ptr());
     }
 
@@ -40,7 +40,7 @@ impl Swapchain {
         fence: vk::Fence,
     ) -> VkResult<(u32, bool)> {
         let mut index = 0;
-        let err_code = self.fns.acquire_next_image_khr(
+        let err_code = self.fp.acquire_next_image_khr(
             self.handle,
             swapchain,
             timeout,
@@ -62,7 +62,7 @@ impl Swapchain {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SwapchainKHR> {
         let mut swapchain = mem::zeroed();
-        self.fns
+        self.fp
             .create_swapchain_khr(
                 self.handle,
                 create_info,
@@ -79,7 +79,7 @@ impl Swapchain {
         queue: vk::Queue,
         present_info: &vk::PresentInfoKHR,
     ) -> VkResult<bool> {
-        let err_code = self.fns.queue_present_khr(queue, present_info);
+        let err_code = self.fp.queue_present_khr(queue, present_info);
         match err_code {
             vk::Result::SUCCESS => Ok(false),
             vk::Result::SUBOPTIMAL_KHR => Ok(true),
@@ -93,7 +93,7 @@ impl Swapchain {
         swapchain: vk::SwapchainKHR,
     ) -> VkResult<Vec<vk::Image>> {
         read_into_uninitialized_vector(|count, data| {
-            self.fns
+            self.fp
                 .get_swapchain_images_khr(self.handle, swapchain, count, data)
         })
     }
@@ -103,7 +103,7 @@ impl Swapchain {
     }
 
     pub fn fp(&self) -> &vk::KhrSwapchainFn {
-        &self.fns
+        &self.fp
     }
 
     pub fn device(&self) -> vk::Device {

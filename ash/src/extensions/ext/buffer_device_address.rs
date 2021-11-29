@@ -6,16 +6,16 @@ use std::mem;
 #[derive(Clone)]
 pub struct BufferDeviceAddress {
     handle: vk::Device,
-    fns: vk::ExtBufferDeviceAddressFn,
+    fp: vk::ExtBufferDeviceAddressFn,
 }
 
 impl BufferDeviceAddress {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fns = vk::ExtBufferDeviceAddressFn::load(|name| unsafe {
+        let fp = vk::ExtBufferDeviceAddressFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
-        Self { handle, fns }
+        Self { handle, fp }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetBufferDeviceAddressEXT.html>"]
@@ -23,7 +23,7 @@ impl BufferDeviceAddress {
         &self,
         info: &vk::BufferDeviceAddressInfoEXT,
     ) -> vk::DeviceAddress {
-        self.fns.get_buffer_device_address_ext(self.handle, info)
+        self.fp.get_buffer_device_address_ext(self.handle, info)
     }
 
     pub fn name() -> &'static CStr {
@@ -31,7 +31,7 @@ impl BufferDeviceAddress {
     }
 
     pub fn fp(&self) -> &vk::ExtBufferDeviceAddressFn {
-        &self.fns
+        &self.fp
     }
 
     pub fn device(&self) -> vk::Device {

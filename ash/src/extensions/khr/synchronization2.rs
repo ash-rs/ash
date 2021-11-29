@@ -6,15 +6,15 @@ use std::mem;
 
 #[derive(Clone)]
 pub struct Synchronization2 {
-    fns: vk::KhrSynchronization2Fn,
+    fp: vk::KhrSynchronization2Fn,
 }
 
 impl Synchronization2 {
     pub fn new(instance: &Instance, device: &Device) -> Self {
-        let fns = vk::KhrSynchronization2Fn::load(|name| unsafe {
+        let fp = vk::KhrSynchronization2Fn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
-        Self { fns }
+        Self { fp }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdPipelineBarrier2KHR.html>"]
@@ -23,7 +23,7 @@ impl Synchronization2 {
         command_buffer: vk::CommandBuffer,
         dependency_info: &vk::DependencyInfoKHR,
     ) {
-        self.fns
+        self.fp
             .cmd_pipeline_barrier2_khr(command_buffer, dependency_info)
     }
 
@@ -34,7 +34,7 @@ impl Synchronization2 {
         event: vk::Event,
         stage_mask: vk::PipelineStageFlags2KHR,
     ) {
-        self.fns
+        self.fp
             .cmd_reset_event2_khr(command_buffer, event, stage_mask)
     }
 
@@ -45,7 +45,7 @@ impl Synchronization2 {
         event: vk::Event,
         dependency_info: &vk::DependencyInfoKHR,
     ) {
-        self.fns
+        self.fp
             .cmd_set_event2_khr(command_buffer, event, dependency_info)
     }
 
@@ -57,7 +57,7 @@ impl Synchronization2 {
         dependency_infos: &[vk::DependencyInfoKHR],
     ) {
         assert_eq!(events.len(), dependency_infos.len());
-        self.fns.cmd_wait_events2_khr(
+        self.fp.cmd_wait_events2_khr(
             command_buffer,
             events.len() as u32,
             events.as_ptr(),
@@ -73,7 +73,7 @@ impl Synchronization2 {
         query_pool: vk::QueryPool,
         query: u32,
     ) {
-        self.fns
+        self.fp
             .cmd_write_timestamp2_khr(command_buffer, stage, query_pool, query)
     }
 
@@ -84,7 +84,7 @@ impl Synchronization2 {
         submits: &[vk::SubmitInfo2KHR],
         fence: vk::Fence,
     ) -> VkResult<()> {
-        self.fns
+        self.fp
             .queue_submit2_khr(queue, submits.len() as u32, submits.as_ptr(), fence)
             .result()
     }
@@ -94,6 +94,6 @@ impl Synchronization2 {
     }
 
     pub fn fp(&self) -> &vk::KhrSynchronization2Fn {
-        &self.fns
+        &self.fp
     }
 }

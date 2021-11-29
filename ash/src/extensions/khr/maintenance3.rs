@@ -6,16 +6,16 @@ use std::mem;
 #[derive(Clone)]
 pub struct Maintenance3 {
     handle: vk::Device,
-    fns: vk::KhrMaintenance3Fn,
+    fp: vk::KhrMaintenance3Fn,
 }
 
 impl Maintenance3 {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fns = vk::KhrMaintenance3Fn::load(|name| unsafe {
+        let fp = vk::KhrMaintenance3Fn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
-        Self { handle, fns }
+        Self { handle, fp }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDescriptorSetLayoutSupportKHR.html>"]
@@ -24,7 +24,7 @@ impl Maintenance3 {
         create_info: &vk::DescriptorSetLayoutCreateInfo,
         out: &mut vk::DescriptorSetLayoutSupportKHR,
     ) {
-        self.fns
+        self.fp
             .get_descriptor_set_layout_support_khr(self.handle, create_info, out);
     }
 
@@ -33,7 +33,7 @@ impl Maintenance3 {
     }
 
     pub fn fp(&self) -> &vk::KhrMaintenance3Fn {
-        &self.fns
+        &self.fp
     }
 
     pub fn device(&self) -> vk::Device {

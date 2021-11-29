@@ -8,16 +8,16 @@ use std::mem;
 #[derive(Clone)]
 pub struct ViSurface {
     handle: vk::Instance,
-    fns: vk::NnViSurfaceFn,
+    fp: vk::NnViSurfaceFn,
 }
 
 impl ViSurface {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let handle = instance.handle();
-        let fns = vk::NnViSurfaceFn::load(|name| unsafe {
+        let fp = vk::NnViSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
-        Self { handle, fns }
+        Self { handle, fp }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateViSurfaceNN.html>"]
@@ -27,7 +27,7 @@ impl ViSurface {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::zeroed();
-        self.fns
+        self.fp
             .create_vi_surface_nn(
                 self.handle,
                 create_info,
@@ -42,7 +42,7 @@ impl ViSurface {
     }
 
     pub fn fp(&self) -> &vk::NnViSurfaceFn {
-        &self.fns
+        &self.fp
     }
 
     pub fn instance(&self) -> vk::Instance {

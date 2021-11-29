@@ -7,16 +7,16 @@ use std::mem;
 #[derive(Clone)]
 pub struct ExternalSemaphoreFd {
     handle: vk::Device,
-    fns: vk::KhrExternalSemaphoreFdFn,
+    fp: vk::KhrExternalSemaphoreFdFn,
 }
 
 impl ExternalSemaphoreFd {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fns = vk::KhrExternalSemaphoreFdFn::load(|name| unsafe {
+        let fp = vk::KhrExternalSemaphoreFdFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
-        Self { handle, fns }
+        Self { handle, fp }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkImportSemaphoreFdKHR.html>"]
@@ -24,7 +24,7 @@ impl ExternalSemaphoreFd {
         &self,
         import_info: &vk::ImportSemaphoreFdInfoKHR,
     ) -> VkResult<()> {
-        self.fns
+        self.fp
             .import_semaphore_fd_khr(self.handle, import_info)
             .result()
     }
@@ -32,7 +32,7 @@ impl ExternalSemaphoreFd {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetSemaphoreFdKHR.html>"]
     pub unsafe fn get_semaphore_fd(&self, get_info: &vk::SemaphoreGetFdInfoKHR) -> VkResult<i32> {
         let mut fd = -1;
-        self.fns
+        self.fp
             .get_semaphore_fd_khr(self.handle, get_info, &mut fd)
             .result_with_success(fd)
     }
@@ -42,7 +42,7 @@ impl ExternalSemaphoreFd {
     }
 
     pub fn fp(&self) -> &vk::KhrExternalSemaphoreFdFn {
-        &self.fns
+        &self.fp
     }
 
     pub fn device(&self) -> vk::Device {

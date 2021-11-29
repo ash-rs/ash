@@ -5,15 +5,15 @@ use std::mem;
 
 #[derive(Clone)]
 pub struct DrawIndirectCount {
-    fns: vk::KhrDrawIndirectCountFn,
+    fp: vk::KhrDrawIndirectCountFn,
 }
 
 impl DrawIndirectCount {
     pub fn new(instance: &Instance, device: &Device) -> Self {
-        let fns = vk::KhrDrawIndirectCountFn::load(|name| unsafe {
+        let fp = vk::KhrDrawIndirectCountFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
-        Self { fns }
+        Self { fp }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDrawIndexedIndirectCountKHR.html>"]
@@ -27,7 +27,7 @@ impl DrawIndirectCount {
         max_draw_count: u32,
         stride: u32,
     ) {
-        self.fns.cmd_draw_indexed_indirect_count_khr(
+        self.fp.cmd_draw_indexed_indirect_count_khr(
             command_buffer,
             buffer,
             offset,
@@ -49,7 +49,7 @@ impl DrawIndirectCount {
         max_draw_count: u32,
         stride: u32,
     ) {
-        self.fns.cmd_draw_indexed_indirect_count_khr(
+        self.fp.cmd_draw_indexed_indirect_count_khr(
             command_buffer,
             buffer,
             offset,
@@ -65,6 +65,6 @@ impl DrawIndirectCount {
     }
 
     pub fn fp(&self) -> &vk::KhrDrawIndirectCountFn {
-        &self.fns
+        &self.fp
     }
 }

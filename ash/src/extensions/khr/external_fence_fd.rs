@@ -7,21 +7,21 @@ use std::mem;
 #[derive(Clone)]
 pub struct ExternalFenceFd {
     handle: vk::Device,
-    fns: vk::KhrExternalFenceFdFn,
+    fp: vk::KhrExternalFenceFdFn,
 }
 
 impl ExternalFenceFd {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fns = vk::KhrExternalFenceFdFn::load(|name| unsafe {
+        let fp = vk::KhrExternalFenceFdFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
-        Self { handle, fns }
+        Self { handle, fp }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkImportFenceFdKHR.html>"]
     pub unsafe fn import_fence_fd(&self, import_info: &vk::ImportFenceFdInfoKHR) -> VkResult<()> {
-        self.fns
+        self.fp
             .import_fence_fd_khr(self.handle, import_info)
             .result()
     }
@@ -29,7 +29,7 @@ impl ExternalFenceFd {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetFenceFdKHR.html>"]
     pub unsafe fn get_fence_fd(&self, get_info: &vk::FenceGetFdInfoKHR) -> VkResult<i32> {
         let mut fd = -1;
-        self.fns
+        self.fp
             .get_fence_fd_khr(self.handle, get_info, &mut fd)
             .result_with_success(fd)
     }
@@ -39,7 +39,7 @@ impl ExternalFenceFd {
     }
 
     pub fn fp(&self) -> &vk::KhrExternalFenceFdFn {
-        &self.fns
+        &self.fp
     }
 
     pub fn device(&self) -> vk::Device {

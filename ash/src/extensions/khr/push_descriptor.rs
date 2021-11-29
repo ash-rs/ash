@@ -6,15 +6,15 @@ use std::mem;
 
 #[derive(Clone)]
 pub struct PushDescriptor {
-    fns: vk::KhrPushDescriptorFn,
+    fp: vk::KhrPushDescriptorFn,
 }
 
 impl PushDescriptor {
     pub fn new(instance: &Instance, device: &Device) -> Self {
-        let fns = vk::KhrPushDescriptorFn::load(|name| unsafe {
+        let fp = vk::KhrPushDescriptorFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
-        Self { fns }
+        Self { fp }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdPushDescriptorSetKHR.html>"]
@@ -26,7 +26,7 @@ impl PushDescriptor {
         set: u32,
         descriptor_writes: &[vk::WriteDescriptorSet],
     ) {
-        self.fns.cmd_push_descriptor_set_khr(
+        self.fp.cmd_push_descriptor_set_khr(
             command_buffer,
             pipeline_bind_point,
             layout,
@@ -45,7 +45,7 @@ impl PushDescriptor {
         set: u32,
         p_data: *const c_void,
     ) {
-        self.fns.cmd_push_descriptor_set_with_template_khr(
+        self.fp.cmd_push_descriptor_set_with_template_khr(
             command_buffer,
             descriptor_update_template,
             layout,
@@ -59,6 +59,6 @@ impl PushDescriptor {
     }
 
     pub fn fp(&self) -> &vk::KhrPushDescriptorFn {
-        &self.fns
+        &self.fp
     }
 }
