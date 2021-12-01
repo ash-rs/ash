@@ -4134,6 +4134,14 @@ impl StructureType {
     pub const VIDEO_ENCODE_H264_PROFILE_EXT: Self = Self(1_000_038_008);
 }
 #[doc = "Generated from 'VK_EXT_video_encode_h264'"]
+impl StructureType {
+    pub const VIDEO_ENCODE_H264_RATE_CONTROL_INFO_EXT: Self = Self(1_000_038_009);
+}
+#[doc = "Generated from 'VK_EXT_video_encode_h264'"]
+impl StructureType {
+    pub const VIDEO_ENCODE_H264_RATE_CONTROL_LAYER_INFO_EXT: Self = Self(1_000_038_010);
+}
+#[doc = "Generated from 'VK_EXT_video_encode_h264'"]
 impl VideoCodecOperationFlagsKHR {
     pub const ENCODE_H264_EXT: Self = Self(0b1_0000_0000_0000_0000);
 }
@@ -4195,6 +4203,14 @@ impl StructureType {
 #[doc = "Generated from 'VK_EXT_video_encode_h265'"]
 impl StructureType {
     pub const VIDEO_ENCODE_H265_REFERENCE_LISTS_EXT: Self = Self(1_000_039_009);
+}
+#[doc = "Generated from 'VK_EXT_video_encode_h265'"]
+impl StructureType {
+    pub const VIDEO_ENCODE_H265_RATE_CONTROL_INFO_EXT: Self = Self(1_000_039_010);
+}
+#[doc = "Generated from 'VK_EXT_video_encode_h265'"]
+impl StructureType {
+    pub const VIDEO_ENCODE_H265_RATE_CONTROL_LAYER_INFO_EXT: Self = Self(1_000_039_011);
 }
 #[doc = "Generated from 'VK_EXT_video_encode_h265'"]
 impl VideoCodecOperationFlagsKHR {
@@ -21520,6 +21536,10 @@ impl StructureType {
     pub const VIDEO_ENCODE_RATE_CONTROL_INFO_KHR: Self = Self(1_000_299_001);
 }
 #[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl StructureType {
+    pub const VIDEO_ENCODE_RATE_CONTROL_LAYER_INFO_KHR: Self = Self(1_000_299_002);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
 impl QueueFlags {
     pub const VIDEO_ENCODE_KHR: Self = Self(0b100_0000);
 }
@@ -26664,6 +26684,25 @@ pub struct ExtExtension437Fn {}
 unsafe impl Send for ExtExtension437Fn {}
 unsafe impl Sync for ExtExtension437Fn {}
 impl ExtExtension437Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl ExtExtension438Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_438\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct ExtExtension438Fn {}
+unsafe impl Send for ExtExtension438Fn {}
+unsafe impl Sync for ExtExtension438Fn {}
+impl ExtExtension438Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,

@@ -1160,7 +1160,7 @@ pub struct VideoEncodeRateControlFlagsKHR(pub(crate) Flags);
 vk_bitflags_wrapped!(VideoEncodeRateControlFlagsKHR, Flags);
 impl VideoEncodeRateControlFlagsKHR {
     pub const DEFAULT: Self = Self(0);
-    pub const RESET: Self = Self(0b1);
+    pub const RESERVED_0: Self = Self(0b1);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -1189,6 +1189,7 @@ impl VideoEncodeH264CapabilityFlagsEXT {
     pub const DEBLOCKING_FILTER_PARTIAL: Self = Self(0b1_0000_0000);
     pub const MULTIPLE_SLICE_PER_FRAME: Self = Self(0b10_0000_0000);
     pub const EVENLY_DISTRIBUTED_SLICE_SIZE: Self = Self(0b100_0000_0000);
+    pub const OPTIONAL_RC_EXTENSION_STRUCT: Self = Self(0b1000_0000_0000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -1218,6 +1219,16 @@ vk_bitflags_wrapped!(VideoEncodeH264CreateFlagsEXT, Flags);
 impl VideoEncodeH264CreateFlagsEXT {
     pub const DEFAULT: Self = Self(0);
     pub const RESERVED_0: Self = Self(0b1);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkVideoEncodeH264RateControlStructureFlagBitsEXT.html>"]
+pub struct VideoEncodeH264RateControlStructureFlagsEXT(pub(crate) Flags);
+vk_bitflags_wrapped!(VideoEncodeH264RateControlStructureFlagsEXT, Flags);
+impl VideoEncodeH264RateControlStructureFlagsEXT {
+    pub const UNKNOWN: Self = Self(0);
+    pub const FLAT: Self = Self(0b1);
+    pub const DYADIC: Self = Self(0b10);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -1316,4 +1327,14 @@ impl RenderingFlagsKHR {
     pub const CONTENTS_SECONDARY_COMMAND_BUFFERS: Self = Self(0b1);
     pub const SUSPENDING: Self = Self(0b10);
     pub const RESUMING: Self = Self(0b100);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkVideoEncodeH265RateControlStructureFlagBitsEXT.html>"]
+pub struct VideoEncodeH265RateControlStructureFlagsEXT(pub(crate) Flags);
+vk_bitflags_wrapped!(VideoEncodeH265RateControlStructureFlagsEXT, Flags);
+impl VideoEncodeH265RateControlStructureFlagsEXT {
+    pub const UNKNOWN: Self = Self(0);
+    pub const FLAT: Self = Self(0b1);
+    pub const DYADIC: Self = Self(0b10);
 }

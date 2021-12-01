@@ -4143,6 +4143,12 @@ impl fmt::Debug for StructureType {
                 Some("VIDEO_ENCODE_H264_EMIT_PICTURE_PARAMETERS_EXT")
             }
             Self::VIDEO_ENCODE_H264_PROFILE_EXT => Some("VIDEO_ENCODE_H264_PROFILE_EXT"),
+            Self::VIDEO_ENCODE_H264_RATE_CONTROL_INFO_EXT => {
+                Some("VIDEO_ENCODE_H264_RATE_CONTROL_INFO_EXT")
+            }
+            Self::VIDEO_ENCODE_H264_RATE_CONTROL_LAYER_INFO_EXT => {
+                Some("VIDEO_ENCODE_H264_RATE_CONTROL_LAYER_INFO_EXT")
+            }
             Self::VIDEO_ENCODE_H265_CAPABILITIES_EXT => Some("VIDEO_ENCODE_H265_CAPABILITIES_EXT"),
             Self::VIDEO_ENCODE_H265_SESSION_CREATE_INFO_EXT => {
                 Some("VIDEO_ENCODE_H265_SESSION_CREATE_INFO_EXT")
@@ -4166,6 +4172,12 @@ impl fmt::Debug for StructureType {
             Self::VIDEO_ENCODE_H265_PROFILE_EXT => Some("VIDEO_ENCODE_H265_PROFILE_EXT"),
             Self::VIDEO_ENCODE_H265_REFERENCE_LISTS_EXT => {
                 Some("VIDEO_ENCODE_H265_REFERENCE_LISTS_EXT")
+            }
+            Self::VIDEO_ENCODE_H265_RATE_CONTROL_INFO_EXT => {
+                Some("VIDEO_ENCODE_H265_RATE_CONTROL_INFO_EXT")
+            }
+            Self::VIDEO_ENCODE_H265_RATE_CONTROL_LAYER_INFO_EXT => {
+                Some("VIDEO_ENCODE_H265_RATE_CONTROL_LAYER_INFO_EXT")
             }
             Self::VIDEO_DECODE_H264_CAPABILITIES_EXT => Some("VIDEO_DECODE_H264_CAPABILITIES_EXT"),
             Self::VIDEO_DECODE_H264_SESSION_CREATE_INFO_EXT => {
@@ -4882,6 +4894,9 @@ impl fmt::Debug for StructureType {
             }
             Self::VIDEO_ENCODE_INFO_KHR => Some("VIDEO_ENCODE_INFO_KHR"),
             Self::VIDEO_ENCODE_RATE_CONTROL_INFO_KHR => Some("VIDEO_ENCODE_RATE_CONTROL_INFO_KHR"),
+            Self::VIDEO_ENCODE_RATE_CONTROL_LAYER_INFO_KHR => {
+                Some("VIDEO_ENCODE_RATE_CONTROL_LAYER_INFO_KHR")
+            }
             Self::PHYSICAL_DEVICE_DIAGNOSTICS_CONFIG_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_DIAGNOSTICS_CONFIG_FEATURES_NV")
             }
@@ -5812,6 +5827,10 @@ impl fmt::Debug for VideoEncodeH264CapabilityFlagsEXT {
                 VideoEncodeH264CapabilityFlagsEXT::EVENLY_DISTRIBUTED_SLICE_SIZE.0,
                 "EVENLY_DISTRIBUTED_SLICE_SIZE",
             ),
+            (
+                VideoEncodeH264CapabilityFlagsEXT::OPTIONAL_RC_EXTENSION_STRUCT.0,
+                "OPTIONAL_RC_EXTENSION_STRUCT",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -5841,6 +5860,22 @@ impl fmt::Debug for VideoEncodeH264OutputModeFlagsEXT {
             (VideoEncodeH264OutputModeFlagsEXT::FRAME.0, "FRAME"),
             (VideoEncodeH264OutputModeFlagsEXT::SLICE.0, "SLICE"),
             (VideoEncodeH264OutputModeFlagsEXT::NON_VCL.0, "NON_VCL"),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for VideoEncodeH264RateControlStructureFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                VideoEncodeH264RateControlStructureFlagsEXT::UNKNOWN.0,
+                "UNKNOWN",
+            ),
+            (VideoEncodeH264RateControlStructureFlagsEXT::FLAT.0, "FLAT"),
+            (
+                VideoEncodeH264RateControlStructureFlagsEXT::DYADIC.0,
+                "DYADIC",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -5888,11 +5923,27 @@ impl fmt::Debug for VideoEncodeH265OutputModeFlagsEXT {
         debug_flags(f, KNOWN, self.0)
     }
 }
+impl fmt::Debug for VideoEncodeH265RateControlStructureFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                VideoEncodeH265RateControlStructureFlagsEXT::UNKNOWN.0,
+                "UNKNOWN",
+            ),
+            (VideoEncodeH265RateControlStructureFlagsEXT::FLAT.0, "FLAT"),
+            (
+                VideoEncodeH265RateControlStructureFlagsEXT::DYADIC.0,
+                "DYADIC",
+            ),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
 impl fmt::Debug for VideoEncodeRateControlFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (VideoEncodeRateControlFlagsKHR::DEFAULT.0, "DEFAULT"),
-            (VideoEncodeRateControlFlagsKHR::RESET.0, "RESET"),
+            (VideoEncodeRateControlFlagsKHR::RESERVED_0.0, "RESERVED_0"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
