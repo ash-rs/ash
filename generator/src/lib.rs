@@ -1049,10 +1049,10 @@ fn generate_function_pointers<'a>(
     let pfn_typedefs = commands
         .iter()
         .filter(|pfn| pfn.type_needs_defining)
-        .map(|pfn| CommandToType(pfn));
-    let members = commands.iter().map(|pfn| CommandToMember(pfn));
-    let loaders = commands.iter().map(|pfn| CommandToLoader(pfn));
-    let bodies = commands.iter().map(|pfn| CommandToBody(pfn));
+        .map(CommandToType);
+    let members = commands.iter().map(CommandToMember);
+    let loaders = commands.iter().map(CommandToLoader);
+    let bodies = commands.iter().map(CommandToBody);
 
     quote! {
         #(#pfn_typedefs)*
