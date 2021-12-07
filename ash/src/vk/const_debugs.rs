@@ -2103,6 +2103,7 @@ impl fmt::Debug for ImageAspectFlags {
             (ImageAspectFlags::MEMORY_PLANE_1_EXT.0, "MEMORY_PLANE_1_EXT"),
             (ImageAspectFlags::MEMORY_PLANE_2_EXT.0, "MEMORY_PLANE_2_EXT"),
             (ImageAspectFlags::MEMORY_PLANE_3_EXT.0, "MEMORY_PLANE_3_EXT"),
+            (ImageAspectFlags::NONE_KHR.0, "NONE_KHR"),
             (ImageAspectFlags::PLANE_0.0, "PLANE_0"),
             (ImageAspectFlags::PLANE_1.0, "PLANE_1"),
             (ImageAspectFlags::PLANE_2.0, "PLANE_2"),

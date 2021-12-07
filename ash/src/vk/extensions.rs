@@ -26246,6 +26246,10 @@ impl StructureType {
 impl StructureType {
     pub const DEVICE_IMAGE_MEMORY_REQUIREMENTS_KHR: Self = Self(1_000_413_003);
 }
+#[doc = "Generated from 'VK_KHR_maintenance4'"]
+impl ImageAspectFlags {
+    pub const NONE_KHR: Self = Self(0);
+}
 impl HuaweiExtension415Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_HUAWEI_extension_415\0")
@@ -26703,6 +26707,25 @@ pub struct ExtExtension438Fn {}
 unsafe impl Send for ExtExtension438Fn {}
 unsafe impl Sync for ExtExtension438Fn {}
 impl ExtExtension438Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl SecExtension439Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_SEC_extension_439\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct SecExtension439Fn {}
+unsafe impl Send for SecExtension439Fn {}
+unsafe impl Sync for SecExtension439Fn {}
+impl SecExtension439Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
