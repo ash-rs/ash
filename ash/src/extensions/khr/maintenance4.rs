@@ -6,18 +6,16 @@ use std::mem;
 #[derive(Clone)]
 pub struct Maintenance4 {
     handle: vk::Device,
-    fns: vk::KhrMaintenance4Fn,
+    fp: vk::KhrMaintenance4Fn,
 }
 
 impl Maintenance4 {
     pub fn new(instance: &Instance, device: &Device) -> Self {
-        let fns = vk::KhrMaintenance4Fn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
+        let handle = device.handle();
+        let fp = vk::KhrMaintenance4Fn::load(|name| unsafe {
+            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
-        Self {
-            handle: device.handle(),
-            fns,
-        }
+        Self { handle, fp }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDeviceBufferMemoryRequirementsKHR.html>"]
@@ -26,7 +24,7 @@ impl Maintenance4 {
         create_info: &vk::DeviceBufferMemoryRequirementsKHR,
         out: &mut vk::MemoryRequirements2,
     ) {
-        self.fns
+        self.fp
             .get_device_buffer_memory_requirements_khr(self.handle, create_info, out)
     }
 
@@ -36,7 +34,7 @@ impl Maintenance4 {
         create_info: &vk::DeviceImageMemoryRequirementsKHR,
         out: &mut vk::MemoryRequirements2,
     ) {
-        self.fns
+        self.fp
             .get_device_image_memory_requirements_khr(self.handle, create_info, out)
     }
 
@@ -46,7 +44,7 @@ impl Maintenance4 {
         create_info: &vk::DeviceImageMemoryRequirementsKHR,
     ) -> usize {
         let mut count = 0;
-        self.fns.get_device_image_sparse_memory_requirements_khr(
+        self.fp.get_device_image_sparse_memory_requirements_khr(
             self.handle,
             create_info,
             &mut count,
@@ -65,7 +63,7 @@ impl Maintenance4 {
         out: &mut [vk::SparseImageMemoryRequirements2],
     ) {
         let mut count = out.len() as u32;
-        self.fns.get_device_image_sparse_memory_requirements_khr(
+        self.fp.get_device_image_sparse_memory_requirements_khr(
             self.handle,
             create_info,
             &mut count,
@@ -79,7 +77,7 @@ impl Maintenance4 {
     }
 
     pub fn fp(&self) -> &vk::KhrMaintenance4Fn {
-        &self.fns
+        &self.fp
     }
 
     pub fn device(&self) -> vk::Device {
