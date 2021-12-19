@@ -294,13 +294,12 @@ impl ExampleBase {
             };
             let priorities = [1.0];
 
-            let queue_info = [vk::DeviceQueueCreateInfo::builder()
+            let queue_info = vk::DeviceQueueCreateInfo::builder()
                 .queue_family_index(queue_family_index)
-                .queue_priorities(&priorities)
-                .build()];
+                .queue_priorities(&priorities);
 
             let device_create_info = vk::DeviceCreateInfo::builder()
-                .queue_create_infos(&queue_info)
+                .queue_create_infos(std::slice::from_ref(&queue_info))
                 .enabled_extension_names(&device_extension_names_raw)
                 .enabled_features(&features);
 
