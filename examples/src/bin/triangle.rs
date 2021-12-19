@@ -51,15 +51,14 @@ fn main() {
             ..Default::default()
         }];
 
-        let subpasses = [vk::SubpassDescription::builder()
+        let subpass = vk::SubpassDescription::builder()
             .color_attachments(&color_attachment_refs)
             .depth_stencil_attachment(&depth_attachment_ref)
-            .pipeline_bind_point(vk::PipelineBindPoint::GRAPHICS)
-            .build()];
+            .pipeline_bind_point(vk::PipelineBindPoint::GRAPHICS);
 
         let renderpass_create_info = vk::RenderPassCreateInfo::builder()
             .attachments(&renderpass_attachments)
-            .subpasses(&subpasses)
+            .subpasses(std::slice::from_ref(&subpass))
             .dependencies(&dependencies);
 
         let renderpass = base
