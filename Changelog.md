@@ -4,27 +4,43 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] - ReleaseDate
+## [0.34.0] - 2021-12-22
 
 ### Added
 
+- Update Vulkan-Headers to 1.2.203 (#477, #497, #504, #509, #514)
+- Add missing documentation to bitflag extension variants (#501)
 - Added `VK_KHR_present_wait` device extension (#493)
+- Added `VK_KHR_maintenance4` device extension (#489, #498)
+- Link `_len()` functions to their array-getter using intradoc-links (#490)
+- Added `VK_KHR_dynamic_rendering` device extension (#488)
 
 ### Changed
 
 - Extension names from `fn name()` will not be checked for interior nuls anymore at runtime (#522)
 - examples: Use `c_char` for pointer to raw string (#521)
+- Group enum extension variants together per `impl T` block (#519)
+- examples: Use `slice::from_ref` to not loose lifetime on nested slices (#513)
+- Simplify triangle example's vertex input state (#512)
 - Device extension `khr::PipelineExecutableProperties` and `khr::TimelineSemaphore` now expose `fn device()` instead of `fn instance()` (#499)
 - Changed `khr::PipelineExecutableProperties::new()` and `khr::TimelineSemaphore::new()` to take `instance` and `device` as arguments (#499)
+- Fix broken vulkan-tutorial link in README.md (#492)
+- Make `enumerate_physical_device_groups` unsafe (#491)
+- Added `Packed24_8` helper-type for constructing AS Instance bitfields, used in `AccelerationStructureInstanceKHR`, `AccelerationStructureSRTMotionInstanceNV` and `AccelerationStructureMatrixMotionInstanceNV` (#476)s (#490)
+- examples: Upgrade to winit 0.25 (#487)
 - To allow faster builds, Vulkan structures only implement `Debug` if the `debug` feature is enabled, which is the default (#482)
+- Use `Self` in macros (instead of `$name`) and `impl` blocks (#479)
+- Link Vulkan directly under the default `linked` feature. Disable default features and enable the `loaded` feature for the old `libloading` behaviour (#457)
 
 ### Removed
 
+- Deprecated aliases for wrongly-named enum constants (containing `"Backwards-compatible"` in the Vulkan spec comment) are removed: switch to the version that it aliased (#502)
 - Removed `device()` function from `khr::Synchronization2` device extension (#494)
 - Removed `instance()` function from `ext::ExtendedDynamicState`, `khr::PushDescriptor`, `ext::ToolingInfo` and `khr::GetPhysicalDeviceProperties2` instance extensions (#494)
-- Removed `device` argument from `ext::DebugMarkers::debug_marker_set_object_name` function (#494)
+- Removed `device` argument from `ext::DebugMarkers::debug_marker_set_object_name` function, `khr::PipelineExecutableProperties` and `khr::TimelineSemaphore` functions (#494, #499)
 - Removed `From<vk::Result>` trait for `VkResult` (#495)
 - Removed `instance` argument from `ext::DebugUtils::submit_debug_utils_message` function (#499)
+- Removed misleading `all()`/`-`/`-=` function/ops from bitflags (#478)
 
 ## [0.33.3] - 2021-09-08
 
@@ -235,7 +251,8 @@ flags: vk::CommandPoolCreateFlags::RESET_COMMAND_BUFFER_BIT,
 can write to aligned memory.
 
 
-[Unreleased]: https://github.com/MaikKlein/ash/compare/0.33.3...HEAD
+[Unreleased]: https://github.com/MaikKlein/ash/compare/0.34.0...HEAD
+[0.34.0]: https://github.com/MaikKlein/ash/releases/tag/0.34.0
 [0.33.3]: https://github.com/MaikKlein/ash/releases/tag/0.33.3
 [0.33.2]: https://github.com/MaikKlein/ash/releases/tag/0.33.2
 [0.33.1]: https://github.com/MaikKlein/ash/releases/tag/0.33.1

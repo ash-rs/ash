@@ -1,5 +1,11 @@
 ### Changelog
 
+## [0.8.0] - 2021-12-22
+
+### Changed
+
+- Bumped `ash` version to [`0.34`](https://github.com/MaikKlein/ash/releases/tag/0.34.0)
+
 ## [0.7.0] - 2021-07-30
 
 ### Changed
@@ -43,5 +49,7 @@
 ## Version 0.1.0
 Initial release for `raw-window-handle = "0.3"` with Windows, Linux, Android, MacOS/iOS support.
 
+[0.8.0]: https://github.com/MaikKlein/ash/releases/tag/ash-window-0.8.0
+[0.7.0]: https://github.com/MaikKlein/ash/releases/tag/ash-window-0.7.0
 [0.6.0]: https://github.com/MaikKlein/ash/releases/tag/ash-window-0.6.0
 [0.5.0]: https://github.com/MaikKlein/ash/releases/tag/ash-window-0.5.0
