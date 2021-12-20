@@ -1107,19 +1107,31 @@ pub fn generate_extension_constants<'a>(
             _ => None,
         })
         .flatten();
-    let enum_tokens = items.filter_map(|item| match item {
-        vk_parse::InterfaceItem::Enum(enum_) => {
+
+    let mut extended_enums = BTreeMap::<String, Vec<ExtensionConstant>>::new();
+
+    for item in items {
+        if let vk_parse::InterfaceItem::Enum(enum_) = item {
             if !const_cache.insert(enum_.name.as_str()) {
-                return None;
+                continue;
             }
 
             if enum_.comment.as_deref() == Some(BACKWARDS_COMPATIBLE_ALIAS_COMMENT) {
-                return None;
+                continue;
             }
 
-            let (constant, extends, is_alias) =
-                Constant::from_vk_parse_enum(enum_, None, Some(extension_number))?;
-            let extends = extends?;
+            let (constant, extends, is_alias) = if let Some(r) =
+                Constant::from_vk_parse_enum(enum_, None, Some(extension_number))
+            {
+                r
+            } else {
+                continue;
+            };
+            let extends = if let Some(extends) = extends {
+                extends
+            } else {
+                continue;
+            };
             let ext_constant = ExtensionConstant {
                 name: &enum_.name,
                 constant,
@@ -1134,20 +1146,24 @@ pub fn generate_extension_constants<'a>(
                     ident: ext_constant.variant_ident(&extends),
                     is_alias,
                 });
-            let impl_block = bitflags_impl_block(ident, &extends, &[&ext_constant]);
-            let doc_string = format!("Generated from '{}'", extension_name);
-            let q = quote! {
-                #[doc = #doc_string]
-                #impl_block
-            };
 
-            Some(q)
+            extended_enums
+                .entry(extends)
+                .or_default()
+                .push(ext_constant);
         }
-        _ => None,
-    });
-    quote! {
-        #(#enum_tokens)*
     }
+
+    let enum_tokens = extended_enums.iter().map(|(extends, constants)| {
+        let ident = name_to_tokens(extends);
+        let doc_string = format!("Generated from '{}'", extension_name);
+        let impl_block = bitflags_impl_block(ident, extends, &constants.iter().collect_vec());
+        quote! {
+            #[doc = #doc_string]
+            #impl_block
+        }
+    });
+    quote!(#(#enum_tokens)*)
 }
 pub fn generate_extension_commands<'a>(
     extension_name: &str,
