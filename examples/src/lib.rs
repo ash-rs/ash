@@ -185,11 +185,8 @@ impl ExampleBase {
             .run_return(|event, _, control_flow| {
                 *control_flow = ControlFlow::Wait;
                 f();
-                match event {
-                    Event::WindowEvent {
-                        ref event,
-                        window_id,
-                    } if window_id == self.window.id() => match event {
+                if let Event::WindowEvent {
+                    event:
                         WindowEvent::CloseRequested
                         | WindowEvent::KeyboardInput {
                             input:
@@ -199,10 +196,11 @@ impl ExampleBase {
                                     ..
                                 },
                             ..
-                        } => *control_flow = ControlFlow::Exit,
-                        _ => {}
-                    },
-                    _ => {}
+                        },
+                    ..
+                } = event
+                {
+                    *control_flow = ControlFlow::Exit
                 }
             });
     }
