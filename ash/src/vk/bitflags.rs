@@ -1189,7 +1189,6 @@ impl VideoEncodeH264CapabilityFlagsEXT {
     pub const DEBLOCKING_FILTER_PARTIAL: Self = Self(0b1_0000_0000);
     pub const MULTIPLE_SLICE_PER_FRAME: Self = Self(0b10_0000_0000);
     pub const EVENLY_DISTRIBUTED_SLICE_SIZE: Self = Self(0b100_0000_0000);
-    pub const OPTIONAL_RC_EXTENSION_STRUCT: Self = Self(0b1000_0000_0000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]

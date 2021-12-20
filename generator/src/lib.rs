@@ -2877,7 +2877,25 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         bindings = bindings.allowlist_type(typ);
     }
 
+    #[derive(Debug)]
+    struct ParseCallbacks;
+    impl bindgen::callbacks::ParseCallbacks for ParseCallbacks {
+        fn enum_variant_behavior(
+            &self,
+            _enum_name: Option<&str>,
+            original_variant_name: &str,
+            _variant_value: bindgen::callbacks::EnumVariantValue,
+        ) -> Option<bindgen::callbacks::EnumVariantCustomBehavior> {
+            if original_variant_name.ends_with("_MAX_ENUM") {
+                Some(bindgen::callbacks::EnumVariantCustomBehavior::Hide)
+            } else {
+                None
+            }
+        }
+    }
+
     bindings
+        .parse_callbacks(Box::new(ParseCallbacks))
         .generate()
         .expect("Unable to generate native bindings")
         .write_to_file(vk_dir.join("native.rs"))
