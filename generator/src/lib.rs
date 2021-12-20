@@ -1465,17 +1465,6 @@ pub fn generate_enum<'a>(
             _ => None,
         })
         .filter(|constant| constant.notation() != Some(BACKWARDS_COMPATIBLE_ALIAS_COMMENT))
-        .filter(|constant| match &constant.spec {
-            vk_parse::EnumSpec::Alias { alias, .. } => {
-                // Remove any alias whose name is identical after name de-mangling. For example
-                // the XML contains compatibility aliases for variants without _BIT postfix
-                // which are removed by the generator anyway, after which they become identical.
-                let alias_name = constant.variant_ident(name);
-                let aliases_to = variant_ident(name, alias);
-                alias_name != aliases_to
-            }
-            _ => true,
-        })
         .collect_vec();
 
     let mut values = Vec::with_capacity(constants.len());
