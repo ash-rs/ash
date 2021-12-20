@@ -14,7 +14,6 @@ use quote::*;
 use regex::Regex;
 use std::collections::{BTreeMap, HashMap, HashSet};
 use std::fmt::Display;
-use std::hash::BuildHasher;
 use std::path::Path;
 use syn::Ident;
 
@@ -886,8 +885,8 @@ pub type CommandMap<'a> = HashMap<vkxml::Identifier, &'a vkxml::Command>;
 fn generate_function_pointers<'a>(
     ident: Ident,
     commands: &[&'a vkxml::Command],
-    aliases: &HashMap<String, String, impl BuildHasher>,
-    fn_cache: &mut HashSet<&'a str, impl BuildHasher>,
+    aliases: &HashMap<String, String>,
+    fn_cache: &mut HashSet<&'a str>,
 ) -> TokenStream {
     // Commands can have duplicates inside them because they are declared per features. But we only
     // really want to generate one function pointer.
@@ -1098,7 +1097,7 @@ pub fn generate_extension_constants<'a>(
     extension_name: &str,
     extension_number: i64,
     extension_items: &'a [vk_parse::ExtensionChild],
-    const_cache: &mut HashSet<&'a str, impl BuildHasher>,
+    const_cache: &mut HashSet<&'a str>,
     const_values: &mut BTreeMap<Ident, ConstantTypeInfo>,
 ) -> TokenStream {
     let items = extension_items
@@ -1154,8 +1153,8 @@ pub fn generate_extension_commands<'a>(
     extension_name: &str,
     items: &[vk_parse::ExtensionChild],
     cmd_map: &CommandMap<'a>,
-    cmd_aliases: &HashMap<String, String, impl BuildHasher>,
-    fn_cache: &mut HashSet<&'a str, impl BuildHasher>,
+    cmd_aliases: &HashMap<String, String>,
+    fn_cache: &mut HashSet<&'a str>,
 ) -> TokenStream {
     let mut commands = Vec::new();
     let mut aliases = HashMap::new();
@@ -1229,10 +1228,10 @@ pub fn generate_extension_commands<'a>(
 pub fn generate_extension<'a>(
     extension: &'a vk_parse::Extension,
     cmd_map: &CommandMap<'a>,
-    const_cache: &mut HashSet<&'a str, impl BuildHasher>,
+    const_cache: &mut HashSet<&'a str>,
     const_values: &mut BTreeMap<Ident, ConstantTypeInfo>,
-    cmd_aliases: &HashMap<String, String, impl BuildHasher>,
-    fn_cache: &mut HashSet<&'a str, impl BuildHasher>,
+    cmd_aliases: &HashMap<String, String>,
+    fn_cache: &mut HashSet<&'a str>,
 ) -> Option<TokenStream> {
     // Okay this is a little bit odd. We need to generate all extensions, even disabled ones,
     // because otherwise some StructureTypes won't get generated. But we don't generate extensions
@@ -1330,7 +1329,7 @@ pub fn generate_typedef(typedef: &vkxml::Typedef) -> TokenStream {
 }
 pub fn generate_bitmask(
     bitmask: &vkxml::Bitmask,
-    bitflags_cache: &mut HashSet<Ident, impl BuildHasher>,
+    bitflags_cache: &mut HashSet<Ident>,
     const_values: &mut BTreeMap<Ident, ConstantTypeInfo>,
 ) -> Option<TokenStream> {
     // Workaround for empty bitmask
@@ -1458,9 +1457,9 @@ pub fn bitflags_impl_block(
 
 pub fn generate_enum<'a>(
     enum_: &'a vk_parse::Enums,
-    const_cache: &mut HashSet<&'a str, impl BuildHasher>,
+    const_cache: &mut HashSet<&'a str>,
     const_values: &mut BTreeMap<Ident, ConstantTypeInfo>,
-    bitflags_cache: &mut HashSet<Ident, impl BuildHasher>,
+    bitflags_cache: &mut HashSet<Ident>,
 ) -> EnumType {
     let name = enum_.name.as_ref().unwrap();
     let clean_name = name.strip_prefix("Vk").unwrap();
@@ -1667,10 +1666,7 @@ pub fn derive_default(_struct: &vkxml::Struct) -> Option<TokenStream> {
     };
     Some(q)
 }
-pub fn derive_debug(
-    _struct: &vkxml::Struct,
-    union_types: &HashSet<&str, impl BuildHasher>,
-) -> Option<TokenStream> {
+pub fn derive_debug(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Option<TokenStream> {
     let name = name_to_tokens(&_struct.name);
     let members = _struct.elements.iter().filter_map(|elem| match *elem {
         vkxml::StructElement::Member(ref field) => Some(field),
@@ -1731,7 +1727,7 @@ pub fn derive_debug(
 
 pub fn derive_setters(
     struct_: &vkxml::Struct,
-    root_structs: &HashSet<Ident, impl BuildHasher>,
+    root_structs: &HashSet<Ident>,
 ) -> Option<TokenStream> {
     if &struct_.name == "VkBaseInStructure"
         || &struct_.name == "VkBaseOutStructure"
@@ -2047,8 +2043,8 @@ pub fn manual_derives(_struct: &vkxml::Struct) -> TokenStream {
 }
 pub fn generate_struct(
     _struct: &vkxml::Struct,
-    root_structs: &HashSet<Ident, impl BuildHasher>,
-    union_types: &HashSet<&str, impl BuildHasher>,
+    root_structs: &HashSet<Ident>,
+    union_types: &HashSet<&str>,
 ) -> TokenStream {
     let name = name_to_tokens(&_struct.name);
     if &_struct.name == "VkTransformMatrixKHR" {
@@ -2251,9 +2247,9 @@ pub fn root_structs(definitions: &[&vkxml::DefinitionsElement]) -> HashSet<Ident
 }
 pub fn generate_definition(
     definition: &vkxml::DefinitionsElement,
-    union_types: &HashSet<&str, impl BuildHasher>,
-    root_structs: &HashSet<Ident, impl BuildHasher>,
-    bitflags_cache: &mut HashSet<Ident, impl BuildHasher>,
+    union_types: &HashSet<&str>,
+    root_structs: &HashSet<Ident>,
+    bitflags_cache: &mut HashSet<Ident>,
     const_values: &mut BTreeMap<Ident, ConstantTypeInfo>,
     identifier_renames: &mut BTreeMap<String, Ident>,
 ) -> Option<TokenStream> {
@@ -2277,7 +2273,7 @@ pub fn generate_definition(
 pub fn generate_feature<'a>(
     feature: &vkxml::Feature,
     commands: &CommandMap<'a>,
-    fn_cache: &mut HashSet<&'a str, impl BuildHasher>,
+    fn_cache: &mut HashSet<&'a str>,
 ) -> TokenStream {
     let (static_commands, entry_commands, device_commands, instance_commands) = feature
         .elements
@@ -2363,7 +2359,7 @@ pub fn constant_name(name: &str) -> &str {
 
 pub fn generate_constant<'a>(
     constant: &'a vkxml::Constant,
-    cache: &mut HashSet<&'a str, impl BuildHasher>,
+    cache: &mut HashSet<&'a str>,
 ) -> TokenStream {
     cache.insert(constant.name.as_str());
     let c = Constant::from_constant(constant);
@@ -2384,7 +2380,7 @@ pub fn generate_constant<'a>(
 
 pub fn generate_feature_extension<'a>(
     registry: &'a vk_parse::Registry,
-    const_cache: &mut HashSet<&'a str, impl BuildHasher>,
+    const_cache: &mut HashSet<&'a str>,
     const_values: &mut BTreeMap<Ident, ConstantTypeInfo>,
 ) -> TokenStream {
     let constants = registry.0.iter().filter_map(|item| match item {
@@ -2557,7 +2553,7 @@ pub fn extract_native_types(registry: &vk_parse::Registry) -> (Vec<(String, Stri
 }
 pub fn generate_aliases_of_types(
     types: &vk_parse::Types,
-    ty_cache: &mut HashSet<Ident, impl BuildHasher>,
+    ty_cache: &mut HashSet<Ident>,
 ) -> TokenStream {
     let aliases = types
         .children
