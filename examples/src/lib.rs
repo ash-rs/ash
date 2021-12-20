@@ -147,7 +147,7 @@ pub struct ExampleBase {
     pub swapchain_loader: Swapchain,
     pub debug_utils_loader: DebugUtils,
     pub window: winit::window::Window,
-    pub events_loop: RefCell<EventLoop<()>>,
+    pub event_loop: RefCell<EventLoop<()>>,
     pub debug_call_back: vk::DebugUtilsMessengerEXT,
 
     pub pdevice: vk::PhysicalDevice,
@@ -180,7 +180,7 @@ pub struct ExampleBase {
 
 impl ExampleBase {
     pub fn render_loop<F: Fn()>(&self, f: F) {
-        self.events_loop
+        self.event_loop
             .borrow_mut()
             .run_return(|event, _, control_flow| {
                 *control_flow = ControlFlow::Wait;
@@ -207,14 +207,14 @@ impl ExampleBase {
 
     pub fn new(window_width: u32, window_height: u32) -> Self {
         unsafe {
-            let events_loop = EventLoop::new();
+            let event_loop = EventLoop::new();
             let window = WindowBuilder::new()
                 .with_title("Ash - Example")
                 .with_inner_size(winit::dpi::LogicalSize::new(
                     f64::from(window_width),
                     f64::from(window_height),
                 ))
-                .build(&events_loop)
+                .build(&event_loop)
                 .unwrap();
             let entry = Entry::new();
             let app_name = CString::new("VulkanTriangle").unwrap();
@@ -528,7 +528,7 @@ impl ExampleBase {
                 .unwrap();
 
             ExampleBase {
-                events_loop: RefCell::new(events_loop),
+                event_loop: RefCell::new(event_loop),
                 entry,
                 instance,
                 device,
