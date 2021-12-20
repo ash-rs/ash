@@ -2865,6 +2865,7 @@ impl StructureType {
     pub const VIDEO_PROFILES_KHR: Self = Self(1_000_023_013);
     pub const PHYSICAL_DEVICE_VIDEO_FORMAT_INFO_KHR: Self = Self(1_000_023_014);
     pub const VIDEO_FORMAT_PROPERTIES_KHR: Self = Self(1_000_023_015);
+    pub const QUEUE_FAMILY_QUERY_RESULT_STATUS_PROPERTIES_2_KHR: Self = Self(1_000_023_016);
 }
 impl KhrVideoDecodeQueueFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -3921,7 +3922,7 @@ impl ExtVideoEncodeH264Fn {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_video_encode_h264\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 2u32;
+    pub const SPEC_VERSION: u32 = 3u32;
 }
 #[derive(Clone)]
 pub struct ExtVideoEncodeH264Fn {}
@@ -3958,7 +3959,7 @@ impl ExtVideoEncodeH265Fn {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_video_encode_h265\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 2u32;
+    pub const SPEC_VERSION: u32 = 3u32;
 }
 #[derive(Clone)]
 pub struct ExtVideoEncodeH265Fn {}
@@ -24372,18 +24373,18 @@ impl ArmExtension425Fn {
         Self {}
     }
 }
-impl QcomExtension426Fn {
+impl QcomFragmentDensityMapOffsetFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_extension_426\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_fragment_density_map_offset\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct QcomExtension426Fn {}
-unsafe impl Send for QcomExtension426Fn {}
-unsafe impl Sync for QcomExtension426Fn {}
-impl QcomExtension426Fn {
+pub struct QcomFragmentDensityMapOffsetFn {}
+unsafe impl Send for QcomFragmentDensityMapOffsetFn {}
+unsafe impl Sync for QcomFragmentDensityMapOffsetFn {}
+impl QcomFragmentDensityMapOffsetFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -24391,9 +24392,16 @@ impl QcomExtension426Fn {
         Self {}
     }
 }
-#[doc = "Generated from 'VK_QCOM_extension_426'"]
+#[doc = "Generated from 'VK_QCOM_fragment_density_map_offset'"]
 impl ImageCreateFlags {
-    pub const RESERVED_426_QCOM: Self = Self(0b1000_0000_0000_0000);
+    pub const FRAGMENT_DENSITY_MAP_OFFSET_QCOM: Self = Self(0b1000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_QCOM_fragment_density_map_offset'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_OFFSET_FEATURES_QCOM: Self = Self(1_000_425_000);
+    pub const PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_OFFSET_PROPERTIES_QCOM: Self =
+        Self(1_000_425_001);
+    pub const SUBPASS_FRAGMENT_DENSITY_MAP_OFFSET_END_INFO_QCOM: Self = Self(1_000_425_002);
 }
 impl NvExtension427Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -24471,24 +24479,34 @@ impl NvExtension430Fn {
         Self {}
     }
 }
-impl NvExtension431Fn {
+impl NvLinearColorAttachmentFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_431\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_linear_color_attachment\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct NvExtension431Fn {}
-unsafe impl Send for NvExtension431Fn {}
-unsafe impl Sync for NvExtension431Fn {}
-impl NvExtension431Fn {
+pub struct NvLinearColorAttachmentFn {}
+unsafe impl Send for NvLinearColorAttachmentFn {}
+unsafe impl Sync for NvLinearColorAttachmentFn {}
+impl NvLinearColorAttachmentFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         Self {}
     }
+}
+#[doc = "Generated from 'VK_NV_linear_color_attachment'"]
+impl FormatFeatureFlags2KHR {
+    #[doc = "Format support linear image as render target, it cannot be mixed with non linear attachment"]
+    pub const LINEAR_COLOR_ATTACHMENT_NV: Self =
+        Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_NV_linear_color_attachment'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_LINEAR_COLOR_ATTACHMENT_FEATURES_NV: Self = Self(1_000_430_000);
 }
 impl NvExtension432Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -24528,18 +24546,18 @@ impl NvExtension433Fn {
         Self {}
     }
 }
-impl ExtExtension434Fn {
+impl GoogleSurfacelessQueryFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_434\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GOOGLE_surfaceless_query\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct ExtExtension434Fn {}
-unsafe impl Send for ExtExtension434Fn {}
-unsafe impl Sync for ExtExtension434Fn {}
-impl ExtExtension434Fn {
+pub struct GoogleSurfacelessQueryFn {}
+unsafe impl Send for GoogleSurfacelessQueryFn {}
+unsafe impl Sync for GoogleSurfacelessQueryFn {}
+impl GoogleSurfacelessQueryFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -24635,6 +24653,262 @@ pub struct SecExtension439Fn {}
 unsafe impl Send for SecExtension439Fn {}
 unsafe impl Sync for SecExtension439Fn {}
 impl SecExtension439Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl QcomExtension440Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_extension_440\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct QcomExtension440Fn {}
+unsafe impl Send for QcomExtension440Fn {}
+unsafe impl Sync for QcomExtension440Fn {}
+impl QcomExtension440Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+#[doc = "Generated from 'VK_QCOM_extension_440'"]
+impl DeviceQueueCreateFlags {
+    pub const RESERVED_1_QCOM: Self = Self(0b10);
+}
+#[doc = "Generated from 'VK_QCOM_extension_440'"]
+impl QueueFlags {
+    pub const RESERVED_7_QCOM: Self = Self(0b1000_0000);
+}
+impl QcomExtension441Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_extension_441\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct QcomExtension441Fn {}
+unsafe impl Send for QcomExtension441Fn {}
+unsafe impl Sync for QcomExtension441Fn {}
+impl QcomExtension441Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+#[doc = "Generated from 'VK_QCOM_extension_441'"]
+impl FormatFeatureFlags2KHR {
+    pub const RESERVED_34_QCOM: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const RESERVED_35_QCOM: Self = Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const RESERVED_36_QCOM: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const RESERVED_37_QCOM: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_QCOM_extension_441'"]
+impl ImageUsageFlags {
+    pub const RESERVED_20_QCOM: Self = Self(0b1_0000_0000_0000_0000_0000);
+    pub const RESERVED_21_QCOM: Self = Self(0b10_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_QCOM_extension_441'"]
+impl SamplerCreateFlags {
+    pub const IMAGE_PROCESSING_QCOM: Self = Self(0b1_0000);
+}
+impl CoreaviExtension442Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_COREAVI_extension_442\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct CoreaviExtension442Fn {}
+unsafe impl Send for CoreaviExtension442Fn {}
+unsafe impl Sync for CoreaviExtension442Fn {}
+impl CoreaviExtension442Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl CoreaviExtension443Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_COREAVI_extension_443\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct CoreaviExtension443Fn {}
+unsafe impl Send for CoreaviExtension443Fn {}
+unsafe impl Sync for CoreaviExtension443Fn {}
+impl CoreaviExtension443Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl CoreaviExtension444Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_COREAVI_extension_444\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct CoreaviExtension444Fn {}
+unsafe impl Send for CoreaviExtension444Fn {}
+unsafe impl Sync for CoreaviExtension444Fn {}
+impl CoreaviExtension444Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+#[doc = "Generated from 'VK_COREAVI_extension_444'"]
+impl CommandPoolResetFlags {
+    pub const RESERVED_1_COREAVI: Self = Self(0b10);
+}
+impl CoreaviExtension445Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_COREAVI_extension_445\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct CoreaviExtension445Fn {}
+unsafe impl Send for CoreaviExtension445Fn {}
+unsafe impl Sync for CoreaviExtension445Fn {}
+impl CoreaviExtension445Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl CoreaviExtension446Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_COREAVI_extension_446\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct CoreaviExtension446Fn {}
+unsafe impl Send for CoreaviExtension446Fn {}
+unsafe impl Sync for CoreaviExtension446Fn {}
+impl CoreaviExtension446Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl CoreaviExtension447Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_COREAVI_extension_447\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct CoreaviExtension447Fn {}
+unsafe impl Send for CoreaviExtension447Fn {}
+unsafe impl Sync for CoreaviExtension447Fn {}
+impl CoreaviExtension447Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl SecExtension448Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_SEC_extension_448\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct SecExtension448Fn {}
+unsafe impl Send for SecExtension448Fn {}
+unsafe impl Sync for SecExtension448Fn {}
+impl SecExtension448Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl SecExtension449Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_SEC_extension_449\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct SecExtension449Fn {}
+unsafe impl Send for SecExtension449Fn {}
+unsafe impl Sync for SecExtension449Fn {}
+impl SecExtension449Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl SecExtension450Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_SEC_extension_450\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct SecExtension450Fn {}
+unsafe impl Send for SecExtension450Fn {}
+unsafe impl Sync for SecExtension450Fn {}
+impl SecExtension450Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl SecExtension451Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_SEC_extension_451\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct SecExtension451Fn {}
+unsafe impl Send for SecExtension451Fn {}
+unsafe impl Sync for SecExtension451Fn {}
+impl SecExtension451Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
