@@ -1426,28 +1426,20 @@ pub fn bitflags_impl_block(
         .filter(|constant| constant.notation() != Some(BACKWARDS_COMPATIBLE_ALIAS_COMMENT))
         .map(|constant| {
             let variant_ident = constant.variant_ident(enum_name);
+            let notation = constant.doc_attribute();
             let constant = constant.constant(enum_name);
-            let tokens = if let Constant::Alias(_) = &constant {
+            let value = if let Constant::Alias(_) = &constant {
                 quote!(#constant)
             } else {
                 quote!(Self(#constant))
             };
-            (variant_ident, tokens)
-        })
-        .collect_vec();
 
-    let notations = constants.iter().map(|constant| constant.doc_attribute());
+            quote! {
+                #notation
+                pub const #variant_ident: Self = #value;
+            }
+        });
 
-    let variants =
-        variants
-            .iter()
-            .zip(notations.clone())
-            .map(|((variant_ident, value), ref notation)| {
-                quote! {
-                    #notation
-                    pub const #variant_ident: Self = #value;
-                }
-            });
     quote! {
         impl #ident {
             #(#variants)*
