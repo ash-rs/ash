@@ -13,6 +13,7 @@ use std::cell::RefCell;
 use std::default::Default;
 use std::ffi::{CStr, CString};
 use std::ops::Drop;
+use std::os::raw::c_char;
 
 use winit::{
     event::{ElementState, Event, KeyboardInput, VirtualKeyCode, WindowEvent},
@@ -219,8 +220,10 @@ impl ExampleBase {
             let entry = Entry::new();
             let app_name = CString::new("VulkanTriangle").unwrap();
 
-            let layer_names = [CString::new("VK_LAYER_KHRONOS_validation").unwrap()];
-            let layers_names_raw: Vec<*const i8> = layer_names
+            let layer_names = [CStr::from_bytes_with_nul_unchecked(
+                b"VK_LAYER_KHRONOS_validation\0",
+            )];
+            let layers_names_raw: Vec<*const c_char> = layer_names
                 .iter()
                 .map(|raw_name| raw_name.as_ptr())
                 .collect();
