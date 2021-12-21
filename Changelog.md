@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- examples: Use `c_char` for pointer to raw string (#521)
 - Device extension `khr::PipelineExecutableProperties` and `khr::TimelineSemaphore` now expose `fn device()` instead of `fn instance()` (#499)
 - Changed `khr::PipelineExecutableProperties::new()` and `khr::TimelineSemaphore::new()` to take `instance` and `device` as arguments (#499)
 
