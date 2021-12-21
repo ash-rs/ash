@@ -2461,33 +2461,6 @@ pub fn generate_const_debugs(const_values: &BTreeMap<Ident, ConstantTypeInfo>) -
         }
     });
     quote! {
-        pub(crate) fn debug_flags<Value: Into<u64> + Copy>(
-            f: &mut fmt::Formatter,
-            known: &[(Value, &'static str)],
-            value: Value,
-        ) -> fmt::Result {
-            let mut first = true;
-            let mut accum = value.into();
-            for &(bit, name) in known {
-                let bit = bit.into();
-                if bit != 0 && accum & bit == bit {
-                    if !first {
-                        f.write_str(" | ")?;
-                    }
-                    f.write_str(name)?;
-                    first = false;
-                    accum &= !bit;
-                }
-            }
-            if accum != 0 {
-                if !first {
-                    f.write_str(" | ")?;
-                }
-                write!(f, "{:b}", accum)?;
-            }
-            Ok(())
-        }
-
         #(#impls)*
     }
 }
@@ -2823,6 +2796,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         use crate::vk::bitflags::*;
         use crate::vk::definitions::*;
         use crate::vk::enums::*;
+        use crate::prelude::debug_flags;
         #const_debugs
     };
 
