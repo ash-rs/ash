@@ -2407,10 +2407,17 @@ pub struct ConstantTypeInfo {
     bitwidth: Option<u32>,
 }
 
-pub fn generate_const_debugs(const_values: &BTreeMap<Ident, ConstantTypeInfo>) -> TokenStream {
-    let impls = const_values.iter().map(|(ty, values)| {
+pub struct ConstDebugs {
+    core: TokenStream,
+    extras: TokenStream,
+}
+
+pub fn generate_const_debugs(const_values: &BTreeMap<Ident, ConstantTypeInfo>) -> ConstDebugs {
+    let mut core = Vec::new();
+    let mut extras = Vec::new();
+    for (ty, values) in const_values {
         let ConstantTypeInfo { values, bitwidth } = values;
-        if ty.to_string().contains("Flags") {
+        let out = if ty.to_string().contains("Flags") {
             let cases = values.iter().filter_map(|value| {
                 if value.is_alias {
                     None
@@ -2460,10 +2467,21 @@ pub fn generate_const_debugs(const_values: &BTreeMap<Ident, ConstantTypeInfo>) -
                     }
                 }
             }
+        };
+        if ty == "Result" || ty == "ObjectType" {
+            core.push(out);
+        } else {
+            extras.push(out);
         }
-    });
-    quote! {
-        #(#impls)*
+    }
+
+    ConstDebugs {
+        core: quote! {
+            #(#core)*
+        },
+        extras: quote! {
+            #(#extras)*
+        },
     }
 }
 pub fn extract_native_types(registry: &vk_parse::Registry) -> (Vec<(String, String)>, Vec<String>) {
@@ -2708,7 +2726,10 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     let feature_extensions_code =
         generate_feature_extension(&spec2, &mut const_cache, &mut const_values);
 
-    let const_debugs = generate_const_debugs(&const_values);
+    let ConstDebugs {
+        core: core_debugs,
+        extras: const_debugs,
+    } = generate_const_debugs(&const_values);
 
     let bitflags_macro = vk_bitflags_wrapped_macro();
     let handle_nondispatchable_macro = handle_nondispatchable_macro();
@@ -2765,6 +2786,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     let enum_code = quote! {
         use std::fmt;
         #(#enum_code)*
+        #core_debugs
     };
 
     let bitflags_code = quote! {
