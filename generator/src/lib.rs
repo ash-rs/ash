@@ -1203,7 +1203,6 @@ pub fn generate_extension_commands<'a>(
         extension_name.to_camel_case().strip_prefix("Vk").unwrap()
     );
     let fp = generate_function_pointers(ident.clone(), &commands, &aliases, fn_cache);
-    let byte_name = format!("{}\0", extension_name);
 
     let spec_version = items
         .iter()
@@ -1227,11 +1226,11 @@ pub fn generate_extension_commands<'a>(
             }
         });
 
-    let byte_name_ident = syn::LitByteStr::new(byte_name.as_bytes(), Span::call_site());
+    let byte_name_ident = Literal::byte_string(format!("{}\0", extension_name).as_bytes());
     let extension_cstr = quote! {
         impl #ident {
             pub fn name() -> &'static ::std::ffi::CStr {
-                ::std::ffi::CStr::from_bytes_with_nul(#byte_name_ident).expect("Wrong extension string")
+                unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(#byte_name_ident) }
             }
             #spec_version
         }
