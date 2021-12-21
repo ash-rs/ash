@@ -1,33 +1,8 @@
+use crate::prelude::debug_flags;
 use crate::vk::bitflags::*;
 use crate::vk::definitions::*;
 use crate::vk::enums::*;
 use std::fmt;
-pub(crate) fn debug_flags<Value: Into<u64> + Copy>(
-    f: &mut fmt::Formatter,
-    known: &[(Value, &'static str)],
-    value: Value,
-) -> fmt::Result {
-    let mut first = true;
-    let mut accum = value.into();
-    for &(bit, name) in known {
-        let bit = bit.into();
-        if bit != 0 && accum & bit == bit {
-            if !first {
-                f.write_str(" | ")?;
-            }
-            f.write_str(name)?;
-            first = false;
-            accum &= !bit;
-        }
-    }
-    if accum != 0 {
-        if !first {
-            f.write_str(" | ")?;
-        }
-        write!(f, "{:b}", accum)?;
-    }
-    Ok(())
-}
 impl fmt::Debug for AccelerationStructureBuildTypeKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {

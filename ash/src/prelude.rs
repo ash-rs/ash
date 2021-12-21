@@ -1,4 +1,5 @@
 use std::convert::TryInto;
+use std::fmt;
 
 use crate::vk;
 pub type VkResult<T> = Result<T, vk::Result>;
@@ -80,4 +81,31 @@ where
             break err_code.result_with_success(data);
         }
     }
+}
+
+pub(crate) fn debug_flags<Value: Into<u64> + Copy>(
+    f: &mut fmt::Formatter,
+    known: &[(Value, &'static str)],
+    value: Value,
+) -> fmt::Result {
+    let mut first = true;
+    let mut accum = value.into();
+    for &(bit, name) in known {
+        let bit = bit.into();
+        if bit != 0 && accum & bit == bit {
+            if !first {
+                f.write_str(" | ")?;
+            }
+            f.write_str(name)?;
+            first = false;
+            accum &= !bit;
+        }
+    }
+    if accum != 0 {
+        if !first {
+            f.write_str(" | ")?;
+        }
+        write!(f, "{:b}", accum)?;
+    }
+    Ok(())
 }
