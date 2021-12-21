@@ -1,4 +1,5 @@
 use std::convert::TryInto;
+#[cfg(feature = "debug")]
 use std::fmt;
 
 use crate::vk;
@@ -83,6 +84,7 @@ where
     }
 }
 
+#[cfg(feature = "debug")]
 pub(crate) fn debug_flags<Value: Into<u64> + Copy>(
     f: &mut fmt::Formatter,
     known: &[(Value, &'static str)],

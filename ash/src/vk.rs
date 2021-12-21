@@ -10,6 +10,7 @@ mod aliases;
 pub use aliases::*;
 mod bitflags;
 pub use bitflags::*;
+#[cfg(feature = "debug")]
 mod const_debugs;
 mod constants;
 pub use constants::*;
