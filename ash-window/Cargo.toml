@@ -14,7 +14,7 @@ exclude = [".github/*"]
 workspace = ".."
 
 [dependencies]
-ash = { path = "../ash", version = "0.33" }
+ash = { path = "../ash", version = "0.33", default-features = false }
 raw-window-handle = "0.3"
 
 [target.'cfg(any(target_os = "macos", target_os = "ios"))'.dependencies]
@@ -22,3 +22,7 @@ raw-window-metal = "0.1"
 
 [dev-dependencies]
 winit = "0.19.4"
+
+[[example]]
+name = "winit"
+required-features = ["ash/linked"]
