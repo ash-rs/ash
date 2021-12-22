@@ -6,7 +6,7 @@ use crate::vk::platform_types::*;
 use std::os::raw::*;
 impl KhrSurfaceFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_surface\0").expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_surface\0") }
     }
     pub const SPEC_VERSION: u32 = 25u32;
 }
@@ -245,8 +245,7 @@ impl Result {
 }
 impl KhrSwapchainFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_swapchain\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_swapchain\0") }
     }
     pub const SPEC_VERSION: u32 = 70u32;
 }
@@ -640,7 +639,7 @@ impl SwapchainCreateFlagsKHR {
 }
 impl KhrDisplayFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_display\0").expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_display\0") }
     }
     pub const SPEC_VERSION: u32 = 23u32;
 }
@@ -970,8 +969,7 @@ impl StructureType {
 }
 impl KhrDisplaySwapchainFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_display_swapchain\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_display_swapchain\0") }
     }
     pub const SPEC_VERSION: u32 = 10u32;
 }
@@ -1048,8 +1046,7 @@ impl StructureType {
 }
 impl KhrXlibSurfaceFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_xlib_surface\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_xlib_surface\0") }
     }
     pub const SPEC_VERSION: u32 = 6u32;
 }
@@ -1158,8 +1155,7 @@ impl StructureType {
 }
 impl KhrXcbSurfaceFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_xcb_surface\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_xcb_surface\0") }
     }
     pub const SPEC_VERSION: u32 = 6u32;
 }
@@ -1268,8 +1264,7 @@ impl StructureType {
 }
 impl KhrWaylandSurfaceFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_wayland_surface\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_wayland_surface\0") }
     }
     pub const SPEC_VERSION: u32 = 6u32;
 }
@@ -1375,8 +1370,7 @@ impl StructureType {
 }
 impl KhrMirSurfaceFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_mir_surface\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_mir_surface\0") }
     }
     pub const SPEC_VERSION: u32 = 4u32;
 }
@@ -1394,8 +1388,7 @@ impl KhrMirSurfaceFn {
 }
 impl KhrAndroidSurfaceFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_android_surface\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_android_surface\0") }
     }
     pub const SPEC_VERSION: u32 = 6u32;
 }
@@ -1458,8 +1451,7 @@ impl StructureType {
 }
 impl KhrWin32SurfaceFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_win32_surface\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_win32_surface\0") }
     }
     pub const SPEC_VERSION: u32 = 6u32;
 }
@@ -1558,8 +1550,7 @@ impl StructureType {
 }
 impl AndroidNativeBufferFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_ANDROID_native_buffer\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_ANDROID_native_buffer\0") }
     }
     pub const SPEC_VERSION: u32 = 8u32;
 }
@@ -1769,8 +1760,7 @@ impl StructureType {
 }
 impl ExtDebugReportFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_debug_report\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_debug_report\0") }
     }
     pub const SPEC_VERSION: u32 = 10u32;
 }
@@ -1944,8 +1934,7 @@ impl StructureType {
 }
 impl NvGlslShaderFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_glsl_shader\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_glsl_shader\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -1967,8 +1956,9 @@ impl Result {
 }
 impl ExtDepthRangeUnrestrictedFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_depth_range_unrestricted\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_depth_range_unrestricted\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -1986,8 +1976,11 @@ impl ExtDepthRangeUnrestrictedFn {
 }
 impl KhrSamplerMirrorClampToEdgeFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_sampler_mirror_clamp_to_edge\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_KHR_sampler_mirror_clamp_to_edge\0",
+            )
+        }
     }
     pub const SPEC_VERSION: u32 = 3u32;
 }
@@ -2012,8 +2005,7 @@ impl SamplerAddressMode {
 }
 impl ImgFilterCubicFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_IMG_filter_cubic\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_IMG_filter_cubic\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -2040,8 +2032,7 @@ impl FormatFeatureFlags {
 }
 impl AmdExtension17Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_17\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_17\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -2059,8 +2050,7 @@ impl AmdExtension17Fn {
 }
 impl AmdExtension18Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_18\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_18\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -2078,8 +2068,7 @@ impl AmdExtension18Fn {
 }
 impl AmdRasterizationOrderFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_rasterization_order\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_rasterization_order\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -2101,8 +2090,7 @@ impl StructureType {
 }
 impl AmdExtension20Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_20\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_20\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -2120,8 +2108,9 @@ impl AmdExtension20Fn {
 }
 impl AmdShaderTrinaryMinmaxFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_shader_trinary_minmax\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_trinary_minmax\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -2139,8 +2128,11 @@ impl AmdShaderTrinaryMinmaxFn {
 }
 impl AmdShaderExplicitVertexParameterFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_shader_explicit_vertex_parameter\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_AMD_shader_explicit_vertex_parameter\0",
+            )
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -2158,8 +2150,7 @@ impl AmdShaderExplicitVertexParameterFn {
 }
 impl ExtDebugMarkerFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_debug_marker\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_debug_marker\0") }
     }
     pub const SPEC_VERSION: u32 = 4u32;
 }
@@ -2342,8 +2333,7 @@ impl StructureType {
 }
 impl KhrVideoQueueFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_video_queue\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_queue\0") }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -2869,8 +2859,7 @@ impl StructureType {
 }
 impl KhrVideoDecodeQueueFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_video_decode_queue\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_decode_queue\0") }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -2964,8 +2953,7 @@ impl StructureType {
 }
 impl AmdGcnShaderFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_gcn_shader\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_gcn_shader\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -2983,8 +2971,7 @@ impl AmdGcnShaderFn {
 }
 impl NvDedicatedAllocationFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_dedicated_allocation\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_dedicated_allocation\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -3008,8 +2995,7 @@ impl StructureType {
 }
 impl ExtExtension28Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_28\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_28\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -3027,8 +3013,7 @@ impl ExtExtension28Fn {
 }
 impl ExtTransformFeedbackFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_transform_feedback\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_transform_feedback\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -3363,8 +3348,7 @@ impl StructureType {
 }
 impl NvxBinaryImportFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NVX_binary_import\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NVX_binary_import\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -3578,8 +3562,7 @@ impl StructureType {
 }
 impl NvxImageViewHandleFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NVX_image_view_handle\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NVX_image_view_handle\0") }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -3671,8 +3654,7 @@ impl StructureType {
 }
 impl AmdExtension32Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_32\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_32\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -3690,8 +3672,7 @@ impl AmdExtension32Fn {
 }
 impl AmdExtension33Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_33\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_33\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -3709,8 +3690,7 @@ impl AmdExtension33Fn {
 }
 impl AmdDrawIndirectCountFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_draw_indirect_count\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_draw_indirect_count\0") }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -3843,8 +3823,7 @@ impl AmdDrawIndirectCountFn {
 }
 impl AmdExtension35Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_35\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_35\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -3862,8 +3841,9 @@ impl AmdExtension35Fn {
 }
 impl AmdNegativeViewportHeightFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_negative_viewport_height\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_negative_viewport_height\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -3881,8 +3861,9 @@ impl AmdNegativeViewportHeightFn {
 }
 impl AmdGpuShaderHalfFloatFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_gpu_shader_half_float\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_gpu_shader_half_float\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -3900,8 +3881,7 @@ impl AmdGpuShaderHalfFloatFn {
 }
 impl AmdShaderBallotFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_shader_ballot\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_ballot\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -3919,8 +3899,7 @@ impl AmdShaderBallotFn {
 }
 impl ExtVideoEncodeH264Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_video_encode_h264\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_encode_h264\0") }
     }
     pub const SPEC_VERSION: u32 = 3u32;
 }
@@ -3956,8 +3935,7 @@ impl VideoCodecOperationFlagsKHR {
 }
 impl ExtVideoEncodeH265Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_video_encode_h265\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_encode_h265\0") }
     }
     pub const SPEC_VERSION: u32 = 3u32;
 }
@@ -3994,8 +3972,7 @@ impl VideoCodecOperationFlagsKHR {
 }
 impl ExtVideoDecodeH264Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_video_decode_h264\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_decode_h264\0") }
     }
     pub const SPEC_VERSION: u32 = 3u32;
 }
@@ -4028,8 +4005,9 @@ impl VideoCodecOperationFlagsKHR {
 }
 impl AmdTextureGatherBiasLodFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_texture_gather_bias_lod\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_texture_gather_bias_lod\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -4051,8 +4029,7 @@ impl StructureType {
 }
 impl AmdShaderInfoFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_shader_info\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_info\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -4121,8 +4098,7 @@ impl AmdShaderInfoFn {
 }
 impl AmdExtension44Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_44\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_44\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -4140,8 +4116,7 @@ impl AmdExtension44Fn {
 }
 impl KhrDynamicRenderingFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_dynamic_rendering\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_dynamic_rendering\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -4241,8 +4216,7 @@ impl StructureType {
 }
 impl AmdExtension46Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_46\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_46\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -4260,8 +4234,9 @@ impl AmdExtension46Fn {
 }
 impl AmdShaderImageLoadStoreLodFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_shader_image_load_store_lod\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_image_load_store_lod\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -4279,8 +4254,7 @@ impl AmdShaderImageLoadStoreLodFn {
 }
 impl NvxExtension48Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NVX_extension_48\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NVX_extension_48\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -4298,8 +4272,7 @@ impl NvxExtension48Fn {
 }
 impl GoogleExtension49Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GOOGLE_extension_49\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_extension_49\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -4317,8 +4290,9 @@ impl GoogleExtension49Fn {
 }
 impl GgpStreamDescriptorSurfaceFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GGP_stream_descriptor_surface\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GGP_stream_descriptor_surface\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -4382,8 +4356,7 @@ impl StructureType {
 }
 impl NvCornerSampledImageFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_corner_sampled_image\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_corner_sampled_image\0") }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -4409,8 +4382,7 @@ impl StructureType {
 }
 impl NvExtension52Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_52\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_52\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -4436,8 +4408,7 @@ impl ShaderModuleCreateFlags {
 }
 impl NvExtension53Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_53\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_53\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -4455,8 +4426,7 @@ impl NvExtension53Fn {
 }
 impl KhrMultiviewFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_multiview\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_multiview\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -4486,8 +4456,7 @@ impl StructureType {
 }
 impl ImgFormatPvrtcFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_IMG_format_pvrtc\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_IMG_format_pvrtc\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -4516,8 +4485,9 @@ impl Format {
 }
 impl NvExternalMemoryCapabilitiesFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_external_memory_capabilities\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_external_memory_capabilities\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -4600,8 +4570,7 @@ impl NvExternalMemoryCapabilitiesFn {
 }
 impl NvExternalMemoryFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_external_memory\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_external_memory\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -4624,8 +4593,7 @@ impl StructureType {
 }
 impl NvExternalMemoryWin32Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_external_memory_win32\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_external_memory_win32\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -4689,8 +4657,7 @@ impl StructureType {
 }
 impl NvWin32KeyedMutexFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_win32_keyed_mutex\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_win32_keyed_mutex\0") }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -4712,8 +4679,11 @@ impl StructureType {
 }
 impl KhrGetPhysicalDeviceProperties2Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_get_physical_device_properties2\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_KHR_get_physical_device_properties2\0",
+            )
+        }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -5021,8 +4991,7 @@ impl StructureType {
 }
 impl KhrDeviceGroupFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_device_group\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_device_group\0") }
     }
     pub const SPEC_VERSION: u32 = 4u32;
 }
@@ -5345,8 +5314,7 @@ impl StructureType {
 }
 impl ExtValidationFlagsFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_validation_flags\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_validation_flags\0") }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -5368,8 +5336,7 @@ impl StructureType {
 }
 impl NnViSurfaceFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NN_vi_surface\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NN_vi_surface\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -5429,8 +5396,9 @@ impl StructureType {
 }
 impl KhrShaderDrawParametersFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_shader_draw_parameters\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_draw_parameters\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -5448,8 +5416,9 @@ impl KhrShaderDrawParametersFn {
 }
 impl ExtShaderSubgroupBallotFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_shader_subgroup_ballot\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_subgroup_ballot\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -5467,8 +5436,7 @@ impl ExtShaderSubgroupBallotFn {
 }
 impl ExtShaderSubgroupVoteFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_shader_subgroup_vote\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_subgroup_vote\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -5486,8 +5454,11 @@ impl ExtShaderSubgroupVoteFn {
 }
 impl ExtTextureCompressionAstcHdrFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_texture_compression_astc_hdr\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_EXT_texture_compression_astc_hdr\0",
+            )
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -5526,8 +5497,7 @@ impl StructureType {
 }
 impl ExtAstcDecodeModeFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_astc_decode_mode\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_astc_decode_mode\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -5550,8 +5520,7 @@ impl StructureType {
 }
 impl ImgExtension69Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_IMG_extension_69\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_IMG_extension_69\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -5569,8 +5538,7 @@ impl ImgExtension69Fn {
 }
 impl KhrMaintenance1Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_maintenance1\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance1\0") }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -5639,8 +5607,9 @@ impl Result {
 }
 impl KhrDeviceGroupCreationFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_device_group_creation\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_device_group_creation\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -5710,8 +5679,11 @@ impl StructureType {
 }
 impl KhrExternalMemoryCapabilitiesFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_external_memory_capabilities\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_KHR_external_memory_capabilities\0",
+            )
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -5799,8 +5771,7 @@ impl StructureType {
 }
 impl KhrExternalMemoryFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_external_memory\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_memory\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -5829,8 +5800,9 @@ impl StructureType {
 }
 impl KhrExternalMemoryWin32Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_external_memory_win32\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_memory_win32\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -5938,8 +5910,7 @@ impl StructureType {
 }
 impl KhrExternalMemoryFdFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_external_memory_fd\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_memory_fd\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -6037,8 +6008,7 @@ impl StructureType {
 }
 impl KhrWin32KeyedMutexFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_win32_keyed_mutex\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_win32_keyed_mutex\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -6060,8 +6030,11 @@ impl StructureType {
 }
 impl KhrExternalSemaphoreCapabilitiesFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_external_semaphore_capabilities\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_KHR_external_semaphore_capabilities\0",
+            )
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -6142,8 +6115,7 @@ impl StructureType {
 }
 impl KhrExternalSemaphoreFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_external_semaphore\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_semaphore\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -6169,8 +6141,9 @@ impl StructureType {
 }
 impl KhrExternalSemaphoreWin32Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_external_semaphore_win32\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_semaphore_win32\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -6268,8 +6241,9 @@ impl StructureType {
 }
 impl KhrExternalSemaphoreFdFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_external_semaphore_fd\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_semaphore_fd\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -6360,8 +6334,7 @@ impl StructureType {
 }
 impl KhrPushDescriptorFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_push_descriptor\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_push_descriptor\0") }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -6496,8 +6469,9 @@ impl StructureType {
 }
 impl ExtConditionalRenderingFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_conditional_rendering\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_conditional_rendering\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -6599,8 +6573,7 @@ impl StructureType {
 }
 impl KhrShaderFloat16Int8Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_shader_float16_int8\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_float16_int8\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -6625,8 +6598,7 @@ impl StructureType {
 }
 impl Khr16bitStorageFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_16bit_storage\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_16bit_storage\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -6649,8 +6621,7 @@ impl StructureType {
 }
 impl KhrIncrementalPresentFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_incremental_present\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_incremental_present\0") }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -6672,8 +6643,9 @@ impl StructureType {
 }
 impl KhrDescriptorUpdateTemplateFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_descriptor_update_template\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_descriptor_update_template\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -6883,8 +6855,9 @@ impl StructureType {
 }
 impl NvxDeviceGeneratedCommandsFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NVX_device_generated_commands\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NVX_device_generated_commands\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 3u32;
 }
@@ -6902,8 +6875,7 @@ impl NvxDeviceGeneratedCommandsFn {
 }
 impl NvClipSpaceWScalingFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_clip_space_w_scaling\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_clip_space_w_scaling\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -6976,8 +6948,7 @@ impl StructureType {
 }
 impl ExtDirectModeDisplayFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_direct_mode_display\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_direct_mode_display\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -7025,8 +6996,7 @@ impl ExtDirectModeDisplayFn {
 }
 impl ExtAcquireXlibDisplayFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_acquire_xlib_display\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_acquire_xlib_display\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -7122,8 +7092,9 @@ impl ExtAcquireXlibDisplayFn {
 }
 impl ExtDisplaySurfaceCounterFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_display_surface_counter\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_display_surface_counter\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -7189,8 +7160,7 @@ impl StructureType {
 }
 impl ExtDisplayControlFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_display_control\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_display_control\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -7379,8 +7349,7 @@ impl StructureType {
 }
 impl GoogleDisplayTimingFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GOOGLE_display_timing\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_display_timing\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -7486,8 +7455,11 @@ impl StructureType {
 }
 impl NvSampleMaskOverrideCoverageFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_sample_mask_override_coverage\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_NV_sample_mask_override_coverage\0",
+            )
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -7505,8 +7477,9 @@ impl NvSampleMaskOverrideCoverageFn {
 }
 impl NvGeometryShaderPassthroughFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_geometry_shader_passthrough\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_geometry_shader_passthrough\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -7524,8 +7497,7 @@ impl NvGeometryShaderPassthroughFn {
 }
 impl NvViewportArray2Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_viewport_array2\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_viewport_array2\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -7543,8 +7515,11 @@ impl NvViewportArray2Fn {
 }
 impl NvxMultiviewPerViewAttributesFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NVX_multiview_per_view_attributes\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_NVX_multiview_per_view_attributes\0",
+            )
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -7572,8 +7547,7 @@ impl SubpassDescriptionFlags {
 }
 impl NvViewportSwizzleFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_viewport_swizzle\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_viewport_swizzle\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -7595,8 +7569,7 @@ impl StructureType {
 }
 impl ExtDiscardRectanglesFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_discard_rectangles\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_discard_rectangles\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -7670,8 +7643,7 @@ impl StructureType {
 }
 impl NvExtension101Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_101\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_101\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -7689,8 +7661,9 @@ impl NvExtension101Fn {
 }
 impl ExtConservativeRasterizationFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_conservative_rasterization\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_conservative_rasterization\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -7713,8 +7686,7 @@ impl StructureType {
 }
 impl ExtDepthClipEnableFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_depth_clip_enable\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_depth_clip_enable\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -7737,8 +7709,7 @@ impl StructureType {
 }
 impl NvExtension104Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_104\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_104\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -7756,8 +7727,7 @@ impl NvExtension104Fn {
 }
 impl ExtSwapchainColorspaceFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_swapchain_colorspace\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_swapchain_colorspace\0") }
     }
     pub const SPEC_VERSION: u32 = 4u32;
 }
@@ -7792,8 +7762,7 @@ impl ColorSpaceKHR {
 }
 impl ExtHdrMetadataFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_hdr_metadata\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_hdr_metadata\0") }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -7853,8 +7822,7 @@ impl StructureType {
 }
 impl ImgExtension107Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_IMG_extension_107\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_IMG_extension_107\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -7872,8 +7840,7 @@ impl ImgExtension107Fn {
 }
 impl ImgExtension108Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_IMG_extension_108\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_IMG_extension_108\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -7891,8 +7858,9 @@ impl ImgExtension108Fn {
 }
 impl KhrImagelessFramebufferFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_imageless_framebuffer\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_imageless_framebuffer\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -7923,8 +7891,7 @@ impl StructureType {
 }
 impl KhrCreateRenderpass2Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_create_renderpass2\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_create_renderpass2\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -8098,8 +8065,7 @@ impl StructureType {
 }
 impl ImgExtension111Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_IMG_extension_111\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_IMG_extension_111\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -8117,8 +8083,9 @@ impl ImgExtension111Fn {
 }
 impl KhrSharedPresentableImageFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_shared_presentable_image\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shared_presentable_image\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -8182,8 +8149,9 @@ impl StructureType {
 }
 impl KhrExternalFenceCapabilitiesFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_external_fence_capabilities\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_fence_capabilities\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -8263,8 +8231,7 @@ impl StructureType {
 }
 impl KhrExternalFenceFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_external_fence\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_fence\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -8290,8 +8257,7 @@ impl StructureType {
 }
 impl KhrExternalFenceWin32Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_external_fence_win32\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_fence_win32\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -8387,8 +8353,7 @@ impl StructureType {
 }
 impl KhrExternalFenceFdFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_external_fence_fd\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_fence_fd\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -8475,8 +8440,7 @@ impl StructureType {
 }
 impl KhrPerformanceQueryFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_performance_query\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_performance_query\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -8660,8 +8624,7 @@ impl StructureType {
 }
 impl KhrMaintenance2Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_maintenance2\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance2\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -8711,8 +8674,7 @@ impl TessellationDomainOrigin {
 }
 impl KhrExtension119Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_119\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_119\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -8730,8 +8692,9 @@ impl KhrExtension119Fn {
 }
 impl KhrGetSurfaceCapabilities2Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_get_surface_capabilities2\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_get_surface_capabilities2\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -8844,8 +8807,7 @@ impl StructureType {
 }
 impl KhrVariablePointersFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_variable_pointers\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_variable_pointers\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -8870,8 +8832,9 @@ impl StructureType {
 }
 impl KhrGetDisplayProperties2Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_get_display_properties2\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_get_display_properties2\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -9068,8 +9031,7 @@ impl StructureType {
 }
 impl MvkIosSurfaceFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_MVK_ios_surface\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_MVK_ios_surface\0") }
     }
     pub const SPEC_VERSION: u32 = 3u32;
 }
@@ -9132,8 +9094,7 @@ impl StructureType {
 }
 impl MvkMacosSurfaceFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_MVK_macos_surface\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_MVK_macos_surface\0") }
     }
     pub const SPEC_VERSION: u32 = 3u32;
 }
@@ -9196,7 +9157,7 @@ impl StructureType {
 }
 impl MvkMoltenvkFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_MVK_moltenvk\0").expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_MVK_moltenvk\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -9214,8 +9175,9 @@ impl MvkMoltenvkFn {
 }
 impl ExtExternalMemoryDmaBufFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_external_memory_dma_buf\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_external_memory_dma_buf\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -9237,8 +9199,7 @@ impl ExternalMemoryHandleTypeFlags {
 }
 impl ExtQueueFamilyForeignFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_queue_family_foreign\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_queue_family_foreign\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -9256,8 +9217,7 @@ impl ExtQueueFamilyForeignFn {
 }
 impl KhrDedicatedAllocationFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_dedicated_allocation\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_dedicated_allocation\0") }
     }
     pub const SPEC_VERSION: u32 = 3u32;
 }
@@ -9280,8 +9240,7 @@ impl StructureType {
 }
 impl ExtDebugUtilsFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_debug_utils\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_debug_utils\0") }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -9685,10 +9644,11 @@ impl StructureType {
 }
 impl AndroidExternalMemoryAndroidHardwareBufferFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(
-            b"VK_ANDROID_external_memory_android_hardware_buffer\0",
-        )
-        .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_ANDROID_external_memory_android_hardware_buffer\0",
+            )
+        }
     }
     pub const SPEC_VERSION: u32 = 4u32;
 }
@@ -9797,8 +9757,9 @@ impl StructureType {
 }
 impl ExtSamplerFilterMinmaxFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_sampler_filter_minmax\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_sampler_filter_minmax\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -9833,8 +9794,11 @@ impl StructureType {
 }
 impl KhrStorageBufferStorageClassFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_storage_buffer_storage_class\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_KHR_storage_buffer_storage_class\0",
+            )
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -9852,8 +9816,7 @@ impl KhrStorageBufferStorageClassFn {
 }
 impl AmdGpuShaderInt16Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_gpu_shader_int16\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_gpu_shader_int16\0") }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -9871,8 +9834,7 @@ impl AmdGpuShaderInt16Fn {
 }
 impl AmdExtension134Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_134\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_134\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -9890,8 +9852,7 @@ impl AmdExtension134Fn {
 }
 impl AmdExtension135Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_135\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_135\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -9909,8 +9870,7 @@ impl AmdExtension135Fn {
 }
 impl AmdExtension136Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_136\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_136\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -9928,8 +9888,9 @@ impl AmdExtension136Fn {
 }
 impl AmdMixedAttachmentSamplesFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_mixed_attachment_samples\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_mixed_attachment_samples\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -9947,8 +9908,7 @@ impl AmdMixedAttachmentSamplesFn {
 }
 impl AmdShaderFragmentMaskFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_shader_fragment_mask\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_fragment_mask\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -9966,8 +9926,7 @@ impl AmdShaderFragmentMaskFn {
 }
 impl ExtInlineUniformBlockFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_inline_uniform_block\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_inline_uniform_block\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -9996,8 +9955,7 @@ impl StructureType {
 }
 impl AmdExtension140Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_140\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_140\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -10015,8 +9973,9 @@ impl AmdExtension140Fn {
 }
 impl ExtShaderStencilExportFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_shader_stencil_export\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_stencil_export\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -10034,8 +9993,7 @@ impl ExtShaderStencilExportFn {
 }
 impl AmdExtension142Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_142\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_142\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -10053,8 +10011,7 @@ impl AmdExtension142Fn {
 }
 impl AmdExtension143Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_143\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_143\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -10072,8 +10029,7 @@ impl AmdExtension143Fn {
 }
 impl ExtSampleLocationsFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_sample_locations\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_sample_locations\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -10185,8 +10141,7 @@ impl StructureType {
 }
 impl KhrRelaxedBlockLayoutFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_relaxed_block_layout\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_relaxed_block_layout\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -10204,8 +10159,9 @@ impl KhrRelaxedBlockLayoutFn {
 }
 impl KhrGetMemoryRequirements2Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_get_memory_requirements2\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_get_memory_requirements2\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -10354,8 +10310,7 @@ impl StructureType {
 }
 impl KhrImageFormatListFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_image_format_list\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_image_format_list\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -10377,8 +10332,9 @@ impl StructureType {
 }
 impl ExtBlendOperationAdvancedFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_blend_operation_advanced\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_blend_operation_advanced\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -10455,8 +10411,9 @@ impl StructureType {
 }
 impl NvFragmentCoverageToColorFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_fragment_coverage_to_color\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_fragment_coverage_to_color\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -10478,8 +10435,9 @@ impl StructureType {
 }
 impl KhrAccelerationStructureFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_acceleration_structure\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_acceleration_structure\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 13u32;
 }
@@ -11247,8 +11205,7 @@ impl StructureType {
 }
 impl KhrRayTracingPipelineFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_ray_tracing_pipeline\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_ray_tracing_pipeline\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -11657,8 +11614,7 @@ impl StructureType {
 }
 impl KhrRayQueryFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_ray_query\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_ray_query\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -11680,8 +11636,7 @@ impl StructureType {
 }
 impl NvExtension152Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_152\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_152\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -11699,8 +11654,9 @@ impl NvExtension152Fn {
 }
 impl NvFramebufferMixedSamplesFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_framebuffer_mixed_samples\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_framebuffer_mixed_samples\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -11722,8 +11678,7 @@ impl StructureType {
 }
 impl NvFillRectangleFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_fill_rectangle\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_fill_rectangle\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -11745,8 +11700,7 @@ impl PolygonMode {
 }
 impl NvShaderSmBuiltinsFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_shader_sm_builtins\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_shader_sm_builtins\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -11769,8 +11723,7 @@ impl StructureType {
 }
 impl ExtPostDepthCoverageFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_post_depth_coverage\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_post_depth_coverage\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -11788,8 +11741,9 @@ impl ExtPostDepthCoverageFn {
 }
 impl KhrSamplerYcbcrConversionFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_sampler_ycbcr_conversion\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_sampler_ycbcr_conversion\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 14u32;
 }
@@ -12007,8 +11961,7 @@ impl StructureType {
 }
 impl KhrBindMemory2Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_bind_memory2\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_bind_memory2\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -12109,8 +12062,9 @@ impl StructureType {
 }
 impl ExtImageDrmFormatModifierFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_image_drm_format_modifier\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_drm_format_modifier\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -12191,8 +12145,7 @@ impl StructureType {
 }
 impl ExtExtension160Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_160\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_160\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -12210,8 +12163,7 @@ impl ExtExtension160Fn {
 }
 impl ExtValidationCacheFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_validation_cache\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_validation_cache\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -12397,8 +12349,7 @@ impl StructureType {
 }
 impl ExtDescriptorIndexingFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_descriptor_indexing\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_descriptor_indexing\0") }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -12448,8 +12399,9 @@ impl StructureType {
 }
 impl ExtShaderViewportIndexLayerFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_shader_viewport_index_layer\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_viewport_index_layer\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -12467,8 +12419,7 @@ impl ExtShaderViewportIndexLayerFn {
 }
 impl KhrPortabilitySubsetFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_portability_subset\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_portability_subset\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -12491,8 +12442,7 @@ impl StructureType {
 }
 impl NvShadingRateImageFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_shading_rate_image\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_shading_rate_image\0") }
     }
     pub const SPEC_VERSION: u32 = 3u32;
 }
@@ -12668,8 +12618,7 @@ impl StructureType {
 }
 impl NvRayTracingFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_ray_tracing\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_ray_tracing\0") }
     }
     pub const SPEC_VERSION: u32 = 3u32;
 }
@@ -13372,8 +13321,9 @@ impl StructureType {
 }
 impl NvRepresentativeFragmentTestFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_representative_fragment_test\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_representative_fragment_test\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -13397,8 +13347,7 @@ impl StructureType {
 }
 impl NvExtension168Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_168\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_168\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -13416,8 +13365,7 @@ impl NvExtension168Fn {
 }
 impl KhrMaintenance3Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_maintenance3\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance3\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -13480,8 +13428,7 @@ impl StructureType {
 }
 impl KhrDrawIndirectCountFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_draw_indirect_count\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_draw_indirect_count\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -13594,8 +13541,7 @@ impl KhrDrawIndirectCountFn {
 }
 impl ExtFilterCubicFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_filter_cubic\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_filter_cubic\0") }
     }
     pub const SPEC_VERSION: u32 = 3u32;
 }
@@ -13626,8 +13572,9 @@ impl StructureType {
 }
 impl QcomRenderPassShaderResolveFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_render_pass_shader_resolve\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_render_pass_shader_resolve\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 4u32;
 }
@@ -13650,8 +13597,7 @@ impl SubpassDescriptionFlags {
 }
 impl QcomExtension173Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_extension_173\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_extension_173\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -13678,8 +13624,7 @@ impl ImageUsageFlags {
 }
 impl QcomExtension174Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_extension_174\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_extension_174\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -13697,8 +13642,7 @@ impl QcomExtension174Fn {
 }
 impl ExtGlobalPriorityFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_global_priority\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_global_priority\0") }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -13724,8 +13668,11 @@ impl StructureType {
 }
 impl KhrShaderSubgroupExtendedTypesFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_shader_subgroup_extended_types\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_KHR_shader_subgroup_extended_types\0",
+            )
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -13748,8 +13695,7 @@ impl StructureType {
 }
 impl ExtExtension177Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_177\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_177\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -13767,8 +13713,7 @@ impl ExtExtension177Fn {
 }
 impl Khr8bitStorageFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_8bit_storage\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_8bit_storage\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -13791,8 +13736,7 @@ impl StructureType {
 }
 impl ExtExternalMemoryHostFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_external_memory_host\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_external_memory_host\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -13868,8 +13812,7 @@ impl StructureType {
 }
 impl AmdBufferMarkerFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_buffer_marker\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_buffer_marker\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -13937,8 +13880,7 @@ impl AmdBufferMarkerFn {
 }
 impl KhrShaderAtomicInt64Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_shader_atomic_int64\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_atomic_int64\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -13961,8 +13903,7 @@ impl StructureType {
 }
 impl KhrShaderClockFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_shader_clock\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_clock\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -13984,8 +13925,7 @@ impl StructureType {
 }
 impl AmdExtension183Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_183\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_183\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -14003,8 +13943,9 @@ impl AmdExtension183Fn {
 }
 impl AmdPipelineCompilerControlFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_pipeline_compiler_control\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_pipeline_compiler_control\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -14026,8 +13967,9 @@ impl StructureType {
 }
 impl ExtCalibratedTimestampsFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_calibrated_timestamps\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_calibrated_timestamps\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -14142,8 +14084,9 @@ impl StructureType {
 }
 impl AmdShaderCorePropertiesFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_shader_core_properties\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_core_properties\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -14165,8 +14108,7 @@ impl StructureType {
 }
 impl AmdExtension187Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_187\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_187\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -14184,8 +14126,7 @@ impl AmdExtension187Fn {
 }
 impl ExtVideoDecodeH265Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_video_decode_h265\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_decode_h265\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -14217,8 +14158,7 @@ impl VideoCodecOperationFlagsKHR {
 }
 impl AmdExtension189Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_189\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_189\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -14236,8 +14176,11 @@ impl AmdExtension189Fn {
 }
 impl AmdMemoryOverallocationBehaviorFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_memory_overallocation_behavior\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_AMD_memory_overallocation_behavior\0",
+            )
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -14259,8 +14202,9 @@ impl StructureType {
 }
 impl ExtVertexAttributeDivisorFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_vertex_attribute_divisor\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_vertex_attribute_divisor\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 3u32;
 }
@@ -14284,8 +14228,7 @@ impl StructureType {
 }
 impl GgpFrameTokenFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GGP_frame_token\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GGP_frame_token\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -14307,8 +14250,9 @@ impl StructureType {
 }
 impl ExtPipelineCreationFeedbackFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_pipeline_creation_feedback\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pipeline_creation_feedback\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -14330,8 +14274,7 @@ impl StructureType {
 }
 impl GoogleExtension194Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GOOGLE_extension_194\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_extension_194\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -14349,8 +14292,7 @@ impl GoogleExtension194Fn {
 }
 impl GoogleExtension195Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GOOGLE_extension_195\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_extension_195\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -14368,8 +14310,7 @@ impl GoogleExtension195Fn {
 }
 impl GoogleExtension196Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GOOGLE_extension_196\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_extension_196\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -14391,8 +14332,7 @@ impl PipelineCacheCreateFlags {
 }
 impl KhrDriverPropertiesFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_driver_properties\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_driver_properties\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -14429,8 +14369,9 @@ impl StructureType {
 }
 impl KhrShaderFloatControlsFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_shader_float_controls\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_float_controls\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 4u32;
 }
@@ -14459,8 +14400,9 @@ impl StructureType {
 }
 impl NvShaderSubgroupPartitionedFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_shader_subgroup_partitioned\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_shader_subgroup_partitioned\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -14482,8 +14424,9 @@ impl SubgroupFeatureFlags {
 }
 impl KhrDepthStencilResolveFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_depth_stencil_resolve\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_depth_stencil_resolve\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -14516,8 +14459,9 @@ impl StructureType {
 }
 impl KhrSwapchainMutableFormatFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_swapchain_mutable_format\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_swapchain_mutable_format\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -14539,8 +14483,9 @@ impl SwapchainCreateFlagsKHR {
 }
 impl NvComputeShaderDerivativesFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_compute_shader_derivatives\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_compute_shader_derivatives\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -14562,8 +14507,7 @@ impl StructureType {
 }
 impl NvMeshShaderFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_mesh_shader\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_mesh_shader\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -14731,8 +14675,9 @@ impl StructureType {
 }
 impl NvFragmentShaderBarycentricFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_fragment_shader_barycentric\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_fragment_shader_barycentric\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -14754,8 +14699,9 @@ impl StructureType {
 }
 impl NvShaderImageFootprintFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_shader_image_footprint\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_shader_image_footprint\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -14777,8 +14723,7 @@ impl StructureType {
 }
 impl NvScissorExclusiveFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_scissor_exclusive\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_scissor_exclusive\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -14852,8 +14797,11 @@ impl StructureType {
 }
 impl NvDeviceDiagnosticCheckpointsFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_device_diagnostic_checkpoints\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_NV_device_diagnostic_checkpoints\0",
+            )
+        }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -14946,8 +14894,7 @@ impl StructureType {
 }
 impl KhrTimelineSemaphoreFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_timeline_semaphore\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_timeline_semaphore\0") }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -15082,8 +15029,7 @@ impl StructureType {
 }
 impl KhrExtension209Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_209\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_209\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -15101,8 +15047,9 @@ impl KhrExtension209Fn {
 }
 impl IntelShaderIntegerFunctions2Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_INTEL_shader_integer_functions2\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_INTEL_shader_integer_functions2\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -15124,8 +15071,7 @@ impl StructureType {
 }
 impl IntelPerformanceQueryFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_INTEL_performance_query\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_INTEL_performance_query\0") }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -15462,8 +15408,7 @@ impl StructureType {
 }
 impl KhrVulkanMemoryModelFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_vulkan_memory_model\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_vulkan_memory_model\0") }
     }
     pub const SPEC_VERSION: u32 = 3u32;
 }
@@ -15486,8 +15431,7 @@ impl StructureType {
 }
 impl ExtPciBusInfoFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_pci_bus_info\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pci_bus_info\0") }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -15509,8 +15453,7 @@ impl StructureType {
 }
 impl AmdDisplayNativeHdrFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_display_native_hdr\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_display_native_hdr\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -15575,8 +15518,9 @@ impl StructureType {
 }
 impl FuchsiaImagepipeSurfaceFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_FUCHSIA_imagepipe_surface\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_FUCHSIA_imagepipe_surface\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -15640,8 +15584,9 @@ impl StructureType {
 }
 impl KhrShaderTerminateInvocationFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_shader_terminate_invocation\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_terminate_invocation\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -15663,8 +15608,7 @@ impl StructureType {
 }
 impl GoogleExtension217Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GOOGLE_extension_217\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_extension_217\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -15682,8 +15626,7 @@ impl GoogleExtension217Fn {
 }
 impl ExtMetalSurfaceFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_metal_surface\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_metal_surface\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -15746,8 +15689,7 @@ impl StructureType {
 }
 impl ExtFragmentDensityMapFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_fragment_density_map\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_fragment_density_map\0") }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -15808,8 +15750,7 @@ impl StructureType {
 }
 impl ExtExtension220Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_220\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_220\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -15827,8 +15768,7 @@ impl ExtExtension220Fn {
 }
 impl KhrExtension221Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_221\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_221\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -15850,8 +15790,7 @@ impl RenderPassCreateFlags {
 }
 impl ExtScalarBlockLayoutFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_scalar_block_layout\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_scalar_block_layout\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -15874,8 +15813,7 @@ impl StructureType {
 }
 impl ExtExtension223Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_223\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_223\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -15893,8 +15831,9 @@ impl ExtExtension223Fn {
 }
 impl GoogleHlslFunctionality1Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GOOGLE_hlsl_functionality1\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_hlsl_functionality1\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -15912,8 +15851,7 @@ impl GoogleHlslFunctionality1Fn {
 }
 impl GoogleDecorateStringFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GOOGLE_decorate_string\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_decorate_string\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -15931,8 +15869,9 @@ impl GoogleDecorateStringFn {
 }
 impl ExtSubgroupSizeControlFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_subgroup_size_control\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_subgroup_size_control\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -15962,8 +15901,9 @@ impl StructureType {
 }
 impl KhrFragmentShadingRateFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_fragment_shading_rate\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_fragment_shading_rate\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -16101,8 +16041,9 @@ impl StructureType {
 }
 impl AmdShaderCoreProperties2Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_shader_core_properties2\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_core_properties2\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -16124,8 +16065,7 @@ impl StructureType {
 }
 impl AmdExtension229Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_229\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_229\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -16143,8 +16083,9 @@ impl AmdExtension229Fn {
 }
 impl AmdDeviceCoherentMemoryFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_device_coherent_memory\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_device_coherent_memory\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -16171,8 +16112,7 @@ impl StructureType {
 }
 impl AmdExtension231Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_231\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_231\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -16190,8 +16130,7 @@ impl AmdExtension231Fn {
 }
 impl AmdExtension232Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_232\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_232\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -16209,8 +16148,7 @@ impl AmdExtension232Fn {
 }
 impl AmdExtension233Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_233\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_233\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -16228,8 +16166,7 @@ impl AmdExtension233Fn {
 }
 impl AmdExtension234Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_234\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_234\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -16247,8 +16184,9 @@ impl AmdExtension234Fn {
 }
 impl ExtShaderImageAtomicInt64Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_shader_image_atomic_int64\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_image_atomic_int64\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -16270,8 +16208,7 @@ impl StructureType {
 }
 impl AmdExtension236Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_236\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_236\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -16289,8 +16226,7 @@ impl AmdExtension236Fn {
 }
 impl KhrSpirv14Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_spirv_1_4\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_spirv_1_4\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -16308,8 +16244,7 @@ impl KhrSpirv14Fn {
 }
 impl ExtMemoryBudgetFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_memory_budget\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_memory_budget\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -16331,8 +16266,7 @@ impl StructureType {
 }
 impl ExtMemoryPriorityFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_memory_priority\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_memory_priority\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -16355,8 +16289,11 @@ impl StructureType {
 }
 impl KhrSurfaceProtectedCapabilitiesFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_surface_protected_capabilities\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_KHR_surface_protected_capabilities\0",
+            )
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -16378,8 +16315,11 @@ impl StructureType {
 }
 impl NvDedicatedAllocationImageAliasingFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_dedicated_allocation_image_aliasing\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_NV_dedicated_allocation_image_aliasing\0",
+            )
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -16402,8 +16342,11 @@ impl StructureType {
 }
 impl KhrSeparateDepthStencilLayoutsFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_separate_depth_stencil_layouts\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_KHR_separate_depth_stencil_layouts\0",
+            )
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -16437,8 +16380,7 @@ impl StructureType {
 }
 impl IntelExtension243Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_INTEL_extension_243\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_INTEL_extension_243\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -16456,8 +16398,7 @@ impl IntelExtension243Fn {
 }
 impl MesaExtension244Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_MESA_extension_244\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_MESA_extension_244\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -16475,8 +16416,9 @@ impl MesaExtension244Fn {
 }
 impl ExtBufferDeviceAddressFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_buffer_device_address\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_buffer_device_address\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -16550,8 +16492,7 @@ impl StructureType {
 }
 impl ExtToolingInfoFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_tooling_info\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_tooling_info\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -16621,8 +16562,9 @@ impl ToolPurposeFlagsEXT {
 }
 impl ExtSeparateStencilUsageFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_separate_stencil_usage\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_separate_stencil_usage\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -16644,8 +16586,7 @@ impl StructureType {
 }
 impl ExtValidationFeaturesFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_validation_features\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_validation_features\0") }
     }
     pub const SPEC_VERSION: u32 = 5u32;
 }
@@ -16667,8 +16608,7 @@ impl StructureType {
 }
 impl KhrPresentWaitFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_present_wait\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_present_wait\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -16728,8 +16668,7 @@ impl StructureType {
 }
 impl NvCooperativeMatrixFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_cooperative_matrix\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_cooperative_matrix\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -16798,8 +16737,9 @@ impl StructureType {
 }
 impl NvCoverageReductionModeFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_coverage_reduction_mode\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_coverage_reduction_mode\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -16870,8 +16810,9 @@ impl StructureType {
 }
 impl ExtFragmentShaderInterlockFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_fragment_shader_interlock\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_fragment_shader_interlock\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -16893,8 +16834,7 @@ impl StructureType {
 }
 impl ExtYcbcrImageArraysFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_ycbcr_image_arrays\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_ycbcr_image_arrays\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -16916,8 +16856,11 @@ impl StructureType {
 }
 impl KhrUniformBufferStandardLayoutFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_uniform_buffer_standard_layout\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_KHR_uniform_buffer_standard_layout\0",
+            )
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -16940,8 +16883,7 @@ impl StructureType {
 }
 impl ExtProvokingVertexFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_provoking_vertex\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_provoking_vertex\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -16966,8 +16908,9 @@ impl StructureType {
 }
 impl ExtFullScreenExclusiveFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_full_screen_exclusive\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_full_screen_exclusive\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 4u32;
 }
@@ -17144,8 +17087,7 @@ impl StructureType {
 }
 impl ExtHeadlessSurfaceFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_headless_surface\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_headless_surface\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -17209,8 +17151,9 @@ impl StructureType {
 }
 impl KhrBufferDeviceAddressFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_buffer_device_address\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_buffer_device_address\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -17355,8 +17298,7 @@ impl StructureType {
 }
 impl ExtExtension259Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_259\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_259\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -17374,8 +17316,7 @@ impl ExtExtension259Fn {
 }
 impl ExtLineRasterizationFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_line_rasterization\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_line_rasterization\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -17441,8 +17382,7 @@ impl StructureType {
 }
 impl ExtShaderAtomicFloatFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_shader_atomic_float\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_atomic_float\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -17464,8 +17404,7 @@ impl StructureType {
 }
 impl ExtHostQueryResetFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_host_query_reset\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_host_query_reset\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -17526,8 +17465,7 @@ impl StructureType {
 }
 impl GgpExtension263Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GGP_extension_263\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GGP_extension_263\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -17545,8 +17483,7 @@ impl GgpExtension263Fn {
 }
 impl BrcmExtension264Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_BRCM_extension_264\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_BRCM_extension_264\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -17564,8 +17501,7 @@ impl BrcmExtension264Fn {
 }
 impl BrcmExtension265Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_BRCM_extension_265\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_BRCM_extension_265\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -17583,8 +17519,7 @@ impl BrcmExtension265Fn {
 }
 impl ExtIndexTypeUint8Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_index_type_uint8\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_index_type_uint8\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -17610,8 +17545,7 @@ impl StructureType {
 }
 impl ExtExtension267Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_267\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_267\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -17629,8 +17563,9 @@ impl ExtExtension267Fn {
 }
 impl ExtExtendedDynamicStateFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extended_dynamic_state\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extended_dynamic_state\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -18105,8 +18040,9 @@ impl StructureType {
 }
 impl KhrDeferredHostOperationsFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_deferred_host_operations\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_deferred_host_operations\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 4u32;
 }
@@ -18307,8 +18243,11 @@ impl Result {
 }
 impl KhrPipelineExecutablePropertiesFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_pipeline_executable_properties\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_KHR_pipeline_executable_properties\0",
+            )
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -18480,8 +18419,7 @@ impl StructureType {
 }
 impl IntelExtension271Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_INTEL_extension_271\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_INTEL_extension_271\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -18499,8 +18437,7 @@ impl IntelExtension271Fn {
 }
 impl IntelExtension272Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_INTEL_extension_272\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_INTEL_extension_272\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -18518,8 +18455,7 @@ impl IntelExtension272Fn {
 }
 impl IntelExtension273Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_INTEL_extension_273\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_INTEL_extension_273\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -18537,8 +18473,7 @@ impl IntelExtension273Fn {
 }
 impl ExtShaderAtomicFloat2Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_shader_atomic_float2\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_atomic_float2\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -18560,8 +18495,7 @@ impl StructureType {
 }
 impl KhrExtension275Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_275\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_275\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -18579,8 +18513,7 @@ impl KhrExtension275Fn {
 }
 impl KhrExtension276Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_276\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_276\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -18598,8 +18531,11 @@ impl KhrExtension276Fn {
 }
 impl ExtShaderDemoteToHelperInvocationFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_shader_demote_to_helper_invocation\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_EXT_shader_demote_to_helper_invocation\0",
+            )
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -18622,8 +18558,9 @@ impl StructureType {
 }
 impl NvDeviceGeneratedCommandsFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_device_generated_commands\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_device_generated_commands\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 3u32;
 }
@@ -18911,8 +18848,9 @@ impl StructureType {
 }
 impl NvInheritedViewportScissorFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_inherited_viewport_scissor\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_inherited_viewport_scissor\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -18935,8 +18873,7 @@ impl StructureType {
 }
 impl KhrExtension280Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_280\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_280\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -18954,8 +18891,9 @@ impl KhrExtension280Fn {
 }
 impl KhrShaderIntegerDotProductFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_shader_integer_dot_product\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_integer_dot_product\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -18978,8 +18916,9 @@ impl StructureType {
 }
 impl ExtTexelBufferAlignmentFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_texel_buffer_alignment\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_texel_buffer_alignment\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -19002,8 +18941,9 @@ impl StructureType {
 }
 impl QcomRenderPassTransformFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_render_pass_transform\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_render_pass_transform\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -19031,8 +18971,7 @@ impl StructureType {
 }
 impl ExtExtension284Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_284\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_284\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -19050,8 +18989,7 @@ impl ExtExtension284Fn {
 }
 impl ExtDeviceMemoryReportFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_device_memory_report\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_device_memory_report\0") }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -19075,8 +19013,7 @@ impl StructureType {
 }
 impl ExtAcquireDrmDisplayFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_acquire_drm_display\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_acquire_drm_display\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -19168,8 +19105,7 @@ impl ExtAcquireDrmDisplayFn {
 }
 impl ExtRobustness2Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_robustness2\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_robustness2\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -19192,8 +19128,7 @@ impl StructureType {
 }
 impl ExtCustomBorderColorFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_custom_border_color\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_custom_border_color\0") }
     }
     pub const SPEC_VERSION: u32 = 12u32;
 }
@@ -19222,8 +19157,7 @@ impl StructureType {
 }
 impl ExtExtension289Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_289\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_289\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -19274,8 +19208,7 @@ impl Format {
 }
 impl GoogleUserTypeFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GOOGLE_user_type\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_user_type\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -19293,8 +19226,7 @@ impl GoogleUserTypeFn {
 }
 impl KhrPipelineLibraryFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_pipeline_library\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_pipeline_library\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -19320,8 +19252,7 @@ impl StructureType {
 }
 impl NvExtension292Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_292\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_292\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -19339,8 +19270,7 @@ impl NvExtension292Fn {
 }
 impl NvExtension293Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_293\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_293\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -19358,8 +19288,9 @@ impl NvExtension293Fn {
 }
 impl KhrShaderNonSemanticInfoFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_shader_non_semantic_info\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_non_semantic_info\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -19377,8 +19308,7 @@ impl KhrShaderNonSemanticInfoFn {
 }
 impl KhrPresentIdFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_present_id\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_present_id\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -19401,8 +19331,7 @@ impl StructureType {
 }
 impl ExtPrivateDataFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_private_data\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_private_data\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -19593,8 +19522,7 @@ impl StructureType {
 }
 impl KhrExtension297Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_297\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_297\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -19616,8 +19544,11 @@ impl PipelineShaderStageCreateFlags {
 }
 impl ExtPipelineCreationCacheControlFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_pipeline_creation_cache_control\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_EXT_pipeline_creation_cache_control\0",
+            )
+        }
     }
     pub const SPEC_VERSION: u32 = 3u32;
 }
@@ -19654,8 +19585,7 @@ impl StructureType {
 }
 impl KhrExtension299Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_299\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_299\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -19682,8 +19612,7 @@ impl PipelineCacheCreateFlags {
 }
 impl KhrVideoEncodeQueueFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_video_encode_queue\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_encode_queue\0") }
     }
     pub const SPEC_VERSION: u32 = 3u32;
 }
@@ -19783,8 +19712,9 @@ impl StructureType {
 }
 impl NvDeviceDiagnosticsConfigFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_device_diagnostics_config\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_device_diagnostics_config\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -19807,8 +19737,9 @@ impl StructureType {
 }
 impl QcomRenderPassStoreOpsFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_render_pass_store_ops\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_render_pass_store_ops\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -19830,8 +19761,7 @@ impl AttachmentStoreOp {
 }
 impl QcomExtension303Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_extension_303\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_extension_303\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -19849,8 +19779,7 @@ impl QcomExtension303Fn {
 }
 impl QcomExtension304Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_extension_304\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_extension_304\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -19868,8 +19797,7 @@ impl QcomExtension304Fn {
 }
 impl QcomExtension305Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_extension_305\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_extension_305\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -19887,8 +19815,7 @@ impl QcomExtension305Fn {
 }
 impl QcomExtension306Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_extension_306\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_extension_306\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -19906,8 +19833,7 @@ impl QcomExtension306Fn {
 }
 impl QcomExtension307Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_extension_307\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_extension_307\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -19925,8 +19851,7 @@ impl QcomExtension307Fn {
 }
 impl NvExtension308Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_308\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_308\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -19944,8 +19869,7 @@ impl NvExtension308Fn {
 }
 impl KhrExtension309Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_309\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_309\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -19963,8 +19887,7 @@ impl KhrExtension309Fn {
 }
 impl QcomExtension310Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_extension_310\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_extension_310\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -19986,8 +19909,7 @@ impl StructureType {
 }
 impl NvExtension311Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_311\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_311\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -20005,8 +19927,7 @@ impl NvExtension311Fn {
 }
 impl ExtExtension312Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_312\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_312\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -20024,8 +19945,7 @@ impl ExtExtension312Fn {
 }
 impl ExtExtension313Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_313\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_313\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -20043,8 +19963,7 @@ impl ExtExtension313Fn {
 }
 impl AmdExtension314Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_314\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_314\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -20062,8 +19981,7 @@ impl AmdExtension314Fn {
 }
 impl KhrSynchronization2Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_synchronization2\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_synchronization2\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -20436,8 +20354,7 @@ impl StructureType {
 }
 impl AmdExtension316Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_316\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_316\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -20455,8 +20372,7 @@ impl AmdExtension316Fn {
 }
 impl AmdExtension317Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_317\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_317\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -20499,8 +20415,7 @@ impl SamplerCreateFlags {
 }
 impl AmdExtension318Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_318\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_318\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -20518,8 +20433,7 @@ impl AmdExtension318Fn {
 }
 impl AmdExtension319Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_319\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_319\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -20545,8 +20459,7 @@ impl PipelineLayoutCreateFlags {
 }
 impl AmdExtension320Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_320\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_320\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -20564,8 +20477,7 @@ impl AmdExtension320Fn {
 }
 impl AmdExtension321Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_321\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_321\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -20592,8 +20504,7 @@ impl PipelineLayoutCreateFlags {
 }
 impl AmdExtension322Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_322\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_322\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -20611,8 +20522,7 @@ impl AmdExtension322Fn {
 }
 impl AmdExtension323Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_323\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_323\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -20630,8 +20540,11 @@ impl AmdExtension323Fn {
 }
 impl KhrShaderSubgroupUniformControlFlowFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_shader_subgroup_uniform_control_flow\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_KHR_shader_subgroup_uniform_control_flow\0",
+            )
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -20654,8 +20567,7 @@ impl StructureType {
 }
 impl KhrExtension325Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_325\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_325\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -20673,8 +20585,11 @@ impl KhrExtension325Fn {
 }
 impl KhrZeroInitializeWorkgroupMemoryFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_zero_initialize_workgroup_memory\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_KHR_zero_initialize_workgroup_memory\0",
+            )
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -20697,8 +20612,9 @@ impl StructureType {
 }
 impl NvFragmentShadingRateEnumsFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_fragment_shading_rate_enums\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_fragment_shading_rate_enums\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -20761,8 +20677,9 @@ impl StructureType {
 }
 impl NvRayTracingMotionBlurFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_ray_tracing_motion_blur\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_ray_tracing_motion_blur\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -20798,8 +20715,7 @@ impl StructureType {
 }
 impl NvExtension329Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_329\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_329\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -20817,8 +20733,7 @@ impl NvExtension329Fn {
 }
 impl NvExtension330Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_330\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_330\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -20836,8 +20751,9 @@ impl NvExtension330Fn {
 }
 impl ExtYcbcr2plane444FormatsFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_ycbcr_2plane_444_formats\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_ycbcr_2plane_444_formats\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -20866,8 +20782,7 @@ impl StructureType {
 }
 impl NvExtension332Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_332\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_332\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -20885,8 +20800,9 @@ impl NvExtension332Fn {
 }
 impl ExtFragmentDensityMap2Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_fragment_density_map2\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_fragment_density_map2\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -20913,8 +20829,9 @@ impl StructureType {
 }
 impl QcomRotatedCopyCommandsFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_rotated_copy_commands\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_rotated_copy_commands\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -20936,8 +20853,7 @@ impl StructureType {
 }
 impl KhrExtension335Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_335\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_335\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -20955,8 +20871,7 @@ impl KhrExtension335Fn {
 }
 impl ExtImageRobustnessFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_image_robustness\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_robustness\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -20978,8 +20893,11 @@ impl StructureType {
 }
 impl KhrWorkgroupMemoryExplicitLayoutFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_workgroup_memory_explicit_layout\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_KHR_workgroup_memory_explicit_layout\0",
+            )
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -21002,8 +20920,7 @@ impl StructureType {
 }
 impl KhrCopyCommands2Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_copy_commands2\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_copy_commands2\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -21228,8 +21145,7 @@ impl StructureType {
 }
 impl ArmExtension339Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_ARM_extension_339\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_ARM_extension_339\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -21247,8 +21163,7 @@ impl ArmExtension339Fn {
 }
 impl ExtExtension340Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_340\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_340\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -21270,8 +21185,7 @@ impl ImageUsageFlags {
 }
 impl Ext4444FormatsFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_4444_formats\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_4444_formats\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -21298,8 +21212,7 @@ impl StructureType {
 }
 impl ExtExtension342Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_342\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_342\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -21317,8 +21230,11 @@ impl ExtExtension342Fn {
 }
 impl ArmRasterizationOrderAttachmentAccessFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_ARM_rasterization_order_attachment_access\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_ARM_rasterization_order_attachment_access\0",
+            )
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -21356,8 +21272,7 @@ impl SubpassDescriptionFlags {
 }
 impl ArmExtension344Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_ARM_extension_344\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_ARM_extension_344\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -21375,8 +21290,7 @@ impl ArmExtension344Fn {
 }
 impl ExtRgba10x6FormatsFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_rgba10x6_formats\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_rgba10x6_formats\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -21398,8 +21312,7 @@ impl StructureType {
 }
 impl NvAcquireWinrtDisplayFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_acquire_winrt_display\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_acquire_winrt_display\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -21483,8 +21396,7 @@ impl NvAcquireWinrtDisplayFn {
 }
 impl ExtDirectfbSurfaceFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_directfb_surface\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_directfb_surface\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -21591,8 +21503,7 @@ impl StructureType {
 }
 impl KhrExtension350Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_350\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_350\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -21610,8 +21521,7 @@ impl KhrExtension350Fn {
 }
 impl NvExtension351Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_351\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_351\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -21629,8 +21539,9 @@ impl NvExtension351Fn {
 }
 impl ValveMutableDescriptorTypeFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_VALVE_mutable_descriptor_type\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_VALVE_mutable_descriptor_type\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -21665,8 +21576,9 @@ impl StructureType {
 }
 impl ExtVertexInputDynamicStateFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_vertex_input_dynamic_state\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_vertex_input_dynamic_state\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -21744,8 +21656,7 @@ impl StructureType {
 }
 impl ExtPhysicalDeviceDrmFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_physical_device_drm\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_physical_device_drm\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -21767,8 +21678,7 @@ impl StructureType {
 }
 impl ExtExtension355Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_355\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_355\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -21786,8 +21696,7 @@ impl ExtExtension355Fn {
 }
 impl ExtDepthClipControlFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_depth_clip_control\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_depth_clip_control\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -21810,8 +21719,11 @@ impl StructureType {
 }
 impl ExtPrimitiveTopologyListRestartFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_primitive_topology_list_restart\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_EXT_primitive_topology_list_restart\0",
+            )
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -21834,8 +21746,7 @@ impl StructureType {
 }
 impl KhrExtension358Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_358\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_358\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -21853,8 +21764,7 @@ impl KhrExtension358Fn {
 }
 impl ExtExtension359Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_359\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_359\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -21872,8 +21782,7 @@ impl ExtExtension359Fn {
 }
 impl ExtExtension360Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_360\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_360\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -21891,8 +21800,9 @@ impl ExtExtension360Fn {
 }
 impl KhrFormatFeatureFlags2Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_format_feature_flags2\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_format_feature_flags2\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -21914,8 +21824,7 @@ impl StructureType {
 }
 impl ExtExtension362Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_362\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_362\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -21933,8 +21842,7 @@ impl ExtExtension362Fn {
 }
 impl ExtExtension363Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_363\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_363\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -21952,8 +21860,7 @@ impl ExtExtension363Fn {
 }
 impl FuchsiaExtension364Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_FUCHSIA_extension_364\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_FUCHSIA_extension_364\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -21971,8 +21878,7 @@ impl FuchsiaExtension364Fn {
 }
 impl FuchsiaExternalMemoryFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_FUCHSIA_external_memory\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_FUCHSIA_external_memory\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -22084,8 +21990,9 @@ impl StructureType {
 }
 impl FuchsiaExternalSemaphoreFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_FUCHSIA_external_semaphore\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_FUCHSIA_external_semaphore\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -22189,8 +22096,9 @@ impl StructureType {
 }
 impl FuchsiaBufferCollectionFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_FUCHSIA_buffer_collection\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_FUCHSIA_buffer_collection\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -22430,8 +22338,7 @@ impl StructureType {
 }
 impl FuchsiaExtension368Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_FUCHSIA_extension_368\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_FUCHSIA_extension_368\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -22449,8 +22356,7 @@ impl FuchsiaExtension368Fn {
 }
 impl QcomExtension369Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_extension_369\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_extension_369\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -22472,8 +22378,7 @@ impl DescriptorBindingFlags {
 }
 impl HuaweiSubpassShadingFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_HUAWEI_subpass_shading\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_HUAWEI_subpass_shading\0") }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -22579,8 +22484,7 @@ impl StructureType {
 }
 impl HuaweiInvocationMaskFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_HUAWEI_invocation_mask\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_HUAWEI_invocation_mask\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -22655,8 +22559,7 @@ impl StructureType {
 }
 impl NvExternalMemoryRdmaFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_external_memory_rdma\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_external_memory_rdma\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -22726,8 +22629,7 @@ impl StructureType {
 }
 impl NvExtension373Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_373\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_373\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -22745,8 +22647,7 @@ impl NvExtension373Fn {
 }
 impl NvExtension374Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_374\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_374\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -22774,8 +22675,7 @@ impl ExternalSemaphoreHandleTypeFlags {
 }
 impl NvExtension375Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_375\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_375\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -22797,8 +22697,7 @@ impl ExternalMemoryHandleTypeFlags {
 }
 impl ExtExtension376Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_376\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_376\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -22816,8 +22715,7 @@ impl ExtExtension376Fn {
 }
 impl ExtExtension377Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_377\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_377\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -22835,8 +22733,9 @@ impl ExtExtension377Fn {
 }
 impl ExtExtendedDynamicState2Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extended_dynamic_state2\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extended_dynamic_state2\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -23020,8 +22919,7 @@ impl StructureType {
 }
 impl QnxScreenSurfaceFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_QNX_screen_surface\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QNX_screen_surface\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -23126,8 +23024,7 @@ impl StructureType {
 }
 impl KhrExtension380Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_380\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_380\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -23145,8 +23042,7 @@ impl KhrExtension380Fn {
 }
 impl KhrExtension381Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_381\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_381\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -23164,8 +23060,7 @@ impl KhrExtension381Fn {
 }
 impl ExtColorWriteEnableFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_color_write_enable\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_color_write_enable\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -23235,8 +23130,7 @@ impl StructureType {
 }
 impl ExtExtension383Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_383\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_383\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -23254,8 +23148,7 @@ impl ExtExtension383Fn {
 }
 impl ExtExtension384Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_384\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_384\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -23273,8 +23166,7 @@ impl ExtExtension384Fn {
 }
 impl MesaExtension385Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_MESA_extension_385\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_MESA_extension_385\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -23292,8 +23184,7 @@ impl MesaExtension385Fn {
 }
 impl GoogleExtension386Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GOOGLE_extension_386\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_extension_386\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -23311,8 +23202,7 @@ impl GoogleExtension386Fn {
 }
 impl KhrExtension387Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_387\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_387\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -23338,8 +23228,7 @@ impl PipelineStageFlags2KHR {
 }
 impl ExtExtension388Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_388\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_388\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -23357,8 +23246,9 @@ impl ExtExtension388Fn {
 }
 impl ExtGlobalPriorityQueryFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_global_priority_query\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_global_priority_query\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -23381,8 +23271,7 @@ impl StructureType {
 }
 impl ExtExtension390Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_390\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_390\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -23400,8 +23289,7 @@ impl ExtExtension390Fn {
 }
 impl ExtExtension391Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_391\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_391\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -23419,8 +23307,7 @@ impl ExtExtension391Fn {
 }
 impl ExtImageViewMinLodFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_image_view_min_lod\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_view_min_lod\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -23443,8 +23330,7 @@ impl StructureType {
 }
 impl ExtMultiDrawFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_multi_draw\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_multi_draw\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -23573,8 +23459,7 @@ impl StructureType {
 }
 impl ExtExtension394Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_394\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_394\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -23596,8 +23481,7 @@ impl ImageCreateFlags {
 }
 impl KhrExtension395Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_395\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_395\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -23615,8 +23499,7 @@ impl KhrExtension395Fn {
 }
 impl KhrExtension396Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_396\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_396\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -23634,8 +23517,7 @@ impl KhrExtension396Fn {
 }
 impl NvExtension397Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_397\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_397\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -23653,8 +23535,7 @@ impl NvExtension397Fn {
 }
 impl NvExtension398Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_398\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_398\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -23672,8 +23553,7 @@ impl NvExtension398Fn {
 }
 impl JuiceExtension399Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_JUICE_extension_399\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_JUICE_extension_399\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -23691,8 +23571,7 @@ impl JuiceExtension399Fn {
 }
 impl JuiceExtension400Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_JUICE_extension_400\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_JUICE_extension_400\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -23710,8 +23589,7 @@ impl JuiceExtension400Fn {
 }
 impl ExtLoadStoreOpNoneFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_load_store_op_none\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_load_store_op_none\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -23737,8 +23615,7 @@ impl AttachmentStoreOp {
 }
 impl FbExtension402Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_FB_extension_402\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_FB_extension_402\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -23756,8 +23633,7 @@ impl FbExtension402Fn {
 }
 impl FbExtension403Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_FB_extension_403\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_FB_extension_403\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -23775,8 +23651,7 @@ impl FbExtension403Fn {
 }
 impl FbExtension404Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_FB_extension_404\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_FB_extension_404\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -23794,8 +23669,7 @@ impl FbExtension404Fn {
 }
 impl HuaweiExtension405Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_HUAWEI_extension_405\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_HUAWEI_extension_405\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -23813,8 +23687,7 @@ impl HuaweiExtension405Fn {
 }
 impl HuaweiExtension406Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_HUAWEI_extension_406\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_HUAWEI_extension_406\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -23832,8 +23705,7 @@ impl HuaweiExtension406Fn {
 }
 impl GgpExtension407Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GGP_extension_407\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GGP_extension_407\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -23851,8 +23723,7 @@ impl GgpExtension407Fn {
 }
 impl GgpExtension408Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GGP_extension_408\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GGP_extension_408\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -23870,8 +23741,7 @@ impl GgpExtension408Fn {
 }
 impl GgpExtension409Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GGP_extension_409\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GGP_extension_409\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -23889,8 +23759,7 @@ impl GgpExtension409Fn {
 }
 impl GgpExtension410Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GGP_extension_410\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GGP_extension_410\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -23908,8 +23777,7 @@ impl GgpExtension410Fn {
 }
 impl GgpExtension411Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GGP_extension_411\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GGP_extension_411\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -23927,8 +23795,7 @@ impl GgpExtension411Fn {
 }
 impl ExtBorderColorSwizzleFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_border_color_swizzle\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_border_color_swizzle\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -23951,8 +23818,11 @@ impl StructureType {
 }
 impl ExtPageableDeviceLocalMemoryFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_pageable_device_local_memory\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_EXT_pageable_device_local_memory\0",
+            )
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -24010,8 +23880,7 @@ impl StructureType {
 }
 impl KhrMaintenance4Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_maintenance4\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance4\0") }
     }
     pub const SPEC_VERSION: u32 = 2u32;
 }
@@ -24162,8 +24031,7 @@ impl StructureType {
 }
 impl HuaweiExtension415Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_HUAWEI_extension_415\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_HUAWEI_extension_415\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24181,8 +24049,7 @@ impl HuaweiExtension415Fn {
 }
 impl ArmExtension416Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_ARM_extension_416\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_ARM_extension_416\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24200,8 +24067,7 @@ impl ArmExtension416Fn {
 }
 impl KhrExtension417Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_417\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_417\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24219,8 +24085,7 @@ impl KhrExtension417Fn {
 }
 impl ArmExtension418Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_ARM_extension_418\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_ARM_extension_418\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24238,8 +24103,7 @@ impl ArmExtension418Fn {
 }
 impl ExtExtension419Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_419\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_419\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24257,8 +24121,7 @@ impl ExtExtension419Fn {
 }
 impl ExtExtension420Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_420\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_420\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24276,8 +24139,7 @@ impl ExtExtension420Fn {
 }
 impl KhrExtension421Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_421\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_421\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24295,8 +24157,7 @@ impl KhrExtension421Fn {
 }
 impl ExtExtension422Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_422\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_422\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24314,8 +24175,9 @@ impl ExtExtension422Fn {
 }
 impl ExtDisableCubeMapWrapFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_disable_cube_map_wrap\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_disable_cube_map_wrap\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24337,8 +24199,7 @@ impl SamplerCreateFlags {
 }
 impl ArmExtension424Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_ARM_extension_424\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_ARM_extension_424\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24356,8 +24217,7 @@ impl ArmExtension424Fn {
 }
 impl ArmExtension425Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_ARM_extension_425\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_ARM_extension_425\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24375,8 +24235,11 @@ impl ArmExtension425Fn {
 }
 impl QcomFragmentDensityMapOffsetFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_fragment_density_map_offset\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_QCOM_fragment_density_map_offset\0",
+            )
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -24405,8 +24268,7 @@ impl StructureType {
 }
 impl NvExtension427Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_427\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_427\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24424,8 +24286,7 @@ impl NvExtension427Fn {
 }
 impl NvExtension428Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_428\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_428\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24443,8 +24304,7 @@ impl NvExtension428Fn {
 }
 impl NvExtension429Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_429\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_429\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24462,8 +24322,7 @@ impl NvExtension429Fn {
 }
 impl NvExtension430Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_430\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_430\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24481,8 +24340,9 @@ impl NvExtension430Fn {
 }
 impl NvLinearColorAttachmentFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_linear_color_attachment\0")
-            .expect("Wrong extension string")
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_linear_color_attachment\0")
+        }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -24510,8 +24370,7 @@ impl StructureType {
 }
 impl NvExtension432Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_432\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_432\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24529,8 +24388,7 @@ impl NvExtension432Fn {
 }
 impl NvExtension433Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_433\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_433\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24548,8 +24406,7 @@ impl NvExtension433Fn {
 }
 impl GoogleSurfacelessQueryFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GOOGLE_surfaceless_query\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_surfaceless_query\0") }
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
@@ -24567,8 +24424,7 @@ impl GoogleSurfacelessQueryFn {
 }
 impl KhrExtension435Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_435\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_435\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24586,8 +24442,7 @@ impl KhrExtension435Fn {
 }
 impl NvExtension436Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_436\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_436\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24605,8 +24460,7 @@ impl NvExtension436Fn {
 }
 impl ExtExtension437Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_437\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_437\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24624,8 +24478,7 @@ impl ExtExtension437Fn {
 }
 impl ExtExtension438Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_438\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_438\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24643,8 +24496,7 @@ impl ExtExtension438Fn {
 }
 impl SecExtension439Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_SEC_extension_439\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_SEC_extension_439\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24662,8 +24514,7 @@ impl SecExtension439Fn {
 }
 impl QcomExtension440Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_extension_440\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_extension_440\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24689,8 +24540,7 @@ impl QueueFlags {
 }
 impl QcomExtension441Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_extension_441\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_extension_441\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24724,8 +24574,7 @@ impl SamplerCreateFlags {
 }
 impl CoreaviExtension442Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_COREAVI_extension_442\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_COREAVI_extension_442\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24743,8 +24592,7 @@ impl CoreaviExtension442Fn {
 }
 impl CoreaviExtension443Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_COREAVI_extension_443\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_COREAVI_extension_443\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24762,8 +24610,7 @@ impl CoreaviExtension443Fn {
 }
 impl CoreaviExtension444Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_COREAVI_extension_444\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_COREAVI_extension_444\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24785,8 +24632,7 @@ impl CommandPoolResetFlags {
 }
 impl CoreaviExtension445Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_COREAVI_extension_445\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_COREAVI_extension_445\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24804,8 +24650,7 @@ impl CoreaviExtension445Fn {
 }
 impl CoreaviExtension446Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_COREAVI_extension_446\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_COREAVI_extension_446\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24823,8 +24668,7 @@ impl CoreaviExtension446Fn {
 }
 impl CoreaviExtension447Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_COREAVI_extension_447\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_COREAVI_extension_447\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24842,8 +24686,7 @@ impl CoreaviExtension447Fn {
 }
 impl SecExtension448Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_SEC_extension_448\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_SEC_extension_448\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24861,8 +24704,7 @@ impl SecExtension448Fn {
 }
 impl SecExtension449Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_SEC_extension_449\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_SEC_extension_449\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24880,8 +24722,7 @@ impl SecExtension449Fn {
 }
 impl SecExtension450Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_SEC_extension_450\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_SEC_extension_450\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
@@ -24899,8 +24740,7 @@ impl SecExtension450Fn {
 }
 impl SecExtension451Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_SEC_extension_451\0")
-            .expect("Wrong extension string")
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_SEC_extension_451\0") }
     }
     pub const SPEC_VERSION: u32 = 0u32;
 }
