@@ -217,7 +217,7 @@ impl ExampleBase {
                 ))
                 .build(&event_loop)
                 .unwrap();
-            let entry = Entry::new();
+            let entry = Entry::linked();
             let app_name = CString::new("VulkanTriangle").unwrap();
 
             let layer_names = [CStr::from_bytes_with_nul_unchecked(

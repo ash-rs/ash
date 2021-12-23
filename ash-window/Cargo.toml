@@ -22,6 +22,7 @@ raw-window-metal = "0.1"
 
 [dev-dependencies]
 winit = "0.19.4"
+ash = { path = "../ash", version = "0.34", default-features = false, features = ["linked"] }
 
 [[example]]
 name = "winit"

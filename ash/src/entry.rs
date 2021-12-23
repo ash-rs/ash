@@ -29,39 +29,11 @@ pub struct Entry {
 /// Vulkan core 1.0
 #[allow(non_camel_case_types)]
 impl Entry {
-    /// Load entry points from a Vulkan loader linked at compile time
-    ///
-    /// Note that instance/device functions are still fetched via `vkGetInstanceProcAddr` and
-    /// `vkGetDeviceProcAddr` for maximum performance.
-    ///
-    /// ```no_run
-    /// use ash::{vk, Entry};
-    /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
-    /// let entry = Entry::new();
-    /// let app_info = vk::ApplicationInfo {
-    ///     api_version: vk::make_api_version(0, 1, 0, 0),
-    ///     ..Default::default()
-    /// };
-    /// let create_info = vk::InstanceCreateInfo {
-    ///     p_application_info: &app_info,
-    ///     ..Default::default()
-    /// };
-    /// let instance = unsafe { entry.create_instance(&create_info, None)? };
-    /// # Ok(()) }
-    /// ```
-    #[cfg(feature = "linked")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "linked")))]
-    pub fn new() -> Self {
-        // Sound because we're linking to Vulkan, which provides a vkGetInstanceProcAddr that has
-        // defined behavior in this use.
-        unsafe {
-            Self::from_static_fn(vk::StaticFn {
-                get_instance_proc_addr: vkGetInstanceProcAddr,
-            })
-        }
-    }
-
     /// Load default Vulkan library for the current platform
+    ///
+    /// Prefer this over [`linked`](Self::linked) when your application can gracefully handle
+    /// environments that lack Vulkan support, and when the build environment might not have Vulkan
+    /// development packages installed (e.g. the Vulkan SDK, or Ubuntu's libvulkan-dev).
     ///
     /// # Safety
     /// `dlopen`ing native libraries is inherently unsafe. The safety guidelines
@@ -101,6 +73,43 @@ impl Entry {
         const LIB_PATH: &str = "libvulkan.dylib";
 
         Self::load_from(LIB_PATH)
+    }
+
+    /// Load entry points from a Vulkan loader linked at compile time
+    ///
+    /// Compared to [`load`](Self::load), this is infallible, but requires that the build
+    /// environment have Vulkan development packages installed (e.g. the Vulkan SDK, or Ubuntu's
+    /// libvulkan-dev), and prevents the resulting binary from starting in environments that do not
+    /// support Vulkan.
+    ///
+    /// Note that instance/device functions are still fetched via `vkGetInstanceProcAddr` and
+    /// `vkGetDeviceProcAddr` for maximum performance.
+    ///
+    /// ```no_run
+    /// use ash::{vk, Entry};
+    /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
+    /// let entry = Entry::linked();
+    /// let app_info = vk::ApplicationInfo {
+    ///     api_version: vk::make_api_version(0, 1, 0, 0),
+    ///     ..Default::default()
+    /// };
+    /// let create_info = vk::InstanceCreateInfo {
+    ///     p_application_info: &app_info,
+    ///     ..Default::default()
+    /// };
+    /// let instance = unsafe { entry.create_instance(&create_info, None)? };
+    /// # Ok(()) }
+    /// ```
+    #[cfg(feature = "linked")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "linked")))]
+    pub fn linked() -> Self {
+        // Sound because we're linking to Vulkan, which provides a vkGetInstanceProcAddr that has
+        // defined behavior in this use.
+        unsafe {
+            Self::from_static_fn(vk::StaticFn {
+                get_instance_proc_addr: vkGetInstanceProcAddr,
+            })
+        }
     }
 
     /// Load Vulkan library at `path`
@@ -162,7 +171,7 @@ impl Entry {
     /// ```no_run
     /// # use ash::{Entry, vk};
     /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
-    /// let entry = Entry::new();
+    /// let entry = Entry::linked();
     /// match entry.try_enumerate_instance_version()? {
     ///     // Vulkan 1.1+
     ///     Some(version) => {
@@ -278,9 +287,10 @@ impl Entry {
 }
 
 #[cfg(feature = "linked")]
+#[cfg_attr(docsrs, doc(cfg(feature = "linked")))]
 impl Default for Entry {
     fn default() -> Self {
-        Self::new()
+        Self::linked()
     }
 }
 
