@@ -355,7 +355,7 @@ mod loaded {
 
     impl From<MissingEntryPoint> for LoadingError {
         fn from(err: MissingEntryPoint) -> Self {
-            LoadingError::MissingEntryPoint(err)
+            Self::MissingEntryPoint(err)
         }
     }
 }
