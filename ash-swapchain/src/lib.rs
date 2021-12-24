@@ -25,24 +25,26 @@ impl Swapchain {
     /// Construct a new [`Swapchain`] for rendering at most `frames_in_flight` frames
     /// concurrently. `extent` should be the current dimensions of `surface`.
     pub fn new(
+        fp: &Functions<'_>,
         options: Options,
         surface: vk::SurfaceKHR,
         physical_device: vk::PhysicalDevice,
-        device: &Device,
         extent: vk::Extent2D,
     ) -> Self {
         Self {
             frames: (0..options.frames_in_flight)
                 .map(|_| unsafe {
                     Frame {
-                        complete: device
+                        complete: fp
+                            .device
                             .create_fence(
                                 &vk::FenceCreateInfo::builder()
                                     .flags(vk::FenceCreateFlags::SIGNALED),
                                 None,
                             )
                             .unwrap(),
-                        acquire: device
+                        acquire: fp
+                            .device
                             .create_semaphore(&vk::SemaphoreCreateInfo::default(), None)
                             .unwrap(),
                         generation: 0,
@@ -71,17 +73,19 @@ impl Swapchain {
     ///
     /// # Safety
     ///
-    /// Access to images obtained from [`images`](Self::images) must be externally synchronized.
-    pub unsafe fn destroy(&mut self, device: &Device, swapchain_fn: &khr::Swapchain) {
+    /// Access to images obtained from [`images`](Self::images) must be externally synchronized, and
+    /// the contents of `fp` must be associated with the same `vk::Device` as that passed to
+    /// [`new`](Self::new).
+    pub unsafe fn destroy(&mut self, fp: &Functions<'_>) {
         for frame in &self.frames {
-            device.destroy_fence(frame.complete, None);
-            device.destroy_semaphore(frame.acquire, None);
+            fp.device.destroy_fence(frame.complete, None);
+            fp.device.destroy_semaphore(frame.acquire, None);
         }
         if self.handle != vk::SwapchainKHR::null() {
-            swapchain_fn.destroy_swapchain(self.handle, None);
+            fp.swapchain.destroy_swapchain(self.handle, None);
         }
         for &(swapchain, _) in &self.old_swapchains {
-            swapchain_fn.destroy_swapchain(swapchain, None);
+            fp.swapchain.destroy_swapchain(swapchain, None);
         }
     }
 
@@ -120,40 +124,42 @@ impl Swapchain {
     ///
     /// # Safety
     ///
-    /// `surface_fn` and `swapchain_fn` must have been acquired from `device`, which must match the
-    /// `device` passed to [`new`](Self::new)
+    /// The contents of `fp` must be associated with the same `vk::Device` as that passed to
+    /// [`new`](Self::new).
     pub unsafe fn acquire(
         &mut self,
-        device: &Device,
-        surface_fn: &khr::Surface,
-        swapchain_fn: &khr::Swapchain,
+        fp: &Functions<'_>,
         timeout_ns: u64,
     ) -> VkResult<AcquiredFrame> {
         let frame_index = self.frame_index;
         let next_frame_index = (self.frame_index + 1) % self.frames.len();
         let frame = &self.frames[frame_index];
         let acquire = frame.acquire;
-        device.wait_for_fences(&[frame.complete], true, timeout_ns)?;
+        fp.device
+            .wait_for_fences(&[frame.complete], true, timeout_ns)?;
 
         // Destroy swapchains that are guaranteed not to be in use now that this frame has finished
         while let Some(&(swapchain, generation)) = self.old_swapchains.front() {
             if self.frames[next_frame_index].generation == generation {
                 break;
             }
-            swapchain_fn.destroy_swapchain(swapchain, None);
+            fp.swapchain.destroy_swapchain(swapchain, None);
             self.old_swapchains.pop_front();
         }
 
         loop {
             if !self.needs_rebuild {
-                match swapchain_fn.acquire_next_image(self.handle, !0, acquire, vk::Fence::null()) {
+                match fp
+                    .swapchain
+                    .acquire_next_image(self.handle, !0, acquire, vk::Fence::null())
+                {
                     Ok((index, suboptimal)) => {
                         self.needs_rebuild = suboptimal;
                         let invalidate_images =
                             self.frames[frame_index].generation != self.generation;
                         self.frames[frame_index].generation = self.generation;
                         self.frame_index = next_frame_index;
-                        device
+                        fp.device
                             .reset_fences(&[self.frames[frame_index].complete])
                             .unwrap();
                         return Ok(AcquiredFrame {
@@ -171,7 +177,8 @@ impl Swapchain {
             self.needs_rebuild = true;
 
             // Rebuild swapchain
-            let surface_capabilities = surface_fn
+            let surface_capabilities = fp
+                .surface
                 .get_physical_device_surface_capabilities(self.physical_device, self.surface)?;
             self.extent = match surface_capabilities.current_extent.width {
                 // If Vulkan doesn't know, the windowing system probably does. Known to apply at
@@ -190,7 +197,8 @@ impl Swapchain {
             } else {
                 surface_capabilities.current_transform
             };
-            let present_mode = surface_fn
+            let present_mode = fp
+                .surface
                 .get_physical_device_surface_present_modes(self.physical_device, self.surface)?
                 .iter()
                 .filter_map(|&mode| {
@@ -216,7 +224,8 @@ impl Swapchain {
                 desired_image_count
             };
 
-            self.format = surface_fn
+            self.format = fp
+                .surface
                 .get_physical_device_surface_formats(self.physical_device, self.surface)?
                 .iter()
                 .filter_map(|&format| {
@@ -236,7 +245,7 @@ impl Swapchain {
                 self.old_swapchains
                     .push_back((self.handle, self.generation));
             }
-            let handle = swapchain_fn.create_swapchain(
+            let handle = fp.swapchain.create_swapchain(
                 &vk::SwapchainCreateInfoKHR::builder()
                     .surface(self.surface)
                     .min_image_count(image_count)
@@ -255,7 +264,7 @@ impl Swapchain {
             )?;
             self.generation = self.generation.wrapping_add(1);
             self.handle = handle;
-            self.images = swapchain_fn.get_swapchain_images(handle)?;
+            self.images = fp.swapchain.get_swapchain_images(handle)?;
             self.needs_rebuild = false;
         }
     }
@@ -266,20 +275,20 @@ impl Swapchain {
     ///
     /// In addition to the usual requirements of [`khr::Swapchain::queue_present`]:
     ///
-    /// - `swapchain_fn` must be associated with the device `queue` and `render_complete` were
-    ///    obtained from, which must match the device passed to [`new`](Self::new)
+    /// - The contents of `fp` must be associated with the same `vk::Device` as that passed to
+    ///   [`new`](Self::new).
     /// - `image_index` must have been obtained from an [`AcquiredFrame::image_index`] from a
     ///   previous [`acquire`](Self::acquire) call which has not yet been passed to queue_present
     /// - A command buffer that will signal `render_complete` after finishing access to the
     ///   `image_index` element of [`images`](Self::images) must have been submitted
     pub unsafe fn queue_present(
         &mut self,
-        swapchain_fn: &khr::Swapchain,
+        fp: &Functions<'_>,
         queue: vk::Queue,
         render_complete: vk::Semaphore,
         image_index: usize,
     ) -> VkResult<()> {
-        match swapchain_fn.queue_present(
+        match fp.swapchain.queue_present(
             queue,
             &vk::PresentInfoKHR::builder()
                 .wait_semaphores(&[render_complete])
@@ -294,6 +303,13 @@ impl Swapchain {
             Err(e) => Err(e),
         }
     }
+}
+
+/// Functions required by [`Swapchain`] methods
+pub struct Functions<'a> {
+    pub device: &'a Device,
+    pub swapchain: &'a khr::Swapchain,
+    pub surface: &'a khr::Surface,
 }
 
 /// [`Swapchain`] configuration

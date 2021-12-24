@@ -41,12 +41,10 @@ fn main() {
 pub struct App {
     _entry: ash::Entry,
     instance: ash::Instance,
-    surface_fn: khr::Surface,
     surface: vk::SurfaceKHR,
     epoch: Instant,
 
-    device: ash::Device,
-    swapchain_fn: khr::Swapchain,
+    functions: Functions,
     swapchain: Swapchain,
     queue: vk::Queue,
 
@@ -119,10 +117,14 @@ impl App {
             let mut options = ash_swapchain::Options::default();
             options.usage(vk::ImageUsageFlags::TRANSFER_DST); // Typically this would be left as the default, COLOR_ATTACHMENT
             let swapchain = Swapchain::new(
+                &ash_swapchain::Functions {
+                    device: &device,
+                    swapchain: &swapchain_fn,
+                    surface: &surface_fn,
+                },
                 options,
                 surface,
                 physical_device,
-                &device,
                 vk::Extent2D {
                     width: size.width,
                     height: size.height,
@@ -161,12 +163,14 @@ impl App {
             Self {
                 _entry: entry,
                 instance,
-                surface_fn,
                 surface,
                 epoch: Instant::now(),
 
-                device,
-                swapchain_fn,
+                functions: Functions {
+                    device,
+                    swapchain: swapchain_fn,
+                    surface: surface_fn,
+                },
                 swapchain,
                 queue,
 
@@ -181,14 +185,15 @@ impl App {
     }
 
     fn draw(&mut self) {
+        let device = &self.functions.device;
         unsafe {
             let acq = self
                 .swapchain
-                .acquire(&self.device, &self.surface_fn, &self.swapchain_fn, !0)
+                .acquire(&self.functions.ash_swapchain(), !0)
                 .unwrap();
             let cmd = self.frames[acq.frame_index].cmd;
             let swapchain_image = self.swapchain.images()[acq.image_index];
-            self.device
+            device
                 .begin_command_buffer(
                     cmd,
                     &vk::CommandBufferBeginInfo::builder()
@@ -205,7 +210,7 @@ impl App {
             // work that doesn't write to the swapchain image. The source stage must overlap with
             // the wait_dst_stage_mask passed to `queue_submit` below to ensure that the image
             // transition doesn't happen until after the acquire semaphore is signaled.
-            self.device.cmd_pipeline_barrier(
+            device.cmd_pipeline_barrier(
                 cmd,
                 vk::PipelineStageFlags::TRANSFER,
                 vk::PipelineStageFlags::TRANSFER,
@@ -229,7 +234,7 @@ impl App {
                     .build()],
             );
             let t = (self.epoch.elapsed().as_secs_f32().sin() + 1.0) * 0.5;
-            self.device.cmd_clear_color_image(
+            device.cmd_clear_color_image(
                 cmd,
                 swapchain_image,
                 vk::ImageLayout::TRANSFER_DST_OPTIMAL,
@@ -246,7 +251,7 @@ impl App {
             );
             // Typically this barrier would be implemented with the implicit subpass dependency to
             // EXTERNAL
-            self.device.cmd_pipeline_barrier(
+            device.cmd_pipeline_barrier(
                 cmd,
                 vk::PipelineStageFlags::TRANSFER,
                 vk::PipelineStageFlags::BOTTOM_OF_PIPE,
@@ -274,8 +279,8 @@ impl App {
             // Submit commands and queue present
             //
 
-            self.device.end_command_buffer(cmd).unwrap();
-            self.device
+            device.end_command_buffer(cmd).unwrap();
+            device
                 .queue_submit(
                     self.queue,
                     &[vk::SubmitInfo::builder()
@@ -289,7 +294,7 @@ impl App {
                 .unwrap();
             self.swapchain
                 .queue_present(
-                    &self.swapchain_fn,
+                    &self.functions.ash_swapchain(),
                     self.queue,
                     self.frames[acq.frame_index].complete,
                     acq.image_index,
@@ -302,15 +307,32 @@ impl App {
 impl Drop for App {
     fn drop(&mut self) {
         unsafe {
-            let _ = self.device.device_wait_idle();
+            let device = &self.functions.device;
+            let _ = device.device_wait_idle();
             for frame in &self.frames {
-                self.device.destroy_semaphore(frame.complete, None);
+                device.destroy_semaphore(frame.complete, None);
             }
-            self.device.destroy_command_pool(self.command_pool, None);
-            self.swapchain.destroy(&self.device, &self.swapchain_fn);
-            self.surface_fn.destroy_surface(self.surface, None);
-            self.device.destroy_device(None);
+            device.destroy_command_pool(self.command_pool, None);
+            self.swapchain.destroy(&self.functions.ash_swapchain());
+            self.functions.surface.destroy_surface(self.surface, None);
+            device.destroy_device(None);
             self.instance.destroy_instance(None);
+        }
+    }
+}
+
+struct Functions {
+    device: ash::Device,
+    surface: khr::Surface,
+    swapchain: khr::Swapchain,
+}
+
+impl Functions {
+    fn ash_swapchain(&self) -> ash_swapchain::Functions<'_> {
+        ash_swapchain::Functions {
+            device: &self.device,
+            swapchain: &self.swapchain,
+            surface: &self.surface,
         }
     }
 }
