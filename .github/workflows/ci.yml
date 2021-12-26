@@ -76,7 +76,7 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
-      - run: rustup component add rustfmt
+          components: rustfmt
       - uses: actions-rs/cargo@v1
         with:
           command: fmt
@@ -92,12 +92,22 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
-      - run: rustup component add clippy
+          components: clippy
       - uses: actions-rs/cargo@v1
+        name: Clippy lint without features
         with:
           command: clippy
-          args: -p ash --no-default-features -- -D warnings
+          # Only test the core ash and ash-window crate, where features reside.
+          # The examples crate would otherwise enable all default features again,
+          # making this test moot.
+          args: -p ash -p ash-window --no-default-features -- -D warnings
       - uses: actions-rs/cargo@v1
+        name: Clippy lint with all features
         with:
           command: clippy
           args: --workspace --all-targets --all-features -- -D warnings
+      - uses: actions-rs/cargo@v1
+        name: Clippy lint with default features
+        with:
+          command: clippy
+          args: --workspace --all-targets -- -D warnings
