@@ -133,3 +133,7 @@ pub fn read_spv<R: io::Read + io::Seek>(x: &mut R) -> io::Result<Vec<u32>> {
     }
     Ok(result)
 }
+
+#[repr(align(4))]
+#[doc(hidden)]
+pub struct Align4<T: ?Sized>(pub T);

@@ -1,9 +1,8 @@
 use ash::util::*;
-use ash::vk;
+use ash::{include_spv, vk, Spirv};
 use examples::*;
 use std::default::Default;
 use std::ffi::CString;
-use std::io::Cursor;
 use std::mem;
 use std::mem::align_of;
 
@@ -197,17 +196,12 @@ fn main() {
         base.device
             .bind_buffer_memory(vertex_input_buffer, vertex_input_buffer_memory, 0)
             .unwrap();
-        let mut vertex_spv_file =
-            Cursor::new(&include_bytes!("../../shader/triangle/vert.spv")[..]);
-        let mut frag_spv_file = Cursor::new(&include_bytes!("../../shader/triangle/frag.spv")[..]);
 
-        let vertex_code =
-            read_spv(&mut vertex_spv_file).expect("Failed to read vertex shader spv file");
-        let vertex_shader_info = vk::ShaderModuleCreateInfo::builder().code(&vertex_code);
+        const VERTEX_CODE: &Spirv = include_spv!("../../shader/triangle/vert.spv");
+        let vertex_shader_info = vk::ShaderModuleCreateInfo::builder().code(VERTEX_CODE);
 
-        let frag_code =
-            read_spv(&mut frag_spv_file).expect("Failed to read fragment shader spv file");
-        let frag_shader_info = vk::ShaderModuleCreateInfo::builder().code(&frag_code);
+        const FRAG_CODE: &Spirv = include_spv!("../../shader/triangle/frag.spv");
+        let frag_shader_info = vk::ShaderModuleCreateInfo::builder().code(FRAG_CODE);
 
         let vertex_shader_module = base
             .device
