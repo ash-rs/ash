@@ -7,5 +7,8 @@ edition = "2018"
 [dependencies]
 winit = "0.25.0"
 image = "0.10.4"
-ash = { path = "../ash" }
+# The examples require the validation layers, which means the SDK or
+# equivalent development packages should be present, so we can link
+# directly and benefit from the infallible `Entry` constructor.
+ash = { path = "../ash", default-features = false, features = ["linked", "debug"] }
 ash-window = { path = "../ash-window" }

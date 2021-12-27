@@ -14,7 +14,7 @@
 //! ```no_run
 //! use ash::{vk, Entry};
 //! # fn main() -> Result<(), Box<dyn std::error::Error>> {
-//! let entry = Entry::new();
+//! let entry = Entry::linked();
 //! let app_info = vk::ApplicationInfo {
 //!     api_version: vk::make_api_version(0, 1, 0, 0),
 //!     ..Default::default()
@@ -29,7 +29,7 @@
 //!
 //! ## Getting started
 //!
-//! Load the Vulkan library linked at compile time using [`Entry::new()`], or load it at runtime
+//! Load the Vulkan library linked at compile time using [`Entry::linked()`], or load it at runtime
 //! using [`Entry::load()`], which uses `libloading`. If you want to perform entry point loading
 //! yourself, call [`Entry::from_static_fn()`].
 

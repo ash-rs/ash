@@ -15,7 +15,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         .build(&events_loop)?;
 
     unsafe {
-        let entry = ash::Entry::new();
+        let entry = ash::Entry::linked();
         let surface_extensions = ash_window::enumerate_required_extensions(&window)?;
         let instance_extensions = surface_extensions
             .iter()
