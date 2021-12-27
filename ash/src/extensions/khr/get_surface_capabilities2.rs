@@ -66,7 +66,7 @@ impl GetSurfaceCapabilities2 {
             &mut count,
             out.as_mut_ptr(),
         );
-        assert_eq!(count, out.len() as u32);
+        assert_eq!(count as usize, out.len());
         err_code.result()
     }
 
