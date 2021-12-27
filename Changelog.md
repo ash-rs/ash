@@ -4,7 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [Unreleased] - ReleaseDate
+
+## [0.35.0] - 2021-12-27
 
 ### Changed
 
@@ -258,7 +260,8 @@ flags: vk::CommandPoolCreateFlags::RESET_COMMAND_BUFFER_BIT,
 can write to aligned memory.
 
 
-[Unreleased]: https://github.com/MaikKlein/ash/compare/0.34.0...HEAD
+[Unreleased]: https://github.com/MaikKlein/ash/compare/0.35.0...HEAD
+[0.35.0]: https://github.com/MaikKlein/ash/releases/tag/0.35.0
 [0.34.0]: https://github.com/MaikKlein/ash/releases/tag/0.34.0
 [0.33.3]: https://github.com/MaikKlein/ash/releases/tag/0.33.3
 [0.33.2]: https://github.com/MaikKlein/ash/releases/tag/0.33.2
