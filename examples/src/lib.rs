@@ -11,7 +11,7 @@ pub use ash::{Device, Instance};
 use std::borrow::Cow;
 use std::cell::RefCell;
 use std::default::Default;
-use std::ffi::{CStr, CString};
+use std::ffi::CStr;
 use std::ops::Drop;
 use std::os::raw::c_char;
 
@@ -218,7 +218,7 @@ impl ExampleBase {
                 .build(&event_loop)
                 .unwrap();
             let entry = Entry::linked();
-            let app_name = CString::new("VulkanTriangle").unwrap();
+            let app_name = CStr::from_bytes_with_nul_unchecked(b"VulkanTriangle\0");
 
             let layer_names = [CStr::from_bytes_with_nul_unchecked(
                 b"VK_LAYER_KHRONOS_validation\0",
@@ -236,9 +236,9 @@ impl ExampleBase {
             extension_names_raw.push(DebugUtils::name().as_ptr());
 
             let appinfo = vk::ApplicationInfo::builder()
-                .application_name(&app_name)
+                .application_name(app_name)
                 .application_version(0)
-                .engine_name(&app_name)
+                .engine_name(app_name)
                 .engine_version(0)
                 .api_version(vk::make_api_version(0, 1, 0, 0));
 

@@ -1,5 +1,5 @@
 use std::default::Default;
-use std::ffi::CString;
+use std::ffi::CStr;
 use std::io::Cursor;
 use std::mem::{self, align_of};
 use std::os::raw::c_void;
@@ -573,7 +573,7 @@ fn main() {
             .create_pipeline_layout(&layout_create_info, None)
             .unwrap();
 
-        let shader_entry_name = CString::new("main").unwrap();
+        let shader_entry_name = CStr::from_bytes_with_nul_unchecked(b"main\0");
         let shader_stage_create_infos = [
             vk::PipelineShaderStageCreateInfo {
                 module: vertex_shader_module,
