@@ -33,7 +33,7 @@ impl Entry {
     ///
     /// Prefer this over [`linked`](Self::linked) when your application can gracefully handle
     /// environments that lack Vulkan support, and when the build environment might not have Vulkan
-    /// development packages installed (e.g. the Vulkan SDK, or Ubuntu's libvulkan-dev).
+    /// development packages installed (e.g. the Vulkan SDK, or Ubuntu's `libvulkan-dev`).
     ///
     /// # Safety
     /// `dlopen`ing native libraries is inherently unsafe. The safety guidelines
@@ -79,7 +79,7 @@ impl Entry {
     ///
     /// Compared to [`load`](Self::load), this is infallible, but requires that the build
     /// environment have Vulkan development packages installed (e.g. the Vulkan SDK, or Ubuntu's
-    /// libvulkan-dev), and prevents the resulting binary from starting in environments that do not
+    /// `libvulkan-dev`), and prevents the resulting binary from starting in environments that do not
     /// support Vulkan.
     ///
     /// Note that instance/device functions are still fetched via `vkGetInstanceProcAddr` and
