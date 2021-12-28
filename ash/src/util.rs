@@ -1,9 +1,10 @@
 use crate::vk;
-use std::iter::Iterator;
-use std::marker::PhantomData;
-use std::mem::size_of;
-use std::os::raw::c_void;
-use std::{io, slice};
+use core::ffi::c_void;
+use core::iter::Iterator;
+use core::marker::PhantomData;
+use core::mem::size_of;
+use core::slice;
+use std::io;
 
 /// [`Align`] handles dynamic alignment. The is useful for dynamic uniform buffers where
 /// the alignment might be different. For example a 4x4 f32 matrix has a size of 64 bytes
@@ -28,7 +29,7 @@ pub struct AlignIter<'a, T: 'a> {
 
 impl<T: Copy> Align<T> {
     pub fn copy_from_slice(&mut self, slice: &[T]) {
-        use std::slice::from_raw_parts_mut;
+        use core::slice::from_raw_parts_mut;
         if self.elem_size == size_of::<T>() as u64 {
             unsafe {
                 let mapped_slice = from_raw_parts_mut(self.ptr as *mut T, slice.len());

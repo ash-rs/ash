@@ -1,8 +1,8 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::{Device, Instance};
+use core::mem;
 use std::ffi::CStr;
-use std::mem;
 
 #[derive(Clone)]
 pub struct FullScreenExclusive {

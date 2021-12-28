@@ -2,9 +2,9 @@ use crate::device::Device;
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use std::mem;
+use core::mem;
+use core::ptr;
 use std::os::raw::c_char;
-use std::ptr;
 
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkInstance.html>"]
 #[derive(Clone)]

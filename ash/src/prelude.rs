@@ -1,6 +1,6 @@
-use std::convert::TryInto;
+use core::convert::TryInto;
 #[cfg(feature = "debug")]
-use std::fmt;
+use core::fmt;
 
 use crate::vk;
 pub type VkResult<T> = Result<T, vk::Result>;
@@ -31,11 +31,11 @@ pub(crate) unsafe fn read_into_uninitialized_vector<N: Copy + Default + TryInto<
     f: impl Fn(&mut N, *mut T) -> vk::Result,
 ) -> VkResult<Vec<T>>
 where
-    <N as TryInto<usize>>::Error: std::fmt::Debug,
+    <N as TryInto<usize>>::Error: core::fmt::Debug,
 {
     loop {
         let mut count = N::default();
-        f(&mut count, std::ptr::null_mut()).result()?;
+        f(&mut count, core::ptr::null_mut()).result()?;
         let mut data =
             Vec::with_capacity(count.try_into().expect("`N` failed to convert to `usize`"));
 
@@ -68,11 +68,11 @@ pub(crate) unsafe fn read_into_defaulted_vector<
     f: impl Fn(&mut N, *mut T) -> vk::Result,
 ) -> VkResult<Vec<T>>
 where
-    <N as TryInto<usize>>::Error: std::fmt::Debug,
+    <N as TryInto<usize>>::Error: core::fmt::Debug,
 {
     loop {
         let mut count = N::default();
-        f(&mut count, std::ptr::null_mut()).result()?;
+        f(&mut count, core::ptr::null_mut()).result()?;
         let mut data =
             vec![Default::default(); count.try_into().expect("`N` failed to convert to `usize`")];
 

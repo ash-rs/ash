@@ -161,7 +161,7 @@ pub fn define_handle_macro() -> TokenStream {
 
                 impl $name {
                     pub const fn null() -> Self {
-                        Self(::std::ptr::null_mut())
+                        Self(::core::ptr::null_mut())
                     }
                 }
 
@@ -262,7 +262,7 @@ pub fn vk_bitflags_wrapped_macro() -> TokenStream {
                     }
                 }
 
-                impl ::std::ops::BitOr for $name {
+                impl ::core::ops::BitOr for $name {
                     type Output = Self;
 
                     #[inline]
@@ -271,14 +271,14 @@ pub fn vk_bitflags_wrapped_macro() -> TokenStream {
                     }
                 }
 
-                impl ::std::ops::BitOrAssign for $name {
+                impl ::core::ops::BitOrAssign for $name {
                     #[inline]
                     fn bitor_assign(&mut self, rhs: Self) {
                         *self = *self | rhs
                     }
                 }
 
-                impl ::std::ops::BitAnd for $name {
+                impl ::core::ops::BitAnd for $name {
                     type Output = Self;
 
                     #[inline]
@@ -287,14 +287,14 @@ pub fn vk_bitflags_wrapped_macro() -> TokenStream {
                     }
                 }
 
-                impl ::std::ops::BitAndAssign for $name {
+                impl ::core::ops::BitAndAssign for $name {
                     #[inline]
                     fn bitand_assign(&mut self, rhs: Self) {
                         *self = *self & rhs
                     }
                 }
 
-                impl ::std::ops::BitXor for $name {
+                impl ::core::ops::BitXor for $name {
                     type Output = Self;
 
                     #[inline]
@@ -303,14 +303,14 @@ pub fn vk_bitflags_wrapped_macro() -> TokenStream {
                     }
                 }
 
-                impl ::std::ops::BitXorAssign for $name {
+                impl ::core::ops::BitXorAssign for $name {
                     #[inline]
                     fn bitxor_assign(&mut self, rhs: Self) {
                         *self = *self ^ rhs
                     }
                 }
 
-                impl ::std::ops::Not for $name {
+                impl ::core::ops::Not for $name {
                     type Output = Self;
 
                     #[inline]
@@ -1019,7 +1019,7 @@ fn generate_function_pointers<'a>(
                     if val.is_null() {
                         #function_name_rust
                     } else {
-                        ::std::mem::transmute(val)
+                        ::core::mem::transmute(val)
                     }
                 }
             )
@@ -1629,18 +1629,18 @@ pub fn derive_default(_struct: &vkxml::Struct) -> Option<TokenStream> {
                 }
             } else {
                 quote! {
-                    #param_ident: unsafe { ::std::mem::zeroed() }
+                    #param_ident: unsafe { ::core::mem::zeroed() }
                 }
             }
         } else if field.reference.is_some() {
             if field.is_const {
-                quote!(#param_ident: ::std::ptr::null())
+                quote!(#param_ident: ::core::ptr::null())
             } else {
-                quote!(#param_ident: ::std::ptr::null_mut())
+                quote!(#param_ident: ::core::ptr::null_mut())
             }
         } else if is_static_array(field) || handles.contains(&field.basetype.as_str()) {
             quote! {
-                #param_ident: unsafe { ::std::mem::zeroed() }
+                #param_ident: unsafe { ::core::mem::zeroed() }
             }
         } else {
             let ty = field.type_tokens(false);
@@ -1650,7 +1650,7 @@ pub fn derive_default(_struct: &vkxml::Struct) -> Option<TokenStream> {
         }
     });
     let q = quote! {
-        impl ::std::default::Default for #name {
+        impl ::core::default::Default for #name {
             fn default() -> Self {
                 Self {
                     #(
@@ -1981,7 +1981,7 @@ pub fn derive_setters(
             pub fn builder<'a>() -> #name_builder<'a> {
                 #name_builder {
                     inner: Self::default(),
-                    marker: ::std::marker::PhantomData,
+                    marker: ::core::marker::PhantomData,
                 }
             }
         }
@@ -1989,14 +1989,14 @@ pub fn derive_setters(
         #[repr(transparent)]
         pub struct #name_builder<'a> {
             inner: #name,
-            marker: ::std::marker::PhantomData<&'a ()>,
+            marker: ::core::marker::PhantomData<&'a ()>,
         }
 
         #(#impl_extend_trait)*
         #next_trait
 
 
-        impl<'a> ::std::ops::Deref for #name_builder<'a> {
+        impl<'a> ::core::ops::Deref for #name_builder<'a> {
             type Target = #name;
 
             fn deref(&self) -> &Self::Target {
@@ -2004,7 +2004,7 @@ pub fn derive_setters(
             }
         }
 
-        impl<'a> ::std::ops::DerefMut for #name_builder<'a> {
+        impl<'a> ::core::ops::DerefMut for #name_builder<'a> {
             fn deref_mut(&mut self) -> &mut Self::Target {
                 &mut self.inner
             }
@@ -2223,9 +2223,9 @@ fn generate_union(union: &vkxml::Union) -> TokenStream {
         pub union #name {
             #(#fields),*
         }
-        impl ::std::default::Default for #name {
+        impl ::core::default::Default for #name {
             fn default() -> Self {
-                unsafe { ::std::mem::zeroed() }
+                unsafe { ::core::mem::zeroed() }
             }
         }
     }
@@ -2770,7 +2770,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     };
 
     let definition_code = quote! {
-        use std::fmt;
+        use core::fmt;
         use std::os::raw::*;
         use crate::vk::{Handle, ptr_chain_iter};
         use crate::vk::aliases::*;
@@ -2784,7 +2784,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     };
 
     let enum_code = quote! {
-        use std::fmt;
+        use core::fmt;
         #(#enum_code)*
         #core_debugs
     };
@@ -2816,7 +2816,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     };
 
     let const_debugs = quote! {
-        use std::fmt;
+        use core::fmt;
         use crate::vk::bitflags::*;
         use crate::vk::definitions::*;
         use crate::vk::enums::*;

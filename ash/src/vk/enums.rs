@@ -1,4 +1,4 @@
-use std::fmt;
+use core::fmt;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkImageLayout.html>"]

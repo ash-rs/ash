@@ -74,7 +74,7 @@ impl KhrSurfaceFn {
                 if val.is_null() {
                     destroy_surface_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_surface_support_khr: unsafe {
@@ -96,7 +96,7 @@ impl KhrSurfaceFn {
                 if val.is_null() {
                     get_physical_device_surface_support_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_surface_capabilities_khr: unsafe {
@@ -117,7 +117,7 @@ impl KhrSurfaceFn {
                 if val.is_null() {
                     get_physical_device_surface_capabilities_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_surface_formats_khr: unsafe {
@@ -139,7 +139,7 @@ impl KhrSurfaceFn {
                 if val.is_null() {
                     get_physical_device_surface_formats_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_surface_present_modes_khr: unsafe {
@@ -161,7 +161,7 @@ impl KhrSurfaceFn {
                 if val.is_null() {
                     get_physical_device_surface_present_modes_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -340,7 +340,7 @@ impl KhrSwapchainFn {
                 if val.is_null() {
                     create_swapchain_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_swapchain_khr: unsafe {
@@ -360,7 +360,7 @@ impl KhrSwapchainFn {
                 if val.is_null() {
                     destroy_swapchain_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_swapchain_images_khr: unsafe {
@@ -381,7 +381,7 @@ impl KhrSwapchainFn {
                 if val.is_null() {
                     get_swapchain_images_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             acquire_next_image_khr: unsafe {
@@ -404,7 +404,7 @@ impl KhrSwapchainFn {
                 if val.is_null() {
                     acquire_next_image_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             queue_present_khr: unsafe {
@@ -419,7 +419,7 @@ impl KhrSwapchainFn {
                 if val.is_null() {
                     queue_present_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_device_group_present_capabilities_khr: unsafe {
@@ -439,7 +439,7 @@ impl KhrSwapchainFn {
                 if val.is_null() {
                     get_device_group_present_capabilities_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_device_group_surface_present_modes_khr: unsafe {
@@ -460,7 +460,7 @@ impl KhrSwapchainFn {
                 if val.is_null() {
                     get_device_group_surface_present_modes_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_present_rectangles_khr: unsafe {
@@ -482,7 +482,7 @@ impl KhrSwapchainFn {
                 if val.is_null() {
                     get_physical_device_present_rectangles_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             acquire_next_image2_khr: unsafe {
@@ -502,7 +502,7 @@ impl KhrSwapchainFn {
                 if val.is_null() {
                     acquire_next_image2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -728,7 +728,7 @@ impl KhrDisplayFn {
                 if val.is_null() {
                     get_physical_device_display_properties_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_display_plane_properties_khr: unsafe {
@@ -749,7 +749,7 @@ impl KhrDisplayFn {
                 if val.is_null() {
                     get_physical_device_display_plane_properties_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_display_plane_supported_displays_khr: unsafe {
@@ -771,7 +771,7 @@ impl KhrDisplayFn {
                 if val.is_null() {
                     get_display_plane_supported_displays_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_display_mode_properties_khr: unsafe {
@@ -793,7 +793,7 @@ impl KhrDisplayFn {
                 if val.is_null() {
                     get_display_mode_properties_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             create_display_mode_khr: unsafe {
@@ -815,7 +815,7 @@ impl KhrDisplayFn {
                 if val.is_null() {
                     create_display_mode_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_display_plane_capabilities_khr: unsafe {
@@ -837,7 +837,7 @@ impl KhrDisplayFn {
                 if val.is_null() {
                     get_display_plane_capabilities_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             create_display_plane_surface_khr: unsafe {
@@ -859,7 +859,7 @@ impl KhrDisplayFn {
                 if val.is_null() {
                     create_display_plane_surface_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -1013,7 +1013,7 @@ impl KhrDisplaySwapchainFn {
                 if val.is_null() {
                     create_shared_swapchains_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -1096,7 +1096,7 @@ impl KhrXlibSurfaceFn {
                 if val.is_null() {
                     create_xlib_surface_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_xlib_presentation_support_khr: unsafe {
@@ -1118,7 +1118,7 @@ impl KhrXlibSurfaceFn {
                 if val.is_null() {
                     get_physical_device_xlib_presentation_support_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -1205,7 +1205,7 @@ impl KhrXcbSurfaceFn {
                 if val.is_null() {
                     create_xcb_surface_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_xcb_presentation_support_khr: unsafe {
@@ -1227,7 +1227,7 @@ impl KhrXcbSurfaceFn {
                 if val.is_null() {
                     get_physical_device_xcb_presentation_support_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -1314,7 +1314,7 @@ impl KhrWaylandSurfaceFn {
                 if val.is_null() {
                     create_wayland_surface_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_wayland_presentation_support_khr: unsafe {
@@ -1335,7 +1335,7 @@ impl KhrWaylandSurfaceFn {
                 if val.is_null() {
                     get_physical_device_wayland_presentation_support_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -1429,7 +1429,7 @@ impl KhrAndroidSurfaceFn {
                 if val.is_null() {
                     create_android_surface_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -1497,7 +1497,7 @@ impl KhrWin32SurfaceFn {
                 if val.is_null() {
                     create_win32_surface_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_win32_presentation_support_khr: unsafe {
@@ -1517,7 +1517,7 @@ impl KhrWin32SurfaceFn {
                 if val.is_null() {
                     get_physical_device_win32_presentation_support_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -1620,7 +1620,7 @@ impl AndroidNativeBufferFn {
                 if val.is_null() {
                     get_swapchain_gralloc_usage_android
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             acquire_image_android: unsafe {
@@ -1642,7 +1642,7 @@ impl AndroidNativeBufferFn {
                 if val.is_null() {
                     acquire_image_android
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             queue_signal_release_image_android: unsafe {
@@ -1665,7 +1665,7 @@ impl AndroidNativeBufferFn {
                 if val.is_null() {
                     queue_signal_release_image_android
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_swapchain_gralloc_usage2_android: unsafe {
@@ -1689,7 +1689,7 @@ impl AndroidNativeBufferFn {
                 if val.is_null() {
                     get_swapchain_gralloc_usage2_android
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -1821,7 +1821,7 @@ impl ExtDebugReportFn {
                 if val.is_null() {
                     create_debug_report_callback_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_debug_report_callback_ext: unsafe {
@@ -1842,7 +1842,7 @@ impl ExtDebugReportFn {
                 if val.is_null() {
                     destroy_debug_report_callback_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             debug_report_message_ext: unsafe {
@@ -1867,7 +1867,7 @@ impl ExtDebugReportFn {
                 if val.is_null() {
                     debug_report_message_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -2209,7 +2209,7 @@ impl ExtDebugMarkerFn {
                 if val.is_null() {
                     debug_marker_set_object_tag_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             debug_marker_set_object_name_ext: unsafe {
@@ -2229,7 +2229,7 @@ impl ExtDebugMarkerFn {
                 if val.is_null() {
                     debug_marker_set_object_name_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_debug_marker_begin_ext: unsafe {
@@ -2248,7 +2248,7 @@ impl ExtDebugMarkerFn {
                 if val.is_null() {
                     cmd_debug_marker_begin_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_debug_marker_end_ext: unsafe {
@@ -2264,7 +2264,7 @@ impl ExtDebugMarkerFn {
                 if val.is_null() {
                     cmd_debug_marker_end_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_debug_marker_insert_ext: unsafe {
@@ -2283,7 +2283,7 @@ impl ExtDebugMarkerFn {
                 if val.is_null() {
                     cmd_debug_marker_insert_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -2453,7 +2453,7 @@ impl KhrVideoQueueFn {
                 if val.is_null() {
                     get_physical_device_video_capabilities_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_video_format_properties_khr: unsafe {
@@ -2475,7 +2475,7 @@ impl KhrVideoQueueFn {
                 if val.is_null() {
                     get_physical_device_video_format_properties_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             create_video_session_khr: unsafe {
@@ -2496,7 +2496,7 @@ impl KhrVideoQueueFn {
                 if val.is_null() {
                     create_video_session_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_video_session_khr: unsafe {
@@ -2516,7 +2516,7 @@ impl KhrVideoQueueFn {
                 if val.is_null() {
                     destroy_video_session_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_video_session_memory_requirements_khr: unsafe {
@@ -2538,7 +2538,7 @@ impl KhrVideoQueueFn {
                 if val.is_null() {
                     get_video_session_memory_requirements_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             bind_video_session_memory_khr: unsafe {
@@ -2560,7 +2560,7 @@ impl KhrVideoQueueFn {
                 if val.is_null() {
                     bind_video_session_memory_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             create_video_session_parameters_khr: unsafe {
@@ -2582,7 +2582,7 @@ impl KhrVideoQueueFn {
                 if val.is_null() {
                     create_video_session_parameters_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             update_video_session_parameters_khr: unsafe {
@@ -2603,7 +2603,7 @@ impl KhrVideoQueueFn {
                 if val.is_null() {
                     update_video_session_parameters_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_video_session_parameters_khr: unsafe {
@@ -2624,7 +2624,7 @@ impl KhrVideoQueueFn {
                 if val.is_null() {
                     destroy_video_session_parameters_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_begin_video_coding_khr: unsafe {
@@ -2643,7 +2643,7 @@ impl KhrVideoQueueFn {
                 if val.is_null() {
                     cmd_begin_video_coding_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_end_video_coding_khr: unsafe {
@@ -2662,7 +2662,7 @@ impl KhrVideoQueueFn {
                 if val.is_null() {
                     cmd_end_video_coding_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_control_video_coding_khr: unsafe {
@@ -2682,7 +2682,7 @@ impl KhrVideoQueueFn {
                 if val.is_null() {
                     cmd_control_video_coding_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -2893,7 +2893,7 @@ impl KhrVideoDecodeQueueFn {
                 if val.is_null() {
                     cmd_decode_video_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -3105,7 +3105,7 @@ impl ExtTransformFeedbackFn {
                 if val.is_null() {
                     cmd_bind_transform_feedback_buffers_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_begin_transform_feedback_ext: unsafe {
@@ -3128,7 +3128,7 @@ impl ExtTransformFeedbackFn {
                 if val.is_null() {
                     cmd_begin_transform_feedback_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_end_transform_feedback_ext: unsafe {
@@ -3151,7 +3151,7 @@ impl ExtTransformFeedbackFn {
                 if val.is_null() {
                     cmd_end_transform_feedback_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_begin_query_indexed_ext: unsafe {
@@ -3173,7 +3173,7 @@ impl ExtTransformFeedbackFn {
                 if val.is_null() {
                     cmd_begin_query_indexed_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_end_query_indexed_ext: unsafe {
@@ -3194,7 +3194,7 @@ impl ExtTransformFeedbackFn {
                 if val.is_null() {
                     cmd_end_query_indexed_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_draw_indirect_byte_count_ext: unsafe {
@@ -3219,7 +3219,7 @@ impl ExtTransformFeedbackFn {
                 if val.is_null() {
                     cmd_draw_indirect_byte_count_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -3412,7 +3412,7 @@ impl NvxBinaryImportFn {
                 if val.is_null() {
                     create_cu_module_nvx
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             create_cu_function_nvx: unsafe {
@@ -3433,7 +3433,7 @@ impl NvxBinaryImportFn {
                 if val.is_null() {
                     create_cu_function_nvx
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_cu_module_nvx: unsafe {
@@ -3453,7 +3453,7 @@ impl NvxBinaryImportFn {
                 if val.is_null() {
                     destroy_cu_module_nvx
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_cu_function_nvx: unsafe {
@@ -3473,7 +3473,7 @@ impl NvxBinaryImportFn {
                 if val.is_null() {
                     destroy_cu_function_nvx
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_cu_launch_kernel_nvx: unsafe {
@@ -3492,7 +3492,7 @@ impl NvxBinaryImportFn {
                 if val.is_null() {
                     cmd_cu_launch_kernel_nvx
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -3604,7 +3604,7 @@ impl NvxImageViewHandleFn {
                 if val.is_null() {
                     get_image_view_handle_nvx
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_image_view_address_nvx: unsafe {
@@ -3624,7 +3624,7 @@ impl NvxImageViewHandleFn {
                 if val.is_null() {
                     get_image_view_address_nvx
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -3748,7 +3748,7 @@ impl AmdDrawIndirectCountFn {
                 if val.is_null() {
                     cmd_draw_indirect_count_amd
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_draw_indexed_indirect_count_amd: unsafe {
@@ -3773,7 +3773,7 @@ impl AmdDrawIndirectCountFn {
                 if val.is_null() {
                     cmd_draw_indexed_indirect_count_amd
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -4071,7 +4071,7 @@ impl AmdShaderInfoFn {
                 if val.is_null() {
                     get_shader_info_amd
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -4156,7 +4156,7 @@ impl KhrDynamicRenderingFn {
                 if val.is_null() {
                     cmd_begin_rendering_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_end_rendering_khr: unsafe {
@@ -4172,7 +4172,7 @@ impl KhrDynamicRenderingFn {
                 if val.is_null() {
                     cmd_end_rendering_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -4334,7 +4334,7 @@ impl GgpStreamDescriptorSurfaceFn {
                 if val.is_null() {
                     create_stream_descriptor_surface_ggp
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -4539,7 +4539,7 @@ impl NvExternalMemoryCapabilitiesFn {
                 if val.is_null() {
                     get_physical_device_external_image_format_properties_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -4634,7 +4634,7 @@ impl NvExternalMemoryWin32Fn {
                 if val.is_null() {
                     get_memory_win32_handle_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -4765,7 +4765,7 @@ impl KhrGetPhysicalDeviceProperties2Fn {
                 if val.is_null() {
                     get_physical_device_features2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_properties2_khr: unsafe {
@@ -4785,7 +4785,7 @@ impl KhrGetPhysicalDeviceProperties2Fn {
                 if val.is_null() {
                     get_physical_device_properties2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_format_properties2_khr: unsafe {
@@ -4806,7 +4806,7 @@ impl KhrGetPhysicalDeviceProperties2Fn {
                 if val.is_null() {
                     get_physical_device_format_properties2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_image_format_properties2_khr: unsafe {
@@ -4827,7 +4827,7 @@ impl KhrGetPhysicalDeviceProperties2Fn {
                 if val.is_null() {
                     get_physical_device_image_format_properties2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_queue_family_properties2_khr: unsafe {
@@ -4848,7 +4848,7 @@ impl KhrGetPhysicalDeviceProperties2Fn {
                 if val.is_null() {
                     get_physical_device_queue_family_properties2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_memory_properties2_khr: unsafe {
@@ -4868,7 +4868,7 @@ impl KhrGetPhysicalDeviceProperties2Fn {
                 if val.is_null() {
                     get_physical_device_memory_properties2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_sparse_image_format_properties2_khr: unsafe {
@@ -4890,7 +4890,7 @@ impl KhrGetPhysicalDeviceProperties2Fn {
                 if val.is_null() {
                     get_physical_device_sparse_image_format_properties2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -5057,7 +5057,7 @@ impl KhrDeviceGroupFn {
                 if val.is_null() {
                     get_device_group_peer_memory_features_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_device_mask_khr: unsafe {
@@ -5076,7 +5076,7 @@ impl KhrDeviceGroupFn {
                 if val.is_null() {
                     cmd_set_device_mask_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_dispatch_base_khr: unsafe {
@@ -5100,7 +5100,7 @@ impl KhrDeviceGroupFn {
                 if val.is_null() {
                     cmd_dispatch_base_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_device_group_present_capabilities_khr: unsafe {
@@ -5120,7 +5120,7 @@ impl KhrDeviceGroupFn {
                 if val.is_null() {
                     get_device_group_present_capabilities_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_device_group_surface_present_modes_khr: unsafe {
@@ -5141,7 +5141,7 @@ impl KhrDeviceGroupFn {
                 if val.is_null() {
                     get_device_group_surface_present_modes_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_present_rectangles_khr: unsafe {
@@ -5163,7 +5163,7 @@ impl KhrDeviceGroupFn {
                 if val.is_null() {
                     get_physical_device_present_rectangles_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             acquire_next_image2_khr: unsafe {
@@ -5183,7 +5183,7 @@ impl KhrDeviceGroupFn {
                 if val.is_null() {
                     acquire_next_image2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -5374,7 +5374,7 @@ impl NnViSurfaceFn {
                 if val.is_null() {
                     create_vi_surface_nn
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -5577,7 +5577,7 @@ impl KhrMaintenance1Fn {
                 if val.is_null() {
                     trim_command_pool_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -5649,7 +5649,7 @@ impl KhrDeviceGroupCreationFn {
                 if val.is_null() {
                     enumerate_physical_device_groups_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -5724,7 +5724,7 @@ impl KhrExternalMemoryCapabilitiesFn {
                 if val.is_null() {
                     get_physical_device_external_buffer_properties_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -5849,7 +5849,7 @@ impl KhrExternalMemoryWin32Fn {
                 if val.is_null() {
                     get_memory_win32_handle_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_memory_win32_handle_properties_khr: unsafe {
@@ -5871,7 +5871,7 @@ impl KhrExternalMemoryWin32Fn {
                 if val.is_null() {
                     get_memory_win32_handle_properties_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -5953,7 +5953,7 @@ impl KhrExternalMemoryFdFn {
                 if val.is_null() {
                     get_memory_fd_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_memory_fd_properties_khr: unsafe {
@@ -5975,7 +5975,7 @@ impl KhrExternalMemoryFdFn {
                 if val.is_null() {
                     get_memory_fd_properties_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -6075,7 +6075,7 @@ impl KhrExternalSemaphoreCapabilitiesFn {
                 if val.is_null() {
                     get_physical_device_external_semaphore_properties_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -6188,7 +6188,7 @@ impl KhrExternalSemaphoreWin32Fn {
                 if val.is_null() {
                     import_semaphore_win32_handle_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_semaphore_win32_handle_khr: unsafe {
@@ -6209,7 +6209,7 @@ impl KhrExternalSemaphoreWin32Fn {
                 if val.is_null() {
                     get_semaphore_win32_handle_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -6287,7 +6287,7 @@ impl KhrExternalSemaphoreFdFn {
                 if val.is_null() {
                     import_semaphore_fd_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_semaphore_fd_khr: unsafe {
@@ -6304,7 +6304,7 @@ impl KhrExternalSemaphoreFdFn {
                 if val.is_null() {
                     get_semaphore_fd_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -6388,7 +6388,7 @@ impl KhrPushDescriptorFn {
                 if val.is_null() {
                     cmd_push_descriptor_set_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_push_descriptor_set_with_template_khr: unsafe {
@@ -6411,7 +6411,7 @@ impl KhrPushDescriptorFn {
                 if val.is_null() {
                     cmd_push_descriptor_set_with_template_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -6513,7 +6513,7 @@ impl ExtConditionalRenderingFn {
                 if val.is_null() {
                     cmd_begin_conditional_rendering_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_end_conditional_rendering_ext: unsafe {
@@ -6532,7 +6532,7 @@ impl ExtConditionalRenderingFn {
                 if val.is_null() {
                     cmd_end_conditional_rendering_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -6704,7 +6704,7 @@ impl KhrDescriptorUpdateTemplateFn {
                 if val.is_null() {
                     create_descriptor_update_template_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_descriptor_update_template_khr: unsafe {
@@ -6725,7 +6725,7 @@ impl KhrDescriptorUpdateTemplateFn {
                 if val.is_null() {
                     destroy_descriptor_update_template_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             update_descriptor_set_with_template_khr: unsafe {
@@ -6747,7 +6747,7 @@ impl KhrDescriptorUpdateTemplateFn {
                 if val.is_null() {
                     update_descriptor_set_with_template_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_push_descriptor_set_with_template_khr: unsafe {
@@ -6770,7 +6770,7 @@ impl KhrDescriptorUpdateTemplateFn {
                 if val.is_null() {
                     cmd_push_descriptor_set_with_template_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -6917,7 +6917,7 @@ impl NvClipSpaceWScalingFn {
                 if val.is_null() {
                     cmd_set_viewport_w_scaling_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -6980,7 +6980,7 @@ impl ExtDirectModeDisplayFn {
                 if val.is_null() {
                     release_display_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -7043,7 +7043,7 @@ impl ExtAcquireXlibDisplayFn {
                 if val.is_null() {
                     acquire_xlib_display_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_rand_r_output_display_ext: unsafe {
@@ -7065,7 +7065,7 @@ impl ExtAcquireXlibDisplayFn {
                 if val.is_null() {
                     get_rand_r_output_display_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -7135,7 +7135,7 @@ impl ExtDisplaySurfaceCounterFn {
                 if val.is_null() {
                     get_physical_device_surface_capabilities2_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -7224,7 +7224,7 @@ impl ExtDisplayControlFn {
                 if val.is_null() {
                     display_power_control_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             register_device_event_ext: unsafe {
@@ -7245,7 +7245,7 @@ impl ExtDisplayControlFn {
                 if val.is_null() {
                     register_device_event_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             register_display_event_ext: unsafe {
@@ -7267,7 +7267,7 @@ impl ExtDisplayControlFn {
                 if val.is_null() {
                     register_display_event_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_swapchain_counter_ext: unsafe {
@@ -7288,7 +7288,7 @@ impl ExtDisplayControlFn {
                 if val.is_null() {
                     get_swapchain_counter_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -7397,7 +7397,7 @@ impl GoogleDisplayTimingFn {
                 if val.is_null() {
                     get_refresh_cycle_duration_google
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_past_presentation_timing_google: unsafe {
@@ -7419,7 +7419,7 @@ impl GoogleDisplayTimingFn {
                 if val.is_null() {
                     get_past_presentation_timing_google
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -7611,7 +7611,7 @@ impl ExtDiscardRectanglesFn {
                 if val.is_null() {
                     cmd_set_discard_rectangle_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -7800,7 +7800,7 @@ impl ExtHdrMetadataFn {
                 if val.is_null() {
                     set_hdr_metadata_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -7952,7 +7952,7 @@ impl KhrCreateRenderpass2Fn {
                 if val.is_null() {
                     create_render_pass2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_begin_render_pass2_khr: unsafe {
@@ -7972,7 +7972,7 @@ impl KhrCreateRenderpass2Fn {
                 if val.is_null() {
                     cmd_begin_render_pass2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_next_subpass2_khr: unsafe {
@@ -7992,7 +7992,7 @@ impl KhrCreateRenderpass2Fn {
                 if val.is_null() {
                     cmd_next_subpass2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_end_render_pass2_khr: unsafe {
@@ -8011,7 +8011,7 @@ impl KhrCreateRenderpass2Fn {
                 if val.is_null() {
                     cmd_end_render_pass2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -8120,7 +8120,7 @@ impl KhrSharedPresentableImageFn {
                 if val.is_null() {
                     get_swapchain_status_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -8192,7 +8192,7 @@ impl KhrExternalFenceCapabilitiesFn {
                 if val.is_null() {
                     get_physical_device_external_fence_properties_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -8302,7 +8302,7 @@ impl KhrExternalFenceWin32Fn {
                 if val.is_null() {
                     import_fence_win32_handle_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_fence_win32_handle_khr: unsafe {
@@ -8322,7 +8322,7 @@ impl KhrExternalFenceWin32Fn {
                 if val.is_null() {
                     get_fence_win32_handle_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -8394,7 +8394,7 @@ impl KhrExternalFenceFdFn {
                 if val.is_null() {
                     import_fence_fd_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_fence_fd_khr: unsafe {
@@ -8410,7 +8410,7 @@ impl KhrExternalFenceFdFn {
                 if val.is_null() {
                     get_fence_fd_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -8504,7 +8504,7 @@ impl KhrPerformanceQueryFn {
                 if val.is_null() {
                     enumerate_physical_device_queue_family_performance_query_counters_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_queue_family_performance_query_passes_khr: unsafe {
@@ -8525,7 +8525,7 @@ impl KhrPerformanceQueryFn {
                 if val.is_null() {
                     get_physical_device_queue_family_performance_query_passes_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             acquire_profiling_lock_khr: unsafe {
@@ -8544,7 +8544,7 @@ impl KhrPerformanceQueryFn {
                 if val.is_null() {
                     acquire_profiling_lock_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             release_profiling_lock_khr: unsafe {
@@ -8560,7 +8560,7 @@ impl KhrPerformanceQueryFn {
                 if val.is_null() {
                     release_profiling_lock_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -8743,7 +8743,7 @@ impl KhrGetSurfaceCapabilities2Fn {
                 if val.is_null() {
                     get_physical_device_surface_capabilities2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_surface_formats2_khr: unsafe {
@@ -8765,7 +8765,7 @@ impl KhrGetSurfaceCapabilities2Fn {
                 if val.is_null() {
                     get_physical_device_surface_formats2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -8897,7 +8897,7 @@ impl KhrGetDisplayProperties2Fn {
                 if val.is_null() {
                     get_physical_device_display_properties2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_display_plane_properties2_khr: unsafe {
@@ -8918,7 +8918,7 @@ impl KhrGetDisplayProperties2Fn {
                 if val.is_null() {
                     get_physical_device_display_plane_properties2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_display_mode_properties2_khr: unsafe {
@@ -8940,7 +8940,7 @@ impl KhrGetDisplayProperties2Fn {
                 if val.is_null() {
                     get_display_mode_properties2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_display_plane_capabilities2_khr: unsafe {
@@ -8961,7 +8961,7 @@ impl KhrGetDisplayProperties2Fn {
                 if val.is_null() {
                     get_display_plane_capabilities2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -9072,7 +9072,7 @@ impl MvkIosSurfaceFn {
                 if val.is_null() {
                     create_ios_surface_mvk
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -9135,7 +9135,7 @@ impl MvkMacosSurfaceFn {
                 if val.is_null() {
                     create_mac_os_surface_mvk
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -9333,7 +9333,7 @@ impl ExtDebugUtilsFn {
                 if val.is_null() {
                     set_debug_utils_object_name_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             set_debug_utils_object_tag_ext: unsafe {
@@ -9353,7 +9353,7 @@ impl ExtDebugUtilsFn {
                 if val.is_null() {
                     set_debug_utils_object_tag_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             queue_begin_debug_utils_label_ext: unsafe {
@@ -9373,7 +9373,7 @@ impl ExtDebugUtilsFn {
                 if val.is_null() {
                     queue_begin_debug_utils_label_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             queue_end_debug_utils_label_ext: unsafe {
@@ -9390,7 +9390,7 @@ impl ExtDebugUtilsFn {
                 if val.is_null() {
                     queue_end_debug_utils_label_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             queue_insert_debug_utils_label_ext: unsafe {
@@ -9410,7 +9410,7 @@ impl ExtDebugUtilsFn {
                 if val.is_null() {
                     queue_insert_debug_utils_label_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_begin_debug_utils_label_ext: unsafe {
@@ -9430,7 +9430,7 @@ impl ExtDebugUtilsFn {
                 if val.is_null() {
                     cmd_begin_debug_utils_label_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_end_debug_utils_label_ext: unsafe {
@@ -9449,7 +9449,7 @@ impl ExtDebugUtilsFn {
                 if val.is_null() {
                     cmd_end_debug_utils_label_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_insert_debug_utils_label_ext: unsafe {
@@ -9469,7 +9469,7 @@ impl ExtDebugUtilsFn {
                 if val.is_null() {
                     cmd_insert_debug_utils_label_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             create_debug_utils_messenger_ext: unsafe {
@@ -9491,7 +9491,7 @@ impl ExtDebugUtilsFn {
                 if val.is_null() {
                     create_debug_utils_messenger_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_debug_utils_messenger_ext: unsafe {
@@ -9512,7 +9512,7 @@ impl ExtDebugUtilsFn {
                 if val.is_null() {
                     destroy_debug_utils_messenger_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             submit_debug_utils_message_ext: unsafe {
@@ -9534,7 +9534,7 @@ impl ExtDebugUtilsFn {
                 if val.is_null() {
                     submit_debug_utils_message_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -9696,7 +9696,7 @@ impl AndroidExternalMemoryAndroidHardwareBufferFn {
                 if val.is_null() {
                     get_android_hardware_buffer_properties_android
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_memory_android_hardware_buffer_android: unsafe {
@@ -9717,7 +9717,7 @@ impl AndroidExternalMemoryAndroidHardwareBufferFn {
                 if val.is_null() {
                     get_memory_android_hardware_buffer_android
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -10075,7 +10075,7 @@ impl ExtSampleLocationsFn {
                 if val.is_null() {
                     cmd_set_sample_locations_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_multisample_properties_ext: unsafe {
@@ -10096,7 +10096,7 @@ impl ExtSampleLocationsFn {
                 if val.is_null() {
                     get_physical_device_multisample_properties_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -10216,7 +10216,7 @@ impl KhrGetMemoryRequirements2Fn {
                 if val.is_null() {
                     get_image_memory_requirements2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_buffer_memory_requirements2_khr: unsafe {
@@ -10237,7 +10237,7 @@ impl KhrGetMemoryRequirements2Fn {
                 if val.is_null() {
                     get_buffer_memory_requirements2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_image_sparse_memory_requirements2_khr: unsafe {
@@ -10259,7 +10259,7 @@ impl KhrGetMemoryRequirements2Fn {
                 if val.is_null() {
                     get_image_sparse_memory_requirements2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -10603,7 +10603,7 @@ impl KhrAccelerationStructureFn {
                 if val.is_null() {
                     create_acceleration_structure_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_acceleration_structure_khr: unsafe {
@@ -10624,7 +10624,7 @@ impl KhrAccelerationStructureFn {
                 if val.is_null() {
                     destroy_acceleration_structure_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_build_acceleration_structures_khr: unsafe {
@@ -10646,7 +10646,7 @@ impl KhrAccelerationStructureFn {
                 if val.is_null() {
                     cmd_build_acceleration_structures_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_build_acceleration_structures_indirect_khr: unsafe {
@@ -10670,7 +10670,7 @@ impl KhrAccelerationStructureFn {
                 if val.is_null() {
                     cmd_build_acceleration_structures_indirect_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             build_acceleration_structures_khr: unsafe {
@@ -10693,7 +10693,7 @@ impl KhrAccelerationStructureFn {
                 if val.is_null() {
                     build_acceleration_structures_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             copy_acceleration_structure_khr: unsafe {
@@ -10714,7 +10714,7 @@ impl KhrAccelerationStructureFn {
                 if val.is_null() {
                     copy_acceleration_structure_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             copy_acceleration_structure_to_memory_khr: unsafe {
@@ -10735,7 +10735,7 @@ impl KhrAccelerationStructureFn {
                 if val.is_null() {
                     copy_acceleration_structure_to_memory_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             copy_memory_to_acceleration_structure_khr: unsafe {
@@ -10756,7 +10756,7 @@ impl KhrAccelerationStructureFn {
                 if val.is_null() {
                     copy_memory_to_acceleration_structure_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             write_acceleration_structures_properties_khr: unsafe {
@@ -10781,7 +10781,7 @@ impl KhrAccelerationStructureFn {
                 if val.is_null() {
                     write_acceleration_structures_properties_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_copy_acceleration_structure_khr: unsafe {
@@ -10801,7 +10801,7 @@ impl KhrAccelerationStructureFn {
                 if val.is_null() {
                     cmd_copy_acceleration_structure_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_copy_acceleration_structure_to_memory_khr: unsafe {
@@ -10821,7 +10821,7 @@ impl KhrAccelerationStructureFn {
                 if val.is_null() {
                     cmd_copy_acceleration_structure_to_memory_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_copy_memory_to_acceleration_structure_khr: unsafe {
@@ -10841,7 +10841,7 @@ impl KhrAccelerationStructureFn {
                 if val.is_null() {
                     cmd_copy_memory_to_acceleration_structure_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_acceleration_structure_device_address_khr: unsafe {
@@ -10861,7 +10861,7 @@ impl KhrAccelerationStructureFn {
                 if val.is_null() {
                     get_acceleration_structure_device_address_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_write_acceleration_structures_properties_khr: unsafe {
@@ -10885,7 +10885,7 @@ impl KhrAccelerationStructureFn {
                 if val.is_null() {
                     cmd_write_acceleration_structures_properties_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_device_acceleration_structure_compatibility_khr: unsafe {
@@ -10906,7 +10906,7 @@ impl KhrAccelerationStructureFn {
                 if val.is_null() {
                     get_device_acceleration_structure_compatibility_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_acceleration_structure_build_sizes_khr: unsafe {
@@ -10929,7 +10929,7 @@ impl KhrAccelerationStructureFn {
                 if val.is_null() {
                     get_acceleration_structure_build_sizes_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -11305,7 +11305,7 @@ impl KhrRayTracingPipelineFn {
                 if val.is_null() {
                     cmd_trace_rays_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             create_ray_tracing_pipelines_khr: unsafe {
@@ -11330,7 +11330,7 @@ impl KhrRayTracingPipelineFn {
                 if val.is_null() {
                     create_ray_tracing_pipelines_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_ray_tracing_shader_group_handles_khr: unsafe {
@@ -11354,7 +11354,7 @@ impl KhrRayTracingPipelineFn {
                 if val.is_null() {
                     get_ray_tracing_shader_group_handles_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_ray_tracing_capture_replay_shader_group_handles_khr: unsafe {
@@ -11378,7 +11378,7 @@ impl KhrRayTracingPipelineFn {
                 if val.is_null() {
                     get_ray_tracing_capture_replay_shader_group_handles_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_trace_rays_indirect_khr: unsafe {
@@ -11401,7 +11401,7 @@ impl KhrRayTracingPipelineFn {
                 if val.is_null() {
                     cmd_trace_rays_indirect_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_ray_tracing_shader_group_stack_size_khr: unsafe {
@@ -11423,7 +11423,7 @@ impl KhrRayTracingPipelineFn {
                 if val.is_null() {
                     get_ray_tracing_shader_group_stack_size_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_ray_tracing_pipeline_stack_size_khr: unsafe {
@@ -11443,7 +11443,7 @@ impl KhrRayTracingPipelineFn {
                 if val.is_null() {
                     cmd_set_ray_tracing_pipeline_stack_size_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -11792,7 +11792,7 @@ impl KhrSamplerYcbcrConversionFn {
                 if val.is_null() {
                     create_sampler_ycbcr_conversion_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_sampler_ycbcr_conversion_khr: unsafe {
@@ -11813,7 +11813,7 @@ impl KhrSamplerYcbcrConversionFn {
                 if val.is_null() {
                     destroy_sampler_ycbcr_conversion_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -12007,7 +12007,7 @@ impl KhrBindMemory2Fn {
                 if val.is_null() {
                     bind_buffer_memory2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             bind_image_memory2_khr: unsafe {
@@ -12027,7 +12027,7 @@ impl KhrBindMemory2Fn {
                 if val.is_null() {
                     bind_image_memory2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -12104,7 +12104,7 @@ impl ExtImageDrmFormatModifierFn {
                 if val.is_null() {
                     get_image_drm_format_modifier_properties_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -12228,7 +12228,7 @@ impl ExtValidationCacheFn {
                 if val.is_null() {
                     create_validation_cache_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_validation_cache_ext: unsafe {
@@ -12249,7 +12249,7 @@ impl ExtValidationCacheFn {
                 if val.is_null() {
                     destroy_validation_cache_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             merge_validation_caches_ext: unsafe {
@@ -12271,7 +12271,7 @@ impl ExtValidationCacheFn {
                 if val.is_null() {
                     merge_validation_caches_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_validation_cache_data_ext: unsafe {
@@ -12293,7 +12293,7 @@ impl ExtValidationCacheFn {
                 if val.is_null() {
                     get_validation_cache_data_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -12498,7 +12498,7 @@ impl NvShadingRateImageFn {
                 if val.is_null() {
                     cmd_bind_shading_rate_image_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_viewport_shading_rate_palette_nv: unsafe {
@@ -12520,7 +12520,7 @@ impl NvShadingRateImageFn {
                 if val.is_null() {
                     cmd_set_viewport_shading_rate_palette_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_coarse_sample_order_nv: unsafe {
@@ -12542,7 +12542,7 @@ impl NvShadingRateImageFn {
                 if val.is_null() {
                     cmd_set_coarse_sample_order_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -12757,7 +12757,7 @@ impl NvRayTracingFn {
                 if val.is_null() {
                     create_acceleration_structure_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_acceleration_structure_nv: unsafe {
@@ -12778,7 +12778,7 @@ impl NvRayTracingFn {
                 if val.is_null() {
                     destroy_acceleration_structure_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_acceleration_structure_memory_requirements_nv: unsafe {
@@ -12799,7 +12799,7 @@ impl NvRayTracingFn {
                 if val.is_null() {
                     get_acceleration_structure_memory_requirements_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             bind_acceleration_structure_memory_nv: unsafe {
@@ -12820,7 +12820,7 @@ impl NvRayTracingFn {
                 if val.is_null() {
                     bind_acceleration_structure_memory_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_build_acceleration_structure_nv: unsafe {
@@ -12847,7 +12847,7 @@ impl NvRayTracingFn {
                 if val.is_null() {
                     cmd_build_acceleration_structure_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_copy_acceleration_structure_nv: unsafe {
@@ -12869,7 +12869,7 @@ impl NvRayTracingFn {
                 if val.is_null() {
                     cmd_copy_acceleration_structure_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_trace_rays_nv: unsafe {
@@ -12897,7 +12897,7 @@ impl NvRayTracingFn {
                 if val.is_null() {
                     cmd_trace_rays_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             create_ray_tracing_pipelines_nv: unsafe {
@@ -12921,7 +12921,7 @@ impl NvRayTracingFn {
                 if val.is_null() {
                     create_ray_tracing_pipelines_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_ray_tracing_shader_group_handles_nv: unsafe {
@@ -12945,7 +12945,7 @@ impl NvRayTracingFn {
                 if val.is_null() {
                     get_ray_tracing_shader_group_handles_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_acceleration_structure_handle_nv: unsafe {
@@ -12967,7 +12967,7 @@ impl NvRayTracingFn {
                 if val.is_null() {
                     get_acceleration_structure_handle_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_write_acceleration_structures_properties_nv: unsafe {
@@ -12991,7 +12991,7 @@ impl NvRayTracingFn {
                 if val.is_null() {
                     cmd_write_acceleration_structures_properties_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             compile_deferred_nv: unsafe {
@@ -13008,7 +13008,7 @@ impl NvRayTracingFn {
                 if val.is_null() {
                     compile_deferred_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -13405,7 +13405,7 @@ impl KhrMaintenance3Fn {
                 if val.is_null() {
                     get_descriptor_set_layout_support_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -13466,7 +13466,7 @@ impl KhrDrawIndirectCountFn {
                 if val.is_null() {
                     cmd_draw_indirect_count_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_draw_indexed_indirect_count_khr: unsafe {
@@ -13491,7 +13491,7 @@ impl KhrDrawIndirectCountFn {
                 if val.is_null() {
                     cmd_draw_indexed_indirect_count_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -13778,7 +13778,7 @@ impl ExtExternalMemoryHostFn {
                 if val.is_null() {
                     get_memory_host_pointer_properties_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -13855,7 +13855,7 @@ impl AmdBufferMarkerFn {
                 if val.is_null() {
                     cmd_write_buffer_marker_amd
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -14019,7 +14019,7 @@ impl ExtCalibratedTimestampsFn {
                 if val.is_null() {
                     get_physical_device_calibrateable_time_domains_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_calibrated_timestamps_ext: unsafe {
@@ -14042,7 +14042,7 @@ impl ExtCalibratedTimestampsFn {
                 if val.is_null() {
                     get_calibrated_timestamps_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -14563,7 +14563,7 @@ impl NvMeshShaderFn {
                 if val.is_null() {
                     cmd_draw_mesh_tasks_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_draw_mesh_tasks_indirect_nv: unsafe {
@@ -14586,7 +14586,7 @@ impl NvMeshShaderFn {
                 if val.is_null() {
                     cmd_draw_mesh_tasks_indirect_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_draw_mesh_tasks_indirect_count_nv: unsafe {
@@ -14611,7 +14611,7 @@ impl NvMeshShaderFn {
                 if val.is_null() {
                     cmd_draw_mesh_tasks_indirect_count_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -14765,7 +14765,7 @@ impl NvScissorExclusiveFn {
                 if val.is_null() {
                     cmd_set_exclusive_scissor_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -14843,7 +14843,7 @@ impl NvDeviceDiagnosticCheckpointsFn {
                 if val.is_null() {
                     cmd_set_checkpoint_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_queue_checkpoint_data_nv: unsafe {
@@ -14864,7 +14864,7 @@ impl NvDeviceDiagnosticCheckpointsFn {
                 if val.is_null() {
                     get_queue_checkpoint_data_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -14942,7 +14942,7 @@ impl KhrTimelineSemaphoreFn {
                 if val.is_null() {
                     get_semaphore_counter_value_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             wait_semaphores_khr: unsafe {
@@ -14959,7 +14959,7 @@ impl KhrTimelineSemaphoreFn {
                 if val.is_null() {
                     wait_semaphores_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             signal_semaphore_khr: unsafe {
@@ -14975,7 +14975,7 @@ impl KhrTimelineSemaphoreFn {
                 if val.is_null() {
                     signal_semaphore_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -15154,7 +15154,7 @@ impl IntelPerformanceQueryFn {
                 if val.is_null() {
                     initialize_performance_api_intel
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             uninitialize_performance_api_intel: unsafe {
@@ -15171,7 +15171,7 @@ impl IntelPerformanceQueryFn {
                 if val.is_null() {
                     uninitialize_performance_api_intel
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_performance_marker_intel: unsafe {
@@ -15191,7 +15191,7 @@ impl IntelPerformanceQueryFn {
                 if val.is_null() {
                     cmd_set_performance_marker_intel
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_performance_stream_marker_intel: unsafe {
@@ -15211,7 +15211,7 @@ impl IntelPerformanceQueryFn {
                 if val.is_null() {
                     cmd_set_performance_stream_marker_intel
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_performance_override_intel: unsafe {
@@ -15231,7 +15231,7 @@ impl IntelPerformanceQueryFn {
                 if val.is_null() {
                     cmd_set_performance_override_intel
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             acquire_performance_configuration_intel: unsafe {
@@ -15252,7 +15252,7 @@ impl IntelPerformanceQueryFn {
                 if val.is_null() {
                     acquire_performance_configuration_intel
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             release_performance_configuration_intel: unsafe {
@@ -15272,7 +15272,7 @@ impl IntelPerformanceQueryFn {
                 if val.is_null() {
                     release_performance_configuration_intel
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             queue_set_performance_configuration_intel: unsafe {
@@ -15292,7 +15292,7 @@ impl IntelPerformanceQueryFn {
                 if val.is_null() {
                     queue_set_performance_configuration_intel
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_performance_parameter_intel: unsafe {
@@ -15313,7 +15313,7 @@ impl IntelPerformanceQueryFn {
                 if val.is_null() {
                     get_performance_parameter_intel
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -15492,7 +15492,7 @@ impl AmdDisplayNativeHdrFn {
                 if val.is_null() {
                     set_local_dimming_amd
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -15562,7 +15562,7 @@ impl FuchsiaImagepipeSurfaceFn {
                 if val.is_null() {
                     create_image_pipe_surface_fuchsia
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -15667,7 +15667,7 @@ impl ExtMetalSurfaceFn {
                 if val.is_null() {
                     create_metal_surface_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -15951,7 +15951,7 @@ impl KhrFragmentShadingRateFn {
                 if val.is_null() {
                     get_physical_device_fragment_shading_rates_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_fragment_shading_rate_khr: unsafe {
@@ -15972,7 +15972,7 @@ impl KhrFragmentShadingRateFn {
                 if val.is_null() {
                     cmd_set_fragment_shading_rate_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -16456,7 +16456,7 @@ impl ExtBufferDeviceAddressFn {
                 if val.is_null() {
                     get_buffer_device_address_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -16532,7 +16532,7 @@ impl ExtToolingInfoFn {
                 if val.is_null() {
                     get_physical_device_tool_properties_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -16646,7 +16646,7 @@ impl KhrPresentWaitFn {
                 if val.is_null() {
                     wait_for_present_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -16710,7 +16710,7 @@ impl NvCooperativeMatrixFn {
                 if val.is_null() {
                     get_physical_device_cooperative_matrix_properties_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -16783,7 +16783,7 @@ impl NvCoverageReductionModeFn {
                 if val.is_null() {
                     get_physical_device_supported_framebuffer_mixed_samples_combinations_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -16968,7 +16968,7 @@ impl ExtFullScreenExclusiveFn {
                 if val.is_null() {
                     get_physical_device_surface_present_modes2_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             acquire_full_screen_exclusive_mode_ext: unsafe {
@@ -16988,7 +16988,7 @@ impl ExtFullScreenExclusiveFn {
                 if val.is_null() {
                     acquire_full_screen_exclusive_mode_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             release_full_screen_exclusive_mode_ext: unsafe {
@@ -17008,7 +17008,7 @@ impl ExtFullScreenExclusiveFn {
                 if val.is_null() {
                     release_full_screen_exclusive_mode_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_device_group_surface_present_modes2_ext: unsafe {
@@ -17029,7 +17029,7 @@ impl ExtFullScreenExclusiveFn {
                 if val.is_null() {
                     get_device_group_surface_present_modes2_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -17129,7 +17129,7 @@ impl ExtHeadlessSurfaceFn {
                 if val.is_null() {
                     create_headless_surface_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -17196,7 +17196,7 @@ impl KhrBufferDeviceAddressFn {
                 if val.is_null() {
                     get_buffer_device_address_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_buffer_opaque_capture_address_khr: unsafe {
@@ -17216,7 +17216,7 @@ impl KhrBufferDeviceAddressFn {
                 if val.is_null() {
                     get_buffer_opaque_capture_address_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_device_memory_opaque_capture_address_khr: unsafe {
@@ -17236,7 +17236,7 @@ impl KhrBufferDeviceAddressFn {
                 if val.is_null() {
                     get_device_memory_opaque_capture_address_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -17355,7 +17355,7 @@ impl ExtLineRasterizationFn {
                 if val.is_null() {
                     cmd_set_line_stipple_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -17442,7 +17442,7 @@ impl ExtHostQueryResetFn {
                 if val.is_null() {
                     reset_query_pool_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -17663,7 +17663,7 @@ impl ExtExtendedDynamicStateFn {
                 if val.is_null() {
                     cmd_set_cull_mode_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_front_face_ext: unsafe {
@@ -17682,7 +17682,7 @@ impl ExtExtendedDynamicStateFn {
                 if val.is_null() {
                     cmd_set_front_face_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_primitive_topology_ext: unsafe {
@@ -17702,7 +17702,7 @@ impl ExtExtendedDynamicStateFn {
                 if val.is_null() {
                     cmd_set_primitive_topology_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_viewport_with_count_ext: unsafe {
@@ -17723,7 +17723,7 @@ impl ExtExtendedDynamicStateFn {
                 if val.is_null() {
                     cmd_set_viewport_with_count_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_scissor_with_count_ext: unsafe {
@@ -17744,7 +17744,7 @@ impl ExtExtendedDynamicStateFn {
                 if val.is_null() {
                     cmd_set_scissor_with_count_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_bind_vertex_buffers2_ext: unsafe {
@@ -17769,7 +17769,7 @@ impl ExtExtendedDynamicStateFn {
                 if val.is_null() {
                     cmd_bind_vertex_buffers2_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_depth_test_enable_ext: unsafe {
@@ -17789,7 +17789,7 @@ impl ExtExtendedDynamicStateFn {
                 if val.is_null() {
                     cmd_set_depth_test_enable_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_depth_write_enable_ext: unsafe {
@@ -17809,7 +17809,7 @@ impl ExtExtendedDynamicStateFn {
                 if val.is_null() {
                     cmd_set_depth_write_enable_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_depth_compare_op_ext: unsafe {
@@ -17828,7 +17828,7 @@ impl ExtExtendedDynamicStateFn {
                 if val.is_null() {
                     cmd_set_depth_compare_op_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_depth_bounds_test_enable_ext: unsafe {
@@ -17848,7 +17848,7 @@ impl ExtExtendedDynamicStateFn {
                 if val.is_null() {
                     cmd_set_depth_bounds_test_enable_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_stencil_test_enable_ext: unsafe {
@@ -17868,7 +17868,7 @@ impl ExtExtendedDynamicStateFn {
                 if val.is_null() {
                     cmd_set_stencil_test_enable_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_stencil_op_ext: unsafe {
@@ -17891,7 +17891,7 @@ impl ExtExtendedDynamicStateFn {
                 if val.is_null() {
                     cmd_set_stencil_op_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -18101,7 +18101,7 @@ impl KhrDeferredHostOperationsFn {
                 if val.is_null() {
                     create_deferred_operation_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_deferred_operation_khr: unsafe {
@@ -18122,7 +18122,7 @@ impl KhrDeferredHostOperationsFn {
                 if val.is_null() {
                     destroy_deferred_operation_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_deferred_operation_max_concurrency_khr: unsafe {
@@ -18142,7 +18142,7 @@ impl KhrDeferredHostOperationsFn {
                 if val.is_null() {
                     get_deferred_operation_max_concurrency_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_deferred_operation_result_khr: unsafe {
@@ -18162,7 +18162,7 @@ impl KhrDeferredHostOperationsFn {
                 if val.is_null() {
                     get_deferred_operation_result_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             deferred_operation_join_khr: unsafe {
@@ -18182,7 +18182,7 @@ impl KhrDeferredHostOperationsFn {
                 if val.is_null() {
                     deferred_operation_join_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -18307,7 +18307,7 @@ impl KhrPipelineExecutablePropertiesFn {
                 if val.is_null() {
                     get_pipeline_executable_properties_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_pipeline_executable_statistics_khr: unsafe {
@@ -18329,7 +18329,7 @@ impl KhrPipelineExecutablePropertiesFn {
                 if val.is_null() {
                     get_pipeline_executable_statistics_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_pipeline_executable_internal_representations_khr: unsafe {
@@ -18351,7 +18351,7 @@ impl KhrPipelineExecutablePropertiesFn {
                 if val.is_null() {
                     get_pipeline_executable_internal_representations_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -18637,7 +18637,7 @@ impl NvDeviceGeneratedCommandsFn {
                 if val.is_null() {
                     get_generated_commands_memory_requirements_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_preprocess_generated_commands_nv: unsafe {
@@ -18657,7 +18657,7 @@ impl NvDeviceGeneratedCommandsFn {
                 if val.is_null() {
                     cmd_preprocess_generated_commands_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_execute_generated_commands_nv: unsafe {
@@ -18678,7 +18678,7 @@ impl NvDeviceGeneratedCommandsFn {
                 if val.is_null() {
                     cmd_execute_generated_commands_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_bind_pipeline_shader_group_nv: unsafe {
@@ -18700,7 +18700,7 @@ impl NvDeviceGeneratedCommandsFn {
                 if val.is_null() {
                     cmd_bind_pipeline_shader_group_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             create_indirect_commands_layout_nv: unsafe {
@@ -18722,7 +18722,7 @@ impl NvDeviceGeneratedCommandsFn {
                 if val.is_null() {
                     create_indirect_commands_layout_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_indirect_commands_layout_nv: unsafe {
@@ -18743,7 +18743,7 @@ impl NvDeviceGeneratedCommandsFn {
                 if val.is_null() {
                     destroy_indirect_commands_layout_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -19060,7 +19060,7 @@ impl ExtAcquireDrmDisplayFn {
                 if val.is_null() {
                     acquire_drm_display_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_drm_display_ext: unsafe {
@@ -19078,7 +19078,7 @@ impl ExtAcquireDrmDisplayFn {
                 if val.is_null() {
                     get_drm_display_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -19398,7 +19398,7 @@ impl ExtPrivateDataFn {
                 if val.is_null() {
                     create_private_data_slot_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_private_data_slot_ext: unsafe {
@@ -19419,7 +19419,7 @@ impl ExtPrivateDataFn {
                 if val.is_null() {
                     destroy_private_data_slot_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             set_private_data_ext: unsafe {
@@ -19438,7 +19438,7 @@ impl ExtPrivateDataFn {
                 if val.is_null() {
                     set_private_data_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_private_data_ext: unsafe {
@@ -19457,7 +19457,7 @@ impl ExtPrivateDataFn {
                 if val.is_null() {
                     get_private_data_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -19646,7 +19646,7 @@ impl KhrVideoEncodeQueueFn {
                 if val.is_null() {
                     cmd_encode_video_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -20069,7 +20069,7 @@ impl KhrSynchronization2Fn {
                 if val.is_null() {
                     cmd_set_event2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_reset_event2_khr: unsafe {
@@ -20086,7 +20086,7 @@ impl KhrSynchronization2Fn {
                 if val.is_null() {
                     cmd_reset_event2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_wait_events2_khr: unsafe {
@@ -20104,7 +20104,7 @@ impl KhrSynchronization2Fn {
                 if val.is_null() {
                     cmd_wait_events2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_pipeline_barrier2_khr: unsafe {
@@ -20123,7 +20123,7 @@ impl KhrSynchronization2Fn {
                 if val.is_null() {
                     cmd_pipeline_barrier2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_write_timestamp2_khr: unsafe {
@@ -20144,7 +20144,7 @@ impl KhrSynchronization2Fn {
                 if val.is_null() {
                     cmd_write_timestamp2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             queue_submit2_khr: unsafe {
@@ -20161,7 +20161,7 @@ impl KhrSynchronization2Fn {
                 if val.is_null() {
                     queue_submit2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_write_buffer_marker2_amd: unsafe {
@@ -20184,7 +20184,7 @@ impl KhrSynchronization2Fn {
                 if val.is_null() {
                     cmd_write_buffer_marker2_amd
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_queue_checkpoint_data2_nv: unsafe {
@@ -20205,7 +20205,7 @@ impl KhrSynchronization2Fn {
                 if val.is_null() {
                     get_queue_checkpoint_data2_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -20654,7 +20654,7 @@ impl NvFragmentShadingRateEnumsFn {
                 if val.is_null() {
                     cmd_set_fragment_shading_rate_enum_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -20984,7 +20984,7 @@ impl KhrCopyCommands2Fn {
                 if val.is_null() {
                     cmd_copy_buffer2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_copy_image2_khr: unsafe {
@@ -21000,7 +21000,7 @@ impl KhrCopyCommands2Fn {
                 if val.is_null() {
                     cmd_copy_image2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_copy_buffer_to_image2_khr: unsafe {
@@ -21020,7 +21020,7 @@ impl KhrCopyCommands2Fn {
                 if val.is_null() {
                     cmd_copy_buffer_to_image2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_copy_image_to_buffer2_khr: unsafe {
@@ -21040,7 +21040,7 @@ impl KhrCopyCommands2Fn {
                 if val.is_null() {
                     cmd_copy_image_to_buffer2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_blit_image2_khr: unsafe {
@@ -21056,7 +21056,7 @@ impl KhrCopyCommands2Fn {
                 if val.is_null() {
                     cmd_blit_image2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_resolve_image2_khr: unsafe {
@@ -21075,7 +21075,7 @@ impl KhrCopyCommands2Fn {
                 if val.is_null() {
                     cmd_resolve_image2_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -21354,7 +21354,7 @@ impl NvAcquireWinrtDisplayFn {
                 if val.is_null() {
                     acquire_winrt_display_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_winrt_display_nv: unsafe {
@@ -21371,7 +21371,7 @@ impl NvAcquireWinrtDisplayFn {
                 if val.is_null() {
                     get_winrt_display_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -21447,7 +21447,7 @@ impl ExtDirectfbSurfaceFn {
                 if val.is_null() {
                     create_direct_fb_surface_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_direct_fb_presentation_support_ext: unsafe {
@@ -21468,7 +21468,7 @@ impl ExtDirectfbSurfaceFn {
                 if val.is_null() {
                     get_physical_device_direct_fb_presentation_support_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -21621,7 +21621,7 @@ impl ExtVertexInputDynamicStateFn {
                 if val.is_null() {
                     cmd_set_vertex_input_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -21926,7 +21926,7 @@ impl FuchsiaExternalMemoryFn {
                 if val.is_null() {
                     get_memory_zircon_handle_fuchsia
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_memory_zircon_handle_properties_fuchsia: unsafe {
@@ -21948,7 +21948,7 @@ impl FuchsiaExternalMemoryFn {
                 if val.is_null() {
                     get_memory_zircon_handle_properties_fuchsia
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -22037,7 +22037,7 @@ impl FuchsiaExternalSemaphoreFn {
                 if val.is_null() {
                     import_semaphore_zircon_handle_fuchsia
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_semaphore_zircon_handle_fuchsia: unsafe {
@@ -22058,7 +22058,7 @@ impl FuchsiaExternalSemaphoreFn {
                 if val.is_null() {
                     get_semaphore_zircon_handle_fuchsia
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -22170,7 +22170,7 @@ impl FuchsiaBufferCollectionFn {
                 if val.is_null() {
                     create_buffer_collection_fuchsia
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             set_buffer_collection_image_constraints_fuchsia: unsafe {
@@ -22191,7 +22191,7 @@ impl FuchsiaBufferCollectionFn {
                 if val.is_null() {
                     set_buffer_collection_image_constraints_fuchsia
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             set_buffer_collection_buffer_constraints_fuchsia: unsafe {
@@ -22212,7 +22212,7 @@ impl FuchsiaBufferCollectionFn {
                 if val.is_null() {
                     set_buffer_collection_buffer_constraints_fuchsia
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_buffer_collection_fuchsia: unsafe {
@@ -22233,7 +22233,7 @@ impl FuchsiaBufferCollectionFn {
                 if val.is_null() {
                     destroy_buffer_collection_fuchsia
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_buffer_collection_properties_fuchsia: unsafe {
@@ -22254,7 +22254,7 @@ impl FuchsiaBufferCollectionFn {
                 if val.is_null() {
                     get_buffer_collection_properties_fuchsia
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -22422,7 +22422,7 @@ impl HuaweiSubpassShadingFn {
                 if val.is_null() {
                     get_device_subpass_shading_max_workgroup_size_huawei
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_subpass_shading_huawei: unsafe {
@@ -22440,7 +22440,7 @@ impl HuaweiSubpassShadingFn {
                 if val.is_null() {
                     cmd_subpass_shading_huawei
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -22524,7 +22524,7 @@ impl HuaweiInvocationMaskFn {
                 if val.is_null() {
                     cmd_bind_invocation_mask_huawei
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -22599,7 +22599,7 @@ impl NvExternalMemoryRdmaFn {
                 if val.is_null() {
                     get_memory_remote_address_nv
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -22787,7 +22787,7 @@ impl ExtExtendedDynamicState2Fn {
                 if val.is_null() {
                     cmd_set_patch_control_points_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_rasterizer_discard_enable_ext: unsafe {
@@ -22807,7 +22807,7 @@ impl ExtExtendedDynamicState2Fn {
                 if val.is_null() {
                     cmd_set_rasterizer_discard_enable_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_depth_bias_enable_ext: unsafe {
@@ -22827,7 +22827,7 @@ impl ExtExtendedDynamicState2Fn {
                 if val.is_null() {
                     cmd_set_depth_bias_enable_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_logic_op_ext: unsafe {
@@ -22843,7 +22843,7 @@ impl ExtExtendedDynamicState2Fn {
                 if val.is_null() {
                     cmd_set_logic_op_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_primitive_restart_enable_ext: unsafe {
@@ -22863,7 +22863,7 @@ impl ExtExtendedDynamicState2Fn {
                 if val.is_null() {
                     cmd_set_primitive_restart_enable_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -22968,7 +22968,7 @@ impl QnxScreenSurfaceFn {
                 if val.is_null() {
                     create_screen_surface_qnx
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_screen_presentation_support_qnx: unsafe {
@@ -22989,7 +22989,7 @@ impl QnxScreenSurfaceFn {
                 if val.is_null() {
                     get_physical_device_screen_presentation_support_qnx
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -23100,7 +23100,7 @@ impl ExtColorWriteEnableFn {
                 if val.is_null() {
                     cmd_set_color_write_enable_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -23382,7 +23382,7 @@ impl ExtMultiDrawFn {
                 if val.is_null() {
                     cmd_draw_multi_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_draw_multi_indexed_ext: unsafe {
@@ -23406,7 +23406,7 @@ impl ExtMultiDrawFn {
                 if val.is_null() {
                     cmd_draw_multi_indexed_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -23859,7 +23859,7 @@ impl ExtPageableDeviceLocalMemoryFn {
                 if val.is_null() {
                     set_device_memory_priority_ext
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -23936,7 +23936,7 @@ impl KhrMaintenance4Fn {
                 if val.is_null() {
                     get_device_buffer_memory_requirements_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_device_image_memory_requirements_khr: unsafe {
@@ -23957,7 +23957,7 @@ impl KhrMaintenance4Fn {
                 if val.is_null() {
                     get_device_image_memory_requirements_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_device_image_sparse_memory_requirements_khr: unsafe {
@@ -23979,7 +23979,7 @@ impl KhrMaintenance4Fn {
                 if val.is_null() {
                     get_device_image_sparse_memory_requirements_khr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }

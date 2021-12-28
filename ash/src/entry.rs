@@ -2,13 +2,13 @@ use crate::instance::Instance;
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
+use core::ffi::c_void;
+use core::mem;
+use core::ptr;
 use std::ffi::CStr;
 #[cfg(feature = "loaded")]
 use std::ffi::OsStr;
-use std::mem;
 use std::os::raw::c_char;
-use std::os::raw::c_void;
-use std::ptr;
 #[cfg(feature = "loaded")]
 use std::sync::Arc;
 
@@ -318,8 +318,8 @@ impl vk::StaticFn {
 
 #[derive(Clone, Debug)]
 pub struct MissingEntryPoint;
-impl std::fmt::Display for MissingEntryPoint {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::result::Result<(), std::fmt::Error> {
+impl core::fmt::Display for MissingEntryPoint {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::result::Result<(), core::fmt::Error> {
         write!(f, "Cannot load `vkGetInstanceProcAddr` symbol from library")
     }
 }
@@ -333,8 +333,8 @@ extern "system" {
 
 #[cfg(feature = "loaded")]
 mod loaded {
+    use core::fmt;
     use std::error::Error;
-    use std::fmt;
 
     use super::*;
 

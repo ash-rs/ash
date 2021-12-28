@@ -33,7 +33,7 @@ impl StaticFn {
                 if val.is_null() {
                     get_instance_proc_addr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -91,7 +91,7 @@ impl EntryFnV1_0 {
                 if val.is_null() {
                     create_instance
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             enumerate_instance_extension_properties: unsafe {
@@ -112,7 +112,7 @@ impl EntryFnV1_0 {
                 if val.is_null() {
                     enumerate_instance_extension_properties
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             enumerate_instance_layer_properties: unsafe {
@@ -132,7 +132,7 @@ impl EntryFnV1_0 {
                 if val.is_null() {
                     enumerate_instance_layer_properties
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -281,7 +281,7 @@ impl InstanceFnV1_0 {
                 if val.is_null() {
                     destroy_instance
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             enumerate_physical_devices: unsafe {
@@ -302,7 +302,7 @@ impl InstanceFnV1_0 {
                 if val.is_null() {
                     enumerate_physical_devices
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_features: unsafe {
@@ -322,7 +322,7 @@ impl InstanceFnV1_0 {
                 if val.is_null() {
                     get_physical_device_features
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_format_properties: unsafe {
@@ -343,7 +343,7 @@ impl InstanceFnV1_0 {
                 if val.is_null() {
                     get_physical_device_format_properties
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_image_format_properties: unsafe {
@@ -368,7 +368,7 @@ impl InstanceFnV1_0 {
                 if val.is_null() {
                     get_physical_device_image_format_properties
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_properties: unsafe {
@@ -388,7 +388,7 @@ impl InstanceFnV1_0 {
                 if val.is_null() {
                     get_physical_device_properties
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_queue_family_properties: unsafe {
@@ -409,7 +409,7 @@ impl InstanceFnV1_0 {
                 if val.is_null() {
                     get_physical_device_queue_family_properties
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_memory_properties: unsafe {
@@ -429,7 +429,7 @@ impl InstanceFnV1_0 {
                 if val.is_null() {
                     get_physical_device_memory_properties
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_device_proc_addr: unsafe {
@@ -445,7 +445,7 @@ impl InstanceFnV1_0 {
                 if val.is_null() {
                     get_device_proc_addr
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             create_device: unsafe {
@@ -462,7 +462,7 @@ impl InstanceFnV1_0 {
                 if val.is_null() {
                     create_device
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             enumerate_device_extension_properties: unsafe {
@@ -484,7 +484,7 @@ impl InstanceFnV1_0 {
                 if val.is_null() {
                     enumerate_device_extension_properties
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             enumerate_device_layer_properties: unsafe {
@@ -505,7 +505,7 @@ impl InstanceFnV1_0 {
                 if val.is_null() {
                     enumerate_device_layer_properties
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_sparse_image_format_properties: unsafe {
@@ -531,7 +531,7 @@ impl InstanceFnV1_0 {
                 if val.is_null() {
                     get_physical_device_sparse_image_format_properties
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -1618,7 +1618,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     destroy_device
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_device_queue: unsafe {
@@ -1635,7 +1635,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     get_device_queue
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             queue_submit: unsafe {
@@ -1652,7 +1652,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     queue_submit
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             queue_wait_idle: unsafe {
@@ -1664,7 +1664,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     queue_wait_idle
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             device_wait_idle: unsafe {
@@ -1676,7 +1676,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     device_wait_idle
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             allocate_memory: unsafe {
@@ -1693,7 +1693,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     allocate_memory
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             free_memory: unsafe {
@@ -1709,7 +1709,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     free_memory
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             map_memory: unsafe {
@@ -1728,7 +1728,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     map_memory
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             unmap_memory: unsafe {
@@ -1740,7 +1740,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     unmap_memory
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             flush_mapped_memory_ranges: unsafe {
@@ -1760,7 +1760,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     flush_mapped_memory_ranges
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             invalidate_mapped_memory_ranges: unsafe {
@@ -1781,7 +1781,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     invalidate_mapped_memory_ranges
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_device_memory_commitment: unsafe {
@@ -1802,7 +1802,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     get_device_memory_commitment
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             bind_buffer_memory: unsafe {
@@ -1820,7 +1820,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     bind_buffer_memory
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             bind_image_memory: unsafe {
@@ -1837,7 +1837,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     bind_image_memory
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_buffer_memory_requirements: unsafe {
@@ -1858,7 +1858,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     get_buffer_memory_requirements
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_image_memory_requirements: unsafe {
@@ -1879,7 +1879,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     get_image_memory_requirements
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_image_sparse_memory_requirements: unsafe {
@@ -1901,7 +1901,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     get_image_sparse_memory_requirements
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             queue_bind_sparse: unsafe {
@@ -1918,7 +1918,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     queue_bind_sparse
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             create_fence: unsafe {
@@ -1935,7 +1935,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     create_fence
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_fence: unsafe {
@@ -1951,7 +1951,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     destroy_fence
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             reset_fences: unsafe {
@@ -1967,7 +1967,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     reset_fences
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_fence_status: unsafe {
@@ -1982,7 +1982,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     get_fence_status
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             wait_for_fences: unsafe {
@@ -2000,7 +2000,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     wait_for_fences
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             create_semaphore: unsafe {
@@ -2017,7 +2017,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     create_semaphore
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_semaphore: unsafe {
@@ -2034,7 +2034,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     destroy_semaphore
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             create_event: unsafe {
@@ -2051,7 +2051,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     create_event
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_event: unsafe {
@@ -2067,7 +2067,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     destroy_event
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_event_status: unsafe {
@@ -2082,7 +2082,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     get_event_status
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             set_event: unsafe {
@@ -2094,7 +2094,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     set_event
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             reset_event: unsafe {
@@ -2106,7 +2106,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     reset_event
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             create_query_pool: unsafe {
@@ -2123,7 +2123,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     create_query_pool
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_query_pool: unsafe {
@@ -2140,7 +2140,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     destroy_query_pool
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_query_pool_results: unsafe {
@@ -2165,7 +2165,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     get_query_pool_results
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             create_buffer: unsafe {
@@ -2182,7 +2182,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     create_buffer
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_buffer: unsafe {
@@ -2198,7 +2198,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     destroy_buffer
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             create_buffer_view: unsafe {
@@ -2216,7 +2216,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     create_buffer_view
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_buffer_view: unsafe {
@@ -2233,7 +2233,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     destroy_buffer_view
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             create_image: unsafe {
@@ -2250,7 +2250,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     create_image
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_image: unsafe {
@@ -2266,7 +2266,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     destroy_image
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_image_subresource_layout: unsafe {
@@ -2288,7 +2288,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     get_image_subresource_layout
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             create_image_view: unsafe {
@@ -2305,7 +2305,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     create_image_view
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_image_view: unsafe {
@@ -2322,7 +2322,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     destroy_image_view
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             create_shader_module: unsafe {
@@ -2340,7 +2340,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     create_shader_module
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_shader_module: unsafe {
@@ -2360,7 +2360,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     destroy_shader_module
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             create_pipeline_cache: unsafe {
@@ -2381,7 +2381,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     create_pipeline_cache
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_pipeline_cache: unsafe {
@@ -2401,7 +2401,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     destroy_pipeline_cache
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_pipeline_cache_data: unsafe {
@@ -2422,7 +2422,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     get_pipeline_cache_data
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             merge_pipeline_caches: unsafe {
@@ -2443,7 +2443,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     merge_pipeline_caches
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             create_graphics_pipelines: unsafe {
@@ -2466,7 +2466,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     create_graphics_pipelines
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             create_compute_pipelines: unsafe {
@@ -2489,7 +2489,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     create_compute_pipelines
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_pipeline: unsafe {
@@ -2505,7 +2505,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     destroy_pipeline
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             create_pipeline_layout: unsafe {
@@ -2526,7 +2526,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     create_pipeline_layout
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_pipeline_layout: unsafe {
@@ -2546,7 +2546,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     destroy_pipeline_layout
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             create_sampler: unsafe {
@@ -2563,7 +2563,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     create_sampler
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_sampler: unsafe {
@@ -2579,7 +2579,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     destroy_sampler
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             create_descriptor_set_layout: unsafe {
@@ -2601,7 +2601,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     create_descriptor_set_layout
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_descriptor_set_layout: unsafe {
@@ -2622,7 +2622,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     destroy_descriptor_set_layout
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             create_descriptor_pool: unsafe {
@@ -2643,7 +2643,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     create_descriptor_pool
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_descriptor_pool: unsafe {
@@ -2663,7 +2663,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     destroy_descriptor_pool
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             reset_descriptor_pool: unsafe {
@@ -2683,7 +2683,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     reset_descriptor_pool
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             allocate_descriptor_sets: unsafe {
@@ -2703,7 +2703,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     allocate_descriptor_sets
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             free_descriptor_sets: unsafe {
@@ -2721,7 +2721,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     free_descriptor_sets
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             update_descriptor_sets: unsafe {
@@ -2743,7 +2743,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     update_descriptor_sets
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             create_framebuffer: unsafe {
@@ -2761,7 +2761,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     create_framebuffer
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_framebuffer: unsafe {
@@ -2778,7 +2778,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     destroy_framebuffer
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             create_render_pass: unsafe {
@@ -2796,7 +2796,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     create_render_pass
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_render_pass: unsafe {
@@ -2813,7 +2813,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     destroy_render_pass
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_render_area_granularity: unsafe {
@@ -2834,7 +2834,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     get_render_area_granularity
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             create_command_pool: unsafe {
@@ -2852,7 +2852,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     create_command_pool
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_command_pool: unsafe {
@@ -2869,7 +2869,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     destroy_command_pool
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             reset_command_pool: unsafe {
@@ -2886,7 +2886,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     reset_command_pool
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             allocate_command_buffers: unsafe {
@@ -2906,7 +2906,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     allocate_command_buffers
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             free_command_buffers: unsafe {
@@ -2924,7 +2924,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     free_command_buffers
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             begin_command_buffer: unsafe {
@@ -2940,7 +2940,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     begin_command_buffer
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             end_command_buffer: unsafe {
@@ -2955,7 +2955,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     end_command_buffer
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             reset_command_buffer: unsafe {
@@ -2971,7 +2971,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     reset_command_buffer
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_bind_pipeline: unsafe {
@@ -2987,7 +2987,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_bind_pipeline
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_viewport: unsafe {
@@ -3004,7 +3004,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_set_viewport
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_scissor: unsafe {
@@ -3021,7 +3021,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_set_scissor
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_line_width: unsafe {
@@ -3036,7 +3036,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_set_line_width
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_depth_bias: unsafe {
@@ -3053,7 +3053,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_set_depth_bias
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_blend_constants: unsafe {
@@ -3072,7 +3072,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_set_blend_constants
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_depth_bounds: unsafe {
@@ -3089,7 +3089,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_set_depth_bounds
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_stencil_compare_mask: unsafe {
@@ -3110,7 +3110,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_set_stencil_compare_mask
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_stencil_write_mask: unsafe {
@@ -3130,7 +3130,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_set_stencil_write_mask
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_stencil_reference: unsafe {
@@ -3150,7 +3150,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_set_stencil_reference
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_bind_descriptor_sets: unsafe {
@@ -3175,7 +3175,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_bind_descriptor_sets
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_bind_index_buffer: unsafe {
@@ -3196,7 +3196,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_bind_index_buffer
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_bind_vertex_buffers: unsafe {
@@ -3218,7 +3218,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_bind_vertex_buffers
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_draw: unsafe {
@@ -3236,7 +3236,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_draw
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_draw_indexed: unsafe {
@@ -3255,7 +3255,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_draw_indexed
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_draw_indirect: unsafe {
@@ -3273,7 +3273,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_draw_indirect
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_draw_indexed_indirect: unsafe {
@@ -3295,7 +3295,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_draw_indexed_indirect
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_dispatch: unsafe {
@@ -3312,7 +3312,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_dispatch
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_dispatch_indirect: unsafe {
@@ -3332,7 +3332,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_dispatch_indirect
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_copy_buffer: unsafe {
@@ -3350,7 +3350,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_copy_buffer
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_copy_image: unsafe {
@@ -3370,7 +3370,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_copy_image
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_blit_image: unsafe {
@@ -3391,7 +3391,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_blit_image
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_copy_buffer_to_image: unsafe {
@@ -3414,7 +3414,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_copy_buffer_to_image
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_copy_image_to_buffer: unsafe {
@@ -3437,7 +3437,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_copy_image_to_buffer
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_update_buffer: unsafe {
@@ -3455,7 +3455,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_update_buffer
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_fill_buffer: unsafe {
@@ -3473,7 +3473,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_fill_buffer
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_clear_color_image: unsafe {
@@ -3496,7 +3496,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_clear_color_image
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_clear_depth_stencil_image: unsafe {
@@ -3520,7 +3520,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_clear_depth_stencil_image
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_clear_attachments: unsafe {
@@ -3542,7 +3542,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_clear_attachments
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_resolve_image: unsafe {
@@ -3562,7 +3562,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_resolve_image
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_event: unsafe {
@@ -3578,7 +3578,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_set_event
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_reset_event: unsafe {
@@ -3594,7 +3594,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_reset_event
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_wait_events: unsafe {
@@ -3618,7 +3618,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_wait_events
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_pipeline_barrier: unsafe {
@@ -3642,7 +3642,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_pipeline_barrier
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_begin_query: unsafe {
@@ -3659,7 +3659,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_begin_query
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_end_query: unsafe {
@@ -3675,7 +3675,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_end_query
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_reset_query_pool: unsafe {
@@ -3693,7 +3693,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_reset_query_pool
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_write_timestamp: unsafe {
@@ -3711,7 +3711,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_write_timestamp
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_copy_query_pool_results: unsafe {
@@ -3736,7 +3736,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_copy_query_pool_results
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_push_constants: unsafe {
@@ -3756,7 +3756,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_push_constants
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_begin_render_pass: unsafe {
@@ -3776,7 +3776,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_begin_render_pass
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_next_subpass: unsafe {
@@ -3791,7 +3791,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_next_subpass
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_end_render_pass: unsafe {
@@ -3804,7 +3804,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_end_render_pass
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_execute_commands: unsafe {
@@ -3821,7 +3821,7 @@ impl DeviceFnV1_0 {
                 if val.is_null() {
                     cmd_execute_commands
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -5180,7 +5180,7 @@ impl EntryFnV1_1 {
                 if val.is_null() {
                     enumerate_instance_version
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -5236,7 +5236,7 @@ impl InstanceFnV1_1 {
                 if val.is_null() {
                     enumerate_physical_device_groups
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_features2: unsafe {
@@ -5256,7 +5256,7 @@ impl InstanceFnV1_1 {
                 if val.is_null() {
                     get_physical_device_features2
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_properties2: unsafe {
@@ -5276,7 +5276,7 @@ impl InstanceFnV1_1 {
                 if val.is_null() {
                     get_physical_device_properties2
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_format_properties2: unsafe {
@@ -5297,7 +5297,7 @@ impl InstanceFnV1_1 {
                 if val.is_null() {
                     get_physical_device_format_properties2
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_image_format_properties2: unsafe {
@@ -5318,7 +5318,7 @@ impl InstanceFnV1_1 {
                 if val.is_null() {
                     get_physical_device_image_format_properties2
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_queue_family_properties2: unsafe {
@@ -5339,7 +5339,7 @@ impl InstanceFnV1_1 {
                 if val.is_null() {
                     get_physical_device_queue_family_properties2
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_memory_properties2: unsafe {
@@ -5359,7 +5359,7 @@ impl InstanceFnV1_1 {
                 if val.is_null() {
                     get_physical_device_memory_properties2
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_sparse_image_format_properties2: unsafe {
@@ -5381,7 +5381,7 @@ impl InstanceFnV1_1 {
                 if val.is_null() {
                     get_physical_device_sparse_image_format_properties2
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_external_buffer_properties: unsafe {
@@ -5402,7 +5402,7 @@ impl InstanceFnV1_1 {
                 if val.is_null() {
                     get_physical_device_external_buffer_properties
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_external_fence_properties: unsafe {
@@ -5423,7 +5423,7 @@ impl InstanceFnV1_1 {
                 if val.is_null() {
                     get_physical_device_external_fence_properties
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_physical_device_external_semaphore_properties: unsafe {
@@ -5444,7 +5444,7 @@ impl InstanceFnV1_1 {
                 if val.is_null() {
                     get_physical_device_external_semaphore_properties
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -5623,7 +5623,7 @@ impl DeviceFnV1_1 {
                 if val.is_null() {
                     bind_buffer_memory2
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             bind_image_memory2: unsafe {
@@ -5640,7 +5640,7 @@ impl DeviceFnV1_1 {
                 if val.is_null() {
                     bind_image_memory2
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_device_group_peer_memory_features: unsafe {
@@ -5663,7 +5663,7 @@ impl DeviceFnV1_1 {
                 if val.is_null() {
                     get_device_group_peer_memory_features
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_set_device_mask: unsafe {
@@ -5679,7 +5679,7 @@ impl DeviceFnV1_1 {
                 if val.is_null() {
                     cmd_set_device_mask
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_dispatch_base: unsafe {
@@ -5699,7 +5699,7 @@ impl DeviceFnV1_1 {
                 if val.is_null() {
                     cmd_dispatch_base
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_image_memory_requirements2: unsafe {
@@ -5720,7 +5720,7 @@ impl DeviceFnV1_1 {
                 if val.is_null() {
                     get_image_memory_requirements2
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_buffer_memory_requirements2: unsafe {
@@ -5741,7 +5741,7 @@ impl DeviceFnV1_1 {
                 if val.is_null() {
                     get_buffer_memory_requirements2
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_image_sparse_memory_requirements2: unsafe {
@@ -5763,7 +5763,7 @@ impl DeviceFnV1_1 {
                 if val.is_null() {
                     get_image_sparse_memory_requirements2
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             trim_command_pool: unsafe {
@@ -5779,7 +5779,7 @@ impl DeviceFnV1_1 {
                 if val.is_null() {
                     trim_command_pool
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_device_queue2: unsafe {
@@ -5795,7 +5795,7 @@ impl DeviceFnV1_1 {
                 if val.is_null() {
                     get_device_queue2
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             create_sampler_ycbcr_conversion: unsafe {
@@ -5817,7 +5817,7 @@ impl DeviceFnV1_1 {
                 if val.is_null() {
                     create_sampler_ycbcr_conversion
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_sampler_ycbcr_conversion: unsafe {
@@ -5838,7 +5838,7 @@ impl DeviceFnV1_1 {
                 if val.is_null() {
                     destroy_sampler_ycbcr_conversion
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             create_descriptor_update_template: unsafe {
@@ -5860,7 +5860,7 @@ impl DeviceFnV1_1 {
                 if val.is_null() {
                     create_descriptor_update_template
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             destroy_descriptor_update_template: unsafe {
@@ -5881,7 +5881,7 @@ impl DeviceFnV1_1 {
                 if val.is_null() {
                     destroy_descriptor_update_template
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             update_descriptor_set_with_template: unsafe {
@@ -5903,7 +5903,7 @@ impl DeviceFnV1_1 {
                 if val.is_null() {
                     update_descriptor_set_with_template
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_descriptor_set_layout_support: unsafe {
@@ -5924,7 +5924,7 @@ impl DeviceFnV1_1 {
                 if val.is_null() {
                     get_descriptor_set_layout_support
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }
@@ -6183,7 +6183,7 @@ impl DeviceFnV1_2 {
                 if val.is_null() {
                     cmd_draw_indirect_count
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_draw_indexed_indirect_count: unsafe {
@@ -6208,7 +6208,7 @@ impl DeviceFnV1_2 {
                 if val.is_null() {
                     cmd_draw_indexed_indirect_count
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             create_render_pass2: unsafe {
@@ -6226,7 +6226,7 @@ impl DeviceFnV1_2 {
                 if val.is_null() {
                     create_render_pass2
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_begin_render_pass2: unsafe {
@@ -6246,7 +6246,7 @@ impl DeviceFnV1_2 {
                 if val.is_null() {
                     cmd_begin_render_pass2
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_next_subpass2: unsafe {
@@ -6262,7 +6262,7 @@ impl DeviceFnV1_2 {
                 if val.is_null() {
                     cmd_next_subpass2
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             cmd_end_render_pass2: unsafe {
@@ -6278,7 +6278,7 @@ impl DeviceFnV1_2 {
                 if val.is_null() {
                     cmd_end_render_pass2
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             reset_query_pool: unsafe {
@@ -6295,7 +6295,7 @@ impl DeviceFnV1_2 {
                 if val.is_null() {
                     reset_query_pool
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_semaphore_counter_value: unsafe {
@@ -6316,7 +6316,7 @@ impl DeviceFnV1_2 {
                 if val.is_null() {
                     get_semaphore_counter_value
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             wait_semaphores: unsafe {
@@ -6332,7 +6332,7 @@ impl DeviceFnV1_2 {
                 if val.is_null() {
                     wait_semaphores
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             signal_semaphore: unsafe {
@@ -6347,7 +6347,7 @@ impl DeviceFnV1_2 {
                 if val.is_null() {
                     signal_semaphore
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_buffer_device_address: unsafe {
@@ -6366,7 +6366,7 @@ impl DeviceFnV1_2 {
                 if val.is_null() {
                     get_buffer_device_address
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_buffer_opaque_capture_address: unsafe {
@@ -6386,7 +6386,7 @@ impl DeviceFnV1_2 {
                 if val.is_null() {
                     get_buffer_opaque_capture_address
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
             get_device_memory_opaque_capture_address: unsafe {
@@ -6406,7 +6406,7 @@ impl DeviceFnV1_2 {
                 if val.is_null() {
                     get_device_memory_opaque_capture_address
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         }

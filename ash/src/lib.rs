@@ -61,7 +61,7 @@ impl<'r, T> RawPtr<T> for Option<&'r T> {
         match *self {
             Some(inner) => inner as *const T,
 
-            _ => ::std::ptr::null(),
+            _ => ::core::ptr::null(),
         }
     }
 }
