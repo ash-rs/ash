@@ -26,3 +26,8 @@ impl Packed24_8 {
         (self.0 >> 24) as u8
     }
 }
+
+impl super::ColorComponentFlags {
+    /// Contraction of [`Self::R`] | [`Self::G`] | [`Self::B`] | [`Self::A`]
+    pub const RGBA: Self = Self(Self::R.0 | Self::G.0 | Self::B.0 | Self::A.0);
+}
