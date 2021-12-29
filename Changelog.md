@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - ReleaseDate
 
+### Added
+
+- Added `VK_KHR_get_surface_capabilities2` device extension (#530)
+
 ## [0.35.0] - 2021-12-27
 
 ### Changed
