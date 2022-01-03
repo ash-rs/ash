@@ -185,23 +185,23 @@ impl ExampleBase {
             .borrow_mut()
             .run_return(|event, _, control_flow| {
                 *control_flow = ControlFlow::Wait;
-                f();
-                if let Event::WindowEvent {
-                    event:
-                        WindowEvent::CloseRequested
-                        | WindowEvent::KeyboardInput {
-                            input:
-                                KeyboardInput {
-                                    state: ElementState::Pressed,
-                                    virtual_keycode: Some(VirtualKeyCode::Escape),
-                                    ..
-                                },
-                            ..
-                        },
-                    ..
-                } = event
-                {
-                    *control_flow = ControlFlow::Exit
+                match event {
+                    Event::WindowEvent {
+                        event:
+                            WindowEvent::CloseRequested
+                            | WindowEvent::KeyboardInput {
+                                input:
+                                    KeyboardInput {
+                                        state: ElementState::Pressed,
+                                        virtual_keycode: Some(VirtualKeyCode::Escape),
+                                        ..
+                                    },
+                                ..
+                            },
+                        ..
+                    } => *control_flow = ControlFlow::Exit,
+                    Event::RedrawRequested(_) => f(),
+                    _ => (),
                 }
             });
     }
