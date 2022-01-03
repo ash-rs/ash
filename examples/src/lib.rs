@@ -184,7 +184,7 @@ impl ExampleBase {
         self.event_loop
             .borrow_mut()
             .run_return(|event, _, control_flow| {
-                *control_flow = ControlFlow::Wait;
+                *control_flow = ControlFlow::Poll;
                 match event {
                     Event::WindowEvent {
                         event:
@@ -200,7 +200,7 @@ impl ExampleBase {
                             },
                         ..
                     } => *control_flow = ControlFlow::Exit,
-                    Event::RedrawRequested(_) => f(),
+                    Event::MainEventsCleared => f(),
                     _ => (),
                 }
             });
