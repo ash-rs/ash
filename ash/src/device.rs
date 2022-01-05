@@ -328,6 +328,7 @@ impl Device {
             &mut count,
             out.as_mut_ptr(),
         );
+        assert_eq!(count as usize, out.len());
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkTrimCommandPool.html>"]

@@ -67,10 +67,12 @@ impl Instance {
         &self,
         out: &mut [vk::PhysicalDeviceGroupProperties],
     ) -> VkResult<()> {
-        let mut group_count = out.len() as u32;
+        let mut count = out.len() as u32;
         self.instance_fn_1_1
-            .enumerate_physical_device_groups(self.handle(), &mut group_count, out.as_mut_ptr())
-            .result()
+            .enumerate_physical_device_groups(self.handle(), &mut count, out.as_mut_ptr())
+            .result()?;
+        assert_eq!(count as usize, out.len());
+        Ok(())
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceFeatures2.html>"]
@@ -144,13 +146,14 @@ impl Instance {
         physical_device: vk::PhysicalDevice,
         out: &mut [vk::QueueFamilyProperties2],
     ) {
-        let mut queue_count = out.len() as u32;
+        let mut count = out.len() as u32;
         self.instance_fn_1_1
             .get_physical_device_queue_family_properties2(
                 physical_device,
-                &mut queue_count,
+                &mut count,
                 out.as_mut_ptr(),
             );
+        assert_eq!(count as usize, out.len());
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceMemoryProperties2.html>"]
@@ -190,14 +193,15 @@ impl Instance {
         format_info: &vk::PhysicalDeviceSparseImageFormatInfo2,
         out: &mut [vk::SparseImageFormatProperties2],
     ) {
-        let mut format_count = out.len() as u32;
+        let mut count = out.len() as u32;
         self.instance_fn_1_1
             .get_physical_device_sparse_image_format_properties2(
                 physical_device,
                 format_info,
-                &mut format_count,
+                &mut count,
                 out.as_mut_ptr(),
             );
+        assert_eq!(count as usize, out.len());
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceExternalBufferProperties.html>"]

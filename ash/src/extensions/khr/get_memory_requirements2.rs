@@ -70,6 +70,7 @@ impl GetMemoryRequirements2 {
             &mut count,
             out.as_mut_ptr(),
         );
+        assert_eq!(count as usize, out.len());
     }
 
     pub fn name() -> &'static CStr {
