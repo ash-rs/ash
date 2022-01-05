@@ -1,4 +1,5 @@
 #![recursion_limit = "256"]
+#![warn(trivial_casts, trivial_numeric_casts)]
 
 use heck::{CamelCase, ShoutySnakeCase, SnakeCase};
 use itertools::Itertools;
@@ -1499,7 +1500,7 @@ pub fn derive_debug(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Opt
         let debug_value = if is_static_array(field) && field.basetype == "char" {
             quote! {
                 &unsafe {
-                    ::std::ffi::CStr::from_ptr(self.#param_ident.as_ptr() as *const c_char)
+                    ::std::ffi::CStr::from_ptr(self.#param_ident.as_ptr())
                 }
             }
         } else if param_str.contains("pfn") {
@@ -1551,7 +1552,9 @@ pub fn derive_setters(
         _ => None,
     });
 
-    let has_next = members.clone().any(|field| field.param_ident() == "p_next");
+    let next_field = members
+        .clone()
+        .find(|field| field.param_ident() == "p_next");
 
     let nofilter_count_members = [
         "VkPipelineViewportStateCreateInfo.pViewports",
@@ -1610,7 +1613,7 @@ pub fn derive_setters(
                 return Some(quote!{
                     pub fn code(mut self, code: &'a [u32]) -> Self {
                         self.inner.code_size = code.len() * 4;
-                        self.inner.p_code = code.as_ptr() as *const u32;
+                        self.inner.p_code = code.as_ptr();
                         self
                     }
                 });
@@ -1627,7 +1630,7 @@ pub fn derive_setters(
                         self.inner.p_sample_mask = if sample_mask.is_empty() {
                             std::ptr::null()
                         } else {
-                            sample_mask.as_ptr() as *const SampleMask
+                            sample_mask.as_ptr()
                         };
                         self
                     }
@@ -1681,15 +1684,23 @@ pub fn derive_setters(
                         let array_size = field.c_size.as_ref().unwrap();
                         let c_size = convert_c_expression(array_size, &BTreeMap::new());
                         let inner_type = field.inner_type_tokens();
-                        let mutable = if field.is_const { quote!(const) } else { quote!(mut) };
 
                         slice_param_ty_tokens = quote!([#inner_type; #c_size]);
-                        ptr = quote!(as *#mutable #slice_param_ty_tokens);
+                        ptr = quote!();
 
                         quote!()
                     } else {
                         let array_size_ident = format_ident!("{}", array_size.to_snake_case().as_str());
-                        quote!(self.inner.#array_size_ident = #param_ident_short.len() as _;)
+
+                        let size_field = members.clone().find(|m| m.name.as_ref() == Some(array_size)).unwrap();
+
+                        let cast = if size_field.basetype == "size_t" {
+                            quote!()
+                        }else{
+                            quote!(as _)
+                        };
+
+                        quote!(self.inner.#array_size_ident = #param_ident_short.len()#cast;)
                     };
 
                     let mutable = if field.is_const { quote!() } else { quote!(mut) };
@@ -1731,10 +1742,17 @@ pub fn derive_setters(
 
     let extends_name = format_ident!("Extends{}", name);
 
-    let is_root_struct = has_next && root_structs.contains(&name);
+    // The `p_next` field should only be considered if this struct is also a root struct
+    let root_struct_next_field = next_field.filter(|_| root_structs.contains(&name));
 
     // We only implement a next methods for root structs with a `pnext` field.
-    let next_function = if is_root_struct {
+    let next_function = if let Some(next_field) = root_struct_next_field {
+        assert_eq!(next_field.basetype, "void");
+        let mutability = if next_field.is_const {
+            quote!(const)
+        } else {
+            quote!(mut)
+        };
         quote! {
             /// Prepends the given extension struct between the root and the first pointer. This
             /// method only exists on structs that can be passed to a function directly. Only
@@ -1742,8 +1760,8 @@ pub fn derive_setters(
             /// If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the
             /// chain will look like `A -> D -> B -> C`.
             pub fn push_next<T: #extends_name>(mut self, next: &'a mut T) -> Self {
-                unsafe{
-                    let next_ptr = next as *mut T as *mut BaseOutStructure;
+                unsafe {
+                    let next_ptr = <*#mutability T>::cast(next);
                     // `next` here can contain a pointer chain. This means that we must correctly
                     // attach he head to the root and the tail to the rest of the chain
                     // For example:
@@ -1755,7 +1773,7 @@ pub fn derive_setters(
                     //                 next chain
                     let last_next = ptr_chain_iter(next).last().unwrap();
                     (*last_next).p_next = self.inner.p_next as _;
-                    self.inner.p_next = next_ptr as _;
+                    self.inner.p_next = next_ptr;
                 }
                 self
             }
@@ -1766,7 +1784,7 @@ pub fn derive_setters(
 
     // Root structs come with their own trait that structs that extend
     // this struct will implement
-    let next_trait = if is_root_struct {
+    let next_trait = if root_struct_next_field.is_some() {
         quote!(pub unsafe trait #extends_name {})
     } else {
         quote!()

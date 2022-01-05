@@ -46,10 +46,10 @@ impl RayTracingPipeline {
     ) {
         self.fp.cmd_trace_rays_khr(
             command_buffer,
-            raygen_shader_binding_tables as *const _,
-            miss_shader_binding_tables as *const _,
-            hit_shader_binding_tables as *const _,
-            callable_shader_binding_tables as *const _,
+            raygen_shader_binding_tables,
+            miss_shader_binding_tables,
+            hit_shader_binding_tables,
+            callable_shader_binding_tables,
             width,
             height,
             depth,

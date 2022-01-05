@@ -1005,7 +1005,7 @@ impl fmt::Debug for PhysicalDeviceProperties {
             .field("device_id", &self.device_id)
             .field("device_type", &self.device_type)
             .field("device_name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.device_name.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.device_name.as_ptr())
             })
             .field("pipeline_cache_uuid", &self.pipeline_cache_uuid)
             .field("limits", &self.limits)
@@ -1108,7 +1108,7 @@ impl fmt::Debug for ExtensionProperties {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         fmt.debug_struct("ExtensionProperties")
             .field("extension_name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.extension_name.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.extension_name.as_ptr())
             })
             .field("spec_version", &self.spec_version)
             .finish()
@@ -1176,12 +1176,12 @@ impl fmt::Debug for LayerProperties {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         fmt.debug_struct("LayerProperties")
             .field("layer_name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.layer_name.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.layer_name.as_ptr())
             })
             .field("spec_version", &self.spec_version)
             .field("implementation_version", &self.implementation_version)
             .field("description", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.description.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.description.as_ptr())
             })
             .finish()
     }
@@ -1499,10 +1499,10 @@ impl<'a> DeviceQueueCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsDeviceQueueCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -1601,10 +1601,10 @@ impl<'a> DeviceCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsDeviceCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -1694,10 +1694,10 @@ impl<'a> InstanceCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsInstanceCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -1898,10 +1898,10 @@ impl<'a> MemoryAllocateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsMemoryAllocateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -2561,10 +2561,10 @@ impl<'a> WriteDescriptorSetBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsWriteDescriptorSet>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -2747,10 +2747,10 @@ impl<'a> BufferCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsBufferCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -3260,10 +3260,10 @@ impl<'a> ImageMemoryBarrierBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsImageMemoryBarrier>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -3398,10 +3398,10 @@ impl<'a> ImageCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsImageCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -3560,10 +3560,10 @@ impl<'a> ImageViewCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsImageViewCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -4032,10 +4032,10 @@ impl<'a> BindSparseInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsBindSparseInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -4362,7 +4362,7 @@ impl<'a> ShaderModuleCreateInfoBuilder<'a> {
     }
     pub fn code(mut self, code: &'a [u32]) -> Self {
         self.inner.code_size = code.len() * 4;
-        self.inner.p_code = code.as_ptr() as *const u32;
+        self.inner.p_code = code.as_ptr();
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -4372,10 +4372,10 @@ impl<'a> ShaderModuleCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsShaderModuleCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -4525,10 +4525,10 @@ impl<'a> DescriptorSetLayoutCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsDescriptorSetLayoutCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -4657,10 +4657,10 @@ impl<'a> DescriptorPoolCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsDescriptorPoolCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -4735,10 +4735,10 @@ impl<'a> DescriptorSetAllocateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsDescriptorSetAllocateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -4853,7 +4853,7 @@ impl<'a> SpecializationInfoBuilder<'a> {
         self
     }
     pub fn data(mut self, data: &'a [u8]) -> Self {
-        self.inner.data_size = data.len() as _;
+        self.inner.data_size = data.len();
         self.inner.p_data = data.as_ptr() as *const c_void;
         self
     }
@@ -4943,10 +4943,10 @@ impl<'a> PipelineShaderStageCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsPipelineShaderStageCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -5036,10 +5036,10 @@ impl<'a> ComputePipelineCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsComputePipelineCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -5243,10 +5243,10 @@ impl<'a> PipelineVertexInputStateCreateInfoBuilder<'a> {
         next: &'a mut T,
     ) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -5387,10 +5387,10 @@ impl<'a> PipelineTessellationStateCreateInfoBuilder<'a> {
         next: &'a mut T,
     ) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -5482,10 +5482,10 @@ impl<'a> PipelineViewportStateCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsPipelineViewportStateCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -5614,10 +5614,10 @@ impl<'a> PipelineRasterizationStateCreateInfoBuilder<'a> {
         next: &'a mut T,
     ) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -5709,7 +5709,7 @@ impl<'a> PipelineMultisampleStateCreateInfoBuilder<'a> {
         self.inner.p_sample_mask = if sample_mask.is_empty() {
             std::ptr::null()
         } else {
-            sample_mask.as_ptr() as *const SampleMask
+            sample_mask.as_ptr()
         };
         self
     }
@@ -5731,10 +5731,10 @@ impl<'a> PipelineMultisampleStateCreateInfoBuilder<'a> {
         next: &'a mut T,
     ) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -5908,10 +5908,10 @@ impl<'a> PipelineColorBlendStateCreateInfoBuilder<'a> {
         next: &'a mut T,
     ) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -6335,10 +6335,10 @@ impl<'a> GraphicsPipelineCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsGraphicsPipelineCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -6401,7 +6401,7 @@ impl<'a> PipelineCacheCreateInfoBuilder<'a> {
         self
     }
     pub fn initial_data(mut self, initial_data: &'a [u8]) -> Self {
-        self.inner.initial_data_size = initial_data.len() as _;
+        self.inner.initial_data_size = initial_data.len();
         self.inner.p_initial_data = initial_data.as_ptr() as *const c_void;
         self
     }
@@ -6756,10 +6756,10 @@ impl<'a> SamplerCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsSamplerCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -6981,10 +6981,10 @@ impl<'a> CommandBufferInheritanceInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsCommandBufferInheritanceInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -7056,10 +7056,10 @@ impl<'a> CommandBufferBeginInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsCommandBufferBeginInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -7159,10 +7159,10 @@ impl<'a> RenderPassBeginInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsRenderPassBeginInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -7693,10 +7693,10 @@ impl<'a> RenderPassCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsRenderPassCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -7816,10 +7816,10 @@ impl<'a> FenceCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsFenceCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -9130,10 +9130,10 @@ impl<'a> SemaphoreCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsSemaphoreCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -9217,10 +9217,10 @@ impl<'a> QueryPoolCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsQueryPoolCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -9319,10 +9319,10 @@ impl<'a> FramebufferCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsFramebufferCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -9691,10 +9691,10 @@ impl<'a> SubmitInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsSubmitInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -11159,10 +11159,10 @@ impl<'a> SwapchainCreateInfoKHRBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsSwapchainCreateInfoKHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -11254,10 +11254,10 @@ impl<'a> PresentInfoKHRBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsPresentInfoKHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -11675,7 +11675,7 @@ impl<'a> DebugMarkerObjectTagInfoEXTBuilder<'a> {
         self
     }
     pub fn tag(mut self, tag: &'a [u8]) -> Self {
-        self.inner.tag_size = tag.len() as _;
+        self.inner.tag_size = tag.len();
         self.inner.p_tag = tag.as_ptr() as *const c_void;
         self
     }
@@ -13585,10 +13585,10 @@ impl<'a> PhysicalDeviceFeatures2Builder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsPhysicalDeviceFeatures2>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -13654,10 +13654,10 @@ impl<'a> PhysicalDeviceProperties2Builder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsPhysicalDeviceProperties2>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -13723,10 +13723,10 @@ impl<'a> FormatProperties2Builder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsFormatProperties2>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -13795,10 +13795,10 @@ impl<'a> ImageFormatProperties2Builder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsImageFormatProperties2>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -13888,10 +13888,10 @@ impl<'a> PhysicalDeviceImageFormatInfo2Builder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsPhysicalDeviceImageFormatInfo2>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -13960,10 +13960,10 @@ impl<'a> QueueFamilyProperties2Builder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsQueueFamilyProperties2>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -14029,10 +14029,10 @@ impl<'a> PhysicalDeviceMemoryProperties2Builder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsPhysicalDeviceMemoryProperties2>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -14311,10 +14311,10 @@ impl fmt::Debug for PhysicalDeviceDriverProperties {
             .field("p_next", &self.p_next)
             .field("driver_id", &self.driver_id)
             .field("driver_name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.driver_name.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.driver_name.as_ptr())
             })
             .field("driver_info", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.driver_info.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.driver_info.as_ptr())
             })
             .field("conformance_version", &self.conformance_version)
             .finish()
@@ -15916,10 +15916,10 @@ impl<'a> PhysicalDeviceExternalSemaphoreInfoBuilder<'a> {
         next: &'a mut T,
     ) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -17867,10 +17867,10 @@ impl<'a> BindBufferMemoryInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsBindBufferMemoryInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -18007,10 +18007,10 @@ impl<'a> BindImageMemoryInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsBindImageMemoryInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -20397,10 +20397,10 @@ impl<'a> PhysicalDeviceSurfaceInfo2KHRBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsPhysicalDeviceSurfaceInfo2KHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -20466,10 +20466,10 @@ impl<'a> SurfaceCapabilities2KHRBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsSurfaceCapabilities2KHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -21256,10 +21256,10 @@ impl<'a> ImageMemoryRequirementsInfo2Builder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsImageMemoryRequirementsInfo2>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -21439,10 +21439,10 @@ impl<'a> MemoryRequirements2Builder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsMemoryRequirements2>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -21969,10 +21969,10 @@ impl<'a> SamplerYcbcrConversionCreateInfoBuilder<'a> {
         next: &'a mut T,
     ) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -24097,7 +24097,7 @@ impl<'a> ValidationCacheCreateInfoEXTBuilder<'a> {
         self
     }
     pub fn initial_data(mut self, initial_data: &'a [u8]) -> Self {
-        self.inner.initial_data_size = initial_data.len() as _;
+        self.inner.initial_data_size = initial_data.len();
         self.inner.p_initial_data = initial_data.as_ptr() as *const c_void;
         self
     }
@@ -24398,10 +24398,10 @@ impl<'a> DescriptorSetLayoutSupportBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsDescriptorSetLayoutSupport>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -25487,7 +25487,7 @@ impl<'a> DebugUtilsObjectTagInfoEXTBuilder<'a> {
         self
     }
     pub fn tag(mut self, tag: &'a [u8]) -> Self {
-        self.inner.tag_size = tag.len() as _;
+        self.inner.tag_size = tag.len();
         self.inner.p_tag = tag.as_ptr() as *const c_void;
         self
     }
@@ -27480,10 +27480,10 @@ impl<'a> AttachmentDescription2Builder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsAttachmentDescription2>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -27561,10 +27561,10 @@ impl<'a> AttachmentReference2Builder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsAttachmentReference2>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -27685,10 +27685,10 @@ impl<'a> SubpassDescription2Builder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsSubpassDescription2>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -27796,10 +27796,10 @@ impl<'a> SubpassDependency2Builder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsSubpassDependency2>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -27901,10 +27901,10 @@ impl<'a> RenderPassCreateInfo2Builder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsRenderPassCreateInfo2>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -28018,10 +28018,10 @@ impl<'a> SubpassEndInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsSubpassEndInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -28842,10 +28842,10 @@ impl<'a> AndroidHardwareBufferPropertiesANDROIDBuilder<'a> {
         next: &'a mut T,
     ) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -32079,10 +32079,10 @@ impl<'a> RayTracingPipelineCreateInfoNVBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsRayTracingPipelineCreateInfoNV>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -32214,10 +32214,10 @@ impl<'a> RayTracingPipelineCreateInfoKHRBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsRayTracingPipelineCreateInfoKHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -37008,13 +37008,13 @@ impl fmt::Debug for PerformanceCounterDescriptionKHR {
             .field("p_next", &self.p_next)
             .field("flags", &self.flags)
             .field("name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.name.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.name.as_ptr())
             })
             .field("category", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.category.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.category.as_ptr())
             })
             .field("description", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.description.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.description.as_ptr())
             })
             .finish()
     }
@@ -38748,10 +38748,10 @@ impl fmt::Debug for PipelineExecutablePropertiesKHR {
             .field("p_next", &self.p_next)
             .field("stages", &self.stages)
             .field("name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.name.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.name.as_ptr())
             })
             .field("description", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.description.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.description.as_ptr())
             })
             .field("subgroup_size", &self.subgroup_size)
             .finish()
@@ -38909,10 +38909,10 @@ impl fmt::Debug for PipelineExecutableStatisticKHR {
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
             .field("name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.name.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.name.as_ptr())
             })
             .field("description", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.description.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.description.as_ptr())
             })
             .field("format", &self.format)
             .field("value", &"union")
@@ -38998,10 +38998,10 @@ impl fmt::Debug for PipelineExecutableInternalRepresentationKHR {
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
             .field("name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.name.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.name.as_ptr())
             })
             .field("description", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.description.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.description.as_ptr())
             })
             .field("is_text", &self.is_text)
             .field("data_size", &self.data_size)
@@ -39060,7 +39060,7 @@ impl<'a> PipelineExecutableInternalRepresentationKHRBuilder<'a> {
         self
     }
     pub fn data(mut self, data: &'a mut [u8]) -> Self {
-        self.inner.data_size = data.len() as _;
+        self.inner.data_size = data.len();
         self.inner.p_data = data.as_mut_ptr() as *mut c_void;
         self
     }
@@ -40836,10 +40836,10 @@ impl fmt::Debug for PhysicalDeviceVulkan12Properties {
             .field("p_next", &self.p_next)
             .field("driver_id", &self.driver_id)
             .field("driver_name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.driver_name.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.driver_name.as_ptr())
             })
             .field("driver_info", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.driver_info.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.driver_info.as_ptr())
             })
             .field("conformance_version", &self.conformance_version)
             .field(
@@ -41644,17 +41644,17 @@ impl fmt::Debug for PhysicalDeviceToolPropertiesEXT {
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
             .field("name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.name.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.name.as_ptr())
             })
             .field("version", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.version.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.version.as_ptr())
             })
             .field("purposes", &self.purposes)
             .field("description", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.description.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.description.as_ptr())
             })
             .field("layer", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.layer.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.layer.as_ptr())
             })
             .finish()
     }
@@ -42196,10 +42196,10 @@ impl<'a> AccelerationStructureGeometryTrianglesDataKHRBuilder<'a> {
         next: &'a mut T,
     ) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -42718,10 +42718,10 @@ impl<'a> AccelerationStructureCreateInfoKHRBuilder<'a> {
         next: &'a mut T,
     ) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -42923,7 +42923,7 @@ impl<'a> ::std::ops::DerefMut for AccelerationStructureVersionInfoKHRBuilder<'a>
 }
 impl<'a> AccelerationStructureVersionInfoKHRBuilder<'a> {
     pub fn version_data(mut self, version_data: &'a [u8; 2 * UUID_SIZE]) -> Self {
-        self.inner.p_version_data = version_data as *const [u8; 2 * UUID_SIZE];
+        self.inner.p_version_data = version_data;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -44727,10 +44727,10 @@ impl<'a> ImageBlit2KHRBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsImageBlit2KHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -44826,10 +44826,10 @@ impl<'a> BufferImageCopy2KHRBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsBufferImageCopy2KHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -47177,10 +47177,10 @@ impl<'a> ImageMemoryBarrier2KHRBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsImageMemoryBarrier2KHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -47603,10 +47603,10 @@ impl<'a> SubmitInfo2KHRBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsSubmitInfo2KHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -48186,10 +48186,10 @@ impl<'a> VideoProfileKHRBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsVideoProfileKHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -48312,10 +48312,10 @@ impl<'a> VideoCapabilitiesKHRBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsVideoCapabilitiesKHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -48591,10 +48591,10 @@ impl<'a> VideoReferenceSlotKHRBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsVideoReferenceSlotKHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -48711,10 +48711,10 @@ impl<'a> VideoDecodeInfoKHRBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsVideoDecodeInfoKHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -49144,10 +49144,10 @@ impl<'a> VideoDecodeH264PictureInfoEXTBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsVideoDecodeH264PictureInfoEXT>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -49844,10 +49844,10 @@ impl<'a> VideoSessionCreateInfoKHRBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsVideoSessionCreateInfoKHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -49925,10 +49925,10 @@ impl<'a> VideoSessionParametersCreateInfoKHRBuilder<'a> {
         next: &'a mut T,
     ) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -49997,10 +49997,10 @@ impl<'a> VideoSessionParametersUpdateInfoKHRBuilder<'a> {
         next: &'a mut T,
     ) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -50207,10 +50207,10 @@ impl<'a> VideoCodingControlInfoKHRBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsVideoCodingControlInfoKHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -50339,10 +50339,10 @@ impl<'a> VideoEncodeInfoKHRBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsVideoEncodeInfoKHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -50431,10 +50431,10 @@ impl<'a> VideoEncodeRateControlInfoKHRBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsVideoEncodeRateControlInfoKHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -50538,10 +50538,10 @@ impl<'a> VideoEncodeRateControlLayerInfoKHRBuilder<'a> {
         next: &'a mut T,
     ) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -53094,7 +53094,7 @@ impl<'a> ::std::ops::DerefMut for CuModuleCreateInfoNVXBuilder<'a> {
 }
 impl<'a> CuModuleCreateInfoNVXBuilder<'a> {
     pub fn data(mut self, data: &'a [u8]) -> Self {
-        self.inner.data_size = data.len() as _;
+        self.inner.data_size = data.len();
         self.inner.p_data = data.as_ptr() as *const c_void;
         self
     }
@@ -53263,12 +53263,12 @@ impl<'a> CuLaunchInfoNVXBuilder<'a> {
         self
     }
     pub fn params(mut self, params: &'a [*const c_void]) -> Self {
-        self.inner.param_count = params.len() as _;
+        self.inner.param_count = params.len();
         self.inner.p_params = params.as_ptr();
         self
     }
     pub fn extras(mut self, extras: &'a [*const c_void]) -> Self {
-        self.inner.extra_count = extras.len() as _;
+        self.inner.extra_count = extras.len();
         self.inner.p_extras = extras.as_ptr();
         self
     }
@@ -55536,10 +55536,10 @@ impl<'a> RenderingInfoKHRBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsRenderingInfoKHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }

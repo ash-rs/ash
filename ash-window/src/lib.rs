@@ -1,3 +1,5 @@
+#![warn(trivial_casts, trivial_numeric_casts)]
+
 use ash::{extensions::khr, prelude::*, vk, Entry, Instance};
 use raw_window_handle::{HasRawWindowHandle, RawWindowHandle};
 use std::ffi::CStr;
@@ -69,7 +71,7 @@ pub unsafe fn create_surface(
         ))]
         RawWindowHandle::Xcb(handle) => {
             let surface_desc = vk::XcbSurfaceCreateInfoKHR::builder()
-                .connection(handle.connection as *mut _)
+                .connection(handle.connection)
                 .window(handle.window);
             let surface_fn = khr::XcbSurface::new(entry, instance);
             surface_fn.create_xcb_surface(&surface_desc, allocation_callbacks)
@@ -78,7 +80,7 @@ pub unsafe fn create_surface(
         #[cfg(any(target_os = "android"))]
         RawWindowHandle::Android(handle) => {
             let surface_desc =
-                vk::AndroidSurfaceCreateInfoKHR::builder().window(handle.a_native_window as _);
+                vk::AndroidSurfaceCreateInfoKHR::builder().window(handle.a_native_window);
             let surface_fn = khr::AndroidSurface::new(entry, instance);
             surface_fn.create_android_surface(&surface_desc, allocation_callbacks)
         }

@@ -240,11 +240,16 @@ impl<'a> ::std::ops::Deref for PhysicalDeviceGpaPropertiesAmdBuilder<'a> {
     }
 }
 impl<'a> PhysicalDeviceGpaPropertiesAmdBuilder<'a> {
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceGpaPropertiesAmdBuilder<'a>
+    pub fn push_next<T>(mut self, next: &'a mut T) -> PhysicalDeviceGpaPropertiesAmdBuilder<'a>
     where
         T: ExtendsPhysicalDeviceGpaPropertiesAmd,
     {
-        self.inner.p_next = next as *mut T as *mut c_void;
+        unsafe {
+            let next_ptr = <*const T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr;
+        }
         self
     }
     pub fn build(self) -> PhysicalDeviceGpaPropertiesAmd {
@@ -694,10 +699,10 @@ impl<'a> PhysicalDeviceWaveLimitPropertiesAmdBuilder<'a> {
         T: ExtendsPhysicalDeviceWaveLimitPropertiesAmd,
     {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
