@@ -1,6 +1,6 @@
 #![recursion_limit = "256"]
 
-use heck::{CamelCase, ShoutySnakeCase, SnakeCase};
+use heck::{ToLowerCamelCase, ToShoutySnakeCase, ToSnakeCase};
 use itertools::Itertools;
 use nom::{
     alt, char,
@@ -1200,7 +1200,7 @@ pub fn generate_extension_commands<'a>(
 
     let ident = format_ident!(
         "{}Fn",
-        extension_name.to_camel_case().strip_prefix("Vk").unwrap()
+        extension_name.to_lower_camel_case().strip_prefix("Vk").unwrap()
     );
     let fp = generate_function_pointers(ident.clone(), &commands, &aliases, fn_cache);
 

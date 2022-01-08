@@ -5,15 +5,15 @@ authors = ["Maik Klein <maikklein@googlemail.com>"]
 edition = "2018"
 
 [dependencies]
-bindgen = "0.58"
-heck = "0.3"
+bindgen = "0.59.2"
+heck = "0.4.0"
 itertools = "0.10"
 nom = "6.0"
-once_cell = "1.7"
+once_cell = "1.9.0"
 proc-macro2 = "1.0"
 quote = "1.0"
-regex = "1.4"
-vk-parse = { version = "0.6", features = ["vkxml-convert"] }
+regex = "1.5.4"
+vk-parse = { version = "0.7.0", features = ["vkxml-convert"] }
 vkxml = "0.3"
 
 [dependencies.syn]
