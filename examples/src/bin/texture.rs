@@ -263,7 +263,7 @@ fn main() {
 
         let image = image::load_from_memory(include_bytes!("../../assets/rust.png"))
             .unwrap()
-            .to_rgba();
+            .to_rgba8();
         let image_dimensions = image.dimensions();
         let image_data = image.into_raw();
         let image_buffer_info = vk::BufferCreateInfo {
