@@ -1,6 +1,6 @@
 #[macro_export]
 macro_rules! vk_bitflags_wrapped {
-    ($ name : ident , $ flag_type : ty) => {
+    ($name:ident, $flag_type:ty) => {
         impl Default for $name {
             fn default() -> Self {
                 Self(0)
@@ -11,10 +11,12 @@ macro_rules! vk_bitflags_wrapped {
             pub const fn empty() -> Self {
                 Self(0)
             }
+            #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
             #[inline]
             pub const fn from_raw(x: $flag_type) -> Self {
                 Self(x)
             }
+            #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
             #[inline]
             pub const fn as_raw(self) -> $flag_type {
                 self.0
@@ -81,12 +83,13 @@ macro_rules! vk_bitflags_wrapped {
         }
     };
 }
+
 #[macro_export]
 macro_rules! handle_nondispatchable {
-    ($ name : ident , $ ty : ident) => {
+    ($name:ident, $ty:ident) => {
         handle_nondispatchable!($name, $ty, doc = "");
     };
-    ($ name : ident , $ ty : ident , $ doc_link : meta) => {
+    ($name:ident, $ty:ident, $doc_link:meta) => {
         #[repr(transparent)]
         #[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy, Hash, Default)]
         #[$doc_link]
@@ -117,12 +120,13 @@ macro_rules! handle_nondispatchable {
         }
     };
 }
+
 #[macro_export]
 macro_rules! define_handle {
-    ($ name : ident , $ ty : ident) => {
+    ($name:ident, $ty:ident) => {
         define_handle!($name, $ty, doc = "");
     };
-    ($ name : ident , $ ty : ident , $ doc_link : meta) => {
+    ($name:ident, $ty:ident, $doc_link:meta) => {
         #[repr(transparent)]
         #[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy, Hash)]
         #[$doc_link]

@@ -2,11 +2,13 @@ use std::fmt;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkImageLayout.html>"]
-pub struct ImageLayout(pub(crate) i32);
+pub struct ImageLayout(pub i32);
 impl ImageLayout {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -34,11 +36,13 @@ impl ImageLayout {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAttachmentLoadOp.html>"]
-pub struct AttachmentLoadOp(pub(crate) i32);
+pub struct AttachmentLoadOp(pub i32);
 impl AttachmentLoadOp {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -51,11 +55,13 @@ impl AttachmentLoadOp {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAttachmentStoreOp.html>"]
-pub struct AttachmentStoreOp(pub(crate) i32);
+pub struct AttachmentStoreOp(pub i32);
 impl AttachmentStoreOp {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -67,11 +73,13 @@ impl AttachmentStoreOp {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkImageType.html>"]
-pub struct ImageType(pub(crate) i32);
+pub struct ImageType(pub i32);
 impl ImageType {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -84,11 +92,13 @@ impl ImageType {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkImageTiling.html>"]
-pub struct ImageTiling(pub(crate) i32);
+pub struct ImageTiling(pub i32);
 impl ImageTiling {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -100,11 +110,13 @@ impl ImageTiling {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkImageViewType.html>"]
-pub struct ImageViewType(pub(crate) i32);
+pub struct ImageViewType(pub i32);
 impl ImageViewType {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -121,11 +133,13 @@ impl ImageViewType {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkCommandBufferLevel.html>"]
-pub struct CommandBufferLevel(pub(crate) i32);
+pub struct CommandBufferLevel(pub i32);
 impl CommandBufferLevel {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -137,11 +151,13 @@ impl CommandBufferLevel {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkComponentSwizzle.html>"]
-pub struct ComponentSwizzle(pub(crate) i32);
+pub struct ComponentSwizzle(pub i32);
 impl ComponentSwizzle {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -158,11 +174,13 @@ impl ComponentSwizzle {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDescriptorType.html>"]
-pub struct DescriptorType(pub(crate) i32);
+pub struct DescriptorType(pub i32);
 impl DescriptorType {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -183,11 +201,13 @@ impl DescriptorType {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkQueryType.html>"]
-pub struct QueryType(pub(crate) i32);
+pub struct QueryType(pub i32);
 impl QueryType {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -201,11 +221,13 @@ impl QueryType {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkBorderColor.html>"]
-pub struct BorderColor(pub(crate) i32);
+pub struct BorderColor(pub i32);
 impl BorderColor {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -221,11 +243,13 @@ impl BorderColor {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineBindPoint.html>"]
-pub struct PipelineBindPoint(pub(crate) i32);
+pub struct PipelineBindPoint(pub i32);
 impl PipelineBindPoint {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -237,11 +261,13 @@ impl PipelineBindPoint {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineCacheHeaderVersion.html>"]
-pub struct PipelineCacheHeaderVersion(pub(crate) i32);
+pub struct PipelineCacheHeaderVersion(pub i32);
 impl PipelineCacheHeaderVersion {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -252,11 +278,13 @@ impl PipelineCacheHeaderVersion {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPrimitiveTopology.html>"]
-pub struct PrimitiveTopology(pub(crate) i32);
+pub struct PrimitiveTopology(pub i32);
 impl PrimitiveTopology {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -277,11 +305,13 @@ impl PrimitiveTopology {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSharingMode.html>"]
-pub struct SharingMode(pub(crate) i32);
+pub struct SharingMode(pub i32);
 impl SharingMode {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -293,11 +323,13 @@ impl SharingMode {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkIndexType.html>"]
-pub struct IndexType(pub(crate) i32);
+pub struct IndexType(pub i32);
 impl IndexType {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -309,11 +341,13 @@ impl IndexType {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkFilter.html>"]
-pub struct Filter(pub(crate) i32);
+pub struct Filter(pub i32);
 impl Filter {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -325,11 +359,13 @@ impl Filter {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSamplerMipmapMode.html>"]
-pub struct SamplerMipmapMode(pub(crate) i32);
+pub struct SamplerMipmapMode(pub i32);
 impl SamplerMipmapMode {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -343,11 +379,13 @@ impl SamplerMipmapMode {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSamplerAddressMode.html>"]
-pub struct SamplerAddressMode(pub(crate) i32);
+pub struct SamplerAddressMode(pub i32);
 impl SamplerAddressMode {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -361,11 +399,13 @@ impl SamplerAddressMode {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkCompareOp.html>"]
-pub struct CompareOp(pub(crate) i32);
+pub struct CompareOp(pub i32);
 impl CompareOp {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -383,11 +423,13 @@ impl CompareOp {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPolygonMode.html>"]
-pub struct PolygonMode(pub(crate) i32);
+pub struct PolygonMode(pub i32);
 impl PolygonMode {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -400,11 +442,13 @@ impl PolygonMode {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkFrontFace.html>"]
-pub struct FrontFace(pub(crate) i32);
+pub struct FrontFace(pub i32);
 impl FrontFace {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -416,11 +460,13 @@ impl FrontFace {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkBlendFactor.html>"]
-pub struct BlendFactor(pub(crate) i32);
+pub struct BlendFactor(pub i32);
 impl BlendFactor {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -449,11 +495,13 @@ impl BlendFactor {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkBlendOp.html>"]
-pub struct BlendOp(pub(crate) i32);
+pub struct BlendOp(pub i32);
 impl BlendOp {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -468,11 +516,13 @@ impl BlendOp {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkStencilOp.html>"]
-pub struct StencilOp(pub(crate) i32);
+pub struct StencilOp(pub i32);
 impl StencilOp {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -490,11 +540,13 @@ impl StencilOp {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkLogicOp.html>"]
-pub struct LogicOp(pub(crate) i32);
+pub struct LogicOp(pub i32);
 impl LogicOp {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -520,11 +572,13 @@ impl LogicOp {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkInternalAllocationType.html>"]
-pub struct InternalAllocationType(pub(crate) i32);
+pub struct InternalAllocationType(pub i32);
 impl InternalAllocationType {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -535,11 +589,13 @@ impl InternalAllocationType {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSystemAllocationScope.html>"]
-pub struct SystemAllocationScope(pub(crate) i32);
+pub struct SystemAllocationScope(pub i32);
 impl SystemAllocationScope {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -554,11 +610,13 @@ impl SystemAllocationScope {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDeviceType.html>"]
-pub struct PhysicalDeviceType(pub(crate) i32);
+pub struct PhysicalDeviceType(pub i32);
 impl PhysicalDeviceType {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -573,11 +631,13 @@ impl PhysicalDeviceType {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkVertexInputRate.html>"]
-pub struct VertexInputRate(pub(crate) i32);
+pub struct VertexInputRate(pub i32);
 impl VertexInputRate {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -589,11 +649,13 @@ impl VertexInputRate {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkFormat.html>"]
-pub struct Format(pub(crate) i32);
+pub struct Format(pub i32);
 impl Format {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -788,11 +850,13 @@ impl Format {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkStructureType.html>"]
-pub struct StructureType(pub(crate) i32);
+pub struct StructureType(pub i32);
 impl StructureType {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -853,11 +917,13 @@ impl StructureType {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSubpassContents.html>"]
-pub struct SubpassContents(pub(crate) i32);
+pub struct SubpassContents(pub i32);
 impl SubpassContents {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -870,11 +936,13 @@ impl SubpassContents {
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkResult.html>"]
 #[must_use]
-pub struct Result(pub(crate) i32);
+pub struct Result(pub i32);
 impl Result {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -966,11 +1034,13 @@ impl fmt::Display for Result {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDynamicState.html>"]
-pub struct DynamicState(pub(crate) i32);
+pub struct DynamicState(pub i32);
 impl DynamicState {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -989,11 +1059,13 @@ impl DynamicState {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDescriptorUpdateTemplateType.html>"]
-pub struct DescriptorUpdateTemplateType(pub(crate) i32);
+pub struct DescriptorUpdateTemplateType(pub i32);
 impl DescriptorUpdateTemplateType {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1005,11 +1077,13 @@ impl DescriptorUpdateTemplateType {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkObjectType.html>"]
-pub struct ObjectType(pub(crate) i32);
+pub struct ObjectType(pub i32);
 impl ObjectType {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1045,11 +1119,13 @@ impl ObjectType {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSemaphoreType.html>"]
-pub struct SemaphoreType(pub(crate) i32);
+pub struct SemaphoreType(pub i32);
 impl SemaphoreType {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1061,11 +1137,13 @@ impl SemaphoreType {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPresentModeKHR.html>"]
-pub struct PresentModeKHR(pub(crate) i32);
+pub struct PresentModeKHR(pub i32);
 impl PresentModeKHR {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1079,11 +1157,13 @@ impl PresentModeKHR {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkColorSpaceKHR.html>"]
-pub struct ColorSpaceKHR(pub(crate) i32);
+pub struct ColorSpaceKHR(pub i32);
 impl ColorSpaceKHR {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1094,11 +1174,13 @@ impl ColorSpaceKHR {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkTimeDomainEXT.html>"]
-pub struct TimeDomainEXT(pub(crate) i32);
+pub struct TimeDomainEXT(pub i32);
 impl TimeDomainEXT {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1112,11 +1194,13 @@ impl TimeDomainEXT {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDebugReportObjectTypeEXT.html>"]
-pub struct DebugReportObjectTypeEXT(pub(crate) i32);
+pub struct DebugReportObjectTypeEXT(pub i32);
 impl DebugReportObjectTypeEXT {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1158,11 +1242,13 @@ impl DebugReportObjectTypeEXT {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDeviceMemoryReportEventTypeEXT.html>"]
-pub struct DeviceMemoryReportEventTypeEXT(pub(crate) i32);
+pub struct DeviceMemoryReportEventTypeEXT(pub i32);
 impl DeviceMemoryReportEventTypeEXT {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1177,11 +1263,13 @@ impl DeviceMemoryReportEventTypeEXT {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkRasterizationOrderAMD.html>"]
-pub struct RasterizationOrderAMD(pub(crate) i32);
+pub struct RasterizationOrderAMD(pub i32);
 impl RasterizationOrderAMD {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1193,11 +1281,13 @@ impl RasterizationOrderAMD {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkValidationCheckEXT.html>"]
-pub struct ValidationCheckEXT(pub(crate) i32);
+pub struct ValidationCheckEXT(pub i32);
 impl ValidationCheckEXT {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1209,11 +1299,13 @@ impl ValidationCheckEXT {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkValidationFeatureEnableEXT.html>"]
-pub struct ValidationFeatureEnableEXT(pub(crate) i32);
+pub struct ValidationFeatureEnableEXT(pub i32);
 impl ValidationFeatureEnableEXT {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1228,11 +1320,13 @@ impl ValidationFeatureEnableEXT {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkValidationFeatureDisableEXT.html>"]
-pub struct ValidationFeatureDisableEXT(pub(crate) i32);
+pub struct ValidationFeatureDisableEXT(pub i32);
 impl ValidationFeatureDisableEXT {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1250,11 +1344,13 @@ impl ValidationFeatureDisableEXT {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkIndirectCommandsTokenTypeNV.html>"]
-pub struct IndirectCommandsTokenTypeNV(pub(crate) i32);
+pub struct IndirectCommandsTokenTypeNV(pub i32);
 impl IndirectCommandsTokenTypeNV {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1272,11 +1368,13 @@ impl IndirectCommandsTokenTypeNV {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDisplayPowerStateEXT.html>"]
-pub struct DisplayPowerStateEXT(pub(crate) i32);
+pub struct DisplayPowerStateEXT(pub i32);
 impl DisplayPowerStateEXT {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1289,11 +1387,13 @@ impl DisplayPowerStateEXT {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDeviceEventTypeEXT.html>"]
-pub struct DeviceEventTypeEXT(pub(crate) i32);
+pub struct DeviceEventTypeEXT(pub i32);
 impl DeviceEventTypeEXT {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1304,11 +1404,13 @@ impl DeviceEventTypeEXT {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDisplayEventTypeEXT.html>"]
-pub struct DisplayEventTypeEXT(pub(crate) i32);
+pub struct DisplayEventTypeEXT(pub i32);
 impl DisplayEventTypeEXT {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1319,11 +1421,13 @@ impl DisplayEventTypeEXT {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkViewportCoordinateSwizzleNV.html>"]
-pub struct ViewportCoordinateSwizzleNV(pub(crate) i32);
+pub struct ViewportCoordinateSwizzleNV(pub i32);
 impl ViewportCoordinateSwizzleNV {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1341,11 +1445,13 @@ impl ViewportCoordinateSwizzleNV {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDiscardRectangleModeEXT.html>"]
-pub struct DiscardRectangleModeEXT(pub(crate) i32);
+pub struct DiscardRectangleModeEXT(pub i32);
 impl DiscardRectangleModeEXT {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1357,11 +1463,13 @@ impl DiscardRectangleModeEXT {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPointClippingBehavior.html>"]
-pub struct PointClippingBehavior(pub(crate) i32);
+pub struct PointClippingBehavior(pub i32);
 impl PointClippingBehavior {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1373,11 +1481,13 @@ impl PointClippingBehavior {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSamplerReductionMode.html>"]
-pub struct SamplerReductionMode(pub(crate) i32);
+pub struct SamplerReductionMode(pub i32);
 impl SamplerReductionMode {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1390,11 +1500,13 @@ impl SamplerReductionMode {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkTessellationDomainOrigin.html>"]
-pub struct TessellationDomainOrigin(pub(crate) i32);
+pub struct TessellationDomainOrigin(pub i32);
 impl TessellationDomainOrigin {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1406,11 +1518,13 @@ impl TessellationDomainOrigin {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSamplerYcbcrModelConversion.html>"]
-pub struct SamplerYcbcrModelConversion(pub(crate) i32);
+pub struct SamplerYcbcrModelConversion(pub i32);
 impl SamplerYcbcrModelConversion {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1429,11 +1543,13 @@ impl SamplerYcbcrModelConversion {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSamplerYcbcrRange.html>"]
-pub struct SamplerYcbcrRange(pub(crate) i32);
+pub struct SamplerYcbcrRange(pub i32);
 impl SamplerYcbcrRange {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1447,11 +1563,13 @@ impl SamplerYcbcrRange {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkChromaLocation.html>"]
-pub struct ChromaLocation(pub(crate) i32);
+pub struct ChromaLocation(pub i32);
 impl ChromaLocation {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1463,11 +1581,13 @@ impl ChromaLocation {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkBlendOverlapEXT.html>"]
-pub struct BlendOverlapEXT(pub(crate) i32);
+pub struct BlendOverlapEXT(pub i32);
 impl BlendOverlapEXT {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1480,11 +1600,13 @@ impl BlendOverlapEXT {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkCoverageModulationModeNV.html>"]
-pub struct CoverageModulationModeNV(pub(crate) i32);
+pub struct CoverageModulationModeNV(pub i32);
 impl CoverageModulationModeNV {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1498,11 +1620,13 @@ impl CoverageModulationModeNV {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkCoverageReductionModeNV.html>"]
-pub struct CoverageReductionModeNV(pub(crate) i32);
+pub struct CoverageReductionModeNV(pub i32);
 impl CoverageReductionModeNV {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1514,11 +1638,13 @@ impl CoverageReductionModeNV {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkValidationCacheHeaderVersionEXT.html>"]
-pub struct ValidationCacheHeaderVersionEXT(pub(crate) i32);
+pub struct ValidationCacheHeaderVersionEXT(pub i32);
 impl ValidationCacheHeaderVersionEXT {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1529,11 +1655,13 @@ impl ValidationCacheHeaderVersionEXT {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkShaderInfoTypeAMD.html>"]
-pub struct ShaderInfoTypeAMD(pub(crate) i32);
+pub struct ShaderInfoTypeAMD(pub i32);
 impl ShaderInfoTypeAMD {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1546,11 +1674,13 @@ impl ShaderInfoTypeAMD {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkQueueGlobalPriorityEXT.html>"]
-pub struct QueueGlobalPriorityEXT(pub(crate) i32);
+pub struct QueueGlobalPriorityEXT(pub i32);
 impl QueueGlobalPriorityEXT {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1564,11 +1694,13 @@ impl QueueGlobalPriorityEXT {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkConservativeRasterizationModeEXT.html>"]
-pub struct ConservativeRasterizationModeEXT(pub(crate) i32);
+pub struct ConservativeRasterizationModeEXT(pub i32);
 impl ConservativeRasterizationModeEXT {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1581,11 +1713,13 @@ impl ConservativeRasterizationModeEXT {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkVendorId.html>"]
-pub struct VendorId(pub(crate) i32);
+pub struct VendorId(pub i32);
 impl VendorId {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1607,11 +1741,13 @@ impl VendorId {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDriverId.html>"]
-pub struct DriverId(pub(crate) i32);
+pub struct DriverId(pub i32);
 impl DriverId {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1663,11 +1799,13 @@ impl DriverId {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkShadingRatePaletteEntryNV.html>"]
-pub struct ShadingRatePaletteEntryNV(pub(crate) i32);
+pub struct ShadingRatePaletteEntryNV(pub i32);
 impl ShadingRatePaletteEntryNV {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1689,11 +1827,13 @@ impl ShadingRatePaletteEntryNV {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkCoarseSampleOrderTypeNV.html>"]
-pub struct CoarseSampleOrderTypeNV(pub(crate) i32);
+pub struct CoarseSampleOrderTypeNV(pub i32);
 impl CoarseSampleOrderTypeNV {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1707,11 +1847,13 @@ impl CoarseSampleOrderTypeNV {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkCopyAccelerationStructureModeKHR.html>"]
-pub struct CopyAccelerationStructureModeKHR(pub(crate) i32);
+pub struct CopyAccelerationStructureModeKHR(pub i32);
 impl CopyAccelerationStructureModeKHR {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1725,11 +1867,13 @@ impl CopyAccelerationStructureModeKHR {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkBuildAccelerationStructureModeKHR.html>"]
-pub struct BuildAccelerationStructureModeKHR(pub(crate) i32);
+pub struct BuildAccelerationStructureModeKHR(pub i32);
 impl BuildAccelerationStructureModeKHR {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1741,11 +1885,13 @@ impl BuildAccelerationStructureModeKHR {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAccelerationStructureTypeKHR.html>"]
-pub struct AccelerationStructureTypeKHR(pub(crate) i32);
+pub struct AccelerationStructureTypeKHR(pub i32);
 impl AccelerationStructureTypeKHR {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1758,11 +1904,13 @@ impl AccelerationStructureTypeKHR {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkGeometryTypeKHR.html>"]
-pub struct GeometryTypeKHR(pub(crate) i32);
+pub struct GeometryTypeKHR(pub i32);
 impl GeometryTypeKHR {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1775,11 +1923,13 @@ impl GeometryTypeKHR {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAccelerationStructureMemoryRequirementsTypeNV.html>"]
-pub struct AccelerationStructureMemoryRequirementsTypeNV(pub(crate) i32);
+pub struct AccelerationStructureMemoryRequirementsTypeNV(pub i32);
 impl AccelerationStructureMemoryRequirementsTypeNV {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1792,11 +1942,13 @@ impl AccelerationStructureMemoryRequirementsTypeNV {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAccelerationStructureBuildTypeKHR.html>"]
-pub struct AccelerationStructureBuildTypeKHR(pub(crate) i32);
+pub struct AccelerationStructureBuildTypeKHR(pub i32);
 impl AccelerationStructureBuildTypeKHR {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1809,11 +1961,13 @@ impl AccelerationStructureBuildTypeKHR {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkRayTracingShaderGroupTypeKHR.html>"]
-pub struct RayTracingShaderGroupTypeKHR(pub(crate) i32);
+pub struct RayTracingShaderGroupTypeKHR(pub i32);
 impl RayTracingShaderGroupTypeKHR {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1826,11 +1980,13 @@ impl RayTracingShaderGroupTypeKHR {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAccelerationStructureCompatibilityKHR.html>"]
-pub struct AccelerationStructureCompatibilityKHR(pub(crate) i32);
+pub struct AccelerationStructureCompatibilityKHR(pub i32);
 impl AccelerationStructureCompatibilityKHR {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1842,11 +1998,13 @@ impl AccelerationStructureCompatibilityKHR {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkShaderGroupShaderKHR.html>"]
-pub struct ShaderGroupShaderKHR(pub(crate) i32);
+pub struct ShaderGroupShaderKHR(pub i32);
 impl ShaderGroupShaderKHR {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1860,11 +2018,13 @@ impl ShaderGroupShaderKHR {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkMemoryOverallocationBehaviorAMD.html>"]
-pub struct MemoryOverallocationBehaviorAMD(pub(crate) i32);
+pub struct MemoryOverallocationBehaviorAMD(pub i32);
 impl MemoryOverallocationBehaviorAMD {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1877,11 +2037,13 @@ impl MemoryOverallocationBehaviorAMD {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkScopeNV.html>"]
-pub struct ScopeNV(pub(crate) i32);
+pub struct ScopeNV(pub i32);
 impl ScopeNV {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1895,11 +2057,13 @@ impl ScopeNV {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkComponentTypeNV.html>"]
-pub struct ComponentTypeNV(pub(crate) i32);
+pub struct ComponentTypeNV(pub i32);
 impl ComponentTypeNV {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1920,11 +2084,13 @@ impl ComponentTypeNV {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkFullScreenExclusiveEXT.html>"]
-pub struct FullScreenExclusiveEXT(pub(crate) i32);
+pub struct FullScreenExclusiveEXT(pub i32);
 impl FullScreenExclusiveEXT {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1938,11 +2104,13 @@ impl FullScreenExclusiveEXT {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPerformanceCounterScopeKHR.html>"]
-pub struct PerformanceCounterScopeKHR(pub(crate) i32);
+pub struct PerformanceCounterScopeKHR(pub i32);
 impl PerformanceCounterScopeKHR {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1955,11 +2123,13 @@ impl PerformanceCounterScopeKHR {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPerformanceCounterUnitKHR.html>"]
-pub struct PerformanceCounterUnitKHR(pub(crate) i32);
+pub struct PerformanceCounterUnitKHR(pub i32);
 impl PerformanceCounterUnitKHR {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -1980,11 +2150,13 @@ impl PerformanceCounterUnitKHR {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPerformanceCounterStorageKHR.html>"]
-pub struct PerformanceCounterStorageKHR(pub(crate) i32);
+pub struct PerformanceCounterStorageKHR(pub i32);
 impl PerformanceCounterStorageKHR {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -2000,11 +2172,13 @@ impl PerformanceCounterStorageKHR {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPerformanceConfigurationTypeINTEL.html>"]
-pub struct PerformanceConfigurationTypeINTEL(pub(crate) i32);
+pub struct PerformanceConfigurationTypeINTEL(pub i32);
 impl PerformanceConfigurationTypeINTEL {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -2015,11 +2189,13 @@ impl PerformanceConfigurationTypeINTEL {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkQueryPoolSamplingModeINTEL.html>"]
-pub struct QueryPoolSamplingModeINTEL(pub(crate) i32);
+pub struct QueryPoolSamplingModeINTEL(pub i32);
 impl QueryPoolSamplingModeINTEL {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -2030,11 +2206,13 @@ impl QueryPoolSamplingModeINTEL {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPerformanceOverrideTypeINTEL.html>"]
-pub struct PerformanceOverrideTypeINTEL(pub(crate) i32);
+pub struct PerformanceOverrideTypeINTEL(pub i32);
 impl PerformanceOverrideTypeINTEL {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -2046,11 +2224,13 @@ impl PerformanceOverrideTypeINTEL {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPerformanceParameterTypeINTEL.html>"]
-pub struct PerformanceParameterTypeINTEL(pub(crate) i32);
+pub struct PerformanceParameterTypeINTEL(pub i32);
 impl PerformanceParameterTypeINTEL {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -2062,11 +2242,13 @@ impl PerformanceParameterTypeINTEL {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPerformanceValueTypeINTEL.html>"]
-pub struct PerformanceValueTypeINTEL(pub(crate) i32);
+pub struct PerformanceValueTypeINTEL(pub i32);
 impl PerformanceValueTypeINTEL {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -2081,11 +2263,13 @@ impl PerformanceValueTypeINTEL {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkShaderFloatControlsIndependence.html>"]
-pub struct ShaderFloatControlsIndependence(pub(crate) i32);
+pub struct ShaderFloatControlsIndependence(pub i32);
 impl ShaderFloatControlsIndependence {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -2098,11 +2282,13 @@ impl ShaderFloatControlsIndependence {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineExecutableStatisticFormatKHR.html>"]
-pub struct PipelineExecutableStatisticFormatKHR(pub(crate) i32);
+pub struct PipelineExecutableStatisticFormatKHR(pub i32);
 impl PipelineExecutableStatisticFormatKHR {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -2116,11 +2302,13 @@ impl PipelineExecutableStatisticFormatKHR {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkLineRasterizationModeEXT.html>"]
-pub struct LineRasterizationModeEXT(pub(crate) i32);
+pub struct LineRasterizationModeEXT(pub i32);
 impl LineRasterizationModeEXT {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -2134,11 +2322,13 @@ impl LineRasterizationModeEXT {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkFragmentShadingRateCombinerOpKHR.html>"]
-pub struct FragmentShadingRateCombinerOpKHR(pub(crate) i32);
+pub struct FragmentShadingRateCombinerOpKHR(pub i32);
 impl FragmentShadingRateCombinerOpKHR {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -2153,11 +2343,13 @@ impl FragmentShadingRateCombinerOpKHR {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkFragmentShadingRateNV.html>"]
-pub struct FragmentShadingRateNV(pub(crate) i32);
+pub struct FragmentShadingRateNV(pub i32);
 impl FragmentShadingRateNV {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -2179,11 +2371,13 @@ impl FragmentShadingRateNV {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkFragmentShadingRateTypeNV.html>"]
-pub struct FragmentShadingRateTypeNV(pub(crate) i32);
+pub struct FragmentShadingRateTypeNV(pub i32);
 impl FragmentShadingRateTypeNV {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -2195,11 +2389,13 @@ impl FragmentShadingRateTypeNV {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkProvokingVertexModeEXT.html>"]
-pub struct ProvokingVertexModeEXT(pub(crate) i32);
+pub struct ProvokingVertexModeEXT(pub i32);
 impl ProvokingVertexModeEXT {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -2211,11 +2407,13 @@ impl ProvokingVertexModeEXT {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAccelerationStructureMotionInstanceTypeNV.html>"]
-pub struct AccelerationStructureMotionInstanceTypeNV(pub(crate) i32);
+pub struct AccelerationStructureMotionInstanceTypeNV(pub i32);
 impl AccelerationStructureMotionInstanceTypeNV {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }
@@ -2228,11 +2426,13 @@ impl AccelerationStructureMotionInstanceTypeNV {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkQueryResultStatusKHR.html>"]
-pub struct QueryResultStatusKHR(pub(crate) i32);
+pub struct QueryResultStatusKHR(pub i32);
 impl QueryResultStatusKHR {
+    #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
+    #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
     pub const fn as_raw(self) -> i32 {
         self.0
     }

@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Give users direct access to bitflags and enumeration constants (#554)
 - example: Refactor event loop handling for continuous redraw (#542)
 - Generate `RGBA=R|G|B|A` helper constant for `ColorComponentFlags` (#537)
 - Remove remaining `CString` allocations on string literals in examples and hand-written AMD extension (#533)

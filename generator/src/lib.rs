@@ -1177,7 +1177,7 @@ pub fn generate_bitmask(
         #[repr(transparent)]
         #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
         #[doc = #khronos_link]
-        pub struct #ident(pub(crate) #type_);
+        pub struct #ident(pub #type_);
         vk_bitflags_wrapped!(#ident, #type_);
     })
 }
@@ -1326,7 +1326,7 @@ pub fn generate_enum<'a>(
                 #[repr(transparent)]
                 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
                 #[doc = #khronos_link]
-                pub struct #ident(pub(crate) #type_);
+                pub struct #ident(pub #type_);
                 vk_bitflags_wrapped!(#ident, #type_);
                 #impl_bitflags
             };
@@ -1345,9 +1345,11 @@ pub fn generate_enum<'a>(
             #[repr(transparent)]
             #[doc = #khronos_link]
             #struct_attribute
-            pub struct #ident(pub(crate) i32);
+            pub struct #ident(pub i32);
             impl #ident {
+                #[deprecated = "The newtype constructor is now directly available and preferred. This function will be removed in Ash 0.36."]
                 pub const fn from_raw(x: i32) -> Self { Self(x) }
+                #[deprecated = "The newtype `.0` member is now directly available and preferred. This function will be removed in Ash 0.36."]
                 pub const fn as_raw(self) -> i32 { self.0 }
             }
             #impl_block
