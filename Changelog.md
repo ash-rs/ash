@@ -13,6 +13,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Convert `vk_bitflags_wrapped!` methods to `const fn` (#549)
+- examples: Update winit to 0.26 and image to 0.23 (#551)
+- ash-window: Require at least `raw-window-handle 0.3.4` for 0.4 interop (#553)
+- Assert that Vulkan array-getters return the same length (#534)
+- README: Correct documentation for `Entry` functions and related crate features (#545)
 - example: Refactor event loop handling for continuous redraw (#542)
 - Generate `RGBA=R|G|B|A` helper constant for `ColorComponentFlags` (#537)
 - Remove remaining `CString` allocations on string literals in examples and hand-written AMD extension (#533)
