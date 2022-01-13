@@ -1,4 +1,5 @@
 pub use self::buffer_device_address::BufferDeviceAddress;
+pub use self::calibrated_timestamps::CalibratedTimestamps;
 #[allow(deprecated)]
 pub use self::debug_marker::DebugMarker;
 #[allow(deprecated)]
@@ -11,6 +12,7 @@ pub use self::physical_device_drm::PhysicalDeviceDrm;
 pub use self::tooling_info::ToolingInfo;
 
 mod buffer_device_address;
+mod calibrated_timestamps;
 #[deprecated(note = "Please use the [DebugUtils](struct.DebugUtils.html) extension instead.")]
 mod debug_marker;
 #[deprecated(note = "Please use the [DebugUtils](struct.DebugUtils.html) extension instead.")]

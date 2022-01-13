@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added `VK_EXT_calibrated_timestamps` device extension (#556)
 - Added `VK_KHR_get_surface_capabilities2` device extension (#530)
 
 ### Changed
