@@ -1,8 +1,6 @@
-Ash
-=
+# Ash
 
 A very lightweight wrapper around Vulkan
--
 
 [![Crates.io Version](https://img.shields.io/crates/v/ash.svg)](https://crates.io/crates/ash)
 [![Documentation](https://docs.rs/ash/badge.svg)](https://docs.rs/ash)
@@ -221,7 +219,7 @@ let pool = device.create_command_pool(&pool_create_info).unwrap();
 
 ### Optional linking
 
-The default `loaded` cargo feature will dynamically load the default Vulkan library for the current platform with `Entry::load`, meaning that the build environment does not have to have Vulkan development packages installed. 
+The default `loaded` cargo feature will dynamically load the default Vulkan library for the current platform with `Entry::load`, meaning that the build environment does not have to have Vulkan development packages installed.
 
 If, on the other hand, your application cannot handle Vulkan being missing at runtime, you can instead enable the `linked` feature, which will link your binary with the Vulkan loader directly and expose the infallible `Entry::linked`.
 

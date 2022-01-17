@@ -1,8 +1,6 @@
-Ash-window
-=
+## Ash-window
 
 Interoperability between [`ash`](https://github.com/MaikKlein/ash) and [`raw-window-handle`](https://github.com/rust-windowing/raw-window-handle) for surface creation.
--
 
 [![Crates.io Version](https://img.shields.io/crates/v/ash-window.svg)](https://crates.io/crates/ash-window)
 [![Documentation](https://docs.rs/ash-window/badge.svg)](https://docs.rs/ash-window)
