@@ -425,11 +425,7 @@ impl ExampleBase {
             let depth_image_create_info = vk::ImageCreateInfo::builder()
                 .image_type(vk::ImageType::TYPE_2D)
                 .format(vk::Format::D16_UNORM)
-                .extent(vk::Extent3D {
-                    width: surface_resolution.width,
-                    height: surface_resolution.height,
-                    depth: 1,
-                })
+                .extent(surface_resolution.into())
                 .mip_levels(1)
                 .array_layers(1)
                 .samples(vk::SampleCountFlags::TYPE_1)

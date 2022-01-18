@@ -1,3 +1,5 @@
+use crate::vk;
+
 /// Holds 24 bits in the least significant bits of memory,
 /// and 8 bytes in the most significant bits of that memory,
 /// occupying a single [`u32`] in total. This is commonly used in
@@ -30,4 +32,23 @@ impl Packed24_8 {
 impl super::ColorComponentFlags {
     /// Contraction of [`Self::R`] | [`Self::G`] | [`Self::B`] | [`Self::A`]
     pub const RGBA: Self = Self(Self::R.0 | Self::G.0 | Self::B.0 | Self::A.0);
+}
+
+impl From<vk::Extent2D> for vk::Extent3D {
+    fn from(value: vk::Extent2D) -> Self {
+        Self {
+            width: value.width,
+            height: value.height,
+            depth: 1,
+        }
+    }
+}
+
+impl From<vk::Extent2D> for vk::Rect2D {
+    fn from(extent: vk::Extent2D) -> Self {
+        Self {
+            offset: Default::default(),
+            extent,
+        }
+    }
 }
