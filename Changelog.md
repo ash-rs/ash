@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - ReleaseDate
 
+## [0.35.1] - 2022-01-18
+
 ### Added
 
 - Added `VK_EXT_calibrated_timestamps` device extension (#556)
@@ -276,7 +278,8 @@ flags: vk::CommandPoolCreateFlags::RESET_COMMAND_BUFFER_BIT,
 can write to aligned memory.
 
 
-[Unreleased]: https://github.com/MaikKlein/ash/compare/0.35.0...HEAD
+[Unreleased]: https://github.com/MaikKlein/ash/compare/0.35.1...HEAD
+[0.35.1]: https://github.com/MaikKlein/ash/releases/tag/0.35.1
 [0.35.0]: https://github.com/MaikKlein/ash/releases/tag/0.35.0
 [0.34.0]: https://github.com/MaikKlein/ash/releases/tag/0.34.0
 [0.33.3]: https://github.com/MaikKlein/ash/releases/tag/0.33.3
