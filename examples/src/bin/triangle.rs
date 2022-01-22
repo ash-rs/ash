@@ -277,10 +277,7 @@ fn main() {
             min_depth: 0.0,
             max_depth: 1.0,
         }];
-        let scissors = [vk::Rect2D {
-            offset: vk::Offset2D { x: 0, y: 0 },
-            extent: base.surface_resolution,
-        }];
+        let scissors = [base.surface_resolution.into()];
         let viewport_state_info = vk::PipelineViewportStateCreateInfo::builder()
             .scissors(&scissors)
             .viewports(&viewports);
@@ -380,10 +377,7 @@ fn main() {
             let render_pass_begin_info = vk::RenderPassBeginInfo::builder()
                 .render_pass(renderpass)
                 .framebuffer(framebuffers[present_index as usize])
-                .render_area(vk::Rect2D {
-                    offset: vk::Offset2D { x: 0, y: 0 },
-                    extent: base.surface_resolution,
-                })
+                .render_area(base.surface_resolution.into())
                 .clear_values(&clear_values);
 
             record_submit_commandbuffer(

@@ -264,7 +264,8 @@ fn main() {
         let image = image::load_from_memory(include_bytes!("../../assets/rust.png"))
             .unwrap()
             .to_rgba8();
-        let image_dimensions = image.dimensions();
+        let (width, height) = image.dimensions();
+        let image_extent = vk::Extent2D { width, height };
         let image_data = image.into_raw();
         let image_buffer_info = vk::BufferCreateInfo {
             size: (std::mem::size_of::<u8>() * image_data.len()) as u64,
@@ -313,11 +314,7 @@ fn main() {
         let texture_create_info = vk::ImageCreateInfo {
             image_type: vk::ImageType::TYPE_2D,
             format: vk::Format::R8G8B8A8_UNORM,
-            extent: vk::Extent3D {
-                width: image_dimensions.0,
-                height: image_dimensions.1,
-                depth: 1,
-            },
+            extent: image_extent.into(),
             mip_levels: 1,
             array_layers: 1,
             samples: vk::SampleCountFlags::TYPE_1,
@@ -388,11 +385,7 @@ fn main() {
                             .layer_count(1)
                             .build(),
                     )
-                    .image_extent(vk::Extent3D {
-                        width: image_dimensions.0,
-                        height: image_dimensions.1,
-                        depth: 1,
-                    });
+                    .image_extent(image_extent.into());
 
                 device.cmd_copy_buffer_to_image(
                     texture_command_buffer,
@@ -623,10 +616,7 @@ fn main() {
             min_depth: 0.0,
             max_depth: 1.0,
         }];
-        let scissors = [vk::Rect2D {
-            extent: base.surface_resolution,
-            ..Default::default()
-        }];
+        let scissors = [base.surface_resolution.into()];
         let viewport_state_info = vk::PipelineViewportStateCreateInfo::builder()
             .scissors(&scissors)
             .viewports(&viewports);
@@ -727,10 +717,7 @@ fn main() {
             let render_pass_begin_info = vk::RenderPassBeginInfo::builder()
                 .render_pass(renderpass)
                 .framebuffer(framebuffers[present_index as usize])
-                .render_area(vk::Rect2D {
-                    offset: vk::Offset2D { x: 0, y: 0 },
-                    extent: base.surface_resolution,
-                })
+                .render_area(base.surface_resolution.into())
                 .clear_values(&clear_values);
 
             record_submit_commandbuffer(
