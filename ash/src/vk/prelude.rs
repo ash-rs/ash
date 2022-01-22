@@ -4,9 +4,9 @@ use crate::vk;
 /// and 8 bytes in the most significant bits of that memory,
 /// occupying a single [`u32`] in total. This is commonly used in
 /// [acceleration structure instances] such as
-/// [`vk::AccelerationStructureInstanceKHR`][super::AccelerationStructureInstanceKHR],
-/// [`vk::AccelerationStructureSRTMotionInstanceNV`][super::AccelerationStructureSRTMotionInstanceNV] and
-/// [`vk::AccelerationStructureMatrixMotionInstanceNV`][super::AccelerationStructureMatrixMotionInstanceNV].
+/// [`vk::AccelerationStructureInstanceKHR`],
+/// [`vk::AccelerationStructureSRTMotionInstanceNV`] and
+/// [`vk::AccelerationStructureMatrixMotionInstanceNV`].
 ///
 /// [acceleration structure instances]: https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAccelerationStructureInstanceKHR.html#_description
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug)]
@@ -29,7 +29,11 @@ impl Packed24_8 {
     }
 }
 
-impl super::ColorComponentFlags {
+// Intradoc `Self::` links refuse to resolve if `ColorComponentFlags`
+// isn't directly in scope: https://github.com/rust-lang/rust/issues/93205
+use vk::ColorComponentFlags;
+
+impl ColorComponentFlags {
     /// Contraction of [`Self::R`] | [`Self::G`] | [`Self::B`] | [`Self::A`]
     pub const RGBA: Self = Self(Self::R.0 | Self::G.0 | Self::B.0 | Self::A.0);
 }

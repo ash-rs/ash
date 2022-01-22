@@ -111,3 +111,21 @@ jobs:
         with:
           command: clippy
           args: --workspace --all-targets -- -D warnings
+
+  docs:
+    name: Build-test docs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+      - uses: actions-rs/cargo@v1
+        name: Document all crates
+        env:
+          RUSTDOCFLAGS: -Dwarnings
+        with:
+          command: doc
+          args: --all --all-features --no-deps --document-private-items
