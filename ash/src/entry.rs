@@ -264,10 +264,10 @@ impl Entry {
         &self.entry_fn_1_1
     }
 
-    #[deprecated = "This function is unavailable and therefore panics on Vulkan 1.0, please use `try_enumerate_instance_version` instead"]
+    #[deprecated = "This function is unavailable and therefore panics on Vulkan 1.0, please use `try_enumerate_instance_version()` instead"]
     /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumerateInstanceVersion.html>
     ///
-    /// Please use [`Self::try_enumerate_instance_version`] instead.
+    /// Please use [`try_enumerate_instance_version()`][Self::try_enumerate_instance_version()] instead.
     pub fn enumerate_instance_version(&self) -> VkResult<u32> {
         unsafe {
             let mut api_version = 0;

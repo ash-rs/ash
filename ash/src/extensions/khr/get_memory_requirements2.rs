@@ -39,7 +39,7 @@ impl GetMemoryRequirements2 {
             .get_image_memory_requirements2_khr(self.handle, info, memory_requirements);
     }
 
-    /// Retrieve the number of elements to pass to [`Self::get_image_sparse_memory_requirements2()`]
+    /// Retrieve the number of elements to pass to [`get_image_sparse_memory_requirements2()`][Self::get_image_sparse_memory_requirements2()]
     pub unsafe fn get_image_sparse_memory_requirements2_len(
         &self,
         info: &vk::ImageSparseMemoryRequirementsInfo2KHR,
@@ -56,7 +56,7 @@ impl GetMemoryRequirements2 {
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetImageSparseMemoryRequirements2KHR.html>
     ///
-    /// Call [`Self::get_image_sparse_memory_requirements2_len()`] to query the number of elements to pass to `out`.
+    /// Call [`get_image_sparse_memory_requirements2_len()`][Self::get_image_sparse_memory_requirements2_len()] to query the number of elements to pass to `out`.
     /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.
     pub unsafe fn get_image_sparse_memory_requirements2(
         &self,
