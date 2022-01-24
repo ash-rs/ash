@@ -19,7 +19,7 @@ impl CalibratedTimestamps {
         Self { handle, fp }
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceCalibrateableTimeDomainsEXT.html>"]
+    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceCalibrateableTimeDomainsEXT.html>
     pub unsafe fn get_physical_device_calibrateable_time_domains(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -30,7 +30,7 @@ impl CalibratedTimestamps {
         })
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetCalibratedTimestampsEXT.html>"]
+    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetCalibratedTimestampsEXT.html>
     ///
     /// Returns a tuple containing `(timestamps, max_deviation)`
     pub unsafe fn get_calibrated_timestamps(

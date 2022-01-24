@@ -17,7 +17,7 @@ impl PushDescriptor {
         Self { fp }
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdPushDescriptorSetKHR.html>"]
+    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdPushDescriptorSetKHR.html>
     pub unsafe fn cmd_push_descriptor_set(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -36,7 +36,7 @@ impl PushDescriptor {
         );
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdPushDescriptorSetWithTemplateKHR.html>"]
+    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdPushDescriptorSetWithTemplateKHR.html>
     pub unsafe fn cmd_push_descriptor_set_with_template(
         &self,
         command_buffer: vk::CommandBuffer,
