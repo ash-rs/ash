@@ -33,7 +33,7 @@ impl GetSurfaceCapabilities2 {
             .result_with_success(surface_capabilities)
     }
 
-    /// Retrieve the number of elements to pass to [`Self::get_physical_device_surface_formats2()`]
+    /// Retrieve the number of elements to pass to [`get_physical_device_surface_formats2()`][Self::get_physical_device_surface_formats2()]
     pub unsafe fn get_physical_device_surface_formats2_len(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -51,7 +51,7 @@ impl GetSurfaceCapabilities2 {
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceSurfaceFormats2KHR.html>
     ///
-    /// Call [`Self::get_physical_device_surface_formats2_len()`] to query the number of elements to pass to `out`.
+    /// Call [`get_physical_device_surface_formats2_len()`][Self::get_physical_device_surface_formats2_len()] to query the number of elements to pass to `out`.
     /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.
     pub unsafe fn get_physical_device_surface_formats2(
         &self,

@@ -34,7 +34,7 @@ impl Packed24_8 {
 use vk::ColorComponentFlags;
 
 impl ColorComponentFlags {
-    /// Contraction of [`Self::R`] | [`Self::G`] | [`Self::B`] | [`Self::A`]
+    /// Contraction of [`R`][Self::R] | [`G`][Self::G] | [`B`][Self::B] | [`A`][Self::A]
     pub const RGBA: Self = Self(Self::R.0 | Self::G.0 | Self::B.0 | Self::A.0);
 }
 
