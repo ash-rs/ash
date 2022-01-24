@@ -18,7 +18,7 @@ impl Maintenance1 {
         Self { handle, fp }
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkTrimCommandPoolKHR.html>"]
+    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkTrimCommandPoolKHR.html>
     pub unsafe fn trim_command_pool(
         &self,
         command_pool: vk::CommandPool,

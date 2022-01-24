@@ -20,7 +20,7 @@ impl MetalSurface {
         Self { handle, fp }
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateMetalSurfaceEXT.html>"]
+    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateMetalSurfaceEXT.html>
     pub unsafe fn create_metal_surface(
         &self,
         create_info: &vk::MetalSurfaceCreateInfoEXT,

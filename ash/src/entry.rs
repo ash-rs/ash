@@ -167,7 +167,7 @@ impl Entry {
         &self.static_fn
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumerateInstanceVersion.html>"]
+    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumerateInstanceVersion.html>
     /// ```no_run
     /// # use ash::{Entry, vk};
     /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -203,7 +203,7 @@ impl Entry {
         }
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateInstance.html>"]
+    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateInstance.html>
     ///
     /// # Safety
     /// In order for the created [`Instance`] to be valid for the duration of its
@@ -225,7 +225,7 @@ impl Entry {
         Ok(Instance::load(&self.static_fn, instance))
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumerateInstanceLayerProperties.html>"]
+    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumerateInstanceLayerProperties.html>
     pub fn enumerate_instance_layer_properties(&self) -> VkResult<Vec<vk::LayerProperties>> {
         unsafe {
             read_into_uninitialized_vector(|count, data| {
@@ -235,7 +235,7 @@ impl Entry {
         }
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumerateInstanceExtensionProperties.html>"]
+    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumerateInstanceExtensionProperties.html>
     pub fn enumerate_instance_extension_properties(
         &self,
     ) -> VkResult<Vec<vk::ExtensionProperties>> {
@@ -247,7 +247,7 @@ impl Entry {
         }
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetInstanceProcAddr.html>"]
+    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetInstanceProcAddr.html>
     pub unsafe fn get_instance_proc_addr(
         &self,
         instance: vk::Instance,
@@ -265,7 +265,7 @@ impl Entry {
     }
 
     #[deprecated = "This function is unavailable and therefore panics on Vulkan 1.0, please use `try_enumerate_instance_version` instead"]
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumerateInstanceVersion.html>"]
+    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumerateInstanceVersion.html>
     ///
     /// Please use [`Self::try_enumerate_instance_version`] instead.
     pub fn enumerate_instance_version(&self) -> VkResult<u32> {

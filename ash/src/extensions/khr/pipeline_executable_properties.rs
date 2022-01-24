@@ -19,7 +19,7 @@ impl PipelineExecutableProperties {
         Self { handle, fp }
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPipelineExecutableInternalRepresentationsKHR.html>"]
+    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPipelineExecutableInternalRepresentationsKHR.html>
     pub unsafe fn get_pipeline_executable_internal_representations(
         &self,
         executable_info: &vk::PipelineExecutableInfoKHR,
@@ -35,7 +35,7 @@ impl PipelineExecutableProperties {
         })
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPipelineExecutablePropertiesKHR.html>"]
+    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPipelineExecutablePropertiesKHR.html>
     pub unsafe fn get_pipeline_executable_properties(
         &self,
         pipeline_info: &vk::PipelineInfoKHR,
@@ -46,7 +46,7 @@ impl PipelineExecutableProperties {
         })
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPipelineExecutableStatisticsKHR.html>"]
+    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPipelineExecutableStatisticsKHR.html>
     pub unsafe fn get_pipeline_executable_statistics(
         &self,
         executable_info: &vk::PipelineExecutableInfoKHR,

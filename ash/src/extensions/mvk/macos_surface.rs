@@ -20,7 +20,7 @@ impl MacOSSurface {
         Self { handle, fp }
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateMacOSSurfaceMVK.html>"]
+    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateMacOSSurfaceMVK.html>
     pub unsafe fn create_mac_os_surface(
         &self,
         create_info: &vk::MacOSSurfaceCreateInfoMVK,

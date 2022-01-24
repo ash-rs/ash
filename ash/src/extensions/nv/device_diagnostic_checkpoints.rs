@@ -17,7 +17,7 @@ impl DeviceDiagnosticCheckpoints {
         Self { fp }
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetCheckpointNV.html>"]
+    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetCheckpointNV.html>
     pub unsafe fn cmd_set_checkpoint(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -27,7 +27,7 @@ impl DeviceDiagnosticCheckpoints {
             .cmd_set_checkpoint_nv(command_buffer, p_checkpoint_marker);
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetQueueCheckpointDataNV.html>"]
+    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetQueueCheckpointDataNV.html>
     pub unsafe fn get_queue_checkpoint_data(&self, queue: vk::Queue) -> Vec<vk::CheckpointDataNV> {
         let mut checkpoint_data_count: u32 = 0;
         self.fp.get_queue_checkpoint_data_nv(

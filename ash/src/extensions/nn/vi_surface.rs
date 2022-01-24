@@ -20,7 +20,7 @@ impl ViSurface {
         Self { handle, fp }
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateViSurfaceNN.html>"]
+    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateViSurfaceNN.html>
     pub unsafe fn create_vi_surface(
         &self,
         create_info: &vk::ViSurfaceCreateInfoNN,

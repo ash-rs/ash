@@ -17,7 +17,7 @@ impl Synchronization2 {
         Self { fp }
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdPipelineBarrier2KHR.html>"]
+    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdPipelineBarrier2KHR.html>
     pub unsafe fn cmd_pipeline_barrier2(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -27,7 +27,7 @@ impl Synchronization2 {
             .cmd_pipeline_barrier2_khr(command_buffer, dependency_info)
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdResetEvent2KHR.html>"]
+    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdResetEvent2KHR.html>
     pub unsafe fn cmd_reset_event2(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -38,7 +38,7 @@ impl Synchronization2 {
             .cmd_reset_event2_khr(command_buffer, event, stage_mask)
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetEvent2KHR.html>"]
+    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetEvent2KHR.html>
     pub unsafe fn cmd_set_event2(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -49,7 +49,7 @@ impl Synchronization2 {
             .cmd_set_event2_khr(command_buffer, event, dependency_info)
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdWaitEvents2KHR.html>"]
+    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdWaitEvents2KHR.html>
     pub unsafe fn cmd_wait_events2(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -65,7 +65,7 @@ impl Synchronization2 {
         )
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdWriteTimestamp2KHR.html>"]
+    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdWriteTimestamp2KHR.html>
     pub unsafe fn cmd_write_timestamp2(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -77,7 +77,7 @@ impl Synchronization2 {
             .cmd_write_timestamp2_khr(command_buffer, stage, query_pool, query)
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkQueueSubmit2KHR.html>"]
+    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkQueueSubmit2KHR.html>
     pub unsafe fn queue_submit2(
         &self,
         queue: vk::Queue,
