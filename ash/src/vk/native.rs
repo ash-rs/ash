@@ -7464,7 +7464,7 @@ fn bindgen_test_layout_StdVideoEncodeH264SliceHeader() {
 #[repr(C)]
 #[repr(align(4))]
 #[derive(Debug, Copy, Clone)]
-pub struct StdVideoEncodeH265SliceHeaderFlags {
+pub struct StdVideoEncodeH265SliceSegmentHeaderFlags {
     pub _bitfield_align_1: [u32; 0],
     pub _bitfield_1: __BindgenBitfieldUnit<[u8; 4usize]>,
     pub luma_weight_l0_flag: u16,
@@ -7473,74 +7473,77 @@ pub struct StdVideoEncodeH265SliceHeaderFlags {
     pub chroma_weight_l1_flag: u16,
 }
 #[test]
-fn bindgen_test_layout_StdVideoEncodeH265SliceHeaderFlags() {
+fn bindgen_test_layout_StdVideoEncodeH265SliceSegmentHeaderFlags() {
     assert_eq!(
-        ::std::mem::size_of::<StdVideoEncodeH265SliceHeaderFlags>(),
+        ::std::mem::size_of::<StdVideoEncodeH265SliceSegmentHeaderFlags>(),
         12usize,
-        concat!("Size of: ", stringify!(StdVideoEncodeH265SliceHeaderFlags))
+        concat!(
+            "Size of: ",
+            stringify!(StdVideoEncodeH265SliceSegmentHeaderFlags)
+        )
     );
     assert_eq!(
-        ::std::mem::align_of::<StdVideoEncodeH265SliceHeaderFlags>(),
+        ::std::mem::align_of::<StdVideoEncodeH265SliceSegmentHeaderFlags>(),
         4usize,
         concat!(
             "Alignment of ",
-            stringify!(StdVideoEncodeH265SliceHeaderFlags)
+            stringify!(StdVideoEncodeH265SliceSegmentHeaderFlags)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeaderFlags>())).luma_weight_l0_flag
-                as *const _ as usize
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeaderFlags>()))
+                .luma_weight_l0_flag as *const _ as usize
         },
         4usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeaderFlags),
+            stringify!(StdVideoEncodeH265SliceSegmentHeaderFlags),
             "::",
             stringify!(luma_weight_l0_flag)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeaderFlags>())).chroma_weight_l0_flag
-                as *const _ as usize
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeaderFlags>()))
+                .chroma_weight_l0_flag as *const _ as usize
         },
         6usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeaderFlags),
+            stringify!(StdVideoEncodeH265SliceSegmentHeaderFlags),
             "::",
             stringify!(chroma_weight_l0_flag)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeaderFlags>())).luma_weight_l1_flag
-                as *const _ as usize
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeaderFlags>()))
+                .luma_weight_l1_flag as *const _ as usize
         },
         8usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeaderFlags),
+            stringify!(StdVideoEncodeH265SliceSegmentHeaderFlags),
             "::",
             stringify!(luma_weight_l1_flag)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeaderFlags>())).chroma_weight_l1_flag
-                as *const _ as usize
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeaderFlags>()))
+                .chroma_weight_l1_flag as *const _ as usize
         },
         10usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeaderFlags),
+            stringify!(StdVideoEncodeH265SliceSegmentHeaderFlags),
             "::",
             stringify!(chroma_weight_l1_flag)
         )
     );
 }
-impl StdVideoEncodeH265SliceHeaderFlags {
+impl StdVideoEncodeH265SliceSegmentHeaderFlags {
     #[inline]
     pub fn first_slice_segment_in_pic_flag(&self) -> u32 {
         unsafe { ::std::mem::transmute(self._bitfield_1.get(0usize, 1u8) as u32) }
@@ -7800,7 +7803,7 @@ impl StdVideoEncodeH265SliceHeaderFlags {
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
-pub struct StdVideoEncodeH265SliceHeader {
+pub struct StdVideoEncodeH265SliceSegmentHeader {
     pub slice_type: StdVideoH265SliceType,
     pub slice_pic_parameter_set_id: u8,
     pub num_short_term_ref_pic_sets: u8,
@@ -7830,405 +7833,412 @@ pub struct StdVideoEncodeH265SliceHeader {
     pub slice_act_y_qp_offset: i8,
     pub slice_act_cb_qp_offset: i8,
     pub slice_act_cr_qp_offset: i8,
-    pub flags: StdVideoEncodeH265SliceHeaderFlags,
+    pub flags: StdVideoEncodeH265SliceSegmentHeaderFlags,
 }
 #[test]
-fn bindgen_test_layout_StdVideoEncodeH265SliceHeader() {
+fn bindgen_test_layout_StdVideoEncodeH265SliceSegmentHeader() {
     assert_eq!(
-        ::std::mem::size_of::<StdVideoEncodeH265SliceHeader>(),
+        ::std::mem::size_of::<StdVideoEncodeH265SliceSegmentHeader>(),
         224usize,
-        concat!("Size of: ", stringify!(StdVideoEncodeH265SliceHeader))
+        concat!(
+            "Size of: ",
+            stringify!(StdVideoEncodeH265SliceSegmentHeader)
+        )
     );
     assert_eq!(
-        ::std::mem::align_of::<StdVideoEncodeH265SliceHeader>(),
+        ::std::mem::align_of::<StdVideoEncodeH265SliceSegmentHeader>(),
         4usize,
-        concat!("Alignment of ", stringify!(StdVideoEncodeH265SliceHeader))
+        concat!(
+            "Alignment of ",
+            stringify!(StdVideoEncodeH265SliceSegmentHeader)
+        )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeader>())).slice_type as *const _
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeader>())).slice_type as *const _
                 as usize
         },
         0usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeader),
+            stringify!(StdVideoEncodeH265SliceSegmentHeader),
             "::",
             stringify!(slice_type)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeader>())).slice_pic_parameter_set_id
-                as *const _ as usize
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeader>()))
+                .slice_pic_parameter_set_id as *const _ as usize
         },
         4usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeader),
+            stringify!(StdVideoEncodeH265SliceSegmentHeader),
             "::",
             stringify!(slice_pic_parameter_set_id)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeader>())).num_short_term_ref_pic_sets
-                as *const _ as usize
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeader>()))
+                .num_short_term_ref_pic_sets as *const _ as usize
         },
         5usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeader),
+            stringify!(StdVideoEncodeH265SliceSegmentHeader),
             "::",
             stringify!(num_short_term_ref_pic_sets)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeader>())).slice_segment_address
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeader>())).slice_segment_address
                 as *const _ as usize
         },
         8usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeader),
+            stringify!(StdVideoEncodeH265SliceSegmentHeader),
             "::",
             stringify!(slice_segment_address)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeader>())).short_term_ref_pic_set_idx
-                as *const _ as usize
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeader>()))
+                .short_term_ref_pic_set_idx as *const _ as usize
         },
         12usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeader),
+            stringify!(StdVideoEncodeH265SliceSegmentHeader),
             "::",
             stringify!(short_term_ref_pic_set_idx)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeader>())).num_long_term_sps as *const _
-                as usize
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeader>())).num_long_term_sps
+                as *const _ as usize
         },
         13usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeader),
+            stringify!(StdVideoEncodeH265SliceSegmentHeader),
             "::",
             stringify!(num_long_term_sps)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeader>())).num_long_term_pics as *const _
-                as usize
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeader>())).num_long_term_pics
+                as *const _ as usize
         },
         14usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeader),
+            stringify!(StdVideoEncodeH265SliceSegmentHeader),
             "::",
             stringify!(num_long_term_pics)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeader>())).collocated_ref_idx as *const _
-                as usize
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeader>())).collocated_ref_idx
+                as *const _ as usize
         },
         15usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeader),
+            stringify!(StdVideoEncodeH265SliceSegmentHeader),
             "::",
             stringify!(collocated_ref_idx)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeader>())).num_ref_idx_l0_active_minus1
-                as *const _ as usize
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeader>()))
+                .num_ref_idx_l0_active_minus1 as *const _ as usize
         },
         16usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeader),
+            stringify!(StdVideoEncodeH265SliceSegmentHeader),
             "::",
             stringify!(num_ref_idx_l0_active_minus1)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeader>())).num_ref_idx_l1_active_minus1
-                as *const _ as usize
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeader>()))
+                .num_ref_idx_l1_active_minus1 as *const _ as usize
         },
         17usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeader),
+            stringify!(StdVideoEncodeH265SliceSegmentHeader),
             "::",
             stringify!(num_ref_idx_l1_active_minus1)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeader>())).luma_log2_weight_denom
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeader>())).luma_log2_weight_denom
                 as *const _ as usize
         },
         18usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeader),
+            stringify!(StdVideoEncodeH265SliceSegmentHeader),
             "::",
             stringify!(luma_log2_weight_denom)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeader>())).delta_chroma_log2_weight_denom
-                as *const _ as usize
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeader>()))
+                .delta_chroma_log2_weight_denom as *const _ as usize
         },
         19usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeader),
+            stringify!(StdVideoEncodeH265SliceSegmentHeader),
             "::",
             stringify!(delta_chroma_log2_weight_denom)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeader>())).delta_luma_weight_l0
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeader>())).delta_luma_weight_l0
                 as *const _ as usize
         },
         20usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeader),
+            stringify!(StdVideoEncodeH265SliceSegmentHeader),
             "::",
             stringify!(delta_luma_weight_l0)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeader>())).luma_offset_l0 as *const _
-                as usize
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeader>())).luma_offset_l0
+                as *const _ as usize
         },
         35usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeader),
+            stringify!(StdVideoEncodeH265SliceSegmentHeader),
             "::",
             stringify!(luma_offset_l0)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeader>())).delta_chroma_weight_l0
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeader>())).delta_chroma_weight_l0
                 as *const _ as usize
         },
         50usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeader),
+            stringify!(StdVideoEncodeH265SliceSegmentHeader),
             "::",
             stringify!(delta_chroma_weight_l0)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeader>())).delta_chroma_offset_l0
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeader>())).delta_chroma_offset_l0
                 as *const _ as usize
         },
         80usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeader),
+            stringify!(StdVideoEncodeH265SliceSegmentHeader),
             "::",
             stringify!(delta_chroma_offset_l0)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeader>())).delta_luma_weight_l1
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeader>())).delta_luma_weight_l1
                 as *const _ as usize
         },
         110usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeader),
+            stringify!(StdVideoEncodeH265SliceSegmentHeader),
             "::",
             stringify!(delta_luma_weight_l1)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeader>())).luma_offset_l1 as *const _
-                as usize
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeader>())).luma_offset_l1
+                as *const _ as usize
         },
         125usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeader),
+            stringify!(StdVideoEncodeH265SliceSegmentHeader),
             "::",
             stringify!(luma_offset_l1)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeader>())).delta_chroma_weight_l1
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeader>())).delta_chroma_weight_l1
                 as *const _ as usize
         },
         140usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeader),
+            stringify!(StdVideoEncodeH265SliceSegmentHeader),
             "::",
             stringify!(delta_chroma_weight_l1)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeader>())).delta_chroma_offset_l1
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeader>())).delta_chroma_offset_l1
                 as *const _ as usize
         },
         170usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeader),
+            stringify!(StdVideoEncodeH265SliceSegmentHeader),
             "::",
             stringify!(delta_chroma_offset_l1)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeader>())).MaxNumMergeCand as *const _
-                as usize
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeader>())).MaxNumMergeCand
+                as *const _ as usize
         },
         200usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeader),
+            stringify!(StdVideoEncodeH265SliceSegmentHeader),
             "::",
             stringify!(MaxNumMergeCand)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeader>())).slice_qp_delta as *const _
-                as usize
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeader>())).slice_qp_delta
+                as *const _ as usize
         },
         201usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeader),
+            stringify!(StdVideoEncodeH265SliceSegmentHeader),
             "::",
             stringify!(slice_qp_delta)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeader>())).slice_cb_qp_offset as *const _
-                as usize
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeader>())).slice_cb_qp_offset
+                as *const _ as usize
         },
         202usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeader),
+            stringify!(StdVideoEncodeH265SliceSegmentHeader),
             "::",
             stringify!(slice_cb_qp_offset)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeader>())).slice_cr_qp_offset as *const _
-                as usize
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeader>())).slice_cr_qp_offset
+                as *const _ as usize
         },
         203usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeader),
+            stringify!(StdVideoEncodeH265SliceSegmentHeader),
             "::",
             stringify!(slice_cr_qp_offset)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeader>())).slice_beta_offset_div2
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeader>())).slice_beta_offset_div2
                 as *const _ as usize
         },
         204usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeader),
+            stringify!(StdVideoEncodeH265SliceSegmentHeader),
             "::",
             stringify!(slice_beta_offset_div2)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeader>())).slice_tc_offset_div2
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeader>())).slice_tc_offset_div2
                 as *const _ as usize
         },
         205usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeader),
+            stringify!(StdVideoEncodeH265SliceSegmentHeader),
             "::",
             stringify!(slice_tc_offset_div2)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeader>())).slice_act_y_qp_offset
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeader>())).slice_act_y_qp_offset
                 as *const _ as usize
         },
         206usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeader),
+            stringify!(StdVideoEncodeH265SliceSegmentHeader),
             "::",
             stringify!(slice_act_y_qp_offset)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeader>())).slice_act_cb_qp_offset
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeader>())).slice_act_cb_qp_offset
                 as *const _ as usize
         },
         207usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeader),
+            stringify!(StdVideoEncodeH265SliceSegmentHeader),
             "::",
             stringify!(slice_act_cb_qp_offset)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeader>())).slice_act_cr_qp_offset
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeader>())).slice_act_cr_qp_offset
                 as *const _ as usize
         },
         208usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeader),
+            stringify!(StdVideoEncodeH265SliceSegmentHeader),
             "::",
             stringify!(slice_act_cr_qp_offset)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<StdVideoEncodeH265SliceHeader>())).flags as *const _ as usize
+            &(*(::std::ptr::null::<StdVideoEncodeH265SliceSegmentHeader>())).flags as *const _
+                as usize
         },
         212usize,
         concat!(
             "Offset of field: ",
-            stringify!(StdVideoEncodeH265SliceHeader),
+            stringify!(StdVideoEncodeH265SliceSegmentHeader),
             "::",
             stringify!(flags)
         )

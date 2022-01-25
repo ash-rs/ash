@@ -2908,9 +2908,9 @@ impl KhrVideoDecodeQueueFn {
     }
 }
 #[doc = "Generated from 'VK_KHR_video_decode_queue'"]
-impl AccessFlags2KHR {
-    pub const VIDEO_DECODE_READ: Self = Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000);
-    pub const VIDEO_DECODE_WRITE: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+impl AccessFlags2 {
+    pub const VIDEO_DECODE_READ_KHR: Self = Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const VIDEO_DECODE_WRITE_KHR: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_video_decode_queue'"]
 impl BufferUsageFlags {
@@ -2923,9 +2923,9 @@ impl FormatFeatureFlags {
     pub const VIDEO_DECODE_DPB_KHR: Self = Self(0b100_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_video_decode_queue'"]
-impl FormatFeatureFlags2KHR {
-    pub const VIDEO_DECODE_OUTPUT: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
-    pub const VIDEO_DECODE_DPB: Self = Self(0b100_0000_0000_0000_0000_0000_0000);
+impl FormatFeatureFlags2 {
+    pub const VIDEO_DECODE_OUTPUT_KHR: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
+    pub const VIDEO_DECODE_DPB_KHR: Self = Self(0b100_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_video_decode_queue'"]
 impl ImageLayout {
@@ -2940,8 +2940,8 @@ impl ImageUsageFlags {
     pub const VIDEO_DECODE_DPB_KHR: Self = Self(0b1_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_video_decode_queue'"]
-impl PipelineStageFlags2KHR {
-    pub const VIDEO_DECODE: Self = Self(0b100_0000_0000_0000_0000_0000_0000);
+impl PipelineStageFlags2 {
+    pub const VIDEO_DECODE_KHR: Self = Self(0b100_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_video_decode_queue'"]
 impl QueueFlags {
@@ -3937,7 +3937,7 @@ impl ExtVideoEncodeH265Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_encode_h265\0") }
     }
-    pub const SPEC_VERSION: u32 = 3u32;
+    pub const SPEC_VERSION: u32 = 4u32;
 }
 #[derive(Clone)]
 pub struct ExtVideoEncodeH265Fn {}
@@ -3959,7 +3959,7 @@ impl StructureType {
     pub const VIDEO_ENCODE_H265_SESSION_PARAMETERS_ADD_INFO_EXT: Self = Self(1_000_039_003);
     pub const VIDEO_ENCODE_H265_VCL_FRAME_INFO_EXT: Self = Self(1_000_039_004);
     pub const VIDEO_ENCODE_H265_DPB_SLOT_INFO_EXT: Self = Self(1_000_039_005);
-    pub const VIDEO_ENCODE_H265_NALU_SLICE_EXT: Self = Self(1_000_039_006);
+    pub const VIDEO_ENCODE_H265_NALU_SLICE_SEGMENT_EXT: Self = Self(1_000_039_006);
     pub const VIDEO_ENCODE_H265_EMIT_PICTURE_PARAMETERS_EXT: Self = Self(1_000_039_007);
     pub const VIDEO_ENCODE_H265_PROFILE_EXT: Self = Self(1_000_039_008);
     pub const VIDEO_ENCODE_H265_REFERENCE_LISTS_EXT: Self = Self(1_000_039_009);
@@ -4121,16 +4121,16 @@ impl KhrDynamicRenderingFn {
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdBeginRenderingKHR = unsafe extern "system" fn(
+pub type PFN_vkCmdBeginRendering = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
-    p_rendering_info: *const RenderingInfoKHR,
+    p_rendering_info: *const RenderingInfo,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdEndRenderingKHR = unsafe extern "system" fn(command_buffer: CommandBuffer);
+pub type PFN_vkCmdEndRendering = unsafe extern "system" fn(command_buffer: CommandBuffer);
 #[derive(Clone)]
 pub struct KhrDynamicRenderingFn {
-    pub cmd_begin_rendering_khr: PFN_vkCmdBeginRenderingKHR,
-    pub cmd_end_rendering_khr: PFN_vkCmdEndRenderingKHR,
+    pub cmd_begin_rendering_khr: PFN_vkCmdBeginRendering,
+    pub cmd_end_rendering_khr: PFN_vkCmdEndRendering,
 }
 unsafe impl Send for KhrDynamicRenderingFn {}
 unsafe impl Sync for KhrDynamicRenderingFn {}
@@ -4143,7 +4143,7 @@ impl KhrDynamicRenderingFn {
             cmd_begin_rendering_khr: unsafe {
                 unsafe extern "system" fn cmd_begin_rendering_khr(
                     _command_buffer: CommandBuffer,
-                    _p_rendering_info: *const RenderingInfoKHR,
+                    _p_rendering_info: *const RenderingInfo,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -4181,7 +4181,7 @@ impl KhrDynamicRenderingFn {
     pub unsafe fn cmd_begin_rendering_khr(
         &self,
         command_buffer: CommandBuffer,
-        p_rendering_info: *const RenderingInfoKHR,
+        p_rendering_info: *const RenderingInfo,
     ) {
         (self.cmd_begin_rendering_khr)(command_buffer, p_rendering_info)
     }
@@ -4192,7 +4192,7 @@ impl KhrDynamicRenderingFn {
 }
 #[doc = "Generated from 'VK_KHR_dynamic_rendering'"]
 impl AttachmentStoreOp {
-    pub const NONE_KHR: Self = Self(1_000_301_000);
+    pub const NONE_KHR: Self = Self::NONE;
 }
 #[doc = "Generated from 'VK_KHR_dynamic_rendering'"]
 impl PipelineCreateFlags {
@@ -4203,11 +4203,13 @@ impl PipelineCreateFlags {
 }
 #[doc = "Generated from 'VK_KHR_dynamic_rendering'"]
 impl StructureType {
-    pub const RENDERING_INFO_KHR: Self = Self(1_000_044_000);
-    pub const RENDERING_ATTACHMENT_INFO_KHR: Self = Self(1_000_044_001);
-    pub const PIPELINE_RENDERING_CREATE_INFO_KHR: Self = Self(1_000_044_002);
-    pub const PHYSICAL_DEVICE_DYNAMIC_RENDERING_FEATURES_KHR: Self = Self(1_000_044_003);
-    pub const COMMAND_BUFFER_INHERITANCE_RENDERING_INFO_KHR: Self = Self(1_000_044_004);
+    pub const RENDERING_INFO_KHR: Self = Self::RENDERING_INFO;
+    pub const RENDERING_ATTACHMENT_INFO_KHR: Self = Self::RENDERING_ATTACHMENT_INFO;
+    pub const PIPELINE_RENDERING_CREATE_INFO_KHR: Self = Self::PIPELINE_RENDERING_CREATE_INFO;
+    pub const PHYSICAL_DEVICE_DYNAMIC_RENDERING_FEATURES_KHR: Self =
+        Self::PHYSICAL_DEVICE_DYNAMIC_RENDERING_FEATURES;
+    pub const COMMAND_BUFFER_INHERITANCE_RENDERING_INFO_KHR: Self =
+        Self::COMMAND_BUFFER_INHERITANCE_RENDERING_INFO;
     pub const RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT_INFO_KHR: Self = Self(1_000_044_006);
     pub const RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_INFO_EXT: Self = Self(1_000_044_007);
     pub const ATTACHMENT_SAMPLE_COUNT_INFO_AMD: Self = Self(1_000_044_008);
@@ -5476,24 +5478,25 @@ impl ExtTextureCompressionAstcHdrFn {
 }
 #[doc = "Generated from 'VK_EXT_texture_compression_astc_hdr'"]
 impl Format {
-    pub const ASTC_4X4_SFLOAT_BLOCK_EXT: Self = Self(1_000_066_000);
-    pub const ASTC_5X4_SFLOAT_BLOCK_EXT: Self = Self(1_000_066_001);
-    pub const ASTC_5X5_SFLOAT_BLOCK_EXT: Self = Self(1_000_066_002);
-    pub const ASTC_6X5_SFLOAT_BLOCK_EXT: Self = Self(1_000_066_003);
-    pub const ASTC_6X6_SFLOAT_BLOCK_EXT: Self = Self(1_000_066_004);
-    pub const ASTC_8X5_SFLOAT_BLOCK_EXT: Self = Self(1_000_066_005);
-    pub const ASTC_8X6_SFLOAT_BLOCK_EXT: Self = Self(1_000_066_006);
-    pub const ASTC_8X8_SFLOAT_BLOCK_EXT: Self = Self(1_000_066_007);
-    pub const ASTC_10X5_SFLOAT_BLOCK_EXT: Self = Self(1_000_066_008);
-    pub const ASTC_10X6_SFLOAT_BLOCK_EXT: Self = Self(1_000_066_009);
-    pub const ASTC_10X8_SFLOAT_BLOCK_EXT: Self = Self(1_000_066_010);
-    pub const ASTC_10X10_SFLOAT_BLOCK_EXT: Self = Self(1_000_066_011);
-    pub const ASTC_12X10_SFLOAT_BLOCK_EXT: Self = Self(1_000_066_012);
-    pub const ASTC_12X12_SFLOAT_BLOCK_EXT: Self = Self(1_000_066_013);
+    pub const ASTC_4X4_SFLOAT_BLOCK_EXT: Self = Self::ASTC_4X4_SFLOAT_BLOCK;
+    pub const ASTC_5X4_SFLOAT_BLOCK_EXT: Self = Self::ASTC_5X4_SFLOAT_BLOCK;
+    pub const ASTC_5X5_SFLOAT_BLOCK_EXT: Self = Self::ASTC_5X5_SFLOAT_BLOCK;
+    pub const ASTC_6X5_SFLOAT_BLOCK_EXT: Self = Self::ASTC_6X5_SFLOAT_BLOCK;
+    pub const ASTC_6X6_SFLOAT_BLOCK_EXT: Self = Self::ASTC_6X6_SFLOAT_BLOCK;
+    pub const ASTC_8X5_SFLOAT_BLOCK_EXT: Self = Self::ASTC_8X5_SFLOAT_BLOCK;
+    pub const ASTC_8X6_SFLOAT_BLOCK_EXT: Self = Self::ASTC_8X6_SFLOAT_BLOCK;
+    pub const ASTC_8X8_SFLOAT_BLOCK_EXT: Self = Self::ASTC_8X8_SFLOAT_BLOCK;
+    pub const ASTC_10X5_SFLOAT_BLOCK_EXT: Self = Self::ASTC_10X5_SFLOAT_BLOCK;
+    pub const ASTC_10X6_SFLOAT_BLOCK_EXT: Self = Self::ASTC_10X6_SFLOAT_BLOCK;
+    pub const ASTC_10X8_SFLOAT_BLOCK_EXT: Self = Self::ASTC_10X8_SFLOAT_BLOCK;
+    pub const ASTC_10X10_SFLOAT_BLOCK_EXT: Self = Self::ASTC_10X10_SFLOAT_BLOCK;
+    pub const ASTC_12X10_SFLOAT_BLOCK_EXT: Self = Self::ASTC_12X10_SFLOAT_BLOCK;
+    pub const ASTC_12X12_SFLOAT_BLOCK_EXT: Self = Self::ASTC_12X12_SFLOAT_BLOCK;
 }
 #[doc = "Generated from 'VK_EXT_texture_compression_astc_hdr'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_TEXTURE_COMPRESSION_ASTC_HDR_FEATURES_EXT: Self = Self(1_000_066_000);
+    pub const PHYSICAL_DEVICE_TEXTURE_COMPRESSION_ASTC_HDR_FEATURES_EXT: Self =
+        Self::PHYSICAL_DEVICE_TEXTURE_COMPRESSION_ASTC_HDR_FEATURES;
 }
 impl ExtAstcDecodeModeFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -9944,14 +9947,18 @@ impl ExtInlineUniformBlockFn {
 }
 #[doc = "Generated from 'VK_EXT_inline_uniform_block'"]
 impl DescriptorType {
-    pub const INLINE_UNIFORM_BLOCK_EXT: Self = Self(1_000_138_000);
+    pub const INLINE_UNIFORM_BLOCK_EXT: Self = Self::INLINE_UNIFORM_BLOCK;
 }
 #[doc = "Generated from 'VK_EXT_inline_uniform_block'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_FEATURES_EXT: Self = Self(1_000_138_000);
-    pub const PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_PROPERTIES_EXT: Self = Self(1_000_138_001);
-    pub const WRITE_DESCRIPTOR_SET_INLINE_UNIFORM_BLOCK_EXT: Self = Self(1_000_138_002);
-    pub const DESCRIPTOR_POOL_INLINE_UNIFORM_BLOCK_CREATE_INFO_EXT: Self = Self(1_000_138_003);
+    pub const PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_FEATURES_EXT: Self =
+        Self::PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_FEATURES;
+    pub const PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_PROPERTIES_EXT: Self =
+        Self::PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_PROPERTIES;
+    pub const WRITE_DESCRIPTOR_SET_INLINE_UNIFORM_BLOCK_EXT: Self =
+        Self::WRITE_DESCRIPTOR_SET_INLINE_UNIFORM_BLOCK;
+    pub const DESCRIPTOR_POOL_INLINE_UNIFORM_BLOCK_CREATE_INFO_EXT: Self =
+        Self::DESCRIPTOR_POOL_INLINE_UNIFORM_BLOCK_CREATE_INFO;
 }
 impl AmdExtension140Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -11164,8 +11171,8 @@ impl FormatFeatureFlags {
         Self(0b10_0000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_acceleration_structure'"]
-impl FormatFeatureFlags2KHR {
-    pub const ACCELERATION_STRUCTURE_VERTEX_BUFFER: Self =
+impl FormatFeatureFlags2 {
+    pub const ACCELERATION_STRUCTURE_VERTEX_BUFFER_KHR: Self =
         Self(0b10_0000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_acceleration_structure'"]
@@ -13660,11 +13667,12 @@ impl ExtGlobalPriorityFn {
 }
 #[doc = "Generated from 'VK_EXT_global_priority'"]
 impl Result {
-    pub const ERROR_NOT_PERMITTED_EXT: Self = Self(-1_000_174_001);
+    pub const ERROR_NOT_PERMITTED_EXT: Self = Self::ERROR_NOT_PERMITTED_KHR;
 }
 #[doc = "Generated from 'VK_EXT_global_priority'"]
 impl StructureType {
-    pub const DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO_EXT: Self = Self(1_000_174_000);
+    pub const DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO_EXT: Self =
+        Self::DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO_KHR;
 }
 impl KhrShaderSubgroupExtendedTypesFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -14156,23 +14164,33 @@ impl StructureType {
 impl VideoCodecOperationFlagsKHR {
     pub const DECODE_H265_EXT: Self = Self(0b10);
 }
-impl AmdExtension189Fn {
+impl KhrGlobalPriorityFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_189\0") }
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_global_priority\0") }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct AmdExtension189Fn {}
-unsafe impl Send for AmdExtension189Fn {}
-unsafe impl Sync for AmdExtension189Fn {}
-impl AmdExtension189Fn {
+pub struct KhrGlobalPriorityFn {}
+unsafe impl Send for KhrGlobalPriorityFn {}
+unsafe impl Sync for KhrGlobalPriorityFn {}
+impl KhrGlobalPriorityFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         Self {}
     }
+}
+#[doc = "Generated from 'VK_KHR_global_priority'"]
+impl Result {
+    pub const ERROR_NOT_PERMITTED_KHR: Self = Self(-1_000_174_001);
+}
+#[doc = "Generated from 'VK_KHR_global_priority'"]
+impl StructureType {
+    pub const DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO_KHR: Self = Self(1_000_174_000);
+    pub const PHYSICAL_DEVICE_GLOBAL_PRIORITY_QUERY_FEATURES_KHR: Self = Self(1_000_388_000);
+    pub const QUEUE_FAMILY_GLOBAL_PRIORITY_PROPERTIES_KHR: Self = Self(1_000_388_001);
 }
 impl AmdMemoryOverallocationBehaviorFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -14270,7 +14288,8 @@ impl ExtPipelineCreationFeedbackFn {
 }
 #[doc = "Generated from 'VK_EXT_pipeline_creation_feedback'"]
 impl StructureType {
-    pub const PIPELINE_CREATION_FEEDBACK_CREATE_INFO_EXT: Self = Self(1_000_192_000);
+    pub const PIPELINE_CREATION_FEEDBACK_CREATE_INFO_EXT: Self =
+        Self::PIPELINE_CREATION_FEEDBACK_CREATE_INFO;
 }
 impl GoogleExtension194Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -15604,7 +15623,8 @@ impl KhrShaderTerminateInvocationFn {
 }
 #[doc = "Generated from 'VK_KHR_shader_terminate_invocation'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_SHADER_TERMINATE_INVOCATION_FEATURES_KHR: Self = Self(1_000_215_000);
+    pub const PHYSICAL_DEVICE_SHADER_TERMINATE_INVOCATION_FEATURES_KHR: Self =
+        Self::PHYSICAL_DEVICE_SHADER_TERMINATE_INVOCATION_FEATURES;
 }
 impl GoogleExtension217Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -15714,7 +15734,7 @@ impl FormatFeatureFlags {
     pub const FRAGMENT_DENSITY_MAP_EXT: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_EXT_fragment_density_map'"]
-impl FormatFeatureFlags2KHR {
+impl FormatFeatureFlags2 {
     pub const FRAGMENT_DENSITY_MAP_EXT: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_EXT_fragment_density_map'"]
@@ -15889,15 +15909,17 @@ impl ExtSubgroupSizeControlFn {
 }
 #[doc = "Generated from 'VK_EXT_subgroup_size_control'"]
 impl PipelineShaderStageCreateFlags {
-    pub const ALLOW_VARYING_SUBGROUP_SIZE_EXT: Self = Self(0b1);
-    pub const REQUIRE_FULL_SUBGROUPS_EXT: Self = Self(0b10);
+    pub const ALLOW_VARYING_SUBGROUP_SIZE_EXT: Self = Self::ALLOW_VARYING_SUBGROUP_SIZE;
+    pub const REQUIRE_FULL_SUBGROUPS_EXT: Self = Self::REQUIRE_FULL_SUBGROUPS;
 }
 #[doc = "Generated from 'VK_EXT_subgroup_size_control'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_SUBGROUP_SIZE_CONTROL_PROPERTIES_EXT: Self = Self(1_000_225_000);
+    pub const PHYSICAL_DEVICE_SUBGROUP_SIZE_CONTROL_PROPERTIES_EXT: Self =
+        Self::PHYSICAL_DEVICE_SUBGROUP_SIZE_CONTROL_PROPERTIES;
     pub const PIPELINE_SHADER_STAGE_REQUIRED_SUBGROUP_SIZE_CREATE_INFO_EXT: Self =
-        Self(1_000_225_001);
-    pub const PHYSICAL_DEVICE_SUBGROUP_SIZE_CONTROL_FEATURES_EXT: Self = Self(1_000_225_002);
+        Self::PIPELINE_SHADER_STAGE_REQUIRED_SUBGROUP_SIZE_CREATE_INFO;
+    pub const PHYSICAL_DEVICE_SUBGROUP_SIZE_CONTROL_FEATURES_EXT: Self =
+        Self::PHYSICAL_DEVICE_SUBGROUP_SIZE_CONTROL_FEATURES;
 }
 impl KhrFragmentShadingRateFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -16015,8 +16037,8 @@ impl FormatFeatureFlags {
         Self(0b100_0000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_fragment_shading_rate'"]
-impl FormatFeatureFlags2KHR {
-    pub const FRAGMENT_SHADING_RATE_ATTACHMENT: Self =
+impl FormatFeatureFlags2 {
+    pub const FRAGMENT_SHADING_RATE_ATTACHMENT_KHR: Self =
         Self(0b100_0000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_fragment_shading_rate'"]
@@ -16497,14 +16519,14 @@ impl ExtToolingInfoFn {
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetPhysicalDeviceToolPropertiesEXT = unsafe extern "system" fn(
+pub type PFN_vkGetPhysicalDeviceToolProperties = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
     p_tool_count: *mut u32,
-    p_tool_properties: *mut PhysicalDeviceToolPropertiesEXT,
+    p_tool_properties: *mut PhysicalDeviceToolProperties,
 ) -> Result;
 #[derive(Clone)]
 pub struct ExtToolingInfoFn {
-    pub get_physical_device_tool_properties_ext: PFN_vkGetPhysicalDeviceToolPropertiesEXT,
+    pub get_physical_device_tool_properties_ext: PFN_vkGetPhysicalDeviceToolProperties,
 }
 unsafe impl Send for ExtToolingInfoFn {}
 unsafe impl Sync for ExtToolingInfoFn {}
@@ -16518,7 +16540,7 @@ impl ExtToolingInfoFn {
                 unsafe extern "system" fn get_physical_device_tool_properties_ext(
                     _physical_device: PhysicalDevice,
                     _p_tool_count: *mut u32,
-                    _p_tool_properties: *mut PhysicalDeviceToolPropertiesEXT,
+                    _p_tool_properties: *mut PhysicalDeviceToolProperties,
                 ) -> Result {
                     panic!(concat!(
                         "Unable to load ",
@@ -16542,7 +16564,7 @@ impl ExtToolingInfoFn {
         &self,
         physical_device: PhysicalDevice,
         p_tool_count: *mut u32,
-        p_tool_properties: *mut PhysicalDeviceToolPropertiesEXT,
+        p_tool_properties: *mut PhysicalDeviceToolProperties,
     ) -> Result {
         (self.get_physical_device_tool_properties_ext)(
             physical_device,
@@ -16553,12 +16575,12 @@ impl ExtToolingInfoFn {
 }
 #[doc = "Generated from 'VK_EXT_tooling_info'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_TOOL_PROPERTIES_EXT: Self = Self(1_000_245_000);
+    pub const PHYSICAL_DEVICE_TOOL_PROPERTIES_EXT: Self = Self::PHYSICAL_DEVICE_TOOL_PROPERTIES;
 }
 #[doc = "Generated from 'VK_EXT_tooling_info'"]
-impl ToolPurposeFlagsEXT {
-    pub const DEBUG_REPORTING: Self = Self(0b10_0000);
-    pub const DEBUG_MARKERS: Self = Self(0b100_0000);
+impl ToolPurposeFlags {
+    pub const DEBUG_REPORTING_EXT: Self = Self(0b10_0000);
+    pub const DEBUG_MARKERS_EXT: Self = Self(0b100_0000);
 }
 impl ExtSeparateStencilUsageFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -17570,28 +17592,28 @@ impl ExtExtendedDynamicStateFn {
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetCullModeEXT =
+pub type PFN_vkCmdSetCullMode =
     unsafe extern "system" fn(command_buffer: CommandBuffer, cull_mode: CullModeFlags);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetFrontFaceEXT =
+pub type PFN_vkCmdSetFrontFace =
     unsafe extern "system" fn(command_buffer: CommandBuffer, front_face: FrontFace);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetPrimitiveTopologyEXT =
+pub type PFN_vkCmdSetPrimitiveTopology =
     unsafe extern "system" fn(command_buffer: CommandBuffer, primitive_topology: PrimitiveTopology);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetViewportWithCountEXT = unsafe extern "system" fn(
+pub type PFN_vkCmdSetViewportWithCount = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     viewport_count: u32,
     p_viewports: *const Viewport,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetScissorWithCountEXT = unsafe extern "system" fn(
+pub type PFN_vkCmdSetScissorWithCount = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     scissor_count: u32,
     p_scissors: *const Rect2D,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdBindVertexBuffers2EXT = unsafe extern "system" fn(
+pub type PFN_vkCmdBindVertexBuffers2 = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     first_binding: u32,
     binding_count: u32,
@@ -17601,22 +17623,22 @@ pub type PFN_vkCmdBindVertexBuffers2EXT = unsafe extern "system" fn(
     p_strides: *const DeviceSize,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetDepthTestEnableEXT =
+pub type PFN_vkCmdSetDepthTestEnable =
     unsafe extern "system" fn(command_buffer: CommandBuffer, depth_test_enable: Bool32);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetDepthWriteEnableEXT =
+pub type PFN_vkCmdSetDepthWriteEnable =
     unsafe extern "system" fn(command_buffer: CommandBuffer, depth_write_enable: Bool32);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetDepthCompareOpEXT =
+pub type PFN_vkCmdSetDepthCompareOp =
     unsafe extern "system" fn(command_buffer: CommandBuffer, depth_compare_op: CompareOp);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetDepthBoundsTestEnableEXT =
+pub type PFN_vkCmdSetDepthBoundsTestEnable =
     unsafe extern "system" fn(command_buffer: CommandBuffer, depth_bounds_test_enable: Bool32);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetStencilTestEnableEXT =
+pub type PFN_vkCmdSetStencilTestEnable =
     unsafe extern "system" fn(command_buffer: CommandBuffer, stencil_test_enable: Bool32);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetStencilOpEXT = unsafe extern "system" fn(
+pub type PFN_vkCmdSetStencilOp = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     face_mask: StencilFaceFlags,
     fail_op: StencilOp,
@@ -17626,18 +17648,18 @@ pub type PFN_vkCmdSetStencilOpEXT = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct ExtExtendedDynamicStateFn {
-    pub cmd_set_cull_mode_ext: PFN_vkCmdSetCullModeEXT,
-    pub cmd_set_front_face_ext: PFN_vkCmdSetFrontFaceEXT,
-    pub cmd_set_primitive_topology_ext: PFN_vkCmdSetPrimitiveTopologyEXT,
-    pub cmd_set_viewport_with_count_ext: PFN_vkCmdSetViewportWithCountEXT,
-    pub cmd_set_scissor_with_count_ext: PFN_vkCmdSetScissorWithCountEXT,
-    pub cmd_bind_vertex_buffers2_ext: PFN_vkCmdBindVertexBuffers2EXT,
-    pub cmd_set_depth_test_enable_ext: PFN_vkCmdSetDepthTestEnableEXT,
-    pub cmd_set_depth_write_enable_ext: PFN_vkCmdSetDepthWriteEnableEXT,
-    pub cmd_set_depth_compare_op_ext: PFN_vkCmdSetDepthCompareOpEXT,
-    pub cmd_set_depth_bounds_test_enable_ext: PFN_vkCmdSetDepthBoundsTestEnableEXT,
-    pub cmd_set_stencil_test_enable_ext: PFN_vkCmdSetStencilTestEnableEXT,
-    pub cmd_set_stencil_op_ext: PFN_vkCmdSetStencilOpEXT,
+    pub cmd_set_cull_mode_ext: PFN_vkCmdSetCullMode,
+    pub cmd_set_front_face_ext: PFN_vkCmdSetFrontFace,
+    pub cmd_set_primitive_topology_ext: PFN_vkCmdSetPrimitiveTopology,
+    pub cmd_set_viewport_with_count_ext: PFN_vkCmdSetViewportWithCount,
+    pub cmd_set_scissor_with_count_ext: PFN_vkCmdSetScissorWithCount,
+    pub cmd_bind_vertex_buffers2_ext: PFN_vkCmdBindVertexBuffers2,
+    pub cmd_set_depth_test_enable_ext: PFN_vkCmdSetDepthTestEnable,
+    pub cmd_set_depth_write_enable_ext: PFN_vkCmdSetDepthWriteEnable,
+    pub cmd_set_depth_compare_op_ext: PFN_vkCmdSetDepthCompareOp,
+    pub cmd_set_depth_bounds_test_enable_ext: PFN_vkCmdSetDepthBoundsTestEnable,
+    pub cmd_set_stencil_test_enable_ext: PFN_vkCmdSetStencilTestEnable,
+    pub cmd_set_stencil_op_ext: PFN_vkCmdSetStencilOp,
 }
 unsafe impl Send for ExtExtendedDynamicStateFn {}
 unsafe impl Sync for ExtExtendedDynamicStateFn {}
@@ -18021,21 +18043,22 @@ impl ExtExtendedDynamicStateFn {
 }
 #[doc = "Generated from 'VK_EXT_extended_dynamic_state'"]
 impl DynamicState {
-    pub const CULL_MODE_EXT: Self = Self(1_000_267_000);
-    pub const FRONT_FACE_EXT: Self = Self(1_000_267_001);
-    pub const PRIMITIVE_TOPOLOGY_EXT: Self = Self(1_000_267_002);
-    pub const VIEWPORT_WITH_COUNT_EXT: Self = Self(1_000_267_003);
-    pub const SCISSOR_WITH_COUNT_EXT: Self = Self(1_000_267_004);
-    pub const VERTEX_INPUT_BINDING_STRIDE_EXT: Self = Self(1_000_267_005);
-    pub const DEPTH_TEST_ENABLE_EXT: Self = Self(1_000_267_006);
-    pub const DEPTH_WRITE_ENABLE_EXT: Self = Self(1_000_267_007);
-    pub const DEPTH_COMPARE_OP_EXT: Self = Self(1_000_267_008);
-    pub const DEPTH_BOUNDS_TEST_ENABLE_EXT: Self = Self(1_000_267_009);
-    pub const STENCIL_TEST_ENABLE_EXT: Self = Self(1_000_267_010);
-    pub const STENCIL_OP_EXT: Self = Self(1_000_267_011);
+    pub const CULL_MODE_EXT: Self = Self::CULL_MODE;
+    pub const FRONT_FACE_EXT: Self = Self::FRONT_FACE;
+    pub const PRIMITIVE_TOPOLOGY_EXT: Self = Self::PRIMITIVE_TOPOLOGY;
+    pub const VIEWPORT_WITH_COUNT_EXT: Self = Self::VIEWPORT_WITH_COUNT;
+    pub const SCISSOR_WITH_COUNT_EXT: Self = Self::SCISSOR_WITH_COUNT;
+    pub const VERTEX_INPUT_BINDING_STRIDE_EXT: Self = Self::VERTEX_INPUT_BINDING_STRIDE;
+    pub const DEPTH_TEST_ENABLE_EXT: Self = Self::DEPTH_TEST_ENABLE;
+    pub const DEPTH_WRITE_ENABLE_EXT: Self = Self::DEPTH_WRITE_ENABLE;
+    pub const DEPTH_COMPARE_OP_EXT: Self = Self::DEPTH_COMPARE_OP;
+    pub const DEPTH_BOUNDS_TEST_ENABLE_EXT: Self = Self::DEPTH_BOUNDS_TEST_ENABLE;
+    pub const STENCIL_TEST_ENABLE_EXT: Self = Self::STENCIL_TEST_ENABLE;
+    pub const STENCIL_OP_EXT: Self = Self::STENCIL_OP;
 }
 #[doc = "Generated from 'VK_EXT_extended_dynamic_state'"]
 impl StructureType {
+    #[doc = "Not promoted to 1.3"]
     pub const PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_FEATURES_EXT: Self = Self(1_000_267_000);
 }
 impl KhrDeferredHostOperationsFn {
@@ -18554,7 +18577,7 @@ impl ExtShaderDemoteToHelperInvocationFn {
 #[doc = "Generated from 'VK_EXT_shader_demote_to_helper_invocation'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_DEMOTE_TO_HELPER_INVOCATION_FEATURES_EXT: Self =
-        Self(1_000_276_000);
+        Self::PHYSICAL_DEVICE_SHADER_DEMOTE_TO_HELPER_INVOCATION_FEATURES;
 }
 impl NvDeviceGeneratedCommandsFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -18911,8 +18934,10 @@ impl KhrShaderIntegerDotProductFn {
 }
 #[doc = "Generated from 'VK_KHR_shader_integer_dot_product'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_SHADER_INTEGER_DOT_PRODUCT_FEATURES_KHR: Self = Self(1_000_280_000);
-    pub const PHYSICAL_DEVICE_SHADER_INTEGER_DOT_PRODUCT_PROPERTIES_KHR: Self = Self(1_000_280_001);
+    pub const PHYSICAL_DEVICE_SHADER_INTEGER_DOT_PRODUCT_FEATURES_KHR: Self =
+        Self::PHYSICAL_DEVICE_SHADER_INTEGER_DOT_PRODUCT_FEATURES;
+    pub const PHYSICAL_DEVICE_SHADER_INTEGER_DOT_PRODUCT_PROPERTIES_KHR: Self =
+        Self::PHYSICAL_DEVICE_SHADER_INTEGER_DOT_PRODUCT_PROPERTIES;
 }
 impl ExtTexelBufferAlignmentFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -18936,8 +18961,10 @@ impl ExtTexelBufferAlignmentFn {
 }
 #[doc = "Generated from 'VK_EXT_texel_buffer_alignment'"]
 impl StructureType {
+    #[doc = "Not promoted to 1.3"]
     pub const PHYSICAL_DEVICE_TEXEL_BUFFER_ALIGNMENT_FEATURES_EXT: Self = Self(1_000_281_000);
-    pub const PHYSICAL_DEVICE_TEXEL_BUFFER_ALIGNMENT_PROPERTIES_EXT: Self = Self(1_000_281_001);
+    pub const PHYSICAL_DEVICE_TEXEL_BUFFER_ALIGNMENT_PROPERTIES_EXT: Self =
+        Self::PHYSICAL_DEVICE_TEXEL_BUFFER_ALIGNMENT_PROPERTIES;
 }
 impl QcomRenderPassTransformFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -19336,40 +19363,40 @@ impl ExtPrivateDataFn {
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
-pub type PFN_vkCreatePrivateDataSlotEXT = unsafe extern "system" fn(
+pub type PFN_vkCreatePrivateDataSlot = unsafe extern "system" fn(
     device: Device,
-    p_create_info: *const PrivateDataSlotCreateInfoEXT,
+    p_create_info: *const PrivateDataSlotCreateInfo,
     p_allocator: *const AllocationCallbacks,
-    p_private_data_slot: *mut PrivateDataSlotEXT,
+    p_private_data_slot: *mut PrivateDataSlot,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkDestroyPrivateDataSlotEXT = unsafe extern "system" fn(
+pub type PFN_vkDestroyPrivateDataSlot = unsafe extern "system" fn(
     device: Device,
-    private_data_slot: PrivateDataSlotEXT,
+    private_data_slot: PrivateDataSlot,
     p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkSetPrivateDataEXT = unsafe extern "system" fn(
+pub type PFN_vkSetPrivateData = unsafe extern "system" fn(
     device: Device,
     object_type: ObjectType,
     object_handle: u64,
-    private_data_slot: PrivateDataSlotEXT,
+    private_data_slot: PrivateDataSlot,
     data: u64,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetPrivateDataEXT = unsafe extern "system" fn(
+pub type PFN_vkGetPrivateData = unsafe extern "system" fn(
     device: Device,
     object_type: ObjectType,
     object_handle: u64,
-    private_data_slot: PrivateDataSlotEXT,
+    private_data_slot: PrivateDataSlot,
     p_data: *mut u64,
 );
 #[derive(Clone)]
 pub struct ExtPrivateDataFn {
-    pub create_private_data_slot_ext: PFN_vkCreatePrivateDataSlotEXT,
-    pub destroy_private_data_slot_ext: PFN_vkDestroyPrivateDataSlotEXT,
-    pub set_private_data_ext: PFN_vkSetPrivateDataEXT,
-    pub get_private_data_ext: PFN_vkGetPrivateDataEXT,
+    pub create_private_data_slot_ext: PFN_vkCreatePrivateDataSlot,
+    pub destroy_private_data_slot_ext: PFN_vkDestroyPrivateDataSlot,
+    pub set_private_data_ext: PFN_vkSetPrivateData,
+    pub get_private_data_ext: PFN_vkGetPrivateData,
 }
 unsafe impl Send for ExtPrivateDataFn {}
 unsafe impl Sync for ExtPrivateDataFn {}
@@ -19382,9 +19409,9 @@ impl ExtPrivateDataFn {
             create_private_data_slot_ext: unsafe {
                 unsafe extern "system" fn create_private_data_slot_ext(
                     _device: Device,
-                    _p_create_info: *const PrivateDataSlotCreateInfoEXT,
+                    _p_create_info: *const PrivateDataSlotCreateInfo,
                     _p_allocator: *const AllocationCallbacks,
-                    _p_private_data_slot: *mut PrivateDataSlotEXT,
+                    _p_private_data_slot: *mut PrivateDataSlot,
                 ) -> Result {
                     panic!(concat!(
                         "Unable to load ",
@@ -19404,7 +19431,7 @@ impl ExtPrivateDataFn {
             destroy_private_data_slot_ext: unsafe {
                 unsafe extern "system" fn destroy_private_data_slot_ext(
                     _device: Device,
-                    _private_data_slot: PrivateDataSlotEXT,
+                    _private_data_slot: PrivateDataSlot,
                     _p_allocator: *const AllocationCallbacks,
                 ) {
                     panic!(concat!(
@@ -19427,7 +19454,7 @@ impl ExtPrivateDataFn {
                     _device: Device,
                     _object_type: ObjectType,
                     _object_handle: u64,
-                    _private_data_slot: PrivateDataSlotEXT,
+                    _private_data_slot: PrivateDataSlot,
                     _data: u64,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(set_private_data_ext)))
@@ -19446,7 +19473,7 @@ impl ExtPrivateDataFn {
                     _device: Device,
                     _object_type: ObjectType,
                     _object_handle: u64,
-                    _private_data_slot: PrivateDataSlotEXT,
+                    _private_data_slot: PrivateDataSlot,
                     _p_data: *mut u64,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(get_private_data_ext)))
@@ -19466,9 +19493,9 @@ impl ExtPrivateDataFn {
     pub unsafe fn create_private_data_slot_ext(
         &self,
         device: Device,
-        p_create_info: *const PrivateDataSlotCreateInfoEXT,
+        p_create_info: *const PrivateDataSlotCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_private_data_slot: *mut PrivateDataSlotEXT,
+        p_private_data_slot: *mut PrivateDataSlot,
     ) -> Result {
         (self.create_private_data_slot_ext)(device, p_create_info, p_allocator, p_private_data_slot)
     }
@@ -19476,7 +19503,7 @@ impl ExtPrivateDataFn {
     pub unsafe fn destroy_private_data_slot_ext(
         &self,
         device: Device,
-        private_data_slot: PrivateDataSlotEXT,
+        private_data_slot: PrivateDataSlot,
         p_allocator: *const AllocationCallbacks,
     ) {
         (self.destroy_private_data_slot_ext)(device, private_data_slot, p_allocator)
@@ -19487,7 +19514,7 @@ impl ExtPrivateDataFn {
         device: Device,
         object_type: ObjectType,
         object_handle: u64,
-        private_data_slot: PrivateDataSlotEXT,
+        private_data_slot: PrivateDataSlot,
         data: u64,
     ) -> Result {
         (self.set_private_data_ext)(device, object_type, object_handle, private_data_slot, data)
@@ -19498,7 +19525,7 @@ impl ExtPrivateDataFn {
         device: Device,
         object_type: ObjectType,
         object_handle: u64,
-        private_data_slot: PrivateDataSlotEXT,
+        private_data_slot: PrivateDataSlot,
         p_data: *mut u64,
     ) {
         (self.get_private_data_ext)(
@@ -19512,13 +19539,14 @@ impl ExtPrivateDataFn {
 }
 #[doc = "Generated from 'VK_EXT_private_data'"]
 impl ObjectType {
-    pub const PRIVATE_DATA_SLOT_EXT: Self = Self(1_000_295_000);
+    pub const PRIVATE_DATA_SLOT_EXT: Self = Self::PRIVATE_DATA_SLOT;
 }
 #[doc = "Generated from 'VK_EXT_private_data'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_PRIVATE_DATA_FEATURES_EXT: Self = Self(1_000_295_000);
-    pub const DEVICE_PRIVATE_DATA_CREATE_INFO_EXT: Self = Self(1_000_295_001);
-    pub const PRIVATE_DATA_SLOT_CREATE_INFO_EXT: Self = Self(1_000_295_002);
+    pub const PHYSICAL_DEVICE_PRIVATE_DATA_FEATURES_EXT: Self =
+        Self::PHYSICAL_DEVICE_PRIVATE_DATA_FEATURES;
+    pub const DEVICE_PRIVATE_DATA_CREATE_INFO_EXT: Self = Self::DEVICE_PRIVATE_DATA_CREATE_INFO;
+    pub const PRIVATE_DATA_SLOT_CREATE_INFO_EXT: Self = Self::PRIVATE_DATA_SLOT_CREATE_INFO;
 }
 impl KhrExtension297Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -19566,22 +19594,22 @@ impl ExtPipelineCreationCacheControlFn {
 }
 #[doc = "Generated from 'VK_EXT_pipeline_creation_cache_control'"]
 impl PipelineCacheCreateFlags {
-    pub const EXTERNALLY_SYNCHRONIZED_EXT: Self = Self(0b1);
+    pub const EXTERNALLY_SYNCHRONIZED_EXT: Self = Self::EXTERNALLY_SYNCHRONIZED;
 }
 #[doc = "Generated from 'VK_EXT_pipeline_creation_cache_control'"]
 impl PipelineCreateFlags {
-    pub const FAIL_ON_PIPELINE_COMPILE_REQUIRED_EXT: Self = Self(0b1_0000_0000);
-    pub const EARLY_RETURN_ON_FAILURE_EXT: Self = Self(0b10_0000_0000);
+    pub const FAIL_ON_PIPELINE_COMPILE_REQUIRED_EXT: Self = Self::FAIL_ON_PIPELINE_COMPILE_REQUIRED;
+    pub const EARLY_RETURN_ON_FAILURE_EXT: Self = Self::EARLY_RETURN_ON_FAILURE;
 }
 #[doc = "Generated from 'VK_EXT_pipeline_creation_cache_control'"]
 impl Result {
-    pub const PIPELINE_COMPILE_REQUIRED_EXT: Self = Self(1_000_297_000);
-    pub const ERROR_PIPELINE_COMPILE_REQUIRED_EXT: Self = Self::PIPELINE_COMPILE_REQUIRED_EXT;
+    pub const PIPELINE_COMPILE_REQUIRED_EXT: Self = Self::PIPELINE_COMPILE_REQUIRED;
+    pub const ERROR_PIPELINE_COMPILE_REQUIRED_EXT: Self = Self::PIPELINE_COMPILE_REQUIRED;
 }
 #[doc = "Generated from 'VK_EXT_pipeline_creation_cache_control'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_PIPELINE_CREATION_CACHE_CONTROL_FEATURES_EXT: Self =
-        Self(1_000_297_000);
+        Self::PHYSICAL_DEVICE_PIPELINE_CREATION_CACHE_CONTROL_FEATURES;
 }
 impl KhrExtension299Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -19661,9 +19689,10 @@ impl KhrVideoEncodeQueueFn {
     }
 }
 #[doc = "Generated from 'VK_KHR_video_encode_queue'"]
-impl AccessFlags2KHR {
-    pub const VIDEO_ENCODE_READ: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000);
-    pub const VIDEO_ENCODE_WRITE: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+impl AccessFlags2 {
+    pub const VIDEO_ENCODE_READ_KHR: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const VIDEO_ENCODE_WRITE_KHR: Self =
+        Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_video_encode_queue'"]
 impl BufferUsageFlags {
@@ -19676,9 +19705,9 @@ impl FormatFeatureFlags {
     pub const VIDEO_ENCODE_DPB_KHR: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_video_encode_queue'"]
-impl FormatFeatureFlags2KHR {
-    pub const VIDEO_ENCODE_INPUT: Self = Self(0b1000_0000_0000_0000_0000_0000_0000);
-    pub const VIDEO_ENCODE_DPB: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000);
+impl FormatFeatureFlags2 {
+    pub const VIDEO_ENCODE_INPUT_KHR: Self = Self(0b1000_0000_0000_0000_0000_0000_0000);
+    pub const VIDEO_ENCODE_DPB_KHR: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_video_encode_queue'"]
 impl ImageLayout {
@@ -19693,8 +19722,8 @@ impl ImageUsageFlags {
     pub const VIDEO_ENCODE_DPB_KHR: Self = Self(0b1000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_video_encode_queue'"]
-impl PipelineStageFlags2KHR {
-    pub const VIDEO_ENCODE: Self = Self(0b1000_0000_0000_0000_0000_0000_0000);
+impl PipelineStageFlags2 {
+    pub const VIDEO_ENCODE_KHR: Self = Self(0b1000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_video_encode_queue'"]
 impl QueryType {
@@ -19757,7 +19786,7 @@ impl QcomRenderPassStoreOpsFn {
 }
 #[doc = "Generated from 'VK_QCOM_render_pass_store_ops'"]
 impl AttachmentStoreOp {
-    pub const NONE_QCOM: Self = Self::NONE_KHR;
+    pub const NONE_QCOM: Self = Self::NONE;
 }
 impl QcomExtension303Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -19986,47 +20015,47 @@ impl KhrSynchronization2Fn {
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetEvent2KHR = unsafe extern "system" fn(
+pub type PFN_vkCmdSetEvent2 = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     event: Event,
-    p_dependency_info: *const DependencyInfoKHR,
+    p_dependency_info: *const DependencyInfo,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdResetEvent2KHR = unsafe extern "system" fn(
+pub type PFN_vkCmdResetEvent2 = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     event: Event,
-    stage_mask: PipelineStageFlags2KHR,
+    stage_mask: PipelineStageFlags2,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdWaitEvents2KHR = unsafe extern "system" fn(
+pub type PFN_vkCmdWaitEvents2 = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     event_count: u32,
     p_events: *const Event,
-    p_dependency_infos: *const DependencyInfoKHR,
+    p_dependency_infos: *const DependencyInfo,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdPipelineBarrier2KHR = unsafe extern "system" fn(
+pub type PFN_vkCmdPipelineBarrier2 = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
-    p_dependency_info: *const DependencyInfoKHR,
+    p_dependency_info: *const DependencyInfo,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdWriteTimestamp2KHR = unsafe extern "system" fn(
+pub type PFN_vkCmdWriteTimestamp2 = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
-    stage: PipelineStageFlags2KHR,
+    stage: PipelineStageFlags2,
     query_pool: QueryPool,
     query: u32,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkQueueSubmit2KHR = unsafe extern "system" fn(
+pub type PFN_vkQueueSubmit2 = unsafe extern "system" fn(
     queue: Queue,
     submit_count: u32,
-    p_submits: *const SubmitInfo2KHR,
+    p_submits: *const SubmitInfo2,
     fence: Fence,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdWriteBufferMarker2AMD = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
-    stage: PipelineStageFlags2KHR,
+    stage: PipelineStageFlags2,
     dst_buffer: Buffer,
     dst_offset: DeviceSize,
     marker: u32,
@@ -20039,12 +20068,12 @@ pub type PFN_vkGetQueueCheckpointData2NV = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct KhrSynchronization2Fn {
-    pub cmd_set_event2_khr: PFN_vkCmdSetEvent2KHR,
-    pub cmd_reset_event2_khr: PFN_vkCmdResetEvent2KHR,
-    pub cmd_wait_events2_khr: PFN_vkCmdWaitEvents2KHR,
-    pub cmd_pipeline_barrier2_khr: PFN_vkCmdPipelineBarrier2KHR,
-    pub cmd_write_timestamp2_khr: PFN_vkCmdWriteTimestamp2KHR,
-    pub queue_submit2_khr: PFN_vkQueueSubmit2KHR,
+    pub cmd_set_event2_khr: PFN_vkCmdSetEvent2,
+    pub cmd_reset_event2_khr: PFN_vkCmdResetEvent2,
+    pub cmd_wait_events2_khr: PFN_vkCmdWaitEvents2,
+    pub cmd_pipeline_barrier2_khr: PFN_vkCmdPipelineBarrier2,
+    pub cmd_write_timestamp2_khr: PFN_vkCmdWriteTimestamp2,
+    pub queue_submit2_khr: PFN_vkQueueSubmit2,
     pub cmd_write_buffer_marker2_amd: PFN_vkCmdWriteBufferMarker2AMD,
     pub get_queue_checkpoint_data2_nv: PFN_vkGetQueueCheckpointData2NV,
 }
@@ -20060,7 +20089,7 @@ impl KhrSynchronization2Fn {
                 unsafe extern "system" fn cmd_set_event2_khr(
                     _command_buffer: CommandBuffer,
                     _event: Event,
-                    _p_dependency_info: *const DependencyInfoKHR,
+                    _p_dependency_info: *const DependencyInfo,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_set_event2_khr)))
                 }
@@ -20076,7 +20105,7 @@ impl KhrSynchronization2Fn {
                 unsafe extern "system" fn cmd_reset_event2_khr(
                     _command_buffer: CommandBuffer,
                     _event: Event,
-                    _stage_mask: PipelineStageFlags2KHR,
+                    _stage_mask: PipelineStageFlags2,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_reset_event2_khr)))
                 }
@@ -20094,7 +20123,7 @@ impl KhrSynchronization2Fn {
                     _command_buffer: CommandBuffer,
                     _event_count: u32,
                     _p_events: *const Event,
-                    _p_dependency_infos: *const DependencyInfoKHR,
+                    _p_dependency_infos: *const DependencyInfo,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_wait_events2_khr)))
                 }
@@ -20110,7 +20139,7 @@ impl KhrSynchronization2Fn {
             cmd_pipeline_barrier2_khr: unsafe {
                 unsafe extern "system" fn cmd_pipeline_barrier2_khr(
                     _command_buffer: CommandBuffer,
-                    _p_dependency_info: *const DependencyInfoKHR,
+                    _p_dependency_info: *const DependencyInfo,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -20129,7 +20158,7 @@ impl KhrSynchronization2Fn {
             cmd_write_timestamp2_khr: unsafe {
                 unsafe extern "system" fn cmd_write_timestamp2_khr(
                     _command_buffer: CommandBuffer,
-                    _stage: PipelineStageFlags2KHR,
+                    _stage: PipelineStageFlags2,
                     _query_pool: QueryPool,
                     _query: u32,
                 ) {
@@ -20151,7 +20180,7 @@ impl KhrSynchronization2Fn {
                 unsafe extern "system" fn queue_submit2_khr(
                     _queue: Queue,
                     _submit_count: u32,
-                    _p_submits: *const SubmitInfo2KHR,
+                    _p_submits: *const SubmitInfo2,
                     _fence: Fence,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(queue_submit2_khr)))
@@ -20167,7 +20196,7 @@ impl KhrSynchronization2Fn {
             cmd_write_buffer_marker2_amd: unsafe {
                 unsafe extern "system" fn cmd_write_buffer_marker2_amd(
                     _command_buffer: CommandBuffer,
-                    _stage: PipelineStageFlags2KHR,
+                    _stage: PipelineStageFlags2,
                     _dst_buffer: Buffer,
                     _dst_offset: DeviceSize,
                     _marker: u32,
@@ -20215,7 +20244,7 @@ impl KhrSynchronization2Fn {
         &self,
         command_buffer: CommandBuffer,
         event: Event,
-        p_dependency_info: *const DependencyInfoKHR,
+        p_dependency_info: *const DependencyInfo,
     ) {
         (self.cmd_set_event2_khr)(command_buffer, event, p_dependency_info)
     }
@@ -20224,7 +20253,7 @@ impl KhrSynchronization2Fn {
         &self,
         command_buffer: CommandBuffer,
         event: Event,
-        stage_mask: PipelineStageFlags2KHR,
+        stage_mask: PipelineStageFlags2,
     ) {
         (self.cmd_reset_event2_khr)(command_buffer, event, stage_mask)
     }
@@ -20234,7 +20263,7 @@ impl KhrSynchronization2Fn {
         command_buffer: CommandBuffer,
         event_count: u32,
         p_events: *const Event,
-        p_dependency_infos: *const DependencyInfoKHR,
+        p_dependency_infos: *const DependencyInfo,
     ) {
         (self.cmd_wait_events2_khr)(command_buffer, event_count, p_events, p_dependency_infos)
     }
@@ -20242,7 +20271,7 @@ impl KhrSynchronization2Fn {
     pub unsafe fn cmd_pipeline_barrier2_khr(
         &self,
         command_buffer: CommandBuffer,
-        p_dependency_info: *const DependencyInfoKHR,
+        p_dependency_info: *const DependencyInfo,
     ) {
         (self.cmd_pipeline_barrier2_khr)(command_buffer, p_dependency_info)
     }
@@ -20250,7 +20279,7 @@ impl KhrSynchronization2Fn {
     pub unsafe fn cmd_write_timestamp2_khr(
         &self,
         command_buffer: CommandBuffer,
-        stage: PipelineStageFlags2KHR,
+        stage: PipelineStageFlags2,
         query_pool: QueryPool,
         query: u32,
     ) {
@@ -20261,7 +20290,7 @@ impl KhrSynchronization2Fn {
         &self,
         queue: Queue,
         submit_count: u32,
-        p_submits: *const SubmitInfo2KHR,
+        p_submits: *const SubmitInfo2,
         fence: Fence,
     ) -> Result {
         (self.queue_submit2_khr)(queue, submit_count, p_submits, fence)
@@ -20270,7 +20299,7 @@ impl KhrSynchronization2Fn {
     pub unsafe fn cmd_write_buffer_marker2_amd(
         &self,
         command_buffer: CommandBuffer,
-        stage: PipelineStageFlags2KHR,
+        stage: PipelineStageFlags2,
         dst_buffer: Buffer,
         dst_offset: DeviceSize,
         marker: u32,
@@ -20289,10 +20318,10 @@ impl KhrSynchronization2Fn {
 }
 #[doc = "Generated from 'VK_KHR_synchronization2'"]
 impl AccessFlags {
-    pub const NONE_KHR: Self = Self(0);
+    pub const NONE_KHR: Self = Self::NONE;
 }
 #[doc = "Generated from 'VK_KHR_synchronization2'"]
-impl AccessFlags2KHR {
+impl AccessFlags2 {
     pub const TRANSFORM_FEEDBACK_WRITE_EXT: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
     pub const TRANSFORM_FEEDBACK_COUNTER_READ_EXT: Self = Self(0b100_0000_0000_0000_0000_0000_0000);
     pub const TRANSFORM_FEEDBACK_COUNTER_WRITE_EXT: Self =
@@ -20301,54 +20330,56 @@ impl AccessFlags2KHR {
     pub const CONDITIONAL_RENDERING_READ_EXT: Self = Self(0b1_0000_0000_0000_0000_0000);
     pub const COMMAND_PREPROCESS_READ_NV: Self = Self(0b10_0000_0000_0000_0000);
     pub const COMMAND_PREPROCESS_WRITE_NV: Self = Self(0b100_0000_0000_0000_0000);
-    pub const FRAGMENT_SHADING_RATE_ATTACHMENT_READ: Self = Self(0b1000_0000_0000_0000_0000_0000);
-    pub const SHADING_RATE_IMAGE_READ_NV: Self = Self::FRAGMENT_SHADING_RATE_ATTACHMENT_READ;
-    pub const ACCELERATION_STRUCTURE_READ: Self = Self(0b10_0000_0000_0000_0000_0000);
-    pub const ACCELERATION_STRUCTURE_WRITE: Self = Self(0b100_0000_0000_0000_0000_0000);
-    pub const ACCELERATION_STRUCTURE_READ_NV: Self = Self::ACCELERATION_STRUCTURE_READ;
-    pub const ACCELERATION_STRUCTURE_WRITE_NV: Self = Self::ACCELERATION_STRUCTURE_WRITE;
+    pub const FRAGMENT_SHADING_RATE_ATTACHMENT_READ_KHR: Self =
+        Self(0b1000_0000_0000_0000_0000_0000);
+    pub const SHADING_RATE_IMAGE_READ_NV: Self = Self::FRAGMENT_SHADING_RATE_ATTACHMENT_READ_KHR;
+    pub const ACCELERATION_STRUCTURE_READ_KHR: Self = Self(0b10_0000_0000_0000_0000_0000);
+    pub const ACCELERATION_STRUCTURE_WRITE_KHR: Self = Self(0b100_0000_0000_0000_0000_0000);
+    pub const ACCELERATION_STRUCTURE_READ_NV: Self = Self::ACCELERATION_STRUCTURE_READ_KHR;
+    pub const ACCELERATION_STRUCTURE_WRITE_NV: Self = Self::ACCELERATION_STRUCTURE_WRITE_KHR;
     pub const FRAGMENT_DENSITY_MAP_READ_EXT: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
     pub const COLOR_ATTACHMENT_READ_NONCOHERENT_EXT: Self = Self(0b1000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_synchronization2'"]
 impl EventCreateFlags {
-    pub const DEVICE_ONLY_KHR: Self = Self(0b1);
+    pub const DEVICE_ONLY_KHR: Self = Self::DEVICE_ONLY;
 }
 #[doc = "Generated from 'VK_KHR_synchronization2'"]
 impl ImageLayout {
-    pub const READ_ONLY_OPTIMAL_KHR: Self = Self(1_000_314_000);
-    pub const ATTACHMENT_OPTIMAL_KHR: Self = Self(1_000_314_001);
+    pub const READ_ONLY_OPTIMAL_KHR: Self = Self::READ_ONLY_OPTIMAL;
+    pub const ATTACHMENT_OPTIMAL_KHR: Self = Self::ATTACHMENT_OPTIMAL;
 }
 #[doc = "Generated from 'VK_KHR_synchronization2'"]
 impl PipelineStageFlags {
-    pub const NONE_KHR: Self = Self(0);
+    pub const NONE_KHR: Self = Self::NONE;
 }
 #[doc = "Generated from 'VK_KHR_synchronization2'"]
-impl PipelineStageFlags2KHR {
+impl PipelineStageFlags2 {
     pub const TRANSFORM_FEEDBACK_EXT: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
     #[doc = "A pipeline stage for conditional rendering predicate fetch"]
     pub const CONDITIONAL_RENDERING_EXT: Self = Self(0b100_0000_0000_0000_0000);
     pub const COMMAND_PREPROCESS_NV: Self = Self(0b10_0000_0000_0000_0000);
-    pub const FRAGMENT_SHADING_RATE_ATTACHMENT: Self = Self(0b100_0000_0000_0000_0000_0000);
-    pub const SHADING_RATE_IMAGE_NV: Self = Self::FRAGMENT_SHADING_RATE_ATTACHMENT;
-    pub const ACCELERATION_STRUCTURE_BUILD: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
-    pub const RAY_TRACING_SHADER: Self = Self(0b10_0000_0000_0000_0000_0000);
-    pub const RAY_TRACING_SHADER_NV: Self = Self::RAY_TRACING_SHADER;
-    pub const ACCELERATION_STRUCTURE_BUILD_NV: Self = Self::ACCELERATION_STRUCTURE_BUILD;
+    pub const FRAGMENT_SHADING_RATE_ATTACHMENT_KHR: Self = Self(0b100_0000_0000_0000_0000_0000);
+    pub const SHADING_RATE_IMAGE_NV: Self = Self::FRAGMENT_SHADING_RATE_ATTACHMENT_KHR;
+    pub const ACCELERATION_STRUCTURE_BUILD_KHR: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
+    pub const RAY_TRACING_SHADER_KHR: Self = Self(0b10_0000_0000_0000_0000_0000);
+    pub const RAY_TRACING_SHADER_NV: Self = Self::RAY_TRACING_SHADER_KHR;
+    pub const ACCELERATION_STRUCTURE_BUILD_NV: Self = Self::ACCELERATION_STRUCTURE_BUILD_KHR;
     pub const FRAGMENT_DENSITY_PROCESS_EXT: Self = Self(0b1000_0000_0000_0000_0000_0000);
     pub const TASK_SHADER_NV: Self = Self(0b1000_0000_0000_0000_0000);
     pub const MESH_SHADER_NV: Self = Self(0b1_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_synchronization2'"]
 impl StructureType {
-    pub const MEMORY_BARRIER_2_KHR: Self = Self(1_000_314_000);
-    pub const BUFFER_MEMORY_BARRIER_2_KHR: Self = Self(1_000_314_001);
-    pub const IMAGE_MEMORY_BARRIER_2_KHR: Self = Self(1_000_314_002);
-    pub const DEPENDENCY_INFO_KHR: Self = Self(1_000_314_003);
-    pub const SUBMIT_INFO_2_KHR: Self = Self(1_000_314_004);
-    pub const SEMAPHORE_SUBMIT_INFO_KHR: Self = Self(1_000_314_005);
-    pub const COMMAND_BUFFER_SUBMIT_INFO_KHR: Self = Self(1_000_314_006);
-    pub const PHYSICAL_DEVICE_SYNCHRONIZATION_2_FEATURES_KHR: Self = Self(1_000_314_007);
+    pub const MEMORY_BARRIER_2_KHR: Self = Self::MEMORY_BARRIER_2;
+    pub const BUFFER_MEMORY_BARRIER_2_KHR: Self = Self::BUFFER_MEMORY_BARRIER_2;
+    pub const IMAGE_MEMORY_BARRIER_2_KHR: Self = Self::IMAGE_MEMORY_BARRIER_2;
+    pub const DEPENDENCY_INFO_KHR: Self = Self::DEPENDENCY_INFO;
+    pub const SUBMIT_INFO_2_KHR: Self = Self::SUBMIT_INFO_2;
+    pub const SEMAPHORE_SUBMIT_INFO_KHR: Self = Self::SEMAPHORE_SUBMIT_INFO;
+    pub const COMMAND_BUFFER_SUBMIT_INFO_KHR: Self = Self::COMMAND_BUFFER_SUBMIT_INFO;
+    pub const PHYSICAL_DEVICE_SYNCHRONIZATION_2_FEATURES_KHR: Self =
+        Self::PHYSICAL_DEVICE_SYNCHRONIZATION_2_FEATURES;
     pub const QUEUE_FAMILY_CHECKPOINT_PROPERTIES_2_NV: Self = Self(1_000_314_008);
     pub const CHECKPOINT_DATA_2_NV: Self = Self(1_000_314_009);
 }
@@ -20389,7 +20420,7 @@ impl AmdExtension317Fn {
     }
 }
 #[doc = "Generated from 'VK_AMD_extension_317'"]
-impl AccessFlags2KHR {
+impl AccessFlags2 {
     pub const RESERVED_41_AMD: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_AMD_extension_317'"]
@@ -20408,6 +20439,10 @@ impl DescriptorSetLayoutCreateFlags {
 #[doc = "Generated from 'VK_AMD_extension_317'"]
 impl ImageCreateFlags {
     pub const RESERVED_16_AMD: Self = Self(0b1_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_AMD_extension_317'"]
+impl ImageViewCreateFlags {
+    pub const RESERVED_2_AMD: Self = Self(0b100);
 }
 #[doc = "Generated from 'VK_AMD_extension_317'"]
 impl SamplerCreateFlags {
@@ -20608,7 +20643,7 @@ impl KhrZeroInitializeWorkgroupMemoryFn {
 #[doc = "Generated from 'VK_KHR_zero_initialize_workgroup_memory'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_ZERO_INITIALIZE_WORKGROUP_MEMORY_FEATURES_KHR: Self =
-        Self(1_000_325_000);
+        Self::PHYSICAL_DEVICE_ZERO_INITIALIZE_WORKGROUP_MEMORY_FEATURES;
 }
 impl NvFragmentShadingRateEnumsFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -20771,10 +20806,12 @@ impl ExtYcbcr2plane444FormatsFn {
 }
 #[doc = "Generated from 'VK_EXT_ycbcr_2plane_444_formats'"]
 impl Format {
-    pub const G8_B8R8_2PLANE_444_UNORM_EXT: Self = Self(1_000_330_000);
-    pub const G10X6_B10X6R10X6_2PLANE_444_UNORM_3PACK16_EXT: Self = Self(1_000_330_001);
-    pub const G12X4_B12X4R12X4_2PLANE_444_UNORM_3PACK16_EXT: Self = Self(1_000_330_002);
-    pub const G16_B16R16_2PLANE_444_UNORM_EXT: Self = Self(1_000_330_003);
+    pub const G8_B8R8_2PLANE_444_UNORM_EXT: Self = Self::G8_B8R8_2PLANE_444_UNORM;
+    pub const G10X6_B10X6R10X6_2PLANE_444_UNORM_3PACK16_EXT: Self =
+        Self::G10X6_B10X6R10X6_2PLANE_444_UNORM_3PACK16;
+    pub const G12X4_B12X4R12X4_2PLANE_444_UNORM_3PACK16_EXT: Self =
+        Self::G12X4_B12X4R12X4_2PLANE_444_UNORM_3PACK16;
+    pub const G16_B16R16_2PLANE_444_UNORM_EXT: Self = Self::G16_B16R16_2PLANE_444_UNORM;
 }
 #[doc = "Generated from 'VK_EXT_ycbcr_2plane_444_formats'"]
 impl StructureType {
@@ -20889,7 +20926,8 @@ impl ExtImageRobustnessFn {
 }
 #[doc = "Generated from 'VK_EXT_image_robustness'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_IMAGE_ROBUSTNESS_FEATURES_EXT: Self = Self(1_000_335_000);
+    pub const PHYSICAL_DEVICE_IMAGE_ROBUSTNESS_FEATURES_EXT: Self =
+        Self::PHYSICAL_DEVICE_IMAGE_ROBUSTNESS_FEATURES;
 }
 impl KhrWorkgroupMemoryExplicitLayoutFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -20925,43 +20963,43 @@ impl KhrCopyCommands2Fn {
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdCopyBuffer2KHR = unsafe extern "system" fn(
+pub type PFN_vkCmdCopyBuffer2 = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
-    p_copy_buffer_info: *const CopyBufferInfo2KHR,
+    p_copy_buffer_info: *const CopyBufferInfo2,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdCopyImage2KHR = unsafe extern "system" fn(
+pub type PFN_vkCmdCopyImage2 = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
-    p_copy_image_info: *const CopyImageInfo2KHR,
+    p_copy_image_info: *const CopyImageInfo2,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdCopyBufferToImage2KHR = unsafe extern "system" fn(
+pub type PFN_vkCmdCopyBufferToImage2 = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
-    p_copy_buffer_to_image_info: *const CopyBufferToImageInfo2KHR,
+    p_copy_buffer_to_image_info: *const CopyBufferToImageInfo2,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdCopyImageToBuffer2KHR = unsafe extern "system" fn(
+pub type PFN_vkCmdCopyImageToBuffer2 = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
-    p_copy_image_to_buffer_info: *const CopyImageToBufferInfo2KHR,
+    p_copy_image_to_buffer_info: *const CopyImageToBufferInfo2,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdBlitImage2KHR = unsafe extern "system" fn(
+pub type PFN_vkCmdBlitImage2 = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
-    p_blit_image_info: *const BlitImageInfo2KHR,
+    p_blit_image_info: *const BlitImageInfo2,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdResolveImage2KHR = unsafe extern "system" fn(
+pub type PFN_vkCmdResolveImage2 = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
-    p_resolve_image_info: *const ResolveImageInfo2KHR,
+    p_resolve_image_info: *const ResolveImageInfo2,
 );
 #[derive(Clone)]
 pub struct KhrCopyCommands2Fn {
-    pub cmd_copy_buffer2_khr: PFN_vkCmdCopyBuffer2KHR,
-    pub cmd_copy_image2_khr: PFN_vkCmdCopyImage2KHR,
-    pub cmd_copy_buffer_to_image2_khr: PFN_vkCmdCopyBufferToImage2KHR,
-    pub cmd_copy_image_to_buffer2_khr: PFN_vkCmdCopyImageToBuffer2KHR,
-    pub cmd_blit_image2_khr: PFN_vkCmdBlitImage2KHR,
-    pub cmd_resolve_image2_khr: PFN_vkCmdResolveImage2KHR,
+    pub cmd_copy_buffer2_khr: PFN_vkCmdCopyBuffer2,
+    pub cmd_copy_image2_khr: PFN_vkCmdCopyImage2,
+    pub cmd_copy_buffer_to_image2_khr: PFN_vkCmdCopyBufferToImage2,
+    pub cmd_copy_image_to_buffer2_khr: PFN_vkCmdCopyImageToBuffer2,
+    pub cmd_blit_image2_khr: PFN_vkCmdBlitImage2,
+    pub cmd_resolve_image2_khr: PFN_vkCmdResolveImage2,
 }
 unsafe impl Send for KhrCopyCommands2Fn {}
 unsafe impl Sync for KhrCopyCommands2Fn {}
@@ -20974,7 +21012,7 @@ impl KhrCopyCommands2Fn {
             cmd_copy_buffer2_khr: unsafe {
                 unsafe extern "system" fn cmd_copy_buffer2_khr(
                     _command_buffer: CommandBuffer,
-                    _p_copy_buffer_info: *const CopyBufferInfo2KHR,
+                    _p_copy_buffer_info: *const CopyBufferInfo2,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_copy_buffer2_khr)))
                 }
@@ -20990,7 +21028,7 @@ impl KhrCopyCommands2Fn {
             cmd_copy_image2_khr: unsafe {
                 unsafe extern "system" fn cmd_copy_image2_khr(
                     _command_buffer: CommandBuffer,
-                    _p_copy_image_info: *const CopyImageInfo2KHR,
+                    _p_copy_image_info: *const CopyImageInfo2,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_copy_image2_khr)))
                 }
@@ -21006,7 +21044,7 @@ impl KhrCopyCommands2Fn {
             cmd_copy_buffer_to_image2_khr: unsafe {
                 unsafe extern "system" fn cmd_copy_buffer_to_image2_khr(
                     _command_buffer: CommandBuffer,
-                    _p_copy_buffer_to_image_info: *const CopyBufferToImageInfo2KHR,
+                    _p_copy_buffer_to_image_info: *const CopyBufferToImageInfo2,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -21026,7 +21064,7 @@ impl KhrCopyCommands2Fn {
             cmd_copy_image_to_buffer2_khr: unsafe {
                 unsafe extern "system" fn cmd_copy_image_to_buffer2_khr(
                     _command_buffer: CommandBuffer,
-                    _p_copy_image_to_buffer_info: *const CopyImageToBufferInfo2KHR,
+                    _p_copy_image_to_buffer_info: *const CopyImageToBufferInfo2,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -21046,7 +21084,7 @@ impl KhrCopyCommands2Fn {
             cmd_blit_image2_khr: unsafe {
                 unsafe extern "system" fn cmd_blit_image2_khr(
                     _command_buffer: CommandBuffer,
-                    _p_blit_image_info: *const BlitImageInfo2KHR,
+                    _p_blit_image_info: *const BlitImageInfo2,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_blit_image2_khr)))
                 }
@@ -21062,7 +21100,7 @@ impl KhrCopyCommands2Fn {
             cmd_resolve_image2_khr: unsafe {
                 unsafe extern "system" fn cmd_resolve_image2_khr(
                     _command_buffer: CommandBuffer,
-                    _p_resolve_image_info: *const ResolveImageInfo2KHR,
+                    _p_resolve_image_info: *const ResolveImageInfo2,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -21084,7 +21122,7 @@ impl KhrCopyCommands2Fn {
     pub unsafe fn cmd_copy_buffer2_khr(
         &self,
         command_buffer: CommandBuffer,
-        p_copy_buffer_info: *const CopyBufferInfo2KHR,
+        p_copy_buffer_info: *const CopyBufferInfo2,
     ) {
         (self.cmd_copy_buffer2_khr)(command_buffer, p_copy_buffer_info)
     }
@@ -21092,7 +21130,7 @@ impl KhrCopyCommands2Fn {
     pub unsafe fn cmd_copy_image2_khr(
         &self,
         command_buffer: CommandBuffer,
-        p_copy_image_info: *const CopyImageInfo2KHR,
+        p_copy_image_info: *const CopyImageInfo2,
     ) {
         (self.cmd_copy_image2_khr)(command_buffer, p_copy_image_info)
     }
@@ -21100,7 +21138,7 @@ impl KhrCopyCommands2Fn {
     pub unsafe fn cmd_copy_buffer_to_image2_khr(
         &self,
         command_buffer: CommandBuffer,
-        p_copy_buffer_to_image_info: *const CopyBufferToImageInfo2KHR,
+        p_copy_buffer_to_image_info: *const CopyBufferToImageInfo2,
     ) {
         (self.cmd_copy_buffer_to_image2_khr)(command_buffer, p_copy_buffer_to_image_info)
     }
@@ -21108,7 +21146,7 @@ impl KhrCopyCommands2Fn {
     pub unsafe fn cmd_copy_image_to_buffer2_khr(
         &self,
         command_buffer: CommandBuffer,
-        p_copy_image_to_buffer_info: *const CopyImageToBufferInfo2KHR,
+        p_copy_image_to_buffer_info: *const CopyImageToBufferInfo2,
     ) {
         (self.cmd_copy_image_to_buffer2_khr)(command_buffer, p_copy_image_to_buffer_info)
     }
@@ -21116,7 +21154,7 @@ impl KhrCopyCommands2Fn {
     pub unsafe fn cmd_blit_image2_khr(
         &self,
         command_buffer: CommandBuffer,
-        p_blit_image_info: *const BlitImageInfo2KHR,
+        p_blit_image_info: *const BlitImageInfo2,
     ) {
         (self.cmd_blit_image2_khr)(command_buffer, p_blit_image_info)
     }
@@ -21124,24 +21162,24 @@ impl KhrCopyCommands2Fn {
     pub unsafe fn cmd_resolve_image2_khr(
         &self,
         command_buffer: CommandBuffer,
-        p_resolve_image_info: *const ResolveImageInfo2KHR,
+        p_resolve_image_info: *const ResolveImageInfo2,
     ) {
         (self.cmd_resolve_image2_khr)(command_buffer, p_resolve_image_info)
     }
 }
 #[doc = "Generated from 'VK_KHR_copy_commands2'"]
 impl StructureType {
-    pub const COPY_BUFFER_INFO_2_KHR: Self = Self(1_000_337_000);
-    pub const COPY_IMAGE_INFO_2_KHR: Self = Self(1_000_337_001);
-    pub const COPY_BUFFER_TO_IMAGE_INFO_2_KHR: Self = Self(1_000_337_002);
-    pub const COPY_IMAGE_TO_BUFFER_INFO_2_KHR: Self = Self(1_000_337_003);
-    pub const BLIT_IMAGE_INFO_2_KHR: Self = Self(1_000_337_004);
-    pub const RESOLVE_IMAGE_INFO_2_KHR: Self = Self(1_000_337_005);
-    pub const BUFFER_COPY_2_KHR: Self = Self(1_000_337_006);
-    pub const IMAGE_COPY_2_KHR: Self = Self(1_000_337_007);
-    pub const IMAGE_BLIT_2_KHR: Self = Self(1_000_337_008);
-    pub const BUFFER_IMAGE_COPY_2_KHR: Self = Self(1_000_337_009);
-    pub const IMAGE_RESOLVE_2_KHR: Self = Self(1_000_337_010);
+    pub const COPY_BUFFER_INFO_2_KHR: Self = Self::COPY_BUFFER_INFO_2;
+    pub const COPY_IMAGE_INFO_2_KHR: Self = Self::COPY_IMAGE_INFO_2;
+    pub const COPY_BUFFER_TO_IMAGE_INFO_2_KHR: Self = Self::COPY_BUFFER_TO_IMAGE_INFO_2;
+    pub const COPY_IMAGE_TO_BUFFER_INFO_2_KHR: Self = Self::COPY_IMAGE_TO_BUFFER_INFO_2;
+    pub const BLIT_IMAGE_INFO_2_KHR: Self = Self::BLIT_IMAGE_INFO_2;
+    pub const RESOLVE_IMAGE_INFO_2_KHR: Self = Self::RESOLVE_IMAGE_INFO_2;
+    pub const BUFFER_COPY_2_KHR: Self = Self::BUFFER_COPY_2;
+    pub const IMAGE_COPY_2_KHR: Self = Self::IMAGE_COPY_2;
+    pub const IMAGE_BLIT_2_KHR: Self = Self::IMAGE_BLIT_2;
+    pub const BUFFER_IMAGE_COPY_2_KHR: Self = Self::BUFFER_IMAGE_COPY_2;
+    pub const IMAGE_RESOLVE_2_KHR: Self = Self::IMAGE_RESOLVE_2;
 }
 impl ArmExtension339Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -21203,8 +21241,8 @@ impl Ext4444FormatsFn {
 }
 #[doc = "Generated from 'VK_EXT_4444_formats'"]
 impl Format {
-    pub const A4R4G4B4_UNORM_PACK16_EXT: Self = Self(1_000_340_000);
-    pub const A4B4G4R4_UNORM_PACK16_EXT: Self = Self(1_000_340_001);
+    pub const A4R4G4B4_UNORM_PACK16_EXT: Self = Self::A4R4G4B4_UNORM_PACK16;
+    pub const A4B4G4R4_UNORM_PACK16_EXT: Self = Self::A4B4G4R4_UNORM_PACK16;
 }
 #[doc = "Generated from 'VK_EXT_4444_formats'"]
 impl StructureType {
@@ -21820,7 +21858,7 @@ impl KhrFormatFeatureFlags2Fn {
 }
 #[doc = "Generated from 'VK_KHR_format_feature_flags2'"]
 impl StructureType {
-    pub const FORMAT_PROPERTIES_3_KHR: Self = Self(1_000_360_000);
+    pub const FORMAT_PROPERTIES_3_KHR: Self = Self::FORMAT_PROPERTIES_3;
 }
 impl ExtExtension362Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -22468,7 +22506,7 @@ impl PipelineBindPoint {
     pub const SUBPASS_SHADING_HUAWEI: Self = Self(1_000_369_003);
 }
 #[doc = "Generated from 'VK_HUAWEI_subpass_shading'"]
-impl PipelineStageFlags2KHR {
+impl PipelineStageFlags2 {
     pub const SUBPASS_SHADING_HUAWEI: Self =
         Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
 }
@@ -22540,7 +22578,7 @@ impl HuaweiInvocationMaskFn {
     }
 }
 #[doc = "Generated from 'VK_HUAWEI_invocation_mask'"]
-impl AccessFlags2KHR {
+impl AccessFlags2 {
     pub const INVOCATION_MASK_READ_HUAWEI: Self =
         Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
 }
@@ -22549,7 +22587,7 @@ impl ImageUsageFlags {
     pub const INVOCATION_MASK_HUAWEI: Self = Self(0b100_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_HUAWEI_invocation_mask'"]
-impl PipelineStageFlags2KHR {
+impl PipelineStageFlags2 {
     pub const INVOCATION_MASK_HUAWEI: Self =
         Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
 }
@@ -22743,24 +22781,24 @@ impl ExtExtendedDynamicState2Fn {
 pub type PFN_vkCmdSetPatchControlPointsEXT =
     unsafe extern "system" fn(command_buffer: CommandBuffer, patch_control_points: u32);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetRasterizerDiscardEnableEXT =
+pub type PFN_vkCmdSetRasterizerDiscardEnable =
     unsafe extern "system" fn(command_buffer: CommandBuffer, rasterizer_discard_enable: Bool32);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetDepthBiasEnableEXT =
+pub type PFN_vkCmdSetDepthBiasEnable =
     unsafe extern "system" fn(command_buffer: CommandBuffer, depth_bias_enable: Bool32);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetLogicOpEXT =
     unsafe extern "system" fn(command_buffer: CommandBuffer, logic_op: LogicOp);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetPrimitiveRestartEnableEXT =
+pub type PFN_vkCmdSetPrimitiveRestartEnable =
     unsafe extern "system" fn(command_buffer: CommandBuffer, primitive_restart_enable: Bool32);
 #[derive(Clone)]
 pub struct ExtExtendedDynamicState2Fn {
     pub cmd_set_patch_control_points_ext: PFN_vkCmdSetPatchControlPointsEXT,
-    pub cmd_set_rasterizer_discard_enable_ext: PFN_vkCmdSetRasterizerDiscardEnableEXT,
-    pub cmd_set_depth_bias_enable_ext: PFN_vkCmdSetDepthBiasEnableEXT,
+    pub cmd_set_rasterizer_discard_enable_ext: PFN_vkCmdSetRasterizerDiscardEnable,
+    pub cmd_set_depth_bias_enable_ext: PFN_vkCmdSetDepthBiasEnable,
     pub cmd_set_logic_op_ext: PFN_vkCmdSetLogicOpEXT,
-    pub cmd_set_primitive_restart_enable_ext: PFN_vkCmdSetPrimitiveRestartEnableEXT,
+    pub cmd_set_primitive_restart_enable_ext: PFN_vkCmdSetPrimitiveRestartEnable,
 }
 unsafe impl Send for ExtExtendedDynamicState2Fn {}
 unsafe impl Sync for ExtExtendedDynamicState2Fn {}
@@ -22907,14 +22945,17 @@ impl ExtExtendedDynamicState2Fn {
 }
 #[doc = "Generated from 'VK_EXT_extended_dynamic_state2'"]
 impl DynamicState {
+    #[doc = "Not promoted to 1.3"]
     pub const PATCH_CONTROL_POINTS_EXT: Self = Self(1_000_377_000);
-    pub const RASTERIZER_DISCARD_ENABLE_EXT: Self = Self(1_000_377_001);
-    pub const DEPTH_BIAS_ENABLE_EXT: Self = Self(1_000_377_002);
+    pub const RASTERIZER_DISCARD_ENABLE_EXT: Self = Self::RASTERIZER_DISCARD_ENABLE;
+    pub const DEPTH_BIAS_ENABLE_EXT: Self = Self::DEPTH_BIAS_ENABLE;
+    #[doc = "Not promoted to 1.3"]
     pub const LOGIC_OP_EXT: Self = Self(1_000_377_003);
-    pub const PRIMITIVE_RESTART_ENABLE_EXT: Self = Self(1_000_377_004);
+    pub const PRIMITIVE_RESTART_ENABLE_EXT: Self = Self::PRIMITIVE_RESTART_ENABLE;
 }
 #[doc = "Generated from 'VK_EXT_extended_dynamic_state2'"]
 impl StructureType {
+    #[doc = "Not promoted to 1.3"]
     pub const PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_2_FEATURES_EXT: Self = Self(1_000_377_000);
 }
 impl QnxScreenSurfaceFn {
@@ -23219,12 +23260,12 @@ impl KhrExtension387Fn {
     }
 }
 #[doc = "Generated from 'VK_KHR_extension_387'"]
-impl AccessFlags2KHR {
-    pub const RESERVED_387: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+impl AccessFlags2 {
+    pub const RESERVED_387_KHR: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_extension_387'"]
-impl PipelineStageFlags2KHR {
-    pub const RESERVED_387: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000);
+impl PipelineStageFlags2 {
+    pub const RESERVED_387_KHR: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000);
 }
 impl ExtExtension388Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -23266,8 +23307,10 @@ impl ExtGlobalPriorityQueryFn {
 }
 #[doc = "Generated from 'VK_EXT_global_priority_query'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_GLOBAL_PRIORITY_QUERY_FEATURES_EXT: Self = Self(1_000_388_000);
-    pub const QUEUE_FAMILY_GLOBAL_PRIORITY_PROPERTIES_EXT: Self = Self(1_000_388_001);
+    pub const PHYSICAL_DEVICE_GLOBAL_PRIORITY_QUERY_FEATURES_EXT: Self =
+        Self::PHYSICAL_DEVICE_GLOBAL_PRIORITY_QUERY_FEATURES_KHR;
+    pub const QUEUE_FAMILY_GLOBAL_PRIORITY_PROPERTIES_EXT: Self =
+        Self::QUEUE_FAMILY_GLOBAL_PRIORITY_PROPERTIES_KHR;
 }
 impl ExtExtension390Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -23611,7 +23654,7 @@ impl AttachmentLoadOp {
 }
 #[doc = "Generated from 'VK_EXT_load_store_op_none'"]
 impl AttachmentStoreOp {
-    pub const NONE_EXT: Self = Self::NONE_KHR;
+    pub const NONE_EXT: Self = Self::NONE;
 }
 impl FbExtension402Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -23885,30 +23928,30 @@ impl KhrMaintenance4Fn {
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetDeviceBufferMemoryRequirementsKHR = unsafe extern "system" fn(
+pub type PFN_vkGetDeviceBufferMemoryRequirements = unsafe extern "system" fn(
     device: Device,
-    p_info: *const DeviceBufferMemoryRequirementsKHR,
+    p_info: *const DeviceBufferMemoryRequirements,
     p_memory_requirements: *mut MemoryRequirements2,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetDeviceImageMemoryRequirementsKHR = unsafe extern "system" fn(
+pub type PFN_vkGetDeviceImageMemoryRequirements = unsafe extern "system" fn(
     device: Device,
-    p_info: *const DeviceImageMemoryRequirementsKHR,
+    p_info: *const DeviceImageMemoryRequirements,
     p_memory_requirements: *mut MemoryRequirements2,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetDeviceImageSparseMemoryRequirementsKHR = unsafe extern "system" fn(
+pub type PFN_vkGetDeviceImageSparseMemoryRequirements = unsafe extern "system" fn(
     device: Device,
-    p_info: *const DeviceImageMemoryRequirementsKHR,
+    p_info: *const DeviceImageMemoryRequirements,
     p_sparse_memory_requirement_count: *mut u32,
     p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2,
 );
 #[derive(Clone)]
 pub struct KhrMaintenance4Fn {
-    pub get_device_buffer_memory_requirements_khr: PFN_vkGetDeviceBufferMemoryRequirementsKHR,
-    pub get_device_image_memory_requirements_khr: PFN_vkGetDeviceImageMemoryRequirementsKHR,
+    pub get_device_buffer_memory_requirements_khr: PFN_vkGetDeviceBufferMemoryRequirements,
+    pub get_device_image_memory_requirements_khr: PFN_vkGetDeviceImageMemoryRequirements,
     pub get_device_image_sparse_memory_requirements_khr:
-        PFN_vkGetDeviceImageSparseMemoryRequirementsKHR,
+        PFN_vkGetDeviceImageSparseMemoryRequirements,
 }
 unsafe impl Send for KhrMaintenance4Fn {}
 unsafe impl Sync for KhrMaintenance4Fn {}
@@ -23921,7 +23964,7 @@ impl KhrMaintenance4Fn {
             get_device_buffer_memory_requirements_khr: unsafe {
                 unsafe extern "system" fn get_device_buffer_memory_requirements_khr(
                     _device: Device,
-                    _p_info: *const DeviceBufferMemoryRequirementsKHR,
+                    _p_info: *const DeviceBufferMemoryRequirements,
                     _p_memory_requirements: *mut MemoryRequirements2,
                 ) {
                     panic!(concat!(
@@ -23942,7 +23985,7 @@ impl KhrMaintenance4Fn {
             get_device_image_memory_requirements_khr: unsafe {
                 unsafe extern "system" fn get_device_image_memory_requirements_khr(
                     _device: Device,
-                    _p_info: *const DeviceImageMemoryRequirementsKHR,
+                    _p_info: *const DeviceImageMemoryRequirements,
                     _p_memory_requirements: *mut MemoryRequirements2,
                 ) {
                     panic!(concat!(
@@ -23963,7 +24006,7 @@ impl KhrMaintenance4Fn {
             get_device_image_sparse_memory_requirements_khr: unsafe {
                 unsafe extern "system" fn get_device_image_sparse_memory_requirements_khr(
                     _device: Device,
-                    _p_info: *const DeviceImageMemoryRequirementsKHR,
+                    _p_info: *const DeviceImageMemoryRequirements,
                     _p_sparse_memory_requirement_count: *mut u32,
                     _p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2,
                 ) {
@@ -23988,7 +24031,7 @@ impl KhrMaintenance4Fn {
     pub unsafe fn get_device_buffer_memory_requirements_khr(
         &self,
         device: Device,
-        p_info: *const DeviceBufferMemoryRequirementsKHR,
+        p_info: *const DeviceBufferMemoryRequirements,
         p_memory_requirements: *mut MemoryRequirements2,
     ) {
         (self.get_device_buffer_memory_requirements_khr)(device, p_info, p_memory_requirements)
@@ -23997,7 +24040,7 @@ impl KhrMaintenance4Fn {
     pub unsafe fn get_device_image_memory_requirements_khr(
         &self,
         device: Device,
-        p_info: *const DeviceImageMemoryRequirementsKHR,
+        p_info: *const DeviceImageMemoryRequirements,
         p_memory_requirements: *mut MemoryRequirements2,
     ) {
         (self.get_device_image_memory_requirements_khr)(device, p_info, p_memory_requirements)
@@ -24006,7 +24049,7 @@ impl KhrMaintenance4Fn {
     pub unsafe fn get_device_image_sparse_memory_requirements_khr(
         &self,
         device: Device,
-        p_info: *const DeviceImageMemoryRequirementsKHR,
+        p_info: *const DeviceImageMemoryRequirements,
         p_sparse_memory_requirement_count: *mut u32,
         p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2,
     ) {
@@ -24020,14 +24063,16 @@ impl KhrMaintenance4Fn {
 }
 #[doc = "Generated from 'VK_KHR_maintenance4'"]
 impl ImageAspectFlags {
-    pub const NONE_KHR: Self = Self(0);
+    pub const NONE_KHR: Self = Self::NONE;
 }
 #[doc = "Generated from 'VK_KHR_maintenance4'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_MAINTENANCE_4_FEATURES_KHR: Self = Self(1_000_413_000);
-    pub const PHYSICAL_DEVICE_MAINTENANCE_4_PROPERTIES_KHR: Self = Self(1_000_413_001);
-    pub const DEVICE_BUFFER_MEMORY_REQUIREMENTS_KHR: Self = Self(1_000_413_002);
-    pub const DEVICE_IMAGE_MEMORY_REQUIREMENTS_KHR: Self = Self(1_000_413_003);
+    pub const PHYSICAL_DEVICE_MAINTENANCE_4_FEATURES_KHR: Self =
+        Self::PHYSICAL_DEVICE_MAINTENANCE_4_FEATURES;
+    pub const PHYSICAL_DEVICE_MAINTENANCE_4_PROPERTIES_KHR: Self =
+        Self::PHYSICAL_DEVICE_MAINTENANCE_4_PROPERTIES;
+    pub const DEVICE_BUFFER_MEMORY_REQUIREMENTS_KHR: Self = Self::DEVICE_BUFFER_MEMORY_REQUIREMENTS;
+    pub const DEVICE_IMAGE_MEMORY_REQUIREMENTS_KHR: Self = Self::DEVICE_IMAGE_MEMORY_REQUIREMENTS;
 }
 impl HuaweiExtension415Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -24359,7 +24404,7 @@ impl NvLinearColorAttachmentFn {
     }
 }
 #[doc = "Generated from 'VK_NV_linear_color_attachment'"]
-impl FormatFeatureFlags2KHR {
+impl FormatFeatureFlags2 {
     #[doc = "Format support linear image as render target, it cannot be mixed with non linear attachment"]
     pub const LINEAR_COLOR_ATTACHMENT_NV: Self =
         Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000_0000);
@@ -24557,7 +24602,7 @@ impl QcomExtension441Fn {
     }
 }
 #[doc = "Generated from 'VK_QCOM_extension_441'"]
-impl FormatFeatureFlags2KHR {
+impl FormatFeatureFlags2 {
     pub const RESERVED_34_QCOM: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000);
     pub const RESERVED_35_QCOM: Self = Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000);
     pub const RESERVED_36_QCOM: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000_0000);
@@ -24749,6 +24794,24 @@ pub struct SecExtension451Fn {}
 unsafe impl Send for SecExtension451Fn {}
 unsafe impl Sync for SecExtension451Fn {}
 impl SecExtension451Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl NvExtension452Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_452\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct NvExtension452Fn {}
+unsafe impl Send for NvExtension452Fn {}
+unsafe impl Sync for NvExtension452Fn {}
+impl NvExtension452Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,

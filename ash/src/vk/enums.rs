@@ -1545,9 +1545,9 @@ impl ShaderInfoTypeAMD {
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkQueueGlobalPriorityEXT.html>"]
-pub struct QueueGlobalPriorityEXT(pub(crate) i32);
-impl QueueGlobalPriorityEXT {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkQueueGlobalPriorityKHR.html>"]
+pub struct QueueGlobalPriorityKHR(pub(crate) i32);
+impl QueueGlobalPriorityKHR {
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
     }
@@ -1555,11 +1555,15 @@ impl QueueGlobalPriorityEXT {
         self.0
     }
 }
-impl QueueGlobalPriorityEXT {
+impl QueueGlobalPriorityKHR {
     pub const LOW: Self = Self(128);
     pub const MEDIUM: Self = Self(256);
     pub const HIGH: Self = Self(512);
     pub const REALTIME: Self = Self(1_024);
+    pub const LOW_EXT: Self = Self::LOW;
+    pub const MEDIUM_EXT: Self = Self::MEDIUM;
+    pub const HIGH_EXT: Self = Self::HIGH;
+    pub const REALTIME_EXT: Self = Self::REALTIME;
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
@@ -1659,6 +1663,8 @@ impl DriverId {
     pub const MESA_PANVK: Self = Self(20);
     #[doc = "Samsung Electronics Co., Ltd."]
     pub const SAMSUNG_PROPRIETARY: Self = Self(21);
+    #[doc = "Mesa open source project"]
+    pub const MESA_VENUS: Self = Self(22);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
@@ -2287,10 +2293,10 @@ impl fmt::Debug for ObjectType {
             Self::PERFORMANCE_CONFIGURATION_INTEL => Some("PERFORMANCE_CONFIGURATION_INTEL"),
             Self::DEFERRED_OPERATION_KHR => Some("DEFERRED_OPERATION_KHR"),
             Self::INDIRECT_COMMANDS_LAYOUT_NV => Some("INDIRECT_COMMANDS_LAYOUT_NV"),
-            Self::PRIVATE_DATA_SLOT_EXT => Some("PRIVATE_DATA_SLOT_EXT"),
             Self::BUFFER_COLLECTION_FUCHSIA => Some("BUFFER_COLLECTION_FUCHSIA"),
             Self::SAMPLER_YCBCR_CONVERSION => Some("SAMPLER_YCBCR_CONVERSION"),
             Self::DESCRIPTOR_UPDATE_TEMPLATE => Some("DESCRIPTOR_UPDATE_TEMPLATE"),
+            Self::PRIVATE_DATA_SLOT => Some("PRIVATE_DATA_SLOT"),
             _ => None,
         };
         if let Some(x) = name {
@@ -2332,7 +2338,7 @@ impl fmt::Debug for Result {
             Self::ERROR_INVALID_DRM_FORMAT_MODIFIER_PLANE_LAYOUT_EXT => {
                 Some("ERROR_INVALID_DRM_FORMAT_MODIFIER_PLANE_LAYOUT_EXT")
             }
-            Self::ERROR_NOT_PERMITTED_EXT => Some("ERROR_NOT_PERMITTED_EXT"),
+            Self::ERROR_NOT_PERMITTED_KHR => Some("ERROR_NOT_PERMITTED_KHR"),
             Self::ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT => {
                 Some("ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT")
             }
@@ -2340,13 +2346,13 @@ impl fmt::Debug for Result {
             Self::THREAD_DONE_KHR => Some("THREAD_DONE_KHR"),
             Self::OPERATION_DEFERRED_KHR => Some("OPERATION_DEFERRED_KHR"),
             Self::OPERATION_NOT_DEFERRED_KHR => Some("OPERATION_NOT_DEFERRED_KHR"),
-            Self::PIPELINE_COMPILE_REQUIRED_EXT => Some("PIPELINE_COMPILE_REQUIRED_EXT"),
             Self::ERROR_OUT_OF_POOL_MEMORY => Some("ERROR_OUT_OF_POOL_MEMORY"),
             Self::ERROR_INVALID_EXTERNAL_HANDLE => Some("ERROR_INVALID_EXTERNAL_HANDLE"),
             Self::ERROR_FRAGMENTATION => Some("ERROR_FRAGMENTATION"),
             Self::ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS => {
                 Some("ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS")
             }
+            Self::PIPELINE_COMPILE_REQUIRED => Some("PIPELINE_COMPILE_REQUIRED"),
             _ => None,
         };
         if let Some(x) = name {
