@@ -1550,9 +1550,9 @@ pub fn derive_setters(
         .find(|field| field.param_ident() == "p_next");
 
     let nofilter_count_members = [
-        "VkPipelineViewportStateCreateInfo.pViewports",
-        "VkPipelineViewportStateCreateInfo.pScissors",
-        "VkDescriptorSetLayoutBinding.pImmutableSamplers",
+        ("VkPipelineViewportStateCreateInfo", "pViewports"),
+        ("VkPipelineViewportStateCreateInfo", "pScissors"),
+        ("VkDescriptorSetLayoutBinding", "pImmutableSamplers"),
     ];
     let filter_members: Vec<String> = members
         .clone()
@@ -1562,10 +1562,7 @@ pub fn derive_setters(
             // Associated _count members
             if field.array.is_some() {
                 if let Some(ref array_size) = field.size {
-                    if !nofilter_count_members
-                        .iter()
-                        .any(|&n| n == (struct_.name.clone() + "." + field_name))
-                    {
+                    if !nofilter_count_members.contains(&(&struct_.name, field_name)) {
                         return Some((*array_size).clone());
                     }
                 }
