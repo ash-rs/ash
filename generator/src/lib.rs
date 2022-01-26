@@ -995,7 +995,7 @@ fn generate_function_pointers<'a>(
                 quote!(crate::vk::#type_name)
             };
             let function_name_rust = &self.0.function_name_rust;
-            quote!(pub #function_name_rust: #type_name).to_tokens(tokens)
+            quote!(pub #function_name_rust: Option<#type_name>).to_tokens(tokens)
         }
     }
 
@@ -1003,24 +1003,15 @@ fn generate_function_pointers<'a>(
     impl<'a> quote::ToTokens for CommandToLoader<'a> {
         fn to_tokens(&self, tokens: &mut TokenStream) {
             let function_name_rust = &self.0.function_name_rust;
-            let parameters_unused = &self.0.parameters_unused;
-            let returns = &self.0.returns;
 
             let byte_function_name =
                 Literal::byte_string(format!("{}\0", self.0.function_name_c).as_bytes());
 
             quote!(
                 #function_name_rust: unsafe {
-                    unsafe extern "system" fn #function_name_rust (#parameters_unused) #returns {
-                        panic!(concat!("Unable to load ", stringify!(#function_name_rust)))
-                    }
                     let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(#byte_function_name);
                     let val = _f(cname);
-                    if val.is_null() {
-                        #function_name_rust
-                    } else {
-                        ::std::mem::transmute(val)
-                    }
+                    ::std::mem::transmute(val)
                 }
             )
             .to_tokens(tokens)
@@ -1038,7 +1029,7 @@ fn generate_function_pointers<'a>(
             quote!(
                 #[doc = #khronos_link]
                 pub unsafe fn #function_name_rust(&self, #parameters) #returns {
-                    (self.#function_name_rust)(#parameter_names)
+                    self.#function_name_rust.unwrap_unchecked()(#parameter_names)
                 }
             )
             .to_tokens(tokens)

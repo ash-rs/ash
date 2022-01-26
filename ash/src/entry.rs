@@ -107,7 +107,7 @@ impl Entry {
         // defined behavior in this use.
         unsafe {
             Self::from_static_fn(vk::StaticFn {
-                get_instance_proc_addr: vkGetInstanceProcAddr,
+                get_instance_proc_addr: Some(vkGetInstanceProcAddr),
             })
         }
     }
