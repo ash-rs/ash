@@ -2099,22 +2099,15 @@ pub fn generate_feature<'a>(
         .filter_map(|cmd_ref| commands.get(&cmd_ref.name))
         .fold(
             (Vec::new(), Vec::new(), Vec::new(), Vec::new()),
-            |mut acc, &cmd_ref| {
-                match cmd_ref.function_type() {
-                    FunctionType::Static => {
-                        acc.0.push(cmd_ref);
-                    }
-                    FunctionType::Entry => {
-                        acc.1.push(cmd_ref);
-                    }
-                    FunctionType::Device => {
-                        acc.2.push(cmd_ref);
-                    }
-                    FunctionType::Instance => {
-                        acc.3.push(cmd_ref);
-                    }
-                }
-                acc
+            |mut accs, &cmd_ref| {
+                let acc = match cmd_ref.function_type() {
+                    FunctionType::Static => &mut accs.0,
+                    FunctionType::Entry => &mut accs.1,
+                    FunctionType::Device => &mut accs.2,
+                    FunctionType::Instance => &mut accs.3,
+                };
+                acc.push(cmd_ref);
+                accs
             },
         );
     let version = feature.version_string();
