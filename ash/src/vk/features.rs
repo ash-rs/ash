@@ -31,7 +31,10 @@ impl StaticFn {
         instance: Instance,
         p_name: *const c_char,
     ) -> PFN_vkVoidFunction {
-        self.get_instance_proc_addr.unwrap_unchecked()(instance, p_name)
+        match self.get_instance_proc_addr {
+            Some(f) => f(instance, p_name),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
 }
 #[allow(non_camel_case_types)]
@@ -93,7 +96,10 @@ impl EntryFnV1_0 {
         p_allocator: *const AllocationCallbacks,
         p_instance: *mut Instance,
     ) -> Result {
-        self.create_instance.unwrap_unchecked()(p_create_info, p_allocator, p_instance)
+        match self.create_instance {
+            Some(f) => f(p_create_info, p_allocator, p_instance),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumerateInstanceExtensionProperties.html>"]
     pub unsafe fn enumerate_instance_extension_properties(
@@ -102,8 +108,10 @@ impl EntryFnV1_0 {
         p_property_count: *mut u32,
         p_properties: *mut ExtensionProperties,
     ) -> Result {
-        self.enumerate_instance_extension_properties
-            .unwrap_unchecked()(p_layer_name, p_property_count, p_properties)
+        match self.enumerate_instance_extension_properties {
+            Some(f) => f(p_layer_name, p_property_count, p_properties),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumerateInstanceLayerProperties.html>"]
     pub unsafe fn enumerate_instance_layer_properties(
@@ -111,7 +119,10 @@ impl EntryFnV1_0 {
         p_property_count: *mut u32,
         p_properties: *mut LayerProperties,
     ) -> Result {
-        self.enumerate_instance_layer_properties.unwrap_unchecked()(p_property_count, p_properties)
+        match self.enumerate_instance_layer_properties {
+            Some(f) => f(p_property_count, p_properties),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
 }
 #[allow(non_camel_case_types)]
@@ -315,7 +326,10 @@ impl InstanceFnV1_0 {
         instance: Instance,
         p_allocator: *const AllocationCallbacks,
     ) {
-        self.destroy_instance.unwrap_unchecked()(instance, p_allocator)
+        match self.destroy_instance {
+            Some(f) => f(instance, p_allocator),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumeratePhysicalDevices.html>"]
     pub unsafe fn enumerate_physical_devices(
@@ -324,11 +338,10 @@ impl InstanceFnV1_0 {
         p_physical_device_count: *mut u32,
         p_physical_devices: *mut PhysicalDevice,
     ) -> Result {
-        self.enumerate_physical_devices.unwrap_unchecked()(
-            instance,
-            p_physical_device_count,
-            p_physical_devices,
-        )
+        match self.enumerate_physical_devices {
+            Some(f) => f(instance, p_physical_device_count, p_physical_devices),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceFeatures.html>"]
     pub unsafe fn get_physical_device_features(
@@ -336,7 +349,10 @@ impl InstanceFnV1_0 {
         physical_device: PhysicalDevice,
         p_features: *mut PhysicalDeviceFeatures,
     ) {
-        self.get_physical_device_features.unwrap_unchecked()(physical_device, p_features)
+        match self.get_physical_device_features {
+            Some(f) => f(physical_device, p_features),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceFormatProperties.html>"]
     pub unsafe fn get_physical_device_format_properties(
@@ -345,8 +361,10 @@ impl InstanceFnV1_0 {
         format: Format,
         p_format_properties: *mut FormatProperties,
     ) {
-        self.get_physical_device_format_properties
-            .unwrap_unchecked()(physical_device, format, p_format_properties)
+        match self.get_physical_device_format_properties {
+            Some(f) => f(physical_device, format, p_format_properties),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceImageFormatProperties.html>"]
     pub unsafe fn get_physical_device_image_format_properties(
@@ -359,16 +377,18 @@ impl InstanceFnV1_0 {
         flags: ImageCreateFlags,
         p_image_format_properties: *mut ImageFormatProperties,
     ) -> Result {
-        self.get_physical_device_image_format_properties
-            .unwrap_unchecked()(
-            physical_device,
-            format,
-            ty,
-            tiling,
-            usage,
-            flags,
-            p_image_format_properties,
-        )
+        match self.get_physical_device_image_format_properties {
+            Some(f) => f(
+                physical_device,
+                format,
+                ty,
+                tiling,
+                usage,
+                flags,
+                p_image_format_properties,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceProperties.html>"]
     pub unsafe fn get_physical_device_properties(
@@ -376,7 +396,10 @@ impl InstanceFnV1_0 {
         physical_device: PhysicalDevice,
         p_properties: *mut PhysicalDeviceProperties,
     ) {
-        self.get_physical_device_properties.unwrap_unchecked()(physical_device, p_properties)
+        match self.get_physical_device_properties {
+            Some(f) => f(physical_device, p_properties),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceQueueFamilyProperties.html>"]
     pub unsafe fn get_physical_device_queue_family_properties(
@@ -385,12 +408,14 @@ impl InstanceFnV1_0 {
         p_queue_family_property_count: *mut u32,
         p_queue_family_properties: *mut QueueFamilyProperties,
     ) {
-        self.get_physical_device_queue_family_properties
-            .unwrap_unchecked()(
-            physical_device,
-            p_queue_family_property_count,
-            p_queue_family_properties,
-        )
+        match self.get_physical_device_queue_family_properties {
+            Some(f) => f(
+                physical_device,
+                p_queue_family_property_count,
+                p_queue_family_properties,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceMemoryProperties.html>"]
     pub unsafe fn get_physical_device_memory_properties(
@@ -398,8 +423,10 @@ impl InstanceFnV1_0 {
         physical_device: PhysicalDevice,
         p_memory_properties: *mut PhysicalDeviceMemoryProperties,
     ) {
-        self.get_physical_device_memory_properties
-            .unwrap_unchecked()(physical_device, p_memory_properties)
+        match self.get_physical_device_memory_properties {
+            Some(f) => f(physical_device, p_memory_properties),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDeviceProcAddr.html>"]
     pub unsafe fn get_device_proc_addr(
@@ -407,7 +434,10 @@ impl InstanceFnV1_0 {
         device: Device,
         p_name: *const c_char,
     ) -> PFN_vkVoidFunction {
-        self.get_device_proc_addr.unwrap_unchecked()(device, p_name)
+        match self.get_device_proc_addr {
+            Some(f) => f(device, p_name),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateDevice.html>"]
     pub unsafe fn create_device(
@@ -417,7 +447,10 @@ impl InstanceFnV1_0 {
         p_allocator: *const AllocationCallbacks,
         p_device: *mut Device,
     ) -> Result {
-        self.create_device.unwrap_unchecked()(physical_device, p_create_info, p_allocator, p_device)
+        match self.create_device {
+            Some(f) => f(physical_device, p_create_info, p_allocator, p_device),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumerateDeviceExtensionProperties.html>"]
     pub unsafe fn enumerate_device_extension_properties(
@@ -427,13 +460,15 @@ impl InstanceFnV1_0 {
         p_property_count: *mut u32,
         p_properties: *mut ExtensionProperties,
     ) -> Result {
-        self.enumerate_device_extension_properties
-            .unwrap_unchecked()(
-            physical_device,
-            p_layer_name,
-            p_property_count,
-            p_properties,
-        )
+        match self.enumerate_device_extension_properties {
+            Some(f) => f(
+                physical_device,
+                p_layer_name,
+                p_property_count,
+                p_properties,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumerateDeviceLayerProperties.html>"]
     pub unsafe fn enumerate_device_layer_properties(
@@ -442,11 +477,10 @@ impl InstanceFnV1_0 {
         p_property_count: *mut u32,
         p_properties: *mut LayerProperties,
     ) -> Result {
-        self.enumerate_device_layer_properties.unwrap_unchecked()(
-            physical_device,
-            p_property_count,
-            p_properties,
-        )
+        match self.enumerate_device_layer_properties {
+            Some(f) => f(physical_device, p_property_count, p_properties),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceSparseImageFormatProperties.html>"]
     pub unsafe fn get_physical_device_sparse_image_format_properties(
@@ -460,17 +494,19 @@ impl InstanceFnV1_0 {
         p_property_count: *mut u32,
         p_properties: *mut SparseImageFormatProperties,
     ) {
-        self.get_physical_device_sparse_image_format_properties
-            .unwrap_unchecked()(
-            physical_device,
-            format,
-            ty,
-            samples,
-            usage,
-            tiling,
-            p_property_count,
-            p_properties,
-        )
+        match self.get_physical_device_sparse_image_format_properties {
+            Some(f) => f(
+                physical_device,
+                format,
+                ty,
+                samples,
+                usage,
+                tiling,
+                p_property_count,
+                p_properties,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
 }
 #[allow(non_camel_case_types)]
@@ -2076,7 +2112,10 @@ impl DeviceFnV1_0 {
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyDevice.html>"]
     pub unsafe fn destroy_device(&self, device: Device, p_allocator: *const AllocationCallbacks) {
-        self.destroy_device.unwrap_unchecked()(device, p_allocator)
+        match self.destroy_device {
+            Some(f) => f(device, p_allocator),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDeviceQueue.html>"]
     pub unsafe fn get_device_queue(
@@ -2086,7 +2125,10 @@ impl DeviceFnV1_0 {
         queue_index: u32,
         p_queue: *mut Queue,
     ) {
-        self.get_device_queue.unwrap_unchecked()(device, queue_family_index, queue_index, p_queue)
+        match self.get_device_queue {
+            Some(f) => f(device, queue_family_index, queue_index, p_queue),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkQueueSubmit.html>"]
     pub unsafe fn queue_submit(
@@ -2096,15 +2138,24 @@ impl DeviceFnV1_0 {
         p_submits: *const SubmitInfo,
         fence: Fence,
     ) -> Result {
-        self.queue_submit.unwrap_unchecked()(queue, submit_count, p_submits, fence)
+        match self.queue_submit {
+            Some(f) => f(queue, submit_count, p_submits, fence),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkQueueWaitIdle.html>"]
     pub unsafe fn queue_wait_idle(&self, queue: Queue) -> Result {
-        self.queue_wait_idle.unwrap_unchecked()(queue)
+        match self.queue_wait_idle {
+            Some(f) => f(queue),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDeviceWaitIdle.html>"]
     pub unsafe fn device_wait_idle(&self, device: Device) -> Result {
-        self.device_wait_idle.unwrap_unchecked()(device)
+        match self.device_wait_idle {
+            Some(f) => f(device),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkAllocateMemory.html>"]
     pub unsafe fn allocate_memory(
@@ -2114,7 +2165,10 @@ impl DeviceFnV1_0 {
         p_allocator: *const AllocationCallbacks,
         p_memory: *mut DeviceMemory,
     ) -> Result {
-        self.allocate_memory.unwrap_unchecked()(device, p_allocate_info, p_allocator, p_memory)
+        match self.allocate_memory {
+            Some(f) => f(device, p_allocate_info, p_allocator, p_memory),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkFreeMemory.html>"]
     pub unsafe fn free_memory(
@@ -2123,7 +2177,10 @@ impl DeviceFnV1_0 {
         memory: DeviceMemory,
         p_allocator: *const AllocationCallbacks,
     ) {
-        self.free_memory.unwrap_unchecked()(device, memory, p_allocator)
+        match self.free_memory {
+            Some(f) => f(device, memory, p_allocator),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkMapMemory.html>"]
     pub unsafe fn map_memory(
@@ -2135,11 +2192,17 @@ impl DeviceFnV1_0 {
         flags: MemoryMapFlags,
         pp_data: *mut *mut c_void,
     ) -> Result {
-        self.map_memory.unwrap_unchecked()(device, memory, offset, size, flags, pp_data)
+        match self.map_memory {
+            Some(f) => f(device, memory, offset, size, flags, pp_data),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkUnmapMemory.html>"]
     pub unsafe fn unmap_memory(&self, device: Device, memory: DeviceMemory) {
-        self.unmap_memory.unwrap_unchecked()(device, memory)
+        match self.unmap_memory {
+            Some(f) => f(device, memory),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkFlushMappedMemoryRanges.html>"]
     pub unsafe fn flush_mapped_memory_ranges(
@@ -2148,11 +2211,10 @@ impl DeviceFnV1_0 {
         memory_range_count: u32,
         p_memory_ranges: *const MappedMemoryRange,
     ) -> Result {
-        self.flush_mapped_memory_ranges.unwrap_unchecked()(
-            device,
-            memory_range_count,
-            p_memory_ranges,
-        )
+        match self.flush_mapped_memory_ranges {
+            Some(f) => f(device, memory_range_count, p_memory_ranges),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkInvalidateMappedMemoryRanges.html>"]
     pub unsafe fn invalidate_mapped_memory_ranges(
@@ -2161,11 +2223,10 @@ impl DeviceFnV1_0 {
         memory_range_count: u32,
         p_memory_ranges: *const MappedMemoryRange,
     ) -> Result {
-        self.invalidate_mapped_memory_ranges.unwrap_unchecked()(
-            device,
-            memory_range_count,
-            p_memory_ranges,
-        )
+        match self.invalidate_mapped_memory_ranges {
+            Some(f) => f(device, memory_range_count, p_memory_ranges),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDeviceMemoryCommitment.html>"]
     pub unsafe fn get_device_memory_commitment(
@@ -2174,11 +2235,10 @@ impl DeviceFnV1_0 {
         memory: DeviceMemory,
         p_committed_memory_in_bytes: *mut DeviceSize,
     ) {
-        self.get_device_memory_commitment.unwrap_unchecked()(
-            device,
-            memory,
-            p_committed_memory_in_bytes,
-        )
+        match self.get_device_memory_commitment {
+            Some(f) => f(device, memory, p_committed_memory_in_bytes),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkBindBufferMemory.html>"]
     pub unsafe fn bind_buffer_memory(
@@ -2188,7 +2248,10 @@ impl DeviceFnV1_0 {
         memory: DeviceMemory,
         memory_offset: DeviceSize,
     ) -> Result {
-        self.bind_buffer_memory.unwrap_unchecked()(device, buffer, memory, memory_offset)
+        match self.bind_buffer_memory {
+            Some(f) => f(device, buffer, memory, memory_offset),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkBindImageMemory.html>"]
     pub unsafe fn bind_image_memory(
@@ -2198,7 +2261,10 @@ impl DeviceFnV1_0 {
         memory: DeviceMemory,
         memory_offset: DeviceSize,
     ) -> Result {
-        self.bind_image_memory.unwrap_unchecked()(device, image, memory, memory_offset)
+        match self.bind_image_memory {
+            Some(f) => f(device, image, memory, memory_offset),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetBufferMemoryRequirements.html>"]
     pub unsafe fn get_buffer_memory_requirements(
@@ -2207,11 +2273,10 @@ impl DeviceFnV1_0 {
         buffer: Buffer,
         p_memory_requirements: *mut MemoryRequirements,
     ) {
-        self.get_buffer_memory_requirements.unwrap_unchecked()(
-            device,
-            buffer,
-            p_memory_requirements,
-        )
+        match self.get_buffer_memory_requirements {
+            Some(f) => f(device, buffer, p_memory_requirements),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetImageMemoryRequirements.html>"]
     pub unsafe fn get_image_memory_requirements(
@@ -2220,7 +2285,10 @@ impl DeviceFnV1_0 {
         image: Image,
         p_memory_requirements: *mut MemoryRequirements,
     ) {
-        self.get_image_memory_requirements.unwrap_unchecked()(device, image, p_memory_requirements)
+        match self.get_image_memory_requirements {
+            Some(f) => f(device, image, p_memory_requirements),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetImageSparseMemoryRequirements.html>"]
     pub unsafe fn get_image_sparse_memory_requirements(
@@ -2230,12 +2298,15 @@ impl DeviceFnV1_0 {
         p_sparse_memory_requirement_count: *mut u32,
         p_sparse_memory_requirements: *mut SparseImageMemoryRequirements,
     ) {
-        self.get_image_sparse_memory_requirements.unwrap_unchecked()(
-            device,
-            image,
-            p_sparse_memory_requirement_count,
-            p_sparse_memory_requirements,
-        )
+        match self.get_image_sparse_memory_requirements {
+            Some(f) => f(
+                device,
+                image,
+                p_sparse_memory_requirement_count,
+                p_sparse_memory_requirements,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkQueueBindSparse.html>"]
     pub unsafe fn queue_bind_sparse(
@@ -2245,7 +2316,10 @@ impl DeviceFnV1_0 {
         p_bind_info: *const BindSparseInfo,
         fence: Fence,
     ) -> Result {
-        self.queue_bind_sparse.unwrap_unchecked()(queue, bind_info_count, p_bind_info, fence)
+        match self.queue_bind_sparse {
+            Some(f) => f(queue, bind_info_count, p_bind_info, fence),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateFence.html>"]
     pub unsafe fn create_fence(
@@ -2255,7 +2329,10 @@ impl DeviceFnV1_0 {
         p_allocator: *const AllocationCallbacks,
         p_fence: *mut Fence,
     ) -> Result {
-        self.create_fence.unwrap_unchecked()(device, p_create_info, p_allocator, p_fence)
+        match self.create_fence {
+            Some(f) => f(device, p_create_info, p_allocator, p_fence),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyFence.html>"]
     pub unsafe fn destroy_fence(
@@ -2264,7 +2341,10 @@ impl DeviceFnV1_0 {
         fence: Fence,
         p_allocator: *const AllocationCallbacks,
     ) {
-        self.destroy_fence.unwrap_unchecked()(device, fence, p_allocator)
+        match self.destroy_fence {
+            Some(f) => f(device, fence, p_allocator),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkResetFences.html>"]
     pub unsafe fn reset_fences(
@@ -2273,11 +2353,17 @@ impl DeviceFnV1_0 {
         fence_count: u32,
         p_fences: *const Fence,
     ) -> Result {
-        self.reset_fences.unwrap_unchecked()(device, fence_count, p_fences)
+        match self.reset_fences {
+            Some(f) => f(device, fence_count, p_fences),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetFenceStatus.html>"]
     pub unsafe fn get_fence_status(&self, device: Device, fence: Fence) -> Result {
-        self.get_fence_status.unwrap_unchecked()(device, fence)
+        match self.get_fence_status {
+            Some(f) => f(device, fence),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkWaitForFences.html>"]
     pub unsafe fn wait_for_fences(
@@ -2288,7 +2374,10 @@ impl DeviceFnV1_0 {
         wait_all: Bool32,
         timeout: u64,
     ) -> Result {
-        self.wait_for_fences.unwrap_unchecked()(device, fence_count, p_fences, wait_all, timeout)
+        match self.wait_for_fences {
+            Some(f) => f(device, fence_count, p_fences, wait_all, timeout),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateSemaphore.html>"]
     pub unsafe fn create_semaphore(
@@ -2298,7 +2387,10 @@ impl DeviceFnV1_0 {
         p_allocator: *const AllocationCallbacks,
         p_semaphore: *mut Semaphore,
     ) -> Result {
-        self.create_semaphore.unwrap_unchecked()(device, p_create_info, p_allocator, p_semaphore)
+        match self.create_semaphore {
+            Some(f) => f(device, p_create_info, p_allocator, p_semaphore),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroySemaphore.html>"]
     pub unsafe fn destroy_semaphore(
@@ -2307,7 +2399,10 @@ impl DeviceFnV1_0 {
         semaphore: Semaphore,
         p_allocator: *const AllocationCallbacks,
     ) {
-        self.destroy_semaphore.unwrap_unchecked()(device, semaphore, p_allocator)
+        match self.destroy_semaphore {
+            Some(f) => f(device, semaphore, p_allocator),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateEvent.html>"]
     pub unsafe fn create_event(
@@ -2317,7 +2412,10 @@ impl DeviceFnV1_0 {
         p_allocator: *const AllocationCallbacks,
         p_event: *mut Event,
     ) -> Result {
-        self.create_event.unwrap_unchecked()(device, p_create_info, p_allocator, p_event)
+        match self.create_event {
+            Some(f) => f(device, p_create_info, p_allocator, p_event),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyEvent.html>"]
     pub unsafe fn destroy_event(
@@ -2326,19 +2424,31 @@ impl DeviceFnV1_0 {
         event: Event,
         p_allocator: *const AllocationCallbacks,
     ) {
-        self.destroy_event.unwrap_unchecked()(device, event, p_allocator)
+        match self.destroy_event {
+            Some(f) => f(device, event, p_allocator),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetEventStatus.html>"]
     pub unsafe fn get_event_status(&self, device: Device, event: Event) -> Result {
-        self.get_event_status.unwrap_unchecked()(device, event)
+        match self.get_event_status {
+            Some(f) => f(device, event),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkSetEvent.html>"]
     pub unsafe fn set_event(&self, device: Device, event: Event) -> Result {
-        self.set_event.unwrap_unchecked()(device, event)
+        match self.set_event {
+            Some(f) => f(device, event),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkResetEvent.html>"]
     pub unsafe fn reset_event(&self, device: Device, event: Event) -> Result {
-        self.reset_event.unwrap_unchecked()(device, event)
+        match self.reset_event {
+            Some(f) => f(device, event),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateQueryPool.html>"]
     pub unsafe fn create_query_pool(
@@ -2348,7 +2458,10 @@ impl DeviceFnV1_0 {
         p_allocator: *const AllocationCallbacks,
         p_query_pool: *mut QueryPool,
     ) -> Result {
-        self.create_query_pool.unwrap_unchecked()(device, p_create_info, p_allocator, p_query_pool)
+        match self.create_query_pool {
+            Some(f) => f(device, p_create_info, p_allocator, p_query_pool),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyQueryPool.html>"]
     pub unsafe fn destroy_query_pool(
@@ -2357,7 +2470,10 @@ impl DeviceFnV1_0 {
         query_pool: QueryPool,
         p_allocator: *const AllocationCallbacks,
     ) {
-        self.destroy_query_pool.unwrap_unchecked()(device, query_pool, p_allocator)
+        match self.destroy_query_pool {
+            Some(f) => f(device, query_pool, p_allocator),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetQueryPoolResults.html>"]
     pub unsafe fn get_query_pool_results(
@@ -2371,16 +2487,19 @@ impl DeviceFnV1_0 {
         stride: DeviceSize,
         flags: QueryResultFlags,
     ) -> Result {
-        self.get_query_pool_results.unwrap_unchecked()(
-            device,
-            query_pool,
-            first_query,
-            query_count,
-            data_size,
-            p_data,
-            stride,
-            flags,
-        )
+        match self.get_query_pool_results {
+            Some(f) => f(
+                device,
+                query_pool,
+                first_query,
+                query_count,
+                data_size,
+                p_data,
+                stride,
+                flags,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateBuffer.html>"]
     pub unsafe fn create_buffer(
@@ -2390,7 +2509,10 @@ impl DeviceFnV1_0 {
         p_allocator: *const AllocationCallbacks,
         p_buffer: *mut Buffer,
     ) -> Result {
-        self.create_buffer.unwrap_unchecked()(device, p_create_info, p_allocator, p_buffer)
+        match self.create_buffer {
+            Some(f) => f(device, p_create_info, p_allocator, p_buffer),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyBuffer.html>"]
     pub unsafe fn destroy_buffer(
@@ -2399,7 +2521,10 @@ impl DeviceFnV1_0 {
         buffer: Buffer,
         p_allocator: *const AllocationCallbacks,
     ) {
-        self.destroy_buffer.unwrap_unchecked()(device, buffer, p_allocator)
+        match self.destroy_buffer {
+            Some(f) => f(device, buffer, p_allocator),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateBufferView.html>"]
     pub unsafe fn create_buffer_view(
@@ -2409,7 +2534,10 @@ impl DeviceFnV1_0 {
         p_allocator: *const AllocationCallbacks,
         p_view: *mut BufferView,
     ) -> Result {
-        self.create_buffer_view.unwrap_unchecked()(device, p_create_info, p_allocator, p_view)
+        match self.create_buffer_view {
+            Some(f) => f(device, p_create_info, p_allocator, p_view),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyBufferView.html>"]
     pub unsafe fn destroy_buffer_view(
@@ -2418,7 +2546,10 @@ impl DeviceFnV1_0 {
         buffer_view: BufferView,
         p_allocator: *const AllocationCallbacks,
     ) {
-        self.destroy_buffer_view.unwrap_unchecked()(device, buffer_view, p_allocator)
+        match self.destroy_buffer_view {
+            Some(f) => f(device, buffer_view, p_allocator),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateImage.html>"]
     pub unsafe fn create_image(
@@ -2428,7 +2559,10 @@ impl DeviceFnV1_0 {
         p_allocator: *const AllocationCallbacks,
         p_image: *mut Image,
     ) -> Result {
-        self.create_image.unwrap_unchecked()(device, p_create_info, p_allocator, p_image)
+        match self.create_image {
+            Some(f) => f(device, p_create_info, p_allocator, p_image),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyImage.html>"]
     pub unsafe fn destroy_image(
@@ -2437,7 +2571,10 @@ impl DeviceFnV1_0 {
         image: Image,
         p_allocator: *const AllocationCallbacks,
     ) {
-        self.destroy_image.unwrap_unchecked()(device, image, p_allocator)
+        match self.destroy_image {
+            Some(f) => f(device, image, p_allocator),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetImageSubresourceLayout.html>"]
     pub unsafe fn get_image_subresource_layout(
@@ -2447,7 +2584,10 @@ impl DeviceFnV1_0 {
         p_subresource: *const ImageSubresource,
         p_layout: *mut SubresourceLayout,
     ) {
-        self.get_image_subresource_layout.unwrap_unchecked()(device, image, p_subresource, p_layout)
+        match self.get_image_subresource_layout {
+            Some(f) => f(device, image, p_subresource, p_layout),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateImageView.html>"]
     pub unsafe fn create_image_view(
@@ -2457,7 +2597,10 @@ impl DeviceFnV1_0 {
         p_allocator: *const AllocationCallbacks,
         p_view: *mut ImageView,
     ) -> Result {
-        self.create_image_view.unwrap_unchecked()(device, p_create_info, p_allocator, p_view)
+        match self.create_image_view {
+            Some(f) => f(device, p_create_info, p_allocator, p_view),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyImageView.html>"]
     pub unsafe fn destroy_image_view(
@@ -2466,7 +2609,10 @@ impl DeviceFnV1_0 {
         image_view: ImageView,
         p_allocator: *const AllocationCallbacks,
     ) {
-        self.destroy_image_view.unwrap_unchecked()(device, image_view, p_allocator)
+        match self.destroy_image_view {
+            Some(f) => f(device, image_view, p_allocator),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateShaderModule.html>"]
     pub unsafe fn create_shader_module(
@@ -2476,12 +2622,10 @@ impl DeviceFnV1_0 {
         p_allocator: *const AllocationCallbacks,
         p_shader_module: *mut ShaderModule,
     ) -> Result {
-        self.create_shader_module.unwrap_unchecked()(
-            device,
-            p_create_info,
-            p_allocator,
-            p_shader_module,
-        )
+        match self.create_shader_module {
+            Some(f) => f(device, p_create_info, p_allocator, p_shader_module),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyShaderModule.html>"]
     pub unsafe fn destroy_shader_module(
@@ -2490,7 +2634,10 @@ impl DeviceFnV1_0 {
         shader_module: ShaderModule,
         p_allocator: *const AllocationCallbacks,
     ) {
-        self.destroy_shader_module.unwrap_unchecked()(device, shader_module, p_allocator)
+        match self.destroy_shader_module {
+            Some(f) => f(device, shader_module, p_allocator),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreatePipelineCache.html>"]
     pub unsafe fn create_pipeline_cache(
@@ -2500,12 +2647,10 @@ impl DeviceFnV1_0 {
         p_allocator: *const AllocationCallbacks,
         p_pipeline_cache: *mut PipelineCache,
     ) -> Result {
-        self.create_pipeline_cache.unwrap_unchecked()(
-            device,
-            p_create_info,
-            p_allocator,
-            p_pipeline_cache,
-        )
+        match self.create_pipeline_cache {
+            Some(f) => f(device, p_create_info, p_allocator, p_pipeline_cache),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyPipelineCache.html>"]
     pub unsafe fn destroy_pipeline_cache(
@@ -2514,7 +2659,10 @@ impl DeviceFnV1_0 {
         pipeline_cache: PipelineCache,
         p_allocator: *const AllocationCallbacks,
     ) {
-        self.destroy_pipeline_cache.unwrap_unchecked()(device, pipeline_cache, p_allocator)
+        match self.destroy_pipeline_cache {
+            Some(f) => f(device, pipeline_cache, p_allocator),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPipelineCacheData.html>"]
     pub unsafe fn get_pipeline_cache_data(
@@ -2524,7 +2672,10 @@ impl DeviceFnV1_0 {
         p_data_size: *mut usize,
         p_data: *mut c_void,
     ) -> Result {
-        self.get_pipeline_cache_data.unwrap_unchecked()(device, pipeline_cache, p_data_size, p_data)
+        match self.get_pipeline_cache_data {
+            Some(f) => f(device, pipeline_cache, p_data_size, p_data),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkMergePipelineCaches.html>"]
     pub unsafe fn merge_pipeline_caches(
@@ -2534,12 +2685,10 @@ impl DeviceFnV1_0 {
         src_cache_count: u32,
         p_src_caches: *const PipelineCache,
     ) -> Result {
-        self.merge_pipeline_caches.unwrap_unchecked()(
-            device,
-            dst_cache,
-            src_cache_count,
-            p_src_caches,
-        )
+        match self.merge_pipeline_caches {
+            Some(f) => f(device, dst_cache, src_cache_count, p_src_caches),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateGraphicsPipelines.html>"]
     pub unsafe fn create_graphics_pipelines(
@@ -2551,14 +2700,17 @@ impl DeviceFnV1_0 {
         p_allocator: *const AllocationCallbacks,
         p_pipelines: *mut Pipeline,
     ) -> Result {
-        self.create_graphics_pipelines.unwrap_unchecked()(
-            device,
-            pipeline_cache,
-            create_info_count,
-            p_create_infos,
-            p_allocator,
-            p_pipelines,
-        )
+        match self.create_graphics_pipelines {
+            Some(f) => f(
+                device,
+                pipeline_cache,
+                create_info_count,
+                p_create_infos,
+                p_allocator,
+                p_pipelines,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateComputePipelines.html>"]
     pub unsafe fn create_compute_pipelines(
@@ -2570,14 +2722,17 @@ impl DeviceFnV1_0 {
         p_allocator: *const AllocationCallbacks,
         p_pipelines: *mut Pipeline,
     ) -> Result {
-        self.create_compute_pipelines.unwrap_unchecked()(
-            device,
-            pipeline_cache,
-            create_info_count,
-            p_create_infos,
-            p_allocator,
-            p_pipelines,
-        )
+        match self.create_compute_pipelines {
+            Some(f) => f(
+                device,
+                pipeline_cache,
+                create_info_count,
+                p_create_infos,
+                p_allocator,
+                p_pipelines,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyPipeline.html>"]
     pub unsafe fn destroy_pipeline(
@@ -2586,7 +2741,10 @@ impl DeviceFnV1_0 {
         pipeline: Pipeline,
         p_allocator: *const AllocationCallbacks,
     ) {
-        self.destroy_pipeline.unwrap_unchecked()(device, pipeline, p_allocator)
+        match self.destroy_pipeline {
+            Some(f) => f(device, pipeline, p_allocator),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreatePipelineLayout.html>"]
     pub unsafe fn create_pipeline_layout(
@@ -2596,12 +2754,10 @@ impl DeviceFnV1_0 {
         p_allocator: *const AllocationCallbacks,
         p_pipeline_layout: *mut PipelineLayout,
     ) -> Result {
-        self.create_pipeline_layout.unwrap_unchecked()(
-            device,
-            p_create_info,
-            p_allocator,
-            p_pipeline_layout,
-        )
+        match self.create_pipeline_layout {
+            Some(f) => f(device, p_create_info, p_allocator, p_pipeline_layout),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyPipelineLayout.html>"]
     pub unsafe fn destroy_pipeline_layout(
@@ -2610,7 +2766,10 @@ impl DeviceFnV1_0 {
         pipeline_layout: PipelineLayout,
         p_allocator: *const AllocationCallbacks,
     ) {
-        self.destroy_pipeline_layout.unwrap_unchecked()(device, pipeline_layout, p_allocator)
+        match self.destroy_pipeline_layout {
+            Some(f) => f(device, pipeline_layout, p_allocator),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateSampler.html>"]
     pub unsafe fn create_sampler(
@@ -2620,7 +2779,10 @@ impl DeviceFnV1_0 {
         p_allocator: *const AllocationCallbacks,
         p_sampler: *mut Sampler,
     ) -> Result {
-        self.create_sampler.unwrap_unchecked()(device, p_create_info, p_allocator, p_sampler)
+        match self.create_sampler {
+            Some(f) => f(device, p_create_info, p_allocator, p_sampler),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroySampler.html>"]
     pub unsafe fn destroy_sampler(
@@ -2629,7 +2791,10 @@ impl DeviceFnV1_0 {
         sampler: Sampler,
         p_allocator: *const AllocationCallbacks,
     ) {
-        self.destroy_sampler.unwrap_unchecked()(device, sampler, p_allocator)
+        match self.destroy_sampler {
+            Some(f) => f(device, sampler, p_allocator),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateDescriptorSetLayout.html>"]
     pub unsafe fn create_descriptor_set_layout(
@@ -2639,12 +2804,10 @@ impl DeviceFnV1_0 {
         p_allocator: *const AllocationCallbacks,
         p_set_layout: *mut DescriptorSetLayout,
     ) -> Result {
-        self.create_descriptor_set_layout.unwrap_unchecked()(
-            device,
-            p_create_info,
-            p_allocator,
-            p_set_layout,
-        )
+        match self.create_descriptor_set_layout {
+            Some(f) => f(device, p_create_info, p_allocator, p_set_layout),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyDescriptorSetLayout.html>"]
     pub unsafe fn destroy_descriptor_set_layout(
@@ -2653,11 +2816,10 @@ impl DeviceFnV1_0 {
         descriptor_set_layout: DescriptorSetLayout,
         p_allocator: *const AllocationCallbacks,
     ) {
-        self.destroy_descriptor_set_layout.unwrap_unchecked()(
-            device,
-            descriptor_set_layout,
-            p_allocator,
-        )
+        match self.destroy_descriptor_set_layout {
+            Some(f) => f(device, descriptor_set_layout, p_allocator),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateDescriptorPool.html>"]
     pub unsafe fn create_descriptor_pool(
@@ -2667,12 +2829,10 @@ impl DeviceFnV1_0 {
         p_allocator: *const AllocationCallbacks,
         p_descriptor_pool: *mut DescriptorPool,
     ) -> Result {
-        self.create_descriptor_pool.unwrap_unchecked()(
-            device,
-            p_create_info,
-            p_allocator,
-            p_descriptor_pool,
-        )
+        match self.create_descriptor_pool {
+            Some(f) => f(device, p_create_info, p_allocator, p_descriptor_pool),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyDescriptorPool.html>"]
     pub unsafe fn destroy_descriptor_pool(
@@ -2681,7 +2841,10 @@ impl DeviceFnV1_0 {
         descriptor_pool: DescriptorPool,
         p_allocator: *const AllocationCallbacks,
     ) {
-        self.destroy_descriptor_pool.unwrap_unchecked()(device, descriptor_pool, p_allocator)
+        match self.destroy_descriptor_pool {
+            Some(f) => f(device, descriptor_pool, p_allocator),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkResetDescriptorPool.html>"]
     pub unsafe fn reset_descriptor_pool(
@@ -2690,7 +2853,10 @@ impl DeviceFnV1_0 {
         descriptor_pool: DescriptorPool,
         flags: DescriptorPoolResetFlags,
     ) -> Result {
-        self.reset_descriptor_pool.unwrap_unchecked()(device, descriptor_pool, flags)
+        match self.reset_descriptor_pool {
+            Some(f) => f(device, descriptor_pool, flags),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkAllocateDescriptorSets.html>"]
     pub unsafe fn allocate_descriptor_sets(
@@ -2699,7 +2865,10 @@ impl DeviceFnV1_0 {
         p_allocate_info: *const DescriptorSetAllocateInfo,
         p_descriptor_sets: *mut DescriptorSet,
     ) -> Result {
-        self.allocate_descriptor_sets.unwrap_unchecked()(device, p_allocate_info, p_descriptor_sets)
+        match self.allocate_descriptor_sets {
+            Some(f) => f(device, p_allocate_info, p_descriptor_sets),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkFreeDescriptorSets.html>"]
     pub unsafe fn free_descriptor_sets(
@@ -2709,12 +2878,15 @@ impl DeviceFnV1_0 {
         descriptor_set_count: u32,
         p_descriptor_sets: *const DescriptorSet,
     ) -> Result {
-        self.free_descriptor_sets.unwrap_unchecked()(
-            device,
-            descriptor_pool,
-            descriptor_set_count,
-            p_descriptor_sets,
-        )
+        match self.free_descriptor_sets {
+            Some(f) => f(
+                device,
+                descriptor_pool,
+                descriptor_set_count,
+                p_descriptor_sets,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkUpdateDescriptorSets.html>"]
     pub unsafe fn update_descriptor_sets(
@@ -2725,13 +2897,16 @@ impl DeviceFnV1_0 {
         descriptor_copy_count: u32,
         p_descriptor_copies: *const CopyDescriptorSet,
     ) {
-        self.update_descriptor_sets.unwrap_unchecked()(
-            device,
-            descriptor_write_count,
-            p_descriptor_writes,
-            descriptor_copy_count,
-            p_descriptor_copies,
-        )
+        match self.update_descriptor_sets {
+            Some(f) => f(
+                device,
+                descriptor_write_count,
+                p_descriptor_writes,
+                descriptor_copy_count,
+                p_descriptor_copies,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateFramebuffer.html>"]
     pub unsafe fn create_framebuffer(
@@ -2741,12 +2916,10 @@ impl DeviceFnV1_0 {
         p_allocator: *const AllocationCallbacks,
         p_framebuffer: *mut Framebuffer,
     ) -> Result {
-        self.create_framebuffer.unwrap_unchecked()(
-            device,
-            p_create_info,
-            p_allocator,
-            p_framebuffer,
-        )
+        match self.create_framebuffer {
+            Some(f) => f(device, p_create_info, p_allocator, p_framebuffer),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyFramebuffer.html>"]
     pub unsafe fn destroy_framebuffer(
@@ -2755,7 +2928,10 @@ impl DeviceFnV1_0 {
         framebuffer: Framebuffer,
         p_allocator: *const AllocationCallbacks,
     ) {
-        self.destroy_framebuffer.unwrap_unchecked()(device, framebuffer, p_allocator)
+        match self.destroy_framebuffer {
+            Some(f) => f(device, framebuffer, p_allocator),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateRenderPass.html>"]
     pub unsafe fn create_render_pass(
@@ -2765,12 +2941,10 @@ impl DeviceFnV1_0 {
         p_allocator: *const AllocationCallbacks,
         p_render_pass: *mut RenderPass,
     ) -> Result {
-        self.create_render_pass.unwrap_unchecked()(
-            device,
-            p_create_info,
-            p_allocator,
-            p_render_pass,
-        )
+        match self.create_render_pass {
+            Some(f) => f(device, p_create_info, p_allocator, p_render_pass),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyRenderPass.html>"]
     pub unsafe fn destroy_render_pass(
@@ -2779,7 +2953,10 @@ impl DeviceFnV1_0 {
         render_pass: RenderPass,
         p_allocator: *const AllocationCallbacks,
     ) {
-        self.destroy_render_pass.unwrap_unchecked()(device, render_pass, p_allocator)
+        match self.destroy_render_pass {
+            Some(f) => f(device, render_pass, p_allocator),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetRenderAreaGranularity.html>"]
     pub unsafe fn get_render_area_granularity(
@@ -2788,7 +2965,10 @@ impl DeviceFnV1_0 {
         render_pass: RenderPass,
         p_granularity: *mut Extent2D,
     ) {
-        self.get_render_area_granularity.unwrap_unchecked()(device, render_pass, p_granularity)
+        match self.get_render_area_granularity {
+            Some(f) => f(device, render_pass, p_granularity),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateCommandPool.html>"]
     pub unsafe fn create_command_pool(
@@ -2798,12 +2978,10 @@ impl DeviceFnV1_0 {
         p_allocator: *const AllocationCallbacks,
         p_command_pool: *mut CommandPool,
     ) -> Result {
-        self.create_command_pool.unwrap_unchecked()(
-            device,
-            p_create_info,
-            p_allocator,
-            p_command_pool,
-        )
+        match self.create_command_pool {
+            Some(f) => f(device, p_create_info, p_allocator, p_command_pool),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyCommandPool.html>"]
     pub unsafe fn destroy_command_pool(
@@ -2812,7 +2990,10 @@ impl DeviceFnV1_0 {
         command_pool: CommandPool,
         p_allocator: *const AllocationCallbacks,
     ) {
-        self.destroy_command_pool.unwrap_unchecked()(device, command_pool, p_allocator)
+        match self.destroy_command_pool {
+            Some(f) => f(device, command_pool, p_allocator),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkResetCommandPool.html>"]
     pub unsafe fn reset_command_pool(
@@ -2821,7 +3002,10 @@ impl DeviceFnV1_0 {
         command_pool: CommandPool,
         flags: CommandPoolResetFlags,
     ) -> Result {
-        self.reset_command_pool.unwrap_unchecked()(device, command_pool, flags)
+        match self.reset_command_pool {
+            Some(f) => f(device, command_pool, flags),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkAllocateCommandBuffers.html>"]
     pub unsafe fn allocate_command_buffers(
@@ -2830,7 +3014,10 @@ impl DeviceFnV1_0 {
         p_allocate_info: *const CommandBufferAllocateInfo,
         p_command_buffers: *mut CommandBuffer,
     ) -> Result {
-        self.allocate_command_buffers.unwrap_unchecked()(device, p_allocate_info, p_command_buffers)
+        match self.allocate_command_buffers {
+            Some(f) => f(device, p_allocate_info, p_command_buffers),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkFreeCommandBuffers.html>"]
     pub unsafe fn free_command_buffers(
@@ -2840,12 +3027,15 @@ impl DeviceFnV1_0 {
         command_buffer_count: u32,
         p_command_buffers: *const CommandBuffer,
     ) {
-        self.free_command_buffers.unwrap_unchecked()(
-            device,
-            command_pool,
-            command_buffer_count,
-            p_command_buffers,
-        )
+        match self.free_command_buffers {
+            Some(f) => f(
+                device,
+                command_pool,
+                command_buffer_count,
+                p_command_buffers,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkBeginCommandBuffer.html>"]
     pub unsafe fn begin_command_buffer(
@@ -2853,11 +3043,17 @@ impl DeviceFnV1_0 {
         command_buffer: CommandBuffer,
         p_begin_info: *const CommandBufferBeginInfo,
     ) -> Result {
-        self.begin_command_buffer.unwrap_unchecked()(command_buffer, p_begin_info)
+        match self.begin_command_buffer {
+            Some(f) => f(command_buffer, p_begin_info),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEndCommandBuffer.html>"]
     pub unsafe fn end_command_buffer(&self, command_buffer: CommandBuffer) -> Result {
-        self.end_command_buffer.unwrap_unchecked()(command_buffer)
+        match self.end_command_buffer {
+            Some(f) => f(command_buffer),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkResetCommandBuffer.html>"]
     pub unsafe fn reset_command_buffer(
@@ -2865,7 +3061,10 @@ impl DeviceFnV1_0 {
         command_buffer: CommandBuffer,
         flags: CommandBufferResetFlags,
     ) -> Result {
-        self.reset_command_buffer.unwrap_unchecked()(command_buffer, flags)
+        match self.reset_command_buffer {
+            Some(f) => f(command_buffer, flags),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBindPipeline.html>"]
     pub unsafe fn cmd_bind_pipeline(
@@ -2874,7 +3073,10 @@ impl DeviceFnV1_0 {
         pipeline_bind_point: PipelineBindPoint,
         pipeline: Pipeline,
     ) {
-        self.cmd_bind_pipeline.unwrap_unchecked()(command_buffer, pipeline_bind_point, pipeline)
+        match self.cmd_bind_pipeline {
+            Some(f) => f(command_buffer, pipeline_bind_point, pipeline),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetViewport.html>"]
     pub unsafe fn cmd_set_viewport(
@@ -2884,12 +3086,10 @@ impl DeviceFnV1_0 {
         viewport_count: u32,
         p_viewports: *const Viewport,
     ) {
-        self.cmd_set_viewport.unwrap_unchecked()(
-            command_buffer,
-            first_viewport,
-            viewport_count,
-            p_viewports,
-        )
+        match self.cmd_set_viewport {
+            Some(f) => f(command_buffer, first_viewport, viewport_count, p_viewports),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetScissor.html>"]
     pub unsafe fn cmd_set_scissor(
@@ -2899,16 +3099,17 @@ impl DeviceFnV1_0 {
         scissor_count: u32,
         p_scissors: *const Rect2D,
     ) {
-        self.cmd_set_scissor.unwrap_unchecked()(
-            command_buffer,
-            first_scissor,
-            scissor_count,
-            p_scissors,
-        )
+        match self.cmd_set_scissor {
+            Some(f) => f(command_buffer, first_scissor, scissor_count, p_scissors),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetLineWidth.html>"]
     pub unsafe fn cmd_set_line_width(&self, command_buffer: CommandBuffer, line_width: f32) {
-        self.cmd_set_line_width.unwrap_unchecked()(command_buffer, line_width)
+        match self.cmd_set_line_width {
+            Some(f) => f(command_buffer, line_width),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetDepthBias.html>"]
     pub unsafe fn cmd_set_depth_bias(
@@ -2918,12 +3119,15 @@ impl DeviceFnV1_0 {
         depth_bias_clamp: f32,
         depth_bias_slope_factor: f32,
     ) {
-        self.cmd_set_depth_bias.unwrap_unchecked()(
-            command_buffer,
-            depth_bias_constant_factor,
-            depth_bias_clamp,
-            depth_bias_slope_factor,
-        )
+        match self.cmd_set_depth_bias {
+            Some(f) => f(
+                command_buffer,
+                depth_bias_constant_factor,
+                depth_bias_clamp,
+                depth_bias_slope_factor,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetBlendConstants.html>"]
     pub unsafe fn cmd_set_blend_constants(
@@ -2931,7 +3135,10 @@ impl DeviceFnV1_0 {
         command_buffer: CommandBuffer,
         blend_constants: *const [f32; 4],
     ) {
-        self.cmd_set_blend_constants.unwrap_unchecked()(command_buffer, blend_constants)
+        match self.cmd_set_blend_constants {
+            Some(f) => f(command_buffer, blend_constants),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetDepthBounds.html>"]
     pub unsafe fn cmd_set_depth_bounds(
@@ -2940,11 +3147,10 @@ impl DeviceFnV1_0 {
         min_depth_bounds: f32,
         max_depth_bounds: f32,
     ) {
-        self.cmd_set_depth_bounds.unwrap_unchecked()(
-            command_buffer,
-            min_depth_bounds,
-            max_depth_bounds,
-        )
+        match self.cmd_set_depth_bounds {
+            Some(f) => f(command_buffer, min_depth_bounds, max_depth_bounds),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetStencilCompareMask.html>"]
     pub unsafe fn cmd_set_stencil_compare_mask(
@@ -2953,11 +3159,10 @@ impl DeviceFnV1_0 {
         face_mask: StencilFaceFlags,
         compare_mask: u32,
     ) {
-        self.cmd_set_stencil_compare_mask.unwrap_unchecked()(
-            command_buffer,
-            face_mask,
-            compare_mask,
-        )
+        match self.cmd_set_stencil_compare_mask {
+            Some(f) => f(command_buffer, face_mask, compare_mask),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetStencilWriteMask.html>"]
     pub unsafe fn cmd_set_stencil_write_mask(
@@ -2966,7 +3171,10 @@ impl DeviceFnV1_0 {
         face_mask: StencilFaceFlags,
         write_mask: u32,
     ) {
-        self.cmd_set_stencil_write_mask.unwrap_unchecked()(command_buffer, face_mask, write_mask)
+        match self.cmd_set_stencil_write_mask {
+            Some(f) => f(command_buffer, face_mask, write_mask),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetStencilReference.html>"]
     pub unsafe fn cmd_set_stencil_reference(
@@ -2975,7 +3183,10 @@ impl DeviceFnV1_0 {
         face_mask: StencilFaceFlags,
         reference: u32,
     ) {
-        self.cmd_set_stencil_reference.unwrap_unchecked()(command_buffer, face_mask, reference)
+        match self.cmd_set_stencil_reference {
+            Some(f) => f(command_buffer, face_mask, reference),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBindDescriptorSets.html>"]
     pub unsafe fn cmd_bind_descriptor_sets(
@@ -2989,16 +3200,19 @@ impl DeviceFnV1_0 {
         dynamic_offset_count: u32,
         p_dynamic_offsets: *const u32,
     ) {
-        self.cmd_bind_descriptor_sets.unwrap_unchecked()(
-            command_buffer,
-            pipeline_bind_point,
-            layout,
-            first_set,
-            descriptor_set_count,
-            p_descriptor_sets,
-            dynamic_offset_count,
-            p_dynamic_offsets,
-        )
+        match self.cmd_bind_descriptor_sets {
+            Some(f) => f(
+                command_buffer,
+                pipeline_bind_point,
+                layout,
+                first_set,
+                descriptor_set_count,
+                p_descriptor_sets,
+                dynamic_offset_count,
+                p_dynamic_offsets,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBindIndexBuffer.html>"]
     pub unsafe fn cmd_bind_index_buffer(
@@ -3008,7 +3222,10 @@ impl DeviceFnV1_0 {
         offset: DeviceSize,
         index_type: IndexType,
     ) {
-        self.cmd_bind_index_buffer.unwrap_unchecked()(command_buffer, buffer, offset, index_type)
+        match self.cmd_bind_index_buffer {
+            Some(f) => f(command_buffer, buffer, offset, index_type),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBindVertexBuffers.html>"]
     pub unsafe fn cmd_bind_vertex_buffers(
@@ -3019,13 +3236,16 @@ impl DeviceFnV1_0 {
         p_buffers: *const Buffer,
         p_offsets: *const DeviceSize,
     ) {
-        self.cmd_bind_vertex_buffers.unwrap_unchecked()(
-            command_buffer,
-            first_binding,
-            binding_count,
-            p_buffers,
-            p_offsets,
-        )
+        match self.cmd_bind_vertex_buffers {
+            Some(f) => f(
+                command_buffer,
+                first_binding,
+                binding_count,
+                p_buffers,
+                p_offsets,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDraw.html>"]
     pub unsafe fn cmd_draw(
@@ -3036,13 +3256,16 @@ impl DeviceFnV1_0 {
         first_vertex: u32,
         first_instance: u32,
     ) {
-        self.cmd_draw.unwrap_unchecked()(
-            command_buffer,
-            vertex_count,
-            instance_count,
-            first_vertex,
-            first_instance,
-        )
+        match self.cmd_draw {
+            Some(f) => f(
+                command_buffer,
+                vertex_count,
+                instance_count,
+                first_vertex,
+                first_instance,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDrawIndexed.html>"]
     pub unsafe fn cmd_draw_indexed(
@@ -3054,14 +3277,17 @@ impl DeviceFnV1_0 {
         vertex_offset: i32,
         first_instance: u32,
     ) {
-        self.cmd_draw_indexed.unwrap_unchecked()(
-            command_buffer,
-            index_count,
-            instance_count,
-            first_index,
-            vertex_offset,
-            first_instance,
-        )
+        match self.cmd_draw_indexed {
+            Some(f) => f(
+                command_buffer,
+                index_count,
+                instance_count,
+                first_index,
+                vertex_offset,
+                first_instance,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDrawIndirect.html>"]
     pub unsafe fn cmd_draw_indirect(
@@ -3072,13 +3298,10 @@ impl DeviceFnV1_0 {
         draw_count: u32,
         stride: u32,
     ) {
-        self.cmd_draw_indirect.unwrap_unchecked()(
-            command_buffer,
-            buffer,
-            offset,
-            draw_count,
-            stride,
-        )
+        match self.cmd_draw_indirect {
+            Some(f) => f(command_buffer, buffer, offset, draw_count, stride),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDrawIndexedIndirect.html>"]
     pub unsafe fn cmd_draw_indexed_indirect(
@@ -3089,13 +3312,10 @@ impl DeviceFnV1_0 {
         draw_count: u32,
         stride: u32,
     ) {
-        self.cmd_draw_indexed_indirect.unwrap_unchecked()(
-            command_buffer,
-            buffer,
-            offset,
-            draw_count,
-            stride,
-        )
+        match self.cmd_draw_indexed_indirect {
+            Some(f) => f(command_buffer, buffer, offset, draw_count, stride),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDispatch.html>"]
     pub unsafe fn cmd_dispatch(
@@ -3105,12 +3325,10 @@ impl DeviceFnV1_0 {
         group_count_y: u32,
         group_count_z: u32,
     ) {
-        self.cmd_dispatch.unwrap_unchecked()(
-            command_buffer,
-            group_count_x,
-            group_count_y,
-            group_count_z,
-        )
+        match self.cmd_dispatch {
+            Some(f) => f(command_buffer, group_count_x, group_count_y, group_count_z),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDispatchIndirect.html>"]
     pub unsafe fn cmd_dispatch_indirect(
@@ -3119,7 +3337,10 @@ impl DeviceFnV1_0 {
         buffer: Buffer,
         offset: DeviceSize,
     ) {
-        self.cmd_dispatch_indirect.unwrap_unchecked()(command_buffer, buffer, offset)
+        match self.cmd_dispatch_indirect {
+            Some(f) => f(command_buffer, buffer, offset),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdCopyBuffer.html>"]
     pub unsafe fn cmd_copy_buffer(
@@ -3130,13 +3351,16 @@ impl DeviceFnV1_0 {
         region_count: u32,
         p_regions: *const BufferCopy,
     ) {
-        self.cmd_copy_buffer.unwrap_unchecked()(
-            command_buffer,
-            src_buffer,
-            dst_buffer,
-            region_count,
-            p_regions,
-        )
+        match self.cmd_copy_buffer {
+            Some(f) => f(
+                command_buffer,
+                src_buffer,
+                dst_buffer,
+                region_count,
+                p_regions,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdCopyImage.html>"]
     pub unsafe fn cmd_copy_image(
@@ -3149,15 +3373,18 @@ impl DeviceFnV1_0 {
         region_count: u32,
         p_regions: *const ImageCopy,
     ) {
-        self.cmd_copy_image.unwrap_unchecked()(
-            command_buffer,
-            src_image,
-            src_image_layout,
-            dst_image,
-            dst_image_layout,
-            region_count,
-            p_regions,
-        )
+        match self.cmd_copy_image {
+            Some(f) => f(
+                command_buffer,
+                src_image,
+                src_image_layout,
+                dst_image,
+                dst_image_layout,
+                region_count,
+                p_regions,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBlitImage.html>"]
     pub unsafe fn cmd_blit_image(
@@ -3171,16 +3398,19 @@ impl DeviceFnV1_0 {
         p_regions: *const ImageBlit,
         filter: Filter,
     ) {
-        self.cmd_blit_image.unwrap_unchecked()(
-            command_buffer,
-            src_image,
-            src_image_layout,
-            dst_image,
-            dst_image_layout,
-            region_count,
-            p_regions,
-            filter,
-        )
+        match self.cmd_blit_image {
+            Some(f) => f(
+                command_buffer,
+                src_image,
+                src_image_layout,
+                dst_image,
+                dst_image_layout,
+                region_count,
+                p_regions,
+                filter,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdCopyBufferToImage.html>"]
     pub unsafe fn cmd_copy_buffer_to_image(
@@ -3192,14 +3422,17 @@ impl DeviceFnV1_0 {
         region_count: u32,
         p_regions: *const BufferImageCopy,
     ) {
-        self.cmd_copy_buffer_to_image.unwrap_unchecked()(
-            command_buffer,
-            src_buffer,
-            dst_image,
-            dst_image_layout,
-            region_count,
-            p_regions,
-        )
+        match self.cmd_copy_buffer_to_image {
+            Some(f) => f(
+                command_buffer,
+                src_buffer,
+                dst_image,
+                dst_image_layout,
+                region_count,
+                p_regions,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdCopyImageToBuffer.html>"]
     pub unsafe fn cmd_copy_image_to_buffer(
@@ -3211,14 +3444,17 @@ impl DeviceFnV1_0 {
         region_count: u32,
         p_regions: *const BufferImageCopy,
     ) {
-        self.cmd_copy_image_to_buffer.unwrap_unchecked()(
-            command_buffer,
-            src_image,
-            src_image_layout,
-            dst_buffer,
-            region_count,
-            p_regions,
-        )
+        match self.cmd_copy_image_to_buffer {
+            Some(f) => f(
+                command_buffer,
+                src_image,
+                src_image_layout,
+                dst_buffer,
+                region_count,
+                p_regions,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdUpdateBuffer.html>"]
     pub unsafe fn cmd_update_buffer(
@@ -3229,13 +3465,10 @@ impl DeviceFnV1_0 {
         data_size: DeviceSize,
         p_data: *const c_void,
     ) {
-        self.cmd_update_buffer.unwrap_unchecked()(
-            command_buffer,
-            dst_buffer,
-            dst_offset,
-            data_size,
-            p_data,
-        )
+        match self.cmd_update_buffer {
+            Some(f) => f(command_buffer, dst_buffer, dst_offset, data_size, p_data),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdFillBuffer.html>"]
     pub unsafe fn cmd_fill_buffer(
@@ -3246,7 +3479,10 @@ impl DeviceFnV1_0 {
         size: DeviceSize,
         data: u32,
     ) {
-        self.cmd_fill_buffer.unwrap_unchecked()(command_buffer, dst_buffer, dst_offset, size, data)
+        match self.cmd_fill_buffer {
+            Some(f) => f(command_buffer, dst_buffer, dst_offset, size, data),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdClearColorImage.html>"]
     pub unsafe fn cmd_clear_color_image(
@@ -3258,14 +3494,17 @@ impl DeviceFnV1_0 {
         range_count: u32,
         p_ranges: *const ImageSubresourceRange,
     ) {
-        self.cmd_clear_color_image.unwrap_unchecked()(
-            command_buffer,
-            image,
-            image_layout,
-            p_color,
-            range_count,
-            p_ranges,
-        )
+        match self.cmd_clear_color_image {
+            Some(f) => f(
+                command_buffer,
+                image,
+                image_layout,
+                p_color,
+                range_count,
+                p_ranges,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdClearDepthStencilImage.html>"]
     pub unsafe fn cmd_clear_depth_stencil_image(
@@ -3277,14 +3516,17 @@ impl DeviceFnV1_0 {
         range_count: u32,
         p_ranges: *const ImageSubresourceRange,
     ) {
-        self.cmd_clear_depth_stencil_image.unwrap_unchecked()(
-            command_buffer,
-            image,
-            image_layout,
-            p_depth_stencil,
-            range_count,
-            p_ranges,
-        )
+        match self.cmd_clear_depth_stencil_image {
+            Some(f) => f(
+                command_buffer,
+                image,
+                image_layout,
+                p_depth_stencil,
+                range_count,
+                p_ranges,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdClearAttachments.html>"]
     pub unsafe fn cmd_clear_attachments(
@@ -3295,13 +3537,16 @@ impl DeviceFnV1_0 {
         rect_count: u32,
         p_rects: *const ClearRect,
     ) {
-        self.cmd_clear_attachments.unwrap_unchecked()(
-            command_buffer,
-            attachment_count,
-            p_attachments,
-            rect_count,
-            p_rects,
-        )
+        match self.cmd_clear_attachments {
+            Some(f) => f(
+                command_buffer,
+                attachment_count,
+                p_attachments,
+                rect_count,
+                p_rects,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdResolveImage.html>"]
     pub unsafe fn cmd_resolve_image(
@@ -3314,15 +3559,18 @@ impl DeviceFnV1_0 {
         region_count: u32,
         p_regions: *const ImageResolve,
     ) {
-        self.cmd_resolve_image.unwrap_unchecked()(
-            command_buffer,
-            src_image,
-            src_image_layout,
-            dst_image,
-            dst_image_layout,
-            region_count,
-            p_regions,
-        )
+        match self.cmd_resolve_image {
+            Some(f) => f(
+                command_buffer,
+                src_image,
+                src_image_layout,
+                dst_image,
+                dst_image_layout,
+                region_count,
+                p_regions,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetEvent.html>"]
     pub unsafe fn cmd_set_event(
@@ -3331,7 +3579,10 @@ impl DeviceFnV1_0 {
         event: Event,
         stage_mask: PipelineStageFlags,
     ) {
-        self.cmd_set_event.unwrap_unchecked()(command_buffer, event, stage_mask)
+        match self.cmd_set_event {
+            Some(f) => f(command_buffer, event, stage_mask),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdResetEvent.html>"]
     pub unsafe fn cmd_reset_event(
@@ -3340,7 +3591,10 @@ impl DeviceFnV1_0 {
         event: Event,
         stage_mask: PipelineStageFlags,
     ) {
-        self.cmd_reset_event.unwrap_unchecked()(command_buffer, event, stage_mask)
+        match self.cmd_reset_event {
+            Some(f) => f(command_buffer, event, stage_mask),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdWaitEvents.html>"]
     pub unsafe fn cmd_wait_events(
@@ -3357,19 +3611,22 @@ impl DeviceFnV1_0 {
         image_memory_barrier_count: u32,
         p_image_memory_barriers: *const ImageMemoryBarrier,
     ) {
-        self.cmd_wait_events.unwrap_unchecked()(
-            command_buffer,
-            event_count,
-            p_events,
-            src_stage_mask,
-            dst_stage_mask,
-            memory_barrier_count,
-            p_memory_barriers,
-            buffer_memory_barrier_count,
-            p_buffer_memory_barriers,
-            image_memory_barrier_count,
-            p_image_memory_barriers,
-        )
+        match self.cmd_wait_events {
+            Some(f) => f(
+                command_buffer,
+                event_count,
+                p_events,
+                src_stage_mask,
+                dst_stage_mask,
+                memory_barrier_count,
+                p_memory_barriers,
+                buffer_memory_barrier_count,
+                p_buffer_memory_barriers,
+                image_memory_barrier_count,
+                p_image_memory_barriers,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdPipelineBarrier.html>"]
     pub unsafe fn cmd_pipeline_barrier(
@@ -3385,18 +3642,21 @@ impl DeviceFnV1_0 {
         image_memory_barrier_count: u32,
         p_image_memory_barriers: *const ImageMemoryBarrier,
     ) {
-        self.cmd_pipeline_barrier.unwrap_unchecked()(
-            command_buffer,
-            src_stage_mask,
-            dst_stage_mask,
-            dependency_flags,
-            memory_barrier_count,
-            p_memory_barriers,
-            buffer_memory_barrier_count,
-            p_buffer_memory_barriers,
-            image_memory_barrier_count,
-            p_image_memory_barriers,
-        )
+        match self.cmd_pipeline_barrier {
+            Some(f) => f(
+                command_buffer,
+                src_stage_mask,
+                dst_stage_mask,
+                dependency_flags,
+                memory_barrier_count,
+                p_memory_barriers,
+                buffer_memory_barrier_count,
+                p_buffer_memory_barriers,
+                image_memory_barrier_count,
+                p_image_memory_barriers,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBeginQuery.html>"]
     pub unsafe fn cmd_begin_query(
@@ -3406,7 +3666,10 @@ impl DeviceFnV1_0 {
         query: u32,
         flags: QueryControlFlags,
     ) {
-        self.cmd_begin_query.unwrap_unchecked()(command_buffer, query_pool, query, flags)
+        match self.cmd_begin_query {
+            Some(f) => f(command_buffer, query_pool, query, flags),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdEndQuery.html>"]
     pub unsafe fn cmd_end_query(
@@ -3415,7 +3678,10 @@ impl DeviceFnV1_0 {
         query_pool: QueryPool,
         query: u32,
     ) {
-        self.cmd_end_query.unwrap_unchecked()(command_buffer, query_pool, query)
+        match self.cmd_end_query {
+            Some(f) => f(command_buffer, query_pool, query),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdResetQueryPool.html>"]
     pub unsafe fn cmd_reset_query_pool(
@@ -3425,12 +3691,10 @@ impl DeviceFnV1_0 {
         first_query: u32,
         query_count: u32,
     ) {
-        self.cmd_reset_query_pool.unwrap_unchecked()(
-            command_buffer,
-            query_pool,
-            first_query,
-            query_count,
-        )
+        match self.cmd_reset_query_pool {
+            Some(f) => f(command_buffer, query_pool, first_query, query_count),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdWriteTimestamp.html>"]
     pub unsafe fn cmd_write_timestamp(
@@ -3440,12 +3704,10 @@ impl DeviceFnV1_0 {
         query_pool: QueryPool,
         query: u32,
     ) {
-        self.cmd_write_timestamp.unwrap_unchecked()(
-            command_buffer,
-            pipeline_stage,
-            query_pool,
-            query,
-        )
+        match self.cmd_write_timestamp {
+            Some(f) => f(command_buffer, pipeline_stage, query_pool, query),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdCopyQueryPoolResults.html>"]
     pub unsafe fn cmd_copy_query_pool_results(
@@ -3459,16 +3721,19 @@ impl DeviceFnV1_0 {
         stride: DeviceSize,
         flags: QueryResultFlags,
     ) {
-        self.cmd_copy_query_pool_results.unwrap_unchecked()(
-            command_buffer,
-            query_pool,
-            first_query,
-            query_count,
-            dst_buffer,
-            dst_offset,
-            stride,
-            flags,
-        )
+        match self.cmd_copy_query_pool_results {
+            Some(f) => f(
+                command_buffer,
+                query_pool,
+                first_query,
+                query_count,
+                dst_buffer,
+                dst_offset,
+                stride,
+                flags,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdPushConstants.html>"]
     pub unsafe fn cmd_push_constants(
@@ -3480,14 +3745,10 @@ impl DeviceFnV1_0 {
         size: u32,
         p_values: *const c_void,
     ) {
-        self.cmd_push_constants.unwrap_unchecked()(
-            command_buffer,
-            layout,
-            stage_flags,
-            offset,
-            size,
-            p_values,
-        )
+        match self.cmd_push_constants {
+            Some(f) => f(command_buffer, layout, stage_flags, offset, size, p_values),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBeginRenderPass.html>"]
     pub unsafe fn cmd_begin_render_pass(
@@ -3496,7 +3757,10 @@ impl DeviceFnV1_0 {
         p_render_pass_begin: *const RenderPassBeginInfo,
         contents: SubpassContents,
     ) {
-        self.cmd_begin_render_pass.unwrap_unchecked()(command_buffer, p_render_pass_begin, contents)
+        match self.cmd_begin_render_pass {
+            Some(f) => f(command_buffer, p_render_pass_begin, contents),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdNextSubpass.html>"]
     pub unsafe fn cmd_next_subpass(
@@ -3504,11 +3768,17 @@ impl DeviceFnV1_0 {
         command_buffer: CommandBuffer,
         contents: SubpassContents,
     ) {
-        self.cmd_next_subpass.unwrap_unchecked()(command_buffer, contents)
+        match self.cmd_next_subpass {
+            Some(f) => f(command_buffer, contents),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdEndRenderPass.html>"]
     pub unsafe fn cmd_end_render_pass(&self, command_buffer: CommandBuffer) {
-        self.cmd_end_render_pass.unwrap_unchecked()(command_buffer)
+        match self.cmd_end_render_pass {
+            Some(f) => f(command_buffer),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdExecuteCommands.html>"]
     pub unsafe fn cmd_execute_commands(
@@ -3517,11 +3787,10 @@ impl DeviceFnV1_0 {
         command_buffer_count: u32,
         p_command_buffers: *const CommandBuffer,
     ) {
-        self.cmd_execute_commands.unwrap_unchecked()(
-            command_buffer,
-            command_buffer_count,
-            p_command_buffers,
-        )
+        match self.cmd_execute_commands {
+            Some(f) => f(command_buffer, command_buffer_count, p_command_buffers),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
 }
 #[allow(non_camel_case_types)]
@@ -3550,7 +3819,10 @@ impl EntryFnV1_1 {
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumerateInstanceVersion.html>"]
     pub unsafe fn enumerate_instance_version(&self, p_api_version: *mut u32) -> Result {
-        self.enumerate_instance_version.unwrap_unchecked()(p_api_version)
+        match self.enumerate_instance_version {
+            Some(f) => f(p_api_version),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
 }
 #[derive(Clone)]
@@ -3669,11 +3941,14 @@ impl InstanceFnV1_1 {
         p_physical_device_group_count: *mut u32,
         p_physical_device_group_properties: *mut PhysicalDeviceGroupProperties,
     ) -> Result {
-        self.enumerate_physical_device_groups.unwrap_unchecked()(
-            instance,
-            p_physical_device_group_count,
-            p_physical_device_group_properties,
-        )
+        match self.enumerate_physical_device_groups {
+            Some(f) => f(
+                instance,
+                p_physical_device_group_count,
+                p_physical_device_group_properties,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceFeatures2.html>"]
     pub unsafe fn get_physical_device_features2(
@@ -3681,7 +3956,10 @@ impl InstanceFnV1_1 {
         physical_device: PhysicalDevice,
         p_features: *mut PhysicalDeviceFeatures2,
     ) {
-        self.get_physical_device_features2.unwrap_unchecked()(physical_device, p_features)
+        match self.get_physical_device_features2 {
+            Some(f) => f(physical_device, p_features),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceProperties2.html>"]
     pub unsafe fn get_physical_device_properties2(
@@ -3689,7 +3967,10 @@ impl InstanceFnV1_1 {
         physical_device: PhysicalDevice,
         p_properties: *mut PhysicalDeviceProperties2,
     ) {
-        self.get_physical_device_properties2.unwrap_unchecked()(physical_device, p_properties)
+        match self.get_physical_device_properties2 {
+            Some(f) => f(physical_device, p_properties),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceFormatProperties2.html>"]
     pub unsafe fn get_physical_device_format_properties2(
@@ -3698,8 +3979,10 @@ impl InstanceFnV1_1 {
         format: Format,
         p_format_properties: *mut FormatProperties2,
     ) {
-        self.get_physical_device_format_properties2
-            .unwrap_unchecked()(physical_device, format, p_format_properties)
+        match self.get_physical_device_format_properties2 {
+            Some(f) => f(physical_device, format, p_format_properties),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceImageFormatProperties2.html>"]
     pub unsafe fn get_physical_device_image_format_properties2(
@@ -3708,12 +3991,14 @@ impl InstanceFnV1_1 {
         p_image_format_info: *const PhysicalDeviceImageFormatInfo2,
         p_image_format_properties: *mut ImageFormatProperties2,
     ) -> Result {
-        self.get_physical_device_image_format_properties2
-            .unwrap_unchecked()(
-            physical_device,
-            p_image_format_info,
-            p_image_format_properties,
-        )
+        match self.get_physical_device_image_format_properties2 {
+            Some(f) => f(
+                physical_device,
+                p_image_format_info,
+                p_image_format_properties,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceQueueFamilyProperties2.html>"]
     pub unsafe fn get_physical_device_queue_family_properties2(
@@ -3722,12 +4007,14 @@ impl InstanceFnV1_1 {
         p_queue_family_property_count: *mut u32,
         p_queue_family_properties: *mut QueueFamilyProperties2,
     ) {
-        self.get_physical_device_queue_family_properties2
-            .unwrap_unchecked()(
-            physical_device,
-            p_queue_family_property_count,
-            p_queue_family_properties,
-        )
+        match self.get_physical_device_queue_family_properties2 {
+            Some(f) => f(
+                physical_device,
+                p_queue_family_property_count,
+                p_queue_family_properties,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceMemoryProperties2.html>"]
     pub unsafe fn get_physical_device_memory_properties2(
@@ -3735,8 +4022,10 @@ impl InstanceFnV1_1 {
         physical_device: PhysicalDevice,
         p_memory_properties: *mut PhysicalDeviceMemoryProperties2,
     ) {
-        self.get_physical_device_memory_properties2
-            .unwrap_unchecked()(physical_device, p_memory_properties)
+        match self.get_physical_device_memory_properties2 {
+            Some(f) => f(physical_device, p_memory_properties),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceSparseImageFormatProperties2.html>"]
     pub unsafe fn get_physical_device_sparse_image_format_properties2(
@@ -3746,13 +4035,15 @@ impl InstanceFnV1_1 {
         p_property_count: *mut u32,
         p_properties: *mut SparseImageFormatProperties2,
     ) {
-        self.get_physical_device_sparse_image_format_properties2
-            .unwrap_unchecked()(
-            physical_device,
-            p_format_info,
-            p_property_count,
-            p_properties,
-        )
+        match self.get_physical_device_sparse_image_format_properties2 {
+            Some(f) => f(
+                physical_device,
+                p_format_info,
+                p_property_count,
+                p_properties,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceExternalBufferProperties.html>"]
     pub unsafe fn get_physical_device_external_buffer_properties(
@@ -3761,12 +4052,14 @@ impl InstanceFnV1_1 {
         p_external_buffer_info: *const PhysicalDeviceExternalBufferInfo,
         p_external_buffer_properties: *mut ExternalBufferProperties,
     ) {
-        self.get_physical_device_external_buffer_properties
-            .unwrap_unchecked()(
-            physical_device,
-            p_external_buffer_info,
-            p_external_buffer_properties,
-        )
+        match self.get_physical_device_external_buffer_properties {
+            Some(f) => f(
+                physical_device,
+                p_external_buffer_info,
+                p_external_buffer_properties,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceExternalFenceProperties.html>"]
     pub unsafe fn get_physical_device_external_fence_properties(
@@ -3775,12 +4068,14 @@ impl InstanceFnV1_1 {
         p_external_fence_info: *const PhysicalDeviceExternalFenceInfo,
         p_external_fence_properties: *mut ExternalFenceProperties,
     ) {
-        self.get_physical_device_external_fence_properties
-            .unwrap_unchecked()(
-            physical_device,
-            p_external_fence_info,
-            p_external_fence_properties,
-        )
+        match self.get_physical_device_external_fence_properties {
+            Some(f) => f(
+                physical_device,
+                p_external_fence_info,
+                p_external_fence_properties,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceExternalSemaphoreProperties.html>"]
     pub unsafe fn get_physical_device_external_semaphore_properties(
@@ -3789,12 +4084,14 @@ impl InstanceFnV1_1 {
         p_external_semaphore_info: *const PhysicalDeviceExternalSemaphoreInfo,
         p_external_semaphore_properties: *mut ExternalSemaphoreProperties,
     ) {
-        self.get_physical_device_external_semaphore_properties
-            .unwrap_unchecked()(
-            physical_device,
-            p_external_semaphore_info,
-            p_external_semaphore_properties,
-        )
+        match self.get_physical_device_external_semaphore_properties {
+            Some(f) => f(
+                physical_device,
+                p_external_semaphore_info,
+                p_external_semaphore_properties,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
 }
 #[allow(non_camel_case_types)]
@@ -3946,7 +4243,10 @@ impl DeviceFnV1_1 {
         bind_info_count: u32,
         p_bind_infos: *const BindBufferMemoryInfo,
     ) -> Result {
-        self.bind_buffer_memory2.unwrap_unchecked()(device, bind_info_count, p_bind_infos)
+        match self.bind_buffer_memory2 {
+            Some(f) => f(device, bind_info_count, p_bind_infos),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkBindImageMemory2.html>"]
     pub unsafe fn bind_image_memory2(
@@ -3955,7 +4255,10 @@ impl DeviceFnV1_1 {
         bind_info_count: u32,
         p_bind_infos: *const BindImageMemoryInfo,
     ) -> Result {
-        self.bind_image_memory2.unwrap_unchecked()(device, bind_info_count, p_bind_infos)
+        match self.bind_image_memory2 {
+            Some(f) => f(device, bind_info_count, p_bind_infos),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDeviceGroupPeerMemoryFeatures.html>"]
     pub unsafe fn get_device_group_peer_memory_features(
@@ -3966,18 +4269,23 @@ impl DeviceFnV1_1 {
         remote_device_index: u32,
         p_peer_memory_features: *mut PeerMemoryFeatureFlags,
     ) {
-        self.get_device_group_peer_memory_features
-            .unwrap_unchecked()(
-            device,
-            heap_index,
-            local_device_index,
-            remote_device_index,
-            p_peer_memory_features,
-        )
+        match self.get_device_group_peer_memory_features {
+            Some(f) => f(
+                device,
+                heap_index,
+                local_device_index,
+                remote_device_index,
+                p_peer_memory_features,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetDeviceMask.html>"]
     pub unsafe fn cmd_set_device_mask(&self, command_buffer: CommandBuffer, device_mask: u32) {
-        self.cmd_set_device_mask.unwrap_unchecked()(command_buffer, device_mask)
+        match self.cmd_set_device_mask {
+            Some(f) => f(command_buffer, device_mask),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDispatchBase.html>"]
     pub unsafe fn cmd_dispatch_base(
@@ -3990,15 +4298,18 @@ impl DeviceFnV1_1 {
         group_count_y: u32,
         group_count_z: u32,
     ) {
-        self.cmd_dispatch_base.unwrap_unchecked()(
-            command_buffer,
-            base_group_x,
-            base_group_y,
-            base_group_z,
-            group_count_x,
-            group_count_y,
-            group_count_z,
-        )
+        match self.cmd_dispatch_base {
+            Some(f) => f(
+                command_buffer,
+                base_group_x,
+                base_group_y,
+                base_group_z,
+                group_count_x,
+                group_count_y,
+                group_count_z,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetImageMemoryRequirements2.html>"]
     pub unsafe fn get_image_memory_requirements2(
@@ -4007,11 +4318,10 @@ impl DeviceFnV1_1 {
         p_info: *const ImageMemoryRequirementsInfo2,
         p_memory_requirements: *mut MemoryRequirements2,
     ) {
-        self.get_image_memory_requirements2.unwrap_unchecked()(
-            device,
-            p_info,
-            p_memory_requirements,
-        )
+        match self.get_image_memory_requirements2 {
+            Some(f) => f(device, p_info, p_memory_requirements),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetBufferMemoryRequirements2.html>"]
     pub unsafe fn get_buffer_memory_requirements2(
@@ -4020,11 +4330,10 @@ impl DeviceFnV1_1 {
         p_info: *const BufferMemoryRequirementsInfo2,
         p_memory_requirements: *mut MemoryRequirements2,
     ) {
-        self.get_buffer_memory_requirements2.unwrap_unchecked()(
-            device,
-            p_info,
-            p_memory_requirements,
-        )
+        match self.get_buffer_memory_requirements2 {
+            Some(f) => f(device, p_info, p_memory_requirements),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetImageSparseMemoryRequirements2.html>"]
     pub unsafe fn get_image_sparse_memory_requirements2(
@@ -4034,13 +4343,15 @@ impl DeviceFnV1_1 {
         p_sparse_memory_requirement_count: *mut u32,
         p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2,
     ) {
-        self.get_image_sparse_memory_requirements2
-            .unwrap_unchecked()(
-            device,
-            p_info,
-            p_sparse_memory_requirement_count,
-            p_sparse_memory_requirements,
-        )
+        match self.get_image_sparse_memory_requirements2 {
+            Some(f) => f(
+                device,
+                p_info,
+                p_sparse_memory_requirement_count,
+                p_sparse_memory_requirements,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkTrimCommandPool.html>"]
     pub unsafe fn trim_command_pool(
@@ -4049,7 +4360,10 @@ impl DeviceFnV1_1 {
         command_pool: CommandPool,
         flags: CommandPoolTrimFlags,
     ) {
-        self.trim_command_pool.unwrap_unchecked()(device, command_pool, flags)
+        match self.trim_command_pool {
+            Some(f) => f(device, command_pool, flags),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDeviceQueue2.html>"]
     pub unsafe fn get_device_queue2(
@@ -4058,7 +4372,10 @@ impl DeviceFnV1_1 {
         p_queue_info: *const DeviceQueueInfo2,
         p_queue: *mut Queue,
     ) {
-        self.get_device_queue2.unwrap_unchecked()(device, p_queue_info, p_queue)
+        match self.get_device_queue2 {
+            Some(f) => f(device, p_queue_info, p_queue),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateSamplerYcbcrConversion.html>"]
     pub unsafe fn create_sampler_ycbcr_conversion(
@@ -4068,12 +4385,10 @@ impl DeviceFnV1_1 {
         p_allocator: *const AllocationCallbacks,
         p_ycbcr_conversion: *mut SamplerYcbcrConversion,
     ) -> Result {
-        self.create_sampler_ycbcr_conversion.unwrap_unchecked()(
-            device,
-            p_create_info,
-            p_allocator,
-            p_ycbcr_conversion,
-        )
+        match self.create_sampler_ycbcr_conversion {
+            Some(f) => f(device, p_create_info, p_allocator, p_ycbcr_conversion),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroySamplerYcbcrConversion.html>"]
     pub unsafe fn destroy_sampler_ycbcr_conversion(
@@ -4082,11 +4397,10 @@ impl DeviceFnV1_1 {
         ycbcr_conversion: SamplerYcbcrConversion,
         p_allocator: *const AllocationCallbacks,
     ) {
-        self.destroy_sampler_ycbcr_conversion.unwrap_unchecked()(
-            device,
-            ycbcr_conversion,
-            p_allocator,
-        )
+        match self.destroy_sampler_ycbcr_conversion {
+            Some(f) => f(device, ycbcr_conversion, p_allocator),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateDescriptorUpdateTemplate.html>"]
     pub unsafe fn create_descriptor_update_template(
@@ -4096,12 +4410,15 @@ impl DeviceFnV1_1 {
         p_allocator: *const AllocationCallbacks,
         p_descriptor_update_template: *mut DescriptorUpdateTemplate,
     ) -> Result {
-        self.create_descriptor_update_template.unwrap_unchecked()(
-            device,
-            p_create_info,
-            p_allocator,
-            p_descriptor_update_template,
-        )
+        match self.create_descriptor_update_template {
+            Some(f) => f(
+                device,
+                p_create_info,
+                p_allocator,
+                p_descriptor_update_template,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyDescriptorUpdateTemplate.html>"]
     pub unsafe fn destroy_descriptor_update_template(
@@ -4110,11 +4427,10 @@ impl DeviceFnV1_1 {
         descriptor_update_template: DescriptorUpdateTemplate,
         p_allocator: *const AllocationCallbacks,
     ) {
-        self.destroy_descriptor_update_template.unwrap_unchecked()(
-            device,
-            descriptor_update_template,
-            p_allocator,
-        )
+        match self.destroy_descriptor_update_template {
+            Some(f) => f(device, descriptor_update_template, p_allocator),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkUpdateDescriptorSetWithTemplate.html>"]
     pub unsafe fn update_descriptor_set_with_template(
@@ -4124,12 +4440,10 @@ impl DeviceFnV1_1 {
         descriptor_update_template: DescriptorUpdateTemplate,
         p_data: *const c_void,
     ) {
-        self.update_descriptor_set_with_template.unwrap_unchecked()(
-            device,
-            descriptor_set,
-            descriptor_update_template,
-            p_data,
-        )
+        match self.update_descriptor_set_with_template {
+            Some(f) => f(device, descriptor_set, descriptor_update_template, p_data),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDescriptorSetLayoutSupport.html>"]
     pub unsafe fn get_descriptor_set_layout_support(
@@ -4138,7 +4452,10 @@ impl DeviceFnV1_1 {
         p_create_info: *const DescriptorSetLayoutCreateInfo,
         p_support: *mut DescriptorSetLayoutSupport,
     ) {
-        self.get_descriptor_set_layout_support.unwrap_unchecked()(device, p_create_info, p_support)
+        match self.get_descriptor_set_layout_support {
+            Some(f) => f(device, p_create_info, p_support),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
 }
 #[derive(Clone)]
@@ -4281,15 +4598,18 @@ impl DeviceFnV1_2 {
         max_draw_count: u32,
         stride: u32,
     ) {
-        self.cmd_draw_indirect_count.unwrap_unchecked()(
-            command_buffer,
-            buffer,
-            offset,
-            count_buffer,
-            count_buffer_offset,
-            max_draw_count,
-            stride,
-        )
+        match self.cmd_draw_indirect_count {
+            Some(f) => f(
+                command_buffer,
+                buffer,
+                offset,
+                count_buffer,
+                count_buffer_offset,
+                max_draw_count,
+                stride,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDrawIndexedIndirectCount.html>"]
     pub unsafe fn cmd_draw_indexed_indirect_count(
@@ -4302,15 +4622,18 @@ impl DeviceFnV1_2 {
         max_draw_count: u32,
         stride: u32,
     ) {
-        self.cmd_draw_indexed_indirect_count.unwrap_unchecked()(
-            command_buffer,
-            buffer,
-            offset,
-            count_buffer,
-            count_buffer_offset,
-            max_draw_count,
-            stride,
-        )
+        match self.cmd_draw_indexed_indirect_count {
+            Some(f) => f(
+                command_buffer,
+                buffer,
+                offset,
+                count_buffer,
+                count_buffer_offset,
+                max_draw_count,
+                stride,
+            ),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateRenderPass2.html>"]
     pub unsafe fn create_render_pass2(
@@ -4320,12 +4643,10 @@ impl DeviceFnV1_2 {
         p_allocator: *const AllocationCallbacks,
         p_render_pass: *mut RenderPass,
     ) -> Result {
-        self.create_render_pass2.unwrap_unchecked()(
-            device,
-            p_create_info,
-            p_allocator,
-            p_render_pass,
-        )
+        match self.create_render_pass2 {
+            Some(f) => f(device, p_create_info, p_allocator, p_render_pass),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBeginRenderPass2.html>"]
     pub unsafe fn cmd_begin_render_pass2(
@@ -4334,11 +4655,10 @@ impl DeviceFnV1_2 {
         p_render_pass_begin: *const RenderPassBeginInfo,
         p_subpass_begin_info: *const SubpassBeginInfo,
     ) {
-        self.cmd_begin_render_pass2.unwrap_unchecked()(
-            command_buffer,
-            p_render_pass_begin,
-            p_subpass_begin_info,
-        )
+        match self.cmd_begin_render_pass2 {
+            Some(f) => f(command_buffer, p_render_pass_begin, p_subpass_begin_info),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdNextSubpass2.html>"]
     pub unsafe fn cmd_next_subpass2(
@@ -4347,11 +4667,10 @@ impl DeviceFnV1_2 {
         p_subpass_begin_info: *const SubpassBeginInfo,
         p_subpass_end_info: *const SubpassEndInfo,
     ) {
-        self.cmd_next_subpass2.unwrap_unchecked()(
-            command_buffer,
-            p_subpass_begin_info,
-            p_subpass_end_info,
-        )
+        match self.cmd_next_subpass2 {
+            Some(f) => f(command_buffer, p_subpass_begin_info, p_subpass_end_info),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdEndRenderPass2.html>"]
     pub unsafe fn cmd_end_render_pass2(
@@ -4359,7 +4678,10 @@ impl DeviceFnV1_2 {
         command_buffer: CommandBuffer,
         p_subpass_end_info: *const SubpassEndInfo,
     ) {
-        self.cmd_end_render_pass2.unwrap_unchecked()(command_buffer, p_subpass_end_info)
+        match self.cmd_end_render_pass2 {
+            Some(f) => f(command_buffer, p_subpass_end_info),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkResetQueryPool.html>"]
     pub unsafe fn reset_query_pool(
@@ -4369,7 +4691,10 @@ impl DeviceFnV1_2 {
         first_query: u32,
         query_count: u32,
     ) {
-        self.reset_query_pool.unwrap_unchecked()(device, query_pool, first_query, query_count)
+        match self.reset_query_pool {
+            Some(f) => f(device, query_pool, first_query, query_count),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetSemaphoreCounterValue.html>"]
     pub unsafe fn get_semaphore_counter_value(
@@ -4378,7 +4703,10 @@ impl DeviceFnV1_2 {
         semaphore: Semaphore,
         p_value: *mut u64,
     ) -> Result {
-        self.get_semaphore_counter_value.unwrap_unchecked()(device, semaphore, p_value)
+        match self.get_semaphore_counter_value {
+            Some(f) => f(device, semaphore, p_value),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkWaitSemaphores.html>"]
     pub unsafe fn wait_semaphores(
@@ -4387,7 +4715,10 @@ impl DeviceFnV1_2 {
         p_wait_info: *const SemaphoreWaitInfo,
         timeout: u64,
     ) -> Result {
-        self.wait_semaphores.unwrap_unchecked()(device, p_wait_info, timeout)
+        match self.wait_semaphores {
+            Some(f) => f(device, p_wait_info, timeout),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkSignalSemaphore.html>"]
     pub unsafe fn signal_semaphore(
@@ -4395,7 +4726,10 @@ impl DeviceFnV1_2 {
         device: Device,
         p_signal_info: *const SemaphoreSignalInfo,
     ) -> Result {
-        self.signal_semaphore.unwrap_unchecked()(device, p_signal_info)
+        match self.signal_semaphore {
+            Some(f) => f(device, p_signal_info),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetBufferDeviceAddress.html>"]
     pub unsafe fn get_buffer_device_address(
@@ -4403,7 +4737,10 @@ impl DeviceFnV1_2 {
         device: Device,
         p_info: *const BufferDeviceAddressInfo,
     ) -> DeviceAddress {
-        self.get_buffer_device_address.unwrap_unchecked()(device, p_info)
+        match self.get_buffer_device_address {
+            Some(f) => f(device, p_info),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetBufferOpaqueCaptureAddress.html>"]
     pub unsafe fn get_buffer_opaque_capture_address(
@@ -4411,7 +4748,10 @@ impl DeviceFnV1_2 {
         device: Device,
         p_info: *const BufferDeviceAddressInfo,
     ) -> u64 {
-        self.get_buffer_opaque_capture_address.unwrap_unchecked()(device, p_info)
+        match self.get_buffer_opaque_capture_address {
+            Some(f) => f(device, p_info),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDeviceMemoryOpaqueCaptureAddress.html>"]
     pub unsafe fn get_device_memory_opaque_capture_address(
@@ -4419,7 +4759,9 @@ impl DeviceFnV1_2 {
         device: Device,
         p_info: *const DeviceMemoryOpaqueCaptureAddressInfo,
     ) -> u64 {
-        self.get_device_memory_opaque_capture_address
-            .unwrap_unchecked()(device, p_info)
+        match self.get_device_memory_opaque_capture_address {
+            Some(f) => f(device, p_info),
+            None => std::hint::unreachable_unchecked(),
+        }
     }
 }

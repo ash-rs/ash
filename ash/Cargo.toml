@@ -9,7 +9,6 @@ readme = "../README.md"
 keywords = ["vulkan", "graphic"]
 documentation = "https://docs.rs/ash"
 edition = "2018"
-rust-version = "1.58"
 
 [dependencies]
 libloading = { version = "0.7", optional = true }

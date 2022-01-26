@@ -1029,7 +1029,10 @@ fn generate_function_pointers<'a>(
             quote!(
                 #[doc = #khronos_link]
                 pub unsafe fn #function_name_rust(&self, #parameters) #returns {
-                    self.#function_name_rust.unwrap_unchecked()(#parameter_names)
+                    match self.#function_name_rust {
+                        Some(f) => f(#parameter_names),
+                        None => std::hint::unreachable_unchecked(),
+                    }
                 }
             )
             .to_tokens(tokens)
