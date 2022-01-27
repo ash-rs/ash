@@ -44,6 +44,456 @@ impl Device {
     pub fn fp_v1_3(&self) -> &vk::DeviceFnV1_3 {
         &self.device_fn_1_3
     }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreatePrivateDataSlot.html>
+    pub unsafe fn create_private_data_slot(
+        &self,
+        create_info: &vk::PrivateDataSlotCreateInfo,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+    ) -> VkResult<vk::PrivateDataSlot> {
+        let mut private_data_slot = mem::zeroed();
+        self.fp_v1_3()
+            .create_private_data_slot(
+                self.handle,
+                create_info,
+                allocation_callbacks.as_raw_ptr(),
+                &mut private_data_slot,
+            )
+            .result_with_success(private_data_slot)
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroyPrivateDataSlot.html>
+    pub unsafe fn destroy_private_data_slot(
+        &self,
+        private_data_slot: vk::PrivateDataSlot,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+    ) {
+        self.fp_v1_3().destroy_private_data_slot(
+            self.handle,
+            private_data_slot,
+            allocation_callbacks.as_raw_ptr(),
+        )
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkSetPrivateData.html>
+    pub unsafe fn set_private_data<T: vk::Handle>(
+        &self,
+        object: T,
+        private_data_slot: vk::PrivateDataSlot,
+        data: u64,
+    ) -> VkResult<()> {
+        self.fp_v1_3()
+            .set_private_data(
+                self.handle,
+                T::TYPE,
+                object.as_raw(),
+                private_data_slot,
+                data,
+            )
+            .result()
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPrivateData.html>
+    pub unsafe fn get_private_data<T: vk::Handle>(
+        &self,
+        object: T,
+        private_data_slot: vk::PrivateDataSlot,
+    ) -> u64 {
+        let mut data = mem::zeroed();
+        self.fp_v1_3().get_private_data(
+            self.handle,
+            T::TYPE,
+            object.as_raw(),
+            private_data_slot,
+            &mut data,
+        );
+        data
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPipelineBarrier2.html>
+    pub unsafe fn cmd_pipeline_barrier2(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        dependency_info: &vk::DependencyInfo,
+    ) {
+        self.fp_v1_3()
+            .cmd_pipeline_barrier2(command_buffer, dependency_info)
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdResetEvent2.html>
+    pub unsafe fn cmd_reset_event2(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        event: vk::Event,
+        stage_mask: vk::PipelineStageFlags2,
+    ) {
+        self.fp_v1_3()
+            .cmd_reset_event2(command_buffer, event, stage_mask)
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetEvent2.html>
+    pub unsafe fn cmd_set_event2(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        event: vk::Event,
+        dependency_info: &vk::DependencyInfo,
+    ) {
+        self.fp_v1_3()
+            .cmd_set_event2(command_buffer, event, dependency_info)
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdWaitEvents2.html>
+    pub unsafe fn cmd_wait_events2(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        events: &[vk::Event],
+        dependency_infos: &[vk::DependencyInfo],
+    ) {
+        assert_eq!(events.len(), dependency_infos.len());
+        self.fp_v1_3().cmd_wait_events2(
+            command_buffer,
+            events.len() as u32,
+            events.as_ptr(),
+            dependency_infos.as_ptr(),
+        )
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdWriteTimestamp2.html>
+    pub unsafe fn cmd_write_timestamp2(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        stage: vk::PipelineStageFlags2,
+        query_pool: vk::QueryPool,
+        query: u32,
+    ) {
+        self.fp_v1_3()
+            .cmd_write_timestamp2(command_buffer, stage, query_pool, query)
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkQueueSubmit2.html>
+    pub unsafe fn queue_submit2(
+        &self,
+        queue: vk::Queue,
+        submits: &[vk::SubmitInfo2],
+        fence: vk::Fence,
+    ) -> VkResult<()> {
+        self.fp_v1_3()
+            .queue_submit2(queue, submits.len() as u32, submits.as_ptr(), fence)
+            .result()
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdCopyBuffer2.html>
+    pub unsafe fn cmd_copy_buffer2(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        copy_buffer_info: &vk::CopyBufferInfo2,
+    ) {
+        self.fp_v1_3()
+            .cmd_copy_buffer2(command_buffer, copy_buffer_info)
+    }
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdCopyImage2.html>
+    pub unsafe fn cmd_copy_image2(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        copy_image_info: &vk::CopyImageInfo2,
+    ) {
+        self.fp_v1_3()
+            .cmd_copy_image2(command_buffer, copy_image_info)
+    }
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdCopyBufferToImage2.html>
+    pub unsafe fn cmd_copy_buffer_to_image2(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        copy_buffer_to_image_info: &vk::CopyBufferToImageInfo2,
+    ) {
+        self.fp_v1_3()
+            .cmd_copy_buffer_to_image2(command_buffer, copy_buffer_to_image_info)
+    }
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdCopyImageToBuffer2.html>
+    pub unsafe fn cmd_copy_image_to_buffer2(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        copy_image_to_buffer_info: &vk::CopyImageToBufferInfo2,
+    ) {
+        self.fp_v1_3()
+            .cmd_copy_image_to_buffer2(command_buffer, copy_image_to_buffer_info)
+    }
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBlitImage2.html>
+    pub unsafe fn cmd_blit_image2(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        blit_image_info: &vk::BlitImageInfo2,
+    ) {
+        self.fp_v1_3()
+            .cmd_blit_image2(command_buffer, blit_image_info)
+    }
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdResolveImage2.html>
+    pub unsafe fn cmd_resolve_image2(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        resolve_image_info: &vk::ResolveImageInfo2,
+    ) {
+        self.fp_v1_3()
+            .cmd_resolve_image2(command_buffer, resolve_image_info)
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBeginRendering.html>
+    pub unsafe fn cmd_begin_rendering(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        rendering_info: &vk::RenderingInfo,
+    ) {
+        self.fp_v1_3()
+            .cmd_begin_rendering(command_buffer, rendering_info)
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdEndRendering.html>
+    pub unsafe fn cmd_end_rendering(&self, command_buffer: vk::CommandBuffer) {
+        self.fp_v1_3().cmd_end_rendering(command_buffer)
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetCullMode.html>
+    pub unsafe fn cmd_set_cull_mode(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        cull_mode: vk::CullModeFlags,
+    ) {
+        self.fp_v1_3().cmd_set_cull_mode(command_buffer, cull_mode)
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetFrontFace.html>
+    pub unsafe fn cmd_set_front_face(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        front_face: vk::FrontFace,
+    ) {
+        self.fp_v1_3()
+            .cmd_set_front_face(command_buffer, front_face)
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetPrimitiveTopology.html>
+    pub unsafe fn cmd_set_primitive_topology(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        primitive_topology: vk::PrimitiveTopology,
+    ) {
+        self.fp_v1_3()
+            .cmd_set_primitive_topology(command_buffer, primitive_topology)
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetViewportWithCount.html>
+    pub unsafe fn cmd_set_viewport_with_count(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        viewports: &[vk::Viewport],
+    ) {
+        self.fp_v1_3().cmd_set_viewport_with_count(
+            command_buffer,
+            viewports.len() as u32,
+            viewports.as_ptr(),
+        )
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetScissorWithCount.html>
+    pub unsafe fn cmd_set_scissor_with_count(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        scissors: &[vk::Rect2D],
+    ) {
+        self.fp_v1_3().cmd_set_scissor_with_count(
+            command_buffer,
+            scissors.len() as u32,
+            scissors.as_ptr(),
+        )
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBindVertexBuffers2.html>
+    pub unsafe fn cmd_bind_vertex_buffers2(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        first_binding: u32,
+        buffers: &[vk::Buffer],
+        offsets: &[vk::DeviceSize],
+        sizes: Option<&[vk::DeviceSize]>,
+        strides: Option<&[vk::DeviceSize]>,
+    ) {
+        assert_eq!(offsets.len(), buffers.len());
+        let p_sizes = if let Some(sizes) = sizes {
+            assert_eq!(sizes.len(), buffers.len());
+            sizes.as_ptr()
+        } else {
+            ptr::null()
+        };
+        let p_strides = if let Some(strides) = strides {
+            assert_eq!(strides.len(), buffers.len());
+            strides.as_ptr()
+        } else {
+            ptr::null()
+        };
+        self.fp_v1_3().cmd_bind_vertex_buffers2(
+            command_buffer,
+            first_binding,
+            buffers.len() as u32,
+            buffers.as_ptr(),
+            offsets.as_ptr(),
+            p_sizes,
+            p_strides,
+        )
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthTestEnable.html>
+    pub unsafe fn cmd_set_depth_test_enable(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        depth_test_enable: bool,
+    ) {
+        self.fp_v1_3()
+            .cmd_set_depth_test_enable(command_buffer, depth_test_enable.into())
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthWriteEnable.html>
+    pub unsafe fn cmd_set_depth_write_enable(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        depth_write_enable: bool,
+    ) {
+        self.fp_v1_3()
+            .cmd_set_depth_write_enable(command_buffer, depth_write_enable.into())
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthCompareOp.html>
+    pub unsafe fn cmd_set_depth_compare_op(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        depth_compare_op: vk::CompareOp,
+    ) {
+        self.fp_v1_3()
+            .cmd_set_depth_compare_op(command_buffer, depth_compare_op)
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthBoundsTestEnable.html>
+    pub unsafe fn cmd_set_depth_bounds_test_enable(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        depth_bounds_test_enable: bool,
+    ) {
+        self.fp_v1_3()
+            .cmd_set_depth_bounds_test_enable(command_buffer, depth_bounds_test_enable.into())
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetStencilTestEnable.html>
+    pub unsafe fn cmd_set_stencil_test_enable(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        stencil_test_enable: bool,
+    ) {
+        self.fp_v1_3()
+            .cmd_set_stencil_test_enable(command_buffer, stencil_test_enable.into())
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetStencilOp.html>
+    pub unsafe fn cmd_set_stencil_op(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        face_mask: vk::StencilFaceFlags,
+        fail_op: vk::StencilOp,
+        pass_op: vk::StencilOp,
+        depth_fail_op: vk::StencilOp,
+        compare_op: vk::CompareOp,
+    ) {
+        self.fp_v1_3().cmd_set_stencil_op(
+            command_buffer,
+            face_mask,
+            fail_op,
+            pass_op,
+            depth_fail_op,
+            compare_op,
+        )
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetRasterizerDiscardEnable.html>
+    pub unsafe fn cmd_set_rasterizer_discard_enable(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        rasterizer_discard_enable: bool,
+    ) {
+        self.fp_v1_3()
+            .cmd_set_rasterizer_discard_enable(command_buffer, rasterizer_discard_enable.into())
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthBiasEnable.html>
+    pub unsafe fn cmd_set_depth_bias_enable(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        depth_bias_enable: bool,
+    ) {
+        self.fp_v1_3()
+            .cmd_set_depth_bias_enable(command_buffer, depth_bias_enable.into())
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetPrimitiveRestartEnable.html>
+    pub unsafe fn cmd_set_primitive_restart_enable(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        primitive_restart_enable: bool,
+    ) {
+        self.fp_v1_3()
+            .cmd_set_primitive_restart_enable(command_buffer, primitive_restart_enable.into())
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceBufferMemoryRequirements.html>
+    pub unsafe fn get_device_buffer_memory_requirements(
+        &self,
+        create_info: &vk::DeviceBufferMemoryRequirements,
+        out: &mut vk::MemoryRequirements2,
+    ) {
+        self.fp_v1_3()
+            .get_device_buffer_memory_requirements(self.handle, create_info, out)
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceImageMemoryRequirements.html>
+    pub unsafe fn get_device_image_memory_requirements(
+        &self,
+        create_info: &vk::DeviceImageMemoryRequirements,
+        out: &mut vk::MemoryRequirements2,
+    ) {
+        self.fp_v1_3()
+            .get_device_image_memory_requirements(self.handle, create_info, out)
+    }
+
+    /// Retrieve the number of elements to pass to [`get_device_image_sparse_memory_requirements()`][Self::get_device_image_sparse_memory_requirements()]
+    pub unsafe fn get_device_image_sparse_memory_requirements_len(
+        &self,
+        create_info: &vk::DeviceImageMemoryRequirements,
+    ) -> usize {
+        let mut count = 0;
+        self.fp_v1_3().get_device_image_sparse_memory_requirements(
+            self.handle,
+            create_info,
+            &mut count,
+            std::ptr::null_mut(),
+        );
+        count as usize
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceImageSparseMemoryRequirements.html>
+    ///
+    /// Call [`get_device_image_sparse_memory_requirements_len()`][Self::get_device_image_sparse_memory_requirements_len()] to query the number of elements to pass to `out`.
+    /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.
+    pub unsafe fn get_device_image_sparse_memory_requirements(
+        &self,
+        create_info: &vk::DeviceImageMemoryRequirements,
+        out: &mut [vk::SparseImageMemoryRequirements2],
+    ) {
+        let mut count = out.len() as u32;
+        self.fp_v1_3().get_device_image_sparse_memory_requirements(
+            self.handle,
+            create_info,
+            &mut count,
+            out.as_mut_ptr(),
+        );
+        assert_eq!(count as usize, out.len());
+    }
 }
 
 /// Vulkan core 1.2
