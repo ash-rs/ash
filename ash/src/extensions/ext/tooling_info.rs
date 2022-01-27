@@ -17,7 +17,7 @@ impl ToolingInfo {
         Self { fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceToolPropertiesEXT.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceToolPropertiesEXT.html>
     pub unsafe fn get_physical_device_tool_properties(
         &self,
         physical_device: vk::PhysicalDevice,

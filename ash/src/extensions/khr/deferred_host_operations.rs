@@ -20,7 +20,7 @@ impl DeferredHostOperations {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateDeferredOperationKHR.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateDeferredOperationKHR.html>
     pub unsafe fn create_deferred_operation(
         &self,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
@@ -35,7 +35,7 @@ impl DeferredHostOperations {
             .result_with_success(operation)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDeferredOperationJoinKHR.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDeferredOperationJoinKHR.html>
     pub unsafe fn deferred_operation_join(
         &self,
         operation: vk::DeferredOperationKHR,
@@ -45,7 +45,7 @@ impl DeferredHostOperations {
             .result()
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyDeferredOperationKHR.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroyDeferredOperationKHR.html>
     pub unsafe fn destroy_deferred_operation(
         &self,
         operation: vk::DeferredOperationKHR,
@@ -58,7 +58,7 @@ impl DeferredHostOperations {
         );
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDeferredOperationMaxConcurrencyKHR.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeferredOperationMaxConcurrencyKHR.html>
     pub unsafe fn get_deferred_operation_max_concurrency(
         &self,
         operation: vk::DeferredOperationKHR,
@@ -67,7 +67,7 @@ impl DeferredHostOperations {
             .get_deferred_operation_max_concurrency_khr(self.handle, operation)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDeferredOperationResultKHR.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeferredOperationResultKHR.html>
     pub unsafe fn get_deferred_operation_result(
         &self,
         operation: vk::DeferredOperationKHR,

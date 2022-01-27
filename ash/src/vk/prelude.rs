@@ -8,7 +8,7 @@ use crate::vk;
 /// [`vk::AccelerationStructureSRTMotionInstanceNV`] and
 /// [`vk::AccelerationStructureMatrixMotionInstanceNV`].
 ///
-/// [acceleration structure instances]: https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAccelerationStructureInstanceKHR.html#_description
+/// [acceleration structure instances]: https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureInstanceKHR.html#_description
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug)]
 #[repr(transparent)]
 pub struct Packed24_8(u32);

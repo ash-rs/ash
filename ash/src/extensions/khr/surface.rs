@@ -20,7 +20,7 @@ impl Surface {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceSurfaceSupportKHR.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceSupportKHR.html>
     pub unsafe fn get_physical_device_surface_support(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -38,7 +38,7 @@ impl Surface {
             .result_with_success(b > 0)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceSurfacePresentModesKHR.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfacePresentModesKHR.html>
     pub unsafe fn get_physical_device_surface_present_modes(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -54,7 +54,7 @@ impl Surface {
         })
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilitiesKHR.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilitiesKHR.html>
     pub unsafe fn get_physical_device_surface_capabilities(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -70,7 +70,7 @@ impl Surface {
             .result_with_success(surface_capabilities)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceSurfaceFormatsKHR.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceFormatsKHR.html>
     pub unsafe fn get_physical_device_surface_formats(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -82,7 +82,7 @@ impl Surface {
         })
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroySurfaceKHR.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroySurfaceKHR.html>
     pub unsafe fn destroy_surface(
         &self,
         surface: vk::SurfaceKHR,

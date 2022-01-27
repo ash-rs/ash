@@ -7,7 +7,7 @@
 #![cfg_attr(docsrs, feature(doc_cfg))]
 //! # Vulkan API
 //!
-//! <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/index.html>
+//! <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/html/index.html>
 //!
 //! ## Examples
 //!

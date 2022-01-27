@@ -20,7 +20,7 @@ impl WaylandSurface {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateWaylandSurfaceKHR.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateWaylandSurfaceKHR.html>
     pub unsafe fn create_wayland_surface(
         &self,
         create_info: &vk::WaylandSurfaceCreateInfoKHR,
@@ -37,7 +37,7 @@ impl WaylandSurface {
             .result_with_success(surface)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceWaylandPresentationSupportKHR.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceWaylandPresentationSupportKHR.html>
     pub unsafe fn get_physical_device_wayland_presentation_support(
         &self,
         physical_device: vk::PhysicalDevice,

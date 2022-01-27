@@ -32,7 +32,7 @@ impl RayTracingPipeline {
         props_rt
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdTraceRaysKHR.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdTraceRaysKHR.html>
     pub unsafe fn cmd_trace_rays(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -56,7 +56,7 @@ impl RayTracingPipeline {
         );
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateRayTracingPipelinesKHR.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateRayTracingPipelinesKHR.html>
     pub unsafe fn create_ray_tracing_pipelines(
         &self,
         deferred_operation: vk::DeferredOperationKHR,
@@ -78,7 +78,7 @@ impl RayTracingPipeline {
             .result_with_success(pipelines)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetRayTracingShaderGroupHandlesKHR.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetRayTracingShaderGroupHandlesKHR.html>
     pub unsafe fn get_ray_tracing_shader_group_handles(
         &self,
         pipeline: vk::Pipeline,
@@ -99,7 +99,7 @@ impl RayTracingPipeline {
         err_code.result_with_success(data)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetRayTracingCaptureReplayShaderGroupHandlesKHR.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetRayTracingCaptureReplayShaderGroupHandlesKHR.html>
     pub unsafe fn get_ray_tracing_capture_replay_shader_group_handles(
         &self,
         pipeline: vk::Pipeline,
@@ -121,7 +121,7 @@ impl RayTracingPipeline {
             .result_with_success(data)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdTraceRaysIndirectKHR.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdTraceRaysIndirectKHR.html>
     pub unsafe fn cmd_trace_rays_indirect(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -141,7 +141,7 @@ impl RayTracingPipeline {
         );
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetRayTracingShaderGroupStackSizeKHR.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetRayTracingShaderGroupStackSizeKHR.html>
     pub unsafe fn get_ray_tracing_shader_group_stack_size(
         &self,
         pipeline: vk::Pipeline,
@@ -156,7 +156,7 @@ impl RayTracingPipeline {
         )
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetRayTracingPipelineStackSizeKHR.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetRayTracingPipelineStackSizeKHR.html>
     pub unsafe fn cmd_set_ray_tracing_pipeline_stack_size(
         &self,
         command_buffer: vk::CommandBuffer,
