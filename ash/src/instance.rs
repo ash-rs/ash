@@ -44,6 +44,34 @@ impl Instance {
     pub fn fp_v1_3(&self) -> &vk::InstanceFnV1_3 {
         &self.instance_fn_1_3
     }
+
+    /// Retrieve the number of elements to pass to [`get_physical_device_tool_properties()`][Self::get_physical_device_tool_properties()]
+    pub unsafe fn get_physical_device_tool_properties_len(
+        &self,
+        physical_device: vk::PhysicalDevice,
+    ) -> VkResult<usize> {
+        let mut count = 0;
+        self.instance_fn_1_3
+            .get_physical_device_tool_properties(physical_device, &mut count, ptr::null_mut())
+            .result_with_success(count as usize)
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceToolProperties.html>
+    ///
+    /// Call [`get_physical_device_tool_properties_len()`][Self::get_physical_device_tool_properties_len()] to query the number of elements to pass to `out`.
+    /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.
+    pub unsafe fn get_physical_device_tool_properties(
+        &self,
+        physical_device: vk::PhysicalDevice,
+        out: &mut [vk::PhysicalDeviceToolProperties],
+    ) -> VkResult<()> {
+        let mut count = out.len() as u32;
+        self.instance_fn_1_3
+            .get_physical_device_tool_properties(physical_device, &mut count, out.as_mut_ptr())
+            .result()?;
+        assert_eq!(count as usize, out.len());
+        Ok(())
+    }
 }
 
 /// Vulkan core 1.2
