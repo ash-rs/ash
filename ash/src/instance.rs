@@ -14,6 +14,7 @@ pub struct Instance {
     pub(crate) instance_fn_1_0: vk::InstanceFnV1_0,
     pub(crate) instance_fn_1_1: vk::InstanceFnV1_1,
     pub(crate) instance_fn_1_2: vk::InstanceFnV1_2,
+    pub(crate) instance_fn_1_3: vk::InstanceFnV1_3,
 }
 
 impl Instance {
@@ -28,11 +29,20 @@ impl Instance {
             instance_fn_1_0: vk::InstanceFnV1_0::load(load_fn),
             instance_fn_1_1: vk::InstanceFnV1_1::load(load_fn),
             instance_fn_1_2: vk::InstanceFnV1_2::load(load_fn),
+            instance_fn_1_3: vk::InstanceFnV1_3::load(load_fn),
         }
     }
 
     pub fn handle(&self) -> vk::Instance {
         self.handle
+    }
+}
+
+/// Vulkan core 1.3
+#[allow(non_camel_case_types)]
+impl Instance {
+    pub fn fp_v1_3(&self) -> &vk::InstanceFnV1_3 {
+        &self.instance_fn_1_3
     }
 }
 

@@ -22,6 +22,7 @@ pub struct Entry {
     entry_fn_1_0: vk::EntryFnV1_0,
     entry_fn_1_1: vk::EntryFnV1_1,
     entry_fn_1_2: vk::EntryFnV1_2,
+    entry_fn_1_3: vk::EntryFnV1_3,
     #[cfg(feature = "loaded")]
     _lib_guard: Option<Arc<Library>>,
 }
@@ -148,12 +149,14 @@ impl Entry {
         let entry_fn_1_0 = vk::EntryFnV1_0::load(load_fn);
         let entry_fn_1_1 = vk::EntryFnV1_1::load(load_fn);
         let entry_fn_1_2 = vk::EntryFnV1_2::load(load_fn);
+        let entry_fn_1_3 = vk::EntryFnV1_3::load(load_fn);
 
         Self {
             static_fn,
             entry_fn_1_0,
             entry_fn_1_1,
             entry_fn_1_2,
+            entry_fn_1_3,
             #[cfg(feature = "loaded")]
             _lib_guard: None,
         }
@@ -287,6 +290,14 @@ impl Entry {
 impl Entry {
     pub fn fp_v1_2(&self) -> &vk::EntryFnV1_2 {
         &self.entry_fn_1_2
+    }
+}
+
+/// Vulkan core 1.3
+#[allow(non_camel_case_types)]
+impl Entry {
+    pub fn fp_v1_3(&self) -> &vk::EntryFnV1_3 {
+        &self.entry_fn_1_3
     }
 }
 

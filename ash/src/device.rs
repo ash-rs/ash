@@ -14,6 +14,7 @@ pub struct Device {
     pub(crate) device_fn_1_0: vk::DeviceFnV1_0,
     pub(crate) device_fn_1_1: vk::DeviceFnV1_1,
     pub(crate) device_fn_1_2: vk::DeviceFnV1_2,
+    pub(crate) device_fn_1_3: vk::DeviceFnV1_3,
 }
 
 impl Device {
@@ -28,11 +29,20 @@ impl Device {
             device_fn_1_0: vk::DeviceFnV1_0::load(load_fn),
             device_fn_1_1: vk::DeviceFnV1_1::load(load_fn),
             device_fn_1_2: vk::DeviceFnV1_2::load(load_fn),
+            device_fn_1_3: vk::DeviceFnV1_3::load(load_fn),
         }
     }
 
     pub fn handle(&self) -> vk::Device {
         self.handle
+    }
+}
+
+/// Vulkan core 1.3
+#[allow(non_camel_case_types)]
+impl Device {
+    pub fn fp_v1_3(&self) -> &vk::DeviceFnV1_3 {
+        &self.device_fn_1_3
     }
 }
 
