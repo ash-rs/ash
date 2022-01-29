@@ -16,7 +16,7 @@ impl DynamicRendering {
         Self { fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBeginRenderingKHR.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBeginRenderingKHR.html>
     pub unsafe fn cmd_begin_rendering(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -26,7 +26,7 @@ impl DynamicRendering {
             .cmd_begin_rendering_khr(command_buffer, rendering_info)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdEndRenderingKHR.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdEndRenderingKHR.html>
     pub unsafe fn cmd_end_rendering(&self, command_buffer: vk::CommandBuffer) {
         self.fp.cmd_end_rendering_khr(command_buffer)
     }

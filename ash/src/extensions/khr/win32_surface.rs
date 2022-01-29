@@ -20,7 +20,7 @@ impl Win32Surface {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateWin32SurfaceKHR.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateWin32SurfaceKHR.html>
     pub unsafe fn create_win32_surface(
         &self,
         create_info: &vk::Win32SurfaceCreateInfoKHR,
@@ -37,7 +37,7 @@ impl Win32Surface {
             .result_with_success(surface)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceWin32PresentationSupportKHR.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceWin32PresentationSupportKHR.html>
     pub unsafe fn get_physical_device_win32_presentation_support(
         &self,
         physical_device: vk::PhysicalDevice,

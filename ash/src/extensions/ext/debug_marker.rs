@@ -19,7 +19,7 @@ impl DebugMarker {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDebugMarkerSetObjectNameEXT.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDebugMarkerSetObjectNameEXT.html>
     pub unsafe fn debug_marker_set_object_name(
         &self,
         name_info: &vk::DebugMarkerObjectNameInfoEXT,
@@ -29,7 +29,7 @@ impl DebugMarker {
             .result()
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDebugMarkerBeginEXT.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdDebugMarkerBeginEXT.html>
     pub unsafe fn cmd_debug_marker_begin(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -39,12 +39,12 @@ impl DebugMarker {
             .cmd_debug_marker_begin_ext(command_buffer, marker_info);
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDebugMarkerEndEXT.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdDebugMarkerEndEXT.html>
     pub unsafe fn cmd_debug_marker_end(&self, command_buffer: vk::CommandBuffer) {
         self.fp.cmd_debug_marker_end_ext(command_buffer);
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDebugMarkerInsertEXT.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdDebugMarkerInsertEXT.html>
     pub unsafe fn cmd_debug_marker_insert(
         &self,
         command_buffer: vk::CommandBuffer,

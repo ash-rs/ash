@@ -20,7 +20,7 @@ impl AndroidSurface {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateAndroidSurfaceKHR.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateAndroidSurfaceKHR.html>
     pub unsafe fn create_android_surface(
         &self,
         create_info: &vk::AndroidSurfaceCreateInfoKHR,

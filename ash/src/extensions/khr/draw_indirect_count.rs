@@ -16,7 +16,7 @@ impl DrawIndirectCount {
         Self { fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDrawIndexedIndirectCountKHR.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdDrawIndexedIndirectCountKHR.html>
     pub unsafe fn cmd_draw_indexed_indirect_count(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -38,7 +38,7 @@ impl DrawIndirectCount {
         );
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDrawIndirectCountKHR.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdDrawIndirectCountKHR.html>
     pub unsafe fn cmd_draw_indirect_count(
         &self,
         command_buffer: vk::CommandBuffer,

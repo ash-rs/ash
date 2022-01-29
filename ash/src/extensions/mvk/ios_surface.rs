@@ -20,7 +20,7 @@ impl IOSSurface {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateIOSSurfaceMVK.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateIOSSurfaceMVK.html>
     pub unsafe fn create_ios_surface(
         &self,
         create_info: &vk::IOSSurfaceCreateInfoMVK,

@@ -19,7 +19,7 @@ impl ExternalSemaphoreFd {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkImportSemaphoreFdKHR.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkImportSemaphoreFdKHR.html>
     pub unsafe fn import_semaphore_fd(
         &self,
         import_info: &vk::ImportSemaphoreFdInfoKHR,
@@ -29,7 +29,7 @@ impl ExternalSemaphoreFd {
             .result()
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetSemaphoreFdKHR.html>
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetSemaphoreFdKHR.html>
     pub unsafe fn get_semaphore_fd(&self, get_info: &vk::SemaphoreGetFdInfoKHR) -> VkResult<i32> {
         let mut fd = -1;
         self.fp
