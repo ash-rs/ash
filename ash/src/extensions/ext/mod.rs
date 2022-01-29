@@ -9,6 +9,7 @@ pub use self::extended_dynamic_state::ExtendedDynamicState;
 pub use self::full_screen_exclusive::FullScreenExclusive;
 pub use self::metal_surface::MetalSurface;
 pub use self::physical_device_drm::PhysicalDeviceDrm;
+pub use self::private_data::PrivateData;
 pub use self::tooling_info::ToolingInfo;
 
 mod buffer_device_address;
@@ -22,4 +23,5 @@ mod extended_dynamic_state;
 mod full_screen_exclusive;
 mod metal_surface;
 mod physical_device_drm;
+mod private_data;
 mod tooling_info;
