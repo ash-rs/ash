@@ -996,22 +996,22 @@ pub fn generate_extension_commands<'a>(
 ) -> TokenStream {
     let mut commands = Vec::new();
     let mut aliases = HashMap::new();
-    items
+    let names = items
         .iter()
         .filter_map(get_variant!(vk_parse::ExtensionChild::Require { items }))
         .flatten()
-        .filter_map(get_variant!(vk_parse::InterfaceItem::Command { name }))
-        .for_each(|name| {
-            if let Some(cmd) = cmd_map.get(name).copied() {
-                commands.push(cmd);
-            } else if let Some(cmd) = cmd_aliases
-                .get(name)
-                .and_then(|alias_name| cmd_map.get(alias_name).copied())
-            {
-                aliases.insert(cmd.name.clone(), name.to_string());
-                commands.push(cmd);
-            }
-        });
+        .filter_map(get_variant!(vk_parse::InterfaceItem::Command { name }));
+    for name in names {
+        if let Some(cmd) = cmd_map.get(name).copied() {
+            commands.push(cmd);
+        } else if let Some(cmd) = cmd_aliases
+            .get(name)
+            .and_then(|alias_name| cmd_map.get(alias_name).copied())
+        {
+            aliases.insert(cmd.name.clone(), name.to_string());
+            commands.push(cmd);
+        }
+    }
 
     let ident = format_ident!(
         "{}Fn",
