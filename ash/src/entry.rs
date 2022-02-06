@@ -238,7 +238,7 @@ impl Entry {
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceExtensionProperties.html>
     pub fn enumerate_instance_extension_properties(
         &self,
-        p_layer_name: Option<&CStr>,
+        layer_name: Option<&CStr>,
     ) -> VkResult<Vec<vk::ExtensionProperties>> {
         unsafe {
             read_into_uninitialized_vector(|count, data| {
