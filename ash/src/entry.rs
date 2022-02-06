@@ -238,15 +238,18 @@ impl Entry {
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceExtensionProperties.html>
     pub fn enumerate_instance_extension_properties(
         &self,
-        p_layer_name: Option<&CStr>
+        p_layer_name: Option<&CStr>,
     ) -> VkResult<Vec<vk::ExtensionProperties>> {
         unsafe {
             read_into_uninitialized_vector(|count, data| {
-                self.entry_fn_1_0
-                    .enumerate_instance_extension_properties(match p_layer_name {
+                self.entry_fn_1_0.enumerate_instance_extension_properties(
+                    match p_layer_name {
                         None => ptr::null(),
-                        Some(str) => str.as_ptr()
-                    }, count, data)
+                        Some(str) => str.as_ptr(),
+                    },
+                    count,
+                    data,
+                )
             })
         }
     }
