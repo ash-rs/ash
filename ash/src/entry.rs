@@ -243,7 +243,7 @@ impl Entry {
         unsafe {
             read_into_uninitialized_vector(|count, data| {
                 self.entry_fn_1_0.enumerate_instance_extension_properties(
-                    layer_name.as_raw_ptr(),
+                    layer_name.map_or(ptr::null(), |str| str.as_ptr()),
                     count,
                     data,
                 )
