@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added `VK_KHR_external_fence_win32` device extension (#582)
 - Added `VK_KHR_external_semaphore_win32` device extension (#581)
 - Added `VK_KHR_external_memory_win32` device extension (#579)
 - Added `VK_EXT_extended_dynamic_state2` device extension (#572)
