@@ -28,7 +28,7 @@ impl ExternalMemoryFd {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetMemoryFdPropertiesKHR.html>
-    pub unsafe fn get_memory_fd_properties_khr(
+    pub unsafe fn get_memory_fd_properties(
         &self,
         handle_type: vk::ExternalMemoryHandleTypeFlags,
         fd: i32,

@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- extensions/khr: Drop `_khr` suffix from `get_memory_fd_properties_khr` in `ExternalMemoryFd` (#580)
 - Replace `1.2-extensions` documentation links with `1.3-extensions` (#569)
 - Fixed broken (intradoc) links in the prelude and `VK_KHR_get_surface_capabilities2` extension (#559)
 
