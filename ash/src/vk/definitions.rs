@@ -56,7 +56,7 @@ pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
-pub const HEADER_VERSION: u32 = 205u32;
+pub const HEADER_VERSION: u32 = 206u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -316,11 +316,6 @@ vk_bitflags_wrapped!(VideoDecodeH264CreateFlagsEXT, Flags);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH265CreateFlagsEXT.html>"]
 pub struct VideoDecodeH265CreateFlagsEXT(pub(crate) Flags);
 vk_bitflags_wrapped!(VideoDecodeH265CreateFlagsEXT, Flags);
-#[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265CapabilityFlagsEXT.html>"]
-pub struct VideoEncodeH265CapabilityFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(VideoEncodeH265CapabilityFlagsEXT, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265CreateFlagsEXT.html>"]
@@ -51138,6 +51133,107 @@ impl<'a> VideoEncodeRateControlLayerInfoKHRBuilder<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeCapabilitiesKHR.html>"]
+pub struct VideoEncodeCapabilitiesKHR {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub flags: VideoEncodeCapabilityFlagsKHR,
+    pub rate_control_modes: VideoEncodeRateControlModeFlagsKHR,
+    pub rate_control_layer_count: u8,
+    pub quality_level_count: u8,
+    pub input_image_data_fill_alignment: Extent2D,
+}
+impl ::std::default::Default for VideoEncodeCapabilitiesKHR {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::VIDEO_ENCODE_CAPABILITIES_KHR,
+            p_next: ::std::ptr::null(),
+            flags: VideoEncodeCapabilityFlagsKHR::default(),
+            rate_control_modes: VideoEncodeRateControlModeFlagsKHR::default(),
+            rate_control_layer_count: u8::default(),
+            quality_level_count: u8::default(),
+            input_image_data_fill_alignment: Extent2D::default(),
+        }
+    }
+}
+impl VideoEncodeCapabilitiesKHR {
+    pub fn builder<'a>() -> VideoEncodeCapabilitiesKHRBuilder<'a> {
+        VideoEncodeCapabilitiesKHRBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct VideoEncodeCapabilitiesKHRBuilder<'a> {
+    inner: VideoEncodeCapabilitiesKHR,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsVideoCapabilitiesKHR for VideoEncodeCapabilitiesKHRBuilder<'_> {}
+unsafe impl ExtendsVideoCapabilitiesKHR for VideoEncodeCapabilitiesKHR {}
+pub unsafe trait ExtendsVideoEncodeCapabilitiesKHR {}
+impl<'a> ::std::ops::Deref for VideoEncodeCapabilitiesKHRBuilder<'a> {
+    type Target = VideoEncodeCapabilitiesKHR;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for VideoEncodeCapabilitiesKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> VideoEncodeCapabilitiesKHRBuilder<'a> {
+    pub fn flags(mut self, flags: VideoEncodeCapabilityFlagsKHR) -> Self {
+        self.inner.flags = flags;
+        self
+    }
+    pub fn rate_control_modes(
+        mut self,
+        rate_control_modes: VideoEncodeRateControlModeFlagsKHR,
+    ) -> Self {
+        self.inner.rate_control_modes = rate_control_modes;
+        self
+    }
+    pub fn rate_control_layer_count(mut self, rate_control_layer_count: u8) -> Self {
+        self.inner.rate_control_layer_count = rate_control_layer_count;
+        self
+    }
+    pub fn quality_level_count(mut self, quality_level_count: u8) -> Self {
+        self.inner.quality_level_count = quality_level_count;
+        self
+    }
+    pub fn input_image_data_fill_alignment(
+        mut self,
+        input_image_data_fill_alignment: Extent2D,
+    ) -> Self {
+        self.inner.input_image_data_fill_alignment = input_image_data_fill_alignment;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsVideoEncodeCapabilitiesKHR>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = <*const T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr;
+        }
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> VideoEncodeCapabilitiesKHR {
+        self.inner
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH264CapabilitiesEXT.html>"]
 pub struct VideoEncodeH264CapabilitiesEXT {
     pub s_type: StructureType,
@@ -51145,13 +51241,14 @@ pub struct VideoEncodeH264CapabilitiesEXT {
     pub flags: VideoEncodeH264CapabilityFlagsEXT,
     pub input_mode_flags: VideoEncodeH264InputModeFlagsEXT,
     pub output_mode_flags: VideoEncodeH264OutputModeFlagsEXT,
-    pub min_picture_size_in_mbs: Extent2D,
-    pub max_picture_size_in_mbs: Extent2D,
-    pub input_image_data_alignment: Extent2D,
-    pub max_num_l0_reference_for_p: u8,
-    pub max_num_l0_reference_for_b: u8,
-    pub max_num_l1_reference: u8,
-    pub quality_level_count: u8,
+    pub max_p_picture_l0_reference_count: u8,
+    pub max_b_picture_l0_reference_count: u8,
+    pub max_l1_reference_count: u8,
+    pub motion_vectors_over_pic_boundaries_flag: Bool32,
+    pub max_bytes_per_pic_denom: u32,
+    pub max_bits_per_mb_denom: u32,
+    pub log2_max_mv_length_horizontal: u32,
+    pub log2_max_mv_length_vertical: u32,
     pub std_extension_version: ExtensionProperties,
 }
 impl ::std::default::Default for VideoEncodeH264CapabilitiesEXT {
@@ -51162,13 +51259,14 @@ impl ::std::default::Default for VideoEncodeH264CapabilitiesEXT {
             flags: VideoEncodeH264CapabilityFlagsEXT::default(),
             input_mode_flags: VideoEncodeH264InputModeFlagsEXT::default(),
             output_mode_flags: VideoEncodeH264OutputModeFlagsEXT::default(),
-            min_picture_size_in_mbs: Extent2D::default(),
-            max_picture_size_in_mbs: Extent2D::default(),
-            input_image_data_alignment: Extent2D::default(),
-            max_num_l0_reference_for_p: u8::default(),
-            max_num_l0_reference_for_b: u8::default(),
-            max_num_l1_reference: u8::default(),
-            quality_level_count: u8::default(),
+            max_p_picture_l0_reference_count: u8::default(),
+            max_b_picture_l0_reference_count: u8::default(),
+            max_l1_reference_count: u8::default(),
+            motion_vectors_over_pic_boundaries_flag: Bool32::default(),
+            max_bytes_per_pic_denom: u32::default(),
+            max_bits_per_mb_denom: u32::default(),
+            log2_max_mv_length_horizontal: u32::default(),
+            log2_max_mv_length_vertical: u32::default(),
             std_extension_version: ExtensionProperties::default(),
         }
     }
@@ -51186,8 +51284,8 @@ pub struct VideoEncodeH264CapabilitiesEXTBuilder<'a> {
     inner: VideoEncodeH264CapabilitiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-unsafe impl ExtendsVideoCapabilitiesKHR for VideoEncodeH264CapabilitiesEXTBuilder<'_> {}
-unsafe impl ExtendsVideoCapabilitiesKHR for VideoEncodeH264CapabilitiesEXT {}
+unsafe impl ExtendsVideoEncodeCapabilitiesKHR for VideoEncodeH264CapabilitiesEXTBuilder<'_> {}
+unsafe impl ExtendsVideoEncodeCapabilitiesKHR for VideoEncodeH264CapabilitiesEXT {}
 impl<'a> ::std::ops::Deref for VideoEncodeH264CapabilitiesEXTBuilder<'a> {
     type Target = VideoEncodeH264CapabilitiesEXT;
     fn deref(&self) -> &Self::Target {
@@ -51215,32 +51313,46 @@ impl<'a> VideoEncodeH264CapabilitiesEXTBuilder<'a> {
         self.inner.output_mode_flags = output_mode_flags;
         self
     }
-    pub fn min_picture_size_in_mbs(mut self, min_picture_size_in_mbs: Extent2D) -> Self {
-        self.inner.min_picture_size_in_mbs = min_picture_size_in_mbs;
+    pub fn max_p_picture_l0_reference_count(
+        mut self,
+        max_p_picture_l0_reference_count: u8,
+    ) -> Self {
+        self.inner.max_p_picture_l0_reference_count = max_p_picture_l0_reference_count;
         self
     }
-    pub fn max_picture_size_in_mbs(mut self, max_picture_size_in_mbs: Extent2D) -> Self {
-        self.inner.max_picture_size_in_mbs = max_picture_size_in_mbs;
+    pub fn max_b_picture_l0_reference_count(
+        mut self,
+        max_b_picture_l0_reference_count: u8,
+    ) -> Self {
+        self.inner.max_b_picture_l0_reference_count = max_b_picture_l0_reference_count;
         self
     }
-    pub fn input_image_data_alignment(mut self, input_image_data_alignment: Extent2D) -> Self {
-        self.inner.input_image_data_alignment = input_image_data_alignment;
+    pub fn max_l1_reference_count(mut self, max_l1_reference_count: u8) -> Self {
+        self.inner.max_l1_reference_count = max_l1_reference_count;
         self
     }
-    pub fn max_num_l0_reference_for_p(mut self, max_num_l0_reference_for_p: u8) -> Self {
-        self.inner.max_num_l0_reference_for_p = max_num_l0_reference_for_p;
+    pub fn motion_vectors_over_pic_boundaries_flag(
+        mut self,
+        motion_vectors_over_pic_boundaries_flag: bool,
+    ) -> Self {
+        self.inner.motion_vectors_over_pic_boundaries_flag =
+            motion_vectors_over_pic_boundaries_flag.into();
         self
     }
-    pub fn max_num_l0_reference_for_b(mut self, max_num_l0_reference_for_b: u8) -> Self {
-        self.inner.max_num_l0_reference_for_b = max_num_l0_reference_for_b;
+    pub fn max_bytes_per_pic_denom(mut self, max_bytes_per_pic_denom: u32) -> Self {
+        self.inner.max_bytes_per_pic_denom = max_bytes_per_pic_denom;
         self
     }
-    pub fn max_num_l1_reference(mut self, max_num_l1_reference: u8) -> Self {
-        self.inner.max_num_l1_reference = max_num_l1_reference;
+    pub fn max_bits_per_mb_denom(mut self, max_bits_per_mb_denom: u32) -> Self {
+        self.inner.max_bits_per_mb_denom = max_bits_per_mb_denom;
         self
     }
-    pub fn quality_level_count(mut self, quality_level_count: u8) -> Self {
-        self.inner.quality_level_count = quality_level_count;
+    pub fn log2_max_mv_length_horizontal(mut self, log2_max_mv_length_horizontal: u32) -> Self {
+        self.inner.log2_max_mv_length_horizontal = log2_max_mv_length_horizontal;
+        self
+    }
+    pub fn log2_max_mv_length_vertical(mut self, log2_max_mv_length_vertical: u32) -> Self {
+        self.inner.log2_max_mv_length_vertical = log2_max_mv_length_vertical;
         self
     }
     pub fn std_extension_version(mut self, std_extension_version: ExtensionProperties) -> Self {
@@ -51481,7 +51593,7 @@ pub struct VideoEncodeH264DpbSlotInfoEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub slot_index: i8,
-    pub p_std_picture_info: *const StdVideoEncodeH264PictureInfo,
+    pub p_std_reference_info: *const StdVideoEncodeH264ReferenceInfo,
 }
 impl ::std::default::Default for VideoEncodeH264DpbSlotInfoEXT {
     fn default() -> Self {
@@ -51489,7 +51601,7 @@ impl ::std::default::Default for VideoEncodeH264DpbSlotInfoEXT {
             s_type: StructureType::VIDEO_ENCODE_H264_DPB_SLOT_INFO_EXT,
             p_next: ::std::ptr::null(),
             slot_index: i8::default(),
-            p_std_picture_info: ::std::ptr::null(),
+            p_std_reference_info: ::std::ptr::null(),
         }
     }
 }
@@ -51522,8 +51634,11 @@ impl<'a> VideoEncodeH264DpbSlotInfoEXTBuilder<'a> {
         self.inner.slot_index = slot_index;
         self
     }
-    pub fn std_picture_info(mut self, std_picture_info: &'a StdVideoEncodeH264PictureInfo) -> Self {
-        self.inner.p_std_picture_info = std_picture_info;
+    pub fn std_reference_info(
+        mut self,
+        std_reference_info: &'a StdVideoEncodeH264ReferenceInfo,
+    ) -> Self {
+        self.inner.p_std_reference_info = std_reference_info;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -51540,23 +51655,17 @@ impl<'a> VideoEncodeH264DpbSlotInfoEXTBuilder<'a> {
 pub struct VideoEncodeH264VclFrameInfoEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub ref_default_final_list0_entry_count: u8,
-    pub p_ref_default_final_list0_entries: *const VideoEncodeH264DpbSlotInfoEXT,
-    pub ref_default_final_list1_entry_count: u8,
-    pub p_ref_default_final_list1_entries: *const VideoEncodeH264DpbSlotInfoEXT,
+    pub p_reference_final_lists: *const VideoEncodeH264ReferenceListsEXT,
     pub nalu_slice_entry_count: u32,
     pub p_nalu_slice_entries: *const VideoEncodeH264NaluSliceEXT,
-    pub p_current_picture_info: *const VideoEncodeH264DpbSlotInfoEXT,
+    pub p_current_picture_info: *const StdVideoEncodeH264PictureInfo,
 }
 impl ::std::default::Default for VideoEncodeH264VclFrameInfoEXT {
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_H264_VCL_FRAME_INFO_EXT,
             p_next: ::std::ptr::null(),
-            ref_default_final_list0_entry_count: u8::default(),
-            p_ref_default_final_list0_entries: ::std::ptr::null(),
-            ref_default_final_list1_entry_count: u8::default(),
-            p_ref_default_final_list1_entries: ::std::ptr::null(),
+            p_reference_final_lists: ::std::ptr::null(),
             nalu_slice_entry_count: u32::default(),
             p_nalu_slice_entries: ::std::ptr::null(),
             p_current_picture_info: ::std::ptr::null(),
@@ -51590,20 +51699,11 @@ impl<'a> ::std::ops::DerefMut for VideoEncodeH264VclFrameInfoEXTBuilder<'a> {
     }
 }
 impl<'a> VideoEncodeH264VclFrameInfoEXTBuilder<'a> {
-    pub fn ref_default_final_list0_entries(
+    pub fn reference_final_lists(
         mut self,
-        ref_default_final_list0_entries: &'a [VideoEncodeH264DpbSlotInfoEXT],
+        reference_final_lists: &'a VideoEncodeH264ReferenceListsEXT,
     ) -> Self {
-        self.inner.ref_default_final_list0_entry_count = ref_default_final_list0_entries.len() as _;
-        self.inner.p_ref_default_final_list0_entries = ref_default_final_list0_entries.as_ptr();
-        self
-    }
-    pub fn ref_default_final_list1_entries(
-        mut self,
-        ref_default_final_list1_entries: &'a [VideoEncodeH264DpbSlotInfoEXT],
-    ) -> Self {
-        self.inner.ref_default_final_list1_entry_count = ref_default_final_list1_entries.len() as _;
-        self.inner.p_ref_default_final_list1_entries = ref_default_final_list1_entries.as_ptr();
+        self.inner.p_reference_final_lists = reference_final_lists;
         self
     }
     pub fn nalu_slice_entries(
@@ -51616,7 +51716,7 @@ impl<'a> VideoEncodeH264VclFrameInfoEXTBuilder<'a> {
     }
     pub fn current_picture_info(
         mut self,
-        current_picture_info: &'a VideoEncodeH264DpbSlotInfoEXT,
+        current_picture_info: &'a StdVideoEncodeH264PictureInfo,
     ) -> Self {
         self.inner.p_current_picture_info = current_picture_info;
         self
@@ -51625,6 +51725,87 @@ impl<'a> VideoEncodeH264VclFrameInfoEXTBuilder<'a> {
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> VideoEncodeH264VclFrameInfoEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH264ReferenceListsEXT.html>"]
+pub struct VideoEncodeH264ReferenceListsEXT {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub reference_list0_entry_count: u8,
+    pub p_reference_list0_entries: *const VideoEncodeH264DpbSlotInfoEXT,
+    pub reference_list1_entry_count: u8,
+    pub p_reference_list1_entries: *const VideoEncodeH264DpbSlotInfoEXT,
+    pub p_mem_mgmt_ctrl_operations: *const StdVideoEncodeH264RefMemMgmtCtrlOperations,
+}
+impl ::std::default::Default for VideoEncodeH264ReferenceListsEXT {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::VIDEO_ENCODE_H264_REFERENCE_LISTS_EXT,
+            p_next: ::std::ptr::null(),
+            reference_list0_entry_count: u8::default(),
+            p_reference_list0_entries: ::std::ptr::null(),
+            reference_list1_entry_count: u8::default(),
+            p_reference_list1_entries: ::std::ptr::null(),
+            p_mem_mgmt_ctrl_operations: ::std::ptr::null(),
+        }
+    }
+}
+impl VideoEncodeH264ReferenceListsEXT {
+    pub fn builder<'a>() -> VideoEncodeH264ReferenceListsEXTBuilder<'a> {
+        VideoEncodeH264ReferenceListsEXTBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct VideoEncodeH264ReferenceListsEXTBuilder<'a> {
+    inner: VideoEncodeH264ReferenceListsEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+impl<'a> ::std::ops::Deref for VideoEncodeH264ReferenceListsEXTBuilder<'a> {
+    type Target = VideoEncodeH264ReferenceListsEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for VideoEncodeH264ReferenceListsEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> VideoEncodeH264ReferenceListsEXTBuilder<'a> {
+    pub fn reference_list0_entries(
+        mut self,
+        reference_list0_entries: &'a [VideoEncodeH264DpbSlotInfoEXT],
+    ) -> Self {
+        self.inner.reference_list0_entry_count = reference_list0_entries.len() as _;
+        self.inner.p_reference_list0_entries = reference_list0_entries.as_ptr();
+        self
+    }
+    pub fn reference_list1_entries(
+        mut self,
+        reference_list1_entries: &'a [VideoEncodeH264DpbSlotInfoEXT],
+    ) -> Self {
+        self.inner.reference_list1_entry_count = reference_list1_entries.len() as _;
+        self.inner.p_reference_list1_entries = reference_list1_entries.as_ptr();
+        self
+    }
+    pub fn mem_mgmt_ctrl_operations(
+        mut self,
+        mem_mgmt_ctrl_operations: &'a StdVideoEncodeH264RefMemMgmtCtrlOperations,
+    ) -> Self {
+        self.inner.p_mem_mgmt_ctrl_operations = mem_mgmt_ctrl_operations;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> VideoEncodeH264ReferenceListsEXT {
         self.inner
     }
 }
@@ -51772,24 +51953,18 @@ impl<'a> VideoEncodeH264ProfileEXTBuilder<'a> {
 pub struct VideoEncodeH264NaluSliceEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub p_slice_header_std: *const StdVideoEncodeH264SliceHeader,
     pub mb_count: u32,
-    pub ref_final_list0_entry_count: u8,
-    pub p_ref_final_list0_entries: *const VideoEncodeH264DpbSlotInfoEXT,
-    pub ref_final_list1_entry_count: u8,
-    pub p_ref_final_list1_entries: *const VideoEncodeH264DpbSlotInfoEXT,
+    pub p_reference_final_lists: *const VideoEncodeH264ReferenceListsEXT,
+    pub p_slice_header_std: *const StdVideoEncodeH264SliceHeader,
 }
 impl ::std::default::Default for VideoEncodeH264NaluSliceEXT {
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_H264_NALU_SLICE_EXT,
             p_next: ::std::ptr::null(),
-            p_slice_header_std: ::std::ptr::null(),
             mb_count: u32::default(),
-            ref_final_list0_entry_count: u8::default(),
-            p_ref_final_list0_entries: ::std::ptr::null(),
-            ref_final_list1_entry_count: u8::default(),
-            p_ref_final_list1_entries: ::std::ptr::null(),
+            p_reference_final_lists: ::std::ptr::null(),
+            p_slice_header_std: ::std::ptr::null(),
         }
     }
 }
@@ -51818,28 +51993,19 @@ impl<'a> ::std::ops::DerefMut for VideoEncodeH264NaluSliceEXTBuilder<'a> {
     }
 }
 impl<'a> VideoEncodeH264NaluSliceEXTBuilder<'a> {
-    pub fn slice_header_std(mut self, slice_header_std: &'a StdVideoEncodeH264SliceHeader) -> Self {
-        self.inner.p_slice_header_std = slice_header_std;
-        self
-    }
     pub fn mb_count(mut self, mb_count: u32) -> Self {
         self.inner.mb_count = mb_count;
         self
     }
-    pub fn ref_final_list0_entries(
+    pub fn reference_final_lists(
         mut self,
-        ref_final_list0_entries: &'a [VideoEncodeH264DpbSlotInfoEXT],
+        reference_final_lists: &'a VideoEncodeH264ReferenceListsEXT,
     ) -> Self {
-        self.inner.ref_final_list0_entry_count = ref_final_list0_entries.len() as _;
-        self.inner.p_ref_final_list0_entries = ref_final_list0_entries.as_ptr();
+        self.inner.p_reference_final_lists = reference_final_lists;
         self
     }
-    pub fn ref_final_list1_entries(
-        mut self,
-        ref_final_list1_entries: &'a [VideoEncodeH264DpbSlotInfoEXT],
-    ) -> Self {
-        self.inner.ref_final_list1_entry_count = ref_final_list1_entries.len() as _;
-        self.inner.p_ref_final_list1_entries = ref_final_list1_entries.as_ptr();
+    pub fn slice_header_std(mut self, slice_header_std: &'a StdVideoEncodeH264SliceHeader) -> Self {
+        self.inner.p_slice_header_std = slice_header_std;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -52156,12 +52322,22 @@ pub struct VideoEncodeH265CapabilitiesEXT {
     pub input_mode_flags: VideoEncodeH265InputModeFlagsEXT,
     pub output_mode_flags: VideoEncodeH265OutputModeFlagsEXT,
     pub ctb_sizes: VideoEncodeH265CtbSizeFlagsEXT,
-    pub input_image_data_alignment: Extent2D,
-    pub max_num_l0_reference_for_p: u8,
-    pub max_num_l0_reference_for_b: u8,
-    pub max_num_l1_reference: u8,
-    pub max_num_sub_layers: u8,
-    pub quality_level_count: u8,
+    pub transform_block_sizes: VideoEncodeH265TransformBlockSizeFlagsEXT,
+    pub max_p_picture_l0_reference_count: u8,
+    pub max_b_picture_l0_reference_count: u8,
+    pub max_l1_reference_count: u8,
+    pub max_sub_layers_count: u8,
+    pub min_log2_min_luma_coding_block_size_minus3: u8,
+    pub max_log2_min_luma_coding_block_size_minus3: u8,
+    pub min_log2_min_luma_transform_block_size_minus2: u8,
+    pub max_log2_min_luma_transform_block_size_minus2: u8,
+    pub min_max_transform_hierarchy_depth_inter: u8,
+    pub max_max_transform_hierarchy_depth_inter: u8,
+    pub min_max_transform_hierarchy_depth_intra: u8,
+    pub max_max_transform_hierarchy_depth_intra: u8,
+    pub max_diff_cu_qp_delta_depth: u8,
+    pub min_max_num_merge_cand: u8,
+    pub max_max_num_merge_cand: u8,
     pub std_extension_version: ExtensionProperties,
 }
 impl ::std::default::Default for VideoEncodeH265CapabilitiesEXT {
@@ -52173,12 +52349,22 @@ impl ::std::default::Default for VideoEncodeH265CapabilitiesEXT {
             input_mode_flags: VideoEncodeH265InputModeFlagsEXT::default(),
             output_mode_flags: VideoEncodeH265OutputModeFlagsEXT::default(),
             ctb_sizes: VideoEncodeH265CtbSizeFlagsEXT::default(),
-            input_image_data_alignment: Extent2D::default(),
-            max_num_l0_reference_for_p: u8::default(),
-            max_num_l0_reference_for_b: u8::default(),
-            max_num_l1_reference: u8::default(),
-            max_num_sub_layers: u8::default(),
-            quality_level_count: u8::default(),
+            transform_block_sizes: VideoEncodeH265TransformBlockSizeFlagsEXT::default(),
+            max_p_picture_l0_reference_count: u8::default(),
+            max_b_picture_l0_reference_count: u8::default(),
+            max_l1_reference_count: u8::default(),
+            max_sub_layers_count: u8::default(),
+            min_log2_min_luma_coding_block_size_minus3: u8::default(),
+            max_log2_min_luma_coding_block_size_minus3: u8::default(),
+            min_log2_min_luma_transform_block_size_minus2: u8::default(),
+            max_log2_min_luma_transform_block_size_minus2: u8::default(),
+            min_max_transform_hierarchy_depth_inter: u8::default(),
+            max_max_transform_hierarchy_depth_inter: u8::default(),
+            min_max_transform_hierarchy_depth_intra: u8::default(),
+            max_max_transform_hierarchy_depth_intra: u8::default(),
+            max_diff_cu_qp_delta_depth: u8::default(),
+            min_max_num_merge_cand: u8::default(),
+            max_max_num_merge_cand: u8::default(),
             std_extension_version: ExtensionProperties::default(),
         }
     }
@@ -52196,8 +52382,8 @@ pub struct VideoEncodeH265CapabilitiesEXTBuilder<'a> {
     inner: VideoEncodeH265CapabilitiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-unsafe impl ExtendsVideoCapabilitiesKHR for VideoEncodeH265CapabilitiesEXTBuilder<'_> {}
-unsafe impl ExtendsVideoCapabilitiesKHR for VideoEncodeH265CapabilitiesEXT {}
+unsafe impl ExtendsVideoEncodeCapabilitiesKHR for VideoEncodeH265CapabilitiesEXTBuilder<'_> {}
+unsafe impl ExtendsVideoEncodeCapabilitiesKHR for VideoEncodeH265CapabilitiesEXT {}
 impl<'a> ::std::ops::Deref for VideoEncodeH265CapabilitiesEXTBuilder<'a> {
     type Target = VideoEncodeH265CapabilitiesEXT;
     fn deref(&self) -> &Self::Target {
@@ -52229,28 +52415,109 @@ impl<'a> VideoEncodeH265CapabilitiesEXTBuilder<'a> {
         self.inner.ctb_sizes = ctb_sizes;
         self
     }
-    pub fn input_image_data_alignment(mut self, input_image_data_alignment: Extent2D) -> Self {
-        self.inner.input_image_data_alignment = input_image_data_alignment;
+    pub fn transform_block_sizes(
+        mut self,
+        transform_block_sizes: VideoEncodeH265TransformBlockSizeFlagsEXT,
+    ) -> Self {
+        self.inner.transform_block_sizes = transform_block_sizes;
         self
     }
-    pub fn max_num_l0_reference_for_p(mut self, max_num_l0_reference_for_p: u8) -> Self {
-        self.inner.max_num_l0_reference_for_p = max_num_l0_reference_for_p;
+    pub fn max_p_picture_l0_reference_count(
+        mut self,
+        max_p_picture_l0_reference_count: u8,
+    ) -> Self {
+        self.inner.max_p_picture_l0_reference_count = max_p_picture_l0_reference_count;
         self
     }
-    pub fn max_num_l0_reference_for_b(mut self, max_num_l0_reference_for_b: u8) -> Self {
-        self.inner.max_num_l0_reference_for_b = max_num_l0_reference_for_b;
+    pub fn max_b_picture_l0_reference_count(
+        mut self,
+        max_b_picture_l0_reference_count: u8,
+    ) -> Self {
+        self.inner.max_b_picture_l0_reference_count = max_b_picture_l0_reference_count;
         self
     }
-    pub fn max_num_l1_reference(mut self, max_num_l1_reference: u8) -> Self {
-        self.inner.max_num_l1_reference = max_num_l1_reference;
+    pub fn max_l1_reference_count(mut self, max_l1_reference_count: u8) -> Self {
+        self.inner.max_l1_reference_count = max_l1_reference_count;
         self
     }
-    pub fn max_num_sub_layers(mut self, max_num_sub_layers: u8) -> Self {
-        self.inner.max_num_sub_layers = max_num_sub_layers;
+    pub fn max_sub_layers_count(mut self, max_sub_layers_count: u8) -> Self {
+        self.inner.max_sub_layers_count = max_sub_layers_count;
         self
     }
-    pub fn quality_level_count(mut self, quality_level_count: u8) -> Self {
-        self.inner.quality_level_count = quality_level_count;
+    pub fn min_log2_min_luma_coding_block_size_minus3(
+        mut self,
+        min_log2_min_luma_coding_block_size_minus3: u8,
+    ) -> Self {
+        self.inner.min_log2_min_luma_coding_block_size_minus3 =
+            min_log2_min_luma_coding_block_size_minus3;
+        self
+    }
+    pub fn max_log2_min_luma_coding_block_size_minus3(
+        mut self,
+        max_log2_min_luma_coding_block_size_minus3: u8,
+    ) -> Self {
+        self.inner.max_log2_min_luma_coding_block_size_minus3 =
+            max_log2_min_luma_coding_block_size_minus3;
+        self
+    }
+    pub fn min_log2_min_luma_transform_block_size_minus2(
+        mut self,
+        min_log2_min_luma_transform_block_size_minus2: u8,
+    ) -> Self {
+        self.inner.min_log2_min_luma_transform_block_size_minus2 =
+            min_log2_min_luma_transform_block_size_minus2;
+        self
+    }
+    pub fn max_log2_min_luma_transform_block_size_minus2(
+        mut self,
+        max_log2_min_luma_transform_block_size_minus2: u8,
+    ) -> Self {
+        self.inner.max_log2_min_luma_transform_block_size_minus2 =
+            max_log2_min_luma_transform_block_size_minus2;
+        self
+    }
+    pub fn min_max_transform_hierarchy_depth_inter(
+        mut self,
+        min_max_transform_hierarchy_depth_inter: u8,
+    ) -> Self {
+        self.inner.min_max_transform_hierarchy_depth_inter =
+            min_max_transform_hierarchy_depth_inter;
+        self
+    }
+    pub fn max_max_transform_hierarchy_depth_inter(
+        mut self,
+        max_max_transform_hierarchy_depth_inter: u8,
+    ) -> Self {
+        self.inner.max_max_transform_hierarchy_depth_inter =
+            max_max_transform_hierarchy_depth_inter;
+        self
+    }
+    pub fn min_max_transform_hierarchy_depth_intra(
+        mut self,
+        min_max_transform_hierarchy_depth_intra: u8,
+    ) -> Self {
+        self.inner.min_max_transform_hierarchy_depth_intra =
+            min_max_transform_hierarchy_depth_intra;
+        self
+    }
+    pub fn max_max_transform_hierarchy_depth_intra(
+        mut self,
+        max_max_transform_hierarchy_depth_intra: u8,
+    ) -> Self {
+        self.inner.max_max_transform_hierarchy_depth_intra =
+            max_max_transform_hierarchy_depth_intra;
+        self
+    }
+    pub fn max_diff_cu_qp_delta_depth(mut self, max_diff_cu_qp_delta_depth: u8) -> Self {
+        self.inner.max_diff_cu_qp_delta_depth = max_diff_cu_qp_delta_depth;
+        self
+    }
+    pub fn min_max_num_merge_cand(mut self, min_max_num_merge_cand: u8) -> Self {
+        self.inner.min_max_num_merge_cand = min_max_num_merge_cand;
+        self
+    }
+    pub fn max_max_num_merge_cand(mut self, max_max_num_merge_cand: u8) -> Self {
+        self.inner.max_max_num_merge_cand = max_max_num_merge_cand;
         self
     }
     pub fn std_extension_version(mut self, std_extension_version: ExtensionProperties) -> Self {

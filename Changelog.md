@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Update Vulkan-Headers to 1.3.205 (#563)
+- Update Vulkan-Headers to 1.3.206 (#563)
 
 ## [0.35.2] - 2022-02-19
 

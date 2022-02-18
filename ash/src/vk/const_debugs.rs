@@ -4038,6 +4038,9 @@ impl fmt::Debug for StructureType {
             Self::VIDEO_ENCODE_H264_RATE_CONTROL_LAYER_INFO_EXT => {
                 Some("VIDEO_ENCODE_H264_RATE_CONTROL_LAYER_INFO_EXT")
             }
+            Self::VIDEO_ENCODE_H264_REFERENCE_LISTS_EXT => {
+                Some("VIDEO_ENCODE_H264_REFERENCE_LISTS_EXT")
+            }
             Self::VIDEO_ENCODE_H265_CAPABILITIES_EXT => Some("VIDEO_ENCODE_H265_CAPABILITIES_EXT"),
             Self::VIDEO_ENCODE_H265_SESSION_CREATE_INFO_EXT => {
                 Some("VIDEO_ENCODE_H265_SESSION_CREATE_INFO_EXT")
@@ -4730,6 +4733,7 @@ impl fmt::Debug for StructureType {
             Self::VIDEO_ENCODE_RATE_CONTROL_LAYER_INFO_KHR => {
                 Some("VIDEO_ENCODE_RATE_CONTROL_LAYER_INFO_KHR")
             }
+            Self::VIDEO_ENCODE_CAPABILITIES_KHR => Some("VIDEO_ENCODE_CAPABILITIES_KHR"),
             Self::PHYSICAL_DEVICE_DIAGNOSTICS_CONFIG_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_DIAGNOSTICS_CONFIG_FEATURES_NV")
             }
@@ -5678,6 +5682,18 @@ impl fmt::Debug for VideoDecodeH265CreateFlagsEXT {
         debug_flags(f, KNOWN, self.0)
     }
 }
+impl fmt::Debug for VideoEncodeCapabilityFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (VideoEncodeCapabilityFlagsKHR::DEFAULT.0, "DEFAULT"),
+            (
+                VideoEncodeCapabilityFlagsKHR::PRECEDING_EXTERNALLY_ENCODED_BYTES.0,
+                "PRECEDING_EXTERNALLY_ENCODED_BYTES",
+            ),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
 impl fmt::Debug for VideoEncodeFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
@@ -5690,15 +5706,25 @@ impl fmt::Debug for VideoEncodeFlagsKHR {
 impl fmt::Debug for VideoEncodeH264CapabilityFlagsEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (VideoEncodeH264CapabilityFlagsEXT::CABAC.0, "CABAC"),
-            (VideoEncodeH264CapabilityFlagsEXT::CAVLC.0, "CAVLC"),
             (
-                VideoEncodeH264CapabilityFlagsEXT::WEIGHTED_BI_PRED_IMPLICIT.0,
-                "WEIGHTED_BI_PRED_IMPLICIT",
+                VideoEncodeH264CapabilityFlagsEXT::DIRECT_8X8_INFERENCE.0,
+                "DIRECT_8X8_INFERENCE",
             ),
             (
-                VideoEncodeH264CapabilityFlagsEXT::TRANSFORM_8X8.0,
-                "TRANSFORM_8X8",
+                VideoEncodeH264CapabilityFlagsEXT::SEPARATE_COLOUR_PLANE.0,
+                "SEPARATE_COLOUR_PLANE",
+            ),
+            (
+                VideoEncodeH264CapabilityFlagsEXT::QPPRIME_Y_ZERO_TRANSFORM_BYPASS.0,
+                "QPPRIME_Y_ZERO_TRANSFORM_BYPASS",
+            ),
+            (
+                VideoEncodeH264CapabilityFlagsEXT::SCALING_LISTS.0,
+                "SCALING_LISTS",
+            ),
+            (
+                VideoEncodeH264CapabilityFlagsEXT::HRD_COMPLIANCE.0,
+                "HRD_COMPLIANCE",
             ),
             (
                 VideoEncodeH264CapabilityFlagsEXT::CHROMA_QP_OFFSET.0,
@@ -5708,6 +5734,32 @@ impl fmt::Debug for VideoEncodeH264CapabilityFlagsEXT {
                 VideoEncodeH264CapabilityFlagsEXT::SECOND_CHROMA_QP_OFFSET.0,
                 "SECOND_CHROMA_QP_OFFSET",
             ),
+            (
+                VideoEncodeH264CapabilityFlagsEXT::PIC_INIT_QP_MINUS26.0,
+                "PIC_INIT_QP_MINUS26",
+            ),
+            (
+                VideoEncodeH264CapabilityFlagsEXT::WEIGHTED_PRED.0,
+                "WEIGHTED_PRED",
+            ),
+            (
+                VideoEncodeH264CapabilityFlagsEXT::WEIGHTED_BIPRED_EXPLICIT.0,
+                "WEIGHTED_BIPRED_EXPLICIT",
+            ),
+            (
+                VideoEncodeH264CapabilityFlagsEXT::WEIGHTED_BIPRED_IMPLICIT.0,
+                "WEIGHTED_BIPRED_IMPLICIT",
+            ),
+            (
+                VideoEncodeH264CapabilityFlagsEXT::WEIGHTED_PRED_NO_TABLE.0,
+                "WEIGHTED_PRED_NO_TABLE",
+            ),
+            (
+                VideoEncodeH264CapabilityFlagsEXT::TRANSFORM_8X8.0,
+                "TRANSFORM_8X8",
+            ),
+            (VideoEncodeH264CapabilityFlagsEXT::CABAC.0, "CABAC"),
+            (VideoEncodeH264CapabilityFlagsEXT::CAVLC.0, "CAVLC"),
             (
                 VideoEncodeH264CapabilityFlagsEXT::DEBLOCKING_FILTER_DISABLED.0,
                 "DEBLOCKING_FILTER_DISABLED",
@@ -5721,12 +5773,24 @@ impl fmt::Debug for VideoEncodeH264CapabilityFlagsEXT {
                 "DEBLOCKING_FILTER_PARTIAL",
             ),
             (
+                VideoEncodeH264CapabilityFlagsEXT::DISABLE_DIRECT_SPATIAL_MV_PRED.0,
+                "DISABLE_DIRECT_SPATIAL_MV_PRED",
+            ),
+            (
                 VideoEncodeH264CapabilityFlagsEXT::MULTIPLE_SLICE_PER_FRAME.0,
                 "MULTIPLE_SLICE_PER_FRAME",
             ),
             (
-                VideoEncodeH264CapabilityFlagsEXT::EVENLY_DISTRIBUTED_SLICE_SIZE.0,
-                "EVENLY_DISTRIBUTED_SLICE_SIZE",
+                VideoEncodeH264CapabilityFlagsEXT::SLICE_MB_COUNT.0,
+                "SLICE_MB_COUNT",
+            ),
+            (
+                VideoEncodeH264CapabilityFlagsEXT::ROW_UNALIGNED_SLICE.0,
+                "ROW_UNALIGNED_SLICE",
+            ),
+            (
+                VideoEncodeH264CapabilityFlagsEXT::DIFFERENT_SLICE_TYPE.0,
+                "DIFFERENT_SLICE_TYPE",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -5779,7 +5843,104 @@ impl fmt::Debug for VideoEncodeH264RateControlStructureFlagsEXT {
 }
 impl fmt::Debug for VideoEncodeH265CapabilityFlagsEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[];
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                VideoEncodeH265CapabilityFlagsEXT::SEPARATE_COLOUR_PLANE.0,
+                "SEPARATE_COLOUR_PLANE",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsEXT::SCALING_LISTS.0,
+                "SCALING_LISTS",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsEXT::SAMPLE_ADAPTIVE_OFFSET_ENABLED.0,
+                "SAMPLE_ADAPTIVE_OFFSET_ENABLED",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsEXT::PCM_ENABLE.0,
+                "PCM_ENABLE",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsEXT::SPS_TEMPORAL_MVP_ENABLED.0,
+                "SPS_TEMPORAL_MVP_ENABLED",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsEXT::HRD_COMPLIANCE.0,
+                "HRD_COMPLIANCE",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsEXT::INIT_QP_MINUS26.0,
+                "INIT_QP_MINUS26",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsEXT::LOG2_PARALLEL_MERGE_LEVEL_MINUS2.0,
+                "LOG2_PARALLEL_MERGE_LEVEL_MINUS2",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsEXT::SIGN_DATA_HIDING_ENABLED.0,
+                "SIGN_DATA_HIDING_ENABLED",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsEXT::TRANSFORM_SKIP_ENABLED.0,
+                "TRANSFORM_SKIP_ENABLED",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsEXT::PPS_SLICE_CHROMA_QP_OFFSETS_PRESENT.0,
+                "PPS_SLICE_CHROMA_QP_OFFSETS_PRESENT",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsEXT::WEIGHTED_PRED.0,
+                "WEIGHTED_PRED",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsEXT::WEIGHTED_BIPRED.0,
+                "WEIGHTED_BIPRED",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsEXT::WEIGHTED_PRED_NO_TABLE.0,
+                "WEIGHTED_PRED_NO_TABLE",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsEXT::TRANSQUANT_BYPASS_ENABLED.0,
+                "TRANSQUANT_BYPASS_ENABLED",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsEXT::ENTROPY_CODING_SYNC_ENABLED.0,
+                "ENTROPY_CODING_SYNC_ENABLED",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsEXT::DEBLOCKING_FILTER_OVERRIDE_ENABLED.0,
+                "DEBLOCKING_FILTER_OVERRIDE_ENABLED",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsEXT::MULTIPLE_TILE_PER_FRAME.0,
+                "MULTIPLE_TILE_PER_FRAME",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsEXT::MULTIPLE_SLICE_PER_TILE.0,
+                "MULTIPLE_SLICE_PER_TILE",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsEXT::MULTIPLE_TILE_PER_SLICE.0,
+                "MULTIPLE_TILE_PER_SLICE",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsEXT::SLICE_SEGMENT_CTB_COUNT.0,
+                "SLICE_SEGMENT_CTB_COUNT",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsEXT::ROW_UNALIGNED_SLICE_SEGMENT.0,
+                "ROW_UNALIGNED_SLICE_SEGMENT",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsEXT::DEPENDENT_SLICE_SEGMENT.0,
+                "DEPENDENT_SLICE_SEGMENT",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsEXT::DIFFERENT_SLICE_TYPE.0,
+                "DIFFERENT_SLICE_TYPE",
+            ),
+        ];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -5792,7 +5953,6 @@ impl fmt::Debug for VideoEncodeH265CreateFlagsEXT {
 impl fmt::Debug for VideoEncodeH265CtbSizeFlagsEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (VideoEncodeH265CtbSizeFlagsEXT::TYPE_8.0, "TYPE_8"),
             (VideoEncodeH265CtbSizeFlagsEXT::TYPE_16.0, "TYPE_16"),
             (VideoEncodeH265CtbSizeFlagsEXT::TYPE_32.0, "TYPE_32"),
             (VideoEncodeH265CtbSizeFlagsEXT::TYPE_64.0, "TYPE_64"),
@@ -5837,6 +5997,29 @@ impl fmt::Debug for VideoEncodeH265RateControlStructureFlagsEXT {
             (
                 VideoEncodeH265RateControlStructureFlagsEXT::DYADIC.0,
                 "DYADIC",
+            ),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for VideoEncodeH265TransformBlockSizeFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                VideoEncodeH265TransformBlockSizeFlagsEXT::TYPE_4.0,
+                "TYPE_4",
+            ),
+            (
+                VideoEncodeH265TransformBlockSizeFlagsEXT::TYPE_8.0,
+                "TYPE_8",
+            ),
+            (
+                VideoEncodeH265TransformBlockSizeFlagsEXT::TYPE_16.0,
+                "TYPE_16",
+            ),
+            (
+                VideoEncodeH265TransformBlockSizeFlagsEXT::TYPE_32.0,
+                "TYPE_32",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
