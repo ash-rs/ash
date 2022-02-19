@@ -94,10 +94,10 @@ macro_rules! handle_nondispatchable {
         impl Handle for $name {
             const TYPE: ObjectType = ObjectType::$ty;
             fn as_raw(self) -> u64 {
-                self.0 as u64
+                self.0
             }
             fn from_raw(x: u64) -> Self {
-                Self(x as _)
+                Self(x)
             }
         }
         impl $name {

@@ -6550,3 +6550,1107 @@ impl DeviceFnV1_2 {
         (self.get_device_memory_opaque_capture_address)(device, p_info)
     }
 }
+#[derive(Clone)]
+pub struct EntryFnV1_3 {}
+unsafe impl Send for EntryFnV1_3 {}
+unsafe impl Sync for EntryFnV1_3 {}
+impl EntryFnV1_3 {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+#[derive(Clone)]
+pub struct InstanceFnV1_3 {
+    pub get_physical_device_tool_properties: crate::vk::PFN_vkGetPhysicalDeviceToolProperties,
+}
+unsafe impl Send for InstanceFnV1_3 {}
+unsafe impl Sync for InstanceFnV1_3 {}
+impl InstanceFnV1_3 {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {
+            get_physical_device_tool_properties: unsafe {
+                unsafe extern "system" fn get_physical_device_tool_properties(
+                    _physical_device: PhysicalDevice,
+                    _p_tool_count: *mut u32,
+                    _p_tool_properties: *mut PhysicalDeviceToolProperties,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_physical_device_tool_properties)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetPhysicalDeviceToolProperties\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_physical_device_tool_properties
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceToolProperties.html>"]
+    pub unsafe fn get_physical_device_tool_properties(
+        &self,
+        physical_device: PhysicalDevice,
+        p_tool_count: *mut u32,
+        p_tool_properties: *mut PhysicalDeviceToolProperties,
+    ) -> Result {
+        (self.get_physical_device_tool_properties)(physical_device, p_tool_count, p_tool_properties)
+    }
+}
+#[derive(Clone)]
+pub struct DeviceFnV1_3 {
+    pub create_private_data_slot: crate::vk::PFN_vkCreatePrivateDataSlot,
+    pub destroy_private_data_slot: crate::vk::PFN_vkDestroyPrivateDataSlot,
+    pub set_private_data: crate::vk::PFN_vkSetPrivateData,
+    pub get_private_data: crate::vk::PFN_vkGetPrivateData,
+    pub cmd_set_event2: crate::vk::PFN_vkCmdSetEvent2,
+    pub cmd_reset_event2: crate::vk::PFN_vkCmdResetEvent2,
+    pub cmd_wait_events2: crate::vk::PFN_vkCmdWaitEvents2,
+    pub cmd_pipeline_barrier2: crate::vk::PFN_vkCmdPipelineBarrier2,
+    pub cmd_write_timestamp2: crate::vk::PFN_vkCmdWriteTimestamp2,
+    pub queue_submit2: crate::vk::PFN_vkQueueSubmit2,
+    pub cmd_copy_buffer2: crate::vk::PFN_vkCmdCopyBuffer2,
+    pub cmd_copy_image2: crate::vk::PFN_vkCmdCopyImage2,
+    pub cmd_copy_buffer_to_image2: crate::vk::PFN_vkCmdCopyBufferToImage2,
+    pub cmd_copy_image_to_buffer2: crate::vk::PFN_vkCmdCopyImageToBuffer2,
+    pub cmd_blit_image2: crate::vk::PFN_vkCmdBlitImage2,
+    pub cmd_resolve_image2: crate::vk::PFN_vkCmdResolveImage2,
+    pub cmd_begin_rendering: crate::vk::PFN_vkCmdBeginRendering,
+    pub cmd_end_rendering: crate::vk::PFN_vkCmdEndRendering,
+    pub cmd_set_cull_mode: crate::vk::PFN_vkCmdSetCullMode,
+    pub cmd_set_front_face: crate::vk::PFN_vkCmdSetFrontFace,
+    pub cmd_set_primitive_topology: crate::vk::PFN_vkCmdSetPrimitiveTopology,
+    pub cmd_set_viewport_with_count: crate::vk::PFN_vkCmdSetViewportWithCount,
+    pub cmd_set_scissor_with_count: crate::vk::PFN_vkCmdSetScissorWithCount,
+    pub cmd_bind_vertex_buffers2: crate::vk::PFN_vkCmdBindVertexBuffers2,
+    pub cmd_set_depth_test_enable: crate::vk::PFN_vkCmdSetDepthTestEnable,
+    pub cmd_set_depth_write_enable: crate::vk::PFN_vkCmdSetDepthWriteEnable,
+    pub cmd_set_depth_compare_op: crate::vk::PFN_vkCmdSetDepthCompareOp,
+    pub cmd_set_depth_bounds_test_enable: crate::vk::PFN_vkCmdSetDepthBoundsTestEnable,
+    pub cmd_set_stencil_test_enable: crate::vk::PFN_vkCmdSetStencilTestEnable,
+    pub cmd_set_stencil_op: crate::vk::PFN_vkCmdSetStencilOp,
+    pub cmd_set_rasterizer_discard_enable: crate::vk::PFN_vkCmdSetRasterizerDiscardEnable,
+    pub cmd_set_depth_bias_enable: crate::vk::PFN_vkCmdSetDepthBiasEnable,
+    pub cmd_set_primitive_restart_enable: crate::vk::PFN_vkCmdSetPrimitiveRestartEnable,
+    pub get_device_buffer_memory_requirements: crate::vk::PFN_vkGetDeviceBufferMemoryRequirements,
+    pub get_device_image_memory_requirements: crate::vk::PFN_vkGetDeviceImageMemoryRequirements,
+    pub get_device_image_sparse_memory_requirements:
+        crate::vk::PFN_vkGetDeviceImageSparseMemoryRequirements,
+}
+unsafe impl Send for DeviceFnV1_3 {}
+unsafe impl Sync for DeviceFnV1_3 {}
+impl DeviceFnV1_3 {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {
+            create_private_data_slot: unsafe {
+                unsafe extern "system" fn create_private_data_slot(
+                    _device: Device,
+                    _p_create_info: *const PrivateDataSlotCreateInfo,
+                    _p_allocator: *const AllocationCallbacks,
+                    _p_private_data_slot: *mut PrivateDataSlot,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(create_private_data_slot)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCreatePrivateDataSlot\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    create_private_data_slot
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            destroy_private_data_slot: unsafe {
+                unsafe extern "system" fn destroy_private_data_slot(
+                    _device: Device,
+                    _private_data_slot: PrivateDataSlot,
+                    _p_allocator: *const AllocationCallbacks,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(destroy_private_data_slot)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkDestroyPrivateDataSlot\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    destroy_private_data_slot
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            set_private_data: unsafe {
+                unsafe extern "system" fn set_private_data(
+                    _device: Device,
+                    _object_type: ObjectType,
+                    _object_handle: u64,
+                    _private_data_slot: PrivateDataSlot,
+                    _data: u64,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(set_private_data)))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkSetPrivateData\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    set_private_data
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_private_data: unsafe {
+                unsafe extern "system" fn get_private_data(
+                    _device: Device,
+                    _object_type: ObjectType,
+                    _object_handle: u64,
+                    _private_data_slot: PrivateDataSlot,
+                    _p_data: *mut u64,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(get_private_data)))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkGetPrivateData\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    get_private_data
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_event2: unsafe {
+                unsafe extern "system" fn cmd_set_event2(
+                    _command_buffer: CommandBuffer,
+                    _event: Event,
+                    _p_dependency_info: *const DependencyInfo,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_set_event2)))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetEvent2\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_event2
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_reset_event2: unsafe {
+                unsafe extern "system" fn cmd_reset_event2(
+                    _command_buffer: CommandBuffer,
+                    _event: Event,
+                    _stage_mask: PipelineStageFlags2,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_reset_event2)))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdResetEvent2\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_reset_event2
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_wait_events2: unsafe {
+                unsafe extern "system" fn cmd_wait_events2(
+                    _command_buffer: CommandBuffer,
+                    _event_count: u32,
+                    _p_events: *const Event,
+                    _p_dependency_infos: *const DependencyInfo,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_wait_events2)))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdWaitEvents2\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_wait_events2
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_pipeline_barrier2: unsafe {
+                unsafe extern "system" fn cmd_pipeline_barrier2(
+                    _command_buffer: CommandBuffer,
+                    _p_dependency_info: *const DependencyInfo,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_pipeline_barrier2)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdPipelineBarrier2\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_pipeline_barrier2
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_write_timestamp2: unsafe {
+                unsafe extern "system" fn cmd_write_timestamp2(
+                    _command_buffer: CommandBuffer,
+                    _stage: PipelineStageFlags2,
+                    _query_pool: QueryPool,
+                    _query: u32,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_write_timestamp2)))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdWriteTimestamp2\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_write_timestamp2
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            queue_submit2: unsafe {
+                unsafe extern "system" fn queue_submit2(
+                    _queue: Queue,
+                    _submit_count: u32,
+                    _p_submits: *const SubmitInfo2,
+                    _fence: Fence,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(queue_submit2)))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkQueueSubmit2\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    queue_submit2
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_copy_buffer2: unsafe {
+                unsafe extern "system" fn cmd_copy_buffer2(
+                    _command_buffer: CommandBuffer,
+                    _p_copy_buffer_info: *const CopyBufferInfo2,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_copy_buffer2)))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyBuffer2\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_copy_buffer2
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_copy_image2: unsafe {
+                unsafe extern "system" fn cmd_copy_image2(
+                    _command_buffer: CommandBuffer,
+                    _p_copy_image_info: *const CopyImageInfo2,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_copy_image2)))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyImage2\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_copy_image2
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_copy_buffer_to_image2: unsafe {
+                unsafe extern "system" fn cmd_copy_buffer_to_image2(
+                    _command_buffer: CommandBuffer,
+                    _p_copy_buffer_to_image_info: *const CopyBufferToImageInfo2,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_copy_buffer_to_image2)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyBufferToImage2\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_copy_buffer_to_image2
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_copy_image_to_buffer2: unsafe {
+                unsafe extern "system" fn cmd_copy_image_to_buffer2(
+                    _command_buffer: CommandBuffer,
+                    _p_copy_image_to_buffer_info: *const CopyImageToBufferInfo2,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_copy_image_to_buffer2)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyImageToBuffer2\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_copy_image_to_buffer2
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_blit_image2: unsafe {
+                unsafe extern "system" fn cmd_blit_image2(
+                    _command_buffer: CommandBuffer,
+                    _p_blit_image_info: *const BlitImageInfo2,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_blit_image2)))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdBlitImage2\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_blit_image2
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_resolve_image2: unsafe {
+                unsafe extern "system" fn cmd_resolve_image2(
+                    _command_buffer: CommandBuffer,
+                    _p_resolve_image_info: *const ResolveImageInfo2,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_resolve_image2)))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdResolveImage2\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_resolve_image2
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_begin_rendering: unsafe {
+                unsafe extern "system" fn cmd_begin_rendering(
+                    _command_buffer: CommandBuffer,
+                    _p_rendering_info: *const RenderingInfo,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_begin_rendering)))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdBeginRendering\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_begin_rendering
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_end_rendering: unsafe {
+                unsafe extern "system" fn cmd_end_rendering(_command_buffer: CommandBuffer) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_end_rendering)))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdEndRendering\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_end_rendering
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_cull_mode: unsafe {
+                unsafe extern "system" fn cmd_set_cull_mode(
+                    _command_buffer: CommandBuffer,
+                    _cull_mode: CullModeFlags,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_set_cull_mode)))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetCullMode\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_cull_mode
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_front_face: unsafe {
+                unsafe extern "system" fn cmd_set_front_face(
+                    _command_buffer: CommandBuffer,
+                    _front_face: FrontFace,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_set_front_face)))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetFrontFace\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_front_face
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_primitive_topology: unsafe {
+                unsafe extern "system" fn cmd_set_primitive_topology(
+                    _command_buffer: CommandBuffer,
+                    _primitive_topology: PrimitiveTopology,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_primitive_topology)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetPrimitiveTopology\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_primitive_topology
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_viewport_with_count: unsafe {
+                unsafe extern "system" fn cmd_set_viewport_with_count(
+                    _command_buffer: CommandBuffer,
+                    _viewport_count: u32,
+                    _p_viewports: *const Viewport,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_viewport_with_count)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetViewportWithCount\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_viewport_with_count
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_scissor_with_count: unsafe {
+                unsafe extern "system" fn cmd_set_scissor_with_count(
+                    _command_buffer: CommandBuffer,
+                    _scissor_count: u32,
+                    _p_scissors: *const Rect2D,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_scissor_with_count)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetScissorWithCount\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_scissor_with_count
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_bind_vertex_buffers2: unsafe {
+                unsafe extern "system" fn cmd_bind_vertex_buffers2(
+                    _command_buffer: CommandBuffer,
+                    _first_binding: u32,
+                    _binding_count: u32,
+                    _p_buffers: *const Buffer,
+                    _p_offsets: *const DeviceSize,
+                    _p_sizes: *const DeviceSize,
+                    _p_strides: *const DeviceSize,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_bind_vertex_buffers2)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdBindVertexBuffers2\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_bind_vertex_buffers2
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_depth_test_enable: unsafe {
+                unsafe extern "system" fn cmd_set_depth_test_enable(
+                    _command_buffer: CommandBuffer,
+                    _depth_test_enable: Bool32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_depth_test_enable)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthTestEnable\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_depth_test_enable
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_depth_write_enable: unsafe {
+                unsafe extern "system" fn cmd_set_depth_write_enable(
+                    _command_buffer: CommandBuffer,
+                    _depth_write_enable: Bool32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_depth_write_enable)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthWriteEnable\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_depth_write_enable
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_depth_compare_op: unsafe {
+                unsafe extern "system" fn cmd_set_depth_compare_op(
+                    _command_buffer: CommandBuffer,
+                    _depth_compare_op: CompareOp,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_depth_compare_op)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthCompareOp\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_depth_compare_op
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_depth_bounds_test_enable: unsafe {
+                unsafe extern "system" fn cmd_set_depth_bounds_test_enable(
+                    _command_buffer: CommandBuffer,
+                    _depth_bounds_test_enable: Bool32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_depth_bounds_test_enable)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetDepthBoundsTestEnable\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_depth_bounds_test_enable
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_stencil_test_enable: unsafe {
+                unsafe extern "system" fn cmd_set_stencil_test_enable(
+                    _command_buffer: CommandBuffer,
+                    _stencil_test_enable: Bool32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_stencil_test_enable)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetStencilTestEnable\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_stencil_test_enable
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_stencil_op: unsafe {
+                unsafe extern "system" fn cmd_set_stencil_op(
+                    _command_buffer: CommandBuffer,
+                    _face_mask: StencilFaceFlags,
+                    _fail_op: StencilOp,
+                    _pass_op: StencilOp,
+                    _depth_fail_op: StencilOp,
+                    _compare_op: CompareOp,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_set_stencil_op)))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetStencilOp\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_stencil_op
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_rasterizer_discard_enable: unsafe {
+                unsafe extern "system" fn cmd_set_rasterizer_discard_enable(
+                    _command_buffer: CommandBuffer,
+                    _rasterizer_discard_enable: Bool32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_rasterizer_discard_enable)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetRasterizerDiscardEnable\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_rasterizer_discard_enable
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_depth_bias_enable: unsafe {
+                unsafe extern "system" fn cmd_set_depth_bias_enable(
+                    _command_buffer: CommandBuffer,
+                    _depth_bias_enable: Bool32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_depth_bias_enable)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthBiasEnable\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_depth_bias_enable
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_primitive_restart_enable: unsafe {
+                unsafe extern "system" fn cmd_set_primitive_restart_enable(
+                    _command_buffer: CommandBuffer,
+                    _primitive_restart_enable: Bool32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_primitive_restart_enable)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetPrimitiveRestartEnable\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_primitive_restart_enable
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_device_buffer_memory_requirements: unsafe {
+                unsafe extern "system" fn get_device_buffer_memory_requirements(
+                    _device: Device,
+                    _p_info: *const DeviceBufferMemoryRequirements,
+                    _p_memory_requirements: *mut MemoryRequirements2,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_device_buffer_memory_requirements)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetDeviceBufferMemoryRequirements\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_device_buffer_memory_requirements
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_device_image_memory_requirements: unsafe {
+                unsafe extern "system" fn get_device_image_memory_requirements(
+                    _device: Device,
+                    _p_info: *const DeviceImageMemoryRequirements,
+                    _p_memory_requirements: *mut MemoryRequirements2,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_device_image_memory_requirements)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetDeviceImageMemoryRequirements\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_device_image_memory_requirements
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_device_image_sparse_memory_requirements: unsafe {
+                unsafe extern "system" fn get_device_image_sparse_memory_requirements(
+                    _device: Device,
+                    _p_info: *const DeviceImageMemoryRequirements,
+                    _p_sparse_memory_requirement_count: *mut u32,
+                    _p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_device_image_sparse_memory_requirements)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetDeviceImageSparseMemoryRequirements\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_device_image_sparse_memory_requirements
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreatePrivateDataSlot.html>"]
+    pub unsafe fn create_private_data_slot(
+        &self,
+        device: Device,
+        p_create_info: *const PrivateDataSlotCreateInfo,
+        p_allocator: *const AllocationCallbacks,
+        p_private_data_slot: *mut PrivateDataSlot,
+    ) -> Result {
+        (self.create_private_data_slot)(device, p_create_info, p_allocator, p_private_data_slot)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroyPrivateDataSlot.html>"]
+    pub unsafe fn destroy_private_data_slot(
+        &self,
+        device: Device,
+        private_data_slot: PrivateDataSlot,
+        p_allocator: *const AllocationCallbacks,
+    ) {
+        (self.destroy_private_data_slot)(device, private_data_slot, p_allocator)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkSetPrivateData.html>"]
+    pub unsafe fn set_private_data(
+        &self,
+        device: Device,
+        object_type: ObjectType,
+        object_handle: u64,
+        private_data_slot: PrivateDataSlot,
+        data: u64,
+    ) -> Result {
+        (self.set_private_data)(device, object_type, object_handle, private_data_slot, data)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPrivateData.html>"]
+    pub unsafe fn get_private_data(
+        &self,
+        device: Device,
+        object_type: ObjectType,
+        object_handle: u64,
+        private_data_slot: PrivateDataSlot,
+        p_data: *mut u64,
+    ) {
+        (self.get_private_data)(
+            device,
+            object_type,
+            object_handle,
+            private_data_slot,
+            p_data,
+        )
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetEvent2.html>"]
+    pub unsafe fn cmd_set_event2(
+        &self,
+        command_buffer: CommandBuffer,
+        event: Event,
+        p_dependency_info: *const DependencyInfo,
+    ) {
+        (self.cmd_set_event2)(command_buffer, event, p_dependency_info)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdResetEvent2.html>"]
+    pub unsafe fn cmd_reset_event2(
+        &self,
+        command_buffer: CommandBuffer,
+        event: Event,
+        stage_mask: PipelineStageFlags2,
+    ) {
+        (self.cmd_reset_event2)(command_buffer, event, stage_mask)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdWaitEvents2.html>"]
+    pub unsafe fn cmd_wait_events2(
+        &self,
+        command_buffer: CommandBuffer,
+        event_count: u32,
+        p_events: *const Event,
+        p_dependency_infos: *const DependencyInfo,
+    ) {
+        (self.cmd_wait_events2)(command_buffer, event_count, p_events, p_dependency_infos)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPipelineBarrier2.html>"]
+    pub unsafe fn cmd_pipeline_barrier2(
+        &self,
+        command_buffer: CommandBuffer,
+        p_dependency_info: *const DependencyInfo,
+    ) {
+        (self.cmd_pipeline_barrier2)(command_buffer, p_dependency_info)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdWriteTimestamp2.html>"]
+    pub unsafe fn cmd_write_timestamp2(
+        &self,
+        command_buffer: CommandBuffer,
+        stage: PipelineStageFlags2,
+        query_pool: QueryPool,
+        query: u32,
+    ) {
+        (self.cmd_write_timestamp2)(command_buffer, stage, query_pool, query)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkQueueSubmit2.html>"]
+    pub unsafe fn queue_submit2(
+        &self,
+        queue: Queue,
+        submit_count: u32,
+        p_submits: *const SubmitInfo2,
+        fence: Fence,
+    ) -> Result {
+        (self.queue_submit2)(queue, submit_count, p_submits, fence)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdCopyBuffer2.html>"]
+    pub unsafe fn cmd_copy_buffer2(
+        &self,
+        command_buffer: CommandBuffer,
+        p_copy_buffer_info: *const CopyBufferInfo2,
+    ) {
+        (self.cmd_copy_buffer2)(command_buffer, p_copy_buffer_info)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdCopyImage2.html>"]
+    pub unsafe fn cmd_copy_image2(
+        &self,
+        command_buffer: CommandBuffer,
+        p_copy_image_info: *const CopyImageInfo2,
+    ) {
+        (self.cmd_copy_image2)(command_buffer, p_copy_image_info)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdCopyBufferToImage2.html>"]
+    pub unsafe fn cmd_copy_buffer_to_image2(
+        &self,
+        command_buffer: CommandBuffer,
+        p_copy_buffer_to_image_info: *const CopyBufferToImageInfo2,
+    ) {
+        (self.cmd_copy_buffer_to_image2)(command_buffer, p_copy_buffer_to_image_info)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdCopyImageToBuffer2.html>"]
+    pub unsafe fn cmd_copy_image_to_buffer2(
+        &self,
+        command_buffer: CommandBuffer,
+        p_copy_image_to_buffer_info: *const CopyImageToBufferInfo2,
+    ) {
+        (self.cmd_copy_image_to_buffer2)(command_buffer, p_copy_image_to_buffer_info)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBlitImage2.html>"]
+    pub unsafe fn cmd_blit_image2(
+        &self,
+        command_buffer: CommandBuffer,
+        p_blit_image_info: *const BlitImageInfo2,
+    ) {
+        (self.cmd_blit_image2)(command_buffer, p_blit_image_info)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdResolveImage2.html>"]
+    pub unsafe fn cmd_resolve_image2(
+        &self,
+        command_buffer: CommandBuffer,
+        p_resolve_image_info: *const ResolveImageInfo2,
+    ) {
+        (self.cmd_resolve_image2)(command_buffer, p_resolve_image_info)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBeginRendering.html>"]
+    pub unsafe fn cmd_begin_rendering(
+        &self,
+        command_buffer: CommandBuffer,
+        p_rendering_info: *const RenderingInfo,
+    ) {
+        (self.cmd_begin_rendering)(command_buffer, p_rendering_info)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdEndRendering.html>"]
+    pub unsafe fn cmd_end_rendering(&self, command_buffer: CommandBuffer) {
+        (self.cmd_end_rendering)(command_buffer)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetCullMode.html>"]
+    pub unsafe fn cmd_set_cull_mode(
+        &self,
+        command_buffer: CommandBuffer,
+        cull_mode: CullModeFlags,
+    ) {
+        (self.cmd_set_cull_mode)(command_buffer, cull_mode)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetFrontFace.html>"]
+    pub unsafe fn cmd_set_front_face(&self, command_buffer: CommandBuffer, front_face: FrontFace) {
+        (self.cmd_set_front_face)(command_buffer, front_face)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetPrimitiveTopology.html>"]
+    pub unsafe fn cmd_set_primitive_topology(
+        &self,
+        command_buffer: CommandBuffer,
+        primitive_topology: PrimitiveTopology,
+    ) {
+        (self.cmd_set_primitive_topology)(command_buffer, primitive_topology)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetViewportWithCount.html>"]
+    pub unsafe fn cmd_set_viewport_with_count(
+        &self,
+        command_buffer: CommandBuffer,
+        viewport_count: u32,
+        p_viewports: *const Viewport,
+    ) {
+        (self.cmd_set_viewport_with_count)(command_buffer, viewport_count, p_viewports)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetScissorWithCount.html>"]
+    pub unsafe fn cmd_set_scissor_with_count(
+        &self,
+        command_buffer: CommandBuffer,
+        scissor_count: u32,
+        p_scissors: *const Rect2D,
+    ) {
+        (self.cmd_set_scissor_with_count)(command_buffer, scissor_count, p_scissors)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBindVertexBuffers2.html>"]
+    pub unsafe fn cmd_bind_vertex_buffers2(
+        &self,
+        command_buffer: CommandBuffer,
+        first_binding: u32,
+        binding_count: u32,
+        p_buffers: *const Buffer,
+        p_offsets: *const DeviceSize,
+        p_sizes: *const DeviceSize,
+        p_strides: *const DeviceSize,
+    ) {
+        (self.cmd_bind_vertex_buffers2)(
+            command_buffer,
+            first_binding,
+            binding_count,
+            p_buffers,
+            p_offsets,
+            p_sizes,
+            p_strides,
+        )
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthTestEnable.html>"]
+    pub unsafe fn cmd_set_depth_test_enable(
+        &self,
+        command_buffer: CommandBuffer,
+        depth_test_enable: Bool32,
+    ) {
+        (self.cmd_set_depth_test_enable)(command_buffer, depth_test_enable)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthWriteEnable.html>"]
+    pub unsafe fn cmd_set_depth_write_enable(
+        &self,
+        command_buffer: CommandBuffer,
+        depth_write_enable: Bool32,
+    ) {
+        (self.cmd_set_depth_write_enable)(command_buffer, depth_write_enable)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthCompareOp.html>"]
+    pub unsafe fn cmd_set_depth_compare_op(
+        &self,
+        command_buffer: CommandBuffer,
+        depth_compare_op: CompareOp,
+    ) {
+        (self.cmd_set_depth_compare_op)(command_buffer, depth_compare_op)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthBoundsTestEnable.html>"]
+    pub unsafe fn cmd_set_depth_bounds_test_enable(
+        &self,
+        command_buffer: CommandBuffer,
+        depth_bounds_test_enable: Bool32,
+    ) {
+        (self.cmd_set_depth_bounds_test_enable)(command_buffer, depth_bounds_test_enable)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetStencilTestEnable.html>"]
+    pub unsafe fn cmd_set_stencil_test_enable(
+        &self,
+        command_buffer: CommandBuffer,
+        stencil_test_enable: Bool32,
+    ) {
+        (self.cmd_set_stencil_test_enable)(command_buffer, stencil_test_enable)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetStencilOp.html>"]
+    pub unsafe fn cmd_set_stencil_op(
+        &self,
+        command_buffer: CommandBuffer,
+        face_mask: StencilFaceFlags,
+        fail_op: StencilOp,
+        pass_op: StencilOp,
+        depth_fail_op: StencilOp,
+        compare_op: CompareOp,
+    ) {
+        (self.cmd_set_stencil_op)(
+            command_buffer,
+            face_mask,
+            fail_op,
+            pass_op,
+            depth_fail_op,
+            compare_op,
+        )
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetRasterizerDiscardEnable.html>"]
+    pub unsafe fn cmd_set_rasterizer_discard_enable(
+        &self,
+        command_buffer: CommandBuffer,
+        rasterizer_discard_enable: Bool32,
+    ) {
+        (self.cmd_set_rasterizer_discard_enable)(command_buffer, rasterizer_discard_enable)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthBiasEnable.html>"]
+    pub unsafe fn cmd_set_depth_bias_enable(
+        &self,
+        command_buffer: CommandBuffer,
+        depth_bias_enable: Bool32,
+    ) {
+        (self.cmd_set_depth_bias_enable)(command_buffer, depth_bias_enable)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetPrimitiveRestartEnable.html>"]
+    pub unsafe fn cmd_set_primitive_restart_enable(
+        &self,
+        command_buffer: CommandBuffer,
+        primitive_restart_enable: Bool32,
+    ) {
+        (self.cmd_set_primitive_restart_enable)(command_buffer, primitive_restart_enable)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceBufferMemoryRequirements.html>"]
+    pub unsafe fn get_device_buffer_memory_requirements(
+        &self,
+        device: Device,
+        p_info: *const DeviceBufferMemoryRequirements,
+        p_memory_requirements: *mut MemoryRequirements2,
+    ) {
+        (self.get_device_buffer_memory_requirements)(device, p_info, p_memory_requirements)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceImageMemoryRequirements.html>"]
+    pub unsafe fn get_device_image_memory_requirements(
+        &self,
+        device: Device,
+        p_info: *const DeviceImageMemoryRequirements,
+        p_memory_requirements: *mut MemoryRequirements2,
+    ) {
+        (self.get_device_image_memory_requirements)(device, p_info, p_memory_requirements)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceImageSparseMemoryRequirements.html>"]
+    pub unsafe fn get_device_image_sparse_memory_requirements(
+        &self,
+        device: Device,
+        p_info: *const DeviceImageMemoryRequirements,
+        p_sparse_memory_requirement_count: *mut u32,
+        p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2,
+    ) {
+        (self.get_device_image_sparse_memory_requirements)(
+            device,
+            p_info,
+            p_sparse_memory_requirement_count,
+            p_sparse_memory_requirements,
+        )
+    }
+}

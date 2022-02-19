@@ -4,7 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] - ReleaseDate
+## Unreleased
+
+### Changed
+
+- extensions/khr: Drop `_khr` suffix from `get_memory_fd_properties_khr` in `ExternalMemoryFd` (#580)
+
+### Added
+
+- Update Vulkan-Headers to 1.3.206 (#563)
+
+## [0.35.2] - 2022-02-19
 
 ### Changed
 
@@ -14,6 +24,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added `VK_KHR_external_fence_win32` device extension (#582)
+- Added `VK_KHR_external_semaphore_win32` device extension (#581)
+- Added `VK_KHR_external_memory_win32` device extension (#579)
 - Added `VK_EXT_extended_dynamic_state2` device extension (#572)
 - Added `VK_KHR_copy_commands2` device extension (#571)
 - Added `VK_EXT_private_data` device extension (#570)
@@ -291,7 +304,8 @@ flags: vk::CommandPoolCreateFlags::RESET_COMMAND_BUFFER_BIT,
 can write to aligned memory.
 
 
-[Unreleased]: https://github.com/MaikKlein/ash/compare/0.35.1...HEAD
+[Unreleased]: https://github.com/MaikKlein/ash/compare/0.35.2...HEAD
+[0.35.1]: https://github.com/MaikKlein/ash/releases/tag/0.35.2
 [0.35.1]: https://github.com/MaikKlein/ash/releases/tag/0.35.1
 [0.35.0]: https://github.com/MaikKlein/ash/releases/tag/0.35.0
 [0.34.0]: https://github.com/MaikKlein/ash/releases/tag/0.34.0

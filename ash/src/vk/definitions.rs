@@ -54,9 +54,11 @@ pub const API_VERSION_1_0: u32 = make_api_version(0, 1, 0, 0);
 pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_2.html>"]
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
-pub const HEADER_VERSION: u32 = 203u32;
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
+pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
+pub const HEADER_VERSION: u32 = 206u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
-pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 2, HEADER_VERSION);
+pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
 pub type SampleMask = u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkBool32.html>"]
@@ -316,11 +318,6 @@ pub struct VideoDecodeH265CreateFlagsEXT(pub(crate) Flags);
 vk_bitflags_wrapped!(VideoDecodeH265CreateFlagsEXT, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265CapabilityFlagsEXT.html>"]
-pub struct VideoEncodeH265CapabilityFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(VideoEncodeH265CapabilityFlagsEXT, Flags);
-#[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265CreateFlagsEXT.html>"]
 pub struct VideoEncodeH265CreateFlagsEXT(pub(crate) Flags);
 vk_bitflags_wrapped!(VideoEncodeH265CreateFlagsEXT, Flags);
@@ -419,7 +416,7 @@ handle_nondispatchable ! (AccelerationStructureNV , ACCELERATION_STRUCTURE_NV , 
 handle_nondispatchable ! (PerformanceConfigurationINTEL , PERFORMANCE_CONFIGURATION_INTEL , doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPerformanceConfigurationINTEL.html>") ;
 handle_nondispatchable ! (BufferCollectionFUCHSIA , BUFFER_COLLECTION_FUCHSIA , doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkBufferCollectionFUCHSIA.html>") ;
 handle_nondispatchable ! (DeferredOperationKHR , DEFERRED_OPERATION_KHR , doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDeferredOperationKHR.html>") ;
-handle_nondispatchable ! (PrivateDataSlotEXT , PRIVATE_DATA_SLOT_EXT , doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPrivateDataSlotEXT.html>") ;
+handle_nondispatchable ! (PrivateDataSlot , PRIVATE_DATA_SLOT , doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPrivateDataSlot.html>") ;
 handle_nondispatchable ! (CuModuleNVX , CU_MODULE_NVX , doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCuModuleNVX.html>") ;
 handle_nondispatchable ! (CuFunctionNVX , CU_FUNCTION_NVX , doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCuFunctionNVX.html>") ;
 handle_nondispatchable!(
@@ -1005,7 +1002,7 @@ impl fmt::Debug for PhysicalDeviceProperties {
             .field("device_id", &self.device_id)
             .field("device_type", &self.device_type)
             .field("device_name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.device_name.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.device_name.as_ptr())
             })
             .field("pipeline_cache_uuid", &self.pipeline_cache_uuid)
             .field("limits", &self.limits)
@@ -1108,7 +1105,7 @@ impl fmt::Debug for ExtensionProperties {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         fmt.debug_struct("ExtensionProperties")
             .field("extension_name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.extension_name.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.extension_name.as_ptr())
             })
             .field("spec_version", &self.spec_version)
             .finish()
@@ -1176,12 +1173,12 @@ impl fmt::Debug for LayerProperties {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         fmt.debug_struct("LayerProperties")
             .field("layer_name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.layer_name.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.layer_name.as_ptr())
             })
             .field("spec_version", &self.spec_version)
             .field("implementation_version", &self.implementation_version)
             .field("description", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.description.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.description.as_ptr())
             })
             .finish()
     }
@@ -1499,10 +1496,10 @@ impl<'a> DeviceQueueCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsDeviceQueueCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -1601,10 +1598,10 @@ impl<'a> DeviceCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsDeviceCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -1694,10 +1691,10 @@ impl<'a> InstanceCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsInstanceCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -1898,10 +1895,10 @@ impl<'a> MemoryAllocateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsMemoryAllocateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -2561,10 +2558,10 @@ impl<'a> WriteDescriptorSetBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsWriteDescriptorSet>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -2747,10 +2744,10 @@ impl<'a> BufferCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsBufferCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -3260,10 +3257,10 @@ impl<'a> ImageMemoryBarrierBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsImageMemoryBarrier>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -3398,10 +3395,10 @@ impl<'a> ImageCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsImageCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -3560,10 +3557,10 @@ impl<'a> ImageViewCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsImageViewCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -4032,10 +4029,10 @@ impl<'a> BindSparseInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsBindSparseInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -4362,7 +4359,7 @@ impl<'a> ShaderModuleCreateInfoBuilder<'a> {
     }
     pub fn code(mut self, code: &'a [u32]) -> Self {
         self.inner.code_size = code.len() * 4;
-        self.inner.p_code = code.as_ptr() as *const u32;
+        self.inner.p_code = code.as_ptr();
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -4372,10 +4369,10 @@ impl<'a> ShaderModuleCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsShaderModuleCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -4525,10 +4522,10 @@ impl<'a> DescriptorSetLayoutCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsDescriptorSetLayoutCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -4657,10 +4654,10 @@ impl<'a> DescriptorPoolCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsDescriptorPoolCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -4735,10 +4732,10 @@ impl<'a> DescriptorSetAllocateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsDescriptorSetAllocateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -4853,7 +4850,7 @@ impl<'a> SpecializationInfoBuilder<'a> {
         self
     }
     pub fn data(mut self, data: &'a [u8]) -> Self {
-        self.inner.data_size = data.len() as _;
+        self.inner.data_size = data.len();
         self.inner.p_data = data.as_ptr() as *const c_void;
         self
     }
@@ -4943,10 +4940,10 @@ impl<'a> PipelineShaderStageCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsPipelineShaderStageCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -5036,10 +5033,10 @@ impl<'a> ComputePipelineCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsComputePipelineCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -5243,10 +5240,10 @@ impl<'a> PipelineVertexInputStateCreateInfoBuilder<'a> {
         next: &'a mut T,
     ) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -5387,10 +5384,10 @@ impl<'a> PipelineTessellationStateCreateInfoBuilder<'a> {
         next: &'a mut T,
     ) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -5482,10 +5479,10 @@ impl<'a> PipelineViewportStateCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsPipelineViewportStateCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -5614,10 +5611,10 @@ impl<'a> PipelineRasterizationStateCreateInfoBuilder<'a> {
         next: &'a mut T,
     ) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -5709,7 +5706,7 @@ impl<'a> PipelineMultisampleStateCreateInfoBuilder<'a> {
         self.inner.p_sample_mask = if sample_mask.is_empty() {
             std::ptr::null()
         } else {
-            sample_mask.as_ptr() as *const SampleMask
+            sample_mask.as_ptr()
         };
         self
     }
@@ -5731,10 +5728,10 @@ impl<'a> PipelineMultisampleStateCreateInfoBuilder<'a> {
         next: &'a mut T,
     ) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -5908,10 +5905,10 @@ impl<'a> PipelineColorBlendStateCreateInfoBuilder<'a> {
         next: &'a mut T,
     ) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -6335,10 +6332,10 @@ impl<'a> GraphicsPipelineCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsGraphicsPipelineCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -6401,7 +6398,7 @@ impl<'a> PipelineCacheCreateInfoBuilder<'a> {
         self
     }
     pub fn initial_data(mut self, initial_data: &'a [u8]) -> Self {
-        self.inner.initial_data_size = initial_data.len() as _;
+        self.inner.initial_data_size = initial_data.len();
         self.inner.p_initial_data = initial_data.as_ptr() as *const c_void;
         self
     }
@@ -6756,10 +6753,10 @@ impl<'a> SamplerCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsSamplerCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -6981,10 +6978,10 @@ impl<'a> CommandBufferInheritanceInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsCommandBufferInheritanceInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -7056,10 +7053,10 @@ impl<'a> CommandBufferBeginInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsCommandBufferBeginInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -7159,10 +7156,10 @@ impl<'a> RenderPassBeginInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsRenderPassBeginInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -7693,10 +7690,10 @@ impl<'a> RenderPassCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsRenderPassCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -7816,10 +7813,10 @@ impl<'a> FenceCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsFenceCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -9130,10 +9127,10 @@ impl<'a> SemaphoreCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsSemaphoreCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -9217,10 +9214,10 @@ impl<'a> QueryPoolCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsQueryPoolCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -9319,10 +9316,10 @@ impl<'a> FramebufferCreateInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsFramebufferCreateInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -9691,10 +9688,10 @@ impl<'a> SubmitInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsSubmitInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -11159,10 +11156,10 @@ impl<'a> SwapchainCreateInfoKHRBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsSwapchainCreateInfoKHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -11254,10 +11251,10 @@ impl<'a> PresentInfoKHRBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsPresentInfoKHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -11675,7 +11672,7 @@ impl<'a> DebugMarkerObjectTagInfoEXTBuilder<'a> {
         self
     }
     pub fn tag(mut self, tag: &'a [u8]) -> Self {
-        self.inner.tag_size = tag.len() as _;
+        self.inner.tag_size = tag.len();
         self.inner.p_tag = tag.as_ptr() as *const c_void;
         self
     }
@@ -12271,8 +12268,8 @@ pub struct Win32KeyedMutexAcquireReleaseInfoNVBuilder<'a> {
 }
 unsafe impl ExtendsSubmitInfo for Win32KeyedMutexAcquireReleaseInfoNVBuilder<'_> {}
 unsafe impl ExtendsSubmitInfo for Win32KeyedMutexAcquireReleaseInfoNV {}
-unsafe impl ExtendsSubmitInfo2KHR for Win32KeyedMutexAcquireReleaseInfoNVBuilder<'_> {}
-unsafe impl ExtendsSubmitInfo2KHR for Win32KeyedMutexAcquireReleaseInfoNV {}
+unsafe impl ExtendsSubmitInfo2 for Win32KeyedMutexAcquireReleaseInfoNVBuilder<'_> {}
+unsafe impl ExtendsSubmitInfo2 for Win32KeyedMutexAcquireReleaseInfoNV {}
 impl<'a> ::std::ops::Deref for Win32KeyedMutexAcquireReleaseInfoNVBuilder<'a> {
     type Target = Win32KeyedMutexAcquireReleaseInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -12381,48 +12378,48 @@ impl<'a> PhysicalDeviceDeviceGeneratedCommandsFeaturesNVBuilder<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDevicePrivateDataCreateInfoEXT.html>"]
-pub struct DevicePrivateDataCreateInfoEXT {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDevicePrivateDataCreateInfo.html>"]
+pub struct DevicePrivateDataCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub private_data_slot_request_count: u32,
 }
-impl ::std::default::Default for DevicePrivateDataCreateInfoEXT {
+impl ::std::default::Default for DevicePrivateDataCreateInfo {
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEVICE_PRIVATE_DATA_CREATE_INFO_EXT,
+            s_type: StructureType::DEVICE_PRIVATE_DATA_CREATE_INFO,
             p_next: ::std::ptr::null(),
             private_data_slot_request_count: u32::default(),
         }
     }
 }
-impl DevicePrivateDataCreateInfoEXT {
-    pub fn builder<'a>() -> DevicePrivateDataCreateInfoEXTBuilder<'a> {
-        DevicePrivateDataCreateInfoEXTBuilder {
+impl DevicePrivateDataCreateInfo {
+    pub fn builder<'a>() -> DevicePrivateDataCreateInfoBuilder<'a> {
+        DevicePrivateDataCreateInfoBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct DevicePrivateDataCreateInfoEXTBuilder<'a> {
-    inner: DevicePrivateDataCreateInfoEXT,
+pub struct DevicePrivateDataCreateInfoBuilder<'a> {
+    inner: DevicePrivateDataCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-unsafe impl ExtendsDeviceCreateInfo for DevicePrivateDataCreateInfoEXTBuilder<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for DevicePrivateDataCreateInfoEXT {}
-impl<'a> ::std::ops::Deref for DevicePrivateDataCreateInfoEXTBuilder<'a> {
-    type Target = DevicePrivateDataCreateInfoEXT;
+unsafe impl ExtendsDeviceCreateInfo for DevicePrivateDataCreateInfoBuilder<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for DevicePrivateDataCreateInfo {}
+impl<'a> ::std::ops::Deref for DevicePrivateDataCreateInfoBuilder<'a> {
+    type Target = DevicePrivateDataCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for DevicePrivateDataCreateInfoEXTBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for DevicePrivateDataCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> DevicePrivateDataCreateInfoEXTBuilder<'a> {
+impl<'a> DevicePrivateDataCreateInfoBuilder<'a> {
     pub fn private_data_slot_request_count(mut self, private_data_slot_request_count: u32) -> Self {
         self.inner.private_data_slot_request_count = private_data_slot_request_count;
         self
@@ -12430,111 +12427,111 @@ impl<'a> DevicePrivateDataCreateInfoEXTBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> DevicePrivateDataCreateInfoEXT {
+    pub fn build(self) -> DevicePrivateDataCreateInfo {
         self.inner
     }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPrivateDataSlotCreateInfoEXT.html>"]
-pub struct PrivateDataSlotCreateInfoEXT {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPrivateDataSlotCreateInfo.html>"]
+pub struct PrivateDataSlotCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: PrivateDataSlotCreateFlagsEXT,
+    pub flags: PrivateDataSlotCreateFlags,
 }
-impl ::std::default::Default for PrivateDataSlotCreateInfoEXT {
+impl ::std::default::Default for PrivateDataSlotCreateInfo {
     fn default() -> Self {
         Self {
-            s_type: StructureType::PRIVATE_DATA_SLOT_CREATE_INFO_EXT,
+            s_type: StructureType::PRIVATE_DATA_SLOT_CREATE_INFO,
             p_next: ::std::ptr::null(),
-            flags: PrivateDataSlotCreateFlagsEXT::default(),
+            flags: PrivateDataSlotCreateFlags::default(),
         }
     }
 }
-impl PrivateDataSlotCreateInfoEXT {
-    pub fn builder<'a>() -> PrivateDataSlotCreateInfoEXTBuilder<'a> {
-        PrivateDataSlotCreateInfoEXTBuilder {
+impl PrivateDataSlotCreateInfo {
+    pub fn builder<'a>() -> PrivateDataSlotCreateInfoBuilder<'a> {
+        PrivateDataSlotCreateInfoBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct PrivateDataSlotCreateInfoEXTBuilder<'a> {
-    inner: PrivateDataSlotCreateInfoEXT,
+pub struct PrivateDataSlotCreateInfoBuilder<'a> {
+    inner: PrivateDataSlotCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-impl<'a> ::std::ops::Deref for PrivateDataSlotCreateInfoEXTBuilder<'a> {
-    type Target = PrivateDataSlotCreateInfoEXT;
+impl<'a> ::std::ops::Deref for PrivateDataSlotCreateInfoBuilder<'a> {
+    type Target = PrivateDataSlotCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for PrivateDataSlotCreateInfoEXTBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for PrivateDataSlotCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> PrivateDataSlotCreateInfoEXTBuilder<'a> {
-    pub fn flags(mut self, flags: PrivateDataSlotCreateFlagsEXT) -> Self {
+impl<'a> PrivateDataSlotCreateInfoBuilder<'a> {
+    pub fn flags(mut self, flags: PrivateDataSlotCreateFlags) -> Self {
         self.inner.flags = flags;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> PrivateDataSlotCreateInfoEXT {
+    pub fn build(self) -> PrivateDataSlotCreateInfo {
         self.inner
     }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDevicePrivateDataFeaturesEXT.html>"]
-pub struct PhysicalDevicePrivateDataFeaturesEXT {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDevicePrivateDataFeatures.html>"]
+pub struct PhysicalDevicePrivateDataFeatures {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub private_data: Bool32,
 }
-impl ::std::default::Default for PhysicalDevicePrivateDataFeaturesEXT {
+impl ::std::default::Default for PhysicalDevicePrivateDataFeatures {
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_PRIVATE_DATA_FEATURES_EXT,
+            s_type: StructureType::PHYSICAL_DEVICE_PRIVATE_DATA_FEATURES,
             p_next: ::std::ptr::null_mut(),
             private_data: Bool32::default(),
         }
     }
 }
-impl PhysicalDevicePrivateDataFeaturesEXT {
-    pub fn builder<'a>() -> PhysicalDevicePrivateDataFeaturesEXTBuilder<'a> {
-        PhysicalDevicePrivateDataFeaturesEXTBuilder {
+impl PhysicalDevicePrivateDataFeatures {
+    pub fn builder<'a>() -> PhysicalDevicePrivateDataFeaturesBuilder<'a> {
+        PhysicalDevicePrivateDataFeaturesBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct PhysicalDevicePrivateDataFeaturesEXTBuilder<'a> {
-    inner: PhysicalDevicePrivateDataFeaturesEXT,
+pub struct PhysicalDevicePrivateDataFeaturesBuilder<'a> {
+    inner: PhysicalDevicePrivateDataFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePrivateDataFeaturesEXTBuilder<'_> {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePrivateDataFeaturesEXT {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePrivateDataFeaturesEXTBuilder<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePrivateDataFeaturesEXT {}
-impl<'a> ::std::ops::Deref for PhysicalDevicePrivateDataFeaturesEXTBuilder<'a> {
-    type Target = PhysicalDevicePrivateDataFeaturesEXT;
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePrivateDataFeaturesBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePrivateDataFeatures {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePrivateDataFeaturesBuilder<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePrivateDataFeatures {}
+impl<'a> ::std::ops::Deref for PhysicalDevicePrivateDataFeaturesBuilder<'a> {
+    type Target = PhysicalDevicePrivateDataFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for PhysicalDevicePrivateDataFeaturesEXTBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for PhysicalDevicePrivateDataFeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> PhysicalDevicePrivateDataFeaturesEXTBuilder<'a> {
+impl<'a> PhysicalDevicePrivateDataFeaturesBuilder<'a> {
     pub fn private_data(mut self, private_data: bool) -> Self {
         self.inner.private_data = private_data.into();
         self
@@ -12542,7 +12539,7 @@ impl<'a> PhysicalDevicePrivateDataFeaturesEXTBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> PhysicalDevicePrivateDataFeaturesEXT {
+    pub fn build(self) -> PhysicalDevicePrivateDataFeatures {
         self.inner
     }
 }
@@ -13585,10 +13582,10 @@ impl<'a> PhysicalDeviceFeatures2Builder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsPhysicalDeviceFeatures2>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -13654,10 +13651,10 @@ impl<'a> PhysicalDeviceProperties2Builder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsPhysicalDeviceProperties2>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -13723,10 +13720,10 @@ impl<'a> FormatProperties2Builder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsFormatProperties2>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -13795,10 +13792,10 @@ impl<'a> ImageFormatProperties2Builder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsImageFormatProperties2>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -13888,10 +13885,10 @@ impl<'a> PhysicalDeviceImageFormatInfo2Builder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsPhysicalDeviceImageFormatInfo2>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -13960,10 +13957,10 @@ impl<'a> QueueFamilyProperties2Builder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsQueueFamilyProperties2>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -14029,10 +14026,10 @@ impl<'a> PhysicalDeviceMemoryProperties2Builder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsPhysicalDeviceMemoryProperties2>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -14311,10 +14308,10 @@ impl fmt::Debug for PhysicalDeviceDriverProperties {
             .field("p_next", &self.p_next)
             .field("driver_id", &self.driver_id)
             .field("driver_name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.driver_name.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.driver_name.as_ptr())
             })
             .field("driver_info", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.driver_info.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.driver_info.as_ptr())
             })
             .field("conformance_version", &self.conformance_version)
             .finish()
@@ -15812,8 +15809,8 @@ pub struct Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'a> {
 }
 unsafe impl ExtendsSubmitInfo for Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'_> {}
 unsafe impl ExtendsSubmitInfo for Win32KeyedMutexAcquireReleaseInfoKHR {}
-unsafe impl ExtendsSubmitInfo2KHR for Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'_> {}
-unsafe impl ExtendsSubmitInfo2KHR for Win32KeyedMutexAcquireReleaseInfoKHR {}
+unsafe impl ExtendsSubmitInfo2 for Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'_> {}
+unsafe impl ExtendsSubmitInfo2 for Win32KeyedMutexAcquireReleaseInfoKHR {}
 impl<'a> ::std::ops::Deref for Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'a> {
     type Target = Win32KeyedMutexAcquireReleaseInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -15916,10 +15913,10 @@ impl<'a> PhysicalDeviceExternalSemaphoreInfoBuilder<'a> {
         next: &'a mut T,
     ) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -17867,10 +17864,10 @@ impl<'a> BindBufferMemoryInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsBindBufferMemoryInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -18007,10 +18004,10 @@ impl<'a> BindImageMemoryInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsBindImageMemoryInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -18129,8 +18126,8 @@ pub struct DeviceGroupRenderPassBeginInfoBuilder<'a> {
 }
 unsafe impl ExtendsRenderPassBeginInfo for DeviceGroupRenderPassBeginInfoBuilder<'_> {}
 unsafe impl ExtendsRenderPassBeginInfo for DeviceGroupRenderPassBeginInfo {}
-unsafe impl ExtendsRenderingInfoKHR for DeviceGroupRenderPassBeginInfoBuilder<'_> {}
-unsafe impl ExtendsRenderingInfoKHR for DeviceGroupRenderPassBeginInfo {}
+unsafe impl ExtendsRenderingInfo for DeviceGroupRenderPassBeginInfoBuilder<'_> {}
+unsafe impl ExtendsRenderingInfo for DeviceGroupRenderPassBeginInfo {}
 impl<'a> ::std::ops::Deref for DeviceGroupRenderPassBeginInfoBuilder<'a> {
     type Target = DeviceGroupRenderPassBeginInfo;
     fn deref(&self) -> &Self::Target {
@@ -20397,10 +20394,10 @@ impl<'a> PhysicalDeviceSurfaceInfo2KHRBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsPhysicalDeviceSurfaceInfo2KHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -20466,10 +20463,10 @@ impl<'a> SurfaceCapabilities2KHRBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsSurfaceCapabilities2KHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -21150,46 +21147,46 @@ impl<'a> BufferMemoryRequirementsInfo2Builder<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDeviceBufferMemoryRequirementsKHR.html>"]
-pub struct DeviceBufferMemoryRequirementsKHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDeviceBufferMemoryRequirements.html>"]
+pub struct DeviceBufferMemoryRequirements {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub p_create_info: *const BufferCreateInfo,
 }
-impl ::std::default::Default for DeviceBufferMemoryRequirementsKHR {
+impl ::std::default::Default for DeviceBufferMemoryRequirements {
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEVICE_BUFFER_MEMORY_REQUIREMENTS_KHR,
+            s_type: StructureType::DEVICE_BUFFER_MEMORY_REQUIREMENTS,
             p_next: ::std::ptr::null(),
             p_create_info: ::std::ptr::null(),
         }
     }
 }
-impl DeviceBufferMemoryRequirementsKHR {
-    pub fn builder<'a>() -> DeviceBufferMemoryRequirementsKHRBuilder<'a> {
-        DeviceBufferMemoryRequirementsKHRBuilder {
+impl DeviceBufferMemoryRequirements {
+    pub fn builder<'a>() -> DeviceBufferMemoryRequirementsBuilder<'a> {
+        DeviceBufferMemoryRequirementsBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct DeviceBufferMemoryRequirementsKHRBuilder<'a> {
-    inner: DeviceBufferMemoryRequirementsKHR,
+pub struct DeviceBufferMemoryRequirementsBuilder<'a> {
+    inner: DeviceBufferMemoryRequirements,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-impl<'a> ::std::ops::Deref for DeviceBufferMemoryRequirementsKHRBuilder<'a> {
-    type Target = DeviceBufferMemoryRequirementsKHR;
+impl<'a> ::std::ops::Deref for DeviceBufferMemoryRequirementsBuilder<'a> {
+    type Target = DeviceBufferMemoryRequirements;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for DeviceBufferMemoryRequirementsKHRBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for DeviceBufferMemoryRequirementsBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> DeviceBufferMemoryRequirementsKHRBuilder<'a> {
+impl<'a> DeviceBufferMemoryRequirementsBuilder<'a> {
     pub fn create_info(mut self, create_info: &'a BufferCreateInfo) -> Self {
         self.inner.p_create_info = create_info;
         self
@@ -21197,7 +21194,7 @@ impl<'a> DeviceBufferMemoryRequirementsKHRBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> DeviceBufferMemoryRequirementsKHR {
+    pub fn build(self) -> DeviceBufferMemoryRequirements {
         self.inner
     }
 }
@@ -21256,10 +21253,10 @@ impl<'a> ImageMemoryRequirementsInfo2Builder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsImageMemoryRequirementsInfo2>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -21327,48 +21324,48 @@ impl<'a> ImageSparseMemoryRequirementsInfo2Builder<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDeviceImageMemoryRequirementsKHR.html>"]
-pub struct DeviceImageMemoryRequirementsKHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDeviceImageMemoryRequirements.html>"]
+pub struct DeviceImageMemoryRequirements {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub p_create_info: *const ImageCreateInfo,
     pub plane_aspect: ImageAspectFlags,
 }
-impl ::std::default::Default for DeviceImageMemoryRequirementsKHR {
+impl ::std::default::Default for DeviceImageMemoryRequirements {
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEVICE_IMAGE_MEMORY_REQUIREMENTS_KHR,
+            s_type: StructureType::DEVICE_IMAGE_MEMORY_REQUIREMENTS,
             p_next: ::std::ptr::null(),
             p_create_info: ::std::ptr::null(),
             plane_aspect: ImageAspectFlags::default(),
         }
     }
 }
-impl DeviceImageMemoryRequirementsKHR {
-    pub fn builder<'a>() -> DeviceImageMemoryRequirementsKHRBuilder<'a> {
-        DeviceImageMemoryRequirementsKHRBuilder {
+impl DeviceImageMemoryRequirements {
+    pub fn builder<'a>() -> DeviceImageMemoryRequirementsBuilder<'a> {
+        DeviceImageMemoryRequirementsBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct DeviceImageMemoryRequirementsKHRBuilder<'a> {
-    inner: DeviceImageMemoryRequirementsKHR,
+pub struct DeviceImageMemoryRequirementsBuilder<'a> {
+    inner: DeviceImageMemoryRequirements,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-impl<'a> ::std::ops::Deref for DeviceImageMemoryRequirementsKHRBuilder<'a> {
-    type Target = DeviceImageMemoryRequirementsKHR;
+impl<'a> ::std::ops::Deref for DeviceImageMemoryRequirementsBuilder<'a> {
+    type Target = DeviceImageMemoryRequirements;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for DeviceImageMemoryRequirementsKHRBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for DeviceImageMemoryRequirementsBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> DeviceImageMemoryRequirementsKHRBuilder<'a> {
+impl<'a> DeviceImageMemoryRequirementsBuilder<'a> {
     pub fn create_info(mut self, create_info: &'a ImageCreateInfo) -> Self {
         self.inner.p_create_info = create_info;
         self
@@ -21380,7 +21377,7 @@ impl<'a> DeviceImageMemoryRequirementsKHRBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> DeviceImageMemoryRequirementsKHR {
+    pub fn build(self) -> DeviceImageMemoryRequirements {
         self.inner
     }
 }
@@ -21439,10 +21436,10 @@ impl<'a> MemoryRequirements2Builder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsMemoryRequirements2>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -21969,10 +21966,10 @@ impl<'a> SamplerYcbcrConversionCreateInfoBuilder<'a> {
         next: &'a mut T,
     ) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -22815,8 +22812,8 @@ pub struct SampleLocationsInfoEXTBuilder<'a> {
 }
 unsafe impl ExtendsImageMemoryBarrier for SampleLocationsInfoEXTBuilder<'_> {}
 unsafe impl ExtendsImageMemoryBarrier for SampleLocationsInfoEXT {}
-unsafe impl ExtendsImageMemoryBarrier2KHR for SampleLocationsInfoEXTBuilder<'_> {}
-unsafe impl ExtendsImageMemoryBarrier2KHR for SampleLocationsInfoEXT {}
+unsafe impl ExtendsImageMemoryBarrier2 for SampleLocationsInfoEXTBuilder<'_> {}
+unsafe impl ExtendsImageMemoryBarrier2 for SampleLocationsInfoEXT {}
 impl<'a> ::std::ops::Deref for SampleLocationsInfoEXTBuilder<'a> {
     type Target = SampleLocationsInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -23602,55 +23599,52 @@ impl<'a> PipelineColorBlendAdvancedStateCreateInfoEXTBuilder<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceInlineUniformBlockFeaturesEXT.html>"]
-pub struct PhysicalDeviceInlineUniformBlockFeaturesEXT {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceInlineUniformBlockFeatures.html>"]
+pub struct PhysicalDeviceInlineUniformBlockFeatures {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub inline_uniform_block: Bool32,
     pub descriptor_binding_inline_uniform_block_update_after_bind: Bool32,
 }
-impl ::std::default::Default for PhysicalDeviceInlineUniformBlockFeaturesEXT {
+impl ::std::default::Default for PhysicalDeviceInlineUniformBlockFeatures {
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_FEATURES_EXT,
+            s_type: StructureType::PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_FEATURES,
             p_next: ::std::ptr::null_mut(),
             inline_uniform_block: Bool32::default(),
             descriptor_binding_inline_uniform_block_update_after_bind: Bool32::default(),
         }
     }
 }
-impl PhysicalDeviceInlineUniformBlockFeaturesEXT {
-    pub fn builder<'a>() -> PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'a> {
-        PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder {
+impl PhysicalDeviceInlineUniformBlockFeatures {
+    pub fn builder<'a>() -> PhysicalDeviceInlineUniformBlockFeaturesBuilder<'a> {
+        PhysicalDeviceInlineUniformBlockFeaturesBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'a> {
-    inner: PhysicalDeviceInlineUniformBlockFeaturesEXT,
+pub struct PhysicalDeviceInlineUniformBlockFeaturesBuilder<'a> {
+    inner: PhysicalDeviceInlineUniformBlockFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'_>
-{
-}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceInlineUniformBlockFeaturesEXT {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceInlineUniformBlockFeaturesEXT {}
-impl<'a> ::std::ops::Deref for PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'a> {
-    type Target = PhysicalDeviceInlineUniformBlockFeaturesEXT;
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceInlineUniformBlockFeaturesBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceInlineUniformBlockFeatures {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceInlineUniformBlockFeaturesBuilder<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceInlineUniformBlockFeatures {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceInlineUniformBlockFeaturesBuilder<'a> {
+    type Target = PhysicalDeviceInlineUniformBlockFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceInlineUniformBlockFeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'a> {
+impl<'a> PhysicalDeviceInlineUniformBlockFeaturesBuilder<'a> {
     pub fn inline_uniform_block(mut self, inline_uniform_block: bool) -> Self {
         self.inner.inline_uniform_block = inline_uniform_block.into();
         self
@@ -23667,15 +23661,15 @@ impl<'a> PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> PhysicalDeviceInlineUniformBlockFeaturesEXT {
+    pub fn build(self) -> PhysicalDeviceInlineUniformBlockFeatures {
         self.inner
     }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceInlineUniformBlockPropertiesEXT.html>"]
-pub struct PhysicalDeviceInlineUniformBlockPropertiesEXT {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceInlineUniformBlockProperties.html>"]
+pub struct PhysicalDeviceInlineUniformBlockProperties {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub max_inline_uniform_block_size: u32,
@@ -23684,10 +23678,10 @@ pub struct PhysicalDeviceInlineUniformBlockPropertiesEXT {
     pub max_descriptor_set_inline_uniform_blocks: u32,
     pub max_descriptor_set_update_after_bind_inline_uniform_blocks: u32,
 }
-impl ::std::default::Default for PhysicalDeviceInlineUniformBlockPropertiesEXT {
+impl ::std::default::Default for PhysicalDeviceInlineUniformBlockProperties {
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_PROPERTIES_EXT,
+            s_type: StructureType::PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_PROPERTIES,
             p_next: ::std::ptr::null_mut(),
             max_inline_uniform_block_size: u32::default(),
             max_per_stage_descriptor_inline_uniform_blocks: u32::default(),
@@ -23697,36 +23691,36 @@ impl ::std::default::Default for PhysicalDeviceInlineUniformBlockPropertiesEXT {
         }
     }
 }
-impl PhysicalDeviceInlineUniformBlockPropertiesEXT {
-    pub fn builder<'a>() -> PhysicalDeviceInlineUniformBlockPropertiesEXTBuilder<'a> {
-        PhysicalDeviceInlineUniformBlockPropertiesEXTBuilder {
+impl PhysicalDeviceInlineUniformBlockProperties {
+    pub fn builder<'a>() -> PhysicalDeviceInlineUniformBlockPropertiesBuilder<'a> {
+        PhysicalDeviceInlineUniformBlockPropertiesBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct PhysicalDeviceInlineUniformBlockPropertiesEXTBuilder<'a> {
-    inner: PhysicalDeviceInlineUniformBlockPropertiesEXT,
+pub struct PhysicalDeviceInlineUniformBlockPropertiesBuilder<'a> {
+    inner: PhysicalDeviceInlineUniformBlockProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceInlineUniformBlockPropertiesEXTBuilder<'_>
+    for PhysicalDeviceInlineUniformBlockPropertiesBuilder<'_>
 {
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceInlineUniformBlockPropertiesEXT {}
-impl<'a> ::std::ops::Deref for PhysicalDeviceInlineUniformBlockPropertiesEXTBuilder<'a> {
-    type Target = PhysicalDeviceInlineUniformBlockPropertiesEXT;
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceInlineUniformBlockProperties {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceInlineUniformBlockPropertiesBuilder<'a> {
+    type Target = PhysicalDeviceInlineUniformBlockProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for PhysicalDeviceInlineUniformBlockPropertiesEXTBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceInlineUniformBlockPropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> PhysicalDeviceInlineUniformBlockPropertiesEXTBuilder<'a> {
+impl<'a> PhysicalDeviceInlineUniformBlockPropertiesBuilder<'a> {
     pub fn max_inline_uniform_block_size(mut self, max_inline_uniform_block_size: u32) -> Self {
         self.inner.max_inline_uniform_block_size = max_inline_uniform_block_size;
         self
@@ -23768,57 +23762,57 @@ impl<'a> PhysicalDeviceInlineUniformBlockPropertiesEXTBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> PhysicalDeviceInlineUniformBlockPropertiesEXT {
+    pub fn build(self) -> PhysicalDeviceInlineUniformBlockProperties {
         self.inner
     }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkWriteDescriptorSetInlineUniformBlockEXT.html>"]
-pub struct WriteDescriptorSetInlineUniformBlockEXT {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkWriteDescriptorSetInlineUniformBlock.html>"]
+pub struct WriteDescriptorSetInlineUniformBlock {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub data_size: u32,
     pub p_data: *const c_void,
 }
-impl ::std::default::Default for WriteDescriptorSetInlineUniformBlockEXT {
+impl ::std::default::Default for WriteDescriptorSetInlineUniformBlock {
     fn default() -> Self {
         Self {
-            s_type: StructureType::WRITE_DESCRIPTOR_SET_INLINE_UNIFORM_BLOCK_EXT,
+            s_type: StructureType::WRITE_DESCRIPTOR_SET_INLINE_UNIFORM_BLOCK,
             p_next: ::std::ptr::null(),
             data_size: u32::default(),
             p_data: ::std::ptr::null(),
         }
     }
 }
-impl WriteDescriptorSetInlineUniformBlockEXT {
-    pub fn builder<'a>() -> WriteDescriptorSetInlineUniformBlockEXTBuilder<'a> {
-        WriteDescriptorSetInlineUniformBlockEXTBuilder {
+impl WriteDescriptorSetInlineUniformBlock {
+    pub fn builder<'a>() -> WriteDescriptorSetInlineUniformBlockBuilder<'a> {
+        WriteDescriptorSetInlineUniformBlockBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct WriteDescriptorSetInlineUniformBlockEXTBuilder<'a> {
-    inner: WriteDescriptorSetInlineUniformBlockEXT,
+pub struct WriteDescriptorSetInlineUniformBlockBuilder<'a> {
+    inner: WriteDescriptorSetInlineUniformBlock,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-unsafe impl ExtendsWriteDescriptorSet for WriteDescriptorSetInlineUniformBlockEXTBuilder<'_> {}
-unsafe impl ExtendsWriteDescriptorSet for WriteDescriptorSetInlineUniformBlockEXT {}
-impl<'a> ::std::ops::Deref for WriteDescriptorSetInlineUniformBlockEXTBuilder<'a> {
-    type Target = WriteDescriptorSetInlineUniformBlockEXT;
+unsafe impl ExtendsWriteDescriptorSet for WriteDescriptorSetInlineUniformBlockBuilder<'_> {}
+unsafe impl ExtendsWriteDescriptorSet for WriteDescriptorSetInlineUniformBlock {}
+impl<'a> ::std::ops::Deref for WriteDescriptorSetInlineUniformBlockBuilder<'a> {
+    type Target = WriteDescriptorSetInlineUniformBlock;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for WriteDescriptorSetInlineUniformBlockEXTBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for WriteDescriptorSetInlineUniformBlockBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> WriteDescriptorSetInlineUniformBlockEXTBuilder<'a> {
+impl<'a> WriteDescriptorSetInlineUniformBlockBuilder<'a> {
     pub fn data(mut self, data: &'a [u8]) -> Self {
         self.inner.data_size = data.len() as _;
         self.inner.p_data = data.as_ptr() as *const c_void;
@@ -23827,58 +23821,58 @@ impl<'a> WriteDescriptorSetInlineUniformBlockEXTBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> WriteDescriptorSetInlineUniformBlockEXT {
+    pub fn build(self) -> WriteDescriptorSetInlineUniformBlock {
         self.inner
     }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDescriptorPoolInlineUniformBlockCreateInfoEXT.html>"]
-pub struct DescriptorPoolInlineUniformBlockCreateInfoEXT {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDescriptorPoolInlineUniformBlockCreateInfo.html>"]
+pub struct DescriptorPoolInlineUniformBlockCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub max_inline_uniform_block_bindings: u32,
 }
-impl ::std::default::Default for DescriptorPoolInlineUniformBlockCreateInfoEXT {
+impl ::std::default::Default for DescriptorPoolInlineUniformBlockCreateInfo {
     fn default() -> Self {
         Self {
-            s_type: StructureType::DESCRIPTOR_POOL_INLINE_UNIFORM_BLOCK_CREATE_INFO_EXT,
+            s_type: StructureType::DESCRIPTOR_POOL_INLINE_UNIFORM_BLOCK_CREATE_INFO,
             p_next: ::std::ptr::null(),
             max_inline_uniform_block_bindings: u32::default(),
         }
     }
 }
-impl DescriptorPoolInlineUniformBlockCreateInfoEXT {
-    pub fn builder<'a>() -> DescriptorPoolInlineUniformBlockCreateInfoEXTBuilder<'a> {
-        DescriptorPoolInlineUniformBlockCreateInfoEXTBuilder {
+impl DescriptorPoolInlineUniformBlockCreateInfo {
+    pub fn builder<'a>() -> DescriptorPoolInlineUniformBlockCreateInfoBuilder<'a> {
+        DescriptorPoolInlineUniformBlockCreateInfoBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct DescriptorPoolInlineUniformBlockCreateInfoEXTBuilder<'a> {
-    inner: DescriptorPoolInlineUniformBlockCreateInfoEXT,
+pub struct DescriptorPoolInlineUniformBlockCreateInfoBuilder<'a> {
+    inner: DescriptorPoolInlineUniformBlockCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 unsafe impl ExtendsDescriptorPoolCreateInfo
-    for DescriptorPoolInlineUniformBlockCreateInfoEXTBuilder<'_>
+    for DescriptorPoolInlineUniformBlockCreateInfoBuilder<'_>
 {
 }
-unsafe impl ExtendsDescriptorPoolCreateInfo for DescriptorPoolInlineUniformBlockCreateInfoEXT {}
-impl<'a> ::std::ops::Deref for DescriptorPoolInlineUniformBlockCreateInfoEXTBuilder<'a> {
-    type Target = DescriptorPoolInlineUniformBlockCreateInfoEXT;
+unsafe impl ExtendsDescriptorPoolCreateInfo for DescriptorPoolInlineUniformBlockCreateInfo {}
+impl<'a> ::std::ops::Deref for DescriptorPoolInlineUniformBlockCreateInfoBuilder<'a> {
+    type Target = DescriptorPoolInlineUniformBlockCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for DescriptorPoolInlineUniformBlockCreateInfoEXTBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for DescriptorPoolInlineUniformBlockCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> DescriptorPoolInlineUniformBlockCreateInfoEXTBuilder<'a> {
+impl<'a> DescriptorPoolInlineUniformBlockCreateInfoBuilder<'a> {
     pub fn max_inline_uniform_block_bindings(
         mut self,
         max_inline_uniform_block_bindings: u32,
@@ -23889,7 +23883,7 @@ impl<'a> DescriptorPoolInlineUniformBlockCreateInfoEXTBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> DescriptorPoolInlineUniformBlockCreateInfoEXT {
+    pub fn build(self) -> DescriptorPoolInlineUniformBlockCreateInfo {
         self.inner
     }
 }
@@ -24097,7 +24091,7 @@ impl<'a> ValidationCacheCreateInfoEXTBuilder<'a> {
         self
     }
     pub fn initial_data(mut self, initial_data: &'a [u8]) -> Self {
-        self.inner.initial_data_size = initial_data.len() as _;
+        self.inner.initial_data_size = initial_data.len();
         self.inner.p_initial_data = initial_data.as_ptr() as *const c_void;
         self
     }
@@ -24229,50 +24223,50 @@ impl<'a> PhysicalDeviceMaintenance3PropertiesBuilder<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceMaintenance4FeaturesKHR.html>"]
-pub struct PhysicalDeviceMaintenance4FeaturesKHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceMaintenance4Features.html>"]
+pub struct PhysicalDeviceMaintenance4Features {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub maintenance4: Bool32,
 }
-impl ::std::default::Default for PhysicalDeviceMaintenance4FeaturesKHR {
+impl ::std::default::Default for PhysicalDeviceMaintenance4Features {
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_MAINTENANCE_4_FEATURES_KHR,
+            s_type: StructureType::PHYSICAL_DEVICE_MAINTENANCE_4_FEATURES,
             p_next: ::std::ptr::null_mut(),
             maintenance4: Bool32::default(),
         }
     }
 }
-impl PhysicalDeviceMaintenance4FeaturesKHR {
-    pub fn builder<'a>() -> PhysicalDeviceMaintenance4FeaturesKHRBuilder<'a> {
-        PhysicalDeviceMaintenance4FeaturesKHRBuilder {
+impl PhysicalDeviceMaintenance4Features {
+    pub fn builder<'a>() -> PhysicalDeviceMaintenance4FeaturesBuilder<'a> {
+        PhysicalDeviceMaintenance4FeaturesBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct PhysicalDeviceMaintenance4FeaturesKHRBuilder<'a> {
-    inner: PhysicalDeviceMaintenance4FeaturesKHR,
+pub struct PhysicalDeviceMaintenance4FeaturesBuilder<'a> {
+    inner: PhysicalDeviceMaintenance4Features,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMaintenance4FeaturesKHRBuilder<'_> {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMaintenance4FeaturesKHR {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMaintenance4FeaturesKHRBuilder<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMaintenance4FeaturesKHR {}
-impl<'a> ::std::ops::Deref for PhysicalDeviceMaintenance4FeaturesKHRBuilder<'a> {
-    type Target = PhysicalDeviceMaintenance4FeaturesKHR;
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMaintenance4FeaturesBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMaintenance4Features {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMaintenance4FeaturesBuilder<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMaintenance4Features {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceMaintenance4FeaturesBuilder<'a> {
+    type Target = PhysicalDeviceMaintenance4Features;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for PhysicalDeviceMaintenance4FeaturesKHRBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceMaintenance4FeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> PhysicalDeviceMaintenance4FeaturesKHRBuilder<'a> {
+impl<'a> PhysicalDeviceMaintenance4FeaturesBuilder<'a> {
     pub fn maintenance4(mut self, maintenance4: bool) -> Self {
         self.inner.maintenance4 = maintenance4.into();
         self
@@ -24280,58 +24274,55 @@ impl<'a> PhysicalDeviceMaintenance4FeaturesKHRBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> PhysicalDeviceMaintenance4FeaturesKHR {
+    pub fn build(self) -> PhysicalDeviceMaintenance4Features {
         self.inner
     }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceMaintenance4PropertiesKHR.html>"]
-pub struct PhysicalDeviceMaintenance4PropertiesKHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceMaintenance4Properties.html>"]
+pub struct PhysicalDeviceMaintenance4Properties {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub max_buffer_size: DeviceSize,
 }
-impl ::std::default::Default for PhysicalDeviceMaintenance4PropertiesKHR {
+impl ::std::default::Default for PhysicalDeviceMaintenance4Properties {
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_MAINTENANCE_4_PROPERTIES_KHR,
+            s_type: StructureType::PHYSICAL_DEVICE_MAINTENANCE_4_PROPERTIES,
             p_next: ::std::ptr::null_mut(),
             max_buffer_size: DeviceSize::default(),
         }
     }
 }
-impl PhysicalDeviceMaintenance4PropertiesKHR {
-    pub fn builder<'a>() -> PhysicalDeviceMaintenance4PropertiesKHRBuilder<'a> {
-        PhysicalDeviceMaintenance4PropertiesKHRBuilder {
+impl PhysicalDeviceMaintenance4Properties {
+    pub fn builder<'a>() -> PhysicalDeviceMaintenance4PropertiesBuilder<'a> {
+        PhysicalDeviceMaintenance4PropertiesBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct PhysicalDeviceMaintenance4PropertiesKHRBuilder<'a> {
-    inner: PhysicalDeviceMaintenance4PropertiesKHR,
+pub struct PhysicalDeviceMaintenance4PropertiesBuilder<'a> {
+    inner: PhysicalDeviceMaintenance4Properties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceMaintenance4PropertiesKHRBuilder<'_>
-{
-}
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMaintenance4PropertiesKHR {}
-impl<'a> ::std::ops::Deref for PhysicalDeviceMaintenance4PropertiesKHRBuilder<'a> {
-    type Target = PhysicalDeviceMaintenance4PropertiesKHR;
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMaintenance4PropertiesBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMaintenance4Properties {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceMaintenance4PropertiesBuilder<'a> {
+    type Target = PhysicalDeviceMaintenance4Properties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for PhysicalDeviceMaintenance4PropertiesKHRBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceMaintenance4PropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> PhysicalDeviceMaintenance4PropertiesKHRBuilder<'a> {
+impl<'a> PhysicalDeviceMaintenance4PropertiesBuilder<'a> {
     pub fn max_buffer_size(mut self, max_buffer_size: DeviceSize) -> Self {
         self.inner.max_buffer_size = max_buffer_size;
         self
@@ -24339,7 +24330,7 @@ impl<'a> PhysicalDeviceMaintenance4PropertiesKHRBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> PhysicalDeviceMaintenance4PropertiesKHR {
+    pub fn build(self) -> PhysicalDeviceMaintenance4Properties {
         self.inner
     }
 }
@@ -24398,10 +24389,10 @@ impl<'a> DescriptorSetLayoutSupportBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsDescriptorSetLayoutSupport>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -25178,109 +25169,109 @@ impl<'a> ShaderStatisticsInfoAMDBuilder<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDeviceQueueGlobalPriorityCreateInfoEXT.html>"]
-pub struct DeviceQueueGlobalPriorityCreateInfoEXT {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDeviceQueueGlobalPriorityCreateInfoKHR.html>"]
+pub struct DeviceQueueGlobalPriorityCreateInfoKHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub global_priority: QueueGlobalPriorityEXT,
+    pub global_priority: QueueGlobalPriorityKHR,
 }
-impl ::std::default::Default for DeviceQueueGlobalPriorityCreateInfoEXT {
+impl ::std::default::Default for DeviceQueueGlobalPriorityCreateInfoKHR {
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO_EXT,
+            s_type: StructureType::DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO_KHR,
             p_next: ::std::ptr::null(),
-            global_priority: QueueGlobalPriorityEXT::default(),
+            global_priority: QueueGlobalPriorityKHR::default(),
         }
     }
 }
-impl DeviceQueueGlobalPriorityCreateInfoEXT {
-    pub fn builder<'a>() -> DeviceQueueGlobalPriorityCreateInfoEXTBuilder<'a> {
-        DeviceQueueGlobalPriorityCreateInfoEXTBuilder {
+impl DeviceQueueGlobalPriorityCreateInfoKHR {
+    pub fn builder<'a>() -> DeviceQueueGlobalPriorityCreateInfoKHRBuilder<'a> {
+        DeviceQueueGlobalPriorityCreateInfoKHRBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct DeviceQueueGlobalPriorityCreateInfoEXTBuilder<'a> {
-    inner: DeviceQueueGlobalPriorityCreateInfoEXT,
+pub struct DeviceQueueGlobalPriorityCreateInfoKHRBuilder<'a> {
+    inner: DeviceQueueGlobalPriorityCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-unsafe impl ExtendsDeviceQueueCreateInfo for DeviceQueueGlobalPriorityCreateInfoEXTBuilder<'_> {}
-unsafe impl ExtendsDeviceQueueCreateInfo for DeviceQueueGlobalPriorityCreateInfoEXT {}
-impl<'a> ::std::ops::Deref for DeviceQueueGlobalPriorityCreateInfoEXTBuilder<'a> {
-    type Target = DeviceQueueGlobalPriorityCreateInfoEXT;
+unsafe impl ExtendsDeviceQueueCreateInfo for DeviceQueueGlobalPriorityCreateInfoKHRBuilder<'_> {}
+unsafe impl ExtendsDeviceQueueCreateInfo for DeviceQueueGlobalPriorityCreateInfoKHR {}
+impl<'a> ::std::ops::Deref for DeviceQueueGlobalPriorityCreateInfoKHRBuilder<'a> {
+    type Target = DeviceQueueGlobalPriorityCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for DeviceQueueGlobalPriorityCreateInfoEXTBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for DeviceQueueGlobalPriorityCreateInfoKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> DeviceQueueGlobalPriorityCreateInfoEXTBuilder<'a> {
-    pub fn global_priority(mut self, global_priority: QueueGlobalPriorityEXT) -> Self {
+impl<'a> DeviceQueueGlobalPriorityCreateInfoKHRBuilder<'a> {
+    pub fn global_priority(mut self, global_priority: QueueGlobalPriorityKHR) -> Self {
         self.inner.global_priority = global_priority;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> DeviceQueueGlobalPriorityCreateInfoEXT {
+    pub fn build(self) -> DeviceQueueGlobalPriorityCreateInfoKHR {
         self.inner
     }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceGlobalPriorityQueryFeaturesEXT.html>"]
-pub struct PhysicalDeviceGlobalPriorityQueryFeaturesEXT {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceGlobalPriorityQueryFeaturesKHR.html>"]
+pub struct PhysicalDeviceGlobalPriorityQueryFeaturesKHR {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub global_priority_query: Bool32,
 }
-impl ::std::default::Default for PhysicalDeviceGlobalPriorityQueryFeaturesEXT {
+impl ::std::default::Default for PhysicalDeviceGlobalPriorityQueryFeaturesKHR {
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_GLOBAL_PRIORITY_QUERY_FEATURES_EXT,
+            s_type: StructureType::PHYSICAL_DEVICE_GLOBAL_PRIORITY_QUERY_FEATURES_KHR,
             p_next: ::std::ptr::null_mut(),
             global_priority_query: Bool32::default(),
         }
     }
 }
-impl PhysicalDeviceGlobalPriorityQueryFeaturesEXT {
-    pub fn builder<'a>() -> PhysicalDeviceGlobalPriorityQueryFeaturesEXTBuilder<'a> {
-        PhysicalDeviceGlobalPriorityQueryFeaturesEXTBuilder {
+impl PhysicalDeviceGlobalPriorityQueryFeaturesKHR {
+    pub fn builder<'a>() -> PhysicalDeviceGlobalPriorityQueryFeaturesKHRBuilder<'a> {
+        PhysicalDeviceGlobalPriorityQueryFeaturesKHRBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct PhysicalDeviceGlobalPriorityQueryFeaturesEXTBuilder<'a> {
-    inner: PhysicalDeviceGlobalPriorityQueryFeaturesEXT,
+pub struct PhysicalDeviceGlobalPriorityQueryFeaturesKHRBuilder<'a> {
+    inner: PhysicalDeviceGlobalPriorityQueryFeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceGlobalPriorityQueryFeaturesEXTBuilder<'_>
+    for PhysicalDeviceGlobalPriorityQueryFeaturesKHRBuilder<'_>
 {
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceGlobalPriorityQueryFeaturesEXT {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceGlobalPriorityQueryFeaturesEXTBuilder<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceGlobalPriorityQueryFeaturesEXT {}
-impl<'a> ::std::ops::Deref for PhysicalDeviceGlobalPriorityQueryFeaturesEXTBuilder<'a> {
-    type Target = PhysicalDeviceGlobalPriorityQueryFeaturesEXT;
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceGlobalPriorityQueryFeaturesKHR {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceGlobalPriorityQueryFeaturesKHRBuilder<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceGlobalPriorityQueryFeaturesKHR {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceGlobalPriorityQueryFeaturesKHRBuilder<'a> {
+    type Target = PhysicalDeviceGlobalPriorityQueryFeaturesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for PhysicalDeviceGlobalPriorityQueryFeaturesEXTBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceGlobalPriorityQueryFeaturesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> PhysicalDeviceGlobalPriorityQueryFeaturesEXTBuilder<'a> {
+impl<'a> PhysicalDeviceGlobalPriorityQueryFeaturesKHRBuilder<'a> {
     pub fn global_priority_query(mut self, global_priority_query: bool) -> Self {
         self.inner.global_priority_query = global_priority_query.into();
         self
@@ -25288,64 +25279,64 @@ impl<'a> PhysicalDeviceGlobalPriorityQueryFeaturesEXTBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> PhysicalDeviceGlobalPriorityQueryFeaturesEXT {
+    pub fn build(self) -> PhysicalDeviceGlobalPriorityQueryFeaturesKHR {
         self.inner
     }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkQueueFamilyGlobalPriorityPropertiesEXT.html>"]
-pub struct QueueFamilyGlobalPriorityPropertiesEXT {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkQueueFamilyGlobalPriorityPropertiesKHR.html>"]
+pub struct QueueFamilyGlobalPriorityPropertiesKHR {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub priority_count: u32,
-    pub priorities: [QueueGlobalPriorityEXT; MAX_GLOBAL_PRIORITY_SIZE_EXT],
+    pub priorities: [QueueGlobalPriorityKHR; MAX_GLOBAL_PRIORITY_SIZE_KHR],
 }
-impl ::std::default::Default for QueueFamilyGlobalPriorityPropertiesEXT {
+impl ::std::default::Default for QueueFamilyGlobalPriorityPropertiesKHR {
     fn default() -> Self {
         Self {
-            s_type: StructureType::QUEUE_FAMILY_GLOBAL_PRIORITY_PROPERTIES_EXT,
+            s_type: StructureType::QUEUE_FAMILY_GLOBAL_PRIORITY_PROPERTIES_KHR,
             p_next: ::std::ptr::null_mut(),
             priority_count: u32::default(),
             priorities: unsafe { ::std::mem::zeroed() },
         }
     }
 }
-impl QueueFamilyGlobalPriorityPropertiesEXT {
-    pub fn builder<'a>() -> QueueFamilyGlobalPriorityPropertiesEXTBuilder<'a> {
-        QueueFamilyGlobalPriorityPropertiesEXTBuilder {
+impl QueueFamilyGlobalPriorityPropertiesKHR {
+    pub fn builder<'a>() -> QueueFamilyGlobalPriorityPropertiesKHRBuilder<'a> {
+        QueueFamilyGlobalPriorityPropertiesKHRBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct QueueFamilyGlobalPriorityPropertiesEXTBuilder<'a> {
-    inner: QueueFamilyGlobalPriorityPropertiesEXT,
+pub struct QueueFamilyGlobalPriorityPropertiesKHRBuilder<'a> {
+    inner: QueueFamilyGlobalPriorityPropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-unsafe impl ExtendsQueueFamilyProperties2 for QueueFamilyGlobalPriorityPropertiesEXTBuilder<'_> {}
-unsafe impl ExtendsQueueFamilyProperties2 for QueueFamilyGlobalPriorityPropertiesEXT {}
-impl<'a> ::std::ops::Deref for QueueFamilyGlobalPriorityPropertiesEXTBuilder<'a> {
-    type Target = QueueFamilyGlobalPriorityPropertiesEXT;
+unsafe impl ExtendsQueueFamilyProperties2 for QueueFamilyGlobalPriorityPropertiesKHRBuilder<'_> {}
+unsafe impl ExtendsQueueFamilyProperties2 for QueueFamilyGlobalPriorityPropertiesKHR {}
+impl<'a> ::std::ops::Deref for QueueFamilyGlobalPriorityPropertiesKHRBuilder<'a> {
+    type Target = QueueFamilyGlobalPriorityPropertiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for QueueFamilyGlobalPriorityPropertiesEXTBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for QueueFamilyGlobalPriorityPropertiesKHRBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> QueueFamilyGlobalPriorityPropertiesEXTBuilder<'a> {
+impl<'a> QueueFamilyGlobalPriorityPropertiesKHRBuilder<'a> {
     pub fn priority_count(mut self, priority_count: u32) -> Self {
         self.inner.priority_count = priority_count;
         self
     }
     pub fn priorities(
         mut self,
-        priorities: [QueueGlobalPriorityEXT; MAX_GLOBAL_PRIORITY_SIZE_EXT],
+        priorities: [QueueGlobalPriorityKHR; MAX_GLOBAL_PRIORITY_SIZE_KHR],
     ) -> Self {
         self.inner.priorities = priorities;
         self
@@ -25353,7 +25344,7 @@ impl<'a> QueueFamilyGlobalPriorityPropertiesEXTBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> QueueFamilyGlobalPriorityPropertiesEXT {
+    pub fn build(self) -> QueueFamilyGlobalPriorityPropertiesKHR {
         self.inner
     }
 }
@@ -25487,7 +25478,7 @@ impl<'a> DebugUtilsObjectTagInfoEXTBuilder<'a> {
         self
     }
     pub fn tag(mut self, tag: &'a [u8]) -> Self {
-        self.inner.tag_size = tag.len() as _;
+        self.inner.tag_size = tag.len();
         self.inner.p_tag = tag.as_ptr() as *const c_void;
         self
     }
@@ -27480,10 +27471,10 @@ impl<'a> AttachmentDescription2Builder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsAttachmentDescription2>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -27561,10 +27552,10 @@ impl<'a> AttachmentReference2Builder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsAttachmentReference2>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -27685,10 +27676,10 @@ impl<'a> SubpassDescription2Builder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsSubpassDescription2>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -27796,10 +27787,10 @@ impl<'a> SubpassDependency2Builder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsSubpassDependency2>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -27901,10 +27892,10 @@ impl<'a> RenderPassCreateInfo2Builder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsRenderPassCreateInfo2>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -28018,10 +28009,10 @@ impl<'a> SubpassEndInfoBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsSubpassEndInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -28842,10 +28833,10 @@ impl<'a> AndroidHardwareBufferPropertiesANDROIDBuilder<'a> {
         next: &'a mut T,
     ) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -32079,10 +32070,10 @@ impl<'a> RayTracingPipelineCreateInfoNVBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsRayTracingPipelineCreateInfoNV>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -32214,10 +32205,10 @@ impl<'a> RayTracingPipelineCreateInfoKHRBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsRayTracingPipelineCreateInfoKHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -35934,56 +35925,53 @@ impl<'a> RenderPassAttachmentBeginInfoBuilder<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceTextureCompressionASTCHDRFeaturesEXT.html>"]
-pub struct PhysicalDeviceTextureCompressionASTCHDRFeaturesEXT {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceTextureCompressionASTCHDRFeatures.html>"]
+pub struct PhysicalDeviceTextureCompressionASTCHDRFeatures {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub texture_compression_astc_hdr: Bool32,
 }
-impl ::std::default::Default for PhysicalDeviceTextureCompressionASTCHDRFeaturesEXT {
+impl ::std::default::Default for PhysicalDeviceTextureCompressionASTCHDRFeatures {
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_TEXTURE_COMPRESSION_ASTC_HDR_FEATURES_EXT,
+            s_type: StructureType::PHYSICAL_DEVICE_TEXTURE_COMPRESSION_ASTC_HDR_FEATURES,
             p_next: ::std::ptr::null_mut(),
             texture_compression_astc_hdr: Bool32::default(),
         }
     }
 }
-impl PhysicalDeviceTextureCompressionASTCHDRFeaturesEXT {
-    pub fn builder<'a>() -> PhysicalDeviceTextureCompressionASTCHDRFeaturesEXTBuilder<'a> {
-        PhysicalDeviceTextureCompressionASTCHDRFeaturesEXTBuilder {
+impl PhysicalDeviceTextureCompressionASTCHDRFeatures {
+    pub fn builder<'a>() -> PhysicalDeviceTextureCompressionASTCHDRFeaturesBuilder<'a> {
+        PhysicalDeviceTextureCompressionASTCHDRFeaturesBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct PhysicalDeviceTextureCompressionASTCHDRFeaturesEXTBuilder<'a> {
-    inner: PhysicalDeviceTextureCompressionASTCHDRFeaturesEXT,
+pub struct PhysicalDeviceTextureCompressionASTCHDRFeaturesBuilder<'a> {
+    inner: PhysicalDeviceTextureCompressionASTCHDRFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceTextureCompressionASTCHDRFeaturesEXTBuilder<'_>
+    for PhysicalDeviceTextureCompressionASTCHDRFeaturesBuilder<'_>
 {
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceTextureCompressionASTCHDRFeaturesEXT {}
-unsafe impl ExtendsDeviceCreateInfo
-    for PhysicalDeviceTextureCompressionASTCHDRFeaturesEXTBuilder<'_>
-{
-}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceTextureCompressionASTCHDRFeaturesEXT {}
-impl<'a> ::std::ops::Deref for PhysicalDeviceTextureCompressionASTCHDRFeaturesEXTBuilder<'a> {
-    type Target = PhysicalDeviceTextureCompressionASTCHDRFeaturesEXT;
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceTextureCompressionASTCHDRFeatures {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceTextureCompressionASTCHDRFeaturesBuilder<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceTextureCompressionASTCHDRFeatures {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceTextureCompressionASTCHDRFeaturesBuilder<'a> {
+    type Target = PhysicalDeviceTextureCompressionASTCHDRFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for PhysicalDeviceTextureCompressionASTCHDRFeaturesEXTBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceTextureCompressionASTCHDRFeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> PhysicalDeviceTextureCompressionASTCHDRFeaturesEXTBuilder<'a> {
+impl<'a> PhysicalDeviceTextureCompressionASTCHDRFeaturesBuilder<'a> {
     pub fn texture_compression_astc_hdr(mut self, texture_compression_astc_hdr: bool) -> Self {
         self.inner.texture_compression_astc_hdr = texture_compression_astc_hdr.into();
         self
@@ -35991,7 +35979,7 @@ impl<'a> PhysicalDeviceTextureCompressionASTCHDRFeaturesEXTBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> PhysicalDeviceTextureCompressionASTCHDRFeaturesEXT {
+    pub fn build(self) -> PhysicalDeviceTextureCompressionASTCHDRFeatures {
         self.inner
     }
 }
@@ -36470,37 +36458,37 @@ impl<'a> PresentFrameTokenGGPBuilder<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone, Default)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineCreationFeedbackEXT.html>"]
-pub struct PipelineCreationFeedbackEXT {
-    pub flags: PipelineCreationFeedbackFlagsEXT,
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineCreationFeedback.html>"]
+pub struct PipelineCreationFeedback {
+    pub flags: PipelineCreationFeedbackFlags,
     pub duration: u64,
 }
-impl PipelineCreationFeedbackEXT {
-    pub fn builder<'a>() -> PipelineCreationFeedbackEXTBuilder<'a> {
-        PipelineCreationFeedbackEXTBuilder {
+impl PipelineCreationFeedback {
+    pub fn builder<'a>() -> PipelineCreationFeedbackBuilder<'a> {
+        PipelineCreationFeedbackBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct PipelineCreationFeedbackEXTBuilder<'a> {
-    inner: PipelineCreationFeedbackEXT,
+pub struct PipelineCreationFeedbackBuilder<'a> {
+    inner: PipelineCreationFeedback,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-impl<'a> ::std::ops::Deref for PipelineCreationFeedbackEXTBuilder<'a> {
-    type Target = PipelineCreationFeedbackEXT;
+impl<'a> ::std::ops::Deref for PipelineCreationFeedbackBuilder<'a> {
+    type Target = PipelineCreationFeedback;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for PipelineCreationFeedbackEXTBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for PipelineCreationFeedbackBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> PipelineCreationFeedbackEXTBuilder<'a> {
-    pub fn flags(mut self, flags: PipelineCreationFeedbackFlagsEXT) -> Self {
+impl<'a> PipelineCreationFeedbackBuilder<'a> {
+    pub fn flags(mut self, flags: PipelineCreationFeedbackFlags) -> Self {
         self.inner.flags = flags;
         self
     }
@@ -36511,25 +36499,25 @@ impl<'a> PipelineCreationFeedbackEXTBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> PipelineCreationFeedbackEXT {
+    pub fn build(self) -> PipelineCreationFeedback {
         self.inner
     }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineCreationFeedbackCreateInfoEXT.html>"]
-pub struct PipelineCreationFeedbackCreateInfoEXT {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineCreationFeedbackCreateInfo.html>"]
+pub struct PipelineCreationFeedbackCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub p_pipeline_creation_feedback: *mut PipelineCreationFeedbackEXT,
+    pub p_pipeline_creation_feedback: *mut PipelineCreationFeedback,
     pub pipeline_stage_creation_feedback_count: u32,
-    pub p_pipeline_stage_creation_feedbacks: *mut PipelineCreationFeedbackEXT,
+    pub p_pipeline_stage_creation_feedbacks: *mut PipelineCreationFeedback,
 }
-impl ::std::default::Default for PipelineCreationFeedbackCreateInfoEXT {
+impl ::std::default::Default for PipelineCreationFeedbackCreateInfo {
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_CREATION_FEEDBACK_CREATE_INFO_EXT,
+            s_type: StructureType::PIPELINE_CREATION_FEEDBACK_CREATE_INFO,
             p_next: ::std::ptr::null(),
             p_pipeline_creation_feedback: ::std::ptr::null_mut(),
             pipeline_stage_creation_feedback_count: u32::default(),
@@ -36537,55 +36525,55 @@ impl ::std::default::Default for PipelineCreationFeedbackCreateInfoEXT {
         }
     }
 }
-impl PipelineCreationFeedbackCreateInfoEXT {
-    pub fn builder<'a>() -> PipelineCreationFeedbackCreateInfoEXTBuilder<'a> {
-        PipelineCreationFeedbackCreateInfoEXTBuilder {
+impl PipelineCreationFeedbackCreateInfo {
+    pub fn builder<'a>() -> PipelineCreationFeedbackCreateInfoBuilder<'a> {
+        PipelineCreationFeedbackCreateInfoBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct PipelineCreationFeedbackCreateInfoEXTBuilder<'a> {
-    inner: PipelineCreationFeedbackCreateInfoEXT,
+pub struct PipelineCreationFeedbackCreateInfoBuilder<'a> {
+    inner: PipelineCreationFeedbackCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineCreationFeedbackCreateInfoEXTBuilder<'_> {}
-unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineCreationFeedbackCreateInfoEXT {}
-unsafe impl ExtendsComputePipelineCreateInfo for PipelineCreationFeedbackCreateInfoEXTBuilder<'_> {}
-unsafe impl ExtendsComputePipelineCreateInfo for PipelineCreationFeedbackCreateInfoEXT {}
+unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineCreationFeedbackCreateInfoBuilder<'_> {}
+unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineCreationFeedbackCreateInfo {}
+unsafe impl ExtendsComputePipelineCreateInfo for PipelineCreationFeedbackCreateInfoBuilder<'_> {}
+unsafe impl ExtendsComputePipelineCreateInfo for PipelineCreationFeedbackCreateInfo {}
 unsafe impl ExtendsRayTracingPipelineCreateInfoNV
-    for PipelineCreationFeedbackCreateInfoEXTBuilder<'_>
+    for PipelineCreationFeedbackCreateInfoBuilder<'_>
 {
 }
-unsafe impl ExtendsRayTracingPipelineCreateInfoNV for PipelineCreationFeedbackCreateInfoEXT {}
+unsafe impl ExtendsRayTracingPipelineCreateInfoNV for PipelineCreationFeedbackCreateInfo {}
 unsafe impl ExtendsRayTracingPipelineCreateInfoKHR
-    for PipelineCreationFeedbackCreateInfoEXTBuilder<'_>
+    for PipelineCreationFeedbackCreateInfoBuilder<'_>
 {
 }
-unsafe impl ExtendsRayTracingPipelineCreateInfoKHR for PipelineCreationFeedbackCreateInfoEXT {}
-impl<'a> ::std::ops::Deref for PipelineCreationFeedbackCreateInfoEXTBuilder<'a> {
-    type Target = PipelineCreationFeedbackCreateInfoEXT;
+unsafe impl ExtendsRayTracingPipelineCreateInfoKHR for PipelineCreationFeedbackCreateInfo {}
+impl<'a> ::std::ops::Deref for PipelineCreationFeedbackCreateInfoBuilder<'a> {
+    type Target = PipelineCreationFeedbackCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for PipelineCreationFeedbackCreateInfoEXTBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for PipelineCreationFeedbackCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> PipelineCreationFeedbackCreateInfoEXTBuilder<'a> {
+impl<'a> PipelineCreationFeedbackCreateInfoBuilder<'a> {
     pub fn pipeline_creation_feedback(
         mut self,
-        pipeline_creation_feedback: &'a mut PipelineCreationFeedbackEXT,
+        pipeline_creation_feedback: &'a mut PipelineCreationFeedback,
     ) -> Self {
         self.inner.p_pipeline_creation_feedback = pipeline_creation_feedback;
         self
     }
     pub fn pipeline_stage_creation_feedbacks(
         mut self,
-        pipeline_stage_creation_feedbacks: &'a mut [PipelineCreationFeedbackEXT],
+        pipeline_stage_creation_feedbacks: &'a mut [PipelineCreationFeedback],
     ) -> Self {
         self.inner.pipeline_stage_creation_feedback_count =
             pipeline_stage_creation_feedbacks.len() as _;
@@ -36596,7 +36584,7 @@ impl<'a> PipelineCreationFeedbackCreateInfoEXTBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> PipelineCreationFeedbackCreateInfoEXT {
+    pub fn build(self) -> PipelineCreationFeedbackCreateInfo {
         self.inner
     }
 }
@@ -37008,13 +36996,13 @@ impl fmt::Debug for PerformanceCounterDescriptionKHR {
             .field("p_next", &self.p_next)
             .field("flags", &self.flags)
             .field("name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.name.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.name.as_ptr())
             })
             .field("category", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.category.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.category.as_ptr())
             })
             .field("description", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.description.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.description.as_ptr())
             })
             .finish()
     }
@@ -37253,8 +37241,8 @@ pub struct PerformanceQuerySubmitInfoKHRBuilder<'a> {
 }
 unsafe impl ExtendsSubmitInfo for PerformanceQuerySubmitInfoKHRBuilder<'_> {}
 unsafe impl ExtendsSubmitInfo for PerformanceQuerySubmitInfoKHR {}
-unsafe impl ExtendsSubmitInfo2KHR for PerformanceQuerySubmitInfoKHRBuilder<'_> {}
-unsafe impl ExtendsSubmitInfo2KHR for PerformanceQuerySubmitInfoKHR {}
+unsafe impl ExtendsSubmitInfo2 for PerformanceQuerySubmitInfoKHRBuilder<'_> {}
+unsafe impl ExtendsSubmitInfo2 for PerformanceQuerySubmitInfoKHR {}
 impl<'a> ::std::ops::Deref for PerformanceQuerySubmitInfoKHRBuilder<'a> {
     type Target = PerformanceQuerySubmitInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -38748,10 +38736,10 @@ impl fmt::Debug for PipelineExecutablePropertiesKHR {
             .field("p_next", &self.p_next)
             .field("stages", &self.stages)
             .field("name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.name.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.name.as_ptr())
             })
             .field("description", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.description.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.description.as_ptr())
             })
             .field("subgroup_size", &self.subgroup_size)
             .finish()
@@ -38909,10 +38897,10 @@ impl fmt::Debug for PipelineExecutableStatisticKHR {
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
             .field("name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.name.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.name.as_ptr())
             })
             .field("description", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.description.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.description.as_ptr())
             })
             .field("format", &self.format)
             .field("value", &"union")
@@ -38998,10 +38986,10 @@ impl fmt::Debug for PipelineExecutableInternalRepresentationKHR {
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
             .field("name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.name.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.name.as_ptr())
             })
             .field("description", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.description.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.description.as_ptr())
             })
             .field("is_text", &self.is_text)
             .field("data_size", &self.data_size)
@@ -39060,7 +39048,7 @@ impl<'a> PipelineExecutableInternalRepresentationKHRBuilder<'a> {
         self
     }
     pub fn data(mut self, data: &'a mut [u8]) -> Self {
-        self.inner.data_size = data.len() as _;
+        self.inner.data_size = data.len();
         self.inner.p_data = data.as_mut_ptr() as *mut c_void;
         self
     }
@@ -39074,61 +39062,59 @@ impl<'a> PipelineExecutableInternalRepresentationKHRBuilder<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT.html>"]
-pub struct PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderDemoteToHelperInvocationFeatures.html>"]
+pub struct PhysicalDeviceShaderDemoteToHelperInvocationFeatures {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub shader_demote_to_helper_invocation: Bool32,
 }
-impl ::std::default::Default for PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT {
+impl ::std::default::Default for PhysicalDeviceShaderDemoteToHelperInvocationFeatures {
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SHADER_DEMOTE_TO_HELPER_INVOCATION_FEATURES_EXT,
+            s_type: StructureType::PHYSICAL_DEVICE_SHADER_DEMOTE_TO_HELPER_INVOCATION_FEATURES,
             p_next: ::std::ptr::null_mut(),
             shader_demote_to_helper_invocation: Bool32::default(),
         }
     }
 }
-impl PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT {
-    pub fn builder<'a>() -> PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXTBuilder<'a> {
-        PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXTBuilder {
+impl PhysicalDeviceShaderDemoteToHelperInvocationFeatures {
+    pub fn builder<'a>() -> PhysicalDeviceShaderDemoteToHelperInvocationFeaturesBuilder<'a> {
+        PhysicalDeviceShaderDemoteToHelperInvocationFeaturesBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXTBuilder<'a> {
-    inner: PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT,
+pub struct PhysicalDeviceShaderDemoteToHelperInvocationFeaturesBuilder<'a> {
+    inner: PhysicalDeviceShaderDemoteToHelperInvocationFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXTBuilder<'_>
+    for PhysicalDeviceShaderDemoteToHelperInvocationFeaturesBuilder<'_>
 {
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT
+    for PhysicalDeviceShaderDemoteToHelperInvocationFeatures
 {
 }
 unsafe impl ExtendsDeviceCreateInfo
-    for PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXTBuilder<'_>
+    for PhysicalDeviceShaderDemoteToHelperInvocationFeaturesBuilder<'_>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT {}
-impl<'a> ::std::ops::Deref for PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXTBuilder<'a> {
-    type Target = PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT;
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderDemoteToHelperInvocationFeatures {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceShaderDemoteToHelperInvocationFeaturesBuilder<'a> {
+    type Target = PhysicalDeviceShaderDemoteToHelperInvocationFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut
-    for PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXTBuilder<'a>
-{
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderDemoteToHelperInvocationFeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXTBuilder<'a> {
+impl<'a> PhysicalDeviceShaderDemoteToHelperInvocationFeaturesBuilder<'a> {
     pub fn shader_demote_to_helper_invocation(
         mut self,
         shader_demote_to_helper_invocation: bool,
@@ -39139,7 +39125,7 @@ impl<'a> PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXTBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT {
+    pub fn build(self) -> PhysicalDeviceShaderDemoteToHelperInvocationFeatures {
         self.inner
     }
 }
@@ -39207,8 +39193,8 @@ impl<'a> PhysicalDeviceTexelBufferAlignmentFeaturesEXTBuilder<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceTexelBufferAlignmentPropertiesEXT.html>"]
-pub struct PhysicalDeviceTexelBufferAlignmentPropertiesEXT {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceTexelBufferAlignmentProperties.html>"]
+pub struct PhysicalDeviceTexelBufferAlignmentProperties {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub storage_texel_buffer_offset_alignment_bytes: DeviceSize,
@@ -39216,10 +39202,10 @@ pub struct PhysicalDeviceTexelBufferAlignmentPropertiesEXT {
     pub uniform_texel_buffer_offset_alignment_bytes: DeviceSize,
     pub uniform_texel_buffer_offset_single_texel_alignment: Bool32,
 }
-impl ::std::default::Default for PhysicalDeviceTexelBufferAlignmentPropertiesEXT {
+impl ::std::default::Default for PhysicalDeviceTexelBufferAlignmentProperties {
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_TEXEL_BUFFER_ALIGNMENT_PROPERTIES_EXT,
+            s_type: StructureType::PHYSICAL_DEVICE_TEXEL_BUFFER_ALIGNMENT_PROPERTIES,
             p_next: ::std::ptr::null_mut(),
             storage_texel_buffer_offset_alignment_bytes: DeviceSize::default(),
             storage_texel_buffer_offset_single_texel_alignment: Bool32::default(),
@@ -39228,36 +39214,36 @@ impl ::std::default::Default for PhysicalDeviceTexelBufferAlignmentPropertiesEXT
         }
     }
 }
-impl PhysicalDeviceTexelBufferAlignmentPropertiesEXT {
-    pub fn builder<'a>() -> PhysicalDeviceTexelBufferAlignmentPropertiesEXTBuilder<'a> {
-        PhysicalDeviceTexelBufferAlignmentPropertiesEXTBuilder {
+impl PhysicalDeviceTexelBufferAlignmentProperties {
+    pub fn builder<'a>() -> PhysicalDeviceTexelBufferAlignmentPropertiesBuilder<'a> {
+        PhysicalDeviceTexelBufferAlignmentPropertiesBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct PhysicalDeviceTexelBufferAlignmentPropertiesEXTBuilder<'a> {
-    inner: PhysicalDeviceTexelBufferAlignmentPropertiesEXT,
+pub struct PhysicalDeviceTexelBufferAlignmentPropertiesBuilder<'a> {
+    inner: PhysicalDeviceTexelBufferAlignmentProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceTexelBufferAlignmentPropertiesEXTBuilder<'_>
+    for PhysicalDeviceTexelBufferAlignmentPropertiesBuilder<'_>
 {
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceTexelBufferAlignmentPropertiesEXT {}
-impl<'a> ::std::ops::Deref for PhysicalDeviceTexelBufferAlignmentPropertiesEXTBuilder<'a> {
-    type Target = PhysicalDeviceTexelBufferAlignmentPropertiesEXT;
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceTexelBufferAlignmentProperties {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceTexelBufferAlignmentPropertiesBuilder<'a> {
+    type Target = PhysicalDeviceTexelBufferAlignmentProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for PhysicalDeviceTexelBufferAlignmentPropertiesEXTBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceTexelBufferAlignmentPropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> PhysicalDeviceTexelBufferAlignmentPropertiesEXTBuilder<'a> {
+impl<'a> PhysicalDeviceTexelBufferAlignmentPropertiesBuilder<'a> {
     pub fn storage_texel_buffer_offset_alignment_bytes(
         mut self,
         storage_texel_buffer_offset_alignment_bytes: DeviceSize,
@@ -39295,62 +39281,62 @@ impl<'a> PhysicalDeviceTexelBufferAlignmentPropertiesEXTBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> PhysicalDeviceTexelBufferAlignmentPropertiesEXT {
+    pub fn build(self) -> PhysicalDeviceTexelBufferAlignmentProperties {
         self.inner
     }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceSubgroupSizeControlFeaturesEXT.html>"]
-pub struct PhysicalDeviceSubgroupSizeControlFeaturesEXT {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceSubgroupSizeControlFeatures.html>"]
+pub struct PhysicalDeviceSubgroupSizeControlFeatures {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub subgroup_size_control: Bool32,
     pub compute_full_subgroups: Bool32,
 }
-impl ::std::default::Default for PhysicalDeviceSubgroupSizeControlFeaturesEXT {
+impl ::std::default::Default for PhysicalDeviceSubgroupSizeControlFeatures {
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SUBGROUP_SIZE_CONTROL_FEATURES_EXT,
+            s_type: StructureType::PHYSICAL_DEVICE_SUBGROUP_SIZE_CONTROL_FEATURES,
             p_next: ::std::ptr::null_mut(),
             subgroup_size_control: Bool32::default(),
             compute_full_subgroups: Bool32::default(),
         }
     }
 }
-impl PhysicalDeviceSubgroupSizeControlFeaturesEXT {
-    pub fn builder<'a>() -> PhysicalDeviceSubgroupSizeControlFeaturesEXTBuilder<'a> {
-        PhysicalDeviceSubgroupSizeControlFeaturesEXTBuilder {
+impl PhysicalDeviceSubgroupSizeControlFeatures {
+    pub fn builder<'a>() -> PhysicalDeviceSubgroupSizeControlFeaturesBuilder<'a> {
+        PhysicalDeviceSubgroupSizeControlFeaturesBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct PhysicalDeviceSubgroupSizeControlFeaturesEXTBuilder<'a> {
-    inner: PhysicalDeviceSubgroupSizeControlFeaturesEXT,
+pub struct PhysicalDeviceSubgroupSizeControlFeaturesBuilder<'a> {
+    inner: PhysicalDeviceSubgroupSizeControlFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceSubgroupSizeControlFeaturesEXTBuilder<'_>
+    for PhysicalDeviceSubgroupSizeControlFeaturesBuilder<'_>
 {
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSubgroupSizeControlFeaturesEXT {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSubgroupSizeControlFeaturesEXTBuilder<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSubgroupSizeControlFeaturesEXT {}
-impl<'a> ::std::ops::Deref for PhysicalDeviceSubgroupSizeControlFeaturesEXTBuilder<'a> {
-    type Target = PhysicalDeviceSubgroupSizeControlFeaturesEXT;
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSubgroupSizeControlFeatures {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSubgroupSizeControlFeaturesBuilder<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSubgroupSizeControlFeatures {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceSubgroupSizeControlFeaturesBuilder<'a> {
+    type Target = PhysicalDeviceSubgroupSizeControlFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for PhysicalDeviceSubgroupSizeControlFeaturesEXTBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceSubgroupSizeControlFeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> PhysicalDeviceSubgroupSizeControlFeaturesEXTBuilder<'a> {
+impl<'a> PhysicalDeviceSubgroupSizeControlFeaturesBuilder<'a> {
     pub fn subgroup_size_control(mut self, subgroup_size_control: bool) -> Self {
         self.inner.subgroup_size_control = subgroup_size_control.into();
         self
@@ -39362,15 +39348,15 @@ impl<'a> PhysicalDeviceSubgroupSizeControlFeaturesEXTBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> PhysicalDeviceSubgroupSizeControlFeaturesEXT {
+    pub fn build(self) -> PhysicalDeviceSubgroupSizeControlFeatures {
         self.inner
     }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceSubgroupSizeControlPropertiesEXT.html>"]
-pub struct PhysicalDeviceSubgroupSizeControlPropertiesEXT {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceSubgroupSizeControlProperties.html>"]
+pub struct PhysicalDeviceSubgroupSizeControlProperties {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub min_subgroup_size: u32,
@@ -39378,10 +39364,10 @@ pub struct PhysicalDeviceSubgroupSizeControlPropertiesEXT {
     pub max_compute_workgroup_subgroups: u32,
     pub required_subgroup_size_stages: ShaderStageFlags,
 }
-impl ::std::default::Default for PhysicalDeviceSubgroupSizeControlPropertiesEXT {
+impl ::std::default::Default for PhysicalDeviceSubgroupSizeControlProperties {
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SUBGROUP_SIZE_CONTROL_PROPERTIES_EXT,
+            s_type: StructureType::PHYSICAL_DEVICE_SUBGROUP_SIZE_CONTROL_PROPERTIES,
             p_next: ::std::ptr::null_mut(),
             min_subgroup_size: u32::default(),
             max_subgroup_size: u32::default(),
@@ -39390,36 +39376,36 @@ impl ::std::default::Default for PhysicalDeviceSubgroupSizeControlPropertiesEXT 
         }
     }
 }
-impl PhysicalDeviceSubgroupSizeControlPropertiesEXT {
-    pub fn builder<'a>() -> PhysicalDeviceSubgroupSizeControlPropertiesEXTBuilder<'a> {
-        PhysicalDeviceSubgroupSizeControlPropertiesEXTBuilder {
+impl PhysicalDeviceSubgroupSizeControlProperties {
+    pub fn builder<'a>() -> PhysicalDeviceSubgroupSizeControlPropertiesBuilder<'a> {
+        PhysicalDeviceSubgroupSizeControlPropertiesBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct PhysicalDeviceSubgroupSizeControlPropertiesEXTBuilder<'a> {
-    inner: PhysicalDeviceSubgroupSizeControlPropertiesEXT,
+pub struct PhysicalDeviceSubgroupSizeControlPropertiesBuilder<'a> {
+    inner: PhysicalDeviceSubgroupSizeControlProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceSubgroupSizeControlPropertiesEXTBuilder<'_>
+    for PhysicalDeviceSubgroupSizeControlPropertiesBuilder<'_>
 {
 }
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSubgroupSizeControlPropertiesEXT {}
-impl<'a> ::std::ops::Deref for PhysicalDeviceSubgroupSizeControlPropertiesEXTBuilder<'a> {
-    type Target = PhysicalDeviceSubgroupSizeControlPropertiesEXT;
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSubgroupSizeControlProperties {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceSubgroupSizeControlPropertiesBuilder<'a> {
+    type Target = PhysicalDeviceSubgroupSizeControlProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for PhysicalDeviceSubgroupSizeControlPropertiesEXTBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceSubgroupSizeControlPropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> PhysicalDeviceSubgroupSizeControlPropertiesEXTBuilder<'a> {
+impl<'a> PhysicalDeviceSubgroupSizeControlPropertiesBuilder<'a> {
     pub fn min_subgroup_size(mut self, min_subgroup_size: u32) -> Self {
         self.inner.min_subgroup_size = min_subgroup_size;
         self
@@ -39442,61 +39428,61 @@ impl<'a> PhysicalDeviceSubgroupSizeControlPropertiesEXTBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> PhysicalDeviceSubgroupSizeControlPropertiesEXT {
+    pub fn build(self) -> PhysicalDeviceSubgroupSizeControlProperties {
         self.inner
     }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineShaderStageRequiredSubgroupSizeCreateInfoEXT.html>"]
-pub struct PipelineShaderStageRequiredSubgroupSizeCreateInfoEXT {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineShaderStageRequiredSubgroupSizeCreateInfo.html>"]
+pub struct PipelineShaderStageRequiredSubgroupSizeCreateInfo {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub required_subgroup_size: u32,
 }
-impl ::std::default::Default for PipelineShaderStageRequiredSubgroupSizeCreateInfoEXT {
+impl ::std::default::Default for PipelineShaderStageRequiredSubgroupSizeCreateInfo {
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_SHADER_STAGE_REQUIRED_SUBGROUP_SIZE_CREATE_INFO_EXT,
+            s_type: StructureType::PIPELINE_SHADER_STAGE_REQUIRED_SUBGROUP_SIZE_CREATE_INFO,
             p_next: ::std::ptr::null_mut(),
             required_subgroup_size: u32::default(),
         }
     }
 }
-impl PipelineShaderStageRequiredSubgroupSizeCreateInfoEXT {
-    pub fn builder<'a>() -> PipelineShaderStageRequiredSubgroupSizeCreateInfoEXTBuilder<'a> {
-        PipelineShaderStageRequiredSubgroupSizeCreateInfoEXTBuilder {
+impl PipelineShaderStageRequiredSubgroupSizeCreateInfo {
+    pub fn builder<'a>() -> PipelineShaderStageRequiredSubgroupSizeCreateInfoBuilder<'a> {
+        PipelineShaderStageRequiredSubgroupSizeCreateInfoBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct PipelineShaderStageRequiredSubgroupSizeCreateInfoEXTBuilder<'a> {
-    inner: PipelineShaderStageRequiredSubgroupSizeCreateInfoEXT,
+pub struct PipelineShaderStageRequiredSubgroupSizeCreateInfoBuilder<'a> {
+    inner: PipelineShaderStageRequiredSubgroupSizeCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 unsafe impl ExtendsPipelineShaderStageCreateInfo
-    for PipelineShaderStageRequiredSubgroupSizeCreateInfoEXTBuilder<'_>
+    for PipelineShaderStageRequiredSubgroupSizeCreateInfoBuilder<'_>
 {
 }
 unsafe impl ExtendsPipelineShaderStageCreateInfo
-    for PipelineShaderStageRequiredSubgroupSizeCreateInfoEXT
+    for PipelineShaderStageRequiredSubgroupSizeCreateInfo
 {
 }
-impl<'a> ::std::ops::Deref for PipelineShaderStageRequiredSubgroupSizeCreateInfoEXTBuilder<'a> {
-    type Target = PipelineShaderStageRequiredSubgroupSizeCreateInfoEXT;
+impl<'a> ::std::ops::Deref for PipelineShaderStageRequiredSubgroupSizeCreateInfoBuilder<'a> {
+    type Target = PipelineShaderStageRequiredSubgroupSizeCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for PipelineShaderStageRequiredSubgroupSizeCreateInfoEXTBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for PipelineShaderStageRequiredSubgroupSizeCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> PipelineShaderStageRequiredSubgroupSizeCreateInfoEXTBuilder<'a> {
+impl<'a> PipelineShaderStageRequiredSubgroupSizeCreateInfoBuilder<'a> {
     pub fn required_subgroup_size(mut self, required_subgroup_size: u32) -> Self {
         self.inner.required_subgroup_size = required_subgroup_size;
         self
@@ -39504,7 +39490,7 @@ impl<'a> PipelineShaderStageRequiredSubgroupSizeCreateInfoEXTBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> PipelineShaderStageRequiredSubgroupSizeCreateInfoEXT {
+    pub fn build(self) -> PipelineShaderStageRequiredSubgroupSizeCreateInfo {
         self.inner
     }
 }
@@ -39979,59 +39965,56 @@ impl<'a> PipelineRasterizationLineStateCreateInfoEXTBuilder<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDevicePipelineCreationCacheControlFeaturesEXT.html>"]
-pub struct PhysicalDevicePipelineCreationCacheControlFeaturesEXT {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDevicePipelineCreationCacheControlFeatures.html>"]
+pub struct PhysicalDevicePipelineCreationCacheControlFeatures {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub pipeline_creation_cache_control: Bool32,
 }
-impl ::std::default::Default for PhysicalDevicePipelineCreationCacheControlFeaturesEXT {
+impl ::std::default::Default for PhysicalDevicePipelineCreationCacheControlFeatures {
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_PIPELINE_CREATION_CACHE_CONTROL_FEATURES_EXT,
+            s_type: StructureType::PHYSICAL_DEVICE_PIPELINE_CREATION_CACHE_CONTROL_FEATURES,
             p_next: ::std::ptr::null_mut(),
             pipeline_creation_cache_control: Bool32::default(),
         }
     }
 }
-impl PhysicalDevicePipelineCreationCacheControlFeaturesEXT {
-    pub fn builder<'a>() -> PhysicalDevicePipelineCreationCacheControlFeaturesEXTBuilder<'a> {
-        PhysicalDevicePipelineCreationCacheControlFeaturesEXTBuilder {
+impl PhysicalDevicePipelineCreationCacheControlFeatures {
+    pub fn builder<'a>() -> PhysicalDevicePipelineCreationCacheControlFeaturesBuilder<'a> {
+        PhysicalDevicePipelineCreationCacheControlFeaturesBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct PhysicalDevicePipelineCreationCacheControlFeaturesEXTBuilder<'a> {
-    inner: PhysicalDevicePipelineCreationCacheControlFeaturesEXT,
+pub struct PhysicalDevicePipelineCreationCacheControlFeaturesBuilder<'a> {
+    inner: PhysicalDevicePipelineCreationCacheControlFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDevicePipelineCreationCacheControlFeaturesEXTBuilder<'_>
+    for PhysicalDevicePipelineCreationCacheControlFeaturesBuilder<'_>
 {
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDevicePipelineCreationCacheControlFeaturesEXT
-{
-}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePipelineCreationCacheControlFeatures {}
 unsafe impl ExtendsDeviceCreateInfo
-    for PhysicalDevicePipelineCreationCacheControlFeaturesEXTBuilder<'_>
+    for PhysicalDevicePipelineCreationCacheControlFeaturesBuilder<'_>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePipelineCreationCacheControlFeaturesEXT {}
-impl<'a> ::std::ops::Deref for PhysicalDevicePipelineCreationCacheControlFeaturesEXTBuilder<'a> {
-    type Target = PhysicalDevicePipelineCreationCacheControlFeaturesEXT;
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePipelineCreationCacheControlFeatures {}
+impl<'a> ::std::ops::Deref for PhysicalDevicePipelineCreationCacheControlFeaturesBuilder<'a> {
+    type Target = PhysicalDevicePipelineCreationCacheControlFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for PhysicalDevicePipelineCreationCacheControlFeaturesEXTBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for PhysicalDevicePipelineCreationCacheControlFeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> PhysicalDevicePipelineCreationCacheControlFeaturesEXTBuilder<'a> {
+impl<'a> PhysicalDevicePipelineCreationCacheControlFeaturesBuilder<'a> {
     pub fn pipeline_creation_cache_control(
         mut self,
         pipeline_creation_cache_control: bool,
@@ -40042,7 +40025,7 @@ impl<'a> PhysicalDevicePipelineCreationCacheControlFeaturesEXTBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> PhysicalDevicePipelineCreationCacheControlFeaturesEXT {
+    pub fn build(self) -> PhysicalDevicePipelineCreationCacheControlFeatures {
         self.inner
     }
 }
@@ -40836,10 +40819,10 @@ impl fmt::Debug for PhysicalDeviceVulkan12Properties {
             .field("p_next", &self.p_next)
             .field("driver_id", &self.driver_id)
             .field("driver_name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.driver_name.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.driver_name.as_ptr())
             })
             .field("driver_info", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.driver_info.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.driver_info.as_ptr())
             })
             .field("conformance_version", &self.conformance_version)
             .field(
@@ -41509,6 +41492,615 @@ impl<'a> PhysicalDeviceVulkan12PropertiesBuilder<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceVulkan13Features.html>"]
+pub struct PhysicalDeviceVulkan13Features {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub robust_image_access: Bool32,
+    pub inline_uniform_block: Bool32,
+    pub descriptor_binding_inline_uniform_block_update_after_bind: Bool32,
+    pub pipeline_creation_cache_control: Bool32,
+    pub private_data: Bool32,
+    pub shader_demote_to_helper_invocation: Bool32,
+    pub shader_terminate_invocation: Bool32,
+    pub subgroup_size_control: Bool32,
+    pub compute_full_subgroups: Bool32,
+    pub synchronization2: Bool32,
+    pub texture_compression_astc_hdr: Bool32,
+    pub shader_zero_initialize_workgroup_memory: Bool32,
+    pub dynamic_rendering: Bool32,
+    pub shader_integer_dot_product: Bool32,
+    pub maintenance4: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceVulkan13Features {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PHYSICAL_DEVICE_VULKAN_1_3_FEATURES,
+            p_next: ::std::ptr::null_mut(),
+            robust_image_access: Bool32::default(),
+            inline_uniform_block: Bool32::default(),
+            descriptor_binding_inline_uniform_block_update_after_bind: Bool32::default(),
+            pipeline_creation_cache_control: Bool32::default(),
+            private_data: Bool32::default(),
+            shader_demote_to_helper_invocation: Bool32::default(),
+            shader_terminate_invocation: Bool32::default(),
+            subgroup_size_control: Bool32::default(),
+            compute_full_subgroups: Bool32::default(),
+            synchronization2: Bool32::default(),
+            texture_compression_astc_hdr: Bool32::default(),
+            shader_zero_initialize_workgroup_memory: Bool32::default(),
+            dynamic_rendering: Bool32::default(),
+            shader_integer_dot_product: Bool32::default(),
+            maintenance4: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceVulkan13Features {
+    pub fn builder<'a>() -> PhysicalDeviceVulkan13FeaturesBuilder<'a> {
+        PhysicalDeviceVulkan13FeaturesBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceVulkan13FeaturesBuilder<'a> {
+    inner: PhysicalDeviceVulkan13Features,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVulkan13FeaturesBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVulkan13Features {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVulkan13FeaturesBuilder<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVulkan13Features {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceVulkan13FeaturesBuilder<'a> {
+    type Target = PhysicalDeviceVulkan13Features;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceVulkan13FeaturesBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceVulkan13FeaturesBuilder<'a> {
+    pub fn robust_image_access(mut self, robust_image_access: bool) -> Self {
+        self.inner.robust_image_access = robust_image_access.into();
+        self
+    }
+    pub fn inline_uniform_block(mut self, inline_uniform_block: bool) -> Self {
+        self.inner.inline_uniform_block = inline_uniform_block.into();
+        self
+    }
+    pub fn descriptor_binding_inline_uniform_block_update_after_bind(
+        mut self,
+        descriptor_binding_inline_uniform_block_update_after_bind: bool,
+    ) -> Self {
+        self.inner
+            .descriptor_binding_inline_uniform_block_update_after_bind =
+            descriptor_binding_inline_uniform_block_update_after_bind.into();
+        self
+    }
+    pub fn pipeline_creation_cache_control(
+        mut self,
+        pipeline_creation_cache_control: bool,
+    ) -> Self {
+        self.inner.pipeline_creation_cache_control = pipeline_creation_cache_control.into();
+        self
+    }
+    pub fn private_data(mut self, private_data: bool) -> Self {
+        self.inner.private_data = private_data.into();
+        self
+    }
+    pub fn shader_demote_to_helper_invocation(
+        mut self,
+        shader_demote_to_helper_invocation: bool,
+    ) -> Self {
+        self.inner.shader_demote_to_helper_invocation = shader_demote_to_helper_invocation.into();
+        self
+    }
+    pub fn shader_terminate_invocation(mut self, shader_terminate_invocation: bool) -> Self {
+        self.inner.shader_terminate_invocation = shader_terminate_invocation.into();
+        self
+    }
+    pub fn subgroup_size_control(mut self, subgroup_size_control: bool) -> Self {
+        self.inner.subgroup_size_control = subgroup_size_control.into();
+        self
+    }
+    pub fn compute_full_subgroups(mut self, compute_full_subgroups: bool) -> Self {
+        self.inner.compute_full_subgroups = compute_full_subgroups.into();
+        self
+    }
+    pub fn synchronization2(mut self, synchronization2: bool) -> Self {
+        self.inner.synchronization2 = synchronization2.into();
+        self
+    }
+    pub fn texture_compression_astc_hdr(mut self, texture_compression_astc_hdr: bool) -> Self {
+        self.inner.texture_compression_astc_hdr = texture_compression_astc_hdr.into();
+        self
+    }
+    pub fn shader_zero_initialize_workgroup_memory(
+        mut self,
+        shader_zero_initialize_workgroup_memory: bool,
+    ) -> Self {
+        self.inner.shader_zero_initialize_workgroup_memory =
+            shader_zero_initialize_workgroup_memory.into();
+        self
+    }
+    pub fn dynamic_rendering(mut self, dynamic_rendering: bool) -> Self {
+        self.inner.dynamic_rendering = dynamic_rendering.into();
+        self
+    }
+    pub fn shader_integer_dot_product(mut self, shader_integer_dot_product: bool) -> Self {
+        self.inner.shader_integer_dot_product = shader_integer_dot_product.into();
+        self
+    }
+    pub fn maintenance4(mut self, maintenance4: bool) -> Self {
+        self.inner.maintenance4 = maintenance4.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceVulkan13Features {
+        self.inner
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceVulkan13Properties.html>"]
+pub struct PhysicalDeviceVulkan13Properties {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub min_subgroup_size: u32,
+    pub max_subgroup_size: u32,
+    pub max_compute_workgroup_subgroups: u32,
+    pub required_subgroup_size_stages: ShaderStageFlags,
+    pub max_inline_uniform_block_size: u32,
+    pub max_per_stage_descriptor_inline_uniform_blocks: u32,
+    pub max_per_stage_descriptor_update_after_bind_inline_uniform_blocks: u32,
+    pub max_descriptor_set_inline_uniform_blocks: u32,
+    pub max_descriptor_set_update_after_bind_inline_uniform_blocks: u32,
+    pub max_inline_uniform_total_size: u32,
+    pub integer_dot_product8_bit_unsigned_accelerated: Bool32,
+    pub integer_dot_product8_bit_signed_accelerated: Bool32,
+    pub integer_dot_product8_bit_mixed_signedness_accelerated: Bool32,
+    pub integer_dot_product4x8_bit_packed_unsigned_accelerated: Bool32,
+    pub integer_dot_product4x8_bit_packed_signed_accelerated: Bool32,
+    pub integer_dot_product4x8_bit_packed_mixed_signedness_accelerated: Bool32,
+    pub integer_dot_product16_bit_unsigned_accelerated: Bool32,
+    pub integer_dot_product16_bit_signed_accelerated: Bool32,
+    pub integer_dot_product16_bit_mixed_signedness_accelerated: Bool32,
+    pub integer_dot_product32_bit_unsigned_accelerated: Bool32,
+    pub integer_dot_product32_bit_signed_accelerated: Bool32,
+    pub integer_dot_product32_bit_mixed_signedness_accelerated: Bool32,
+    pub integer_dot_product64_bit_unsigned_accelerated: Bool32,
+    pub integer_dot_product64_bit_signed_accelerated: Bool32,
+    pub integer_dot_product64_bit_mixed_signedness_accelerated: Bool32,
+    pub integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated: Bool32,
+    pub integer_dot_product_accumulating_saturating8_bit_signed_accelerated: Bool32,
+    pub integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated: Bool32,
+    pub integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated: Bool32,
+    pub integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated: Bool32,
+    pub integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated:
+        Bool32,
+    pub integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated: Bool32,
+    pub integer_dot_product_accumulating_saturating16_bit_signed_accelerated: Bool32,
+    pub integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated: Bool32,
+    pub integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated: Bool32,
+    pub integer_dot_product_accumulating_saturating32_bit_signed_accelerated: Bool32,
+    pub integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated: Bool32,
+    pub integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated: Bool32,
+    pub integer_dot_product_accumulating_saturating64_bit_signed_accelerated: Bool32,
+    pub integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated: Bool32,
+    pub storage_texel_buffer_offset_alignment_bytes: DeviceSize,
+    pub storage_texel_buffer_offset_single_texel_alignment: Bool32,
+    pub uniform_texel_buffer_offset_alignment_bytes: DeviceSize,
+    pub uniform_texel_buffer_offset_single_texel_alignment: Bool32,
+    pub max_buffer_size: DeviceSize,
+}
+impl ::std::default::Default for PhysicalDeviceVulkan13Properties {
+    fn default() -> Self {
+        Self { s_type : StructureType :: PHYSICAL_DEVICE_VULKAN_1_3_PROPERTIES , p_next : :: std :: ptr :: null_mut () , min_subgroup_size : u32 :: default () , max_subgroup_size : u32 :: default () , max_compute_workgroup_subgroups : u32 :: default () , required_subgroup_size_stages : ShaderStageFlags :: default () , max_inline_uniform_block_size : u32 :: default () , max_per_stage_descriptor_inline_uniform_blocks : u32 :: default () , max_per_stage_descriptor_update_after_bind_inline_uniform_blocks : u32 :: default () , max_descriptor_set_inline_uniform_blocks : u32 :: default () , max_descriptor_set_update_after_bind_inline_uniform_blocks : u32 :: default () , max_inline_uniform_total_size : u32 :: default () , integer_dot_product8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product64_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated : Bool32 :: default () , storage_texel_buffer_offset_alignment_bytes : DeviceSize :: default () , storage_texel_buffer_offset_single_texel_alignment : Bool32 :: default () , uniform_texel_buffer_offset_alignment_bytes : DeviceSize :: default () , uniform_texel_buffer_offset_single_texel_alignment : Bool32 :: default () , max_buffer_size : DeviceSize :: default () }
+    }
+}
+impl PhysicalDeviceVulkan13Properties {
+    pub fn builder<'a>() -> PhysicalDeviceVulkan13PropertiesBuilder<'a> {
+        PhysicalDeviceVulkan13PropertiesBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceVulkan13PropertiesBuilder<'a> {
+    inner: PhysicalDeviceVulkan13Properties,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceVulkan13PropertiesBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceVulkan13Properties {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceVulkan13PropertiesBuilder<'a> {
+    type Target = PhysicalDeviceVulkan13Properties;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceVulkan13PropertiesBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceVulkan13PropertiesBuilder<'a> {
+    pub fn min_subgroup_size(mut self, min_subgroup_size: u32) -> Self {
+        self.inner.min_subgroup_size = min_subgroup_size;
+        self
+    }
+    pub fn max_subgroup_size(mut self, max_subgroup_size: u32) -> Self {
+        self.inner.max_subgroup_size = max_subgroup_size;
+        self
+    }
+    pub fn max_compute_workgroup_subgroups(mut self, max_compute_workgroup_subgroups: u32) -> Self {
+        self.inner.max_compute_workgroup_subgroups = max_compute_workgroup_subgroups;
+        self
+    }
+    pub fn required_subgroup_size_stages(
+        mut self,
+        required_subgroup_size_stages: ShaderStageFlags,
+    ) -> Self {
+        self.inner.required_subgroup_size_stages = required_subgroup_size_stages;
+        self
+    }
+    pub fn max_inline_uniform_block_size(mut self, max_inline_uniform_block_size: u32) -> Self {
+        self.inner.max_inline_uniform_block_size = max_inline_uniform_block_size;
+        self
+    }
+    pub fn max_per_stage_descriptor_inline_uniform_blocks(
+        mut self,
+        max_per_stage_descriptor_inline_uniform_blocks: u32,
+    ) -> Self {
+        self.inner.max_per_stage_descriptor_inline_uniform_blocks =
+            max_per_stage_descriptor_inline_uniform_blocks;
+        self
+    }
+    pub fn max_per_stage_descriptor_update_after_bind_inline_uniform_blocks(
+        mut self,
+        max_per_stage_descriptor_update_after_bind_inline_uniform_blocks: u32,
+    ) -> Self {
+        self.inner
+            .max_per_stage_descriptor_update_after_bind_inline_uniform_blocks =
+            max_per_stage_descriptor_update_after_bind_inline_uniform_blocks;
+        self
+    }
+    pub fn max_descriptor_set_inline_uniform_blocks(
+        mut self,
+        max_descriptor_set_inline_uniform_blocks: u32,
+    ) -> Self {
+        self.inner.max_descriptor_set_inline_uniform_blocks =
+            max_descriptor_set_inline_uniform_blocks;
+        self
+    }
+    pub fn max_descriptor_set_update_after_bind_inline_uniform_blocks(
+        mut self,
+        max_descriptor_set_update_after_bind_inline_uniform_blocks: u32,
+    ) -> Self {
+        self.inner
+            .max_descriptor_set_update_after_bind_inline_uniform_blocks =
+            max_descriptor_set_update_after_bind_inline_uniform_blocks;
+        self
+    }
+    pub fn max_inline_uniform_total_size(mut self, max_inline_uniform_total_size: u32) -> Self {
+        self.inner.max_inline_uniform_total_size = max_inline_uniform_total_size;
+        self
+    }
+    pub fn integer_dot_product8_bit_unsigned_accelerated(
+        mut self,
+        integer_dot_product8_bit_unsigned_accelerated: bool,
+    ) -> Self {
+        self.inner.integer_dot_product8_bit_unsigned_accelerated =
+            integer_dot_product8_bit_unsigned_accelerated.into();
+        self
+    }
+    pub fn integer_dot_product8_bit_signed_accelerated(
+        mut self,
+        integer_dot_product8_bit_signed_accelerated: bool,
+    ) -> Self {
+        self.inner.integer_dot_product8_bit_signed_accelerated =
+            integer_dot_product8_bit_signed_accelerated.into();
+        self
+    }
+    pub fn integer_dot_product8_bit_mixed_signedness_accelerated(
+        mut self,
+        integer_dot_product8_bit_mixed_signedness_accelerated: bool,
+    ) -> Self {
+        self.inner
+            .integer_dot_product8_bit_mixed_signedness_accelerated =
+            integer_dot_product8_bit_mixed_signedness_accelerated.into();
+        self
+    }
+    pub fn integer_dot_product4x8_bit_packed_unsigned_accelerated(
+        mut self,
+        integer_dot_product4x8_bit_packed_unsigned_accelerated: bool,
+    ) -> Self {
+        self.inner
+            .integer_dot_product4x8_bit_packed_unsigned_accelerated =
+            integer_dot_product4x8_bit_packed_unsigned_accelerated.into();
+        self
+    }
+    pub fn integer_dot_product4x8_bit_packed_signed_accelerated(
+        mut self,
+        integer_dot_product4x8_bit_packed_signed_accelerated: bool,
+    ) -> Self {
+        self.inner
+            .integer_dot_product4x8_bit_packed_signed_accelerated =
+            integer_dot_product4x8_bit_packed_signed_accelerated.into();
+        self
+    }
+    pub fn integer_dot_product4x8_bit_packed_mixed_signedness_accelerated(
+        mut self,
+        integer_dot_product4x8_bit_packed_mixed_signedness_accelerated: bool,
+    ) -> Self {
+        self.inner
+            .integer_dot_product4x8_bit_packed_mixed_signedness_accelerated =
+            integer_dot_product4x8_bit_packed_mixed_signedness_accelerated.into();
+        self
+    }
+    pub fn integer_dot_product16_bit_unsigned_accelerated(
+        mut self,
+        integer_dot_product16_bit_unsigned_accelerated: bool,
+    ) -> Self {
+        self.inner.integer_dot_product16_bit_unsigned_accelerated =
+            integer_dot_product16_bit_unsigned_accelerated.into();
+        self
+    }
+    pub fn integer_dot_product16_bit_signed_accelerated(
+        mut self,
+        integer_dot_product16_bit_signed_accelerated: bool,
+    ) -> Self {
+        self.inner.integer_dot_product16_bit_signed_accelerated =
+            integer_dot_product16_bit_signed_accelerated.into();
+        self
+    }
+    pub fn integer_dot_product16_bit_mixed_signedness_accelerated(
+        mut self,
+        integer_dot_product16_bit_mixed_signedness_accelerated: bool,
+    ) -> Self {
+        self.inner
+            .integer_dot_product16_bit_mixed_signedness_accelerated =
+            integer_dot_product16_bit_mixed_signedness_accelerated.into();
+        self
+    }
+    pub fn integer_dot_product32_bit_unsigned_accelerated(
+        mut self,
+        integer_dot_product32_bit_unsigned_accelerated: bool,
+    ) -> Self {
+        self.inner.integer_dot_product32_bit_unsigned_accelerated =
+            integer_dot_product32_bit_unsigned_accelerated.into();
+        self
+    }
+    pub fn integer_dot_product32_bit_signed_accelerated(
+        mut self,
+        integer_dot_product32_bit_signed_accelerated: bool,
+    ) -> Self {
+        self.inner.integer_dot_product32_bit_signed_accelerated =
+            integer_dot_product32_bit_signed_accelerated.into();
+        self
+    }
+    pub fn integer_dot_product32_bit_mixed_signedness_accelerated(
+        mut self,
+        integer_dot_product32_bit_mixed_signedness_accelerated: bool,
+    ) -> Self {
+        self.inner
+            .integer_dot_product32_bit_mixed_signedness_accelerated =
+            integer_dot_product32_bit_mixed_signedness_accelerated.into();
+        self
+    }
+    pub fn integer_dot_product64_bit_unsigned_accelerated(
+        mut self,
+        integer_dot_product64_bit_unsigned_accelerated: bool,
+    ) -> Self {
+        self.inner.integer_dot_product64_bit_unsigned_accelerated =
+            integer_dot_product64_bit_unsigned_accelerated.into();
+        self
+    }
+    pub fn integer_dot_product64_bit_signed_accelerated(
+        mut self,
+        integer_dot_product64_bit_signed_accelerated: bool,
+    ) -> Self {
+        self.inner.integer_dot_product64_bit_signed_accelerated =
+            integer_dot_product64_bit_signed_accelerated.into();
+        self
+    }
+    pub fn integer_dot_product64_bit_mixed_signedness_accelerated(
+        mut self,
+        integer_dot_product64_bit_mixed_signedness_accelerated: bool,
+    ) -> Self {
+        self.inner
+            .integer_dot_product64_bit_mixed_signedness_accelerated =
+            integer_dot_product64_bit_mixed_signedness_accelerated.into();
+        self
+    }
+    pub fn integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated(
+        mut self,
+        integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated: bool,
+    ) -> Self {
+        self.inner
+            .integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated =
+            integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated.into();
+        self
+    }
+    pub fn integer_dot_product_accumulating_saturating8_bit_signed_accelerated(
+        mut self,
+        integer_dot_product_accumulating_saturating8_bit_signed_accelerated: bool,
+    ) -> Self {
+        self.inner
+            .integer_dot_product_accumulating_saturating8_bit_signed_accelerated =
+            integer_dot_product_accumulating_saturating8_bit_signed_accelerated.into();
+        self
+    }
+    pub fn integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated(
+        mut self,
+        integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated: bool,
+    ) -> Self {
+        self.inner
+            .integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated =
+            integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated.into();
+        self
+    }
+    pub fn integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated(
+        mut self,
+        integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated: bool,
+    ) -> Self {
+        self.inner
+            .integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated =
+            integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated.into();
+        self
+    }
+    pub fn integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated(
+        mut self,
+        integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated: bool,
+    ) -> Self {
+        self.inner
+            .integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated =
+            integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated.into();
+        self
+    }
+    pub fn integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated(
+        mut self,
+        integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated : bool,
+    ) -> Self {
+        self . inner . integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated = integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated . into () ;
+        self
+    }
+    pub fn integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated(
+        mut self,
+        integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated: bool,
+    ) -> Self {
+        self.inner
+            .integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated =
+            integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated.into();
+        self
+    }
+    pub fn integer_dot_product_accumulating_saturating16_bit_signed_accelerated(
+        mut self,
+        integer_dot_product_accumulating_saturating16_bit_signed_accelerated: bool,
+    ) -> Self {
+        self.inner
+            .integer_dot_product_accumulating_saturating16_bit_signed_accelerated =
+            integer_dot_product_accumulating_saturating16_bit_signed_accelerated.into();
+        self
+    }
+    pub fn integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated(
+        mut self,
+        integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated: bool,
+    ) -> Self {
+        self.inner
+            .integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated =
+            integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated.into();
+        self
+    }
+    pub fn integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated(
+        mut self,
+        integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated: bool,
+    ) -> Self {
+        self.inner
+            .integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated =
+            integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated.into();
+        self
+    }
+    pub fn integer_dot_product_accumulating_saturating32_bit_signed_accelerated(
+        mut self,
+        integer_dot_product_accumulating_saturating32_bit_signed_accelerated: bool,
+    ) -> Self {
+        self.inner
+            .integer_dot_product_accumulating_saturating32_bit_signed_accelerated =
+            integer_dot_product_accumulating_saturating32_bit_signed_accelerated.into();
+        self
+    }
+    pub fn integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated(
+        mut self,
+        integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated: bool,
+    ) -> Self {
+        self.inner
+            .integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated =
+            integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated.into();
+        self
+    }
+    pub fn integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated(
+        mut self,
+        integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated: bool,
+    ) -> Self {
+        self.inner
+            .integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated =
+            integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated.into();
+        self
+    }
+    pub fn integer_dot_product_accumulating_saturating64_bit_signed_accelerated(
+        mut self,
+        integer_dot_product_accumulating_saturating64_bit_signed_accelerated: bool,
+    ) -> Self {
+        self.inner
+            .integer_dot_product_accumulating_saturating64_bit_signed_accelerated =
+            integer_dot_product_accumulating_saturating64_bit_signed_accelerated.into();
+        self
+    }
+    pub fn integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated(
+        mut self,
+        integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated: bool,
+    ) -> Self {
+        self.inner
+            .integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated =
+            integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated.into();
+        self
+    }
+    pub fn storage_texel_buffer_offset_alignment_bytes(
+        mut self,
+        storage_texel_buffer_offset_alignment_bytes: DeviceSize,
+    ) -> Self {
+        self.inner.storage_texel_buffer_offset_alignment_bytes =
+            storage_texel_buffer_offset_alignment_bytes;
+        self
+    }
+    pub fn storage_texel_buffer_offset_single_texel_alignment(
+        mut self,
+        storage_texel_buffer_offset_single_texel_alignment: bool,
+    ) -> Self {
+        self.inner
+            .storage_texel_buffer_offset_single_texel_alignment =
+            storage_texel_buffer_offset_single_texel_alignment.into();
+        self
+    }
+    pub fn uniform_texel_buffer_offset_alignment_bytes(
+        mut self,
+        uniform_texel_buffer_offset_alignment_bytes: DeviceSize,
+    ) -> Self {
+        self.inner.uniform_texel_buffer_offset_alignment_bytes =
+            uniform_texel_buffer_offset_alignment_bytes;
+        self
+    }
+    pub fn uniform_texel_buffer_offset_single_texel_alignment(
+        mut self,
+        uniform_texel_buffer_offset_single_texel_alignment: bool,
+    ) -> Self {
+        self.inner
+            .uniform_texel_buffer_offset_single_texel_alignment =
+            uniform_texel_buffer_offset_single_texel_alignment.into();
+        self
+    }
+    pub fn max_buffer_size(mut self, max_buffer_size: DeviceSize) -> Self {
+        self.inner.max_buffer_size = max_buffer_size;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceVulkan13Properties {
+        self.inner
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineCompilerControlCreateInfoAMD.html>"]
 pub struct PipelineCompilerControlCreateInfoAMD {
     pub s_type: StructureType,
@@ -41627,76 +42219,76 @@ impl<'a> PhysicalDeviceCoherentMemoryFeaturesAMDBuilder<'a> {
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceToolPropertiesEXT.html>"]
-pub struct PhysicalDeviceToolPropertiesEXT {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceToolProperties.html>"]
+pub struct PhysicalDeviceToolProperties {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub name: [c_char; MAX_EXTENSION_NAME_SIZE],
     pub version: [c_char; MAX_EXTENSION_NAME_SIZE],
-    pub purposes: ToolPurposeFlagsEXT,
+    pub purposes: ToolPurposeFlags,
     pub description: [c_char; MAX_DESCRIPTION_SIZE],
     pub layer: [c_char; MAX_EXTENSION_NAME_SIZE],
 }
 #[cfg(feature = "debug")]
-impl fmt::Debug for PhysicalDeviceToolPropertiesEXT {
+impl fmt::Debug for PhysicalDeviceToolProperties {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
-        fmt.debug_struct("PhysicalDeviceToolPropertiesEXT")
+        fmt.debug_struct("PhysicalDeviceToolProperties")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
             .field("name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.name.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.name.as_ptr())
             })
             .field("version", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.version.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.version.as_ptr())
             })
             .field("purposes", &self.purposes)
             .field("description", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.description.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.description.as_ptr())
             })
             .field("layer", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.layer.as_ptr() as *const c_char)
+                ::std::ffi::CStr::from_ptr(self.layer.as_ptr())
             })
             .finish()
     }
 }
-impl ::std::default::Default for PhysicalDeviceToolPropertiesEXT {
+impl ::std::default::Default for PhysicalDeviceToolProperties {
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_TOOL_PROPERTIES_EXT,
+            s_type: StructureType::PHYSICAL_DEVICE_TOOL_PROPERTIES,
             p_next: ::std::ptr::null_mut(),
             name: unsafe { ::std::mem::zeroed() },
             version: unsafe { ::std::mem::zeroed() },
-            purposes: ToolPurposeFlagsEXT::default(),
+            purposes: ToolPurposeFlags::default(),
             description: unsafe { ::std::mem::zeroed() },
             layer: unsafe { ::std::mem::zeroed() },
         }
     }
 }
-impl PhysicalDeviceToolPropertiesEXT {
-    pub fn builder<'a>() -> PhysicalDeviceToolPropertiesEXTBuilder<'a> {
-        PhysicalDeviceToolPropertiesEXTBuilder {
+impl PhysicalDeviceToolProperties {
+    pub fn builder<'a>() -> PhysicalDeviceToolPropertiesBuilder<'a> {
+        PhysicalDeviceToolPropertiesBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct PhysicalDeviceToolPropertiesEXTBuilder<'a> {
-    inner: PhysicalDeviceToolPropertiesEXT,
+pub struct PhysicalDeviceToolPropertiesBuilder<'a> {
+    inner: PhysicalDeviceToolProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-impl<'a> ::std::ops::Deref for PhysicalDeviceToolPropertiesEXTBuilder<'a> {
-    type Target = PhysicalDeviceToolPropertiesEXT;
+impl<'a> ::std::ops::Deref for PhysicalDeviceToolPropertiesBuilder<'a> {
+    type Target = PhysicalDeviceToolProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for PhysicalDeviceToolPropertiesEXTBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceToolPropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> PhysicalDeviceToolPropertiesEXTBuilder<'a> {
+impl<'a> PhysicalDeviceToolPropertiesBuilder<'a> {
     pub fn name(mut self, name: [c_char; MAX_EXTENSION_NAME_SIZE]) -> Self {
         self.inner.name = name;
         self
@@ -41705,7 +42297,7 @@ impl<'a> PhysicalDeviceToolPropertiesEXTBuilder<'a> {
         self.inner.version = version;
         self
     }
-    pub fn purposes(mut self, purposes: ToolPurposeFlagsEXT) -> Self {
+    pub fn purposes(mut self, purposes: ToolPurposeFlags) -> Self {
         self.inner.purposes = purposes;
         self
     }
@@ -41720,7 +42312,7 @@ impl<'a> PhysicalDeviceToolPropertiesEXTBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> PhysicalDeviceToolPropertiesEXT {
+    pub fn build(self) -> PhysicalDeviceToolProperties {
         self.inner
     }
 }
@@ -42196,10 +42788,10 @@ impl<'a> AccelerationStructureGeometryTrianglesDataKHRBuilder<'a> {
         next: &'a mut T,
     ) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -42718,10 +43310,10 @@ impl<'a> AccelerationStructureCreateInfoKHRBuilder<'a> {
         next: &'a mut T,
     ) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -42923,7 +43515,7 @@ impl<'a> ::std::ops::DerefMut for AccelerationStructureVersionInfoKHRBuilder<'a>
 }
 impl<'a> AccelerationStructureVersionInfoKHRBuilder<'a> {
     pub fn version_data(mut self, version_data: &'a [u8; 2 * UUID_SIZE]) -> Self {
-        self.inner.p_version_data = version_data as *const [u8; 2 * UUID_SIZE];
+        self.inner.p_version_data = version_data;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -43501,10 +44093,10 @@ pub struct CopyCommandTransformInfoQCOMBuilder<'a> {
     inner: CopyCommandTransformInfoQCOM,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-unsafe impl ExtendsBufferImageCopy2KHR for CopyCommandTransformInfoQCOMBuilder<'_> {}
-unsafe impl ExtendsBufferImageCopy2KHR for CopyCommandTransformInfoQCOM {}
-unsafe impl ExtendsImageBlit2KHR for CopyCommandTransformInfoQCOMBuilder<'_> {}
-unsafe impl ExtendsImageBlit2KHR for CopyCommandTransformInfoQCOM {}
+unsafe impl ExtendsBufferImageCopy2 for CopyCommandTransformInfoQCOMBuilder<'_> {}
+unsafe impl ExtendsBufferImageCopy2 for CopyCommandTransformInfoQCOM {}
+unsafe impl ExtendsImageBlit2 for CopyCommandTransformInfoQCOMBuilder<'_> {}
+unsafe impl ExtendsImageBlit2 for CopyCommandTransformInfoQCOM {}
 impl<'a> ::std::ops::Deref for CopyCommandTransformInfoQCOMBuilder<'a> {
     type Target = CopyCommandTransformInfoQCOM;
     fn deref(&self) -> &Self::Target {
@@ -43716,61 +44308,56 @@ impl<'a> DeviceDiagnosticsConfigCreateInfoNVBuilder<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHR.html>"]
-pub struct PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceZeroInitializeWorkgroupMemoryFeatures.html>"]
+pub struct PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub shader_zero_initialize_workgroup_memory: Bool32,
 }
-impl ::std::default::Default for PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHR {
+impl ::std::default::Default for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures {
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_ZERO_INITIALIZE_WORKGROUP_MEMORY_FEATURES_KHR,
+            s_type: StructureType::PHYSICAL_DEVICE_ZERO_INITIALIZE_WORKGROUP_MEMORY_FEATURES,
             p_next: ::std::ptr::null_mut(),
             shader_zero_initialize_workgroup_memory: Bool32::default(),
         }
     }
 }
-impl PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHR {
-    pub fn builder<'a>() -> PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHRBuilder<'a> {
-        PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHRBuilder {
+impl PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures {
+    pub fn builder<'a>() -> PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesBuilder<'a> {
+        PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHRBuilder<'a> {
-    inner: PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHR,
+pub struct PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesBuilder<'a> {
+    inner: PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHRBuilder<'_>
+    for PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesBuilder<'_>
 {
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHR
-{
-}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures {}
 unsafe impl ExtendsDeviceCreateInfo
-    for PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHRBuilder<'_>
+    for PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesBuilder<'_>
 {
 }
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHR {}
-impl<'a> ::std::ops::Deref for PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHRBuilder<'a> {
-    type Target = PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHR;
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesBuilder<'a> {
+    type Target = PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut
-    for PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHRBuilder<'a>
-{
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHRBuilder<'a> {
+impl<'a> PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesBuilder<'a> {
     pub fn shader_zero_initialize_workgroup_memory(
         mut self,
         shader_zero_initialize_workgroup_memory: bool,
@@ -43782,7 +44369,7 @@ impl<'a> PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHRBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHR {
+    pub fn build(self) -> PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures {
         self.inner
     }
 }
@@ -44005,50 +44592,50 @@ impl<'a> PhysicalDeviceRobustness2PropertiesEXTBuilder<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceImageRobustnessFeaturesEXT.html>"]
-pub struct PhysicalDeviceImageRobustnessFeaturesEXT {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceImageRobustnessFeatures.html>"]
+pub struct PhysicalDeviceImageRobustnessFeatures {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub robust_image_access: Bool32,
 }
-impl ::std::default::Default for PhysicalDeviceImageRobustnessFeaturesEXT {
+impl ::std::default::Default for PhysicalDeviceImageRobustnessFeatures {
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_IMAGE_ROBUSTNESS_FEATURES_EXT,
+            s_type: StructureType::PHYSICAL_DEVICE_IMAGE_ROBUSTNESS_FEATURES,
             p_next: ::std::ptr::null_mut(),
             robust_image_access: Bool32::default(),
         }
     }
 }
-impl PhysicalDeviceImageRobustnessFeaturesEXT {
-    pub fn builder<'a>() -> PhysicalDeviceImageRobustnessFeaturesEXTBuilder<'a> {
-        PhysicalDeviceImageRobustnessFeaturesEXTBuilder {
+impl PhysicalDeviceImageRobustnessFeatures {
+    pub fn builder<'a>() -> PhysicalDeviceImageRobustnessFeaturesBuilder<'a> {
+        PhysicalDeviceImageRobustnessFeaturesBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct PhysicalDeviceImageRobustnessFeaturesEXTBuilder<'a> {
-    inner: PhysicalDeviceImageRobustnessFeaturesEXT,
+pub struct PhysicalDeviceImageRobustnessFeaturesBuilder<'a> {
+    inner: PhysicalDeviceImageRobustnessFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImageRobustnessFeaturesEXTBuilder<'_> {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImageRobustnessFeaturesEXT {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImageRobustnessFeaturesEXTBuilder<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImageRobustnessFeaturesEXT {}
-impl<'a> ::std::ops::Deref for PhysicalDeviceImageRobustnessFeaturesEXTBuilder<'a> {
-    type Target = PhysicalDeviceImageRobustnessFeaturesEXT;
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImageRobustnessFeaturesBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImageRobustnessFeatures {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImageRobustnessFeaturesBuilder<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImageRobustnessFeatures {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceImageRobustnessFeaturesBuilder<'a> {
+    type Target = PhysicalDeviceImageRobustnessFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for PhysicalDeviceImageRobustnessFeaturesEXTBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceImageRobustnessFeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> PhysicalDeviceImageRobustnessFeaturesEXTBuilder<'a> {
+impl<'a> PhysicalDeviceImageRobustnessFeaturesBuilder<'a> {
     pub fn robust_image_access(mut self, robust_image_access: bool) -> Self {
         self.inner.robust_image_access = robust_image_access.into();
         self
@@ -44056,7 +44643,7 @@ impl<'a> PhysicalDeviceImageRobustnessFeaturesEXTBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> PhysicalDeviceImageRobustnessFeaturesEXT {
+    pub fn build(self) -> PhysicalDeviceImageRobustnessFeatures {
         self.inner
     }
 }
@@ -44513,18 +45100,18 @@ impl<'a> PhysicalDeviceSubpassShadingFeaturesHUAWEIBuilder<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkBufferCopy2KHR.html>"]
-pub struct BufferCopy2KHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkBufferCopy2.html>"]
+pub struct BufferCopy2 {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub src_offset: DeviceSize,
     pub dst_offset: DeviceSize,
     pub size: DeviceSize,
 }
-impl ::std::default::Default for BufferCopy2KHR {
+impl ::std::default::Default for BufferCopy2 {
     fn default() -> Self {
         Self {
-            s_type: StructureType::BUFFER_COPY_2_KHR,
+            s_type: StructureType::BUFFER_COPY_2,
             p_next: ::std::ptr::null(),
             src_offset: DeviceSize::default(),
             dst_offset: DeviceSize::default(),
@@ -44532,31 +45119,31 @@ impl ::std::default::Default for BufferCopy2KHR {
         }
     }
 }
-impl BufferCopy2KHR {
-    pub fn builder<'a>() -> BufferCopy2KHRBuilder<'a> {
-        BufferCopy2KHRBuilder {
+impl BufferCopy2 {
+    pub fn builder<'a>() -> BufferCopy2Builder<'a> {
+        BufferCopy2Builder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct BufferCopy2KHRBuilder<'a> {
-    inner: BufferCopy2KHR,
+pub struct BufferCopy2Builder<'a> {
+    inner: BufferCopy2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-impl<'a> ::std::ops::Deref for BufferCopy2KHRBuilder<'a> {
-    type Target = BufferCopy2KHR;
+impl<'a> ::std::ops::Deref for BufferCopy2Builder<'a> {
+    type Target = BufferCopy2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for BufferCopy2KHRBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for BufferCopy2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> BufferCopy2KHRBuilder<'a> {
+impl<'a> BufferCopy2Builder<'a> {
     pub fn src_offset(mut self, src_offset: DeviceSize) -> Self {
         self.inner.src_offset = src_offset;
         self
@@ -44572,15 +45159,15 @@ impl<'a> BufferCopy2KHRBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> BufferCopy2KHR {
+    pub fn build(self) -> BufferCopy2 {
         self.inner
     }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImageCopy2KHR.html>"]
-pub struct ImageCopy2KHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImageCopy2.html>"]
+pub struct ImageCopy2 {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub src_subresource: ImageSubresourceLayers,
@@ -44589,10 +45176,10 @@ pub struct ImageCopy2KHR {
     pub dst_offset: Offset3D,
     pub extent: Extent3D,
 }
-impl ::std::default::Default for ImageCopy2KHR {
+impl ::std::default::Default for ImageCopy2 {
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMAGE_COPY_2_KHR,
+            s_type: StructureType::IMAGE_COPY_2,
             p_next: ::std::ptr::null(),
             src_subresource: ImageSubresourceLayers::default(),
             src_offset: Offset3D::default(),
@@ -44602,31 +45189,31 @@ impl ::std::default::Default for ImageCopy2KHR {
         }
     }
 }
-impl ImageCopy2KHR {
-    pub fn builder<'a>() -> ImageCopy2KHRBuilder<'a> {
-        ImageCopy2KHRBuilder {
+impl ImageCopy2 {
+    pub fn builder<'a>() -> ImageCopy2Builder<'a> {
+        ImageCopy2Builder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct ImageCopy2KHRBuilder<'a> {
-    inner: ImageCopy2KHR,
+pub struct ImageCopy2Builder<'a> {
+    inner: ImageCopy2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-impl<'a> ::std::ops::Deref for ImageCopy2KHRBuilder<'a> {
-    type Target = ImageCopy2KHR;
+impl<'a> ::std::ops::Deref for ImageCopy2Builder<'a> {
+    type Target = ImageCopy2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for ImageCopy2KHRBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for ImageCopy2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> ImageCopy2KHRBuilder<'a> {
+impl<'a> ImageCopy2Builder<'a> {
     pub fn src_subresource(mut self, src_subresource: ImageSubresourceLayers) -> Self {
         self.inner.src_subresource = src_subresource;
         self
@@ -44650,15 +45237,15 @@ impl<'a> ImageCopy2KHRBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> ImageCopy2KHR {
+    pub fn build(self) -> ImageCopy2 {
         self.inner
     }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImageBlit2KHR.html>"]
-pub struct ImageBlit2KHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImageBlit2.html>"]
+pub struct ImageBlit2 {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub src_subresource: ImageSubresourceLayers,
@@ -44666,10 +45253,10 @@ pub struct ImageBlit2KHR {
     pub dst_subresource: ImageSubresourceLayers,
     pub dst_offsets: [Offset3D; 2],
 }
-impl ::std::default::Default for ImageBlit2KHR {
+impl ::std::default::Default for ImageBlit2 {
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMAGE_BLIT_2_KHR,
+            s_type: StructureType::IMAGE_BLIT_2,
             p_next: ::std::ptr::null(),
             src_subresource: ImageSubresourceLayers::default(),
             src_offsets: unsafe { ::std::mem::zeroed() },
@@ -44678,32 +45265,32 @@ impl ::std::default::Default for ImageBlit2KHR {
         }
     }
 }
-impl ImageBlit2KHR {
-    pub fn builder<'a>() -> ImageBlit2KHRBuilder<'a> {
-        ImageBlit2KHRBuilder {
+impl ImageBlit2 {
+    pub fn builder<'a>() -> ImageBlit2Builder<'a> {
+        ImageBlit2Builder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct ImageBlit2KHRBuilder<'a> {
-    inner: ImageBlit2KHR,
+pub struct ImageBlit2Builder<'a> {
+    inner: ImageBlit2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImageBlit2KHR {}
-impl<'a> ::std::ops::Deref for ImageBlit2KHRBuilder<'a> {
-    type Target = ImageBlit2KHR;
+pub unsafe trait ExtendsImageBlit2 {}
+impl<'a> ::std::ops::Deref for ImageBlit2Builder<'a> {
+    type Target = ImageBlit2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for ImageBlit2KHRBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for ImageBlit2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> ImageBlit2KHRBuilder<'a> {
+impl<'a> ImageBlit2Builder<'a> {
     pub fn src_subresource(mut self, src_subresource: ImageSubresourceLayers) -> Self {
         self.inner.src_subresource = src_subresource;
         self
@@ -44725,27 +45312,27 @@ impl<'a> ImageBlit2KHRBuilder<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsImageBlit2KHR>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsImageBlit2>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> ImageBlit2KHR {
+    pub fn build(self) -> ImageBlit2 {
         self.inner
     }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkBufferImageCopy2KHR.html>"]
-pub struct BufferImageCopy2KHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkBufferImageCopy2.html>"]
+pub struct BufferImageCopy2 {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub buffer_offset: DeviceSize,
@@ -44755,10 +45342,10 @@ pub struct BufferImageCopy2KHR {
     pub image_offset: Offset3D,
     pub image_extent: Extent3D,
 }
-impl ::std::default::Default for BufferImageCopy2KHR {
+impl ::std::default::Default for BufferImageCopy2 {
     fn default() -> Self {
         Self {
-            s_type: StructureType::BUFFER_IMAGE_COPY_2_KHR,
+            s_type: StructureType::BUFFER_IMAGE_COPY_2,
             p_next: ::std::ptr::null(),
             buffer_offset: DeviceSize::default(),
             buffer_row_length: u32::default(),
@@ -44769,32 +45356,32 @@ impl ::std::default::Default for BufferImageCopy2KHR {
         }
     }
 }
-impl BufferImageCopy2KHR {
-    pub fn builder<'a>() -> BufferImageCopy2KHRBuilder<'a> {
-        BufferImageCopy2KHRBuilder {
+impl BufferImageCopy2 {
+    pub fn builder<'a>() -> BufferImageCopy2Builder<'a> {
+        BufferImageCopy2Builder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct BufferImageCopy2KHRBuilder<'a> {
-    inner: BufferImageCopy2KHR,
+pub struct BufferImageCopy2Builder<'a> {
+    inner: BufferImageCopy2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsBufferImageCopy2KHR {}
-impl<'a> ::std::ops::Deref for BufferImageCopy2KHRBuilder<'a> {
-    type Target = BufferImageCopy2KHR;
+pub unsafe trait ExtendsBufferImageCopy2 {}
+impl<'a> ::std::ops::Deref for BufferImageCopy2Builder<'a> {
+    type Target = BufferImageCopy2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for BufferImageCopy2KHRBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for BufferImageCopy2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> BufferImageCopy2KHRBuilder<'a> {
+impl<'a> BufferImageCopy2Builder<'a> {
     pub fn buffer_offset(mut self, buffer_offset: DeviceSize) -> Self {
         self.inner.buffer_offset = buffer_offset;
         self
@@ -44824,27 +45411,27 @@ impl<'a> BufferImageCopy2KHRBuilder<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBufferImageCopy2KHR>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsBufferImageCopy2>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> BufferImageCopy2KHR {
+    pub fn build(self) -> BufferImageCopy2 {
         self.inner
     }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImageResolve2KHR.html>"]
-pub struct ImageResolve2KHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImageResolve2.html>"]
+pub struct ImageResolve2 {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub src_subresource: ImageSubresourceLayers,
@@ -44853,10 +45440,10 @@ pub struct ImageResolve2KHR {
     pub dst_offset: Offset3D,
     pub extent: Extent3D,
 }
-impl ::std::default::Default for ImageResolve2KHR {
+impl ::std::default::Default for ImageResolve2 {
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMAGE_RESOLVE_2_KHR,
+            s_type: StructureType::IMAGE_RESOLVE_2,
             p_next: ::std::ptr::null(),
             src_subresource: ImageSubresourceLayers::default(),
             src_offset: Offset3D::default(),
@@ -44866,31 +45453,31 @@ impl ::std::default::Default for ImageResolve2KHR {
         }
     }
 }
-impl ImageResolve2KHR {
-    pub fn builder<'a>() -> ImageResolve2KHRBuilder<'a> {
-        ImageResolve2KHRBuilder {
+impl ImageResolve2 {
+    pub fn builder<'a>() -> ImageResolve2Builder<'a> {
+        ImageResolve2Builder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct ImageResolve2KHRBuilder<'a> {
-    inner: ImageResolve2KHR,
+pub struct ImageResolve2Builder<'a> {
+    inner: ImageResolve2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-impl<'a> ::std::ops::Deref for ImageResolve2KHRBuilder<'a> {
-    type Target = ImageResolve2KHR;
+impl<'a> ::std::ops::Deref for ImageResolve2Builder<'a> {
+    type Target = ImageResolve2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for ImageResolve2KHRBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for ImageResolve2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> ImageResolve2KHRBuilder<'a> {
+impl<'a> ImageResolve2Builder<'a> {
     pub fn src_subresource(mut self, src_subresource: ImageSubresourceLayers) -> Self {
         self.inner.src_subresource = src_subresource;
         self
@@ -44914,26 +45501,26 @@ impl<'a> ImageResolve2KHRBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> ImageResolve2KHR {
+    pub fn build(self) -> ImageResolve2 {
         self.inner
     }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCopyBufferInfo2KHR.html>"]
-pub struct CopyBufferInfo2KHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCopyBufferInfo2.html>"]
+pub struct CopyBufferInfo2 {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub src_buffer: Buffer,
     pub dst_buffer: Buffer,
     pub region_count: u32,
-    pub p_regions: *const BufferCopy2KHR,
+    pub p_regions: *const BufferCopy2,
 }
-impl ::std::default::Default for CopyBufferInfo2KHR {
+impl ::std::default::Default for CopyBufferInfo2 {
     fn default() -> Self {
         Self {
-            s_type: StructureType::COPY_BUFFER_INFO_2_KHR,
+            s_type: StructureType::COPY_BUFFER_INFO_2,
             p_next: ::std::ptr::null(),
             src_buffer: Buffer::default(),
             dst_buffer: Buffer::default(),
@@ -44942,31 +45529,31 @@ impl ::std::default::Default for CopyBufferInfo2KHR {
         }
     }
 }
-impl CopyBufferInfo2KHR {
-    pub fn builder<'a>() -> CopyBufferInfo2KHRBuilder<'a> {
-        CopyBufferInfo2KHRBuilder {
+impl CopyBufferInfo2 {
+    pub fn builder<'a>() -> CopyBufferInfo2Builder<'a> {
+        CopyBufferInfo2Builder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct CopyBufferInfo2KHRBuilder<'a> {
-    inner: CopyBufferInfo2KHR,
+pub struct CopyBufferInfo2Builder<'a> {
+    inner: CopyBufferInfo2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-impl<'a> ::std::ops::Deref for CopyBufferInfo2KHRBuilder<'a> {
-    type Target = CopyBufferInfo2KHR;
+impl<'a> ::std::ops::Deref for CopyBufferInfo2Builder<'a> {
+    type Target = CopyBufferInfo2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for CopyBufferInfo2KHRBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for CopyBufferInfo2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> CopyBufferInfo2KHRBuilder<'a> {
+impl<'a> CopyBufferInfo2Builder<'a> {
     pub fn src_buffer(mut self, src_buffer: Buffer) -> Self {
         self.inner.src_buffer = src_buffer;
         self
@@ -44975,7 +45562,7 @@ impl<'a> CopyBufferInfo2KHRBuilder<'a> {
         self.inner.dst_buffer = dst_buffer;
         self
     }
-    pub fn regions(mut self, regions: &'a [BufferCopy2KHR]) -> Self {
+    pub fn regions(mut self, regions: &'a [BufferCopy2]) -> Self {
         self.inner.region_count = regions.len() as _;
         self.inner.p_regions = regions.as_ptr();
         self
@@ -44983,15 +45570,15 @@ impl<'a> CopyBufferInfo2KHRBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> CopyBufferInfo2KHR {
+    pub fn build(self) -> CopyBufferInfo2 {
         self.inner
     }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCopyImageInfo2KHR.html>"]
-pub struct CopyImageInfo2KHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCopyImageInfo2.html>"]
+pub struct CopyImageInfo2 {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub src_image: Image,
@@ -44999,12 +45586,12 @@ pub struct CopyImageInfo2KHR {
     pub dst_image: Image,
     pub dst_image_layout: ImageLayout,
     pub region_count: u32,
-    pub p_regions: *const ImageCopy2KHR,
+    pub p_regions: *const ImageCopy2,
 }
-impl ::std::default::Default for CopyImageInfo2KHR {
+impl ::std::default::Default for CopyImageInfo2 {
     fn default() -> Self {
         Self {
-            s_type: StructureType::COPY_IMAGE_INFO_2_KHR,
+            s_type: StructureType::COPY_IMAGE_INFO_2,
             p_next: ::std::ptr::null(),
             src_image: Image::default(),
             src_image_layout: ImageLayout::default(),
@@ -45015,31 +45602,31 @@ impl ::std::default::Default for CopyImageInfo2KHR {
         }
     }
 }
-impl CopyImageInfo2KHR {
-    pub fn builder<'a>() -> CopyImageInfo2KHRBuilder<'a> {
-        CopyImageInfo2KHRBuilder {
+impl CopyImageInfo2 {
+    pub fn builder<'a>() -> CopyImageInfo2Builder<'a> {
+        CopyImageInfo2Builder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct CopyImageInfo2KHRBuilder<'a> {
-    inner: CopyImageInfo2KHR,
+pub struct CopyImageInfo2Builder<'a> {
+    inner: CopyImageInfo2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-impl<'a> ::std::ops::Deref for CopyImageInfo2KHRBuilder<'a> {
-    type Target = CopyImageInfo2KHR;
+impl<'a> ::std::ops::Deref for CopyImageInfo2Builder<'a> {
+    type Target = CopyImageInfo2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for CopyImageInfo2KHRBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for CopyImageInfo2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> CopyImageInfo2KHRBuilder<'a> {
+impl<'a> CopyImageInfo2Builder<'a> {
     pub fn src_image(mut self, src_image: Image) -> Self {
         self.inner.src_image = src_image;
         self
@@ -45056,7 +45643,7 @@ impl<'a> CopyImageInfo2KHRBuilder<'a> {
         self.inner.dst_image_layout = dst_image_layout;
         self
     }
-    pub fn regions(mut self, regions: &'a [ImageCopy2KHR]) -> Self {
+    pub fn regions(mut self, regions: &'a [ImageCopy2]) -> Self {
         self.inner.region_count = regions.len() as _;
         self.inner.p_regions = regions.as_ptr();
         self
@@ -45064,15 +45651,15 @@ impl<'a> CopyImageInfo2KHRBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> CopyImageInfo2KHR {
+    pub fn build(self) -> CopyImageInfo2 {
         self.inner
     }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkBlitImageInfo2KHR.html>"]
-pub struct BlitImageInfo2KHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkBlitImageInfo2.html>"]
+pub struct BlitImageInfo2 {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub src_image: Image,
@@ -45080,13 +45667,13 @@ pub struct BlitImageInfo2KHR {
     pub dst_image: Image,
     pub dst_image_layout: ImageLayout,
     pub region_count: u32,
-    pub p_regions: *const ImageBlit2KHR,
+    pub p_regions: *const ImageBlit2,
     pub filter: Filter,
 }
-impl ::std::default::Default for BlitImageInfo2KHR {
+impl ::std::default::Default for BlitImageInfo2 {
     fn default() -> Self {
         Self {
-            s_type: StructureType::BLIT_IMAGE_INFO_2_KHR,
+            s_type: StructureType::BLIT_IMAGE_INFO_2,
             p_next: ::std::ptr::null(),
             src_image: Image::default(),
             src_image_layout: ImageLayout::default(),
@@ -45098,31 +45685,31 @@ impl ::std::default::Default for BlitImageInfo2KHR {
         }
     }
 }
-impl BlitImageInfo2KHR {
-    pub fn builder<'a>() -> BlitImageInfo2KHRBuilder<'a> {
-        BlitImageInfo2KHRBuilder {
+impl BlitImageInfo2 {
+    pub fn builder<'a>() -> BlitImageInfo2Builder<'a> {
+        BlitImageInfo2Builder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct BlitImageInfo2KHRBuilder<'a> {
-    inner: BlitImageInfo2KHR,
+pub struct BlitImageInfo2Builder<'a> {
+    inner: BlitImageInfo2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-impl<'a> ::std::ops::Deref for BlitImageInfo2KHRBuilder<'a> {
-    type Target = BlitImageInfo2KHR;
+impl<'a> ::std::ops::Deref for BlitImageInfo2Builder<'a> {
+    type Target = BlitImageInfo2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for BlitImageInfo2KHRBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for BlitImageInfo2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> BlitImageInfo2KHRBuilder<'a> {
+impl<'a> BlitImageInfo2Builder<'a> {
     pub fn src_image(mut self, src_image: Image) -> Self {
         self.inner.src_image = src_image;
         self
@@ -45139,7 +45726,7 @@ impl<'a> BlitImageInfo2KHRBuilder<'a> {
         self.inner.dst_image_layout = dst_image_layout;
         self
     }
-    pub fn regions(mut self, regions: &'a [ImageBlit2KHR]) -> Self {
+    pub fn regions(mut self, regions: &'a [ImageBlit2]) -> Self {
         self.inner.region_count = regions.len() as _;
         self.inner.p_regions = regions.as_ptr();
         self
@@ -45151,27 +45738,27 @@ impl<'a> BlitImageInfo2KHRBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> BlitImageInfo2KHR {
+    pub fn build(self) -> BlitImageInfo2 {
         self.inner
     }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCopyBufferToImageInfo2KHR.html>"]
-pub struct CopyBufferToImageInfo2KHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCopyBufferToImageInfo2.html>"]
+pub struct CopyBufferToImageInfo2 {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub src_buffer: Buffer,
     pub dst_image: Image,
     pub dst_image_layout: ImageLayout,
     pub region_count: u32,
-    pub p_regions: *const BufferImageCopy2KHR,
+    pub p_regions: *const BufferImageCopy2,
 }
-impl ::std::default::Default for CopyBufferToImageInfo2KHR {
+impl ::std::default::Default for CopyBufferToImageInfo2 {
     fn default() -> Self {
         Self {
-            s_type: StructureType::COPY_BUFFER_TO_IMAGE_INFO_2_KHR,
+            s_type: StructureType::COPY_BUFFER_TO_IMAGE_INFO_2,
             p_next: ::std::ptr::null(),
             src_buffer: Buffer::default(),
             dst_image: Image::default(),
@@ -45181,31 +45768,31 @@ impl ::std::default::Default for CopyBufferToImageInfo2KHR {
         }
     }
 }
-impl CopyBufferToImageInfo2KHR {
-    pub fn builder<'a>() -> CopyBufferToImageInfo2KHRBuilder<'a> {
-        CopyBufferToImageInfo2KHRBuilder {
+impl CopyBufferToImageInfo2 {
+    pub fn builder<'a>() -> CopyBufferToImageInfo2Builder<'a> {
+        CopyBufferToImageInfo2Builder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct CopyBufferToImageInfo2KHRBuilder<'a> {
-    inner: CopyBufferToImageInfo2KHR,
+pub struct CopyBufferToImageInfo2Builder<'a> {
+    inner: CopyBufferToImageInfo2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-impl<'a> ::std::ops::Deref for CopyBufferToImageInfo2KHRBuilder<'a> {
-    type Target = CopyBufferToImageInfo2KHR;
+impl<'a> ::std::ops::Deref for CopyBufferToImageInfo2Builder<'a> {
+    type Target = CopyBufferToImageInfo2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for CopyBufferToImageInfo2KHRBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for CopyBufferToImageInfo2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> CopyBufferToImageInfo2KHRBuilder<'a> {
+impl<'a> CopyBufferToImageInfo2Builder<'a> {
     pub fn src_buffer(mut self, src_buffer: Buffer) -> Self {
         self.inner.src_buffer = src_buffer;
         self
@@ -45218,7 +45805,7 @@ impl<'a> CopyBufferToImageInfo2KHRBuilder<'a> {
         self.inner.dst_image_layout = dst_image_layout;
         self
     }
-    pub fn regions(mut self, regions: &'a [BufferImageCopy2KHR]) -> Self {
+    pub fn regions(mut self, regions: &'a [BufferImageCopy2]) -> Self {
         self.inner.region_count = regions.len() as _;
         self.inner.p_regions = regions.as_ptr();
         self
@@ -45226,27 +45813,27 @@ impl<'a> CopyBufferToImageInfo2KHRBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> CopyBufferToImageInfo2KHR {
+    pub fn build(self) -> CopyBufferToImageInfo2 {
         self.inner
     }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCopyImageToBufferInfo2KHR.html>"]
-pub struct CopyImageToBufferInfo2KHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCopyImageToBufferInfo2.html>"]
+pub struct CopyImageToBufferInfo2 {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub src_image: Image,
     pub src_image_layout: ImageLayout,
     pub dst_buffer: Buffer,
     pub region_count: u32,
-    pub p_regions: *const BufferImageCopy2KHR,
+    pub p_regions: *const BufferImageCopy2,
 }
-impl ::std::default::Default for CopyImageToBufferInfo2KHR {
+impl ::std::default::Default for CopyImageToBufferInfo2 {
     fn default() -> Self {
         Self {
-            s_type: StructureType::COPY_IMAGE_TO_BUFFER_INFO_2_KHR,
+            s_type: StructureType::COPY_IMAGE_TO_BUFFER_INFO_2,
             p_next: ::std::ptr::null(),
             src_image: Image::default(),
             src_image_layout: ImageLayout::default(),
@@ -45256,31 +45843,31 @@ impl ::std::default::Default for CopyImageToBufferInfo2KHR {
         }
     }
 }
-impl CopyImageToBufferInfo2KHR {
-    pub fn builder<'a>() -> CopyImageToBufferInfo2KHRBuilder<'a> {
-        CopyImageToBufferInfo2KHRBuilder {
+impl CopyImageToBufferInfo2 {
+    pub fn builder<'a>() -> CopyImageToBufferInfo2Builder<'a> {
+        CopyImageToBufferInfo2Builder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct CopyImageToBufferInfo2KHRBuilder<'a> {
-    inner: CopyImageToBufferInfo2KHR,
+pub struct CopyImageToBufferInfo2Builder<'a> {
+    inner: CopyImageToBufferInfo2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-impl<'a> ::std::ops::Deref for CopyImageToBufferInfo2KHRBuilder<'a> {
-    type Target = CopyImageToBufferInfo2KHR;
+impl<'a> ::std::ops::Deref for CopyImageToBufferInfo2Builder<'a> {
+    type Target = CopyImageToBufferInfo2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for CopyImageToBufferInfo2KHRBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for CopyImageToBufferInfo2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> CopyImageToBufferInfo2KHRBuilder<'a> {
+impl<'a> CopyImageToBufferInfo2Builder<'a> {
     pub fn src_image(mut self, src_image: Image) -> Self {
         self.inner.src_image = src_image;
         self
@@ -45293,7 +45880,7 @@ impl<'a> CopyImageToBufferInfo2KHRBuilder<'a> {
         self.inner.dst_buffer = dst_buffer;
         self
     }
-    pub fn regions(mut self, regions: &'a [BufferImageCopy2KHR]) -> Self {
+    pub fn regions(mut self, regions: &'a [BufferImageCopy2]) -> Self {
         self.inner.region_count = regions.len() as _;
         self.inner.p_regions = regions.as_ptr();
         self
@@ -45301,15 +45888,15 @@ impl<'a> CopyImageToBufferInfo2KHRBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> CopyImageToBufferInfo2KHR {
+    pub fn build(self) -> CopyImageToBufferInfo2 {
         self.inner
     }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkResolveImageInfo2KHR.html>"]
-pub struct ResolveImageInfo2KHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkResolveImageInfo2.html>"]
+pub struct ResolveImageInfo2 {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub src_image: Image,
@@ -45317,12 +45904,12 @@ pub struct ResolveImageInfo2KHR {
     pub dst_image: Image,
     pub dst_image_layout: ImageLayout,
     pub region_count: u32,
-    pub p_regions: *const ImageResolve2KHR,
+    pub p_regions: *const ImageResolve2,
 }
-impl ::std::default::Default for ResolveImageInfo2KHR {
+impl ::std::default::Default for ResolveImageInfo2 {
     fn default() -> Self {
         Self {
-            s_type: StructureType::RESOLVE_IMAGE_INFO_2_KHR,
+            s_type: StructureType::RESOLVE_IMAGE_INFO_2,
             p_next: ::std::ptr::null(),
             src_image: Image::default(),
             src_image_layout: ImageLayout::default(),
@@ -45333,31 +45920,31 @@ impl ::std::default::Default for ResolveImageInfo2KHR {
         }
     }
 }
-impl ResolveImageInfo2KHR {
-    pub fn builder<'a>() -> ResolveImageInfo2KHRBuilder<'a> {
-        ResolveImageInfo2KHRBuilder {
+impl ResolveImageInfo2 {
+    pub fn builder<'a>() -> ResolveImageInfo2Builder<'a> {
+        ResolveImageInfo2Builder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct ResolveImageInfo2KHRBuilder<'a> {
-    inner: ResolveImageInfo2KHR,
+pub struct ResolveImageInfo2Builder<'a> {
+    inner: ResolveImageInfo2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-impl<'a> ::std::ops::Deref for ResolveImageInfo2KHRBuilder<'a> {
-    type Target = ResolveImageInfo2KHR;
+impl<'a> ::std::ops::Deref for ResolveImageInfo2Builder<'a> {
+    type Target = ResolveImageInfo2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for ResolveImageInfo2KHRBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for ResolveImageInfo2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> ResolveImageInfo2KHRBuilder<'a> {
+impl<'a> ResolveImageInfo2Builder<'a> {
     pub fn src_image(mut self, src_image: Image) -> Self {
         self.inner.src_image = src_image;
         self
@@ -45374,7 +45961,7 @@ impl<'a> ResolveImageInfo2KHRBuilder<'a> {
         self.inner.dst_image_layout = dst_image_layout;
         self
     }
-    pub fn regions(mut self, regions: &'a [ImageResolve2KHR]) -> Self {
+    pub fn regions(mut self, regions: &'a [ImageResolve2]) -> Self {
         self.inner.region_count = regions.len() as _;
         self.inner.p_regions = regions.as_ptr();
         self
@@ -45382,7 +45969,7 @@ impl<'a> ResolveImageInfo2KHRBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> ResolveImageInfo2KHR {
+    pub fn build(self) -> ResolveImageInfo2 {
         self.inner
     }
 }
@@ -45948,56 +46535,53 @@ impl<'a> PhysicalDeviceFragmentShadingRateKHRBuilder<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderTerminateInvocationFeaturesKHR.html>"]
-pub struct PhysicalDeviceShaderTerminateInvocationFeaturesKHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderTerminateInvocationFeatures.html>"]
+pub struct PhysicalDeviceShaderTerminateInvocationFeatures {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub shader_terminate_invocation: Bool32,
 }
-impl ::std::default::Default for PhysicalDeviceShaderTerminateInvocationFeaturesKHR {
+impl ::std::default::Default for PhysicalDeviceShaderTerminateInvocationFeatures {
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SHADER_TERMINATE_INVOCATION_FEATURES_KHR,
+            s_type: StructureType::PHYSICAL_DEVICE_SHADER_TERMINATE_INVOCATION_FEATURES,
             p_next: ::std::ptr::null_mut(),
             shader_terminate_invocation: Bool32::default(),
         }
     }
 }
-impl PhysicalDeviceShaderTerminateInvocationFeaturesKHR {
-    pub fn builder<'a>() -> PhysicalDeviceShaderTerminateInvocationFeaturesKHRBuilder<'a> {
-        PhysicalDeviceShaderTerminateInvocationFeaturesKHRBuilder {
+impl PhysicalDeviceShaderTerminateInvocationFeatures {
+    pub fn builder<'a>() -> PhysicalDeviceShaderTerminateInvocationFeaturesBuilder<'a> {
+        PhysicalDeviceShaderTerminateInvocationFeaturesBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct PhysicalDeviceShaderTerminateInvocationFeaturesKHRBuilder<'a> {
-    inner: PhysicalDeviceShaderTerminateInvocationFeaturesKHR,
+pub struct PhysicalDeviceShaderTerminateInvocationFeaturesBuilder<'a> {
+    inner: PhysicalDeviceShaderTerminateInvocationFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceShaderTerminateInvocationFeaturesKHRBuilder<'_>
+    for PhysicalDeviceShaderTerminateInvocationFeaturesBuilder<'_>
 {
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderTerminateInvocationFeaturesKHR {}
-unsafe impl ExtendsDeviceCreateInfo
-    for PhysicalDeviceShaderTerminateInvocationFeaturesKHRBuilder<'_>
-{
-}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderTerminateInvocationFeaturesKHR {}
-impl<'a> ::std::ops::Deref for PhysicalDeviceShaderTerminateInvocationFeaturesKHRBuilder<'a> {
-    type Target = PhysicalDeviceShaderTerminateInvocationFeaturesKHR;
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderTerminateInvocationFeatures {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderTerminateInvocationFeaturesBuilder<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderTerminateInvocationFeatures {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceShaderTerminateInvocationFeaturesBuilder<'a> {
+    type Target = PhysicalDeviceShaderTerminateInvocationFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderTerminateInvocationFeaturesKHRBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderTerminateInvocationFeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> PhysicalDeviceShaderTerminateInvocationFeaturesKHRBuilder<'a> {
+impl<'a> PhysicalDeviceShaderTerminateInvocationFeaturesBuilder<'a> {
     pub fn shader_terminate_invocation(mut self, shader_terminate_invocation: bool) -> Self {
         self.inner.shader_terminate_invocation = shader_terminate_invocation.into();
         self
@@ -46005,7 +46589,7 @@ impl<'a> PhysicalDeviceShaderTerminateInvocationFeaturesKHRBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> PhysicalDeviceShaderTerminateInvocationFeaturesKHR {
+    pub fn build(self) -> PhysicalDeviceShaderTerminateInvocationFeatures {
         self.inner
     }
 }
@@ -46997,88 +47581,88 @@ impl<'a> PipelineColorWriteCreateInfoEXTBuilder<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMemoryBarrier2KHR.html>"]
-pub struct MemoryBarrier2KHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMemoryBarrier2.html>"]
+pub struct MemoryBarrier2 {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub src_stage_mask: PipelineStageFlags2KHR,
-    pub src_access_mask: AccessFlags2KHR,
-    pub dst_stage_mask: PipelineStageFlags2KHR,
-    pub dst_access_mask: AccessFlags2KHR,
+    pub src_stage_mask: PipelineStageFlags2,
+    pub src_access_mask: AccessFlags2,
+    pub dst_stage_mask: PipelineStageFlags2,
+    pub dst_access_mask: AccessFlags2,
 }
-impl ::std::default::Default for MemoryBarrier2KHR {
+impl ::std::default::Default for MemoryBarrier2 {
     fn default() -> Self {
         Self {
-            s_type: StructureType::MEMORY_BARRIER_2_KHR,
+            s_type: StructureType::MEMORY_BARRIER_2,
             p_next: ::std::ptr::null(),
-            src_stage_mask: PipelineStageFlags2KHR::default(),
-            src_access_mask: AccessFlags2KHR::default(),
-            dst_stage_mask: PipelineStageFlags2KHR::default(),
-            dst_access_mask: AccessFlags2KHR::default(),
+            src_stage_mask: PipelineStageFlags2::default(),
+            src_access_mask: AccessFlags2::default(),
+            dst_stage_mask: PipelineStageFlags2::default(),
+            dst_access_mask: AccessFlags2::default(),
         }
     }
 }
-impl MemoryBarrier2KHR {
-    pub fn builder<'a>() -> MemoryBarrier2KHRBuilder<'a> {
-        MemoryBarrier2KHRBuilder {
+impl MemoryBarrier2 {
+    pub fn builder<'a>() -> MemoryBarrier2Builder<'a> {
+        MemoryBarrier2Builder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct MemoryBarrier2KHRBuilder<'a> {
-    inner: MemoryBarrier2KHR,
+pub struct MemoryBarrier2Builder<'a> {
+    inner: MemoryBarrier2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-unsafe impl ExtendsSubpassDependency2 for MemoryBarrier2KHRBuilder<'_> {}
-unsafe impl ExtendsSubpassDependency2 for MemoryBarrier2KHR {}
-impl<'a> ::std::ops::Deref for MemoryBarrier2KHRBuilder<'a> {
-    type Target = MemoryBarrier2KHR;
+unsafe impl ExtendsSubpassDependency2 for MemoryBarrier2Builder<'_> {}
+unsafe impl ExtendsSubpassDependency2 for MemoryBarrier2 {}
+impl<'a> ::std::ops::Deref for MemoryBarrier2Builder<'a> {
+    type Target = MemoryBarrier2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for MemoryBarrier2KHRBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for MemoryBarrier2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> MemoryBarrier2KHRBuilder<'a> {
-    pub fn src_stage_mask(mut self, src_stage_mask: PipelineStageFlags2KHR) -> Self {
+impl<'a> MemoryBarrier2Builder<'a> {
+    pub fn src_stage_mask(mut self, src_stage_mask: PipelineStageFlags2) -> Self {
         self.inner.src_stage_mask = src_stage_mask;
         self
     }
-    pub fn src_access_mask(mut self, src_access_mask: AccessFlags2KHR) -> Self {
+    pub fn src_access_mask(mut self, src_access_mask: AccessFlags2) -> Self {
         self.inner.src_access_mask = src_access_mask;
         self
     }
-    pub fn dst_stage_mask(mut self, dst_stage_mask: PipelineStageFlags2KHR) -> Self {
+    pub fn dst_stage_mask(mut self, dst_stage_mask: PipelineStageFlags2) -> Self {
         self.inner.dst_stage_mask = dst_stage_mask;
         self
     }
-    pub fn dst_access_mask(mut self, dst_access_mask: AccessFlags2KHR) -> Self {
+    pub fn dst_access_mask(mut self, dst_access_mask: AccessFlags2) -> Self {
         self.inner.dst_access_mask = dst_access_mask;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> MemoryBarrier2KHR {
+    pub fn build(self) -> MemoryBarrier2 {
         self.inner
     }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImageMemoryBarrier2KHR.html>"]
-pub struct ImageMemoryBarrier2KHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImageMemoryBarrier2.html>"]
+pub struct ImageMemoryBarrier2 {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub src_stage_mask: PipelineStageFlags2KHR,
-    pub src_access_mask: AccessFlags2KHR,
-    pub dst_stage_mask: PipelineStageFlags2KHR,
-    pub dst_access_mask: AccessFlags2KHR,
+    pub src_stage_mask: PipelineStageFlags2,
+    pub src_access_mask: AccessFlags2,
+    pub dst_stage_mask: PipelineStageFlags2,
+    pub dst_access_mask: AccessFlags2,
     pub old_layout: ImageLayout,
     pub new_layout: ImageLayout,
     pub src_queue_family_index: u32,
@@ -47086,15 +47670,15 @@ pub struct ImageMemoryBarrier2KHR {
     pub image: Image,
     pub subresource_range: ImageSubresourceRange,
 }
-impl ::std::default::Default for ImageMemoryBarrier2KHR {
+impl ::std::default::Default for ImageMemoryBarrier2 {
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMAGE_MEMORY_BARRIER_2_KHR,
+            s_type: StructureType::IMAGE_MEMORY_BARRIER_2,
             p_next: ::std::ptr::null(),
-            src_stage_mask: PipelineStageFlags2KHR::default(),
-            src_access_mask: AccessFlags2KHR::default(),
-            dst_stage_mask: PipelineStageFlags2KHR::default(),
-            dst_access_mask: AccessFlags2KHR::default(),
+            src_stage_mask: PipelineStageFlags2::default(),
+            src_access_mask: AccessFlags2::default(),
+            dst_stage_mask: PipelineStageFlags2::default(),
+            dst_access_mask: AccessFlags2::default(),
             old_layout: ImageLayout::default(),
             new_layout: ImageLayout::default(),
             src_queue_family_index: u32::default(),
@@ -47104,45 +47688,45 @@ impl ::std::default::Default for ImageMemoryBarrier2KHR {
         }
     }
 }
-impl ImageMemoryBarrier2KHR {
-    pub fn builder<'a>() -> ImageMemoryBarrier2KHRBuilder<'a> {
-        ImageMemoryBarrier2KHRBuilder {
+impl ImageMemoryBarrier2 {
+    pub fn builder<'a>() -> ImageMemoryBarrier2Builder<'a> {
+        ImageMemoryBarrier2Builder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct ImageMemoryBarrier2KHRBuilder<'a> {
-    inner: ImageMemoryBarrier2KHR,
+pub struct ImageMemoryBarrier2Builder<'a> {
+    inner: ImageMemoryBarrier2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImageMemoryBarrier2KHR {}
-impl<'a> ::std::ops::Deref for ImageMemoryBarrier2KHRBuilder<'a> {
-    type Target = ImageMemoryBarrier2KHR;
+pub unsafe trait ExtendsImageMemoryBarrier2 {}
+impl<'a> ::std::ops::Deref for ImageMemoryBarrier2Builder<'a> {
+    type Target = ImageMemoryBarrier2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for ImageMemoryBarrier2KHRBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for ImageMemoryBarrier2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> ImageMemoryBarrier2KHRBuilder<'a> {
-    pub fn src_stage_mask(mut self, src_stage_mask: PipelineStageFlags2KHR) -> Self {
+impl<'a> ImageMemoryBarrier2Builder<'a> {
+    pub fn src_stage_mask(mut self, src_stage_mask: PipelineStageFlags2) -> Self {
         self.inner.src_stage_mask = src_stage_mask;
         self
     }
-    pub fn src_access_mask(mut self, src_access_mask: AccessFlags2KHR) -> Self {
+    pub fn src_access_mask(mut self, src_access_mask: AccessFlags2) -> Self {
         self.inner.src_access_mask = src_access_mask;
         self
     }
-    pub fn dst_stage_mask(mut self, dst_stage_mask: PipelineStageFlags2KHR) -> Self {
+    pub fn dst_stage_mask(mut self, dst_stage_mask: PipelineStageFlags2) -> Self {
         self.inner.dst_stage_mask = dst_stage_mask;
         self
     }
-    pub fn dst_access_mask(mut self, dst_access_mask: AccessFlags2KHR) -> Self {
+    pub fn dst_access_mask(mut self, dst_access_mask: AccessFlags2) -> Self {
         self.inner.dst_access_mask = dst_access_mask;
         self
     }
@@ -47175,48 +47759,48 @@ impl<'a> ImageMemoryBarrier2KHRBuilder<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsImageMemoryBarrier2KHR>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsImageMemoryBarrier2>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> ImageMemoryBarrier2KHR {
+    pub fn build(self) -> ImageMemoryBarrier2 {
         self.inner
     }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkBufferMemoryBarrier2KHR.html>"]
-pub struct BufferMemoryBarrier2KHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkBufferMemoryBarrier2.html>"]
+pub struct BufferMemoryBarrier2 {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub src_stage_mask: PipelineStageFlags2KHR,
-    pub src_access_mask: AccessFlags2KHR,
-    pub dst_stage_mask: PipelineStageFlags2KHR,
-    pub dst_access_mask: AccessFlags2KHR,
+    pub src_stage_mask: PipelineStageFlags2,
+    pub src_access_mask: AccessFlags2,
+    pub dst_stage_mask: PipelineStageFlags2,
+    pub dst_access_mask: AccessFlags2,
     pub src_queue_family_index: u32,
     pub dst_queue_family_index: u32,
     pub buffer: Buffer,
     pub offset: DeviceSize,
     pub size: DeviceSize,
 }
-impl ::std::default::Default for BufferMemoryBarrier2KHR {
+impl ::std::default::Default for BufferMemoryBarrier2 {
     fn default() -> Self {
         Self {
-            s_type: StructureType::BUFFER_MEMORY_BARRIER_2_KHR,
+            s_type: StructureType::BUFFER_MEMORY_BARRIER_2,
             p_next: ::std::ptr::null(),
-            src_stage_mask: PipelineStageFlags2KHR::default(),
-            src_access_mask: AccessFlags2KHR::default(),
-            dst_stage_mask: PipelineStageFlags2KHR::default(),
-            dst_access_mask: AccessFlags2KHR::default(),
+            src_stage_mask: PipelineStageFlags2::default(),
+            src_access_mask: AccessFlags2::default(),
+            dst_stage_mask: PipelineStageFlags2::default(),
+            dst_access_mask: AccessFlags2::default(),
             src_queue_family_index: u32::default(),
             dst_queue_family_index: u32::default(),
             buffer: Buffer::default(),
@@ -47225,44 +47809,44 @@ impl ::std::default::Default for BufferMemoryBarrier2KHR {
         }
     }
 }
-impl BufferMemoryBarrier2KHR {
-    pub fn builder<'a>() -> BufferMemoryBarrier2KHRBuilder<'a> {
-        BufferMemoryBarrier2KHRBuilder {
+impl BufferMemoryBarrier2 {
+    pub fn builder<'a>() -> BufferMemoryBarrier2Builder<'a> {
+        BufferMemoryBarrier2Builder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct BufferMemoryBarrier2KHRBuilder<'a> {
-    inner: BufferMemoryBarrier2KHR,
+pub struct BufferMemoryBarrier2Builder<'a> {
+    inner: BufferMemoryBarrier2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-impl<'a> ::std::ops::Deref for BufferMemoryBarrier2KHRBuilder<'a> {
-    type Target = BufferMemoryBarrier2KHR;
+impl<'a> ::std::ops::Deref for BufferMemoryBarrier2Builder<'a> {
+    type Target = BufferMemoryBarrier2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for BufferMemoryBarrier2KHRBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for BufferMemoryBarrier2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> BufferMemoryBarrier2KHRBuilder<'a> {
-    pub fn src_stage_mask(mut self, src_stage_mask: PipelineStageFlags2KHR) -> Self {
+impl<'a> BufferMemoryBarrier2Builder<'a> {
+    pub fn src_stage_mask(mut self, src_stage_mask: PipelineStageFlags2) -> Self {
         self.inner.src_stage_mask = src_stage_mask;
         self
     }
-    pub fn src_access_mask(mut self, src_access_mask: AccessFlags2KHR) -> Self {
+    pub fn src_access_mask(mut self, src_access_mask: AccessFlags2) -> Self {
         self.inner.src_access_mask = src_access_mask;
         self
     }
-    pub fn dst_stage_mask(mut self, dst_stage_mask: PipelineStageFlags2KHR) -> Self {
+    pub fn dst_stage_mask(mut self, dst_stage_mask: PipelineStageFlags2) -> Self {
         self.inner.dst_stage_mask = dst_stage_mask;
         self
     }
-    pub fn dst_access_mask(mut self, dst_access_mask: AccessFlags2KHR) -> Self {
+    pub fn dst_access_mask(mut self, dst_access_mask: AccessFlags2) -> Self {
         self.inner.dst_access_mask = dst_access_mask;
         self
     }
@@ -47289,29 +47873,29 @@ impl<'a> BufferMemoryBarrier2KHRBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> BufferMemoryBarrier2KHR {
+    pub fn build(self) -> BufferMemoryBarrier2 {
         self.inner
     }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDependencyInfoKHR.html>"]
-pub struct DependencyInfoKHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDependencyInfo.html>"]
+pub struct DependencyInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub dependency_flags: DependencyFlags,
     pub memory_barrier_count: u32,
-    pub p_memory_barriers: *const MemoryBarrier2KHR,
+    pub p_memory_barriers: *const MemoryBarrier2,
     pub buffer_memory_barrier_count: u32,
-    pub p_buffer_memory_barriers: *const BufferMemoryBarrier2KHR,
+    pub p_buffer_memory_barriers: *const BufferMemoryBarrier2,
     pub image_memory_barrier_count: u32,
-    pub p_image_memory_barriers: *const ImageMemoryBarrier2KHR,
+    pub p_image_memory_barriers: *const ImageMemoryBarrier2,
 }
-impl ::std::default::Default for DependencyInfoKHR {
+impl ::std::default::Default for DependencyInfo {
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEPENDENCY_INFO_KHR,
+            s_type: StructureType::DEPENDENCY_INFO,
             p_next: ::std::ptr::null(),
             dependency_flags: DependencyFlags::default(),
             memory_barrier_count: u32::default(),
@@ -47323,43 +47907,43 @@ impl ::std::default::Default for DependencyInfoKHR {
         }
     }
 }
-impl DependencyInfoKHR {
-    pub fn builder<'a>() -> DependencyInfoKHRBuilder<'a> {
-        DependencyInfoKHRBuilder {
+impl DependencyInfo {
+    pub fn builder<'a>() -> DependencyInfoBuilder<'a> {
+        DependencyInfoBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct DependencyInfoKHRBuilder<'a> {
-    inner: DependencyInfoKHR,
+pub struct DependencyInfoBuilder<'a> {
+    inner: DependencyInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-impl<'a> ::std::ops::Deref for DependencyInfoKHRBuilder<'a> {
-    type Target = DependencyInfoKHR;
+impl<'a> ::std::ops::Deref for DependencyInfoBuilder<'a> {
+    type Target = DependencyInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for DependencyInfoKHRBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for DependencyInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> DependencyInfoKHRBuilder<'a> {
+impl<'a> DependencyInfoBuilder<'a> {
     pub fn dependency_flags(mut self, dependency_flags: DependencyFlags) -> Self {
         self.inner.dependency_flags = dependency_flags;
         self
     }
-    pub fn memory_barriers(mut self, memory_barriers: &'a [MemoryBarrier2KHR]) -> Self {
+    pub fn memory_barriers(mut self, memory_barriers: &'a [MemoryBarrier2]) -> Self {
         self.inner.memory_barrier_count = memory_barriers.len() as _;
         self.inner.p_memory_barriers = memory_barriers.as_ptr();
         self
     }
     pub fn buffer_memory_barriers(
         mut self,
-        buffer_memory_barriers: &'a [BufferMemoryBarrier2KHR],
+        buffer_memory_barriers: &'a [BufferMemoryBarrier2],
     ) -> Self {
         self.inner.buffer_memory_barrier_count = buffer_memory_barriers.len() as _;
         self.inner.p_buffer_memory_barriers = buffer_memory_barriers.as_ptr();
@@ -47367,7 +47951,7 @@ impl<'a> DependencyInfoKHRBuilder<'a> {
     }
     pub fn image_memory_barriers(
         mut self,
-        image_memory_barriers: &'a [ImageMemoryBarrier2KHR],
+        image_memory_barriers: &'a [ImageMemoryBarrier2],
     ) -> Self {
         self.inner.image_memory_barrier_count = image_memory_barriers.len() as _;
         self.inner.p_image_memory_barriers = image_memory_barriers.as_ptr();
@@ -47376,59 +47960,59 @@ impl<'a> DependencyInfoKHRBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> DependencyInfoKHR {
+    pub fn build(self) -> DependencyInfo {
         self.inner
     }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSemaphoreSubmitInfoKHR.html>"]
-pub struct SemaphoreSubmitInfoKHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSemaphoreSubmitInfo.html>"]
+pub struct SemaphoreSubmitInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub semaphore: Semaphore,
     pub value: u64,
-    pub stage_mask: PipelineStageFlags2KHR,
+    pub stage_mask: PipelineStageFlags2,
     pub device_index: u32,
 }
-impl ::std::default::Default for SemaphoreSubmitInfoKHR {
+impl ::std::default::Default for SemaphoreSubmitInfo {
     fn default() -> Self {
         Self {
-            s_type: StructureType::SEMAPHORE_SUBMIT_INFO_KHR,
+            s_type: StructureType::SEMAPHORE_SUBMIT_INFO,
             p_next: ::std::ptr::null(),
             semaphore: Semaphore::default(),
             value: u64::default(),
-            stage_mask: PipelineStageFlags2KHR::default(),
+            stage_mask: PipelineStageFlags2::default(),
             device_index: u32::default(),
         }
     }
 }
-impl SemaphoreSubmitInfoKHR {
-    pub fn builder<'a>() -> SemaphoreSubmitInfoKHRBuilder<'a> {
-        SemaphoreSubmitInfoKHRBuilder {
+impl SemaphoreSubmitInfo {
+    pub fn builder<'a>() -> SemaphoreSubmitInfoBuilder<'a> {
+        SemaphoreSubmitInfoBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct SemaphoreSubmitInfoKHRBuilder<'a> {
-    inner: SemaphoreSubmitInfoKHR,
+pub struct SemaphoreSubmitInfoBuilder<'a> {
+    inner: SemaphoreSubmitInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-impl<'a> ::std::ops::Deref for SemaphoreSubmitInfoKHRBuilder<'a> {
-    type Target = SemaphoreSubmitInfoKHR;
+impl<'a> ::std::ops::Deref for SemaphoreSubmitInfoBuilder<'a> {
+    type Target = SemaphoreSubmitInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for SemaphoreSubmitInfoKHRBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for SemaphoreSubmitInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> SemaphoreSubmitInfoKHRBuilder<'a> {
+impl<'a> SemaphoreSubmitInfoBuilder<'a> {
     pub fn semaphore(mut self, semaphore: Semaphore) -> Self {
         self.inner.semaphore = semaphore;
         self
@@ -47437,7 +48021,7 @@ impl<'a> SemaphoreSubmitInfoKHRBuilder<'a> {
         self.inner.value = value;
         self
     }
-    pub fn stage_mask(mut self, stage_mask: PipelineStageFlags2KHR) -> Self {
+    pub fn stage_mask(mut self, stage_mask: PipelineStageFlags2) -> Self {
         self.inner.stage_mask = stage_mask;
         self
     }
@@ -47448,55 +48032,55 @@ impl<'a> SemaphoreSubmitInfoKHRBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> SemaphoreSubmitInfoKHR {
+    pub fn build(self) -> SemaphoreSubmitInfo {
         self.inner
     }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCommandBufferSubmitInfoKHR.html>"]
-pub struct CommandBufferSubmitInfoKHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCommandBufferSubmitInfo.html>"]
+pub struct CommandBufferSubmitInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub command_buffer: CommandBuffer,
     pub device_mask: u32,
 }
-impl ::std::default::Default for CommandBufferSubmitInfoKHR {
+impl ::std::default::Default for CommandBufferSubmitInfo {
     fn default() -> Self {
         Self {
-            s_type: StructureType::COMMAND_BUFFER_SUBMIT_INFO_KHR,
+            s_type: StructureType::COMMAND_BUFFER_SUBMIT_INFO,
             p_next: ::std::ptr::null(),
             command_buffer: CommandBuffer::default(),
             device_mask: u32::default(),
         }
     }
 }
-impl CommandBufferSubmitInfoKHR {
-    pub fn builder<'a>() -> CommandBufferSubmitInfoKHRBuilder<'a> {
-        CommandBufferSubmitInfoKHRBuilder {
+impl CommandBufferSubmitInfo {
+    pub fn builder<'a>() -> CommandBufferSubmitInfoBuilder<'a> {
+        CommandBufferSubmitInfoBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct CommandBufferSubmitInfoKHRBuilder<'a> {
-    inner: CommandBufferSubmitInfoKHR,
+pub struct CommandBufferSubmitInfoBuilder<'a> {
+    inner: CommandBufferSubmitInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-impl<'a> ::std::ops::Deref for CommandBufferSubmitInfoKHRBuilder<'a> {
-    type Target = CommandBufferSubmitInfoKHR;
+impl<'a> ::std::ops::Deref for CommandBufferSubmitInfoBuilder<'a> {
+    type Target = CommandBufferSubmitInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for CommandBufferSubmitInfoKHRBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for CommandBufferSubmitInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> CommandBufferSubmitInfoKHRBuilder<'a> {
+impl<'a> CommandBufferSubmitInfoBuilder<'a> {
     pub fn command_buffer(mut self, command_buffer: CommandBuffer) -> Self {
         self.inner.command_buffer = command_buffer;
         self
@@ -47508,31 +48092,31 @@ impl<'a> CommandBufferSubmitInfoKHRBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> CommandBufferSubmitInfoKHR {
+    pub fn build(self) -> CommandBufferSubmitInfo {
         self.inner
     }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSubmitInfo2KHR.html>"]
-pub struct SubmitInfo2KHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSubmitInfo2.html>"]
+pub struct SubmitInfo2 {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: SubmitFlagsKHR,
+    pub flags: SubmitFlags,
     pub wait_semaphore_info_count: u32,
-    pub p_wait_semaphore_infos: *const SemaphoreSubmitInfoKHR,
+    pub p_wait_semaphore_infos: *const SemaphoreSubmitInfo,
     pub command_buffer_info_count: u32,
-    pub p_command_buffer_infos: *const CommandBufferSubmitInfoKHR,
+    pub p_command_buffer_infos: *const CommandBufferSubmitInfo,
     pub signal_semaphore_info_count: u32,
-    pub p_signal_semaphore_infos: *const SemaphoreSubmitInfoKHR,
+    pub p_signal_semaphore_infos: *const SemaphoreSubmitInfo,
 }
-impl ::std::default::Default for SubmitInfo2KHR {
+impl ::std::default::Default for SubmitInfo2 {
     fn default() -> Self {
         Self {
-            s_type: StructureType::SUBMIT_INFO_2_KHR,
+            s_type: StructureType::SUBMIT_INFO_2,
             p_next: ::std::ptr::null(),
-            flags: SubmitFlagsKHR::default(),
+            flags: SubmitFlags::default(),
             wait_semaphore_info_count: u32::default(),
             p_wait_semaphore_infos: ::std::ptr::null(),
             command_buffer_info_count: u32::default(),
@@ -47542,47 +48126,44 @@ impl ::std::default::Default for SubmitInfo2KHR {
         }
     }
 }
-impl SubmitInfo2KHR {
-    pub fn builder<'a>() -> SubmitInfo2KHRBuilder<'a> {
-        SubmitInfo2KHRBuilder {
+impl SubmitInfo2 {
+    pub fn builder<'a>() -> SubmitInfo2Builder<'a> {
+        SubmitInfo2Builder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct SubmitInfo2KHRBuilder<'a> {
-    inner: SubmitInfo2KHR,
+pub struct SubmitInfo2Builder<'a> {
+    inner: SubmitInfo2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSubmitInfo2KHR {}
-impl<'a> ::std::ops::Deref for SubmitInfo2KHRBuilder<'a> {
-    type Target = SubmitInfo2KHR;
+pub unsafe trait ExtendsSubmitInfo2 {}
+impl<'a> ::std::ops::Deref for SubmitInfo2Builder<'a> {
+    type Target = SubmitInfo2;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for SubmitInfo2KHRBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for SubmitInfo2Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> SubmitInfo2KHRBuilder<'a> {
-    pub fn flags(mut self, flags: SubmitFlagsKHR) -> Self {
+impl<'a> SubmitInfo2Builder<'a> {
+    pub fn flags(mut self, flags: SubmitFlags) -> Self {
         self.inner.flags = flags;
         self
     }
-    pub fn wait_semaphore_infos(
-        mut self,
-        wait_semaphore_infos: &'a [SemaphoreSubmitInfoKHR],
-    ) -> Self {
+    pub fn wait_semaphore_infos(mut self, wait_semaphore_infos: &'a [SemaphoreSubmitInfo]) -> Self {
         self.inner.wait_semaphore_info_count = wait_semaphore_infos.len() as _;
         self.inner.p_wait_semaphore_infos = wait_semaphore_infos.as_ptr();
         self
     }
     pub fn command_buffer_infos(
         mut self,
-        command_buffer_infos: &'a [CommandBufferSubmitInfoKHR],
+        command_buffer_infos: &'a [CommandBufferSubmitInfo],
     ) -> Self {
         self.inner.command_buffer_info_count = command_buffer_infos.len() as _;
         self.inner.p_command_buffer_infos = command_buffer_infos.as_ptr();
@@ -47590,7 +48171,7 @@ impl<'a> SubmitInfo2KHRBuilder<'a> {
     }
     pub fn signal_semaphore_infos(
         mut self,
-        signal_semaphore_infos: &'a [SemaphoreSubmitInfoKHR],
+        signal_semaphore_infos: &'a [SemaphoreSubmitInfo],
     ) -> Self {
         self.inner.signal_semaphore_info_count = signal_semaphore_infos.len() as _;
         self.inner.p_signal_semaphore_infos = signal_semaphore_infos.as_ptr();
@@ -47601,19 +48182,19 @@ impl<'a> SubmitInfo2KHRBuilder<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSubmitInfo2KHR>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsSubmitInfo2>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> SubmitInfo2KHR {
+    pub fn build(self) -> SubmitInfo2 {
         self.inner
     }
 }
@@ -47624,14 +48205,14 @@ impl<'a> SubmitInfo2KHRBuilder<'a> {
 pub struct QueueFamilyCheckpointProperties2NV {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
-    pub checkpoint_execution_stage_mask: PipelineStageFlags2KHR,
+    pub checkpoint_execution_stage_mask: PipelineStageFlags2,
 }
 impl ::std::default::Default for QueueFamilyCheckpointProperties2NV {
     fn default() -> Self {
         Self {
             s_type: StructureType::QUEUE_FAMILY_CHECKPOINT_PROPERTIES_2_NV,
             p_next: ::std::ptr::null_mut(),
-            checkpoint_execution_stage_mask: PipelineStageFlags2KHR::default(),
+            checkpoint_execution_stage_mask: PipelineStageFlags2::default(),
         }
     }
 }
@@ -47664,7 +48245,7 @@ impl<'a> ::std::ops::DerefMut for QueueFamilyCheckpointProperties2NVBuilder<'a> 
 impl<'a> QueueFamilyCheckpointProperties2NVBuilder<'a> {
     pub fn checkpoint_execution_stage_mask(
         mut self,
-        checkpoint_execution_stage_mask: PipelineStageFlags2KHR,
+        checkpoint_execution_stage_mask: PipelineStageFlags2,
     ) -> Self {
         self.inner.checkpoint_execution_stage_mask = checkpoint_execution_stage_mask;
         self
@@ -47683,7 +48264,7 @@ impl<'a> QueueFamilyCheckpointProperties2NVBuilder<'a> {
 pub struct CheckpointData2NV {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
-    pub stage: PipelineStageFlags2KHR,
+    pub stage: PipelineStageFlags2,
     pub p_checkpoint_marker: *mut c_void,
 }
 impl ::std::default::Default for CheckpointData2NV {
@@ -47691,7 +48272,7 @@ impl ::std::default::Default for CheckpointData2NV {
         Self {
             s_type: StructureType::CHECKPOINT_DATA_2_NV,
             p_next: ::std::ptr::null_mut(),
-            stage: PipelineStageFlags2KHR::default(),
+            stage: PipelineStageFlags2::default(),
             p_checkpoint_marker: ::std::ptr::null_mut(),
         }
     }
@@ -47721,7 +48302,7 @@ impl<'a> ::std::ops::DerefMut for CheckpointData2NVBuilder<'a> {
     }
 }
 impl<'a> CheckpointData2NVBuilder<'a> {
-    pub fn stage(mut self, stage: PipelineStageFlags2KHR) -> Self {
+    pub fn stage(mut self, stage: PipelineStageFlags2) -> Self {
         self.inner.stage = stage;
         self
     }
@@ -47739,53 +48320,50 @@ impl<'a> CheckpointData2NVBuilder<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceSynchronization2FeaturesKHR.html>"]
-pub struct PhysicalDeviceSynchronization2FeaturesKHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceSynchronization2Features.html>"]
+pub struct PhysicalDeviceSynchronization2Features {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub synchronization2: Bool32,
 }
-impl ::std::default::Default for PhysicalDeviceSynchronization2FeaturesKHR {
+impl ::std::default::Default for PhysicalDeviceSynchronization2Features {
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SYNCHRONIZATION_2_FEATURES_KHR,
+            s_type: StructureType::PHYSICAL_DEVICE_SYNCHRONIZATION_2_FEATURES,
             p_next: ::std::ptr::null_mut(),
             synchronization2: Bool32::default(),
         }
     }
 }
-impl PhysicalDeviceSynchronization2FeaturesKHR {
-    pub fn builder<'a>() -> PhysicalDeviceSynchronization2FeaturesKHRBuilder<'a> {
-        PhysicalDeviceSynchronization2FeaturesKHRBuilder {
+impl PhysicalDeviceSynchronization2Features {
+    pub fn builder<'a>() -> PhysicalDeviceSynchronization2FeaturesBuilder<'a> {
+        PhysicalDeviceSynchronization2FeaturesBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct PhysicalDeviceSynchronization2FeaturesKHRBuilder<'a> {
-    inner: PhysicalDeviceSynchronization2FeaturesKHR,
+pub struct PhysicalDeviceSynchronization2FeaturesBuilder<'a> {
+    inner: PhysicalDeviceSynchronization2Features,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceSynchronization2FeaturesKHRBuilder<'_>
-{
-}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSynchronization2FeaturesKHR {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSynchronization2FeaturesKHRBuilder<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSynchronization2FeaturesKHR {}
-impl<'a> ::std::ops::Deref for PhysicalDeviceSynchronization2FeaturesKHRBuilder<'a> {
-    type Target = PhysicalDeviceSynchronization2FeaturesKHR;
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSynchronization2FeaturesBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSynchronization2Features {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSynchronization2FeaturesBuilder<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSynchronization2Features {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceSynchronization2FeaturesBuilder<'a> {
+    type Target = PhysicalDeviceSynchronization2Features;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for PhysicalDeviceSynchronization2FeaturesKHRBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceSynchronization2FeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> PhysicalDeviceSynchronization2FeaturesKHRBuilder<'a> {
+impl<'a> PhysicalDeviceSynchronization2FeaturesBuilder<'a> {
     pub fn synchronization2(mut self, synchronization2: bool) -> Self {
         self.inner.synchronization2 = synchronization2.into();
         self
@@ -47793,7 +48371,7 @@ impl<'a> PhysicalDeviceSynchronization2FeaturesKHRBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> PhysicalDeviceSynchronization2FeaturesKHR {
+    pub fn build(self) -> PhysicalDeviceSynchronization2Features {
         self.inner
     }
 }
@@ -48186,10 +48764,10 @@ impl<'a> VideoProfileKHRBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsVideoProfileKHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -48312,10 +48890,10 @@ impl<'a> VideoCapabilitiesKHRBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsVideoCapabilitiesKHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -48591,10 +49169,10 @@ impl<'a> VideoReferenceSlotKHRBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsVideoReferenceSlotKHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -48711,10 +49289,10 @@ impl<'a> VideoDecodeInfoKHRBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsVideoDecodeInfoKHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -49144,10 +49722,10 @@ impl<'a> VideoDecodeH264PictureInfoEXTBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsVideoDecodeH264PictureInfoEXT>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -49844,10 +50422,10 @@ impl<'a> VideoSessionCreateInfoKHRBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsVideoSessionCreateInfoKHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -49925,10 +50503,10 @@ impl<'a> VideoSessionParametersCreateInfoKHRBuilder<'a> {
         next: &'a mut T,
     ) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -49997,10 +50575,10 @@ impl<'a> VideoSessionParametersUpdateInfoKHRBuilder<'a> {
         next: &'a mut T,
     ) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -50207,10 +50785,10 @@ impl<'a> VideoCodingControlInfoKHRBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsVideoCodingControlInfoKHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -50339,10 +50917,10 @@ impl<'a> VideoEncodeInfoKHRBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsVideoEncodeInfoKHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -50431,10 +51009,10 @@ impl<'a> VideoEncodeRateControlInfoKHRBuilder<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsVideoEncodeRateControlInfoKHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -50538,10 +51116,10 @@ impl<'a> VideoEncodeRateControlLayerInfoKHRBuilder<'a> {
         next: &'a mut T,
     ) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
@@ -50555,6 +51133,107 @@ impl<'a> VideoEncodeRateControlLayerInfoKHRBuilder<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeCapabilitiesKHR.html>"]
+pub struct VideoEncodeCapabilitiesKHR {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub flags: VideoEncodeCapabilityFlagsKHR,
+    pub rate_control_modes: VideoEncodeRateControlModeFlagsKHR,
+    pub rate_control_layer_count: u8,
+    pub quality_level_count: u8,
+    pub input_image_data_fill_alignment: Extent2D,
+}
+impl ::std::default::Default for VideoEncodeCapabilitiesKHR {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::VIDEO_ENCODE_CAPABILITIES_KHR,
+            p_next: ::std::ptr::null(),
+            flags: VideoEncodeCapabilityFlagsKHR::default(),
+            rate_control_modes: VideoEncodeRateControlModeFlagsKHR::default(),
+            rate_control_layer_count: u8::default(),
+            quality_level_count: u8::default(),
+            input_image_data_fill_alignment: Extent2D::default(),
+        }
+    }
+}
+impl VideoEncodeCapabilitiesKHR {
+    pub fn builder<'a>() -> VideoEncodeCapabilitiesKHRBuilder<'a> {
+        VideoEncodeCapabilitiesKHRBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct VideoEncodeCapabilitiesKHRBuilder<'a> {
+    inner: VideoEncodeCapabilitiesKHR,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsVideoCapabilitiesKHR for VideoEncodeCapabilitiesKHRBuilder<'_> {}
+unsafe impl ExtendsVideoCapabilitiesKHR for VideoEncodeCapabilitiesKHR {}
+pub unsafe trait ExtendsVideoEncodeCapabilitiesKHR {}
+impl<'a> ::std::ops::Deref for VideoEncodeCapabilitiesKHRBuilder<'a> {
+    type Target = VideoEncodeCapabilitiesKHR;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for VideoEncodeCapabilitiesKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> VideoEncodeCapabilitiesKHRBuilder<'a> {
+    pub fn flags(mut self, flags: VideoEncodeCapabilityFlagsKHR) -> Self {
+        self.inner.flags = flags;
+        self
+    }
+    pub fn rate_control_modes(
+        mut self,
+        rate_control_modes: VideoEncodeRateControlModeFlagsKHR,
+    ) -> Self {
+        self.inner.rate_control_modes = rate_control_modes;
+        self
+    }
+    pub fn rate_control_layer_count(mut self, rate_control_layer_count: u8) -> Self {
+        self.inner.rate_control_layer_count = rate_control_layer_count;
+        self
+    }
+    pub fn quality_level_count(mut self, quality_level_count: u8) -> Self {
+        self.inner.quality_level_count = quality_level_count;
+        self
+    }
+    pub fn input_image_data_fill_alignment(
+        mut self,
+        input_image_data_fill_alignment: Extent2D,
+    ) -> Self {
+        self.inner.input_image_data_fill_alignment = input_image_data_fill_alignment;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsVideoEncodeCapabilitiesKHR>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = <*const T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr;
+        }
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> VideoEncodeCapabilitiesKHR {
+        self.inner
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH264CapabilitiesEXT.html>"]
 pub struct VideoEncodeH264CapabilitiesEXT {
     pub s_type: StructureType,
@@ -50562,13 +51241,14 @@ pub struct VideoEncodeH264CapabilitiesEXT {
     pub flags: VideoEncodeH264CapabilityFlagsEXT,
     pub input_mode_flags: VideoEncodeH264InputModeFlagsEXT,
     pub output_mode_flags: VideoEncodeH264OutputModeFlagsEXT,
-    pub min_picture_size_in_mbs: Extent2D,
-    pub max_picture_size_in_mbs: Extent2D,
-    pub input_image_data_alignment: Extent2D,
-    pub max_num_l0_reference_for_p: u8,
-    pub max_num_l0_reference_for_b: u8,
-    pub max_num_l1_reference: u8,
-    pub quality_level_count: u8,
+    pub max_p_picture_l0_reference_count: u8,
+    pub max_b_picture_l0_reference_count: u8,
+    pub max_l1_reference_count: u8,
+    pub motion_vectors_over_pic_boundaries_flag: Bool32,
+    pub max_bytes_per_pic_denom: u32,
+    pub max_bits_per_mb_denom: u32,
+    pub log2_max_mv_length_horizontal: u32,
+    pub log2_max_mv_length_vertical: u32,
     pub std_extension_version: ExtensionProperties,
 }
 impl ::std::default::Default for VideoEncodeH264CapabilitiesEXT {
@@ -50579,13 +51259,14 @@ impl ::std::default::Default for VideoEncodeH264CapabilitiesEXT {
             flags: VideoEncodeH264CapabilityFlagsEXT::default(),
             input_mode_flags: VideoEncodeH264InputModeFlagsEXT::default(),
             output_mode_flags: VideoEncodeH264OutputModeFlagsEXT::default(),
-            min_picture_size_in_mbs: Extent2D::default(),
-            max_picture_size_in_mbs: Extent2D::default(),
-            input_image_data_alignment: Extent2D::default(),
-            max_num_l0_reference_for_p: u8::default(),
-            max_num_l0_reference_for_b: u8::default(),
-            max_num_l1_reference: u8::default(),
-            quality_level_count: u8::default(),
+            max_p_picture_l0_reference_count: u8::default(),
+            max_b_picture_l0_reference_count: u8::default(),
+            max_l1_reference_count: u8::default(),
+            motion_vectors_over_pic_boundaries_flag: Bool32::default(),
+            max_bytes_per_pic_denom: u32::default(),
+            max_bits_per_mb_denom: u32::default(),
+            log2_max_mv_length_horizontal: u32::default(),
+            log2_max_mv_length_vertical: u32::default(),
             std_extension_version: ExtensionProperties::default(),
         }
     }
@@ -50603,8 +51284,8 @@ pub struct VideoEncodeH264CapabilitiesEXTBuilder<'a> {
     inner: VideoEncodeH264CapabilitiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-unsafe impl ExtendsVideoCapabilitiesKHR for VideoEncodeH264CapabilitiesEXTBuilder<'_> {}
-unsafe impl ExtendsVideoCapabilitiesKHR for VideoEncodeH264CapabilitiesEXT {}
+unsafe impl ExtendsVideoEncodeCapabilitiesKHR for VideoEncodeH264CapabilitiesEXTBuilder<'_> {}
+unsafe impl ExtendsVideoEncodeCapabilitiesKHR for VideoEncodeH264CapabilitiesEXT {}
 impl<'a> ::std::ops::Deref for VideoEncodeH264CapabilitiesEXTBuilder<'a> {
     type Target = VideoEncodeH264CapabilitiesEXT;
     fn deref(&self) -> &Self::Target {
@@ -50632,32 +51313,46 @@ impl<'a> VideoEncodeH264CapabilitiesEXTBuilder<'a> {
         self.inner.output_mode_flags = output_mode_flags;
         self
     }
-    pub fn min_picture_size_in_mbs(mut self, min_picture_size_in_mbs: Extent2D) -> Self {
-        self.inner.min_picture_size_in_mbs = min_picture_size_in_mbs;
+    pub fn max_p_picture_l0_reference_count(
+        mut self,
+        max_p_picture_l0_reference_count: u8,
+    ) -> Self {
+        self.inner.max_p_picture_l0_reference_count = max_p_picture_l0_reference_count;
         self
     }
-    pub fn max_picture_size_in_mbs(mut self, max_picture_size_in_mbs: Extent2D) -> Self {
-        self.inner.max_picture_size_in_mbs = max_picture_size_in_mbs;
+    pub fn max_b_picture_l0_reference_count(
+        mut self,
+        max_b_picture_l0_reference_count: u8,
+    ) -> Self {
+        self.inner.max_b_picture_l0_reference_count = max_b_picture_l0_reference_count;
         self
     }
-    pub fn input_image_data_alignment(mut self, input_image_data_alignment: Extent2D) -> Self {
-        self.inner.input_image_data_alignment = input_image_data_alignment;
+    pub fn max_l1_reference_count(mut self, max_l1_reference_count: u8) -> Self {
+        self.inner.max_l1_reference_count = max_l1_reference_count;
         self
     }
-    pub fn max_num_l0_reference_for_p(mut self, max_num_l0_reference_for_p: u8) -> Self {
-        self.inner.max_num_l0_reference_for_p = max_num_l0_reference_for_p;
+    pub fn motion_vectors_over_pic_boundaries_flag(
+        mut self,
+        motion_vectors_over_pic_boundaries_flag: bool,
+    ) -> Self {
+        self.inner.motion_vectors_over_pic_boundaries_flag =
+            motion_vectors_over_pic_boundaries_flag.into();
         self
     }
-    pub fn max_num_l0_reference_for_b(mut self, max_num_l0_reference_for_b: u8) -> Self {
-        self.inner.max_num_l0_reference_for_b = max_num_l0_reference_for_b;
+    pub fn max_bytes_per_pic_denom(mut self, max_bytes_per_pic_denom: u32) -> Self {
+        self.inner.max_bytes_per_pic_denom = max_bytes_per_pic_denom;
         self
     }
-    pub fn max_num_l1_reference(mut self, max_num_l1_reference: u8) -> Self {
-        self.inner.max_num_l1_reference = max_num_l1_reference;
+    pub fn max_bits_per_mb_denom(mut self, max_bits_per_mb_denom: u32) -> Self {
+        self.inner.max_bits_per_mb_denom = max_bits_per_mb_denom;
         self
     }
-    pub fn quality_level_count(mut self, quality_level_count: u8) -> Self {
-        self.inner.quality_level_count = quality_level_count;
+    pub fn log2_max_mv_length_horizontal(mut self, log2_max_mv_length_horizontal: u32) -> Self {
+        self.inner.log2_max_mv_length_horizontal = log2_max_mv_length_horizontal;
+        self
+    }
+    pub fn log2_max_mv_length_vertical(mut self, log2_max_mv_length_vertical: u32) -> Self {
+        self.inner.log2_max_mv_length_vertical = log2_max_mv_length_vertical;
         self
     }
     pub fn std_extension_version(mut self, std_extension_version: ExtensionProperties) -> Self {
@@ -50898,7 +51593,7 @@ pub struct VideoEncodeH264DpbSlotInfoEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub slot_index: i8,
-    pub p_std_picture_info: *const StdVideoEncodeH264PictureInfo,
+    pub p_std_reference_info: *const StdVideoEncodeH264ReferenceInfo,
 }
 impl ::std::default::Default for VideoEncodeH264DpbSlotInfoEXT {
     fn default() -> Self {
@@ -50906,7 +51601,7 @@ impl ::std::default::Default for VideoEncodeH264DpbSlotInfoEXT {
             s_type: StructureType::VIDEO_ENCODE_H264_DPB_SLOT_INFO_EXT,
             p_next: ::std::ptr::null(),
             slot_index: i8::default(),
-            p_std_picture_info: ::std::ptr::null(),
+            p_std_reference_info: ::std::ptr::null(),
         }
     }
 }
@@ -50939,8 +51634,11 @@ impl<'a> VideoEncodeH264DpbSlotInfoEXTBuilder<'a> {
         self.inner.slot_index = slot_index;
         self
     }
-    pub fn std_picture_info(mut self, std_picture_info: &'a StdVideoEncodeH264PictureInfo) -> Self {
-        self.inner.p_std_picture_info = std_picture_info;
+    pub fn std_reference_info(
+        mut self,
+        std_reference_info: &'a StdVideoEncodeH264ReferenceInfo,
+    ) -> Self {
+        self.inner.p_std_reference_info = std_reference_info;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -50957,23 +51655,17 @@ impl<'a> VideoEncodeH264DpbSlotInfoEXTBuilder<'a> {
 pub struct VideoEncodeH264VclFrameInfoEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub ref_default_final_list0_entry_count: u8,
-    pub p_ref_default_final_list0_entries: *const VideoEncodeH264DpbSlotInfoEXT,
-    pub ref_default_final_list1_entry_count: u8,
-    pub p_ref_default_final_list1_entries: *const VideoEncodeH264DpbSlotInfoEXT,
+    pub p_reference_final_lists: *const VideoEncodeH264ReferenceListsEXT,
     pub nalu_slice_entry_count: u32,
     pub p_nalu_slice_entries: *const VideoEncodeH264NaluSliceEXT,
-    pub p_current_picture_info: *const VideoEncodeH264DpbSlotInfoEXT,
+    pub p_current_picture_info: *const StdVideoEncodeH264PictureInfo,
 }
 impl ::std::default::Default for VideoEncodeH264VclFrameInfoEXT {
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_H264_VCL_FRAME_INFO_EXT,
             p_next: ::std::ptr::null(),
-            ref_default_final_list0_entry_count: u8::default(),
-            p_ref_default_final_list0_entries: ::std::ptr::null(),
-            ref_default_final_list1_entry_count: u8::default(),
-            p_ref_default_final_list1_entries: ::std::ptr::null(),
+            p_reference_final_lists: ::std::ptr::null(),
             nalu_slice_entry_count: u32::default(),
             p_nalu_slice_entries: ::std::ptr::null(),
             p_current_picture_info: ::std::ptr::null(),
@@ -51007,20 +51699,11 @@ impl<'a> ::std::ops::DerefMut for VideoEncodeH264VclFrameInfoEXTBuilder<'a> {
     }
 }
 impl<'a> VideoEncodeH264VclFrameInfoEXTBuilder<'a> {
-    pub fn ref_default_final_list0_entries(
+    pub fn reference_final_lists(
         mut self,
-        ref_default_final_list0_entries: &'a [VideoEncodeH264DpbSlotInfoEXT],
+        reference_final_lists: &'a VideoEncodeH264ReferenceListsEXT,
     ) -> Self {
-        self.inner.ref_default_final_list0_entry_count = ref_default_final_list0_entries.len() as _;
-        self.inner.p_ref_default_final_list0_entries = ref_default_final_list0_entries.as_ptr();
-        self
-    }
-    pub fn ref_default_final_list1_entries(
-        mut self,
-        ref_default_final_list1_entries: &'a [VideoEncodeH264DpbSlotInfoEXT],
-    ) -> Self {
-        self.inner.ref_default_final_list1_entry_count = ref_default_final_list1_entries.len() as _;
-        self.inner.p_ref_default_final_list1_entries = ref_default_final_list1_entries.as_ptr();
+        self.inner.p_reference_final_lists = reference_final_lists;
         self
     }
     pub fn nalu_slice_entries(
@@ -51033,7 +51716,7 @@ impl<'a> VideoEncodeH264VclFrameInfoEXTBuilder<'a> {
     }
     pub fn current_picture_info(
         mut self,
-        current_picture_info: &'a VideoEncodeH264DpbSlotInfoEXT,
+        current_picture_info: &'a StdVideoEncodeH264PictureInfo,
     ) -> Self {
         self.inner.p_current_picture_info = current_picture_info;
         self
@@ -51042,6 +51725,87 @@ impl<'a> VideoEncodeH264VclFrameInfoEXTBuilder<'a> {
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> VideoEncodeH264VclFrameInfoEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH264ReferenceListsEXT.html>"]
+pub struct VideoEncodeH264ReferenceListsEXT {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub reference_list0_entry_count: u8,
+    pub p_reference_list0_entries: *const VideoEncodeH264DpbSlotInfoEXT,
+    pub reference_list1_entry_count: u8,
+    pub p_reference_list1_entries: *const VideoEncodeH264DpbSlotInfoEXT,
+    pub p_mem_mgmt_ctrl_operations: *const StdVideoEncodeH264RefMemMgmtCtrlOperations,
+}
+impl ::std::default::Default for VideoEncodeH264ReferenceListsEXT {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::VIDEO_ENCODE_H264_REFERENCE_LISTS_EXT,
+            p_next: ::std::ptr::null(),
+            reference_list0_entry_count: u8::default(),
+            p_reference_list0_entries: ::std::ptr::null(),
+            reference_list1_entry_count: u8::default(),
+            p_reference_list1_entries: ::std::ptr::null(),
+            p_mem_mgmt_ctrl_operations: ::std::ptr::null(),
+        }
+    }
+}
+impl VideoEncodeH264ReferenceListsEXT {
+    pub fn builder<'a>() -> VideoEncodeH264ReferenceListsEXTBuilder<'a> {
+        VideoEncodeH264ReferenceListsEXTBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct VideoEncodeH264ReferenceListsEXTBuilder<'a> {
+    inner: VideoEncodeH264ReferenceListsEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+impl<'a> ::std::ops::Deref for VideoEncodeH264ReferenceListsEXTBuilder<'a> {
+    type Target = VideoEncodeH264ReferenceListsEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for VideoEncodeH264ReferenceListsEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> VideoEncodeH264ReferenceListsEXTBuilder<'a> {
+    pub fn reference_list0_entries(
+        mut self,
+        reference_list0_entries: &'a [VideoEncodeH264DpbSlotInfoEXT],
+    ) -> Self {
+        self.inner.reference_list0_entry_count = reference_list0_entries.len() as _;
+        self.inner.p_reference_list0_entries = reference_list0_entries.as_ptr();
+        self
+    }
+    pub fn reference_list1_entries(
+        mut self,
+        reference_list1_entries: &'a [VideoEncodeH264DpbSlotInfoEXT],
+    ) -> Self {
+        self.inner.reference_list1_entry_count = reference_list1_entries.len() as _;
+        self.inner.p_reference_list1_entries = reference_list1_entries.as_ptr();
+        self
+    }
+    pub fn mem_mgmt_ctrl_operations(
+        mut self,
+        mem_mgmt_ctrl_operations: &'a StdVideoEncodeH264RefMemMgmtCtrlOperations,
+    ) -> Self {
+        self.inner.p_mem_mgmt_ctrl_operations = mem_mgmt_ctrl_operations;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> VideoEncodeH264ReferenceListsEXT {
         self.inner
     }
 }
@@ -51189,24 +51953,18 @@ impl<'a> VideoEncodeH264ProfileEXTBuilder<'a> {
 pub struct VideoEncodeH264NaluSliceEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub p_slice_header_std: *const StdVideoEncodeH264SliceHeader,
     pub mb_count: u32,
-    pub ref_final_list0_entry_count: u8,
-    pub p_ref_final_list0_entries: *const VideoEncodeH264DpbSlotInfoEXT,
-    pub ref_final_list1_entry_count: u8,
-    pub p_ref_final_list1_entries: *const VideoEncodeH264DpbSlotInfoEXT,
+    pub p_reference_final_lists: *const VideoEncodeH264ReferenceListsEXT,
+    pub p_slice_header_std: *const StdVideoEncodeH264SliceHeader,
 }
 impl ::std::default::Default for VideoEncodeH264NaluSliceEXT {
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_H264_NALU_SLICE_EXT,
             p_next: ::std::ptr::null(),
-            p_slice_header_std: ::std::ptr::null(),
             mb_count: u32::default(),
-            ref_final_list0_entry_count: u8::default(),
-            p_ref_final_list0_entries: ::std::ptr::null(),
-            ref_final_list1_entry_count: u8::default(),
-            p_ref_final_list1_entries: ::std::ptr::null(),
+            p_reference_final_lists: ::std::ptr::null(),
+            p_slice_header_std: ::std::ptr::null(),
         }
     }
 }
@@ -51235,28 +51993,19 @@ impl<'a> ::std::ops::DerefMut for VideoEncodeH264NaluSliceEXTBuilder<'a> {
     }
 }
 impl<'a> VideoEncodeH264NaluSliceEXTBuilder<'a> {
-    pub fn slice_header_std(mut self, slice_header_std: &'a StdVideoEncodeH264SliceHeader) -> Self {
-        self.inner.p_slice_header_std = slice_header_std;
-        self
-    }
     pub fn mb_count(mut self, mb_count: u32) -> Self {
         self.inner.mb_count = mb_count;
         self
     }
-    pub fn ref_final_list0_entries(
+    pub fn reference_final_lists(
         mut self,
-        ref_final_list0_entries: &'a [VideoEncodeH264DpbSlotInfoEXT],
+        reference_final_lists: &'a VideoEncodeH264ReferenceListsEXT,
     ) -> Self {
-        self.inner.ref_final_list0_entry_count = ref_final_list0_entries.len() as _;
-        self.inner.p_ref_final_list0_entries = ref_final_list0_entries.as_ptr();
+        self.inner.p_reference_final_lists = reference_final_lists;
         self
     }
-    pub fn ref_final_list1_entries(
-        mut self,
-        ref_final_list1_entries: &'a [VideoEncodeH264DpbSlotInfoEXT],
-    ) -> Self {
-        self.inner.ref_final_list1_entry_count = ref_final_list1_entries.len() as _;
-        self.inner.p_ref_final_list1_entries = ref_final_list1_entries.as_ptr();
+    pub fn slice_header_std(mut self, slice_header_std: &'a StdVideoEncodeH264SliceHeader) -> Self {
+        self.inner.p_slice_header_std = slice_header_std;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -51573,12 +52322,22 @@ pub struct VideoEncodeH265CapabilitiesEXT {
     pub input_mode_flags: VideoEncodeH265InputModeFlagsEXT,
     pub output_mode_flags: VideoEncodeH265OutputModeFlagsEXT,
     pub ctb_sizes: VideoEncodeH265CtbSizeFlagsEXT,
-    pub input_image_data_alignment: Extent2D,
-    pub max_num_l0_reference_for_p: u8,
-    pub max_num_l0_reference_for_b: u8,
-    pub max_num_l1_reference: u8,
-    pub max_num_sub_layers: u8,
-    pub quality_level_count: u8,
+    pub transform_block_sizes: VideoEncodeH265TransformBlockSizeFlagsEXT,
+    pub max_p_picture_l0_reference_count: u8,
+    pub max_b_picture_l0_reference_count: u8,
+    pub max_l1_reference_count: u8,
+    pub max_sub_layers_count: u8,
+    pub min_log2_min_luma_coding_block_size_minus3: u8,
+    pub max_log2_min_luma_coding_block_size_minus3: u8,
+    pub min_log2_min_luma_transform_block_size_minus2: u8,
+    pub max_log2_min_luma_transform_block_size_minus2: u8,
+    pub min_max_transform_hierarchy_depth_inter: u8,
+    pub max_max_transform_hierarchy_depth_inter: u8,
+    pub min_max_transform_hierarchy_depth_intra: u8,
+    pub max_max_transform_hierarchy_depth_intra: u8,
+    pub max_diff_cu_qp_delta_depth: u8,
+    pub min_max_num_merge_cand: u8,
+    pub max_max_num_merge_cand: u8,
     pub std_extension_version: ExtensionProperties,
 }
 impl ::std::default::Default for VideoEncodeH265CapabilitiesEXT {
@@ -51590,12 +52349,22 @@ impl ::std::default::Default for VideoEncodeH265CapabilitiesEXT {
             input_mode_flags: VideoEncodeH265InputModeFlagsEXT::default(),
             output_mode_flags: VideoEncodeH265OutputModeFlagsEXT::default(),
             ctb_sizes: VideoEncodeH265CtbSizeFlagsEXT::default(),
-            input_image_data_alignment: Extent2D::default(),
-            max_num_l0_reference_for_p: u8::default(),
-            max_num_l0_reference_for_b: u8::default(),
-            max_num_l1_reference: u8::default(),
-            max_num_sub_layers: u8::default(),
-            quality_level_count: u8::default(),
+            transform_block_sizes: VideoEncodeH265TransformBlockSizeFlagsEXT::default(),
+            max_p_picture_l0_reference_count: u8::default(),
+            max_b_picture_l0_reference_count: u8::default(),
+            max_l1_reference_count: u8::default(),
+            max_sub_layers_count: u8::default(),
+            min_log2_min_luma_coding_block_size_minus3: u8::default(),
+            max_log2_min_luma_coding_block_size_minus3: u8::default(),
+            min_log2_min_luma_transform_block_size_minus2: u8::default(),
+            max_log2_min_luma_transform_block_size_minus2: u8::default(),
+            min_max_transform_hierarchy_depth_inter: u8::default(),
+            max_max_transform_hierarchy_depth_inter: u8::default(),
+            min_max_transform_hierarchy_depth_intra: u8::default(),
+            max_max_transform_hierarchy_depth_intra: u8::default(),
+            max_diff_cu_qp_delta_depth: u8::default(),
+            min_max_num_merge_cand: u8::default(),
+            max_max_num_merge_cand: u8::default(),
             std_extension_version: ExtensionProperties::default(),
         }
     }
@@ -51613,8 +52382,8 @@ pub struct VideoEncodeH265CapabilitiesEXTBuilder<'a> {
     inner: VideoEncodeH265CapabilitiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-unsafe impl ExtendsVideoCapabilitiesKHR for VideoEncodeH265CapabilitiesEXTBuilder<'_> {}
-unsafe impl ExtendsVideoCapabilitiesKHR for VideoEncodeH265CapabilitiesEXT {}
+unsafe impl ExtendsVideoEncodeCapabilitiesKHR for VideoEncodeH265CapabilitiesEXTBuilder<'_> {}
+unsafe impl ExtendsVideoEncodeCapabilitiesKHR for VideoEncodeH265CapabilitiesEXT {}
 impl<'a> ::std::ops::Deref for VideoEncodeH265CapabilitiesEXTBuilder<'a> {
     type Target = VideoEncodeH265CapabilitiesEXT;
     fn deref(&self) -> &Self::Target {
@@ -51646,28 +52415,109 @@ impl<'a> VideoEncodeH265CapabilitiesEXTBuilder<'a> {
         self.inner.ctb_sizes = ctb_sizes;
         self
     }
-    pub fn input_image_data_alignment(mut self, input_image_data_alignment: Extent2D) -> Self {
-        self.inner.input_image_data_alignment = input_image_data_alignment;
+    pub fn transform_block_sizes(
+        mut self,
+        transform_block_sizes: VideoEncodeH265TransformBlockSizeFlagsEXT,
+    ) -> Self {
+        self.inner.transform_block_sizes = transform_block_sizes;
         self
     }
-    pub fn max_num_l0_reference_for_p(mut self, max_num_l0_reference_for_p: u8) -> Self {
-        self.inner.max_num_l0_reference_for_p = max_num_l0_reference_for_p;
+    pub fn max_p_picture_l0_reference_count(
+        mut self,
+        max_p_picture_l0_reference_count: u8,
+    ) -> Self {
+        self.inner.max_p_picture_l0_reference_count = max_p_picture_l0_reference_count;
         self
     }
-    pub fn max_num_l0_reference_for_b(mut self, max_num_l0_reference_for_b: u8) -> Self {
-        self.inner.max_num_l0_reference_for_b = max_num_l0_reference_for_b;
+    pub fn max_b_picture_l0_reference_count(
+        mut self,
+        max_b_picture_l0_reference_count: u8,
+    ) -> Self {
+        self.inner.max_b_picture_l0_reference_count = max_b_picture_l0_reference_count;
         self
     }
-    pub fn max_num_l1_reference(mut self, max_num_l1_reference: u8) -> Self {
-        self.inner.max_num_l1_reference = max_num_l1_reference;
+    pub fn max_l1_reference_count(mut self, max_l1_reference_count: u8) -> Self {
+        self.inner.max_l1_reference_count = max_l1_reference_count;
         self
     }
-    pub fn max_num_sub_layers(mut self, max_num_sub_layers: u8) -> Self {
-        self.inner.max_num_sub_layers = max_num_sub_layers;
+    pub fn max_sub_layers_count(mut self, max_sub_layers_count: u8) -> Self {
+        self.inner.max_sub_layers_count = max_sub_layers_count;
         self
     }
-    pub fn quality_level_count(mut self, quality_level_count: u8) -> Self {
-        self.inner.quality_level_count = quality_level_count;
+    pub fn min_log2_min_luma_coding_block_size_minus3(
+        mut self,
+        min_log2_min_luma_coding_block_size_minus3: u8,
+    ) -> Self {
+        self.inner.min_log2_min_luma_coding_block_size_minus3 =
+            min_log2_min_luma_coding_block_size_minus3;
+        self
+    }
+    pub fn max_log2_min_luma_coding_block_size_minus3(
+        mut self,
+        max_log2_min_luma_coding_block_size_minus3: u8,
+    ) -> Self {
+        self.inner.max_log2_min_luma_coding_block_size_minus3 =
+            max_log2_min_luma_coding_block_size_minus3;
+        self
+    }
+    pub fn min_log2_min_luma_transform_block_size_minus2(
+        mut self,
+        min_log2_min_luma_transform_block_size_minus2: u8,
+    ) -> Self {
+        self.inner.min_log2_min_luma_transform_block_size_minus2 =
+            min_log2_min_luma_transform_block_size_minus2;
+        self
+    }
+    pub fn max_log2_min_luma_transform_block_size_minus2(
+        mut self,
+        max_log2_min_luma_transform_block_size_minus2: u8,
+    ) -> Self {
+        self.inner.max_log2_min_luma_transform_block_size_minus2 =
+            max_log2_min_luma_transform_block_size_minus2;
+        self
+    }
+    pub fn min_max_transform_hierarchy_depth_inter(
+        mut self,
+        min_max_transform_hierarchy_depth_inter: u8,
+    ) -> Self {
+        self.inner.min_max_transform_hierarchy_depth_inter =
+            min_max_transform_hierarchy_depth_inter;
+        self
+    }
+    pub fn max_max_transform_hierarchy_depth_inter(
+        mut self,
+        max_max_transform_hierarchy_depth_inter: u8,
+    ) -> Self {
+        self.inner.max_max_transform_hierarchy_depth_inter =
+            max_max_transform_hierarchy_depth_inter;
+        self
+    }
+    pub fn min_max_transform_hierarchy_depth_intra(
+        mut self,
+        min_max_transform_hierarchy_depth_intra: u8,
+    ) -> Self {
+        self.inner.min_max_transform_hierarchy_depth_intra =
+            min_max_transform_hierarchy_depth_intra;
+        self
+    }
+    pub fn max_max_transform_hierarchy_depth_intra(
+        mut self,
+        max_max_transform_hierarchy_depth_intra: u8,
+    ) -> Self {
+        self.inner.max_max_transform_hierarchy_depth_intra =
+            max_max_transform_hierarchy_depth_intra;
+        self
+    }
+    pub fn max_diff_cu_qp_delta_depth(mut self, max_diff_cu_qp_delta_depth: u8) -> Self {
+        self.inner.max_diff_cu_qp_delta_depth = max_diff_cu_qp_delta_depth;
+        self
+    }
+    pub fn min_max_num_merge_cand(mut self, min_max_num_merge_cand: u8) -> Self {
+        self.inner.min_max_num_merge_cand = min_max_num_merge_cand;
+        self
+    }
+    pub fn max_max_num_merge_cand(mut self, max_max_num_merge_cand: u8) -> Self {
+        self.inner.max_max_num_merge_cand = max_max_num_merge_cand;
         self
     }
     pub fn std_extension_version(mut self, std_extension_version: ExtensionProperties) -> Self {
@@ -51917,8 +52767,8 @@ pub struct VideoEncodeH265VclFrameInfoEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub p_reference_final_lists: *const VideoEncodeH265ReferenceListsEXT,
-    pub nalu_slice_entry_count: u32,
-    pub p_nalu_slice_entries: *const VideoEncodeH265NaluSliceEXT,
+    pub nalu_slice_segment_entry_count: u32,
+    pub p_nalu_slice_segment_entries: *const VideoEncodeH265NaluSliceSegmentEXT,
     pub p_current_picture_info: *const StdVideoEncodeH265PictureInfo,
 }
 impl ::std::default::Default for VideoEncodeH265VclFrameInfoEXT {
@@ -51927,8 +52777,8 @@ impl ::std::default::Default for VideoEncodeH265VclFrameInfoEXT {
             s_type: StructureType::VIDEO_ENCODE_H265_VCL_FRAME_INFO_EXT,
             p_next: ::std::ptr::null(),
             p_reference_final_lists: ::std::ptr::null(),
-            nalu_slice_entry_count: u32::default(),
-            p_nalu_slice_entries: ::std::ptr::null(),
+            nalu_slice_segment_entry_count: u32::default(),
+            p_nalu_slice_segment_entries: ::std::ptr::null(),
             p_current_picture_info: ::std::ptr::null(),
         }
     }
@@ -51967,12 +52817,12 @@ impl<'a> VideoEncodeH265VclFrameInfoEXTBuilder<'a> {
         self.inner.p_reference_final_lists = reference_final_lists;
         self
     }
-    pub fn nalu_slice_entries(
+    pub fn nalu_slice_segment_entries(
         mut self,
-        nalu_slice_entries: &'a [VideoEncodeH265NaluSliceEXT],
+        nalu_slice_segment_entries: &'a [VideoEncodeH265NaluSliceSegmentEXT],
     ) -> Self {
-        self.inner.nalu_slice_entry_count = nalu_slice_entries.len() as _;
-        self.inner.p_nalu_slice_entries = nalu_slice_entries.as_ptr();
+        self.inner.nalu_slice_segment_entry_count = nalu_slice_segment_entries.len() as _;
+        self.inner.p_nalu_slice_segment_entries = nalu_slice_segment_entries.as_ptr();
         self
     }
     pub fn current_picture_info(
@@ -52075,50 +52925,50 @@ impl<'a> VideoEncodeH265EmitPictureParametersEXTBuilder<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265NaluSliceEXT.html>"]
-pub struct VideoEncodeH265NaluSliceEXT {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265NaluSliceSegmentEXT.html>"]
+pub struct VideoEncodeH265NaluSliceSegmentEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub ctb_count: u32,
     pub p_reference_final_lists: *const VideoEncodeH265ReferenceListsEXT,
-    pub p_slice_header_std: *const StdVideoEncodeH265SliceHeader,
+    pub p_slice_segment_header_std: *const StdVideoEncodeH265SliceSegmentHeader,
 }
-impl ::std::default::Default for VideoEncodeH265NaluSliceEXT {
+impl ::std::default::Default for VideoEncodeH265NaluSliceSegmentEXT {
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_ENCODE_H265_NALU_SLICE_EXT,
+            s_type: StructureType::VIDEO_ENCODE_H265_NALU_SLICE_SEGMENT_EXT,
             p_next: ::std::ptr::null(),
             ctb_count: u32::default(),
             p_reference_final_lists: ::std::ptr::null(),
-            p_slice_header_std: ::std::ptr::null(),
+            p_slice_segment_header_std: ::std::ptr::null(),
         }
     }
 }
-impl VideoEncodeH265NaluSliceEXT {
-    pub fn builder<'a>() -> VideoEncodeH265NaluSliceEXTBuilder<'a> {
-        VideoEncodeH265NaluSliceEXTBuilder {
+impl VideoEncodeH265NaluSliceSegmentEXT {
+    pub fn builder<'a>() -> VideoEncodeH265NaluSliceSegmentEXTBuilder<'a> {
+        VideoEncodeH265NaluSliceSegmentEXTBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct VideoEncodeH265NaluSliceEXTBuilder<'a> {
-    inner: VideoEncodeH265NaluSliceEXT,
+pub struct VideoEncodeH265NaluSliceSegmentEXTBuilder<'a> {
+    inner: VideoEncodeH265NaluSliceSegmentEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-impl<'a> ::std::ops::Deref for VideoEncodeH265NaluSliceEXTBuilder<'a> {
-    type Target = VideoEncodeH265NaluSliceEXT;
+impl<'a> ::std::ops::Deref for VideoEncodeH265NaluSliceSegmentEXTBuilder<'a> {
+    type Target = VideoEncodeH265NaluSliceSegmentEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for VideoEncodeH265NaluSliceEXTBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for VideoEncodeH265NaluSliceSegmentEXTBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> VideoEncodeH265NaluSliceEXTBuilder<'a> {
+impl<'a> VideoEncodeH265NaluSliceSegmentEXTBuilder<'a> {
     pub fn ctb_count(mut self, ctb_count: u32) -> Self {
         self.inner.ctb_count = ctb_count;
         self
@@ -52130,14 +52980,17 @@ impl<'a> VideoEncodeH265NaluSliceEXTBuilder<'a> {
         self.inner.p_reference_final_lists = reference_final_lists;
         self
     }
-    pub fn slice_header_std(mut self, slice_header_std: &'a StdVideoEncodeH265SliceHeader) -> Self {
-        self.inner.p_slice_header_std = slice_header_std;
+    pub fn slice_segment_header_std(
+        mut self,
+        slice_segment_header_std: &'a StdVideoEncodeH265SliceSegmentHeader,
+    ) -> Self {
+        self.inner.p_slice_segment_header_std = slice_segment_header_std;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> VideoEncodeH265NaluSliceEXT {
+    pub fn build(self) -> VideoEncodeH265NaluSliceSegmentEXT {
         self.inner
     }
 }
@@ -53094,7 +53947,7 @@ impl<'a> ::std::ops::DerefMut for CuModuleCreateInfoNVXBuilder<'a> {
 }
 impl<'a> CuModuleCreateInfoNVXBuilder<'a> {
     pub fn data(mut self, data: &'a [u8]) -> Self {
-        self.inner.data_size = data.len() as _;
+        self.inner.data_size = data.len();
         self.inner.p_data = data.as_ptr() as *const c_void;
         self
     }
@@ -53263,12 +54116,12 @@ impl<'a> CuLaunchInfoNVXBuilder<'a> {
         self
     }
     pub fn params(mut self, params: &'a [*const c_void]) -> Self {
-        self.inner.param_count = params.len() as _;
+        self.inner.param_count = params.len();
         self.inner.p_params = params.as_ptr();
         self
     }
     pub fn extras(mut self, extras: &'a [*const c_void]) -> Self {
-        self.inner.extra_count = extras.len() as _;
+        self.inner.extra_count = extras.len();
         self.inner.p_extras = extras.as_ptr();
         self
     }
@@ -53282,56 +54135,53 @@ impl<'a> CuLaunchInfoNVXBuilder<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderIntegerDotProductFeaturesKHR.html>"]
-pub struct PhysicalDeviceShaderIntegerDotProductFeaturesKHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderIntegerDotProductFeatures.html>"]
+pub struct PhysicalDeviceShaderIntegerDotProductFeatures {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub shader_integer_dot_product: Bool32,
 }
-impl ::std::default::Default for PhysicalDeviceShaderIntegerDotProductFeaturesKHR {
+impl ::std::default::Default for PhysicalDeviceShaderIntegerDotProductFeatures {
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SHADER_INTEGER_DOT_PRODUCT_FEATURES_KHR,
+            s_type: StructureType::PHYSICAL_DEVICE_SHADER_INTEGER_DOT_PRODUCT_FEATURES,
             p_next: ::std::ptr::null_mut(),
             shader_integer_dot_product: Bool32::default(),
         }
     }
 }
-impl PhysicalDeviceShaderIntegerDotProductFeaturesKHR {
-    pub fn builder<'a>() -> PhysicalDeviceShaderIntegerDotProductFeaturesKHRBuilder<'a> {
-        PhysicalDeviceShaderIntegerDotProductFeaturesKHRBuilder {
+impl PhysicalDeviceShaderIntegerDotProductFeatures {
+    pub fn builder<'a>() -> PhysicalDeviceShaderIntegerDotProductFeaturesBuilder<'a> {
+        PhysicalDeviceShaderIntegerDotProductFeaturesBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct PhysicalDeviceShaderIntegerDotProductFeaturesKHRBuilder<'a> {
-    inner: PhysicalDeviceShaderIntegerDotProductFeaturesKHR,
+pub struct PhysicalDeviceShaderIntegerDotProductFeaturesBuilder<'a> {
+    inner: PhysicalDeviceShaderIntegerDotProductFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceShaderIntegerDotProductFeaturesKHRBuilder<'_>
+    for PhysicalDeviceShaderIntegerDotProductFeaturesBuilder<'_>
 {
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderIntegerDotProductFeaturesKHR {}
-unsafe impl ExtendsDeviceCreateInfo
-    for PhysicalDeviceShaderIntegerDotProductFeaturesKHRBuilder<'_>
-{
-}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderIntegerDotProductFeaturesKHR {}
-impl<'a> ::std::ops::Deref for PhysicalDeviceShaderIntegerDotProductFeaturesKHRBuilder<'a> {
-    type Target = PhysicalDeviceShaderIntegerDotProductFeaturesKHR;
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderIntegerDotProductFeatures {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderIntegerDotProductFeaturesBuilder<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderIntegerDotProductFeatures {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceShaderIntegerDotProductFeaturesBuilder<'a> {
+    type Target = PhysicalDeviceShaderIntegerDotProductFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderIntegerDotProductFeaturesKHRBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderIntegerDotProductFeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> PhysicalDeviceShaderIntegerDotProductFeaturesKHRBuilder<'a> {
+impl<'a> PhysicalDeviceShaderIntegerDotProductFeaturesBuilder<'a> {
     pub fn shader_integer_dot_product(mut self, shader_integer_dot_product: bool) -> Self {
         self.inner.shader_integer_dot_product = shader_integer_dot_product.into();
         self
@@ -53339,15 +54189,15 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductFeaturesKHRBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> PhysicalDeviceShaderIntegerDotProductFeaturesKHR {
+    pub fn build(self) -> PhysicalDeviceShaderIntegerDotProductFeatures {
         self.inner
     }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderIntegerDotProductPropertiesKHR.html>"]
-pub struct PhysicalDeviceShaderIntegerDotProductPropertiesKHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderIntegerDotProductProperties.html>"]
+pub struct PhysicalDeviceShaderIntegerDotProductProperties {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub integer_dot_product8_bit_unsigned_accelerated: Bool32,
@@ -53382,44 +54232,41 @@ pub struct PhysicalDeviceShaderIntegerDotProductPropertiesKHR {
     pub integer_dot_product_accumulating_saturating64_bit_signed_accelerated: Bool32,
     pub integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated: Bool32,
 }
-impl ::std::default::Default for PhysicalDeviceShaderIntegerDotProductPropertiesKHR {
+impl ::std::default::Default for PhysicalDeviceShaderIntegerDotProductProperties {
     fn default() -> Self {
-        Self { s_type : StructureType :: PHYSICAL_DEVICE_SHADER_INTEGER_DOT_PRODUCT_PROPERTIES_KHR , p_next : :: std :: ptr :: null_mut () , integer_dot_product8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product64_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated : Bool32 :: default () }
+        Self { s_type : StructureType :: PHYSICAL_DEVICE_SHADER_INTEGER_DOT_PRODUCT_PROPERTIES , p_next : :: std :: ptr :: null_mut () , integer_dot_product8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product64_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated : Bool32 :: default () }
     }
 }
-impl PhysicalDeviceShaderIntegerDotProductPropertiesKHR {
-    pub fn builder<'a>() -> PhysicalDeviceShaderIntegerDotProductPropertiesKHRBuilder<'a> {
-        PhysicalDeviceShaderIntegerDotProductPropertiesKHRBuilder {
+impl PhysicalDeviceShaderIntegerDotProductProperties {
+    pub fn builder<'a>() -> PhysicalDeviceShaderIntegerDotProductPropertiesBuilder<'a> {
+        PhysicalDeviceShaderIntegerDotProductPropertiesBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct PhysicalDeviceShaderIntegerDotProductPropertiesKHRBuilder<'a> {
-    inner: PhysicalDeviceShaderIntegerDotProductPropertiesKHR,
+pub struct PhysicalDeviceShaderIntegerDotProductPropertiesBuilder<'a> {
+    inner: PhysicalDeviceShaderIntegerDotProductProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceShaderIntegerDotProductPropertiesKHRBuilder<'_>
+    for PhysicalDeviceShaderIntegerDotProductPropertiesBuilder<'_>
 {
 }
-unsafe impl ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceShaderIntegerDotProductPropertiesKHR
-{
-}
-impl<'a> ::std::ops::Deref for PhysicalDeviceShaderIntegerDotProductPropertiesKHRBuilder<'a> {
-    type Target = PhysicalDeviceShaderIntegerDotProductPropertiesKHR;
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderIntegerDotProductProperties {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceShaderIntegerDotProductPropertiesBuilder<'a> {
+    type Target = PhysicalDeviceShaderIntegerDotProductProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderIntegerDotProductPropertiesKHRBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderIntegerDotProductPropertiesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> PhysicalDeviceShaderIntegerDotProductPropertiesKHRBuilder<'a> {
+impl<'a> PhysicalDeviceShaderIntegerDotProductPropertiesBuilder<'a> {
     pub fn integer_dot_product8_bit_unsigned_accelerated(
         mut self,
         integer_dot_product8_bit_unsigned_accelerated: bool,
@@ -53683,7 +54530,7 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductPropertiesKHRBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> PhysicalDeviceShaderIntegerDotProductPropertiesKHR {
+    pub fn build(self) -> PhysicalDeviceShaderIntegerDotProductProperties {
         self.inner
     }
 }
@@ -54821,12 +55668,9 @@ impl<'a> ImageFormatConstraintsInfoFUCHSIABuilder<'a> {
         self.inner.sysmem_pixel_format = sysmem_pixel_format;
         self
     }
-    pub fn color_space_count(mut self, color_space_count: u32) -> Self {
-        self.inner.color_space_count = color_space_count;
-        self
-    }
-    pub fn color_spaces(mut self, color_spaces: &'a SysmemColorSpaceFUCHSIA) -> Self {
-        self.inner.p_color_spaces = color_spaces;
+    pub fn color_spaces(mut self, color_spaces: &'a [SysmemColorSpaceFUCHSIA]) -> Self {
+        self.inner.color_space_count = color_spaces.len() as _;
+        self.inner.p_color_spaces = color_spaces.as_ptr();
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -55060,74 +55904,68 @@ impl<'a> PhysicalDeviceRGBA10X6FormatsFeaturesEXTBuilder<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkFormatProperties3KHR.html>"]
-pub struct FormatProperties3KHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkFormatProperties3.html>"]
+pub struct FormatProperties3 {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
-    pub linear_tiling_features: FormatFeatureFlags2KHR,
-    pub optimal_tiling_features: FormatFeatureFlags2KHR,
-    pub buffer_features: FormatFeatureFlags2KHR,
+    pub linear_tiling_features: FormatFeatureFlags2,
+    pub optimal_tiling_features: FormatFeatureFlags2,
+    pub buffer_features: FormatFeatureFlags2,
 }
-impl ::std::default::Default for FormatProperties3KHR {
+impl ::std::default::Default for FormatProperties3 {
     fn default() -> Self {
         Self {
-            s_type: StructureType::FORMAT_PROPERTIES_3_KHR,
+            s_type: StructureType::FORMAT_PROPERTIES_3,
             p_next: ::std::ptr::null_mut(),
-            linear_tiling_features: FormatFeatureFlags2KHR::default(),
-            optimal_tiling_features: FormatFeatureFlags2KHR::default(),
-            buffer_features: FormatFeatureFlags2KHR::default(),
+            linear_tiling_features: FormatFeatureFlags2::default(),
+            optimal_tiling_features: FormatFeatureFlags2::default(),
+            buffer_features: FormatFeatureFlags2::default(),
         }
     }
 }
-impl FormatProperties3KHR {
-    pub fn builder<'a>() -> FormatProperties3KHRBuilder<'a> {
-        FormatProperties3KHRBuilder {
+impl FormatProperties3 {
+    pub fn builder<'a>() -> FormatProperties3Builder<'a> {
+        FormatProperties3Builder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct FormatProperties3KHRBuilder<'a> {
-    inner: FormatProperties3KHR,
+pub struct FormatProperties3Builder<'a> {
+    inner: FormatProperties3,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-unsafe impl ExtendsFormatProperties2 for FormatProperties3KHRBuilder<'_> {}
-unsafe impl ExtendsFormatProperties2 for FormatProperties3KHR {}
-impl<'a> ::std::ops::Deref for FormatProperties3KHRBuilder<'a> {
-    type Target = FormatProperties3KHR;
+unsafe impl ExtendsFormatProperties2 for FormatProperties3Builder<'_> {}
+unsafe impl ExtendsFormatProperties2 for FormatProperties3 {}
+impl<'a> ::std::ops::Deref for FormatProperties3Builder<'a> {
+    type Target = FormatProperties3;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for FormatProperties3KHRBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for FormatProperties3Builder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> FormatProperties3KHRBuilder<'a> {
-    pub fn linear_tiling_features(
-        mut self,
-        linear_tiling_features: FormatFeatureFlags2KHR,
-    ) -> Self {
+impl<'a> FormatProperties3Builder<'a> {
+    pub fn linear_tiling_features(mut self, linear_tiling_features: FormatFeatureFlags2) -> Self {
         self.inner.linear_tiling_features = linear_tiling_features;
         self
     }
-    pub fn optimal_tiling_features(
-        mut self,
-        optimal_tiling_features: FormatFeatureFlags2KHR,
-    ) -> Self {
+    pub fn optimal_tiling_features(mut self, optimal_tiling_features: FormatFeatureFlags2) -> Self {
         self.inner.optimal_tiling_features = optimal_tiling_features;
         self
     }
-    pub fn buffer_features(mut self, buffer_features: FormatFeatureFlags2KHR) -> Self {
+    pub fn buffer_features(mut self, buffer_features: FormatFeatureFlags2) -> Self {
         self.inner.buffer_features = buffer_features;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> FormatProperties3KHR {
+    pub fn build(self) -> FormatProperties3 {
         self.inner
     }
 }
@@ -55200,7 +56038,7 @@ impl<'a> DrmFormatModifierPropertiesList2EXTBuilder<'a> {
 pub struct DrmFormatModifierProperties2EXT {
     pub drm_format_modifier: u64,
     pub drm_format_modifier_plane_count: u32,
-    pub drm_format_modifier_tiling_features: FormatFeatureFlags2KHR,
+    pub drm_format_modifier_tiling_features: FormatFeatureFlags2,
 }
 impl DrmFormatModifierProperties2EXT {
     pub fn builder<'a>() -> DrmFormatModifierProperties2EXTBuilder<'a> {
@@ -55237,7 +56075,7 @@ impl<'a> DrmFormatModifierProperties2EXTBuilder<'a> {
     }
     pub fn drm_format_modifier_tiling_features(
         mut self,
-        drm_format_modifier_tiling_features: FormatFeatureFlags2KHR,
+        drm_format_modifier_tiling_features: FormatFeatureFlags2,
     ) -> Self {
         self.inner.drm_format_modifier_tiling_features = drm_format_modifier_tiling_features;
         self
@@ -55258,7 +56096,7 @@ pub struct AndroidHardwareBufferFormatProperties2ANDROID {
     pub p_next: *mut c_void,
     pub format: Format,
     pub external_format: u64,
-    pub format_features: FormatFeatureFlags2KHR,
+    pub format_features: FormatFeatureFlags2,
     pub sampler_ycbcr_conversion_components: ComponentMapping,
     pub suggested_ycbcr_model: SamplerYcbcrModelConversion,
     pub suggested_ycbcr_range: SamplerYcbcrRange,
@@ -55272,7 +56110,7 @@ impl ::std::default::Default for AndroidHardwareBufferFormatProperties2ANDROID {
             p_next: ::std::ptr::null_mut(),
             format: Format::default(),
             external_format: u64::default(),
-            format_features: FormatFeatureFlags2KHR::default(),
+            format_features: FormatFeatureFlags2::default(),
             sampler_ycbcr_conversion_components: ComponentMapping::default(),
             suggested_ycbcr_model: SamplerYcbcrModelConversion::default(),
             suggested_ycbcr_range: SamplerYcbcrRange::default(),
@@ -55322,7 +56160,7 @@ impl<'a> AndroidHardwareBufferFormatProperties2ANDROIDBuilder<'a> {
         self.inner.external_format = external_format;
         self
     }
-    pub fn format_features(mut self, format_features: FormatFeatureFlags2KHR) -> Self {
+    pub fn format_features(mut self, format_features: FormatFeatureFlags2) -> Self {
         self.inner.format_features = format_features;
         self
     }
@@ -55362,8 +56200,8 @@ impl<'a> AndroidHardwareBufferFormatProperties2ANDROIDBuilder<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineRenderingCreateInfoKHR.html>"]
-pub struct PipelineRenderingCreateInfoKHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineRenderingCreateInfo.html>"]
+pub struct PipelineRenderingCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub view_mask: u32,
@@ -55372,10 +56210,10 @@ pub struct PipelineRenderingCreateInfoKHR {
     pub depth_attachment_format: Format,
     pub stencil_attachment_format: Format,
 }
-impl ::std::default::Default for PipelineRenderingCreateInfoKHR {
+impl ::std::default::Default for PipelineRenderingCreateInfo {
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_RENDERING_CREATE_INFO_KHR,
+            s_type: StructureType::PIPELINE_RENDERING_CREATE_INFO,
             p_next: ::std::ptr::null(),
             view_mask: u32::default(),
             color_attachment_count: u32::default(),
@@ -55385,33 +56223,33 @@ impl ::std::default::Default for PipelineRenderingCreateInfoKHR {
         }
     }
 }
-impl PipelineRenderingCreateInfoKHR {
-    pub fn builder<'a>() -> PipelineRenderingCreateInfoKHRBuilder<'a> {
-        PipelineRenderingCreateInfoKHRBuilder {
+impl PipelineRenderingCreateInfo {
+    pub fn builder<'a>() -> PipelineRenderingCreateInfoBuilder<'a> {
+        PipelineRenderingCreateInfoBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct PipelineRenderingCreateInfoKHRBuilder<'a> {
-    inner: PipelineRenderingCreateInfoKHR,
+pub struct PipelineRenderingCreateInfoBuilder<'a> {
+    inner: PipelineRenderingCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineRenderingCreateInfoKHRBuilder<'_> {}
-unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineRenderingCreateInfoKHR {}
-impl<'a> ::std::ops::Deref for PipelineRenderingCreateInfoKHRBuilder<'a> {
-    type Target = PipelineRenderingCreateInfoKHR;
+unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineRenderingCreateInfoBuilder<'_> {}
+unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineRenderingCreateInfo {}
+impl<'a> ::std::ops::Deref for PipelineRenderingCreateInfoBuilder<'a> {
+    type Target = PipelineRenderingCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for PipelineRenderingCreateInfoKHRBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for PipelineRenderingCreateInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> PipelineRenderingCreateInfoKHRBuilder<'a> {
+impl<'a> PipelineRenderingCreateInfoBuilder<'a> {
     pub fn view_mask(mut self, view_mask: u32) -> Self {
         self.inner.view_mask = view_mask;
         self
@@ -55432,32 +56270,32 @@ impl<'a> PipelineRenderingCreateInfoKHRBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> PipelineRenderingCreateInfoKHR {
+    pub fn build(self) -> PipelineRenderingCreateInfo {
         self.inner
     }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkRenderingInfoKHR.html>"]
-pub struct RenderingInfoKHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkRenderingInfo.html>"]
+pub struct RenderingInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: RenderingFlagsKHR,
+    pub flags: RenderingFlags,
     pub render_area: Rect2D,
     pub layer_count: u32,
     pub view_mask: u32,
     pub color_attachment_count: u32,
-    pub p_color_attachments: *const RenderingAttachmentInfoKHR,
-    pub p_depth_attachment: *const RenderingAttachmentInfoKHR,
-    pub p_stencil_attachment: *const RenderingAttachmentInfoKHR,
+    pub p_color_attachments: *const RenderingAttachmentInfo,
+    pub p_depth_attachment: *const RenderingAttachmentInfo,
+    pub p_stencil_attachment: *const RenderingAttachmentInfo,
 }
-impl ::std::default::Default for RenderingInfoKHR {
+impl ::std::default::Default for RenderingInfo {
     fn default() -> Self {
         Self {
-            s_type: StructureType::RENDERING_INFO_KHR,
+            s_type: StructureType::RENDERING_INFO,
             p_next: ::std::ptr::null(),
-            flags: RenderingFlagsKHR::default(),
+            flags: RenderingFlags::default(),
             render_area: Rect2D::default(),
             layer_count: u32::default(),
             view_mask: u32::default(),
@@ -55468,33 +56306,33 @@ impl ::std::default::Default for RenderingInfoKHR {
         }
     }
 }
-impl RenderingInfoKHR {
-    pub fn builder<'a>() -> RenderingInfoKHRBuilder<'a> {
-        RenderingInfoKHRBuilder {
+impl RenderingInfo {
+    pub fn builder<'a>() -> RenderingInfoBuilder<'a> {
+        RenderingInfoBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct RenderingInfoKHRBuilder<'a> {
-    inner: RenderingInfoKHR,
+pub struct RenderingInfoBuilder<'a> {
+    inner: RenderingInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsRenderingInfoKHR {}
-impl<'a> ::std::ops::Deref for RenderingInfoKHRBuilder<'a> {
-    type Target = RenderingInfoKHR;
+pub unsafe trait ExtendsRenderingInfo {}
+impl<'a> ::std::ops::Deref for RenderingInfoBuilder<'a> {
+    type Target = RenderingInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for RenderingInfoKHRBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for RenderingInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> RenderingInfoKHRBuilder<'a> {
-    pub fn flags(mut self, flags: RenderingFlagsKHR) -> Self {
+impl<'a> RenderingInfoBuilder<'a> {
+    pub fn flags(mut self, flags: RenderingFlags) -> Self {
         self.inner.flags = flags;
         self
     }
@@ -55510,22 +56348,16 @@ impl<'a> RenderingInfoKHRBuilder<'a> {
         self.inner.view_mask = view_mask;
         self
     }
-    pub fn color_attachments(
-        mut self,
-        color_attachments: &'a [RenderingAttachmentInfoKHR],
-    ) -> Self {
+    pub fn color_attachments(mut self, color_attachments: &'a [RenderingAttachmentInfo]) -> Self {
         self.inner.color_attachment_count = color_attachments.len() as _;
         self.inner.p_color_attachments = color_attachments.as_ptr();
         self
     }
-    pub fn depth_attachment(mut self, depth_attachment: &'a RenderingAttachmentInfoKHR) -> Self {
+    pub fn depth_attachment(mut self, depth_attachment: &'a RenderingAttachmentInfo) -> Self {
         self.inner.p_depth_attachment = depth_attachment;
         self
     }
-    pub fn stencil_attachment(
-        mut self,
-        stencil_attachment: &'a RenderingAttachmentInfoKHR,
-    ) -> Self {
+    pub fn stencil_attachment(mut self, stencil_attachment: &'a RenderingAttachmentInfo) -> Self {
         self.inner.p_stencil_attachment = stencil_attachment;
         self
     }
@@ -55534,26 +56366,26 @@ impl<'a> RenderingInfoKHRBuilder<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsRenderingInfoKHR>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsRenderingInfo>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr as _;
+            self.inner.p_next = next_ptr;
         }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> RenderingInfoKHR {
+    pub fn build(self) -> RenderingInfo {
         self.inner
     }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkRenderingAttachmentInfoKHR.html>"]
-pub struct RenderingAttachmentInfoKHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkRenderingAttachmentInfo.html>"]
+pub struct RenderingAttachmentInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub image_view: ImageView,
@@ -55566,9 +56398,9 @@ pub struct RenderingAttachmentInfoKHR {
     pub clear_value: ClearValue,
 }
 #[cfg(feature = "debug")]
-impl fmt::Debug for RenderingAttachmentInfoKHR {
+impl fmt::Debug for RenderingAttachmentInfo {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
-        fmt.debug_struct("RenderingAttachmentInfoKHR")
+        fmt.debug_struct("RenderingAttachmentInfo")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
             .field("image_view", &self.image_view)
@@ -55582,10 +56414,10 @@ impl fmt::Debug for RenderingAttachmentInfoKHR {
             .finish()
     }
 }
-impl ::std::default::Default for RenderingAttachmentInfoKHR {
+impl ::std::default::Default for RenderingAttachmentInfo {
     fn default() -> Self {
         Self {
-            s_type: StructureType::RENDERING_ATTACHMENT_INFO_KHR,
+            s_type: StructureType::RENDERING_ATTACHMENT_INFO,
             p_next: ::std::ptr::null(),
             image_view: ImageView::default(),
             image_layout: ImageLayout::default(),
@@ -55598,31 +56430,31 @@ impl ::std::default::Default for RenderingAttachmentInfoKHR {
         }
     }
 }
-impl RenderingAttachmentInfoKHR {
-    pub fn builder<'a>() -> RenderingAttachmentInfoKHRBuilder<'a> {
-        RenderingAttachmentInfoKHRBuilder {
+impl RenderingAttachmentInfo {
+    pub fn builder<'a>() -> RenderingAttachmentInfoBuilder<'a> {
+        RenderingAttachmentInfoBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct RenderingAttachmentInfoKHRBuilder<'a> {
-    inner: RenderingAttachmentInfoKHR,
+pub struct RenderingAttachmentInfoBuilder<'a> {
+    inner: RenderingAttachmentInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-impl<'a> ::std::ops::Deref for RenderingAttachmentInfoKHRBuilder<'a> {
-    type Target = RenderingAttachmentInfoKHR;
+impl<'a> ::std::ops::Deref for RenderingAttachmentInfoBuilder<'a> {
+    type Target = RenderingAttachmentInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for RenderingAttachmentInfoKHRBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for RenderingAttachmentInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> RenderingAttachmentInfoKHRBuilder<'a> {
+impl<'a> RenderingAttachmentInfoBuilder<'a> {
     pub fn image_view(mut self, image_view: ImageView) -> Self {
         self.inner.image_view = image_view;
         self
@@ -55658,7 +56490,7 @@ impl<'a> RenderingAttachmentInfoKHRBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> RenderingAttachmentInfoKHR {
+    pub fn build(self) -> RenderingAttachmentInfo {
         self.inner
     }
 }
@@ -55697,8 +56529,8 @@ pub struct RenderingFragmentShadingRateAttachmentInfoKHRBuilder<'a> {
     inner: RenderingFragmentShadingRateAttachmentInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-unsafe impl ExtendsRenderingInfoKHR for RenderingFragmentShadingRateAttachmentInfoKHRBuilder<'_> {}
-unsafe impl ExtendsRenderingInfoKHR for RenderingFragmentShadingRateAttachmentInfoKHR {}
+unsafe impl ExtendsRenderingInfo for RenderingFragmentShadingRateAttachmentInfoKHRBuilder<'_> {}
+unsafe impl ExtendsRenderingInfo for RenderingFragmentShadingRateAttachmentInfoKHR {}
 impl<'a> ::std::ops::Deref for RenderingFragmentShadingRateAttachmentInfoKHRBuilder<'a> {
     type Target = RenderingFragmentShadingRateAttachmentInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -55766,8 +56598,8 @@ pub struct RenderingFragmentDensityMapAttachmentInfoEXTBuilder<'a> {
     inner: RenderingFragmentDensityMapAttachmentInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-unsafe impl ExtendsRenderingInfoKHR for RenderingFragmentDensityMapAttachmentInfoEXTBuilder<'_> {}
-unsafe impl ExtendsRenderingInfoKHR for RenderingFragmentDensityMapAttachmentInfoEXT {}
+unsafe impl ExtendsRenderingInfo for RenderingFragmentDensityMapAttachmentInfoEXTBuilder<'_> {}
+unsafe impl ExtendsRenderingInfo for RenderingFragmentDensityMapAttachmentInfoEXT {}
 impl<'a> ::std::ops::Deref for RenderingFragmentDensityMapAttachmentInfoEXTBuilder<'a> {
     type Target = RenderingFragmentDensityMapAttachmentInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -55798,53 +56630,50 @@ impl<'a> RenderingFragmentDensityMapAttachmentInfoEXTBuilder<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDynamicRenderingFeaturesKHR.html>"]
-pub struct PhysicalDeviceDynamicRenderingFeaturesKHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDynamicRenderingFeatures.html>"]
+pub struct PhysicalDeviceDynamicRenderingFeatures {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub dynamic_rendering: Bool32,
 }
-impl ::std::default::Default for PhysicalDeviceDynamicRenderingFeaturesKHR {
+impl ::std::default::Default for PhysicalDeviceDynamicRenderingFeatures {
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_DYNAMIC_RENDERING_FEATURES_KHR,
+            s_type: StructureType::PHYSICAL_DEVICE_DYNAMIC_RENDERING_FEATURES,
             p_next: ::std::ptr::null_mut(),
             dynamic_rendering: Bool32::default(),
         }
     }
 }
-impl PhysicalDeviceDynamicRenderingFeaturesKHR {
-    pub fn builder<'a>() -> PhysicalDeviceDynamicRenderingFeaturesKHRBuilder<'a> {
-        PhysicalDeviceDynamicRenderingFeaturesKHRBuilder {
+impl PhysicalDeviceDynamicRenderingFeatures {
+    pub fn builder<'a>() -> PhysicalDeviceDynamicRenderingFeaturesBuilder<'a> {
+        PhysicalDeviceDynamicRenderingFeaturesBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct PhysicalDeviceDynamicRenderingFeaturesKHRBuilder<'a> {
-    inner: PhysicalDeviceDynamicRenderingFeaturesKHR,
+pub struct PhysicalDeviceDynamicRenderingFeaturesBuilder<'a> {
+    inner: PhysicalDeviceDynamicRenderingFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceDynamicRenderingFeaturesKHRBuilder<'_>
-{
-}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDynamicRenderingFeaturesKHR {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDynamicRenderingFeaturesKHRBuilder<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDynamicRenderingFeaturesKHR {}
-impl<'a> ::std::ops::Deref for PhysicalDeviceDynamicRenderingFeaturesKHRBuilder<'a> {
-    type Target = PhysicalDeviceDynamicRenderingFeaturesKHR;
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDynamicRenderingFeaturesBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDynamicRenderingFeatures {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDynamicRenderingFeaturesBuilder<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDynamicRenderingFeatures {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceDynamicRenderingFeaturesBuilder<'a> {
+    type Target = PhysicalDeviceDynamicRenderingFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for PhysicalDeviceDynamicRenderingFeaturesKHRBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceDynamicRenderingFeaturesBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> PhysicalDeviceDynamicRenderingFeaturesKHRBuilder<'a> {
+impl<'a> PhysicalDeviceDynamicRenderingFeaturesBuilder<'a> {
     pub fn dynamic_rendering(mut self, dynamic_rendering: bool) -> Self {
         self.inner.dynamic_rendering = dynamic_rendering.into();
         self
@@ -55852,18 +56681,18 @@ impl<'a> PhysicalDeviceDynamicRenderingFeaturesKHRBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> PhysicalDeviceDynamicRenderingFeaturesKHR {
+    pub fn build(self) -> PhysicalDeviceDynamicRenderingFeatures {
         self.inner
     }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCommandBufferInheritanceRenderingInfoKHR.html>"]
-pub struct CommandBufferInheritanceRenderingInfoKHR {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCommandBufferInheritanceRenderingInfo.html>"]
+pub struct CommandBufferInheritanceRenderingInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: RenderingFlagsKHR,
+    pub flags: RenderingFlags,
     pub view_mask: u32,
     pub color_attachment_count: u32,
     pub p_color_attachment_formats: *const Format,
@@ -55871,12 +56700,12 @@ pub struct CommandBufferInheritanceRenderingInfoKHR {
     pub stencil_attachment_format: Format,
     pub rasterization_samples: SampleCountFlags,
 }
-impl ::std::default::Default for CommandBufferInheritanceRenderingInfoKHR {
+impl ::std::default::Default for CommandBufferInheritanceRenderingInfo {
     fn default() -> Self {
         Self {
-            s_type: StructureType::COMMAND_BUFFER_INHERITANCE_RENDERING_INFO_KHR,
+            s_type: StructureType::COMMAND_BUFFER_INHERITANCE_RENDERING_INFO,
             p_next: ::std::ptr::null(),
-            flags: RenderingFlagsKHR::default(),
+            flags: RenderingFlags::default(),
             view_mask: u32::default(),
             color_attachment_count: u32::default(),
             p_color_attachment_formats: ::std::ptr::null(),
@@ -55886,37 +56715,37 @@ impl ::std::default::Default for CommandBufferInheritanceRenderingInfoKHR {
         }
     }
 }
-impl CommandBufferInheritanceRenderingInfoKHR {
-    pub fn builder<'a>() -> CommandBufferInheritanceRenderingInfoKHRBuilder<'a> {
-        CommandBufferInheritanceRenderingInfoKHRBuilder {
+impl CommandBufferInheritanceRenderingInfo {
+    pub fn builder<'a>() -> CommandBufferInheritanceRenderingInfoBuilder<'a> {
+        CommandBufferInheritanceRenderingInfoBuilder {
             inner: Self::default(),
             marker: ::std::marker::PhantomData,
         }
     }
 }
 #[repr(transparent)]
-pub struct CommandBufferInheritanceRenderingInfoKHRBuilder<'a> {
-    inner: CommandBufferInheritanceRenderingInfoKHR,
+pub struct CommandBufferInheritanceRenderingInfoBuilder<'a> {
+    inner: CommandBufferInheritanceRenderingInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 unsafe impl ExtendsCommandBufferInheritanceInfo
-    for CommandBufferInheritanceRenderingInfoKHRBuilder<'_>
+    for CommandBufferInheritanceRenderingInfoBuilder<'_>
 {
 }
-unsafe impl ExtendsCommandBufferInheritanceInfo for CommandBufferInheritanceRenderingInfoKHR {}
-impl<'a> ::std::ops::Deref for CommandBufferInheritanceRenderingInfoKHRBuilder<'a> {
-    type Target = CommandBufferInheritanceRenderingInfoKHR;
+unsafe impl ExtendsCommandBufferInheritanceInfo for CommandBufferInheritanceRenderingInfo {}
+impl<'a> ::std::ops::Deref for CommandBufferInheritanceRenderingInfoBuilder<'a> {
+    type Target = CommandBufferInheritanceRenderingInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
-impl<'a> ::std::ops::DerefMut for CommandBufferInheritanceRenderingInfoKHRBuilder<'a> {
+impl<'a> ::std::ops::DerefMut for CommandBufferInheritanceRenderingInfoBuilder<'a> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
-impl<'a> CommandBufferInheritanceRenderingInfoKHRBuilder<'a> {
-    pub fn flags(mut self, flags: RenderingFlagsKHR) -> Self {
+impl<'a> CommandBufferInheritanceRenderingInfoBuilder<'a> {
+    pub fn flags(mut self, flags: RenderingFlags) -> Self {
         self.inner.flags = flags;
         self
     }
@@ -55944,7 +56773,7 @@ impl<'a> CommandBufferInheritanceRenderingInfoKHRBuilder<'a> {
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> CommandBufferInheritanceRenderingInfoKHR {
+    pub fn build(self) -> CommandBufferInheritanceRenderingInfo {
         self.inner
     }
 }
@@ -56058,8 +56887,8 @@ unsafe impl ExtendsCommandBufferInheritanceInfo for MultiviewPerViewAttributesIn
 unsafe impl ExtendsCommandBufferInheritanceInfo for MultiviewPerViewAttributesInfoNVX {}
 unsafe impl ExtendsGraphicsPipelineCreateInfo for MultiviewPerViewAttributesInfoNVXBuilder<'_> {}
 unsafe impl ExtendsGraphicsPipelineCreateInfo for MultiviewPerViewAttributesInfoNVX {}
-unsafe impl ExtendsRenderingInfoKHR for MultiviewPerViewAttributesInfoNVXBuilder<'_> {}
-unsafe impl ExtendsRenderingInfoKHR for MultiviewPerViewAttributesInfoNVX {}
+unsafe impl ExtendsRenderingInfo for MultiviewPerViewAttributesInfoNVXBuilder<'_> {}
+unsafe impl ExtendsRenderingInfo for MultiviewPerViewAttributesInfoNVX {}
 impl<'a> ::std::ops::Deref for MultiviewPerViewAttributesInfoNVXBuilder<'a> {
     type Target = MultiviewPerViewAttributesInfoNVX;
     fn deref(&self) -> &Self::Target {
@@ -56210,7 +57039,7 @@ impl<'a> ImageViewMinLodCreateInfoEXTBuilder<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARM.html>"]
 pub struct PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARM {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub rasterization_order_color_attachment_access: Bool32,
     pub rasterization_order_depth_attachment_access: Bool32,
     pub rasterization_order_stencil_attachment_access: Bool32,
@@ -56220,7 +57049,7 @@ impl ::std::default::Default for PhysicalDeviceRasterizationOrderAttachmentAcces
         Self {
             s_type:
                 StructureType::PHYSICAL_DEVICE_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_FEATURES_ARM,
-            p_next: ::std::ptr::null(),
+            p_next: ::std::ptr::null_mut(),
             rasterization_order_color_attachment_access: Bool32::default(),
             rasterization_order_depth_attachment_access: Bool32::default(),
             rasterization_order_stencil_attachment_access: Bool32::default(),
