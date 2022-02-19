@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add helper wrappers for Vulkan core 1.3 `Device` and `Instance` functions (#568)
+- Add helper wrappers for Vulkan core 1.3 `Instance` and `Device` functions (#568)
 - Update Vulkan-Headers to 1.3.206 (#563)
 
 ## [0.35.2] - 2022-02-19
