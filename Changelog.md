@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - extensions/khr: Drop `_khr` suffix from `get_memory_fd_properties_khr` in `ExternalMemoryFd` (#580)
+- entry: Allow querying `enumerate_instance_extension_properties()` by layer name (#574)
 
 ### Added
 
