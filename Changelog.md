@@ -4,11 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.35.2] - 2022-02-19
+## Unreleased
 
 ### Changed
 
 - extensions/khr: Drop `_khr` suffix from `get_memory_fd_properties_khr` in `ExternalMemoryFd` (#580)
+
+### Added
+
+- Update Vulkan-Headers to 1.3.206 (#563)
+
+## [0.35.2] - 2022-02-19
+
+### Changed
+
 - Replace `1.2-extensions` documentation links with `1.3-extensions` (#569)
 - Fixed broken (intradoc) links in the prelude and `VK_KHR_get_surface_capabilities2` extension (#559)
 
