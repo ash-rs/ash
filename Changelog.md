@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Replace `1.2-extensions` documentation links with `1.3-extensions` (#569)
 - Fixed broken (intradoc) links in the prelude and `VK_KHR_get_surface_capabilities2` extension (#559)
+- Allow querying `vkEnumerateInstanceExtensionProperties` extension properties by layer name (#574) 
 
 ### Added
 
