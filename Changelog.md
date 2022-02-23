@@ -6,8 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
 - Dropped auto-generated wrapper methods from function pointer structs
   in favor of direct invocation of function pointers (#599)
+- `VK_NV_device_diagnostic_checkpoints`: Enable passing `pNext`-initialized structs to `get_queue_checkpoint_data` (#588)
 
 ### Added
 
