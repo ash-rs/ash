@@ -54,7 +54,7 @@ impl DebugMarker {
             .cmd_debug_marker_insert_ext(command_buffer, marker_info);
     }
 
-    pub fn name() -> &'static CStr {
+    pub const fn name() -> &'static CStr {
         vk::ExtDebugMarkerFn::name()
     }
 

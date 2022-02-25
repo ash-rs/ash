@@ -28,7 +28,7 @@ impl Maintenance3 {
             .get_descriptor_set_layout_support_khr(self.handle, create_info, out);
     }
 
-    pub fn name() -> &'static CStr {
+    pub const fn name() -> &'static CStr {
         vk::KhrMaintenance3Fn::name()
     }
 

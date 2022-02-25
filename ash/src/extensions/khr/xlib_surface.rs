@@ -55,7 +55,7 @@ impl XlibSurface {
         b > 0
     }
 
-    pub fn name() -> &'static CStr {
+    pub const fn name() -> &'static CStr {
         vk::KhrXlibSurfaceFn::name()
     }
 

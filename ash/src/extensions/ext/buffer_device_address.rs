@@ -26,7 +26,7 @@ impl BufferDeviceAddress {
         self.fp.get_buffer_device_address_ext(self.handle, info)
     }
 
-    pub fn name() -> &'static CStr {
+    pub const fn name() -> &'static CStr {
         vk::ExtBufferDeviceAddressFn::name()
     }
 

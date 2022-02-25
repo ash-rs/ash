@@ -38,7 +38,7 @@ impl DisplaySwapchain {
         err_code.result_with_success(swapchains)
     }
 
-    pub fn name() -> &'static CStr {
+    pub const fn name() -> &'static CStr {
         vk::KhrDisplaySwapchainFn::name()
     }
 

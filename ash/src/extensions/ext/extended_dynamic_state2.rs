@@ -66,7 +66,7 @@ impl ExtendedDynamicState2 {
             .cmd_set_primitive_restart_enable_ext(command_buffer, primitive_restart_enable.into())
     }
 
-    pub fn name() -> &'static CStr {
+    pub const fn name() -> &'static CStr {
         vk::ExtExtendedDynamicState2Fn::name()
     }
 

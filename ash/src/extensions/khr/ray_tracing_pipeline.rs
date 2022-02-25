@@ -166,7 +166,7 @@ impl RayTracingPipeline {
             .cmd_set_ray_tracing_pipeline_stack_size_khr(command_buffer, pipeline_stack_size);
     }
 
-    pub fn name() -> &'static CStr {
+    pub const fn name() -> &'static CStr {
         vk::KhrRayTracingPipelineFn::name()
     }
 

@@ -72,7 +72,7 @@ impl CreateRenderPass2 {
             .cmd_end_render_pass2_khr(command_buffer, subpass_end_info);
     }
 
-    pub fn name() -> &'static CStr {
+    pub const fn name() -> &'static CStr {
         vk::KhrCreateRenderpass2Fn::name()
     }
 
