@@ -17,14 +17,10 @@ fn main() -> Result<(), Box<dyn Error>> {
     unsafe {
         let entry = ash::Entry::linked();
         let surface_extensions = ash_window::enumerate_required_extensions(&window)?;
-        let instance_extensions = surface_extensions
-            .iter()
-            .map(|ext| ext.as_ptr())
-            .collect::<Vec<_>>();
         let app_desc = vk::ApplicationInfo::builder().api_version(vk::make_api_version(0, 1, 0, 0));
         let instance_desc = vk::InstanceCreateInfo::builder()
             .application_info(&app_desc)
-            .enabled_extension_names(&instance_extensions);
+            .enabled_extension_names(surface_extensions);
 
         let instance = entry.create_instance(&instance_desc, None)?;
 
