@@ -2401,11 +2401,10 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     let extensions: &Vec<vk_parse::Extension> = spec2
         .0
         .iter()
-        .filter_map(|item| match item {
+        .find_map(|item| match item {
             vk_parse::RegistryChild::Extensions(ref ext) => Some(&ext.children),
             _ => None,
         })
-        .next()
         .expect("extension");
     let mut ty_cache = HashSet::new();
     let aliases: Vec<_> = spec2

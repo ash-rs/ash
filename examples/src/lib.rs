@@ -275,12 +275,12 @@ impl ExampleBase {
             let surface_loader = Surface::new(&entry, &instance);
             let (pdevice, queue_family_index) = pdevices
                 .iter()
-                .map(|pdevice| {
+                .find_map(|pdevice| {
                     instance
                         .get_physical_device_queue_family_properties(*pdevice)
                         .iter()
                         .enumerate()
-                        .filter_map(|(index, info)| {
+                        .find_map(|(index, info)| {
                             let supports_graphic_and_surface =
                                 info.queue_flags.contains(vk::QueueFlags::GRAPHICS)
                                     && surface_loader
@@ -296,10 +296,7 @@ impl ExampleBase {
                                 None
                             }
                         })
-                        .next()
                 })
-                .flatten()
-                .next()
                 .expect("Couldn't find suitable device.");
             let queue_family_index = queue_family_index as u32;
             let device_extension_names_raw = [Swapchain::name().as_ptr()];
