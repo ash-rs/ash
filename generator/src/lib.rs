@@ -396,7 +396,7 @@ impl FeatureExt for vkxml::Feature {
             version = format!("{}_0", version)
         }
 
-        version.replace(".", "_")
+        version.replace('.', "_")
     }
 }
 #[derive(Debug, Copy, Clone)]
