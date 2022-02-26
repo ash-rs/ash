@@ -396,7 +396,7 @@ impl FeatureExt for vkxml::Feature {
             version = format!("{}_0", version)
         }
 
-        version.replace(".", "_")
+        version.replace('.', "_")
     }
 }
 #[derive(Debug, Copy, Clone)]
@@ -655,7 +655,7 @@ impl FieldExt for vkxml::Field {
                 let size = self
                     .size
                     .as_ref()
-                    .or_else(|| self.size_enumref.as_ref())
+                    .or(self.size_enumref.as_ref())
                     .expect("Should have size");
                 // Make sure we also rename the constant, that is
                 // used inside the static array
@@ -1207,9 +1207,7 @@ pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
         .unwrap_or("");
     let struct_name = struct_name.strip_suffix(vendor).unwrap();
     let struct_name = TRAILING_NUMBER.replace(struct_name, "_$1");
-    let variant_name = variant_name
-        .strip_suffix(vendor)
-        .unwrap_or_else(|| variant_name.as_str());
+    let variant_name = variant_name.strip_suffix(vendor).unwrap_or(&variant_name);
 
     let new_variant_name = variant_name
         .strip_prefix(struct_name.as_ref())
@@ -1599,7 +1597,7 @@ pub fn derive_setters(
         let param_ident_short = param_ident_string
             .strip_prefix("p_")
             .or_else(|| param_ident_string.strip_prefix("pp_"))
-            .unwrap_or_else(|| param_ident_string.as_str());
+            .unwrap_or(&param_ident_string);
         let param_ident_short = format_ident!("{}", &param_ident_short);
 
         if let Some(name) = field.name.as_ref() {
@@ -2401,11 +2399,10 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     let extensions: &Vec<vk_parse::Extension> = spec2
         .0
         .iter()
-        .filter_map(|item| match item {
+        .find_map(|item| match item {
             vk_parse::RegistryChild::Extensions(ref ext) => Some(&ext.children),
             _ => None,
         })
-        .next()
         .expect("extension");
     let mut ty_cache = HashSet::new();
     let aliases: Vec<_> = spec2
