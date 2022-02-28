@@ -8,7 +8,7 @@ use std::ptr;
 
 /// `ash::Instance` contains a [vk::Instance][vk::Instance] (accessible via `[handle()][Self::handle()]`) and all associated function pointers.
 ///
-/// All functions from the Vulkan API (except those from extensions) which have a `VkInstance` as their frist argument have become methods of `ash::Instance`. 
+/// All functions from the Vulkan API (except those from extensions) which have a `VkInstance` as their first argument have become methods of `ash::Instance`. 
 /// Their VkInstance argument is always passed implicitly.
 
 #[derive(Clone)]
