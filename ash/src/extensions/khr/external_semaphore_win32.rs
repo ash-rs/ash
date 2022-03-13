@@ -42,7 +42,7 @@ impl ExternalSemaphoreWin32 {
             .result_with_success(handle)
     }
 
-    pub fn name() -> &'static CStr {
+    pub const fn name() -> &'static CStr {
         vk::KhrExternalSemaphoreWin32Fn::name()
     }
 

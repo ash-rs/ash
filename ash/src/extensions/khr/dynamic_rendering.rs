@@ -31,7 +31,7 @@ impl DynamicRendering {
         self.fp.cmd_end_rendering_khr(command_buffer)
     }
 
-    pub fn name() -> &'static CStr {
+    pub const fn name() -> &'static CStr {
         vk::KhrDynamicRenderingFn::name()
     }
 

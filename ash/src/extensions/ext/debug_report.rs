@@ -50,7 +50,7 @@ impl DebugReport {
             .result_with_success(debug_cb)
     }
 
-    pub fn name() -> &'static CStr {
+    pub const fn name() -> &'static CStr {
         vk::ExtDebugReportFn::name()
     }
 

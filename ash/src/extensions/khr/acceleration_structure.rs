@@ -299,7 +299,7 @@ impl AccelerationStructure {
         size_info
     }
 
-    pub fn name() -> &'static CStr {
+    pub const fn name() -> &'static CStr {
         vk::KhrAccelerationStructureFn::name()
     }
 

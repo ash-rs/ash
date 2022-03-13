@@ -45,7 +45,7 @@ impl TimelineSemaphore {
             .result()
     }
 
-    pub fn name() -> &'static CStr {
+    pub const fn name() -> &'static CStr {
         vk::KhrTimelineSemaphoreFn::name()
     }
 

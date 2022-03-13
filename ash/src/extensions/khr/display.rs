@@ -125,7 +125,7 @@ impl Display {
             .result_with_success(surface.assume_init())
     }
 
-    pub fn name() -> &'static CStr {
+    pub const fn name() -> &'static CStr {
         vk::KhrDisplayFn::name()
     }
 
