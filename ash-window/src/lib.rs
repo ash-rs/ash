@@ -117,54 +117,81 @@ pub unsafe fn create_surface(
     }
 }
 
-/// Query the required instance extensions for creating a surface from a window handle.
+/// Query the required instance extensions for creating a surface.
 ///
 /// The returned extensions will include all extension dependencies.
-pub fn enumerate_required_extensions(
-    window_handle: &dyn HasRawWindowHandle,
-) -> VkResult<Vec<&'static CStr>> {
-    let extensions = match window_handle.raw_window_handle() {
-        #[cfg(target_os = "windows")]
-        RawWindowHandle::Windows(_) => vec![khr::Surface::name(), khr::Win32Surface::name()],
-
-        #[cfg(any(
-            target_os = "linux",
-            target_os = "dragonfly",
-            target_os = "freebsd",
-            target_os = "netbsd",
-            target_os = "openbsd"
-        ))]
-        RawWindowHandle::Wayland(_) => vec![khr::Surface::name(), khr::WaylandSurface::name()],
-
-        #[cfg(any(
-            target_os = "linux",
-            target_os = "dragonfly",
-            target_os = "freebsd",
-            target_os = "netbsd",
-            target_os = "openbsd"
-        ))]
-        RawWindowHandle::Xlib(_) => vec![khr::Surface::name(), khr::XlibSurface::name()],
-
-        #[cfg(any(
-            target_os = "linux",
-            target_os = "dragonfly",
-            target_os = "freebsd",
-            target_os = "netbsd",
-            target_os = "openbsd"
-        ))]
-        RawWindowHandle::Xcb(_) => vec![khr::Surface::name(), khr::XcbSurface::name()],
-
-        #[cfg(any(target_os = "android"))]
-        RawWindowHandle::Android(_) => vec![khr::Surface::name(), khr::AndroidSurface::name()],
-
-        #[cfg(any(target_os = "macos"))]
-        RawWindowHandle::MacOS(_) => vec![khr::Surface::name(), ext::MetalSurface::name()],
-
-        #[cfg(any(target_os = "ios"))]
-        RawWindowHandle::IOS(_) => vec![khr::Surface::name(), ext::MetalSurface::name()],
-
-        _ => return Err(vk::Result::ERROR_EXTENSION_NOT_PRESENT),
+pub fn enumerate_required_extensions(entry: &ash::Entry) -> VkResult<Vec<&'static CStr>> {
+    let supported_instance_extensions = entry.enumerate_instance_extension_properties(None)?;
+    let has_extension = |name: &CStr| {
+        supported_instance_extensions
+            .iter()
+            .map(|ep| unsafe { CStr::from_ptr(ep.extension_name.as_ptr()) })
+            .find(|&ext_name| ext_name == name)
+            .is_some()
     };
+    if !has_extension(khr::Surface::name()) {
+        return Err(vk::Result::ERROR_EXTENSION_NOT_PRESENT);
+    }
 
-    Ok(extensions)
+    #[cfg(any(
+        target_os = "linux",
+        target_os = "dragonfly",
+        target_os = "freebsd",
+        target_os = "netbsd",
+        target_os = "openbsd"
+    ))]
+    {
+        let has_wayland_extension = has_extension(khr::WaylandSurface::name());
+        let has_xlib_extension = has_extension(khr::XlibSurface::name());
+        let has_xcb_extension = has_extension(khr::XcbSurface::name());
+        let num_extensions = has_wayland_extension as usize
+            + has_xlib_extension as usize
+            + has_xcb_extension as usize;
+        if (num_extensions == 0) {
+            return Err(vk::Result::ERROR_EXTENSION_NOT_PRESENT);
+        }
+        let mut extensions: Vec<&'static CStr> = Vec::with_capacity(num_extensions + 1);
+        extensions.push(khr::Surface::name());
+        if has_wayland_extension {
+            extensions.push(khr::WaylandSurface::name());
+        }
+        if has_xlib_extension {
+            extensions.push(khr::XlibSurface::name());
+        }
+        if has_xcb_extension {
+            extensions.push(khr::XcbSurface::name());
+        }
+        return Ok(extensions);
+    }
+
+    #[cfg(target_os = "windows")]
+    {
+        if !has_extension(khr::Win32Surface::name()) {
+            return Err(vk::Result::ERROR_EXTENSION_NOT_PRESENT);
+        }
+        return Ok(vec![khr::Surface::name(), khr::Win32Surface::name()]);
+    }
+
+    #[cfg(any(target_os = "android"))]
+    {
+        if !has_extension(khr::AndroidSurface::name()) {
+            return Err(vk::Result::ERROR_EXTENSION_NOT_PRESENT);
+        }
+        return Ok(vec![khr::Surface::name(), khr::AndroidSurface::name()]);
+    }
+
+    #[cfg(any(target_os = "macos"))]
+    #[cfg(any(target_os = "ios"))]
+    {
+        if !has_extension(ext::MetalSurface::name()) {
+            return Err(vk::Result::ERROR_EXTENSION_NOT_PRESENT);
+        }
+        return Ok(vec![khr::Surface::name(), ext::MetalSurface::name()]);
+    }
+
+    #[allow(unreachable_code)]
+    {
+        // Catch-all error
+        return Err(vk::Result::ERROR_EXTENSION_NOT_PRESENT);
+    }
 }
