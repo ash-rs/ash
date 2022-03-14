@@ -2141,6 +2141,7 @@ impl fmt::Debug for ImageCreateFlags {
             ),
             (ImageCreateFlags::SUBSAMPLED_EXT.0, "SUBSAMPLED_EXT"),
             (ImageCreateFlags::RESERVED_16_AMD.0, "RESERVED_16_AMD"),
+            (ImageCreateFlags::RESERVED_18_EXT.0, "RESERVED_18_EXT"),
             (ImageCreateFlags::RESERVED_394_EXT.0, "RESERVED_394_EXT"),
             (
                 ImageCreateFlags::FRAGMENT_DENSITY_MAP_OFFSET_QCOM.0,
@@ -2292,6 +2293,7 @@ impl fmt::Debug for ImageUsageFlags {
                 ImageUsageFlags::FRAGMENT_SHADING_RATE_ATTACHMENT_KHR.0,
                 "FRAGMENT_SHADING_RATE_ATTACHMENT_KHR",
             ),
+            (ImageUsageFlags::RESERVED_22_EXT.0, "RESERVED_22_EXT"),
             (
                 ImageUsageFlags::VIDEO_ENCODE_DST_KHR.0,
                 "VIDEO_ENCODE_DST_KHR",
@@ -3988,6 +3990,7 @@ impl fmt::Debug for StructureType {
                 Some("QUEUE_FAMILY_QUERY_RESULT_STATUS_PROPERTIES_2_KHR")
             }
             Self::VIDEO_DECODE_INFO_KHR => Some("VIDEO_DECODE_INFO_KHR"),
+            Self::VIDEO_DECODE_CAPABILITIES_KHR => Some("VIDEO_DECODE_CAPABILITIES_KHR"),
             Self::DEDICATED_ALLOCATION_IMAGE_CREATE_INFO_NV => {
                 Some("DEDICATED_ALLOCATION_IMAGE_CREATE_INFO_NV")
             }
@@ -4898,6 +4901,15 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_PAGEABLE_DEVICE_LOCAL_MEMORY_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_PAGEABLE_DEVICE_LOCAL_MEMORY_FEATURES_EXT")
             }
+            Self::PHYSICAL_DEVICE_DESCRIPTOR_SET_HOST_MAPPING_FEATURES_VALVE => {
+                Some("PHYSICAL_DEVICE_DESCRIPTOR_SET_HOST_MAPPING_FEATURES_VALVE")
+            }
+            Self::DESCRIPTOR_SET_BINDING_REFERENCE_VALVE => {
+                Some("DESCRIPTOR_SET_BINDING_REFERENCE_VALVE")
+            }
+            Self::DESCRIPTOR_SET_LAYOUT_HOST_MAPPING_INFO_VALVE => {
+                Some("DESCRIPTOR_SET_LAYOUT_HOST_MAPPING_INFO_VALVE")
+            }
             Self::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_OFFSET_FEATURES_QCOM => {
                 Some("PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_OFFSET_FEATURES_QCOM")
             }
@@ -5638,6 +5650,22 @@ impl fmt::Debug for VideoComponentBitDepthFlagsKHR {
             (VideoComponentBitDepthFlagsKHR::TYPE_8.0, "TYPE_8"),
             (VideoComponentBitDepthFlagsKHR::TYPE_10.0, "TYPE_10"),
             (VideoComponentBitDepthFlagsKHR::TYPE_12.0, "TYPE_12"),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for VideoDecodeCapabilityFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (VideoDecodeCapabilityFlagsKHR::DEFAULT.0, "DEFAULT"),
+            (
+                VideoDecodeCapabilityFlagsKHR::DPB_AND_OUTPUT_COINCIDE.0,
+                "DPB_AND_OUTPUT_COINCIDE",
+            ),
+            (
+                VideoDecodeCapabilityFlagsKHR::DPB_AND_OUTPUT_DISTINCT.0,
+                "DPB_AND_OUTPUT_DISTINCT",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
