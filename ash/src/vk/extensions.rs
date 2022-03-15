@@ -9655,7 +9655,7 @@ impl AndroidExternalMemoryAndroidHardwareBufferFn {
             )
         }
     }
-    pub const SPEC_VERSION: u32 = 4u32;
+    pub const SPEC_VERSION: u32 = 5u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetAndroidHardwareBufferPropertiesANDROID = unsafe extern "system" fn(
@@ -23533,23 +23533,29 @@ impl ExtExtension394Fn {
 impl ImageCreateFlags {
     pub const RESERVED_394_EXT: Self = Self(0b10_0000_0000_0000_0000);
 }
-impl KhrExtension395Fn {
+impl KhrPortabilityEnumerationFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_395\0") }
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_portability_enumeration\0")
+        }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct KhrExtension395Fn {}
-unsafe impl Send for KhrExtension395Fn {}
-unsafe impl Sync for KhrExtension395Fn {}
-impl KhrExtension395Fn {
+pub struct KhrPortabilityEnumerationFn {}
+unsafe impl Send for KhrPortabilityEnumerationFn {}
+unsafe impl Sync for KhrPortabilityEnumerationFn {}
+impl KhrPortabilityEnumerationFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         Self {}
     }
+}
+#[doc = "Generated from 'VK_KHR_portability_enumeration'"]
+impl InstanceCreateFlags {
+    pub const ENUMERATE_PORTABILITY_KHR: Self = Self(0b1);
 }
 impl KhrExtension396Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -25041,6 +25047,24 @@ pub struct ArmExtension459Fn {}
 unsafe impl Send for ArmExtension459Fn {}
 unsafe impl Sync for ArmExtension459Fn {}
 impl ArmExtension459Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl ExtExtension460Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_460\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct ExtExtension460Fn {}
+unsafe impl Send for ExtExtension460Fn {}
+unsafe impl Sync for ExtExtension460Fn {}
+impl ExtExtension460Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,

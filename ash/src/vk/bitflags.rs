@@ -1500,3 +1500,9 @@ impl VideoEncodeH265TransformBlockSizeFlagsEXT {
     pub const TYPE_16: Self = Self(0b100);
     pub const TYPE_32: Self = Self(0b1000);
 }
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkInstanceCreateFlagBits.html>"]
+pub struct InstanceCreateFlags(pub(crate) Flags);
+vk_bitflags_wrapped!(InstanceCreateFlags, Flags);
+impl InstanceCreateFlags {}

@@ -2416,7 +2416,10 @@ impl fmt::Debug for IndirectStateFlagsNV {
 }
 impl fmt::Debug for InstanceCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[];
+        const KNOWN: &[(Flags, &str)] = &[(
+            InstanceCreateFlags::ENUMERATE_PORTABILITY_KHR.0,
+            "ENUMERATE_PORTABILITY_KHR",
+        )];
         debug_flags(f, KNOWN, self.0)
     }
 }
