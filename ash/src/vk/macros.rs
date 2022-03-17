@@ -32,6 +32,26 @@ macro_rules! vk_bitflags_wrapped {
             pub const fn contains(self, other: Self) -> bool {
                 self.0 & other.0 == other.0
             }
+            #[inline]
+            pub const fn intersection(self, other: Self) -> Self {
+                Self(self.0 & other.0)
+            }
+            #[inline]
+            pub const fn union(self, other: Self) -> Self {
+                Self(self.0 | other.0)
+            }
+            #[inline]
+            pub const fn difference(self, other: Self) -> Self {
+                Self(self.0 & !other.0)
+            }
+            #[inline]
+            pub const fn symmetric_difference(self, other: Self) -> Self {
+                Self(self.0 ^ other.0)
+            }
+            #[inline]
+            pub const fn complement(self) -> Self {
+                Self(!self.0)
+            }
         }
         impl ::std::ops::BitOr for $name {
             type Output = Self;
