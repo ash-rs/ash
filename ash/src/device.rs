@@ -8,14 +8,17 @@ use std::ptr;
 
 /// This is a dispatchable object, whose main purpose is to provide access to Vulkan's functions.
 ///
-/// It is not identical to Vulkan's device object (see [vk::Device][vk::Device]). 
-/// The latter, however, can be accessed via the `[handle()][Self::handle()]` method.
+/// It is not identical to Vulkan's device object (see [vk::Device]).
+/// The latter, however, can be accessed via the [`handle()`][Self::handle()] method.
 /// In this sense, `ash::Device` is a Vulkan device handle together with all its associated function pointers.
 ///
-/// All functions from the Vulkan API (except those from extensions) which have a VkDevice as their first argument, have become methods of `ash::Device`.
-/// Their VkDevice argument is always passed implicitly.
+/// All functions from the Vulkan API (except those from extensions) which have a [`VkDevice`] as their first argument, have become methods of `ash::Device`.
+/// Their [`VkDevice`] argument is always passed implicitly.
 ///
-/// Also, all `vkCmd*` functions are accessed as methods of `ash::Device`. 
+/// Also, all `vkCmd*` functions are accessed as methods of `ash::Device`.
+///
+/// [`VkDevice`]: https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDevice.html
+
 #[derive(Clone)]
 pub struct Device {
     pub(crate) handle: vk::Device,
