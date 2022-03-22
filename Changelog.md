@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Update Vulkan-Headers to 1.3.208 (#597)
 - Added `VK_EXT_headless_surface` instance extension (#589)
 
 ## [0.36.0] - 2022-02-21

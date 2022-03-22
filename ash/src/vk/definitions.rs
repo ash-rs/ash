@@ -56,7 +56,7 @@ pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
-pub const HEADER_VERSION: u32 = 206u32;
+pub const HEADER_VERSION: u32 = 208u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -116,11 +116,6 @@ vk_bitflags_wrapped!(PipelineVertexInputStateCreateFlags, Flags);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkBufferViewCreateFlags.html>"]
 pub struct BufferViewCreateFlags(pub(crate) Flags);
 vk_bitflags_wrapped!(BufferViewCreateFlags, Flags);
-#[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkInstanceCreateFlags.html>"]
-pub struct InstanceCreateFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(InstanceCreateFlags, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDeviceCreateFlags.html>"]
@@ -48546,12 +48541,9 @@ impl<'a> ::std::ops::DerefMut for VideoProfilesKHRBuilder<'a> {
     }
 }
 impl<'a> VideoProfilesKHRBuilder<'a> {
-    pub fn profile_count(mut self, profile_count: u32) -> Self {
-        self.inner.profile_count = profile_count;
-        self
-    }
-    pub fn profiles(mut self, profiles: &'a VideoProfileKHR) -> Self {
-        self.inner.p_profiles = profiles;
+    pub fn profiles(mut self, profiles: &'a [VideoProfileKHR]) -> Self {
+        self.inner.profile_count = profiles.len() as _;
+        self.inner.p_profiles = profiles.as_ptr();
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -49186,6 +49178,77 @@ impl<'a> VideoReferenceSlotKHRBuilder<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeCapabilitiesKHR.html>"]
+pub struct VideoDecodeCapabilitiesKHR {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub flags: VideoDecodeCapabilityFlagsKHR,
+}
+impl ::std::default::Default for VideoDecodeCapabilitiesKHR {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::VIDEO_DECODE_CAPABILITIES_KHR,
+            p_next: ::std::ptr::null_mut(),
+            flags: VideoDecodeCapabilityFlagsKHR::default(),
+        }
+    }
+}
+impl VideoDecodeCapabilitiesKHR {
+    pub fn builder<'a>() -> VideoDecodeCapabilitiesKHRBuilder<'a> {
+        VideoDecodeCapabilitiesKHRBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct VideoDecodeCapabilitiesKHRBuilder<'a> {
+    inner: VideoDecodeCapabilitiesKHR,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsVideoCapabilitiesKHR for VideoDecodeCapabilitiesKHRBuilder<'_> {}
+unsafe impl ExtendsVideoCapabilitiesKHR for VideoDecodeCapabilitiesKHR {}
+pub unsafe trait ExtendsVideoDecodeCapabilitiesKHR {}
+impl<'a> ::std::ops::Deref for VideoDecodeCapabilitiesKHRBuilder<'a> {
+    type Target = VideoDecodeCapabilitiesKHR;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for VideoDecodeCapabilitiesKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> VideoDecodeCapabilitiesKHRBuilder<'a> {
+    pub fn flags(mut self, flags: VideoDecodeCapabilityFlagsKHR) -> Self {
+        self.inner.flags = flags;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsVideoDecodeCapabilitiesKHR>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = <*mut T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr;
+        }
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> VideoDecodeCapabilitiesKHR {
+        self.inner
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeInfoKHR.html>"]
 pub struct VideoDecodeInfoKHR {
     pub s_type: StructureType,
@@ -49410,8 +49473,8 @@ pub struct VideoDecodeH264CapabilitiesEXTBuilder<'a> {
     inner: VideoDecodeH264CapabilitiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-unsafe impl ExtendsVideoCapabilitiesKHR for VideoDecodeH264CapabilitiesEXTBuilder<'_> {}
-unsafe impl ExtendsVideoCapabilitiesKHR for VideoDecodeH264CapabilitiesEXT {}
+unsafe impl ExtendsVideoDecodeCapabilitiesKHR for VideoDecodeH264CapabilitiesEXTBuilder<'_> {}
+unsafe impl ExtendsVideoDecodeCapabilitiesKHR for VideoDecodeH264CapabilitiesEXT {}
 impl<'a> ::std::ops::Deref for VideoDecodeH264CapabilitiesEXTBuilder<'a> {
     type Target = VideoDecodeH264CapabilitiesEXT;
     fn deref(&self) -> &Self::Target {
@@ -49950,8 +50013,8 @@ pub struct VideoDecodeH265CapabilitiesEXTBuilder<'a> {
     inner: VideoDecodeH265CapabilitiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-unsafe impl ExtendsVideoCapabilitiesKHR for VideoDecodeH265CapabilitiesEXTBuilder<'_> {}
-unsafe impl ExtendsVideoCapabilitiesKHR for VideoDecodeH265CapabilitiesEXT {}
+unsafe impl ExtendsVideoDecodeCapabilitiesKHR for VideoDecodeH265CapabilitiesEXTBuilder<'_> {}
+unsafe impl ExtendsVideoDecodeCapabilitiesKHR for VideoDecodeH265CapabilitiesEXT {}
 impl<'a> ::std::ops::Deref for VideoDecodeH265CapabilitiesEXTBuilder<'a> {
     type Target = VideoDecodeH265CapabilitiesEXT;
     fn deref(&self) -> &Self::Target {
@@ -57190,6 +57253,190 @@ impl<'a> PhysicalDeviceLinearColorAttachmentFeaturesNVBuilder<'a> {
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceLinearColorAttachmentFeaturesNV {
+        self.inner
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDescriptorSetHostMappingFeaturesVALVE.html>"]
+pub struct PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub descriptor_set_host_mapping: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PHYSICAL_DEVICE_DESCRIPTOR_SET_HOST_MAPPING_FEATURES_VALVE,
+            p_next: ::std::ptr::null_mut(),
+            descriptor_set_host_mapping: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE {
+    pub fn builder<'a>() -> PhysicalDeviceDescriptorSetHostMappingFeaturesVALVEBuilder<'a> {
+        PhysicalDeviceDescriptorSetHostMappingFeaturesVALVEBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceDescriptorSetHostMappingFeaturesVALVEBuilder<'a> {
+    inner: PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVEBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE {}
+unsafe impl ExtendsDeviceCreateInfo
+    for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVEBuilder<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVEBuilder<'a> {
+    type Target = PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVEBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceDescriptorSetHostMappingFeaturesVALVEBuilder<'a> {
+    pub fn descriptor_set_host_mapping(mut self, descriptor_set_host_mapping: bool) -> Self {
+        self.inner.descriptor_set_host_mapping = descriptor_set_host_mapping.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE {
+        self.inner
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDescriptorSetBindingReferenceVALVE.html>"]
+pub struct DescriptorSetBindingReferenceVALVE {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub descriptor_set_layout: DescriptorSetLayout,
+    pub binding: u32,
+}
+impl ::std::default::Default for DescriptorSetBindingReferenceVALVE {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::DESCRIPTOR_SET_BINDING_REFERENCE_VALVE,
+            p_next: ::std::ptr::null(),
+            descriptor_set_layout: DescriptorSetLayout::default(),
+            binding: u32::default(),
+        }
+    }
+}
+impl DescriptorSetBindingReferenceVALVE {
+    pub fn builder<'a>() -> DescriptorSetBindingReferenceVALVEBuilder<'a> {
+        DescriptorSetBindingReferenceVALVEBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct DescriptorSetBindingReferenceVALVEBuilder<'a> {
+    inner: DescriptorSetBindingReferenceVALVE,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+impl<'a> ::std::ops::Deref for DescriptorSetBindingReferenceVALVEBuilder<'a> {
+    type Target = DescriptorSetBindingReferenceVALVE;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DescriptorSetBindingReferenceVALVEBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> DescriptorSetBindingReferenceVALVEBuilder<'a> {
+    pub fn descriptor_set_layout(mut self, descriptor_set_layout: DescriptorSetLayout) -> Self {
+        self.inner.descriptor_set_layout = descriptor_set_layout;
+        self
+    }
+    pub fn binding(mut self, binding: u32) -> Self {
+        self.inner.binding = binding;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> DescriptorSetBindingReferenceVALVE {
+        self.inner
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDescriptorSetLayoutHostMappingInfoVALVE.html>"]
+pub struct DescriptorSetLayoutHostMappingInfoVALVE {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub descriptor_offset: usize,
+    pub descriptor_size: u32,
+}
+impl ::std::default::Default for DescriptorSetLayoutHostMappingInfoVALVE {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::DESCRIPTOR_SET_LAYOUT_HOST_MAPPING_INFO_VALVE,
+            p_next: ::std::ptr::null_mut(),
+            descriptor_offset: usize::default(),
+            descriptor_size: u32::default(),
+        }
+    }
+}
+impl DescriptorSetLayoutHostMappingInfoVALVE {
+    pub fn builder<'a>() -> DescriptorSetLayoutHostMappingInfoVALVEBuilder<'a> {
+        DescriptorSetLayoutHostMappingInfoVALVEBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct DescriptorSetLayoutHostMappingInfoVALVEBuilder<'a> {
+    inner: DescriptorSetLayoutHostMappingInfoVALVE,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+impl<'a> ::std::ops::Deref for DescriptorSetLayoutHostMappingInfoVALVEBuilder<'a> {
+    type Target = DescriptorSetLayoutHostMappingInfoVALVE;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DescriptorSetLayoutHostMappingInfoVALVEBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> DescriptorSetLayoutHostMappingInfoVALVEBuilder<'a> {
+    pub fn descriptor_offset(mut self, descriptor_offset: usize) -> Self {
+        self.inner.descriptor_offset = descriptor_offset;
+        self
+    }
+    pub fn descriptor_size(mut self, descriptor_size: u32) -> Self {
+        self.inner.descriptor_size = descriptor_size;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> DescriptorSetLayoutHostMappingInfoVALVE {
         self.inner
     }
 }
