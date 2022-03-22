@@ -16,7 +16,7 @@ A very lightweight wrapper around Vulkan
 - [x] Device local function pointer loading
 - [x] No validation, everything is **unsafe**
 - [x] Generated from `vk.xml`
-- [x] Support for Vulkan `1.1`, `1.2`
+- [x] Support for Vulkan `1.1`, `1.2`, `1.3`
 
 ## Features
 ### Explicit returns with `Result`
