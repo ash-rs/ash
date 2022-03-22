@@ -20,7 +20,7 @@ pub struct Instance {
 impl Instance {
     pub unsafe fn load(static_fn: &vk::StaticFn, instance: vk::Instance) -> Self {
         let load_fn = |name: &std::ffi::CStr| {
-            mem::transmute(static_fn.get_instance_proc_addr(instance, name.as_ptr()))
+            mem::transmute((static_fn.get_instance_proc_addr)(instance, name.as_ptr()))
         };
 
         Self {
@@ -51,9 +51,12 @@ impl Instance {
         physical_device: vk::PhysicalDevice,
     ) -> VkResult<usize> {
         let mut count = 0;
-        self.instance_fn_1_3
-            .get_physical_device_tool_properties(physical_device, &mut count, ptr::null_mut())
-            .result_with_success(count as usize)
+        (self.instance_fn_1_3.get_physical_device_tool_properties)(
+            physical_device,
+            &mut count,
+            ptr::null_mut(),
+        )
+        .result_with_success(count as usize)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceToolProperties.html>
@@ -66,9 +69,12 @@ impl Instance {
         out: &mut [vk::PhysicalDeviceToolProperties],
     ) -> VkResult<()> {
         let mut count = out.len() as u32;
-        self.instance_fn_1_3
-            .get_physical_device_tool_properties(physical_device, &mut count, out.as_mut_ptr())
-            .result()?;
+        (self.instance_fn_1_3.get_physical_device_tool_properties)(
+            physical_device,
+            &mut count,
+            out.as_mut_ptr(),
+        )
+        .result()?;
         assert_eq!(count as usize, out.len());
         Ok(())
     }
@@ -92,9 +98,12 @@ impl Instance {
     /// Retrieve the number of elements to pass to [`enumerate_physical_device_groups()`][Self::enumerate_physical_device_groups()]
     pub unsafe fn enumerate_physical_device_groups_len(&self) -> VkResult<usize> {
         let mut group_count = 0;
-        self.instance_fn_1_1
-            .enumerate_physical_device_groups(self.handle(), &mut group_count, ptr::null_mut())
-            .result_with_success(group_count as usize)
+        (self.instance_fn_1_1.enumerate_physical_device_groups)(
+            self.handle(),
+            &mut group_count,
+            ptr::null_mut(),
+        )
+        .result_with_success(group_count as usize)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumeratePhysicalDeviceGroups.html>
@@ -106,9 +115,12 @@ impl Instance {
         out: &mut [vk::PhysicalDeviceGroupProperties],
     ) -> VkResult<()> {
         let mut count = out.len() as u32;
-        self.instance_fn_1_1
-            .enumerate_physical_device_groups(self.handle(), &mut count, out.as_mut_ptr())
-            .result()?;
+        (self.instance_fn_1_1.enumerate_physical_device_groups)(
+            self.handle(),
+            &mut count,
+            out.as_mut_ptr(),
+        )
+        .result()?;
         assert_eq!(count as usize, out.len());
         Ok(())
     }
@@ -119,8 +131,7 @@ impl Instance {
         physical_device: vk::PhysicalDevice,
         features: &mut vk::PhysicalDeviceFeatures2,
     ) {
-        self.instance_fn_1_1
-            .get_physical_device_features2(physical_device, features);
+        (self.instance_fn_1_1.get_physical_device_features2)(physical_device, features);
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceProperties2.html>
@@ -129,8 +140,7 @@ impl Instance {
         physical_device: vk::PhysicalDevice,
         prop: &mut vk::PhysicalDeviceProperties2,
     ) {
-        self.instance_fn_1_1
-            .get_physical_device_properties2(physical_device, prop);
+        (self.instance_fn_1_1.get_physical_device_properties2)(physical_device, prop);
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceFormatProperties2.html>
@@ -140,8 +150,7 @@ impl Instance {
         format: vk::Format,
         out: &mut vk::FormatProperties2,
     ) {
-        self.instance_fn_1_1
-            .get_physical_device_format_properties2(physical_device, format, out);
+        (self.instance_fn_1_1.get_physical_device_format_properties2)(physical_device, format, out);
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceImageFormatProperties2.html>
@@ -151,13 +160,14 @@ impl Instance {
         format_info: &vk::PhysicalDeviceImageFormatInfo2,
         image_format_prop: &mut vk::ImageFormatProperties2,
     ) -> VkResult<()> {
-        self.instance_fn_1_1
-            .get_physical_device_image_format_properties2(
-                physical_device,
-                format_info,
-                image_format_prop,
-            )
-            .result()
+        (self
+            .instance_fn_1_1
+            .get_physical_device_image_format_properties2)(
+            physical_device,
+            format_info,
+            image_format_prop,
+        )
+        .result()
     }
 
     /// Retrieve the number of elements to pass to [`get_physical_device_queue_family_properties2()`][Self::get_physical_device_queue_family_properties2()]
@@ -166,12 +176,13 @@ impl Instance {
         physical_device: vk::PhysicalDevice,
     ) -> usize {
         let mut queue_count = 0;
-        self.instance_fn_1_1
-            .get_physical_device_queue_family_properties2(
-                physical_device,
-                &mut queue_count,
-                ptr::null_mut(),
-            );
+        (self
+            .instance_fn_1_1
+            .get_physical_device_queue_family_properties2)(
+            physical_device,
+            &mut queue_count,
+            ptr::null_mut(),
+        );
         queue_count as usize
     }
 
@@ -185,12 +196,13 @@ impl Instance {
         out: &mut [vk::QueueFamilyProperties2],
     ) {
         let mut count = out.len() as u32;
-        self.instance_fn_1_1
-            .get_physical_device_queue_family_properties2(
-                physical_device,
-                &mut count,
-                out.as_mut_ptr(),
-            );
+        (self
+            .instance_fn_1_1
+            .get_physical_device_queue_family_properties2)(
+            physical_device,
+            &mut count,
+            out.as_mut_ptr(),
+        );
         assert_eq!(count as usize, out.len());
     }
 
@@ -200,8 +212,7 @@ impl Instance {
         physical_device: vk::PhysicalDevice,
         out: &mut vk::PhysicalDeviceMemoryProperties2,
     ) {
-        self.instance_fn_1_1
-            .get_physical_device_memory_properties2(physical_device, out);
+        (self.instance_fn_1_1.get_physical_device_memory_properties2)(physical_device, out);
     }
 
     /// Retrieve the number of elements to pass to [`get_physical_device_sparse_image_format_properties2()`][Self::get_physical_device_sparse_image_format_properties2()]
@@ -211,13 +222,14 @@ impl Instance {
         format_info: &vk::PhysicalDeviceSparseImageFormatInfo2,
     ) -> usize {
         let mut format_count = 0;
-        self.instance_fn_1_1
-            .get_physical_device_sparse_image_format_properties2(
-                physical_device,
-                format_info,
-                &mut format_count,
-                ptr::null_mut(),
-            );
+        (self
+            .instance_fn_1_1
+            .get_physical_device_sparse_image_format_properties2)(
+            physical_device,
+            format_info,
+            &mut format_count,
+            ptr::null_mut(),
+        );
         format_count as usize
     }
 
@@ -232,13 +244,14 @@ impl Instance {
         out: &mut [vk::SparseImageFormatProperties2],
     ) {
         let mut count = out.len() as u32;
-        self.instance_fn_1_1
-            .get_physical_device_sparse_image_format_properties2(
-                physical_device,
-                format_info,
-                &mut count,
-                out.as_mut_ptr(),
-            );
+        (self
+            .instance_fn_1_1
+            .get_physical_device_sparse_image_format_properties2)(
+            physical_device,
+            format_info,
+            &mut count,
+            out.as_mut_ptr(),
+        );
         assert_eq!(count as usize, out.len());
     }
 
@@ -249,12 +262,13 @@ impl Instance {
         external_buffer_info: &vk::PhysicalDeviceExternalBufferInfo,
         out: &mut vk::ExternalBufferProperties,
     ) {
-        self.instance_fn_1_1
-            .get_physical_device_external_buffer_properties(
-                physical_device,
-                external_buffer_info,
-                out,
-            );
+        (self
+            .instance_fn_1_1
+            .get_physical_device_external_buffer_properties)(
+            physical_device,
+            external_buffer_info,
+            out,
+        );
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceExternalFenceProperties.html>
@@ -264,12 +278,13 @@ impl Instance {
         external_fence_info: &vk::PhysicalDeviceExternalFenceInfo,
         out: &mut vk::ExternalFenceProperties,
     ) {
-        self.instance_fn_1_1
-            .get_physical_device_external_fence_properties(
-                physical_device,
-                external_fence_info,
-                out,
-            );
+        (self
+            .instance_fn_1_1
+            .get_physical_device_external_fence_properties)(
+            physical_device,
+            external_fence_info,
+            out,
+        );
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceExternalSemaphoreProperties.html>
@@ -279,12 +294,13 @@ impl Instance {
         external_semaphore_info: &vk::PhysicalDeviceExternalSemaphoreInfo,
         out: &mut vk::ExternalSemaphoreProperties,
     ) {
-        self.instance_fn_1_1
-            .get_physical_device_external_semaphore_properties(
-                physical_device,
-                external_semaphore_info,
-                out,
-            );
+        (self
+            .instance_fn_1_1
+            .get_physical_device_external_semaphore_properties)(
+            physical_device,
+            external_semaphore_info,
+            out,
+        );
     }
 }
 
@@ -308,14 +324,13 @@ impl Instance {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<Device> {
         let mut device = mem::zeroed();
-        self.instance_fn_1_0
-            .create_device(
-                physical_device,
-                create_info,
-                allocation_callbacks.as_raw_ptr(),
-                &mut device,
-            )
-            .result()?;
+        (self.instance_fn_1_0.create_device)(
+            physical_device,
+            create_info,
+            allocation_callbacks.as_raw_ptr(),
+            &mut device,
+        )
+        .result()?;
         Ok(Device::load(&self.instance_fn_1_0, device))
     }
 
@@ -325,13 +340,12 @@ impl Instance {
         device: vk::Device,
         p_name: *const c_char,
     ) -> vk::PFN_vkVoidFunction {
-        self.instance_fn_1_0.get_device_proc_addr(device, p_name)
+        (self.instance_fn_1_0.get_device_proc_addr)(device, p_name)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroyInstance.html>
     pub unsafe fn destroy_instance(&self, allocation_callbacks: Option<&vk::AllocationCallbacks>) {
-        self.instance_fn_1_0
-            .destroy_instance(self.handle(), allocation_callbacks.as_raw_ptr());
+        (self.instance_fn_1_0.destroy_instance)(self.handle(), allocation_callbacks.as_raw_ptr());
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceFormatProperties.html>
@@ -341,7 +355,7 @@ impl Instance {
         format: vk::Format,
     ) -> vk::FormatProperties {
         let mut format_prop = mem::zeroed();
-        self.instance_fn_1_0.get_physical_device_format_properties(
+        (self.instance_fn_1_0.get_physical_device_format_properties)(
             physical_device,
             format,
             &mut format_prop,
@@ -360,17 +374,18 @@ impl Instance {
         flags: vk::ImageCreateFlags,
     ) -> VkResult<vk::ImageFormatProperties> {
         let mut image_format_prop = mem::zeroed();
-        self.instance_fn_1_0
-            .get_physical_device_image_format_properties(
-                physical_device,
-                format,
-                typ,
-                tiling,
-                usage,
-                flags,
-                &mut image_format_prop,
-            )
-            .result_with_success(image_format_prop)
+        (self
+            .instance_fn_1_0
+            .get_physical_device_image_format_properties)(
+            physical_device,
+            format,
+            typ,
+            tiling,
+            usage,
+            flags,
+            &mut image_format_prop,
+        )
+        .result_with_success(image_format_prop)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceMemoryProperties.html>
@@ -379,8 +394,10 @@ impl Instance {
         physical_device: vk::PhysicalDevice,
     ) -> vk::PhysicalDeviceMemoryProperties {
         let mut memory_prop = mem::zeroed();
-        self.instance_fn_1_0
-            .get_physical_device_memory_properties(physical_device, &mut memory_prop);
+        (self.instance_fn_1_0.get_physical_device_memory_properties)(
+            physical_device,
+            &mut memory_prop,
+        );
         memory_prop
     }
 
@@ -390,8 +407,7 @@ impl Instance {
         physical_device: vk::PhysicalDevice,
     ) -> vk::PhysicalDeviceProperties {
         let mut prop = mem::zeroed();
-        self.instance_fn_1_0
-            .get_physical_device_properties(physical_device, &mut prop);
+        (self.instance_fn_1_0.get_physical_device_properties)(physical_device, &mut prop);
         prop
     }
 
@@ -401,8 +417,11 @@ impl Instance {
         physical_device: vk::PhysicalDevice,
     ) -> Vec<vk::QueueFamilyProperties> {
         read_into_uninitialized_vector(|count, data| {
-            self.instance_fn_1_0
-                .get_physical_device_queue_family_properties(physical_device, count, data);
+            (self
+                .instance_fn_1_0
+                .get_physical_device_queue_family_properties)(
+                physical_device, count, data
+            );
             vk::Result::SUCCESS
         })
         // The closure always returns SUCCESS
@@ -415,16 +434,14 @@ impl Instance {
         physical_device: vk::PhysicalDevice,
     ) -> vk::PhysicalDeviceFeatures {
         let mut prop = mem::zeroed();
-        self.instance_fn_1_0
-            .get_physical_device_features(physical_device, &mut prop);
+        (self.instance_fn_1_0.get_physical_device_features)(physical_device, &mut prop);
         prop
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumeratePhysicalDevices.html>
     pub unsafe fn enumerate_physical_devices(&self) -> VkResult<Vec<vk::PhysicalDevice>> {
         read_into_uninitialized_vector(|count, data| {
-            self.instance_fn_1_0
-                .enumerate_physical_devices(self.handle(), count, data)
+            (self.instance_fn_1_0.enumerate_physical_devices)(self.handle(), count, data)
         })
     }
 
@@ -434,7 +451,7 @@ impl Instance {
         device: vk::PhysicalDevice,
     ) -> VkResult<Vec<vk::ExtensionProperties>> {
         read_into_uninitialized_vector(|count, data| {
-            self.instance_fn_1_0.enumerate_device_extension_properties(
+            (self.instance_fn_1_0.enumerate_device_extension_properties)(
                 device,
                 ptr::null(),
                 count,
@@ -449,8 +466,7 @@ impl Instance {
         device: vk::PhysicalDevice,
     ) -> VkResult<Vec<vk::LayerProperties>> {
         read_into_uninitialized_vector(|count, data| {
-            self.instance_fn_1_0
-                .enumerate_device_layer_properties(device, count, data)
+            (self.instance_fn_1_0.enumerate_device_layer_properties)(device, count, data)
         })
     }
 
@@ -465,17 +481,18 @@ impl Instance {
         tiling: vk::ImageTiling,
     ) -> Vec<vk::SparseImageFormatProperties> {
         read_into_uninitialized_vector(|count, data| {
-            self.instance_fn_1_0
-                .get_physical_device_sparse_image_format_properties(
-                    physical_device,
-                    format,
-                    typ,
-                    samples,
-                    usage,
-                    tiling,
-                    count,
-                    data,
-                );
+            (self
+                .instance_fn_1_0
+                .get_physical_device_sparse_image_format_properties)(
+                physical_device,
+                format,
+                typ,
+                samples,
+                usage,
+                tiling,
+                count,
+                data,
+            );
             vk::Result::SUCCESS
         })
         // The closure always returns SUCCESS

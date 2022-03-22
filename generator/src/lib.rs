@@ -725,7 +725,6 @@ fn generate_function_pointers<'a>(
         type_name: Ident,
         function_name_c: String,
         function_name_rust: Ident,
-        parameter_names: TokenStream,
         parameters: TokenStream,
         parameters_unused: TokenStream,
         returns: TokenStream,
@@ -760,9 +759,6 @@ fn generate_function_pointers<'a>(
                 })
                 .collect();
 
-            let params_iter = params.iter().map(|(param_name, _)| param_name);
-            let parameter_names = quote!(#(#params_iter,)*);
-
             let params_iter = params
                 .iter()
                 .map(|(param_name, param_ty)| quote!(#param_name: #param_ty));
@@ -781,7 +777,6 @@ fn generate_function_pointers<'a>(
                 type_name,
                 function_name_c,
                 function_name_rust,
-                parameter_names,
                 parameters,
                 parameters_unused,
                 returns: if cmd.return_type.is_void() {
@@ -852,31 +847,12 @@ fn generate_function_pointers<'a>(
         }
     }
 
-    struct CommandToBody<'a>(&'a Command);
-    impl<'a> quote::ToTokens for CommandToBody<'a> {
-        fn to_tokens(&self, tokens: &mut TokenStream) {
-            let function_name_rust = &self.0.function_name_rust;
-            let parameters = &self.0.parameters;
-            let parameter_names = &self.0.parameter_names;
-            let returns = &self.0.returns;
-            let khronos_link = khronos_link(&self.0.function_name_c);
-            quote!(
-                #[doc = #khronos_link]
-                pub unsafe fn #function_name_rust(&self, #parameters) #returns {
-                    (self.#function_name_rust)(#parameter_names)
-                }
-            )
-            .to_tokens(tokens)
-        }
-    }
-
     let pfn_typedefs = commands
         .iter()
         .filter(|pfn| pfn.type_needs_defining)
         .map(CommandToType);
     let members = commands.iter().map(CommandToMember);
     let loaders = commands.iter().map(CommandToLoader);
-    let bodies = commands.iter().map(CommandToBody);
 
     quote! {
         #(#pfn_typedefs)*
@@ -897,7 +873,6 @@ fn generate_function_pointers<'a>(
                     #(#loaders,)*
                 }
             }
-            #(#bodies)*
         }
     }
 }

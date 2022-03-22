@@ -26,13 +26,12 @@ impl DeferredHostOperations {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::DeferredOperationKHR> {
         let mut operation = mem::zeroed();
-        self.fp
-            .create_deferred_operation_khr(
-                self.handle,
-                allocation_callbacks.as_raw_ptr(),
-                &mut operation,
-            )
-            .result_with_success(operation)
+        (self.fp.create_deferred_operation_khr)(
+            self.handle,
+            allocation_callbacks.as_raw_ptr(),
+            &mut operation,
+        )
+        .result_with_success(operation)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDeferredOperationJoinKHR.html>
@@ -40,9 +39,7 @@ impl DeferredHostOperations {
         &self,
         operation: vk::DeferredOperationKHR,
     ) -> VkResult<()> {
-        self.fp
-            .deferred_operation_join_khr(self.handle, operation)
-            .result()
+        (self.fp.deferred_operation_join_khr)(self.handle, operation).result()
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroyDeferredOperationKHR.html>
@@ -51,7 +48,7 @@ impl DeferredHostOperations {
         operation: vk::DeferredOperationKHR,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
-        self.fp.destroy_deferred_operation_khr(
+        (self.fp.destroy_deferred_operation_khr)(
             self.handle,
             operation,
             allocation_callbacks.as_raw_ptr(),
@@ -63,8 +60,7 @@ impl DeferredHostOperations {
         &self,
         operation: vk::DeferredOperationKHR,
     ) -> u32 {
-        self.fp
-            .get_deferred_operation_max_concurrency_khr(self.handle, operation)
+        (self.fp.get_deferred_operation_max_concurrency_khr)(self.handle, operation)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeferredOperationResultKHR.html>
@@ -72,9 +68,7 @@ impl DeferredHostOperations {
         &self,
         operation: vk::DeferredOperationKHR,
     ) -> VkResult<()> {
-        self.fp
-            .get_deferred_operation_result_khr(self.handle, operation)
-            .result()
+        (self.fp.get_deferred_operation_result_khr)(self.handle, operation).result()
     }
 
     pub const fn name() -> &'static CStr {

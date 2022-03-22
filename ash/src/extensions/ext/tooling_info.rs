@@ -23,8 +23,7 @@ impl ToolingInfo {
         physical_device: vk::PhysicalDevice,
     ) -> VkResult<Vec<vk::PhysicalDeviceToolPropertiesEXT>> {
         read_into_defaulted_vector(|count, data| {
-            self.fp
-                .get_physical_device_tool_properties_ext(physical_device, count, data)
+            (self.fp.get_physical_device_tool_properties_ext)(physical_device, count, data)
         })
     }
 

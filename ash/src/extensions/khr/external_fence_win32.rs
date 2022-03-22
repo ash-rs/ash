@@ -26,9 +26,7 @@ impl ExternalFenceWin32 {
         &self,
         import_info: &vk::ImportFenceWin32HandleInfoKHR,
     ) -> VkResult<()> {
-        self.fp
-            .import_fence_win32_handle_khr(self.handle, import_info)
-            .result()
+        (self.fp.import_fence_win32_handle_khr)(self.handle, import_info).result()
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetFenceWin32HandleKHR.html>
@@ -37,8 +35,7 @@ impl ExternalFenceWin32 {
         get_info: &vk::FenceGetWin32HandleInfoKHR,
     ) -> VkResult<vk::HANDLE> {
         let mut handle = ptr::null_mut();
-        self.fp
-            .get_fence_win32_handle_khr(self.handle, get_info, &mut handle)
+        (self.fp.get_fence_win32_handle_khr)(self.handle, get_info, &mut handle)
             .result_with_success(handle)
     }
 

@@ -28,14 +28,13 @@ impl PrivateData {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::PrivateDataSlotEXT> {
         let mut private_data_slot = mem::zeroed();
-        self.fp
-            .create_private_data_slot_ext(
-                self.handle,
-                create_info,
-                allocation_callbacks.as_raw_ptr(),
-                &mut private_data_slot,
-            )
-            .result_with_success(private_data_slot)
+        (self.fp.create_private_data_slot_ext)(
+            self.handle,
+            create_info,
+            allocation_callbacks.as_raw_ptr(),
+            &mut private_data_slot,
+        )
+        .result_with_success(private_data_slot)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroyPrivateDataSlotEXT.html>
@@ -44,7 +43,7 @@ impl PrivateData {
         private_data_slot: vk::PrivateDataSlotEXT,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
-        self.fp.destroy_private_data_slot_ext(
+        (self.fp.destroy_private_data_slot_ext)(
             self.handle,
             private_data_slot,
             allocation_callbacks.as_raw_ptr(),
@@ -58,15 +57,14 @@ impl PrivateData {
         private_data_slot: vk::PrivateDataSlotEXT,
         data: u64,
     ) -> VkResult<()> {
-        self.fp
-            .set_private_data_ext(
-                self.handle,
-                T::TYPE,
-                object.as_raw(),
-                private_data_slot,
-                data,
-            )
-            .result()
+        (self.fp.set_private_data_ext)(
+            self.handle,
+            T::TYPE,
+            object.as_raw(),
+            private_data_slot,
+            data,
+        )
+        .result()
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPrivateDataEXT.html>
@@ -76,7 +74,7 @@ impl PrivateData {
         private_data_slot: vk::PrivateDataSlotEXT,
     ) -> u64 {
         let mut data = mem::zeroed();
-        self.fp.get_private_data_ext(
+        (self.fp.get_private_data_ext)(
             self.handle,
             T::TYPE,
             object.as_raw(),
