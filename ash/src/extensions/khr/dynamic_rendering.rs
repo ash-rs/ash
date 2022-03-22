@@ -22,13 +22,12 @@ impl DynamicRendering {
         command_buffer: vk::CommandBuffer,
         rendering_info: &vk::RenderingInfoKHR,
     ) {
-        self.fp
-            .cmd_begin_rendering_khr(command_buffer, rendering_info)
+        (self.fp.cmd_begin_rendering_khr)(command_buffer, rendering_info)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdEndRenderingKHR.html>
     pub unsafe fn cmd_end_rendering(&self, command_buffer: vk::CommandBuffer) {
-        self.fp.cmd_end_rendering_khr(command_buffer)
+        (self.fp.cmd_end_rendering_khr)(command_buffer)
     }
 
     pub fn name() -> &'static CStr {

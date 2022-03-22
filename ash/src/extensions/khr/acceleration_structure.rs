@@ -39,14 +39,13 @@ impl AccelerationStructure {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::AccelerationStructureKHR> {
         let mut accel_struct = mem::zeroed();
-        self.fp
-            .create_acceleration_structure_khr(
-                self.handle,
-                create_info,
-                allocation_callbacks.as_raw_ptr(),
-                &mut accel_struct,
-            )
-            .result_with_success(accel_struct)
+        (self.fp.create_acceleration_structure_khr)(
+            self.handle,
+            create_info,
+            allocation_callbacks.as_raw_ptr(),
+            &mut accel_struct,
+        )
+        .result_with_success(accel_struct)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroyAccelerationStructureKHR.html>
@@ -55,7 +54,7 @@ impl AccelerationStructure {
         accel_struct: vk::AccelerationStructureKHR,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
-        self.fp.destroy_acceleration_structure_khr(
+        (self.fp.destroy_acceleration_structure_khr)(
             self.handle,
             accel_struct,
             allocation_callbacks.as_raw_ptr(),
@@ -80,7 +79,7 @@ impl AccelerationStructure {
             })
             .collect::<Vec<_>>();
 
-        self.fp.cmd_build_acceleration_structures_khr(
+        (self.fp.cmd_build_acceleration_structures_khr)(
             command_buffer,
             infos.len() as _,
             infos.as_ptr(),
@@ -110,7 +109,7 @@ impl AccelerationStructure {
             })
             .collect::<Vec<_>>();
 
-        self.fp.cmd_build_acceleration_structures_indirect_khr(
+        (self.fp.cmd_build_acceleration_structures_indirect_khr)(
             command_buffer,
             infos.len() as _,
             infos.as_ptr(),
@@ -138,15 +137,14 @@ impl AccelerationStructure {
             })
             .collect::<Vec<_>>();
 
-        self.fp
-            .build_acceleration_structures_khr(
-                self.handle,
-                deferred_operation,
-                infos.len() as _,
-                infos.as_ptr(),
-                build_range_infos.as_ptr(),
-            )
-            .result()
+        (self.fp.build_acceleration_structures_khr)(
+            self.handle,
+            deferred_operation,
+            infos.len() as _,
+            infos.as_ptr(),
+            build_range_infos.as_ptr(),
+        )
+        .result()
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCopyAccelerationStructureKHR.html>
@@ -155,9 +153,7 @@ impl AccelerationStructure {
         deferred_operation: vk::DeferredOperationKHR,
         info: &vk::CopyAccelerationStructureInfoKHR,
     ) -> VkResult<()> {
-        self.fp
-            .copy_acceleration_structure_khr(self.handle, deferred_operation, info)
-            .result()
+        (self.fp.copy_acceleration_structure_khr)(self.handle, deferred_operation, info).result()
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCopyAccelerationStructureToMemoryKHR.html>
@@ -166,8 +162,7 @@ impl AccelerationStructure {
         deferred_operation: vk::DeferredOperationKHR,
         info: &vk::CopyAccelerationStructureToMemoryInfoKHR,
     ) -> VkResult<()> {
-        self.fp
-            .copy_acceleration_structure_to_memory_khr(self.handle, deferred_operation, info)
+        (self.fp.copy_acceleration_structure_to_memory_khr)(self.handle, deferred_operation, info)
             .result()
     }
 
@@ -177,8 +172,7 @@ impl AccelerationStructure {
         deferred_operation: vk::DeferredOperationKHR,
         info: &vk::CopyMemoryToAccelerationStructureInfoKHR,
     ) -> VkResult<()> {
-        self.fp
-            .copy_memory_to_acceleration_structure_khr(self.handle, deferred_operation, info)
+        (self.fp.copy_memory_to_acceleration_structure_khr)(self.handle, deferred_operation, info)
             .result()
     }
 
@@ -190,17 +184,16 @@ impl AccelerationStructure {
         data: &mut [u8],
         stride: usize,
     ) -> VkResult<()> {
-        self.fp
-            .write_acceleration_structures_properties_khr(
-                self.handle,
-                acceleration_structures.len() as _,
-                acceleration_structures.as_ptr(),
-                query_type,
-                data.len(),
-                data.as_mut_ptr() as *mut std::ffi::c_void,
-                stride,
-            )
-            .result()
+        (self.fp.write_acceleration_structures_properties_khr)(
+            self.handle,
+            acceleration_structures.len() as _,
+            acceleration_structures.as_ptr(),
+            query_type,
+            data.len(),
+            data.as_mut_ptr() as *mut std::ffi::c_void,
+            stride,
+        )
+        .result()
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdCopyAccelerationStructureKHR.html>
@@ -209,8 +202,7 @@ impl AccelerationStructure {
         command_buffer: vk::CommandBuffer,
         info: &vk::CopyAccelerationStructureInfoKHR,
     ) {
-        self.fp
-            .cmd_copy_acceleration_structure_khr(command_buffer, info);
+        (self.fp.cmd_copy_acceleration_structure_khr)(command_buffer, info);
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdCopyAccelerationStructureToMemoryKHR.html>
@@ -219,8 +211,7 @@ impl AccelerationStructure {
         command_buffer: vk::CommandBuffer,
         info: &vk::CopyAccelerationStructureToMemoryInfoKHR,
     ) {
-        self.fp
-            .cmd_copy_acceleration_structure_to_memory_khr(command_buffer, info);
+        (self.fp.cmd_copy_acceleration_structure_to_memory_khr)(command_buffer, info);
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdCopyMemoryToAccelerationStructureKHR.html>
@@ -229,8 +220,7 @@ impl AccelerationStructure {
         command_buffer: vk::CommandBuffer,
         info: &vk::CopyMemoryToAccelerationStructureInfoKHR,
     ) {
-        self.fp
-            .cmd_copy_memory_to_acceleration_structure_khr(command_buffer, info);
+        (self.fp.cmd_copy_memory_to_acceleration_structure_khr)(command_buffer, info);
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetAccelerationStructureHandleKHR.html>
@@ -238,8 +228,7 @@ impl AccelerationStructure {
         &self,
         info: &vk::AccelerationStructureDeviceAddressInfoKHR,
     ) -> vk::DeviceAddress {
-        self.fp
-            .get_acceleration_structure_device_address_khr(self.handle, info)
+        (self.fp.get_acceleration_structure_device_address_khr)(self.handle, info)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdWriteAccelerationStructuresPropertiesKHR.html>
@@ -251,7 +240,7 @@ impl AccelerationStructure {
         query_pool: vk::QueryPool,
         first_query: u32,
     ) {
-        self.fp.cmd_write_acceleration_structures_properties_khr(
+        (self.fp.cmd_write_acceleration_structures_properties_khr)(
             command_buffer,
             structures.len() as _,
             structures.as_ptr(),
@@ -268,7 +257,7 @@ impl AccelerationStructure {
     ) -> vk::AccelerationStructureCompatibilityKHR {
         let mut compatibility = vk::AccelerationStructureCompatibilityKHR::default();
 
-        self.fp.get_device_acceleration_structure_compatibility_khr(
+        (self.fp.get_device_acceleration_structure_compatibility_khr)(
             self.handle,
             version,
             &mut compatibility,
@@ -288,7 +277,7 @@ impl AccelerationStructure {
 
         let mut size_info = vk::AccelerationStructureBuildSizesInfoKHR::default();
 
-        self.fp.get_acceleration_structure_build_sizes_khr(
+        (self.fp.get_acceleration_structure_build_sizes_khr)(
             self.handle,
             build_type,
             build_info,

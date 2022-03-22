@@ -26,7 +26,7 @@ impl DebugReport {
         debug: vk::DebugReportCallbackEXT,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
-        self.fp.destroy_debug_report_callback_ext(
+        (self.fp.destroy_debug_report_callback_ext)(
             self.handle,
             debug,
             allocation_callbacks.as_raw_ptr(),
@@ -40,14 +40,13 @@ impl DebugReport {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::DebugReportCallbackEXT> {
         let mut debug_cb = mem::zeroed();
-        self.fp
-            .create_debug_report_callback_ext(
-                self.handle,
-                create_info,
-                allocation_callbacks.as_raw_ptr(),
-                &mut debug_cb,
-            )
-            .result_with_success(debug_cb)
+        (self.fp.create_debug_report_callback_ext)(
+            self.handle,
+            create_info,
+            allocation_callbacks.as_raw_ptr(),
+            &mut debug_cb,
+        )
+        .result_with_success(debug_cb)
     }
 
     pub fn name() -> &'static CStr {

@@ -23,21 +23,20 @@ impl DeviceDiagnosticCheckpoints {
         command_buffer: vk::CommandBuffer,
         p_checkpoint_marker: *const c_void,
     ) {
-        self.fp
-            .cmd_set_checkpoint_nv(command_buffer, p_checkpoint_marker);
+        (self.fp.cmd_set_checkpoint_nv)(command_buffer, p_checkpoint_marker);
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetQueueCheckpointDataNV.html>
     pub unsafe fn get_queue_checkpoint_data(&self, queue: vk::Queue) -> Vec<vk::CheckpointDataNV> {
         let mut checkpoint_data_count: u32 = 0;
-        self.fp.get_queue_checkpoint_data_nv(
+        (self.fp.get_queue_checkpoint_data_nv)(
             queue,
             &mut checkpoint_data_count,
             std::ptr::null_mut(),
         );
         let mut checkpoint_data: Vec<vk::CheckpointDataNV> =
             vec![vk::CheckpointDataNV::default(); checkpoint_data_count as _];
-        self.fp.get_queue_checkpoint_data_nv(
+        (self.fp.get_queue_checkpoint_data_nv)(
             queue,
             &mut checkpoint_data_count,
             checkpoint_data.as_mut_ptr(),

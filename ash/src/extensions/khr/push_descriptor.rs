@@ -26,7 +26,7 @@ impl PushDescriptor {
         set: u32,
         descriptor_writes: &[vk::WriteDescriptorSet],
     ) {
-        self.fp.cmd_push_descriptor_set_khr(
+        (self.fp.cmd_push_descriptor_set_khr)(
             command_buffer,
             pipeline_bind_point,
             layout,
@@ -45,7 +45,7 @@ impl PushDescriptor {
         set: u32,
         p_data: *const c_void,
     ) {
-        self.fp.cmd_push_descriptor_set_with_template_khr(
+        (self.fp.cmd_push_descriptor_set_with_template_khr)(
             command_buffer,
             descriptor_update_template,
             layout,

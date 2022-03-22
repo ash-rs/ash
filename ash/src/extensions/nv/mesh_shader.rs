@@ -23,8 +23,7 @@ impl MeshShader {
         task_count: u32,
         first_task: u32,
     ) {
-        self.fp
-            .cmd_draw_mesh_tasks_nv(command_buffer, task_count, first_task);
+        (self.fp.cmd_draw_mesh_tasks_nv)(command_buffer, task_count, first_task);
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksIndirectNV.html>
@@ -36,8 +35,13 @@ impl MeshShader {
         draw_count: u32,
         stride: u32,
     ) {
-        self.fp
-            .cmd_draw_mesh_tasks_indirect_nv(command_buffer, buffer, offset, draw_count, stride);
+        (self.fp.cmd_draw_mesh_tasks_indirect_nv)(
+            command_buffer,
+            buffer,
+            offset,
+            draw_count,
+            stride,
+        );
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksIndirectCountNV.html>
@@ -51,7 +55,7 @@ impl MeshShader {
         max_draw_count: u32,
         stride: u32,
     ) {
-        self.fp.cmd_draw_mesh_tasks_indirect_count_nv(
+        (self.fp.cmd_draw_mesh_tasks_indirect_count_nv)(
             command_buffer,
             buffer,
             offset,

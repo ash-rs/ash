@@ -26,8 +26,7 @@ impl Display {
         physical_device: vk::PhysicalDevice,
     ) -> VkResult<Vec<vk::DisplayPropertiesKHR>> {
         read_into_uninitialized_vector(|count, data| {
-            self.fp
-                .get_physical_device_display_properties_khr(physical_device, count, data)
+            (self.fp.get_physical_device_display_properties_khr)(physical_device, count, data)
         })
     }
 
@@ -37,8 +36,7 @@ impl Display {
         physical_device: vk::PhysicalDevice,
     ) -> VkResult<Vec<vk::DisplayPlanePropertiesKHR>> {
         read_into_uninitialized_vector(|count, data| {
-            self.fp
-                .get_physical_device_display_plane_properties_khr(physical_device, count, data)
+            (self.fp.get_physical_device_display_plane_properties_khr)(physical_device, count, data)
         })
     }
 
@@ -49,7 +47,7 @@ impl Display {
         plane_index: u32,
     ) -> VkResult<Vec<vk::DisplayKHR>> {
         read_into_uninitialized_vector(|count, data| {
-            self.fp.get_display_plane_supported_displays_khr(
+            (self.fp.get_display_plane_supported_displays_khr)(
                 physical_device,
                 plane_index,
                 count,
@@ -65,8 +63,7 @@ impl Display {
         display: vk::DisplayKHR,
     ) -> VkResult<Vec<vk::DisplayModePropertiesKHR>> {
         read_into_uninitialized_vector(|count, data| {
-            self.fp
-                .get_display_mode_properties_khr(physical_device, display, count, data)
+            (self.fp.get_display_mode_properties_khr)(physical_device, display, count, data)
         })
     }
 
@@ -79,15 +76,14 @@ impl Display {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::DisplayModeKHR> {
         let mut display_mode = mem::MaybeUninit::zeroed();
-        self.fp
-            .create_display_mode_khr(
-                physical_device,
-                display,
-                create_info,
-                allocation_callbacks.as_raw_ptr(),
-                display_mode.as_mut_ptr(),
-            )
-            .result_with_success(display_mode.assume_init())
+        (self.fp.create_display_mode_khr)(
+            physical_device,
+            display,
+            create_info,
+            allocation_callbacks.as_raw_ptr(),
+            display_mode.as_mut_ptr(),
+        )
+        .result_with_success(display_mode.assume_init())
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDisplayPlaneCapabilitiesKHR.html>
@@ -98,14 +94,13 @@ impl Display {
         plane_index: u32,
     ) -> VkResult<vk::DisplayPlaneCapabilitiesKHR> {
         let mut display_plane_capabilities = mem::MaybeUninit::zeroed();
-        self.fp
-            .get_display_plane_capabilities_khr(
-                physical_device,
-                mode,
-                plane_index,
-                display_plane_capabilities.as_mut_ptr(),
-            )
-            .result_with_success(display_plane_capabilities.assume_init())
+        (self.fp.get_display_plane_capabilities_khr)(
+            physical_device,
+            mode,
+            plane_index,
+            display_plane_capabilities.as_mut_ptr(),
+        )
+        .result_with_success(display_plane_capabilities.assume_init())
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateDisplayPlaneSurfaceKHR.html>
@@ -115,14 +110,13 @@ impl Display {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::MaybeUninit::zeroed();
-        self.fp
-            .create_display_plane_surface_khr(
-                self.handle,
-                create_info,
-                allocation_callbacks.as_raw_ptr(),
-                surface.as_mut_ptr(),
-            )
-            .result_with_success(surface.assume_init())
+        (self.fp.create_display_plane_surface_khr)(
+            self.handle,
+            create_info,
+            allocation_callbacks.as_raw_ptr(),
+            surface.as_mut_ptr(),
+        )
+        .result_with_success(surface.assume_init())
     }
 
     pub fn name() -> &'static CStr {

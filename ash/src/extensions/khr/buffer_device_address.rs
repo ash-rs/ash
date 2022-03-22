@@ -23,7 +23,7 @@ impl BufferDeviceAddress {
         &self,
         info: &vk::BufferDeviceAddressInfoKHR,
     ) -> vk::DeviceAddress {
-        self.fp.get_buffer_device_address_khr(self.handle, info)
+        (self.fp.get_buffer_device_address_khr)(self.handle, info)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetBufferOpaqueCaptureAddressKHR.html>
@@ -31,8 +31,7 @@ impl BufferDeviceAddress {
         &self,
         info: &vk::BufferDeviceAddressInfoKHR,
     ) -> u64 {
-        self.fp
-            .get_buffer_opaque_capture_address_khr(self.handle, info)
+        (self.fp.get_buffer_opaque_capture_address_khr)(self.handle, info)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceMemoryOpaqueCaptureAddressKHR.html>
@@ -40,8 +39,7 @@ impl BufferDeviceAddress {
         &self,
         info: &vk::DeviceMemoryOpaqueCaptureAddressInfoKHR,
     ) -> u64 {
-        self.fp
-            .get_device_memory_opaque_capture_address_khr(self.handle, info)
+        (self.fp.get_device_memory_opaque_capture_address_khr)(self.handle, info)
     }
 
     pub fn name() -> &'static CStr {

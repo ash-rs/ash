@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- Dropped auto-generated wrapper methods from function pointer structs
+  in favor of direct invocation of function pointers (#599)
+
 ### Added
 
 - Update Vulkan-Headers to 1.3.208 (#597)

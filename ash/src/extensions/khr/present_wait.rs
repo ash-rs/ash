@@ -26,9 +26,7 @@ impl PresentWait {
         present_id: u64,
         timeout: u64,
     ) -> VkResult<()> {
-        self.fp
-            .wait_for_present_khr(self.handle, swapchain, present_id, timeout)
-            .result()
+        (self.fp.wait_for_present_khr)(self.handle, swapchain, present_id, timeout).result()
     }
 
     pub fn name() -> &'static CStr {

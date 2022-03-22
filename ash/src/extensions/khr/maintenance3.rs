@@ -24,8 +24,7 @@ impl Maintenance3 {
         create_info: &vk::DescriptorSetLayoutCreateInfo,
         out: &mut vk::DescriptorSetLayoutSupportKHR,
     ) {
-        self.fp
-            .get_descriptor_set_layout_support_khr(self.handle, create_info, out);
+        (self.fp.get_descriptor_set_layout_support_khr)(self.handle, create_info, out);
     }
 
     pub fn name() -> &'static CStr {

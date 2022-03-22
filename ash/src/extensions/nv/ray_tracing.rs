@@ -39,14 +39,13 @@ impl RayTracing {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::AccelerationStructureNV> {
         let mut accel_struct = mem::zeroed();
-        self.fp
-            .create_acceleration_structure_nv(
-                self.handle,
-                create_info,
-                allocation_callbacks.as_raw_ptr(),
-                &mut accel_struct,
-            )
-            .result_with_success(accel_struct)
+        (self.fp.create_acceleration_structure_nv)(
+            self.handle,
+            create_info,
+            allocation_callbacks.as_raw_ptr(),
+            &mut accel_struct,
+        )
+        .result_with_success(accel_struct)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroyAccelerationStructureNV.html>
@@ -55,7 +54,7 @@ impl RayTracing {
         accel_struct: vk::AccelerationStructureNV,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
-        self.fp.destroy_acceleration_structure_nv(
+        (self.fp.destroy_acceleration_structure_nv)(
             self.handle,
             accel_struct,
             allocation_callbacks.as_raw_ptr(),
@@ -68,7 +67,7 @@ impl RayTracing {
         info: &vk::AccelerationStructureMemoryRequirementsInfoNV,
     ) -> vk::MemoryRequirements2KHR {
         let mut requirements = mem::zeroed();
-        self.fp.get_acceleration_structure_memory_requirements_nv(
+        (self.fp.get_acceleration_structure_memory_requirements_nv)(
             self.handle,
             info,
             &mut requirements,
@@ -81,13 +80,12 @@ impl RayTracing {
         &self,
         bind_info: &[vk::BindAccelerationStructureMemoryInfoNV],
     ) -> VkResult<()> {
-        self.fp
-            .bind_acceleration_structure_memory_nv(
-                self.handle,
-                bind_info.len() as u32,
-                bind_info.as_ptr(),
-            )
-            .result()
+        (self.fp.bind_acceleration_structure_memory_nv)(
+            self.handle,
+            bind_info.len() as u32,
+            bind_info.as_ptr(),
+        )
+        .result()
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBuildAccelerationStructureNV.html>
@@ -103,7 +101,7 @@ impl RayTracing {
         scratch: vk::Buffer,
         scratch_offset: vk::DeviceSize,
     ) {
-        self.fp.cmd_build_acceleration_structure_nv(
+        (self.fp.cmd_build_acceleration_structure_nv)(
             command_buffer,
             info,
             instance_data,
@@ -124,8 +122,7 @@ impl RayTracing {
         src: vk::AccelerationStructureNV,
         mode: vk::CopyAccelerationStructureModeNV,
     ) {
-        self.fp
-            .cmd_copy_acceleration_structure_nv(command_buffer, dst, src, mode);
+        (self.fp.cmd_copy_acceleration_structure_nv)(command_buffer, dst, src, mode);
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdTraceRaysNV.html>
@@ -147,7 +144,7 @@ impl RayTracing {
         height: u32,
         depth: u32,
     ) {
-        self.fp.cmd_trace_rays_nv(
+        (self.fp.cmd_trace_rays_nv)(
             command_buffer,
             raygen_shader_binding_table_buffer,
             raygen_shader_binding_offset,
@@ -174,16 +171,15 @@ impl RayTracing {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<Vec<vk::Pipeline>> {
         let mut pipelines = vec![mem::zeroed(); create_info.len()];
-        self.fp
-            .create_ray_tracing_pipelines_nv(
-                self.handle,
-                pipeline_cache,
-                create_info.len() as u32,
-                create_info.as_ptr(),
-                allocation_callbacks.as_raw_ptr(),
-                pipelines.as_mut_ptr(),
-            )
-            .result_with_success(pipelines)
+        (self.fp.create_ray_tracing_pipelines_nv)(
+            self.handle,
+            pipeline_cache,
+            create_info.len() as u32,
+            create_info.as_ptr(),
+            allocation_callbacks.as_raw_ptr(),
+            pipelines.as_mut_ptr(),
+        )
+        .result_with_success(pipelines)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetRayTracingShaderGroupHandlesNV.html>
@@ -194,16 +190,15 @@ impl RayTracing {
         group_count: u32,
         data: &mut [u8],
     ) -> VkResult<()> {
-        self.fp
-            .get_ray_tracing_shader_group_handles_nv(
-                self.handle,
-                pipeline,
-                first_group,
-                group_count,
-                data.len(),
-                data.as_mut_ptr() as *mut std::ffi::c_void,
-            )
-            .result()
+        (self.fp.get_ray_tracing_shader_group_handles_nv)(
+            self.handle,
+            pipeline,
+            first_group,
+            group_count,
+            data.len(),
+            data.as_mut_ptr() as *mut std::ffi::c_void,
+        )
+        .result()
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetAccelerationStructureHandleNV.html>
@@ -213,14 +208,13 @@ impl RayTracing {
     ) -> VkResult<u64> {
         let mut handle: u64 = 0;
         let handle_ptr: *mut u64 = &mut handle;
-        self.fp
-            .get_acceleration_structure_handle_nv(
-                self.handle,
-                accel_struct,
-                std::mem::size_of::<u64>(),
-                handle_ptr as *mut std::ffi::c_void,
-            )
-            .result_with_success(handle)
+        (self.fp.get_acceleration_structure_handle_nv)(
+            self.handle,
+            accel_struct,
+            std::mem::size_of::<u64>(),
+            handle_ptr as *mut std::ffi::c_void,
+        )
+        .result_with_success(handle)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdWriteAccelerationStructuresPropertiesNV.html>
@@ -232,7 +226,7 @@ impl RayTracing {
         query_pool: vk::QueryPool,
         first_query: u32,
     ) {
-        self.fp.cmd_write_acceleration_structures_properties_nv(
+        (self.fp.cmd_write_acceleration_structures_properties_nv)(
             command_buffer,
             structures.len() as u32,
             structures.as_ptr(),
@@ -244,9 +238,7 @@ impl RayTracing {
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCompileDeferredNV.html>
     pub unsafe fn compile_deferred(&self, pipeline: vk::Pipeline, shader: u32) -> VkResult<()> {
-        self.fp
-            .compile_deferred_nv(self.handle, pipeline, shader)
-            .result()
+        (self.fp.compile_deferred_nv)(self.handle, pipeline, shader).result()
     }
 
     pub fn name() -> &'static CStr {

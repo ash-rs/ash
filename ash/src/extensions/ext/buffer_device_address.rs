@@ -23,7 +23,7 @@ impl BufferDeviceAddress {
         &self,
         info: &vk::BufferDeviceAddressInfoEXT,
     ) -> vk::DeviceAddress {
-        self.fp.get_buffer_device_address_ext(self.handle, info)
+        (self.fp.get_buffer_device_address_ext)(self.handle, info)
     }
 
     pub fn name() -> &'static CStr {
