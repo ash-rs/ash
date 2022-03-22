@@ -2,6 +2,8 @@
 
 ## [Unreleased] - ReleaseDate
 
+- Make `enumerate_required_extensions()` return `&[*const c_char]` instead of `Vec<&CStr>` to match `ash::vk::InstanceCreateInfo` (#590)
+
 ## [0.9.1] - 2022-02-21
 
 ### Changed

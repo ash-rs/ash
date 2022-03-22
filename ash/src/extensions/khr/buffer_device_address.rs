@@ -44,7 +44,7 @@ impl BufferDeviceAddress {
             .get_device_memory_opaque_capture_address_khr(self.handle, info)
     }
 
-    pub fn name() -> &'static CStr {
+    pub const fn name() -> &'static CStr {
         vk::KhrBufferDeviceAddressFn::name()
     }
 

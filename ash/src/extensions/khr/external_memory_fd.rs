@@ -39,7 +39,7 @@ impl ExternalMemoryFd {
             .result_with_success(memory_fd_properties)
     }
 
-    pub fn name() -> &'static CStr {
+    pub const fn name() -> &'static CStr {
         vk::KhrExternalMemoryFdFn::name()
     }
 

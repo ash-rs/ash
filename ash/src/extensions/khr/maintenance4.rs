@@ -72,7 +72,7 @@ impl Maintenance4 {
         assert_eq!(count as usize, out.len());
     }
 
-    pub fn name() -> &'static CStr {
+    pub const fn name() -> &'static CStr {
         vk::KhrMaintenance4Fn::name()
     }
 

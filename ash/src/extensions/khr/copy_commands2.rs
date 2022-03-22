@@ -70,7 +70,7 @@ impl CopyCommands2 {
             .cmd_resolve_image2_khr(command_buffer, resolve_image_info)
     }
 
-    pub fn name() -> &'static CStr {
+    pub const fn name() -> &'static CStr {
         vk::KhrCopyCommands2Fn::name()
     }
 

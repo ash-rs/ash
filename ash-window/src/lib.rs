@@ -1,8 +1,9 @@
 #![warn(trivial_casts, trivial_numeric_casts)]
 
+use std::os::raw::c_char;
+
 use ash::{extensions::khr, prelude::*, vk, Entry, Instance};
 use raw_window_handle::{HasRawWindowHandle, RawWindowHandle};
-use std::ffi::CStr;
 
 #[cfg(any(target_os = "macos", target_os = "ios"))]
 use ash::extensions::ext; // portability extensions
@@ -122,10 +123,16 @@ pub unsafe fn create_surface(
 /// The returned extensions will include all extension dependencies.
 pub fn enumerate_required_extensions(
     window_handle: &dyn HasRawWindowHandle,
-) -> VkResult<Vec<&'static CStr>> {
+) -> VkResult<&'static [*const c_char]> {
     let extensions = match window_handle.raw_window_handle() {
         #[cfg(target_os = "windows")]
-        RawWindowHandle::Windows(_) => vec![khr::Surface::name(), khr::Win32Surface::name()],
+        RawWindowHandle::Windows(_) => {
+            const WINDOWS_EXTS: [*const c_char; 2] = [
+                khr::Surface::name().as_ptr(),
+                khr::Win32Surface::name().as_ptr(),
+            ];
+            &WINDOWS_EXTS
+        }
 
         #[cfg(any(
             target_os = "linux",
@@ -134,7 +141,13 @@ pub fn enumerate_required_extensions(
             target_os = "netbsd",
             target_os = "openbsd"
         ))]
-        RawWindowHandle::Wayland(_) => vec![khr::Surface::name(), khr::WaylandSurface::name()],
+        RawWindowHandle::Wayland(_) => {
+            const WAYLAND_EXTS: [*const c_char; 2] = [
+                khr::Surface::name().as_ptr(),
+                khr::WaylandSurface::name().as_ptr(),
+            ];
+            &WAYLAND_EXTS
+        }
 
         #[cfg(any(
             target_os = "linux",
@@ -143,7 +156,13 @@ pub fn enumerate_required_extensions(
             target_os = "netbsd",
             target_os = "openbsd"
         ))]
-        RawWindowHandle::Xlib(_) => vec![khr::Surface::name(), khr::XlibSurface::name()],
+        RawWindowHandle::Xlib(_) => {
+            const XLIB_EXTS: [*const c_char; 2] = [
+                khr::Surface::name().as_ptr(),
+                khr::XlibSurface::name().as_ptr(),
+            ];
+            &XLIB_EXTS
+        }
 
         #[cfg(any(
             target_os = "linux",
@@ -152,16 +171,40 @@ pub fn enumerate_required_extensions(
             target_os = "netbsd",
             target_os = "openbsd"
         ))]
-        RawWindowHandle::Xcb(_) => vec![khr::Surface::name(), khr::XcbSurface::name()],
+        RawWindowHandle::Xcb(_) => {
+            const XCB_EXTS: [*const c_char; 2] = [
+                khr::Surface::name().as_ptr(),
+                khr::XcbSurface::name().as_ptr(),
+            ];
+            &XCB_EXTS
+        }
 
         #[cfg(any(target_os = "android"))]
-        RawWindowHandle::Android(_) => vec![khr::Surface::name(), khr::AndroidSurface::name()],
+        RawWindowHandle::Android(_) => {
+            const ANDROID_EXTS: [*const c_char; 2] = [
+                khr::Surface::name().as_ptr(),
+                khr::AndroidSurface::name().as_ptr(),
+            ];
+            &ANDROID_EXTS
+        }
 
         #[cfg(any(target_os = "macos"))]
-        RawWindowHandle::MacOS(_) => vec![khr::Surface::name(), ext::MetalSurface::name()],
+        RawWindowHandle::MacOS(_) => {
+            const MACOS_EXTS: [*const c_char; 2] = [
+                khr::Surface::name().as_ptr(),
+                ext::MetalSurface::name().as_ptr(),
+            ];
+            &MACOS_EXTS
+        }
 
         #[cfg(any(target_os = "ios"))]
-        RawWindowHandle::IOS(_) => vec![khr::Surface::name(), ext::MetalSurface::name()],
+        RawWindowHandle::IOS(_) => {
+            const IOS_EXTS: [*const c_char; 2] = [
+                khr::Surface::name().as_ptr(),
+                ext::MetalSurface::name().as_ptr(),
+            ];
+            &IOS_EXTS
+        }
 
         _ => return Err(vk::Result::ERROR_EXTENSION_NOT_PRESENT),
     };

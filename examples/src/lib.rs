@@ -228,12 +228,10 @@ impl ExampleBase {
                 .map(|raw_name| raw_name.as_ptr())
                 .collect();
 
-            let surface_extensions = ash_window::enumerate_required_extensions(&window).unwrap();
-            let mut extension_names_raw = surface_extensions
-                .iter()
-                .map(|ext| ext.as_ptr())
-                .collect::<Vec<_>>();
-            extension_names_raw.push(DebugUtils::name().as_ptr());
+            let mut extension_names = ash_window::enumerate_required_extensions(&window)
+                .unwrap()
+                .to_vec();
+            extension_names.push(DebugUtils::name().as_ptr());
 
             let appinfo = vk::ApplicationInfo::builder()
                 .application_name(app_name)
@@ -245,7 +243,7 @@ impl ExampleBase {
             let create_info = vk::InstanceCreateInfo::builder()
                 .application_info(&appinfo)
                 .enabled_layer_names(&layers_names_raw)
-                .enabled_extension_names(&extension_names_raw);
+                .enabled_extension_names(&extension_names);
 
             let instance: Instance = entry
                 .create_instance(&create_info, None)

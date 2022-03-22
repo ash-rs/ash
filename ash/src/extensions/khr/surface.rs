@@ -92,7 +92,7 @@ impl Surface {
             .destroy_surface_khr(self.handle, surface, allocation_callbacks.as_raw_ptr());
     }
 
-    pub fn name() -> &'static CStr {
+    pub const fn name() -> &'static CStr {
         vk::KhrSurfaceFn::name()
     }
 

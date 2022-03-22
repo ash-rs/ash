@@ -28,7 +28,7 @@ impl Maintenance1 {
             .trim_command_pool_khr(self.handle, command_pool, flags);
     }
 
-    pub fn name() -> &'static CStr {
+    pub const fn name() -> &'static CStr {
         vk::KhrMaintenance1Fn::name()
     }
 

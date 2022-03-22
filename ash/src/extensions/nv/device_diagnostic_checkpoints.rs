@@ -45,7 +45,7 @@ impl DeviceDiagnosticCheckpoints {
         checkpoint_data
     }
 
-    pub fn name() -> &'static CStr {
+    pub const fn name() -> &'static CStr {
         vk::NvDeviceDiagnosticCheckpointsFn::name()
     }
 

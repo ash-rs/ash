@@ -34,7 +34,7 @@ impl ExternalFenceFd {
             .result_with_success(fd)
     }
 
-    pub fn name() -> &'static CStr {
+    pub const fn name() -> &'static CStr {
         vk::KhrExternalFenceFdFn::name()
     }
 
