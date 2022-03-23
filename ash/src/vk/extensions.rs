@@ -1822,7 +1822,7 @@ impl KhrVideoQueueFn {
     pub const fn name() -> &'static ::std::ffi::CStr {
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_queue\0") }
     }
-    pub const SPEC_VERSION: u32 = 2u32;
+    pub const SPEC_VERSION: u32 = 3u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceVideoCapabilitiesKHR = unsafe extern "system" fn(
@@ -3047,7 +3047,7 @@ impl ExtVideoEncodeH264Fn {
     pub const fn name() -> &'static ::std::ffi::CStr {
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_encode_h264\0") }
     }
-    pub const SPEC_VERSION: u32 = 5u32;
+    pub const SPEC_VERSION: u32 = 6u32;
 }
 #[derive(Clone)]
 pub struct ExtVideoEncodeH264Fn {}
@@ -3064,17 +3064,16 @@ impl ExtVideoEncodeH264Fn {
 #[doc = "Generated from 'VK_EXT_video_encode_h264'"]
 impl StructureType {
     pub const VIDEO_ENCODE_H264_CAPABILITIES_EXT: Self = Self(1_000_038_000);
-    pub const VIDEO_ENCODE_H264_SESSION_CREATE_INFO_EXT: Self = Self(1_000_038_001);
-    pub const VIDEO_ENCODE_H264_SESSION_PARAMETERS_CREATE_INFO_EXT: Self = Self(1_000_038_002);
-    pub const VIDEO_ENCODE_H264_SESSION_PARAMETERS_ADD_INFO_EXT: Self = Self(1_000_038_003);
-    pub const VIDEO_ENCODE_H264_VCL_FRAME_INFO_EXT: Self = Self(1_000_038_004);
-    pub const VIDEO_ENCODE_H264_DPB_SLOT_INFO_EXT: Self = Self(1_000_038_005);
-    pub const VIDEO_ENCODE_H264_NALU_SLICE_EXT: Self = Self(1_000_038_006);
-    pub const VIDEO_ENCODE_H264_EMIT_PICTURE_PARAMETERS_EXT: Self = Self(1_000_038_007);
-    pub const VIDEO_ENCODE_H264_PROFILE_EXT: Self = Self(1_000_038_008);
-    pub const VIDEO_ENCODE_H264_RATE_CONTROL_INFO_EXT: Self = Self(1_000_038_009);
-    pub const VIDEO_ENCODE_H264_RATE_CONTROL_LAYER_INFO_EXT: Self = Self(1_000_038_010);
-    pub const VIDEO_ENCODE_H264_REFERENCE_LISTS_EXT: Self = Self(1_000_038_011);
+    pub const VIDEO_ENCODE_H264_SESSION_PARAMETERS_CREATE_INFO_EXT: Self = Self(1_000_038_001);
+    pub const VIDEO_ENCODE_H264_SESSION_PARAMETERS_ADD_INFO_EXT: Self = Self(1_000_038_002);
+    pub const VIDEO_ENCODE_H264_VCL_FRAME_INFO_EXT: Self = Self(1_000_038_003);
+    pub const VIDEO_ENCODE_H264_DPB_SLOT_INFO_EXT: Self = Self(1_000_038_004);
+    pub const VIDEO_ENCODE_H264_NALU_SLICE_EXT: Self = Self(1_000_038_005);
+    pub const VIDEO_ENCODE_H264_EMIT_PICTURE_PARAMETERS_EXT: Self = Self(1_000_038_006);
+    pub const VIDEO_ENCODE_H264_PROFILE_EXT: Self = Self(1_000_038_007);
+    pub const VIDEO_ENCODE_H264_RATE_CONTROL_INFO_EXT: Self = Self(1_000_038_008);
+    pub const VIDEO_ENCODE_H264_RATE_CONTROL_LAYER_INFO_EXT: Self = Self(1_000_038_009);
+    pub const VIDEO_ENCODE_H264_REFERENCE_LISTS_EXT: Self = Self(1_000_038_010);
 }
 #[doc = "Generated from 'VK_EXT_video_encode_h264'"]
 impl VideoCodecOperationFlagsKHR {
@@ -3084,7 +3083,7 @@ impl ExtVideoEncodeH265Fn {
     pub const fn name() -> &'static ::std::ffi::CStr {
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_encode_h265\0") }
     }
-    pub const SPEC_VERSION: u32 = 5u32;
+    pub const SPEC_VERSION: u32 = 6u32;
 }
 #[derive(Clone)]
 pub struct ExtVideoEncodeH265Fn {}
@@ -3101,17 +3100,16 @@ impl ExtVideoEncodeH265Fn {
 #[doc = "Generated from 'VK_EXT_video_encode_h265'"]
 impl StructureType {
     pub const VIDEO_ENCODE_H265_CAPABILITIES_EXT: Self = Self(1_000_039_000);
-    pub const VIDEO_ENCODE_H265_SESSION_CREATE_INFO_EXT: Self = Self(1_000_039_001);
-    pub const VIDEO_ENCODE_H265_SESSION_PARAMETERS_CREATE_INFO_EXT: Self = Self(1_000_039_002);
-    pub const VIDEO_ENCODE_H265_SESSION_PARAMETERS_ADD_INFO_EXT: Self = Self(1_000_039_003);
-    pub const VIDEO_ENCODE_H265_VCL_FRAME_INFO_EXT: Self = Self(1_000_039_004);
-    pub const VIDEO_ENCODE_H265_DPB_SLOT_INFO_EXT: Self = Self(1_000_039_005);
-    pub const VIDEO_ENCODE_H265_NALU_SLICE_SEGMENT_EXT: Self = Self(1_000_039_006);
-    pub const VIDEO_ENCODE_H265_EMIT_PICTURE_PARAMETERS_EXT: Self = Self(1_000_039_007);
-    pub const VIDEO_ENCODE_H265_PROFILE_EXT: Self = Self(1_000_039_008);
-    pub const VIDEO_ENCODE_H265_REFERENCE_LISTS_EXT: Self = Self(1_000_039_009);
-    pub const VIDEO_ENCODE_H265_RATE_CONTROL_INFO_EXT: Self = Self(1_000_039_010);
-    pub const VIDEO_ENCODE_H265_RATE_CONTROL_LAYER_INFO_EXT: Self = Self(1_000_039_011);
+    pub const VIDEO_ENCODE_H265_SESSION_PARAMETERS_CREATE_INFO_EXT: Self = Self(1_000_039_001);
+    pub const VIDEO_ENCODE_H265_SESSION_PARAMETERS_ADD_INFO_EXT: Self = Self(1_000_039_002);
+    pub const VIDEO_ENCODE_H265_VCL_FRAME_INFO_EXT: Self = Self(1_000_039_003);
+    pub const VIDEO_ENCODE_H265_DPB_SLOT_INFO_EXT: Self = Self(1_000_039_004);
+    pub const VIDEO_ENCODE_H265_NALU_SLICE_SEGMENT_EXT: Self = Self(1_000_039_005);
+    pub const VIDEO_ENCODE_H265_EMIT_PICTURE_PARAMETERS_EXT: Self = Self(1_000_039_006);
+    pub const VIDEO_ENCODE_H265_PROFILE_EXT: Self = Self(1_000_039_007);
+    pub const VIDEO_ENCODE_H265_REFERENCE_LISTS_EXT: Self = Self(1_000_039_008);
+    pub const VIDEO_ENCODE_H265_RATE_CONTROL_INFO_EXT: Self = Self(1_000_039_009);
+    pub const VIDEO_ENCODE_H265_RATE_CONTROL_LAYER_INFO_EXT: Self = Self(1_000_039_010);
 }
 #[doc = "Generated from 'VK_EXT_video_encode_h265'"]
 impl VideoCodecOperationFlagsKHR {
@@ -3121,7 +3119,7 @@ impl ExtVideoDecodeH264Fn {
     pub const fn name() -> &'static ::std::ffi::CStr {
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_decode_h264\0") }
     }
-    pub const SPEC_VERSION: u32 = 3u32;
+    pub const SPEC_VERSION: u32 = 4u32;
 }
 #[derive(Clone)]
 pub struct ExtVideoDecodeH264Fn {}
@@ -3138,13 +3136,12 @@ impl ExtVideoDecodeH264Fn {
 #[doc = "Generated from 'VK_EXT_video_decode_h264'"]
 impl StructureType {
     pub const VIDEO_DECODE_H264_CAPABILITIES_EXT: Self = Self(1_000_040_000);
-    pub const VIDEO_DECODE_H264_SESSION_CREATE_INFO_EXT: Self = Self(1_000_040_001);
-    pub const VIDEO_DECODE_H264_PICTURE_INFO_EXT: Self = Self(1_000_040_002);
-    pub const VIDEO_DECODE_H264_MVC_EXT: Self = Self(1_000_040_003);
-    pub const VIDEO_DECODE_H264_PROFILE_EXT: Self = Self(1_000_040_004);
-    pub const VIDEO_DECODE_H264_SESSION_PARAMETERS_CREATE_INFO_EXT: Self = Self(1_000_040_005);
-    pub const VIDEO_DECODE_H264_SESSION_PARAMETERS_ADD_INFO_EXT: Self = Self(1_000_040_006);
-    pub const VIDEO_DECODE_H264_DPB_SLOT_INFO_EXT: Self = Self(1_000_040_007);
+    pub const VIDEO_DECODE_H264_PICTURE_INFO_EXT: Self = Self(1_000_040_001);
+    pub const VIDEO_DECODE_H264_MVC_EXT: Self = Self(1_000_040_002);
+    pub const VIDEO_DECODE_H264_PROFILE_EXT: Self = Self(1_000_040_003);
+    pub const VIDEO_DECODE_H264_SESSION_PARAMETERS_CREATE_INFO_EXT: Self = Self(1_000_040_004);
+    pub const VIDEO_DECODE_H264_SESSION_PARAMETERS_ADD_INFO_EXT: Self = Self(1_000_040_005);
+    pub const VIDEO_DECODE_H264_DPB_SLOT_INFO_EXT: Self = Self(1_000_040_006);
 }
 #[doc = "Generated from 'VK_EXT_video_decode_h264'"]
 impl VideoCodecOperationFlagsKHR {
@@ -11491,7 +11488,7 @@ impl ExtVideoDecodeH265Fn {
     pub const fn name() -> &'static ::std::ffi::CStr {
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_decode_h265\0") }
     }
-    pub const SPEC_VERSION: u32 = 1u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
 pub struct ExtVideoDecodeH265Fn {}
@@ -11508,12 +11505,11 @@ impl ExtVideoDecodeH265Fn {
 #[doc = "Generated from 'VK_EXT_video_decode_h265'"]
 impl StructureType {
     pub const VIDEO_DECODE_H265_CAPABILITIES_EXT: Self = Self(1_000_187_000);
-    pub const VIDEO_DECODE_H265_SESSION_CREATE_INFO_EXT: Self = Self(1_000_187_001);
-    pub const VIDEO_DECODE_H265_SESSION_PARAMETERS_CREATE_INFO_EXT: Self = Self(1_000_187_002);
-    pub const VIDEO_DECODE_H265_SESSION_PARAMETERS_ADD_INFO_EXT: Self = Self(1_000_187_003);
-    pub const VIDEO_DECODE_H265_PROFILE_EXT: Self = Self(1_000_187_004);
-    pub const VIDEO_DECODE_H265_PICTURE_INFO_EXT: Self = Self(1_000_187_005);
-    pub const VIDEO_DECODE_H265_DPB_SLOT_INFO_EXT: Self = Self(1_000_187_006);
+    pub const VIDEO_DECODE_H265_SESSION_PARAMETERS_CREATE_INFO_EXT: Self = Self(1_000_187_001);
+    pub const VIDEO_DECODE_H265_SESSION_PARAMETERS_ADD_INFO_EXT: Self = Self(1_000_187_002);
+    pub const VIDEO_DECODE_H265_PROFILE_EXT: Self = Self(1_000_187_003);
+    pub const VIDEO_DECODE_H265_PICTURE_INFO_EXT: Self = Self(1_000_187_004);
+    pub const VIDEO_DECODE_H265_DPB_SLOT_INFO_EXT: Self = Self(1_000_187_005);
 }
 #[doc = "Generated from 'VK_EXT_video_decode_h265'"]
 impl VideoCodecOperationFlagsKHR {
@@ -21196,6 +21192,64 @@ pub struct ExtExtension460Fn {}
 unsafe impl Send for ExtExtension460Fn {}
 unsafe impl Sync for ExtExtension460Fn {}
 impl ExtExtension460Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl ExtExtension461Fn {
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_461\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct ExtExtension461Fn {}
+unsafe impl Send for ExtExtension461Fn {}
+unsafe impl Sync for ExtExtension461Fn {}
+impl ExtExtension461Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+#[doc = "Generated from 'VK_EXT_extension_461'"]
+impl FormatFeatureFlags2 {
+    pub const RESERVED_39_EXT: Self = Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+impl ExtExtension462Fn {
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_462\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct ExtExtension462Fn {}
+unsafe impl Send for ExtExtension462Fn {}
+unsafe impl Sync for ExtExtension462Fn {}
+impl ExtExtension462Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl ExtExtension463Fn {
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_463\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct ExtExtension463Fn {}
+unsafe impl Send for ExtExtension463Fn {}
+unsafe impl Sync for ExtExtension463Fn {}
+impl ExtExtension463Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
