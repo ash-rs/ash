@@ -1299,15 +1299,6 @@ impl VideoEncodeH264OutputModeFlagsEXT {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH264CreateFlagBitsEXT.html>"]
-pub struct VideoEncodeH264CreateFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(VideoEncodeH264CreateFlagsEXT, Flags);
-impl VideoEncodeH264CreateFlagsEXT {
-    pub const DEFAULT: Self = Self(0);
-    pub const RESERVED_0: Self = Self(0b1);
-}
-#[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH264RateControlStructureFlagBitsEXT.html>"]
 pub struct VideoEncodeH264RateControlStructureFlagsEXT(pub(crate) Flags);
 vk_bitflags_wrapped!(VideoEncodeH264RateControlStructureFlagsEXT, Flags);

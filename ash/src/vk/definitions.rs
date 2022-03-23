@@ -56,7 +56,7 @@ pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
-pub const HEADER_VERSION: u32 = 208u32;
+pub const HEADER_VERSION: u32 = 209u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -301,21 +301,6 @@ vk_bitflags_wrapped!(VideoBeginCodingFlagsKHR, Flags);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEndCodingFlagsKHR.html>"]
 pub struct VideoEndCodingFlagsKHR(pub(crate) Flags);
 vk_bitflags_wrapped!(VideoEndCodingFlagsKHR, Flags);
-#[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH264CreateFlagsEXT.html>"]
-pub struct VideoDecodeH264CreateFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(VideoDecodeH264CreateFlagsEXT, Flags);
-#[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH265CreateFlagsEXT.html>"]
-pub struct VideoDecodeH265CreateFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(VideoDecodeH265CreateFlagsEXT, Flags);
-#[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265CreateFlagsEXT.html>"]
-pub struct VideoEncodeH265CreateFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(VideoEncodeH265CreateFlagsEXT, Flags);
 define_handle!(
     Instance,
     INSTANCE,
@@ -48785,6 +48770,7 @@ pub struct VideoCapabilitiesKHR {
     pub max_extent: Extent2D,
     pub max_reference_pictures_slots_count: u32,
     pub max_reference_pictures_active_count: u32,
+    pub std_header_version: ExtensionProperties,
 }
 impl ::std::default::Default for VideoCapabilitiesKHR {
     fn default() -> Self {
@@ -48799,6 +48785,7 @@ impl ::std::default::Default for VideoCapabilitiesKHR {
             max_extent: Extent2D::default(),
             max_reference_pictures_slots_count: u32::default(),
             max_reference_pictures_active_count: u32::default(),
+            std_header_version: ExtensionProperties::default(),
         }
     }
 }
@@ -48873,6 +48860,10 @@ impl<'a> VideoCapabilitiesKHRBuilder<'a> {
         max_reference_pictures_active_count: u32,
     ) -> Self {
         self.inner.max_reference_pictures_active_count = max_reference_pictures_active_count;
+        self
+    }
+    pub fn std_header_version(mut self, std_header_version: ExtensionProperties) -> Self {
+        self.inner.std_header_version = std_header_version;
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -49447,7 +49438,6 @@ pub struct VideoDecodeH264CapabilitiesEXT {
     pub p_next: *mut c_void,
     pub max_level: u32,
     pub field_offset_granularity: Offset2D,
-    pub std_extension_version: ExtensionProperties,
 }
 impl ::std::default::Default for VideoDecodeH264CapabilitiesEXT {
     fn default() -> Self {
@@ -49456,7 +49446,6 @@ impl ::std::default::Default for VideoDecodeH264CapabilitiesEXT {
             p_next: ::std::ptr::null_mut(),
             max_level: u32::default(),
             field_offset_granularity: Offset2D::default(),
-            std_extension_version: ExtensionProperties::default(),
         }
     }
 }
@@ -49495,76 +49484,10 @@ impl<'a> VideoDecodeH264CapabilitiesEXTBuilder<'a> {
         self.inner.field_offset_granularity = field_offset_granularity;
         self
     }
-    pub fn std_extension_version(mut self, std_extension_version: ExtensionProperties) -> Self {
-        self.inner.std_extension_version = std_extension_version;
-        self
-    }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> VideoDecodeH264CapabilitiesEXT {
-        self.inner
-    }
-}
-#[repr(C)]
-#[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH264SessionCreateInfoEXT.html>"]
-pub struct VideoDecodeH264SessionCreateInfoEXT {
-    pub s_type: StructureType,
-    pub p_next: *const c_void,
-    pub flags: VideoDecodeH264CreateFlagsEXT,
-    pub p_std_extension_version: *const ExtensionProperties,
-}
-impl ::std::default::Default for VideoDecodeH264SessionCreateInfoEXT {
-    fn default() -> Self {
-        Self {
-            s_type: StructureType::VIDEO_DECODE_H264_SESSION_CREATE_INFO_EXT,
-            p_next: ::std::ptr::null(),
-            flags: VideoDecodeH264CreateFlagsEXT::default(),
-            p_std_extension_version: ::std::ptr::null(),
-        }
-    }
-}
-impl VideoDecodeH264SessionCreateInfoEXT {
-    pub fn builder<'a>() -> VideoDecodeH264SessionCreateInfoEXTBuilder<'a> {
-        VideoDecodeH264SessionCreateInfoEXTBuilder {
-            inner: Self::default(),
-            marker: ::std::marker::PhantomData,
-        }
-    }
-}
-#[repr(transparent)]
-pub struct VideoDecodeH264SessionCreateInfoEXTBuilder<'a> {
-    inner: VideoDecodeH264SessionCreateInfoEXT,
-    marker: ::std::marker::PhantomData<&'a ()>,
-}
-unsafe impl ExtendsVideoSessionCreateInfoKHR for VideoDecodeH264SessionCreateInfoEXTBuilder<'_> {}
-unsafe impl ExtendsVideoSessionCreateInfoKHR for VideoDecodeH264SessionCreateInfoEXT {}
-impl<'a> ::std::ops::Deref for VideoDecodeH264SessionCreateInfoEXTBuilder<'a> {
-    type Target = VideoDecodeH264SessionCreateInfoEXT;
-    fn deref(&self) -> &Self::Target {
-        &self.inner
-    }
-}
-impl<'a> ::std::ops::DerefMut for VideoDecodeH264SessionCreateInfoEXTBuilder<'a> {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        &mut self.inner
-    }
-}
-impl<'a> VideoDecodeH264SessionCreateInfoEXTBuilder<'a> {
-    pub fn flags(mut self, flags: VideoDecodeH264CreateFlagsEXT) -> Self {
-        self.inner.flags = flags;
-        self
-    }
-    pub fn std_extension_version(mut self, std_extension_version: &'a ExtensionProperties) -> Self {
-        self.inner.p_std_extension_version = std_extension_version;
-        self
-    }
-    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
-    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
-    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> VideoDecodeH264SessionCreateInfoEXT {
         self.inner
     }
 }
@@ -49988,7 +49911,6 @@ pub struct VideoDecodeH265CapabilitiesEXT {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub max_level: u32,
-    pub std_extension_version: ExtensionProperties,
 }
 impl ::std::default::Default for VideoDecodeH265CapabilitiesEXT {
     fn default() -> Self {
@@ -49996,7 +49918,6 @@ impl ::std::default::Default for VideoDecodeH265CapabilitiesEXT {
             s_type: StructureType::VIDEO_DECODE_H265_CAPABILITIES_EXT,
             p_next: ::std::ptr::null_mut(),
             max_level: u32::default(),
-            std_extension_version: ExtensionProperties::default(),
         }
     }
 }
@@ -50031,10 +49952,6 @@ impl<'a> VideoDecodeH265CapabilitiesEXTBuilder<'a> {
         self.inner.max_level = max_level;
         self
     }
-    pub fn std_extension_version(mut self, std_extension_version: ExtensionProperties) -> Self {
-        self.inner.std_extension_version = std_extension_version;
-        self
-    }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
@@ -50045,72 +49962,12 @@ impl<'a> VideoDecodeH265CapabilitiesEXTBuilder<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH265SessionCreateInfoEXT.html>"]
-pub struct VideoDecodeH265SessionCreateInfoEXT {
-    pub s_type: StructureType,
-    pub p_next: *const c_void,
-    pub flags: VideoDecodeH265CreateFlagsEXT,
-    pub p_std_extension_version: *const ExtensionProperties,
-}
-impl ::std::default::Default for VideoDecodeH265SessionCreateInfoEXT {
-    fn default() -> Self {
-        Self {
-            s_type: StructureType::VIDEO_DECODE_H265_SESSION_CREATE_INFO_EXT,
-            p_next: ::std::ptr::null(),
-            flags: VideoDecodeH265CreateFlagsEXT::default(),
-            p_std_extension_version: ::std::ptr::null(),
-        }
-    }
-}
-impl VideoDecodeH265SessionCreateInfoEXT {
-    pub fn builder<'a>() -> VideoDecodeH265SessionCreateInfoEXTBuilder<'a> {
-        VideoDecodeH265SessionCreateInfoEXTBuilder {
-            inner: Self::default(),
-            marker: ::std::marker::PhantomData,
-        }
-    }
-}
-#[repr(transparent)]
-pub struct VideoDecodeH265SessionCreateInfoEXTBuilder<'a> {
-    inner: VideoDecodeH265SessionCreateInfoEXT,
-    marker: ::std::marker::PhantomData<&'a ()>,
-}
-unsafe impl ExtendsVideoSessionCreateInfoKHR for VideoDecodeH265SessionCreateInfoEXTBuilder<'_> {}
-unsafe impl ExtendsVideoSessionCreateInfoKHR for VideoDecodeH265SessionCreateInfoEXT {}
-impl<'a> ::std::ops::Deref for VideoDecodeH265SessionCreateInfoEXTBuilder<'a> {
-    type Target = VideoDecodeH265SessionCreateInfoEXT;
-    fn deref(&self) -> &Self::Target {
-        &self.inner
-    }
-}
-impl<'a> ::std::ops::DerefMut for VideoDecodeH265SessionCreateInfoEXTBuilder<'a> {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        &mut self.inner
-    }
-}
-impl<'a> VideoDecodeH265SessionCreateInfoEXTBuilder<'a> {
-    pub fn flags(mut self, flags: VideoDecodeH265CreateFlagsEXT) -> Self {
-        self.inner.flags = flags;
-        self
-    }
-    pub fn std_extension_version(mut self, std_extension_version: &'a ExtensionProperties) -> Self {
-        self.inner.p_std_extension_version = std_extension_version;
-        self
-    }
-    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
-    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
-    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> VideoDecodeH265SessionCreateInfoEXT {
-        self.inner
-    }
-}
-#[repr(C)]
-#[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH265SessionParametersAddInfoEXT.html>"]
 pub struct VideoDecodeH265SessionParametersAddInfoEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
+    pub vps_std_count: u32,
+    pub p_vps_std: *const StdVideoH265VideoParameterSet,
     pub sps_std_count: u32,
     pub p_sps_std: *const StdVideoH265SequenceParameterSet,
     pub pps_std_count: u32,
@@ -50121,6 +49978,8 @@ impl ::std::default::Default for VideoDecodeH265SessionParametersAddInfoEXT {
         Self {
             s_type: StructureType::VIDEO_DECODE_H265_SESSION_PARAMETERS_ADD_INFO_EXT,
             p_next: ::std::ptr::null(),
+            vps_std_count: u32::default(),
+            p_vps_std: ::std::ptr::null(),
             sps_std_count: u32::default(),
             p_sps_std: ::std::ptr::null(),
             pps_std_count: u32::default(),
@@ -50161,6 +50020,11 @@ impl<'a> ::std::ops::DerefMut for VideoDecodeH265SessionParametersAddInfoEXTBuil
     }
 }
 impl<'a> VideoDecodeH265SessionParametersAddInfoEXTBuilder<'a> {
+    pub fn vps_std(mut self, vps_std: &'a [StdVideoH265VideoParameterSet]) -> Self {
+        self.inner.vps_std_count = vps_std.len() as _;
+        self.inner.p_vps_std = vps_std.as_ptr();
+        self
+    }
     pub fn sps_std(mut self, sps_std: &'a [StdVideoH265SequenceParameterSet]) -> Self {
         self.inner.sps_std_count = sps_std.len() as _;
         self.inner.p_sps_std = sps_std.as_ptr();
@@ -50185,6 +50049,7 @@ impl<'a> VideoDecodeH265SessionParametersAddInfoEXTBuilder<'a> {
 pub struct VideoDecodeH265SessionParametersCreateInfoEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
+    pub max_vps_std_count: u32,
     pub max_sps_std_count: u32,
     pub max_pps_std_count: u32,
     pub p_parameters_add_info: *const VideoDecodeH265SessionParametersAddInfoEXT,
@@ -50194,6 +50059,7 @@ impl ::std::default::Default for VideoDecodeH265SessionParametersCreateInfoEXT {
         Self {
             s_type: StructureType::VIDEO_DECODE_H265_SESSION_PARAMETERS_CREATE_INFO_EXT,
             p_next: ::std::ptr::null(),
+            max_vps_std_count: u32::default(),
             max_sps_std_count: u32::default(),
             max_pps_std_count: u32::default(),
             p_parameters_add_info: ::std::ptr::null(),
@@ -50233,6 +50099,10 @@ impl<'a> ::std::ops::DerefMut for VideoDecodeH265SessionParametersCreateInfoEXTB
     }
 }
 impl<'a> VideoDecodeH265SessionParametersCreateInfoEXTBuilder<'a> {
+    pub fn max_vps_std_count(mut self, max_vps_std_count: u32) -> Self {
+        self.inner.max_vps_std_count = max_vps_std_count;
+        self
+    }
     pub fn max_sps_std_count(mut self, max_sps_std_count: u32) -> Self {
         self.inner.max_sps_std_count = max_sps_std_count;
         self
@@ -50397,6 +50267,7 @@ pub struct VideoSessionCreateInfoKHR {
     pub reference_pictures_format: Format,
     pub max_reference_pictures_slots_count: u32,
     pub max_reference_pictures_active_count: u32,
+    pub p_std_header_version: *const ExtensionProperties,
 }
 impl ::std::default::Default for VideoSessionCreateInfoKHR {
     fn default() -> Self {
@@ -50411,6 +50282,7 @@ impl ::std::default::Default for VideoSessionCreateInfoKHR {
             reference_pictures_format: Format::default(),
             max_reference_pictures_slots_count: u32::default(),
             max_reference_pictures_active_count: u32::default(),
+            p_std_header_version: ::std::ptr::null(),
         }
     }
 }
@@ -50427,7 +50299,6 @@ pub struct VideoSessionCreateInfoKHRBuilder<'a> {
     inner: VideoSessionCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsVideoSessionCreateInfoKHR {}
 impl<'a> ::std::ops::Deref for VideoSessionCreateInfoKHRBuilder<'a> {
     type Target = VideoSessionCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -50478,18 +50349,8 @@ impl<'a> VideoSessionCreateInfoKHRBuilder<'a> {
         self.inner.max_reference_pictures_active_count = max_reference_pictures_active_count;
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoSessionCreateInfoKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.inner.p_next as _;
-            self.inner.p_next = next_ptr;
-        }
+    pub fn std_header_version(mut self, std_header_version: &'a ExtensionProperties) -> Self {
+        self.inner.p_std_header_version = std_header_version;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -51312,7 +51173,6 @@ pub struct VideoEncodeH264CapabilitiesEXT {
     pub max_bits_per_mb_denom: u32,
     pub log2_max_mv_length_horizontal: u32,
     pub log2_max_mv_length_vertical: u32,
-    pub std_extension_version: ExtensionProperties,
 }
 impl ::std::default::Default for VideoEncodeH264CapabilitiesEXT {
     fn default() -> Self {
@@ -51330,7 +51190,6 @@ impl ::std::default::Default for VideoEncodeH264CapabilitiesEXT {
             max_bits_per_mb_denom: u32::default(),
             log2_max_mv_length_horizontal: u32::default(),
             log2_max_mv_length_vertical: u32::default(),
-            std_extension_version: ExtensionProperties::default(),
         }
     }
 }
@@ -51418,82 +51277,10 @@ impl<'a> VideoEncodeH264CapabilitiesEXTBuilder<'a> {
         self.inner.log2_max_mv_length_vertical = log2_max_mv_length_vertical;
         self
     }
-    pub fn std_extension_version(mut self, std_extension_version: ExtensionProperties) -> Self {
-        self.inner.std_extension_version = std_extension_version;
-        self
-    }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> VideoEncodeH264CapabilitiesEXT {
-        self.inner
-    }
-}
-#[repr(C)]
-#[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH264SessionCreateInfoEXT.html>"]
-pub struct VideoEncodeH264SessionCreateInfoEXT {
-    pub s_type: StructureType,
-    pub p_next: *const c_void,
-    pub flags: VideoEncodeH264CreateFlagsEXT,
-    pub max_picture_size_in_mbs: Extent2D,
-    pub p_std_extension_version: *const ExtensionProperties,
-}
-impl ::std::default::Default for VideoEncodeH264SessionCreateInfoEXT {
-    fn default() -> Self {
-        Self {
-            s_type: StructureType::VIDEO_ENCODE_H264_SESSION_CREATE_INFO_EXT,
-            p_next: ::std::ptr::null(),
-            flags: VideoEncodeH264CreateFlagsEXT::default(),
-            max_picture_size_in_mbs: Extent2D::default(),
-            p_std_extension_version: ::std::ptr::null(),
-        }
-    }
-}
-impl VideoEncodeH264SessionCreateInfoEXT {
-    pub fn builder<'a>() -> VideoEncodeH264SessionCreateInfoEXTBuilder<'a> {
-        VideoEncodeH264SessionCreateInfoEXTBuilder {
-            inner: Self::default(),
-            marker: ::std::marker::PhantomData,
-        }
-    }
-}
-#[repr(transparent)]
-pub struct VideoEncodeH264SessionCreateInfoEXTBuilder<'a> {
-    inner: VideoEncodeH264SessionCreateInfoEXT,
-    marker: ::std::marker::PhantomData<&'a ()>,
-}
-unsafe impl ExtendsVideoSessionCreateInfoKHR for VideoEncodeH264SessionCreateInfoEXTBuilder<'_> {}
-unsafe impl ExtendsVideoSessionCreateInfoKHR for VideoEncodeH264SessionCreateInfoEXT {}
-impl<'a> ::std::ops::Deref for VideoEncodeH264SessionCreateInfoEXTBuilder<'a> {
-    type Target = VideoEncodeH264SessionCreateInfoEXT;
-    fn deref(&self) -> &Self::Target {
-        &self.inner
-    }
-}
-impl<'a> ::std::ops::DerefMut for VideoEncodeH264SessionCreateInfoEXTBuilder<'a> {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        &mut self.inner
-    }
-}
-impl<'a> VideoEncodeH264SessionCreateInfoEXTBuilder<'a> {
-    pub fn flags(mut self, flags: VideoEncodeH264CreateFlagsEXT) -> Self {
-        self.inner.flags = flags;
-        self
-    }
-    pub fn max_picture_size_in_mbs(mut self, max_picture_size_in_mbs: Extent2D) -> Self {
-        self.inner.max_picture_size_in_mbs = max_picture_size_in_mbs;
-        self
-    }
-    pub fn std_extension_version(mut self, std_extension_version: &'a ExtensionProperties) -> Self {
-        self.inner.p_std_extension_version = std_extension_version;
-        self
-    }
-    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
-    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
-    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> VideoEncodeH264SessionCreateInfoEXT {
         self.inner
     }
 }
@@ -52401,7 +52188,6 @@ pub struct VideoEncodeH265CapabilitiesEXT {
     pub max_diff_cu_qp_delta_depth: u8,
     pub min_max_num_merge_cand: u8,
     pub max_max_num_merge_cand: u8,
-    pub std_extension_version: ExtensionProperties,
 }
 impl ::std::default::Default for VideoEncodeH265CapabilitiesEXT {
     fn default() -> Self {
@@ -52428,7 +52214,6 @@ impl ::std::default::Default for VideoEncodeH265CapabilitiesEXT {
             max_diff_cu_qp_delta_depth: u8::default(),
             min_max_num_merge_cand: u8::default(),
             max_max_num_merge_cand: u8::default(),
-            std_extension_version: ExtensionProperties::default(),
         }
     }
 }
@@ -52583,76 +52368,10 @@ impl<'a> VideoEncodeH265CapabilitiesEXTBuilder<'a> {
         self.inner.max_max_num_merge_cand = max_max_num_merge_cand;
         self
     }
-    pub fn std_extension_version(mut self, std_extension_version: ExtensionProperties) -> Self {
-        self.inner.std_extension_version = std_extension_version;
-        self
-    }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> VideoEncodeH265CapabilitiesEXT {
-        self.inner
-    }
-}
-#[repr(C)]
-#[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265SessionCreateInfoEXT.html>"]
-pub struct VideoEncodeH265SessionCreateInfoEXT {
-    pub s_type: StructureType,
-    pub p_next: *const c_void,
-    pub flags: VideoEncodeH265CreateFlagsEXT,
-    pub p_std_extension_version: *const ExtensionProperties,
-}
-impl ::std::default::Default for VideoEncodeH265SessionCreateInfoEXT {
-    fn default() -> Self {
-        Self {
-            s_type: StructureType::VIDEO_ENCODE_H265_SESSION_CREATE_INFO_EXT,
-            p_next: ::std::ptr::null(),
-            flags: VideoEncodeH265CreateFlagsEXT::default(),
-            p_std_extension_version: ::std::ptr::null(),
-        }
-    }
-}
-impl VideoEncodeH265SessionCreateInfoEXT {
-    pub fn builder<'a>() -> VideoEncodeH265SessionCreateInfoEXTBuilder<'a> {
-        VideoEncodeH265SessionCreateInfoEXTBuilder {
-            inner: Self::default(),
-            marker: ::std::marker::PhantomData,
-        }
-    }
-}
-#[repr(transparent)]
-pub struct VideoEncodeH265SessionCreateInfoEXTBuilder<'a> {
-    inner: VideoEncodeH265SessionCreateInfoEXT,
-    marker: ::std::marker::PhantomData<&'a ()>,
-}
-unsafe impl ExtendsVideoSessionCreateInfoKHR for VideoEncodeH265SessionCreateInfoEXTBuilder<'_> {}
-unsafe impl ExtendsVideoSessionCreateInfoKHR for VideoEncodeH265SessionCreateInfoEXT {}
-impl<'a> ::std::ops::Deref for VideoEncodeH265SessionCreateInfoEXTBuilder<'a> {
-    type Target = VideoEncodeH265SessionCreateInfoEXT;
-    fn deref(&self) -> &Self::Target {
-        &self.inner
-    }
-}
-impl<'a> ::std::ops::DerefMut for VideoEncodeH265SessionCreateInfoEXTBuilder<'a> {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        &mut self.inner
-    }
-}
-impl<'a> VideoEncodeH265SessionCreateInfoEXTBuilder<'a> {
-    pub fn flags(mut self, flags: VideoEncodeH265CreateFlagsEXT) -> Self {
-        self.inner.flags = flags;
-        self
-    }
-    pub fn std_extension_version(mut self, std_extension_version: &'a ExtensionProperties) -> Self {
-        self.inner.p_std_extension_version = std_extension_version;
-        self
-    }
-    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
-    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
-    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
-    pub fn build(self) -> VideoEncodeH265SessionCreateInfoEXT {
         self.inner
     }
 }
