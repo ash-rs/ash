@@ -4,22 +4,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [Unreleased] - ReleaseDate
+
+## [0.37.0] - 2022-03-23
 
 ### Changed
 
 - Dropped auto-generated wrapper methods from function pointer structs
   in favor of direct invocation of function pointers (#599)
+- Constified extension names (#590)
 - `VK_NV_device_diagnostic_checkpoints`: Enable passing `pNext`-initialized structs to `get_queue_checkpoint_data` (#588)
 
 ### Added
 
 - Update Vulkan-Headers to 1.3.209 (#597, #601)
 - Added `VK_EXT_headless_surface` instance extension (#589)
-
-### Changed
-
-- Constified extension names (#590)
 
 ## [0.36.0] - 2022-02-21
 
@@ -322,7 +321,8 @@ flags: vk::CommandPoolCreateFlags::RESET_COMMAND_BUFFER_BIT,
 can write to aligned memory.
 
 
-[Unreleased]: https://github.com/MaikKlein/ash/compare/0.36.0...HEAD
+[Unreleased]: https://github.com/MaikKlein/ash/compare/0.37.0...HEAD
+[0.37.0]: https://github.com/MaikKlein/ash/releases/tag/0.37.0
 [0.36.0]: https://github.com/MaikKlein/ash/releases/tag/0.36.0
 [0.35.2]: https://github.com/MaikKlein/ash/releases/tag/0.35.2
 [0.35.1]: https://github.com/MaikKlein/ash/releases/tag/0.35.1
