@@ -17,8 +17,8 @@ fn main() -> Result<(), Box<dyn Error>> {
     unsafe {
         let entry = ash::Entry::linked();
         let surface_extensions = ash_window::enumerate_required_extensions(&window)?;
-        let app_desc = vk::ApplicationInfo::builder().api_version(vk::make_api_version(0, 1, 0, 0));
-        let instance_desc = vk::InstanceCreateInfo::builder()
+        let app_desc = vk::ApplicationInfo::default().api_version(vk::make_api_version(0, 1, 0, 0));
+        let instance_desc = vk::InstanceCreateInfo::default()
             .application_info(&app_desc)
             .enabled_extension_names(surface_extensions);
 

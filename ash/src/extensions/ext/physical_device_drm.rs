@@ -12,7 +12,7 @@ impl PhysicalDeviceDrm {
     ) -> vk::PhysicalDeviceDrmPropertiesEXT {
         let mut props_drm = vk::PhysicalDeviceDrmPropertiesEXT::default();
         {
-            let mut props = vk::PhysicalDeviceProperties2::builder().push_next(&mut props_drm);
+            let mut props = vk::PhysicalDeviceProperties2::default().push_next(&mut props_drm);
             instance.get_physical_device_properties2(pdevice, &mut props);
         }
         props_drm

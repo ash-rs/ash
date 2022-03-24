@@ -26,7 +26,7 @@ pub unsafe fn create_surface(
     match window_handle.raw_window_handle() {
         #[cfg(target_os = "windows")]
         RawWindowHandle::Windows(handle) => {
-            let surface_desc = vk::Win32SurfaceCreateInfoKHR::builder()
+            let surface_desc = vk::Win32SurfaceCreateInfoKHR::default()
                 .hinstance(handle.hinstance)
                 .hwnd(handle.hwnd);
             let surface_fn = khr::Win32Surface::new(entry, instance);
@@ -41,7 +41,7 @@ pub unsafe fn create_surface(
             target_os = "openbsd"
         ))]
         RawWindowHandle::Wayland(handle) => {
-            let surface_desc = vk::WaylandSurfaceCreateInfoKHR::builder()
+            let surface_desc = vk::WaylandSurfaceCreateInfoKHR::default()
                 .display(handle.display)
                 .surface(handle.surface);
             let surface_fn = khr::WaylandSurface::new(entry, instance);
@@ -56,7 +56,7 @@ pub unsafe fn create_surface(
             target_os = "openbsd"
         ))]
         RawWindowHandle::Xlib(handle) => {
-            let surface_desc = vk::XlibSurfaceCreateInfoKHR::builder()
+            let surface_desc = vk::XlibSurfaceCreateInfoKHR::default()
                 .dpy(handle.display as *mut _)
                 .window(handle.window);
             let surface_fn = khr::XlibSurface::new(entry, instance);
@@ -71,7 +71,7 @@ pub unsafe fn create_surface(
             target_os = "openbsd"
         ))]
         RawWindowHandle::Xcb(handle) => {
-            let surface_desc = vk::XcbSurfaceCreateInfoKHR::builder()
+            let surface_desc = vk::XcbSurfaceCreateInfoKHR::default()
                 .connection(handle.connection)
                 .window(handle.window);
             let surface_fn = khr::XcbSurface::new(entry, instance);
@@ -81,7 +81,7 @@ pub unsafe fn create_surface(
         #[cfg(any(target_os = "android"))]
         RawWindowHandle::Android(handle) => {
             let surface_desc =
-                vk::AndroidSurfaceCreateInfoKHR::builder().window(handle.a_native_window);
+                vk::AndroidSurfaceCreateInfoKHR::default().window(handle.a_native_window);
             let surface_fn = khr::AndroidSurface::new(entry, instance);
             surface_fn.create_android_surface(&surface_desc, allocation_callbacks)
         }
@@ -95,7 +95,7 @@ pub unsafe fn create_surface(
                 Layer::None => return Err(vk::Result::ERROR_INITIALIZATION_FAILED),
             };
 
-            let surface_desc = vk::MetalSurfaceCreateInfoEXT::builder().layer(&*layer);
+            let surface_desc = vk::MetalSurfaceCreateInfoEXT::default().layer(&*layer);
             let surface_fn = ext::MetalSurface::new(entry, instance);
             surface_fn.create_metal_surface(&surface_desc, allocation_callbacks)
         }
@@ -109,7 +109,7 @@ pub unsafe fn create_surface(
                 Layer::None => return Err(vk::Result::ERROR_INITIALIZATION_FAILED),
             };
 
-            let surface_desc = vk::MetalSurfaceCreateInfoEXT::builder().layer(&*layer);
+            let surface_desc = vk::MetalSurfaceCreateInfoEXT::default().layer(&*layer);
             let surface_fn = ext::MetalSurface::new(entry, instance);
             surface_fn.create_metal_surface(&surface_desc, allocation_callbacks)
         }

@@ -51,12 +51,12 @@ fn main() {
             ..Default::default()
         }];
 
-        let subpass = vk::SubpassDescription::builder()
+        let subpass = vk::SubpassDescription::default()
             .color_attachments(&color_attachment_refs)
             .depth_stencil_attachment(&depth_attachment_ref)
             .pipeline_bind_point(vk::PipelineBindPoint::GRAPHICS);
 
-        let renderpass_create_info = vk::RenderPassCreateInfo::builder()
+        let renderpass_create_info = vk::RenderPassCreateInfo::default()
             .attachments(&renderpass_attachments)
             .subpasses(std::slice::from_ref(&subpass))
             .dependencies(&dependencies);
@@ -71,7 +71,7 @@ fn main() {
             .iter()
             .map(|&present_image_view| {
                 let framebuffer_attachments = [present_image_view, base.depth_image_view];
-                let frame_buffer_create_info = vk::FramebufferCreateInfo::builder()
+                let frame_buffer_create_info = vk::FramebufferCreateInfo::default()
                     .render_pass(renderpass)
                     .attachments(&framebuffer_attachments)
                     .width(base.surface_resolution.width)
@@ -85,7 +85,7 @@ fn main() {
             .collect();
 
         let index_buffer_data = [0u32, 1, 2];
-        let index_buffer_info = vk::BufferCreateInfo::builder()
+        let index_buffer_info = vk::BufferCreateInfo::default()
             .size(std::mem::size_of_val(&index_buffer_data) as u64)
             .usage(vk::BufferUsageFlags::INDEX_BUFFER)
             .sharing_mode(vk::SharingMode::EXCLUSIVE);
@@ -203,11 +203,11 @@ fn main() {
 
         let vertex_code =
             read_spv(&mut vertex_spv_file).expect("Failed to read vertex shader spv file");
-        let vertex_shader_info = vk::ShaderModuleCreateInfo::builder().code(&vertex_code);
+        let vertex_shader_info = vk::ShaderModuleCreateInfo::default().code(&vertex_code);
 
         let frag_code =
             read_spv(&mut frag_spv_file).expect("Failed to read fragment shader spv file");
-        let frag_shader_info = vk::ShaderModuleCreateInfo::builder().code(&frag_code);
+        let frag_shader_info = vk::ShaderModuleCreateInfo::default().code(&frag_code);
 
         let vertex_shader_module = base
             .device
@@ -262,7 +262,7 @@ fn main() {
             },
         ];
 
-        let vertex_input_state_info = vk::PipelineVertexInputStateCreateInfo::builder()
+        let vertex_input_state_info = vk::PipelineVertexInputStateCreateInfo::default()
             .vertex_attribute_descriptions(&vertex_input_attribute_descriptions)
             .vertex_binding_descriptions(&vertex_input_binding_descriptions);
         let vertex_input_assembly_state_info = vk::PipelineInputAssemblyStateCreateInfo {
@@ -278,7 +278,7 @@ fn main() {
             max_depth: 1.0,
         }];
         let scissors = [base.surface_resolution.into()];
-        let viewport_state_info = vk::PipelineViewportStateCreateInfo::builder()
+        let viewport_state_info = vk::PipelineViewportStateCreateInfo::default()
             .scissors(&scissors)
             .viewports(&viewports);
 
@@ -318,15 +318,15 @@ fn main() {
             alpha_blend_op: vk::BlendOp::ADD,
             color_write_mask: vk::ColorComponentFlags::RGBA,
         }];
-        let color_blend_state = vk::PipelineColorBlendStateCreateInfo::builder()
+        let color_blend_state = vk::PipelineColorBlendStateCreateInfo::default()
             .logic_op(vk::LogicOp::CLEAR)
             .attachments(&color_blend_attachment_states);
 
         let dynamic_state = [vk::DynamicState::VIEWPORT, vk::DynamicState::SCISSOR];
         let dynamic_state_info =
-            vk::PipelineDynamicStateCreateInfo::builder().dynamic_states(&dynamic_state);
+            vk::PipelineDynamicStateCreateInfo::default().dynamic_states(&dynamic_state);
 
-        let graphic_pipeline_info = vk::GraphicsPipelineCreateInfo::builder()
+        let graphic_pipeline_info = vk::GraphicsPipelineCreateInfo::default()
             .stages(&shader_stage_create_infos)
             .vertex_input_state(&vertex_input_state_info)
             .input_assembly_state(&vertex_input_assembly_state_info)
@@ -341,11 +341,7 @@ fn main() {
 
         let graphics_pipelines = base
             .device
-            .create_graphics_pipelines(
-                vk::PipelineCache::null(),
-                &[graphic_pipeline_info.build()],
-                None,
-            )
+            .create_graphics_pipelines(vk::PipelineCache::null(), &[graphic_pipeline_info], None)
             .expect("Unable to create graphics pipeline");
 
         let graphic_pipeline = graphics_pipelines[0];
@@ -374,7 +370,7 @@ fn main() {
                 },
             ];
 
-            let render_pass_begin_info = vk::RenderPassBeginInfo::builder()
+            let render_pass_begin_info = vk::RenderPassBeginInfo::default()
                 .render_pass(renderpass)
                 .framebuffer(framebuffers[present_index as usize])
                 .render_area(base.surface_resolution.into())
@@ -430,7 +426,7 @@ fn main() {
             let wait_semaphors = [base.rendering_complete_semaphore];
             let swapchains = [base.swapchain];
             let image_indices = [present_index];
-            let present_info = vk::PresentInfoKHR::builder()
+            let present_info = vk::PresentInfoKHR::default()
                 .wait_semaphores(&wait_semaphors) // &base.rendering_complete_semaphore)
                 .swapchains(&swapchains)
                 .image_indices(&image_indices);
