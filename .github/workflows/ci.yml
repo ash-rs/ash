@@ -18,6 +18,17 @@ jobs:
           command: check
           args: --workspace --all-targets --all-features
 
+  check_msrv:
+    name: Check MSRV (1.59.0)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: dtolnay/rust-toolchain@1.59.0
+      - uses: actions-rs/cargo@v1
+        with:
+          command: check
+          args: --workspace --all-targets --all-features
+
   generated:
     name: Generated
     runs-on: ubuntu-latest
