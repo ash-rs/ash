@@ -543,10 +543,12 @@ pub struct Offset2D {
     pub y: i32,
 }
 impl Offset2D {
+    #[inline]
     pub fn x(mut self, x: i32) -> Self {
         self.x = x;
         self
     }
+    #[inline]
     pub fn y(mut self, y: i32) -> Self {
         self.y = y;
         self
@@ -562,14 +564,17 @@ pub struct Offset3D {
     pub z: i32,
 }
 impl Offset3D {
+    #[inline]
     pub fn x(mut self, x: i32) -> Self {
         self.x = x;
         self
     }
+    #[inline]
     pub fn y(mut self, y: i32) -> Self {
         self.y = y;
         self
     }
+    #[inline]
     pub fn z(mut self, z: i32) -> Self {
         self.z = z;
         self
@@ -584,10 +589,12 @@ pub struct Extent2D {
     pub height: u32,
 }
 impl Extent2D {
+    #[inline]
     pub fn width(mut self, width: u32) -> Self {
         self.width = width;
         self
     }
+    #[inline]
     pub fn height(mut self, height: u32) -> Self {
         self.height = height;
         self
@@ -603,14 +610,17 @@ pub struct Extent3D {
     pub depth: u32,
 }
 impl Extent3D {
+    #[inline]
     pub fn width(mut self, width: u32) -> Self {
         self.width = width;
         self
     }
+    #[inline]
     pub fn height(mut self, height: u32) -> Self {
         self.height = height;
         self
     }
+    #[inline]
     pub fn depth(mut self, depth: u32) -> Self {
         self.depth = depth;
         self
@@ -629,26 +639,32 @@ pub struct Viewport {
     pub max_depth: f32,
 }
 impl Viewport {
+    #[inline]
     pub fn x(mut self, x: f32) -> Self {
         self.x = x;
         self
     }
+    #[inline]
     pub fn y(mut self, y: f32) -> Self {
         self.y = y;
         self
     }
+    #[inline]
     pub fn width(mut self, width: f32) -> Self {
         self.width = width;
         self
     }
+    #[inline]
     pub fn height(mut self, height: f32) -> Self {
         self.height = height;
         self
     }
+    #[inline]
     pub fn min_depth(mut self, min_depth: f32) -> Self {
         self.min_depth = min_depth;
         self
     }
+    #[inline]
     pub fn max_depth(mut self, max_depth: f32) -> Self {
         self.max_depth = max_depth;
         self
@@ -663,10 +679,12 @@ pub struct Rect2D {
     pub extent: Extent2D,
 }
 impl Rect2D {
+    #[inline]
     pub fn offset(mut self, offset: Offset2D) -> Self {
         self.offset = offset;
         self
     }
+    #[inline]
     pub fn extent(mut self, extent: Extent2D) -> Self {
         self.extent = extent;
         self
@@ -682,14 +700,17 @@ pub struct ClearRect {
     pub layer_count: u32,
 }
 impl ClearRect {
+    #[inline]
     pub fn rect(mut self, rect: Rect2D) -> Self {
         self.rect = rect;
         self
     }
+    #[inline]
     pub fn base_array_layer(mut self, base_array_layer: u32) -> Self {
         self.base_array_layer = base_array_layer;
         self
     }
+    #[inline]
     pub fn layer_count(mut self, layer_count: u32) -> Self {
         self.layer_count = layer_count;
         self
@@ -706,18 +727,22 @@ pub struct ComponentMapping {
     pub a: ComponentSwizzle,
 }
 impl ComponentMapping {
+    #[inline]
     pub fn r(mut self, r: ComponentSwizzle) -> Self {
         self.r = r;
         self
     }
+    #[inline]
     pub fn g(mut self, g: ComponentSwizzle) -> Self {
         self.g = g;
         self
     }
+    #[inline]
     pub fn b(mut self, b: ComponentSwizzle) -> Self {
         self.b = b;
         self
     }
+    #[inline]
     pub fn a(mut self, a: ComponentSwizzle) -> Self {
         self.a = a;
         self
@@ -771,38 +796,47 @@ impl ::std::default::Default for PhysicalDeviceProperties {
     }
 }
 impl PhysicalDeviceProperties {
+    #[inline]
     pub fn api_version(mut self, api_version: u32) -> Self {
         self.api_version = api_version;
         self
     }
+    #[inline]
     pub fn driver_version(mut self, driver_version: u32) -> Self {
         self.driver_version = driver_version;
         self
     }
+    #[inline]
     pub fn vendor_id(mut self, vendor_id: u32) -> Self {
         self.vendor_id = vendor_id;
         self
     }
+    #[inline]
     pub fn device_id(mut self, device_id: u32) -> Self {
         self.device_id = device_id;
         self
     }
+    #[inline]
     pub fn device_type(mut self, device_type: PhysicalDeviceType) -> Self {
         self.device_type = device_type;
         self
     }
+    #[inline]
     pub fn device_name(mut self, device_name: [c_char; MAX_PHYSICAL_DEVICE_NAME_SIZE]) -> Self {
         self.device_name = device_name;
         self
     }
+    #[inline]
     pub fn pipeline_cache_uuid(mut self, pipeline_cache_uuid: [u8; UUID_SIZE]) -> Self {
         self.pipeline_cache_uuid = pipeline_cache_uuid;
         self
     }
+    #[inline]
     pub fn limits(mut self, limits: PhysicalDeviceLimits) -> Self {
         self.limits = limits;
         self
     }
+    #[inline]
     pub fn sparse_properties(mut self, sparse_properties: PhysicalDeviceSparseProperties) -> Self {
         self.sparse_properties = sparse_properties;
         self
@@ -835,10 +869,12 @@ impl ::std::default::Default for ExtensionProperties {
     }
 }
 impl ExtensionProperties {
+    #[inline]
     pub fn extension_name(mut self, extension_name: [c_char; MAX_EXTENSION_NAME_SIZE]) -> Self {
         self.extension_name = extension_name;
         self
     }
+    #[inline]
     pub fn spec_version(mut self, spec_version: u32) -> Self {
         self.spec_version = spec_version;
         self
@@ -879,18 +915,22 @@ impl ::std::default::Default for LayerProperties {
     }
 }
 impl LayerProperties {
+    #[inline]
     pub fn layer_name(mut self, layer_name: [c_char; MAX_EXTENSION_NAME_SIZE]) -> Self {
         self.layer_name = layer_name;
         self
     }
+    #[inline]
     pub fn spec_version(mut self, spec_version: u32) -> Self {
         self.spec_version = spec_version;
         self
     }
+    #[inline]
     pub fn implementation_version(mut self, implementation_version: u32) -> Self {
         self.implementation_version = implementation_version;
         self
     }
+    #[inline]
     pub fn description(mut self, description: [c_char; MAX_DESCRIPTION_SIZE]) -> Self {
         self.description = description;
         self
@@ -925,22 +965,27 @@ impl ::std::default::Default for ApplicationInfo<'_> {
     }
 }
 impl<'a> ApplicationInfo<'a> {
+    #[inline]
     pub fn application_name(mut self, application_name: &'a ::std::ffi::CStr) -> Self {
         self.p_application_name = application_name.as_ptr();
         self
     }
+    #[inline]
     pub fn application_version(mut self, application_version: u32) -> Self {
         self.application_version = application_version;
         self
     }
+    #[inline]
     pub fn engine_name(mut self, engine_name: &'a ::std::ffi::CStr) -> Self {
         self.p_engine_name = engine_name.as_ptr();
         self
     }
+    #[inline]
     pub fn engine_version(mut self, engine_version: u32) -> Self {
         self.engine_version = engine_version;
         self
     }
+    #[inline]
     pub fn api_version(mut self, api_version: u32) -> Self {
         self.api_version = api_version;
         self
@@ -997,22 +1042,27 @@ impl ::std::default::Default for AllocationCallbacks<'_> {
     }
 }
 impl<'a> AllocationCallbacks<'a> {
+    #[inline]
     pub fn user_data(mut self, user_data: *mut c_void) -> Self {
         self.p_user_data = user_data;
         self
     }
+    #[inline]
     pub fn pfn_allocation(mut self, pfn_allocation: PFN_vkAllocationFunction) -> Self {
         self.pfn_allocation = pfn_allocation;
         self
     }
+    #[inline]
     pub fn pfn_reallocation(mut self, pfn_reallocation: PFN_vkReallocationFunction) -> Self {
         self.pfn_reallocation = pfn_reallocation;
         self
     }
+    #[inline]
     pub fn pfn_free(mut self, pfn_free: PFN_vkFreeFunction) -> Self {
         self.pfn_free = pfn_free;
         self
     }
+    #[inline]
     pub fn pfn_internal_allocation(
         mut self,
         pfn_internal_allocation: PFN_vkInternalAllocationNotification,
@@ -1020,6 +1070,7 @@ impl<'a> AllocationCallbacks<'a> {
         self.pfn_internal_allocation = pfn_internal_allocation;
         self
     }
+    #[inline]
     pub fn pfn_internal_free(mut self, pfn_internal_free: PFN_vkInternalFreeNotification) -> Self {
         self.pfn_internal_free = pfn_internal_free;
         self
@@ -1053,14 +1104,17 @@ impl ::std::default::Default for DeviceQueueCreateInfo<'_> {
 }
 pub unsafe trait ExtendsDeviceQueueCreateInfo {}
 impl<'a> DeviceQueueCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: DeviceQueueCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn queue_family_index(mut self, queue_family_index: u32) -> Self {
         self.queue_family_index = queue_family_index;
         self
     }
+    #[inline]
     pub fn queue_priorities(mut self, queue_priorities: &'a [f32]) -> Self {
         self.queue_count = queue_priorities.len() as _;
         self.p_queue_priorities = queue_priorities.as_ptr();
@@ -1117,25 +1171,30 @@ impl ::std::default::Default for DeviceCreateInfo<'_> {
 }
 pub unsafe trait ExtendsDeviceCreateInfo {}
 impl<'a> DeviceCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: DeviceCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn queue_create_infos(mut self, queue_create_infos: &'a [DeviceQueueCreateInfo]) -> Self {
         self.queue_create_info_count = queue_create_infos.len() as _;
         self.p_queue_create_infos = queue_create_infos.as_ptr();
         self
     }
+    #[inline]
     pub fn enabled_layer_names(mut self, enabled_layer_names: &'a [*const c_char]) -> Self {
         self.enabled_layer_count = enabled_layer_names.len() as _;
         self.pp_enabled_layer_names = enabled_layer_names.as_ptr();
         self
     }
+    #[inline]
     pub fn enabled_extension_names(mut self, enabled_extension_names: &'a [*const c_char]) -> Self {
         self.enabled_extension_count = enabled_extension_names.len() as _;
         self.pp_enabled_extension_names = enabled_extension_names.as_ptr();
         self
     }
+    #[inline]
     pub fn enabled_features(mut self, enabled_features: &'a PhysicalDeviceFeatures) -> Self {
         self.p_enabled_features = enabled_features;
         self
@@ -1187,19 +1246,23 @@ impl ::std::default::Default for InstanceCreateInfo<'_> {
 }
 pub unsafe trait ExtendsInstanceCreateInfo {}
 impl<'a> InstanceCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: InstanceCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn application_info(mut self, application_info: &'a ApplicationInfo<'a>) -> Self {
         self.p_application_info = application_info;
         self
     }
+    #[inline]
     pub fn enabled_layer_names(mut self, enabled_layer_names: &'a [*const c_char]) -> Self {
         self.enabled_layer_count = enabled_layer_names.len() as _;
         self.pp_enabled_layer_names = enabled_layer_names.as_ptr();
         self
     }
+    #[inline]
     pub fn enabled_extension_names(mut self, enabled_extension_names: &'a [*const c_char]) -> Self {
         self.enabled_extension_count = enabled_extension_names.len() as _;
         self.pp_enabled_extension_names = enabled_extension_names.as_ptr();
@@ -1231,18 +1294,22 @@ pub struct QueueFamilyProperties {
     pub min_image_transfer_granularity: Extent3D,
 }
 impl QueueFamilyProperties {
+    #[inline]
     pub fn queue_flags(mut self, queue_flags: QueueFlags) -> Self {
         self.queue_flags = queue_flags;
         self
     }
+    #[inline]
     pub fn queue_count(mut self, queue_count: u32) -> Self {
         self.queue_count = queue_count;
         self
     }
+    #[inline]
     pub fn timestamp_valid_bits(mut self, timestamp_valid_bits: u32) -> Self {
         self.timestamp_valid_bits = timestamp_valid_bits;
         self
     }
+    #[inline]
     pub fn min_image_transfer_granularity(
         mut self,
         min_image_transfer_granularity: Extent3D,
@@ -1272,18 +1339,22 @@ impl ::std::default::Default for PhysicalDeviceMemoryProperties {
     }
 }
 impl PhysicalDeviceMemoryProperties {
+    #[inline]
     pub fn memory_type_count(mut self, memory_type_count: u32) -> Self {
         self.memory_type_count = memory_type_count;
         self
     }
+    #[inline]
     pub fn memory_types(mut self, memory_types: [MemoryType; MAX_MEMORY_TYPES]) -> Self {
         self.memory_types = memory_types;
         self
     }
+    #[inline]
     pub fn memory_heap_count(mut self, memory_heap_count: u32) -> Self {
         self.memory_heap_count = memory_heap_count;
         self
     }
+    #[inline]
     pub fn memory_heaps(mut self, memory_heaps: [MemoryHeap; MAX_MEMORY_HEAPS]) -> Self {
         self.memory_heaps = memory_heaps;
         self
@@ -1313,10 +1384,12 @@ impl ::std::default::Default for MemoryAllocateInfo<'_> {
 }
 pub unsafe trait ExtendsMemoryAllocateInfo {}
 impl<'a> MemoryAllocateInfo<'a> {
+    #[inline]
     pub fn allocation_size(mut self, allocation_size: DeviceSize) -> Self {
         self.allocation_size = allocation_size;
         self
     }
+    #[inline]
     pub fn memory_type_index(mut self, memory_type_index: u32) -> Self {
         self.memory_type_index = memory_type_index;
         self
@@ -1346,14 +1419,17 @@ pub struct MemoryRequirements {
     pub memory_type_bits: u32,
 }
 impl MemoryRequirements {
+    #[inline]
     pub fn size(mut self, size: DeviceSize) -> Self {
         self.size = size;
         self
     }
+    #[inline]
     pub fn alignment(mut self, alignment: DeviceSize) -> Self {
         self.alignment = alignment;
         self
     }
+    #[inline]
     pub fn memory_type_bits(mut self, memory_type_bits: u32) -> Self {
         self.memory_type_bits = memory_type_bits;
         self
@@ -1369,14 +1445,17 @@ pub struct SparseImageFormatProperties {
     pub flags: SparseImageFormatFlags,
 }
 impl SparseImageFormatProperties {
+    #[inline]
     pub fn aspect_mask(mut self, aspect_mask: ImageAspectFlags) -> Self {
         self.aspect_mask = aspect_mask;
         self
     }
+    #[inline]
     pub fn image_granularity(mut self, image_granularity: Extent3D) -> Self {
         self.image_granularity = image_granularity;
         self
     }
+    #[inline]
     pub fn flags(mut self, flags: SparseImageFormatFlags) -> Self {
         self.flags = flags;
         self
@@ -1394,22 +1473,27 @@ pub struct SparseImageMemoryRequirements {
     pub image_mip_tail_stride: DeviceSize,
 }
 impl SparseImageMemoryRequirements {
+    #[inline]
     pub fn format_properties(mut self, format_properties: SparseImageFormatProperties) -> Self {
         self.format_properties = format_properties;
         self
     }
+    #[inline]
     pub fn image_mip_tail_first_lod(mut self, image_mip_tail_first_lod: u32) -> Self {
         self.image_mip_tail_first_lod = image_mip_tail_first_lod;
         self
     }
+    #[inline]
     pub fn image_mip_tail_size(mut self, image_mip_tail_size: DeviceSize) -> Self {
         self.image_mip_tail_size = image_mip_tail_size;
         self
     }
+    #[inline]
     pub fn image_mip_tail_offset(mut self, image_mip_tail_offset: DeviceSize) -> Self {
         self.image_mip_tail_offset = image_mip_tail_offset;
         self
     }
+    #[inline]
     pub fn image_mip_tail_stride(mut self, image_mip_tail_stride: DeviceSize) -> Self {
         self.image_mip_tail_stride = image_mip_tail_stride;
         self
@@ -1424,10 +1508,12 @@ pub struct MemoryType {
     pub heap_index: u32,
 }
 impl MemoryType {
+    #[inline]
     pub fn property_flags(mut self, property_flags: MemoryPropertyFlags) -> Self {
         self.property_flags = property_flags;
         self
     }
+    #[inline]
     pub fn heap_index(mut self, heap_index: u32) -> Self {
         self.heap_index = heap_index;
         self
@@ -1442,10 +1528,12 @@ pub struct MemoryHeap {
     pub flags: MemoryHeapFlags,
 }
 impl MemoryHeap {
+    #[inline]
     pub fn size(mut self, size: DeviceSize) -> Self {
         self.size = size;
         self
     }
+    #[inline]
     pub fn flags(mut self, flags: MemoryHeapFlags) -> Self {
         self.flags = flags;
         self
@@ -1476,14 +1564,17 @@ impl ::std::default::Default for MappedMemoryRange<'_> {
     }
 }
 impl<'a> MappedMemoryRange<'a> {
+    #[inline]
     pub fn memory(mut self, memory: DeviceMemory) -> Self {
         self.memory = memory;
         self
     }
+    #[inline]
     pub fn offset(mut self, offset: DeviceSize) -> Self {
         self.offset = offset;
         self
     }
+    #[inline]
     pub fn size(mut self, size: DeviceSize) -> Self {
         self.size = size;
         self
@@ -1499,14 +1590,17 @@ pub struct FormatProperties {
     pub buffer_features: FormatFeatureFlags,
 }
 impl FormatProperties {
+    #[inline]
     pub fn linear_tiling_features(mut self, linear_tiling_features: FormatFeatureFlags) -> Self {
         self.linear_tiling_features = linear_tiling_features;
         self
     }
+    #[inline]
     pub fn optimal_tiling_features(mut self, optimal_tiling_features: FormatFeatureFlags) -> Self {
         self.optimal_tiling_features = optimal_tiling_features;
         self
     }
+    #[inline]
     pub fn buffer_features(mut self, buffer_features: FormatFeatureFlags) -> Self {
         self.buffer_features = buffer_features;
         self
@@ -1524,22 +1618,27 @@ pub struct ImageFormatProperties {
     pub max_resource_size: DeviceSize,
 }
 impl ImageFormatProperties {
+    #[inline]
     pub fn max_extent(mut self, max_extent: Extent3D) -> Self {
         self.max_extent = max_extent;
         self
     }
+    #[inline]
     pub fn max_mip_levels(mut self, max_mip_levels: u32) -> Self {
         self.max_mip_levels = max_mip_levels;
         self
     }
+    #[inline]
     pub fn max_array_layers(mut self, max_array_layers: u32) -> Self {
         self.max_array_layers = max_array_layers;
         self
     }
+    #[inline]
     pub fn sample_counts(mut self, sample_counts: SampleCountFlags) -> Self {
         self.sample_counts = sample_counts;
         self
     }
+    #[inline]
     pub fn max_resource_size(mut self, max_resource_size: DeviceSize) -> Self {
         self.max_resource_size = max_resource_size;
         self
@@ -1555,14 +1654,17 @@ pub struct DescriptorBufferInfo {
     pub range: DeviceSize,
 }
 impl DescriptorBufferInfo {
+    #[inline]
     pub fn buffer(mut self, buffer: Buffer) -> Self {
         self.buffer = buffer;
         self
     }
+    #[inline]
     pub fn offset(mut self, offset: DeviceSize) -> Self {
         self.offset = offset;
         self
     }
+    #[inline]
     pub fn range(mut self, range: DeviceSize) -> Self {
         self.range = range;
         self
@@ -1578,14 +1680,17 @@ pub struct DescriptorImageInfo {
     pub image_layout: ImageLayout,
 }
 impl DescriptorImageInfo {
+    #[inline]
     pub fn sampler(mut self, sampler: Sampler) -> Self {
         self.sampler = sampler;
         self
     }
+    #[inline]
     pub fn image_view(mut self, image_view: ImageView) -> Self {
         self.image_view = image_view;
         self
     }
+    #[inline]
     pub fn image_layout(mut self, image_layout: ImageLayout) -> Self {
         self.image_layout = image_layout;
         self
@@ -1627,32 +1732,39 @@ impl ::std::default::Default for WriteDescriptorSet<'_> {
 }
 pub unsafe trait ExtendsWriteDescriptorSet {}
 impl<'a> WriteDescriptorSet<'a> {
+    #[inline]
     pub fn dst_set(mut self, dst_set: DescriptorSet) -> Self {
         self.dst_set = dst_set;
         self
     }
+    #[inline]
     pub fn dst_binding(mut self, dst_binding: u32) -> Self {
         self.dst_binding = dst_binding;
         self
     }
+    #[inline]
     pub fn dst_array_element(mut self, dst_array_element: u32) -> Self {
         self.dst_array_element = dst_array_element;
         self
     }
+    #[inline]
     pub fn descriptor_type(mut self, descriptor_type: DescriptorType) -> Self {
         self.descriptor_type = descriptor_type;
         self
     }
+    #[inline]
     pub fn image_info(mut self, image_info: &'a [DescriptorImageInfo]) -> Self {
         self.descriptor_count = image_info.len() as _;
         self.p_image_info = image_info.as_ptr();
         self
     }
+    #[inline]
     pub fn buffer_info(mut self, buffer_info: &'a [DescriptorBufferInfo]) -> Self {
         self.descriptor_count = buffer_info.len() as _;
         self.p_buffer_info = buffer_info.as_ptr();
         self
     }
+    #[inline]
     pub fn texel_buffer_view(mut self, texel_buffer_view: &'a [BufferView]) -> Self {
         self.descriptor_count = texel_buffer_view.len() as _;
         self.p_texel_buffer_view = texel_buffer_view.as_ptr();
@@ -1706,30 +1818,37 @@ impl ::std::default::Default for CopyDescriptorSet<'_> {
     }
 }
 impl<'a> CopyDescriptorSet<'a> {
+    #[inline]
     pub fn src_set(mut self, src_set: DescriptorSet) -> Self {
         self.src_set = src_set;
         self
     }
+    #[inline]
     pub fn src_binding(mut self, src_binding: u32) -> Self {
         self.src_binding = src_binding;
         self
     }
+    #[inline]
     pub fn src_array_element(mut self, src_array_element: u32) -> Self {
         self.src_array_element = src_array_element;
         self
     }
+    #[inline]
     pub fn dst_set(mut self, dst_set: DescriptorSet) -> Self {
         self.dst_set = dst_set;
         self
     }
+    #[inline]
     pub fn dst_binding(mut self, dst_binding: u32) -> Self {
         self.dst_binding = dst_binding;
         self
     }
+    #[inline]
     pub fn dst_array_element(mut self, dst_array_element: u32) -> Self {
         self.dst_array_element = dst_array_element;
         self
     }
+    #[inline]
     pub fn descriptor_count(mut self, descriptor_count: u32) -> Self {
         self.descriptor_count = descriptor_count;
         self
@@ -1767,22 +1886,27 @@ impl ::std::default::Default for BufferCreateInfo<'_> {
 }
 pub unsafe trait ExtendsBufferCreateInfo {}
 impl<'a> BufferCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: BufferCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn size(mut self, size: DeviceSize) -> Self {
         self.size = size;
         self
     }
+    #[inline]
     pub fn usage(mut self, usage: BufferUsageFlags) -> Self {
         self.usage = usage;
         self
     }
+    #[inline]
     pub fn sharing_mode(mut self, sharing_mode: SharingMode) -> Self {
         self.sharing_mode = sharing_mode;
         self
     }
+    #[inline]
     pub fn queue_family_indices(mut self, queue_family_indices: &'a [u32]) -> Self {
         self.queue_family_index_count = queue_family_indices.len() as _;
         self.p_queue_family_indices = queue_family_indices.as_ptr();
@@ -1832,22 +1956,27 @@ impl ::std::default::Default for BufferViewCreateInfo<'_> {
     }
 }
 impl<'a> BufferViewCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: BufferViewCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn buffer(mut self, buffer: Buffer) -> Self {
         self.buffer = buffer;
         self
     }
+    #[inline]
     pub fn format(mut self, format: Format) -> Self {
         self.format = format;
         self
     }
+    #[inline]
     pub fn offset(mut self, offset: DeviceSize) -> Self {
         self.offset = offset;
         self
     }
+    #[inline]
     pub fn range(mut self, range: DeviceSize) -> Self {
         self.range = range;
         self
@@ -1863,14 +1992,17 @@ pub struct ImageSubresource {
     pub array_layer: u32,
 }
 impl ImageSubresource {
+    #[inline]
     pub fn aspect_mask(mut self, aspect_mask: ImageAspectFlags) -> Self {
         self.aspect_mask = aspect_mask;
         self
     }
+    #[inline]
     pub fn mip_level(mut self, mip_level: u32) -> Self {
         self.mip_level = mip_level;
         self
     }
+    #[inline]
     pub fn array_layer(mut self, array_layer: u32) -> Self {
         self.array_layer = array_layer;
         self
@@ -1887,18 +2019,22 @@ pub struct ImageSubresourceLayers {
     pub layer_count: u32,
 }
 impl ImageSubresourceLayers {
+    #[inline]
     pub fn aspect_mask(mut self, aspect_mask: ImageAspectFlags) -> Self {
         self.aspect_mask = aspect_mask;
         self
     }
+    #[inline]
     pub fn mip_level(mut self, mip_level: u32) -> Self {
         self.mip_level = mip_level;
         self
     }
+    #[inline]
     pub fn base_array_layer(mut self, base_array_layer: u32) -> Self {
         self.base_array_layer = base_array_layer;
         self
     }
+    #[inline]
     pub fn layer_count(mut self, layer_count: u32) -> Self {
         self.layer_count = layer_count;
         self
@@ -1916,22 +2052,27 @@ pub struct ImageSubresourceRange {
     pub layer_count: u32,
 }
 impl ImageSubresourceRange {
+    #[inline]
     pub fn aspect_mask(mut self, aspect_mask: ImageAspectFlags) -> Self {
         self.aspect_mask = aspect_mask;
         self
     }
+    #[inline]
     pub fn base_mip_level(mut self, base_mip_level: u32) -> Self {
         self.base_mip_level = base_mip_level;
         self
     }
+    #[inline]
     pub fn level_count(mut self, level_count: u32) -> Self {
         self.level_count = level_count;
         self
     }
+    #[inline]
     pub fn base_array_layer(mut self, base_array_layer: u32) -> Self {
         self.base_array_layer = base_array_layer;
         self
     }
+    #[inline]
     pub fn layer_count(mut self, layer_count: u32) -> Self {
         self.layer_count = layer_count;
         self
@@ -1960,10 +2101,12 @@ impl ::std::default::Default for MemoryBarrier<'_> {
     }
 }
 impl<'a> MemoryBarrier<'a> {
+    #[inline]
     pub fn src_access_mask(mut self, src_access_mask: AccessFlags) -> Self {
         self.src_access_mask = src_access_mask;
         self
     }
+    #[inline]
     pub fn dst_access_mask(mut self, dst_access_mask: AccessFlags) -> Self {
         self.dst_access_mask = dst_access_mask;
         self
@@ -2002,30 +2145,37 @@ impl ::std::default::Default for BufferMemoryBarrier<'_> {
     }
 }
 impl<'a> BufferMemoryBarrier<'a> {
+    #[inline]
     pub fn src_access_mask(mut self, src_access_mask: AccessFlags) -> Self {
         self.src_access_mask = src_access_mask;
         self
     }
+    #[inline]
     pub fn dst_access_mask(mut self, dst_access_mask: AccessFlags) -> Self {
         self.dst_access_mask = dst_access_mask;
         self
     }
+    #[inline]
     pub fn src_queue_family_index(mut self, src_queue_family_index: u32) -> Self {
         self.src_queue_family_index = src_queue_family_index;
         self
     }
+    #[inline]
     pub fn dst_queue_family_index(mut self, dst_queue_family_index: u32) -> Self {
         self.dst_queue_family_index = dst_queue_family_index;
         self
     }
+    #[inline]
     pub fn buffer(mut self, buffer: Buffer) -> Self {
         self.buffer = buffer;
         self
     }
+    #[inline]
     pub fn offset(mut self, offset: DeviceSize) -> Self {
         self.offset = offset;
         self
     }
+    #[inline]
     pub fn size(mut self, size: DeviceSize) -> Self {
         self.size = size;
         self
@@ -2067,34 +2217,42 @@ impl ::std::default::Default for ImageMemoryBarrier<'_> {
 }
 pub unsafe trait ExtendsImageMemoryBarrier {}
 impl<'a> ImageMemoryBarrier<'a> {
+    #[inline]
     pub fn src_access_mask(mut self, src_access_mask: AccessFlags) -> Self {
         self.src_access_mask = src_access_mask;
         self
     }
+    #[inline]
     pub fn dst_access_mask(mut self, dst_access_mask: AccessFlags) -> Self {
         self.dst_access_mask = dst_access_mask;
         self
     }
+    #[inline]
     pub fn old_layout(mut self, old_layout: ImageLayout) -> Self {
         self.old_layout = old_layout;
         self
     }
+    #[inline]
     pub fn new_layout(mut self, new_layout: ImageLayout) -> Self {
         self.new_layout = new_layout;
         self
     }
+    #[inline]
     pub fn src_queue_family_index(mut self, src_queue_family_index: u32) -> Self {
         self.src_queue_family_index = src_queue_family_index;
         self
     }
+    #[inline]
     pub fn dst_queue_family_index(mut self, dst_queue_family_index: u32) -> Self {
         self.dst_queue_family_index = dst_queue_family_index;
         self
     }
+    #[inline]
     pub fn image(mut self, image: Image) -> Self {
         self.image = image;
         self
     }
+    #[inline]
     pub fn subresource_range(mut self, subresource_range: ImageSubresourceRange) -> Self {
         self.subresource_range = subresource_range;
         self
@@ -2160,51 +2318,63 @@ impl ::std::default::Default for ImageCreateInfo<'_> {
 }
 pub unsafe trait ExtendsImageCreateInfo {}
 impl<'a> ImageCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: ImageCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn image_type(mut self, image_type: ImageType) -> Self {
         self.image_type = image_type;
         self
     }
+    #[inline]
     pub fn format(mut self, format: Format) -> Self {
         self.format = format;
         self
     }
+    #[inline]
     pub fn extent(mut self, extent: Extent3D) -> Self {
         self.extent = extent;
         self
     }
+    #[inline]
     pub fn mip_levels(mut self, mip_levels: u32) -> Self {
         self.mip_levels = mip_levels;
         self
     }
+    #[inline]
     pub fn array_layers(mut self, array_layers: u32) -> Self {
         self.array_layers = array_layers;
         self
     }
+    #[inline]
     pub fn samples(mut self, samples: SampleCountFlags) -> Self {
         self.samples = samples;
         self
     }
+    #[inline]
     pub fn tiling(mut self, tiling: ImageTiling) -> Self {
         self.tiling = tiling;
         self
     }
+    #[inline]
     pub fn usage(mut self, usage: ImageUsageFlags) -> Self {
         self.usage = usage;
         self
     }
+    #[inline]
     pub fn sharing_mode(mut self, sharing_mode: SharingMode) -> Self {
         self.sharing_mode = sharing_mode;
         self
     }
+    #[inline]
     pub fn queue_family_indices(mut self, queue_family_indices: &'a [u32]) -> Self {
         self.queue_family_index_count = queue_family_indices.len() as _;
         self.p_queue_family_indices = queue_family_indices.as_ptr();
         self
     }
+    #[inline]
     pub fn initial_layout(mut self, initial_layout: ImageLayout) -> Self {
         self.initial_layout = initial_layout;
         self
@@ -2236,22 +2406,27 @@ pub struct SubresourceLayout {
     pub depth_pitch: DeviceSize,
 }
 impl SubresourceLayout {
+    #[inline]
     pub fn offset(mut self, offset: DeviceSize) -> Self {
         self.offset = offset;
         self
     }
+    #[inline]
     pub fn size(mut self, size: DeviceSize) -> Self {
         self.size = size;
         self
     }
+    #[inline]
     pub fn row_pitch(mut self, row_pitch: DeviceSize) -> Self {
         self.row_pitch = row_pitch;
         self
     }
+    #[inline]
     pub fn array_pitch(mut self, array_pitch: DeviceSize) -> Self {
         self.array_pitch = array_pitch;
         self
     }
+    #[inline]
     pub fn depth_pitch(mut self, depth_pitch: DeviceSize) -> Self {
         self.depth_pitch = depth_pitch;
         self
@@ -2289,26 +2464,32 @@ impl ::std::default::Default for ImageViewCreateInfo<'_> {
 }
 pub unsafe trait ExtendsImageViewCreateInfo {}
 impl<'a> ImageViewCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: ImageViewCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn image(mut self, image: Image) -> Self {
         self.image = image;
         self
     }
+    #[inline]
     pub fn view_type(mut self, view_type: ImageViewType) -> Self {
         self.view_type = view_type;
         self
     }
+    #[inline]
     pub fn format(mut self, format: Format) -> Self {
         self.format = format;
         self
     }
+    #[inline]
     pub fn components(mut self, components: ComponentMapping) -> Self {
         self.components = components;
         self
     }
+    #[inline]
     pub fn subresource_range(mut self, subresource_range: ImageSubresourceRange) -> Self {
         self.subresource_range = subresource_range;
         self
@@ -2338,14 +2519,17 @@ pub struct BufferCopy {
     pub size: DeviceSize,
 }
 impl BufferCopy {
+    #[inline]
     pub fn src_offset(mut self, src_offset: DeviceSize) -> Self {
         self.src_offset = src_offset;
         self
     }
+    #[inline]
     pub fn dst_offset(mut self, dst_offset: DeviceSize) -> Self {
         self.dst_offset = dst_offset;
         self
     }
+    #[inline]
     pub fn size(mut self, size: DeviceSize) -> Self {
         self.size = size;
         self
@@ -2363,22 +2547,27 @@ pub struct SparseMemoryBind {
     pub flags: SparseMemoryBindFlags,
 }
 impl SparseMemoryBind {
+    #[inline]
     pub fn resource_offset(mut self, resource_offset: DeviceSize) -> Self {
         self.resource_offset = resource_offset;
         self
     }
+    #[inline]
     pub fn size(mut self, size: DeviceSize) -> Self {
         self.size = size;
         self
     }
+    #[inline]
     pub fn memory(mut self, memory: DeviceMemory) -> Self {
         self.memory = memory;
         self
     }
+    #[inline]
     pub fn memory_offset(mut self, memory_offset: DeviceSize) -> Self {
         self.memory_offset = memory_offset;
         self
     }
+    #[inline]
     pub fn flags(mut self, flags: SparseMemoryBindFlags) -> Self {
         self.flags = flags;
         self
@@ -2397,26 +2586,32 @@ pub struct SparseImageMemoryBind {
     pub flags: SparseMemoryBindFlags,
 }
 impl SparseImageMemoryBind {
+    #[inline]
     pub fn subresource(mut self, subresource: ImageSubresource) -> Self {
         self.subresource = subresource;
         self
     }
+    #[inline]
     pub fn offset(mut self, offset: Offset3D) -> Self {
         self.offset = offset;
         self
     }
+    #[inline]
     pub fn extent(mut self, extent: Extent3D) -> Self {
         self.extent = extent;
         self
     }
+    #[inline]
     pub fn memory(mut self, memory: DeviceMemory) -> Self {
         self.memory = memory;
         self
     }
+    #[inline]
     pub fn memory_offset(mut self, memory_offset: DeviceSize) -> Self {
         self.memory_offset = memory_offset;
         self
     }
+    #[inline]
     pub fn flags(mut self, flags: SparseMemoryBindFlags) -> Self {
         self.flags = flags;
         self
@@ -2443,10 +2638,12 @@ impl ::std::default::Default for SparseBufferMemoryBindInfo<'_> {
     }
 }
 impl<'a> SparseBufferMemoryBindInfo<'a> {
+    #[inline]
     pub fn buffer(mut self, buffer: Buffer) -> Self {
         self.buffer = buffer;
         self
     }
+    #[inline]
     pub fn binds(mut self, binds: &'a [SparseMemoryBind]) -> Self {
         self.bind_count = binds.len() as _;
         self.p_binds = binds.as_ptr();
@@ -2474,10 +2671,12 @@ impl ::std::default::Default for SparseImageOpaqueMemoryBindInfo<'_> {
     }
 }
 impl<'a> SparseImageOpaqueMemoryBindInfo<'a> {
+    #[inline]
     pub fn image(mut self, image: Image) -> Self {
         self.image = image;
         self
     }
+    #[inline]
     pub fn binds(mut self, binds: &'a [SparseMemoryBind]) -> Self {
         self.bind_count = binds.len() as _;
         self.p_binds = binds.as_ptr();
@@ -2505,10 +2704,12 @@ impl ::std::default::Default for SparseImageMemoryBindInfo<'_> {
     }
 }
 impl<'a> SparseImageMemoryBindInfo<'a> {
+    #[inline]
     pub fn image(mut self, image: Image) -> Self {
         self.image = image;
         self
     }
+    #[inline]
     pub fn binds(mut self, binds: &'a [SparseImageMemoryBind]) -> Self {
         self.bind_count = binds.len() as _;
         self.p_binds = binds.as_ptr();
@@ -2555,16 +2756,19 @@ impl ::std::default::Default for BindSparseInfo<'_> {
 }
 pub unsafe trait ExtendsBindSparseInfo {}
 impl<'a> BindSparseInfo<'a> {
+    #[inline]
     pub fn wait_semaphores(mut self, wait_semaphores: &'a [Semaphore]) -> Self {
         self.wait_semaphore_count = wait_semaphores.len() as _;
         self.p_wait_semaphores = wait_semaphores.as_ptr();
         self
     }
+    #[inline]
     pub fn buffer_binds(mut self, buffer_binds: &'a [SparseBufferMemoryBindInfo]) -> Self {
         self.buffer_bind_count = buffer_binds.len() as _;
         self.p_buffer_binds = buffer_binds.as_ptr();
         self
     }
+    #[inline]
     pub fn image_opaque_binds(
         mut self,
         image_opaque_binds: &'a [SparseImageOpaqueMemoryBindInfo],
@@ -2573,11 +2777,13 @@ impl<'a> BindSparseInfo<'a> {
         self.p_image_opaque_binds = image_opaque_binds.as_ptr();
         self
     }
+    #[inline]
     pub fn image_binds(mut self, image_binds: &'a [SparseImageMemoryBindInfo]) -> Self {
         self.image_bind_count = image_binds.len() as _;
         self.p_image_binds = image_binds.as_ptr();
         self
     }
+    #[inline]
     pub fn signal_semaphores(mut self, signal_semaphores: &'a [Semaphore]) -> Self {
         self.signal_semaphore_count = signal_semaphores.len() as _;
         self.p_signal_semaphores = signal_semaphores.as_ptr();
@@ -2610,22 +2816,27 @@ pub struct ImageCopy {
     pub extent: Extent3D,
 }
 impl ImageCopy {
+    #[inline]
     pub fn src_subresource(mut self, src_subresource: ImageSubresourceLayers) -> Self {
         self.src_subresource = src_subresource;
         self
     }
+    #[inline]
     pub fn src_offset(mut self, src_offset: Offset3D) -> Self {
         self.src_offset = src_offset;
         self
     }
+    #[inline]
     pub fn dst_subresource(mut self, dst_subresource: ImageSubresourceLayers) -> Self {
         self.dst_subresource = dst_subresource;
         self
     }
+    #[inline]
     pub fn dst_offset(mut self, dst_offset: Offset3D) -> Self {
         self.dst_offset = dst_offset;
         self
     }
+    #[inline]
     pub fn extent(mut self, extent: Extent3D) -> Self {
         self.extent = extent;
         self
@@ -2652,18 +2863,22 @@ impl ::std::default::Default for ImageBlit {
     }
 }
 impl ImageBlit {
+    #[inline]
     pub fn src_subresource(mut self, src_subresource: ImageSubresourceLayers) -> Self {
         self.src_subresource = src_subresource;
         self
     }
+    #[inline]
     pub fn src_offsets(mut self, src_offsets: [Offset3D; 2]) -> Self {
         self.src_offsets = src_offsets;
         self
     }
+    #[inline]
     pub fn dst_subresource(mut self, dst_subresource: ImageSubresourceLayers) -> Self {
         self.dst_subresource = dst_subresource;
         self
     }
+    #[inline]
     pub fn dst_offsets(mut self, dst_offsets: [Offset3D; 2]) -> Self {
         self.dst_offsets = dst_offsets;
         self
@@ -2682,26 +2897,32 @@ pub struct BufferImageCopy {
     pub image_extent: Extent3D,
 }
 impl BufferImageCopy {
+    #[inline]
     pub fn buffer_offset(mut self, buffer_offset: DeviceSize) -> Self {
         self.buffer_offset = buffer_offset;
         self
     }
+    #[inline]
     pub fn buffer_row_length(mut self, buffer_row_length: u32) -> Self {
         self.buffer_row_length = buffer_row_length;
         self
     }
+    #[inline]
     pub fn buffer_image_height(mut self, buffer_image_height: u32) -> Self {
         self.buffer_image_height = buffer_image_height;
         self
     }
+    #[inline]
     pub fn image_subresource(mut self, image_subresource: ImageSubresourceLayers) -> Self {
         self.image_subresource = image_subresource;
         self
     }
+    #[inline]
     pub fn image_offset(mut self, image_offset: Offset3D) -> Self {
         self.image_offset = image_offset;
         self
     }
+    #[inline]
     pub fn image_extent(mut self, image_extent: Extent3D) -> Self {
         self.image_extent = image_extent;
         self
@@ -2719,22 +2940,27 @@ pub struct ImageResolve {
     pub extent: Extent3D,
 }
 impl ImageResolve {
+    #[inline]
     pub fn src_subresource(mut self, src_subresource: ImageSubresourceLayers) -> Self {
         self.src_subresource = src_subresource;
         self
     }
+    #[inline]
     pub fn src_offset(mut self, src_offset: Offset3D) -> Self {
         self.src_offset = src_offset;
         self
     }
+    #[inline]
     pub fn dst_subresource(mut self, dst_subresource: ImageSubresourceLayers) -> Self {
         self.dst_subresource = dst_subresource;
         self
     }
+    #[inline]
     pub fn dst_offset(mut self, dst_offset: Offset3D) -> Self {
         self.dst_offset = dst_offset;
         self
     }
+    #[inline]
     pub fn extent(mut self, extent: Extent3D) -> Self {
         self.extent = extent;
         self
@@ -2766,10 +2992,12 @@ impl ::std::default::Default for ShaderModuleCreateInfo<'_> {
 }
 pub unsafe trait ExtendsShaderModuleCreateInfo {}
 impl<'a> ShaderModuleCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: ShaderModuleCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn code(mut self, code: &'a [u32]) -> Self {
         self.code_size = code.len() * 4;
         self.p_code = code.as_ptr();
@@ -2815,22 +3043,27 @@ impl ::std::default::Default for DescriptorSetLayoutBinding<'_> {
     }
 }
 impl<'a> DescriptorSetLayoutBinding<'a> {
+    #[inline]
     pub fn binding(mut self, binding: u32) -> Self {
         self.binding = binding;
         self
     }
+    #[inline]
     pub fn descriptor_type(mut self, descriptor_type: DescriptorType) -> Self {
         self.descriptor_type = descriptor_type;
         self
     }
+    #[inline]
     pub fn descriptor_count(mut self, descriptor_count: u32) -> Self {
         self.descriptor_count = descriptor_count;
         self
     }
+    #[inline]
     pub fn stage_flags(mut self, stage_flags: ShaderStageFlags) -> Self {
         self.stage_flags = stage_flags;
         self
     }
+    #[inline]
     pub fn immutable_samplers(mut self, immutable_samplers: &'a [Sampler]) -> Self {
         self.descriptor_count = immutable_samplers.len() as _;
         self.p_immutable_samplers = immutable_samplers.as_ptr();
@@ -2863,10 +3096,12 @@ impl ::std::default::Default for DescriptorSetLayoutCreateInfo<'_> {
 }
 pub unsafe trait ExtendsDescriptorSetLayoutCreateInfo {}
 impl<'a> DescriptorSetLayoutCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: DescriptorSetLayoutCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn bindings(mut self, bindings: &'a [DescriptorSetLayoutBinding]) -> Self {
         self.binding_count = bindings.len() as _;
         self.p_bindings = bindings.as_ptr();
@@ -2896,10 +3131,12 @@ pub struct DescriptorPoolSize {
     pub descriptor_count: u32,
 }
 impl DescriptorPoolSize {
+    #[inline]
     pub fn ty(mut self, ty: DescriptorType) -> Self {
         self.ty = ty;
         self
     }
+    #[inline]
     pub fn descriptor_count(mut self, descriptor_count: u32) -> Self {
         self.descriptor_count = descriptor_count;
         self
@@ -2933,14 +3170,17 @@ impl ::std::default::Default for DescriptorPoolCreateInfo<'_> {
 }
 pub unsafe trait ExtendsDescriptorPoolCreateInfo {}
 impl<'a> DescriptorPoolCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: DescriptorPoolCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn max_sets(mut self, max_sets: u32) -> Self {
         self.max_sets = max_sets;
         self
     }
+    #[inline]
     pub fn pool_sizes(mut self, pool_sizes: &'a [DescriptorPoolSize]) -> Self {
         self.pool_size_count = pool_sizes.len() as _;
         self.p_pool_sizes = pool_sizes.as_ptr();
@@ -2987,10 +3227,12 @@ impl ::std::default::Default for DescriptorSetAllocateInfo<'_> {
 }
 pub unsafe trait ExtendsDescriptorSetAllocateInfo {}
 impl<'a> DescriptorSetAllocateInfo<'a> {
+    #[inline]
     pub fn descriptor_pool(mut self, descriptor_pool: DescriptorPool) -> Self {
         self.descriptor_pool = descriptor_pool;
         self
     }
+    #[inline]
     pub fn set_layouts(mut self, set_layouts: &'a [DescriptorSetLayout]) -> Self {
         self.descriptor_set_count = set_layouts.len() as _;
         self.p_set_layouts = set_layouts.as_ptr();
@@ -3021,14 +3263,17 @@ pub struct SpecializationMapEntry {
     pub size: usize,
 }
 impl SpecializationMapEntry {
+    #[inline]
     pub fn constant_id(mut self, constant_id: u32) -> Self {
         self.constant_id = constant_id;
         self
     }
+    #[inline]
     pub fn offset(mut self, offset: u32) -> Self {
         self.offset = offset;
         self
     }
+    #[inline]
     pub fn size(mut self, size: usize) -> Self {
         self.size = size;
         self
@@ -3057,11 +3302,13 @@ impl ::std::default::Default for SpecializationInfo<'_> {
     }
 }
 impl<'a> SpecializationInfo<'a> {
+    #[inline]
     pub fn map_entries(mut self, map_entries: &'a [SpecializationMapEntry]) -> Self {
         self.map_entry_count = map_entries.len() as _;
         self.p_map_entries = map_entries.as_ptr();
         self
     }
+    #[inline]
     pub fn data(mut self, data: &'a [u8]) -> Self {
         self.data_size = data.len();
         self.p_data = data.as_ptr() as *const c_void;
@@ -3098,22 +3345,27 @@ impl ::std::default::Default for PipelineShaderStageCreateInfo<'_> {
 }
 pub unsafe trait ExtendsPipelineShaderStageCreateInfo {}
 impl<'a> PipelineShaderStageCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: PipelineShaderStageCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn stage(mut self, stage: ShaderStageFlags) -> Self {
         self.stage = stage;
         self
     }
+    #[inline]
     pub fn module(mut self, module: ShaderModule) -> Self {
         self.module = module;
         self
     }
+    #[inline]
     pub fn name(mut self, name: &'a ::std::ffi::CStr) -> Self {
         self.p_name = name.as_ptr();
         self
     }
+    #[inline]
     pub fn specialization_info(mut self, specialization_info: &'a SpecializationInfo<'a>) -> Self {
         self.p_specialization_info = specialization_info;
         self
@@ -3163,22 +3415,27 @@ impl ::std::default::Default for ComputePipelineCreateInfo<'_> {
 }
 pub unsafe trait ExtendsComputePipelineCreateInfo {}
 impl<'a> ComputePipelineCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: PipelineCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn stage(mut self, stage: PipelineShaderStageCreateInfo<'a>) -> Self {
         self.stage = stage;
         self
     }
+    #[inline]
     pub fn layout(mut self, layout: PipelineLayout) -> Self {
         self.layout = layout;
         self
     }
+    #[inline]
     pub fn base_pipeline_handle(mut self, base_pipeline_handle: Pipeline) -> Self {
         self.base_pipeline_handle = base_pipeline_handle;
         self
     }
+    #[inline]
     pub fn base_pipeline_index(mut self, base_pipeline_index: i32) -> Self {
         self.base_pipeline_index = base_pipeline_index;
         self
@@ -3208,14 +3465,17 @@ pub struct VertexInputBindingDescription {
     pub input_rate: VertexInputRate,
 }
 impl VertexInputBindingDescription {
+    #[inline]
     pub fn binding(mut self, binding: u32) -> Self {
         self.binding = binding;
         self
     }
+    #[inline]
     pub fn stride(mut self, stride: u32) -> Self {
         self.stride = stride;
         self
     }
+    #[inline]
     pub fn input_rate(mut self, input_rate: VertexInputRate) -> Self {
         self.input_rate = input_rate;
         self
@@ -3232,18 +3492,22 @@ pub struct VertexInputAttributeDescription {
     pub offset: u32,
 }
 impl VertexInputAttributeDescription {
+    #[inline]
     pub fn location(mut self, location: u32) -> Self {
         self.location = location;
         self
     }
+    #[inline]
     pub fn binding(mut self, binding: u32) -> Self {
         self.binding = binding;
         self
     }
+    #[inline]
     pub fn format(mut self, format: Format) -> Self {
         self.format = format;
         self
     }
+    #[inline]
     pub fn offset(mut self, offset: u32) -> Self {
         self.offset = offset;
         self
@@ -3279,10 +3543,12 @@ impl ::std::default::Default for PipelineVertexInputStateCreateInfo<'_> {
 }
 pub unsafe trait ExtendsPipelineVertexInputStateCreateInfo {}
 impl<'a> PipelineVertexInputStateCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: PipelineVertexInputStateCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn vertex_binding_descriptions(
         mut self,
         vertex_binding_descriptions: &'a [VertexInputBindingDescription],
@@ -3291,6 +3557,7 @@ impl<'a> PipelineVertexInputStateCreateInfo<'a> {
         self.p_vertex_binding_descriptions = vertex_binding_descriptions.as_ptr();
         self
     }
+    #[inline]
     pub fn vertex_attribute_descriptions(
         mut self,
         vertex_attribute_descriptions: &'a [VertexInputAttributeDescription],
@@ -3342,14 +3609,17 @@ impl ::std::default::Default for PipelineInputAssemblyStateCreateInfo<'_> {
     }
 }
 impl<'a> PipelineInputAssemblyStateCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: PipelineInputAssemblyStateCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn topology(mut self, topology: PrimitiveTopology) -> Self {
         self.topology = topology;
         self
     }
+    #[inline]
     pub fn primitive_restart_enable(mut self, primitive_restart_enable: bool) -> Self {
         self.primitive_restart_enable = primitive_restart_enable.into();
         self
@@ -3379,10 +3649,12 @@ impl ::std::default::Default for PipelineTessellationStateCreateInfo<'_> {
 }
 pub unsafe trait ExtendsPipelineTessellationStateCreateInfo {}
 impl<'a> PipelineTessellationStateCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: PipelineTessellationStateCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn patch_control_points(mut self, patch_control_points: u32) -> Self {
         self.patch_control_points = patch_control_points;
         self
@@ -3435,23 +3707,28 @@ impl ::std::default::Default for PipelineViewportStateCreateInfo<'_> {
 }
 pub unsafe trait ExtendsPipelineViewportStateCreateInfo {}
 impl<'a> PipelineViewportStateCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: PipelineViewportStateCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn viewport_count(mut self, viewport_count: u32) -> Self {
         self.viewport_count = viewport_count;
         self
     }
+    #[inline]
     pub fn viewports(mut self, viewports: &'a [Viewport]) -> Self {
         self.viewport_count = viewports.len() as _;
         self.p_viewports = viewports.as_ptr();
         self
     }
+    #[inline]
     pub fn scissor_count(mut self, scissor_count: u32) -> Self {
         self.scissor_count = scissor_count;
         self
     }
+    #[inline]
     pub fn scissors(mut self, scissors: &'a [Rect2D]) -> Self {
         self.scissor_count = scissors.len() as _;
         self.p_scissors = scissors.as_ptr();
@@ -3514,46 +3791,57 @@ impl ::std::default::Default for PipelineRasterizationStateCreateInfo<'_> {
 }
 pub unsafe trait ExtendsPipelineRasterizationStateCreateInfo {}
 impl<'a> PipelineRasterizationStateCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: PipelineRasterizationStateCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn depth_clamp_enable(mut self, depth_clamp_enable: bool) -> Self {
         self.depth_clamp_enable = depth_clamp_enable.into();
         self
     }
+    #[inline]
     pub fn rasterizer_discard_enable(mut self, rasterizer_discard_enable: bool) -> Self {
         self.rasterizer_discard_enable = rasterizer_discard_enable.into();
         self
     }
+    #[inline]
     pub fn polygon_mode(mut self, polygon_mode: PolygonMode) -> Self {
         self.polygon_mode = polygon_mode;
         self
     }
+    #[inline]
     pub fn cull_mode(mut self, cull_mode: CullModeFlags) -> Self {
         self.cull_mode = cull_mode;
         self
     }
+    #[inline]
     pub fn front_face(mut self, front_face: FrontFace) -> Self {
         self.front_face = front_face;
         self
     }
+    #[inline]
     pub fn depth_bias_enable(mut self, depth_bias_enable: bool) -> Self {
         self.depth_bias_enable = depth_bias_enable.into();
         self
     }
+    #[inline]
     pub fn depth_bias_constant_factor(mut self, depth_bias_constant_factor: f32) -> Self {
         self.depth_bias_constant_factor = depth_bias_constant_factor;
         self
     }
+    #[inline]
     pub fn depth_bias_clamp(mut self, depth_bias_clamp: f32) -> Self {
         self.depth_bias_clamp = depth_bias_clamp;
         self
     }
+    #[inline]
     pub fn depth_bias_slope_factor(mut self, depth_bias_slope_factor: f32) -> Self {
         self.depth_bias_slope_factor = depth_bias_slope_factor;
         self
     }
+    #[inline]
     pub fn line_width(mut self, line_width: f32) -> Self {
         self.line_width = line_width;
         self
@@ -3610,18 +3898,22 @@ impl ::std::default::Default for PipelineMultisampleStateCreateInfo<'_> {
 }
 pub unsafe trait ExtendsPipelineMultisampleStateCreateInfo {}
 impl<'a> PipelineMultisampleStateCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: PipelineMultisampleStateCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn rasterization_samples(mut self, rasterization_samples: SampleCountFlags) -> Self {
         self.rasterization_samples = rasterization_samples;
         self
     }
+    #[inline]
     pub fn sample_shading_enable(mut self, sample_shading_enable: bool) -> Self {
         self.sample_shading_enable = sample_shading_enable.into();
         self
     }
+    #[inline]
     pub fn min_sample_shading(mut self, min_sample_shading: f32) -> Self {
         self.min_sample_shading = min_sample_shading;
         self
@@ -3631,6 +3923,7 @@ impl<'a> PipelineMultisampleStateCreateInfo<'a> {
     #[doc = r""]
     #[doc = r" See <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineMultisampleStateCreateInfo.html#_description>"]
     #[doc = r" for more details."]
+    #[inline]
     pub fn sample_mask(mut self, sample_mask: &'a [SampleMask]) -> Self {
         self.p_sample_mask = if sample_mask.is_empty() {
             std::ptr::null()
@@ -3639,10 +3932,12 @@ impl<'a> PipelineMultisampleStateCreateInfo<'a> {
         };
         self
     }
+    #[inline]
     pub fn alpha_to_coverage_enable(mut self, alpha_to_coverage_enable: bool) -> Self {
         self.alpha_to_coverage_enable = alpha_to_coverage_enable.into();
         self
     }
+    #[inline]
     pub fn alpha_to_one_enable(mut self, alpha_to_one_enable: bool) -> Self {
         self.alpha_to_one_enable = alpha_to_one_enable.into();
         self
@@ -3680,34 +3975,42 @@ pub struct PipelineColorBlendAttachmentState {
     pub color_write_mask: ColorComponentFlags,
 }
 impl PipelineColorBlendAttachmentState {
+    #[inline]
     pub fn blend_enable(mut self, blend_enable: bool) -> Self {
         self.blend_enable = blend_enable.into();
         self
     }
+    #[inline]
     pub fn src_color_blend_factor(mut self, src_color_blend_factor: BlendFactor) -> Self {
         self.src_color_blend_factor = src_color_blend_factor;
         self
     }
+    #[inline]
     pub fn dst_color_blend_factor(mut self, dst_color_blend_factor: BlendFactor) -> Self {
         self.dst_color_blend_factor = dst_color_blend_factor;
         self
     }
+    #[inline]
     pub fn color_blend_op(mut self, color_blend_op: BlendOp) -> Self {
         self.color_blend_op = color_blend_op;
         self
     }
+    #[inline]
     pub fn src_alpha_blend_factor(mut self, src_alpha_blend_factor: BlendFactor) -> Self {
         self.src_alpha_blend_factor = src_alpha_blend_factor;
         self
     }
+    #[inline]
     pub fn dst_alpha_blend_factor(mut self, dst_alpha_blend_factor: BlendFactor) -> Self {
         self.dst_alpha_blend_factor = dst_alpha_blend_factor;
         self
     }
+    #[inline]
     pub fn alpha_blend_op(mut self, alpha_blend_op: BlendOp) -> Self {
         self.alpha_blend_op = alpha_blend_op;
         self
     }
+    #[inline]
     pub fn color_write_mask(mut self, color_write_mask: ColorComponentFlags) -> Self {
         self.color_write_mask = color_write_mask;
         self
@@ -3745,23 +4048,28 @@ impl ::std::default::Default for PipelineColorBlendStateCreateInfo<'_> {
 }
 pub unsafe trait ExtendsPipelineColorBlendStateCreateInfo {}
 impl<'a> PipelineColorBlendStateCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: PipelineColorBlendStateCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn logic_op_enable(mut self, logic_op_enable: bool) -> Self {
         self.logic_op_enable = logic_op_enable.into();
         self
     }
+    #[inline]
     pub fn logic_op(mut self, logic_op: LogicOp) -> Self {
         self.logic_op = logic_op;
         self
     }
+    #[inline]
     pub fn attachments(mut self, attachments: &'a [PipelineColorBlendAttachmentState]) -> Self {
         self.attachment_count = attachments.len() as _;
         self.p_attachments = attachments.as_ptr();
         self
     }
+    #[inline]
     pub fn blend_constants(mut self, blend_constants: [f32; 4]) -> Self {
         self.blend_constants = blend_constants;
         self
@@ -3809,10 +4117,12 @@ impl ::std::default::Default for PipelineDynamicStateCreateInfo<'_> {
     }
 }
 impl<'a> PipelineDynamicStateCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: PipelineDynamicStateCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn dynamic_states(mut self, dynamic_states: &'a [DynamicState]) -> Self {
         self.dynamic_state_count = dynamic_states.len() as _;
         self.p_dynamic_states = dynamic_states.as_ptr();
@@ -3833,30 +4143,37 @@ pub struct StencilOpState {
     pub reference: u32,
 }
 impl StencilOpState {
+    #[inline]
     pub fn fail_op(mut self, fail_op: StencilOp) -> Self {
         self.fail_op = fail_op;
         self
     }
+    #[inline]
     pub fn pass_op(mut self, pass_op: StencilOp) -> Self {
         self.pass_op = pass_op;
         self
     }
+    #[inline]
     pub fn depth_fail_op(mut self, depth_fail_op: StencilOp) -> Self {
         self.depth_fail_op = depth_fail_op;
         self
     }
+    #[inline]
     pub fn compare_op(mut self, compare_op: CompareOp) -> Self {
         self.compare_op = compare_op;
         self
     }
+    #[inline]
     pub fn compare_mask(mut self, compare_mask: u32) -> Self {
         self.compare_mask = compare_mask;
         self
     }
+    #[inline]
     pub fn write_mask(mut self, write_mask: u32) -> Self {
         self.write_mask = write_mask;
         self
     }
+    #[inline]
     pub fn reference(mut self, reference: u32) -> Self {
         self.reference = reference;
         self
@@ -3901,42 +4218,52 @@ impl ::std::default::Default for PipelineDepthStencilStateCreateInfo<'_> {
     }
 }
 impl<'a> PipelineDepthStencilStateCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: PipelineDepthStencilStateCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn depth_test_enable(mut self, depth_test_enable: bool) -> Self {
         self.depth_test_enable = depth_test_enable.into();
         self
     }
+    #[inline]
     pub fn depth_write_enable(mut self, depth_write_enable: bool) -> Self {
         self.depth_write_enable = depth_write_enable.into();
         self
     }
+    #[inline]
     pub fn depth_compare_op(mut self, depth_compare_op: CompareOp) -> Self {
         self.depth_compare_op = depth_compare_op;
         self
     }
+    #[inline]
     pub fn depth_bounds_test_enable(mut self, depth_bounds_test_enable: bool) -> Self {
         self.depth_bounds_test_enable = depth_bounds_test_enable.into();
         self
     }
+    #[inline]
     pub fn stencil_test_enable(mut self, stencil_test_enable: bool) -> Self {
         self.stencil_test_enable = stencil_test_enable.into();
         self
     }
+    #[inline]
     pub fn front(mut self, front: StencilOpState) -> Self {
         self.front = front;
         self
     }
+    #[inline]
     pub fn back(mut self, back: StencilOpState) -> Self {
         self.back = back;
         self
     }
+    #[inline]
     pub fn min_depth_bounds(mut self, min_depth_bounds: f32) -> Self {
         self.min_depth_bounds = min_depth_bounds;
         self
     }
+    #[inline]
     pub fn max_depth_bounds(mut self, max_depth_bounds: f32) -> Self {
         self.max_depth_bounds = max_depth_bounds;
         self
@@ -3996,15 +4323,18 @@ impl ::std::default::Default for GraphicsPipelineCreateInfo<'_> {
 }
 pub unsafe trait ExtendsGraphicsPipelineCreateInfo {}
 impl<'a> GraphicsPipelineCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: PipelineCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn stages(mut self, stages: &'a [PipelineShaderStageCreateInfo]) -> Self {
         self.stage_count = stages.len() as _;
         self.p_stages = stages.as_ptr();
         self
     }
+    #[inline]
     pub fn vertex_input_state(
         mut self,
         vertex_input_state: &'a PipelineVertexInputStateCreateInfo<'a>,
@@ -4012,6 +4342,7 @@ impl<'a> GraphicsPipelineCreateInfo<'a> {
         self.p_vertex_input_state = vertex_input_state;
         self
     }
+    #[inline]
     pub fn input_assembly_state(
         mut self,
         input_assembly_state: &'a PipelineInputAssemblyStateCreateInfo<'a>,
@@ -4019,6 +4350,7 @@ impl<'a> GraphicsPipelineCreateInfo<'a> {
         self.p_input_assembly_state = input_assembly_state;
         self
     }
+    #[inline]
     pub fn tessellation_state(
         mut self,
         tessellation_state: &'a PipelineTessellationStateCreateInfo<'a>,
@@ -4026,6 +4358,7 @@ impl<'a> GraphicsPipelineCreateInfo<'a> {
         self.p_tessellation_state = tessellation_state;
         self
     }
+    #[inline]
     pub fn viewport_state(
         mut self,
         viewport_state: &'a PipelineViewportStateCreateInfo<'a>,
@@ -4033,6 +4366,7 @@ impl<'a> GraphicsPipelineCreateInfo<'a> {
         self.p_viewport_state = viewport_state;
         self
     }
+    #[inline]
     pub fn rasterization_state(
         mut self,
         rasterization_state: &'a PipelineRasterizationStateCreateInfo<'a>,
@@ -4040,6 +4374,7 @@ impl<'a> GraphicsPipelineCreateInfo<'a> {
         self.p_rasterization_state = rasterization_state;
         self
     }
+    #[inline]
     pub fn multisample_state(
         mut self,
         multisample_state: &'a PipelineMultisampleStateCreateInfo<'a>,
@@ -4047,6 +4382,7 @@ impl<'a> GraphicsPipelineCreateInfo<'a> {
         self.p_multisample_state = multisample_state;
         self
     }
+    #[inline]
     pub fn depth_stencil_state(
         mut self,
         depth_stencil_state: &'a PipelineDepthStencilStateCreateInfo<'a>,
@@ -4054,6 +4390,7 @@ impl<'a> GraphicsPipelineCreateInfo<'a> {
         self.p_depth_stencil_state = depth_stencil_state;
         self
     }
+    #[inline]
     pub fn color_blend_state(
         mut self,
         color_blend_state: &'a PipelineColorBlendStateCreateInfo<'a>,
@@ -4061,26 +4398,32 @@ impl<'a> GraphicsPipelineCreateInfo<'a> {
         self.p_color_blend_state = color_blend_state;
         self
     }
+    #[inline]
     pub fn dynamic_state(mut self, dynamic_state: &'a PipelineDynamicStateCreateInfo<'a>) -> Self {
         self.p_dynamic_state = dynamic_state;
         self
     }
+    #[inline]
     pub fn layout(mut self, layout: PipelineLayout) -> Self {
         self.layout = layout;
         self
     }
+    #[inline]
     pub fn render_pass(mut self, render_pass: RenderPass) -> Self {
         self.render_pass = render_pass;
         self
     }
+    #[inline]
     pub fn subpass(mut self, subpass: u32) -> Self {
         self.subpass = subpass;
         self
     }
+    #[inline]
     pub fn base_pipeline_handle(mut self, base_pipeline_handle: Pipeline) -> Self {
         self.base_pipeline_handle = base_pipeline_handle;
         self
     }
+    #[inline]
     pub fn base_pipeline_index(mut self, base_pipeline_index: i32) -> Self {
         self.base_pipeline_index = base_pipeline_index;
         self
@@ -4125,10 +4468,12 @@ impl ::std::default::Default for PipelineCacheCreateInfo<'_> {
     }
 }
 impl<'a> PipelineCacheCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: PipelineCacheCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn initial_data(mut self, initial_data: &'a [u8]) -> Self {
         self.initial_data_size = initial_data.len();
         self.p_initial_data = initial_data.as_ptr() as *const c_void;
@@ -4158,22 +4503,27 @@ impl ::std::default::Default for PipelineCacheHeaderVersionOne {
     }
 }
 impl PipelineCacheHeaderVersionOne {
+    #[inline]
     pub fn header_size(mut self, header_size: u32) -> Self {
         self.header_size = header_size;
         self
     }
+    #[inline]
     pub fn header_version(mut self, header_version: PipelineCacheHeaderVersion) -> Self {
         self.header_version = header_version;
         self
     }
+    #[inline]
     pub fn vendor_id(mut self, vendor_id: u32) -> Self {
         self.vendor_id = vendor_id;
         self
     }
+    #[inline]
     pub fn device_id(mut self, device_id: u32) -> Self {
         self.device_id = device_id;
         self
     }
+    #[inline]
     pub fn pipeline_cache_uuid(mut self, pipeline_cache_uuid: [u8; UUID_SIZE]) -> Self {
         self.pipeline_cache_uuid = pipeline_cache_uuid;
         self
@@ -4189,14 +4539,17 @@ pub struct PushConstantRange {
     pub size: u32,
 }
 impl PushConstantRange {
+    #[inline]
     pub fn stage_flags(mut self, stage_flags: ShaderStageFlags) -> Self {
         self.stage_flags = stage_flags;
         self
     }
+    #[inline]
     pub fn offset(mut self, offset: u32) -> Self {
         self.offset = offset;
         self
     }
+    #[inline]
     pub fn size(mut self, size: u32) -> Self {
         self.size = size;
         self
@@ -4231,15 +4584,18 @@ impl ::std::default::Default for PipelineLayoutCreateInfo<'_> {
     }
 }
 impl<'a> PipelineLayoutCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: PipelineLayoutCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn set_layouts(mut self, set_layouts: &'a [DescriptorSetLayout]) -> Self {
         self.set_layout_count = set_layouts.len() as _;
         self.p_set_layouts = set_layouts.as_ptr();
         self
     }
+    #[inline]
     pub fn push_constant_ranges(mut self, push_constant_ranges: &'a [PushConstantRange]) -> Self {
         self.push_constant_range_count = push_constant_ranges.len() as _;
         self.p_push_constant_ranges = push_constant_ranges.as_ptr();
@@ -4298,66 +4654,82 @@ impl ::std::default::Default for SamplerCreateInfo<'_> {
 }
 pub unsafe trait ExtendsSamplerCreateInfo {}
 impl<'a> SamplerCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: SamplerCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn mag_filter(mut self, mag_filter: Filter) -> Self {
         self.mag_filter = mag_filter;
         self
     }
+    #[inline]
     pub fn min_filter(mut self, min_filter: Filter) -> Self {
         self.min_filter = min_filter;
         self
     }
+    #[inline]
     pub fn mipmap_mode(mut self, mipmap_mode: SamplerMipmapMode) -> Self {
         self.mipmap_mode = mipmap_mode;
         self
     }
+    #[inline]
     pub fn address_mode_u(mut self, address_mode_u: SamplerAddressMode) -> Self {
         self.address_mode_u = address_mode_u;
         self
     }
+    #[inline]
     pub fn address_mode_v(mut self, address_mode_v: SamplerAddressMode) -> Self {
         self.address_mode_v = address_mode_v;
         self
     }
+    #[inline]
     pub fn address_mode_w(mut self, address_mode_w: SamplerAddressMode) -> Self {
         self.address_mode_w = address_mode_w;
         self
     }
+    #[inline]
     pub fn mip_lod_bias(mut self, mip_lod_bias: f32) -> Self {
         self.mip_lod_bias = mip_lod_bias;
         self
     }
+    #[inline]
     pub fn anisotropy_enable(mut self, anisotropy_enable: bool) -> Self {
         self.anisotropy_enable = anisotropy_enable.into();
         self
     }
+    #[inline]
     pub fn max_anisotropy(mut self, max_anisotropy: f32) -> Self {
         self.max_anisotropy = max_anisotropy;
         self
     }
+    #[inline]
     pub fn compare_enable(mut self, compare_enable: bool) -> Self {
         self.compare_enable = compare_enable.into();
         self
     }
+    #[inline]
     pub fn compare_op(mut self, compare_op: CompareOp) -> Self {
         self.compare_op = compare_op;
         self
     }
+    #[inline]
     pub fn min_lod(mut self, min_lod: f32) -> Self {
         self.min_lod = min_lod;
         self
     }
+    #[inline]
     pub fn max_lod(mut self, max_lod: f32) -> Self {
         self.max_lod = max_lod;
         self
     }
+    #[inline]
     pub fn border_color(mut self, border_color: BorderColor) -> Self {
         self.border_color = border_color;
         self
     }
+    #[inline]
     pub fn unnormalized_coordinates(mut self, unnormalized_coordinates: bool) -> Self {
         self.unnormalized_coordinates = unnormalized_coordinates.into();
         self
@@ -4400,10 +4772,12 @@ impl ::std::default::Default for CommandPoolCreateInfo<'_> {
     }
 }
 impl<'a> CommandPoolCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: CommandPoolCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn queue_family_index(mut self, queue_family_index: u32) -> Self {
         self.queue_family_index = queue_family_index;
         self
@@ -4434,14 +4808,17 @@ impl ::std::default::Default for CommandBufferAllocateInfo<'_> {
     }
 }
 impl<'a> CommandBufferAllocateInfo<'a> {
+    #[inline]
     pub fn command_pool(mut self, command_pool: CommandPool) -> Self {
         self.command_pool = command_pool;
         self
     }
+    #[inline]
     pub fn level(mut self, level: CommandBufferLevel) -> Self {
         self.level = level;
         self
     }
+    #[inline]
     pub fn command_buffer_count(mut self, command_buffer_count: u32) -> Self {
         self.command_buffer_count = command_buffer_count;
         self
@@ -4479,26 +4856,32 @@ impl ::std::default::Default for CommandBufferInheritanceInfo<'_> {
 }
 pub unsafe trait ExtendsCommandBufferInheritanceInfo {}
 impl<'a> CommandBufferInheritanceInfo<'a> {
+    #[inline]
     pub fn render_pass(mut self, render_pass: RenderPass) -> Self {
         self.render_pass = render_pass;
         self
     }
+    #[inline]
     pub fn subpass(mut self, subpass: u32) -> Self {
         self.subpass = subpass;
         self
     }
+    #[inline]
     pub fn framebuffer(mut self, framebuffer: Framebuffer) -> Self {
         self.framebuffer = framebuffer;
         self
     }
+    #[inline]
     pub fn occlusion_query_enable(mut self, occlusion_query_enable: bool) -> Self {
         self.occlusion_query_enable = occlusion_query_enable.into();
         self
     }
+    #[inline]
     pub fn query_flags(mut self, query_flags: QueryControlFlags) -> Self {
         self.query_flags = query_flags;
         self
     }
+    #[inline]
     pub fn pipeline_statistics(mut self, pipeline_statistics: QueryPipelineStatisticFlags) -> Self {
         self.pipeline_statistics = pipeline_statistics;
         self
@@ -4542,10 +4925,12 @@ impl ::std::default::Default for CommandBufferBeginInfo<'_> {
 }
 pub unsafe trait ExtendsCommandBufferBeginInfo {}
 impl<'a> CommandBufferBeginInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: CommandBufferUsageFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn inheritance_info(
         mut self,
         inheritance_info: &'a CommandBufferInheritanceInfo<'a>,
@@ -4611,18 +4996,22 @@ impl ::std::default::Default for RenderPassBeginInfo<'_> {
 }
 pub unsafe trait ExtendsRenderPassBeginInfo {}
 impl<'a> RenderPassBeginInfo<'a> {
+    #[inline]
     pub fn render_pass(mut self, render_pass: RenderPass) -> Self {
         self.render_pass = render_pass;
         self
     }
+    #[inline]
     pub fn framebuffer(mut self, framebuffer: Framebuffer) -> Self {
         self.framebuffer = framebuffer;
         self
     }
+    #[inline]
     pub fn render_area(mut self, render_area: Rect2D) -> Self {
         self.render_area = render_area;
         self
     }
+    #[inline]
     pub fn clear_values(mut self, clear_values: &'a [ClearValue]) -> Self {
         self.clear_value_count = clear_values.len() as _;
         self.p_clear_values = clear_values.as_ptr();
@@ -4665,10 +5054,12 @@ pub struct ClearDepthStencilValue {
     pub stencil: u32,
 }
 impl ClearDepthStencilValue {
+    #[inline]
     pub fn depth(mut self, depth: f32) -> Self {
         self.depth = depth;
         self
     }
+    #[inline]
     pub fn stencil(mut self, stencil: u32) -> Self {
         self.stencil = stencil;
         self
@@ -4705,14 +5096,17 @@ impl fmt::Debug for ClearAttachment {
     }
 }
 impl ClearAttachment {
+    #[inline]
     pub fn aspect_mask(mut self, aspect_mask: ImageAspectFlags) -> Self {
         self.aspect_mask = aspect_mask;
         self
     }
+    #[inline]
     pub fn color_attachment(mut self, color_attachment: u32) -> Self {
         self.color_attachment = color_attachment;
         self
     }
+    #[inline]
     pub fn clear_value(mut self, clear_value: ClearValue) -> Self {
         self.clear_value = clear_value;
         self
@@ -4734,38 +5128,47 @@ pub struct AttachmentDescription {
     pub final_layout: ImageLayout,
 }
 impl AttachmentDescription {
+    #[inline]
     pub fn flags(mut self, flags: AttachmentDescriptionFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn format(mut self, format: Format) -> Self {
         self.format = format;
         self
     }
+    #[inline]
     pub fn samples(mut self, samples: SampleCountFlags) -> Self {
         self.samples = samples;
         self
     }
+    #[inline]
     pub fn load_op(mut self, load_op: AttachmentLoadOp) -> Self {
         self.load_op = load_op;
         self
     }
+    #[inline]
     pub fn store_op(mut self, store_op: AttachmentStoreOp) -> Self {
         self.store_op = store_op;
         self
     }
+    #[inline]
     pub fn stencil_load_op(mut self, stencil_load_op: AttachmentLoadOp) -> Self {
         self.stencil_load_op = stencil_load_op;
         self
     }
+    #[inline]
     pub fn stencil_store_op(mut self, stencil_store_op: AttachmentStoreOp) -> Self {
         self.stencil_store_op = stencil_store_op;
         self
     }
+    #[inline]
     pub fn initial_layout(mut self, initial_layout: ImageLayout) -> Self {
         self.initial_layout = initial_layout;
         self
     }
+    #[inline]
     pub fn final_layout(mut self, final_layout: ImageLayout) -> Self {
         self.final_layout = final_layout;
         self
@@ -4780,10 +5183,12 @@ pub struct AttachmentReference {
     pub layout: ImageLayout,
 }
 impl AttachmentReference {
+    #[inline]
     pub fn attachment(mut self, attachment: u32) -> Self {
         self.attachment = attachment;
         self
     }
+    #[inline]
     pub fn layout(mut self, layout: ImageLayout) -> Self {
         self.layout = layout;
         self
@@ -4824,29 +5229,35 @@ impl ::std::default::Default for SubpassDescription<'_> {
     }
 }
 impl<'a> SubpassDescription<'a> {
+    #[inline]
     pub fn flags(mut self, flags: SubpassDescriptionFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn pipeline_bind_point(mut self, pipeline_bind_point: PipelineBindPoint) -> Self {
         self.pipeline_bind_point = pipeline_bind_point;
         self
     }
+    #[inline]
     pub fn input_attachments(mut self, input_attachments: &'a [AttachmentReference]) -> Self {
         self.input_attachment_count = input_attachments.len() as _;
         self.p_input_attachments = input_attachments.as_ptr();
         self
     }
+    #[inline]
     pub fn color_attachments(mut self, color_attachments: &'a [AttachmentReference]) -> Self {
         self.color_attachment_count = color_attachments.len() as _;
         self.p_color_attachments = color_attachments.as_ptr();
         self
     }
+    #[inline]
     pub fn resolve_attachments(mut self, resolve_attachments: &'a [AttachmentReference]) -> Self {
         self.color_attachment_count = resolve_attachments.len() as _;
         self.p_resolve_attachments = resolve_attachments.as_ptr();
         self
     }
+    #[inline]
     pub fn depth_stencil_attachment(
         mut self,
         depth_stencil_attachment: &'a AttachmentReference,
@@ -4854,6 +5265,7 @@ impl<'a> SubpassDescription<'a> {
         self.p_depth_stencil_attachment = depth_stencil_attachment;
         self
     }
+    #[inline]
     pub fn preserve_attachments(mut self, preserve_attachments: &'a [u32]) -> Self {
         self.preserve_attachment_count = preserve_attachments.len() as _;
         self.p_preserve_attachments = preserve_attachments.as_ptr();
@@ -4874,30 +5286,37 @@ pub struct SubpassDependency {
     pub dependency_flags: DependencyFlags,
 }
 impl SubpassDependency {
+    #[inline]
     pub fn src_subpass(mut self, src_subpass: u32) -> Self {
         self.src_subpass = src_subpass;
         self
     }
+    #[inline]
     pub fn dst_subpass(mut self, dst_subpass: u32) -> Self {
         self.dst_subpass = dst_subpass;
         self
     }
+    #[inline]
     pub fn src_stage_mask(mut self, src_stage_mask: PipelineStageFlags) -> Self {
         self.src_stage_mask = src_stage_mask;
         self
     }
+    #[inline]
     pub fn dst_stage_mask(mut self, dst_stage_mask: PipelineStageFlags) -> Self {
         self.dst_stage_mask = dst_stage_mask;
         self
     }
+    #[inline]
     pub fn src_access_mask(mut self, src_access_mask: AccessFlags) -> Self {
         self.src_access_mask = src_access_mask;
         self
     }
+    #[inline]
     pub fn dst_access_mask(mut self, dst_access_mask: AccessFlags) -> Self {
         self.dst_access_mask = dst_access_mask;
         self
     }
+    #[inline]
     pub fn dependency_flags(mut self, dependency_flags: DependencyFlags) -> Self {
         self.dependency_flags = dependency_flags;
         self
@@ -4937,20 +5356,24 @@ impl ::std::default::Default for RenderPassCreateInfo<'_> {
 }
 pub unsafe trait ExtendsRenderPassCreateInfo {}
 impl<'a> RenderPassCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: RenderPassCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn attachments(mut self, attachments: &'a [AttachmentDescription]) -> Self {
         self.attachment_count = attachments.len() as _;
         self.p_attachments = attachments.as_ptr();
         self
     }
+    #[inline]
     pub fn subpasses(mut self, subpasses: &'a [SubpassDescription]) -> Self {
         self.subpass_count = subpasses.len() as _;
         self.p_subpasses = subpasses.as_ptr();
         self
     }
+    #[inline]
     pub fn dependencies(mut self, dependencies: &'a [SubpassDependency]) -> Self {
         self.dependency_count = dependencies.len() as _;
         self.p_dependencies = dependencies.as_ptr();
@@ -4992,6 +5415,7 @@ impl ::std::default::Default for EventCreateInfo<'_> {
     }
 }
 impl<'a> EventCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: EventCreateFlags) -> Self {
         self.flags = flags;
         self
@@ -5019,6 +5443,7 @@ impl ::std::default::Default for FenceCreateInfo<'_> {
 }
 pub unsafe trait ExtendsFenceCreateInfo {}
 impl<'a> FenceCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: FenceCreateFlags) -> Self {
         self.flags = flags;
         self
@@ -5100,106 +5525,132 @@ pub struct PhysicalDeviceFeatures {
     pub inherited_queries: Bool32,
 }
 impl PhysicalDeviceFeatures {
+    #[inline]
     pub fn robust_buffer_access(mut self, robust_buffer_access: bool) -> Self {
         self.robust_buffer_access = robust_buffer_access.into();
         self
     }
+    #[inline]
     pub fn full_draw_index_uint32(mut self, full_draw_index_uint32: bool) -> Self {
         self.full_draw_index_uint32 = full_draw_index_uint32.into();
         self
     }
+    #[inline]
     pub fn image_cube_array(mut self, image_cube_array: bool) -> Self {
         self.image_cube_array = image_cube_array.into();
         self
     }
+    #[inline]
     pub fn independent_blend(mut self, independent_blend: bool) -> Self {
         self.independent_blend = independent_blend.into();
         self
     }
+    #[inline]
     pub fn geometry_shader(mut self, geometry_shader: bool) -> Self {
         self.geometry_shader = geometry_shader.into();
         self
     }
+    #[inline]
     pub fn tessellation_shader(mut self, tessellation_shader: bool) -> Self {
         self.tessellation_shader = tessellation_shader.into();
         self
     }
+    #[inline]
     pub fn sample_rate_shading(mut self, sample_rate_shading: bool) -> Self {
         self.sample_rate_shading = sample_rate_shading.into();
         self
     }
+    #[inline]
     pub fn dual_src_blend(mut self, dual_src_blend: bool) -> Self {
         self.dual_src_blend = dual_src_blend.into();
         self
     }
+    #[inline]
     pub fn logic_op(mut self, logic_op: bool) -> Self {
         self.logic_op = logic_op.into();
         self
     }
+    #[inline]
     pub fn multi_draw_indirect(mut self, multi_draw_indirect: bool) -> Self {
         self.multi_draw_indirect = multi_draw_indirect.into();
         self
     }
+    #[inline]
     pub fn draw_indirect_first_instance(mut self, draw_indirect_first_instance: bool) -> Self {
         self.draw_indirect_first_instance = draw_indirect_first_instance.into();
         self
     }
+    #[inline]
     pub fn depth_clamp(mut self, depth_clamp: bool) -> Self {
         self.depth_clamp = depth_clamp.into();
         self
     }
+    #[inline]
     pub fn depth_bias_clamp(mut self, depth_bias_clamp: bool) -> Self {
         self.depth_bias_clamp = depth_bias_clamp.into();
         self
     }
+    #[inline]
     pub fn fill_mode_non_solid(mut self, fill_mode_non_solid: bool) -> Self {
         self.fill_mode_non_solid = fill_mode_non_solid.into();
         self
     }
+    #[inline]
     pub fn depth_bounds(mut self, depth_bounds: bool) -> Self {
         self.depth_bounds = depth_bounds.into();
         self
     }
+    #[inline]
     pub fn wide_lines(mut self, wide_lines: bool) -> Self {
         self.wide_lines = wide_lines.into();
         self
     }
+    #[inline]
     pub fn large_points(mut self, large_points: bool) -> Self {
         self.large_points = large_points.into();
         self
     }
+    #[inline]
     pub fn alpha_to_one(mut self, alpha_to_one: bool) -> Self {
         self.alpha_to_one = alpha_to_one.into();
         self
     }
+    #[inline]
     pub fn multi_viewport(mut self, multi_viewport: bool) -> Self {
         self.multi_viewport = multi_viewport.into();
         self
     }
+    #[inline]
     pub fn sampler_anisotropy(mut self, sampler_anisotropy: bool) -> Self {
         self.sampler_anisotropy = sampler_anisotropy.into();
         self
     }
+    #[inline]
     pub fn texture_compression_etc2(mut self, texture_compression_etc2: bool) -> Self {
         self.texture_compression_etc2 = texture_compression_etc2.into();
         self
     }
+    #[inline]
     pub fn texture_compression_astc_ldr(mut self, texture_compression_astc_ldr: bool) -> Self {
         self.texture_compression_astc_ldr = texture_compression_astc_ldr.into();
         self
     }
+    #[inline]
     pub fn texture_compression_bc(mut self, texture_compression_bc: bool) -> Self {
         self.texture_compression_bc = texture_compression_bc.into();
         self
     }
+    #[inline]
     pub fn occlusion_query_precise(mut self, occlusion_query_precise: bool) -> Self {
         self.occlusion_query_precise = occlusion_query_precise.into();
         self
     }
+    #[inline]
     pub fn pipeline_statistics_query(mut self, pipeline_statistics_query: bool) -> Self {
         self.pipeline_statistics_query = pipeline_statistics_query.into();
         self
     }
+    #[inline]
     pub fn vertex_pipeline_stores_and_atomics(
         mut self,
         vertex_pipeline_stores_and_atomics: bool,
@@ -5207,10 +5658,12 @@ impl PhysicalDeviceFeatures {
         self.vertex_pipeline_stores_and_atomics = vertex_pipeline_stores_and_atomics.into();
         self
     }
+    #[inline]
     pub fn fragment_stores_and_atomics(mut self, fragment_stores_and_atomics: bool) -> Self {
         self.fragment_stores_and_atomics = fragment_stores_and_atomics.into();
         self
     }
+    #[inline]
     pub fn shader_tessellation_and_geometry_point_size(
         mut self,
         shader_tessellation_and_geometry_point_size: bool,
@@ -5219,10 +5672,12 @@ impl PhysicalDeviceFeatures {
             shader_tessellation_and_geometry_point_size.into();
         self
     }
+    #[inline]
     pub fn shader_image_gather_extended(mut self, shader_image_gather_extended: bool) -> Self {
         self.shader_image_gather_extended = shader_image_gather_extended.into();
         self
     }
+    #[inline]
     pub fn shader_storage_image_extended_formats(
         mut self,
         shader_storage_image_extended_formats: bool,
@@ -5230,6 +5685,7 @@ impl PhysicalDeviceFeatures {
         self.shader_storage_image_extended_formats = shader_storage_image_extended_formats.into();
         self
     }
+    #[inline]
     pub fn shader_storage_image_multisample(
         mut self,
         shader_storage_image_multisample: bool,
@@ -5237,6 +5693,7 @@ impl PhysicalDeviceFeatures {
         self.shader_storage_image_multisample = shader_storage_image_multisample.into();
         self
     }
+    #[inline]
     pub fn shader_storage_image_read_without_format(
         mut self,
         shader_storage_image_read_without_format: bool,
@@ -5245,6 +5702,7 @@ impl PhysicalDeviceFeatures {
             shader_storage_image_read_without_format.into();
         self
     }
+    #[inline]
     pub fn shader_storage_image_write_without_format(
         mut self,
         shader_storage_image_write_without_format: bool,
@@ -5253,6 +5711,7 @@ impl PhysicalDeviceFeatures {
             shader_storage_image_write_without_format.into();
         self
     }
+    #[inline]
     pub fn shader_uniform_buffer_array_dynamic_indexing(
         mut self,
         shader_uniform_buffer_array_dynamic_indexing: bool,
@@ -5261,6 +5720,7 @@ impl PhysicalDeviceFeatures {
             shader_uniform_buffer_array_dynamic_indexing.into();
         self
     }
+    #[inline]
     pub fn shader_sampled_image_array_dynamic_indexing(
         mut self,
         shader_sampled_image_array_dynamic_indexing: bool,
@@ -5269,6 +5729,7 @@ impl PhysicalDeviceFeatures {
             shader_sampled_image_array_dynamic_indexing.into();
         self
     }
+    #[inline]
     pub fn shader_storage_buffer_array_dynamic_indexing(
         mut self,
         shader_storage_buffer_array_dynamic_indexing: bool,
@@ -5277,6 +5738,7 @@ impl PhysicalDeviceFeatures {
             shader_storage_buffer_array_dynamic_indexing.into();
         self
     }
+    #[inline]
     pub fn shader_storage_image_array_dynamic_indexing(
         mut self,
         shader_storage_image_array_dynamic_indexing: bool,
@@ -5285,74 +5747,92 @@ impl PhysicalDeviceFeatures {
             shader_storage_image_array_dynamic_indexing.into();
         self
     }
+    #[inline]
     pub fn shader_clip_distance(mut self, shader_clip_distance: bool) -> Self {
         self.shader_clip_distance = shader_clip_distance.into();
         self
     }
+    #[inline]
     pub fn shader_cull_distance(mut self, shader_cull_distance: bool) -> Self {
         self.shader_cull_distance = shader_cull_distance.into();
         self
     }
+    #[inline]
     pub fn shader_float64(mut self, shader_float64: bool) -> Self {
         self.shader_float64 = shader_float64.into();
         self
     }
+    #[inline]
     pub fn shader_int64(mut self, shader_int64: bool) -> Self {
         self.shader_int64 = shader_int64.into();
         self
     }
+    #[inline]
     pub fn shader_int16(mut self, shader_int16: bool) -> Self {
         self.shader_int16 = shader_int16.into();
         self
     }
+    #[inline]
     pub fn shader_resource_residency(mut self, shader_resource_residency: bool) -> Self {
         self.shader_resource_residency = shader_resource_residency.into();
         self
     }
+    #[inline]
     pub fn shader_resource_min_lod(mut self, shader_resource_min_lod: bool) -> Self {
         self.shader_resource_min_lod = shader_resource_min_lod.into();
         self
     }
+    #[inline]
     pub fn sparse_binding(mut self, sparse_binding: bool) -> Self {
         self.sparse_binding = sparse_binding.into();
         self
     }
+    #[inline]
     pub fn sparse_residency_buffer(mut self, sparse_residency_buffer: bool) -> Self {
         self.sparse_residency_buffer = sparse_residency_buffer.into();
         self
     }
+    #[inline]
     pub fn sparse_residency_image2_d(mut self, sparse_residency_image2_d: bool) -> Self {
         self.sparse_residency_image2_d = sparse_residency_image2_d.into();
         self
     }
+    #[inline]
     pub fn sparse_residency_image3_d(mut self, sparse_residency_image3_d: bool) -> Self {
         self.sparse_residency_image3_d = sparse_residency_image3_d.into();
         self
     }
+    #[inline]
     pub fn sparse_residency2_samples(mut self, sparse_residency2_samples: bool) -> Self {
         self.sparse_residency2_samples = sparse_residency2_samples.into();
         self
     }
+    #[inline]
     pub fn sparse_residency4_samples(mut self, sparse_residency4_samples: bool) -> Self {
         self.sparse_residency4_samples = sparse_residency4_samples.into();
         self
     }
+    #[inline]
     pub fn sparse_residency8_samples(mut self, sparse_residency8_samples: bool) -> Self {
         self.sparse_residency8_samples = sparse_residency8_samples.into();
         self
     }
+    #[inline]
     pub fn sparse_residency16_samples(mut self, sparse_residency16_samples: bool) -> Self {
         self.sparse_residency16_samples = sparse_residency16_samples.into();
         self
     }
+    #[inline]
     pub fn sparse_residency_aliased(mut self, sparse_residency_aliased: bool) -> Self {
         self.sparse_residency_aliased = sparse_residency_aliased.into();
         self
     }
+    #[inline]
     pub fn variable_multisample_rate(mut self, variable_multisample_rate: bool) -> Self {
         self.variable_multisample_rate = variable_multisample_rate.into();
         self
     }
+    #[inline]
     pub fn inherited_queries(mut self, inherited_queries: bool) -> Self {
         self.inherited_queries = inherited_queries.into();
         self
@@ -5370,6 +5850,7 @@ pub struct PhysicalDeviceSparseProperties {
     pub residency_non_resident_strict: Bool32,
 }
 impl PhysicalDeviceSparseProperties {
+    #[inline]
     pub fn residency_standard2_d_block_shape(
         mut self,
         residency_standard2_d_block_shape: bool,
@@ -5377,6 +5858,7 @@ impl PhysicalDeviceSparseProperties {
         self.residency_standard2_d_block_shape = residency_standard2_d_block_shape.into();
         self
     }
+    #[inline]
     pub fn residency_standard2_d_multisample_block_shape(
         mut self,
         residency_standard2_d_multisample_block_shape: bool,
@@ -5385,6 +5867,7 @@ impl PhysicalDeviceSparseProperties {
             residency_standard2_d_multisample_block_shape.into();
         self
     }
+    #[inline]
     pub fn residency_standard3_d_block_shape(
         mut self,
         residency_standard3_d_block_shape: bool,
@@ -5392,10 +5875,12 @@ impl PhysicalDeviceSparseProperties {
         self.residency_standard3_d_block_shape = residency_standard3_d_block_shape.into();
         self
     }
+    #[inline]
     pub fn residency_aligned_mip_size(mut self, residency_aligned_mip_size: bool) -> Self {
         self.residency_aligned_mip_size = residency_aligned_mip_size.into();
         self
     }
+    #[inline]
     pub fn residency_non_resident_strict(mut self, residency_non_resident_strict: bool) -> Self {
         self.residency_non_resident_strict = residency_non_resident_strict.into();
         self
@@ -5626,62 +6111,77 @@ impl ::std::default::Default for PhysicalDeviceLimits {
     }
 }
 impl PhysicalDeviceLimits {
+    #[inline]
     pub fn max_image_dimension1_d(mut self, max_image_dimension1_d: u32) -> Self {
         self.max_image_dimension1_d = max_image_dimension1_d;
         self
     }
+    #[inline]
     pub fn max_image_dimension2_d(mut self, max_image_dimension2_d: u32) -> Self {
         self.max_image_dimension2_d = max_image_dimension2_d;
         self
     }
+    #[inline]
     pub fn max_image_dimension3_d(mut self, max_image_dimension3_d: u32) -> Self {
         self.max_image_dimension3_d = max_image_dimension3_d;
         self
     }
+    #[inline]
     pub fn max_image_dimension_cube(mut self, max_image_dimension_cube: u32) -> Self {
         self.max_image_dimension_cube = max_image_dimension_cube;
         self
     }
+    #[inline]
     pub fn max_image_array_layers(mut self, max_image_array_layers: u32) -> Self {
         self.max_image_array_layers = max_image_array_layers;
         self
     }
+    #[inline]
     pub fn max_texel_buffer_elements(mut self, max_texel_buffer_elements: u32) -> Self {
         self.max_texel_buffer_elements = max_texel_buffer_elements;
         self
     }
+    #[inline]
     pub fn max_uniform_buffer_range(mut self, max_uniform_buffer_range: u32) -> Self {
         self.max_uniform_buffer_range = max_uniform_buffer_range;
         self
     }
+    #[inline]
     pub fn max_storage_buffer_range(mut self, max_storage_buffer_range: u32) -> Self {
         self.max_storage_buffer_range = max_storage_buffer_range;
         self
     }
+    #[inline]
     pub fn max_push_constants_size(mut self, max_push_constants_size: u32) -> Self {
         self.max_push_constants_size = max_push_constants_size;
         self
     }
+    #[inline]
     pub fn max_memory_allocation_count(mut self, max_memory_allocation_count: u32) -> Self {
         self.max_memory_allocation_count = max_memory_allocation_count;
         self
     }
+    #[inline]
     pub fn max_sampler_allocation_count(mut self, max_sampler_allocation_count: u32) -> Self {
         self.max_sampler_allocation_count = max_sampler_allocation_count;
         self
     }
+    #[inline]
     pub fn buffer_image_granularity(mut self, buffer_image_granularity: DeviceSize) -> Self {
         self.buffer_image_granularity = buffer_image_granularity;
         self
     }
+    #[inline]
     pub fn sparse_address_space_size(mut self, sparse_address_space_size: DeviceSize) -> Self {
         self.sparse_address_space_size = sparse_address_space_size;
         self
     }
+    #[inline]
     pub fn max_bound_descriptor_sets(mut self, max_bound_descriptor_sets: u32) -> Self {
         self.max_bound_descriptor_sets = max_bound_descriptor_sets;
         self
     }
+    #[inline]
     pub fn max_per_stage_descriptor_samplers(
         mut self,
         max_per_stage_descriptor_samplers: u32,
@@ -5689,6 +6189,7 @@ impl PhysicalDeviceLimits {
         self.max_per_stage_descriptor_samplers = max_per_stage_descriptor_samplers;
         self
     }
+    #[inline]
     pub fn max_per_stage_descriptor_uniform_buffers(
         mut self,
         max_per_stage_descriptor_uniform_buffers: u32,
@@ -5696,6 +6197,7 @@ impl PhysicalDeviceLimits {
         self.max_per_stage_descriptor_uniform_buffers = max_per_stage_descriptor_uniform_buffers;
         self
     }
+    #[inline]
     pub fn max_per_stage_descriptor_storage_buffers(
         mut self,
         max_per_stage_descriptor_storage_buffers: u32,
@@ -5703,6 +6205,7 @@ impl PhysicalDeviceLimits {
         self.max_per_stage_descriptor_storage_buffers = max_per_stage_descriptor_storage_buffers;
         self
     }
+    #[inline]
     pub fn max_per_stage_descriptor_sampled_images(
         mut self,
         max_per_stage_descriptor_sampled_images: u32,
@@ -5710,6 +6213,7 @@ impl PhysicalDeviceLimits {
         self.max_per_stage_descriptor_sampled_images = max_per_stage_descriptor_sampled_images;
         self
     }
+    #[inline]
     pub fn max_per_stage_descriptor_storage_images(
         mut self,
         max_per_stage_descriptor_storage_images: u32,
@@ -5717,6 +6221,7 @@ impl PhysicalDeviceLimits {
         self.max_per_stage_descriptor_storage_images = max_per_stage_descriptor_storage_images;
         self
     }
+    #[inline]
     pub fn max_per_stage_descriptor_input_attachments(
         mut self,
         max_per_stage_descriptor_input_attachments: u32,
@@ -5725,14 +6230,17 @@ impl PhysicalDeviceLimits {
             max_per_stage_descriptor_input_attachments;
         self
     }
+    #[inline]
     pub fn max_per_stage_resources(mut self, max_per_stage_resources: u32) -> Self {
         self.max_per_stage_resources = max_per_stage_resources;
         self
     }
+    #[inline]
     pub fn max_descriptor_set_samplers(mut self, max_descriptor_set_samplers: u32) -> Self {
         self.max_descriptor_set_samplers = max_descriptor_set_samplers;
         self
     }
+    #[inline]
     pub fn max_descriptor_set_uniform_buffers(
         mut self,
         max_descriptor_set_uniform_buffers: u32,
@@ -5740,6 +6248,7 @@ impl PhysicalDeviceLimits {
         self.max_descriptor_set_uniform_buffers = max_descriptor_set_uniform_buffers;
         self
     }
+    #[inline]
     pub fn max_descriptor_set_uniform_buffers_dynamic(
         mut self,
         max_descriptor_set_uniform_buffers_dynamic: u32,
@@ -5748,6 +6257,7 @@ impl PhysicalDeviceLimits {
             max_descriptor_set_uniform_buffers_dynamic;
         self
     }
+    #[inline]
     pub fn max_descriptor_set_storage_buffers(
         mut self,
         max_descriptor_set_storage_buffers: u32,
@@ -5755,6 +6265,7 @@ impl PhysicalDeviceLimits {
         self.max_descriptor_set_storage_buffers = max_descriptor_set_storage_buffers;
         self
     }
+    #[inline]
     pub fn max_descriptor_set_storage_buffers_dynamic(
         mut self,
         max_descriptor_set_storage_buffers_dynamic: u32,
@@ -5763,6 +6274,7 @@ impl PhysicalDeviceLimits {
             max_descriptor_set_storage_buffers_dynamic;
         self
     }
+    #[inline]
     pub fn max_descriptor_set_sampled_images(
         mut self,
         max_descriptor_set_sampled_images: u32,
@@ -5770,6 +6282,7 @@ impl PhysicalDeviceLimits {
         self.max_descriptor_set_sampled_images = max_descriptor_set_sampled_images;
         self
     }
+    #[inline]
     pub fn max_descriptor_set_storage_images(
         mut self,
         max_descriptor_set_storage_images: u32,
@@ -5777,6 +6290,7 @@ impl PhysicalDeviceLimits {
         self.max_descriptor_set_storage_images = max_descriptor_set_storage_images;
         self
     }
+    #[inline]
     pub fn max_descriptor_set_input_attachments(
         mut self,
         max_descriptor_set_input_attachments: u32,
@@ -5784,14 +6298,17 @@ impl PhysicalDeviceLimits {
         self.max_descriptor_set_input_attachments = max_descriptor_set_input_attachments;
         self
     }
+    #[inline]
     pub fn max_vertex_input_attributes(mut self, max_vertex_input_attributes: u32) -> Self {
         self.max_vertex_input_attributes = max_vertex_input_attributes;
         self
     }
+    #[inline]
     pub fn max_vertex_input_bindings(mut self, max_vertex_input_bindings: u32) -> Self {
         self.max_vertex_input_bindings = max_vertex_input_bindings;
         self
     }
+    #[inline]
     pub fn max_vertex_input_attribute_offset(
         mut self,
         max_vertex_input_attribute_offset: u32,
@@ -5799,14 +6316,17 @@ impl PhysicalDeviceLimits {
         self.max_vertex_input_attribute_offset = max_vertex_input_attribute_offset;
         self
     }
+    #[inline]
     pub fn max_vertex_input_binding_stride(mut self, max_vertex_input_binding_stride: u32) -> Self {
         self.max_vertex_input_binding_stride = max_vertex_input_binding_stride;
         self
     }
+    #[inline]
     pub fn max_vertex_output_components(mut self, max_vertex_output_components: u32) -> Self {
         self.max_vertex_output_components = max_vertex_output_components;
         self
     }
+    #[inline]
     pub fn max_tessellation_generation_level(
         mut self,
         max_tessellation_generation_level: u32,
@@ -5814,10 +6334,12 @@ impl PhysicalDeviceLimits {
         self.max_tessellation_generation_level = max_tessellation_generation_level;
         self
     }
+    #[inline]
     pub fn max_tessellation_patch_size(mut self, max_tessellation_patch_size: u32) -> Self {
         self.max_tessellation_patch_size = max_tessellation_patch_size;
         self
     }
+    #[inline]
     pub fn max_tessellation_control_per_vertex_input_components(
         mut self,
         max_tessellation_control_per_vertex_input_components: u32,
@@ -5826,6 +6348,7 @@ impl PhysicalDeviceLimits {
             max_tessellation_control_per_vertex_input_components;
         self
     }
+    #[inline]
     pub fn max_tessellation_control_per_vertex_output_components(
         mut self,
         max_tessellation_control_per_vertex_output_components: u32,
@@ -5834,6 +6357,7 @@ impl PhysicalDeviceLimits {
             max_tessellation_control_per_vertex_output_components;
         self
     }
+    #[inline]
     pub fn max_tessellation_control_per_patch_output_components(
         mut self,
         max_tessellation_control_per_patch_output_components: u32,
@@ -5842,6 +6366,7 @@ impl PhysicalDeviceLimits {
             max_tessellation_control_per_patch_output_components;
         self
     }
+    #[inline]
     pub fn max_tessellation_control_total_output_components(
         mut self,
         max_tessellation_control_total_output_components: u32,
@@ -5850,6 +6375,7 @@ impl PhysicalDeviceLimits {
             max_tessellation_control_total_output_components;
         self
     }
+    #[inline]
     pub fn max_tessellation_evaluation_input_components(
         mut self,
         max_tessellation_evaluation_input_components: u32,
@@ -5858,6 +6384,7 @@ impl PhysicalDeviceLimits {
             max_tessellation_evaluation_input_components;
         self
     }
+    #[inline]
     pub fn max_tessellation_evaluation_output_components(
         mut self,
         max_tessellation_evaluation_output_components: u32,
@@ -5866,22 +6393,27 @@ impl PhysicalDeviceLimits {
             max_tessellation_evaluation_output_components;
         self
     }
+    #[inline]
     pub fn max_geometry_shader_invocations(mut self, max_geometry_shader_invocations: u32) -> Self {
         self.max_geometry_shader_invocations = max_geometry_shader_invocations;
         self
     }
+    #[inline]
     pub fn max_geometry_input_components(mut self, max_geometry_input_components: u32) -> Self {
         self.max_geometry_input_components = max_geometry_input_components;
         self
     }
+    #[inline]
     pub fn max_geometry_output_components(mut self, max_geometry_output_components: u32) -> Self {
         self.max_geometry_output_components = max_geometry_output_components;
         self
     }
+    #[inline]
     pub fn max_geometry_output_vertices(mut self, max_geometry_output_vertices: u32) -> Self {
         self.max_geometry_output_vertices = max_geometry_output_vertices;
         self
     }
+    #[inline]
     pub fn max_geometry_total_output_components(
         mut self,
         max_geometry_total_output_components: u32,
@@ -5889,14 +6421,17 @@ impl PhysicalDeviceLimits {
         self.max_geometry_total_output_components = max_geometry_total_output_components;
         self
     }
+    #[inline]
     pub fn max_fragment_input_components(mut self, max_fragment_input_components: u32) -> Self {
         self.max_fragment_input_components = max_fragment_input_components;
         self
     }
+    #[inline]
     pub fn max_fragment_output_attachments(mut self, max_fragment_output_attachments: u32) -> Self {
         self.max_fragment_output_attachments = max_fragment_output_attachments;
         self
     }
+    #[inline]
     pub fn max_fragment_dual_src_attachments(
         mut self,
         max_fragment_dual_src_attachments: u32,
@@ -5904,6 +6439,7 @@ impl PhysicalDeviceLimits {
         self.max_fragment_dual_src_attachments = max_fragment_dual_src_attachments;
         self
     }
+    #[inline]
     pub fn max_fragment_combined_output_resources(
         mut self,
         max_fragment_combined_output_resources: u32,
@@ -5911,14 +6447,17 @@ impl PhysicalDeviceLimits {
         self.max_fragment_combined_output_resources = max_fragment_combined_output_resources;
         self
     }
+    #[inline]
     pub fn max_compute_shared_memory_size(mut self, max_compute_shared_memory_size: u32) -> Self {
         self.max_compute_shared_memory_size = max_compute_shared_memory_size;
         self
     }
+    #[inline]
     pub fn max_compute_work_group_count(mut self, max_compute_work_group_count: [u32; 3]) -> Self {
         self.max_compute_work_group_count = max_compute_work_group_count;
         self
     }
+    #[inline]
     pub fn max_compute_work_group_invocations(
         mut self,
         max_compute_work_group_invocations: u32,
@@ -5926,58 +6465,72 @@ impl PhysicalDeviceLimits {
         self.max_compute_work_group_invocations = max_compute_work_group_invocations;
         self
     }
+    #[inline]
     pub fn max_compute_work_group_size(mut self, max_compute_work_group_size: [u32; 3]) -> Self {
         self.max_compute_work_group_size = max_compute_work_group_size;
         self
     }
+    #[inline]
     pub fn sub_pixel_precision_bits(mut self, sub_pixel_precision_bits: u32) -> Self {
         self.sub_pixel_precision_bits = sub_pixel_precision_bits;
         self
     }
+    #[inline]
     pub fn sub_texel_precision_bits(mut self, sub_texel_precision_bits: u32) -> Self {
         self.sub_texel_precision_bits = sub_texel_precision_bits;
         self
     }
+    #[inline]
     pub fn mipmap_precision_bits(mut self, mipmap_precision_bits: u32) -> Self {
         self.mipmap_precision_bits = mipmap_precision_bits;
         self
     }
+    #[inline]
     pub fn max_draw_indexed_index_value(mut self, max_draw_indexed_index_value: u32) -> Self {
         self.max_draw_indexed_index_value = max_draw_indexed_index_value;
         self
     }
+    #[inline]
     pub fn max_draw_indirect_count(mut self, max_draw_indirect_count: u32) -> Self {
         self.max_draw_indirect_count = max_draw_indirect_count;
         self
     }
+    #[inline]
     pub fn max_sampler_lod_bias(mut self, max_sampler_lod_bias: f32) -> Self {
         self.max_sampler_lod_bias = max_sampler_lod_bias;
         self
     }
+    #[inline]
     pub fn max_sampler_anisotropy(mut self, max_sampler_anisotropy: f32) -> Self {
         self.max_sampler_anisotropy = max_sampler_anisotropy;
         self
     }
+    #[inline]
     pub fn max_viewports(mut self, max_viewports: u32) -> Self {
         self.max_viewports = max_viewports;
         self
     }
+    #[inline]
     pub fn max_viewport_dimensions(mut self, max_viewport_dimensions: [u32; 2]) -> Self {
         self.max_viewport_dimensions = max_viewport_dimensions;
         self
     }
+    #[inline]
     pub fn viewport_bounds_range(mut self, viewport_bounds_range: [f32; 2]) -> Self {
         self.viewport_bounds_range = viewport_bounds_range;
         self
     }
+    #[inline]
     pub fn viewport_sub_pixel_bits(mut self, viewport_sub_pixel_bits: u32) -> Self {
         self.viewport_sub_pixel_bits = viewport_sub_pixel_bits;
         self
     }
+    #[inline]
     pub fn min_memory_map_alignment(mut self, min_memory_map_alignment: usize) -> Self {
         self.min_memory_map_alignment = min_memory_map_alignment;
         self
     }
+    #[inline]
     pub fn min_texel_buffer_offset_alignment(
         mut self,
         min_texel_buffer_offset_alignment: DeviceSize,
@@ -5985,6 +6538,7 @@ impl PhysicalDeviceLimits {
         self.min_texel_buffer_offset_alignment = min_texel_buffer_offset_alignment;
         self
     }
+    #[inline]
     pub fn min_uniform_buffer_offset_alignment(
         mut self,
         min_uniform_buffer_offset_alignment: DeviceSize,
@@ -5992,6 +6546,7 @@ impl PhysicalDeviceLimits {
         self.min_uniform_buffer_offset_alignment = min_uniform_buffer_offset_alignment;
         self
     }
+    #[inline]
     pub fn min_storage_buffer_offset_alignment(
         mut self,
         min_storage_buffer_offset_alignment: DeviceSize,
@@ -5999,30 +6554,37 @@ impl PhysicalDeviceLimits {
         self.min_storage_buffer_offset_alignment = min_storage_buffer_offset_alignment;
         self
     }
+    #[inline]
     pub fn min_texel_offset(mut self, min_texel_offset: i32) -> Self {
         self.min_texel_offset = min_texel_offset;
         self
     }
+    #[inline]
     pub fn max_texel_offset(mut self, max_texel_offset: u32) -> Self {
         self.max_texel_offset = max_texel_offset;
         self
     }
+    #[inline]
     pub fn min_texel_gather_offset(mut self, min_texel_gather_offset: i32) -> Self {
         self.min_texel_gather_offset = min_texel_gather_offset;
         self
     }
+    #[inline]
     pub fn max_texel_gather_offset(mut self, max_texel_gather_offset: u32) -> Self {
         self.max_texel_gather_offset = max_texel_gather_offset;
         self
     }
+    #[inline]
     pub fn min_interpolation_offset(mut self, min_interpolation_offset: f32) -> Self {
         self.min_interpolation_offset = min_interpolation_offset;
         self
     }
+    #[inline]
     pub fn max_interpolation_offset(mut self, max_interpolation_offset: f32) -> Self {
         self.max_interpolation_offset = max_interpolation_offset;
         self
     }
+    #[inline]
     pub fn sub_pixel_interpolation_offset_bits(
         mut self,
         sub_pixel_interpolation_offset_bits: u32,
@@ -6030,18 +6592,22 @@ impl PhysicalDeviceLimits {
         self.sub_pixel_interpolation_offset_bits = sub_pixel_interpolation_offset_bits;
         self
     }
+    #[inline]
     pub fn max_framebuffer_width(mut self, max_framebuffer_width: u32) -> Self {
         self.max_framebuffer_width = max_framebuffer_width;
         self
     }
+    #[inline]
     pub fn max_framebuffer_height(mut self, max_framebuffer_height: u32) -> Self {
         self.max_framebuffer_height = max_framebuffer_height;
         self
     }
+    #[inline]
     pub fn max_framebuffer_layers(mut self, max_framebuffer_layers: u32) -> Self {
         self.max_framebuffer_layers = max_framebuffer_layers;
         self
     }
+    #[inline]
     pub fn framebuffer_color_sample_counts(
         mut self,
         framebuffer_color_sample_counts: SampleCountFlags,
@@ -6049,6 +6615,7 @@ impl PhysicalDeviceLimits {
         self.framebuffer_color_sample_counts = framebuffer_color_sample_counts;
         self
     }
+    #[inline]
     pub fn framebuffer_depth_sample_counts(
         mut self,
         framebuffer_depth_sample_counts: SampleCountFlags,
@@ -6056,6 +6623,7 @@ impl PhysicalDeviceLimits {
         self.framebuffer_depth_sample_counts = framebuffer_depth_sample_counts;
         self
     }
+    #[inline]
     pub fn framebuffer_stencil_sample_counts(
         mut self,
         framebuffer_stencil_sample_counts: SampleCountFlags,
@@ -6063,6 +6631,7 @@ impl PhysicalDeviceLimits {
         self.framebuffer_stencil_sample_counts = framebuffer_stencil_sample_counts;
         self
     }
+    #[inline]
     pub fn framebuffer_no_attachments_sample_counts(
         mut self,
         framebuffer_no_attachments_sample_counts: SampleCountFlags,
@@ -6070,10 +6639,12 @@ impl PhysicalDeviceLimits {
         self.framebuffer_no_attachments_sample_counts = framebuffer_no_attachments_sample_counts;
         self
     }
+    #[inline]
     pub fn max_color_attachments(mut self, max_color_attachments: u32) -> Self {
         self.max_color_attachments = max_color_attachments;
         self
     }
+    #[inline]
     pub fn sampled_image_color_sample_counts(
         mut self,
         sampled_image_color_sample_counts: SampleCountFlags,
@@ -6081,6 +6652,7 @@ impl PhysicalDeviceLimits {
         self.sampled_image_color_sample_counts = sampled_image_color_sample_counts;
         self
     }
+    #[inline]
     pub fn sampled_image_integer_sample_counts(
         mut self,
         sampled_image_integer_sample_counts: SampleCountFlags,
@@ -6088,6 +6660,7 @@ impl PhysicalDeviceLimits {
         self.sampled_image_integer_sample_counts = sampled_image_integer_sample_counts;
         self
     }
+    #[inline]
     pub fn sampled_image_depth_sample_counts(
         mut self,
         sampled_image_depth_sample_counts: SampleCountFlags,
@@ -6095,6 +6668,7 @@ impl PhysicalDeviceLimits {
         self.sampled_image_depth_sample_counts = sampled_image_depth_sample_counts;
         self
     }
+    #[inline]
     pub fn sampled_image_stencil_sample_counts(
         mut self,
         sampled_image_stencil_sample_counts: SampleCountFlags,
@@ -6102,6 +6676,7 @@ impl PhysicalDeviceLimits {
         self.sampled_image_stencil_sample_counts = sampled_image_stencil_sample_counts;
         self
     }
+    #[inline]
     pub fn storage_image_sample_counts(
         mut self,
         storage_image_sample_counts: SampleCountFlags,
@@ -6109,26 +6684,32 @@ impl PhysicalDeviceLimits {
         self.storage_image_sample_counts = storage_image_sample_counts;
         self
     }
+    #[inline]
     pub fn max_sample_mask_words(mut self, max_sample_mask_words: u32) -> Self {
         self.max_sample_mask_words = max_sample_mask_words;
         self
     }
+    #[inline]
     pub fn timestamp_compute_and_graphics(mut self, timestamp_compute_and_graphics: bool) -> Self {
         self.timestamp_compute_and_graphics = timestamp_compute_and_graphics.into();
         self
     }
+    #[inline]
     pub fn timestamp_period(mut self, timestamp_period: f32) -> Self {
         self.timestamp_period = timestamp_period;
         self
     }
+    #[inline]
     pub fn max_clip_distances(mut self, max_clip_distances: u32) -> Self {
         self.max_clip_distances = max_clip_distances;
         self
     }
+    #[inline]
     pub fn max_cull_distances(mut self, max_cull_distances: u32) -> Self {
         self.max_cull_distances = max_cull_distances;
         self
     }
+    #[inline]
     pub fn max_combined_clip_and_cull_distances(
         mut self,
         max_combined_clip_and_cull_distances: u32,
@@ -6136,34 +6717,42 @@ impl PhysicalDeviceLimits {
         self.max_combined_clip_and_cull_distances = max_combined_clip_and_cull_distances;
         self
     }
+    #[inline]
     pub fn discrete_queue_priorities(mut self, discrete_queue_priorities: u32) -> Self {
         self.discrete_queue_priorities = discrete_queue_priorities;
         self
     }
+    #[inline]
     pub fn point_size_range(mut self, point_size_range: [f32; 2]) -> Self {
         self.point_size_range = point_size_range;
         self
     }
+    #[inline]
     pub fn line_width_range(mut self, line_width_range: [f32; 2]) -> Self {
         self.line_width_range = line_width_range;
         self
     }
+    #[inline]
     pub fn point_size_granularity(mut self, point_size_granularity: f32) -> Self {
         self.point_size_granularity = point_size_granularity;
         self
     }
+    #[inline]
     pub fn line_width_granularity(mut self, line_width_granularity: f32) -> Self {
         self.line_width_granularity = line_width_granularity;
         self
     }
+    #[inline]
     pub fn strict_lines(mut self, strict_lines: bool) -> Self {
         self.strict_lines = strict_lines.into();
         self
     }
+    #[inline]
     pub fn standard_sample_locations(mut self, standard_sample_locations: bool) -> Self {
         self.standard_sample_locations = standard_sample_locations.into();
         self
     }
+    #[inline]
     pub fn optimal_buffer_copy_offset_alignment(
         mut self,
         optimal_buffer_copy_offset_alignment: DeviceSize,
@@ -6171,6 +6760,7 @@ impl PhysicalDeviceLimits {
         self.optimal_buffer_copy_offset_alignment = optimal_buffer_copy_offset_alignment;
         self
     }
+    #[inline]
     pub fn optimal_buffer_copy_row_pitch_alignment(
         mut self,
         optimal_buffer_copy_row_pitch_alignment: DeviceSize,
@@ -6178,6 +6768,7 @@ impl PhysicalDeviceLimits {
         self.optimal_buffer_copy_row_pitch_alignment = optimal_buffer_copy_row_pitch_alignment;
         self
     }
+    #[inline]
     pub fn non_coherent_atom_size(mut self, non_coherent_atom_size: DeviceSize) -> Self {
         self.non_coherent_atom_size = non_coherent_atom_size;
         self
@@ -6205,6 +6796,7 @@ impl ::std::default::Default for SemaphoreCreateInfo<'_> {
 }
 pub unsafe trait ExtendsSemaphoreCreateInfo {}
 impl<'a> SemaphoreCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: SemaphoreCreateFlags) -> Self {
         self.flags = flags;
         self
@@ -6252,18 +6844,22 @@ impl ::std::default::Default for QueryPoolCreateInfo<'_> {
 }
 pub unsafe trait ExtendsQueryPoolCreateInfo {}
 impl<'a> QueryPoolCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: QueryPoolCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn query_type(mut self, query_type: QueryType) -> Self {
         self.query_type = query_type;
         self
     }
+    #[inline]
     pub fn query_count(mut self, query_count: u32) -> Self {
         self.query_count = query_count;
         self
     }
+    #[inline]
     pub fn pipeline_statistics(mut self, pipeline_statistics: QueryPipelineStatisticFlags) -> Self {
         self.pipeline_statistics = pipeline_statistics;
         self
@@ -6317,27 +6913,33 @@ impl ::std::default::Default for FramebufferCreateInfo<'_> {
 }
 pub unsafe trait ExtendsFramebufferCreateInfo {}
 impl<'a> FramebufferCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: FramebufferCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn render_pass(mut self, render_pass: RenderPass) -> Self {
         self.render_pass = render_pass;
         self
     }
+    #[inline]
     pub fn attachments(mut self, attachments: &'a [ImageView]) -> Self {
         self.attachment_count = attachments.len() as _;
         self.p_attachments = attachments.as_ptr();
         self
     }
+    #[inline]
     pub fn width(mut self, width: u32) -> Self {
         self.width = width;
         self
     }
+    #[inline]
     pub fn height(mut self, height: u32) -> Self {
         self.height = height;
         self
     }
+    #[inline]
     pub fn layers(mut self, layers: u32) -> Self {
         self.layers = layers;
         self
@@ -6368,18 +6970,22 @@ pub struct DrawIndirectCommand {
     pub first_instance: u32,
 }
 impl DrawIndirectCommand {
+    #[inline]
     pub fn vertex_count(mut self, vertex_count: u32) -> Self {
         self.vertex_count = vertex_count;
         self
     }
+    #[inline]
     pub fn instance_count(mut self, instance_count: u32) -> Self {
         self.instance_count = instance_count;
         self
     }
+    #[inline]
     pub fn first_vertex(mut self, first_vertex: u32) -> Self {
         self.first_vertex = first_vertex;
         self
     }
+    #[inline]
     pub fn first_instance(mut self, first_instance: u32) -> Self {
         self.first_instance = first_instance;
         self
@@ -6397,22 +7003,27 @@ pub struct DrawIndexedIndirectCommand {
     pub first_instance: u32,
 }
 impl DrawIndexedIndirectCommand {
+    #[inline]
     pub fn index_count(mut self, index_count: u32) -> Self {
         self.index_count = index_count;
         self
     }
+    #[inline]
     pub fn instance_count(mut self, instance_count: u32) -> Self {
         self.instance_count = instance_count;
         self
     }
+    #[inline]
     pub fn first_index(mut self, first_index: u32) -> Self {
         self.first_index = first_index;
         self
     }
+    #[inline]
     pub fn vertex_offset(mut self, vertex_offset: i32) -> Self {
         self.vertex_offset = vertex_offset;
         self
     }
+    #[inline]
     pub fn first_instance(mut self, first_instance: u32) -> Self {
         self.first_instance = first_instance;
         self
@@ -6428,14 +7039,17 @@ pub struct DispatchIndirectCommand {
     pub z: u32,
 }
 impl DispatchIndirectCommand {
+    #[inline]
     pub fn x(mut self, x: u32) -> Self {
         self.x = x;
         self
     }
+    #[inline]
     pub fn y(mut self, y: u32) -> Self {
         self.y = y;
         self
     }
+    #[inline]
     pub fn z(mut self, z: u32) -> Self {
         self.z = z;
         self
@@ -6450,10 +7064,12 @@ pub struct MultiDrawInfoEXT {
     pub vertex_count: u32,
 }
 impl MultiDrawInfoEXT {
+    #[inline]
     pub fn first_vertex(mut self, first_vertex: u32) -> Self {
         self.first_vertex = first_vertex;
         self
     }
+    #[inline]
     pub fn vertex_count(mut self, vertex_count: u32) -> Self {
         self.vertex_count = vertex_count;
         self
@@ -6469,14 +7085,17 @@ pub struct MultiDrawIndexedInfoEXT {
     pub vertex_offset: i32,
 }
 impl MultiDrawIndexedInfoEXT {
+    #[inline]
     pub fn first_index(mut self, first_index: u32) -> Self {
         self.first_index = first_index;
         self
     }
+    #[inline]
     pub fn index_count(mut self, index_count: u32) -> Self {
         self.index_count = index_count;
         self
     }
+    #[inline]
     pub fn vertex_offset(mut self, vertex_offset: i32) -> Self {
         self.vertex_offset = vertex_offset;
         self
@@ -6516,21 +7135,25 @@ impl ::std::default::Default for SubmitInfo<'_> {
 }
 pub unsafe trait ExtendsSubmitInfo {}
 impl<'a> SubmitInfo<'a> {
+    #[inline]
     pub fn wait_semaphores(mut self, wait_semaphores: &'a [Semaphore]) -> Self {
         self.wait_semaphore_count = wait_semaphores.len() as _;
         self.p_wait_semaphores = wait_semaphores.as_ptr();
         self
     }
+    #[inline]
     pub fn wait_dst_stage_mask(mut self, wait_dst_stage_mask: &'a [PipelineStageFlags]) -> Self {
         self.wait_semaphore_count = wait_dst_stage_mask.len() as _;
         self.p_wait_dst_stage_mask = wait_dst_stage_mask.as_ptr();
         self
     }
+    #[inline]
     pub fn command_buffers(mut self, command_buffers: &'a [CommandBuffer]) -> Self {
         self.command_buffer_count = command_buffers.len() as _;
         self.p_command_buffers = command_buffers.as_ptr();
         self
     }
+    #[inline]
     pub fn signal_semaphores(mut self, signal_semaphores: &'a [Semaphore]) -> Self {
         self.signal_semaphore_count = signal_semaphores.len() as _;
         self.p_signal_semaphores = signal_semaphores.as_ptr();
@@ -6580,30 +7203,37 @@ impl ::std::default::Default for DisplayPropertiesKHR<'_> {
     }
 }
 impl<'a> DisplayPropertiesKHR<'a> {
+    #[inline]
     pub fn display(mut self, display: DisplayKHR) -> Self {
         self.display = display;
         self
     }
+    #[inline]
     pub fn display_name(mut self, display_name: &'a ::std::ffi::CStr) -> Self {
         self.display_name = display_name.as_ptr();
         self
     }
+    #[inline]
     pub fn physical_dimensions(mut self, physical_dimensions: Extent2D) -> Self {
         self.physical_dimensions = physical_dimensions;
         self
     }
+    #[inline]
     pub fn physical_resolution(mut self, physical_resolution: Extent2D) -> Self {
         self.physical_resolution = physical_resolution;
         self
     }
+    #[inline]
     pub fn supported_transforms(mut self, supported_transforms: SurfaceTransformFlagsKHR) -> Self {
         self.supported_transforms = supported_transforms;
         self
     }
+    #[inline]
     pub fn plane_reorder_possible(mut self, plane_reorder_possible: bool) -> Self {
         self.plane_reorder_possible = plane_reorder_possible.into();
         self
     }
+    #[inline]
     pub fn persistent_content(mut self, persistent_content: bool) -> Self {
         self.persistent_content = persistent_content.into();
         self
@@ -6618,10 +7248,12 @@ pub struct DisplayPlanePropertiesKHR {
     pub current_stack_index: u32,
 }
 impl DisplayPlanePropertiesKHR {
+    #[inline]
     pub fn current_display(mut self, current_display: DisplayKHR) -> Self {
         self.current_display = current_display;
         self
     }
+    #[inline]
     pub fn current_stack_index(mut self, current_stack_index: u32) -> Self {
         self.current_stack_index = current_stack_index;
         self
@@ -6636,10 +7268,12 @@ pub struct DisplayModeParametersKHR {
     pub refresh_rate: u32,
 }
 impl DisplayModeParametersKHR {
+    #[inline]
     pub fn visible_region(mut self, visible_region: Extent2D) -> Self {
         self.visible_region = visible_region;
         self
     }
+    #[inline]
     pub fn refresh_rate(mut self, refresh_rate: u32) -> Self {
         self.refresh_rate = refresh_rate;
         self
@@ -6654,10 +7288,12 @@ pub struct DisplayModePropertiesKHR {
     pub parameters: DisplayModeParametersKHR,
 }
 impl DisplayModePropertiesKHR {
+    #[inline]
     pub fn display_mode(mut self, display_mode: DisplayModeKHR) -> Self {
         self.display_mode = display_mode;
         self
     }
+    #[inline]
     pub fn parameters(mut self, parameters: DisplayModeParametersKHR) -> Self {
         self.parameters = parameters;
         self
@@ -6686,10 +7322,12 @@ impl ::std::default::Default for DisplayModeCreateInfoKHR<'_> {
     }
 }
 impl<'a> DisplayModeCreateInfoKHR<'a> {
+    #[inline]
     pub fn flags(mut self, flags: DisplayModeCreateFlagsKHR) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn parameters(mut self, parameters: DisplayModeParametersKHR) -> Self {
         self.parameters = parameters;
         self
@@ -6711,38 +7349,47 @@ pub struct DisplayPlaneCapabilitiesKHR {
     pub max_dst_extent: Extent2D,
 }
 impl DisplayPlaneCapabilitiesKHR {
+    #[inline]
     pub fn supported_alpha(mut self, supported_alpha: DisplayPlaneAlphaFlagsKHR) -> Self {
         self.supported_alpha = supported_alpha;
         self
     }
+    #[inline]
     pub fn min_src_position(mut self, min_src_position: Offset2D) -> Self {
         self.min_src_position = min_src_position;
         self
     }
+    #[inline]
     pub fn max_src_position(mut self, max_src_position: Offset2D) -> Self {
         self.max_src_position = max_src_position;
         self
     }
+    #[inline]
     pub fn min_src_extent(mut self, min_src_extent: Extent2D) -> Self {
         self.min_src_extent = min_src_extent;
         self
     }
+    #[inline]
     pub fn max_src_extent(mut self, max_src_extent: Extent2D) -> Self {
         self.max_src_extent = max_src_extent;
         self
     }
+    #[inline]
     pub fn min_dst_position(mut self, min_dst_position: Offset2D) -> Self {
         self.min_dst_position = min_dst_position;
         self
     }
+    #[inline]
     pub fn max_dst_position(mut self, max_dst_position: Offset2D) -> Self {
         self.max_dst_position = max_dst_position;
         self
     }
+    #[inline]
     pub fn min_dst_extent(mut self, min_dst_extent: Extent2D) -> Self {
         self.min_dst_extent = min_dst_extent;
         self
     }
+    #[inline]
     pub fn max_dst_extent(mut self, max_dst_extent: Extent2D) -> Self {
         self.max_dst_extent = max_dst_extent;
         self
@@ -6783,34 +7430,42 @@ impl ::std::default::Default for DisplaySurfaceCreateInfoKHR<'_> {
     }
 }
 impl<'a> DisplaySurfaceCreateInfoKHR<'a> {
+    #[inline]
     pub fn flags(mut self, flags: DisplaySurfaceCreateFlagsKHR) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn display_mode(mut self, display_mode: DisplayModeKHR) -> Self {
         self.display_mode = display_mode;
         self
     }
+    #[inline]
     pub fn plane_index(mut self, plane_index: u32) -> Self {
         self.plane_index = plane_index;
         self
     }
+    #[inline]
     pub fn plane_stack_index(mut self, plane_stack_index: u32) -> Self {
         self.plane_stack_index = plane_stack_index;
         self
     }
+    #[inline]
     pub fn transform(mut self, transform: SurfaceTransformFlagsKHR) -> Self {
         self.transform = transform;
         self
     }
+    #[inline]
     pub fn global_alpha(mut self, global_alpha: f32) -> Self {
         self.global_alpha = global_alpha;
         self
     }
+    #[inline]
     pub fn alpha_mode(mut self, alpha_mode: DisplayPlaneAlphaFlagsKHR) -> Self {
         self.alpha_mode = alpha_mode;
         self
     }
+    #[inline]
     pub fn image_extent(mut self, image_extent: Extent2D) -> Self {
         self.image_extent = image_extent;
         self
@@ -6842,14 +7497,17 @@ impl ::std::default::Default for DisplayPresentInfoKHR<'_> {
 }
 unsafe impl<'a> ExtendsPresentInfoKHR for DisplayPresentInfoKHR<'a> {}
 impl<'a> DisplayPresentInfoKHR<'a> {
+    #[inline]
     pub fn src_rect(mut self, src_rect: Rect2D) -> Self {
         self.src_rect = src_rect;
         self
     }
+    #[inline]
     pub fn dst_rect(mut self, dst_rect: Rect2D) -> Self {
         self.dst_rect = dst_rect;
         self
     }
+    #[inline]
     pub fn persistent(mut self, persistent: bool) -> Self {
         self.persistent = persistent.into();
         self
@@ -6872,38 +7530,47 @@ pub struct SurfaceCapabilitiesKHR {
     pub supported_usage_flags: ImageUsageFlags,
 }
 impl SurfaceCapabilitiesKHR {
+    #[inline]
     pub fn min_image_count(mut self, min_image_count: u32) -> Self {
         self.min_image_count = min_image_count;
         self
     }
+    #[inline]
     pub fn max_image_count(mut self, max_image_count: u32) -> Self {
         self.max_image_count = max_image_count;
         self
     }
+    #[inline]
     pub fn current_extent(mut self, current_extent: Extent2D) -> Self {
         self.current_extent = current_extent;
         self
     }
+    #[inline]
     pub fn min_image_extent(mut self, min_image_extent: Extent2D) -> Self {
         self.min_image_extent = min_image_extent;
         self
     }
+    #[inline]
     pub fn max_image_extent(mut self, max_image_extent: Extent2D) -> Self {
         self.max_image_extent = max_image_extent;
         self
     }
+    #[inline]
     pub fn max_image_array_layers(mut self, max_image_array_layers: u32) -> Self {
         self.max_image_array_layers = max_image_array_layers;
         self
     }
+    #[inline]
     pub fn supported_transforms(mut self, supported_transforms: SurfaceTransformFlagsKHR) -> Self {
         self.supported_transforms = supported_transforms;
         self
     }
+    #[inline]
     pub fn current_transform(mut self, current_transform: SurfaceTransformFlagsKHR) -> Self {
         self.current_transform = current_transform;
         self
     }
+    #[inline]
     pub fn supported_composite_alpha(
         mut self,
         supported_composite_alpha: CompositeAlphaFlagsKHR,
@@ -6911,6 +7578,7 @@ impl SurfaceCapabilitiesKHR {
         self.supported_composite_alpha = supported_composite_alpha;
         self
     }
+    #[inline]
     pub fn supported_usage_flags(mut self, supported_usage_flags: ImageUsageFlags) -> Self {
         self.supported_usage_flags = supported_usage_flags;
         self
@@ -6939,10 +7607,12 @@ impl ::std::default::Default for AndroidSurfaceCreateInfoKHR<'_> {
     }
 }
 impl<'a> AndroidSurfaceCreateInfoKHR<'a> {
+    #[inline]
     pub fn flags(mut self, flags: AndroidSurfaceCreateFlagsKHR) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn window(mut self, window: *mut ANativeWindow) -> Self {
         self.window = window;
         self
@@ -6971,10 +7641,12 @@ impl ::std::default::Default for ViSurfaceCreateInfoNN<'_> {
     }
 }
 impl<'a> ViSurfaceCreateInfoNN<'a> {
+    #[inline]
     pub fn flags(mut self, flags: ViSurfaceCreateFlagsNN) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn window(mut self, window: *mut c_void) -> Self {
         self.window = window;
         self
@@ -7005,14 +7677,17 @@ impl ::std::default::Default for WaylandSurfaceCreateInfoKHR<'_> {
     }
 }
 impl<'a> WaylandSurfaceCreateInfoKHR<'a> {
+    #[inline]
     pub fn flags(mut self, flags: WaylandSurfaceCreateFlagsKHR) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn display(mut self, display: *mut wl_display) -> Self {
         self.display = display;
         self
     }
+    #[inline]
     pub fn surface(mut self, surface: *mut wl_surface) -> Self {
         self.surface = surface;
         self
@@ -7043,14 +7718,17 @@ impl ::std::default::Default for Win32SurfaceCreateInfoKHR<'_> {
     }
 }
 impl<'a> Win32SurfaceCreateInfoKHR<'a> {
+    #[inline]
     pub fn flags(mut self, flags: Win32SurfaceCreateFlagsKHR) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn hinstance(mut self, hinstance: HINSTANCE) -> Self {
         self.hinstance = hinstance;
         self
     }
+    #[inline]
     pub fn hwnd(mut self, hwnd: HWND) -> Self {
         self.hwnd = hwnd;
         self
@@ -7081,14 +7759,17 @@ impl ::std::default::Default for XlibSurfaceCreateInfoKHR<'_> {
     }
 }
 impl<'a> XlibSurfaceCreateInfoKHR<'a> {
+    #[inline]
     pub fn flags(mut self, flags: XlibSurfaceCreateFlagsKHR) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn dpy(mut self, dpy: *mut Display) -> Self {
         self.dpy = dpy;
         self
     }
+    #[inline]
     pub fn window(mut self, window: Window) -> Self {
         self.window = window;
         self
@@ -7119,14 +7800,17 @@ impl ::std::default::Default for XcbSurfaceCreateInfoKHR<'_> {
     }
 }
 impl<'a> XcbSurfaceCreateInfoKHR<'a> {
+    #[inline]
     pub fn flags(mut self, flags: XcbSurfaceCreateFlagsKHR) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn connection(mut self, connection: *mut xcb_connection_t) -> Self {
         self.connection = connection;
         self
     }
+    #[inline]
     pub fn window(mut self, window: xcb_window_t) -> Self {
         self.window = window;
         self
@@ -7157,14 +7841,17 @@ impl ::std::default::Default for DirectFBSurfaceCreateInfoEXT<'_> {
     }
 }
 impl<'a> DirectFBSurfaceCreateInfoEXT<'a> {
+    #[inline]
     pub fn flags(mut self, flags: DirectFBSurfaceCreateFlagsEXT) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn dfb(mut self, dfb: *mut IDirectFB) -> Self {
         self.dfb = dfb;
         self
     }
+    #[inline]
     pub fn surface(mut self, surface: *mut IDirectFBSurface) -> Self {
         self.surface = surface;
         self
@@ -7193,10 +7880,12 @@ impl ::std::default::Default for ImagePipeSurfaceCreateInfoFUCHSIA<'_> {
     }
 }
 impl<'a> ImagePipeSurfaceCreateInfoFUCHSIA<'a> {
+    #[inline]
     pub fn flags(mut self, flags: ImagePipeSurfaceCreateFlagsFUCHSIA) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn image_pipe_handle(mut self, image_pipe_handle: zx_handle_t) -> Self {
         self.image_pipe_handle = image_pipe_handle;
         self
@@ -7225,10 +7914,12 @@ impl ::std::default::Default for StreamDescriptorSurfaceCreateInfoGGP<'_> {
     }
 }
 impl<'a> StreamDescriptorSurfaceCreateInfoGGP<'a> {
+    #[inline]
     pub fn flags(mut self, flags: StreamDescriptorSurfaceCreateFlagsGGP) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn stream_descriptor(mut self, stream_descriptor: GgpStreamDescriptor) -> Self {
         self.stream_descriptor = stream_descriptor;
         self
@@ -7259,14 +7950,17 @@ impl ::std::default::Default for ScreenSurfaceCreateInfoQNX<'_> {
     }
 }
 impl<'a> ScreenSurfaceCreateInfoQNX<'a> {
+    #[inline]
     pub fn flags(mut self, flags: ScreenSurfaceCreateFlagsQNX) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn context(mut self, context: &'a mut _screen_context) -> Self {
         self.context = context;
         self
     }
+    #[inline]
     pub fn window(mut self, window: &'a mut _screen_window) -> Self {
         self.window = window;
         self
@@ -7281,10 +7975,12 @@ pub struct SurfaceFormatKHR {
     pub color_space: ColorSpaceKHR,
 }
 impl SurfaceFormatKHR {
+    #[inline]
     pub fn format(mut self, format: Format) -> Self {
         self.format = format;
         self
     }
+    #[inline]
     pub fn color_space(mut self, color_space: ColorSpaceKHR) -> Self {
         self.color_space = color_space;
         self
@@ -7342,63 +8038,78 @@ impl ::std::default::Default for SwapchainCreateInfoKHR<'_> {
 }
 pub unsafe trait ExtendsSwapchainCreateInfoKHR {}
 impl<'a> SwapchainCreateInfoKHR<'a> {
+    #[inline]
     pub fn flags(mut self, flags: SwapchainCreateFlagsKHR) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn surface(mut self, surface: SurfaceKHR) -> Self {
         self.surface = surface;
         self
     }
+    #[inline]
     pub fn min_image_count(mut self, min_image_count: u32) -> Self {
         self.min_image_count = min_image_count;
         self
     }
+    #[inline]
     pub fn image_format(mut self, image_format: Format) -> Self {
         self.image_format = image_format;
         self
     }
+    #[inline]
     pub fn image_color_space(mut self, image_color_space: ColorSpaceKHR) -> Self {
         self.image_color_space = image_color_space;
         self
     }
+    #[inline]
     pub fn image_extent(mut self, image_extent: Extent2D) -> Self {
         self.image_extent = image_extent;
         self
     }
+    #[inline]
     pub fn image_array_layers(mut self, image_array_layers: u32) -> Self {
         self.image_array_layers = image_array_layers;
         self
     }
+    #[inline]
     pub fn image_usage(mut self, image_usage: ImageUsageFlags) -> Self {
         self.image_usage = image_usage;
         self
     }
+    #[inline]
     pub fn image_sharing_mode(mut self, image_sharing_mode: SharingMode) -> Self {
         self.image_sharing_mode = image_sharing_mode;
         self
     }
+    #[inline]
     pub fn queue_family_indices(mut self, queue_family_indices: &'a [u32]) -> Self {
         self.queue_family_index_count = queue_family_indices.len() as _;
         self.p_queue_family_indices = queue_family_indices.as_ptr();
         self
     }
+    #[inline]
     pub fn pre_transform(mut self, pre_transform: SurfaceTransformFlagsKHR) -> Self {
         self.pre_transform = pre_transform;
         self
     }
+    #[inline]
     pub fn composite_alpha(mut self, composite_alpha: CompositeAlphaFlagsKHR) -> Self {
         self.composite_alpha = composite_alpha;
         self
     }
+    #[inline]
     pub fn present_mode(mut self, present_mode: PresentModeKHR) -> Self {
         self.present_mode = present_mode;
         self
     }
+    #[inline]
     pub fn clipped(mut self, clipped: bool) -> Self {
         self.clipped = clipped.into();
         self
     }
+    #[inline]
     pub fn old_swapchain(mut self, old_swapchain: SwapchainKHR) -> Self {
         self.old_swapchain = old_swapchain;
         self
@@ -7450,21 +8161,25 @@ impl ::std::default::Default for PresentInfoKHR<'_> {
 }
 pub unsafe trait ExtendsPresentInfoKHR {}
 impl<'a> PresentInfoKHR<'a> {
+    #[inline]
     pub fn wait_semaphores(mut self, wait_semaphores: &'a [Semaphore]) -> Self {
         self.wait_semaphore_count = wait_semaphores.len() as _;
         self.p_wait_semaphores = wait_semaphores.as_ptr();
         self
     }
+    #[inline]
     pub fn swapchains(mut self, swapchains: &'a [SwapchainKHR]) -> Self {
         self.swapchain_count = swapchains.len() as _;
         self.p_swapchains = swapchains.as_ptr();
         self
     }
+    #[inline]
     pub fn image_indices(mut self, image_indices: &'a [u32]) -> Self {
         self.swapchain_count = image_indices.len() as _;
         self.p_image_indices = image_indices.as_ptr();
         self
     }
+    #[inline]
     pub fn results(mut self, results: &'a mut [Result]) -> Self {
         self.swapchain_count = results.len() as _;
         self.p_results = results.as_mut_ptr();
@@ -7522,14 +8237,17 @@ impl ::std::default::Default for DebugReportCallbackCreateInfoEXT<'_> {
 }
 unsafe impl<'a> ExtendsInstanceCreateInfo for DebugReportCallbackCreateInfoEXT<'a> {}
 impl<'a> DebugReportCallbackCreateInfoEXT<'a> {
+    #[inline]
     pub fn flags(mut self, flags: DebugReportFlagsEXT) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn pfn_callback(mut self, pfn_callback: PFN_vkDebugReportCallbackEXT) -> Self {
         self.pfn_callback = pfn_callback;
         self
     }
+    #[inline]
     pub fn user_data(mut self, user_data: *mut c_void) -> Self {
         self.p_user_data = user_data;
         self
@@ -7559,6 +8277,7 @@ impl ::std::default::Default for ValidationFlagsEXT<'_> {
 }
 unsafe impl<'a> ExtendsInstanceCreateInfo for ValidationFlagsEXT<'a> {}
 impl<'a> ValidationFlagsEXT<'a> {
+    #[inline]
     pub fn disabled_validation_checks(
         mut self,
         disabled_validation_checks: &'a [ValidationCheckEXT],
@@ -7596,6 +8315,7 @@ impl ::std::default::Default for ValidationFeaturesEXT<'_> {
 }
 unsafe impl<'a> ExtendsInstanceCreateInfo for ValidationFeaturesEXT<'a> {}
 impl<'a> ValidationFeaturesEXT<'a> {
+    #[inline]
     pub fn enabled_validation_features(
         mut self,
         enabled_validation_features: &'a [ValidationFeatureEnableEXT],
@@ -7604,6 +8324,7 @@ impl<'a> ValidationFeaturesEXT<'a> {
         self.p_enabled_validation_features = enabled_validation_features.as_ptr();
         self
     }
+    #[inline]
     pub fn disabled_validation_features(
         mut self,
         disabled_validation_features: &'a [ValidationFeatureDisableEXT],
@@ -7638,6 +8359,7 @@ unsafe impl<'a> ExtendsPipelineRasterizationStateCreateInfo
 {
 }
 impl<'a> PipelineRasterizationStateRasterizationOrderAMD<'a> {
+    #[inline]
     pub fn rasterization_order(mut self, rasterization_order: RasterizationOrderAMD) -> Self {
         self.rasterization_order = rasterization_order;
         self
@@ -7668,14 +8390,17 @@ impl ::std::default::Default for DebugMarkerObjectNameInfoEXT<'_> {
     }
 }
 impl<'a> DebugMarkerObjectNameInfoEXT<'a> {
+    #[inline]
     pub fn object_type(mut self, object_type: DebugReportObjectTypeEXT) -> Self {
         self.object_type = object_type;
         self
     }
+    #[inline]
     pub fn object(mut self, object: u64) -> Self {
         self.object = object;
         self
     }
+    #[inline]
     pub fn object_name(mut self, object_name: &'a ::std::ffi::CStr) -> Self {
         self.p_object_name = object_name.as_ptr();
         self
@@ -7710,18 +8435,22 @@ impl ::std::default::Default for DebugMarkerObjectTagInfoEXT<'_> {
     }
 }
 impl<'a> DebugMarkerObjectTagInfoEXT<'a> {
+    #[inline]
     pub fn object_type(mut self, object_type: DebugReportObjectTypeEXT) -> Self {
         self.object_type = object_type;
         self
     }
+    #[inline]
     pub fn object(mut self, object: u64) -> Self {
         self.object = object;
         self
     }
+    #[inline]
     pub fn tag_name(mut self, tag_name: u64) -> Self {
         self.tag_name = tag_name;
         self
     }
+    #[inline]
     pub fn tag(mut self, tag: &'a [u8]) -> Self {
         self.tag_size = tag.len();
         self.p_tag = tag.as_ptr() as *const c_void;
@@ -7751,10 +8480,12 @@ impl ::std::default::Default for DebugMarkerMarkerInfoEXT<'_> {
     }
 }
 impl<'a> DebugMarkerMarkerInfoEXT<'a> {
+    #[inline]
     pub fn marker_name(mut self, marker_name: &'a ::std::ffi::CStr) -> Self {
         self.p_marker_name = marker_name.as_ptr();
         self
     }
+    #[inline]
     pub fn color(mut self, color: [f32; 4]) -> Self {
         self.color = color;
         self
@@ -7782,6 +8513,7 @@ impl ::std::default::Default for DedicatedAllocationImageCreateInfoNV<'_> {
 }
 unsafe impl<'a> ExtendsImageCreateInfo for DedicatedAllocationImageCreateInfoNV<'a> {}
 impl<'a> DedicatedAllocationImageCreateInfoNV<'a> {
+    #[inline]
     pub fn dedicated_allocation(mut self, dedicated_allocation: bool) -> Self {
         self.dedicated_allocation = dedicated_allocation.into();
         self
@@ -7809,6 +8541,7 @@ impl ::std::default::Default for DedicatedAllocationBufferCreateInfoNV<'_> {
 }
 unsafe impl<'a> ExtendsBufferCreateInfo for DedicatedAllocationBufferCreateInfoNV<'a> {}
 impl<'a> DedicatedAllocationBufferCreateInfoNV<'a> {
+    #[inline]
     pub fn dedicated_allocation(mut self, dedicated_allocation: bool) -> Self {
         self.dedicated_allocation = dedicated_allocation.into();
         self
@@ -7838,10 +8571,12 @@ impl ::std::default::Default for DedicatedAllocationMemoryAllocateInfoNV<'_> {
 }
 unsafe impl<'a> ExtendsMemoryAllocateInfo for DedicatedAllocationMemoryAllocateInfoNV<'a> {}
 impl<'a> DedicatedAllocationMemoryAllocateInfoNV<'a> {
+    #[inline]
     pub fn image(mut self, image: Image) -> Self {
         self.image = image;
         self
     }
+    #[inline]
     pub fn buffer(mut self, buffer: Buffer) -> Self {
         self.buffer = buffer;
         self
@@ -7858,6 +8593,7 @@ pub struct ExternalImageFormatPropertiesNV {
     pub compatible_handle_types: ExternalMemoryHandleTypeFlagsNV,
 }
 impl ExternalImageFormatPropertiesNV {
+    #[inline]
     pub fn image_format_properties(
         mut self,
         image_format_properties: ImageFormatProperties,
@@ -7865,6 +8601,7 @@ impl ExternalImageFormatPropertiesNV {
         self.image_format_properties = image_format_properties;
         self
     }
+    #[inline]
     pub fn external_memory_features(
         mut self,
         external_memory_features: ExternalMemoryFeatureFlagsNV,
@@ -7872,6 +8609,7 @@ impl ExternalImageFormatPropertiesNV {
         self.external_memory_features = external_memory_features;
         self
     }
+    #[inline]
     pub fn export_from_imported_handle_types(
         mut self,
         export_from_imported_handle_types: ExternalMemoryHandleTypeFlagsNV,
@@ -7879,6 +8617,7 @@ impl ExternalImageFormatPropertiesNV {
         self.export_from_imported_handle_types = export_from_imported_handle_types;
         self
     }
+    #[inline]
     pub fn compatible_handle_types(
         mut self,
         compatible_handle_types: ExternalMemoryHandleTypeFlagsNV,
@@ -7909,6 +8648,7 @@ impl ::std::default::Default for ExternalMemoryImageCreateInfoNV<'_> {
 }
 unsafe impl<'a> ExtendsImageCreateInfo for ExternalMemoryImageCreateInfoNV<'a> {}
 impl<'a> ExternalMemoryImageCreateInfoNV<'a> {
+    #[inline]
     pub fn handle_types(mut self, handle_types: ExternalMemoryHandleTypeFlagsNV) -> Self {
         self.handle_types = handle_types;
         self
@@ -7936,6 +8676,7 @@ impl ::std::default::Default for ExportMemoryAllocateInfoNV<'_> {
 }
 unsafe impl<'a> ExtendsMemoryAllocateInfo for ExportMemoryAllocateInfoNV<'a> {}
 impl<'a> ExportMemoryAllocateInfoNV<'a> {
+    #[inline]
     pub fn handle_types(mut self, handle_types: ExternalMemoryHandleTypeFlagsNV) -> Self {
         self.handle_types = handle_types;
         self
@@ -7965,10 +8706,12 @@ impl ::std::default::Default for ImportMemoryWin32HandleInfoNV<'_> {
 }
 unsafe impl<'a> ExtendsMemoryAllocateInfo for ImportMemoryWin32HandleInfoNV<'a> {}
 impl<'a> ImportMemoryWin32HandleInfoNV<'a> {
+    #[inline]
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlagsNV) -> Self {
         self.handle_type = handle_type;
         self
     }
+    #[inline]
     pub fn handle(mut self, handle: HANDLE) -> Self {
         self.handle = handle;
         self
@@ -7998,10 +8741,12 @@ impl ::std::default::Default for ExportMemoryWin32HandleInfoNV<'_> {
 }
 unsafe impl<'a> ExtendsMemoryAllocateInfo for ExportMemoryWin32HandleInfoNV<'a> {}
 impl<'a> ExportMemoryWin32HandleInfoNV<'a> {
+    #[inline]
     pub fn attributes(mut self, attributes: &'a SECURITY_ATTRIBUTES) -> Self {
         self.p_attributes = attributes;
         self
     }
+    #[inline]
     pub fn dw_access(mut self, dw_access: DWORD) -> Self {
         self.dw_access = dw_access;
         self
@@ -8042,26 +8787,31 @@ impl ::std::default::Default for Win32KeyedMutexAcquireReleaseInfoNV<'_> {
 unsafe impl<'a> ExtendsSubmitInfo for Win32KeyedMutexAcquireReleaseInfoNV<'a> {}
 unsafe impl<'a> ExtendsSubmitInfo2 for Win32KeyedMutexAcquireReleaseInfoNV<'a> {}
 impl<'a> Win32KeyedMutexAcquireReleaseInfoNV<'a> {
+    #[inline]
     pub fn acquire_syncs(mut self, acquire_syncs: &'a [DeviceMemory]) -> Self {
         self.acquire_count = acquire_syncs.len() as _;
         self.p_acquire_syncs = acquire_syncs.as_ptr();
         self
     }
+    #[inline]
     pub fn acquire_keys(mut self, acquire_keys: &'a [u64]) -> Self {
         self.acquire_count = acquire_keys.len() as _;
         self.p_acquire_keys = acquire_keys.as_ptr();
         self
     }
+    #[inline]
     pub fn acquire_timeout_milliseconds(mut self, acquire_timeout_milliseconds: &'a [u32]) -> Self {
         self.acquire_count = acquire_timeout_milliseconds.len() as _;
         self.p_acquire_timeout_milliseconds = acquire_timeout_milliseconds.as_ptr();
         self
     }
+    #[inline]
     pub fn release_syncs(mut self, release_syncs: &'a [DeviceMemory]) -> Self {
         self.release_count = release_syncs.len() as _;
         self.p_release_syncs = release_syncs.as_ptr();
         self
     }
+    #[inline]
     pub fn release_keys(mut self, release_keys: &'a [u64]) -> Self {
         self.release_count = release_keys.len() as _;
         self.p_release_keys = release_keys.as_ptr();
@@ -8094,6 +8844,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'a> {}
 impl<'a> PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'a> {
+    #[inline]
     pub fn device_generated_commands(mut self, device_generated_commands: bool) -> Self {
         self.device_generated_commands = device_generated_commands.into();
         self
@@ -8121,6 +8872,7 @@ impl ::std::default::Default for DevicePrivateDataCreateInfo<'_> {
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for DevicePrivateDataCreateInfo<'a> {}
 impl<'a> DevicePrivateDataCreateInfo<'a> {
+    #[inline]
     pub fn private_data_slot_request_count(mut self, private_data_slot_request_count: u32) -> Self {
         self.private_data_slot_request_count = private_data_slot_request_count;
         self
@@ -8147,6 +8899,7 @@ impl ::std::default::Default for PrivateDataSlotCreateInfo<'_> {
     }
 }
 impl<'a> PrivateDataSlotCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: PrivateDataSlotCreateFlags) -> Self {
         self.flags = flags;
         self
@@ -8175,6 +8928,7 @@ impl ::std::default::Default for PhysicalDevicePrivateDataFeatures<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePrivateDataFeatures<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDevicePrivateDataFeatures<'a> {}
 impl<'a> PhysicalDevicePrivateDataFeatures<'a> {
+    #[inline]
     pub fn private_data(mut self, private_data: bool) -> Self {
         self.private_data = private_data.into();
         self
@@ -8221,14 +8975,17 @@ unsafe impl<'a> ExtendsPhysicalDeviceProperties2
 {
 }
 impl<'a> PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'a> {
+    #[inline]
     pub fn max_graphics_shader_group_count(mut self, max_graphics_shader_group_count: u32) -> Self {
         self.max_graphics_shader_group_count = max_graphics_shader_group_count;
         self
     }
+    #[inline]
     pub fn max_indirect_sequence_count(mut self, max_indirect_sequence_count: u32) -> Self {
         self.max_indirect_sequence_count = max_indirect_sequence_count;
         self
     }
+    #[inline]
     pub fn max_indirect_commands_token_count(
         mut self,
         max_indirect_commands_token_count: u32,
@@ -8236,6 +8993,7 @@ impl<'a> PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'a> {
         self.max_indirect_commands_token_count = max_indirect_commands_token_count;
         self
     }
+    #[inline]
     pub fn max_indirect_commands_stream_count(
         mut self,
         max_indirect_commands_stream_count: u32,
@@ -8243,6 +9001,7 @@ impl<'a> PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'a> {
         self.max_indirect_commands_stream_count = max_indirect_commands_stream_count;
         self
     }
+    #[inline]
     pub fn max_indirect_commands_token_offset(
         mut self,
         max_indirect_commands_token_offset: u32,
@@ -8250,6 +9009,7 @@ impl<'a> PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'a> {
         self.max_indirect_commands_token_offset = max_indirect_commands_token_offset;
         self
     }
+    #[inline]
     pub fn max_indirect_commands_stream_stride(
         mut self,
         max_indirect_commands_stream_stride: u32,
@@ -8257,6 +9017,7 @@ impl<'a> PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'a> {
         self.max_indirect_commands_stream_stride = max_indirect_commands_stream_stride;
         self
     }
+    #[inline]
     pub fn min_sequences_count_buffer_offset_alignment(
         mut self,
         min_sequences_count_buffer_offset_alignment: u32,
@@ -8265,6 +9026,7 @@ impl<'a> PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'a> {
             min_sequences_count_buffer_offset_alignment;
         self
     }
+    #[inline]
     pub fn min_sequences_index_buffer_offset_alignment(
         mut self,
         min_sequences_index_buffer_offset_alignment: u32,
@@ -8273,6 +9035,7 @@ impl<'a> PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'a> {
             min_sequences_index_buffer_offset_alignment;
         self
     }
+    #[inline]
     pub fn min_indirect_commands_buffer_offset_alignment(
         mut self,
         min_indirect_commands_buffer_offset_alignment: u32,
@@ -8304,6 +9067,7 @@ impl ::std::default::Default for PhysicalDeviceMultiDrawPropertiesEXT<'_> {
 }
 unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMultiDrawPropertiesEXT<'a> {}
 impl<'a> PhysicalDeviceMultiDrawPropertiesEXT<'a> {
+    #[inline]
     pub fn max_multi_draw_count(mut self, max_multi_draw_count: u32) -> Self {
         self.max_multi_draw_count = max_multi_draw_count;
         self
@@ -8336,11 +9100,13 @@ impl ::std::default::Default for GraphicsShaderGroupCreateInfoNV<'_> {
     }
 }
 impl<'a> GraphicsShaderGroupCreateInfoNV<'a> {
+    #[inline]
     pub fn stages(mut self, stages: &'a [PipelineShaderStageCreateInfo]) -> Self {
         self.stage_count = stages.len() as _;
         self.p_stages = stages.as_ptr();
         self
     }
+    #[inline]
     pub fn vertex_input_state(
         mut self,
         vertex_input_state: &'a PipelineVertexInputStateCreateInfo<'a>,
@@ -8348,6 +9114,7 @@ impl<'a> GraphicsShaderGroupCreateInfoNV<'a> {
         self.p_vertex_input_state = vertex_input_state;
         self
     }
+    #[inline]
     pub fn tessellation_state(
         mut self,
         tessellation_state: &'a PipelineTessellationStateCreateInfo<'a>,
@@ -8384,11 +9151,13 @@ impl ::std::default::Default for GraphicsPipelineShaderGroupsCreateInfoNV<'_> {
 }
 unsafe impl<'a> ExtendsGraphicsPipelineCreateInfo for GraphicsPipelineShaderGroupsCreateInfoNV<'a> {}
 impl<'a> GraphicsPipelineShaderGroupsCreateInfoNV<'a> {
+    #[inline]
     pub fn groups(mut self, groups: &'a [GraphicsShaderGroupCreateInfoNV]) -> Self {
         self.group_count = groups.len() as _;
         self.p_groups = groups.as_ptr();
         self
     }
+    #[inline]
     pub fn pipelines(mut self, pipelines: &'a [Pipeline]) -> Self {
         self.pipeline_count = pipelines.len() as _;
         self.p_pipelines = pipelines.as_ptr();
@@ -8403,6 +9172,7 @@ pub struct BindShaderGroupIndirectCommandNV {
     pub group_index: u32,
 }
 impl BindShaderGroupIndirectCommandNV {
+    #[inline]
     pub fn group_index(mut self, group_index: u32) -> Self {
         self.group_index = group_index;
         self
@@ -8418,14 +9188,17 @@ pub struct BindIndexBufferIndirectCommandNV {
     pub index_type: IndexType,
 }
 impl BindIndexBufferIndirectCommandNV {
+    #[inline]
     pub fn buffer_address(mut self, buffer_address: DeviceAddress) -> Self {
         self.buffer_address = buffer_address;
         self
     }
+    #[inline]
     pub fn size(mut self, size: u32) -> Self {
         self.size = size;
         self
     }
+    #[inline]
     pub fn index_type(mut self, index_type: IndexType) -> Self {
         self.index_type = index_type;
         self
@@ -8441,14 +9214,17 @@ pub struct BindVertexBufferIndirectCommandNV {
     pub stride: u32,
 }
 impl BindVertexBufferIndirectCommandNV {
+    #[inline]
     pub fn buffer_address(mut self, buffer_address: DeviceAddress) -> Self {
         self.buffer_address = buffer_address;
         self
     }
+    #[inline]
     pub fn size(mut self, size: u32) -> Self {
         self.size = size;
         self
     }
+    #[inline]
     pub fn stride(mut self, stride: u32) -> Self {
         self.stride = stride;
         self
@@ -8462,6 +9238,7 @@ pub struct SetStateFlagsIndirectCommandNV {
     pub data: u32,
 }
 impl SetStateFlagsIndirectCommandNV {
+    #[inline]
     pub fn data(mut self, data: u32) -> Self {
         self.data = data;
         self
@@ -8476,10 +9253,12 @@ pub struct IndirectCommandsStreamNV {
     pub offset: DeviceSize,
 }
 impl IndirectCommandsStreamNV {
+    #[inline]
     pub fn buffer(mut self, buffer: Buffer) -> Self {
         self.buffer = buffer;
         self
     }
+    #[inline]
     pub fn offset(mut self, offset: DeviceSize) -> Self {
         self.offset = offset;
         self
@@ -8530,26 +9309,32 @@ impl ::std::default::Default for IndirectCommandsLayoutTokenNV<'_> {
     }
 }
 impl<'a> IndirectCommandsLayoutTokenNV<'a> {
+    #[inline]
     pub fn token_type(mut self, token_type: IndirectCommandsTokenTypeNV) -> Self {
         self.token_type = token_type;
         self
     }
+    #[inline]
     pub fn stream(mut self, stream: u32) -> Self {
         self.stream = stream;
         self
     }
+    #[inline]
     pub fn offset(mut self, offset: u32) -> Self {
         self.offset = offset;
         self
     }
+    #[inline]
     pub fn vertex_binding_unit(mut self, vertex_binding_unit: u32) -> Self {
         self.vertex_binding_unit = vertex_binding_unit;
         self
     }
+    #[inline]
     pub fn vertex_dynamic_stride(mut self, vertex_dynamic_stride: bool) -> Self {
         self.vertex_dynamic_stride = vertex_dynamic_stride.into();
         self
     }
+    #[inline]
     pub fn pushconstant_pipeline_layout(
         mut self,
         pushconstant_pipeline_layout: PipelineLayout,
@@ -8557,6 +9342,7 @@ impl<'a> IndirectCommandsLayoutTokenNV<'a> {
         self.pushconstant_pipeline_layout = pushconstant_pipeline_layout;
         self
     }
+    #[inline]
     pub fn pushconstant_shader_stage_flags(
         mut self,
         pushconstant_shader_stage_flags: ShaderStageFlags,
@@ -8564,23 +9350,28 @@ impl<'a> IndirectCommandsLayoutTokenNV<'a> {
         self.pushconstant_shader_stage_flags = pushconstant_shader_stage_flags;
         self
     }
+    #[inline]
     pub fn pushconstant_offset(mut self, pushconstant_offset: u32) -> Self {
         self.pushconstant_offset = pushconstant_offset;
         self
     }
+    #[inline]
     pub fn pushconstant_size(mut self, pushconstant_size: u32) -> Self {
         self.pushconstant_size = pushconstant_size;
         self
     }
+    #[inline]
     pub fn indirect_state_flags(mut self, indirect_state_flags: IndirectStateFlagsNV) -> Self {
         self.indirect_state_flags = indirect_state_flags;
         self
     }
+    #[inline]
     pub fn index_types(mut self, index_types: &'a [IndexType]) -> Self {
         self.index_type_count = index_types.len() as _;
         self.p_index_types = index_types.as_ptr();
         self
     }
+    #[inline]
     pub fn index_type_values(mut self, index_type_values: &'a [u32]) -> Self {
         self.index_type_count = index_type_values.len() as _;
         self.p_index_type_values = index_type_values.as_ptr();
@@ -8618,19 +9409,23 @@ impl ::std::default::Default for IndirectCommandsLayoutCreateInfoNV<'_> {
     }
 }
 impl<'a> IndirectCommandsLayoutCreateInfoNV<'a> {
+    #[inline]
     pub fn flags(mut self, flags: IndirectCommandsLayoutUsageFlagsNV) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn pipeline_bind_point(mut self, pipeline_bind_point: PipelineBindPoint) -> Self {
         self.pipeline_bind_point = pipeline_bind_point;
         self
     }
+    #[inline]
     pub fn tokens(mut self, tokens: &'a [IndirectCommandsLayoutTokenNV]) -> Self {
         self.token_count = tokens.len() as _;
         self.p_tokens = tokens.as_ptr();
         self
     }
+    #[inline]
     pub fn stream_strides(mut self, stream_strides: &'a [u32]) -> Self {
         self.stream_count = stream_strides.len() as _;
         self.p_stream_strides = stream_strides.as_ptr();
@@ -8682,14 +9477,17 @@ impl ::std::default::Default for GeneratedCommandsInfoNV<'_> {
     }
 }
 impl<'a> GeneratedCommandsInfoNV<'a> {
+    #[inline]
     pub fn pipeline_bind_point(mut self, pipeline_bind_point: PipelineBindPoint) -> Self {
         self.pipeline_bind_point = pipeline_bind_point;
         self
     }
+    #[inline]
     pub fn pipeline(mut self, pipeline: Pipeline) -> Self {
         self.pipeline = pipeline;
         self
     }
+    #[inline]
     pub fn indirect_commands_layout(
         mut self,
         indirect_commands_layout: IndirectCommandsLayoutNV,
@@ -8697,39 +9495,48 @@ impl<'a> GeneratedCommandsInfoNV<'a> {
         self.indirect_commands_layout = indirect_commands_layout;
         self
     }
+    #[inline]
     pub fn streams(mut self, streams: &'a [IndirectCommandsStreamNV]) -> Self {
         self.stream_count = streams.len() as _;
         self.p_streams = streams.as_ptr();
         self
     }
+    #[inline]
     pub fn sequences_count(mut self, sequences_count: u32) -> Self {
         self.sequences_count = sequences_count;
         self
     }
+    #[inline]
     pub fn preprocess_buffer(mut self, preprocess_buffer: Buffer) -> Self {
         self.preprocess_buffer = preprocess_buffer;
         self
     }
+    #[inline]
     pub fn preprocess_offset(mut self, preprocess_offset: DeviceSize) -> Self {
         self.preprocess_offset = preprocess_offset;
         self
     }
+    #[inline]
     pub fn preprocess_size(mut self, preprocess_size: DeviceSize) -> Self {
         self.preprocess_size = preprocess_size;
         self
     }
+    #[inline]
     pub fn sequences_count_buffer(mut self, sequences_count_buffer: Buffer) -> Self {
         self.sequences_count_buffer = sequences_count_buffer;
         self
     }
+    #[inline]
     pub fn sequences_count_offset(mut self, sequences_count_offset: DeviceSize) -> Self {
         self.sequences_count_offset = sequences_count_offset;
         self
     }
+    #[inline]
     pub fn sequences_index_buffer(mut self, sequences_index_buffer: Buffer) -> Self {
         self.sequences_index_buffer = sequences_index_buffer;
         self
     }
+    #[inline]
     pub fn sequences_index_offset(mut self, sequences_index_offset: DeviceSize) -> Self {
         self.sequences_index_offset = sequences_index_offset;
         self
@@ -8762,14 +9569,17 @@ impl ::std::default::Default for GeneratedCommandsMemoryRequirementsInfoNV<'_> {
     }
 }
 impl<'a> GeneratedCommandsMemoryRequirementsInfoNV<'a> {
+    #[inline]
     pub fn pipeline_bind_point(mut self, pipeline_bind_point: PipelineBindPoint) -> Self {
         self.pipeline_bind_point = pipeline_bind_point;
         self
     }
+    #[inline]
     pub fn pipeline(mut self, pipeline: Pipeline) -> Self {
         self.pipeline = pipeline;
         self
     }
+    #[inline]
     pub fn indirect_commands_layout(
         mut self,
         indirect_commands_layout: IndirectCommandsLayoutNV,
@@ -8777,6 +9587,7 @@ impl<'a> GeneratedCommandsMemoryRequirementsInfoNV<'a> {
         self.indirect_commands_layout = indirect_commands_layout;
         self
     }
+    #[inline]
     pub fn max_sequences_count(mut self, max_sequences_count: u32) -> Self {
         self.max_sequences_count = max_sequences_count;
         self
@@ -8805,6 +9616,7 @@ impl ::std::default::Default for PhysicalDeviceFeatures2<'_> {
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceFeatures2<'a> {}
 pub unsafe trait ExtendsPhysicalDeviceFeatures2 {}
 impl<'a> PhysicalDeviceFeatures2<'a> {
+    #[inline]
     pub fn features(mut self, features: PhysicalDeviceFeatures) -> Self {
         self.features = features;
         self
@@ -8846,6 +9658,7 @@ impl ::std::default::Default for PhysicalDeviceProperties2<'_> {
 }
 pub unsafe trait ExtendsPhysicalDeviceProperties2 {}
 impl<'a> PhysicalDeviceProperties2<'a> {
+    #[inline]
     pub fn properties(mut self, properties: PhysicalDeviceProperties) -> Self {
         self.properties = properties;
         self
@@ -8887,6 +9700,7 @@ impl ::std::default::Default for FormatProperties2<'_> {
 }
 pub unsafe trait ExtendsFormatProperties2 {}
 impl<'a> FormatProperties2<'a> {
+    #[inline]
     pub fn format_properties(mut self, format_properties: FormatProperties) -> Self {
         self.format_properties = format_properties;
         self
@@ -8928,6 +9742,7 @@ impl ::std::default::Default for ImageFormatProperties2<'_> {
 }
 pub unsafe trait ExtendsImageFormatProperties2 {}
 impl<'a> ImageFormatProperties2<'a> {
+    #[inline]
     pub fn image_format_properties(
         mut self,
         image_format_properties: ImageFormatProperties,
@@ -8980,22 +9795,27 @@ impl ::std::default::Default for PhysicalDeviceImageFormatInfo2<'_> {
 }
 pub unsafe trait ExtendsPhysicalDeviceImageFormatInfo2 {}
 impl<'a> PhysicalDeviceImageFormatInfo2<'a> {
+    #[inline]
     pub fn format(mut self, format: Format) -> Self {
         self.format = format;
         self
     }
+    #[inline]
     pub fn ty(mut self, ty: ImageType) -> Self {
         self.ty = ty;
         self
     }
+    #[inline]
     pub fn tiling(mut self, tiling: ImageTiling) -> Self {
         self.tiling = tiling;
         self
     }
+    #[inline]
     pub fn usage(mut self, usage: ImageUsageFlags) -> Self {
         self.usage = usage;
         self
     }
+    #[inline]
     pub fn flags(mut self, flags: ImageCreateFlags) -> Self {
         self.flags = flags;
         self
@@ -9037,6 +9857,7 @@ impl ::std::default::Default for QueueFamilyProperties2<'_> {
 }
 pub unsafe trait ExtendsQueueFamilyProperties2 {}
 impl<'a> QueueFamilyProperties2<'a> {
+    #[inline]
     pub fn queue_family_properties(
         mut self,
         queue_family_properties: QueueFamilyProperties,
@@ -9081,6 +9902,7 @@ impl ::std::default::Default for PhysicalDeviceMemoryProperties2<'_> {
 }
 pub unsafe trait ExtendsPhysicalDeviceMemoryProperties2 {}
 impl<'a> PhysicalDeviceMemoryProperties2<'a> {
+    #[inline]
     pub fn memory_properties(mut self, memory_properties: PhysicalDeviceMemoryProperties) -> Self {
         self.memory_properties = memory_properties;
         self
@@ -9121,6 +9943,7 @@ impl ::std::default::Default for SparseImageFormatProperties2<'_> {
     }
 }
 impl<'a> SparseImageFormatProperties2<'a> {
+    #[inline]
     pub fn properties(mut self, properties: SparseImageFormatProperties) -> Self {
         self.properties = properties;
         self
@@ -9155,22 +9978,27 @@ impl ::std::default::Default for PhysicalDeviceSparseImageFormatInfo2<'_> {
     }
 }
 impl<'a> PhysicalDeviceSparseImageFormatInfo2<'a> {
+    #[inline]
     pub fn format(mut self, format: Format) -> Self {
         self.format = format;
         self
     }
+    #[inline]
     pub fn ty(mut self, ty: ImageType) -> Self {
         self.ty = ty;
         self
     }
+    #[inline]
     pub fn samples(mut self, samples: SampleCountFlags) -> Self {
         self.samples = samples;
         self
     }
+    #[inline]
     pub fn usage(mut self, usage: ImageUsageFlags) -> Self {
         self.usage = usage;
         self
     }
+    #[inline]
     pub fn tiling(mut self, tiling: ImageTiling) -> Self {
         self.tiling = tiling;
         self
@@ -9198,6 +10026,7 @@ impl ::std::default::Default for PhysicalDevicePushDescriptorPropertiesKHR<'_> {
 }
 unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDevicePushDescriptorPropertiesKHR<'a> {}
 impl<'a> PhysicalDevicePushDescriptorPropertiesKHR<'a> {
+    #[inline]
     pub fn max_push_descriptors(mut self, max_push_descriptors: u32) -> Self {
         self.max_push_descriptors = max_push_descriptors;
         self
@@ -9214,18 +10043,22 @@ pub struct ConformanceVersion {
     pub patch: u8,
 }
 impl ConformanceVersion {
+    #[inline]
     pub fn major(mut self, major: u8) -> Self {
         self.major = major;
         self
     }
+    #[inline]
     pub fn minor(mut self, minor: u8) -> Self {
         self.minor = minor;
         self
     }
+    #[inline]
     pub fn subminor(mut self, subminor: u8) -> Self {
         self.subminor = subminor;
         self
     }
+    #[inline]
     pub fn patch(mut self, patch: u8) -> Self {
         self.patch = patch;
         self
@@ -9275,18 +10108,22 @@ impl ::std::default::Default for PhysicalDeviceDriverProperties<'_> {
 }
 unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDriverProperties<'a> {}
 impl<'a> PhysicalDeviceDriverProperties<'a> {
+    #[inline]
     pub fn driver_id(mut self, driver_id: DriverId) -> Self {
         self.driver_id = driver_id;
         self
     }
+    #[inline]
     pub fn driver_name(mut self, driver_name: [c_char; MAX_DRIVER_NAME_SIZE]) -> Self {
         self.driver_name = driver_name;
         self
     }
+    #[inline]
     pub fn driver_info(mut self, driver_info: [c_char; MAX_DRIVER_INFO_SIZE]) -> Self {
         self.driver_info = driver_info;
         self
     }
+    #[inline]
     pub fn conformance_version(mut self, conformance_version: ConformanceVersion) -> Self {
         self.conformance_version = conformance_version;
         self
@@ -9316,6 +10153,7 @@ impl ::std::default::Default for PresentRegionsKHR<'_> {
 }
 unsafe impl<'a> ExtendsPresentInfoKHR for PresentRegionsKHR<'a> {}
 impl<'a> PresentRegionsKHR<'a> {
+    #[inline]
     pub fn regions(mut self, regions: &'a [PresentRegionKHR]) -> Self {
         self.swapchain_count = regions.len() as _;
         self.p_regions = regions.as_ptr();
@@ -9341,6 +10179,7 @@ impl ::std::default::Default for PresentRegionKHR<'_> {
     }
 }
 impl<'a> PresentRegionKHR<'a> {
+    #[inline]
     pub fn rectangles(mut self, rectangles: &'a [RectLayerKHR]) -> Self {
         self.rectangle_count = rectangles.len() as _;
         self.p_rectangles = rectangles.as_ptr();
@@ -9357,14 +10196,17 @@ pub struct RectLayerKHR {
     pub layer: u32,
 }
 impl RectLayerKHR {
+    #[inline]
     pub fn offset(mut self, offset: Offset2D) -> Self {
         self.offset = offset;
         self
     }
+    #[inline]
     pub fn extent(mut self, extent: Extent2D) -> Self {
         self.extent = extent;
         self
     }
+    #[inline]
     pub fn layer(mut self, layer: u32) -> Self {
         self.layer = layer;
         self
@@ -9395,6 +10237,7 @@ impl ::std::default::Default for PhysicalDeviceVariablePointersFeatures<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVariablePointersFeatures<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceVariablePointersFeatures<'a> {}
 impl<'a> PhysicalDeviceVariablePointersFeatures<'a> {
+    #[inline]
     pub fn variable_pointers_storage_buffer(
         mut self,
         variable_pointers_storage_buffer: bool,
@@ -9402,6 +10245,7 @@ impl<'a> PhysicalDeviceVariablePointersFeatures<'a> {
         self.variable_pointers_storage_buffer = variable_pointers_storage_buffer.into();
         self
     }
+    #[inline]
     pub fn variable_pointers(mut self, variable_pointers: bool) -> Self {
         self.variable_pointers = variable_pointers.into();
         self
@@ -9417,6 +10261,7 @@ pub struct ExternalMemoryProperties {
     pub compatible_handle_types: ExternalMemoryHandleTypeFlags,
 }
 impl ExternalMemoryProperties {
+    #[inline]
     pub fn external_memory_features(
         mut self,
         external_memory_features: ExternalMemoryFeatureFlags,
@@ -9424,6 +10269,7 @@ impl ExternalMemoryProperties {
         self.external_memory_features = external_memory_features;
         self
     }
+    #[inline]
     pub fn export_from_imported_handle_types(
         mut self,
         export_from_imported_handle_types: ExternalMemoryHandleTypeFlags,
@@ -9431,6 +10277,7 @@ impl ExternalMemoryProperties {
         self.export_from_imported_handle_types = export_from_imported_handle_types;
         self
     }
+    #[inline]
     pub fn compatible_handle_types(
         mut self,
         compatible_handle_types: ExternalMemoryHandleTypeFlags,
@@ -9464,6 +10311,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceImageFormatInfo2
 {
 }
 impl<'a> PhysicalDeviceExternalImageFormatInfo<'a> {
+    #[inline]
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
         self.handle_type = handle_type;
         self
@@ -9491,6 +10339,7 @@ impl ::std::default::Default for ExternalImageFormatProperties<'_> {
 }
 unsafe impl<'a> ExtendsImageFormatProperties2 for ExternalImageFormatProperties<'a> {}
 impl<'a> ExternalImageFormatProperties<'a> {
+    #[inline]
     pub fn external_memory_properties(
         mut self,
         external_memory_properties: ExternalMemoryProperties,
@@ -9524,14 +10373,17 @@ impl ::std::default::Default for PhysicalDeviceExternalBufferInfo<'_> {
     }
 }
 impl<'a> PhysicalDeviceExternalBufferInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: BufferCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn usage(mut self, usage: BufferUsageFlags) -> Self {
         self.usage = usage;
         self
     }
+    #[inline]
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
         self.handle_type = handle_type;
         self
@@ -9558,6 +10410,7 @@ impl ::std::default::Default for ExternalBufferProperties<'_> {
     }
 }
 impl<'a> ExternalBufferProperties<'a> {
+    #[inline]
     pub fn external_memory_properties(
         mut self,
         external_memory_properties: ExternalMemoryProperties,
@@ -9596,22 +10449,27 @@ impl ::std::default::Default for PhysicalDeviceIDProperties<'_> {
 }
 unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceIDProperties<'a> {}
 impl<'a> PhysicalDeviceIDProperties<'a> {
+    #[inline]
     pub fn device_uuid(mut self, device_uuid: [u8; UUID_SIZE]) -> Self {
         self.device_uuid = device_uuid;
         self
     }
+    #[inline]
     pub fn driver_uuid(mut self, driver_uuid: [u8; UUID_SIZE]) -> Self {
         self.driver_uuid = driver_uuid;
         self
     }
+    #[inline]
     pub fn device_luid(mut self, device_luid: [u8; LUID_SIZE]) -> Self {
         self.device_luid = device_luid;
         self
     }
+    #[inline]
     pub fn device_node_mask(mut self, device_node_mask: u32) -> Self {
         self.device_node_mask = device_node_mask;
         self
     }
+    #[inline]
     pub fn device_luid_valid(mut self, device_luid_valid: bool) -> Self {
         self.device_luid_valid = device_luid_valid.into();
         self
@@ -9639,6 +10497,7 @@ impl ::std::default::Default for ExternalMemoryImageCreateInfo<'_> {
 }
 unsafe impl<'a> ExtendsImageCreateInfo for ExternalMemoryImageCreateInfo<'a> {}
 impl<'a> ExternalMemoryImageCreateInfo<'a> {
+    #[inline]
     pub fn handle_types(mut self, handle_types: ExternalMemoryHandleTypeFlags) -> Self {
         self.handle_types = handle_types;
         self
@@ -9666,6 +10525,7 @@ impl ::std::default::Default for ExternalMemoryBufferCreateInfo<'_> {
 }
 unsafe impl<'a> ExtendsBufferCreateInfo for ExternalMemoryBufferCreateInfo<'a> {}
 impl<'a> ExternalMemoryBufferCreateInfo<'a> {
+    #[inline]
     pub fn handle_types(mut self, handle_types: ExternalMemoryHandleTypeFlags) -> Self {
         self.handle_types = handle_types;
         self
@@ -9693,6 +10553,7 @@ impl ::std::default::Default for ExportMemoryAllocateInfo<'_> {
 }
 unsafe impl<'a> ExtendsMemoryAllocateInfo for ExportMemoryAllocateInfo<'a> {}
 impl<'a> ExportMemoryAllocateInfo<'a> {
+    #[inline]
     pub fn handle_types(mut self, handle_types: ExternalMemoryHandleTypeFlags) -> Self {
         self.handle_types = handle_types;
         self
@@ -9724,14 +10585,17 @@ impl ::std::default::Default for ImportMemoryWin32HandleInfoKHR<'_> {
 }
 unsafe impl<'a> ExtendsMemoryAllocateInfo for ImportMemoryWin32HandleInfoKHR<'a> {}
 impl<'a> ImportMemoryWin32HandleInfoKHR<'a> {
+    #[inline]
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
         self.handle_type = handle_type;
         self
     }
+    #[inline]
     pub fn handle(mut self, handle: HANDLE) -> Self {
         self.handle = handle;
         self
     }
+    #[inline]
     pub fn name(mut self, name: LPCWSTR) -> Self {
         self.name = name;
         self
@@ -9763,14 +10627,17 @@ impl ::std::default::Default for ExportMemoryWin32HandleInfoKHR<'_> {
 }
 unsafe impl<'a> ExtendsMemoryAllocateInfo for ExportMemoryWin32HandleInfoKHR<'a> {}
 impl<'a> ExportMemoryWin32HandleInfoKHR<'a> {
+    #[inline]
     pub fn attributes(mut self, attributes: &'a SECURITY_ATTRIBUTES) -> Self {
         self.p_attributes = attributes;
         self
     }
+    #[inline]
     pub fn dw_access(mut self, dw_access: DWORD) -> Self {
         self.dw_access = dw_access;
         self
     }
+    #[inline]
     pub fn name(mut self, name: LPCWSTR) -> Self {
         self.name = name;
         self
@@ -9800,10 +10667,12 @@ impl ::std::default::Default for ImportMemoryZirconHandleInfoFUCHSIA<'_> {
 }
 unsafe impl<'a> ExtendsMemoryAllocateInfo for ImportMemoryZirconHandleInfoFUCHSIA<'a> {}
 impl<'a> ImportMemoryZirconHandleInfoFUCHSIA<'a> {
+    #[inline]
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
         self.handle_type = handle_type;
         self
     }
+    #[inline]
     pub fn handle(mut self, handle: zx_handle_t) -> Self {
         self.handle = handle;
         self
@@ -9830,6 +10699,7 @@ impl ::std::default::Default for MemoryZirconHandlePropertiesFUCHSIA<'_> {
     }
 }
 impl<'a> MemoryZirconHandlePropertiesFUCHSIA<'a> {
+    #[inline]
     pub fn memory_type_bits(mut self, memory_type_bits: u32) -> Self {
         self.memory_type_bits = memory_type_bits;
         self
@@ -9858,10 +10728,12 @@ impl ::std::default::Default for MemoryGetZirconHandleInfoFUCHSIA<'_> {
     }
 }
 impl<'a> MemoryGetZirconHandleInfoFUCHSIA<'a> {
+    #[inline]
     pub fn memory(mut self, memory: DeviceMemory) -> Self {
         self.memory = memory;
         self
     }
+    #[inline]
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
         self.handle_type = handle_type;
         self
@@ -9888,6 +10760,7 @@ impl ::std::default::Default for MemoryWin32HandlePropertiesKHR<'_> {
     }
 }
 impl<'a> MemoryWin32HandlePropertiesKHR<'a> {
+    #[inline]
     pub fn memory_type_bits(mut self, memory_type_bits: u32) -> Self {
         self.memory_type_bits = memory_type_bits;
         self
@@ -9916,10 +10789,12 @@ impl ::std::default::Default for MemoryGetWin32HandleInfoKHR<'_> {
     }
 }
 impl<'a> MemoryGetWin32HandleInfoKHR<'a> {
+    #[inline]
     pub fn memory(mut self, memory: DeviceMemory) -> Self {
         self.memory = memory;
         self
     }
+    #[inline]
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
         self.handle_type = handle_type;
         self
@@ -9949,10 +10824,12 @@ impl ::std::default::Default for ImportMemoryFdInfoKHR<'_> {
 }
 unsafe impl<'a> ExtendsMemoryAllocateInfo for ImportMemoryFdInfoKHR<'a> {}
 impl<'a> ImportMemoryFdInfoKHR<'a> {
+    #[inline]
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
         self.handle_type = handle_type;
         self
     }
+    #[inline]
     pub fn fd(mut self, fd: c_int) -> Self {
         self.fd = fd;
         self
@@ -9979,6 +10856,7 @@ impl ::std::default::Default for MemoryFdPropertiesKHR<'_> {
     }
 }
 impl<'a> MemoryFdPropertiesKHR<'a> {
+    #[inline]
     pub fn memory_type_bits(mut self, memory_type_bits: u32) -> Self {
         self.memory_type_bits = memory_type_bits;
         self
@@ -10007,10 +10885,12 @@ impl ::std::default::Default for MemoryGetFdInfoKHR<'_> {
     }
 }
 impl<'a> MemoryGetFdInfoKHR<'a> {
+    #[inline]
     pub fn memory(mut self, memory: DeviceMemory) -> Self {
         self.memory = memory;
         self
     }
+    #[inline]
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
         self.handle_type = handle_type;
         self
@@ -10051,26 +10931,31 @@ impl ::std::default::Default for Win32KeyedMutexAcquireReleaseInfoKHR<'_> {
 unsafe impl<'a> ExtendsSubmitInfo for Win32KeyedMutexAcquireReleaseInfoKHR<'a> {}
 unsafe impl<'a> ExtendsSubmitInfo2 for Win32KeyedMutexAcquireReleaseInfoKHR<'a> {}
 impl<'a> Win32KeyedMutexAcquireReleaseInfoKHR<'a> {
+    #[inline]
     pub fn acquire_syncs(mut self, acquire_syncs: &'a [DeviceMemory]) -> Self {
         self.acquire_count = acquire_syncs.len() as _;
         self.p_acquire_syncs = acquire_syncs.as_ptr();
         self
     }
+    #[inline]
     pub fn acquire_keys(mut self, acquire_keys: &'a [u64]) -> Self {
         self.acquire_count = acquire_keys.len() as _;
         self.p_acquire_keys = acquire_keys.as_ptr();
         self
     }
+    #[inline]
     pub fn acquire_timeouts(mut self, acquire_timeouts: &'a [u32]) -> Self {
         self.acquire_count = acquire_timeouts.len() as _;
         self.p_acquire_timeouts = acquire_timeouts.as_ptr();
         self
     }
+    #[inline]
     pub fn release_syncs(mut self, release_syncs: &'a [DeviceMemory]) -> Self {
         self.release_count = release_syncs.len() as _;
         self.p_release_syncs = release_syncs.as_ptr();
         self
     }
+    #[inline]
     pub fn release_keys(mut self, release_keys: &'a [u64]) -> Self {
         self.release_count = release_keys.len() as _;
         self.p_release_keys = release_keys.as_ptr();
@@ -10099,6 +10984,7 @@ impl ::std::default::Default for PhysicalDeviceExternalSemaphoreInfo<'_> {
 }
 pub unsafe trait ExtendsPhysicalDeviceExternalSemaphoreInfo {}
 impl<'a> PhysicalDeviceExternalSemaphoreInfo<'a> {
+    #[inline]
     pub fn handle_type(mut self, handle_type: ExternalSemaphoreHandleTypeFlags) -> Self {
         self.handle_type = handle_type;
         self
@@ -10146,6 +11032,7 @@ impl ::std::default::Default for ExternalSemaphoreProperties<'_> {
     }
 }
 impl<'a> ExternalSemaphoreProperties<'a> {
+    #[inline]
     pub fn export_from_imported_handle_types(
         mut self,
         export_from_imported_handle_types: ExternalSemaphoreHandleTypeFlags,
@@ -10153,6 +11040,7 @@ impl<'a> ExternalSemaphoreProperties<'a> {
         self.export_from_imported_handle_types = export_from_imported_handle_types;
         self
     }
+    #[inline]
     pub fn compatible_handle_types(
         mut self,
         compatible_handle_types: ExternalSemaphoreHandleTypeFlags,
@@ -10160,6 +11048,7 @@ impl<'a> ExternalSemaphoreProperties<'a> {
         self.compatible_handle_types = compatible_handle_types;
         self
     }
+    #[inline]
     pub fn external_semaphore_features(
         mut self,
         external_semaphore_features: ExternalSemaphoreFeatureFlags,
@@ -10190,6 +11079,7 @@ impl ::std::default::Default for ExportSemaphoreCreateInfo<'_> {
 }
 unsafe impl<'a> ExtendsSemaphoreCreateInfo for ExportSemaphoreCreateInfo<'a> {}
 impl<'a> ExportSemaphoreCreateInfo<'a> {
+    #[inline]
     pub fn handle_types(mut self, handle_types: ExternalSemaphoreHandleTypeFlags) -> Self {
         self.handle_types = handle_types;
         self
@@ -10224,22 +11114,27 @@ impl ::std::default::Default for ImportSemaphoreWin32HandleInfoKHR<'_> {
     }
 }
 impl<'a> ImportSemaphoreWin32HandleInfoKHR<'a> {
+    #[inline]
     pub fn semaphore(mut self, semaphore: Semaphore) -> Self {
         self.semaphore = semaphore;
         self
     }
+    #[inline]
     pub fn flags(mut self, flags: SemaphoreImportFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn handle_type(mut self, handle_type: ExternalSemaphoreHandleTypeFlags) -> Self {
         self.handle_type = handle_type;
         self
     }
+    #[inline]
     pub fn handle(mut self, handle: HANDLE) -> Self {
         self.handle = handle;
         self
     }
+    #[inline]
     pub fn name(mut self, name: LPCWSTR) -> Self {
         self.name = name;
         self
@@ -10271,14 +11166,17 @@ impl ::std::default::Default for ExportSemaphoreWin32HandleInfoKHR<'_> {
 }
 unsafe impl<'a> ExtendsSemaphoreCreateInfo for ExportSemaphoreWin32HandleInfoKHR<'a> {}
 impl<'a> ExportSemaphoreWin32HandleInfoKHR<'a> {
+    #[inline]
     pub fn attributes(mut self, attributes: &'a SECURITY_ATTRIBUTES) -> Self {
         self.p_attributes = attributes;
         self
     }
+    #[inline]
     pub fn dw_access(mut self, dw_access: DWORD) -> Self {
         self.dw_access = dw_access;
         self
     }
+    #[inline]
     pub fn name(mut self, name: LPCWSTR) -> Self {
         self.name = name;
         self
@@ -10312,11 +11210,13 @@ impl ::std::default::Default for D3D12FenceSubmitInfoKHR<'_> {
 }
 unsafe impl<'a> ExtendsSubmitInfo for D3D12FenceSubmitInfoKHR<'a> {}
 impl<'a> D3D12FenceSubmitInfoKHR<'a> {
+    #[inline]
     pub fn wait_semaphore_values(mut self, wait_semaphore_values: &'a [u64]) -> Self {
         self.wait_semaphore_values_count = wait_semaphore_values.len() as _;
         self.p_wait_semaphore_values = wait_semaphore_values.as_ptr();
         self
     }
+    #[inline]
     pub fn signal_semaphore_values(mut self, signal_semaphore_values: &'a [u64]) -> Self {
         self.signal_semaphore_values_count = signal_semaphore_values.len() as _;
         self.p_signal_semaphore_values = signal_semaphore_values.as_ptr();
@@ -10346,10 +11246,12 @@ impl ::std::default::Default for SemaphoreGetWin32HandleInfoKHR<'_> {
     }
 }
 impl<'a> SemaphoreGetWin32HandleInfoKHR<'a> {
+    #[inline]
     pub fn semaphore(mut self, semaphore: Semaphore) -> Self {
         self.semaphore = semaphore;
         self
     }
+    #[inline]
     pub fn handle_type(mut self, handle_type: ExternalSemaphoreHandleTypeFlags) -> Self {
         self.handle_type = handle_type;
         self
@@ -10382,18 +11284,22 @@ impl ::std::default::Default for ImportSemaphoreFdInfoKHR<'_> {
     }
 }
 impl<'a> ImportSemaphoreFdInfoKHR<'a> {
+    #[inline]
     pub fn semaphore(mut self, semaphore: Semaphore) -> Self {
         self.semaphore = semaphore;
         self
     }
+    #[inline]
     pub fn flags(mut self, flags: SemaphoreImportFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn handle_type(mut self, handle_type: ExternalSemaphoreHandleTypeFlags) -> Self {
         self.handle_type = handle_type;
         self
     }
+    #[inline]
     pub fn fd(mut self, fd: c_int) -> Self {
         self.fd = fd;
         self
@@ -10422,10 +11328,12 @@ impl ::std::default::Default for SemaphoreGetFdInfoKHR<'_> {
     }
 }
 impl<'a> SemaphoreGetFdInfoKHR<'a> {
+    #[inline]
     pub fn semaphore(mut self, semaphore: Semaphore) -> Self {
         self.semaphore = semaphore;
         self
     }
+    #[inline]
     pub fn handle_type(mut self, handle_type: ExternalSemaphoreHandleTypeFlags) -> Self {
         self.handle_type = handle_type;
         self
@@ -10458,18 +11366,22 @@ impl ::std::default::Default for ImportSemaphoreZirconHandleInfoFUCHSIA<'_> {
     }
 }
 impl<'a> ImportSemaphoreZirconHandleInfoFUCHSIA<'a> {
+    #[inline]
     pub fn semaphore(mut self, semaphore: Semaphore) -> Self {
         self.semaphore = semaphore;
         self
     }
+    #[inline]
     pub fn flags(mut self, flags: SemaphoreImportFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn handle_type(mut self, handle_type: ExternalSemaphoreHandleTypeFlags) -> Self {
         self.handle_type = handle_type;
         self
     }
+    #[inline]
     pub fn zircon_handle(mut self, zircon_handle: zx_handle_t) -> Self {
         self.zircon_handle = zircon_handle;
         self
@@ -10498,10 +11410,12 @@ impl ::std::default::Default for SemaphoreGetZirconHandleInfoFUCHSIA<'_> {
     }
 }
 impl<'a> SemaphoreGetZirconHandleInfoFUCHSIA<'a> {
+    #[inline]
     pub fn semaphore(mut self, semaphore: Semaphore) -> Self {
         self.semaphore = semaphore;
         self
     }
+    #[inline]
     pub fn handle_type(mut self, handle_type: ExternalSemaphoreHandleTypeFlags) -> Self {
         self.handle_type = handle_type;
         self
@@ -10528,6 +11442,7 @@ impl ::std::default::Default for PhysicalDeviceExternalFenceInfo<'_> {
     }
 }
 impl<'a> PhysicalDeviceExternalFenceInfo<'a> {
+    #[inline]
     pub fn handle_type(mut self, handle_type: ExternalFenceHandleTypeFlags) -> Self {
         self.handle_type = handle_type;
         self
@@ -10558,6 +11473,7 @@ impl ::std::default::Default for ExternalFenceProperties<'_> {
     }
 }
 impl<'a> ExternalFenceProperties<'a> {
+    #[inline]
     pub fn export_from_imported_handle_types(
         mut self,
         export_from_imported_handle_types: ExternalFenceHandleTypeFlags,
@@ -10565,6 +11481,7 @@ impl<'a> ExternalFenceProperties<'a> {
         self.export_from_imported_handle_types = export_from_imported_handle_types;
         self
     }
+    #[inline]
     pub fn compatible_handle_types(
         mut self,
         compatible_handle_types: ExternalFenceHandleTypeFlags,
@@ -10572,6 +11489,7 @@ impl<'a> ExternalFenceProperties<'a> {
         self.compatible_handle_types = compatible_handle_types;
         self
     }
+    #[inline]
     pub fn external_fence_features(
         mut self,
         external_fence_features: ExternalFenceFeatureFlags,
@@ -10602,6 +11520,7 @@ impl ::std::default::Default for ExportFenceCreateInfo<'_> {
 }
 unsafe impl<'a> ExtendsFenceCreateInfo for ExportFenceCreateInfo<'a> {}
 impl<'a> ExportFenceCreateInfo<'a> {
+    #[inline]
     pub fn handle_types(mut self, handle_types: ExternalFenceHandleTypeFlags) -> Self {
         self.handle_types = handle_types;
         self
@@ -10636,22 +11555,27 @@ impl ::std::default::Default for ImportFenceWin32HandleInfoKHR<'_> {
     }
 }
 impl<'a> ImportFenceWin32HandleInfoKHR<'a> {
+    #[inline]
     pub fn fence(mut self, fence: Fence) -> Self {
         self.fence = fence;
         self
     }
+    #[inline]
     pub fn flags(mut self, flags: FenceImportFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn handle_type(mut self, handle_type: ExternalFenceHandleTypeFlags) -> Self {
         self.handle_type = handle_type;
         self
     }
+    #[inline]
     pub fn handle(mut self, handle: HANDLE) -> Self {
         self.handle = handle;
         self
     }
+    #[inline]
     pub fn name(mut self, name: LPCWSTR) -> Self {
         self.name = name;
         self
@@ -10683,14 +11607,17 @@ impl ::std::default::Default for ExportFenceWin32HandleInfoKHR<'_> {
 }
 unsafe impl<'a> ExtendsFenceCreateInfo for ExportFenceWin32HandleInfoKHR<'a> {}
 impl<'a> ExportFenceWin32HandleInfoKHR<'a> {
+    #[inline]
     pub fn attributes(mut self, attributes: &'a SECURITY_ATTRIBUTES) -> Self {
         self.p_attributes = attributes;
         self
     }
+    #[inline]
     pub fn dw_access(mut self, dw_access: DWORD) -> Self {
         self.dw_access = dw_access;
         self
     }
+    #[inline]
     pub fn name(mut self, name: LPCWSTR) -> Self {
         self.name = name;
         self
@@ -10719,10 +11646,12 @@ impl ::std::default::Default for FenceGetWin32HandleInfoKHR<'_> {
     }
 }
 impl<'a> FenceGetWin32HandleInfoKHR<'a> {
+    #[inline]
     pub fn fence(mut self, fence: Fence) -> Self {
         self.fence = fence;
         self
     }
+    #[inline]
     pub fn handle_type(mut self, handle_type: ExternalFenceHandleTypeFlags) -> Self {
         self.handle_type = handle_type;
         self
@@ -10755,18 +11684,22 @@ impl ::std::default::Default for ImportFenceFdInfoKHR<'_> {
     }
 }
 impl<'a> ImportFenceFdInfoKHR<'a> {
+    #[inline]
     pub fn fence(mut self, fence: Fence) -> Self {
         self.fence = fence;
         self
     }
+    #[inline]
     pub fn flags(mut self, flags: FenceImportFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn handle_type(mut self, handle_type: ExternalFenceHandleTypeFlags) -> Self {
         self.handle_type = handle_type;
         self
     }
+    #[inline]
     pub fn fd(mut self, fd: c_int) -> Self {
         self.fd = fd;
         self
@@ -10795,10 +11728,12 @@ impl ::std::default::Default for FenceGetFdInfoKHR<'_> {
     }
 }
 impl<'a> FenceGetFdInfoKHR<'a> {
+    #[inline]
     pub fn fence(mut self, fence: Fence) -> Self {
         self.fence = fence;
         self
     }
+    #[inline]
     pub fn handle_type(mut self, handle_type: ExternalFenceHandleTypeFlags) -> Self {
         self.handle_type = handle_type;
         self
@@ -10831,14 +11766,17 @@ impl ::std::default::Default for PhysicalDeviceMultiviewFeatures<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMultiviewFeatures<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceMultiviewFeatures<'a> {}
 impl<'a> PhysicalDeviceMultiviewFeatures<'a> {
+    #[inline]
     pub fn multiview(mut self, multiview: bool) -> Self {
         self.multiview = multiview.into();
         self
     }
+    #[inline]
     pub fn multiview_geometry_shader(mut self, multiview_geometry_shader: bool) -> Self {
         self.multiview_geometry_shader = multiview_geometry_shader.into();
         self
     }
+    #[inline]
     pub fn multiview_tessellation_shader(mut self, multiview_tessellation_shader: bool) -> Self {
         self.multiview_tessellation_shader = multiview_tessellation_shader.into();
         self
@@ -10868,10 +11806,12 @@ impl ::std::default::Default for PhysicalDeviceMultiviewProperties<'_> {
 }
 unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMultiviewProperties<'a> {}
 impl<'a> PhysicalDeviceMultiviewProperties<'a> {
+    #[inline]
     pub fn max_multiview_view_count(mut self, max_multiview_view_count: u32) -> Self {
         self.max_multiview_view_count = max_multiview_view_count;
         self
     }
+    #[inline]
     pub fn max_multiview_instance_index(mut self, max_multiview_instance_index: u32) -> Self {
         self.max_multiview_instance_index = max_multiview_instance_index;
         self
@@ -10909,16 +11849,19 @@ impl ::std::default::Default for RenderPassMultiviewCreateInfo<'_> {
 }
 unsafe impl<'a> ExtendsRenderPassCreateInfo for RenderPassMultiviewCreateInfo<'a> {}
 impl<'a> RenderPassMultiviewCreateInfo<'a> {
+    #[inline]
     pub fn view_masks(mut self, view_masks: &'a [u32]) -> Self {
         self.subpass_count = view_masks.len() as _;
         self.p_view_masks = view_masks.as_ptr();
         self
     }
+    #[inline]
     pub fn view_offsets(mut self, view_offsets: &'a [i32]) -> Self {
         self.dependency_count = view_offsets.len() as _;
         self.p_view_offsets = view_offsets.as_ptr();
         self
     }
+    #[inline]
     pub fn correlation_masks(mut self, correlation_masks: &'a [u32]) -> Self {
         self.correlation_mask_count = correlation_masks.len() as _;
         self.p_correlation_masks = correlation_masks.as_ptr();
@@ -10966,38 +11909,47 @@ impl ::std::default::Default for SurfaceCapabilities2EXT<'_> {
     }
 }
 impl<'a> SurfaceCapabilities2EXT<'a> {
+    #[inline]
     pub fn min_image_count(mut self, min_image_count: u32) -> Self {
         self.min_image_count = min_image_count;
         self
     }
+    #[inline]
     pub fn max_image_count(mut self, max_image_count: u32) -> Self {
         self.max_image_count = max_image_count;
         self
     }
+    #[inline]
     pub fn current_extent(mut self, current_extent: Extent2D) -> Self {
         self.current_extent = current_extent;
         self
     }
+    #[inline]
     pub fn min_image_extent(mut self, min_image_extent: Extent2D) -> Self {
         self.min_image_extent = min_image_extent;
         self
     }
+    #[inline]
     pub fn max_image_extent(mut self, max_image_extent: Extent2D) -> Self {
         self.max_image_extent = max_image_extent;
         self
     }
+    #[inline]
     pub fn max_image_array_layers(mut self, max_image_array_layers: u32) -> Self {
         self.max_image_array_layers = max_image_array_layers;
         self
     }
+    #[inline]
     pub fn supported_transforms(mut self, supported_transforms: SurfaceTransformFlagsKHR) -> Self {
         self.supported_transforms = supported_transforms;
         self
     }
+    #[inline]
     pub fn current_transform(mut self, current_transform: SurfaceTransformFlagsKHR) -> Self {
         self.current_transform = current_transform;
         self
     }
+    #[inline]
     pub fn supported_composite_alpha(
         mut self,
         supported_composite_alpha: CompositeAlphaFlagsKHR,
@@ -11005,10 +11957,12 @@ impl<'a> SurfaceCapabilities2EXT<'a> {
         self.supported_composite_alpha = supported_composite_alpha;
         self
     }
+    #[inline]
     pub fn supported_usage_flags(mut self, supported_usage_flags: ImageUsageFlags) -> Self {
         self.supported_usage_flags = supported_usage_flags;
         self
     }
+    #[inline]
     pub fn supported_surface_counters(
         mut self,
         supported_surface_counters: SurfaceCounterFlagsEXT,
@@ -11038,6 +11992,7 @@ impl ::std::default::Default for DisplayPowerInfoEXT<'_> {
     }
 }
 impl<'a> DisplayPowerInfoEXT<'a> {
+    #[inline]
     pub fn power_state(mut self, power_state: DisplayPowerStateEXT) -> Self {
         self.power_state = power_state;
         self
@@ -11064,6 +12019,7 @@ impl ::std::default::Default for DeviceEventInfoEXT<'_> {
     }
 }
 impl<'a> DeviceEventInfoEXT<'a> {
+    #[inline]
     pub fn device_event(mut self, device_event: DeviceEventTypeEXT) -> Self {
         self.device_event = device_event;
         self
@@ -11090,6 +12046,7 @@ impl ::std::default::Default for DisplayEventInfoEXT<'_> {
     }
 }
 impl<'a> DisplayEventInfoEXT<'a> {
+    #[inline]
     pub fn display_event(mut self, display_event: DisplayEventTypeEXT) -> Self {
         self.display_event = display_event;
         self
@@ -11117,6 +12074,7 @@ impl ::std::default::Default for SwapchainCounterCreateInfoEXT<'_> {
 }
 unsafe impl<'a> ExtendsSwapchainCreateInfoKHR for SwapchainCounterCreateInfoEXT<'a> {}
 impl<'a> SwapchainCounterCreateInfoEXT<'a> {
+    #[inline]
     pub fn surface_counters(mut self, surface_counters: SurfaceCounterFlagsEXT) -> Self {
         self.surface_counters = surface_counters;
         self
@@ -11147,10 +12105,12 @@ impl ::std::default::Default for PhysicalDeviceGroupProperties<'_> {
     }
 }
 impl<'a> PhysicalDeviceGroupProperties<'a> {
+    #[inline]
     pub fn physical_device_count(mut self, physical_device_count: u32) -> Self {
         self.physical_device_count = physical_device_count;
         self
     }
+    #[inline]
     pub fn physical_devices(
         mut self,
         physical_devices: [PhysicalDevice; MAX_DEVICE_GROUP_SIZE],
@@ -11158,6 +12118,7 @@ impl<'a> PhysicalDeviceGroupProperties<'a> {
         self.physical_devices = physical_devices;
         self
     }
+    #[inline]
     pub fn subset_allocation(mut self, subset_allocation: bool) -> Self {
         self.subset_allocation = subset_allocation.into();
         self
@@ -11187,10 +12148,12 @@ impl ::std::default::Default for MemoryAllocateFlagsInfo<'_> {
 }
 unsafe impl<'a> ExtendsMemoryAllocateInfo for MemoryAllocateFlagsInfo<'a> {}
 impl<'a> MemoryAllocateFlagsInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: MemoryAllocateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn device_mask(mut self, device_mask: u32) -> Self {
         self.device_mask = device_mask;
         self
@@ -11222,14 +12185,17 @@ impl ::std::default::Default for BindBufferMemoryInfo<'_> {
 }
 pub unsafe trait ExtendsBindBufferMemoryInfo {}
 impl<'a> BindBufferMemoryInfo<'a> {
+    #[inline]
     pub fn buffer(mut self, buffer: Buffer) -> Self {
         self.buffer = buffer;
         self
     }
+    #[inline]
     pub fn memory(mut self, memory: DeviceMemory) -> Self {
         self.memory = memory;
         self
     }
+    #[inline]
     pub fn memory_offset(mut self, memory_offset: DeviceSize) -> Self {
         self.memory_offset = memory_offset;
         self
@@ -11273,6 +12239,7 @@ impl ::std::default::Default for BindBufferMemoryDeviceGroupInfo<'_> {
 }
 unsafe impl<'a> ExtendsBindBufferMemoryInfo for BindBufferMemoryDeviceGroupInfo<'a> {}
 impl<'a> BindBufferMemoryDeviceGroupInfo<'a> {
+    #[inline]
     pub fn device_indices(mut self, device_indices: &'a [u32]) -> Self {
         self.device_index_count = device_indices.len() as _;
         self.p_device_indices = device_indices.as_ptr();
@@ -11305,14 +12272,17 @@ impl ::std::default::Default for BindImageMemoryInfo<'_> {
 }
 pub unsafe trait ExtendsBindImageMemoryInfo {}
 impl<'a> BindImageMemoryInfo<'a> {
+    #[inline]
     pub fn image(mut self, image: Image) -> Self {
         self.image = image;
         self
     }
+    #[inline]
     pub fn memory(mut self, memory: DeviceMemory) -> Self {
         self.memory = memory;
         self
     }
+    #[inline]
     pub fn memory_offset(mut self, memory_offset: DeviceSize) -> Self {
         self.memory_offset = memory_offset;
         self
@@ -11360,11 +12330,13 @@ impl ::std::default::Default for BindImageMemoryDeviceGroupInfo<'_> {
 }
 unsafe impl<'a> ExtendsBindImageMemoryInfo for BindImageMemoryDeviceGroupInfo<'a> {}
 impl<'a> BindImageMemoryDeviceGroupInfo<'a> {
+    #[inline]
     pub fn device_indices(mut self, device_indices: &'a [u32]) -> Self {
         self.device_index_count = device_indices.len() as _;
         self.p_device_indices = device_indices.as_ptr();
         self
     }
+    #[inline]
     pub fn split_instance_bind_regions(
         mut self,
         split_instance_bind_regions: &'a [Rect2D],
@@ -11401,10 +12373,12 @@ impl ::std::default::Default for DeviceGroupRenderPassBeginInfo<'_> {
 unsafe impl<'a> ExtendsRenderPassBeginInfo for DeviceGroupRenderPassBeginInfo<'a> {}
 unsafe impl<'a> ExtendsRenderingInfo for DeviceGroupRenderPassBeginInfo<'a> {}
 impl<'a> DeviceGroupRenderPassBeginInfo<'a> {
+    #[inline]
     pub fn device_mask(mut self, device_mask: u32) -> Self {
         self.device_mask = device_mask;
         self
     }
+    #[inline]
     pub fn device_render_areas(mut self, device_render_areas: &'a [Rect2D]) -> Self {
         self.device_render_area_count = device_render_areas.len() as _;
         self.p_device_render_areas = device_render_areas.as_ptr();
@@ -11433,6 +12407,7 @@ impl ::std::default::Default for DeviceGroupCommandBufferBeginInfo<'_> {
 }
 unsafe impl<'a> ExtendsCommandBufferBeginInfo for DeviceGroupCommandBufferBeginInfo<'a> {}
 impl<'a> DeviceGroupCommandBufferBeginInfo<'a> {
+    #[inline]
     pub fn device_mask(mut self, device_mask: u32) -> Self {
         self.device_mask = device_mask;
         self
@@ -11470,6 +12445,7 @@ impl ::std::default::Default for DeviceGroupSubmitInfo<'_> {
 }
 unsafe impl<'a> ExtendsSubmitInfo for DeviceGroupSubmitInfo<'a> {}
 impl<'a> DeviceGroupSubmitInfo<'a> {
+    #[inline]
     pub fn wait_semaphore_device_indices(
         mut self,
         wait_semaphore_device_indices: &'a [u32],
@@ -11478,11 +12454,13 @@ impl<'a> DeviceGroupSubmitInfo<'a> {
         self.p_wait_semaphore_device_indices = wait_semaphore_device_indices.as_ptr();
         self
     }
+    #[inline]
     pub fn command_buffer_device_masks(mut self, command_buffer_device_masks: &'a [u32]) -> Self {
         self.command_buffer_count = command_buffer_device_masks.len() as _;
         self.p_command_buffer_device_masks = command_buffer_device_masks.as_ptr();
         self
     }
+    #[inline]
     pub fn signal_semaphore_device_indices(
         mut self,
         signal_semaphore_device_indices: &'a [u32],
@@ -11516,10 +12494,12 @@ impl ::std::default::Default for DeviceGroupBindSparseInfo<'_> {
 }
 unsafe impl<'a> ExtendsBindSparseInfo for DeviceGroupBindSparseInfo<'a> {}
 impl<'a> DeviceGroupBindSparseInfo<'a> {
+    #[inline]
     pub fn resource_device_index(mut self, resource_device_index: u32) -> Self {
         self.resource_device_index = resource_device_index;
         self
     }
+    #[inline]
     pub fn memory_device_index(mut self, memory_device_index: u32) -> Self {
         self.memory_device_index = memory_device_index;
         self
@@ -11548,10 +12528,12 @@ impl ::std::default::Default for DeviceGroupPresentCapabilitiesKHR<'_> {
     }
 }
 impl<'a> DeviceGroupPresentCapabilitiesKHR<'a> {
+    #[inline]
     pub fn present_mask(mut self, present_mask: [u32; MAX_DEVICE_GROUP_SIZE]) -> Self {
         self.present_mask = present_mask;
         self
     }
+    #[inline]
     pub fn modes(mut self, modes: DeviceGroupPresentModeFlagsKHR) -> Self {
         self.modes = modes;
         self
@@ -11579,6 +12561,7 @@ impl ::std::default::Default for ImageSwapchainCreateInfoKHR<'_> {
 }
 unsafe impl<'a> ExtendsImageCreateInfo for ImageSwapchainCreateInfoKHR<'a> {}
 impl<'a> ImageSwapchainCreateInfoKHR<'a> {
+    #[inline]
     pub fn swapchain(mut self, swapchain: SwapchainKHR) -> Self {
         self.swapchain = swapchain;
         self
@@ -11608,10 +12591,12 @@ impl ::std::default::Default for BindImageMemorySwapchainInfoKHR<'_> {
 }
 unsafe impl<'a> ExtendsBindImageMemoryInfo for BindImageMemorySwapchainInfoKHR<'a> {}
 impl<'a> BindImageMemorySwapchainInfoKHR<'a> {
+    #[inline]
     pub fn swapchain(mut self, swapchain: SwapchainKHR) -> Self {
         self.swapchain = swapchain;
         self
     }
+    #[inline]
     pub fn image_index(mut self, image_index: u32) -> Self {
         self.image_index = image_index;
         self
@@ -11646,22 +12631,27 @@ impl ::std::default::Default for AcquireNextImageInfoKHR<'_> {
     }
 }
 impl<'a> AcquireNextImageInfoKHR<'a> {
+    #[inline]
     pub fn swapchain(mut self, swapchain: SwapchainKHR) -> Self {
         self.swapchain = swapchain;
         self
     }
+    #[inline]
     pub fn timeout(mut self, timeout: u64) -> Self {
         self.timeout = timeout;
         self
     }
+    #[inline]
     pub fn semaphore(mut self, semaphore: Semaphore) -> Self {
         self.semaphore = semaphore;
         self
     }
+    #[inline]
     pub fn fence(mut self, fence: Fence) -> Self {
         self.fence = fence;
         self
     }
+    #[inline]
     pub fn device_mask(mut self, device_mask: u32) -> Self {
         self.device_mask = device_mask;
         self
@@ -11693,11 +12683,13 @@ impl ::std::default::Default for DeviceGroupPresentInfoKHR<'_> {
 }
 unsafe impl<'a> ExtendsPresentInfoKHR for DeviceGroupPresentInfoKHR<'a> {}
 impl<'a> DeviceGroupPresentInfoKHR<'a> {
+    #[inline]
     pub fn device_masks(mut self, device_masks: &'a [u32]) -> Self {
         self.swapchain_count = device_masks.len() as _;
         self.p_device_masks = device_masks.as_ptr();
         self
     }
+    #[inline]
     pub fn mode(mut self, mode: DeviceGroupPresentModeFlagsKHR) -> Self {
         self.mode = mode;
         self
@@ -11727,6 +12719,7 @@ impl ::std::default::Default for DeviceGroupDeviceCreateInfo<'_> {
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for DeviceGroupDeviceCreateInfo<'a> {}
 impl<'a> DeviceGroupDeviceCreateInfo<'a> {
+    #[inline]
     pub fn physical_devices(mut self, physical_devices: &'a [PhysicalDevice]) -> Self {
         self.physical_device_count = physical_devices.len() as _;
         self.p_physical_devices = physical_devices.as_ptr();
@@ -11755,6 +12748,7 @@ impl ::std::default::Default for DeviceGroupSwapchainCreateInfoKHR<'_> {
 }
 unsafe impl<'a> ExtendsSwapchainCreateInfoKHR for DeviceGroupSwapchainCreateInfoKHR<'a> {}
 impl<'a> DeviceGroupSwapchainCreateInfoKHR<'a> {
+    #[inline]
     pub fn modes(mut self, modes: DeviceGroupPresentModeFlagsKHR) -> Self {
         self.modes = modes;
         self
@@ -11773,26 +12767,32 @@ pub struct DescriptorUpdateTemplateEntry {
     pub stride: usize,
 }
 impl DescriptorUpdateTemplateEntry {
+    #[inline]
     pub fn dst_binding(mut self, dst_binding: u32) -> Self {
         self.dst_binding = dst_binding;
         self
     }
+    #[inline]
     pub fn dst_array_element(mut self, dst_array_element: u32) -> Self {
         self.dst_array_element = dst_array_element;
         self
     }
+    #[inline]
     pub fn descriptor_count(mut self, descriptor_count: u32) -> Self {
         self.descriptor_count = descriptor_count;
         self
     }
+    #[inline]
     pub fn descriptor_type(mut self, descriptor_type: DescriptorType) -> Self {
         self.descriptor_type = descriptor_type;
         self
     }
+    #[inline]
     pub fn offset(mut self, offset: usize) -> Self {
         self.offset = offset;
         self
     }
+    #[inline]
     pub fn stride(mut self, stride: usize) -> Self {
         self.stride = stride;
         self
@@ -11833,10 +12833,12 @@ impl ::std::default::Default for DescriptorUpdateTemplateCreateInfo<'_> {
     }
 }
 impl<'a> DescriptorUpdateTemplateCreateInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: DescriptorUpdateTemplateCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn descriptor_update_entries(
         mut self,
         descriptor_update_entries: &'a [DescriptorUpdateTemplateEntry],
@@ -11845,22 +12847,27 @@ impl<'a> DescriptorUpdateTemplateCreateInfo<'a> {
         self.p_descriptor_update_entries = descriptor_update_entries.as_ptr();
         self
     }
+    #[inline]
     pub fn template_type(mut self, template_type: DescriptorUpdateTemplateType) -> Self {
         self.template_type = template_type;
         self
     }
+    #[inline]
     pub fn descriptor_set_layout(mut self, descriptor_set_layout: DescriptorSetLayout) -> Self {
         self.descriptor_set_layout = descriptor_set_layout;
         self
     }
+    #[inline]
     pub fn pipeline_bind_point(mut self, pipeline_bind_point: PipelineBindPoint) -> Self {
         self.pipeline_bind_point = pipeline_bind_point;
         self
     }
+    #[inline]
     pub fn pipeline_layout(mut self, pipeline_layout: PipelineLayout) -> Self {
         self.pipeline_layout = pipeline_layout;
         self
     }
+    #[inline]
     pub fn set(mut self, set: u32) -> Self {
         self.set = set;
         self
@@ -11875,10 +12882,12 @@ pub struct XYColorEXT {
     pub y: f32,
 }
 impl XYColorEXT {
+    #[inline]
     pub fn x(mut self, x: f32) -> Self {
         self.x = x;
         self
     }
+    #[inline]
     pub fn y(mut self, y: f32) -> Self {
         self.y = y;
         self
@@ -11907,6 +12916,7 @@ impl ::std::default::Default for PhysicalDevicePresentIdFeaturesKHR<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePresentIdFeaturesKHR<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDevicePresentIdFeaturesKHR<'a> {}
 impl<'a> PhysicalDevicePresentIdFeaturesKHR<'a> {
+    #[inline]
     pub fn present_id(mut self, present_id: bool) -> Self {
         self.present_id = present_id.into();
         self
@@ -11936,6 +12946,7 @@ impl ::std::default::Default for PresentIdKHR<'_> {
 }
 unsafe impl<'a> ExtendsPresentInfoKHR for PresentIdKHR<'a> {}
 impl<'a> PresentIdKHR<'a> {
+    #[inline]
     pub fn present_ids(mut self, present_ids: &'a [u64]) -> Self {
         self.swapchain_count = present_ids.len() as _;
         self.p_present_ids = present_ids.as_ptr();
@@ -11965,6 +12976,7 @@ impl ::std::default::Default for PhysicalDevicePresentWaitFeaturesKHR<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePresentWaitFeaturesKHR<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDevicePresentWaitFeaturesKHR<'a> {}
 impl<'a> PhysicalDevicePresentWaitFeaturesKHR<'a> {
+    #[inline]
     pub fn present_wait(mut self, present_wait: bool) -> Self {
         self.present_wait = present_wait.into();
         self
@@ -12005,34 +13017,42 @@ impl ::std::default::Default for HdrMetadataEXT<'_> {
     }
 }
 impl<'a> HdrMetadataEXT<'a> {
+    #[inline]
     pub fn display_primary_red(mut self, display_primary_red: XYColorEXT) -> Self {
         self.display_primary_red = display_primary_red;
         self
     }
+    #[inline]
     pub fn display_primary_green(mut self, display_primary_green: XYColorEXT) -> Self {
         self.display_primary_green = display_primary_green;
         self
     }
+    #[inline]
     pub fn display_primary_blue(mut self, display_primary_blue: XYColorEXT) -> Self {
         self.display_primary_blue = display_primary_blue;
         self
     }
+    #[inline]
     pub fn white_point(mut self, white_point: XYColorEXT) -> Self {
         self.white_point = white_point;
         self
     }
+    #[inline]
     pub fn max_luminance(mut self, max_luminance: f32) -> Self {
         self.max_luminance = max_luminance;
         self
     }
+    #[inline]
     pub fn min_luminance(mut self, min_luminance: f32) -> Self {
         self.min_luminance = min_luminance;
         self
     }
+    #[inline]
     pub fn max_content_light_level(mut self, max_content_light_level: f32) -> Self {
         self.max_content_light_level = max_content_light_level;
         self
     }
+    #[inline]
     pub fn max_frame_average_light_level(mut self, max_frame_average_light_level: f32) -> Self {
         self.max_frame_average_light_level = max_frame_average_light_level;
         self
@@ -12060,6 +13080,7 @@ impl ::std::default::Default for DisplayNativeHdrSurfaceCapabilitiesAMD<'_> {
 }
 unsafe impl<'a> ExtendsSurfaceCapabilities2KHR for DisplayNativeHdrSurfaceCapabilitiesAMD<'a> {}
 impl<'a> DisplayNativeHdrSurfaceCapabilitiesAMD<'a> {
+    #[inline]
     pub fn local_dimming_support(mut self, local_dimming_support: bool) -> Self {
         self.local_dimming_support = local_dimming_support.into();
         self
@@ -12087,6 +13108,7 @@ impl ::std::default::Default for SwapchainDisplayNativeHdrCreateInfoAMD<'_> {
 }
 unsafe impl<'a> ExtendsSwapchainCreateInfoKHR for SwapchainDisplayNativeHdrCreateInfoAMD<'a> {}
 impl<'a> SwapchainDisplayNativeHdrCreateInfoAMD<'a> {
+    #[inline]
     pub fn local_dimming_enable(mut self, local_dimming_enable: bool) -> Self {
         self.local_dimming_enable = local_dimming_enable.into();
         self
@@ -12100,6 +13122,7 @@ pub struct RefreshCycleDurationGOOGLE {
     pub refresh_duration: u64,
 }
 impl RefreshCycleDurationGOOGLE {
+    #[inline]
     pub fn refresh_duration(mut self, refresh_duration: u64) -> Self {
         self.refresh_duration = refresh_duration;
         self
@@ -12117,22 +13140,27 @@ pub struct PastPresentationTimingGOOGLE {
     pub present_margin: u64,
 }
 impl PastPresentationTimingGOOGLE {
+    #[inline]
     pub fn present_id(mut self, present_id: u32) -> Self {
         self.present_id = present_id;
         self
     }
+    #[inline]
     pub fn desired_present_time(mut self, desired_present_time: u64) -> Self {
         self.desired_present_time = desired_present_time;
         self
     }
+    #[inline]
     pub fn actual_present_time(mut self, actual_present_time: u64) -> Self {
         self.actual_present_time = actual_present_time;
         self
     }
+    #[inline]
     pub fn earliest_present_time(mut self, earliest_present_time: u64) -> Self {
         self.earliest_present_time = earliest_present_time;
         self
     }
+    #[inline]
     pub fn present_margin(mut self, present_margin: u64) -> Self {
         self.present_margin = present_margin;
         self
@@ -12162,6 +13190,7 @@ impl ::std::default::Default for PresentTimesInfoGOOGLE<'_> {
 }
 unsafe impl<'a> ExtendsPresentInfoKHR for PresentTimesInfoGOOGLE<'a> {}
 impl<'a> PresentTimesInfoGOOGLE<'a> {
+    #[inline]
     pub fn times(mut self, times: &'a [PresentTimeGOOGLE]) -> Self {
         self.swapchain_count = times.len() as _;
         self.p_times = times.as_ptr();
@@ -12177,10 +13206,12 @@ pub struct PresentTimeGOOGLE {
     pub desired_present_time: u64,
 }
 impl PresentTimeGOOGLE {
+    #[inline]
     pub fn present_id(mut self, present_id: u32) -> Self {
         self.present_id = present_id;
         self
     }
+    #[inline]
     pub fn desired_present_time(mut self, desired_present_time: u64) -> Self {
         self.desired_present_time = desired_present_time;
         self
@@ -12209,10 +13240,12 @@ impl ::std::default::Default for IOSSurfaceCreateInfoMVK<'_> {
     }
 }
 impl<'a> IOSSurfaceCreateInfoMVK<'a> {
+    #[inline]
     pub fn flags(mut self, flags: IOSSurfaceCreateFlagsMVK) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn view(mut self, view: *const c_void) -> Self {
         self.p_view = view;
         self
@@ -12241,10 +13274,12 @@ impl ::std::default::Default for MacOSSurfaceCreateInfoMVK<'_> {
     }
 }
 impl<'a> MacOSSurfaceCreateInfoMVK<'a> {
+    #[inline]
     pub fn flags(mut self, flags: MacOSSurfaceCreateFlagsMVK) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn view(mut self, view: *const c_void) -> Self {
         self.p_view = view;
         self
@@ -12273,10 +13308,12 @@ impl ::std::default::Default for MetalSurfaceCreateInfoEXT<'_> {
     }
 }
 impl<'a> MetalSurfaceCreateInfoEXT<'a> {
+    #[inline]
     pub fn flags(mut self, flags: MetalSurfaceCreateFlagsEXT) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn layer(mut self, layer: *const CAMetalLayer) -> Self {
         self.p_layer = layer;
         self
@@ -12291,10 +13328,12 @@ pub struct ViewportWScalingNV {
     pub ycoeff: f32,
 }
 impl ViewportWScalingNV {
+    #[inline]
     pub fn xcoeff(mut self, xcoeff: f32) -> Self {
         self.xcoeff = xcoeff;
         self
     }
+    #[inline]
     pub fn ycoeff(mut self, ycoeff: f32) -> Self {
         self.ycoeff = ycoeff;
         self
@@ -12329,10 +13368,12 @@ unsafe impl<'a> ExtendsPipelineViewportStateCreateInfo
 {
 }
 impl<'a> PipelineViewportWScalingStateCreateInfoNV<'a> {
+    #[inline]
     pub fn viewport_w_scaling_enable(mut self, viewport_w_scaling_enable: bool) -> Self {
         self.viewport_w_scaling_enable = viewport_w_scaling_enable.into();
         self
     }
+    #[inline]
     pub fn viewport_w_scalings(mut self, viewport_w_scalings: &'a [ViewportWScalingNV]) -> Self {
         self.viewport_count = viewport_w_scalings.len() as _;
         self.p_viewport_w_scalings = viewport_w_scalings.as_ptr();
@@ -12350,18 +13391,22 @@ pub struct ViewportSwizzleNV {
     pub w: ViewportCoordinateSwizzleNV,
 }
 impl ViewportSwizzleNV {
+    #[inline]
     pub fn x(mut self, x: ViewportCoordinateSwizzleNV) -> Self {
         self.x = x;
         self
     }
+    #[inline]
     pub fn y(mut self, y: ViewportCoordinateSwizzleNV) -> Self {
         self.y = y;
         self
     }
+    #[inline]
     pub fn z(mut self, z: ViewportCoordinateSwizzleNV) -> Self {
         self.z = z;
         self
     }
+    #[inline]
     pub fn w(mut self, w: ViewportCoordinateSwizzleNV) -> Self {
         self.w = w;
         self
@@ -12396,10 +13441,12 @@ unsafe impl<'a> ExtendsPipelineViewportStateCreateInfo
 {
 }
 impl<'a> PipelineViewportSwizzleStateCreateInfoNV<'a> {
+    #[inline]
     pub fn flags(mut self, flags: PipelineViewportSwizzleStateCreateFlagsNV) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn viewport_swizzles(mut self, viewport_swizzles: &'a [ViewportSwizzleNV]) -> Self {
         self.viewport_count = viewport_swizzles.len() as _;
         self.p_viewport_swizzles = viewport_swizzles.as_ptr();
@@ -12431,6 +13478,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceProperties2
 {
 }
 impl<'a> PhysicalDeviceDiscardRectanglePropertiesEXT<'a> {
+    #[inline]
     pub fn max_discard_rectangles(mut self, max_discard_rectangles: u32) -> Self {
         self.max_discard_rectangles = max_discard_rectangles;
         self
@@ -12467,10 +13515,12 @@ unsafe impl<'a> ExtendsGraphicsPipelineCreateInfo
 {
 }
 impl<'a> PipelineDiscardRectangleStateCreateInfoEXT<'a> {
+    #[inline]
     pub fn flags(mut self, flags: PipelineDiscardRectangleStateCreateFlagsEXT) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn discard_rectangle_mode(
         mut self,
         discard_rectangle_mode: DiscardRectangleModeEXT,
@@ -12478,6 +13528,7 @@ impl<'a> PipelineDiscardRectangleStateCreateInfoEXT<'a> {
         self.discard_rectangle_mode = discard_rectangle_mode;
         self
     }
+    #[inline]
     pub fn discard_rectangles(mut self, discard_rectangles: &'a [Rect2D]) -> Self {
         self.discard_rectangle_count = discard_rectangles.len() as _;
         self.p_discard_rectangles = discard_rectangles.as_ptr();
@@ -12509,6 +13560,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceProperties2
 {
 }
 impl<'a> PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'a> {
+    #[inline]
     pub fn per_view_position_all_components(
         mut self,
         per_view_position_all_components: bool,
@@ -12527,14 +13579,17 @@ pub struct InputAttachmentAspectReference {
     pub aspect_mask: ImageAspectFlags,
 }
 impl InputAttachmentAspectReference {
+    #[inline]
     pub fn subpass(mut self, subpass: u32) -> Self {
         self.subpass = subpass;
         self
     }
+    #[inline]
     pub fn input_attachment_index(mut self, input_attachment_index: u32) -> Self {
         self.input_attachment_index = input_attachment_index;
         self
     }
+    #[inline]
     pub fn aspect_mask(mut self, aspect_mask: ImageAspectFlags) -> Self {
         self.aspect_mask = aspect_mask;
         self
@@ -12564,6 +13619,7 @@ impl ::std::default::Default for RenderPassInputAttachmentAspectCreateInfo<'_> {
 }
 unsafe impl<'a> ExtendsRenderPassCreateInfo for RenderPassInputAttachmentAspectCreateInfo<'a> {}
 impl<'a> RenderPassInputAttachmentAspectCreateInfo<'a> {
+    #[inline]
     pub fn aspect_references(
         mut self,
         aspect_references: &'a [InputAttachmentAspectReference],
@@ -12595,6 +13651,7 @@ impl ::std::default::Default for PhysicalDeviceSurfaceInfo2KHR<'_> {
 }
 pub unsafe trait ExtendsPhysicalDeviceSurfaceInfo2KHR {}
 impl<'a> PhysicalDeviceSurfaceInfo2KHR<'a> {
+    #[inline]
     pub fn surface(mut self, surface: SurfaceKHR) -> Self {
         self.surface = surface;
         self
@@ -12636,6 +13693,7 @@ impl ::std::default::Default for SurfaceCapabilities2KHR<'_> {
 }
 pub unsafe trait ExtendsSurfaceCapabilities2KHR {}
 impl<'a> SurfaceCapabilities2KHR<'a> {
+    #[inline]
     pub fn surface_capabilities(mut self, surface_capabilities: SurfaceCapabilitiesKHR) -> Self {
         self.surface_capabilities = surface_capabilities;
         self
@@ -12676,6 +13734,7 @@ impl ::std::default::Default for SurfaceFormat2KHR<'_> {
     }
 }
 impl<'a> SurfaceFormat2KHR<'a> {
+    #[inline]
     pub fn surface_format(mut self, surface_format: SurfaceFormatKHR) -> Self {
         self.surface_format = surface_format;
         self
@@ -12702,6 +13761,7 @@ impl ::std::default::Default for DisplayProperties2KHR<'_> {
     }
 }
 impl<'a> DisplayProperties2KHR<'a> {
+    #[inline]
     pub fn display_properties(mut self, display_properties: DisplayPropertiesKHR<'a>) -> Self {
         self.display_properties = display_properties;
         self
@@ -12728,6 +13788,7 @@ impl ::std::default::Default for DisplayPlaneProperties2KHR<'_> {
     }
 }
 impl<'a> DisplayPlaneProperties2KHR<'a> {
+    #[inline]
     pub fn display_plane_properties(
         mut self,
         display_plane_properties: DisplayPlanePropertiesKHR,
@@ -12757,6 +13818,7 @@ impl ::std::default::Default for DisplayModeProperties2KHR<'_> {
     }
 }
 impl<'a> DisplayModeProperties2KHR<'a> {
+    #[inline]
     pub fn display_mode_properties(
         mut self,
         display_mode_properties: DisplayModePropertiesKHR,
@@ -12788,10 +13850,12 @@ impl ::std::default::Default for DisplayPlaneInfo2KHR<'_> {
     }
 }
 impl<'a> DisplayPlaneInfo2KHR<'a> {
+    #[inline]
     pub fn mode(mut self, mode: DisplayModeKHR) -> Self {
         self.mode = mode;
         self
     }
+    #[inline]
     pub fn plane_index(mut self, plane_index: u32) -> Self {
         self.plane_index = plane_index;
         self
@@ -12818,6 +13882,7 @@ impl ::std::default::Default for DisplayPlaneCapabilities2KHR<'_> {
     }
 }
 impl<'a> DisplayPlaneCapabilities2KHR<'a> {
+    #[inline]
     pub fn capabilities(mut self, capabilities: DisplayPlaneCapabilitiesKHR) -> Self {
         self.capabilities = capabilities;
         self
@@ -12845,6 +13910,7 @@ impl ::std::default::Default for SharedPresentSurfaceCapabilitiesKHR<'_> {
 }
 unsafe impl<'a> ExtendsSurfaceCapabilities2KHR for SharedPresentSurfaceCapabilitiesKHR<'a> {}
 impl<'a> SharedPresentSurfaceCapabilitiesKHR<'a> {
+    #[inline]
     pub fn shared_present_supported_usage_flags(
         mut self,
         shared_present_supported_usage_flags: ImageUsageFlags,
@@ -12882,10 +13948,12 @@ impl ::std::default::Default for PhysicalDevice16BitStorageFeatures<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDevice16BitStorageFeatures<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDevice16BitStorageFeatures<'a> {}
 impl<'a> PhysicalDevice16BitStorageFeatures<'a> {
+    #[inline]
     pub fn storage_buffer16_bit_access(mut self, storage_buffer16_bit_access: bool) -> Self {
         self.storage_buffer16_bit_access = storage_buffer16_bit_access.into();
         self
     }
+    #[inline]
     pub fn uniform_and_storage_buffer16_bit_access(
         mut self,
         uniform_and_storage_buffer16_bit_access: bool,
@@ -12894,10 +13962,12 @@ impl<'a> PhysicalDevice16BitStorageFeatures<'a> {
             uniform_and_storage_buffer16_bit_access.into();
         self
     }
+    #[inline]
     pub fn storage_push_constant16(mut self, storage_push_constant16: bool) -> Self {
         self.storage_push_constant16 = storage_push_constant16.into();
         self
     }
+    #[inline]
     pub fn storage_input_output16(mut self, storage_input_output16: bool) -> Self {
         self.storage_input_output16 = storage_input_output16.into();
         self
@@ -12931,18 +14001,22 @@ impl ::std::default::Default for PhysicalDeviceSubgroupProperties<'_> {
 }
 unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSubgroupProperties<'a> {}
 impl<'a> PhysicalDeviceSubgroupProperties<'a> {
+    #[inline]
     pub fn subgroup_size(mut self, subgroup_size: u32) -> Self {
         self.subgroup_size = subgroup_size;
         self
     }
+    #[inline]
     pub fn supported_stages(mut self, supported_stages: ShaderStageFlags) -> Self {
         self.supported_stages = supported_stages;
         self
     }
+    #[inline]
     pub fn supported_operations(mut self, supported_operations: SubgroupFeatureFlags) -> Self {
         self.supported_operations = supported_operations;
         self
     }
+    #[inline]
     pub fn quad_operations_in_all_stages(mut self, quad_operations_in_all_stages: bool) -> Self {
         self.quad_operations_in_all_stages = quad_operations_in_all_stages.into();
         self
@@ -12974,6 +14048,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'a> {}
 impl<'a> PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'a> {
+    #[inline]
     pub fn shader_subgroup_extended_types(mut self, shader_subgroup_extended_types: bool) -> Self {
         self.shader_subgroup_extended_types = shader_subgroup_extended_types.into();
         self
@@ -13000,6 +14075,7 @@ impl ::std::default::Default for BufferMemoryRequirementsInfo2<'_> {
     }
 }
 impl<'a> BufferMemoryRequirementsInfo2<'a> {
+    #[inline]
     pub fn buffer(mut self, buffer: Buffer) -> Self {
         self.buffer = buffer;
         self
@@ -13026,6 +14102,7 @@ impl ::std::default::Default for DeviceBufferMemoryRequirements<'_> {
     }
 }
 impl<'a> DeviceBufferMemoryRequirements<'a> {
+    #[inline]
     pub fn create_info(mut self, create_info: &'a BufferCreateInfo<'a>) -> Self {
         self.p_create_info = create_info;
         self
@@ -13053,6 +14130,7 @@ impl ::std::default::Default for ImageMemoryRequirementsInfo2<'_> {
 }
 pub unsafe trait ExtendsImageMemoryRequirementsInfo2 {}
 impl<'a> ImageMemoryRequirementsInfo2<'a> {
+    #[inline]
     pub fn image(mut self, image: Image) -> Self {
         self.image = image;
         self
@@ -13093,6 +14171,7 @@ impl ::std::default::Default for ImageSparseMemoryRequirementsInfo2<'_> {
     }
 }
 impl<'a> ImageSparseMemoryRequirementsInfo2<'a> {
+    #[inline]
     pub fn image(mut self, image: Image) -> Self {
         self.image = image;
         self
@@ -13121,10 +14200,12 @@ impl ::std::default::Default for DeviceImageMemoryRequirements<'_> {
     }
 }
 impl<'a> DeviceImageMemoryRequirements<'a> {
+    #[inline]
     pub fn create_info(mut self, create_info: &'a ImageCreateInfo<'a>) -> Self {
         self.p_create_info = create_info;
         self
     }
+    #[inline]
     pub fn plane_aspect(mut self, plane_aspect: ImageAspectFlags) -> Self {
         self.plane_aspect = plane_aspect;
         self
@@ -13152,6 +14233,7 @@ impl ::std::default::Default for MemoryRequirements2<'_> {
 }
 pub unsafe trait ExtendsMemoryRequirements2 {}
 impl<'a> MemoryRequirements2<'a> {
+    #[inline]
     pub fn memory_requirements(mut self, memory_requirements: MemoryRequirements) -> Self {
         self.memory_requirements = memory_requirements;
         self
@@ -13192,6 +14274,7 @@ impl ::std::default::Default for SparseImageMemoryRequirements2<'_> {
     }
 }
 impl<'a> SparseImageMemoryRequirements2<'a> {
+    #[inline]
     pub fn memory_requirements(
         mut self,
         memory_requirements: SparseImageMemoryRequirements,
@@ -13222,6 +14305,7 @@ impl ::std::default::Default for PhysicalDevicePointClippingProperties<'_> {
 }
 unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDevicePointClippingProperties<'a> {}
 impl<'a> PhysicalDevicePointClippingProperties<'a> {
+    #[inline]
     pub fn point_clipping_behavior(
         mut self,
         point_clipping_behavior: PointClippingBehavior,
@@ -13254,10 +14338,12 @@ impl ::std::default::Default for MemoryDedicatedRequirements<'_> {
 }
 unsafe impl<'a> ExtendsMemoryRequirements2 for MemoryDedicatedRequirements<'a> {}
 impl<'a> MemoryDedicatedRequirements<'a> {
+    #[inline]
     pub fn prefers_dedicated_allocation(mut self, prefers_dedicated_allocation: bool) -> Self {
         self.prefers_dedicated_allocation = prefers_dedicated_allocation.into();
         self
     }
+    #[inline]
     pub fn requires_dedicated_allocation(mut self, requires_dedicated_allocation: bool) -> Self {
         self.requires_dedicated_allocation = requires_dedicated_allocation.into();
         self
@@ -13287,10 +14373,12 @@ impl ::std::default::Default for MemoryDedicatedAllocateInfo<'_> {
 }
 unsafe impl<'a> ExtendsMemoryAllocateInfo for MemoryDedicatedAllocateInfo<'a> {}
 impl<'a> MemoryDedicatedAllocateInfo<'a> {
+    #[inline]
     pub fn image(mut self, image: Image) -> Self {
         self.image = image;
         self
     }
+    #[inline]
     pub fn buffer(mut self, buffer: Buffer) -> Self {
         self.buffer = buffer;
         self
@@ -13318,6 +14406,7 @@ impl ::std::default::Default for ImageViewUsageCreateInfo<'_> {
 }
 unsafe impl<'a> ExtendsImageViewCreateInfo for ImageViewUsageCreateInfo<'a> {}
 impl<'a> ImageViewUsageCreateInfo<'a> {
+    #[inline]
     pub fn usage(mut self, usage: ImageUsageFlags) -> Self {
         self.usage = usage;
         self
@@ -13348,6 +14437,7 @@ unsafe impl<'a> ExtendsPipelineTessellationStateCreateInfo
 {
 }
 impl<'a> PipelineTessellationDomainOriginStateCreateInfo<'a> {
+    #[inline]
     pub fn domain_origin(mut self, domain_origin: TessellationDomainOrigin) -> Self {
         self.domain_origin = domain_origin;
         self
@@ -13376,6 +14466,7 @@ impl ::std::default::Default for SamplerYcbcrConversionInfo<'_> {
 unsafe impl<'a> ExtendsSamplerCreateInfo for SamplerYcbcrConversionInfo<'a> {}
 unsafe impl<'a> ExtendsImageViewCreateInfo for SamplerYcbcrConversionInfo<'a> {}
 impl<'a> SamplerYcbcrConversionInfo<'a> {
+    #[inline]
     pub fn conversion(mut self, conversion: SamplerYcbcrConversion) -> Self {
         self.conversion = conversion;
         self
@@ -13417,34 +14508,42 @@ impl ::std::default::Default for SamplerYcbcrConversionCreateInfo<'_> {
 }
 pub unsafe trait ExtendsSamplerYcbcrConversionCreateInfo {}
 impl<'a> SamplerYcbcrConversionCreateInfo<'a> {
+    #[inline]
     pub fn format(mut self, format: Format) -> Self {
         self.format = format;
         self
     }
+    #[inline]
     pub fn ycbcr_model(mut self, ycbcr_model: SamplerYcbcrModelConversion) -> Self {
         self.ycbcr_model = ycbcr_model;
         self
     }
+    #[inline]
     pub fn ycbcr_range(mut self, ycbcr_range: SamplerYcbcrRange) -> Self {
         self.ycbcr_range = ycbcr_range;
         self
     }
+    #[inline]
     pub fn components(mut self, components: ComponentMapping) -> Self {
         self.components = components;
         self
     }
+    #[inline]
     pub fn x_chroma_offset(mut self, x_chroma_offset: ChromaLocation) -> Self {
         self.x_chroma_offset = x_chroma_offset;
         self
     }
+    #[inline]
     pub fn y_chroma_offset(mut self, y_chroma_offset: ChromaLocation) -> Self {
         self.y_chroma_offset = y_chroma_offset;
         self
     }
+    #[inline]
     pub fn chroma_filter(mut self, chroma_filter: Filter) -> Self {
         self.chroma_filter = chroma_filter;
         self
     }
+    #[inline]
     pub fn force_explicit_reconstruction(mut self, force_explicit_reconstruction: bool) -> Self {
         self.force_explicit_reconstruction = force_explicit_reconstruction.into();
         self
@@ -13489,6 +14588,7 @@ impl ::std::default::Default for BindImagePlaneMemoryInfo<'_> {
 }
 unsafe impl<'a> ExtendsBindImageMemoryInfo for BindImagePlaneMemoryInfo<'a> {}
 impl<'a> BindImagePlaneMemoryInfo<'a> {
+    #[inline]
     pub fn plane_aspect(mut self, plane_aspect: ImageAspectFlags) -> Self {
         self.plane_aspect = plane_aspect;
         self
@@ -13516,6 +14616,7 @@ impl ::std::default::Default for ImagePlaneMemoryRequirementsInfo<'_> {
 }
 unsafe impl<'a> ExtendsImageMemoryRequirementsInfo2 for ImagePlaneMemoryRequirementsInfo<'a> {}
 impl<'a> ImagePlaneMemoryRequirementsInfo<'a> {
+    #[inline]
     pub fn plane_aspect(mut self, plane_aspect: ImageAspectFlags) -> Self {
         self.plane_aspect = plane_aspect;
         self
@@ -13547,6 +14648,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceSamplerYcbcrConversionFeatures<'a> {}
 impl<'a> PhysicalDeviceSamplerYcbcrConversionFeatures<'a> {
+    #[inline]
     pub fn sampler_ycbcr_conversion(mut self, sampler_ycbcr_conversion: bool) -> Self {
         self.sampler_ycbcr_conversion = sampler_ycbcr_conversion.into();
         self
@@ -13574,6 +14676,7 @@ impl ::std::default::Default for SamplerYcbcrConversionImageFormatProperties<'_>
 }
 unsafe impl<'a> ExtendsImageFormatProperties2 for SamplerYcbcrConversionImageFormatProperties<'a> {}
 impl<'a> SamplerYcbcrConversionImageFormatProperties<'a> {
+    #[inline]
     pub fn combined_image_sampler_descriptor_count(
         mut self,
         combined_image_sampler_descriptor_count: u32,
@@ -13604,6 +14707,7 @@ impl ::std::default::Default for TextureLODGatherFormatPropertiesAMD<'_> {
 }
 unsafe impl<'a> ExtendsImageFormatProperties2 for TextureLODGatherFormatPropertiesAMD<'a> {}
 impl<'a> TextureLODGatherFormatPropertiesAMD<'a> {
+    #[inline]
     pub fn supports_texture_gather_lod_bias_amd(
         mut self,
         supports_texture_gather_lod_bias_amd: bool,
@@ -13637,14 +14741,17 @@ impl ::std::default::Default for ConditionalRenderingBeginInfoEXT<'_> {
     }
 }
 impl<'a> ConditionalRenderingBeginInfoEXT<'a> {
+    #[inline]
     pub fn buffer(mut self, buffer: Buffer) -> Self {
         self.buffer = buffer;
         self
     }
+    #[inline]
     pub fn offset(mut self, offset: DeviceSize) -> Self {
         self.offset = offset;
         self
     }
+    #[inline]
     pub fn flags(mut self, flags: ConditionalRenderingFlagsEXT) -> Self {
         self.flags = flags;
         self
@@ -13672,6 +14779,7 @@ impl ::std::default::Default for ProtectedSubmitInfo<'_> {
 }
 unsafe impl<'a> ExtendsSubmitInfo for ProtectedSubmitInfo<'a> {}
 impl<'a> ProtectedSubmitInfo<'a> {
+    #[inline]
     pub fn protected_submit(mut self, protected_submit: bool) -> Self {
         self.protected_submit = protected_submit.into();
         self
@@ -13700,6 +14808,7 @@ impl ::std::default::Default for PhysicalDeviceProtectedMemoryFeatures<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceProtectedMemoryFeatures<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceProtectedMemoryFeatures<'a> {}
 impl<'a> PhysicalDeviceProtectedMemoryFeatures<'a> {
+    #[inline]
     pub fn protected_memory(mut self, protected_memory: bool) -> Self {
         self.protected_memory = protected_memory.into();
         self
@@ -13727,6 +14836,7 @@ impl ::std::default::Default for PhysicalDeviceProtectedMemoryProperties<'_> {
 }
 unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceProtectedMemoryProperties<'a> {}
 impl<'a> PhysicalDeviceProtectedMemoryProperties<'a> {
+    #[inline]
     pub fn protected_no_fault(mut self, protected_no_fault: bool) -> Self {
         self.protected_no_fault = protected_no_fault.into();
         self
@@ -13757,14 +14867,17 @@ impl ::std::default::Default for DeviceQueueInfo2<'_> {
     }
 }
 impl<'a> DeviceQueueInfo2<'a> {
+    #[inline]
     pub fn flags(mut self, flags: DeviceQueueCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn queue_family_index(mut self, queue_family_index: u32) -> Self {
         self.queue_family_index = queue_family_index;
         self
     }
+    #[inline]
     pub fn queue_index(mut self, queue_index: u32) -> Self {
         self.queue_index = queue_index;
         self
@@ -13799,14 +14912,17 @@ unsafe impl<'a> ExtendsPipelineMultisampleStateCreateInfo
 {
 }
 impl<'a> PipelineCoverageToColorStateCreateInfoNV<'a> {
+    #[inline]
     pub fn flags(mut self, flags: PipelineCoverageToColorStateCreateFlagsNV) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn coverage_to_color_enable(mut self, coverage_to_color_enable: bool) -> Self {
         self.coverage_to_color_enable = coverage_to_color_enable.into();
         self
     }
+    #[inline]
     pub fn coverage_to_color_location(mut self, coverage_to_color_location: u32) -> Self {
         self.coverage_to_color_location = coverage_to_color_location;
         self
@@ -13839,6 +14955,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceProperties2
 {
 }
 impl<'a> PhysicalDeviceSamplerFilterMinmaxProperties<'a> {
+    #[inline]
     pub fn filter_minmax_single_component_formats(
         mut self,
         filter_minmax_single_component_formats: bool,
@@ -13846,6 +14963,7 @@ impl<'a> PhysicalDeviceSamplerFilterMinmaxProperties<'a> {
         self.filter_minmax_single_component_formats = filter_minmax_single_component_formats.into();
         self
     }
+    #[inline]
     pub fn filter_minmax_image_component_mapping(
         mut self,
         filter_minmax_image_component_mapping: bool,
@@ -13863,10 +14981,12 @@ pub struct SampleLocationEXT {
     pub y: f32,
 }
 impl SampleLocationEXT {
+    #[inline]
     pub fn x(mut self, x: f32) -> Self {
         self.x = x;
         self
     }
+    #[inline]
     pub fn y(mut self, y: f32) -> Self {
         self.y = y;
         self
@@ -13901,6 +15021,7 @@ impl ::std::default::Default for SampleLocationsInfoEXT<'_> {
 unsafe impl<'a> ExtendsImageMemoryBarrier for SampleLocationsInfoEXT<'a> {}
 unsafe impl<'a> ExtendsImageMemoryBarrier2 for SampleLocationsInfoEXT<'a> {}
 impl<'a> SampleLocationsInfoEXT<'a> {
+    #[inline]
     pub fn sample_locations_per_pixel(
         mut self,
         sample_locations_per_pixel: SampleCountFlags,
@@ -13908,10 +15029,12 @@ impl<'a> SampleLocationsInfoEXT<'a> {
         self.sample_locations_per_pixel = sample_locations_per_pixel;
         self
     }
+    #[inline]
     pub fn sample_location_grid_size(mut self, sample_location_grid_size: Extent2D) -> Self {
         self.sample_location_grid_size = sample_location_grid_size;
         self
     }
+    #[inline]
     pub fn sample_locations(mut self, sample_locations: &'a [SampleLocationEXT]) -> Self {
         self.sample_locations_count = sample_locations.len() as _;
         self.p_sample_locations = sample_locations.as_ptr();
@@ -13928,10 +15051,12 @@ pub struct AttachmentSampleLocationsEXT<'a> {
     pub _marker: PhantomData<&'a ()>,
 }
 impl<'a> AttachmentSampleLocationsEXT<'a> {
+    #[inline]
     pub fn attachment_index(mut self, attachment_index: u32) -> Self {
         self.attachment_index = attachment_index;
         self
     }
+    #[inline]
     pub fn sample_locations_info(
         mut self,
         sample_locations_info: SampleLocationsInfoEXT<'a>,
@@ -13950,10 +15075,12 @@ pub struct SubpassSampleLocationsEXT<'a> {
     pub _marker: PhantomData<&'a ()>,
 }
 impl<'a> SubpassSampleLocationsEXT<'a> {
+    #[inline]
     pub fn subpass_index(mut self, subpass_index: u32) -> Self {
         self.subpass_index = subpass_index;
         self
     }
+    #[inline]
     pub fn sample_locations_info(
         mut self,
         sample_locations_info: SampleLocationsInfoEXT<'a>,
@@ -13990,6 +15117,7 @@ impl ::std::default::Default for RenderPassSampleLocationsBeginInfoEXT<'_> {
 }
 unsafe impl<'a> ExtendsRenderPassBeginInfo for RenderPassSampleLocationsBeginInfoEXT<'a> {}
 impl<'a> RenderPassSampleLocationsBeginInfoEXT<'a> {
+    #[inline]
     pub fn attachment_initial_sample_locations(
         mut self,
         attachment_initial_sample_locations: &'a [AttachmentSampleLocationsEXT],
@@ -13999,6 +15127,7 @@ impl<'a> RenderPassSampleLocationsBeginInfoEXT<'a> {
         self.p_attachment_initial_sample_locations = attachment_initial_sample_locations.as_ptr();
         self
     }
+    #[inline]
     pub fn post_subpass_sample_locations(
         mut self,
         post_subpass_sample_locations: &'a [SubpassSampleLocationsEXT],
@@ -14035,10 +15164,12 @@ unsafe impl<'a> ExtendsPipelineMultisampleStateCreateInfo
 {
 }
 impl<'a> PipelineSampleLocationsStateCreateInfoEXT<'a> {
+    #[inline]
     pub fn sample_locations_enable(mut self, sample_locations_enable: bool) -> Self {
         self.sample_locations_enable = sample_locations_enable.into();
         self
     }
+    #[inline]
     pub fn sample_locations_info(
         mut self,
         sample_locations_info: SampleLocationsInfoEXT<'a>,
@@ -14080,6 +15211,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceProperties2
 {
 }
 impl<'a> PhysicalDeviceSampleLocationsPropertiesEXT<'a> {
+    #[inline]
     pub fn sample_location_sample_counts(
         mut self,
         sample_location_sample_counts: SampleCountFlags,
@@ -14087,6 +15219,7 @@ impl<'a> PhysicalDeviceSampleLocationsPropertiesEXT<'a> {
         self.sample_location_sample_counts = sample_location_sample_counts;
         self
     }
+    #[inline]
     pub fn max_sample_location_grid_size(
         mut self,
         max_sample_location_grid_size: Extent2D,
@@ -14094,6 +15227,7 @@ impl<'a> PhysicalDeviceSampleLocationsPropertiesEXT<'a> {
         self.max_sample_location_grid_size = max_sample_location_grid_size;
         self
     }
+    #[inline]
     pub fn sample_location_coordinate_range(
         mut self,
         sample_location_coordinate_range: [f32; 2],
@@ -14101,10 +15235,12 @@ impl<'a> PhysicalDeviceSampleLocationsPropertiesEXT<'a> {
         self.sample_location_coordinate_range = sample_location_coordinate_range;
         self
     }
+    #[inline]
     pub fn sample_location_sub_pixel_bits(mut self, sample_location_sub_pixel_bits: u32) -> Self {
         self.sample_location_sub_pixel_bits = sample_location_sub_pixel_bits;
         self
     }
+    #[inline]
     pub fn variable_sample_locations(mut self, variable_sample_locations: bool) -> Self {
         self.variable_sample_locations = variable_sample_locations.into();
         self
@@ -14131,6 +15267,7 @@ impl ::std::default::Default for MultisamplePropertiesEXT<'_> {
     }
 }
 impl<'a> MultisamplePropertiesEXT<'a> {
+    #[inline]
     pub fn max_sample_location_grid_size(
         mut self,
         max_sample_location_grid_size: Extent2D,
@@ -14161,6 +15298,7 @@ impl ::std::default::Default for SamplerReductionModeCreateInfo<'_> {
 }
 unsafe impl<'a> ExtendsSamplerCreateInfo for SamplerReductionModeCreateInfo<'a> {}
 impl<'a> SamplerReductionModeCreateInfo<'a> {
+    #[inline]
     pub fn reduction_mode(mut self, reduction_mode: SamplerReductionMode) -> Self {
         self.reduction_mode = reduction_mode;
         self
@@ -14192,6 +15330,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'a> {
+    #[inline]
     pub fn advanced_blend_coherent_operations(
         mut self,
         advanced_blend_coherent_operations: bool,
@@ -14223,6 +15362,7 @@ impl ::std::default::Default for PhysicalDeviceMultiDrawFeaturesEXT<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMultiDrawFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceMultiDrawFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceMultiDrawFeaturesEXT<'a> {
+    #[inline]
     pub fn multi_draw(mut self, multi_draw: bool) -> Self {
         self.multi_draw = multi_draw.into();
         self
@@ -14263,6 +15403,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceProperties2
 {
 }
 impl<'a> PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'a> {
+    #[inline]
     pub fn advanced_blend_max_color_attachments(
         mut self,
         advanced_blend_max_color_attachments: u32,
@@ -14270,6 +15411,7 @@ impl<'a> PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'a> {
         self.advanced_blend_max_color_attachments = advanced_blend_max_color_attachments;
         self
     }
+    #[inline]
     pub fn advanced_blend_independent_blend(
         mut self,
         advanced_blend_independent_blend: bool,
@@ -14277,6 +15419,7 @@ impl<'a> PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'a> {
         self.advanced_blend_independent_blend = advanced_blend_independent_blend.into();
         self
     }
+    #[inline]
     pub fn advanced_blend_non_premultiplied_src_color(
         mut self,
         advanced_blend_non_premultiplied_src_color: bool,
@@ -14285,6 +15428,7 @@ impl<'a> PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'a> {
             advanced_blend_non_premultiplied_src_color.into();
         self
     }
+    #[inline]
     pub fn advanced_blend_non_premultiplied_dst_color(
         mut self,
         advanced_blend_non_premultiplied_dst_color: bool,
@@ -14293,6 +15437,7 @@ impl<'a> PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'a> {
             advanced_blend_non_premultiplied_dst_color.into();
         self
     }
+    #[inline]
     pub fn advanced_blend_correlated_overlap(
         mut self,
         advanced_blend_correlated_overlap: bool,
@@ -14300,6 +15445,7 @@ impl<'a> PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'a> {
         self.advanced_blend_correlated_overlap = advanced_blend_correlated_overlap.into();
         self
     }
+    #[inline]
     pub fn advanced_blend_all_operations(mut self, advanced_blend_all_operations: bool) -> Self {
         self.advanced_blend_all_operations = advanced_blend_all_operations.into();
         self
@@ -14334,14 +15480,17 @@ unsafe impl<'a> ExtendsPipelineColorBlendStateCreateInfo
 {
 }
 impl<'a> PipelineColorBlendAdvancedStateCreateInfoEXT<'a> {
+    #[inline]
     pub fn src_premultiplied(mut self, src_premultiplied: bool) -> Self {
         self.src_premultiplied = src_premultiplied.into();
         self
     }
+    #[inline]
     pub fn dst_premultiplied(mut self, dst_premultiplied: bool) -> Self {
         self.dst_premultiplied = dst_premultiplied.into();
         self
     }
+    #[inline]
     pub fn blend_overlap(mut self, blend_overlap: BlendOverlapEXT) -> Self {
         self.blend_overlap = blend_overlap;
         self
@@ -14372,10 +15521,12 @@ impl ::std::default::Default for PhysicalDeviceInlineUniformBlockFeatures<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceInlineUniformBlockFeatures<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceInlineUniformBlockFeatures<'a> {}
 impl<'a> PhysicalDeviceInlineUniformBlockFeatures<'a> {
+    #[inline]
     pub fn inline_uniform_block(mut self, inline_uniform_block: bool) -> Self {
         self.inline_uniform_block = inline_uniform_block.into();
         self
     }
+    #[inline]
     pub fn descriptor_binding_inline_uniform_block_update_after_bind(
         mut self,
         descriptor_binding_inline_uniform_block_update_after_bind: bool,
@@ -14418,10 +15569,12 @@ unsafe impl<'a> ExtendsPhysicalDeviceProperties2
 {
 }
 impl<'a> PhysicalDeviceInlineUniformBlockProperties<'a> {
+    #[inline]
     pub fn max_inline_uniform_block_size(mut self, max_inline_uniform_block_size: u32) -> Self {
         self.max_inline_uniform_block_size = max_inline_uniform_block_size;
         self
     }
+    #[inline]
     pub fn max_per_stage_descriptor_inline_uniform_blocks(
         mut self,
         max_per_stage_descriptor_inline_uniform_blocks: u32,
@@ -14430,6 +15583,7 @@ impl<'a> PhysicalDeviceInlineUniformBlockProperties<'a> {
             max_per_stage_descriptor_inline_uniform_blocks;
         self
     }
+    #[inline]
     pub fn max_per_stage_descriptor_update_after_bind_inline_uniform_blocks(
         mut self,
         max_per_stage_descriptor_update_after_bind_inline_uniform_blocks: u32,
@@ -14438,6 +15592,7 @@ impl<'a> PhysicalDeviceInlineUniformBlockProperties<'a> {
             max_per_stage_descriptor_update_after_bind_inline_uniform_blocks;
         self
     }
+    #[inline]
     pub fn max_descriptor_set_inline_uniform_blocks(
         mut self,
         max_descriptor_set_inline_uniform_blocks: u32,
@@ -14445,6 +15600,7 @@ impl<'a> PhysicalDeviceInlineUniformBlockProperties<'a> {
         self.max_descriptor_set_inline_uniform_blocks = max_descriptor_set_inline_uniform_blocks;
         self
     }
+    #[inline]
     pub fn max_descriptor_set_update_after_bind_inline_uniform_blocks(
         mut self,
         max_descriptor_set_update_after_bind_inline_uniform_blocks: u32,
@@ -14478,6 +15634,7 @@ impl ::std::default::Default for WriteDescriptorSetInlineUniformBlock<'_> {
 }
 unsafe impl<'a> ExtendsWriteDescriptorSet for WriteDescriptorSetInlineUniformBlock<'a> {}
 impl<'a> WriteDescriptorSetInlineUniformBlock<'a> {
+    #[inline]
     pub fn data(mut self, data: &'a [u8]) -> Self {
         self.data_size = data.len() as _;
         self.p_data = data.as_ptr() as *const c_void;
@@ -14506,6 +15663,7 @@ impl ::std::default::Default for DescriptorPoolInlineUniformBlockCreateInfo<'_> 
 }
 unsafe impl<'a> ExtendsDescriptorPoolCreateInfo for DescriptorPoolInlineUniformBlockCreateInfo<'a> {}
 impl<'a> DescriptorPoolInlineUniformBlockCreateInfo<'a> {
+    #[inline]
     pub fn max_inline_uniform_block_bindings(
         mut self,
         max_inline_uniform_block_bindings: u32,
@@ -14547,10 +15705,12 @@ unsafe impl<'a> ExtendsPipelineMultisampleStateCreateInfo
 {
 }
 impl<'a> PipelineCoverageModulationStateCreateInfoNV<'a> {
+    #[inline]
     pub fn flags(mut self, flags: PipelineCoverageModulationStateCreateFlagsNV) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn coverage_modulation_mode(
         mut self,
         coverage_modulation_mode: CoverageModulationModeNV,
@@ -14558,6 +15718,7 @@ impl<'a> PipelineCoverageModulationStateCreateInfoNV<'a> {
         self.coverage_modulation_mode = coverage_modulation_mode;
         self
     }
+    #[inline]
     pub fn coverage_modulation_table_enable(
         mut self,
         coverage_modulation_table_enable: bool,
@@ -14565,6 +15726,7 @@ impl<'a> PipelineCoverageModulationStateCreateInfoNV<'a> {
         self.coverage_modulation_table_enable = coverage_modulation_table_enable.into();
         self
     }
+    #[inline]
     pub fn coverage_modulation_table(mut self, coverage_modulation_table: &'a [f32]) -> Self {
         self.coverage_modulation_table_count = coverage_modulation_table.len() as _;
         self.p_coverage_modulation_table = coverage_modulation_table.as_ptr();
@@ -14597,6 +15759,7 @@ unsafe impl<'a> ExtendsImageCreateInfo for ImageFormatListCreateInfo<'a> {}
 unsafe impl<'a> ExtendsSwapchainCreateInfoKHR for ImageFormatListCreateInfo<'a> {}
 unsafe impl<'a> ExtendsPhysicalDeviceImageFormatInfo2 for ImageFormatListCreateInfo<'a> {}
 impl<'a> ImageFormatListCreateInfo<'a> {
+    #[inline]
     pub fn view_formats(mut self, view_formats: &'a [Format]) -> Self {
         self.view_format_count = view_formats.len() as _;
         self.p_view_formats = view_formats.as_ptr();
@@ -14628,10 +15791,12 @@ impl ::std::default::Default for ValidationCacheCreateInfoEXT<'_> {
     }
 }
 impl<'a> ValidationCacheCreateInfoEXT<'a> {
+    #[inline]
     pub fn flags(mut self, flags: ValidationCacheCreateFlagsEXT) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn initial_data(mut self, initial_data: &'a [u8]) -> Self {
         self.initial_data_size = initial_data.len();
         self.p_initial_data = initial_data.as_ptr() as *const c_void;
@@ -14660,6 +15825,7 @@ impl ::std::default::Default for ShaderModuleValidationCacheCreateInfoEXT<'_> {
 }
 unsafe impl<'a> ExtendsShaderModuleCreateInfo for ShaderModuleValidationCacheCreateInfoEXT<'a> {}
 impl<'a> ShaderModuleValidationCacheCreateInfoEXT<'a> {
+    #[inline]
     pub fn validation_cache(mut self, validation_cache: ValidationCacheEXT) -> Self {
         self.validation_cache = validation_cache;
         self
@@ -14689,10 +15855,12 @@ impl ::std::default::Default for PhysicalDeviceMaintenance3Properties<'_> {
 }
 unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMaintenance3Properties<'a> {}
 impl<'a> PhysicalDeviceMaintenance3Properties<'a> {
+    #[inline]
     pub fn max_per_set_descriptors(mut self, max_per_set_descriptors: u32) -> Self {
         self.max_per_set_descriptors = max_per_set_descriptors;
         self
     }
+    #[inline]
     pub fn max_memory_allocation_size(mut self, max_memory_allocation_size: DeviceSize) -> Self {
         self.max_memory_allocation_size = max_memory_allocation_size;
         self
@@ -14721,6 +15889,7 @@ impl ::std::default::Default for PhysicalDeviceMaintenance4Features<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMaintenance4Features<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceMaintenance4Features<'a> {}
 impl<'a> PhysicalDeviceMaintenance4Features<'a> {
+    #[inline]
     pub fn maintenance4(mut self, maintenance4: bool) -> Self {
         self.maintenance4 = maintenance4.into();
         self
@@ -14748,6 +15917,7 @@ impl ::std::default::Default for PhysicalDeviceMaintenance4Properties<'_> {
 }
 unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMaintenance4Properties<'a> {}
 impl<'a> PhysicalDeviceMaintenance4Properties<'a> {
+    #[inline]
     pub fn max_buffer_size(mut self, max_buffer_size: DeviceSize) -> Self {
         self.max_buffer_size = max_buffer_size;
         self
@@ -14775,6 +15945,7 @@ impl ::std::default::Default for DescriptorSetLayoutSupport<'_> {
 }
 pub unsafe trait ExtendsDescriptorSetLayoutSupport {}
 impl<'a> DescriptorSetLayoutSupport<'a> {
+    #[inline]
     pub fn supported(mut self, supported: bool) -> Self {
         self.supported = supported.into();
         self
@@ -14817,6 +15988,7 @@ impl ::std::default::Default for PhysicalDeviceShaderDrawParametersFeatures<'_> 
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderDrawParametersFeatures<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceShaderDrawParametersFeatures<'a> {}
 impl<'a> PhysicalDeviceShaderDrawParametersFeatures<'a> {
+    #[inline]
     pub fn shader_draw_parameters(mut self, shader_draw_parameters: bool) -> Self {
         self.shader_draw_parameters = shader_draw_parameters.into();
         self
@@ -14847,10 +16019,12 @@ impl ::std::default::Default for PhysicalDeviceShaderFloat16Int8Features<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderFloat16Int8Features<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceShaderFloat16Int8Features<'a> {}
 impl<'a> PhysicalDeviceShaderFloat16Int8Features<'a> {
+    #[inline]
     pub fn shader_float16(mut self, shader_float16: bool) -> Self {
         self.shader_float16 = shader_float16.into();
         self
     }
+    #[inline]
     pub fn shader_int8(mut self, shader_int8: bool) -> Self {
         self.shader_int8 = shader_int8.into();
         self
@@ -14910,6 +16084,7 @@ impl ::std::default::Default for PhysicalDeviceFloatControlsProperties<'_> {
 }
 unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceFloatControlsProperties<'a> {}
 impl<'a> PhysicalDeviceFloatControlsProperties<'a> {
+    #[inline]
     pub fn denorm_behavior_independence(
         mut self,
         denorm_behavior_independence: ShaderFloatControlsIndependence,
@@ -14917,6 +16092,7 @@ impl<'a> PhysicalDeviceFloatControlsProperties<'a> {
         self.denorm_behavior_independence = denorm_behavior_independence;
         self
     }
+    #[inline]
     pub fn rounding_mode_independence(
         mut self,
         rounding_mode_independence: ShaderFloatControlsIndependence,
@@ -14924,6 +16100,7 @@ impl<'a> PhysicalDeviceFloatControlsProperties<'a> {
         self.rounding_mode_independence = rounding_mode_independence;
         self
     }
+    #[inline]
     pub fn shader_signed_zero_inf_nan_preserve_float16(
         mut self,
         shader_signed_zero_inf_nan_preserve_float16: bool,
@@ -14932,6 +16109,7 @@ impl<'a> PhysicalDeviceFloatControlsProperties<'a> {
             shader_signed_zero_inf_nan_preserve_float16.into();
         self
     }
+    #[inline]
     pub fn shader_signed_zero_inf_nan_preserve_float32(
         mut self,
         shader_signed_zero_inf_nan_preserve_float32: bool,
@@ -14940,6 +16118,7 @@ impl<'a> PhysicalDeviceFloatControlsProperties<'a> {
             shader_signed_zero_inf_nan_preserve_float32.into();
         self
     }
+    #[inline]
     pub fn shader_signed_zero_inf_nan_preserve_float64(
         mut self,
         shader_signed_zero_inf_nan_preserve_float64: bool,
@@ -14948,18 +16127,22 @@ impl<'a> PhysicalDeviceFloatControlsProperties<'a> {
             shader_signed_zero_inf_nan_preserve_float64.into();
         self
     }
+    #[inline]
     pub fn shader_denorm_preserve_float16(mut self, shader_denorm_preserve_float16: bool) -> Self {
         self.shader_denorm_preserve_float16 = shader_denorm_preserve_float16.into();
         self
     }
+    #[inline]
     pub fn shader_denorm_preserve_float32(mut self, shader_denorm_preserve_float32: bool) -> Self {
         self.shader_denorm_preserve_float32 = shader_denorm_preserve_float32.into();
         self
     }
+    #[inline]
     pub fn shader_denorm_preserve_float64(mut self, shader_denorm_preserve_float64: bool) -> Self {
         self.shader_denorm_preserve_float64 = shader_denorm_preserve_float64.into();
         self
     }
+    #[inline]
     pub fn shader_denorm_flush_to_zero_float16(
         mut self,
         shader_denorm_flush_to_zero_float16: bool,
@@ -14967,6 +16150,7 @@ impl<'a> PhysicalDeviceFloatControlsProperties<'a> {
         self.shader_denorm_flush_to_zero_float16 = shader_denorm_flush_to_zero_float16.into();
         self
     }
+    #[inline]
     pub fn shader_denorm_flush_to_zero_float32(
         mut self,
         shader_denorm_flush_to_zero_float32: bool,
@@ -14974,6 +16158,7 @@ impl<'a> PhysicalDeviceFloatControlsProperties<'a> {
         self.shader_denorm_flush_to_zero_float32 = shader_denorm_flush_to_zero_float32.into();
         self
     }
+    #[inline]
     pub fn shader_denorm_flush_to_zero_float64(
         mut self,
         shader_denorm_flush_to_zero_float64: bool,
@@ -14981,6 +16166,7 @@ impl<'a> PhysicalDeviceFloatControlsProperties<'a> {
         self.shader_denorm_flush_to_zero_float64 = shader_denorm_flush_to_zero_float64.into();
         self
     }
+    #[inline]
     pub fn shader_rounding_mode_rte_float16(
         mut self,
         shader_rounding_mode_rte_float16: bool,
@@ -14988,6 +16174,7 @@ impl<'a> PhysicalDeviceFloatControlsProperties<'a> {
         self.shader_rounding_mode_rte_float16 = shader_rounding_mode_rte_float16.into();
         self
     }
+    #[inline]
     pub fn shader_rounding_mode_rte_float32(
         mut self,
         shader_rounding_mode_rte_float32: bool,
@@ -14995,6 +16182,7 @@ impl<'a> PhysicalDeviceFloatControlsProperties<'a> {
         self.shader_rounding_mode_rte_float32 = shader_rounding_mode_rte_float32.into();
         self
     }
+    #[inline]
     pub fn shader_rounding_mode_rte_float64(
         mut self,
         shader_rounding_mode_rte_float64: bool,
@@ -15002,6 +16190,7 @@ impl<'a> PhysicalDeviceFloatControlsProperties<'a> {
         self.shader_rounding_mode_rte_float64 = shader_rounding_mode_rte_float64.into();
         self
     }
+    #[inline]
     pub fn shader_rounding_mode_rtz_float16(
         mut self,
         shader_rounding_mode_rtz_float16: bool,
@@ -15009,6 +16198,7 @@ impl<'a> PhysicalDeviceFloatControlsProperties<'a> {
         self.shader_rounding_mode_rtz_float16 = shader_rounding_mode_rtz_float16.into();
         self
     }
+    #[inline]
     pub fn shader_rounding_mode_rtz_float32(
         mut self,
         shader_rounding_mode_rtz_float32: bool,
@@ -15016,6 +16206,7 @@ impl<'a> PhysicalDeviceFloatControlsProperties<'a> {
         self.shader_rounding_mode_rtz_float32 = shader_rounding_mode_rtz_float32.into();
         self
     }
+    #[inline]
     pub fn shader_rounding_mode_rtz_float64(
         mut self,
         shader_rounding_mode_rtz_float64: bool,
@@ -15047,6 +16238,7 @@ impl ::std::default::Default for PhysicalDeviceHostQueryResetFeatures<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceHostQueryResetFeatures<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceHostQueryResetFeatures<'a> {}
 impl<'a> PhysicalDeviceHostQueryResetFeatures<'a> {
+    #[inline]
     pub fn host_query_reset(mut self, host_query_reset: bool) -> Self {
         self.host_query_reset = host_query_reset.into();
         self
@@ -15061,10 +16253,12 @@ pub struct NativeBufferUsage2ANDROID {
     pub producer: u64,
 }
 impl NativeBufferUsage2ANDROID {
+    #[inline]
     pub fn consumer(mut self, consumer: u64) -> Self {
         self.consumer = consumer;
         self
     }
+    #[inline]
     pub fn producer(mut self, producer: u64) -> Self {
         self.producer = producer;
         self
@@ -15099,22 +16293,27 @@ impl ::std::default::Default for NativeBufferANDROID<'_> {
     }
 }
 impl<'a> NativeBufferANDROID<'a> {
+    #[inline]
     pub fn handle(mut self, handle: *const c_void) -> Self {
         self.handle = handle;
         self
     }
+    #[inline]
     pub fn stride(mut self, stride: c_int) -> Self {
         self.stride = stride;
         self
     }
+    #[inline]
     pub fn format(mut self, format: c_int) -> Self {
         self.format = format;
         self
     }
+    #[inline]
     pub fn usage(mut self, usage: c_int) -> Self {
         self.usage = usage;
         self
     }
+    #[inline]
     pub fn usage2(mut self, usage2: NativeBufferUsage2ANDROID) -> Self {
         self.usage2 = usage2;
         self
@@ -15141,6 +16340,7 @@ impl ::std::default::Default for SwapchainImageCreateInfoANDROID<'_> {
     }
 }
 impl<'a> SwapchainImageCreateInfoANDROID<'a> {
+    #[inline]
     pub fn usage(mut self, usage: SwapchainImageUsageFlagsANDROID) -> Self {
         self.usage = usage;
         self
@@ -15167,6 +16367,7 @@ impl ::std::default::Default for PhysicalDevicePresentationPropertiesANDROID<'_>
     }
 }
 impl<'a> PhysicalDevicePresentationPropertiesANDROID<'a> {
+    #[inline]
     pub fn shared_image(mut self, shared_image: bool) -> Self {
         self.shared_image = shared_image.into();
         self
@@ -15184,22 +16385,27 @@ pub struct ShaderResourceUsageAMD {
     pub scratch_mem_usage_in_bytes: usize,
 }
 impl ShaderResourceUsageAMD {
+    #[inline]
     pub fn num_used_vgprs(mut self, num_used_vgprs: u32) -> Self {
         self.num_used_vgprs = num_used_vgprs;
         self
     }
+    #[inline]
     pub fn num_used_sgprs(mut self, num_used_sgprs: u32) -> Self {
         self.num_used_sgprs = num_used_sgprs;
         self
     }
+    #[inline]
     pub fn lds_size_per_local_work_group(mut self, lds_size_per_local_work_group: u32) -> Self {
         self.lds_size_per_local_work_group = lds_size_per_local_work_group;
         self
     }
+    #[inline]
     pub fn lds_usage_size_in_bytes(mut self, lds_usage_size_in_bytes: usize) -> Self {
         self.lds_usage_size_in_bytes = lds_usage_size_in_bytes;
         self
     }
+    #[inline]
     pub fn scratch_mem_usage_in_bytes(mut self, scratch_mem_usage_in_bytes: usize) -> Self {
         self.scratch_mem_usage_in_bytes = scratch_mem_usage_in_bytes;
         self
@@ -15232,30 +16438,37 @@ impl ::std::default::Default for ShaderStatisticsInfoAMD {
     }
 }
 impl ShaderStatisticsInfoAMD {
+    #[inline]
     pub fn shader_stage_mask(mut self, shader_stage_mask: ShaderStageFlags) -> Self {
         self.shader_stage_mask = shader_stage_mask;
         self
     }
+    #[inline]
     pub fn resource_usage(mut self, resource_usage: ShaderResourceUsageAMD) -> Self {
         self.resource_usage = resource_usage;
         self
     }
+    #[inline]
     pub fn num_physical_vgprs(mut self, num_physical_vgprs: u32) -> Self {
         self.num_physical_vgprs = num_physical_vgprs;
         self
     }
+    #[inline]
     pub fn num_physical_sgprs(mut self, num_physical_sgprs: u32) -> Self {
         self.num_physical_sgprs = num_physical_sgprs;
         self
     }
+    #[inline]
     pub fn num_available_vgprs(mut self, num_available_vgprs: u32) -> Self {
         self.num_available_vgprs = num_available_vgprs;
         self
     }
+    #[inline]
     pub fn num_available_sgprs(mut self, num_available_sgprs: u32) -> Self {
         self.num_available_sgprs = num_available_sgprs;
         self
     }
+    #[inline]
     pub fn compute_work_group_size(mut self, compute_work_group_size: [u32; 3]) -> Self {
         self.compute_work_group_size = compute_work_group_size;
         self
@@ -15283,6 +16496,7 @@ impl ::std::default::Default for DeviceQueueGlobalPriorityCreateInfoKHR<'_> {
 }
 unsafe impl<'a> ExtendsDeviceQueueCreateInfo for DeviceQueueGlobalPriorityCreateInfoKHR<'a> {}
 impl<'a> DeviceQueueGlobalPriorityCreateInfoKHR<'a> {
+    #[inline]
     pub fn global_priority(mut self, global_priority: QueueGlobalPriorityKHR) -> Self {
         self.global_priority = global_priority;
         self
@@ -15314,6 +16528,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceGlobalPriorityQueryFeaturesKHR<'a> {}
 impl<'a> PhysicalDeviceGlobalPriorityQueryFeaturesKHR<'a> {
+    #[inline]
     pub fn global_priority_query(mut self, global_priority_query: bool) -> Self {
         self.global_priority_query = global_priority_query.into();
         self
@@ -15343,10 +16558,12 @@ impl ::std::default::Default for QueueFamilyGlobalPriorityPropertiesKHR<'_> {
 }
 unsafe impl<'a> ExtendsQueueFamilyProperties2 for QueueFamilyGlobalPriorityPropertiesKHR<'a> {}
 impl<'a> QueueFamilyGlobalPriorityPropertiesKHR<'a> {
+    #[inline]
     pub fn priority_count(mut self, priority_count: u32) -> Self {
         self.priority_count = priority_count;
         self
     }
+    #[inline]
     pub fn priorities(
         mut self,
         priorities: [QueueGlobalPriorityKHR; MAX_GLOBAL_PRIORITY_SIZE_KHR],
@@ -15380,14 +16597,17 @@ impl ::std::default::Default for DebugUtilsObjectNameInfoEXT<'_> {
     }
 }
 impl<'a> DebugUtilsObjectNameInfoEXT<'a> {
+    #[inline]
     pub fn object_type(mut self, object_type: ObjectType) -> Self {
         self.object_type = object_type;
         self
     }
+    #[inline]
     pub fn object_handle(mut self, object_handle: u64) -> Self {
         self.object_handle = object_handle;
         self
     }
+    #[inline]
     pub fn object_name(mut self, object_name: &'a ::std::ffi::CStr) -> Self {
         self.p_object_name = object_name.as_ptr();
         self
@@ -15422,18 +16642,22 @@ impl ::std::default::Default for DebugUtilsObjectTagInfoEXT<'_> {
     }
 }
 impl<'a> DebugUtilsObjectTagInfoEXT<'a> {
+    #[inline]
     pub fn object_type(mut self, object_type: ObjectType) -> Self {
         self.object_type = object_type;
         self
     }
+    #[inline]
     pub fn object_handle(mut self, object_handle: u64) -> Self {
         self.object_handle = object_handle;
         self
     }
+    #[inline]
     pub fn tag_name(mut self, tag_name: u64) -> Self {
         self.tag_name = tag_name;
         self
     }
+    #[inline]
     pub fn tag(mut self, tag: &'a [u8]) -> Self {
         self.tag_size = tag.len();
         self.p_tag = tag.as_ptr() as *const c_void;
@@ -15463,10 +16687,12 @@ impl ::std::default::Default for DebugUtilsLabelEXT<'_> {
     }
 }
 impl<'a> DebugUtilsLabelEXT<'a> {
+    #[inline]
     pub fn label_name(mut self, label_name: &'a ::std::ffi::CStr) -> Self {
         self.p_label_name = label_name.as_ptr();
         self
     }
+    #[inline]
     pub fn color(mut self, color: [f32; 4]) -> Self {
         self.color = color;
         self
@@ -15518,18 +16744,22 @@ impl ::std::default::Default for DebugUtilsMessengerCreateInfoEXT<'_> {
 }
 unsafe impl<'a> ExtendsInstanceCreateInfo for DebugUtilsMessengerCreateInfoEXT<'a> {}
 impl<'a> DebugUtilsMessengerCreateInfoEXT<'a> {
+    #[inline]
     pub fn flags(mut self, flags: DebugUtilsMessengerCreateFlagsEXT) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn message_severity(mut self, message_severity: DebugUtilsMessageSeverityFlagsEXT) -> Self {
         self.message_severity = message_severity;
         self
     }
+    #[inline]
     pub fn message_type(mut self, message_type: DebugUtilsMessageTypeFlagsEXT) -> Self {
         self.message_type = message_type;
         self
     }
+    #[inline]
     pub fn pfn_user_callback(
         mut self,
         pfn_user_callback: PFN_vkDebugUtilsMessengerCallbackEXT,
@@ -15537,6 +16767,7 @@ impl<'a> DebugUtilsMessengerCreateInfoEXT<'a> {
         self.pfn_user_callback = pfn_user_callback;
         self
     }
+    #[inline]
     pub fn user_data(mut self, user_data: *mut c_void) -> Self {
         self.p_user_data = user_data;
         self
@@ -15581,32 +16812,39 @@ impl ::std::default::Default for DebugUtilsMessengerCallbackDataEXT<'_> {
     }
 }
 impl<'a> DebugUtilsMessengerCallbackDataEXT<'a> {
+    #[inline]
     pub fn flags(mut self, flags: DebugUtilsMessengerCallbackDataFlagsEXT) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn message_id_name(mut self, message_id_name: &'a ::std::ffi::CStr) -> Self {
         self.p_message_id_name = message_id_name.as_ptr();
         self
     }
+    #[inline]
     pub fn message_id_number(mut self, message_id_number: i32) -> Self {
         self.message_id_number = message_id_number;
         self
     }
+    #[inline]
     pub fn message(mut self, message: &'a ::std::ffi::CStr) -> Self {
         self.p_message = message.as_ptr();
         self
     }
+    #[inline]
     pub fn queue_labels(mut self, queue_labels: &'a [DebugUtilsLabelEXT]) -> Self {
         self.queue_label_count = queue_labels.len() as _;
         self.p_queue_labels = queue_labels.as_ptr();
         self
     }
+    #[inline]
     pub fn cmd_buf_labels(mut self, cmd_buf_labels: &'a [DebugUtilsLabelEXT]) -> Self {
         self.cmd_buf_label_count = cmd_buf_labels.len() as _;
         self.p_cmd_buf_labels = cmd_buf_labels.as_ptr();
         self
     }
+    #[inline]
     pub fn objects(mut self, objects: &'a [DebugUtilsObjectNameInfoEXT]) -> Self {
         self.object_count = objects.len() as _;
         self.p_objects = objects.as_ptr();
@@ -15636,6 +16874,7 @@ impl ::std::default::Default for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'_>
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceDeviceMemoryReportFeaturesEXT<'a> {
+    #[inline]
     pub fn device_memory_report(mut self, device_memory_report: bool) -> Self {
         self.device_memory_report = device_memory_report.into();
         self
@@ -15681,10 +16920,12 @@ impl ::std::default::Default for DeviceDeviceMemoryReportCreateInfoEXT<'_> {
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for DeviceDeviceMemoryReportCreateInfoEXT<'a> {}
 impl<'a> DeviceDeviceMemoryReportCreateInfoEXT<'a> {
+    #[inline]
     pub fn flags(mut self, flags: DeviceMemoryReportFlagsEXT) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn pfn_user_callback(
         mut self,
         pfn_user_callback: PFN_vkDeviceMemoryReportCallbackEXT,
@@ -15692,6 +16933,7 @@ impl<'a> DeviceDeviceMemoryReportCreateInfoEXT<'a> {
         self.pfn_user_callback = pfn_user_callback;
         self
     }
+    #[inline]
     pub fn user_data(mut self, user_data: *mut c_void) -> Self {
         self.p_user_data = user_data;
         self
@@ -15730,30 +16972,37 @@ impl ::std::default::Default for DeviceMemoryReportCallbackDataEXT<'_> {
     }
 }
 impl<'a> DeviceMemoryReportCallbackDataEXT<'a> {
+    #[inline]
     pub fn flags(mut self, flags: DeviceMemoryReportFlagsEXT) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn ty(mut self, ty: DeviceMemoryReportEventTypeEXT) -> Self {
         self.ty = ty;
         self
     }
+    #[inline]
     pub fn memory_object_id(mut self, memory_object_id: u64) -> Self {
         self.memory_object_id = memory_object_id;
         self
     }
+    #[inline]
     pub fn size(mut self, size: DeviceSize) -> Self {
         self.size = size;
         self
     }
+    #[inline]
     pub fn object_type(mut self, object_type: ObjectType) -> Self {
         self.object_type = object_type;
         self
     }
+    #[inline]
     pub fn object_handle(mut self, object_handle: u64) -> Self {
         self.object_handle = object_handle;
         self
     }
+    #[inline]
     pub fn heap_index(mut self, heap_index: u32) -> Self {
         self.heap_index = heap_index;
         self
@@ -15783,10 +17032,12 @@ impl ::std::default::Default for ImportMemoryHostPointerInfoEXT<'_> {
 }
 unsafe impl<'a> ExtendsMemoryAllocateInfo for ImportMemoryHostPointerInfoEXT<'a> {}
 impl<'a> ImportMemoryHostPointerInfoEXT<'a> {
+    #[inline]
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
         self.handle_type = handle_type;
         self
     }
+    #[inline]
     pub fn host_pointer(mut self, host_pointer: *mut c_void) -> Self {
         self.p_host_pointer = host_pointer;
         self
@@ -15813,6 +17064,7 @@ impl ::std::default::Default for MemoryHostPointerPropertiesEXT<'_> {
     }
 }
 impl<'a> MemoryHostPointerPropertiesEXT<'a> {
+    #[inline]
     pub fn memory_type_bits(mut self, memory_type_bits: u32) -> Self {
         self.memory_type_bits = memory_type_bits;
         self
@@ -15843,6 +17095,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceProperties2
 {
 }
 impl<'a> PhysicalDeviceExternalMemoryHostPropertiesEXT<'a> {
+    #[inline]
     pub fn min_imported_host_pointer_alignment(
         mut self,
         min_imported_host_pointer_alignment: DeviceSize,
@@ -15892,10 +17145,12 @@ unsafe impl<'a> ExtendsPhysicalDeviceProperties2
 {
 }
 impl<'a> PhysicalDeviceConservativeRasterizationPropertiesEXT<'a> {
+    #[inline]
     pub fn primitive_overestimation_size(mut self, primitive_overestimation_size: f32) -> Self {
         self.primitive_overestimation_size = primitive_overestimation_size;
         self
     }
+    #[inline]
     pub fn max_extra_primitive_overestimation_size(
         mut self,
         max_extra_primitive_overestimation_size: f32,
@@ -15903,6 +17158,7 @@ impl<'a> PhysicalDeviceConservativeRasterizationPropertiesEXT<'a> {
         self.max_extra_primitive_overestimation_size = max_extra_primitive_overestimation_size;
         self
     }
+    #[inline]
     pub fn extra_primitive_overestimation_size_granularity(
         mut self,
         extra_primitive_overestimation_size_granularity: f32,
@@ -15911,10 +17167,12 @@ impl<'a> PhysicalDeviceConservativeRasterizationPropertiesEXT<'a> {
             extra_primitive_overestimation_size_granularity;
         self
     }
+    #[inline]
     pub fn primitive_underestimation(mut self, primitive_underestimation: bool) -> Self {
         self.primitive_underestimation = primitive_underestimation.into();
         self
     }
+    #[inline]
     pub fn conservative_point_and_line_rasterization(
         mut self,
         conservative_point_and_line_rasterization: bool,
@@ -15923,6 +17181,7 @@ impl<'a> PhysicalDeviceConservativeRasterizationPropertiesEXT<'a> {
             conservative_point_and_line_rasterization.into();
         self
     }
+    #[inline]
     pub fn degenerate_triangles_rasterized(
         mut self,
         degenerate_triangles_rasterized: bool,
@@ -15930,10 +17189,12 @@ impl<'a> PhysicalDeviceConservativeRasterizationPropertiesEXT<'a> {
         self.degenerate_triangles_rasterized = degenerate_triangles_rasterized.into();
         self
     }
+    #[inline]
     pub fn degenerate_lines_rasterized(mut self, degenerate_lines_rasterized: bool) -> Self {
         self.degenerate_lines_rasterized = degenerate_lines_rasterized.into();
         self
     }
+    #[inline]
     pub fn fully_covered_fragment_shader_input_variable(
         mut self,
         fully_covered_fragment_shader_input_variable: bool,
@@ -15942,6 +17203,7 @@ impl<'a> PhysicalDeviceConservativeRasterizationPropertiesEXT<'a> {
             fully_covered_fragment_shader_input_variable.into();
         self
     }
+    #[inline]
     pub fn conservative_rasterization_post_depth_coverage(
         mut self,
         conservative_rasterization_post_depth_coverage: bool,
@@ -15972,6 +17234,7 @@ impl ::std::default::Default for CalibratedTimestampInfoEXT<'_> {
     }
 }
 impl<'a> CalibratedTimestampInfoEXT<'a> {
+    #[inline]
     pub fn time_domain(mut self, time_domain: TimeDomainEXT) -> Self {
         self.time_domain = time_domain;
         self
@@ -16025,58 +17288,72 @@ impl ::std::default::Default for PhysicalDeviceShaderCorePropertiesAMD<'_> {
 }
 unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderCorePropertiesAMD<'a> {}
 impl<'a> PhysicalDeviceShaderCorePropertiesAMD<'a> {
+    #[inline]
     pub fn shader_engine_count(mut self, shader_engine_count: u32) -> Self {
         self.shader_engine_count = shader_engine_count;
         self
     }
+    #[inline]
     pub fn shader_arrays_per_engine_count(mut self, shader_arrays_per_engine_count: u32) -> Self {
         self.shader_arrays_per_engine_count = shader_arrays_per_engine_count;
         self
     }
+    #[inline]
     pub fn compute_units_per_shader_array(mut self, compute_units_per_shader_array: u32) -> Self {
         self.compute_units_per_shader_array = compute_units_per_shader_array;
         self
     }
+    #[inline]
     pub fn simd_per_compute_unit(mut self, simd_per_compute_unit: u32) -> Self {
         self.simd_per_compute_unit = simd_per_compute_unit;
         self
     }
+    #[inline]
     pub fn wavefronts_per_simd(mut self, wavefronts_per_simd: u32) -> Self {
         self.wavefronts_per_simd = wavefronts_per_simd;
         self
     }
+    #[inline]
     pub fn wavefront_size(mut self, wavefront_size: u32) -> Self {
         self.wavefront_size = wavefront_size;
         self
     }
+    #[inline]
     pub fn sgprs_per_simd(mut self, sgprs_per_simd: u32) -> Self {
         self.sgprs_per_simd = sgprs_per_simd;
         self
     }
+    #[inline]
     pub fn min_sgpr_allocation(mut self, min_sgpr_allocation: u32) -> Self {
         self.min_sgpr_allocation = min_sgpr_allocation;
         self
     }
+    #[inline]
     pub fn max_sgpr_allocation(mut self, max_sgpr_allocation: u32) -> Self {
         self.max_sgpr_allocation = max_sgpr_allocation;
         self
     }
+    #[inline]
     pub fn sgpr_allocation_granularity(mut self, sgpr_allocation_granularity: u32) -> Self {
         self.sgpr_allocation_granularity = sgpr_allocation_granularity;
         self
     }
+    #[inline]
     pub fn vgprs_per_simd(mut self, vgprs_per_simd: u32) -> Self {
         self.vgprs_per_simd = vgprs_per_simd;
         self
     }
+    #[inline]
     pub fn min_vgpr_allocation(mut self, min_vgpr_allocation: u32) -> Self {
         self.min_vgpr_allocation = min_vgpr_allocation;
         self
     }
+    #[inline]
     pub fn max_vgpr_allocation(mut self, max_vgpr_allocation: u32) -> Self {
         self.max_vgpr_allocation = max_vgpr_allocation;
         self
     }
+    #[inline]
     pub fn vgpr_allocation_granularity(mut self, vgpr_allocation_granularity: u32) -> Self {
         self.vgpr_allocation_granularity = vgpr_allocation_granularity;
         self
@@ -16106,6 +17383,7 @@ impl ::std::default::Default for PhysicalDeviceShaderCoreProperties2AMD<'_> {
 }
 unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderCoreProperties2AMD<'a> {}
 impl<'a> PhysicalDeviceShaderCoreProperties2AMD<'a> {
+    #[inline]
     pub fn shader_core_features(
         mut self,
         shader_core_features: ShaderCorePropertiesFlagsAMD,
@@ -16113,6 +17391,7 @@ impl<'a> PhysicalDeviceShaderCoreProperties2AMD<'a> {
         self.shader_core_features = shader_core_features;
         self
     }
+    #[inline]
     pub fn active_compute_unit_count(mut self, active_compute_unit_count: u32) -> Self {
         self.active_compute_unit_count = active_compute_unit_count;
         self
@@ -16147,10 +17426,12 @@ unsafe impl<'a> ExtendsPipelineRasterizationStateCreateInfo
 {
 }
 impl<'a> PipelineRasterizationConservativeStateCreateInfoEXT<'a> {
+    #[inline]
     pub fn flags(mut self, flags: PipelineRasterizationConservativeStateCreateFlagsEXT) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn conservative_rasterization_mode(
         mut self,
         conservative_rasterization_mode: ConservativeRasterizationModeEXT,
@@ -16158,6 +17439,7 @@ impl<'a> PipelineRasterizationConservativeStateCreateInfoEXT<'a> {
         self.conservative_rasterization_mode = conservative_rasterization_mode;
         self
     }
+    #[inline]
     pub fn extra_primitive_overestimation_size(
         mut self,
         extra_primitive_overestimation_size: f32,
@@ -16227,6 +17509,7 @@ impl ::std::default::Default for PhysicalDeviceDescriptorIndexingFeatures<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDescriptorIndexingFeatures<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceDescriptorIndexingFeatures<'a> {}
 impl<'a> PhysicalDeviceDescriptorIndexingFeatures<'a> {
+    #[inline]
     pub fn shader_input_attachment_array_dynamic_indexing(
         mut self,
         shader_input_attachment_array_dynamic_indexing: bool,
@@ -16235,6 +17518,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingFeatures<'a> {
             shader_input_attachment_array_dynamic_indexing.into();
         self
     }
+    #[inline]
     pub fn shader_uniform_texel_buffer_array_dynamic_indexing(
         mut self,
         shader_uniform_texel_buffer_array_dynamic_indexing: bool,
@@ -16243,6 +17527,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingFeatures<'a> {
             shader_uniform_texel_buffer_array_dynamic_indexing.into();
         self
     }
+    #[inline]
     pub fn shader_storage_texel_buffer_array_dynamic_indexing(
         mut self,
         shader_storage_texel_buffer_array_dynamic_indexing: bool,
@@ -16251,6 +17536,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingFeatures<'a> {
             shader_storage_texel_buffer_array_dynamic_indexing.into();
         self
     }
+    #[inline]
     pub fn shader_uniform_buffer_array_non_uniform_indexing(
         mut self,
         shader_uniform_buffer_array_non_uniform_indexing: bool,
@@ -16259,6 +17545,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingFeatures<'a> {
             shader_uniform_buffer_array_non_uniform_indexing.into();
         self
     }
+    #[inline]
     pub fn shader_sampled_image_array_non_uniform_indexing(
         mut self,
         shader_sampled_image_array_non_uniform_indexing: bool,
@@ -16267,6 +17554,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingFeatures<'a> {
             shader_sampled_image_array_non_uniform_indexing.into();
         self
     }
+    #[inline]
     pub fn shader_storage_buffer_array_non_uniform_indexing(
         mut self,
         shader_storage_buffer_array_non_uniform_indexing: bool,
@@ -16275,6 +17563,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingFeatures<'a> {
             shader_storage_buffer_array_non_uniform_indexing.into();
         self
     }
+    #[inline]
     pub fn shader_storage_image_array_non_uniform_indexing(
         mut self,
         shader_storage_image_array_non_uniform_indexing: bool,
@@ -16283,6 +17572,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingFeatures<'a> {
             shader_storage_image_array_non_uniform_indexing.into();
         self
     }
+    #[inline]
     pub fn shader_input_attachment_array_non_uniform_indexing(
         mut self,
         shader_input_attachment_array_non_uniform_indexing: bool,
@@ -16291,6 +17581,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingFeatures<'a> {
             shader_input_attachment_array_non_uniform_indexing.into();
         self
     }
+    #[inline]
     pub fn shader_uniform_texel_buffer_array_non_uniform_indexing(
         mut self,
         shader_uniform_texel_buffer_array_non_uniform_indexing: bool,
@@ -16299,6 +17590,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingFeatures<'a> {
             shader_uniform_texel_buffer_array_non_uniform_indexing.into();
         self
     }
+    #[inline]
     pub fn shader_storage_texel_buffer_array_non_uniform_indexing(
         mut self,
         shader_storage_texel_buffer_array_non_uniform_indexing: bool,
@@ -16307,6 +17599,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingFeatures<'a> {
             shader_storage_texel_buffer_array_non_uniform_indexing.into();
         self
     }
+    #[inline]
     pub fn descriptor_binding_uniform_buffer_update_after_bind(
         mut self,
         descriptor_binding_uniform_buffer_update_after_bind: bool,
@@ -16315,6 +17608,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingFeatures<'a> {
             descriptor_binding_uniform_buffer_update_after_bind.into();
         self
     }
+    #[inline]
     pub fn descriptor_binding_sampled_image_update_after_bind(
         mut self,
         descriptor_binding_sampled_image_update_after_bind: bool,
@@ -16323,6 +17617,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingFeatures<'a> {
             descriptor_binding_sampled_image_update_after_bind.into();
         self
     }
+    #[inline]
     pub fn descriptor_binding_storage_image_update_after_bind(
         mut self,
         descriptor_binding_storage_image_update_after_bind: bool,
@@ -16331,6 +17626,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingFeatures<'a> {
             descriptor_binding_storage_image_update_after_bind.into();
         self
     }
+    #[inline]
     pub fn descriptor_binding_storage_buffer_update_after_bind(
         mut self,
         descriptor_binding_storage_buffer_update_after_bind: bool,
@@ -16339,6 +17635,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingFeatures<'a> {
             descriptor_binding_storage_buffer_update_after_bind.into();
         self
     }
+    #[inline]
     pub fn descriptor_binding_uniform_texel_buffer_update_after_bind(
         mut self,
         descriptor_binding_uniform_texel_buffer_update_after_bind: bool,
@@ -16347,6 +17644,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingFeatures<'a> {
             descriptor_binding_uniform_texel_buffer_update_after_bind.into();
         self
     }
+    #[inline]
     pub fn descriptor_binding_storage_texel_buffer_update_after_bind(
         mut self,
         descriptor_binding_storage_texel_buffer_update_after_bind: bool,
@@ -16355,6 +17653,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingFeatures<'a> {
             descriptor_binding_storage_texel_buffer_update_after_bind.into();
         self
     }
+    #[inline]
     pub fn descriptor_binding_update_unused_while_pending(
         mut self,
         descriptor_binding_update_unused_while_pending: bool,
@@ -16363,6 +17662,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingFeatures<'a> {
             descriptor_binding_update_unused_while_pending.into();
         self
     }
+    #[inline]
     pub fn descriptor_binding_partially_bound(
         mut self,
         descriptor_binding_partially_bound: bool,
@@ -16370,6 +17670,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingFeatures<'a> {
         self.descriptor_binding_partially_bound = descriptor_binding_partially_bound.into();
         self
     }
+    #[inline]
     pub fn descriptor_binding_variable_descriptor_count(
         mut self,
         descriptor_binding_variable_descriptor_count: bool,
@@ -16378,6 +17679,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingFeatures<'a> {
             descriptor_binding_variable_descriptor_count.into();
         self
     }
+    #[inline]
     pub fn runtime_descriptor_array(mut self, runtime_descriptor_array: bool) -> Self {
         self.runtime_descriptor_array = runtime_descriptor_array.into();
         self
@@ -16452,6 +17754,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceProperties2
 {
 }
 impl<'a> PhysicalDeviceDescriptorIndexingProperties<'a> {
+    #[inline]
     pub fn max_update_after_bind_descriptors_in_all_pools(
         mut self,
         max_update_after_bind_descriptors_in_all_pools: u32,
@@ -16460,6 +17763,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingProperties<'a> {
             max_update_after_bind_descriptors_in_all_pools;
         self
     }
+    #[inline]
     pub fn shader_uniform_buffer_array_non_uniform_indexing_native(
         mut self,
         shader_uniform_buffer_array_non_uniform_indexing_native: bool,
@@ -16468,6 +17772,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingProperties<'a> {
             shader_uniform_buffer_array_non_uniform_indexing_native.into();
         self
     }
+    #[inline]
     pub fn shader_sampled_image_array_non_uniform_indexing_native(
         mut self,
         shader_sampled_image_array_non_uniform_indexing_native: bool,
@@ -16476,6 +17781,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingProperties<'a> {
             shader_sampled_image_array_non_uniform_indexing_native.into();
         self
     }
+    #[inline]
     pub fn shader_storage_buffer_array_non_uniform_indexing_native(
         mut self,
         shader_storage_buffer_array_non_uniform_indexing_native: bool,
@@ -16484,6 +17790,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingProperties<'a> {
             shader_storage_buffer_array_non_uniform_indexing_native.into();
         self
     }
+    #[inline]
     pub fn shader_storage_image_array_non_uniform_indexing_native(
         mut self,
         shader_storage_image_array_non_uniform_indexing_native: bool,
@@ -16492,6 +17799,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingProperties<'a> {
             shader_storage_image_array_non_uniform_indexing_native.into();
         self
     }
+    #[inline]
     pub fn shader_input_attachment_array_non_uniform_indexing_native(
         mut self,
         shader_input_attachment_array_non_uniform_indexing_native: bool,
@@ -16500,6 +17808,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingProperties<'a> {
             shader_input_attachment_array_non_uniform_indexing_native.into();
         self
     }
+    #[inline]
     pub fn robust_buffer_access_update_after_bind(
         mut self,
         robust_buffer_access_update_after_bind: bool,
@@ -16507,10 +17816,12 @@ impl<'a> PhysicalDeviceDescriptorIndexingProperties<'a> {
         self.robust_buffer_access_update_after_bind = robust_buffer_access_update_after_bind.into();
         self
     }
+    #[inline]
     pub fn quad_divergent_implicit_lod(mut self, quad_divergent_implicit_lod: bool) -> Self {
         self.quad_divergent_implicit_lod = quad_divergent_implicit_lod.into();
         self
     }
+    #[inline]
     pub fn max_per_stage_descriptor_update_after_bind_samplers(
         mut self,
         max_per_stage_descriptor_update_after_bind_samplers: u32,
@@ -16519,6 +17830,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingProperties<'a> {
             max_per_stage_descriptor_update_after_bind_samplers;
         self
     }
+    #[inline]
     pub fn max_per_stage_descriptor_update_after_bind_uniform_buffers(
         mut self,
         max_per_stage_descriptor_update_after_bind_uniform_buffers: u32,
@@ -16527,6 +17839,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingProperties<'a> {
             max_per_stage_descriptor_update_after_bind_uniform_buffers;
         self
     }
+    #[inline]
     pub fn max_per_stage_descriptor_update_after_bind_storage_buffers(
         mut self,
         max_per_stage_descriptor_update_after_bind_storage_buffers: u32,
@@ -16535,6 +17848,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingProperties<'a> {
             max_per_stage_descriptor_update_after_bind_storage_buffers;
         self
     }
+    #[inline]
     pub fn max_per_stage_descriptor_update_after_bind_sampled_images(
         mut self,
         max_per_stage_descriptor_update_after_bind_sampled_images: u32,
@@ -16543,6 +17857,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingProperties<'a> {
             max_per_stage_descriptor_update_after_bind_sampled_images;
         self
     }
+    #[inline]
     pub fn max_per_stage_descriptor_update_after_bind_storage_images(
         mut self,
         max_per_stage_descriptor_update_after_bind_storage_images: u32,
@@ -16551,6 +17866,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingProperties<'a> {
             max_per_stage_descriptor_update_after_bind_storage_images;
         self
     }
+    #[inline]
     pub fn max_per_stage_descriptor_update_after_bind_input_attachments(
         mut self,
         max_per_stage_descriptor_update_after_bind_input_attachments: u32,
@@ -16559,6 +17875,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingProperties<'a> {
             max_per_stage_descriptor_update_after_bind_input_attachments;
         self
     }
+    #[inline]
     pub fn max_per_stage_update_after_bind_resources(
         mut self,
         max_per_stage_update_after_bind_resources: u32,
@@ -16566,6 +17883,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingProperties<'a> {
         self.max_per_stage_update_after_bind_resources = max_per_stage_update_after_bind_resources;
         self
     }
+    #[inline]
     pub fn max_descriptor_set_update_after_bind_samplers(
         mut self,
         max_descriptor_set_update_after_bind_samplers: u32,
@@ -16574,6 +17892,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingProperties<'a> {
             max_descriptor_set_update_after_bind_samplers;
         self
     }
+    #[inline]
     pub fn max_descriptor_set_update_after_bind_uniform_buffers(
         mut self,
         max_descriptor_set_update_after_bind_uniform_buffers: u32,
@@ -16582,6 +17901,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingProperties<'a> {
             max_descriptor_set_update_after_bind_uniform_buffers;
         self
     }
+    #[inline]
     pub fn max_descriptor_set_update_after_bind_uniform_buffers_dynamic(
         mut self,
         max_descriptor_set_update_after_bind_uniform_buffers_dynamic: u32,
@@ -16590,6 +17910,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingProperties<'a> {
             max_descriptor_set_update_after_bind_uniform_buffers_dynamic;
         self
     }
+    #[inline]
     pub fn max_descriptor_set_update_after_bind_storage_buffers(
         mut self,
         max_descriptor_set_update_after_bind_storage_buffers: u32,
@@ -16598,6 +17919,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingProperties<'a> {
             max_descriptor_set_update_after_bind_storage_buffers;
         self
     }
+    #[inline]
     pub fn max_descriptor_set_update_after_bind_storage_buffers_dynamic(
         mut self,
         max_descriptor_set_update_after_bind_storage_buffers_dynamic: u32,
@@ -16606,6 +17928,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingProperties<'a> {
             max_descriptor_set_update_after_bind_storage_buffers_dynamic;
         self
     }
+    #[inline]
     pub fn max_descriptor_set_update_after_bind_sampled_images(
         mut self,
         max_descriptor_set_update_after_bind_sampled_images: u32,
@@ -16614,6 +17937,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingProperties<'a> {
             max_descriptor_set_update_after_bind_sampled_images;
         self
     }
+    #[inline]
     pub fn max_descriptor_set_update_after_bind_storage_images(
         mut self,
         max_descriptor_set_update_after_bind_storage_images: u32,
@@ -16622,6 +17946,7 @@ impl<'a> PhysicalDeviceDescriptorIndexingProperties<'a> {
             max_descriptor_set_update_after_bind_storage_images;
         self
     }
+    #[inline]
     pub fn max_descriptor_set_update_after_bind_input_attachments(
         mut self,
         max_descriptor_set_update_after_bind_input_attachments: u32,
@@ -16658,6 +17983,7 @@ unsafe impl<'a> ExtendsDescriptorSetLayoutCreateInfo
 {
 }
 impl<'a> DescriptorSetLayoutBindingFlagsCreateInfo<'a> {
+    #[inline]
     pub fn binding_flags(mut self, binding_flags: &'a [DescriptorBindingFlags]) -> Self {
         self.binding_count = binding_flags.len() as _;
         self.p_binding_flags = binding_flags.as_ptr();
@@ -16691,6 +18017,7 @@ unsafe impl<'a> ExtendsDescriptorSetAllocateInfo
 {
 }
 impl<'a> DescriptorSetVariableDescriptorCountAllocateInfo<'a> {
+    #[inline]
     pub fn descriptor_counts(mut self, descriptor_counts: &'a [u32]) -> Self {
         self.descriptor_set_count = descriptor_counts.len() as _;
         self.p_descriptor_counts = descriptor_counts.as_ptr();
@@ -16722,6 +18049,7 @@ unsafe impl<'a> ExtendsDescriptorSetLayoutSupport
 {
 }
 impl<'a> DescriptorSetVariableDescriptorCountLayoutSupport<'a> {
+    #[inline]
     pub fn max_variable_descriptor_count(mut self, max_variable_descriptor_count: u32) -> Self {
         self.max_variable_descriptor_count = max_variable_descriptor_count;
         self
@@ -16765,38 +18093,47 @@ impl ::std::default::Default for AttachmentDescription2<'_> {
 }
 pub unsafe trait ExtendsAttachmentDescription2 {}
 impl<'a> AttachmentDescription2<'a> {
+    #[inline]
     pub fn flags(mut self, flags: AttachmentDescriptionFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn format(mut self, format: Format) -> Self {
         self.format = format;
         self
     }
+    #[inline]
     pub fn samples(mut self, samples: SampleCountFlags) -> Self {
         self.samples = samples;
         self
     }
+    #[inline]
     pub fn load_op(mut self, load_op: AttachmentLoadOp) -> Self {
         self.load_op = load_op;
         self
     }
+    #[inline]
     pub fn store_op(mut self, store_op: AttachmentStoreOp) -> Self {
         self.store_op = store_op;
         self
     }
+    #[inline]
     pub fn stencil_load_op(mut self, stencil_load_op: AttachmentLoadOp) -> Self {
         self.stencil_load_op = stencil_load_op;
         self
     }
+    #[inline]
     pub fn stencil_store_op(mut self, stencil_store_op: AttachmentStoreOp) -> Self {
         self.stencil_store_op = stencil_store_op;
         self
     }
+    #[inline]
     pub fn initial_layout(mut self, initial_layout: ImageLayout) -> Self {
         self.initial_layout = initial_layout;
         self
     }
+    #[inline]
     pub fn final_layout(mut self, final_layout: ImageLayout) -> Self {
         self.final_layout = final_layout;
         self
@@ -16842,14 +18179,17 @@ impl ::std::default::Default for AttachmentReference2<'_> {
 }
 pub unsafe trait ExtendsAttachmentReference2 {}
 impl<'a> AttachmentReference2<'a> {
+    #[inline]
     pub fn attachment(mut self, attachment: u32) -> Self {
         self.attachment = attachment;
         self
     }
+    #[inline]
     pub fn layout(mut self, layout: ImageLayout) -> Self {
         self.layout = layout;
         self
     }
+    #[inline]
     pub fn aspect_mask(mut self, aspect_mask: ImageAspectFlags) -> Self {
         self.aspect_mask = aspect_mask;
         self
@@ -16911,33 +18251,40 @@ impl ::std::default::Default for SubpassDescription2<'_> {
 }
 pub unsafe trait ExtendsSubpassDescription2 {}
 impl<'a> SubpassDescription2<'a> {
+    #[inline]
     pub fn flags(mut self, flags: SubpassDescriptionFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn pipeline_bind_point(mut self, pipeline_bind_point: PipelineBindPoint) -> Self {
         self.pipeline_bind_point = pipeline_bind_point;
         self
     }
+    #[inline]
     pub fn view_mask(mut self, view_mask: u32) -> Self {
         self.view_mask = view_mask;
         self
     }
+    #[inline]
     pub fn input_attachments(mut self, input_attachments: &'a [AttachmentReference2]) -> Self {
         self.input_attachment_count = input_attachments.len() as _;
         self.p_input_attachments = input_attachments.as_ptr();
         self
     }
+    #[inline]
     pub fn color_attachments(mut self, color_attachments: &'a [AttachmentReference2]) -> Self {
         self.color_attachment_count = color_attachments.len() as _;
         self.p_color_attachments = color_attachments.as_ptr();
         self
     }
+    #[inline]
     pub fn resolve_attachments(mut self, resolve_attachments: &'a [AttachmentReference2]) -> Self {
         self.color_attachment_count = resolve_attachments.len() as _;
         self.p_resolve_attachments = resolve_attachments.as_ptr();
         self
     }
+    #[inline]
     pub fn depth_stencil_attachment(
         mut self,
         depth_stencil_attachment: &'a AttachmentReference2<'a>,
@@ -16945,6 +18292,7 @@ impl<'a> SubpassDescription2<'a> {
         self.p_depth_stencil_attachment = depth_stencil_attachment;
         self
     }
+    #[inline]
     pub fn preserve_attachments(mut self, preserve_attachments: &'a [u32]) -> Self {
         self.preserve_attachment_count = preserve_attachments.len() as _;
         self.p_preserve_attachments = preserve_attachments.as_ptr();
@@ -17001,34 +18349,42 @@ impl ::std::default::Default for SubpassDependency2<'_> {
 }
 pub unsafe trait ExtendsSubpassDependency2 {}
 impl<'a> SubpassDependency2<'a> {
+    #[inline]
     pub fn src_subpass(mut self, src_subpass: u32) -> Self {
         self.src_subpass = src_subpass;
         self
     }
+    #[inline]
     pub fn dst_subpass(mut self, dst_subpass: u32) -> Self {
         self.dst_subpass = dst_subpass;
         self
     }
+    #[inline]
     pub fn src_stage_mask(mut self, src_stage_mask: PipelineStageFlags) -> Self {
         self.src_stage_mask = src_stage_mask;
         self
     }
+    #[inline]
     pub fn dst_stage_mask(mut self, dst_stage_mask: PipelineStageFlags) -> Self {
         self.dst_stage_mask = dst_stage_mask;
         self
     }
+    #[inline]
     pub fn src_access_mask(mut self, src_access_mask: AccessFlags) -> Self {
         self.src_access_mask = src_access_mask;
         self
     }
+    #[inline]
     pub fn dst_access_mask(mut self, dst_access_mask: AccessFlags) -> Self {
         self.dst_access_mask = dst_access_mask;
         self
     }
+    #[inline]
     pub fn dependency_flags(mut self, dependency_flags: DependencyFlags) -> Self {
         self.dependency_flags = dependency_flags;
         self
     }
+    #[inline]
     pub fn view_offset(mut self, view_offset: i32) -> Self {
         self.view_offset = view_offset;
         self
@@ -17086,25 +18442,30 @@ impl ::std::default::Default for RenderPassCreateInfo2<'_> {
 }
 pub unsafe trait ExtendsRenderPassCreateInfo2 {}
 impl<'a> RenderPassCreateInfo2<'a> {
+    #[inline]
     pub fn flags(mut self, flags: RenderPassCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn attachments(mut self, attachments: &'a [AttachmentDescription2]) -> Self {
         self.attachment_count = attachments.len() as _;
         self.p_attachments = attachments.as_ptr();
         self
     }
+    #[inline]
     pub fn subpasses(mut self, subpasses: &'a [SubpassDescription2]) -> Self {
         self.subpass_count = subpasses.len() as _;
         self.p_subpasses = subpasses.as_ptr();
         self
     }
+    #[inline]
     pub fn dependencies(mut self, dependencies: &'a [SubpassDependency2]) -> Self {
         self.dependency_count = dependencies.len() as _;
         self.p_dependencies = dependencies.as_ptr();
         self
     }
+    #[inline]
     pub fn correlated_view_masks(mut self, correlated_view_masks: &'a [u32]) -> Self {
         self.correlated_view_mask_count = correlated_view_masks.len() as _;
         self.p_correlated_view_masks = correlated_view_masks.as_ptr();
@@ -17146,6 +18507,7 @@ impl ::std::default::Default for SubpassBeginInfo<'_> {
     }
 }
 impl<'a> SubpassBeginInfo<'a> {
+    #[inline]
     pub fn contents(mut self, contents: SubpassContents) -> Self {
         self.contents = contents;
         self
@@ -17209,6 +18571,7 @@ impl ::std::default::Default for PhysicalDeviceTimelineSemaphoreFeatures<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceTimelineSemaphoreFeatures<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceTimelineSemaphoreFeatures<'a> {}
 impl<'a> PhysicalDeviceTimelineSemaphoreFeatures<'a> {
+    #[inline]
     pub fn timeline_semaphore(mut self, timeline_semaphore: bool) -> Self {
         self.timeline_semaphore = timeline_semaphore.into();
         self
@@ -17236,6 +18599,7 @@ impl ::std::default::Default for PhysicalDeviceTimelineSemaphoreProperties<'_> {
 }
 unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceTimelineSemaphoreProperties<'a> {}
 impl<'a> PhysicalDeviceTimelineSemaphoreProperties<'a> {
+    #[inline]
     pub fn max_timeline_semaphore_value_difference(
         mut self,
         max_timeline_semaphore_value_difference: u64,
@@ -17269,10 +18633,12 @@ impl ::std::default::Default for SemaphoreTypeCreateInfo<'_> {
 unsafe impl<'a> ExtendsSemaphoreCreateInfo for SemaphoreTypeCreateInfo<'a> {}
 unsafe impl<'a> ExtendsPhysicalDeviceExternalSemaphoreInfo for SemaphoreTypeCreateInfo<'a> {}
 impl<'a> SemaphoreTypeCreateInfo<'a> {
+    #[inline]
     pub fn semaphore_type(mut self, semaphore_type: SemaphoreType) -> Self {
         self.semaphore_type = semaphore_type;
         self
     }
+    #[inline]
     pub fn initial_value(mut self, initial_value: u64) -> Self {
         self.initial_value = initial_value;
         self
@@ -17307,11 +18673,13 @@ impl ::std::default::Default for TimelineSemaphoreSubmitInfo<'_> {
 unsafe impl<'a> ExtendsSubmitInfo for TimelineSemaphoreSubmitInfo<'a> {}
 unsafe impl<'a> ExtendsBindSparseInfo for TimelineSemaphoreSubmitInfo<'a> {}
 impl<'a> TimelineSemaphoreSubmitInfo<'a> {
+    #[inline]
     pub fn wait_semaphore_values(mut self, wait_semaphore_values: &'a [u64]) -> Self {
         self.wait_semaphore_value_count = wait_semaphore_values.len() as _;
         self.p_wait_semaphore_values = wait_semaphore_values.as_ptr();
         self
     }
+    #[inline]
     pub fn signal_semaphore_values(mut self, signal_semaphore_values: &'a [u64]) -> Self {
         self.signal_semaphore_value_count = signal_semaphore_values.len() as _;
         self.p_signal_semaphore_values = signal_semaphore_values.as_ptr();
@@ -17345,15 +18713,18 @@ impl ::std::default::Default for SemaphoreWaitInfo<'_> {
     }
 }
 impl<'a> SemaphoreWaitInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: SemaphoreWaitFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn semaphores(mut self, semaphores: &'a [Semaphore]) -> Self {
         self.semaphore_count = semaphores.len() as _;
         self.p_semaphores = semaphores.as_ptr();
         self
     }
+    #[inline]
     pub fn values(mut self, values: &'a [u64]) -> Self {
         self.semaphore_count = values.len() as _;
         self.p_values = values.as_ptr();
@@ -17383,10 +18754,12 @@ impl ::std::default::Default for SemaphoreSignalInfo<'_> {
     }
 }
 impl<'a> SemaphoreSignalInfo<'a> {
+    #[inline]
     pub fn semaphore(mut self, semaphore: Semaphore) -> Self {
         self.semaphore = semaphore;
         self
     }
+    #[inline]
     pub fn value(mut self, value: u64) -> Self {
         self.value = value;
         self
@@ -17401,10 +18774,12 @@ pub struct VertexInputBindingDivisorDescriptionEXT {
     pub divisor: u32,
 }
 impl VertexInputBindingDivisorDescriptionEXT {
+    #[inline]
     pub fn binding(mut self, binding: u32) -> Self {
         self.binding = binding;
         self
     }
+    #[inline]
     pub fn divisor(mut self, divisor: u32) -> Self {
         self.divisor = divisor;
         self
@@ -17437,6 +18812,7 @@ unsafe impl<'a> ExtendsPipelineVertexInputStateCreateInfo
 {
 }
 impl<'a> PipelineVertexInputDivisorStateCreateInfoEXT<'a> {
+    #[inline]
     pub fn vertex_binding_divisors(
         mut self,
         vertex_binding_divisors: &'a [VertexInputBindingDivisorDescriptionEXT],
@@ -17471,6 +18847,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceProperties2
 {
 }
 impl<'a> PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'a> {
+    #[inline]
     pub fn max_vertex_attrib_divisor(mut self, max_vertex_attrib_divisor: u32) -> Self {
         self.max_vertex_attrib_divisor = max_vertex_attrib_divisor;
         self
@@ -17504,18 +18881,22 @@ impl ::std::default::Default for PhysicalDevicePCIBusInfoPropertiesEXT<'_> {
 }
 unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDevicePCIBusInfoPropertiesEXT<'a> {}
 impl<'a> PhysicalDevicePCIBusInfoPropertiesEXT<'a> {
+    #[inline]
     pub fn pci_domain(mut self, pci_domain: u32) -> Self {
         self.pci_domain = pci_domain;
         self
     }
+    #[inline]
     pub fn pci_bus(mut self, pci_bus: u32) -> Self {
         self.pci_bus = pci_bus;
         self
     }
+    #[inline]
     pub fn pci_device(mut self, pci_device: u32) -> Self {
         self.pci_device = pci_device;
         self
     }
+    #[inline]
     pub fn pci_function(mut self, pci_function: u32) -> Self {
         self.pci_function = pci_function;
         self
@@ -17543,6 +18924,7 @@ impl ::std::default::Default for ImportAndroidHardwareBufferInfoANDROID<'_> {
 }
 unsafe impl<'a> ExtendsMemoryAllocateInfo for ImportAndroidHardwareBufferInfoANDROID<'a> {}
 impl<'a> ImportAndroidHardwareBufferInfoANDROID<'a> {
+    #[inline]
     pub fn buffer(mut self, buffer: *mut AHardwareBuffer) -> Self {
         self.buffer = buffer;
         self
@@ -17570,6 +18952,7 @@ impl ::std::default::Default for AndroidHardwareBufferUsageANDROID<'_> {
 }
 unsafe impl<'a> ExtendsImageFormatProperties2 for AndroidHardwareBufferUsageANDROID<'a> {}
 impl<'a> AndroidHardwareBufferUsageANDROID<'a> {
+    #[inline]
     pub fn android_hardware_buffer_usage(mut self, android_hardware_buffer_usage: u64) -> Self {
         self.android_hardware_buffer_usage = android_hardware_buffer_usage;
         self
@@ -17599,10 +18982,12 @@ impl ::std::default::Default for AndroidHardwareBufferPropertiesANDROID<'_> {
 }
 pub unsafe trait ExtendsAndroidHardwareBufferPropertiesANDROID {}
 impl<'a> AndroidHardwareBufferPropertiesANDROID<'a> {
+    #[inline]
     pub fn allocation_size(mut self, allocation_size: DeviceSize) -> Self {
         self.allocation_size = allocation_size;
         self
     }
+    #[inline]
     pub fn memory_type_bits(mut self, memory_type_bits: u32) -> Self {
         self.memory_type_bits = memory_type_bits;
         self
@@ -17646,6 +19031,7 @@ impl ::std::default::Default for MemoryGetAndroidHardwareBufferInfoANDROID<'_> {
     }
 }
 impl<'a> MemoryGetAndroidHardwareBufferInfoANDROID<'a> {
+    #[inline]
     pub fn memory(mut self, memory: DeviceMemory) -> Self {
         self.memory = memory;
         self
@@ -17690,18 +19076,22 @@ unsafe impl<'a> ExtendsAndroidHardwareBufferPropertiesANDROID
 {
 }
 impl<'a> AndroidHardwareBufferFormatPropertiesANDROID<'a> {
+    #[inline]
     pub fn format(mut self, format: Format) -> Self {
         self.format = format;
         self
     }
+    #[inline]
     pub fn external_format(mut self, external_format: u64) -> Self {
         self.external_format = external_format;
         self
     }
+    #[inline]
     pub fn format_features(mut self, format_features: FormatFeatureFlags) -> Self {
         self.format_features = format_features;
         self
     }
+    #[inline]
     pub fn sampler_ycbcr_conversion_components(
         mut self,
         sampler_ycbcr_conversion_components: ComponentMapping,
@@ -17709,6 +19099,7 @@ impl<'a> AndroidHardwareBufferFormatPropertiesANDROID<'a> {
         self.sampler_ycbcr_conversion_components = sampler_ycbcr_conversion_components;
         self
     }
+    #[inline]
     pub fn suggested_ycbcr_model(
         mut self,
         suggested_ycbcr_model: SamplerYcbcrModelConversion,
@@ -17716,14 +19107,17 @@ impl<'a> AndroidHardwareBufferFormatPropertiesANDROID<'a> {
         self.suggested_ycbcr_model = suggested_ycbcr_model;
         self
     }
+    #[inline]
     pub fn suggested_ycbcr_range(mut self, suggested_ycbcr_range: SamplerYcbcrRange) -> Self {
         self.suggested_ycbcr_range = suggested_ycbcr_range;
         self
     }
+    #[inline]
     pub fn suggested_x_chroma_offset(mut self, suggested_x_chroma_offset: ChromaLocation) -> Self {
         self.suggested_x_chroma_offset = suggested_x_chroma_offset;
         self
     }
+    #[inline]
     pub fn suggested_y_chroma_offset(mut self, suggested_y_chroma_offset: ChromaLocation) -> Self {
         self.suggested_y_chroma_offset = suggested_y_chroma_offset;
         self
@@ -17754,6 +19148,7 @@ unsafe impl<'a> ExtendsCommandBufferInheritanceInfo
 {
 }
 impl<'a> CommandBufferInheritanceConditionalRenderingInfoEXT<'a> {
+    #[inline]
     pub fn conditional_rendering_enable(mut self, conditional_rendering_enable: bool) -> Self {
         self.conditional_rendering_enable = conditional_rendering_enable.into();
         self
@@ -17782,6 +19177,7 @@ impl ::std::default::Default for ExternalFormatANDROID<'_> {
 unsafe impl<'a> ExtendsImageCreateInfo for ExternalFormatANDROID<'a> {}
 unsafe impl<'a> ExtendsSamplerYcbcrConversionCreateInfo for ExternalFormatANDROID<'a> {}
 impl<'a> ExternalFormatANDROID<'a> {
+    #[inline]
     pub fn external_format(mut self, external_format: u64) -> Self {
         self.external_format = external_format;
         self
@@ -17814,10 +19210,12 @@ impl ::std::default::Default for PhysicalDevice8BitStorageFeatures<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDevice8BitStorageFeatures<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDevice8BitStorageFeatures<'a> {}
 impl<'a> PhysicalDevice8BitStorageFeatures<'a> {
+    #[inline]
     pub fn storage_buffer8_bit_access(mut self, storage_buffer8_bit_access: bool) -> Self {
         self.storage_buffer8_bit_access = storage_buffer8_bit_access.into();
         self
     }
+    #[inline]
     pub fn uniform_and_storage_buffer8_bit_access(
         mut self,
         uniform_and_storage_buffer8_bit_access: bool,
@@ -17825,6 +19223,7 @@ impl<'a> PhysicalDevice8BitStorageFeatures<'a> {
         self.uniform_and_storage_buffer8_bit_access = uniform_and_storage_buffer8_bit_access.into();
         self
     }
+    #[inline]
     pub fn storage_push_constant8(mut self, storage_push_constant8: bool) -> Self {
         self.storage_push_constant8 = storage_push_constant8.into();
         self
@@ -17858,10 +19257,12 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceConditionalRenderingFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceConditionalRenderingFeaturesEXT<'a> {
+    #[inline]
     pub fn conditional_rendering(mut self, conditional_rendering: bool) -> Self {
         self.conditional_rendering = conditional_rendering.into();
         self
     }
+    #[inline]
     pub fn inherited_conditional_rendering(
         mut self,
         inherited_conditional_rendering: bool,
@@ -17897,10 +19298,12 @@ impl ::std::default::Default for PhysicalDeviceVulkanMemoryModelFeatures<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVulkanMemoryModelFeatures<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceVulkanMemoryModelFeatures<'a> {}
 impl<'a> PhysicalDeviceVulkanMemoryModelFeatures<'a> {
+    #[inline]
     pub fn vulkan_memory_model(mut self, vulkan_memory_model: bool) -> Self {
         self.vulkan_memory_model = vulkan_memory_model.into();
         self
     }
+    #[inline]
     pub fn vulkan_memory_model_device_scope(
         mut self,
         vulkan_memory_model_device_scope: bool,
@@ -17908,6 +19311,7 @@ impl<'a> PhysicalDeviceVulkanMemoryModelFeatures<'a> {
         self.vulkan_memory_model_device_scope = vulkan_memory_model_device_scope.into();
         self
     }
+    #[inline]
     pub fn vulkan_memory_model_availability_visibility_chains(
         mut self,
         vulkan_memory_model_availability_visibility_chains: bool,
@@ -17942,10 +19346,12 @@ impl ::std::default::Default for PhysicalDeviceShaderAtomicInt64Features<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderAtomicInt64Features<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceShaderAtomicInt64Features<'a> {}
 impl<'a> PhysicalDeviceShaderAtomicInt64Features<'a> {
+    #[inline]
     pub fn shader_buffer_int64_atomics(mut self, shader_buffer_int64_atomics: bool) -> Self {
         self.shader_buffer_int64_atomics = shader_buffer_int64_atomics.into();
         self
     }
+    #[inline]
     pub fn shader_shared_int64_atomics(mut self, shader_shared_int64_atomics: bool) -> Self {
         self.shader_shared_int64_atomics = shader_shared_int64_atomics.into();
         self
@@ -17996,10 +19402,12 @@ impl ::std::default::Default for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'_> 
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a> {
+    #[inline]
     pub fn shader_buffer_float32_atomics(mut self, shader_buffer_float32_atomics: bool) -> Self {
         self.shader_buffer_float32_atomics = shader_buffer_float32_atomics.into();
         self
     }
+    #[inline]
     pub fn shader_buffer_float32_atomic_add(
         mut self,
         shader_buffer_float32_atomic_add: bool,
@@ -18007,10 +19415,12 @@ impl<'a> PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a> {
         self.shader_buffer_float32_atomic_add = shader_buffer_float32_atomic_add.into();
         self
     }
+    #[inline]
     pub fn shader_buffer_float64_atomics(mut self, shader_buffer_float64_atomics: bool) -> Self {
         self.shader_buffer_float64_atomics = shader_buffer_float64_atomics.into();
         self
     }
+    #[inline]
     pub fn shader_buffer_float64_atomic_add(
         mut self,
         shader_buffer_float64_atomic_add: bool,
@@ -18018,10 +19428,12 @@ impl<'a> PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a> {
         self.shader_buffer_float64_atomic_add = shader_buffer_float64_atomic_add.into();
         self
     }
+    #[inline]
     pub fn shader_shared_float32_atomics(mut self, shader_shared_float32_atomics: bool) -> Self {
         self.shader_shared_float32_atomics = shader_shared_float32_atomics.into();
         self
     }
+    #[inline]
     pub fn shader_shared_float32_atomic_add(
         mut self,
         shader_shared_float32_atomic_add: bool,
@@ -18029,10 +19441,12 @@ impl<'a> PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a> {
         self.shader_shared_float32_atomic_add = shader_shared_float32_atomic_add.into();
         self
     }
+    #[inline]
     pub fn shader_shared_float64_atomics(mut self, shader_shared_float64_atomics: bool) -> Self {
         self.shader_shared_float64_atomics = shader_shared_float64_atomics.into();
         self
     }
+    #[inline]
     pub fn shader_shared_float64_atomic_add(
         mut self,
         shader_shared_float64_atomic_add: bool,
@@ -18040,10 +19454,12 @@ impl<'a> PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a> {
         self.shader_shared_float64_atomic_add = shader_shared_float64_atomic_add.into();
         self
     }
+    #[inline]
     pub fn shader_image_float32_atomics(mut self, shader_image_float32_atomics: bool) -> Self {
         self.shader_image_float32_atomics = shader_image_float32_atomics.into();
         self
     }
+    #[inline]
     pub fn shader_image_float32_atomic_add(
         mut self,
         shader_image_float32_atomic_add: bool,
@@ -18051,10 +19467,12 @@ impl<'a> PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a> {
         self.shader_image_float32_atomic_add = shader_image_float32_atomic_add.into();
         self
     }
+    #[inline]
     pub fn sparse_image_float32_atomics(mut self, sparse_image_float32_atomics: bool) -> Self {
         self.sparse_image_float32_atomics = sparse_image_float32_atomics.into();
         self
     }
+    #[inline]
     pub fn sparse_image_float32_atomic_add(
         mut self,
         sparse_image_float32_atomic_add: bool,
@@ -18108,10 +19526,12 @@ impl ::std::default::Default for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'_>
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {
+    #[inline]
     pub fn shader_buffer_float16_atomics(mut self, shader_buffer_float16_atomics: bool) -> Self {
         self.shader_buffer_float16_atomics = shader_buffer_float16_atomics.into();
         self
     }
+    #[inline]
     pub fn shader_buffer_float16_atomic_add(
         mut self,
         shader_buffer_float16_atomic_add: bool,
@@ -18119,6 +19539,7 @@ impl<'a> PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {
         self.shader_buffer_float16_atomic_add = shader_buffer_float16_atomic_add.into();
         self
     }
+    #[inline]
     pub fn shader_buffer_float16_atomic_min_max(
         mut self,
         shader_buffer_float16_atomic_min_max: bool,
@@ -18126,6 +19547,7 @@ impl<'a> PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {
         self.shader_buffer_float16_atomic_min_max = shader_buffer_float16_atomic_min_max.into();
         self
     }
+    #[inline]
     pub fn shader_buffer_float32_atomic_min_max(
         mut self,
         shader_buffer_float32_atomic_min_max: bool,
@@ -18133,6 +19555,7 @@ impl<'a> PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {
         self.shader_buffer_float32_atomic_min_max = shader_buffer_float32_atomic_min_max.into();
         self
     }
+    #[inline]
     pub fn shader_buffer_float64_atomic_min_max(
         mut self,
         shader_buffer_float64_atomic_min_max: bool,
@@ -18140,10 +19563,12 @@ impl<'a> PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {
         self.shader_buffer_float64_atomic_min_max = shader_buffer_float64_atomic_min_max.into();
         self
     }
+    #[inline]
     pub fn shader_shared_float16_atomics(mut self, shader_shared_float16_atomics: bool) -> Self {
         self.shader_shared_float16_atomics = shader_shared_float16_atomics.into();
         self
     }
+    #[inline]
     pub fn shader_shared_float16_atomic_add(
         mut self,
         shader_shared_float16_atomic_add: bool,
@@ -18151,6 +19576,7 @@ impl<'a> PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {
         self.shader_shared_float16_atomic_add = shader_shared_float16_atomic_add.into();
         self
     }
+    #[inline]
     pub fn shader_shared_float16_atomic_min_max(
         mut self,
         shader_shared_float16_atomic_min_max: bool,
@@ -18158,6 +19584,7 @@ impl<'a> PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {
         self.shader_shared_float16_atomic_min_max = shader_shared_float16_atomic_min_max.into();
         self
     }
+    #[inline]
     pub fn shader_shared_float32_atomic_min_max(
         mut self,
         shader_shared_float32_atomic_min_max: bool,
@@ -18165,6 +19592,7 @@ impl<'a> PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {
         self.shader_shared_float32_atomic_min_max = shader_shared_float32_atomic_min_max.into();
         self
     }
+    #[inline]
     pub fn shader_shared_float64_atomic_min_max(
         mut self,
         shader_shared_float64_atomic_min_max: bool,
@@ -18172,6 +19600,7 @@ impl<'a> PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {
         self.shader_shared_float64_atomic_min_max = shader_shared_float64_atomic_min_max.into();
         self
     }
+    #[inline]
     pub fn shader_image_float32_atomic_min_max(
         mut self,
         shader_image_float32_atomic_min_max: bool,
@@ -18179,6 +19608,7 @@ impl<'a> PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {
         self.shader_image_float32_atomic_min_max = shader_image_float32_atomic_min_max.into();
         self
     }
+    #[inline]
     pub fn sparse_image_float32_atomic_min_max(
         mut self,
         sparse_image_float32_atomic_min_max: bool,
@@ -18215,6 +19645,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceVertexAttributeDivisorFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceVertexAttributeDivisorFeaturesEXT<'a> {
+    #[inline]
     pub fn vertex_attribute_instance_rate_divisor(
         mut self,
         vertex_attribute_instance_rate_divisor: bool,
@@ -18222,6 +19653,7 @@ impl<'a> PhysicalDeviceVertexAttributeDivisorFeaturesEXT<'a> {
         self.vertex_attribute_instance_rate_divisor = vertex_attribute_instance_rate_divisor.into();
         self
     }
+    #[inline]
     pub fn vertex_attribute_instance_rate_zero_divisor(
         mut self,
         vertex_attribute_instance_rate_zero_divisor: bool,
@@ -18253,6 +19685,7 @@ impl ::std::default::Default for QueueFamilyCheckpointPropertiesNV<'_> {
 }
 unsafe impl<'a> ExtendsQueueFamilyProperties2 for QueueFamilyCheckpointPropertiesNV<'a> {}
 impl<'a> QueueFamilyCheckpointPropertiesNV<'a> {
+    #[inline]
     pub fn checkpoint_execution_stage_mask(
         mut self,
         checkpoint_execution_stage_mask: PipelineStageFlags,
@@ -18284,10 +19717,12 @@ impl ::std::default::Default for CheckpointDataNV<'_> {
     }
 }
 impl<'a> CheckpointDataNV<'a> {
+    #[inline]
     pub fn stage(mut self, stage: PipelineStageFlags) -> Self {
         self.stage = stage;
         self
     }
+    #[inline]
     pub fn checkpoint_marker(mut self, checkpoint_marker: *mut c_void) -> Self {
         self.p_checkpoint_marker = checkpoint_marker;
         self
@@ -18324,6 +19759,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceProperties2
 {
 }
 impl<'a> PhysicalDeviceDepthStencilResolveProperties<'a> {
+    #[inline]
     pub fn supported_depth_resolve_modes(
         mut self,
         supported_depth_resolve_modes: ResolveModeFlags,
@@ -18331,6 +19767,7 @@ impl<'a> PhysicalDeviceDepthStencilResolveProperties<'a> {
         self.supported_depth_resolve_modes = supported_depth_resolve_modes;
         self
     }
+    #[inline]
     pub fn supported_stencil_resolve_modes(
         mut self,
         supported_stencil_resolve_modes: ResolveModeFlags,
@@ -18338,10 +19775,12 @@ impl<'a> PhysicalDeviceDepthStencilResolveProperties<'a> {
         self.supported_stencil_resolve_modes = supported_stencil_resolve_modes;
         self
     }
+    #[inline]
     pub fn independent_resolve_none(mut self, independent_resolve_none: bool) -> Self {
         self.independent_resolve_none = independent_resolve_none.into();
         self
     }
+    #[inline]
     pub fn independent_resolve(mut self, independent_resolve: bool) -> Self {
         self.independent_resolve = independent_resolve.into();
         self
@@ -18373,14 +19812,17 @@ impl ::std::default::Default for SubpassDescriptionDepthStencilResolve<'_> {
 }
 unsafe impl<'a> ExtendsSubpassDescription2 for SubpassDescriptionDepthStencilResolve<'a> {}
 impl<'a> SubpassDescriptionDepthStencilResolve<'a> {
+    #[inline]
     pub fn depth_resolve_mode(mut self, depth_resolve_mode: ResolveModeFlags) -> Self {
         self.depth_resolve_mode = depth_resolve_mode;
         self
     }
+    #[inline]
     pub fn stencil_resolve_mode(mut self, stencil_resolve_mode: ResolveModeFlags) -> Self {
         self.stencil_resolve_mode = stencil_resolve_mode;
         self
     }
+    #[inline]
     pub fn depth_stencil_resolve_attachment(
         mut self,
         depth_stencil_resolve_attachment: &'a AttachmentReference2<'a>,
@@ -18411,6 +19853,7 @@ impl ::std::default::Default for ImageViewASTCDecodeModeEXT<'_> {
 }
 unsafe impl<'a> ExtendsImageViewCreateInfo for ImageViewASTCDecodeModeEXT<'a> {}
 impl<'a> ImageViewASTCDecodeModeEXT<'a> {
+    #[inline]
     pub fn decode_mode(mut self, decode_mode: Format) -> Self {
         self.decode_mode = decode_mode;
         self
@@ -18439,6 +19882,7 @@ impl ::std::default::Default for PhysicalDeviceASTCDecodeFeaturesEXT<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceASTCDecodeFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceASTCDecodeFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceASTCDecodeFeaturesEXT<'a> {
+    #[inline]
     pub fn decode_mode_shared_exponent(mut self, decode_mode_shared_exponent: bool) -> Self {
         self.decode_mode_shared_exponent = decode_mode_shared_exponent.into();
         self
@@ -18469,10 +19913,12 @@ impl ::std::default::Default for PhysicalDeviceTransformFeedbackFeaturesEXT<'_> 
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceTransformFeedbackFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceTransformFeedbackFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceTransformFeedbackFeaturesEXT<'a> {
+    #[inline]
     pub fn transform_feedback(mut self, transform_feedback: bool) -> Self {
         self.transform_feedback = transform_feedback.into();
         self
     }
+    #[inline]
     pub fn geometry_streams(mut self, geometry_streams: bool) -> Self {
         self.geometry_streams = geometry_streams.into();
         self
@@ -18521,14 +19967,17 @@ unsafe impl<'a> ExtendsPhysicalDeviceProperties2
 {
 }
 impl<'a> PhysicalDeviceTransformFeedbackPropertiesEXT<'a> {
+    #[inline]
     pub fn max_transform_feedback_streams(mut self, max_transform_feedback_streams: u32) -> Self {
         self.max_transform_feedback_streams = max_transform_feedback_streams;
         self
     }
+    #[inline]
     pub fn max_transform_feedback_buffers(mut self, max_transform_feedback_buffers: u32) -> Self {
         self.max_transform_feedback_buffers = max_transform_feedback_buffers;
         self
     }
+    #[inline]
     pub fn max_transform_feedback_buffer_size(
         mut self,
         max_transform_feedback_buffer_size: DeviceSize,
@@ -18536,6 +19985,7 @@ impl<'a> PhysicalDeviceTransformFeedbackPropertiesEXT<'a> {
         self.max_transform_feedback_buffer_size = max_transform_feedback_buffer_size;
         self
     }
+    #[inline]
     pub fn max_transform_feedback_stream_data_size(
         mut self,
         max_transform_feedback_stream_data_size: u32,
@@ -18543,6 +19993,7 @@ impl<'a> PhysicalDeviceTransformFeedbackPropertiesEXT<'a> {
         self.max_transform_feedback_stream_data_size = max_transform_feedback_stream_data_size;
         self
     }
+    #[inline]
     pub fn max_transform_feedback_buffer_data_size(
         mut self,
         max_transform_feedback_buffer_data_size: u32,
@@ -18550,6 +20001,7 @@ impl<'a> PhysicalDeviceTransformFeedbackPropertiesEXT<'a> {
         self.max_transform_feedback_buffer_data_size = max_transform_feedback_buffer_data_size;
         self
     }
+    #[inline]
     pub fn max_transform_feedback_buffer_data_stride(
         mut self,
         max_transform_feedback_buffer_data_stride: u32,
@@ -18557,10 +20009,12 @@ impl<'a> PhysicalDeviceTransformFeedbackPropertiesEXT<'a> {
         self.max_transform_feedback_buffer_data_stride = max_transform_feedback_buffer_data_stride;
         self
     }
+    #[inline]
     pub fn transform_feedback_queries(mut self, transform_feedback_queries: bool) -> Self {
         self.transform_feedback_queries = transform_feedback_queries.into();
         self
     }
+    #[inline]
     pub fn transform_feedback_streams_lines_triangles(
         mut self,
         transform_feedback_streams_lines_triangles: bool,
@@ -18569,6 +20023,7 @@ impl<'a> PhysicalDeviceTransformFeedbackPropertiesEXT<'a> {
             transform_feedback_streams_lines_triangles.into();
         self
     }
+    #[inline]
     pub fn transform_feedback_rasterization_stream_select(
         mut self,
         transform_feedback_rasterization_stream_select: bool,
@@ -18577,6 +20032,7 @@ impl<'a> PhysicalDeviceTransformFeedbackPropertiesEXT<'a> {
             transform_feedback_rasterization_stream_select.into();
         self
     }
+    #[inline]
     pub fn transform_feedback_draw(mut self, transform_feedback_draw: bool) -> Self {
         self.transform_feedback_draw = transform_feedback_draw.into();
         self
@@ -18609,10 +20065,12 @@ unsafe impl<'a> ExtendsPipelineRasterizationStateCreateInfo
 {
 }
 impl<'a> PipelineRasterizationStateStreamCreateInfoEXT<'a> {
+    #[inline]
     pub fn flags(mut self, flags: PipelineRasterizationStateStreamCreateFlagsEXT) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn rasterization_stream(mut self, rasterization_stream: u32) -> Self {
         self.rasterization_stream = rasterization_stream;
         self
@@ -18644,6 +20102,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'a> {}
 impl<'a> PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'a> {
+    #[inline]
     pub fn representative_fragment_test(mut self, representative_fragment_test: bool) -> Self {
         self.representative_fragment_test = representative_fragment_test.into();
         self
@@ -18674,6 +20133,7 @@ unsafe impl<'a> ExtendsGraphicsPipelineCreateInfo
 {
 }
 impl<'a> PipelineRepresentativeFragmentTestStateCreateInfoNV<'a> {
+    #[inline]
     pub fn representative_fragment_test_enable(
         mut self,
         representative_fragment_test_enable: bool,
@@ -18705,6 +20165,7 @@ impl ::std::default::Default for PhysicalDeviceExclusiveScissorFeaturesNV<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceExclusiveScissorFeaturesNV<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceExclusiveScissorFeaturesNV<'a> {}
 impl<'a> PhysicalDeviceExclusiveScissorFeaturesNV<'a> {
+    #[inline]
     pub fn exclusive_scissor(mut self, exclusive_scissor: bool) -> Self {
         self.exclusive_scissor = exclusive_scissor.into();
         self
@@ -18737,6 +20198,7 @@ unsafe impl<'a> ExtendsPipelineViewportStateCreateInfo
 {
 }
 impl<'a> PipelineViewportExclusiveScissorStateCreateInfoNV<'a> {
+    #[inline]
     pub fn exclusive_scissors(mut self, exclusive_scissors: &'a [Rect2D]) -> Self {
         self.exclusive_scissor_count = exclusive_scissors.len() as _;
         self.p_exclusive_scissors = exclusive_scissors.as_ptr();
@@ -18766,6 +20228,7 @@ impl ::std::default::Default for PhysicalDeviceCornerSampledImageFeaturesNV<'_> 
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCornerSampledImageFeaturesNV<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceCornerSampledImageFeaturesNV<'a> {}
 impl<'a> PhysicalDeviceCornerSampledImageFeaturesNV<'a> {
+    #[inline]
     pub fn corner_sampled_image(mut self, corner_sampled_image: bool) -> Self {
         self.corner_sampled_image = corner_sampled_image.into();
         self
@@ -18799,10 +20262,12 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceComputeShaderDerivativesFeaturesNV<'a> {}
 impl<'a> PhysicalDeviceComputeShaderDerivativesFeaturesNV<'a> {
+    #[inline]
     pub fn compute_derivative_group_quads(mut self, compute_derivative_group_quads: bool) -> Self {
         self.compute_derivative_group_quads = compute_derivative_group_quads.into();
         self
     }
+    #[inline]
     pub fn compute_derivative_group_linear(
         mut self,
         compute_derivative_group_linear: bool,
@@ -18837,6 +20302,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceFragmentShaderBarycentricFeaturesNV<'a> {}
 impl<'a> PhysicalDeviceFragmentShaderBarycentricFeaturesNV<'a> {
+    #[inline]
     pub fn fragment_shader_barycentric(mut self, fragment_shader_barycentric: bool) -> Self {
         self.fragment_shader_barycentric = fragment_shader_barycentric.into();
         self
@@ -18868,6 +20334,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceShaderImageFootprintFeaturesNV<'a> {}
 impl<'a> PhysicalDeviceShaderImageFootprintFeaturesNV<'a> {
+    #[inline]
     pub fn image_footprint(mut self, image_footprint: bool) -> Self {
         self.image_footprint = image_footprint.into();
         self
@@ -18902,6 +20369,7 @@ unsafe impl<'a> ExtendsDeviceCreateInfo
 {
 }
 impl<'a> PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'a> {
+    #[inline]
     pub fn dedicated_allocation_image_aliasing(
         mut self,
         dedicated_allocation_image_aliasing: bool,
@@ -18929,6 +20397,7 @@ impl ::std::default::Default for ShadingRatePaletteNV<'_> {
     }
 }
 impl<'a> ShadingRatePaletteNV<'a> {
+    #[inline]
     pub fn shading_rate_palette_entries(
         mut self,
         shading_rate_palette_entries: &'a [ShadingRatePaletteEntryNV],
@@ -18967,10 +20436,12 @@ unsafe impl<'a> ExtendsPipelineViewportStateCreateInfo
 {
 }
 impl<'a> PipelineViewportShadingRateImageStateCreateInfoNV<'a> {
+    #[inline]
     pub fn shading_rate_image_enable(mut self, shading_rate_image_enable: bool) -> Self {
         self.shading_rate_image_enable = shading_rate_image_enable.into();
         self
     }
+    #[inline]
     pub fn shading_rate_palettes(
         mut self,
         shading_rate_palettes: &'a [ShadingRatePaletteNV],
@@ -19005,10 +20476,12 @@ impl ::std::default::Default for PhysicalDeviceShadingRateImageFeaturesNV<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShadingRateImageFeaturesNV<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceShadingRateImageFeaturesNV<'a> {}
 impl<'a> PhysicalDeviceShadingRateImageFeaturesNV<'a> {
+    #[inline]
     pub fn shading_rate_image(mut self, shading_rate_image: bool) -> Self {
         self.shading_rate_image = shading_rate_image.into();
         self
     }
+    #[inline]
     pub fn shading_rate_coarse_sample_order(
         mut self,
         shading_rate_coarse_sample_order: bool,
@@ -19046,14 +20519,17 @@ unsafe impl<'a> ExtendsPhysicalDeviceProperties2
 {
 }
 impl<'a> PhysicalDeviceShadingRateImagePropertiesNV<'a> {
+    #[inline]
     pub fn shading_rate_texel_size(mut self, shading_rate_texel_size: Extent2D) -> Self {
         self.shading_rate_texel_size = shading_rate_texel_size;
         self
     }
+    #[inline]
     pub fn shading_rate_palette_size(mut self, shading_rate_palette_size: u32) -> Self {
         self.shading_rate_palette_size = shading_rate_palette_size;
         self
     }
+    #[inline]
     pub fn shading_rate_max_coarse_samples(mut self, shading_rate_max_coarse_samples: u32) -> Self {
         self.shading_rate_max_coarse_samples = shading_rate_max_coarse_samples;
         self
@@ -19082,6 +20558,7 @@ impl ::std::default::Default for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'_> 
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'a> {}
 impl<'a> PhysicalDeviceInvocationMaskFeaturesHUAWEI<'a> {
+    #[inline]
     pub fn invocation_mask(mut self, invocation_mask: bool) -> Self {
         self.invocation_mask = invocation_mask.into();
         self
@@ -19097,14 +20574,17 @@ pub struct CoarseSampleLocationNV {
     pub sample: u32,
 }
 impl CoarseSampleLocationNV {
+    #[inline]
     pub fn pixel_x(mut self, pixel_x: u32) -> Self {
         self.pixel_x = pixel_x;
         self
     }
+    #[inline]
     pub fn pixel_y(mut self, pixel_y: u32) -> Self {
         self.pixel_y = pixel_y;
         self
     }
+    #[inline]
     pub fn sample(mut self, sample: u32) -> Self {
         self.sample = sample;
         self
@@ -19133,14 +20613,17 @@ impl ::std::default::Default for CoarseSampleOrderCustomNV<'_> {
     }
 }
 impl<'a> CoarseSampleOrderCustomNV<'a> {
+    #[inline]
     pub fn shading_rate(mut self, shading_rate: ShadingRatePaletteEntryNV) -> Self {
         self.shading_rate = shading_rate;
         self
     }
+    #[inline]
     pub fn sample_count(mut self, sample_count: u32) -> Self {
         self.sample_count = sample_count;
         self
     }
+    #[inline]
     pub fn sample_locations(mut self, sample_locations: &'a [CoarseSampleLocationNV]) -> Self {
         self.sample_location_count = sample_locations.len() as _;
         self.p_sample_locations = sample_locations.as_ptr();
@@ -19176,10 +20659,12 @@ unsafe impl<'a> ExtendsPipelineViewportStateCreateInfo
 {
 }
 impl<'a> PipelineViewportCoarseSampleOrderStateCreateInfoNV<'a> {
+    #[inline]
     pub fn sample_order_type(mut self, sample_order_type: CoarseSampleOrderTypeNV) -> Self {
         self.sample_order_type = sample_order_type;
         self
     }
+    #[inline]
     pub fn custom_sample_orders(
         mut self,
         custom_sample_orders: &'a [CoarseSampleOrderCustomNV],
@@ -19214,10 +20699,12 @@ impl ::std::default::Default for PhysicalDeviceMeshShaderFeaturesNV<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMeshShaderFeaturesNV<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceMeshShaderFeaturesNV<'a> {}
 impl<'a> PhysicalDeviceMeshShaderFeaturesNV<'a> {
+    #[inline]
     pub fn task_shader(mut self, task_shader: bool) -> Self {
         self.task_shader = task_shader.into();
         self
     }
+    #[inline]
     pub fn mesh_shader(mut self, mesh_shader: bool) -> Self {
         self.mesh_shader = mesh_shader.into();
         self
@@ -19269,50 +20756,62 @@ impl ::std::default::Default for PhysicalDeviceMeshShaderPropertiesNV<'_> {
 }
 unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMeshShaderPropertiesNV<'a> {}
 impl<'a> PhysicalDeviceMeshShaderPropertiesNV<'a> {
+    #[inline]
     pub fn max_draw_mesh_tasks_count(mut self, max_draw_mesh_tasks_count: u32) -> Self {
         self.max_draw_mesh_tasks_count = max_draw_mesh_tasks_count;
         self
     }
+    #[inline]
     pub fn max_task_work_group_invocations(mut self, max_task_work_group_invocations: u32) -> Self {
         self.max_task_work_group_invocations = max_task_work_group_invocations;
         self
     }
+    #[inline]
     pub fn max_task_work_group_size(mut self, max_task_work_group_size: [u32; 3]) -> Self {
         self.max_task_work_group_size = max_task_work_group_size;
         self
     }
+    #[inline]
     pub fn max_task_total_memory_size(mut self, max_task_total_memory_size: u32) -> Self {
         self.max_task_total_memory_size = max_task_total_memory_size;
         self
     }
+    #[inline]
     pub fn max_task_output_count(mut self, max_task_output_count: u32) -> Self {
         self.max_task_output_count = max_task_output_count;
         self
     }
+    #[inline]
     pub fn max_mesh_work_group_invocations(mut self, max_mesh_work_group_invocations: u32) -> Self {
         self.max_mesh_work_group_invocations = max_mesh_work_group_invocations;
         self
     }
+    #[inline]
     pub fn max_mesh_work_group_size(mut self, max_mesh_work_group_size: [u32; 3]) -> Self {
         self.max_mesh_work_group_size = max_mesh_work_group_size;
         self
     }
+    #[inline]
     pub fn max_mesh_total_memory_size(mut self, max_mesh_total_memory_size: u32) -> Self {
         self.max_mesh_total_memory_size = max_mesh_total_memory_size;
         self
     }
+    #[inline]
     pub fn max_mesh_output_vertices(mut self, max_mesh_output_vertices: u32) -> Self {
         self.max_mesh_output_vertices = max_mesh_output_vertices;
         self
     }
+    #[inline]
     pub fn max_mesh_output_primitives(mut self, max_mesh_output_primitives: u32) -> Self {
         self.max_mesh_output_primitives = max_mesh_output_primitives;
         self
     }
+    #[inline]
     pub fn max_mesh_multiview_view_count(mut self, max_mesh_multiview_view_count: u32) -> Self {
         self.max_mesh_multiview_view_count = max_mesh_multiview_view_count;
         self
     }
+    #[inline]
     pub fn mesh_output_per_vertex_granularity(
         mut self,
         mesh_output_per_vertex_granularity: u32,
@@ -19320,6 +20819,7 @@ impl<'a> PhysicalDeviceMeshShaderPropertiesNV<'a> {
         self.mesh_output_per_vertex_granularity = mesh_output_per_vertex_granularity;
         self
     }
+    #[inline]
     pub fn mesh_output_per_primitive_granularity(
         mut self,
         mesh_output_per_primitive_granularity: u32,
@@ -19337,10 +20837,12 @@ pub struct DrawMeshTasksIndirectCommandNV {
     pub first_task: u32,
 }
 impl DrawMeshTasksIndirectCommandNV {
+    #[inline]
     pub fn task_count(mut self, task_count: u32) -> Self {
         self.task_count = task_count;
         self
     }
+    #[inline]
     pub fn first_task(mut self, first_task: u32) -> Self {
         self.first_task = first_task;
         self
@@ -19375,22 +20877,27 @@ impl ::std::default::Default for RayTracingShaderGroupCreateInfoNV<'_> {
     }
 }
 impl<'a> RayTracingShaderGroupCreateInfoNV<'a> {
+    #[inline]
     pub fn ty(mut self, ty: RayTracingShaderGroupTypeKHR) -> Self {
         self.ty = ty;
         self
     }
+    #[inline]
     pub fn general_shader(mut self, general_shader: u32) -> Self {
         self.general_shader = general_shader;
         self
     }
+    #[inline]
     pub fn closest_hit_shader(mut self, closest_hit_shader: u32) -> Self {
         self.closest_hit_shader = closest_hit_shader;
         self
     }
+    #[inline]
     pub fn any_hit_shader(mut self, any_hit_shader: u32) -> Self {
         self.any_hit_shader = any_hit_shader;
         self
     }
+    #[inline]
     pub fn intersection_shader(mut self, intersection_shader: u32) -> Self {
         self.intersection_shader = intersection_shader;
         self
@@ -19427,26 +20934,32 @@ impl ::std::default::Default for RayTracingShaderGroupCreateInfoKHR<'_> {
     }
 }
 impl<'a> RayTracingShaderGroupCreateInfoKHR<'a> {
+    #[inline]
     pub fn ty(mut self, ty: RayTracingShaderGroupTypeKHR) -> Self {
         self.ty = ty;
         self
     }
+    #[inline]
     pub fn general_shader(mut self, general_shader: u32) -> Self {
         self.general_shader = general_shader;
         self
     }
+    #[inline]
     pub fn closest_hit_shader(mut self, closest_hit_shader: u32) -> Self {
         self.closest_hit_shader = closest_hit_shader;
         self
     }
+    #[inline]
     pub fn any_hit_shader(mut self, any_hit_shader: u32) -> Self {
         self.any_hit_shader = any_hit_shader;
         self
     }
+    #[inline]
     pub fn intersection_shader(mut self, intersection_shader: u32) -> Self {
         self.intersection_shader = intersection_shader;
         self
     }
+    #[inline]
     pub fn shader_group_capture_replay_handle(
         mut self,
         shader_group_capture_replay_handle: *const c_void,
@@ -19493,32 +21006,39 @@ impl ::std::default::Default for RayTracingPipelineCreateInfoNV<'_> {
 }
 pub unsafe trait ExtendsRayTracingPipelineCreateInfoNV {}
 impl<'a> RayTracingPipelineCreateInfoNV<'a> {
+    #[inline]
     pub fn flags(mut self, flags: PipelineCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn stages(mut self, stages: &'a [PipelineShaderStageCreateInfo]) -> Self {
         self.stage_count = stages.len() as _;
         self.p_stages = stages.as_ptr();
         self
     }
+    #[inline]
     pub fn groups(mut self, groups: &'a [RayTracingShaderGroupCreateInfoNV]) -> Self {
         self.group_count = groups.len() as _;
         self.p_groups = groups.as_ptr();
         self
     }
+    #[inline]
     pub fn max_recursion_depth(mut self, max_recursion_depth: u32) -> Self {
         self.max_recursion_depth = max_recursion_depth;
         self
     }
+    #[inline]
     pub fn layout(mut self, layout: PipelineLayout) -> Self {
         self.layout = layout;
         self
     }
+    #[inline]
     pub fn base_pipeline_handle(mut self, base_pipeline_handle: Pipeline) -> Self {
         self.base_pipeline_handle = base_pipeline_handle;
         self
     }
+    #[inline]
     pub fn base_pipeline_index(mut self, base_pipeline_index: i32) -> Self {
         self.base_pipeline_index = base_pipeline_index;
         self
@@ -19582,20 +21102,24 @@ impl ::std::default::Default for RayTracingPipelineCreateInfoKHR<'_> {
 }
 pub unsafe trait ExtendsRayTracingPipelineCreateInfoKHR {}
 impl<'a> RayTracingPipelineCreateInfoKHR<'a> {
+    #[inline]
     pub fn flags(mut self, flags: PipelineCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn stages(mut self, stages: &'a [PipelineShaderStageCreateInfo]) -> Self {
         self.stage_count = stages.len() as _;
         self.p_stages = stages.as_ptr();
         self
     }
+    #[inline]
     pub fn groups(mut self, groups: &'a [RayTracingShaderGroupCreateInfoKHR]) -> Self {
         self.group_count = groups.len() as _;
         self.p_groups = groups.as_ptr();
         self
     }
+    #[inline]
     pub fn max_pipeline_ray_recursion_depth(
         mut self,
         max_pipeline_ray_recursion_depth: u32,
@@ -19603,10 +21127,12 @@ impl<'a> RayTracingPipelineCreateInfoKHR<'a> {
         self.max_pipeline_ray_recursion_depth = max_pipeline_ray_recursion_depth;
         self
     }
+    #[inline]
     pub fn library_info(mut self, library_info: &'a PipelineLibraryCreateInfoKHR<'a>) -> Self {
         self.p_library_info = library_info;
         self
     }
+    #[inline]
     pub fn library_interface(
         mut self,
         library_interface: &'a RayTracingPipelineInterfaceCreateInfoKHR<'a>,
@@ -19614,18 +21140,22 @@ impl<'a> RayTracingPipelineCreateInfoKHR<'a> {
         self.p_library_interface = library_interface;
         self
     }
+    #[inline]
     pub fn dynamic_state(mut self, dynamic_state: &'a PipelineDynamicStateCreateInfo<'a>) -> Self {
         self.p_dynamic_state = dynamic_state;
         self
     }
+    #[inline]
     pub fn layout(mut self, layout: PipelineLayout) -> Self {
         self.layout = layout;
         self
     }
+    #[inline]
     pub fn base_pipeline_handle(mut self, base_pipeline_handle: Pipeline) -> Self {
         self.base_pipeline_handle = base_pipeline_handle;
         self
     }
+    #[inline]
     pub fn base_pipeline_index(mut self, base_pipeline_index: i32) -> Self {
         self.base_pipeline_index = base_pipeline_index;
         self
@@ -19686,46 +21216,57 @@ impl ::std::default::Default for GeometryTrianglesNV<'_> {
     }
 }
 impl<'a> GeometryTrianglesNV<'a> {
+    #[inline]
     pub fn vertex_data(mut self, vertex_data: Buffer) -> Self {
         self.vertex_data = vertex_data;
         self
     }
+    #[inline]
     pub fn vertex_offset(mut self, vertex_offset: DeviceSize) -> Self {
         self.vertex_offset = vertex_offset;
         self
     }
+    #[inline]
     pub fn vertex_count(mut self, vertex_count: u32) -> Self {
         self.vertex_count = vertex_count;
         self
     }
+    #[inline]
     pub fn vertex_stride(mut self, vertex_stride: DeviceSize) -> Self {
         self.vertex_stride = vertex_stride;
         self
     }
+    #[inline]
     pub fn vertex_format(mut self, vertex_format: Format) -> Self {
         self.vertex_format = vertex_format;
         self
     }
+    #[inline]
     pub fn index_data(mut self, index_data: Buffer) -> Self {
         self.index_data = index_data;
         self
     }
+    #[inline]
     pub fn index_offset(mut self, index_offset: DeviceSize) -> Self {
         self.index_offset = index_offset;
         self
     }
+    #[inline]
     pub fn index_count(mut self, index_count: u32) -> Self {
         self.index_count = index_count;
         self
     }
+    #[inline]
     pub fn index_type(mut self, index_type: IndexType) -> Self {
         self.index_type = index_type;
         self
     }
+    #[inline]
     pub fn transform_data(mut self, transform_data: Buffer) -> Self {
         self.transform_data = transform_data;
         self
     }
+    #[inline]
     pub fn transform_offset(mut self, transform_offset: DeviceSize) -> Self {
         self.transform_offset = transform_offset;
         self
@@ -19758,18 +21299,22 @@ impl ::std::default::Default for GeometryAABBNV<'_> {
     }
 }
 impl<'a> GeometryAABBNV<'a> {
+    #[inline]
     pub fn aabb_data(mut self, aabb_data: Buffer) -> Self {
         self.aabb_data = aabb_data;
         self
     }
+    #[inline]
     pub fn num_aab_bs(mut self, num_aab_bs: u32) -> Self {
         self.num_aab_bs = num_aab_bs;
         self
     }
+    #[inline]
     pub fn stride(mut self, stride: u32) -> Self {
         self.stride = stride;
         self
     }
+    #[inline]
     pub fn offset(mut self, offset: DeviceSize) -> Self {
         self.offset = offset;
         self
@@ -19785,10 +21330,12 @@ pub struct GeometryDataNV<'a> {
     pub _marker: PhantomData<&'a ()>,
 }
 impl<'a> GeometryDataNV<'a> {
+    #[inline]
     pub fn triangles(mut self, triangles: GeometryTrianglesNV<'a>) -> Self {
         self.triangles = triangles;
         self
     }
+    #[inline]
     pub fn aabbs(mut self, aabbs: GeometryAABBNV<'a>) -> Self {
         self.aabbs = aabbs;
         self
@@ -19819,14 +21366,17 @@ impl ::std::default::Default for GeometryNV<'_> {
     }
 }
 impl<'a> GeometryNV<'a> {
+    #[inline]
     pub fn geometry_type(mut self, geometry_type: GeometryTypeKHR) -> Self {
         self.geometry_type = geometry_type;
         self
     }
+    #[inline]
     pub fn geometry(mut self, geometry: GeometryDataNV<'a>) -> Self {
         self.geometry = geometry;
         self
     }
+    #[inline]
     pub fn flags(mut self, flags: GeometryFlagsKHR) -> Self {
         self.flags = flags;
         self
@@ -19861,18 +21411,22 @@ impl ::std::default::Default for AccelerationStructureInfoNV<'_> {
     }
 }
 impl<'a> AccelerationStructureInfoNV<'a> {
+    #[inline]
     pub fn ty(mut self, ty: AccelerationStructureTypeNV) -> Self {
         self.ty = ty;
         self
     }
+    #[inline]
     pub fn flags(mut self, flags: BuildAccelerationStructureFlagsNV) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn instance_count(mut self, instance_count: u32) -> Self {
         self.instance_count = instance_count;
         self
     }
+    #[inline]
     pub fn geometries(mut self, geometries: &'a [GeometryNV]) -> Self {
         self.geometry_count = geometries.len() as _;
         self.p_geometries = geometries.as_ptr();
@@ -19902,10 +21456,12 @@ impl ::std::default::Default for AccelerationStructureCreateInfoNV<'_> {
     }
 }
 impl<'a> AccelerationStructureCreateInfoNV<'a> {
+    #[inline]
     pub fn compacted_size(mut self, compacted_size: DeviceSize) -> Self {
         self.compacted_size = compacted_size;
         self
     }
+    #[inline]
     pub fn info(mut self, info: AccelerationStructureInfoNV<'a>) -> Self {
         self.info = info;
         self
@@ -19940,6 +21496,7 @@ impl ::std::default::Default for BindAccelerationStructureMemoryInfoNV<'_> {
     }
 }
 impl<'a> BindAccelerationStructureMemoryInfoNV<'a> {
+    #[inline]
     pub fn acceleration_structure(
         mut self,
         acceleration_structure: AccelerationStructureNV,
@@ -19947,14 +21504,17 @@ impl<'a> BindAccelerationStructureMemoryInfoNV<'a> {
         self.acceleration_structure = acceleration_structure;
         self
     }
+    #[inline]
     pub fn memory(mut self, memory: DeviceMemory) -> Self {
         self.memory = memory;
         self
     }
+    #[inline]
     pub fn memory_offset(mut self, memory_offset: DeviceSize) -> Self {
         self.memory_offset = memory_offset;
         self
     }
+    #[inline]
     pub fn device_indices(mut self, device_indices: &'a [u32]) -> Self {
         self.device_index_count = device_indices.len() as _;
         self.p_device_indices = device_indices.as_ptr();
@@ -19985,6 +21545,7 @@ impl ::std::default::Default for WriteDescriptorSetAccelerationStructureKHR<'_> 
 }
 unsafe impl<'a> ExtendsWriteDescriptorSet for WriteDescriptorSetAccelerationStructureKHR<'a> {}
 impl<'a> WriteDescriptorSetAccelerationStructureKHR<'a> {
+    #[inline]
     pub fn acceleration_structures(
         mut self,
         acceleration_structures: &'a [AccelerationStructureKHR],
@@ -20018,6 +21579,7 @@ impl ::std::default::Default for WriteDescriptorSetAccelerationStructureNV<'_> {
 }
 unsafe impl<'a> ExtendsWriteDescriptorSet for WriteDescriptorSetAccelerationStructureNV<'a> {}
 impl<'a> WriteDescriptorSetAccelerationStructureNV<'a> {
+    #[inline]
     pub fn acceleration_structures(
         mut self,
         acceleration_structures: &'a [AccelerationStructureNV],
@@ -20050,10 +21612,12 @@ impl ::std::default::Default for AccelerationStructureMemoryRequirementsInfoNV<'
     }
 }
 impl<'a> AccelerationStructureMemoryRequirementsInfoNV<'a> {
+    #[inline]
     pub fn ty(mut self, ty: AccelerationStructureMemoryRequirementsTypeNV) -> Self {
         self.ty = ty;
         self
     }
+    #[inline]
     pub fn acceleration_structure(
         mut self,
         acceleration_structure: AccelerationStructureNV,
@@ -20096,10 +21660,12 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceAccelerationStructureFeaturesKHR<'a> {}
 impl<'a> PhysicalDeviceAccelerationStructureFeaturesKHR<'a> {
+    #[inline]
     pub fn acceleration_structure(mut self, acceleration_structure: bool) -> Self {
         self.acceleration_structure = acceleration_structure.into();
         self
     }
+    #[inline]
     pub fn acceleration_structure_capture_replay(
         mut self,
         acceleration_structure_capture_replay: bool,
@@ -20107,6 +21673,7 @@ impl<'a> PhysicalDeviceAccelerationStructureFeaturesKHR<'a> {
         self.acceleration_structure_capture_replay = acceleration_structure_capture_replay.into();
         self
     }
+    #[inline]
     pub fn acceleration_structure_indirect_build(
         mut self,
         acceleration_structure_indirect_build: bool,
@@ -20114,6 +21681,7 @@ impl<'a> PhysicalDeviceAccelerationStructureFeaturesKHR<'a> {
         self.acceleration_structure_indirect_build = acceleration_structure_indirect_build.into();
         self
     }
+    #[inline]
     pub fn acceleration_structure_host_commands(
         mut self,
         acceleration_structure_host_commands: bool,
@@ -20121,6 +21689,7 @@ impl<'a> PhysicalDeviceAccelerationStructureFeaturesKHR<'a> {
         self.acceleration_structure_host_commands = acceleration_structure_host_commands.into();
         self
     }
+    #[inline]
     pub fn descriptor_binding_acceleration_structure_update_after_bind(
         mut self,
         descriptor_binding_acceleration_structure_update_after_bind: bool,
@@ -20161,10 +21730,12 @@ impl ::std::default::Default for PhysicalDeviceRayTracingPipelineFeaturesKHR<'_>
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRayTracingPipelineFeaturesKHR<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceRayTracingPipelineFeaturesKHR<'a> {}
 impl<'a> PhysicalDeviceRayTracingPipelineFeaturesKHR<'a> {
+    #[inline]
     pub fn ray_tracing_pipeline(mut self, ray_tracing_pipeline: bool) -> Self {
         self.ray_tracing_pipeline = ray_tracing_pipeline.into();
         self
     }
+    #[inline]
     pub fn ray_tracing_pipeline_shader_group_handle_capture_replay(
         mut self,
         ray_tracing_pipeline_shader_group_handle_capture_replay: bool,
@@ -20173,6 +21744,7 @@ impl<'a> PhysicalDeviceRayTracingPipelineFeaturesKHR<'a> {
             ray_tracing_pipeline_shader_group_handle_capture_replay.into();
         self
     }
+    #[inline]
     pub fn ray_tracing_pipeline_shader_group_handle_capture_replay_mixed(
         mut self,
         ray_tracing_pipeline_shader_group_handle_capture_replay_mixed: bool,
@@ -20181,6 +21753,7 @@ impl<'a> PhysicalDeviceRayTracingPipelineFeaturesKHR<'a> {
             ray_tracing_pipeline_shader_group_handle_capture_replay_mixed.into();
         self
     }
+    #[inline]
     pub fn ray_tracing_pipeline_trace_rays_indirect(
         mut self,
         ray_tracing_pipeline_trace_rays_indirect: bool,
@@ -20189,6 +21762,7 @@ impl<'a> PhysicalDeviceRayTracingPipelineFeaturesKHR<'a> {
             ray_tracing_pipeline_trace_rays_indirect.into();
         self
     }
+    #[inline]
     pub fn ray_traversal_primitive_culling(
         mut self,
         ray_traversal_primitive_culling: bool,
@@ -20220,6 +21794,7 @@ impl ::std::default::Default for PhysicalDeviceRayQueryFeaturesKHR<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRayQueryFeaturesKHR<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceRayQueryFeaturesKHR<'a> {}
 impl<'a> PhysicalDeviceRayQueryFeaturesKHR<'a> {
+    #[inline]
     pub fn ray_query(mut self, ray_query: bool) -> Self {
         self.ray_query = ray_query.into();
         self
@@ -20264,18 +21839,22 @@ unsafe impl<'a> ExtendsPhysicalDeviceProperties2
 {
 }
 impl<'a> PhysicalDeviceAccelerationStructurePropertiesKHR<'a> {
+    #[inline]
     pub fn max_geometry_count(mut self, max_geometry_count: u64) -> Self {
         self.max_geometry_count = max_geometry_count;
         self
     }
+    #[inline]
     pub fn max_instance_count(mut self, max_instance_count: u64) -> Self {
         self.max_instance_count = max_instance_count;
         self
     }
+    #[inline]
     pub fn max_primitive_count(mut self, max_primitive_count: u64) -> Self {
         self.max_primitive_count = max_primitive_count;
         self
     }
+    #[inline]
     pub fn max_per_stage_descriptor_acceleration_structures(
         mut self,
         max_per_stage_descriptor_acceleration_structures: u32,
@@ -20284,6 +21863,7 @@ impl<'a> PhysicalDeviceAccelerationStructurePropertiesKHR<'a> {
             max_per_stage_descriptor_acceleration_structures;
         self
     }
+    #[inline]
     pub fn max_per_stage_descriptor_update_after_bind_acceleration_structures(
         mut self,
         max_per_stage_descriptor_update_after_bind_acceleration_structures: u32,
@@ -20292,6 +21872,7 @@ impl<'a> PhysicalDeviceAccelerationStructurePropertiesKHR<'a> {
             max_per_stage_descriptor_update_after_bind_acceleration_structures;
         self
     }
+    #[inline]
     pub fn max_descriptor_set_acceleration_structures(
         mut self,
         max_descriptor_set_acceleration_structures: u32,
@@ -20300,6 +21881,7 @@ impl<'a> PhysicalDeviceAccelerationStructurePropertiesKHR<'a> {
             max_descriptor_set_acceleration_structures;
         self
     }
+    #[inline]
     pub fn max_descriptor_set_update_after_bind_acceleration_structures(
         mut self,
         max_descriptor_set_update_after_bind_acceleration_structures: u32,
@@ -20308,6 +21890,7 @@ impl<'a> PhysicalDeviceAccelerationStructurePropertiesKHR<'a> {
             max_descriptor_set_update_after_bind_acceleration_structures;
         self
     }
+    #[inline]
     pub fn min_acceleration_structure_scratch_offset_alignment(
         mut self,
         min_acceleration_structure_scratch_offset_alignment: u32,
@@ -20356,22 +21939,27 @@ unsafe impl<'a> ExtendsPhysicalDeviceProperties2
 {
 }
 impl<'a> PhysicalDeviceRayTracingPipelinePropertiesKHR<'a> {
+    #[inline]
     pub fn shader_group_handle_size(mut self, shader_group_handle_size: u32) -> Self {
         self.shader_group_handle_size = shader_group_handle_size;
         self
     }
+    #[inline]
     pub fn max_ray_recursion_depth(mut self, max_ray_recursion_depth: u32) -> Self {
         self.max_ray_recursion_depth = max_ray_recursion_depth;
         self
     }
+    #[inline]
     pub fn max_shader_group_stride(mut self, max_shader_group_stride: u32) -> Self {
         self.max_shader_group_stride = max_shader_group_stride;
         self
     }
+    #[inline]
     pub fn shader_group_base_alignment(mut self, shader_group_base_alignment: u32) -> Self {
         self.shader_group_base_alignment = shader_group_base_alignment;
         self
     }
+    #[inline]
     pub fn shader_group_handle_capture_replay_size(
         mut self,
         shader_group_handle_capture_replay_size: u32,
@@ -20379,6 +21967,7 @@ impl<'a> PhysicalDeviceRayTracingPipelinePropertiesKHR<'a> {
         self.shader_group_handle_capture_replay_size = shader_group_handle_capture_replay_size;
         self
     }
+    #[inline]
     pub fn max_ray_dispatch_invocation_count(
         mut self,
         max_ray_dispatch_invocation_count: u32,
@@ -20386,10 +21975,12 @@ impl<'a> PhysicalDeviceRayTracingPipelinePropertiesKHR<'a> {
         self.max_ray_dispatch_invocation_count = max_ray_dispatch_invocation_count;
         self
     }
+    #[inline]
     pub fn shader_group_handle_alignment(mut self, shader_group_handle_alignment: u32) -> Self {
         self.shader_group_handle_alignment = shader_group_handle_alignment;
         self
     }
+    #[inline]
     pub fn max_ray_hit_attribute_size(mut self, max_ray_hit_attribute_size: u32) -> Self {
         self.max_ray_hit_attribute_size = max_ray_hit_attribute_size;
         self
@@ -20431,34 +22022,42 @@ impl ::std::default::Default for PhysicalDeviceRayTracingPropertiesNV<'_> {
 }
 unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceRayTracingPropertiesNV<'a> {}
 impl<'a> PhysicalDeviceRayTracingPropertiesNV<'a> {
+    #[inline]
     pub fn shader_group_handle_size(mut self, shader_group_handle_size: u32) -> Self {
         self.shader_group_handle_size = shader_group_handle_size;
         self
     }
+    #[inline]
     pub fn max_recursion_depth(mut self, max_recursion_depth: u32) -> Self {
         self.max_recursion_depth = max_recursion_depth;
         self
     }
+    #[inline]
     pub fn max_shader_group_stride(mut self, max_shader_group_stride: u32) -> Self {
         self.max_shader_group_stride = max_shader_group_stride;
         self
     }
+    #[inline]
     pub fn shader_group_base_alignment(mut self, shader_group_base_alignment: u32) -> Self {
         self.shader_group_base_alignment = shader_group_base_alignment;
         self
     }
+    #[inline]
     pub fn max_geometry_count(mut self, max_geometry_count: u64) -> Self {
         self.max_geometry_count = max_geometry_count;
         self
     }
+    #[inline]
     pub fn max_instance_count(mut self, max_instance_count: u64) -> Self {
         self.max_instance_count = max_instance_count;
         self
     }
+    #[inline]
     pub fn max_triangle_count(mut self, max_triangle_count: u64) -> Self {
         self.max_triangle_count = max_triangle_count;
         self
     }
+    #[inline]
     pub fn max_descriptor_set_acceleration_structures(
         mut self,
         max_descriptor_set_acceleration_structures: u32,
@@ -20478,14 +22077,17 @@ pub struct StridedDeviceAddressRegionKHR {
     pub size: DeviceSize,
 }
 impl StridedDeviceAddressRegionKHR {
+    #[inline]
     pub fn device_address(mut self, device_address: DeviceAddress) -> Self {
         self.device_address = device_address;
         self
     }
+    #[inline]
     pub fn stride(mut self, stride: DeviceSize) -> Self {
         self.stride = stride;
         self
     }
+    #[inline]
     pub fn size(mut self, size: DeviceSize) -> Self {
         self.size = size;
         self
@@ -20501,14 +22103,17 @@ pub struct TraceRaysIndirectCommandKHR {
     pub depth: u32,
 }
 impl TraceRaysIndirectCommandKHR {
+    #[inline]
     pub fn width(mut self, width: u32) -> Self {
         self.width = width;
         self
     }
+    #[inline]
     pub fn height(mut self, height: u32) -> Self {
         self.height = height;
         self
     }
+    #[inline]
     pub fn depth(mut self, depth: u32) -> Self {
         self.depth = depth;
         self
@@ -20538,6 +22143,7 @@ impl ::std::default::Default for DrmFormatModifierPropertiesListEXT<'_> {
 }
 unsafe impl<'a> ExtendsFormatProperties2 for DrmFormatModifierPropertiesListEXT<'a> {}
 impl<'a> DrmFormatModifierPropertiesListEXT<'a> {
+    #[inline]
     pub fn drm_format_modifier_properties(
         mut self,
         drm_format_modifier_properties: &'a mut [DrmFormatModifierPropertiesEXT],
@@ -20557,14 +22163,17 @@ pub struct DrmFormatModifierPropertiesEXT {
     pub drm_format_modifier_tiling_features: FormatFeatureFlags,
 }
 impl DrmFormatModifierPropertiesEXT {
+    #[inline]
     pub fn drm_format_modifier(mut self, drm_format_modifier: u64) -> Self {
         self.drm_format_modifier = drm_format_modifier;
         self
     }
+    #[inline]
     pub fn drm_format_modifier_plane_count(mut self, drm_format_modifier_plane_count: u32) -> Self {
         self.drm_format_modifier_plane_count = drm_format_modifier_plane_count;
         self
     }
+    #[inline]
     pub fn drm_format_modifier_tiling_features(
         mut self,
         drm_format_modifier_tiling_features: FormatFeatureFlags,
@@ -20604,14 +22213,17 @@ unsafe impl<'a> ExtendsPhysicalDeviceImageFormatInfo2
 {
 }
 impl<'a> PhysicalDeviceImageDrmFormatModifierInfoEXT<'a> {
+    #[inline]
     pub fn drm_format_modifier(mut self, drm_format_modifier: u64) -> Self {
         self.drm_format_modifier = drm_format_modifier;
         self
     }
+    #[inline]
     pub fn sharing_mode(mut self, sharing_mode: SharingMode) -> Self {
         self.sharing_mode = sharing_mode;
         self
     }
+    #[inline]
     pub fn queue_family_indices(mut self, queue_family_indices: &'a [u32]) -> Self {
         self.queue_family_index_count = queue_family_indices.len() as _;
         self.p_queue_family_indices = queue_family_indices.as_ptr();
@@ -20642,6 +22254,7 @@ impl ::std::default::Default for ImageDrmFormatModifierListCreateInfoEXT<'_> {
 }
 unsafe impl<'a> ExtendsImageCreateInfo for ImageDrmFormatModifierListCreateInfoEXT<'a> {}
 impl<'a> ImageDrmFormatModifierListCreateInfoEXT<'a> {
+    #[inline]
     pub fn drm_format_modifiers(mut self, drm_format_modifiers: &'a [u64]) -> Self {
         self.drm_format_modifier_count = drm_format_modifiers.len() as _;
         self.p_drm_format_modifiers = drm_format_modifiers.as_ptr();
@@ -20674,10 +22287,12 @@ impl ::std::default::Default for ImageDrmFormatModifierExplicitCreateInfoEXT<'_>
 }
 unsafe impl<'a> ExtendsImageCreateInfo for ImageDrmFormatModifierExplicitCreateInfoEXT<'a> {}
 impl<'a> ImageDrmFormatModifierExplicitCreateInfoEXT<'a> {
+    #[inline]
     pub fn drm_format_modifier(mut self, drm_format_modifier: u64) -> Self {
         self.drm_format_modifier = drm_format_modifier;
         self
     }
+    #[inline]
     pub fn plane_layouts(mut self, plane_layouts: &'a [SubresourceLayout]) -> Self {
         self.drm_format_modifier_plane_count = plane_layouts.len() as _;
         self.p_plane_layouts = plane_layouts.as_ptr();
@@ -20705,6 +22320,7 @@ impl ::std::default::Default for ImageDrmFormatModifierPropertiesEXT<'_> {
     }
 }
 impl<'a> ImageDrmFormatModifierPropertiesEXT<'a> {
+    #[inline]
     pub fn drm_format_modifier(mut self, drm_format_modifier: u64) -> Self {
         self.drm_format_modifier = drm_format_modifier;
         self
@@ -20733,6 +22349,7 @@ impl ::std::default::Default for ImageStencilUsageCreateInfo<'_> {
 unsafe impl<'a> ExtendsImageCreateInfo for ImageStencilUsageCreateInfo<'a> {}
 unsafe impl<'a> ExtendsPhysicalDeviceImageFormatInfo2 for ImageStencilUsageCreateInfo<'a> {}
 impl<'a> ImageStencilUsageCreateInfo<'a> {
+    #[inline]
     pub fn stencil_usage(mut self, stencil_usage: ImageUsageFlags) -> Self {
         self.stencil_usage = stencil_usage;
         self
@@ -20760,6 +22377,7 @@ impl ::std::default::Default for DeviceMemoryOverallocationCreateInfoAMD<'_> {
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for DeviceMemoryOverallocationCreateInfoAMD<'a> {}
 impl<'a> DeviceMemoryOverallocationCreateInfoAMD<'a> {
+    #[inline]
     pub fn overallocation_behavior(
         mut self,
         overallocation_behavior: MemoryOverallocationBehaviorAMD,
@@ -20795,14 +22413,17 @@ impl ::std::default::Default for PhysicalDeviceFragmentDensityMapFeaturesEXT<'_>
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceFragmentDensityMapFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceFragmentDensityMapFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceFragmentDensityMapFeaturesEXT<'a> {
+    #[inline]
     pub fn fragment_density_map(mut self, fragment_density_map: bool) -> Self {
         self.fragment_density_map = fragment_density_map.into();
         self
     }
+    #[inline]
     pub fn fragment_density_map_dynamic(mut self, fragment_density_map_dynamic: bool) -> Self {
         self.fragment_density_map_dynamic = fragment_density_map_dynamic.into();
         self
     }
+    #[inline]
     pub fn fragment_density_map_non_subsampled_images(
         mut self,
         fragment_density_map_non_subsampled_images: bool,
@@ -20838,6 +22459,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceFragmentDensityMap2FeaturesEXT<'a> {
+    #[inline]
     pub fn fragment_density_map_deferred(mut self, fragment_density_map_deferred: bool) -> Self {
         self.fragment_density_map_deferred = fragment_density_map_deferred.into();
         self
@@ -20869,6 +22491,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'a> {}
 impl<'a> PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'a> {
+    #[inline]
     pub fn fragment_density_map_offset(mut self, fragment_density_map_offset: bool) -> Self {
         self.fragment_density_map_offset = fragment_density_map_offset.into();
         self
@@ -20903,6 +22526,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceProperties2
 {
 }
 impl<'a> PhysicalDeviceFragmentDensityMapPropertiesEXT<'a> {
+    #[inline]
     pub fn min_fragment_density_texel_size(
         mut self,
         min_fragment_density_texel_size: Extent2D,
@@ -20910,6 +22534,7 @@ impl<'a> PhysicalDeviceFragmentDensityMapPropertiesEXT<'a> {
         self.min_fragment_density_texel_size = min_fragment_density_texel_size;
         self
     }
+    #[inline]
     pub fn max_fragment_density_texel_size(
         mut self,
         max_fragment_density_texel_size: Extent2D,
@@ -20917,6 +22542,7 @@ impl<'a> PhysicalDeviceFragmentDensityMapPropertiesEXT<'a> {
         self.max_fragment_density_texel_size = max_fragment_density_texel_size;
         self
     }
+    #[inline]
     pub fn fragment_density_invocations(mut self, fragment_density_invocations: bool) -> Self {
         self.fragment_density_invocations = fragment_density_invocations.into();
         self
@@ -20953,10 +22579,12 @@ unsafe impl<'a> ExtendsPhysicalDeviceProperties2
 {
 }
 impl<'a> PhysicalDeviceFragmentDensityMap2PropertiesEXT<'a> {
+    #[inline]
     pub fn subsampled_loads(mut self, subsampled_loads: bool) -> Self {
         self.subsampled_loads = subsampled_loads.into();
         self
     }
+    #[inline]
     pub fn subsampled_coarse_reconstruction_early_access(
         mut self,
         subsampled_coarse_reconstruction_early_access: bool,
@@ -20965,10 +22593,12 @@ impl<'a> PhysicalDeviceFragmentDensityMap2PropertiesEXT<'a> {
             subsampled_coarse_reconstruction_early_access.into();
         self
     }
+    #[inline]
     pub fn max_subsampled_array_layers(mut self, max_subsampled_array_layers: u32) -> Self {
         self.max_subsampled_array_layers = max_subsampled_array_layers;
         self
     }
+    #[inline]
     pub fn max_descriptor_set_subsampled_samplers(
         mut self,
         max_descriptor_set_subsampled_samplers: u32,
@@ -21002,6 +22632,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceProperties2
 {
 }
 impl<'a> PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM<'a> {
+    #[inline]
     pub fn fragment_density_offset_granularity(
         mut self,
         fragment_density_offset_granularity: Extent2D,
@@ -21033,6 +22664,7 @@ impl ::std::default::Default for RenderPassFragmentDensityMapCreateInfoEXT<'_> {
 unsafe impl<'a> ExtendsRenderPassCreateInfo for RenderPassFragmentDensityMapCreateInfoEXT<'a> {}
 unsafe impl<'a> ExtendsRenderPassCreateInfo2 for RenderPassFragmentDensityMapCreateInfoEXT<'a> {}
 impl<'a> RenderPassFragmentDensityMapCreateInfoEXT<'a> {
+    #[inline]
     pub fn fragment_density_map_attachment(
         mut self,
         fragment_density_map_attachment: AttachmentReference,
@@ -21065,6 +22697,7 @@ impl ::std::default::Default for SubpassFragmentDensityMapOffsetEndInfoQCOM<'_> 
 }
 unsafe impl<'a> ExtendsSubpassEndInfo for SubpassFragmentDensityMapOffsetEndInfoQCOM<'a> {}
 impl<'a> SubpassFragmentDensityMapOffsetEndInfoQCOM<'a> {
+    #[inline]
     pub fn fragment_density_offsets(mut self, fragment_density_offsets: &'a [Offset2D]) -> Self {
         self.fragment_density_offset_count = fragment_density_offsets.len() as _;
         self.p_fragment_density_offsets = fragment_density_offsets.as_ptr();
@@ -21094,6 +22727,7 @@ impl ::std::default::Default for PhysicalDeviceScalarBlockLayoutFeatures<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceScalarBlockLayoutFeatures<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceScalarBlockLayoutFeatures<'a> {}
 impl<'a> PhysicalDeviceScalarBlockLayoutFeatures<'a> {
+    #[inline]
     pub fn scalar_block_layout(mut self, scalar_block_layout: bool) -> Self {
         self.scalar_block_layout = scalar_block_layout.into();
         self
@@ -21121,6 +22755,7 @@ impl ::std::default::Default for SurfaceProtectedCapabilitiesKHR<'_> {
 }
 unsafe impl<'a> ExtendsSurfaceCapabilities2KHR for SurfaceProtectedCapabilitiesKHR<'a> {}
 impl<'a> SurfaceProtectedCapabilitiesKHR<'a> {
+    #[inline]
     pub fn supports_protected(mut self, supports_protected: bool) -> Self {
         self.supports_protected = supports_protected.into();
         self
@@ -21152,6 +22787,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceUniformBufferStandardLayoutFeatures<'a> {}
 impl<'a> PhysicalDeviceUniformBufferStandardLayoutFeatures<'a> {
+    #[inline]
     pub fn uniform_buffer_standard_layout(mut self, uniform_buffer_standard_layout: bool) -> Self {
         self.uniform_buffer_standard_layout = uniform_buffer_standard_layout.into();
         self
@@ -21180,6 +22816,7 @@ impl ::std::default::Default for PhysicalDeviceDepthClipEnableFeaturesEXT<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDepthClipEnableFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceDepthClipEnableFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceDepthClipEnableFeaturesEXT<'a> {
+    #[inline]
     pub fn depth_clip_enable(mut self, depth_clip_enable: bool) -> Self {
         self.depth_clip_enable = depth_clip_enable.into();
         self
@@ -21212,10 +22849,12 @@ unsafe impl<'a> ExtendsPipelineRasterizationStateCreateInfo
 {
 }
 impl<'a> PipelineRasterizationDepthClipStateCreateInfoEXT<'a> {
+    #[inline]
     pub fn flags(mut self, flags: PipelineRasterizationDepthClipStateCreateFlagsEXT) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn depth_clip_enable(mut self, depth_clip_enable: bool) -> Self {
         self.depth_clip_enable = depth_clip_enable.into();
         self
@@ -21248,10 +22887,12 @@ unsafe impl<'a> ExtendsPhysicalDeviceMemoryProperties2
 {
 }
 impl<'a> PhysicalDeviceMemoryBudgetPropertiesEXT<'a> {
+    #[inline]
     pub fn heap_budget(mut self, heap_budget: [DeviceSize; MAX_MEMORY_HEAPS]) -> Self {
         self.heap_budget = heap_budget;
         self
     }
+    #[inline]
     pub fn heap_usage(mut self, heap_usage: [DeviceSize; MAX_MEMORY_HEAPS]) -> Self {
         self.heap_usage = heap_usage;
         self
@@ -21280,6 +22921,7 @@ impl ::std::default::Default for PhysicalDeviceMemoryPriorityFeaturesEXT<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMemoryPriorityFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceMemoryPriorityFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceMemoryPriorityFeaturesEXT<'a> {
+    #[inline]
     pub fn memory_priority(mut self, memory_priority: bool) -> Self {
         self.memory_priority = memory_priority.into();
         self
@@ -21307,6 +22949,7 @@ impl ::std::default::Default for MemoryPriorityAllocateInfoEXT<'_> {
 }
 unsafe impl<'a> ExtendsMemoryAllocateInfo for MemoryPriorityAllocateInfoEXT<'a> {}
 impl<'a> MemoryPriorityAllocateInfoEXT<'a> {
+    #[inline]
     pub fn priority(mut self, priority: f32) -> Self {
         self.priority = priority;
         self
@@ -21338,6 +22981,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'a> {}
 impl<'a> PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'a> {
+    #[inline]
     pub fn pageable_device_local_memory(mut self, pageable_device_local_memory: bool) -> Self {
         self.pageable_device_local_memory = pageable_device_local_memory.into();
         self
@@ -21370,10 +23014,12 @@ impl ::std::default::Default for PhysicalDeviceBufferDeviceAddressFeatures<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceBufferDeviceAddressFeatures<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceBufferDeviceAddressFeatures<'a> {}
 impl<'a> PhysicalDeviceBufferDeviceAddressFeatures<'a> {
+    #[inline]
     pub fn buffer_device_address(mut self, buffer_device_address: bool) -> Self {
         self.buffer_device_address = buffer_device_address.into();
         self
     }
+    #[inline]
     pub fn buffer_device_address_capture_replay(
         mut self,
         buffer_device_address_capture_replay: bool,
@@ -21381,6 +23027,7 @@ impl<'a> PhysicalDeviceBufferDeviceAddressFeatures<'a> {
         self.buffer_device_address_capture_replay = buffer_device_address_capture_replay.into();
         self
     }
+    #[inline]
     pub fn buffer_device_address_multi_device(
         mut self,
         buffer_device_address_multi_device: bool,
@@ -21419,10 +23066,12 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceBufferDeviceAddressFeaturesEXT<'a> {
+    #[inline]
     pub fn buffer_device_address(mut self, buffer_device_address: bool) -> Self {
         self.buffer_device_address = buffer_device_address.into();
         self
     }
+    #[inline]
     pub fn buffer_device_address_capture_replay(
         mut self,
         buffer_device_address_capture_replay: bool,
@@ -21430,6 +23079,7 @@ impl<'a> PhysicalDeviceBufferDeviceAddressFeaturesEXT<'a> {
         self.buffer_device_address_capture_replay = buffer_device_address_capture_replay.into();
         self
     }
+    #[inline]
     pub fn buffer_device_address_multi_device(
         mut self,
         buffer_device_address_multi_device: bool,
@@ -21459,6 +23109,7 @@ impl ::std::default::Default for BufferDeviceAddressInfo<'_> {
     }
 }
 impl<'a> BufferDeviceAddressInfo<'a> {
+    #[inline]
     pub fn buffer(mut self, buffer: Buffer) -> Self {
         self.buffer = buffer;
         self
@@ -21486,6 +23137,7 @@ impl ::std::default::Default for BufferOpaqueCaptureAddressCreateInfo<'_> {
 }
 unsafe impl<'a> ExtendsBufferCreateInfo for BufferOpaqueCaptureAddressCreateInfo<'a> {}
 impl<'a> BufferOpaqueCaptureAddressCreateInfo<'a> {
+    #[inline]
     pub fn opaque_capture_address(mut self, opaque_capture_address: u64) -> Self {
         self.opaque_capture_address = opaque_capture_address;
         self
@@ -21513,6 +23165,7 @@ impl ::std::default::Default for BufferDeviceAddressCreateInfoEXT<'_> {
 }
 unsafe impl<'a> ExtendsBufferCreateInfo for BufferDeviceAddressCreateInfoEXT<'a> {}
 impl<'a> BufferDeviceAddressCreateInfoEXT<'a> {
+    #[inline]
     pub fn device_address(mut self, device_address: DeviceAddress) -> Self {
         self.device_address = device_address;
         self
@@ -21543,6 +23196,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceImageFormatInfo2
 {
 }
 impl<'a> PhysicalDeviceImageViewImageFormatInfoEXT<'a> {
+    #[inline]
     pub fn image_view_type(mut self, image_view_type: ImageViewType) -> Self {
         self.image_view_type = image_view_type;
         self
@@ -21572,10 +23226,12 @@ impl ::std::default::Default for FilterCubicImageViewImageFormatPropertiesEXT<'_
 }
 unsafe impl<'a> ExtendsImageFormatProperties2 for FilterCubicImageViewImageFormatPropertiesEXT<'a> {}
 impl<'a> FilterCubicImageViewImageFormatPropertiesEXT<'a> {
+    #[inline]
     pub fn filter_cubic(mut self, filter_cubic: bool) -> Self {
         self.filter_cubic = filter_cubic.into();
         self
     }
+    #[inline]
     pub fn filter_cubic_minmax(mut self, filter_cubic_minmax: bool) -> Self {
         self.filter_cubic_minmax = filter_cubic_minmax.into();
         self
@@ -21604,6 +23260,7 @@ impl ::std::default::Default for PhysicalDeviceImagelessFramebufferFeatures<'_> 
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImagelessFramebufferFeatures<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceImagelessFramebufferFeatures<'a> {}
 impl<'a> PhysicalDeviceImagelessFramebufferFeatures<'a> {
+    #[inline]
     pub fn imageless_framebuffer(mut self, imageless_framebuffer: bool) -> Self {
         self.imageless_framebuffer = imageless_framebuffer.into();
         self
@@ -21633,6 +23290,7 @@ impl ::std::default::Default for FramebufferAttachmentsCreateInfo<'_> {
 }
 unsafe impl<'a> ExtendsFramebufferCreateInfo for FramebufferAttachmentsCreateInfo<'a> {}
 impl<'a> FramebufferAttachmentsCreateInfo<'a> {
+    #[inline]
     pub fn attachment_image_infos(
         mut self,
         attachment_image_infos: &'a [FramebufferAttachmentImageInfo],
@@ -21675,26 +23333,32 @@ impl ::std::default::Default for FramebufferAttachmentImageInfo<'_> {
     }
 }
 impl<'a> FramebufferAttachmentImageInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: ImageCreateFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn usage(mut self, usage: ImageUsageFlags) -> Self {
         self.usage = usage;
         self
     }
+    #[inline]
     pub fn width(mut self, width: u32) -> Self {
         self.width = width;
         self
     }
+    #[inline]
     pub fn height(mut self, height: u32) -> Self {
         self.height = height;
         self
     }
+    #[inline]
     pub fn layer_count(mut self, layer_count: u32) -> Self {
         self.layer_count = layer_count;
         self
     }
+    #[inline]
     pub fn view_formats(mut self, view_formats: &'a [Format]) -> Self {
         self.view_format_count = view_formats.len() as _;
         self.p_view_formats = view_formats.as_ptr();
@@ -21725,6 +23389,7 @@ impl ::std::default::Default for RenderPassAttachmentBeginInfo<'_> {
 }
 unsafe impl<'a> ExtendsRenderPassBeginInfo for RenderPassAttachmentBeginInfo<'a> {}
 impl<'a> RenderPassAttachmentBeginInfo<'a> {
+    #[inline]
     pub fn attachments(mut self, attachments: &'a [ImageView]) -> Self {
         self.attachment_count = attachments.len() as _;
         self.p_attachments = attachments.as_ptr();
@@ -21757,6 +23422,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceTextureCompressionASTCHDRFeatures<'a> {}
 impl<'a> PhysicalDeviceTextureCompressionASTCHDRFeatures<'a> {
+    #[inline]
     pub fn texture_compression_astc_hdr(mut self, texture_compression_astc_hdr: bool) -> Self {
         self.texture_compression_astc_hdr = texture_compression_astc_hdr.into();
         self
@@ -21787,10 +23453,12 @@ impl ::std::default::Default for PhysicalDeviceCooperativeMatrixFeaturesNV<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCooperativeMatrixFeaturesNV<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceCooperativeMatrixFeaturesNV<'a> {}
 impl<'a> PhysicalDeviceCooperativeMatrixFeaturesNV<'a> {
+    #[inline]
     pub fn cooperative_matrix(mut self, cooperative_matrix: bool) -> Self {
         self.cooperative_matrix = cooperative_matrix.into();
         self
     }
+    #[inline]
     pub fn cooperative_matrix_robust_buffer_access(
         mut self,
         cooperative_matrix_robust_buffer_access: bool,
@@ -21825,6 +23493,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceProperties2
 {
 }
 impl<'a> PhysicalDeviceCooperativeMatrixPropertiesNV<'a> {
+    #[inline]
     pub fn cooperative_matrix_supported_stages(
         mut self,
         cooperative_matrix_supported_stages: ShaderStageFlags,
@@ -21868,34 +23537,42 @@ impl ::std::default::Default for CooperativeMatrixPropertiesNV<'_> {
     }
 }
 impl<'a> CooperativeMatrixPropertiesNV<'a> {
+    #[inline]
     pub fn m_size(mut self, m_size: u32) -> Self {
         self.m_size = m_size;
         self
     }
+    #[inline]
     pub fn n_size(mut self, n_size: u32) -> Self {
         self.n_size = n_size;
         self
     }
+    #[inline]
     pub fn k_size(mut self, k_size: u32) -> Self {
         self.k_size = k_size;
         self
     }
+    #[inline]
     pub fn a_type(mut self, a_type: ComponentTypeNV) -> Self {
         self.a_type = a_type;
         self
     }
+    #[inline]
     pub fn b_type(mut self, b_type: ComponentTypeNV) -> Self {
         self.b_type = b_type;
         self
     }
+    #[inline]
     pub fn c_type(mut self, c_type: ComponentTypeNV) -> Self {
         self.c_type = c_type;
         self
     }
+    #[inline]
     pub fn d_type(mut self, d_type: ComponentTypeNV) -> Self {
         self.d_type = d_type;
         self
     }
+    #[inline]
     pub fn scope(mut self, scope: ScopeNV) -> Self {
         self.scope = scope;
         self
@@ -21924,6 +23601,7 @@ impl ::std::default::Default for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceYcbcrImageArraysFeaturesEXT<'a> {
+    #[inline]
     pub fn ycbcr_image_arrays(mut self, ycbcr_image_arrays: bool) -> Self {
         self.ycbcr_image_arrays = ycbcr_image_arrays.into();
         self
@@ -21954,14 +23632,17 @@ impl ::std::default::Default for ImageViewHandleInfoNVX<'_> {
     }
 }
 impl<'a> ImageViewHandleInfoNVX<'a> {
+    #[inline]
     pub fn image_view(mut self, image_view: ImageView) -> Self {
         self.image_view = image_view;
         self
     }
+    #[inline]
     pub fn descriptor_type(mut self, descriptor_type: DescriptorType) -> Self {
         self.descriptor_type = descriptor_type;
         self
     }
+    #[inline]
     pub fn sampler(mut self, sampler: Sampler) -> Self {
         self.sampler = sampler;
         self
@@ -21990,10 +23671,12 @@ impl ::std::default::Default for ImageViewAddressPropertiesNVX<'_> {
     }
 }
 impl<'a> ImageViewAddressPropertiesNVX<'a> {
+    #[inline]
     pub fn device_address(mut self, device_address: DeviceAddress) -> Self {
         self.device_address = device_address;
         self
     }
+    #[inline]
     pub fn size(mut self, size: DeviceSize) -> Self {
         self.size = size;
         self
@@ -22021,6 +23704,7 @@ impl ::std::default::Default for PresentFrameTokenGGP<'_> {
 }
 unsafe impl<'a> ExtendsPresentInfoKHR for PresentFrameTokenGGP<'a> {}
 impl<'a> PresentFrameTokenGGP<'a> {
+    #[inline]
     pub fn frame_token(mut self, frame_token: GgpFrameToken) -> Self {
         self.frame_token = frame_token;
         self
@@ -22035,10 +23719,12 @@ pub struct PipelineCreationFeedback {
     pub duration: u64,
 }
 impl PipelineCreationFeedback {
+    #[inline]
     pub fn flags(mut self, flags: PipelineCreationFeedbackFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn duration(mut self, duration: u64) -> Self {
         self.duration = duration;
         self
@@ -22073,6 +23759,7 @@ unsafe impl<'a> ExtendsComputePipelineCreateInfo for PipelineCreationFeedbackCre
 unsafe impl<'a> ExtendsRayTracingPipelineCreateInfoNV for PipelineCreationFeedbackCreateInfo<'a> {}
 unsafe impl<'a> ExtendsRayTracingPipelineCreateInfoKHR for PipelineCreationFeedbackCreateInfo<'a> {}
 impl<'a> PipelineCreationFeedbackCreateInfo<'a> {
+    #[inline]
     pub fn pipeline_creation_feedback(
         mut self,
         pipeline_creation_feedback: &'a mut PipelineCreationFeedback,
@@ -22080,6 +23767,7 @@ impl<'a> PipelineCreationFeedbackCreateInfo<'a> {
         self.p_pipeline_creation_feedback = pipeline_creation_feedback;
         self
     }
+    #[inline]
     pub fn pipeline_stage_creation_feedbacks(
         mut self,
         pipeline_stage_creation_feedbacks: &'a mut [PipelineCreationFeedback],
@@ -22112,6 +23800,7 @@ impl ::std::default::Default for SurfaceFullScreenExclusiveInfoEXT<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceSurfaceInfo2KHR for SurfaceFullScreenExclusiveInfoEXT<'a> {}
 unsafe impl<'a> ExtendsSwapchainCreateInfoKHR for SurfaceFullScreenExclusiveInfoEXT<'a> {}
 impl<'a> SurfaceFullScreenExclusiveInfoEXT<'a> {
+    #[inline]
     pub fn full_screen_exclusive(mut self, full_screen_exclusive: FullScreenExclusiveEXT) -> Self {
         self.full_screen_exclusive = full_screen_exclusive;
         self
@@ -22143,6 +23832,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceSurfaceInfo2KHR
 }
 unsafe impl<'a> ExtendsSwapchainCreateInfoKHR for SurfaceFullScreenExclusiveWin32InfoEXT<'a> {}
 impl<'a> SurfaceFullScreenExclusiveWin32InfoEXT<'a> {
+    #[inline]
     pub fn hmonitor(mut self, hmonitor: HMONITOR) -> Self {
         self.hmonitor = hmonitor;
         self
@@ -22170,6 +23860,7 @@ impl ::std::default::Default for SurfaceCapabilitiesFullScreenExclusiveEXT<'_> {
 }
 unsafe impl<'a> ExtendsSurfaceCapabilities2KHR for SurfaceCapabilitiesFullScreenExclusiveEXT<'a> {}
 impl<'a> SurfaceCapabilitiesFullScreenExclusiveEXT<'a> {
+    #[inline]
     pub fn full_screen_exclusive_supported(
         mut self,
         full_screen_exclusive_supported: bool,
@@ -22203,6 +23894,7 @@ impl ::std::default::Default for PhysicalDevicePerformanceQueryFeaturesKHR<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePerformanceQueryFeaturesKHR<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDevicePerformanceQueryFeaturesKHR<'a> {}
 impl<'a> PhysicalDevicePerformanceQueryFeaturesKHR<'a> {
+    #[inline]
     pub fn performance_counter_query_pools(
         mut self,
         performance_counter_query_pools: bool,
@@ -22210,6 +23902,7 @@ impl<'a> PhysicalDevicePerformanceQueryFeaturesKHR<'a> {
         self.performance_counter_query_pools = performance_counter_query_pools.into();
         self
     }
+    #[inline]
     pub fn performance_counter_multiple_query_pools(
         mut self,
         performance_counter_multiple_query_pools: bool,
@@ -22244,6 +23937,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceProperties2
 {
 }
 impl<'a> PhysicalDevicePerformanceQueryPropertiesKHR<'a> {
+    #[inline]
     pub fn allow_command_buffer_query_copies(
         mut self,
         allow_command_buffer_query_copies: bool,
@@ -22279,18 +23973,22 @@ impl ::std::default::Default for PerformanceCounterKHR<'_> {
     }
 }
 impl<'a> PerformanceCounterKHR<'a> {
+    #[inline]
     pub fn unit(mut self, unit: PerformanceCounterUnitKHR) -> Self {
         self.unit = unit;
         self
     }
+    #[inline]
     pub fn scope(mut self, scope: PerformanceCounterScopeKHR) -> Self {
         self.scope = scope;
         self
     }
+    #[inline]
     pub fn storage(mut self, storage: PerformanceCounterStorageKHR) -> Self {
         self.storage = storage;
         self
     }
+    #[inline]
     pub fn uuid(mut self, uuid: [u8; UUID_SIZE]) -> Self {
         self.uuid = uuid;
         self
@@ -22341,18 +24039,22 @@ impl ::std::default::Default for PerformanceCounterDescriptionKHR<'_> {
     }
 }
 impl<'a> PerformanceCounterDescriptionKHR<'a> {
+    #[inline]
     pub fn flags(mut self, flags: PerformanceCounterDescriptionFlagsKHR) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn name(mut self, name: [c_char; MAX_DESCRIPTION_SIZE]) -> Self {
         self.name = name;
         self
     }
+    #[inline]
     pub fn category(mut self, category: [c_char; MAX_DESCRIPTION_SIZE]) -> Self {
         self.category = category;
         self
     }
+    #[inline]
     pub fn description(mut self, description: [c_char; MAX_DESCRIPTION_SIZE]) -> Self {
         self.description = description;
         self
@@ -22384,10 +24086,12 @@ impl ::std::default::Default for QueryPoolPerformanceCreateInfoKHR<'_> {
 }
 unsafe impl<'a> ExtendsQueryPoolCreateInfo for QueryPoolPerformanceCreateInfoKHR<'a> {}
 impl<'a> QueryPoolPerformanceCreateInfoKHR<'a> {
+    #[inline]
     pub fn queue_family_index(mut self, queue_family_index: u32) -> Self {
         self.queue_family_index = queue_family_index;
         self
     }
+    #[inline]
     pub fn counter_indices(mut self, counter_indices: &'a [u32]) -> Self {
         self.counter_index_count = counter_indices.len() as _;
         self.p_counter_indices = counter_indices.as_ptr();
@@ -22433,10 +24137,12 @@ impl ::std::default::Default for AcquireProfilingLockInfoKHR<'_> {
     }
 }
 impl<'a> AcquireProfilingLockInfoKHR<'a> {
+    #[inline]
     pub fn flags(mut self, flags: AcquireProfilingLockFlagsKHR) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn timeout(mut self, timeout: u64) -> Self {
         self.timeout = timeout;
         self
@@ -22465,6 +24171,7 @@ impl ::std::default::Default for PerformanceQuerySubmitInfoKHR<'_> {
 unsafe impl<'a> ExtendsSubmitInfo for PerformanceQuerySubmitInfoKHR<'a> {}
 unsafe impl<'a> ExtendsSubmitInfo2 for PerformanceQuerySubmitInfoKHR<'a> {}
 impl<'a> PerformanceQuerySubmitInfoKHR<'a> {
+    #[inline]
     pub fn counter_pass_index(mut self, counter_pass_index: u32) -> Self {
         self.counter_pass_index = counter_pass_index;
         self
@@ -22491,6 +24198,7 @@ impl ::std::default::Default for HeadlessSurfaceCreateInfoEXT<'_> {
     }
 }
 impl<'a> HeadlessSurfaceCreateInfoEXT<'a> {
+    #[inline]
     pub fn flags(mut self, flags: HeadlessSurfaceCreateFlagsEXT) -> Self {
         self.flags = flags;
         self
@@ -22522,6 +24230,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceCoverageReductionModeFeaturesNV<'a> {}
 impl<'a> PhysicalDeviceCoverageReductionModeFeaturesNV<'a> {
+    #[inline]
     pub fn coverage_reduction_mode(mut self, coverage_reduction_mode: bool) -> Self {
         self.coverage_reduction_mode = coverage_reduction_mode.into();
         self
@@ -22554,10 +24263,12 @@ unsafe impl<'a> ExtendsPipelineMultisampleStateCreateInfo
 {
 }
 impl<'a> PipelineCoverageReductionStateCreateInfoNV<'a> {
+    #[inline]
     pub fn flags(mut self, flags: PipelineCoverageReductionStateCreateFlagsNV) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn coverage_reduction_mode(
         mut self,
         coverage_reduction_mode: CoverageReductionModeNV,
@@ -22593,6 +24304,7 @@ impl ::std::default::Default for FramebufferMixedSamplesCombinationNV<'_> {
     }
 }
 impl<'a> FramebufferMixedSamplesCombinationNV<'a> {
+    #[inline]
     pub fn coverage_reduction_mode(
         mut self,
         coverage_reduction_mode: CoverageReductionModeNV,
@@ -22600,14 +24312,17 @@ impl<'a> FramebufferMixedSamplesCombinationNV<'a> {
         self.coverage_reduction_mode = coverage_reduction_mode;
         self
     }
+    #[inline]
     pub fn rasterization_samples(mut self, rasterization_samples: SampleCountFlags) -> Self {
         self.rasterization_samples = rasterization_samples;
         self
     }
+    #[inline]
     pub fn depth_stencil_samples(mut self, depth_stencil_samples: SampleCountFlags) -> Self {
         self.depth_stencil_samples = depth_stencil_samples;
         self
     }
+    #[inline]
     pub fn color_samples(mut self, color_samples: SampleCountFlags) -> Self {
         self.color_samples = color_samples;
         self
@@ -22639,6 +24354,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'a> {}
 impl<'a> PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'a> {
+    #[inline]
     pub fn shader_integer_functions2(mut self, shader_integer_functions2: bool) -> Self {
         self.shader_integer_functions2 = shader_integer_functions2.into();
         self
@@ -22676,10 +24392,12 @@ impl fmt::Debug for PerformanceValueINTEL {
     }
 }
 impl PerformanceValueINTEL {
+    #[inline]
     pub fn ty(mut self, ty: PerformanceValueTypeINTEL) -> Self {
         self.ty = ty;
         self
     }
+    #[inline]
     pub fn data(mut self, data: PerformanceValueDataINTEL) -> Self {
         self.data = data;
         self
@@ -22706,6 +24424,7 @@ impl ::std::default::Default for InitializePerformanceApiInfoINTEL<'_> {
     }
 }
 impl<'a> InitializePerformanceApiInfoINTEL<'a> {
+    #[inline]
     pub fn user_data(mut self, user_data: *mut c_void) -> Self {
         self.p_user_data = user_data;
         self
@@ -22733,6 +24452,7 @@ impl ::std::default::Default for QueryPoolPerformanceQueryCreateInfoINTEL<'_> {
 }
 unsafe impl<'a> ExtendsQueryPoolCreateInfo for QueryPoolPerformanceQueryCreateInfoINTEL<'a> {}
 impl<'a> QueryPoolPerformanceQueryCreateInfoINTEL<'a> {
+    #[inline]
     pub fn performance_counters_sampling(
         mut self,
         performance_counters_sampling: QueryPoolSamplingModeINTEL,
@@ -22762,6 +24482,7 @@ impl ::std::default::Default for PerformanceMarkerInfoINTEL<'_> {
     }
 }
 impl<'a> PerformanceMarkerInfoINTEL<'a> {
+    #[inline]
     pub fn marker(mut self, marker: u64) -> Self {
         self.marker = marker;
         self
@@ -22788,6 +24509,7 @@ impl ::std::default::Default for PerformanceStreamMarkerInfoINTEL<'_> {
     }
 }
 impl<'a> PerformanceStreamMarkerInfoINTEL<'a> {
+    #[inline]
     pub fn marker(mut self, marker: u32) -> Self {
         self.marker = marker;
         self
@@ -22818,14 +24540,17 @@ impl ::std::default::Default for PerformanceOverrideInfoINTEL<'_> {
     }
 }
 impl<'a> PerformanceOverrideInfoINTEL<'a> {
+    #[inline]
     pub fn ty(mut self, ty: PerformanceOverrideTypeINTEL) -> Self {
         self.ty = ty;
         self
     }
+    #[inline]
     pub fn enable(mut self, enable: bool) -> Self {
         self.enable = enable.into();
         self
     }
+    #[inline]
     pub fn parameter(mut self, parameter: u64) -> Self {
         self.parameter = parameter;
         self
@@ -22852,6 +24577,7 @@ impl ::std::default::Default for PerformanceConfigurationAcquireInfoINTEL<'_> {
     }
 }
 impl<'a> PerformanceConfigurationAcquireInfoINTEL<'a> {
+    #[inline]
     pub fn ty(mut self, ty: PerformanceConfigurationTypeINTEL) -> Self {
         self.ty = ty;
         self
@@ -22882,10 +24608,12 @@ impl ::std::default::Default for PhysicalDeviceShaderClockFeaturesKHR<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderClockFeaturesKHR<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceShaderClockFeaturesKHR<'a> {}
 impl<'a> PhysicalDeviceShaderClockFeaturesKHR<'a> {
+    #[inline]
     pub fn shader_subgroup_clock(mut self, shader_subgroup_clock: bool) -> Self {
         self.shader_subgroup_clock = shader_subgroup_clock.into();
         self
     }
+    #[inline]
     pub fn shader_device_clock(mut self, shader_device_clock: bool) -> Self {
         self.shader_device_clock = shader_device_clock.into();
         self
@@ -22914,6 +24642,7 @@ impl ::std::default::Default for PhysicalDeviceIndexTypeUint8FeaturesEXT<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceIndexTypeUint8FeaturesEXT<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceIndexTypeUint8FeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceIndexTypeUint8FeaturesEXT<'a> {
+    #[inline]
     pub fn index_type_uint8(mut self, index_type_uint8: bool) -> Self {
         self.index_type_uint8 = index_type_uint8.into();
         self
@@ -22946,10 +24675,12 @@ unsafe impl<'a> ExtendsPhysicalDeviceProperties2
 {
 }
 impl<'a> PhysicalDeviceShaderSMBuiltinsPropertiesNV<'a> {
+    #[inline]
     pub fn shader_sm_count(mut self, shader_sm_count: u32) -> Self {
         self.shader_sm_count = shader_sm_count;
         self
     }
+    #[inline]
     pub fn shader_warps_per_sm(mut self, shader_warps_per_sm: u32) -> Self {
         self.shader_warps_per_sm = shader_warps_per_sm;
         self
@@ -22978,6 +24709,7 @@ impl ::std::default::Default for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'a> {}
 impl<'a> PhysicalDeviceShaderSMBuiltinsFeaturesNV<'a> {
+    #[inline]
     pub fn shader_sm_builtins(mut self, shader_sm_builtins: bool) -> Self {
         self.shader_sm_builtins = shader_sm_builtins.into();
         self
@@ -23013,6 +24745,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'a> {
+    #[inline]
     pub fn fragment_shader_sample_interlock(
         mut self,
         fragment_shader_sample_interlock: bool,
@@ -23020,6 +24753,7 @@ impl<'a> PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'a> {
         self.fragment_shader_sample_interlock = fragment_shader_sample_interlock.into();
         self
     }
+    #[inline]
     pub fn fragment_shader_pixel_interlock(
         mut self,
         fragment_shader_pixel_interlock: bool,
@@ -23027,6 +24761,7 @@ impl<'a> PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'a> {
         self.fragment_shader_pixel_interlock = fragment_shader_pixel_interlock.into();
         self
     }
+    #[inline]
     pub fn fragment_shader_shading_rate_interlock(
         mut self,
         fragment_shader_shading_rate_interlock: bool,
@@ -23061,6 +24796,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'a> {}
 impl<'a> PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'a> {
+    #[inline]
     pub fn separate_depth_stencil_layouts(mut self, separate_depth_stencil_layouts: bool) -> Self {
         self.separate_depth_stencil_layouts = separate_depth_stencil_layouts.into();
         self
@@ -23088,6 +24824,7 @@ impl ::std::default::Default for AttachmentReferenceStencilLayout<'_> {
 }
 unsafe impl<'a> ExtendsAttachmentReference2 for AttachmentReferenceStencilLayout<'a> {}
 impl<'a> AttachmentReferenceStencilLayout<'a> {
+    #[inline]
     pub fn stencil_layout(mut self, stencil_layout: ImageLayout) -> Self {
         self.stencil_layout = stencil_layout;
         self
@@ -23124,6 +24861,7 @@ unsafe impl<'a> ExtendsDeviceCreateInfo
 {
 }
 impl<'a> PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'a> {
+    #[inline]
     pub fn primitive_topology_list_restart(
         mut self,
         primitive_topology_list_restart: bool,
@@ -23131,6 +24869,7 @@ impl<'a> PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'a> {
         self.primitive_topology_list_restart = primitive_topology_list_restart.into();
         self
     }
+    #[inline]
     pub fn primitive_topology_patch_list_restart(
         mut self,
         primitive_topology_patch_list_restart: bool,
@@ -23163,10 +24902,12 @@ impl ::std::default::Default for AttachmentDescriptionStencilLayout<'_> {
 }
 unsafe impl<'a> ExtendsAttachmentDescription2 for AttachmentDescriptionStencilLayout<'a> {}
 impl<'a> AttachmentDescriptionStencilLayout<'a> {
+    #[inline]
     pub fn stencil_initial_layout(mut self, stencil_initial_layout: ImageLayout) -> Self {
         self.stencil_initial_layout = stencil_initial_layout;
         self
     }
+    #[inline]
     pub fn stencil_final_layout(mut self, stencil_final_layout: ImageLayout) -> Self {
         self.stencil_final_layout = stencil_final_layout;
         self
@@ -23201,6 +24942,7 @@ unsafe impl<'a> ExtendsDeviceCreateInfo
 {
 }
 impl<'a> PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'a> {
+    #[inline]
     pub fn pipeline_executable_info(mut self, pipeline_executable_info: bool) -> Self {
         self.pipeline_executable_info = pipeline_executable_info.into();
         self
@@ -23227,6 +24969,7 @@ impl ::std::default::Default for PipelineInfoKHR<'_> {
     }
 }
 impl<'a> PipelineInfoKHR<'a> {
+    #[inline]
     pub fn pipeline(mut self, pipeline: Pipeline) -> Self {
         self.pipeline = pipeline;
         self
@@ -23275,18 +25018,22 @@ impl ::std::default::Default for PipelineExecutablePropertiesKHR<'_> {
     }
 }
 impl<'a> PipelineExecutablePropertiesKHR<'a> {
+    #[inline]
     pub fn stages(mut self, stages: ShaderStageFlags) -> Self {
         self.stages = stages;
         self
     }
+    #[inline]
     pub fn name(mut self, name: [c_char; MAX_DESCRIPTION_SIZE]) -> Self {
         self.name = name;
         self
     }
+    #[inline]
     pub fn description(mut self, description: [c_char; MAX_DESCRIPTION_SIZE]) -> Self {
         self.description = description;
         self
     }
+    #[inline]
     pub fn subgroup_size(mut self, subgroup_size: u32) -> Self {
         self.subgroup_size = subgroup_size;
         self
@@ -23315,10 +25062,12 @@ impl ::std::default::Default for PipelineExecutableInfoKHR<'_> {
     }
 }
 impl<'a> PipelineExecutableInfoKHR<'a> {
+    #[inline]
     pub fn pipeline(mut self, pipeline: Pipeline) -> Self {
         self.pipeline = pipeline;
         self
     }
+    #[inline]
     pub fn executable_index(mut self, executable_index: u32) -> Self {
         self.executable_index = executable_index;
         self
@@ -23381,18 +25130,22 @@ impl ::std::default::Default for PipelineExecutableStatisticKHR<'_> {
     }
 }
 impl<'a> PipelineExecutableStatisticKHR<'a> {
+    #[inline]
     pub fn name(mut self, name: [c_char; MAX_DESCRIPTION_SIZE]) -> Self {
         self.name = name;
         self
     }
+    #[inline]
     pub fn description(mut self, description: [c_char; MAX_DESCRIPTION_SIZE]) -> Self {
         self.description = description;
         self
     }
+    #[inline]
     pub fn format(mut self, format: PipelineExecutableStatisticFormatKHR) -> Self {
         self.format = format;
         self
     }
+    #[inline]
     pub fn value(mut self, value: PipelineExecutableStatisticValueKHR) -> Self {
         self.value = value;
         self
@@ -23444,18 +25197,22 @@ impl ::std::default::Default for PipelineExecutableInternalRepresentationKHR<'_>
     }
 }
 impl<'a> PipelineExecutableInternalRepresentationKHR<'a> {
+    #[inline]
     pub fn name(mut self, name: [c_char; MAX_DESCRIPTION_SIZE]) -> Self {
         self.name = name;
         self
     }
+    #[inline]
     pub fn description(mut self, description: [c_char; MAX_DESCRIPTION_SIZE]) -> Self {
         self.description = description;
         self
     }
+    #[inline]
     pub fn is_text(mut self, is_text: bool) -> Self {
         self.is_text = is_text.into();
         self
     }
+    #[inline]
     pub fn data(mut self, data: &'a mut [u8]) -> Self {
         self.data_size = data.len();
         self.p_data = data.as_mut_ptr() as *mut c_void;
@@ -23491,6 +25248,7 @@ unsafe impl<'a> ExtendsDeviceCreateInfo
 {
 }
 impl<'a> PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'a> {
+    #[inline]
     pub fn shader_demote_to_helper_invocation(
         mut self,
         shader_demote_to_helper_invocation: bool,
@@ -23525,6 +25283,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'a> {
+    #[inline]
     pub fn texel_buffer_alignment(mut self, texel_buffer_alignment: bool) -> Self {
         self.texel_buffer_alignment = texel_buffer_alignment.into();
         self
@@ -23561,6 +25320,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceProperties2
 {
 }
 impl<'a> PhysicalDeviceTexelBufferAlignmentProperties<'a> {
+    #[inline]
     pub fn storage_texel_buffer_offset_alignment_bytes(
         mut self,
         storage_texel_buffer_offset_alignment_bytes: DeviceSize,
@@ -23569,6 +25329,7 @@ impl<'a> PhysicalDeviceTexelBufferAlignmentProperties<'a> {
             storage_texel_buffer_offset_alignment_bytes;
         self
     }
+    #[inline]
     pub fn storage_texel_buffer_offset_single_texel_alignment(
         mut self,
         storage_texel_buffer_offset_single_texel_alignment: bool,
@@ -23577,6 +25338,7 @@ impl<'a> PhysicalDeviceTexelBufferAlignmentProperties<'a> {
             storage_texel_buffer_offset_single_texel_alignment.into();
         self
     }
+    #[inline]
     pub fn uniform_texel_buffer_offset_alignment_bytes(
         mut self,
         uniform_texel_buffer_offset_alignment_bytes: DeviceSize,
@@ -23585,6 +25347,7 @@ impl<'a> PhysicalDeviceTexelBufferAlignmentProperties<'a> {
             uniform_texel_buffer_offset_alignment_bytes;
         self
     }
+    #[inline]
     pub fn uniform_texel_buffer_offset_single_texel_alignment(
         mut self,
         uniform_texel_buffer_offset_single_texel_alignment: bool,
@@ -23619,10 +25382,12 @@ impl ::std::default::Default for PhysicalDeviceSubgroupSizeControlFeatures<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSubgroupSizeControlFeatures<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceSubgroupSizeControlFeatures<'a> {}
 impl<'a> PhysicalDeviceSubgroupSizeControlFeatures<'a> {
+    #[inline]
     pub fn subgroup_size_control(mut self, subgroup_size_control: bool) -> Self {
         self.subgroup_size_control = subgroup_size_control.into();
         self
     }
+    #[inline]
     pub fn compute_full_subgroups(mut self, compute_full_subgroups: bool) -> Self {
         self.compute_full_subgroups = compute_full_subgroups.into();
         self
@@ -23659,18 +25424,22 @@ unsafe impl<'a> ExtendsPhysicalDeviceProperties2
 {
 }
 impl<'a> PhysicalDeviceSubgroupSizeControlProperties<'a> {
+    #[inline]
     pub fn min_subgroup_size(mut self, min_subgroup_size: u32) -> Self {
         self.min_subgroup_size = min_subgroup_size;
         self
     }
+    #[inline]
     pub fn max_subgroup_size(mut self, max_subgroup_size: u32) -> Self {
         self.max_subgroup_size = max_subgroup_size;
         self
     }
+    #[inline]
     pub fn max_compute_workgroup_subgroups(mut self, max_compute_workgroup_subgroups: u32) -> Self {
         self.max_compute_workgroup_subgroups = max_compute_workgroup_subgroups;
         self
     }
+    #[inline]
     pub fn required_subgroup_size_stages(
         mut self,
         required_subgroup_size_stages: ShaderStageFlags,
@@ -23704,6 +25473,7 @@ unsafe impl<'a> ExtendsPipelineShaderStageCreateInfo
 {
 }
 impl<'a> PipelineShaderStageRequiredSubgroupSizeCreateInfo<'a> {
+    #[inline]
     pub fn required_subgroup_size(mut self, required_subgroup_size: u32) -> Self {
         self.required_subgroup_size = required_subgroup_size;
         self
@@ -23733,10 +25503,12 @@ impl ::std::default::Default for SubpassShadingPipelineCreateInfoHUAWEI<'_> {
 }
 unsafe impl<'a> ExtendsComputePipelineCreateInfo for SubpassShadingPipelineCreateInfoHUAWEI<'a> {}
 impl<'a> SubpassShadingPipelineCreateInfoHUAWEI<'a> {
+    #[inline]
     pub fn render_pass(mut self, render_pass: RenderPass) -> Self {
         self.render_pass = render_pass;
         self
     }
+    #[inline]
     pub fn subpass(mut self, subpass: u32) -> Self {
         self.subpass = subpass;
         self
@@ -23767,6 +25539,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceProperties2
 {
 }
 impl<'a> PhysicalDeviceSubpassShadingPropertiesHUAWEI<'a> {
+    #[inline]
     pub fn max_subpass_shading_workgroup_size_aspect_ratio(
         mut self,
         max_subpass_shading_workgroup_size_aspect_ratio: u32,
@@ -23798,6 +25571,7 @@ impl ::std::default::Default for MemoryOpaqueCaptureAddressAllocateInfo<'_> {
 }
 unsafe impl<'a> ExtendsMemoryAllocateInfo for MemoryOpaqueCaptureAddressAllocateInfo<'a> {}
 impl<'a> MemoryOpaqueCaptureAddressAllocateInfo<'a> {
+    #[inline]
     pub fn opaque_capture_address(mut self, opaque_capture_address: u64) -> Self {
         self.opaque_capture_address = opaque_capture_address;
         self
@@ -23824,6 +25598,7 @@ impl ::std::default::Default for DeviceMemoryOpaqueCaptureAddressInfo<'_> {
     }
 }
 impl<'a> DeviceMemoryOpaqueCaptureAddressInfo<'a> {
+    #[inline]
     pub fn memory(mut self, memory: DeviceMemory) -> Self {
         self.memory = memory;
         self
@@ -23862,26 +25637,32 @@ impl ::std::default::Default for PhysicalDeviceLineRasterizationFeaturesEXT<'_> 
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceLineRasterizationFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceLineRasterizationFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceLineRasterizationFeaturesEXT<'a> {
+    #[inline]
     pub fn rectangular_lines(mut self, rectangular_lines: bool) -> Self {
         self.rectangular_lines = rectangular_lines.into();
         self
     }
+    #[inline]
     pub fn bresenham_lines(mut self, bresenham_lines: bool) -> Self {
         self.bresenham_lines = bresenham_lines.into();
         self
     }
+    #[inline]
     pub fn smooth_lines(mut self, smooth_lines: bool) -> Self {
         self.smooth_lines = smooth_lines.into();
         self
     }
+    #[inline]
     pub fn stippled_rectangular_lines(mut self, stippled_rectangular_lines: bool) -> Self {
         self.stippled_rectangular_lines = stippled_rectangular_lines.into();
         self
     }
+    #[inline]
     pub fn stippled_bresenham_lines(mut self, stippled_bresenham_lines: bool) -> Self {
         self.stippled_bresenham_lines = stippled_bresenham_lines.into();
         self
     }
+    #[inline]
     pub fn stippled_smooth_lines(mut self, stippled_smooth_lines: bool) -> Self {
         self.stippled_smooth_lines = stippled_smooth_lines.into();
         self
@@ -23912,6 +25693,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceProperties2
 {
 }
 impl<'a> PhysicalDeviceLineRasterizationPropertiesEXT<'a> {
+    #[inline]
     pub fn line_sub_pixel_precision_bits(mut self, line_sub_pixel_precision_bits: u32) -> Self {
         self.line_sub_pixel_precision_bits = line_sub_pixel_precision_bits;
         self
@@ -23948,6 +25730,7 @@ unsafe impl<'a> ExtendsPipelineRasterizationStateCreateInfo
 {
 }
 impl<'a> PipelineRasterizationLineStateCreateInfoEXT<'a> {
+    #[inline]
     pub fn line_rasterization_mode(
         mut self,
         line_rasterization_mode: LineRasterizationModeEXT,
@@ -23955,14 +25738,17 @@ impl<'a> PipelineRasterizationLineStateCreateInfoEXT<'a> {
         self.line_rasterization_mode = line_rasterization_mode;
         self
     }
+    #[inline]
     pub fn stippled_line_enable(mut self, stippled_line_enable: bool) -> Self {
         self.stippled_line_enable = stippled_line_enable.into();
         self
     }
+    #[inline]
     pub fn line_stipple_factor(mut self, line_stipple_factor: u32) -> Self {
         self.line_stipple_factor = line_stipple_factor;
         self
     }
+    #[inline]
     pub fn line_stipple_pattern(mut self, line_stipple_pattern: u16) -> Self {
         self.line_stipple_pattern = line_stipple_pattern;
         self
@@ -23994,6 +25780,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDevicePipelineCreationCacheControlFeatures<'a> {}
 impl<'a> PhysicalDevicePipelineCreationCacheControlFeatures<'a> {
+    #[inline]
     pub fn pipeline_creation_cache_control(
         mut self,
         pipeline_creation_cache_control: bool,
@@ -24047,10 +25834,12 @@ impl ::std::default::Default for PhysicalDeviceVulkan11Features<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVulkan11Features<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceVulkan11Features<'a> {}
 impl<'a> PhysicalDeviceVulkan11Features<'a> {
+    #[inline]
     pub fn storage_buffer16_bit_access(mut self, storage_buffer16_bit_access: bool) -> Self {
         self.storage_buffer16_bit_access = storage_buffer16_bit_access.into();
         self
     }
+    #[inline]
     pub fn uniform_and_storage_buffer16_bit_access(
         mut self,
         uniform_and_storage_buffer16_bit_access: bool,
@@ -24059,26 +25848,32 @@ impl<'a> PhysicalDeviceVulkan11Features<'a> {
             uniform_and_storage_buffer16_bit_access.into();
         self
     }
+    #[inline]
     pub fn storage_push_constant16(mut self, storage_push_constant16: bool) -> Self {
         self.storage_push_constant16 = storage_push_constant16.into();
         self
     }
+    #[inline]
     pub fn storage_input_output16(mut self, storage_input_output16: bool) -> Self {
         self.storage_input_output16 = storage_input_output16.into();
         self
     }
+    #[inline]
     pub fn multiview(mut self, multiview: bool) -> Self {
         self.multiview = multiview.into();
         self
     }
+    #[inline]
     pub fn multiview_geometry_shader(mut self, multiview_geometry_shader: bool) -> Self {
         self.multiview_geometry_shader = multiview_geometry_shader.into();
         self
     }
+    #[inline]
     pub fn multiview_tessellation_shader(mut self, multiview_tessellation_shader: bool) -> Self {
         self.multiview_tessellation_shader = multiview_tessellation_shader.into();
         self
     }
+    #[inline]
     pub fn variable_pointers_storage_buffer(
         mut self,
         variable_pointers_storage_buffer: bool,
@@ -24086,18 +25881,22 @@ impl<'a> PhysicalDeviceVulkan11Features<'a> {
         self.variable_pointers_storage_buffer = variable_pointers_storage_buffer.into();
         self
     }
+    #[inline]
     pub fn variable_pointers(mut self, variable_pointers: bool) -> Self {
         self.variable_pointers = variable_pointers.into();
         self
     }
+    #[inline]
     pub fn protected_memory(mut self, protected_memory: bool) -> Self {
         self.protected_memory = protected_memory.into();
         self
     }
+    #[inline]
     pub fn sampler_ycbcr_conversion(mut self, sampler_ycbcr_conversion: bool) -> Self {
         self.sampler_ycbcr_conversion = sampler_ycbcr_conversion.into();
         self
     }
+    #[inline]
     pub fn shader_draw_parameters(mut self, shader_draw_parameters: bool) -> Self {
         self.shader_draw_parameters = shader_draw_parameters.into();
         self
@@ -24153,30 +25952,37 @@ impl ::std::default::Default for PhysicalDeviceVulkan11Properties<'_> {
 }
 unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceVulkan11Properties<'a> {}
 impl<'a> PhysicalDeviceVulkan11Properties<'a> {
+    #[inline]
     pub fn device_uuid(mut self, device_uuid: [u8; UUID_SIZE]) -> Self {
         self.device_uuid = device_uuid;
         self
     }
+    #[inline]
     pub fn driver_uuid(mut self, driver_uuid: [u8; UUID_SIZE]) -> Self {
         self.driver_uuid = driver_uuid;
         self
     }
+    #[inline]
     pub fn device_luid(mut self, device_luid: [u8; LUID_SIZE]) -> Self {
         self.device_luid = device_luid;
         self
     }
+    #[inline]
     pub fn device_node_mask(mut self, device_node_mask: u32) -> Self {
         self.device_node_mask = device_node_mask;
         self
     }
+    #[inline]
     pub fn device_luid_valid(mut self, device_luid_valid: bool) -> Self {
         self.device_luid_valid = device_luid_valid.into();
         self
     }
+    #[inline]
     pub fn subgroup_size(mut self, subgroup_size: u32) -> Self {
         self.subgroup_size = subgroup_size;
         self
     }
+    #[inline]
     pub fn subgroup_supported_stages(
         mut self,
         subgroup_supported_stages: ShaderStageFlags,
@@ -24184,6 +25990,7 @@ impl<'a> PhysicalDeviceVulkan11Properties<'a> {
         self.subgroup_supported_stages = subgroup_supported_stages;
         self
     }
+    #[inline]
     pub fn subgroup_supported_operations(
         mut self,
         subgroup_supported_operations: SubgroupFeatureFlags,
@@ -24191,6 +25998,7 @@ impl<'a> PhysicalDeviceVulkan11Properties<'a> {
         self.subgroup_supported_operations = subgroup_supported_operations;
         self
     }
+    #[inline]
     pub fn subgroup_quad_operations_in_all_stages(
         mut self,
         subgroup_quad_operations_in_all_stages: bool,
@@ -24198,6 +26006,7 @@ impl<'a> PhysicalDeviceVulkan11Properties<'a> {
         self.subgroup_quad_operations_in_all_stages = subgroup_quad_operations_in_all_stages.into();
         self
     }
+    #[inline]
     pub fn point_clipping_behavior(
         mut self,
         point_clipping_behavior: PointClippingBehavior,
@@ -24205,22 +26014,27 @@ impl<'a> PhysicalDeviceVulkan11Properties<'a> {
         self.point_clipping_behavior = point_clipping_behavior;
         self
     }
+    #[inline]
     pub fn max_multiview_view_count(mut self, max_multiview_view_count: u32) -> Self {
         self.max_multiview_view_count = max_multiview_view_count;
         self
     }
+    #[inline]
     pub fn max_multiview_instance_index(mut self, max_multiview_instance_index: u32) -> Self {
         self.max_multiview_instance_index = max_multiview_instance_index;
         self
     }
+    #[inline]
     pub fn protected_no_fault(mut self, protected_no_fault: bool) -> Self {
         self.protected_no_fault = protected_no_fault.into();
         self
     }
+    #[inline]
     pub fn max_per_set_descriptors(mut self, max_per_set_descriptors: u32) -> Self {
         self.max_per_set_descriptors = max_per_set_descriptors;
         self
     }
+    #[inline]
     pub fn max_memory_allocation_size(mut self, max_memory_allocation_size: DeviceSize) -> Self {
         self.max_memory_allocation_size = max_memory_allocation_size;
         self
@@ -24341,18 +26155,22 @@ impl ::std::default::Default for PhysicalDeviceVulkan12Features<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVulkan12Features<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceVulkan12Features<'a> {}
 impl<'a> PhysicalDeviceVulkan12Features<'a> {
+    #[inline]
     pub fn sampler_mirror_clamp_to_edge(mut self, sampler_mirror_clamp_to_edge: bool) -> Self {
         self.sampler_mirror_clamp_to_edge = sampler_mirror_clamp_to_edge.into();
         self
     }
+    #[inline]
     pub fn draw_indirect_count(mut self, draw_indirect_count: bool) -> Self {
         self.draw_indirect_count = draw_indirect_count.into();
         self
     }
+    #[inline]
     pub fn storage_buffer8_bit_access(mut self, storage_buffer8_bit_access: bool) -> Self {
         self.storage_buffer8_bit_access = storage_buffer8_bit_access.into();
         self
     }
+    #[inline]
     pub fn uniform_and_storage_buffer8_bit_access(
         mut self,
         uniform_and_storage_buffer8_bit_access: bool,
@@ -24360,30 +26178,37 @@ impl<'a> PhysicalDeviceVulkan12Features<'a> {
         self.uniform_and_storage_buffer8_bit_access = uniform_and_storage_buffer8_bit_access.into();
         self
     }
+    #[inline]
     pub fn storage_push_constant8(mut self, storage_push_constant8: bool) -> Self {
         self.storage_push_constant8 = storage_push_constant8.into();
         self
     }
+    #[inline]
     pub fn shader_buffer_int64_atomics(mut self, shader_buffer_int64_atomics: bool) -> Self {
         self.shader_buffer_int64_atomics = shader_buffer_int64_atomics.into();
         self
     }
+    #[inline]
     pub fn shader_shared_int64_atomics(mut self, shader_shared_int64_atomics: bool) -> Self {
         self.shader_shared_int64_atomics = shader_shared_int64_atomics.into();
         self
     }
+    #[inline]
     pub fn shader_float16(mut self, shader_float16: bool) -> Self {
         self.shader_float16 = shader_float16.into();
         self
     }
+    #[inline]
     pub fn shader_int8(mut self, shader_int8: bool) -> Self {
         self.shader_int8 = shader_int8.into();
         self
     }
+    #[inline]
     pub fn descriptor_indexing(mut self, descriptor_indexing: bool) -> Self {
         self.descriptor_indexing = descriptor_indexing.into();
         self
     }
+    #[inline]
     pub fn shader_input_attachment_array_dynamic_indexing(
         mut self,
         shader_input_attachment_array_dynamic_indexing: bool,
@@ -24392,6 +26217,7 @@ impl<'a> PhysicalDeviceVulkan12Features<'a> {
             shader_input_attachment_array_dynamic_indexing.into();
         self
     }
+    #[inline]
     pub fn shader_uniform_texel_buffer_array_dynamic_indexing(
         mut self,
         shader_uniform_texel_buffer_array_dynamic_indexing: bool,
@@ -24400,6 +26226,7 @@ impl<'a> PhysicalDeviceVulkan12Features<'a> {
             shader_uniform_texel_buffer_array_dynamic_indexing.into();
         self
     }
+    #[inline]
     pub fn shader_storage_texel_buffer_array_dynamic_indexing(
         mut self,
         shader_storage_texel_buffer_array_dynamic_indexing: bool,
@@ -24408,6 +26235,7 @@ impl<'a> PhysicalDeviceVulkan12Features<'a> {
             shader_storage_texel_buffer_array_dynamic_indexing.into();
         self
     }
+    #[inline]
     pub fn shader_uniform_buffer_array_non_uniform_indexing(
         mut self,
         shader_uniform_buffer_array_non_uniform_indexing: bool,
@@ -24416,6 +26244,7 @@ impl<'a> PhysicalDeviceVulkan12Features<'a> {
             shader_uniform_buffer_array_non_uniform_indexing.into();
         self
     }
+    #[inline]
     pub fn shader_sampled_image_array_non_uniform_indexing(
         mut self,
         shader_sampled_image_array_non_uniform_indexing: bool,
@@ -24424,6 +26253,7 @@ impl<'a> PhysicalDeviceVulkan12Features<'a> {
             shader_sampled_image_array_non_uniform_indexing.into();
         self
     }
+    #[inline]
     pub fn shader_storage_buffer_array_non_uniform_indexing(
         mut self,
         shader_storage_buffer_array_non_uniform_indexing: bool,
@@ -24432,6 +26262,7 @@ impl<'a> PhysicalDeviceVulkan12Features<'a> {
             shader_storage_buffer_array_non_uniform_indexing.into();
         self
     }
+    #[inline]
     pub fn shader_storage_image_array_non_uniform_indexing(
         mut self,
         shader_storage_image_array_non_uniform_indexing: bool,
@@ -24440,6 +26271,7 @@ impl<'a> PhysicalDeviceVulkan12Features<'a> {
             shader_storage_image_array_non_uniform_indexing.into();
         self
     }
+    #[inline]
     pub fn shader_input_attachment_array_non_uniform_indexing(
         mut self,
         shader_input_attachment_array_non_uniform_indexing: bool,
@@ -24448,6 +26280,7 @@ impl<'a> PhysicalDeviceVulkan12Features<'a> {
             shader_input_attachment_array_non_uniform_indexing.into();
         self
     }
+    #[inline]
     pub fn shader_uniform_texel_buffer_array_non_uniform_indexing(
         mut self,
         shader_uniform_texel_buffer_array_non_uniform_indexing: bool,
@@ -24456,6 +26289,7 @@ impl<'a> PhysicalDeviceVulkan12Features<'a> {
             shader_uniform_texel_buffer_array_non_uniform_indexing.into();
         self
     }
+    #[inline]
     pub fn shader_storage_texel_buffer_array_non_uniform_indexing(
         mut self,
         shader_storage_texel_buffer_array_non_uniform_indexing: bool,
@@ -24464,6 +26298,7 @@ impl<'a> PhysicalDeviceVulkan12Features<'a> {
             shader_storage_texel_buffer_array_non_uniform_indexing.into();
         self
     }
+    #[inline]
     pub fn descriptor_binding_uniform_buffer_update_after_bind(
         mut self,
         descriptor_binding_uniform_buffer_update_after_bind: bool,
@@ -24472,6 +26307,7 @@ impl<'a> PhysicalDeviceVulkan12Features<'a> {
             descriptor_binding_uniform_buffer_update_after_bind.into();
         self
     }
+    #[inline]
     pub fn descriptor_binding_sampled_image_update_after_bind(
         mut self,
         descriptor_binding_sampled_image_update_after_bind: bool,
@@ -24480,6 +26316,7 @@ impl<'a> PhysicalDeviceVulkan12Features<'a> {
             descriptor_binding_sampled_image_update_after_bind.into();
         self
     }
+    #[inline]
     pub fn descriptor_binding_storage_image_update_after_bind(
         mut self,
         descriptor_binding_storage_image_update_after_bind: bool,
@@ -24488,6 +26325,7 @@ impl<'a> PhysicalDeviceVulkan12Features<'a> {
             descriptor_binding_storage_image_update_after_bind.into();
         self
     }
+    #[inline]
     pub fn descriptor_binding_storage_buffer_update_after_bind(
         mut self,
         descriptor_binding_storage_buffer_update_after_bind: bool,
@@ -24496,6 +26334,7 @@ impl<'a> PhysicalDeviceVulkan12Features<'a> {
             descriptor_binding_storage_buffer_update_after_bind.into();
         self
     }
+    #[inline]
     pub fn descriptor_binding_uniform_texel_buffer_update_after_bind(
         mut self,
         descriptor_binding_uniform_texel_buffer_update_after_bind: bool,
@@ -24504,6 +26343,7 @@ impl<'a> PhysicalDeviceVulkan12Features<'a> {
             descriptor_binding_uniform_texel_buffer_update_after_bind.into();
         self
     }
+    #[inline]
     pub fn descriptor_binding_storage_texel_buffer_update_after_bind(
         mut self,
         descriptor_binding_storage_texel_buffer_update_after_bind: bool,
@@ -24512,6 +26352,7 @@ impl<'a> PhysicalDeviceVulkan12Features<'a> {
             descriptor_binding_storage_texel_buffer_update_after_bind.into();
         self
     }
+    #[inline]
     pub fn descriptor_binding_update_unused_while_pending(
         mut self,
         descriptor_binding_update_unused_while_pending: bool,
@@ -24520,6 +26361,7 @@ impl<'a> PhysicalDeviceVulkan12Features<'a> {
             descriptor_binding_update_unused_while_pending.into();
         self
     }
+    #[inline]
     pub fn descriptor_binding_partially_bound(
         mut self,
         descriptor_binding_partially_bound: bool,
@@ -24527,6 +26369,7 @@ impl<'a> PhysicalDeviceVulkan12Features<'a> {
         self.descriptor_binding_partially_bound = descriptor_binding_partially_bound.into();
         self
     }
+    #[inline]
     pub fn descriptor_binding_variable_descriptor_count(
         mut self,
         descriptor_binding_variable_descriptor_count: bool,
@@ -24535,46 +26378,57 @@ impl<'a> PhysicalDeviceVulkan12Features<'a> {
             descriptor_binding_variable_descriptor_count.into();
         self
     }
+    #[inline]
     pub fn runtime_descriptor_array(mut self, runtime_descriptor_array: bool) -> Self {
         self.runtime_descriptor_array = runtime_descriptor_array.into();
         self
     }
+    #[inline]
     pub fn sampler_filter_minmax(mut self, sampler_filter_minmax: bool) -> Self {
         self.sampler_filter_minmax = sampler_filter_minmax.into();
         self
     }
+    #[inline]
     pub fn scalar_block_layout(mut self, scalar_block_layout: bool) -> Self {
         self.scalar_block_layout = scalar_block_layout.into();
         self
     }
+    #[inline]
     pub fn imageless_framebuffer(mut self, imageless_framebuffer: bool) -> Self {
         self.imageless_framebuffer = imageless_framebuffer.into();
         self
     }
+    #[inline]
     pub fn uniform_buffer_standard_layout(mut self, uniform_buffer_standard_layout: bool) -> Self {
         self.uniform_buffer_standard_layout = uniform_buffer_standard_layout.into();
         self
     }
+    #[inline]
     pub fn shader_subgroup_extended_types(mut self, shader_subgroup_extended_types: bool) -> Self {
         self.shader_subgroup_extended_types = shader_subgroup_extended_types.into();
         self
     }
+    #[inline]
     pub fn separate_depth_stencil_layouts(mut self, separate_depth_stencil_layouts: bool) -> Self {
         self.separate_depth_stencil_layouts = separate_depth_stencil_layouts.into();
         self
     }
+    #[inline]
     pub fn host_query_reset(mut self, host_query_reset: bool) -> Self {
         self.host_query_reset = host_query_reset.into();
         self
     }
+    #[inline]
     pub fn timeline_semaphore(mut self, timeline_semaphore: bool) -> Self {
         self.timeline_semaphore = timeline_semaphore.into();
         self
     }
+    #[inline]
     pub fn buffer_device_address(mut self, buffer_device_address: bool) -> Self {
         self.buffer_device_address = buffer_device_address.into();
         self
     }
+    #[inline]
     pub fn buffer_device_address_capture_replay(
         mut self,
         buffer_device_address_capture_replay: bool,
@@ -24582,6 +26436,7 @@ impl<'a> PhysicalDeviceVulkan12Features<'a> {
         self.buffer_device_address_capture_replay = buffer_device_address_capture_replay.into();
         self
     }
+    #[inline]
     pub fn buffer_device_address_multi_device(
         mut self,
         buffer_device_address_multi_device: bool,
@@ -24589,10 +26444,12 @@ impl<'a> PhysicalDeviceVulkan12Features<'a> {
         self.buffer_device_address_multi_device = buffer_device_address_multi_device.into();
         self
     }
+    #[inline]
     pub fn vulkan_memory_model(mut self, vulkan_memory_model: bool) -> Self {
         self.vulkan_memory_model = vulkan_memory_model.into();
         self
     }
+    #[inline]
     pub fn vulkan_memory_model_device_scope(
         mut self,
         vulkan_memory_model_device_scope: bool,
@@ -24600,6 +26457,7 @@ impl<'a> PhysicalDeviceVulkan12Features<'a> {
         self.vulkan_memory_model_device_scope = vulkan_memory_model_device_scope.into();
         self
     }
+    #[inline]
     pub fn vulkan_memory_model_availability_visibility_chains(
         mut self,
         vulkan_memory_model_availability_visibility_chains: bool,
@@ -24608,14 +26466,17 @@ impl<'a> PhysicalDeviceVulkan12Features<'a> {
             vulkan_memory_model_availability_visibility_chains.into();
         self
     }
+    #[inline]
     pub fn shader_output_viewport_index(mut self, shader_output_viewport_index: bool) -> Self {
         self.shader_output_viewport_index = shader_output_viewport_index.into();
         self
     }
+    #[inline]
     pub fn shader_output_layer(mut self, shader_output_layer: bool) -> Self {
         self.shader_output_layer = shader_output_layer.into();
         self
     }
+    #[inline]
     pub fn subgroup_broadcast_dynamic_id(mut self, subgroup_broadcast_dynamic_id: bool) -> Self {
         self.subgroup_broadcast_dynamic_id = subgroup_broadcast_dynamic_id.into();
         self
@@ -24947,22 +26808,27 @@ impl ::std::default::Default for PhysicalDeviceVulkan12Properties<'_> {
 }
 unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceVulkan12Properties<'a> {}
 impl<'a> PhysicalDeviceVulkan12Properties<'a> {
+    #[inline]
     pub fn driver_id(mut self, driver_id: DriverId) -> Self {
         self.driver_id = driver_id;
         self
     }
+    #[inline]
     pub fn driver_name(mut self, driver_name: [c_char; MAX_DRIVER_NAME_SIZE]) -> Self {
         self.driver_name = driver_name;
         self
     }
+    #[inline]
     pub fn driver_info(mut self, driver_info: [c_char; MAX_DRIVER_INFO_SIZE]) -> Self {
         self.driver_info = driver_info;
         self
     }
+    #[inline]
     pub fn conformance_version(mut self, conformance_version: ConformanceVersion) -> Self {
         self.conformance_version = conformance_version;
         self
     }
+    #[inline]
     pub fn denorm_behavior_independence(
         mut self,
         denorm_behavior_independence: ShaderFloatControlsIndependence,
@@ -24970,6 +26836,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
         self.denorm_behavior_independence = denorm_behavior_independence;
         self
     }
+    #[inline]
     pub fn rounding_mode_independence(
         mut self,
         rounding_mode_independence: ShaderFloatControlsIndependence,
@@ -24977,6 +26844,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
         self.rounding_mode_independence = rounding_mode_independence;
         self
     }
+    #[inline]
     pub fn shader_signed_zero_inf_nan_preserve_float16(
         mut self,
         shader_signed_zero_inf_nan_preserve_float16: bool,
@@ -24985,6 +26853,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
             shader_signed_zero_inf_nan_preserve_float16.into();
         self
     }
+    #[inline]
     pub fn shader_signed_zero_inf_nan_preserve_float32(
         mut self,
         shader_signed_zero_inf_nan_preserve_float32: bool,
@@ -24993,6 +26862,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
             shader_signed_zero_inf_nan_preserve_float32.into();
         self
     }
+    #[inline]
     pub fn shader_signed_zero_inf_nan_preserve_float64(
         mut self,
         shader_signed_zero_inf_nan_preserve_float64: bool,
@@ -25001,18 +26871,22 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
             shader_signed_zero_inf_nan_preserve_float64.into();
         self
     }
+    #[inline]
     pub fn shader_denorm_preserve_float16(mut self, shader_denorm_preserve_float16: bool) -> Self {
         self.shader_denorm_preserve_float16 = shader_denorm_preserve_float16.into();
         self
     }
+    #[inline]
     pub fn shader_denorm_preserve_float32(mut self, shader_denorm_preserve_float32: bool) -> Self {
         self.shader_denorm_preserve_float32 = shader_denorm_preserve_float32.into();
         self
     }
+    #[inline]
     pub fn shader_denorm_preserve_float64(mut self, shader_denorm_preserve_float64: bool) -> Self {
         self.shader_denorm_preserve_float64 = shader_denorm_preserve_float64.into();
         self
     }
+    #[inline]
     pub fn shader_denorm_flush_to_zero_float16(
         mut self,
         shader_denorm_flush_to_zero_float16: bool,
@@ -25020,6 +26894,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
         self.shader_denorm_flush_to_zero_float16 = shader_denorm_flush_to_zero_float16.into();
         self
     }
+    #[inline]
     pub fn shader_denorm_flush_to_zero_float32(
         mut self,
         shader_denorm_flush_to_zero_float32: bool,
@@ -25027,6 +26902,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
         self.shader_denorm_flush_to_zero_float32 = shader_denorm_flush_to_zero_float32.into();
         self
     }
+    #[inline]
     pub fn shader_denorm_flush_to_zero_float64(
         mut self,
         shader_denorm_flush_to_zero_float64: bool,
@@ -25034,6 +26910,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
         self.shader_denorm_flush_to_zero_float64 = shader_denorm_flush_to_zero_float64.into();
         self
     }
+    #[inline]
     pub fn shader_rounding_mode_rte_float16(
         mut self,
         shader_rounding_mode_rte_float16: bool,
@@ -25041,6 +26918,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
         self.shader_rounding_mode_rte_float16 = shader_rounding_mode_rte_float16.into();
         self
     }
+    #[inline]
     pub fn shader_rounding_mode_rte_float32(
         mut self,
         shader_rounding_mode_rte_float32: bool,
@@ -25048,6 +26926,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
         self.shader_rounding_mode_rte_float32 = shader_rounding_mode_rte_float32.into();
         self
     }
+    #[inline]
     pub fn shader_rounding_mode_rte_float64(
         mut self,
         shader_rounding_mode_rte_float64: bool,
@@ -25055,6 +26934,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
         self.shader_rounding_mode_rte_float64 = shader_rounding_mode_rte_float64.into();
         self
     }
+    #[inline]
     pub fn shader_rounding_mode_rtz_float16(
         mut self,
         shader_rounding_mode_rtz_float16: bool,
@@ -25062,6 +26942,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
         self.shader_rounding_mode_rtz_float16 = shader_rounding_mode_rtz_float16.into();
         self
     }
+    #[inline]
     pub fn shader_rounding_mode_rtz_float32(
         mut self,
         shader_rounding_mode_rtz_float32: bool,
@@ -25069,6 +26950,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
         self.shader_rounding_mode_rtz_float32 = shader_rounding_mode_rtz_float32.into();
         self
     }
+    #[inline]
     pub fn shader_rounding_mode_rtz_float64(
         mut self,
         shader_rounding_mode_rtz_float64: bool,
@@ -25076,6 +26958,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
         self.shader_rounding_mode_rtz_float64 = shader_rounding_mode_rtz_float64.into();
         self
     }
+    #[inline]
     pub fn max_update_after_bind_descriptors_in_all_pools(
         mut self,
         max_update_after_bind_descriptors_in_all_pools: u32,
@@ -25084,6 +26967,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
             max_update_after_bind_descriptors_in_all_pools;
         self
     }
+    #[inline]
     pub fn shader_uniform_buffer_array_non_uniform_indexing_native(
         mut self,
         shader_uniform_buffer_array_non_uniform_indexing_native: bool,
@@ -25092,6 +26976,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
             shader_uniform_buffer_array_non_uniform_indexing_native.into();
         self
     }
+    #[inline]
     pub fn shader_sampled_image_array_non_uniform_indexing_native(
         mut self,
         shader_sampled_image_array_non_uniform_indexing_native: bool,
@@ -25100,6 +26985,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
             shader_sampled_image_array_non_uniform_indexing_native.into();
         self
     }
+    #[inline]
     pub fn shader_storage_buffer_array_non_uniform_indexing_native(
         mut self,
         shader_storage_buffer_array_non_uniform_indexing_native: bool,
@@ -25108,6 +26994,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
             shader_storage_buffer_array_non_uniform_indexing_native.into();
         self
     }
+    #[inline]
     pub fn shader_storage_image_array_non_uniform_indexing_native(
         mut self,
         shader_storage_image_array_non_uniform_indexing_native: bool,
@@ -25116,6 +27003,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
             shader_storage_image_array_non_uniform_indexing_native.into();
         self
     }
+    #[inline]
     pub fn shader_input_attachment_array_non_uniform_indexing_native(
         mut self,
         shader_input_attachment_array_non_uniform_indexing_native: bool,
@@ -25124,6 +27012,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
             shader_input_attachment_array_non_uniform_indexing_native.into();
         self
     }
+    #[inline]
     pub fn robust_buffer_access_update_after_bind(
         mut self,
         robust_buffer_access_update_after_bind: bool,
@@ -25131,10 +27020,12 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
         self.robust_buffer_access_update_after_bind = robust_buffer_access_update_after_bind.into();
         self
     }
+    #[inline]
     pub fn quad_divergent_implicit_lod(mut self, quad_divergent_implicit_lod: bool) -> Self {
         self.quad_divergent_implicit_lod = quad_divergent_implicit_lod.into();
         self
     }
+    #[inline]
     pub fn max_per_stage_descriptor_update_after_bind_samplers(
         mut self,
         max_per_stage_descriptor_update_after_bind_samplers: u32,
@@ -25143,6 +27034,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
             max_per_stage_descriptor_update_after_bind_samplers;
         self
     }
+    #[inline]
     pub fn max_per_stage_descriptor_update_after_bind_uniform_buffers(
         mut self,
         max_per_stage_descriptor_update_after_bind_uniform_buffers: u32,
@@ -25151,6 +27043,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
             max_per_stage_descriptor_update_after_bind_uniform_buffers;
         self
     }
+    #[inline]
     pub fn max_per_stage_descriptor_update_after_bind_storage_buffers(
         mut self,
         max_per_stage_descriptor_update_after_bind_storage_buffers: u32,
@@ -25159,6 +27052,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
             max_per_stage_descriptor_update_after_bind_storage_buffers;
         self
     }
+    #[inline]
     pub fn max_per_stage_descriptor_update_after_bind_sampled_images(
         mut self,
         max_per_stage_descriptor_update_after_bind_sampled_images: u32,
@@ -25167,6 +27061,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
             max_per_stage_descriptor_update_after_bind_sampled_images;
         self
     }
+    #[inline]
     pub fn max_per_stage_descriptor_update_after_bind_storage_images(
         mut self,
         max_per_stage_descriptor_update_after_bind_storage_images: u32,
@@ -25175,6 +27070,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
             max_per_stage_descriptor_update_after_bind_storage_images;
         self
     }
+    #[inline]
     pub fn max_per_stage_descriptor_update_after_bind_input_attachments(
         mut self,
         max_per_stage_descriptor_update_after_bind_input_attachments: u32,
@@ -25183,6 +27079,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
             max_per_stage_descriptor_update_after_bind_input_attachments;
         self
     }
+    #[inline]
     pub fn max_per_stage_update_after_bind_resources(
         mut self,
         max_per_stage_update_after_bind_resources: u32,
@@ -25190,6 +27087,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
         self.max_per_stage_update_after_bind_resources = max_per_stage_update_after_bind_resources;
         self
     }
+    #[inline]
     pub fn max_descriptor_set_update_after_bind_samplers(
         mut self,
         max_descriptor_set_update_after_bind_samplers: u32,
@@ -25198,6 +27096,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
             max_descriptor_set_update_after_bind_samplers;
         self
     }
+    #[inline]
     pub fn max_descriptor_set_update_after_bind_uniform_buffers(
         mut self,
         max_descriptor_set_update_after_bind_uniform_buffers: u32,
@@ -25206,6 +27105,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
             max_descriptor_set_update_after_bind_uniform_buffers;
         self
     }
+    #[inline]
     pub fn max_descriptor_set_update_after_bind_uniform_buffers_dynamic(
         mut self,
         max_descriptor_set_update_after_bind_uniform_buffers_dynamic: u32,
@@ -25214,6 +27114,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
             max_descriptor_set_update_after_bind_uniform_buffers_dynamic;
         self
     }
+    #[inline]
     pub fn max_descriptor_set_update_after_bind_storage_buffers(
         mut self,
         max_descriptor_set_update_after_bind_storage_buffers: u32,
@@ -25222,6 +27123,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
             max_descriptor_set_update_after_bind_storage_buffers;
         self
     }
+    #[inline]
     pub fn max_descriptor_set_update_after_bind_storage_buffers_dynamic(
         mut self,
         max_descriptor_set_update_after_bind_storage_buffers_dynamic: u32,
@@ -25230,6 +27132,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
             max_descriptor_set_update_after_bind_storage_buffers_dynamic;
         self
     }
+    #[inline]
     pub fn max_descriptor_set_update_after_bind_sampled_images(
         mut self,
         max_descriptor_set_update_after_bind_sampled_images: u32,
@@ -25238,6 +27141,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
             max_descriptor_set_update_after_bind_sampled_images;
         self
     }
+    #[inline]
     pub fn max_descriptor_set_update_after_bind_storage_images(
         mut self,
         max_descriptor_set_update_after_bind_storage_images: u32,
@@ -25246,6 +27150,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
             max_descriptor_set_update_after_bind_storage_images;
         self
     }
+    #[inline]
     pub fn max_descriptor_set_update_after_bind_input_attachments(
         mut self,
         max_descriptor_set_update_after_bind_input_attachments: u32,
@@ -25254,6 +27159,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
             max_descriptor_set_update_after_bind_input_attachments;
         self
     }
+    #[inline]
     pub fn supported_depth_resolve_modes(
         mut self,
         supported_depth_resolve_modes: ResolveModeFlags,
@@ -25261,6 +27167,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
         self.supported_depth_resolve_modes = supported_depth_resolve_modes;
         self
     }
+    #[inline]
     pub fn supported_stencil_resolve_modes(
         mut self,
         supported_stencil_resolve_modes: ResolveModeFlags,
@@ -25268,14 +27175,17 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
         self.supported_stencil_resolve_modes = supported_stencil_resolve_modes;
         self
     }
+    #[inline]
     pub fn independent_resolve_none(mut self, independent_resolve_none: bool) -> Self {
         self.independent_resolve_none = independent_resolve_none.into();
         self
     }
+    #[inline]
     pub fn independent_resolve(mut self, independent_resolve: bool) -> Self {
         self.independent_resolve = independent_resolve.into();
         self
     }
+    #[inline]
     pub fn filter_minmax_single_component_formats(
         mut self,
         filter_minmax_single_component_formats: bool,
@@ -25283,6 +27193,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
         self.filter_minmax_single_component_formats = filter_minmax_single_component_formats.into();
         self
     }
+    #[inline]
     pub fn filter_minmax_image_component_mapping(
         mut self,
         filter_minmax_image_component_mapping: bool,
@@ -25290,6 +27201,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
         self.filter_minmax_image_component_mapping = filter_minmax_image_component_mapping.into();
         self
     }
+    #[inline]
     pub fn max_timeline_semaphore_value_difference(
         mut self,
         max_timeline_semaphore_value_difference: u64,
@@ -25297,6 +27209,7 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
         self.max_timeline_semaphore_value_difference = max_timeline_semaphore_value_difference;
         self
     }
+    #[inline]
     pub fn framebuffer_integer_color_sample_counts(
         mut self,
         framebuffer_integer_color_sample_counts: SampleCountFlags,
@@ -25356,14 +27269,17 @@ impl ::std::default::Default for PhysicalDeviceVulkan13Features<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVulkan13Features<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceVulkan13Features<'a> {}
 impl<'a> PhysicalDeviceVulkan13Features<'a> {
+    #[inline]
     pub fn robust_image_access(mut self, robust_image_access: bool) -> Self {
         self.robust_image_access = robust_image_access.into();
         self
     }
+    #[inline]
     pub fn inline_uniform_block(mut self, inline_uniform_block: bool) -> Self {
         self.inline_uniform_block = inline_uniform_block.into();
         self
     }
+    #[inline]
     pub fn descriptor_binding_inline_uniform_block_update_after_bind(
         mut self,
         descriptor_binding_inline_uniform_block_update_after_bind: bool,
@@ -25372,6 +27288,7 @@ impl<'a> PhysicalDeviceVulkan13Features<'a> {
             descriptor_binding_inline_uniform_block_update_after_bind.into();
         self
     }
+    #[inline]
     pub fn pipeline_creation_cache_control(
         mut self,
         pipeline_creation_cache_control: bool,
@@ -25379,10 +27296,12 @@ impl<'a> PhysicalDeviceVulkan13Features<'a> {
         self.pipeline_creation_cache_control = pipeline_creation_cache_control.into();
         self
     }
+    #[inline]
     pub fn private_data(mut self, private_data: bool) -> Self {
         self.private_data = private_data.into();
         self
     }
+    #[inline]
     pub fn shader_demote_to_helper_invocation(
         mut self,
         shader_demote_to_helper_invocation: bool,
@@ -25390,26 +27309,32 @@ impl<'a> PhysicalDeviceVulkan13Features<'a> {
         self.shader_demote_to_helper_invocation = shader_demote_to_helper_invocation.into();
         self
     }
+    #[inline]
     pub fn shader_terminate_invocation(mut self, shader_terminate_invocation: bool) -> Self {
         self.shader_terminate_invocation = shader_terminate_invocation.into();
         self
     }
+    #[inline]
     pub fn subgroup_size_control(mut self, subgroup_size_control: bool) -> Self {
         self.subgroup_size_control = subgroup_size_control.into();
         self
     }
+    #[inline]
     pub fn compute_full_subgroups(mut self, compute_full_subgroups: bool) -> Self {
         self.compute_full_subgroups = compute_full_subgroups.into();
         self
     }
+    #[inline]
     pub fn synchronization2(mut self, synchronization2: bool) -> Self {
         self.synchronization2 = synchronization2.into();
         self
     }
+    #[inline]
     pub fn texture_compression_astc_hdr(mut self, texture_compression_astc_hdr: bool) -> Self {
         self.texture_compression_astc_hdr = texture_compression_astc_hdr.into();
         self
     }
+    #[inline]
     pub fn shader_zero_initialize_workgroup_memory(
         mut self,
         shader_zero_initialize_workgroup_memory: bool,
@@ -25418,14 +27343,17 @@ impl<'a> PhysicalDeviceVulkan13Features<'a> {
             shader_zero_initialize_workgroup_memory.into();
         self
     }
+    #[inline]
     pub fn dynamic_rendering(mut self, dynamic_rendering: bool) -> Self {
         self.dynamic_rendering = dynamic_rendering.into();
         self
     }
+    #[inline]
     pub fn shader_integer_dot_product(mut self, shader_integer_dot_product: bool) -> Self {
         self.shader_integer_dot_product = shader_integer_dot_product.into();
         self
     }
+    #[inline]
     pub fn maintenance4(mut self, maintenance4: bool) -> Self {
         self.maintenance4 = maintenance4.into();
         self
@@ -25493,18 +27421,22 @@ impl ::std::default::Default for PhysicalDeviceVulkan13Properties<'_> {
 }
 unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceVulkan13Properties<'a> {}
 impl<'a> PhysicalDeviceVulkan13Properties<'a> {
+    #[inline]
     pub fn min_subgroup_size(mut self, min_subgroup_size: u32) -> Self {
         self.min_subgroup_size = min_subgroup_size;
         self
     }
+    #[inline]
     pub fn max_subgroup_size(mut self, max_subgroup_size: u32) -> Self {
         self.max_subgroup_size = max_subgroup_size;
         self
     }
+    #[inline]
     pub fn max_compute_workgroup_subgroups(mut self, max_compute_workgroup_subgroups: u32) -> Self {
         self.max_compute_workgroup_subgroups = max_compute_workgroup_subgroups;
         self
     }
+    #[inline]
     pub fn required_subgroup_size_stages(
         mut self,
         required_subgroup_size_stages: ShaderStageFlags,
@@ -25512,10 +27444,12 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
         self.required_subgroup_size_stages = required_subgroup_size_stages;
         self
     }
+    #[inline]
     pub fn max_inline_uniform_block_size(mut self, max_inline_uniform_block_size: u32) -> Self {
         self.max_inline_uniform_block_size = max_inline_uniform_block_size;
         self
     }
+    #[inline]
     pub fn max_per_stage_descriptor_inline_uniform_blocks(
         mut self,
         max_per_stage_descriptor_inline_uniform_blocks: u32,
@@ -25524,6 +27458,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             max_per_stage_descriptor_inline_uniform_blocks;
         self
     }
+    #[inline]
     pub fn max_per_stage_descriptor_update_after_bind_inline_uniform_blocks(
         mut self,
         max_per_stage_descriptor_update_after_bind_inline_uniform_blocks: u32,
@@ -25532,6 +27467,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             max_per_stage_descriptor_update_after_bind_inline_uniform_blocks;
         self
     }
+    #[inline]
     pub fn max_descriptor_set_inline_uniform_blocks(
         mut self,
         max_descriptor_set_inline_uniform_blocks: u32,
@@ -25539,6 +27475,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
         self.max_descriptor_set_inline_uniform_blocks = max_descriptor_set_inline_uniform_blocks;
         self
     }
+    #[inline]
     pub fn max_descriptor_set_update_after_bind_inline_uniform_blocks(
         mut self,
         max_descriptor_set_update_after_bind_inline_uniform_blocks: u32,
@@ -25547,10 +27484,12 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             max_descriptor_set_update_after_bind_inline_uniform_blocks;
         self
     }
+    #[inline]
     pub fn max_inline_uniform_total_size(mut self, max_inline_uniform_total_size: u32) -> Self {
         self.max_inline_uniform_total_size = max_inline_uniform_total_size;
         self
     }
+    #[inline]
     pub fn integer_dot_product8_bit_unsigned_accelerated(
         mut self,
         integer_dot_product8_bit_unsigned_accelerated: bool,
@@ -25559,6 +27498,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             integer_dot_product8_bit_unsigned_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product8_bit_signed_accelerated(
         mut self,
         integer_dot_product8_bit_signed_accelerated: bool,
@@ -25567,6 +27507,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             integer_dot_product8_bit_signed_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product8_bit_mixed_signedness_accelerated(
         mut self,
         integer_dot_product8_bit_mixed_signedness_accelerated: bool,
@@ -25575,6 +27516,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             integer_dot_product8_bit_mixed_signedness_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product4x8_bit_packed_unsigned_accelerated(
         mut self,
         integer_dot_product4x8_bit_packed_unsigned_accelerated: bool,
@@ -25583,6 +27525,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             integer_dot_product4x8_bit_packed_unsigned_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product4x8_bit_packed_signed_accelerated(
         mut self,
         integer_dot_product4x8_bit_packed_signed_accelerated: bool,
@@ -25591,6 +27534,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             integer_dot_product4x8_bit_packed_signed_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product4x8_bit_packed_mixed_signedness_accelerated(
         mut self,
         integer_dot_product4x8_bit_packed_mixed_signedness_accelerated: bool,
@@ -25599,6 +27543,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             integer_dot_product4x8_bit_packed_mixed_signedness_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product16_bit_unsigned_accelerated(
         mut self,
         integer_dot_product16_bit_unsigned_accelerated: bool,
@@ -25607,6 +27552,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             integer_dot_product16_bit_unsigned_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product16_bit_signed_accelerated(
         mut self,
         integer_dot_product16_bit_signed_accelerated: bool,
@@ -25615,6 +27561,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             integer_dot_product16_bit_signed_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product16_bit_mixed_signedness_accelerated(
         mut self,
         integer_dot_product16_bit_mixed_signedness_accelerated: bool,
@@ -25623,6 +27570,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             integer_dot_product16_bit_mixed_signedness_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product32_bit_unsigned_accelerated(
         mut self,
         integer_dot_product32_bit_unsigned_accelerated: bool,
@@ -25631,6 +27579,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             integer_dot_product32_bit_unsigned_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product32_bit_signed_accelerated(
         mut self,
         integer_dot_product32_bit_signed_accelerated: bool,
@@ -25639,6 +27588,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             integer_dot_product32_bit_signed_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product32_bit_mixed_signedness_accelerated(
         mut self,
         integer_dot_product32_bit_mixed_signedness_accelerated: bool,
@@ -25647,6 +27597,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             integer_dot_product32_bit_mixed_signedness_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product64_bit_unsigned_accelerated(
         mut self,
         integer_dot_product64_bit_unsigned_accelerated: bool,
@@ -25655,6 +27606,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             integer_dot_product64_bit_unsigned_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product64_bit_signed_accelerated(
         mut self,
         integer_dot_product64_bit_signed_accelerated: bool,
@@ -25663,6 +27615,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             integer_dot_product64_bit_signed_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product64_bit_mixed_signedness_accelerated(
         mut self,
         integer_dot_product64_bit_mixed_signedness_accelerated: bool,
@@ -25671,6 +27624,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             integer_dot_product64_bit_mixed_signedness_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated(
         mut self,
         integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated: bool,
@@ -25679,6 +27633,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product_accumulating_saturating8_bit_signed_accelerated(
         mut self,
         integer_dot_product_accumulating_saturating8_bit_signed_accelerated: bool,
@@ -25687,6 +27642,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             integer_dot_product_accumulating_saturating8_bit_signed_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated(
         mut self,
         integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated: bool,
@@ -25695,6 +27651,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated(
         mut self,
         integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated: bool,
@@ -25703,6 +27660,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated(
         mut self,
         integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated: bool,
@@ -25711,6 +27669,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated(
         mut self,
         integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated : bool,
@@ -25718,6 +27677,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
         self . integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated = integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated . into () ;
         self
     }
+    #[inline]
     pub fn integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated(
         mut self,
         integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated: bool,
@@ -25726,6 +27686,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product_accumulating_saturating16_bit_signed_accelerated(
         mut self,
         integer_dot_product_accumulating_saturating16_bit_signed_accelerated: bool,
@@ -25734,6 +27695,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             integer_dot_product_accumulating_saturating16_bit_signed_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated(
         mut self,
         integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated: bool,
@@ -25742,6 +27704,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated(
         mut self,
         integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated: bool,
@@ -25750,6 +27713,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product_accumulating_saturating32_bit_signed_accelerated(
         mut self,
         integer_dot_product_accumulating_saturating32_bit_signed_accelerated: bool,
@@ -25758,6 +27722,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             integer_dot_product_accumulating_saturating32_bit_signed_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated(
         mut self,
         integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated: bool,
@@ -25766,6 +27731,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated(
         mut self,
         integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated: bool,
@@ -25774,6 +27740,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product_accumulating_saturating64_bit_signed_accelerated(
         mut self,
         integer_dot_product_accumulating_saturating64_bit_signed_accelerated: bool,
@@ -25782,6 +27749,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             integer_dot_product_accumulating_saturating64_bit_signed_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated(
         mut self,
         integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated: bool,
@@ -25790,6 +27758,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated.into();
         self
     }
+    #[inline]
     pub fn storage_texel_buffer_offset_alignment_bytes(
         mut self,
         storage_texel_buffer_offset_alignment_bytes: DeviceSize,
@@ -25798,6 +27767,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             storage_texel_buffer_offset_alignment_bytes;
         self
     }
+    #[inline]
     pub fn storage_texel_buffer_offset_single_texel_alignment(
         mut self,
         storage_texel_buffer_offset_single_texel_alignment: bool,
@@ -25806,6 +27776,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             storage_texel_buffer_offset_single_texel_alignment.into();
         self
     }
+    #[inline]
     pub fn uniform_texel_buffer_offset_alignment_bytes(
         mut self,
         uniform_texel_buffer_offset_alignment_bytes: DeviceSize,
@@ -25814,6 +27785,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             uniform_texel_buffer_offset_alignment_bytes;
         self
     }
+    #[inline]
     pub fn uniform_texel_buffer_offset_single_texel_alignment(
         mut self,
         uniform_texel_buffer_offset_single_texel_alignment: bool,
@@ -25822,6 +27794,7 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
             uniform_texel_buffer_offset_single_texel_alignment.into();
         self
     }
+    #[inline]
     pub fn max_buffer_size(mut self, max_buffer_size: DeviceSize) -> Self {
         self.max_buffer_size = max_buffer_size;
         self
@@ -25850,6 +27823,7 @@ impl ::std::default::Default for PipelineCompilerControlCreateInfoAMD<'_> {
 unsafe impl<'a> ExtendsGraphicsPipelineCreateInfo for PipelineCompilerControlCreateInfoAMD<'a> {}
 unsafe impl<'a> ExtendsComputePipelineCreateInfo for PipelineCompilerControlCreateInfoAMD<'a> {}
 impl<'a> PipelineCompilerControlCreateInfoAMD<'a> {
+    #[inline]
     pub fn compiler_control_flags(
         mut self,
         compiler_control_flags: PipelineCompilerControlFlagsAMD,
@@ -25881,6 +27855,7 @@ impl ::std::default::Default for PhysicalDeviceCoherentMemoryFeaturesAMD<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCoherentMemoryFeaturesAMD<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceCoherentMemoryFeaturesAMD<'a> {}
 impl<'a> PhysicalDeviceCoherentMemoryFeaturesAMD<'a> {
+    #[inline]
     pub fn device_coherent_memory(mut self, device_coherent_memory: bool) -> Self {
         self.device_coherent_memory = device_coherent_memory.into();
         self
@@ -25936,22 +27911,27 @@ impl ::std::default::Default for PhysicalDeviceToolProperties<'_> {
     }
 }
 impl<'a> PhysicalDeviceToolProperties<'a> {
+    #[inline]
     pub fn name(mut self, name: [c_char; MAX_EXTENSION_NAME_SIZE]) -> Self {
         self.name = name;
         self
     }
+    #[inline]
     pub fn version(mut self, version: [c_char; MAX_EXTENSION_NAME_SIZE]) -> Self {
         self.version = version;
         self
     }
+    #[inline]
     pub fn purposes(mut self, purposes: ToolPurposeFlags) -> Self {
         self.purposes = purposes;
         self
     }
+    #[inline]
     pub fn description(mut self, description: [c_char; MAX_DESCRIPTION_SIZE]) -> Self {
         self.description = description;
         self
     }
+    #[inline]
     pub fn layer(mut self, layer: [c_char; MAX_EXTENSION_NAME_SIZE]) -> Self {
         self.layer = layer;
         self
@@ -25991,10 +27971,12 @@ impl ::std::default::Default for SamplerCustomBorderColorCreateInfoEXT<'_> {
 }
 unsafe impl<'a> ExtendsSamplerCreateInfo for SamplerCustomBorderColorCreateInfoEXT<'a> {}
 impl<'a> SamplerCustomBorderColorCreateInfoEXT<'a> {
+    #[inline]
     pub fn custom_border_color(mut self, custom_border_color: ClearColorValue) -> Self {
         self.custom_border_color = custom_border_color;
         self
     }
+    #[inline]
     pub fn format(mut self, format: Format) -> Self {
         self.format = format;
         self
@@ -26025,6 +28007,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceProperties2
 {
 }
 impl<'a> PhysicalDeviceCustomBorderColorPropertiesEXT<'a> {
+    #[inline]
     pub fn max_custom_border_color_samplers(
         mut self,
         max_custom_border_color_samplers: u32,
@@ -26058,10 +28041,12 @@ impl ::std::default::Default for PhysicalDeviceCustomBorderColorFeaturesEXT<'_> 
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCustomBorderColorFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceCustomBorderColorFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceCustomBorderColorFeaturesEXT<'a> {
+    #[inline]
     pub fn custom_border_colors(mut self, custom_border_colors: bool) -> Self {
         self.custom_border_colors = custom_border_colors.into();
         self
     }
+    #[inline]
     pub fn custom_border_color_without_format(
         mut self,
         custom_border_color_without_format: bool,
@@ -26094,10 +28079,12 @@ impl ::std::default::Default for SamplerBorderColorComponentMappingCreateInfoEXT
 }
 unsafe impl<'a> ExtendsSamplerCreateInfo for SamplerBorderColorComponentMappingCreateInfoEXT<'a> {}
 impl<'a> SamplerBorderColorComponentMappingCreateInfoEXT<'a> {
+    #[inline]
     pub fn components(mut self, components: ComponentMapping) -> Self {
         self.components = components;
         self
     }
+    #[inline]
     pub fn srgb(mut self, srgb: bool) -> Self {
         self.srgb = srgb.into();
         self
@@ -26128,10 +28115,12 @@ impl ::std::default::Default for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'_>
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceBorderColorSwizzleFeaturesEXT<'a> {
+    #[inline]
     pub fn border_color_swizzle(mut self, border_color_swizzle: bool) -> Self {
         self.border_color_swizzle = border_color_swizzle.into();
         self
     }
+    #[inline]
     pub fn border_color_swizzle_from_image(
         mut self,
         border_color_swizzle_from_image: bool,
@@ -26213,30 +28202,37 @@ impl ::std::default::Default for AccelerationStructureGeometryTrianglesDataKHR<'
 }
 pub unsafe trait ExtendsAccelerationStructureGeometryTrianglesDataKHR {}
 impl<'a> AccelerationStructureGeometryTrianglesDataKHR<'a> {
+    #[inline]
     pub fn vertex_format(mut self, vertex_format: Format) -> Self {
         self.vertex_format = vertex_format;
         self
     }
+    #[inline]
     pub fn vertex_data(mut self, vertex_data: DeviceOrHostAddressConstKHR) -> Self {
         self.vertex_data = vertex_data;
         self
     }
+    #[inline]
     pub fn vertex_stride(mut self, vertex_stride: DeviceSize) -> Self {
         self.vertex_stride = vertex_stride;
         self
     }
+    #[inline]
     pub fn max_vertex(mut self, max_vertex: u32) -> Self {
         self.max_vertex = max_vertex;
         self
     }
+    #[inline]
     pub fn index_type(mut self, index_type: IndexType) -> Self {
         self.index_type = index_type;
         self
     }
+    #[inline]
     pub fn index_data(mut self, index_data: DeviceOrHostAddressConstKHR) -> Self {
         self.index_data = index_data;
         self
     }
+    #[inline]
     pub fn transform_data(mut self, transform_data: DeviceOrHostAddressConstKHR) -> Self {
         self.transform_data = transform_data;
         self
@@ -26292,10 +28288,12 @@ impl ::std::default::Default for AccelerationStructureGeometryAabbsDataKHR<'_> {
     }
 }
 impl<'a> AccelerationStructureGeometryAabbsDataKHR<'a> {
+    #[inline]
     pub fn data(mut self, data: DeviceOrHostAddressConstKHR) -> Self {
         self.data = data;
         self
     }
+    #[inline]
     pub fn stride(mut self, stride: DeviceSize) -> Self {
         self.stride = stride;
         self
@@ -26334,10 +28332,12 @@ impl ::std::default::Default for AccelerationStructureGeometryInstancesDataKHR<'
     }
 }
 impl<'a> AccelerationStructureGeometryInstancesDataKHR<'a> {
+    #[inline]
     pub fn array_of_pointers(mut self, array_of_pointers: bool) -> Self {
         self.array_of_pointers = array_of_pointers.into();
         self
     }
+    #[inline]
     pub fn data(mut self, data: DeviceOrHostAddressConstKHR) -> Self {
         self.data = data;
         self
@@ -26392,14 +28392,17 @@ impl ::std::default::Default for AccelerationStructureGeometryKHR<'_> {
     }
 }
 impl<'a> AccelerationStructureGeometryKHR<'a> {
+    #[inline]
     pub fn geometry_type(mut self, geometry_type: GeometryTypeKHR) -> Self {
         self.geometry_type = geometry_type;
         self
     }
+    #[inline]
     pub fn geometry(mut self, geometry: AccelerationStructureGeometryDataKHR<'a>) -> Self {
         self.geometry = geometry;
         self
     }
+    #[inline]
     pub fn flags(mut self, flags: GeometryFlagsKHR) -> Self {
         self.flags = flags;
         self
@@ -26465,18 +28468,22 @@ impl ::std::default::Default for AccelerationStructureBuildGeometryInfoKHR<'_> {
     }
 }
 impl<'a> AccelerationStructureBuildGeometryInfoKHR<'a> {
+    #[inline]
     pub fn ty(mut self, ty: AccelerationStructureTypeKHR) -> Self {
         self.ty = ty;
         self
     }
+    #[inline]
     pub fn flags(mut self, flags: BuildAccelerationStructureFlagsKHR) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn mode(mut self, mode: BuildAccelerationStructureModeKHR) -> Self {
         self.mode = mode;
         self
     }
+    #[inline]
     pub fn src_acceleration_structure(
         mut self,
         src_acceleration_structure: AccelerationStructureKHR,
@@ -26484,6 +28491,7 @@ impl<'a> AccelerationStructureBuildGeometryInfoKHR<'a> {
         self.src_acceleration_structure = src_acceleration_structure;
         self
     }
+    #[inline]
     pub fn dst_acceleration_structure(
         mut self,
         dst_acceleration_structure: AccelerationStructureKHR,
@@ -26491,11 +28499,13 @@ impl<'a> AccelerationStructureBuildGeometryInfoKHR<'a> {
         self.dst_acceleration_structure = dst_acceleration_structure;
         self
     }
+    #[inline]
     pub fn geometries(mut self, geometries: &'a [AccelerationStructureGeometryKHR]) -> Self {
         self.geometry_count = geometries.len() as _;
         self.p_geometries = geometries.as_ptr();
         self
     }
+    #[inline]
     pub fn geometries_ptrs(
         mut self,
         geometries: &'a [&'a AccelerationStructureGeometryKHR<'a>],
@@ -26504,6 +28514,7 @@ impl<'a> AccelerationStructureBuildGeometryInfoKHR<'a> {
         self.pp_geometries = geometries.as_ptr() as *const *const _;
         self
     }
+    #[inline]
     pub fn scratch_data(mut self, scratch_data: DeviceOrHostAddressKHR) -> Self {
         self.scratch_data = scratch_data;
         self
@@ -26520,18 +28531,22 @@ pub struct AccelerationStructureBuildRangeInfoKHR {
     pub transform_offset: u32,
 }
 impl AccelerationStructureBuildRangeInfoKHR {
+    #[inline]
     pub fn primitive_count(mut self, primitive_count: u32) -> Self {
         self.primitive_count = primitive_count;
         self
     }
+    #[inline]
     pub fn primitive_offset(mut self, primitive_offset: u32) -> Self {
         self.primitive_offset = primitive_offset;
         self
     }
+    #[inline]
     pub fn first_vertex(mut self, first_vertex: u32) -> Self {
         self.first_vertex = first_vertex;
         self
     }
+    #[inline]
     pub fn transform_offset(mut self, transform_offset: u32) -> Self {
         self.transform_offset = transform_offset;
         self
@@ -26569,26 +28584,32 @@ impl ::std::default::Default for AccelerationStructureCreateInfoKHR<'_> {
 }
 pub unsafe trait ExtendsAccelerationStructureCreateInfoKHR {}
 impl<'a> AccelerationStructureCreateInfoKHR<'a> {
+    #[inline]
     pub fn create_flags(mut self, create_flags: AccelerationStructureCreateFlagsKHR) -> Self {
         self.create_flags = create_flags;
         self
     }
+    #[inline]
     pub fn buffer(mut self, buffer: Buffer) -> Self {
         self.buffer = buffer;
         self
     }
+    #[inline]
     pub fn offset(mut self, offset: DeviceSize) -> Self {
         self.offset = offset;
         self
     }
+    #[inline]
     pub fn size(mut self, size: DeviceSize) -> Self {
         self.size = size;
         self
     }
+    #[inline]
     pub fn ty(mut self, ty: AccelerationStructureTypeKHR) -> Self {
         self.ty = ty;
         self
     }
+    #[inline]
     pub fn device_address(mut self, device_address: DeviceAddress) -> Self {
         self.device_address = device_address;
         self
@@ -26624,26 +28645,32 @@ pub struct AabbPositionsKHR {
     pub max_z: f32,
 }
 impl AabbPositionsKHR {
+    #[inline]
     pub fn min_x(mut self, min_x: f32) -> Self {
         self.min_x = min_x;
         self
     }
+    #[inline]
     pub fn min_y(mut self, min_y: f32) -> Self {
         self.min_y = min_y;
         self
     }
+    #[inline]
     pub fn min_z(mut self, min_z: f32) -> Self {
         self.min_z = min_z;
         self
     }
+    #[inline]
     pub fn max_x(mut self, max_x: f32) -> Self {
         self.max_x = max_x;
         self
     }
+    #[inline]
     pub fn max_y(mut self, max_y: f32) -> Self {
         self.max_y = max_y;
         self
     }
+    #[inline]
     pub fn max_z(mut self, max_z: f32) -> Self {
         self.max_z = max_z;
         self
@@ -26692,6 +28719,7 @@ impl ::std::default::Default for AccelerationStructureDeviceAddressInfoKHR<'_> {
     }
 }
 impl<'a> AccelerationStructureDeviceAddressInfoKHR<'a> {
+    #[inline]
     pub fn acceleration_structure(
         mut self,
         acceleration_structure: AccelerationStructureKHR,
@@ -26721,6 +28749,7 @@ impl ::std::default::Default for AccelerationStructureVersionInfoKHR<'_> {
     }
 }
 impl<'a> AccelerationStructureVersionInfoKHR<'a> {
+    #[inline]
     pub fn version_data(mut self, version_data: &'a [u8; 2 * UUID_SIZE]) -> Self {
         self.p_version_data = version_data;
         self
@@ -26751,14 +28780,17 @@ impl ::std::default::Default for CopyAccelerationStructureInfoKHR<'_> {
     }
 }
 impl<'a> CopyAccelerationStructureInfoKHR<'a> {
+    #[inline]
     pub fn src(mut self, src: AccelerationStructureKHR) -> Self {
         self.src = src;
         self
     }
+    #[inline]
     pub fn dst(mut self, dst: AccelerationStructureKHR) -> Self {
         self.dst = dst;
         self
     }
+    #[inline]
     pub fn mode(mut self, mode: CopyAccelerationStructureModeKHR) -> Self {
         self.mode = mode;
         self
@@ -26800,14 +28832,17 @@ impl ::std::default::Default for CopyAccelerationStructureToMemoryInfoKHR<'_> {
     }
 }
 impl<'a> CopyAccelerationStructureToMemoryInfoKHR<'a> {
+    #[inline]
     pub fn src(mut self, src: AccelerationStructureKHR) -> Self {
         self.src = src;
         self
     }
+    #[inline]
     pub fn dst(mut self, dst: DeviceOrHostAddressKHR) -> Self {
         self.dst = dst;
         self
     }
+    #[inline]
     pub fn mode(mut self, mode: CopyAccelerationStructureModeKHR) -> Self {
         self.mode = mode;
         self
@@ -26849,14 +28884,17 @@ impl ::std::default::Default for CopyMemoryToAccelerationStructureInfoKHR<'_> {
     }
 }
 impl<'a> CopyMemoryToAccelerationStructureInfoKHR<'a> {
+    #[inline]
     pub fn src(mut self, src: DeviceOrHostAddressConstKHR) -> Self {
         self.src = src;
         self
     }
+    #[inline]
     pub fn dst(mut self, dst: AccelerationStructureKHR) -> Self {
         self.dst = dst;
         self
     }
+    #[inline]
     pub fn mode(mut self, mode: CopyAccelerationStructureModeKHR) -> Self {
         self.mode = mode;
         self
@@ -26885,10 +28923,12 @@ impl ::std::default::Default for RayTracingPipelineInterfaceCreateInfoKHR<'_> {
     }
 }
 impl<'a> RayTracingPipelineInterfaceCreateInfoKHR<'a> {
+    #[inline]
     pub fn max_pipeline_ray_payload_size(mut self, max_pipeline_ray_payload_size: u32) -> Self {
         self.max_pipeline_ray_payload_size = max_pipeline_ray_payload_size;
         self
     }
+    #[inline]
     pub fn max_pipeline_ray_hit_attribute_size(
         mut self,
         max_pipeline_ray_hit_attribute_size: u32,
@@ -26920,6 +28960,7 @@ impl ::std::default::Default for PipelineLibraryCreateInfoKHR<'_> {
     }
 }
 impl<'a> PipelineLibraryCreateInfoKHR<'a> {
+    #[inline]
     pub fn libraries(mut self, libraries: &'a [Pipeline]) -> Self {
         self.library_count = libraries.len() as _;
         self.p_libraries = libraries.as_ptr();
@@ -26952,6 +28993,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceExtendedDynamicStateFeaturesEXT<'a> {
+    #[inline]
     pub fn extended_dynamic_state(mut self, extended_dynamic_state: bool) -> Self {
         self.extended_dynamic_state = extended_dynamic_state.into();
         self
@@ -26987,10 +29029,12 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceExtendedDynamicState2FeaturesEXT<'a> {
+    #[inline]
     pub fn extended_dynamic_state2(mut self, extended_dynamic_state2: bool) -> Self {
         self.extended_dynamic_state2 = extended_dynamic_state2.into();
         self
     }
+    #[inline]
     pub fn extended_dynamic_state2_logic_op(
         mut self,
         extended_dynamic_state2_logic_op: bool,
@@ -26998,6 +29042,7 @@ impl<'a> PhysicalDeviceExtendedDynamicState2FeaturesEXT<'a> {
         self.extended_dynamic_state2_logic_op = extended_dynamic_state2_logic_op.into();
         self
     }
+    #[inline]
     pub fn extended_dynamic_state2_patch_control_points(
         mut self,
         extended_dynamic_state2_patch_control_points: bool,
@@ -27029,6 +29074,7 @@ impl ::std::default::Default for RenderPassTransformBeginInfoQCOM<'_> {
 }
 unsafe impl<'a> ExtendsRenderPassBeginInfo for RenderPassTransformBeginInfoQCOM<'a> {}
 impl<'a> RenderPassTransformBeginInfoQCOM<'a> {
+    #[inline]
     pub fn transform(mut self, transform: SurfaceTransformFlagsKHR) -> Self {
         self.transform = transform;
         self
@@ -27057,6 +29103,7 @@ impl ::std::default::Default for CopyCommandTransformInfoQCOM<'_> {
 unsafe impl<'a> ExtendsBufferImageCopy2 for CopyCommandTransformInfoQCOM<'a> {}
 unsafe impl<'a> ExtendsImageBlit2 for CopyCommandTransformInfoQCOM<'a> {}
 impl<'a> CopyCommandTransformInfoQCOM<'a> {
+    #[inline]
     pub fn transform(mut self, transform: SurfaceTransformFlagsKHR) -> Self {
         self.transform = transform;
         self
@@ -27089,10 +29136,12 @@ unsafe impl<'a> ExtendsCommandBufferInheritanceInfo
 {
 }
 impl<'a> CommandBufferInheritanceRenderPassTransformInfoQCOM<'a> {
+    #[inline]
     pub fn transform(mut self, transform: SurfaceTransformFlagsKHR) -> Self {
         self.transform = transform;
         self
     }
+    #[inline]
     pub fn render_area(mut self, render_area: Rect2D) -> Self {
         self.render_area = render_area;
         self
@@ -27121,6 +29170,7 @@ impl ::std::default::Default for PhysicalDeviceDiagnosticsConfigFeaturesNV<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDiagnosticsConfigFeaturesNV<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceDiagnosticsConfigFeaturesNV<'a> {}
 impl<'a> PhysicalDeviceDiagnosticsConfigFeaturesNV<'a> {
+    #[inline]
     pub fn diagnostics_config(mut self, diagnostics_config: bool) -> Self {
         self.diagnostics_config = diagnostics_config.into();
         self
@@ -27148,6 +29198,7 @@ impl ::std::default::Default for DeviceDiagnosticsConfigCreateInfoNV<'_> {
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for DeviceDiagnosticsConfigCreateInfoNV<'a> {}
 impl<'a> DeviceDiagnosticsConfigCreateInfoNV<'a> {
+    #[inline]
     pub fn flags(mut self, flags: DeviceDiagnosticsConfigFlagsNV) -> Self {
         self.flags = flags;
         self
@@ -27182,6 +29233,7 @@ unsafe impl<'a> ExtendsDeviceCreateInfo
 {
 }
 impl<'a> PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'a> {
+    #[inline]
     pub fn shader_zero_initialize_workgroup_memory(
         mut self,
         shader_zero_initialize_workgroup_memory: bool,
@@ -27221,6 +29273,7 @@ unsafe impl<'a> ExtendsDeviceCreateInfo
 {
 }
 impl<'a> PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'a> {
+    #[inline]
     pub fn shader_subgroup_uniform_control_flow(
         mut self,
         shader_subgroup_uniform_control_flow: bool,
@@ -27256,14 +29309,17 @@ impl ::std::default::Default for PhysicalDeviceRobustness2FeaturesEXT<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRobustness2FeaturesEXT<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceRobustness2FeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceRobustness2FeaturesEXT<'a> {
+    #[inline]
     pub fn robust_buffer_access2(mut self, robust_buffer_access2: bool) -> Self {
         self.robust_buffer_access2 = robust_buffer_access2.into();
         self
     }
+    #[inline]
     pub fn robust_image_access2(mut self, robust_image_access2: bool) -> Self {
         self.robust_image_access2 = robust_image_access2.into();
         self
     }
+    #[inline]
     pub fn null_descriptor(mut self, null_descriptor: bool) -> Self {
         self.null_descriptor = null_descriptor.into();
         self
@@ -27293,6 +29349,7 @@ impl ::std::default::Default for PhysicalDeviceRobustness2PropertiesEXT<'_> {
 }
 unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceRobustness2PropertiesEXT<'a> {}
 impl<'a> PhysicalDeviceRobustness2PropertiesEXT<'a> {
+    #[inline]
     pub fn robust_storage_buffer_access_size_alignment(
         mut self,
         robust_storage_buffer_access_size_alignment: DeviceSize,
@@ -27301,6 +29358,7 @@ impl<'a> PhysicalDeviceRobustness2PropertiesEXT<'a> {
             robust_storage_buffer_access_size_alignment;
         self
     }
+    #[inline]
     pub fn robust_uniform_buffer_access_size_alignment(
         mut self,
         robust_uniform_buffer_access_size_alignment: DeviceSize,
@@ -27333,6 +29391,7 @@ impl ::std::default::Default for PhysicalDeviceImageRobustnessFeatures<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImageRobustnessFeatures<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceImageRobustnessFeatures<'a> {}
 impl<'a> PhysicalDeviceImageRobustnessFeatures<'a> {
+    #[inline]
     pub fn robust_image_access(mut self, robust_image_access: bool) -> Self {
         self.robust_image_access = robust_image_access.into();
         self
@@ -27373,6 +29432,7 @@ unsafe impl<'a> ExtendsDeviceCreateInfo
 {
 }
 impl<'a> PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'a> {
+    #[inline]
     pub fn workgroup_memory_explicit_layout(
         mut self,
         workgroup_memory_explicit_layout: bool,
@@ -27380,6 +29440,7 @@ impl<'a> PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'a> {
         self.workgroup_memory_explicit_layout = workgroup_memory_explicit_layout.into();
         self
     }
+    #[inline]
     pub fn workgroup_memory_explicit_layout_scalar_block_layout(
         mut self,
         workgroup_memory_explicit_layout_scalar_block_layout: bool,
@@ -27388,6 +29449,7 @@ impl<'a> PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'a> {
             workgroup_memory_explicit_layout_scalar_block_layout.into();
         self
     }
+    #[inline]
     pub fn workgroup_memory_explicit_layout8_bit_access(
         mut self,
         workgroup_memory_explicit_layout8_bit_access: bool,
@@ -27396,6 +29458,7 @@ impl<'a> PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'a> {
             workgroup_memory_explicit_layout8_bit_access.into();
         self
     }
+    #[inline]
     pub fn workgroup_memory_explicit_layout16_bit_access(
         mut self,
         workgroup_memory_explicit_layout16_bit_access: bool,
@@ -27456,6 +29519,7 @@ impl ::std::default::Default for PhysicalDevicePortabilitySubsetFeaturesKHR<'_> 
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePortabilitySubsetFeaturesKHR<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDevicePortabilitySubsetFeaturesKHR<'a> {}
 impl<'a> PhysicalDevicePortabilitySubsetFeaturesKHR<'a> {
+    #[inline]
     pub fn constant_alpha_color_blend_factors(
         mut self,
         constant_alpha_color_blend_factors: bool,
@@ -27463,10 +29527,12 @@ impl<'a> PhysicalDevicePortabilitySubsetFeaturesKHR<'a> {
         self.constant_alpha_color_blend_factors = constant_alpha_color_blend_factors.into();
         self
     }
+    #[inline]
     pub fn events(mut self, events: bool) -> Self {
         self.events = events.into();
         self
     }
+    #[inline]
     pub fn image_view_format_reinterpretation(
         mut self,
         image_view_format_reinterpretation: bool,
@@ -27474,34 +29540,42 @@ impl<'a> PhysicalDevicePortabilitySubsetFeaturesKHR<'a> {
         self.image_view_format_reinterpretation = image_view_format_reinterpretation.into();
         self
     }
+    #[inline]
     pub fn image_view_format_swizzle(mut self, image_view_format_swizzle: bool) -> Self {
         self.image_view_format_swizzle = image_view_format_swizzle.into();
         self
     }
+    #[inline]
     pub fn image_view2_d_on3_d_image(mut self, image_view2_d_on3_d_image: bool) -> Self {
         self.image_view2_d_on3_d_image = image_view2_d_on3_d_image.into();
         self
     }
+    #[inline]
     pub fn multisample_array_image(mut self, multisample_array_image: bool) -> Self {
         self.multisample_array_image = multisample_array_image.into();
         self
     }
+    #[inline]
     pub fn mutable_comparison_samplers(mut self, mutable_comparison_samplers: bool) -> Self {
         self.mutable_comparison_samplers = mutable_comparison_samplers.into();
         self
     }
+    #[inline]
     pub fn point_polygons(mut self, point_polygons: bool) -> Self {
         self.point_polygons = point_polygons.into();
         self
     }
+    #[inline]
     pub fn sampler_mip_lod_bias(mut self, sampler_mip_lod_bias: bool) -> Self {
         self.sampler_mip_lod_bias = sampler_mip_lod_bias.into();
         self
     }
+    #[inline]
     pub fn separate_stencil_mask_ref(mut self, separate_stencil_mask_ref: bool) -> Self {
         self.separate_stencil_mask_ref = separate_stencil_mask_ref.into();
         self
     }
+    #[inline]
     pub fn shader_sample_rate_interpolation_functions(
         mut self,
         shader_sample_rate_interpolation_functions: bool,
@@ -27510,18 +29584,22 @@ impl<'a> PhysicalDevicePortabilitySubsetFeaturesKHR<'a> {
             shader_sample_rate_interpolation_functions.into();
         self
     }
+    #[inline]
     pub fn tessellation_isolines(mut self, tessellation_isolines: bool) -> Self {
         self.tessellation_isolines = tessellation_isolines.into();
         self
     }
+    #[inline]
     pub fn tessellation_point_mode(mut self, tessellation_point_mode: bool) -> Self {
         self.tessellation_point_mode = tessellation_point_mode.into();
         self
     }
+    #[inline]
     pub fn triangle_fans(mut self, triangle_fans: bool) -> Self {
         self.triangle_fans = triangle_fans.into();
         self
     }
+    #[inline]
     pub fn vertex_attribute_access_beyond_stride(
         mut self,
         vertex_attribute_access_beyond_stride: bool,
@@ -27555,6 +29633,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceProperties2
 {
 }
 impl<'a> PhysicalDevicePortabilitySubsetPropertiesKHR<'a> {
+    #[inline]
     pub fn min_vertex_input_binding_stride_alignment(
         mut self,
         min_vertex_input_binding_stride_alignment: u32,
@@ -27588,10 +29667,12 @@ impl ::std::default::Default for PhysicalDevice4444FormatsFeaturesEXT<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDevice4444FormatsFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDevice4444FormatsFeaturesEXT<'a> {}
 impl<'a> PhysicalDevice4444FormatsFeaturesEXT<'a> {
+    #[inline]
     pub fn format_a4r4g4b4(mut self, format_a4r4g4b4: bool) -> Self {
         self.format_a4r4g4b4 = format_a4r4g4b4.into();
         self
     }
+    #[inline]
     pub fn format_a4b4g4r4(mut self, format_a4b4g4r4: bool) -> Self {
         self.format_a4b4g4r4 = format_a4b4g4r4.into();
         self
@@ -27620,6 +29701,7 @@ impl ::std::default::Default for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'_> 
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'a> {}
 impl<'a> PhysicalDeviceSubpassShadingFeaturesHUAWEI<'a> {
+    #[inline]
     pub fn subpass_shading(mut self, subpass_shading: bool) -> Self {
         self.subpass_shading = subpass_shading.into();
         self
@@ -27650,14 +29732,17 @@ impl ::std::default::Default for BufferCopy2<'_> {
     }
 }
 impl<'a> BufferCopy2<'a> {
+    #[inline]
     pub fn src_offset(mut self, src_offset: DeviceSize) -> Self {
         self.src_offset = src_offset;
         self
     }
+    #[inline]
     pub fn dst_offset(mut self, dst_offset: DeviceSize) -> Self {
         self.dst_offset = dst_offset;
         self
     }
+    #[inline]
     pub fn size(mut self, size: DeviceSize) -> Self {
         self.size = size;
         self
@@ -27692,22 +29777,27 @@ impl ::std::default::Default for ImageCopy2<'_> {
     }
 }
 impl<'a> ImageCopy2<'a> {
+    #[inline]
     pub fn src_subresource(mut self, src_subresource: ImageSubresourceLayers) -> Self {
         self.src_subresource = src_subresource;
         self
     }
+    #[inline]
     pub fn src_offset(mut self, src_offset: Offset3D) -> Self {
         self.src_offset = src_offset;
         self
     }
+    #[inline]
     pub fn dst_subresource(mut self, dst_subresource: ImageSubresourceLayers) -> Self {
         self.dst_subresource = dst_subresource;
         self
     }
+    #[inline]
     pub fn dst_offset(mut self, dst_offset: Offset3D) -> Self {
         self.dst_offset = dst_offset;
         self
     }
+    #[inline]
     pub fn extent(mut self, extent: Extent3D) -> Self {
         self.extent = extent;
         self
@@ -27741,18 +29831,22 @@ impl ::std::default::Default for ImageBlit2<'_> {
 }
 pub unsafe trait ExtendsImageBlit2 {}
 impl<'a> ImageBlit2<'a> {
+    #[inline]
     pub fn src_subresource(mut self, src_subresource: ImageSubresourceLayers) -> Self {
         self.src_subresource = src_subresource;
         self
     }
+    #[inline]
     pub fn src_offsets(mut self, src_offsets: [Offset3D; 2]) -> Self {
         self.src_offsets = src_offsets;
         self
     }
+    #[inline]
     pub fn dst_subresource(mut self, dst_subresource: ImageSubresourceLayers) -> Self {
         self.dst_subresource = dst_subresource;
         self
     }
+    #[inline]
     pub fn dst_offsets(mut self, dst_offsets: [Offset3D; 2]) -> Self {
         self.dst_offsets = dst_offsets;
         self
@@ -27804,26 +29898,32 @@ impl ::std::default::Default for BufferImageCopy2<'_> {
 }
 pub unsafe trait ExtendsBufferImageCopy2 {}
 impl<'a> BufferImageCopy2<'a> {
+    #[inline]
     pub fn buffer_offset(mut self, buffer_offset: DeviceSize) -> Self {
         self.buffer_offset = buffer_offset;
         self
     }
+    #[inline]
     pub fn buffer_row_length(mut self, buffer_row_length: u32) -> Self {
         self.buffer_row_length = buffer_row_length;
         self
     }
+    #[inline]
     pub fn buffer_image_height(mut self, buffer_image_height: u32) -> Self {
         self.buffer_image_height = buffer_image_height;
         self
     }
+    #[inline]
     pub fn image_subresource(mut self, image_subresource: ImageSubresourceLayers) -> Self {
         self.image_subresource = image_subresource;
         self
     }
+    #[inline]
     pub fn image_offset(mut self, image_offset: Offset3D) -> Self {
         self.image_offset = image_offset;
         self
     }
+    #[inline]
     pub fn image_extent(mut self, image_extent: Extent3D) -> Self {
         self.image_extent = image_extent;
         self
@@ -27872,22 +29972,27 @@ impl ::std::default::Default for ImageResolve2<'_> {
     }
 }
 impl<'a> ImageResolve2<'a> {
+    #[inline]
     pub fn src_subresource(mut self, src_subresource: ImageSubresourceLayers) -> Self {
         self.src_subresource = src_subresource;
         self
     }
+    #[inline]
     pub fn src_offset(mut self, src_offset: Offset3D) -> Self {
         self.src_offset = src_offset;
         self
     }
+    #[inline]
     pub fn dst_subresource(mut self, dst_subresource: ImageSubresourceLayers) -> Self {
         self.dst_subresource = dst_subresource;
         self
     }
+    #[inline]
     pub fn dst_offset(mut self, dst_offset: Offset3D) -> Self {
         self.dst_offset = dst_offset;
         self
     }
+    #[inline]
     pub fn extent(mut self, extent: Extent3D) -> Self {
         self.extent = extent;
         self
@@ -27920,14 +30025,17 @@ impl ::std::default::Default for CopyBufferInfo2<'_> {
     }
 }
 impl<'a> CopyBufferInfo2<'a> {
+    #[inline]
     pub fn src_buffer(mut self, src_buffer: Buffer) -> Self {
         self.src_buffer = src_buffer;
         self
     }
+    #[inline]
     pub fn dst_buffer(mut self, dst_buffer: Buffer) -> Self {
         self.dst_buffer = dst_buffer;
         self
     }
+    #[inline]
     pub fn regions(mut self, regions: &'a [BufferCopy2]) -> Self {
         self.region_count = regions.len() as _;
         self.p_regions = regions.as_ptr();
@@ -27965,22 +30073,27 @@ impl ::std::default::Default for CopyImageInfo2<'_> {
     }
 }
 impl<'a> CopyImageInfo2<'a> {
+    #[inline]
     pub fn src_image(mut self, src_image: Image) -> Self {
         self.src_image = src_image;
         self
     }
+    #[inline]
     pub fn src_image_layout(mut self, src_image_layout: ImageLayout) -> Self {
         self.src_image_layout = src_image_layout;
         self
     }
+    #[inline]
     pub fn dst_image(mut self, dst_image: Image) -> Self {
         self.dst_image = dst_image;
         self
     }
+    #[inline]
     pub fn dst_image_layout(mut self, dst_image_layout: ImageLayout) -> Self {
         self.dst_image_layout = dst_image_layout;
         self
     }
+    #[inline]
     pub fn regions(mut self, regions: &'a [ImageCopy2]) -> Self {
         self.region_count = regions.len() as _;
         self.p_regions = regions.as_ptr();
@@ -28020,27 +30133,33 @@ impl ::std::default::Default for BlitImageInfo2<'_> {
     }
 }
 impl<'a> BlitImageInfo2<'a> {
+    #[inline]
     pub fn src_image(mut self, src_image: Image) -> Self {
         self.src_image = src_image;
         self
     }
+    #[inline]
     pub fn src_image_layout(mut self, src_image_layout: ImageLayout) -> Self {
         self.src_image_layout = src_image_layout;
         self
     }
+    #[inline]
     pub fn dst_image(mut self, dst_image: Image) -> Self {
         self.dst_image = dst_image;
         self
     }
+    #[inline]
     pub fn dst_image_layout(mut self, dst_image_layout: ImageLayout) -> Self {
         self.dst_image_layout = dst_image_layout;
         self
     }
+    #[inline]
     pub fn regions(mut self, regions: &'a [ImageBlit2]) -> Self {
         self.region_count = regions.len() as _;
         self.p_regions = regions.as_ptr();
         self
     }
+    #[inline]
     pub fn filter(mut self, filter: Filter) -> Self {
         self.filter = filter;
         self
@@ -28075,18 +30194,22 @@ impl ::std::default::Default for CopyBufferToImageInfo2<'_> {
     }
 }
 impl<'a> CopyBufferToImageInfo2<'a> {
+    #[inline]
     pub fn src_buffer(mut self, src_buffer: Buffer) -> Self {
         self.src_buffer = src_buffer;
         self
     }
+    #[inline]
     pub fn dst_image(mut self, dst_image: Image) -> Self {
         self.dst_image = dst_image;
         self
     }
+    #[inline]
     pub fn dst_image_layout(mut self, dst_image_layout: ImageLayout) -> Self {
         self.dst_image_layout = dst_image_layout;
         self
     }
+    #[inline]
     pub fn regions(mut self, regions: &'a [BufferImageCopy2]) -> Self {
         self.region_count = regions.len() as _;
         self.p_regions = regions.as_ptr();
@@ -28122,18 +30245,22 @@ impl ::std::default::Default for CopyImageToBufferInfo2<'_> {
     }
 }
 impl<'a> CopyImageToBufferInfo2<'a> {
+    #[inline]
     pub fn src_image(mut self, src_image: Image) -> Self {
         self.src_image = src_image;
         self
     }
+    #[inline]
     pub fn src_image_layout(mut self, src_image_layout: ImageLayout) -> Self {
         self.src_image_layout = src_image_layout;
         self
     }
+    #[inline]
     pub fn dst_buffer(mut self, dst_buffer: Buffer) -> Self {
         self.dst_buffer = dst_buffer;
         self
     }
+    #[inline]
     pub fn regions(mut self, regions: &'a [BufferImageCopy2]) -> Self {
         self.region_count = regions.len() as _;
         self.p_regions = regions.as_ptr();
@@ -28171,22 +30298,27 @@ impl ::std::default::Default for ResolveImageInfo2<'_> {
     }
 }
 impl<'a> ResolveImageInfo2<'a> {
+    #[inline]
     pub fn src_image(mut self, src_image: Image) -> Self {
         self.src_image = src_image;
         self
     }
+    #[inline]
     pub fn src_image_layout(mut self, src_image_layout: ImageLayout) -> Self {
         self.src_image_layout = src_image_layout;
         self
     }
+    #[inline]
     pub fn dst_image(mut self, dst_image: Image) -> Self {
         self.dst_image = dst_image;
         self
     }
+    #[inline]
     pub fn dst_image_layout(mut self, dst_image_layout: ImageLayout) -> Self {
         self.dst_image_layout = dst_image_layout;
         self
     }
+    #[inline]
     pub fn regions(mut self, regions: &'a [ImageResolve2]) -> Self {
         self.region_count = regions.len() as _;
         self.p_regions = regions.as_ptr();
@@ -28221,10 +30353,12 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'a> {
+    #[inline]
     pub fn shader_image_int64_atomics(mut self, shader_image_int64_atomics: bool) -> Self {
         self.shader_image_int64_atomics = shader_image_int64_atomics.into();
         self
     }
+    #[inline]
     pub fn sparse_image_int64_atomics(mut self, sparse_image_int64_atomics: bool) -> Self {
         self.sparse_image_int64_atomics = sparse_image_int64_atomics.into();
         self
@@ -28254,6 +30388,7 @@ impl ::std::default::Default for FragmentShadingRateAttachmentInfoKHR<'_> {
 }
 unsafe impl<'a> ExtendsSubpassDescription2 for FragmentShadingRateAttachmentInfoKHR<'a> {}
 impl<'a> FragmentShadingRateAttachmentInfoKHR<'a> {
+    #[inline]
     pub fn fragment_shading_rate_attachment(
         mut self,
         fragment_shading_rate_attachment: &'a AttachmentReference2<'a>,
@@ -28261,6 +30396,7 @@ impl<'a> FragmentShadingRateAttachmentInfoKHR<'a> {
         self.p_fragment_shading_rate_attachment = fragment_shading_rate_attachment;
         self
     }
+    #[inline]
     pub fn shading_rate_attachment_texel_size(
         mut self,
         shading_rate_attachment_texel_size: Extent2D,
@@ -28296,10 +30432,12 @@ unsafe impl<'a> ExtendsGraphicsPipelineCreateInfo
 {
 }
 impl<'a> PipelineFragmentShadingRateStateCreateInfoKHR<'a> {
+    #[inline]
     pub fn fragment_size(mut self, fragment_size: Extent2D) -> Self {
         self.fragment_size = fragment_size;
         self
     }
+    #[inline]
     pub fn combiner_ops(mut self, combiner_ops: [FragmentShadingRateCombinerOpKHR; 2]) -> Self {
         self.combiner_ops = combiner_ops;
         self
@@ -28335,10 +30473,12 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceFragmentShadingRateFeaturesKHR<'a> {}
 impl<'a> PhysicalDeviceFragmentShadingRateFeaturesKHR<'a> {
+    #[inline]
     pub fn pipeline_fragment_shading_rate(mut self, pipeline_fragment_shading_rate: bool) -> Self {
         self.pipeline_fragment_shading_rate = pipeline_fragment_shading_rate.into();
         self
     }
+    #[inline]
     pub fn primitive_fragment_shading_rate(
         mut self,
         primitive_fragment_shading_rate: bool,
@@ -28346,6 +30486,7 @@ impl<'a> PhysicalDeviceFragmentShadingRateFeaturesKHR<'a> {
         self.primitive_fragment_shading_rate = primitive_fragment_shading_rate.into();
         self
     }
+    #[inline]
     pub fn attachment_fragment_shading_rate(
         mut self,
         attachment_fragment_shading_rate: bool,
@@ -28411,6 +30552,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceProperties2
 {
 }
 impl<'a> PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
+    #[inline]
     pub fn min_fragment_shading_rate_attachment_texel_size(
         mut self,
         min_fragment_shading_rate_attachment_texel_size: Extent2D,
@@ -28419,6 +30561,7 @@ impl<'a> PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
             min_fragment_shading_rate_attachment_texel_size;
         self
     }
+    #[inline]
     pub fn max_fragment_shading_rate_attachment_texel_size(
         mut self,
         max_fragment_shading_rate_attachment_texel_size: Extent2D,
@@ -28427,6 +30570,7 @@ impl<'a> PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
             max_fragment_shading_rate_attachment_texel_size;
         self
     }
+    #[inline]
     pub fn max_fragment_shading_rate_attachment_texel_size_aspect_ratio(
         mut self,
         max_fragment_shading_rate_attachment_texel_size_aspect_ratio: u32,
@@ -28435,6 +30579,7 @@ impl<'a> PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
             max_fragment_shading_rate_attachment_texel_size_aspect_ratio;
         self
     }
+    #[inline]
     pub fn primitive_fragment_shading_rate_with_multiple_viewports(
         mut self,
         primitive_fragment_shading_rate_with_multiple_viewports: bool,
@@ -28443,6 +30588,7 @@ impl<'a> PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
             primitive_fragment_shading_rate_with_multiple_viewports.into();
         self
     }
+    #[inline]
     pub fn layered_shading_rate_attachments(
         mut self,
         layered_shading_rate_attachments: bool,
@@ -28450,6 +30596,7 @@ impl<'a> PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
         self.layered_shading_rate_attachments = layered_shading_rate_attachments.into();
         self
     }
+    #[inline]
     pub fn fragment_shading_rate_non_trivial_combiner_ops(
         mut self,
         fragment_shading_rate_non_trivial_combiner_ops: bool,
@@ -28458,14 +30605,17 @@ impl<'a> PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
             fragment_shading_rate_non_trivial_combiner_ops.into();
         self
     }
+    #[inline]
     pub fn max_fragment_size(mut self, max_fragment_size: Extent2D) -> Self {
         self.max_fragment_size = max_fragment_size;
         self
     }
+    #[inline]
     pub fn max_fragment_size_aspect_ratio(mut self, max_fragment_size_aspect_ratio: u32) -> Self {
         self.max_fragment_size_aspect_ratio = max_fragment_size_aspect_ratio;
         self
     }
+    #[inline]
     pub fn max_fragment_shading_rate_coverage_samples(
         mut self,
         max_fragment_shading_rate_coverage_samples: u32,
@@ -28474,6 +30624,7 @@ impl<'a> PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
             max_fragment_shading_rate_coverage_samples;
         self
     }
+    #[inline]
     pub fn max_fragment_shading_rate_rasterization_samples(
         mut self,
         max_fragment_shading_rate_rasterization_samples: SampleCountFlags,
@@ -28482,6 +30633,7 @@ impl<'a> PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
             max_fragment_shading_rate_rasterization_samples;
         self
     }
+    #[inline]
     pub fn fragment_shading_rate_with_shader_depth_stencil_writes(
         mut self,
         fragment_shading_rate_with_shader_depth_stencil_writes: bool,
@@ -28490,6 +30642,7 @@ impl<'a> PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
             fragment_shading_rate_with_shader_depth_stencil_writes.into();
         self
     }
+    #[inline]
     pub fn fragment_shading_rate_with_sample_mask(
         mut self,
         fragment_shading_rate_with_sample_mask: bool,
@@ -28497,6 +30650,7 @@ impl<'a> PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
         self.fragment_shading_rate_with_sample_mask = fragment_shading_rate_with_sample_mask.into();
         self
     }
+    #[inline]
     pub fn fragment_shading_rate_with_shader_sample_mask(
         mut self,
         fragment_shading_rate_with_shader_sample_mask: bool,
@@ -28505,6 +30659,7 @@ impl<'a> PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
             fragment_shading_rate_with_shader_sample_mask.into();
         self
     }
+    #[inline]
     pub fn fragment_shading_rate_with_conservative_rasterization(
         mut self,
         fragment_shading_rate_with_conservative_rasterization: bool,
@@ -28513,6 +30668,7 @@ impl<'a> PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
             fragment_shading_rate_with_conservative_rasterization.into();
         self
     }
+    #[inline]
     pub fn fragment_shading_rate_with_fragment_shader_interlock(
         mut self,
         fragment_shading_rate_with_fragment_shader_interlock: bool,
@@ -28521,6 +30677,7 @@ impl<'a> PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
             fragment_shading_rate_with_fragment_shader_interlock.into();
         self
     }
+    #[inline]
     pub fn fragment_shading_rate_with_custom_sample_locations(
         mut self,
         fragment_shading_rate_with_custom_sample_locations: bool,
@@ -28529,6 +30686,7 @@ impl<'a> PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
             fragment_shading_rate_with_custom_sample_locations.into();
         self
     }
+    #[inline]
     pub fn fragment_shading_rate_strict_multiply_combiner(
         mut self,
         fragment_shading_rate_strict_multiply_combiner: bool,
@@ -28561,10 +30719,12 @@ impl ::std::default::Default for PhysicalDeviceFragmentShadingRateKHR<'_> {
     }
 }
 impl<'a> PhysicalDeviceFragmentShadingRateKHR<'a> {
+    #[inline]
     pub fn sample_counts(mut self, sample_counts: SampleCountFlags) -> Self {
         self.sample_counts = sample_counts;
         self
     }
+    #[inline]
     pub fn fragment_size(mut self, fragment_size: Extent2D) -> Self {
         self.fragment_size = fragment_size;
         self
@@ -28596,6 +30756,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceShaderTerminateInvocationFeatures<'a> {}
 impl<'a> PhysicalDeviceShaderTerminateInvocationFeatures<'a> {
+    #[inline]
     pub fn shader_terminate_invocation(mut self, shader_terminate_invocation: bool) -> Self {
         self.shader_terminate_invocation = shader_terminate_invocation.into();
         self
@@ -28631,10 +30792,12 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'a> {}
 impl<'a> PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'a> {
+    #[inline]
     pub fn fragment_shading_rate_enums(mut self, fragment_shading_rate_enums: bool) -> Self {
         self.fragment_shading_rate_enums = fragment_shading_rate_enums.into();
         self
     }
+    #[inline]
     pub fn supersample_fragment_shading_rates(
         mut self,
         supersample_fragment_shading_rates: bool,
@@ -28642,6 +30805,7 @@ impl<'a> PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'a> {
         self.supersample_fragment_shading_rates = supersample_fragment_shading_rates.into();
         self
     }
+    #[inline]
     pub fn no_invocation_fragment_shading_rates(
         mut self,
         no_invocation_fragment_shading_rates: bool,
@@ -28675,6 +30839,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceProperties2
 {
 }
 impl<'a> PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'a> {
+    #[inline]
     pub fn max_fragment_shading_rate_invocation_count(
         mut self,
         max_fragment_shading_rate_invocation_count: SampleCountFlags,
@@ -28713,14 +30878,17 @@ unsafe impl<'a> ExtendsGraphicsPipelineCreateInfo
 {
 }
 impl<'a> PipelineFragmentShadingRateEnumStateCreateInfoNV<'a> {
+    #[inline]
     pub fn shading_rate_type(mut self, shading_rate_type: FragmentShadingRateTypeNV) -> Self {
         self.shading_rate_type = shading_rate_type;
         self
     }
+    #[inline]
     pub fn shading_rate(mut self, shading_rate: FragmentShadingRateNV) -> Self {
         self.shading_rate = shading_rate;
         self
     }
+    #[inline]
     pub fn combiner_ops(mut self, combiner_ops: [FragmentShadingRateCombinerOpKHR; 2]) -> Self {
         self.combiner_ops = combiner_ops;
         self
@@ -28751,14 +30919,17 @@ impl ::std::default::Default for AccelerationStructureBuildSizesInfoKHR<'_> {
     }
 }
 impl<'a> AccelerationStructureBuildSizesInfoKHR<'a> {
+    #[inline]
     pub fn acceleration_structure_size(mut self, acceleration_structure_size: DeviceSize) -> Self {
         self.acceleration_structure_size = acceleration_structure_size;
         self
     }
+    #[inline]
     pub fn update_scratch_size(mut self, update_scratch_size: DeviceSize) -> Self {
         self.update_scratch_size = update_scratch_size;
         self
     }
+    #[inline]
     pub fn build_scratch_size(mut self, build_scratch_size: DeviceSize) -> Self {
         self.build_scratch_size = build_scratch_size;
         self
@@ -28790,6 +30961,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceMutableDescriptorTypeFeaturesVALVE<'a> {}
 impl<'a> PhysicalDeviceMutableDescriptorTypeFeaturesVALVE<'a> {
+    #[inline]
     pub fn mutable_descriptor_type(mut self, mutable_descriptor_type: bool) -> Self {
         self.mutable_descriptor_type = mutable_descriptor_type.into();
         self
@@ -28814,6 +30986,7 @@ impl ::std::default::Default for MutableDescriptorTypeListVALVE<'_> {
     }
 }
 impl<'a> MutableDescriptorTypeListVALVE<'a> {
+    #[inline]
     pub fn descriptor_types(mut self, descriptor_types: &'a [DescriptorType]) -> Self {
         self.descriptor_type_count = descriptor_types.len() as _;
         self.p_descriptor_types = descriptor_types.as_ptr();
@@ -28845,6 +31018,7 @@ impl ::std::default::Default for MutableDescriptorTypeCreateInfoVALVE<'_> {
 unsafe impl<'a> ExtendsDescriptorSetLayoutCreateInfo for MutableDescriptorTypeCreateInfoVALVE<'a> {}
 unsafe impl<'a> ExtendsDescriptorPoolCreateInfo for MutableDescriptorTypeCreateInfoVALVE<'a> {}
 impl<'a> MutableDescriptorTypeCreateInfoVALVE<'a> {
+    #[inline]
     pub fn mutable_descriptor_type_lists(
         mut self,
         mutable_descriptor_type_lists: &'a [MutableDescriptorTypeListVALVE],
@@ -28877,6 +31051,7 @@ impl ::std::default::Default for PhysicalDeviceDepthClipControlFeaturesEXT<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDepthClipControlFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceDepthClipControlFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceDepthClipControlFeaturesEXT<'a> {
+    #[inline]
     pub fn depth_clip_control(mut self, depth_clip_control: bool) -> Self {
         self.depth_clip_control = depth_clip_control.into();
         self
@@ -28907,6 +31082,7 @@ unsafe impl<'a> ExtendsPipelineViewportStateCreateInfo
 {
 }
 impl<'a> PipelineViewportDepthClipControlCreateInfoEXT<'a> {
+    #[inline]
     pub fn negative_one_to_one(mut self, negative_one_to_one: bool) -> Self {
         self.negative_one_to_one = negative_one_to_one.into();
         self
@@ -28938,6 +31114,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'a> {
+    #[inline]
     pub fn vertex_input_dynamic_state(mut self, vertex_input_dynamic_state: bool) -> Self {
         self.vertex_input_dynamic_state = vertex_input_dynamic_state.into();
         self
@@ -28966,6 +31143,7 @@ impl ::std::default::Default for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'_> 
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'a> {}
 impl<'a> PhysicalDeviceExternalMemoryRDMAFeaturesNV<'a> {
+    #[inline]
     pub fn external_memory_rdma(mut self, external_memory_rdma: bool) -> Self {
         self.external_memory_rdma = external_memory_rdma.into();
         self
@@ -28998,18 +31176,22 @@ impl ::std::default::Default for VertexInputBindingDescription2EXT<'_> {
     }
 }
 impl<'a> VertexInputBindingDescription2EXT<'a> {
+    #[inline]
     pub fn binding(mut self, binding: u32) -> Self {
         self.binding = binding;
         self
     }
+    #[inline]
     pub fn stride(mut self, stride: u32) -> Self {
         self.stride = stride;
         self
     }
+    #[inline]
     pub fn input_rate(mut self, input_rate: VertexInputRate) -> Self {
         self.input_rate = input_rate;
         self
     }
+    #[inline]
     pub fn divisor(mut self, divisor: u32) -> Self {
         self.divisor = divisor;
         self
@@ -29042,18 +31224,22 @@ impl ::std::default::Default for VertexInputAttributeDescription2EXT<'_> {
     }
 }
 impl<'a> VertexInputAttributeDescription2EXT<'a> {
+    #[inline]
     pub fn location(mut self, location: u32) -> Self {
         self.location = location;
         self
     }
+    #[inline]
     pub fn binding(mut self, binding: u32) -> Self {
         self.binding = binding;
         self
     }
+    #[inline]
     pub fn format(mut self, format: Format) -> Self {
         self.format = format;
         self
     }
+    #[inline]
     pub fn offset(mut self, offset: u32) -> Self {
         self.offset = offset;
         self
@@ -29082,6 +31268,7 @@ impl ::std::default::Default for PhysicalDeviceColorWriteEnableFeaturesEXT<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceColorWriteEnableFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceColorWriteEnableFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceColorWriteEnableFeaturesEXT<'a> {
+    #[inline]
     pub fn color_write_enable(mut self, color_write_enable: bool) -> Self {
         self.color_write_enable = color_write_enable.into();
         self
@@ -29111,6 +31298,7 @@ impl ::std::default::Default for PipelineColorWriteCreateInfoEXT<'_> {
 }
 unsafe impl<'a> ExtendsPipelineColorBlendStateCreateInfo for PipelineColorWriteCreateInfoEXT<'a> {}
 impl<'a> PipelineColorWriteCreateInfoEXT<'a> {
+    #[inline]
     pub fn color_write_enables(mut self, color_write_enables: &'a [Bool32]) -> Self {
         self.attachment_count = color_write_enables.len() as _;
         self.p_color_write_enables = color_write_enables.as_ptr();
@@ -29145,18 +31333,22 @@ impl ::std::default::Default for MemoryBarrier2<'_> {
 }
 unsafe impl<'a> ExtendsSubpassDependency2 for MemoryBarrier2<'a> {}
 impl<'a> MemoryBarrier2<'a> {
+    #[inline]
     pub fn src_stage_mask(mut self, src_stage_mask: PipelineStageFlags2) -> Self {
         self.src_stage_mask = src_stage_mask;
         self
     }
+    #[inline]
     pub fn src_access_mask(mut self, src_access_mask: AccessFlags2) -> Self {
         self.src_access_mask = src_access_mask;
         self
     }
+    #[inline]
     pub fn dst_stage_mask(mut self, dst_stage_mask: PipelineStageFlags2) -> Self {
         self.dst_stage_mask = dst_stage_mask;
         self
     }
+    #[inline]
     pub fn dst_access_mask(mut self, dst_access_mask: AccessFlags2) -> Self {
         self.dst_access_mask = dst_access_mask;
         self
@@ -29202,42 +31394,52 @@ impl ::std::default::Default for ImageMemoryBarrier2<'_> {
 }
 pub unsafe trait ExtendsImageMemoryBarrier2 {}
 impl<'a> ImageMemoryBarrier2<'a> {
+    #[inline]
     pub fn src_stage_mask(mut self, src_stage_mask: PipelineStageFlags2) -> Self {
         self.src_stage_mask = src_stage_mask;
         self
     }
+    #[inline]
     pub fn src_access_mask(mut self, src_access_mask: AccessFlags2) -> Self {
         self.src_access_mask = src_access_mask;
         self
     }
+    #[inline]
     pub fn dst_stage_mask(mut self, dst_stage_mask: PipelineStageFlags2) -> Self {
         self.dst_stage_mask = dst_stage_mask;
         self
     }
+    #[inline]
     pub fn dst_access_mask(mut self, dst_access_mask: AccessFlags2) -> Self {
         self.dst_access_mask = dst_access_mask;
         self
     }
+    #[inline]
     pub fn old_layout(mut self, old_layout: ImageLayout) -> Self {
         self.old_layout = old_layout;
         self
     }
+    #[inline]
     pub fn new_layout(mut self, new_layout: ImageLayout) -> Self {
         self.new_layout = new_layout;
         self
     }
+    #[inline]
     pub fn src_queue_family_index(mut self, src_queue_family_index: u32) -> Self {
         self.src_queue_family_index = src_queue_family_index;
         self
     }
+    #[inline]
     pub fn dst_queue_family_index(mut self, dst_queue_family_index: u32) -> Self {
         self.dst_queue_family_index = dst_queue_family_index;
         self
     }
+    #[inline]
     pub fn image(mut self, image: Image) -> Self {
         self.image = image;
         self
     }
+    #[inline]
     pub fn subresource_range(mut self, subresource_range: ImageSubresourceRange) -> Self {
         self.subresource_range = subresource_range;
         self
@@ -29294,38 +31496,47 @@ impl ::std::default::Default for BufferMemoryBarrier2<'_> {
     }
 }
 impl<'a> BufferMemoryBarrier2<'a> {
+    #[inline]
     pub fn src_stage_mask(mut self, src_stage_mask: PipelineStageFlags2) -> Self {
         self.src_stage_mask = src_stage_mask;
         self
     }
+    #[inline]
     pub fn src_access_mask(mut self, src_access_mask: AccessFlags2) -> Self {
         self.src_access_mask = src_access_mask;
         self
     }
+    #[inline]
     pub fn dst_stage_mask(mut self, dst_stage_mask: PipelineStageFlags2) -> Self {
         self.dst_stage_mask = dst_stage_mask;
         self
     }
+    #[inline]
     pub fn dst_access_mask(mut self, dst_access_mask: AccessFlags2) -> Self {
         self.dst_access_mask = dst_access_mask;
         self
     }
+    #[inline]
     pub fn src_queue_family_index(mut self, src_queue_family_index: u32) -> Self {
         self.src_queue_family_index = src_queue_family_index;
         self
     }
+    #[inline]
     pub fn dst_queue_family_index(mut self, dst_queue_family_index: u32) -> Self {
         self.dst_queue_family_index = dst_queue_family_index;
         self
     }
+    #[inline]
     pub fn buffer(mut self, buffer: Buffer) -> Self {
         self.buffer = buffer;
         self
     }
+    #[inline]
     pub fn offset(mut self, offset: DeviceSize) -> Self {
         self.offset = offset;
         self
     }
+    #[inline]
     pub fn size(mut self, size: DeviceSize) -> Self {
         self.size = size;
         self
@@ -29364,15 +31575,18 @@ impl ::std::default::Default for DependencyInfo<'_> {
     }
 }
 impl<'a> DependencyInfo<'a> {
+    #[inline]
     pub fn dependency_flags(mut self, dependency_flags: DependencyFlags) -> Self {
         self.dependency_flags = dependency_flags;
         self
     }
+    #[inline]
     pub fn memory_barriers(mut self, memory_barriers: &'a [MemoryBarrier2]) -> Self {
         self.memory_barrier_count = memory_barriers.len() as _;
         self.p_memory_barriers = memory_barriers.as_ptr();
         self
     }
+    #[inline]
     pub fn buffer_memory_barriers(
         mut self,
         buffer_memory_barriers: &'a [BufferMemoryBarrier2],
@@ -29381,6 +31595,7 @@ impl<'a> DependencyInfo<'a> {
         self.p_buffer_memory_barriers = buffer_memory_barriers.as_ptr();
         self
     }
+    #[inline]
     pub fn image_memory_barriers(
         mut self,
         image_memory_barriers: &'a [ImageMemoryBarrier2],
@@ -29417,18 +31632,22 @@ impl ::std::default::Default for SemaphoreSubmitInfo<'_> {
     }
 }
 impl<'a> SemaphoreSubmitInfo<'a> {
+    #[inline]
     pub fn semaphore(mut self, semaphore: Semaphore) -> Self {
         self.semaphore = semaphore;
         self
     }
+    #[inline]
     pub fn value(mut self, value: u64) -> Self {
         self.value = value;
         self
     }
+    #[inline]
     pub fn stage_mask(mut self, stage_mask: PipelineStageFlags2) -> Self {
         self.stage_mask = stage_mask;
         self
     }
+    #[inline]
     pub fn device_index(mut self, device_index: u32) -> Self {
         self.device_index = device_index;
         self
@@ -29457,10 +31676,12 @@ impl ::std::default::Default for CommandBufferSubmitInfo<'_> {
     }
 }
 impl<'a> CommandBufferSubmitInfo<'a> {
+    #[inline]
     pub fn command_buffer(mut self, command_buffer: CommandBuffer) -> Self {
         self.command_buffer = command_buffer;
         self
     }
+    #[inline]
     pub fn device_mask(mut self, device_mask: u32) -> Self {
         self.device_mask = device_mask;
         self
@@ -29500,15 +31721,18 @@ impl ::std::default::Default for SubmitInfo2<'_> {
 }
 pub unsafe trait ExtendsSubmitInfo2 {}
 impl<'a> SubmitInfo2<'a> {
+    #[inline]
     pub fn flags(mut self, flags: SubmitFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn wait_semaphore_infos(mut self, wait_semaphore_infos: &'a [SemaphoreSubmitInfo]) -> Self {
         self.wait_semaphore_info_count = wait_semaphore_infos.len() as _;
         self.p_wait_semaphore_infos = wait_semaphore_infos.as_ptr();
         self
     }
+    #[inline]
     pub fn command_buffer_infos(
         mut self,
         command_buffer_infos: &'a [CommandBufferSubmitInfo],
@@ -29517,6 +31741,7 @@ impl<'a> SubmitInfo2<'a> {
         self.p_command_buffer_infos = command_buffer_infos.as_ptr();
         self
     }
+    #[inline]
     pub fn signal_semaphore_infos(
         mut self,
         signal_semaphore_infos: &'a [SemaphoreSubmitInfo],
@@ -29562,6 +31787,7 @@ impl ::std::default::Default for QueueFamilyCheckpointProperties2NV<'_> {
 }
 unsafe impl<'a> ExtendsQueueFamilyProperties2 for QueueFamilyCheckpointProperties2NV<'a> {}
 impl<'a> QueueFamilyCheckpointProperties2NV<'a> {
+    #[inline]
     pub fn checkpoint_execution_stage_mask(
         mut self,
         checkpoint_execution_stage_mask: PipelineStageFlags2,
@@ -29593,10 +31819,12 @@ impl ::std::default::Default for CheckpointData2NV<'_> {
     }
 }
 impl<'a> CheckpointData2NV<'a> {
+    #[inline]
     pub fn stage(mut self, stage: PipelineStageFlags2) -> Self {
         self.stage = stage;
         self
     }
+    #[inline]
     pub fn checkpoint_marker(mut self, checkpoint_marker: *mut c_void) -> Self {
         self.p_checkpoint_marker = checkpoint_marker;
         self
@@ -29625,6 +31853,7 @@ impl ::std::default::Default for PhysicalDeviceSynchronization2Features<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSynchronization2Features<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceSynchronization2Features<'a> {}
 impl<'a> PhysicalDeviceSynchronization2Features<'a> {
+    #[inline]
     pub fn synchronization2(mut self, synchronization2: bool) -> Self {
         self.synchronization2 = synchronization2.into();
         self
@@ -29652,6 +31881,7 @@ impl ::std::default::Default for VideoQueueFamilyProperties2KHR<'_> {
 }
 unsafe impl<'a> ExtendsQueueFamilyProperties2 for VideoQueueFamilyProperties2KHR<'a> {}
 impl<'a> VideoQueueFamilyProperties2KHR<'a> {
+    #[inline]
     pub fn video_codec_operations(
         mut self,
         video_codec_operations: VideoCodecOperationFlagsKHR,
@@ -29682,6 +31912,7 @@ impl ::std::default::Default for QueueFamilyQueryResultStatusProperties2KHR<'_> 
 }
 unsafe impl<'a> ExtendsQueueFamilyProperties2 for QueueFamilyQueryResultStatusProperties2KHR<'a> {}
 impl<'a> QueueFamilyQueryResultStatusProperties2KHR<'a> {
+    #[inline]
     pub fn supported(mut self, supported: bool) -> Self {
         self.supported = supported.into();
         self
@@ -29714,6 +31945,7 @@ unsafe impl<'a> ExtendsImageCreateInfo for VideoProfilesKHR<'a> {}
 unsafe impl<'a> ExtendsImageViewCreateInfo for VideoProfilesKHR<'a> {}
 unsafe impl<'a> ExtendsBufferCreateInfo for VideoProfilesKHR<'a> {}
 impl<'a> VideoProfilesKHR<'a> {
+    #[inline]
     pub fn profiles(mut self, profiles: &'a [VideoProfileKHR]) -> Self {
         self.profile_count = profiles.len() as _;
         self.p_profiles = profiles.as_ptr();
@@ -29743,10 +31975,12 @@ impl ::std::default::Default for PhysicalDeviceVideoFormatInfoKHR<'_> {
     }
 }
 impl<'a> PhysicalDeviceVideoFormatInfoKHR<'a> {
+    #[inline]
     pub fn image_usage(mut self, image_usage: ImageUsageFlags) -> Self {
         self.image_usage = image_usage;
         self
     }
+    #[inline]
     pub fn video_profiles(mut self, video_profiles: &'a VideoProfilesKHR<'a>) -> Self {
         self.p_video_profiles = video_profiles;
         self
@@ -29773,6 +32007,7 @@ impl ::std::default::Default for VideoFormatPropertiesKHR<'_> {
     }
 }
 impl<'a> VideoFormatPropertiesKHR<'a> {
+    #[inline]
     pub fn format(mut self, format: Format) -> Self {
         self.format = format;
         self
@@ -29811,6 +32046,7 @@ unsafe impl<'a> ExtendsImageViewCreateInfo for VideoProfileKHR<'a> {}
 unsafe impl<'a> ExtendsBufferCreateInfo for VideoProfileKHR<'a> {}
 pub unsafe trait ExtendsVideoProfileKHR {}
 impl<'a> VideoProfileKHR<'a> {
+    #[inline]
     pub fn video_codec_operation(
         mut self,
         video_codec_operation: VideoCodecOperationFlagsKHR,
@@ -29818,6 +32054,7 @@ impl<'a> VideoProfileKHR<'a> {
         self.video_codec_operation = video_codec_operation;
         self
     }
+    #[inline]
     pub fn chroma_subsampling(
         mut self,
         chroma_subsampling: VideoChromaSubsamplingFlagsKHR,
@@ -29825,10 +32062,12 @@ impl<'a> VideoProfileKHR<'a> {
         self.chroma_subsampling = chroma_subsampling;
         self
     }
+    #[inline]
     pub fn luma_bit_depth(mut self, luma_bit_depth: VideoComponentBitDepthFlagsKHR) -> Self {
         self.luma_bit_depth = luma_bit_depth;
         self
     }
+    #[inline]
     pub fn chroma_bit_depth(mut self, chroma_bit_depth: VideoComponentBitDepthFlagsKHR) -> Self {
         self.chroma_bit_depth = chroma_bit_depth;
         self
@@ -29886,10 +32125,12 @@ impl ::std::default::Default for VideoCapabilitiesKHR<'_> {
 }
 pub unsafe trait ExtendsVideoCapabilitiesKHR {}
 impl<'a> VideoCapabilitiesKHR<'a> {
+    #[inline]
     pub fn capability_flags(mut self, capability_flags: VideoCapabilityFlagsKHR) -> Self {
         self.capability_flags = capability_flags;
         self
     }
+    #[inline]
     pub fn min_bitstream_buffer_offset_alignment(
         mut self,
         min_bitstream_buffer_offset_alignment: DeviceSize,
@@ -29897,6 +32138,7 @@ impl<'a> VideoCapabilitiesKHR<'a> {
         self.min_bitstream_buffer_offset_alignment = min_bitstream_buffer_offset_alignment;
         self
     }
+    #[inline]
     pub fn min_bitstream_buffer_size_alignment(
         mut self,
         min_bitstream_buffer_size_alignment: DeviceSize,
@@ -29904,6 +32146,7 @@ impl<'a> VideoCapabilitiesKHR<'a> {
         self.min_bitstream_buffer_size_alignment = min_bitstream_buffer_size_alignment;
         self
     }
+    #[inline]
     pub fn video_picture_extent_granularity(
         mut self,
         video_picture_extent_granularity: Extent2D,
@@ -29911,14 +32154,17 @@ impl<'a> VideoCapabilitiesKHR<'a> {
         self.video_picture_extent_granularity = video_picture_extent_granularity;
         self
     }
+    #[inline]
     pub fn min_extent(mut self, min_extent: Extent2D) -> Self {
         self.min_extent = min_extent;
         self
     }
+    #[inline]
     pub fn max_extent(mut self, max_extent: Extent2D) -> Self {
         self.max_extent = max_extent;
         self
     }
+    #[inline]
     pub fn max_reference_pictures_slots_count(
         mut self,
         max_reference_pictures_slots_count: u32,
@@ -29926,6 +32172,7 @@ impl<'a> VideoCapabilitiesKHR<'a> {
         self.max_reference_pictures_slots_count = max_reference_pictures_slots_count;
         self
     }
+    #[inline]
     pub fn max_reference_pictures_active_count(
         mut self,
         max_reference_pictures_active_count: u32,
@@ -29933,6 +32180,7 @@ impl<'a> VideoCapabilitiesKHR<'a> {
         self.max_reference_pictures_active_count = max_reference_pictures_active_count;
         self
     }
+    #[inline]
     pub fn std_header_version(mut self, std_header_version: ExtensionProperties) -> Self {
         self.std_header_version = std_header_version;
         self
@@ -29975,10 +32223,12 @@ impl ::std::default::Default for VideoGetMemoryPropertiesKHR<'_> {
     }
 }
 impl<'a> VideoGetMemoryPropertiesKHR<'a> {
+    #[inline]
     pub fn memory_bind_index(mut self, memory_bind_index: u32) -> Self {
         self.memory_bind_index = memory_bind_index;
         self
     }
+    #[inline]
     pub fn memory_requirements(
         mut self,
         memory_requirements: &'a mut MemoryRequirements2<'a>,
@@ -30014,18 +32264,22 @@ impl ::std::default::Default for VideoBindMemoryKHR<'_> {
     }
 }
 impl<'a> VideoBindMemoryKHR<'a> {
+    #[inline]
     pub fn memory_bind_index(mut self, memory_bind_index: u32) -> Self {
         self.memory_bind_index = memory_bind_index;
         self
     }
+    #[inline]
     pub fn memory(mut self, memory: DeviceMemory) -> Self {
         self.memory = memory;
         self
     }
+    #[inline]
     pub fn memory_offset(mut self, memory_offset: DeviceSize) -> Self {
         self.memory_offset = memory_offset;
         self
     }
+    #[inline]
     pub fn memory_size(mut self, memory_size: DeviceSize) -> Self {
         self.memory_size = memory_size;
         self
@@ -30058,18 +32312,22 @@ impl ::std::default::Default for VideoPictureResourceKHR<'_> {
     }
 }
 impl<'a> VideoPictureResourceKHR<'a> {
+    #[inline]
     pub fn coded_offset(mut self, coded_offset: Offset2D) -> Self {
         self.coded_offset = coded_offset;
         self
     }
+    #[inline]
     pub fn coded_extent(mut self, coded_extent: Extent2D) -> Self {
         self.coded_extent = coded_extent;
         self
     }
+    #[inline]
     pub fn base_array_layer(mut self, base_array_layer: u32) -> Self {
         self.base_array_layer = base_array_layer;
         self
     }
+    #[inline]
     pub fn image_view_binding(mut self, image_view_binding: ImageView) -> Self {
         self.image_view_binding = image_view_binding;
         self
@@ -30099,10 +32357,12 @@ impl ::std::default::Default for VideoReferenceSlotKHR<'_> {
 }
 pub unsafe trait ExtendsVideoReferenceSlotKHR {}
 impl<'a> VideoReferenceSlotKHR<'a> {
+    #[inline]
     pub fn slot_index(mut self, slot_index: i8) -> Self {
         self.slot_index = slot_index;
         self
     }
+    #[inline]
     pub fn picture_resource(mut self, picture_resource: &'a VideoPictureResourceKHR<'a>) -> Self {
         self.p_picture_resource = picture_resource;
         self
@@ -30145,6 +32405,7 @@ impl ::std::default::Default for VideoDecodeCapabilitiesKHR<'_> {
 unsafe impl<'a> ExtendsVideoCapabilitiesKHR for VideoDecodeCapabilitiesKHR<'a> {}
 pub unsafe trait ExtendsVideoDecodeCapabilitiesKHR {}
 impl<'a> VideoDecodeCapabilitiesKHR<'a> {
+    #[inline]
     pub fn flags(mut self, flags: VideoDecodeCapabilityFlagsKHR) -> Self {
         self.flags = flags;
         self
@@ -30204,30 +32465,37 @@ impl ::std::default::Default for VideoDecodeInfoKHR<'_> {
 }
 pub unsafe trait ExtendsVideoDecodeInfoKHR {}
 impl<'a> VideoDecodeInfoKHR<'a> {
+    #[inline]
     pub fn flags(mut self, flags: VideoDecodeFlagsKHR) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn coded_offset(mut self, coded_offset: Offset2D) -> Self {
         self.coded_offset = coded_offset;
         self
     }
+    #[inline]
     pub fn coded_extent(mut self, coded_extent: Extent2D) -> Self {
         self.coded_extent = coded_extent;
         self
     }
+    #[inline]
     pub fn src_buffer(mut self, src_buffer: Buffer) -> Self {
         self.src_buffer = src_buffer;
         self
     }
+    #[inline]
     pub fn src_buffer_offset(mut self, src_buffer_offset: DeviceSize) -> Self {
         self.src_buffer_offset = src_buffer_offset;
         self
     }
+    #[inline]
     pub fn src_buffer_range(mut self, src_buffer_range: DeviceSize) -> Self {
         self.src_buffer_range = src_buffer_range;
         self
     }
+    #[inline]
     pub fn dst_picture_resource(
         mut self,
         dst_picture_resource: VideoPictureResourceKHR<'a>,
@@ -30235,6 +32503,7 @@ impl<'a> VideoDecodeInfoKHR<'a> {
         self.dst_picture_resource = dst_picture_resource;
         self
     }
+    #[inline]
     pub fn setup_reference_slot(
         mut self,
         setup_reference_slot: &'a VideoReferenceSlotKHR<'a>,
@@ -30242,6 +32511,7 @@ impl<'a> VideoDecodeInfoKHR<'a> {
         self.p_setup_reference_slot = setup_reference_slot;
         self
     }
+    #[inline]
     pub fn reference_slots(mut self, reference_slots: &'a [VideoReferenceSlotKHR]) -> Self {
         self.reference_slot_count = reference_slots.len() as _;
         self.p_reference_slots = reference_slots.as_ptr();
@@ -30291,10 +32561,12 @@ unsafe impl<'a> ExtendsImageCreateInfo for VideoDecodeH264ProfileEXT<'a> {}
 unsafe impl<'a> ExtendsImageViewCreateInfo for VideoDecodeH264ProfileEXT<'a> {}
 unsafe impl<'a> ExtendsBufferCreateInfo for VideoDecodeH264ProfileEXT<'a> {}
 impl<'a> VideoDecodeH264ProfileEXT<'a> {
+    #[inline]
     pub fn std_profile_idc(mut self, std_profile_idc: StdVideoH264ProfileIdc) -> Self {
         self.std_profile_idc = std_profile_idc;
         self
     }
+    #[inline]
     pub fn picture_layout(mut self, picture_layout: VideoDecodeH264PictureLayoutFlagsEXT) -> Self {
         self.picture_layout = picture_layout;
         self
@@ -30324,10 +32596,12 @@ impl ::std::default::Default for VideoDecodeH264CapabilitiesEXT<'_> {
 }
 unsafe impl<'a> ExtendsVideoDecodeCapabilitiesKHR for VideoDecodeH264CapabilitiesEXT<'a> {}
 impl<'a> VideoDecodeH264CapabilitiesEXT<'a> {
+    #[inline]
     pub fn max_level(mut self, max_level: u32) -> Self {
         self.max_level = max_level;
         self
     }
+    #[inline]
     pub fn field_offset_granularity(mut self, field_offset_granularity: Offset2D) -> Self {
         self.field_offset_granularity = field_offset_granularity;
         self
@@ -30364,11 +32638,13 @@ unsafe impl<'a> ExtendsVideoSessionParametersUpdateInfoKHR
 {
 }
 impl<'a> VideoDecodeH264SessionParametersAddInfoEXT<'a> {
+    #[inline]
     pub fn sps_std(mut self, sps_std: &'a [StdVideoH264SequenceParameterSet]) -> Self {
         self.sps_std_count = sps_std.len() as _;
         self.p_sps_std = sps_std.as_ptr();
         self
     }
+    #[inline]
     pub fn pps_std(mut self, pps_std: &'a [StdVideoH264PictureParameterSet]) -> Self {
         self.pps_std_count = pps_std.len() as _;
         self.p_pps_std = pps_std.as_ptr();
@@ -30404,14 +32680,17 @@ unsafe impl<'a> ExtendsVideoSessionParametersCreateInfoKHR
 {
 }
 impl<'a> VideoDecodeH264SessionParametersCreateInfoEXT<'a> {
+    #[inline]
     pub fn max_sps_std_count(mut self, max_sps_std_count: u32) -> Self {
         self.max_sps_std_count = max_sps_std_count;
         self
     }
+    #[inline]
     pub fn max_pps_std_count(mut self, max_pps_std_count: u32) -> Self {
         self.max_pps_std_count = max_pps_std_count;
         self
     }
+    #[inline]
     pub fn parameters_add_info(
         mut self,
         parameters_add_info: &'a VideoDecodeH264SessionParametersAddInfoEXT<'a>,
@@ -30447,10 +32726,12 @@ impl ::std::default::Default for VideoDecodeH264PictureInfoEXT<'_> {
 unsafe impl<'a> ExtendsVideoDecodeInfoKHR for VideoDecodeH264PictureInfoEXT<'a> {}
 pub unsafe trait ExtendsVideoDecodeH264PictureInfoEXT {}
 impl<'a> VideoDecodeH264PictureInfoEXT<'a> {
+    #[inline]
     pub fn std_picture_info(mut self, std_picture_info: &'a StdVideoDecodeH264PictureInfo) -> Self {
         self.p_std_picture_info = std_picture_info;
         self
     }
+    #[inline]
     pub fn slices_data_offsets(mut self, slices_data_offsets: &'a [u32]) -> Self {
         self.slices_count = slices_data_offsets.len() as _;
         self.p_slices_data_offsets = slices_data_offsets.as_ptr();
@@ -30493,6 +32774,7 @@ impl ::std::default::Default for VideoDecodeH264DpbSlotInfoEXT<'_> {
 }
 unsafe impl<'a> ExtendsVideoReferenceSlotKHR for VideoDecodeH264DpbSlotInfoEXT<'a> {}
 impl<'a> VideoDecodeH264DpbSlotInfoEXT<'a> {
+    #[inline]
     pub fn std_reference_info(
         mut self,
         std_reference_info: &'a StdVideoDecodeH264ReferenceInfo,
@@ -30523,6 +32805,7 @@ impl ::std::default::Default for VideoDecodeH264MvcEXT<'_> {
 }
 unsafe impl<'a> ExtendsVideoDecodeH264PictureInfoEXT for VideoDecodeH264MvcEXT<'a> {}
 impl<'a> VideoDecodeH264MvcEXT<'a> {
+    #[inline]
     pub fn std_mvc(mut self, std_mvc: &'a StdVideoDecodeH264Mvc) -> Self {
         self.p_std_mvc = std_mvc;
         self
@@ -30555,6 +32838,7 @@ unsafe impl<'a> ExtendsImageCreateInfo for VideoDecodeH265ProfileEXT<'a> {}
 unsafe impl<'a> ExtendsImageViewCreateInfo for VideoDecodeH265ProfileEXT<'a> {}
 unsafe impl<'a> ExtendsBufferCreateInfo for VideoDecodeH265ProfileEXT<'a> {}
 impl<'a> VideoDecodeH265ProfileEXT<'a> {
+    #[inline]
     pub fn std_profile_idc(mut self, std_profile_idc: StdVideoH265ProfileIdc) -> Self {
         self.std_profile_idc = std_profile_idc;
         self
@@ -30582,6 +32866,7 @@ impl ::std::default::Default for VideoDecodeH265CapabilitiesEXT<'_> {
 }
 unsafe impl<'a> ExtendsVideoDecodeCapabilitiesKHR for VideoDecodeH265CapabilitiesEXT<'a> {}
 impl<'a> VideoDecodeH265CapabilitiesEXT<'a> {
+    #[inline]
     pub fn max_level(mut self, max_level: u32) -> Self {
         self.max_level = max_level;
         self
@@ -30622,16 +32907,19 @@ unsafe impl<'a> ExtendsVideoSessionParametersUpdateInfoKHR
 {
 }
 impl<'a> VideoDecodeH265SessionParametersAddInfoEXT<'a> {
+    #[inline]
     pub fn vps_std(mut self, vps_std: &'a [StdVideoH265VideoParameterSet]) -> Self {
         self.vps_std_count = vps_std.len() as _;
         self.p_vps_std = vps_std.as_ptr();
         self
     }
+    #[inline]
     pub fn sps_std(mut self, sps_std: &'a [StdVideoH265SequenceParameterSet]) -> Self {
         self.sps_std_count = sps_std.len() as _;
         self.p_sps_std = sps_std.as_ptr();
         self
     }
+    #[inline]
     pub fn pps_std(mut self, pps_std: &'a [StdVideoH265PictureParameterSet]) -> Self {
         self.pps_std_count = pps_std.len() as _;
         self.p_pps_std = pps_std.as_ptr();
@@ -30669,18 +32957,22 @@ unsafe impl<'a> ExtendsVideoSessionParametersCreateInfoKHR
 {
 }
 impl<'a> VideoDecodeH265SessionParametersCreateInfoEXT<'a> {
+    #[inline]
     pub fn max_vps_std_count(mut self, max_vps_std_count: u32) -> Self {
         self.max_vps_std_count = max_vps_std_count;
         self
     }
+    #[inline]
     pub fn max_sps_std_count(mut self, max_sps_std_count: u32) -> Self {
         self.max_sps_std_count = max_sps_std_count;
         self
     }
+    #[inline]
     pub fn max_pps_std_count(mut self, max_pps_std_count: u32) -> Self {
         self.max_pps_std_count = max_pps_std_count;
         self
     }
+    #[inline]
     pub fn parameters_add_info(
         mut self,
         parameters_add_info: &'a VideoDecodeH265SessionParametersAddInfoEXT<'a>,
@@ -30715,6 +33007,7 @@ impl ::std::default::Default for VideoDecodeH265PictureInfoEXT<'_> {
 }
 unsafe impl<'a> ExtendsVideoDecodeInfoKHR for VideoDecodeH265PictureInfoEXT<'a> {}
 impl<'a> VideoDecodeH265PictureInfoEXT<'a> {
+    #[inline]
     pub fn std_picture_info(
         mut self,
         std_picture_info: &'a mut StdVideoDecodeH265PictureInfo,
@@ -30722,6 +33015,7 @@ impl<'a> VideoDecodeH265PictureInfoEXT<'a> {
         self.p_std_picture_info = std_picture_info;
         self
     }
+    #[inline]
     pub fn slices_data_offsets(mut self, slices_data_offsets: &'a [u32]) -> Self {
         self.slices_count = slices_data_offsets.len() as _;
         self.p_slices_data_offsets = slices_data_offsets.as_ptr();
@@ -30750,6 +33044,7 @@ impl ::std::default::Default for VideoDecodeH265DpbSlotInfoEXT<'_> {
 }
 unsafe impl<'a> ExtendsVideoReferenceSlotKHR for VideoDecodeH265DpbSlotInfoEXT<'a> {}
 impl<'a> VideoDecodeH265DpbSlotInfoEXT<'a> {
+    #[inline]
     pub fn std_reference_info(
         mut self,
         std_reference_info: &'a StdVideoDecodeH265ReferenceInfo,
@@ -30795,30 +33090,37 @@ impl ::std::default::Default for VideoSessionCreateInfoKHR<'_> {
     }
 }
 impl<'a> VideoSessionCreateInfoKHR<'a> {
+    #[inline]
     pub fn queue_family_index(mut self, queue_family_index: u32) -> Self {
         self.queue_family_index = queue_family_index;
         self
     }
+    #[inline]
     pub fn flags(mut self, flags: VideoSessionCreateFlagsKHR) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn video_profile(mut self, video_profile: &'a VideoProfileKHR<'a>) -> Self {
         self.p_video_profile = video_profile;
         self
     }
+    #[inline]
     pub fn picture_format(mut self, picture_format: Format) -> Self {
         self.picture_format = picture_format;
         self
     }
+    #[inline]
     pub fn max_coded_extent(mut self, max_coded_extent: Extent2D) -> Self {
         self.max_coded_extent = max_coded_extent;
         self
     }
+    #[inline]
     pub fn reference_pictures_format(mut self, reference_pictures_format: Format) -> Self {
         self.reference_pictures_format = reference_pictures_format;
         self
     }
+    #[inline]
     pub fn max_reference_pictures_slots_count(
         mut self,
         max_reference_pictures_slots_count: u32,
@@ -30826,6 +33128,7 @@ impl<'a> VideoSessionCreateInfoKHR<'a> {
         self.max_reference_pictures_slots_count = max_reference_pictures_slots_count;
         self
     }
+    #[inline]
     pub fn max_reference_pictures_active_count(
         mut self,
         max_reference_pictures_active_count: u32,
@@ -30833,6 +33136,7 @@ impl<'a> VideoSessionCreateInfoKHR<'a> {
         self.max_reference_pictures_active_count = max_reference_pictures_active_count;
         self
     }
+    #[inline]
     pub fn std_header_version(mut self, std_header_version: &'a ExtensionProperties) -> Self {
         self.p_std_header_version = std_header_version;
         self
@@ -30862,6 +33166,7 @@ impl ::std::default::Default for VideoSessionParametersCreateInfoKHR<'_> {
 }
 pub unsafe trait ExtendsVideoSessionParametersCreateInfoKHR {}
 impl<'a> VideoSessionParametersCreateInfoKHR<'a> {
+    #[inline]
     pub fn video_session_parameters_template(
         mut self,
         video_session_parameters_template: VideoSessionParametersKHR,
@@ -30869,6 +33174,7 @@ impl<'a> VideoSessionParametersCreateInfoKHR<'a> {
         self.video_session_parameters_template = video_session_parameters_template;
         self
     }
+    #[inline]
     pub fn video_session(mut self, video_session: VideoSessionKHR) -> Self {
         self.video_session = video_session;
         self
@@ -30913,6 +33219,7 @@ impl ::std::default::Default for VideoSessionParametersUpdateInfoKHR<'_> {
 }
 pub unsafe trait ExtendsVideoSessionParametersUpdateInfoKHR {}
 impl<'a> VideoSessionParametersUpdateInfoKHR<'a> {
+    #[inline]
     pub fn update_sequence_count(mut self, update_sequence_count: u32) -> Self {
         self.update_sequence_count = update_sequence_count;
         self
@@ -30966,10 +33273,12 @@ impl ::std::default::Default for VideoBeginCodingInfoKHR<'_> {
     }
 }
 impl<'a> VideoBeginCodingInfoKHR<'a> {
+    #[inline]
     pub fn flags(mut self, flags: VideoBeginCodingFlagsKHR) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn codec_quality_preset(
         mut self,
         codec_quality_preset: VideoCodingQualityPresetFlagsKHR,
@@ -30977,10 +33286,12 @@ impl<'a> VideoBeginCodingInfoKHR<'a> {
         self.codec_quality_preset = codec_quality_preset;
         self
     }
+    #[inline]
     pub fn video_session(mut self, video_session: VideoSessionKHR) -> Self {
         self.video_session = video_session;
         self
     }
+    #[inline]
     pub fn video_session_parameters(
         mut self,
         video_session_parameters: VideoSessionParametersKHR,
@@ -30988,6 +33299,7 @@ impl<'a> VideoBeginCodingInfoKHR<'a> {
         self.video_session_parameters = video_session_parameters;
         self
     }
+    #[inline]
     pub fn reference_slots(mut self, reference_slots: &'a [VideoReferenceSlotKHR]) -> Self {
         self.reference_slot_count = reference_slots.len() as _;
         self.p_reference_slots = reference_slots.as_ptr();
@@ -31015,6 +33327,7 @@ impl ::std::default::Default for VideoEndCodingInfoKHR<'_> {
     }
 }
 impl<'a> VideoEndCodingInfoKHR<'a> {
+    #[inline]
     pub fn flags(mut self, flags: VideoEndCodingFlagsKHR) -> Self {
         self.flags = flags;
         self
@@ -31042,6 +33355,7 @@ impl ::std::default::Default for VideoCodingControlInfoKHR<'_> {
 }
 pub unsafe trait ExtendsVideoCodingControlInfoKHR {}
 impl<'a> VideoCodingControlInfoKHR<'a> {
+    #[inline]
     pub fn flags(mut self, flags: VideoCodingControlFlagsKHR) -> Self {
         self.flags = flags;
         self
@@ -31103,26 +33417,32 @@ impl ::std::default::Default for VideoEncodeInfoKHR<'_> {
 }
 pub unsafe trait ExtendsVideoEncodeInfoKHR {}
 impl<'a> VideoEncodeInfoKHR<'a> {
+    #[inline]
     pub fn flags(mut self, flags: VideoEncodeFlagsKHR) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn quality_level(mut self, quality_level: u32) -> Self {
         self.quality_level = quality_level;
         self
     }
+    #[inline]
     pub fn coded_extent(mut self, coded_extent: Extent2D) -> Self {
         self.coded_extent = coded_extent;
         self
     }
+    #[inline]
     pub fn dst_bitstream_buffer(mut self, dst_bitstream_buffer: Buffer) -> Self {
         self.dst_bitstream_buffer = dst_bitstream_buffer;
         self
     }
+    #[inline]
     pub fn dst_bitstream_buffer_offset(mut self, dst_bitstream_buffer_offset: DeviceSize) -> Self {
         self.dst_bitstream_buffer_offset = dst_bitstream_buffer_offset;
         self
     }
+    #[inline]
     pub fn dst_bitstream_buffer_max_range(
         mut self,
         dst_bitstream_buffer_max_range: DeviceSize,
@@ -31130,6 +33450,7 @@ impl<'a> VideoEncodeInfoKHR<'a> {
         self.dst_bitstream_buffer_max_range = dst_bitstream_buffer_max_range;
         self
     }
+    #[inline]
     pub fn src_picture_resource(
         mut self,
         src_picture_resource: VideoPictureResourceKHR<'a>,
@@ -31137,6 +33458,7 @@ impl<'a> VideoEncodeInfoKHR<'a> {
         self.src_picture_resource = src_picture_resource;
         self
     }
+    #[inline]
     pub fn setup_reference_slot(
         mut self,
         setup_reference_slot: &'a VideoReferenceSlotKHR<'a>,
@@ -31144,11 +33466,13 @@ impl<'a> VideoEncodeInfoKHR<'a> {
         self.p_setup_reference_slot = setup_reference_slot;
         self
     }
+    #[inline]
     pub fn reference_slots(mut self, reference_slots: &'a [VideoReferenceSlotKHR]) -> Self {
         self.reference_slot_count = reference_slots.len() as _;
         self.p_reference_slots = reference_slots.as_ptr();
         self
     }
+    #[inline]
     pub fn preceding_externally_encoded_bytes(
         mut self,
         preceding_externally_encoded_bytes: u32,
@@ -31200,10 +33524,12 @@ impl ::std::default::Default for VideoEncodeRateControlInfoKHR<'_> {
 unsafe impl<'a> ExtendsVideoCodingControlInfoKHR for VideoEncodeRateControlInfoKHR<'a> {}
 pub unsafe trait ExtendsVideoEncodeRateControlInfoKHR {}
 impl<'a> VideoEncodeRateControlInfoKHR<'a> {
+    #[inline]
     pub fn flags(mut self, flags: VideoEncodeRateControlFlagsKHR) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn rate_control_mode(
         mut self,
         rate_control_mode: VideoEncodeRateControlModeFlagsKHR,
@@ -31211,6 +33537,7 @@ impl<'a> VideoEncodeRateControlInfoKHR<'a> {
         self.rate_control_mode = rate_control_mode;
         self
     }
+    #[inline]
     pub fn layer_configs(
         mut self,
         layer_configs: &'a [VideoEncodeRateControlLayerInfoKHR],
@@ -31267,26 +33594,32 @@ impl ::std::default::Default for VideoEncodeRateControlLayerInfoKHR<'_> {
 unsafe impl<'a> ExtendsVideoCodingControlInfoKHR for VideoEncodeRateControlLayerInfoKHR<'a> {}
 pub unsafe trait ExtendsVideoEncodeRateControlLayerInfoKHR {}
 impl<'a> VideoEncodeRateControlLayerInfoKHR<'a> {
+    #[inline]
     pub fn average_bitrate(mut self, average_bitrate: u32) -> Self {
         self.average_bitrate = average_bitrate;
         self
     }
+    #[inline]
     pub fn max_bitrate(mut self, max_bitrate: u32) -> Self {
         self.max_bitrate = max_bitrate;
         self
     }
+    #[inline]
     pub fn frame_rate_numerator(mut self, frame_rate_numerator: u32) -> Self {
         self.frame_rate_numerator = frame_rate_numerator;
         self
     }
+    #[inline]
     pub fn frame_rate_denominator(mut self, frame_rate_denominator: u32) -> Self {
         self.frame_rate_denominator = frame_rate_denominator;
         self
     }
+    #[inline]
     pub fn virtual_buffer_size_in_ms(mut self, virtual_buffer_size_in_ms: u32) -> Self {
         self.virtual_buffer_size_in_ms = virtual_buffer_size_in_ms;
         self
     }
+    #[inline]
     pub fn initial_virtual_buffer_size_in_ms(
         mut self,
         initial_virtual_buffer_size_in_ms: u32,
@@ -31343,10 +33676,12 @@ impl ::std::default::Default for VideoEncodeCapabilitiesKHR<'_> {
 unsafe impl<'a> ExtendsVideoCapabilitiesKHR for VideoEncodeCapabilitiesKHR<'a> {}
 pub unsafe trait ExtendsVideoEncodeCapabilitiesKHR {}
 impl<'a> VideoEncodeCapabilitiesKHR<'a> {
+    #[inline]
     pub fn flags(mut self, flags: VideoEncodeCapabilityFlagsKHR) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn rate_control_modes(
         mut self,
         rate_control_modes: VideoEncodeRateControlModeFlagsKHR,
@@ -31354,14 +33689,17 @@ impl<'a> VideoEncodeCapabilitiesKHR<'a> {
         self.rate_control_modes = rate_control_modes;
         self
     }
+    #[inline]
     pub fn rate_control_layer_count(mut self, rate_control_layer_count: u8) -> Self {
         self.rate_control_layer_count = rate_control_layer_count;
         self
     }
+    #[inline]
     pub fn quality_level_count(mut self, quality_level_count: u8) -> Self {
         self.quality_level_count = quality_level_count;
         self
     }
+    #[inline]
     pub fn input_image_data_fill_alignment(
         mut self,
         input_image_data_fill_alignment: Extent2D,
@@ -31426,14 +33764,17 @@ impl ::std::default::Default for VideoEncodeH264CapabilitiesEXT<'_> {
 }
 unsafe impl<'a> ExtendsVideoEncodeCapabilitiesKHR for VideoEncodeH264CapabilitiesEXT<'a> {}
 impl<'a> VideoEncodeH264CapabilitiesEXT<'a> {
+    #[inline]
     pub fn flags(mut self, flags: VideoEncodeH264CapabilityFlagsEXT) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn input_mode_flags(mut self, input_mode_flags: VideoEncodeH264InputModeFlagsEXT) -> Self {
         self.input_mode_flags = input_mode_flags;
         self
     }
+    #[inline]
     pub fn output_mode_flags(
         mut self,
         output_mode_flags: VideoEncodeH264OutputModeFlagsEXT,
@@ -31441,6 +33782,7 @@ impl<'a> VideoEncodeH264CapabilitiesEXT<'a> {
         self.output_mode_flags = output_mode_flags;
         self
     }
+    #[inline]
     pub fn max_p_picture_l0_reference_count(
         mut self,
         max_p_picture_l0_reference_count: u8,
@@ -31448,6 +33790,7 @@ impl<'a> VideoEncodeH264CapabilitiesEXT<'a> {
         self.max_p_picture_l0_reference_count = max_p_picture_l0_reference_count;
         self
     }
+    #[inline]
     pub fn max_b_picture_l0_reference_count(
         mut self,
         max_b_picture_l0_reference_count: u8,
@@ -31455,10 +33798,12 @@ impl<'a> VideoEncodeH264CapabilitiesEXT<'a> {
         self.max_b_picture_l0_reference_count = max_b_picture_l0_reference_count;
         self
     }
+    #[inline]
     pub fn max_l1_reference_count(mut self, max_l1_reference_count: u8) -> Self {
         self.max_l1_reference_count = max_l1_reference_count;
         self
     }
+    #[inline]
     pub fn motion_vectors_over_pic_boundaries_flag(
         mut self,
         motion_vectors_over_pic_boundaries_flag: bool,
@@ -31467,18 +33812,22 @@ impl<'a> VideoEncodeH264CapabilitiesEXT<'a> {
             motion_vectors_over_pic_boundaries_flag.into();
         self
     }
+    #[inline]
     pub fn max_bytes_per_pic_denom(mut self, max_bytes_per_pic_denom: u32) -> Self {
         self.max_bytes_per_pic_denom = max_bytes_per_pic_denom;
         self
     }
+    #[inline]
     pub fn max_bits_per_mb_denom(mut self, max_bits_per_mb_denom: u32) -> Self {
         self.max_bits_per_mb_denom = max_bits_per_mb_denom;
         self
     }
+    #[inline]
     pub fn log2_max_mv_length_horizontal(mut self, log2_max_mv_length_horizontal: u32) -> Self {
         self.log2_max_mv_length_horizontal = log2_max_mv_length_horizontal;
         self
     }
+    #[inline]
     pub fn log2_max_mv_length_vertical(mut self, log2_max_mv_length_vertical: u32) -> Self {
         self.log2_max_mv_length_vertical = log2_max_mv_length_vertical;
         self
@@ -31515,11 +33864,13 @@ unsafe impl<'a> ExtendsVideoSessionParametersUpdateInfoKHR
 {
 }
 impl<'a> VideoEncodeH264SessionParametersAddInfoEXT<'a> {
+    #[inline]
     pub fn sps_std(mut self, sps_std: &'a [StdVideoH264SequenceParameterSet]) -> Self {
         self.sps_std_count = sps_std.len() as _;
         self.p_sps_std = sps_std.as_ptr();
         self
     }
+    #[inline]
     pub fn pps_std(mut self, pps_std: &'a [StdVideoH264PictureParameterSet]) -> Self {
         self.pps_std_count = pps_std.len() as _;
         self.p_pps_std = pps_std.as_ptr();
@@ -31555,14 +33906,17 @@ unsafe impl<'a> ExtendsVideoSessionParametersCreateInfoKHR
 {
 }
 impl<'a> VideoEncodeH264SessionParametersCreateInfoEXT<'a> {
+    #[inline]
     pub fn max_sps_std_count(mut self, max_sps_std_count: u32) -> Self {
         self.max_sps_std_count = max_sps_std_count;
         self
     }
+    #[inline]
     pub fn max_pps_std_count(mut self, max_pps_std_count: u32) -> Self {
         self.max_pps_std_count = max_pps_std_count;
         self
     }
+    #[inline]
     pub fn parameters_add_info(
         mut self,
         parameters_add_info: &'a VideoEncodeH264SessionParametersAddInfoEXT<'a>,
@@ -31594,10 +33948,12 @@ impl ::std::default::Default for VideoEncodeH264DpbSlotInfoEXT<'_> {
     }
 }
 impl<'a> VideoEncodeH264DpbSlotInfoEXT<'a> {
+    #[inline]
     pub fn slot_index(mut self, slot_index: i8) -> Self {
         self.slot_index = slot_index;
         self
     }
+    #[inline]
     pub fn std_reference_info(
         mut self,
         std_reference_info: &'a StdVideoEncodeH264ReferenceInfo,
@@ -31634,6 +33990,7 @@ impl ::std::default::Default for VideoEncodeH264VclFrameInfoEXT<'_> {
 }
 unsafe impl<'a> ExtendsVideoEncodeInfoKHR for VideoEncodeH264VclFrameInfoEXT<'a> {}
 impl<'a> VideoEncodeH264VclFrameInfoEXT<'a> {
+    #[inline]
     pub fn reference_final_lists(
         mut self,
         reference_final_lists: &'a VideoEncodeH264ReferenceListsEXT<'a>,
@@ -31641,6 +33998,7 @@ impl<'a> VideoEncodeH264VclFrameInfoEXT<'a> {
         self.p_reference_final_lists = reference_final_lists;
         self
     }
+    #[inline]
     pub fn nalu_slice_entries(
         mut self,
         nalu_slice_entries: &'a [VideoEncodeH264NaluSliceEXT],
@@ -31649,6 +34007,7 @@ impl<'a> VideoEncodeH264VclFrameInfoEXT<'a> {
         self.p_nalu_slice_entries = nalu_slice_entries.as_ptr();
         self
     }
+    #[inline]
     pub fn current_picture_info(
         mut self,
         current_picture_info: &'a StdVideoEncodeH264PictureInfo,
@@ -31686,6 +34045,7 @@ impl ::std::default::Default for VideoEncodeH264ReferenceListsEXT<'_> {
     }
 }
 impl<'a> VideoEncodeH264ReferenceListsEXT<'a> {
+    #[inline]
     pub fn reference_list0_entries(
         mut self,
         reference_list0_entries: &'a [VideoEncodeH264DpbSlotInfoEXT],
@@ -31694,6 +34054,7 @@ impl<'a> VideoEncodeH264ReferenceListsEXT<'a> {
         self.p_reference_list0_entries = reference_list0_entries.as_ptr();
         self
     }
+    #[inline]
     pub fn reference_list1_entries(
         mut self,
         reference_list1_entries: &'a [VideoEncodeH264DpbSlotInfoEXT],
@@ -31702,6 +34063,7 @@ impl<'a> VideoEncodeH264ReferenceListsEXT<'a> {
         self.p_reference_list1_entries = reference_list1_entries.as_ptr();
         self
     }
+    #[inline]
     pub fn mem_mgmt_ctrl_operations(
         mut self,
         mem_mgmt_ctrl_operations: &'a StdVideoEncodeH264RefMemMgmtCtrlOperations,
@@ -31738,14 +34100,17 @@ impl ::std::default::Default for VideoEncodeH264EmitPictureParametersEXT<'_> {
 }
 unsafe impl<'a> ExtendsVideoEncodeInfoKHR for VideoEncodeH264EmitPictureParametersEXT<'a> {}
 impl<'a> VideoEncodeH264EmitPictureParametersEXT<'a> {
+    #[inline]
     pub fn sps_id(mut self, sps_id: u8) -> Self {
         self.sps_id = sps_id;
         self
     }
+    #[inline]
     pub fn emit_sps_enable(mut self, emit_sps_enable: bool) -> Self {
         self.emit_sps_enable = emit_sps_enable.into();
         self
     }
+    #[inline]
     pub fn pps_id_entries(mut self, pps_id_entries: &'a [u8]) -> Self {
         self.pps_id_entry_count = pps_id_entries.len() as _;
         self.pps_id_entries = pps_id_entries.as_ptr();
@@ -31779,6 +34144,7 @@ unsafe impl<'a> ExtendsImageCreateInfo for VideoEncodeH264ProfileEXT<'a> {}
 unsafe impl<'a> ExtendsImageViewCreateInfo for VideoEncodeH264ProfileEXT<'a> {}
 unsafe impl<'a> ExtendsBufferCreateInfo for VideoEncodeH264ProfileEXT<'a> {}
 impl<'a> VideoEncodeH264ProfileEXT<'a> {
+    #[inline]
     pub fn std_profile_idc(mut self, std_profile_idc: StdVideoH264ProfileIdc) -> Self {
         self.std_profile_idc = std_profile_idc;
         self
@@ -31809,10 +34175,12 @@ impl ::std::default::Default for VideoEncodeH264NaluSliceEXT<'_> {
     }
 }
 impl<'a> VideoEncodeH264NaluSliceEXT<'a> {
+    #[inline]
     pub fn mb_count(mut self, mb_count: u32) -> Self {
         self.mb_count = mb_count;
         self
     }
+    #[inline]
     pub fn reference_final_lists(
         mut self,
         reference_final_lists: &'a VideoEncodeH264ReferenceListsEXT<'a>,
@@ -31820,6 +34188,7 @@ impl<'a> VideoEncodeH264NaluSliceEXT<'a> {
         self.p_reference_final_lists = reference_final_lists;
         self
     }
+    #[inline]
     pub fn slice_header_std(mut self, slice_header_std: &'a StdVideoEncodeH264SliceHeader) -> Self {
         self.p_slice_header_std = slice_header_std;
         self
@@ -31855,18 +34224,22 @@ impl ::std::default::Default for VideoEncodeH264RateControlInfoEXT<'_> {
 }
 unsafe impl<'a> ExtendsVideoEncodeRateControlInfoKHR for VideoEncodeH264RateControlInfoEXT<'a> {}
 impl<'a> VideoEncodeH264RateControlInfoEXT<'a> {
+    #[inline]
     pub fn gop_frame_count(mut self, gop_frame_count: u32) -> Self {
         self.gop_frame_count = gop_frame_count;
         self
     }
+    #[inline]
     pub fn idr_period(mut self, idr_period: u32) -> Self {
         self.idr_period = idr_period;
         self
     }
+    #[inline]
     pub fn consecutive_b_frame_count(mut self, consecutive_b_frame_count: u32) -> Self {
         self.consecutive_b_frame_count = consecutive_b_frame_count;
         self
     }
+    #[inline]
     pub fn rate_control_structure(
         mut self,
         rate_control_structure: VideoEncodeH264RateControlStructureFlagsEXT,
@@ -31874,6 +34247,7 @@ impl<'a> VideoEncodeH264RateControlInfoEXT<'a> {
         self.rate_control_structure = rate_control_structure;
         self
     }
+    #[inline]
     pub fn temporal_layer_count(mut self, temporal_layer_count: u8) -> Self {
         self.temporal_layer_count = temporal_layer_count;
         self
@@ -31889,14 +34263,17 @@ pub struct VideoEncodeH264QpEXT {
     pub qp_b: i32,
 }
 impl VideoEncodeH264QpEXT {
+    #[inline]
     pub fn qp_i(mut self, qp_i: i32) -> Self {
         self.qp_i = qp_i;
         self
     }
+    #[inline]
     pub fn qp_p(mut self, qp_p: i32) -> Self {
         self.qp_p = qp_p;
         self
     }
+    #[inline]
     pub fn qp_b(mut self, qp_b: i32) -> Self {
         self.qp_b = qp_b;
         self
@@ -31912,14 +34289,17 @@ pub struct VideoEncodeH264FrameSizeEXT {
     pub frame_b_size: u32,
 }
 impl VideoEncodeH264FrameSizeEXT {
+    #[inline]
     pub fn frame_i_size(mut self, frame_i_size: u32) -> Self {
         self.frame_i_size = frame_i_size;
         self
     }
+    #[inline]
     pub fn frame_p_size(mut self, frame_p_size: u32) -> Self {
         self.frame_p_size = frame_p_size;
         self
     }
+    #[inline]
     pub fn frame_b_size(mut self, frame_b_size: u32) -> Self {
         self.frame_b_size = frame_b_size;
         self
@@ -31966,38 +34346,47 @@ unsafe impl<'a> ExtendsVideoEncodeRateControlLayerInfoKHR
 {
 }
 impl<'a> VideoEncodeH264RateControlLayerInfoEXT<'a> {
+    #[inline]
     pub fn temporal_layer_id(mut self, temporal_layer_id: u8) -> Self {
         self.temporal_layer_id = temporal_layer_id;
         self
     }
+    #[inline]
     pub fn use_initial_rc_qp(mut self, use_initial_rc_qp: bool) -> Self {
         self.use_initial_rc_qp = use_initial_rc_qp.into();
         self
     }
+    #[inline]
     pub fn initial_rc_qp(mut self, initial_rc_qp: VideoEncodeH264QpEXT) -> Self {
         self.initial_rc_qp = initial_rc_qp;
         self
     }
+    #[inline]
     pub fn use_min_qp(mut self, use_min_qp: bool) -> Self {
         self.use_min_qp = use_min_qp.into();
         self
     }
+    #[inline]
     pub fn min_qp(mut self, min_qp: VideoEncodeH264QpEXT) -> Self {
         self.min_qp = min_qp;
         self
     }
+    #[inline]
     pub fn use_max_qp(mut self, use_max_qp: bool) -> Self {
         self.use_max_qp = use_max_qp.into();
         self
     }
+    #[inline]
     pub fn max_qp(mut self, max_qp: VideoEncodeH264QpEXT) -> Self {
         self.max_qp = max_qp;
         self
     }
+    #[inline]
     pub fn use_max_frame_size(mut self, use_max_frame_size: bool) -> Self {
         self.use_max_frame_size = use_max_frame_size.into();
         self
     }
+    #[inline]
     pub fn max_frame_size(mut self, max_frame_size: VideoEncodeH264FrameSizeEXT) -> Self {
         self.max_frame_size = max_frame_size;
         self
@@ -32063,14 +34452,17 @@ impl ::std::default::Default for VideoEncodeH265CapabilitiesEXT<'_> {
 }
 unsafe impl<'a> ExtendsVideoEncodeCapabilitiesKHR for VideoEncodeH265CapabilitiesEXT<'a> {}
 impl<'a> VideoEncodeH265CapabilitiesEXT<'a> {
+    #[inline]
     pub fn flags(mut self, flags: VideoEncodeH265CapabilityFlagsEXT) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn input_mode_flags(mut self, input_mode_flags: VideoEncodeH265InputModeFlagsEXT) -> Self {
         self.input_mode_flags = input_mode_flags;
         self
     }
+    #[inline]
     pub fn output_mode_flags(
         mut self,
         output_mode_flags: VideoEncodeH265OutputModeFlagsEXT,
@@ -32078,10 +34470,12 @@ impl<'a> VideoEncodeH265CapabilitiesEXT<'a> {
         self.output_mode_flags = output_mode_flags;
         self
     }
+    #[inline]
     pub fn ctb_sizes(mut self, ctb_sizes: VideoEncodeH265CtbSizeFlagsEXT) -> Self {
         self.ctb_sizes = ctb_sizes;
         self
     }
+    #[inline]
     pub fn transform_block_sizes(
         mut self,
         transform_block_sizes: VideoEncodeH265TransformBlockSizeFlagsEXT,
@@ -32089,6 +34483,7 @@ impl<'a> VideoEncodeH265CapabilitiesEXT<'a> {
         self.transform_block_sizes = transform_block_sizes;
         self
     }
+    #[inline]
     pub fn max_p_picture_l0_reference_count(
         mut self,
         max_p_picture_l0_reference_count: u8,
@@ -32096,6 +34491,7 @@ impl<'a> VideoEncodeH265CapabilitiesEXT<'a> {
         self.max_p_picture_l0_reference_count = max_p_picture_l0_reference_count;
         self
     }
+    #[inline]
     pub fn max_b_picture_l0_reference_count(
         mut self,
         max_b_picture_l0_reference_count: u8,
@@ -32103,14 +34499,17 @@ impl<'a> VideoEncodeH265CapabilitiesEXT<'a> {
         self.max_b_picture_l0_reference_count = max_b_picture_l0_reference_count;
         self
     }
+    #[inline]
     pub fn max_l1_reference_count(mut self, max_l1_reference_count: u8) -> Self {
         self.max_l1_reference_count = max_l1_reference_count;
         self
     }
+    #[inline]
     pub fn max_sub_layers_count(mut self, max_sub_layers_count: u8) -> Self {
         self.max_sub_layers_count = max_sub_layers_count;
         self
     }
+    #[inline]
     pub fn min_log2_min_luma_coding_block_size_minus3(
         mut self,
         min_log2_min_luma_coding_block_size_minus3: u8,
@@ -32119,6 +34518,7 @@ impl<'a> VideoEncodeH265CapabilitiesEXT<'a> {
             min_log2_min_luma_coding_block_size_minus3;
         self
     }
+    #[inline]
     pub fn max_log2_min_luma_coding_block_size_minus3(
         mut self,
         max_log2_min_luma_coding_block_size_minus3: u8,
@@ -32127,6 +34527,7 @@ impl<'a> VideoEncodeH265CapabilitiesEXT<'a> {
             max_log2_min_luma_coding_block_size_minus3;
         self
     }
+    #[inline]
     pub fn min_log2_min_luma_transform_block_size_minus2(
         mut self,
         min_log2_min_luma_transform_block_size_minus2: u8,
@@ -32135,6 +34536,7 @@ impl<'a> VideoEncodeH265CapabilitiesEXT<'a> {
             min_log2_min_luma_transform_block_size_minus2;
         self
     }
+    #[inline]
     pub fn max_log2_min_luma_transform_block_size_minus2(
         mut self,
         max_log2_min_luma_transform_block_size_minus2: u8,
@@ -32143,6 +34545,7 @@ impl<'a> VideoEncodeH265CapabilitiesEXT<'a> {
             max_log2_min_luma_transform_block_size_minus2;
         self
     }
+    #[inline]
     pub fn min_max_transform_hierarchy_depth_inter(
         mut self,
         min_max_transform_hierarchy_depth_inter: u8,
@@ -32150,6 +34553,7 @@ impl<'a> VideoEncodeH265CapabilitiesEXT<'a> {
         self.min_max_transform_hierarchy_depth_inter = min_max_transform_hierarchy_depth_inter;
         self
     }
+    #[inline]
     pub fn max_max_transform_hierarchy_depth_inter(
         mut self,
         max_max_transform_hierarchy_depth_inter: u8,
@@ -32157,6 +34561,7 @@ impl<'a> VideoEncodeH265CapabilitiesEXT<'a> {
         self.max_max_transform_hierarchy_depth_inter = max_max_transform_hierarchy_depth_inter;
         self
     }
+    #[inline]
     pub fn min_max_transform_hierarchy_depth_intra(
         mut self,
         min_max_transform_hierarchy_depth_intra: u8,
@@ -32164,6 +34569,7 @@ impl<'a> VideoEncodeH265CapabilitiesEXT<'a> {
         self.min_max_transform_hierarchy_depth_intra = min_max_transform_hierarchy_depth_intra;
         self
     }
+    #[inline]
     pub fn max_max_transform_hierarchy_depth_intra(
         mut self,
         max_max_transform_hierarchy_depth_intra: u8,
@@ -32171,14 +34577,17 @@ impl<'a> VideoEncodeH265CapabilitiesEXT<'a> {
         self.max_max_transform_hierarchy_depth_intra = max_max_transform_hierarchy_depth_intra;
         self
     }
+    #[inline]
     pub fn max_diff_cu_qp_delta_depth(mut self, max_diff_cu_qp_delta_depth: u8) -> Self {
         self.max_diff_cu_qp_delta_depth = max_diff_cu_qp_delta_depth;
         self
     }
+    #[inline]
     pub fn min_max_num_merge_cand(mut self, min_max_num_merge_cand: u8) -> Self {
         self.min_max_num_merge_cand = min_max_num_merge_cand;
         self
     }
+    #[inline]
     pub fn max_max_num_merge_cand(mut self, max_max_num_merge_cand: u8) -> Self {
         self.max_max_num_merge_cand = max_max_num_merge_cand;
         self
@@ -32219,16 +34628,19 @@ unsafe impl<'a> ExtendsVideoSessionParametersUpdateInfoKHR
 {
 }
 impl<'a> VideoEncodeH265SessionParametersAddInfoEXT<'a> {
+    #[inline]
     pub fn vps_std(mut self, vps_std: &'a [StdVideoH265VideoParameterSet]) -> Self {
         self.vps_std_count = vps_std.len() as _;
         self.p_vps_std = vps_std.as_ptr();
         self
     }
+    #[inline]
     pub fn sps_std(mut self, sps_std: &'a [StdVideoH265SequenceParameterSet]) -> Self {
         self.sps_std_count = sps_std.len() as _;
         self.p_sps_std = sps_std.as_ptr();
         self
     }
+    #[inline]
     pub fn pps_std(mut self, pps_std: &'a [StdVideoH265PictureParameterSet]) -> Self {
         self.pps_std_count = pps_std.len() as _;
         self.p_pps_std = pps_std.as_ptr();
@@ -32266,18 +34678,22 @@ unsafe impl<'a> ExtendsVideoSessionParametersCreateInfoKHR
 {
 }
 impl<'a> VideoEncodeH265SessionParametersCreateInfoEXT<'a> {
+    #[inline]
     pub fn max_vps_std_count(mut self, max_vps_std_count: u32) -> Self {
         self.max_vps_std_count = max_vps_std_count;
         self
     }
+    #[inline]
     pub fn max_sps_std_count(mut self, max_sps_std_count: u32) -> Self {
         self.max_sps_std_count = max_sps_std_count;
         self
     }
+    #[inline]
     pub fn max_pps_std_count(mut self, max_pps_std_count: u32) -> Self {
         self.max_pps_std_count = max_pps_std_count;
         self
     }
+    #[inline]
     pub fn parameters_add_info(
         mut self,
         parameters_add_info: &'a VideoEncodeH265SessionParametersAddInfoEXT<'a>,
@@ -32314,6 +34730,7 @@ impl ::std::default::Default for VideoEncodeH265VclFrameInfoEXT<'_> {
 }
 unsafe impl<'a> ExtendsVideoEncodeInfoKHR for VideoEncodeH265VclFrameInfoEXT<'a> {}
 impl<'a> VideoEncodeH265VclFrameInfoEXT<'a> {
+    #[inline]
     pub fn reference_final_lists(
         mut self,
         reference_final_lists: &'a VideoEncodeH265ReferenceListsEXT<'a>,
@@ -32321,6 +34738,7 @@ impl<'a> VideoEncodeH265VclFrameInfoEXT<'a> {
         self.p_reference_final_lists = reference_final_lists;
         self
     }
+    #[inline]
     pub fn nalu_slice_segment_entries(
         mut self,
         nalu_slice_segment_entries: &'a [VideoEncodeH265NaluSliceSegmentEXT],
@@ -32329,6 +34747,7 @@ impl<'a> VideoEncodeH265VclFrameInfoEXT<'a> {
         self.p_nalu_slice_segment_entries = nalu_slice_segment_entries.as_ptr();
         self
     }
+    #[inline]
     pub fn current_picture_info(
         mut self,
         current_picture_info: &'a StdVideoEncodeH265PictureInfo,
@@ -32369,22 +34788,27 @@ impl ::std::default::Default for VideoEncodeH265EmitPictureParametersEXT<'_> {
 }
 unsafe impl<'a> ExtendsVideoEncodeInfoKHR for VideoEncodeH265EmitPictureParametersEXT<'a> {}
 impl<'a> VideoEncodeH265EmitPictureParametersEXT<'a> {
+    #[inline]
     pub fn vps_id(mut self, vps_id: u8) -> Self {
         self.vps_id = vps_id;
         self
     }
+    #[inline]
     pub fn sps_id(mut self, sps_id: u8) -> Self {
         self.sps_id = sps_id;
         self
     }
+    #[inline]
     pub fn emit_vps_enable(mut self, emit_vps_enable: bool) -> Self {
         self.emit_vps_enable = emit_vps_enable.into();
         self
     }
+    #[inline]
     pub fn emit_sps_enable(mut self, emit_sps_enable: bool) -> Self {
         self.emit_sps_enable = emit_sps_enable.into();
         self
     }
+    #[inline]
     pub fn pps_id_entries(mut self, pps_id_entries: &'a [u8]) -> Self {
         self.pps_id_entry_count = pps_id_entries.len() as _;
         self.pps_id_entries = pps_id_entries.as_ptr();
@@ -32416,10 +34840,12 @@ impl ::std::default::Default for VideoEncodeH265NaluSliceSegmentEXT<'_> {
     }
 }
 impl<'a> VideoEncodeH265NaluSliceSegmentEXT<'a> {
+    #[inline]
     pub fn ctb_count(mut self, ctb_count: u32) -> Self {
         self.ctb_count = ctb_count;
         self
     }
+    #[inline]
     pub fn reference_final_lists(
         mut self,
         reference_final_lists: &'a VideoEncodeH265ReferenceListsEXT<'a>,
@@ -32427,6 +34853,7 @@ impl<'a> VideoEncodeH265NaluSliceSegmentEXT<'a> {
         self.p_reference_final_lists = reference_final_lists;
         self
     }
+    #[inline]
     pub fn slice_segment_header_std(
         mut self,
         slice_segment_header_std: &'a StdVideoEncodeH265SliceSegmentHeader,
@@ -32465,18 +34892,22 @@ impl ::std::default::Default for VideoEncodeH265RateControlInfoEXT<'_> {
 }
 unsafe impl<'a> ExtendsVideoEncodeRateControlInfoKHR for VideoEncodeH265RateControlInfoEXT<'a> {}
 impl<'a> VideoEncodeH265RateControlInfoEXT<'a> {
+    #[inline]
     pub fn gop_frame_count(mut self, gop_frame_count: u32) -> Self {
         self.gop_frame_count = gop_frame_count;
         self
     }
+    #[inline]
     pub fn idr_period(mut self, idr_period: u32) -> Self {
         self.idr_period = idr_period;
         self
     }
+    #[inline]
     pub fn consecutive_b_frame_count(mut self, consecutive_b_frame_count: u32) -> Self {
         self.consecutive_b_frame_count = consecutive_b_frame_count;
         self
     }
+    #[inline]
     pub fn rate_control_structure(
         mut self,
         rate_control_structure: VideoEncodeH265RateControlStructureFlagsEXT,
@@ -32484,6 +34915,7 @@ impl<'a> VideoEncodeH265RateControlInfoEXT<'a> {
         self.rate_control_structure = rate_control_structure;
         self
     }
+    #[inline]
     pub fn sub_layer_count(mut self, sub_layer_count: u8) -> Self {
         self.sub_layer_count = sub_layer_count;
         self
@@ -32499,14 +34931,17 @@ pub struct VideoEncodeH265QpEXT {
     pub qp_b: i32,
 }
 impl VideoEncodeH265QpEXT {
+    #[inline]
     pub fn qp_i(mut self, qp_i: i32) -> Self {
         self.qp_i = qp_i;
         self
     }
+    #[inline]
     pub fn qp_p(mut self, qp_p: i32) -> Self {
         self.qp_p = qp_p;
         self
     }
+    #[inline]
     pub fn qp_b(mut self, qp_b: i32) -> Self {
         self.qp_b = qp_b;
         self
@@ -32522,14 +34957,17 @@ pub struct VideoEncodeH265FrameSizeEXT {
     pub frame_b_size: u32,
 }
 impl VideoEncodeH265FrameSizeEXT {
+    #[inline]
     pub fn frame_i_size(mut self, frame_i_size: u32) -> Self {
         self.frame_i_size = frame_i_size;
         self
     }
+    #[inline]
     pub fn frame_p_size(mut self, frame_p_size: u32) -> Self {
         self.frame_p_size = frame_p_size;
         self
     }
+    #[inline]
     pub fn frame_b_size(mut self, frame_b_size: u32) -> Self {
         self.frame_b_size = frame_b_size;
         self
@@ -32576,38 +35014,47 @@ unsafe impl<'a> ExtendsVideoEncodeRateControlLayerInfoKHR
 {
 }
 impl<'a> VideoEncodeH265RateControlLayerInfoEXT<'a> {
+    #[inline]
     pub fn temporal_id(mut self, temporal_id: u8) -> Self {
         self.temporal_id = temporal_id;
         self
     }
+    #[inline]
     pub fn use_initial_rc_qp(mut self, use_initial_rc_qp: bool) -> Self {
         self.use_initial_rc_qp = use_initial_rc_qp.into();
         self
     }
+    #[inline]
     pub fn initial_rc_qp(mut self, initial_rc_qp: VideoEncodeH265QpEXT) -> Self {
         self.initial_rc_qp = initial_rc_qp;
         self
     }
+    #[inline]
     pub fn use_min_qp(mut self, use_min_qp: bool) -> Self {
         self.use_min_qp = use_min_qp.into();
         self
     }
+    #[inline]
     pub fn min_qp(mut self, min_qp: VideoEncodeH265QpEXT) -> Self {
         self.min_qp = min_qp;
         self
     }
+    #[inline]
     pub fn use_max_qp(mut self, use_max_qp: bool) -> Self {
         self.use_max_qp = use_max_qp.into();
         self
     }
+    #[inline]
     pub fn max_qp(mut self, max_qp: VideoEncodeH265QpEXT) -> Self {
         self.max_qp = max_qp;
         self
     }
+    #[inline]
     pub fn use_max_frame_size(mut self, use_max_frame_size: bool) -> Self {
         self.use_max_frame_size = use_max_frame_size.into();
         self
     }
+    #[inline]
     pub fn max_frame_size(mut self, max_frame_size: VideoEncodeH265FrameSizeEXT) -> Self {
         self.max_frame_size = max_frame_size;
         self
@@ -32640,6 +35087,7 @@ unsafe impl<'a> ExtendsImageCreateInfo for VideoEncodeH265ProfileEXT<'a> {}
 unsafe impl<'a> ExtendsImageViewCreateInfo for VideoEncodeH265ProfileEXT<'a> {}
 unsafe impl<'a> ExtendsBufferCreateInfo for VideoEncodeH265ProfileEXT<'a> {}
 impl<'a> VideoEncodeH265ProfileEXT<'a> {
+    #[inline]
     pub fn std_profile_idc(mut self, std_profile_idc: StdVideoH265ProfileIdc) -> Self {
         self.std_profile_idc = std_profile_idc;
         self
@@ -32668,10 +35116,12 @@ impl ::std::default::Default for VideoEncodeH265DpbSlotInfoEXT<'_> {
     }
 }
 impl<'a> VideoEncodeH265DpbSlotInfoEXT<'a> {
+    #[inline]
     pub fn slot_index(mut self, slot_index: i8) -> Self {
         self.slot_index = slot_index;
         self
     }
+    #[inline]
     pub fn std_reference_info(
         mut self,
         std_reference_info: &'a StdVideoEncodeH265ReferenceInfo,
@@ -32709,6 +35159,7 @@ impl ::std::default::Default for VideoEncodeH265ReferenceListsEXT<'_> {
     }
 }
 impl<'a> VideoEncodeH265ReferenceListsEXT<'a> {
+    #[inline]
     pub fn reference_list0_entries(
         mut self,
         reference_list0_entries: &'a [VideoEncodeH265DpbSlotInfoEXT],
@@ -32717,6 +35168,7 @@ impl<'a> VideoEncodeH265ReferenceListsEXT<'a> {
         self.p_reference_list0_entries = reference_list0_entries.as_ptr();
         self
     }
+    #[inline]
     pub fn reference_list1_entries(
         mut self,
         reference_list1_entries: &'a [VideoEncodeH265DpbSlotInfoEXT],
@@ -32725,6 +35177,7 @@ impl<'a> VideoEncodeH265ReferenceListsEXT<'a> {
         self.p_reference_list1_entries = reference_list1_entries.as_ptr();
         self
     }
+    #[inline]
     pub fn reference_modifications(
         mut self,
         reference_modifications: &'a StdVideoEncodeH265ReferenceModifications,
@@ -32759,6 +35212,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceInheritedViewportScissorFeaturesNV<'a> {}
 impl<'a> PhysicalDeviceInheritedViewportScissorFeaturesNV<'a> {
+    #[inline]
     pub fn inherited_viewport_scissor2_d(mut self, inherited_viewport_scissor2_d: bool) -> Self {
         self.inherited_viewport_scissor2_d = inherited_viewport_scissor2_d.into();
         self
@@ -32793,14 +35247,17 @@ unsafe impl<'a> ExtendsCommandBufferInheritanceInfo
 {
 }
 impl<'a> CommandBufferInheritanceViewportScissorInfoNV<'a> {
+    #[inline]
     pub fn viewport_scissor2_d(mut self, viewport_scissor2_d: bool) -> Self {
         self.viewport_scissor2_d = viewport_scissor2_d.into();
         self
     }
+    #[inline]
     pub fn viewport_depth_count(mut self, viewport_depth_count: u32) -> Self {
         self.viewport_depth_count = viewport_depth_count;
         self
     }
+    #[inline]
     pub fn viewport_depths(mut self, viewport_depths: &'a Viewport) -> Self {
         self.p_viewport_depths = viewport_depths;
         self
@@ -32832,6 +35289,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'a> {
+    #[inline]
     pub fn ycbcr2plane444_formats(mut self, ycbcr2plane444_formats: bool) -> Self {
         self.ycbcr2plane444_formats = ycbcr2plane444_formats.into();
         self
@@ -32862,10 +35320,12 @@ impl ::std::default::Default for PhysicalDeviceProvokingVertexFeaturesEXT<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceProvokingVertexFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceProvokingVertexFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceProvokingVertexFeaturesEXT<'a> {
+    #[inline]
     pub fn provoking_vertex_last(mut self, provoking_vertex_last: bool) -> Self {
         self.provoking_vertex_last = provoking_vertex_last.into();
         self
     }
+    #[inline]
     pub fn transform_feedback_preserves_provoking_vertex(
         mut self,
         transform_feedback_preserves_provoking_vertex: bool,
@@ -32902,6 +35362,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceProperties2
 {
 }
 impl<'a> PhysicalDeviceProvokingVertexPropertiesEXT<'a> {
+    #[inline]
     pub fn provoking_vertex_mode_per_pipeline(
         mut self,
         provoking_vertex_mode_per_pipeline: bool,
@@ -32909,6 +35370,7 @@ impl<'a> PhysicalDeviceProvokingVertexPropertiesEXT<'a> {
         self.provoking_vertex_mode_per_pipeline = provoking_vertex_mode_per_pipeline.into();
         self
     }
+    #[inline]
     pub fn transform_feedback_preserves_triangle_fan_provoking_vertex(
         mut self,
         transform_feedback_preserves_triangle_fan_provoking_vertex: bool,
@@ -32943,6 +35405,7 @@ unsafe impl<'a> ExtendsPipelineRasterizationStateCreateInfo
 {
 }
 impl<'a> PipelineRasterizationProvokingVertexStateCreateInfoEXT<'a> {
+    #[inline]
     pub fn provoking_vertex_mode(mut self, provoking_vertex_mode: ProvokingVertexModeEXT) -> Self {
         self.provoking_vertex_mode = provoking_vertex_mode;
         self
@@ -32971,6 +35434,7 @@ impl ::std::default::Default for CuModuleCreateInfoNVX<'_> {
     }
 }
 impl<'a> CuModuleCreateInfoNVX<'a> {
+    #[inline]
     pub fn data(mut self, data: &'a [u8]) -> Self {
         self.data_size = data.len();
         self.p_data = data.as_ptr() as *const c_void;
@@ -33000,10 +35464,12 @@ impl ::std::default::Default for CuFunctionCreateInfoNVX<'_> {
     }
 }
 impl<'a> CuFunctionCreateInfoNVX<'a> {
+    #[inline]
     pub fn module(mut self, module: CuModuleNVX) -> Self {
         self.module = module;
         self
     }
+    #[inline]
     pub fn name(mut self, name: &'a ::std::ffi::CStr) -> Self {
         self.p_name = name.as_ptr();
         self
@@ -33052,43 +35518,53 @@ impl ::std::default::Default for CuLaunchInfoNVX<'_> {
     }
 }
 impl<'a> CuLaunchInfoNVX<'a> {
+    #[inline]
     pub fn function(mut self, function: CuFunctionNVX) -> Self {
         self.function = function;
         self
     }
+    #[inline]
     pub fn grid_dim_x(mut self, grid_dim_x: u32) -> Self {
         self.grid_dim_x = grid_dim_x;
         self
     }
+    #[inline]
     pub fn grid_dim_y(mut self, grid_dim_y: u32) -> Self {
         self.grid_dim_y = grid_dim_y;
         self
     }
+    #[inline]
     pub fn grid_dim_z(mut self, grid_dim_z: u32) -> Self {
         self.grid_dim_z = grid_dim_z;
         self
     }
+    #[inline]
     pub fn block_dim_x(mut self, block_dim_x: u32) -> Self {
         self.block_dim_x = block_dim_x;
         self
     }
+    #[inline]
     pub fn block_dim_y(mut self, block_dim_y: u32) -> Self {
         self.block_dim_y = block_dim_y;
         self
     }
+    #[inline]
     pub fn block_dim_z(mut self, block_dim_z: u32) -> Self {
         self.block_dim_z = block_dim_z;
         self
     }
+    #[inline]
     pub fn shared_mem_bytes(mut self, shared_mem_bytes: u32) -> Self {
         self.shared_mem_bytes = shared_mem_bytes;
         self
     }
+    #[inline]
     pub fn params(mut self, params: &'a [*const c_void]) -> Self {
         self.param_count = params.len();
         self.p_params = params.as_ptr();
         self
     }
+    #[inline]
     pub fn extras(mut self, extras: &'a [*const c_void]) -> Self {
         self.extra_count = extras.len();
         self.p_extras = extras.as_ptr();
@@ -33121,6 +35597,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceShaderIntegerDotProductFeatures<'a> {}
 impl<'a> PhysicalDeviceShaderIntegerDotProductFeatures<'a> {
+    #[inline]
     pub fn shader_integer_dot_product(mut self, shader_integer_dot_product: bool) -> Self {
         self.shader_integer_dot_product = shader_integer_dot_product.into();
         self
@@ -33176,6 +35653,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceProperties2
 {
 }
 impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
+    #[inline]
     pub fn integer_dot_product8_bit_unsigned_accelerated(
         mut self,
         integer_dot_product8_bit_unsigned_accelerated: bool,
@@ -33184,6 +35662,7 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
             integer_dot_product8_bit_unsigned_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product8_bit_signed_accelerated(
         mut self,
         integer_dot_product8_bit_signed_accelerated: bool,
@@ -33192,6 +35671,7 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
             integer_dot_product8_bit_signed_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product8_bit_mixed_signedness_accelerated(
         mut self,
         integer_dot_product8_bit_mixed_signedness_accelerated: bool,
@@ -33200,6 +35680,7 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
             integer_dot_product8_bit_mixed_signedness_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product4x8_bit_packed_unsigned_accelerated(
         mut self,
         integer_dot_product4x8_bit_packed_unsigned_accelerated: bool,
@@ -33208,6 +35689,7 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
             integer_dot_product4x8_bit_packed_unsigned_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product4x8_bit_packed_signed_accelerated(
         mut self,
         integer_dot_product4x8_bit_packed_signed_accelerated: bool,
@@ -33216,6 +35698,7 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
             integer_dot_product4x8_bit_packed_signed_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product4x8_bit_packed_mixed_signedness_accelerated(
         mut self,
         integer_dot_product4x8_bit_packed_mixed_signedness_accelerated: bool,
@@ -33224,6 +35707,7 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
             integer_dot_product4x8_bit_packed_mixed_signedness_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product16_bit_unsigned_accelerated(
         mut self,
         integer_dot_product16_bit_unsigned_accelerated: bool,
@@ -33232,6 +35716,7 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
             integer_dot_product16_bit_unsigned_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product16_bit_signed_accelerated(
         mut self,
         integer_dot_product16_bit_signed_accelerated: bool,
@@ -33240,6 +35725,7 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
             integer_dot_product16_bit_signed_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product16_bit_mixed_signedness_accelerated(
         mut self,
         integer_dot_product16_bit_mixed_signedness_accelerated: bool,
@@ -33248,6 +35734,7 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
             integer_dot_product16_bit_mixed_signedness_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product32_bit_unsigned_accelerated(
         mut self,
         integer_dot_product32_bit_unsigned_accelerated: bool,
@@ -33256,6 +35743,7 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
             integer_dot_product32_bit_unsigned_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product32_bit_signed_accelerated(
         mut self,
         integer_dot_product32_bit_signed_accelerated: bool,
@@ -33264,6 +35752,7 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
             integer_dot_product32_bit_signed_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product32_bit_mixed_signedness_accelerated(
         mut self,
         integer_dot_product32_bit_mixed_signedness_accelerated: bool,
@@ -33272,6 +35761,7 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
             integer_dot_product32_bit_mixed_signedness_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product64_bit_unsigned_accelerated(
         mut self,
         integer_dot_product64_bit_unsigned_accelerated: bool,
@@ -33280,6 +35770,7 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
             integer_dot_product64_bit_unsigned_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product64_bit_signed_accelerated(
         mut self,
         integer_dot_product64_bit_signed_accelerated: bool,
@@ -33288,6 +35779,7 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
             integer_dot_product64_bit_signed_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product64_bit_mixed_signedness_accelerated(
         mut self,
         integer_dot_product64_bit_mixed_signedness_accelerated: bool,
@@ -33296,6 +35788,7 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
             integer_dot_product64_bit_mixed_signedness_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated(
         mut self,
         integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated: bool,
@@ -33304,6 +35797,7 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
             integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product_accumulating_saturating8_bit_signed_accelerated(
         mut self,
         integer_dot_product_accumulating_saturating8_bit_signed_accelerated: bool,
@@ -33312,6 +35806,7 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
             integer_dot_product_accumulating_saturating8_bit_signed_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated(
         mut self,
         integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated: bool,
@@ -33320,6 +35815,7 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
             integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated(
         mut self,
         integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated: bool,
@@ -33328,6 +35824,7 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
             integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated(
         mut self,
         integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated: bool,
@@ -33336,6 +35833,7 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
             integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated(
         mut self,
         integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated : bool,
@@ -33343,6 +35841,7 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
         self . integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated = integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated . into () ;
         self
     }
+    #[inline]
     pub fn integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated(
         mut self,
         integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated: bool,
@@ -33351,6 +35850,7 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
             integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product_accumulating_saturating16_bit_signed_accelerated(
         mut self,
         integer_dot_product_accumulating_saturating16_bit_signed_accelerated: bool,
@@ -33359,6 +35859,7 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
             integer_dot_product_accumulating_saturating16_bit_signed_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated(
         mut self,
         integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated: bool,
@@ -33367,6 +35868,7 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
             integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated(
         mut self,
         integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated: bool,
@@ -33375,6 +35877,7 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
             integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product_accumulating_saturating32_bit_signed_accelerated(
         mut self,
         integer_dot_product_accumulating_saturating32_bit_signed_accelerated: bool,
@@ -33383,6 +35886,7 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
             integer_dot_product_accumulating_saturating32_bit_signed_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated(
         mut self,
         integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated: bool,
@@ -33391,6 +35895,7 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
             integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated(
         mut self,
         integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated: bool,
@@ -33399,6 +35904,7 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
             integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product_accumulating_saturating64_bit_signed_accelerated(
         mut self,
         integer_dot_product_accumulating_saturating64_bit_signed_accelerated: bool,
@@ -33407,6 +35913,7 @@ impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
             integer_dot_product_accumulating_saturating64_bit_signed_accelerated.into();
         self
     }
+    #[inline]
     pub fn integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated(
         mut self,
         integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated: bool,
@@ -33448,26 +35955,32 @@ impl ::std::default::Default for PhysicalDeviceDrmPropertiesEXT<'_> {
 }
 unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDrmPropertiesEXT<'a> {}
 impl<'a> PhysicalDeviceDrmPropertiesEXT<'a> {
+    #[inline]
     pub fn has_primary(mut self, has_primary: bool) -> Self {
         self.has_primary = has_primary.into();
         self
     }
+    #[inline]
     pub fn has_render(mut self, has_render: bool) -> Self {
         self.has_render = has_render.into();
         self
     }
+    #[inline]
     pub fn primary_major(mut self, primary_major: i64) -> Self {
         self.primary_major = primary_major;
         self
     }
+    #[inline]
     pub fn primary_minor(mut self, primary_minor: i64) -> Self {
         self.primary_minor = primary_minor;
         self
     }
+    #[inline]
     pub fn render_major(mut self, render_major: i64) -> Self {
         self.render_major = render_major;
         self
     }
+    #[inline]
     pub fn render_minor(mut self, render_minor: i64) -> Self {
         self.render_minor = render_minor;
         self
@@ -33501,10 +36014,12 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'a> {}
 impl<'a> PhysicalDeviceRayTracingMotionBlurFeaturesNV<'a> {
+    #[inline]
     pub fn ray_tracing_motion_blur(mut self, ray_tracing_motion_blur: bool) -> Self {
         self.ray_tracing_motion_blur = ray_tracing_motion_blur.into();
         self
     }
+    #[inline]
     pub fn ray_tracing_motion_blur_pipeline_trace_rays_indirect(
         mut self,
         ray_tracing_motion_blur_pipeline_trace_rays_indirect: bool,
@@ -33548,6 +36063,7 @@ unsafe impl<'a> ExtendsAccelerationStructureGeometryTrianglesDataKHR
 {
 }
 impl<'a> AccelerationStructureGeometryMotionTrianglesDataNV<'a> {
+    #[inline]
     pub fn vertex_data(mut self, vertex_data: DeviceOrHostAddressConstKHR) -> Self {
         self.vertex_data = vertex_data;
         self
@@ -33580,10 +36096,12 @@ unsafe impl<'a> ExtendsAccelerationStructureCreateInfoKHR
 {
 }
 impl<'a> AccelerationStructureMotionInfoNV<'a> {
+    #[inline]
     pub fn max_instances(mut self, max_instances: u32) -> Self {
         self.max_instances = max_instances;
         self
     }
+    #[inline]
     pub fn flags(mut self, flags: AccelerationStructureMotionInfoFlagsNV) -> Self {
         self.flags = flags;
         self
@@ -33612,66 +36130,82 @@ pub struct SRTDataNV {
     pub tz: f32,
 }
 impl SRTDataNV {
+    #[inline]
     pub fn sx(mut self, sx: f32) -> Self {
         self.sx = sx;
         self
     }
+    #[inline]
     pub fn a(mut self, a: f32) -> Self {
         self.a = a;
         self
     }
+    #[inline]
     pub fn b(mut self, b: f32) -> Self {
         self.b = b;
         self
     }
+    #[inline]
     pub fn pvx(mut self, pvx: f32) -> Self {
         self.pvx = pvx;
         self
     }
+    #[inline]
     pub fn sy(mut self, sy: f32) -> Self {
         self.sy = sy;
         self
     }
+    #[inline]
     pub fn c(mut self, c: f32) -> Self {
         self.c = c;
         self
     }
+    #[inline]
     pub fn pvy(mut self, pvy: f32) -> Self {
         self.pvy = pvy;
         self
     }
+    #[inline]
     pub fn sz(mut self, sz: f32) -> Self {
         self.sz = sz;
         self
     }
+    #[inline]
     pub fn pvz(mut self, pvz: f32) -> Self {
         self.pvz = pvz;
         self
     }
+    #[inline]
     pub fn qx(mut self, qx: f32) -> Self {
         self.qx = qx;
         self
     }
+    #[inline]
     pub fn qy(mut self, qy: f32) -> Self {
         self.qy = qy;
         self
     }
+    #[inline]
     pub fn qz(mut self, qz: f32) -> Self {
         self.qz = qz;
         self
     }
+    #[inline]
     pub fn qw(mut self, qw: f32) -> Self {
         self.qw = qw;
         self
     }
+    #[inline]
     pub fn tx(mut self, tx: f32) -> Self {
         self.tx = tx;
         self
     }
+    #[inline]
     pub fn ty(mut self, ty: f32) -> Self {
         self.ty = ty;
         self
     }
+    #[inline]
     pub fn tz(mut self, tz: f32) -> Self {
         self.tz = tz;
         self
@@ -33733,14 +36267,17 @@ impl fmt::Debug for AccelerationStructureMotionInstanceNV {
     }
 }
 impl AccelerationStructureMotionInstanceNV {
+    #[inline]
     pub fn ty(mut self, ty: AccelerationStructureMotionInstanceTypeNV) -> Self {
         self.ty = ty;
         self
     }
+    #[inline]
     pub fn flags(mut self, flags: AccelerationStructureMotionInstanceFlagsNV) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn data(mut self, data: AccelerationStructureMotionInstanceDataNV) -> Self {
         self.data = data;
         self
@@ -33771,10 +36308,12 @@ impl ::std::default::Default for MemoryGetRemoteAddressInfoNV<'_> {
     }
 }
 impl<'a> MemoryGetRemoteAddressInfoNV<'a> {
+    #[inline]
     pub fn memory(mut self, memory: DeviceMemory) -> Self {
         self.memory = memory;
         self
     }
+    #[inline]
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
         self.handle_type = handle_type;
         self
@@ -33804,10 +36343,12 @@ impl ::std::default::Default for ImportMemoryBufferCollectionFUCHSIA<'_> {
 }
 unsafe impl<'a> ExtendsMemoryAllocateInfo for ImportMemoryBufferCollectionFUCHSIA<'a> {}
 impl<'a> ImportMemoryBufferCollectionFUCHSIA<'a> {
+    #[inline]
     pub fn collection(mut self, collection: BufferCollectionFUCHSIA) -> Self {
         self.collection = collection;
         self
     }
+    #[inline]
     pub fn index(mut self, index: u32) -> Self {
         self.index = index;
         self
@@ -33837,10 +36378,12 @@ impl ::std::default::Default for BufferCollectionImageCreateInfoFUCHSIA<'_> {
 }
 unsafe impl<'a> ExtendsImageCreateInfo for BufferCollectionImageCreateInfoFUCHSIA<'a> {}
 impl<'a> BufferCollectionImageCreateInfoFUCHSIA<'a> {
+    #[inline]
     pub fn collection(mut self, collection: BufferCollectionFUCHSIA) -> Self {
         self.collection = collection;
         self
     }
+    #[inline]
     pub fn index(mut self, index: u32) -> Self {
         self.index = index;
         self
@@ -33870,10 +36413,12 @@ impl ::std::default::Default for BufferCollectionBufferCreateInfoFUCHSIA<'_> {
 }
 unsafe impl<'a> ExtendsBufferCreateInfo for BufferCollectionBufferCreateInfoFUCHSIA<'a> {}
 impl<'a> BufferCollectionBufferCreateInfoFUCHSIA<'a> {
+    #[inline]
     pub fn collection(mut self, collection: BufferCollectionFUCHSIA) -> Self {
         self.collection = collection;
         self
     }
+    #[inline]
     pub fn index(mut self, index: u32) -> Self {
         self.index = index;
         self
@@ -33900,6 +36445,7 @@ impl ::std::default::Default for BufferCollectionCreateInfoFUCHSIA<'_> {
     }
 }
 impl<'a> BufferCollectionCreateInfoFUCHSIA<'a> {
+    #[inline]
     pub fn collection_token(mut self, collection_token: zx_handle_t) -> Self {
         self.collection_token = collection_token;
         self
@@ -33946,26 +36492,32 @@ impl ::std::default::Default for BufferCollectionPropertiesFUCHSIA<'_> {
     }
 }
 impl<'a> BufferCollectionPropertiesFUCHSIA<'a> {
+    #[inline]
     pub fn memory_type_bits(mut self, memory_type_bits: u32) -> Self {
         self.memory_type_bits = memory_type_bits;
         self
     }
+    #[inline]
     pub fn buffer_count(mut self, buffer_count: u32) -> Self {
         self.buffer_count = buffer_count;
         self
     }
+    #[inline]
     pub fn create_info_index(mut self, create_info_index: u32) -> Self {
         self.create_info_index = create_info_index;
         self
     }
+    #[inline]
     pub fn sysmem_pixel_format(mut self, sysmem_pixel_format: u64) -> Self {
         self.sysmem_pixel_format = sysmem_pixel_format;
         self
     }
+    #[inline]
     pub fn format_features(mut self, format_features: FormatFeatureFlags) -> Self {
         self.format_features = format_features;
         self
     }
+    #[inline]
     pub fn sysmem_color_space_index(
         mut self,
         sysmem_color_space_index: SysmemColorSpaceFUCHSIA<'a>,
@@ -33973,6 +36525,7 @@ impl<'a> BufferCollectionPropertiesFUCHSIA<'a> {
         self.sysmem_color_space_index = sysmem_color_space_index;
         self
     }
+    #[inline]
     pub fn sampler_ycbcr_conversion_components(
         mut self,
         sampler_ycbcr_conversion_components: ComponentMapping,
@@ -33980,6 +36533,7 @@ impl<'a> BufferCollectionPropertiesFUCHSIA<'a> {
         self.sampler_ycbcr_conversion_components = sampler_ycbcr_conversion_components;
         self
     }
+    #[inline]
     pub fn suggested_ycbcr_model(
         mut self,
         suggested_ycbcr_model: SamplerYcbcrModelConversion,
@@ -33987,14 +36541,17 @@ impl<'a> BufferCollectionPropertiesFUCHSIA<'a> {
         self.suggested_ycbcr_model = suggested_ycbcr_model;
         self
     }
+    #[inline]
     pub fn suggested_ycbcr_range(mut self, suggested_ycbcr_range: SamplerYcbcrRange) -> Self {
         self.suggested_ycbcr_range = suggested_ycbcr_range;
         self
     }
+    #[inline]
     pub fn suggested_x_chroma_offset(mut self, suggested_x_chroma_offset: ChromaLocation) -> Self {
         self.suggested_x_chroma_offset = suggested_x_chroma_offset;
         self
     }
+    #[inline]
     pub fn suggested_y_chroma_offset(mut self, suggested_y_chroma_offset: ChromaLocation) -> Self {
         self.suggested_y_chroma_offset = suggested_y_chroma_offset;
         self
@@ -34025,10 +36582,12 @@ impl ::std::default::Default for BufferConstraintsInfoFUCHSIA<'_> {
     }
 }
 impl<'a> BufferConstraintsInfoFUCHSIA<'a> {
+    #[inline]
     pub fn create_info(mut self, create_info: BufferCreateInfo<'a>) -> Self {
         self.create_info = create_info;
         self
     }
+    #[inline]
     pub fn required_format_features(
         mut self,
         required_format_features: FormatFeatureFlags,
@@ -34036,6 +36595,7 @@ impl<'a> BufferConstraintsInfoFUCHSIA<'a> {
         self.required_format_features = required_format_features;
         self
     }
+    #[inline]
     pub fn buffer_collection_constraints(
         mut self,
         buffer_collection_constraints: BufferCollectionConstraintsInfoFUCHSIA<'a>,
@@ -34065,6 +36625,7 @@ impl ::std::default::Default for SysmemColorSpaceFUCHSIA<'_> {
     }
 }
 impl<'a> SysmemColorSpaceFUCHSIA<'a> {
+    #[inline]
     pub fn color_space(mut self, color_space: u32) -> Self {
         self.color_space = color_space;
         self
@@ -34101,10 +36662,12 @@ impl ::std::default::Default for ImageFormatConstraintsInfoFUCHSIA<'_> {
     }
 }
 impl<'a> ImageFormatConstraintsInfoFUCHSIA<'a> {
+    #[inline]
     pub fn image_create_info(mut self, image_create_info: ImageCreateInfo<'a>) -> Self {
         self.image_create_info = image_create_info;
         self
     }
+    #[inline]
     pub fn required_format_features(
         mut self,
         required_format_features: FormatFeatureFlags,
@@ -34112,14 +36675,17 @@ impl<'a> ImageFormatConstraintsInfoFUCHSIA<'a> {
         self.required_format_features = required_format_features;
         self
     }
+    #[inline]
     pub fn flags(mut self, flags: ImageFormatConstraintsFlagsFUCHSIA) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn sysmem_pixel_format(mut self, sysmem_pixel_format: u64) -> Self {
         self.sysmem_pixel_format = sysmem_pixel_format;
         self
     }
+    #[inline]
     pub fn color_spaces(mut self, color_spaces: &'a [SysmemColorSpaceFUCHSIA]) -> Self {
         self.color_space_count = color_spaces.len() as _;
         self.p_color_spaces = color_spaces.as_ptr();
@@ -34153,6 +36719,7 @@ impl ::std::default::Default for ImageConstraintsInfoFUCHSIA<'_> {
     }
 }
 impl<'a> ImageConstraintsInfoFUCHSIA<'a> {
+    #[inline]
     pub fn format_constraints(
         mut self,
         format_constraints: &'a [ImageFormatConstraintsInfoFUCHSIA],
@@ -34161,6 +36728,7 @@ impl<'a> ImageConstraintsInfoFUCHSIA<'a> {
         self.p_format_constraints = format_constraints.as_ptr();
         self
     }
+    #[inline]
     pub fn buffer_collection_constraints(
         mut self,
         buffer_collection_constraints: BufferCollectionConstraintsInfoFUCHSIA<'a>,
@@ -34168,6 +36736,7 @@ impl<'a> ImageConstraintsInfoFUCHSIA<'a> {
         self.buffer_collection_constraints = buffer_collection_constraints;
         self
     }
+    #[inline]
     pub fn flags(mut self, flags: ImageConstraintsInfoFlagsFUCHSIA) -> Self {
         self.flags = flags;
         self
@@ -34202,18 +36771,22 @@ impl ::std::default::Default for BufferCollectionConstraintsInfoFUCHSIA<'_> {
     }
 }
 impl<'a> BufferCollectionConstraintsInfoFUCHSIA<'a> {
+    #[inline]
     pub fn min_buffer_count(mut self, min_buffer_count: u32) -> Self {
         self.min_buffer_count = min_buffer_count;
         self
     }
+    #[inline]
     pub fn max_buffer_count(mut self, max_buffer_count: u32) -> Self {
         self.max_buffer_count = max_buffer_count;
         self
     }
+    #[inline]
     pub fn min_buffer_count_for_camping(mut self, min_buffer_count_for_camping: u32) -> Self {
         self.min_buffer_count_for_camping = min_buffer_count_for_camping;
         self
     }
+    #[inline]
     pub fn min_buffer_count_for_dedicated_slack(
         mut self,
         min_buffer_count_for_dedicated_slack: u32,
@@ -34221,6 +36794,7 @@ impl<'a> BufferCollectionConstraintsInfoFUCHSIA<'a> {
         self.min_buffer_count_for_dedicated_slack = min_buffer_count_for_dedicated_slack;
         self
     }
+    #[inline]
     pub fn min_buffer_count_for_shared_slack(
         mut self,
         min_buffer_count_for_shared_slack: u32,
@@ -34252,6 +36826,7 @@ impl ::std::default::Default for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'a> {
+    #[inline]
     pub fn format_rgba10x6_without_y_cb_cr_sampler(
         mut self,
         format_rgba10x6_without_y_cb_cr_sampler: bool,
@@ -34287,14 +36862,17 @@ impl ::std::default::Default for FormatProperties3<'_> {
 }
 unsafe impl<'a> ExtendsFormatProperties2 for FormatProperties3<'a> {}
 impl<'a> FormatProperties3<'a> {
+    #[inline]
     pub fn linear_tiling_features(mut self, linear_tiling_features: FormatFeatureFlags2) -> Self {
         self.linear_tiling_features = linear_tiling_features;
         self
     }
+    #[inline]
     pub fn optimal_tiling_features(mut self, optimal_tiling_features: FormatFeatureFlags2) -> Self {
         self.optimal_tiling_features = optimal_tiling_features;
         self
     }
+    #[inline]
     pub fn buffer_features(mut self, buffer_features: FormatFeatureFlags2) -> Self {
         self.buffer_features = buffer_features;
         self
@@ -34324,6 +36902,7 @@ impl ::std::default::Default for DrmFormatModifierPropertiesList2EXT<'_> {
 }
 unsafe impl<'a> ExtendsFormatProperties2 for DrmFormatModifierPropertiesList2EXT<'a> {}
 impl<'a> DrmFormatModifierPropertiesList2EXT<'a> {
+    #[inline]
     pub fn drm_format_modifier_properties(
         mut self,
         drm_format_modifier_properties: &'a mut [DrmFormatModifierProperties2EXT],
@@ -34343,14 +36922,17 @@ pub struct DrmFormatModifierProperties2EXT {
     pub drm_format_modifier_tiling_features: FormatFeatureFlags2,
 }
 impl DrmFormatModifierProperties2EXT {
+    #[inline]
     pub fn drm_format_modifier(mut self, drm_format_modifier: u64) -> Self {
         self.drm_format_modifier = drm_format_modifier;
         self
     }
+    #[inline]
     pub fn drm_format_modifier_plane_count(mut self, drm_format_modifier_plane_count: u32) -> Self {
         self.drm_format_modifier_plane_count = drm_format_modifier_plane_count;
         self
     }
+    #[inline]
     pub fn drm_format_modifier_tiling_features(
         mut self,
         drm_format_modifier_tiling_features: FormatFeatureFlags2,
@@ -34398,18 +36980,22 @@ unsafe impl<'a> ExtendsAndroidHardwareBufferPropertiesANDROID
 {
 }
 impl<'a> AndroidHardwareBufferFormatProperties2ANDROID<'a> {
+    #[inline]
     pub fn format(mut self, format: Format) -> Self {
         self.format = format;
         self
     }
+    #[inline]
     pub fn external_format(mut self, external_format: u64) -> Self {
         self.external_format = external_format;
         self
     }
+    #[inline]
     pub fn format_features(mut self, format_features: FormatFeatureFlags2) -> Self {
         self.format_features = format_features;
         self
     }
+    #[inline]
     pub fn sampler_ycbcr_conversion_components(
         mut self,
         sampler_ycbcr_conversion_components: ComponentMapping,
@@ -34417,6 +37003,7 @@ impl<'a> AndroidHardwareBufferFormatProperties2ANDROID<'a> {
         self.sampler_ycbcr_conversion_components = sampler_ycbcr_conversion_components;
         self
     }
+    #[inline]
     pub fn suggested_ycbcr_model(
         mut self,
         suggested_ycbcr_model: SamplerYcbcrModelConversion,
@@ -34424,14 +37011,17 @@ impl<'a> AndroidHardwareBufferFormatProperties2ANDROID<'a> {
         self.suggested_ycbcr_model = suggested_ycbcr_model;
         self
     }
+    #[inline]
     pub fn suggested_ycbcr_range(mut self, suggested_ycbcr_range: SamplerYcbcrRange) -> Self {
         self.suggested_ycbcr_range = suggested_ycbcr_range;
         self
     }
+    #[inline]
     pub fn suggested_x_chroma_offset(mut self, suggested_x_chroma_offset: ChromaLocation) -> Self {
         self.suggested_x_chroma_offset = suggested_x_chroma_offset;
         self
     }
+    #[inline]
     pub fn suggested_y_chroma_offset(mut self, suggested_y_chroma_offset: ChromaLocation) -> Self {
         self.suggested_y_chroma_offset = suggested_y_chroma_offset;
         self
@@ -34467,19 +37057,23 @@ impl ::std::default::Default for PipelineRenderingCreateInfo<'_> {
 }
 unsafe impl<'a> ExtendsGraphicsPipelineCreateInfo for PipelineRenderingCreateInfo<'a> {}
 impl<'a> PipelineRenderingCreateInfo<'a> {
+    #[inline]
     pub fn view_mask(mut self, view_mask: u32) -> Self {
         self.view_mask = view_mask;
         self
     }
+    #[inline]
     pub fn color_attachment_formats(mut self, color_attachment_formats: &'a [Format]) -> Self {
         self.color_attachment_count = color_attachment_formats.len() as _;
         self.p_color_attachment_formats = color_attachment_formats.as_ptr();
         self
     }
+    #[inline]
     pub fn depth_attachment_format(mut self, depth_attachment_format: Format) -> Self {
         self.depth_attachment_format = depth_attachment_format;
         self
     }
+    #[inline]
     pub fn stencil_attachment_format(mut self, stencil_attachment_format: Format) -> Self {
         self.stencil_attachment_format = stencil_attachment_format;
         self
@@ -34521,31 +37115,38 @@ impl ::std::default::Default for RenderingInfo<'_> {
 }
 pub unsafe trait ExtendsRenderingInfo {}
 impl<'a> RenderingInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: RenderingFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn render_area(mut self, render_area: Rect2D) -> Self {
         self.render_area = render_area;
         self
     }
+    #[inline]
     pub fn layer_count(mut self, layer_count: u32) -> Self {
         self.layer_count = layer_count;
         self
     }
+    #[inline]
     pub fn view_mask(mut self, view_mask: u32) -> Self {
         self.view_mask = view_mask;
         self
     }
+    #[inline]
     pub fn color_attachments(mut self, color_attachments: &'a [RenderingAttachmentInfo]) -> Self {
         self.color_attachment_count = color_attachments.len() as _;
         self.p_color_attachments = color_attachments.as_ptr();
         self
     }
+    #[inline]
     pub fn depth_attachment(mut self, depth_attachment: &'a RenderingAttachmentInfo<'a>) -> Self {
         self.p_depth_attachment = depth_attachment;
         self
     }
+    #[inline]
     pub fn stencil_attachment(
         mut self,
         stencil_attachment: &'a RenderingAttachmentInfo<'a>,
@@ -34619,34 +37220,42 @@ impl ::std::default::Default for RenderingAttachmentInfo<'_> {
     }
 }
 impl<'a> RenderingAttachmentInfo<'a> {
+    #[inline]
     pub fn image_view(mut self, image_view: ImageView) -> Self {
         self.image_view = image_view;
         self
     }
+    #[inline]
     pub fn image_layout(mut self, image_layout: ImageLayout) -> Self {
         self.image_layout = image_layout;
         self
     }
+    #[inline]
     pub fn resolve_mode(mut self, resolve_mode: ResolveModeFlags) -> Self {
         self.resolve_mode = resolve_mode;
         self
     }
+    #[inline]
     pub fn resolve_image_view(mut self, resolve_image_view: ImageView) -> Self {
         self.resolve_image_view = resolve_image_view;
         self
     }
+    #[inline]
     pub fn resolve_image_layout(mut self, resolve_image_layout: ImageLayout) -> Self {
         self.resolve_image_layout = resolve_image_layout;
         self
     }
+    #[inline]
     pub fn load_op(mut self, load_op: AttachmentLoadOp) -> Self {
         self.load_op = load_op;
         self
     }
+    #[inline]
     pub fn store_op(mut self, store_op: AttachmentStoreOp) -> Self {
         self.store_op = store_op;
         self
     }
+    #[inline]
     pub fn clear_value(mut self, clear_value: ClearValue) -> Self {
         self.clear_value = clear_value;
         self
@@ -34678,14 +37287,17 @@ impl ::std::default::Default for RenderingFragmentShadingRateAttachmentInfoKHR<'
 }
 unsafe impl<'a> ExtendsRenderingInfo for RenderingFragmentShadingRateAttachmentInfoKHR<'a> {}
 impl<'a> RenderingFragmentShadingRateAttachmentInfoKHR<'a> {
+    #[inline]
     pub fn image_view(mut self, image_view: ImageView) -> Self {
         self.image_view = image_view;
         self
     }
+    #[inline]
     pub fn image_layout(mut self, image_layout: ImageLayout) -> Self {
         self.image_layout = image_layout;
         self
     }
+    #[inline]
     pub fn shading_rate_attachment_texel_size(
         mut self,
         shading_rate_attachment_texel_size: Extent2D,
@@ -34718,10 +37330,12 @@ impl ::std::default::Default for RenderingFragmentDensityMapAttachmentInfoEXT<'_
 }
 unsafe impl<'a> ExtendsRenderingInfo for RenderingFragmentDensityMapAttachmentInfoEXT<'a> {}
 impl<'a> RenderingFragmentDensityMapAttachmentInfoEXT<'a> {
+    #[inline]
     pub fn image_view(mut self, image_view: ImageView) -> Self {
         self.image_view = image_view;
         self
     }
+    #[inline]
     pub fn image_layout(mut self, image_layout: ImageLayout) -> Self {
         self.image_layout = image_layout;
         self
@@ -34750,6 +37364,7 @@ impl ::std::default::Default for PhysicalDeviceDynamicRenderingFeatures<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDynamicRenderingFeatures<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceDynamicRenderingFeatures<'a> {}
 impl<'a> PhysicalDeviceDynamicRenderingFeatures<'a> {
+    #[inline]
     pub fn dynamic_rendering(mut self, dynamic_rendering: bool) -> Self {
         self.dynamic_rendering = dynamic_rendering.into();
         self
@@ -34789,27 +37404,33 @@ impl ::std::default::Default for CommandBufferInheritanceRenderingInfo<'_> {
 }
 unsafe impl<'a> ExtendsCommandBufferInheritanceInfo for CommandBufferInheritanceRenderingInfo<'a> {}
 impl<'a> CommandBufferInheritanceRenderingInfo<'a> {
+    #[inline]
     pub fn flags(mut self, flags: RenderingFlags) -> Self {
         self.flags = flags;
         self
     }
+    #[inline]
     pub fn view_mask(mut self, view_mask: u32) -> Self {
         self.view_mask = view_mask;
         self
     }
+    #[inline]
     pub fn color_attachment_formats(mut self, color_attachment_formats: &'a [Format]) -> Self {
         self.color_attachment_count = color_attachment_formats.len() as _;
         self.p_color_attachment_formats = color_attachment_formats.as_ptr();
         self
     }
+    #[inline]
     pub fn depth_attachment_format(mut self, depth_attachment_format: Format) -> Self {
         self.depth_attachment_format = depth_attachment_format;
         self
     }
+    #[inline]
     pub fn stencil_attachment_format(mut self, stencil_attachment_format: Format) -> Self {
         self.stencil_attachment_format = stencil_attachment_format;
         self
     }
+    #[inline]
     pub fn rasterization_samples(mut self, rasterization_samples: SampleCountFlags) -> Self {
         self.rasterization_samples = rasterization_samples;
         self
@@ -34842,6 +37463,7 @@ impl ::std::default::Default for AttachmentSampleCountInfoAMD<'_> {
 unsafe impl<'a> ExtendsCommandBufferInheritanceInfo for AttachmentSampleCountInfoAMD<'a> {}
 unsafe impl<'a> ExtendsGraphicsPipelineCreateInfo for AttachmentSampleCountInfoAMD<'a> {}
 impl<'a> AttachmentSampleCountInfoAMD<'a> {
+    #[inline]
     pub fn color_attachment_samples(
         mut self,
         color_attachment_samples: &'a [SampleCountFlags],
@@ -34850,6 +37472,7 @@ impl<'a> AttachmentSampleCountInfoAMD<'a> {
         self.p_color_attachment_samples = color_attachment_samples.as_ptr();
         self
     }
+    #[inline]
     pub fn depth_stencil_attachment_samples(
         mut self,
         depth_stencil_attachment_samples: SampleCountFlags,
@@ -34884,10 +37507,12 @@ unsafe impl<'a> ExtendsCommandBufferInheritanceInfo for MultiviewPerViewAttribut
 unsafe impl<'a> ExtendsGraphicsPipelineCreateInfo for MultiviewPerViewAttributesInfoNVX<'a> {}
 unsafe impl<'a> ExtendsRenderingInfo for MultiviewPerViewAttributesInfoNVX<'a> {}
 impl<'a> MultiviewPerViewAttributesInfoNVX<'a> {
+    #[inline]
     pub fn per_view_attributes(mut self, per_view_attributes: bool) -> Self {
         self.per_view_attributes = per_view_attributes.into();
         self
     }
+    #[inline]
     pub fn per_view_attributes_position_x_only(
         mut self,
         per_view_attributes_position_x_only: bool,
@@ -34919,6 +37544,7 @@ impl ::std::default::Default for PhysicalDeviceImageViewMinLodFeaturesEXT<'_> {
 unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImageViewMinLodFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceImageViewMinLodFeaturesEXT<'a> {}
 impl<'a> PhysicalDeviceImageViewMinLodFeaturesEXT<'a> {
+    #[inline]
     pub fn min_lod(mut self, min_lod: bool) -> Self {
         self.min_lod = min_lod.into();
         self
@@ -34946,6 +37572,7 @@ impl ::std::default::Default for ImageViewMinLodCreateInfoEXT<'_> {
 }
 unsafe impl<'a> ExtendsImageViewCreateInfo for ImageViewMinLodCreateInfoEXT<'a> {}
 impl<'a> ImageViewMinLodCreateInfoEXT<'a> {
+    #[inline]
     pub fn min_lod(mut self, min_lod: f32) -> Self {
         self.min_lod = min_lod;
         self
@@ -34985,6 +37612,7 @@ unsafe impl<'a> ExtendsDeviceCreateInfo
 {
 }
 impl<'a> PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARM<'a> {
+    #[inline]
     pub fn rasterization_order_color_attachment_access(
         mut self,
         rasterization_order_color_attachment_access: bool,
@@ -34993,6 +37621,7 @@ impl<'a> PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARM<'a> {
             rasterization_order_color_attachment_access.into();
         self
     }
+    #[inline]
     pub fn rasterization_order_depth_attachment_access(
         mut self,
         rasterization_order_depth_attachment_access: bool,
@@ -35001,6 +37630,7 @@ impl<'a> PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARM<'a> {
             rasterization_order_depth_attachment_access.into();
         self
     }
+    #[inline]
     pub fn rasterization_order_stencil_attachment_access(
         mut self,
         rasterization_order_stencil_attachment_access: bool,
@@ -35036,6 +37666,7 @@ unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
 }
 unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceLinearColorAttachmentFeaturesNV<'a> {}
 impl<'a> PhysicalDeviceLinearColorAttachmentFeaturesNV<'a> {
+    #[inline]
     pub fn linear_color_attachment(mut self, linear_color_attachment: bool) -> Self {
         self.linear_color_attachment = linear_color_attachment.into();
         self
@@ -35070,6 +37701,7 @@ unsafe impl<'a> ExtendsDeviceCreateInfo
 {
 }
 impl<'a> PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'a> {
+    #[inline]
     pub fn descriptor_set_host_mapping(mut self, descriptor_set_host_mapping: bool) -> Self {
         self.descriptor_set_host_mapping = descriptor_set_host_mapping.into();
         self
@@ -35098,10 +37730,12 @@ impl ::std::default::Default for DescriptorSetBindingReferenceVALVE<'_> {
     }
 }
 impl<'a> DescriptorSetBindingReferenceVALVE<'a> {
+    #[inline]
     pub fn descriptor_set_layout(mut self, descriptor_set_layout: DescriptorSetLayout) -> Self {
         self.descriptor_set_layout = descriptor_set_layout;
         self
     }
+    #[inline]
     pub fn binding(mut self, binding: u32) -> Self {
         self.binding = binding;
         self
@@ -35130,10 +37764,12 @@ impl ::std::default::Default for DescriptorSetLayoutHostMappingInfoVALVE<'_> {
     }
 }
 impl<'a> DescriptorSetLayoutHostMappingInfoVALVE<'a> {
+    #[inline]
     pub fn descriptor_offset(mut self, descriptor_offset: usize) -> Self {
         self.descriptor_offset = descriptor_offset;
         self
     }
+    #[inline]
     pub fn descriptor_size(mut self, descriptor_size: u32) -> Self {
         self.descriptor_size = descriptor_size;
         self
