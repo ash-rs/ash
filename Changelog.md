@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - ReleaseDate
 
+### Changed
+
+- Inlined builder setters (partial backport from #602)
+- Inlined `Default` impls and trivial `Instance`/`Device` wrapper methods (#606)
+
 ### Added
 
 - Added `VK_NV_coverage_reduction_mode` device extension (#617)

@@ -1593,6 +1593,7 @@ pub fn derive_setters(
             // Unique cases
             if name == "pCode" {
                 return Some(quote!{
+                    #[inline]
                     pub fn code(mut self, code: &'a [u32]) -> Self {
                         self.inner.code_size = code.len() * 4;
                         self.inner.p_code = code.as_ptr();
@@ -1608,6 +1609,7 @@ pub fn derive_setters(
                     ///
                     /// See <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineMultisampleStateCreateInfo.html#_description>
                     /// for more details.
+                    #[inline]
                     pub fn sample_mask(mut self, sample_mask: &'a [SampleMask]) -> Self {
                         self.inner.p_sample_mask = if sample_mask.is_empty() {
                             std::ptr::null()
@@ -1621,6 +1623,7 @@ pub fn derive_setters(
 
             if name == "ppGeometries" {
                 return Some(quote!{
+                    #[inline]
                     pub fn geometries_ptrs(mut self, geometries: &'a [&'a AccelerationStructureGeometryKHR]) -> Self {
                         self.inner.geometry_count = geometries.len() as _;
                         self.inner.pp_geometries = geometries.as_ptr() as *const *const _;
@@ -1636,6 +1639,7 @@ pub fn derive_setters(
                 assert!(field.null_terminate);
                 assert_eq!(field.size, None);
                 return Some(quote!{
+                    #[inline]
                     pub fn #param_ident_short(mut self, #param_ident_short: &'a ::std::ffi::CStr) -> Self {
                         self.inner.#param_ident = #param_ident_short.as_ptr();
                         self
@@ -1688,6 +1692,7 @@ pub fn derive_setters(
                     let mutable = if field.is_const { quote!() } else { quote!(mut) };
 
                     return Some(quote! {
+                        #[inline]
                         pub fn #param_ident_short(mut self, #param_ident_short: &'a #mutable #slice_param_ty_tokens) -> Self {
                             #set_size_stmt
                             self.inner.#param_ident = #param_ident_short#ptr;
@@ -1700,6 +1705,7 @@ pub fn derive_setters(
 
         if field.basetype == "VkBool32" {
             return Some(quote!{
+                #[inline]
                 pub fn #param_ident_short(mut self, #param_ident_short: bool) -> Self {
                     self.inner.#param_ident = #param_ident_short.into();
                     self
@@ -1715,6 +1721,7 @@ pub fn derive_setters(
         };
 
         Some(quote!{
+            #[inline]
             pub fn #param_ident_short(mut self, #param_ident_short: #param_ty_tokens) -> Self {
                 self.inner.#param_ident = #param_ident_short;
                 self
