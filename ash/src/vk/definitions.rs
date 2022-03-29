@@ -57,7 +57,7 @@ pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
-pub const HEADER_VERSION: u32 = 209u32;
+pub const HEADER_VERSION: u32 = 210u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -2990,6 +2990,7 @@ impl ::std::default::Default for ShaderModuleCreateInfo<'_> {
         }
     }
 }
+unsafe impl ExtendsPipelineShaderStageCreateInfo for ShaderModuleCreateInfo<'_> {}
 pub unsafe trait ExtendsShaderModuleCreateInfo {}
 impl<'a> ShaderModuleCreateInfo<'a> {
     #[inline]
@@ -16566,6 +16567,7 @@ impl ::std::default::Default for DebugUtilsObjectNameInfoEXT<'_> {
         }
     }
 }
+unsafe impl ExtendsPipelineShaderStageCreateInfo for DebugUtilsObjectNameInfoEXT<'_> {}
 impl<'a> DebugUtilsObjectNameInfoEXT<'a> {
     #[inline]
     pub fn object_type(mut self, object_type: ObjectType) -> Self {
@@ -28839,6 +28841,7 @@ impl ::std::default::Default for PipelineLibraryCreateInfoKHR<'_> {
         }
     }
 }
+unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineLibraryCreateInfoKHR<'_> {}
 impl<'a> PipelineLibraryCreateInfoKHR<'a> {
     #[inline]
     pub fn libraries(mut self, libraries: &'a [Pipeline]) -> Self {
@@ -31712,6 +31715,60 @@ impl<'a> PhysicalDeviceSynchronization2Features<'a> {
     #[inline]
     pub fn synchronization2(mut self, synchronization2: bool) -> Self {
         self.synchronization2 = synchronization2.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDevicePrimitivesGeneratedQueryFeaturesEXT.html>"]
+pub struct PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub primitives_generated_query: Bool32,
+    pub primitives_generated_query_with_rasterizer_discard: Bool32,
+    pub primitives_generated_query_with_non_zero_streams: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'_> {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PHYSICAL_DEVICE_PRIMITIVES_GENERATED_QUERY_FEATURES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            primitives_generated_query: Bool32::default(),
+            primitives_generated_query_with_rasterizer_discard: Bool32::default(),
+            primitives_generated_query_with_non_zero_streams: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'_> {}
+impl<'a> PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'a> {
+    #[inline]
+    pub fn primitives_generated_query(mut self, primitives_generated_query: bool) -> Self {
+        self.primitives_generated_query = primitives_generated_query.into();
+        self
+    }
+    #[inline]
+    pub fn primitives_generated_query_with_rasterizer_discard(
+        mut self,
+        primitives_generated_query_with_rasterizer_discard: bool,
+    ) -> Self {
+        self.primitives_generated_query_with_rasterizer_discard =
+            primitives_generated_query_with_rasterizer_discard.into();
+        self
+    }
+    #[inline]
+    pub fn primitives_generated_query_with_non_zero_streams(
+        mut self,
+        primitives_generated_query_with_non_zero_streams: bool,
+    ) -> Self {
+        self.primitives_generated_query_with_non_zero_streams =
+            primitives_generated_query_with_non_zero_streams.into();
         self
     }
 }
@@ -37507,6 +37564,111 @@ impl<'a> PhysicalDeviceLinearColorAttachmentFeaturesNV<'a> {
     #[inline]
     pub fn linear_color_attachment(mut self, linear_color_attachment: bool) -> Self {
         self.linear_color_attachment = linear_color_attachment.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceGraphicsPipelineLibraryFeaturesEXT.html>"]
+pub struct PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub graphics_pipeline_library: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'_> {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PHYSICAL_DEVICE_GRAPHICS_PIPELINE_LIBRARY_FEATURES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            graphics_pipeline_library: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'_> {}
+impl<'a> PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'a> {
+    #[inline]
+    pub fn graphics_pipeline_library(mut self, graphics_pipeline_library: bool) -> Self {
+        self.graphics_pipeline_library = graphics_pipeline_library.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceGraphicsPipelineLibraryPropertiesEXT.html>"]
+pub struct PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub graphics_pipeline_library_fast_linking: Bool32,
+    pub graphics_pipeline_library_independent_interpolation_decoration: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'_> {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PHYSICAL_DEVICE_GRAPHICS_PIPELINE_LIBRARY_PROPERTIES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            graphics_pipeline_library_fast_linking: Bool32::default(),
+            graphics_pipeline_library_independent_interpolation_decoration: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'_>
+{
+}
+impl<'a> PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'a> {
+    #[inline]
+    pub fn graphics_pipeline_library_fast_linking(
+        mut self,
+        graphics_pipeline_library_fast_linking: bool,
+    ) -> Self {
+        self.graphics_pipeline_library_fast_linking = graphics_pipeline_library_fast_linking.into();
+        self
+    }
+    #[inline]
+    pub fn graphics_pipeline_library_independent_interpolation_decoration(
+        mut self,
+        graphics_pipeline_library_independent_interpolation_decoration: bool,
+    ) -> Self {
+        self.graphics_pipeline_library_independent_interpolation_decoration =
+            graphics_pipeline_library_independent_interpolation_decoration.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkGraphicsPipelineLibraryCreateInfoEXT.html>"]
+pub struct GraphicsPipelineLibraryCreateInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub flags: GraphicsPipelineLibraryFlagsEXT,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for GraphicsPipelineLibraryCreateInfoEXT<'_> {
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::GRAPHICS_PIPELINE_LIBRARY_CREATE_INFO_EXT,
+            p_next: ::std::ptr::null_mut(),
+            flags: GraphicsPipelineLibraryFlagsEXT::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsGraphicsPipelineCreateInfo for GraphicsPipelineLibraryCreateInfoEXT<'_> {}
+impl<'a> GraphicsPipelineLibraryCreateInfoEXT<'a> {
+    #[inline]
+    pub fn flags(mut self, flags: GraphicsPipelineLibraryFlagsEXT) -> Self {
+        self.flags = flags;
         self
     }
 }
