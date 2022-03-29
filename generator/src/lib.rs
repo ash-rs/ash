@@ -1431,6 +1431,7 @@ pub fn derive_default(_struct: &vkxml::Struct, has_lifetime: bool) -> Option<Tok
     let marker = has_lifetime.then(|| quote!(_marker: PhantomData,));
     let q = quote! {
         impl ::std::default::Default for #name #lifetime {
+            #[inline]
             fn default() -> Self {
                 Self {
                     #(
@@ -2014,6 +2015,7 @@ fn generate_union(union: &vkxml::Union, has_lifetimes: &HashSet<Ident>) -> Token
             #(#fields),*
         }
         impl #lifetime ::std::default::Default for #name #lifetime {
+            #[inline]
             fn default() -> Self {
                 unsafe { ::std::mem::zeroed() }
             }
