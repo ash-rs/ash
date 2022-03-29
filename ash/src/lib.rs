@@ -71,13 +71,13 @@ mod tests {
     use super::vk;
     #[test]
     fn test_ptr_chains() {
-        let mut variable_pointers = vk::PhysicalDeviceVariablePointerFeatures::builder();
-        let mut corner = vk::PhysicalDeviceCornerSampledImageFeaturesNV::builder();
+        let mut variable_pointers = vk::PhysicalDeviceVariablePointerFeatures::default();
+        let mut corner = vk::PhysicalDeviceCornerSampledImageFeaturesNV::default();
         let chain = vec![
             <*mut _>::cast(&mut variable_pointers),
             <*mut _>::cast(&mut corner),
         ];
-        let mut device_create_info = vk::DeviceCreateInfo::builder()
+        let mut device_create_info = vk::DeviceCreateInfo::default()
             .push_next(&mut corner)
             .push_next(&mut variable_pointers);
         let chain2: Vec<*mut vk::BaseOutStructure> = unsafe {

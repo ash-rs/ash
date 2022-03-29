@@ -26,7 +26,7 @@ impl RayTracingPipeline {
     ) -> vk::PhysicalDeviceRayTracingPipelinePropertiesKHR {
         let mut props_rt = vk::PhysicalDeviceRayTracingPipelinePropertiesKHR::default();
         {
-            let mut props = vk::PhysicalDeviceProperties2::builder().push_next(&mut props_rt);
+            let mut props = vk::PhysicalDeviceProperties2::default().push_next(&mut props_rt);
             instance.get_physical_device_properties2(pdevice, &mut props);
         }
         props_rt
