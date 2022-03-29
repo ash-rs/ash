@@ -1429,6 +1429,7 @@ pub fn derive_default(_struct: &vkxml::Struct) -> Option<TokenStream> {
     });
     let q = quote! {
         impl ::std::default::Default for #name {
+            #[inline]
             fn default() -> Self {
                 Self {
                     #(
@@ -2016,6 +2017,7 @@ fn generate_union(union: &vkxml::Union) -> TokenStream {
             #(#fields),*
         }
         impl ::std::default::Default for #name {
+            #[inline]
             fn default() -> Self {
                 unsafe { ::std::mem::zeroed() }
             }

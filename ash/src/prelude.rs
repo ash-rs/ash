@@ -6,10 +6,12 @@ use crate::vk;
 pub type VkResult<T> = Result<T, vk::Result>;
 
 impl vk::Result {
+    #[inline]
     pub fn result(self) -> VkResult<()> {
         self.result_with_success(())
     }
 
+    #[inline]
     pub fn result_with_success<T>(self, v: T) -> VkResult<T> {
         match self {
             Self::SUCCESS => Ok(v),

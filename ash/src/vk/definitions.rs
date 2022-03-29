@@ -506,6 +506,7 @@ pub struct BaseOutStructure {
     pub p_next: *mut Self,
 }
 impl ::std::default::Default for BaseOutStructure {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: unsafe { ::std::mem::zeroed() },
@@ -522,6 +523,7 @@ pub struct BaseInStructure {
     pub p_next: *const Self,
 }
 impl ::std::default::Default for BaseInStructure {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: unsafe { ::std::mem::zeroed() },
@@ -991,6 +993,7 @@ impl fmt::Debug for PhysicalDeviceProperties {
     }
 }
 impl ::std::default::Default for PhysicalDeviceProperties {
+    #[inline]
     fn default() -> Self {
         Self {
             api_version: u32::default(),
@@ -1092,6 +1095,7 @@ impl fmt::Debug for ExtensionProperties {
     }
 }
 impl ::std::default::Default for ExtensionProperties {
+    #[inline]
     fn default() -> Self {
         Self {
             extension_name: unsafe { ::std::mem::zeroed() },
@@ -1164,6 +1168,7 @@ impl fmt::Debug for LayerProperties {
     }
 }
 impl ::std::default::Default for LayerProperties {
+    #[inline]
     fn default() -> Self {
         Self {
             layer_name: unsafe { ::std::mem::zeroed() },
@@ -1235,6 +1240,7 @@ pub struct ApplicationInfo {
     pub api_version: u32,
 }
 impl ::std::default::Default for ApplicationInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::APPLICATION_INFO,
@@ -1336,6 +1342,7 @@ impl fmt::Debug for AllocationCallbacks {
     }
 }
 impl ::std::default::Default for AllocationCallbacks {
+    #[inline]
     fn default() -> Self {
         Self {
             p_user_data: ::std::ptr::null_mut(),
@@ -1419,6 +1426,7 @@ pub struct DeviceQueueCreateInfo {
     pub p_queue_priorities: *const f32,
 }
 impl ::std::default::Default for DeviceQueueCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEVICE_QUEUE_CREATE_INFO,
@@ -1507,6 +1515,7 @@ pub struct DeviceCreateInfo {
     pub p_enabled_features: *const PhysicalDeviceFeatures,
 }
 impl ::std::default::Default for DeviceCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEVICE_CREATE_INFO,
@@ -1607,6 +1616,7 @@ pub struct InstanceCreateInfo {
     pub pp_enabled_extension_names: *const *const c_char,
 }
 impl ::std::default::Default for InstanceCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::INSTANCE_CREATE_INFO,
@@ -1757,6 +1767,7 @@ pub struct PhysicalDeviceMemoryProperties {
     pub memory_heaps: [MemoryHeap; MAX_MEMORY_HEAPS],
 }
 impl ::std::default::Default for PhysicalDeviceMemoryProperties {
+    #[inline]
     fn default() -> Self {
         Self {
             memory_type_count: u32::default(),
@@ -1825,6 +1836,7 @@ pub struct MemoryAllocateInfo {
     pub memory_type_index: u32,
 }
 impl ::std::default::Default for MemoryAllocateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::MEMORY_ALLOCATE_INFO,
@@ -2166,6 +2178,7 @@ pub struct MappedMemoryRange {
     pub size: DeviceSize,
 }
 impl ::std::default::Default for MappedMemoryRange {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::MAPPED_MEMORY_RANGE,
@@ -2459,6 +2472,7 @@ pub struct WriteDescriptorSet {
     pub p_texel_buffer_view: *const BufferView,
 }
 impl ::std::default::Default for WriteDescriptorSet {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::WRITE_DESCRIPTOR_SET,
@@ -2568,6 +2582,7 @@ pub struct CopyDescriptorSet {
     pub descriptor_count: u32,
 }
 impl ::std::default::Default for CopyDescriptorSet {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::COPY_DESCRIPTOR_SET,
@@ -2657,6 +2672,7 @@ pub struct BufferCreateInfo {
     pub p_queue_family_indices: *const u32,
 }
 impl ::std::default::Default for BufferCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::BUFFER_CREATE_INFO,
@@ -2752,6 +2768,7 @@ pub struct BufferViewCreateInfo {
     pub range: DeviceSize,
 }
 impl ::std::default::Default for BufferViewCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::BUFFER_VIEW_CREATE_INFO,
@@ -3001,6 +3018,7 @@ pub struct MemoryBarrier {
     pub dst_access_mask: AccessFlags,
 }
 impl ::std::default::Default for MemoryBarrier {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::MEMORY_BARRIER,
@@ -3066,6 +3084,7 @@ pub struct BufferMemoryBarrier {
     pub size: DeviceSize,
 }
 impl ::std::default::Default for BufferMemoryBarrier {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::BUFFER_MEMORY_BARRIER,
@@ -3157,6 +3176,7 @@ pub struct ImageMemoryBarrier {
     pub subresource_range: ImageSubresourceRange,
 }
 impl ::std::default::Default for ImageMemoryBarrier {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMAGE_MEMORY_BARRIER,
@@ -3273,6 +3293,7 @@ pub struct ImageCreateInfo {
     pub initial_layout: ImageLayout,
 }
 impl ::std::default::Default for ImageCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMAGE_CREATE_INFO,
@@ -3467,6 +3488,7 @@ pub struct ImageViewCreateInfo {
     pub subresource_range: ImageSubresourceRange,
 }
 impl ::std::default::Default for ImageViewCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMAGE_VIEW_CREATE_INFO,
@@ -3745,6 +3767,7 @@ pub struct SparseBufferMemoryBindInfo {
     pub p_binds: *const SparseMemoryBind,
 }
 impl ::std::default::Default for SparseBufferMemoryBindInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             buffer: Buffer::default(),
@@ -3804,6 +3827,7 @@ pub struct SparseImageOpaqueMemoryBindInfo {
     pub p_binds: *const SparseMemoryBind,
 }
 impl ::std::default::Default for SparseImageOpaqueMemoryBindInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             image: Image::default(),
@@ -3863,6 +3887,7 @@ pub struct SparseImageMemoryBindInfo {
     pub p_binds: *const SparseImageMemoryBind,
 }
 impl ::std::default::Default for SparseImageMemoryBindInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             image: Image::default(),
@@ -3931,6 +3956,7 @@ pub struct BindSparseInfo {
     pub p_signal_semaphores: *const Semaphore,
 }
 impl ::std::default::Default for BindSparseInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::BIND_SPARSE_INFO,
@@ -4097,6 +4123,7 @@ pub struct ImageBlit {
     pub dst_offsets: [Offset3D; 2],
 }
 impl ::std::default::Default for ImageBlit {
+    #[inline]
     fn default() -> Self {
         Self {
             src_subresource: ImageSubresourceLayers::default(),
@@ -4297,6 +4324,7 @@ pub struct ShaderModuleCreateInfo {
     pub p_code: *const u32,
 }
 impl ::std::default::Default for ShaderModuleCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SHADER_MODULE_CREATE_INFO,
@@ -4375,6 +4403,7 @@ pub struct DescriptorSetLayoutBinding {
     pub p_immutable_samplers: *const Sampler,
 }
 impl ::std::default::Default for DescriptorSetLayoutBinding {
+    #[inline]
     fn default() -> Self {
         Self {
             binding: u32::default(),
@@ -4450,6 +4479,7 @@ pub struct DescriptorSetLayoutCreateInfo {
     pub p_bindings: *const DescriptorSetLayoutBinding,
 }
 impl ::std::default::Default for DescriptorSetLayoutCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DESCRIPTOR_SET_LAYOUT_CREATE_INFO,
@@ -4577,6 +4607,7 @@ pub struct DescriptorPoolCreateInfo {
     pub p_pool_sizes: *const DescriptorPoolSize,
 }
 impl ::std::default::Default for DescriptorPoolCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DESCRIPTOR_POOL_CREATE_INFO,
@@ -4660,6 +4691,7 @@ pub struct DescriptorSetAllocateInfo {
     pub p_set_layouts: *const DescriptorSetLayout,
 }
 impl ::std::default::Default for DescriptorSetAllocateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DESCRIPTOR_SET_ALLOCATE_INFO,
@@ -4790,6 +4822,7 @@ pub struct SpecializationInfo {
     pub p_data: *const c_void,
 }
 impl ::std::default::Default for SpecializationInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             map_entry_count: u32::default(),
@@ -4855,6 +4888,7 @@ pub struct PipelineShaderStageCreateInfo {
     pub p_specialization_info: *const SpecializationInfo,
 }
 impl ::std::default::Default for PipelineShaderStageCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_SHADER_STAGE_CREATE_INFO,
@@ -4948,6 +4982,7 @@ pub struct ComputePipelineCreateInfo {
     pub base_pipeline_index: i32,
 }
 impl ::std::default::Default for ComputePipelineCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::COMPUTE_PIPELINE_CREATE_INFO,
@@ -5152,6 +5187,7 @@ pub struct PipelineVertexInputStateCreateInfo {
     pub p_vertex_attribute_descriptions: *const VertexInputAttributeDescription,
 }
 impl ::std::default::Default for PipelineVertexInputStateCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO,
@@ -5246,6 +5282,7 @@ pub struct PipelineInputAssemblyStateCreateInfo {
     pub primitive_restart_enable: Bool32,
 }
 impl ::std::default::Default for PipelineInputAssemblyStateCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO,
@@ -5311,6 +5348,7 @@ pub struct PipelineTessellationStateCreateInfo {
     pub patch_control_points: u32,
 }
 impl ::std::default::Default for PipelineTessellationStateCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_TESSELLATION_STATE_CREATE_INFO,
@@ -5392,6 +5430,7 @@ pub struct PipelineViewportStateCreateInfo {
     pub p_scissors: *const Rect2D,
 }
 impl ::std::default::Default for PipelineViewportStateCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_VIEWPORT_STATE_CREATE_INFO,
@@ -5493,6 +5532,7 @@ pub struct PipelineRasterizationStateCreateInfo {
     pub line_width: f32,
 }
 impl ::std::default::Default for PipelineRasterizationStateCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_RASTERIZATION_STATE_CREATE_INFO,
@@ -5621,6 +5661,7 @@ pub struct PipelineMultisampleStateCreateInfo {
     pub alpha_to_one_enable: Bool32,
 }
 impl ::std::default::Default for PipelineMultisampleStateCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_MULTISAMPLE_STATE_CREATE_INFO,
@@ -5815,6 +5856,7 @@ pub struct PipelineColorBlendStateCreateInfo {
     pub blend_constants: [f32; 4],
 }
 impl ::std::default::Default for PipelineColorBlendStateCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_COLOR_BLEND_STATE_CREATE_INFO,
@@ -5911,6 +5953,7 @@ pub struct PipelineDynamicStateCreateInfo {
     pub p_dynamic_states: *const DynamicState,
 }
 impl ::std::default::Default for PipelineDynamicStateCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_DYNAMIC_STATE_CREATE_INFO,
@@ -6054,6 +6097,7 @@ pub struct PipelineDepthStencilStateCreateInfo {
     pub max_depth_bounds: f32,
 }
 impl ::std::default::Default for PipelineDepthStencilStateCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO,
@@ -6169,6 +6213,7 @@ pub struct GraphicsPipelineCreateInfo {
     pub base_pipeline_index: i32,
 }
 impl ::std::default::Default for GraphicsPipelineCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::GRAPHICS_PIPELINE_CREATE_INFO,
@@ -6338,6 +6383,7 @@ pub struct PipelineCacheCreateInfo {
     pub p_initial_data: *const c_void,
 }
 impl ::std::default::Default for PipelineCacheCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_CACHE_CREATE_INFO,
@@ -6401,6 +6447,7 @@ pub struct PipelineCacheHeaderVersionOne {
     pub pipeline_cache_uuid: [u8; UUID_SIZE],
 }
 impl ::std::default::Default for PipelineCacheHeaderVersionOne {
+    #[inline]
     fn default() -> Self {
         Self {
             header_size: u32::default(),
@@ -6530,6 +6577,7 @@ pub struct PipelineLayoutCreateInfo {
     pub p_push_constant_ranges: *const PushConstantRange,
 }
 impl ::std::default::Default for PipelineLayoutCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_LAYOUT_CREATE_INFO,
@@ -6613,6 +6661,7 @@ pub struct SamplerCreateInfo {
     pub unnormalized_coordinates: Bool32,
 }
 impl ::std::default::Default for SamplerCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SAMPLER_CREATE_INFO,
@@ -6758,6 +6807,7 @@ pub struct CommandPoolCreateInfo {
     pub queue_family_index: u32,
 }
 impl ::std::default::Default for CommandPoolCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::COMMAND_POOL_CREATE_INFO,
@@ -6819,6 +6869,7 @@ pub struct CommandBufferAllocateInfo {
     pub command_buffer_count: u32,
 }
 impl ::std::default::Default for CommandBufferAllocateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::COMMAND_BUFFER_ALLOCATE_INFO,
@@ -6888,6 +6939,7 @@ pub struct CommandBufferInheritanceInfo {
     pub pipeline_statistics: QueryPipelineStatisticFlags,
 }
 impl ::std::default::Default for CommandBufferInheritanceInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::COMMAND_BUFFER_INHERITANCE_INFO,
@@ -6983,6 +7035,7 @@ pub struct CommandBufferBeginInfo {
     pub p_inheritance_info: *const CommandBufferInheritanceInfo,
 }
 impl ::std::default::Default for CommandBufferBeginInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::COMMAND_BUFFER_BEGIN_INFO,
@@ -7074,6 +7127,7 @@ impl fmt::Debug for RenderPassBeginInfo {
     }
 }
 impl ::std::default::Default for RenderPassBeginInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::RENDER_PASS_BEGIN_INFO,
@@ -7159,6 +7213,7 @@ pub union ClearColorValue {
     pub uint32: [u32; 4],
 }
 impl ::std::default::Default for ClearColorValue {
+    #[inline]
     fn default() -> Self {
         unsafe { ::std::mem::zeroed() }
     }
@@ -7219,6 +7274,7 @@ pub union ClearValue {
     pub depth_stencil: ClearDepthStencilValue,
 }
 impl ::std::default::Default for ClearValue {
+    #[inline]
     fn default() -> Self {
         unsafe { ::std::mem::zeroed() }
     }
@@ -7433,6 +7489,7 @@ pub struct SubpassDescription {
     pub p_preserve_attachments: *const u32,
 }
 impl ::std::default::Default for SubpassDescription {
+    #[inline]
     fn default() -> Self {
         Self {
             flags: SubpassDescriptionFlags::default(),
@@ -7604,6 +7661,7 @@ pub struct RenderPassCreateInfo {
     pub p_dependencies: *const SubpassDependency,
 }
 impl ::std::default::Default for RenderPassCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::RENDER_PASS_CREATE_INFO,
@@ -7694,6 +7752,7 @@ pub struct EventCreateInfo {
     pub flags: EventCreateFlags,
 }
 impl ::std::default::Default for EventCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::EVENT_CREATE_INFO,
@@ -7748,6 +7807,7 @@ pub struct FenceCreateInfo {
     pub flags: FenceCreateFlags,
 }
 impl ::std::default::Default for FenceCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::FENCE_CREATE_INFO,
@@ -8344,6 +8404,7 @@ pub struct PhysicalDeviceLimits {
     pub non_coherent_atom_size: DeviceSize,
 }
 impl ::std::default::Default for PhysicalDeviceLimits {
+    #[inline]
     fn default() -> Self {
         Self {
             max_image_dimension1_d: u32::default(),
@@ -9062,6 +9123,7 @@ pub struct SemaphoreCreateInfo {
     pub flags: SemaphoreCreateFlags,
 }
 impl ::std::default::Default for SemaphoreCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SEMAPHORE_CREATE_INFO,
@@ -9134,6 +9196,7 @@ pub struct QueryPoolCreateInfo {
     pub pipeline_statistics: QueryPipelineStatisticFlags,
 }
 impl ::std::default::Default for QueryPoolCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::QUERY_POOL_CREATE_INFO,
@@ -9224,6 +9287,7 @@ pub struct FramebufferCreateInfo {
     pub layers: u32,
 }
 impl ::std::default::Default for FramebufferCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::FRAMEBUFFER_CREATE_INFO,
@@ -9601,6 +9665,7 @@ pub struct SubmitInfo {
     pub p_signal_semaphores: *const Semaphore,
 }
 impl ::std::default::Default for SubmitInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SUBMIT_INFO,
@@ -9696,6 +9761,7 @@ pub struct DisplayPropertiesKHR {
     pub persistent_content: Bool32,
 }
 impl ::std::default::Default for DisplayPropertiesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             display: DisplayKHR::default(),
@@ -9923,6 +9989,7 @@ pub struct DisplayModeCreateInfoKHR {
     pub parameters: DisplayModeParametersKHR,
 }
 impl ::std::default::Default for DisplayModeCreateInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DISPLAY_MODE_CREATE_INFO_KHR,
@@ -10072,6 +10139,7 @@ pub struct DisplaySurfaceCreateInfoKHR {
     pub image_extent: Extent2D,
 }
 impl ::std::default::Default for DisplaySurfaceCreateInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DISPLAY_SURFACE_CREATE_INFO_KHR,
@@ -10163,6 +10231,7 @@ pub struct DisplayPresentInfoKHR {
     pub persistent: Bool32,
 }
 impl ::std::default::Default for DisplayPresentInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DISPLAY_PRESENT_INFO_KHR,
@@ -10321,6 +10390,7 @@ pub struct AndroidSurfaceCreateInfoKHR {
     pub window: *mut ANativeWindow,
 }
 impl ::std::default::Default for AndroidSurfaceCreateInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::ANDROID_SURFACE_CREATE_INFO_KHR,
@@ -10381,6 +10451,7 @@ pub struct ViSurfaceCreateInfoNN {
     pub window: *mut c_void,
 }
 impl ::std::default::Default for ViSurfaceCreateInfoNN {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VI_SURFACE_CREATE_INFO_NN,
@@ -10442,6 +10513,7 @@ pub struct WaylandSurfaceCreateInfoKHR {
     pub surface: *mut wl_surface,
 }
 impl ::std::default::Default for WaylandSurfaceCreateInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::WAYLAND_SURFACE_CREATE_INFO_KHR,
@@ -10508,6 +10580,7 @@ pub struct Win32SurfaceCreateInfoKHR {
     pub hwnd: HWND,
 }
 impl ::std::default::Default for Win32SurfaceCreateInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::WIN32_SURFACE_CREATE_INFO_KHR,
@@ -10574,6 +10647,7 @@ pub struct XlibSurfaceCreateInfoKHR {
     pub window: Window,
 }
 impl ::std::default::Default for XlibSurfaceCreateInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::XLIB_SURFACE_CREATE_INFO_KHR,
@@ -10640,6 +10714,7 @@ pub struct XcbSurfaceCreateInfoKHR {
     pub window: xcb_window_t,
 }
 impl ::std::default::Default for XcbSurfaceCreateInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::XCB_SURFACE_CREATE_INFO_KHR,
@@ -10706,6 +10781,7 @@ pub struct DirectFBSurfaceCreateInfoEXT {
     pub surface: *mut IDirectFBSurface,
 }
 impl ::std::default::Default for DirectFBSurfaceCreateInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DIRECTFB_SURFACE_CREATE_INFO_EXT,
@@ -10771,6 +10847,7 @@ pub struct ImagePipeSurfaceCreateInfoFUCHSIA {
     pub image_pipe_handle: zx_handle_t,
 }
 impl ::std::default::Default for ImagePipeSurfaceCreateInfoFUCHSIA {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMAGEPIPE_SURFACE_CREATE_INFO_FUCHSIA,
@@ -10831,6 +10908,7 @@ pub struct StreamDescriptorSurfaceCreateInfoGGP {
     pub stream_descriptor: GgpStreamDescriptor,
 }
 impl ::std::default::Default for StreamDescriptorSurfaceCreateInfoGGP {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::STREAM_DESCRIPTOR_SURFACE_CREATE_INFO_GGP,
@@ -10892,6 +10970,7 @@ pub struct ScreenSurfaceCreateInfoQNX {
     pub window: *mut _screen_window,
 }
 impl ::std::default::Default for ScreenSurfaceCreateInfoQNX {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SCREEN_SURFACE_CREATE_INFO_QNX,
@@ -11019,6 +11098,7 @@ pub struct SwapchainCreateInfoKHR {
     pub old_swapchain: SwapchainKHR,
 }
 impl ::std::default::Default for SwapchainCreateInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SWAPCHAIN_CREATE_INFO_KHR,
@@ -11165,6 +11245,7 @@ pub struct PresentInfoKHR {
     pub p_results: *mut Result,
 }
 impl ::std::default::Default for PresentInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PRESENT_INFO_KHR,
@@ -11268,6 +11349,7 @@ impl fmt::Debug for DebugReportCallbackCreateInfoEXT {
     }
 }
 impl ::std::default::Default for DebugReportCallbackCreateInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT,
@@ -11335,6 +11417,7 @@ pub struct ValidationFlagsEXT {
     pub p_disabled_validation_checks: *const ValidationCheckEXT,
 }
 impl ::std::default::Default for ValidationFlagsEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VALIDATION_FLAGS_EXT,
@@ -11399,6 +11482,7 @@ pub struct ValidationFeaturesEXT {
     pub p_disabled_validation_features: *const ValidationFeatureDisableEXT,
 }
 impl ::std::default::Default for ValidationFeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VALIDATION_FEATURES_EXT,
@@ -11470,6 +11554,7 @@ pub struct PipelineRasterizationStateRasterizationOrderAMD {
     pub rasterization_order: RasterizationOrderAMD,
 }
 impl ::std::default::Default for PipelineRasterizationStateRasterizationOrderAMD {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_RASTERIZATION_STATE_RASTERIZATION_ORDER_AMD,
@@ -11534,6 +11619,7 @@ pub struct DebugMarkerObjectNameInfoEXT {
     pub p_object_name: *const c_char,
 }
 impl ::std::default::Default for DebugMarkerObjectNameInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEBUG_MARKER_OBJECT_NAME_INFO_EXT,
@@ -11602,6 +11688,7 @@ pub struct DebugMarkerObjectTagInfoEXT {
     pub p_tag: *const c_void,
 }
 impl ::std::default::Default for DebugMarkerObjectTagInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEBUG_MARKER_OBJECT_TAG_INFO_EXT,
@@ -11674,6 +11761,7 @@ pub struct DebugMarkerMarkerInfoEXT {
     pub color: [f32; 4],
 }
 impl ::std::default::Default for DebugMarkerMarkerInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEBUG_MARKER_MARKER_INFO_EXT,
@@ -11733,6 +11821,7 @@ pub struct DedicatedAllocationImageCreateInfoNV {
     pub dedicated_allocation: Bool32,
 }
 impl ::std::default::Default for DedicatedAllocationImageCreateInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEDICATED_ALLOCATION_IMAGE_CREATE_INFO_NV,
@@ -11789,6 +11878,7 @@ pub struct DedicatedAllocationBufferCreateInfoNV {
     pub dedicated_allocation: Bool32,
 }
 impl ::std::default::Default for DedicatedAllocationBufferCreateInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEDICATED_ALLOCATION_BUFFER_CREATE_INFO_NV,
@@ -11846,6 +11936,7 @@ pub struct DedicatedAllocationMemoryAllocateInfoNV {
     pub buffer: Buffer,
 }
 impl ::std::default::Default for DedicatedAllocationMemoryAllocateInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEDICATED_ALLOCATION_MEMORY_ALLOCATE_INFO_NV,
@@ -11977,6 +12068,7 @@ pub struct ExternalMemoryImageCreateInfoNV {
     pub handle_types: ExternalMemoryHandleTypeFlagsNV,
 }
 impl ::std::default::Default for ExternalMemoryImageCreateInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::EXTERNAL_MEMORY_IMAGE_CREATE_INFO_NV,
@@ -12033,6 +12125,7 @@ pub struct ExportMemoryAllocateInfoNV {
     pub handle_types: ExternalMemoryHandleTypeFlagsNV,
 }
 impl ::std::default::Default for ExportMemoryAllocateInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::EXPORT_MEMORY_ALLOCATE_INFO_NV,
@@ -12090,6 +12183,7 @@ pub struct ImportMemoryWin32HandleInfoNV {
     pub handle: HANDLE,
 }
 impl ::std::default::Default for ImportMemoryWin32HandleInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMPORT_MEMORY_WIN32_HANDLE_INFO_NV,
@@ -12152,6 +12246,7 @@ pub struct ExportMemoryWin32HandleInfoNV {
     pub dw_access: DWORD,
 }
 impl ::std::default::Default for ExportMemoryWin32HandleInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::EXPORT_MEMORY_WIN32_HANDLE_INFO_NV,
@@ -12219,6 +12314,7 @@ pub struct Win32KeyedMutexAcquireReleaseInfoNV {
     pub p_release_keys: *const u64,
 }
 impl ::std::default::Default for Win32KeyedMutexAcquireReleaseInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_NV,
@@ -12304,6 +12400,7 @@ pub struct PhysicalDeviceDeviceGeneratedCommandsFeaturesNV {
     pub device_generated_commands: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_FEATURES_NV,
@@ -12365,6 +12462,7 @@ pub struct DevicePrivateDataCreateInfo {
     pub private_data_slot_request_count: u32,
 }
 impl ::std::default::Default for DevicePrivateDataCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEVICE_PRIVATE_DATA_CREATE_INFO,
@@ -12421,6 +12519,7 @@ pub struct PrivateDataSlotCreateInfo {
     pub flags: PrivateDataSlotCreateFlags,
 }
 impl ::std::default::Default for PrivateDataSlotCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PRIVATE_DATA_SLOT_CREATE_INFO,
@@ -12475,6 +12574,7 @@ pub struct PhysicalDevicePrivateDataFeatures {
     pub private_data: Bool32,
 }
 impl ::std::default::Default for PhysicalDevicePrivateDataFeatures {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_PRIVATE_DATA_FEATURES,
@@ -12541,6 +12641,7 @@ pub struct PhysicalDeviceDeviceGeneratedCommandsPropertiesNV {
     pub min_indirect_commands_buffer_offset_alignment: u32,
 }
 impl ::std::default::Default for PhysicalDeviceDeviceGeneratedCommandsPropertiesNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_PROPERTIES_NV,
@@ -12664,6 +12765,7 @@ pub struct PhysicalDeviceMultiDrawPropertiesEXT {
     pub max_multi_draw_count: u32,
 }
 impl ::std::default::Default for PhysicalDeviceMultiDrawPropertiesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_MULTI_DRAW_PROPERTIES_EXT,
@@ -12723,6 +12825,7 @@ pub struct GraphicsShaderGroupCreateInfoNV {
     pub p_tessellation_state: *const PipelineTessellationStateCreateInfo,
 }
 impl ::std::default::Default for GraphicsShaderGroupCreateInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::GRAPHICS_SHADER_GROUP_CREATE_INFO_NV,
@@ -12798,6 +12901,7 @@ pub struct GraphicsPipelineShaderGroupsCreateInfoNV {
     pub p_pipelines: *const Pipeline,
 }
 impl ::std::default::Default for GraphicsPipelineShaderGroupsCreateInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::GRAPHICS_PIPELINE_SHADER_GROUPS_CREATE_INFO_NV,
@@ -13118,6 +13222,7 @@ pub struct IndirectCommandsLayoutTokenNV {
     pub p_index_type_values: *const u32,
 }
 impl ::std::default::Default for IndirectCommandsLayoutTokenNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::INDIRECT_COMMANDS_LAYOUT_TOKEN_NV,
@@ -13241,6 +13346,7 @@ pub struct IndirectCommandsLayoutCreateInfoNV {
     pub p_stream_strides: *const u32,
 }
 impl ::std::default::Default for IndirectCommandsLayoutCreateInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::INDIRECT_COMMANDS_LAYOUT_CREATE_INFO_NV,
@@ -13326,6 +13432,7 @@ pub struct GeneratedCommandsInfoNV {
     pub sequences_index_offset: DeviceSize,
 }
 impl ::std::default::Default for GeneratedCommandsInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::GENERATED_COMMANDS_INFO_NV,
@@ -13443,6 +13550,7 @@ pub struct GeneratedCommandsMemoryRequirementsInfoNV {
     pub max_sequences_count: u32,
 }
 impl ::std::default::Default for GeneratedCommandsMemoryRequirementsInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::GENERATED_COMMANDS_MEMORY_REQUIREMENTS_INFO_NV,
@@ -13515,6 +13623,7 @@ pub struct PhysicalDeviceFeatures2 {
     pub features: PhysicalDeviceFeatures,
 }
 impl ::std::default::Default for PhysicalDeviceFeatures2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_FEATURES_2,
@@ -13586,6 +13695,7 @@ pub struct PhysicalDeviceProperties2 {
     pub properties: PhysicalDeviceProperties,
 }
 impl ::std::default::Default for PhysicalDeviceProperties2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_PROPERTIES_2,
@@ -13655,6 +13765,7 @@ pub struct FormatProperties2 {
     pub format_properties: FormatProperties,
 }
 impl ::std::default::Default for FormatProperties2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::FORMAT_PROPERTIES_2,
@@ -13724,6 +13835,7 @@ pub struct ImageFormatProperties2 {
     pub image_format_properties: ImageFormatProperties,
 }
 impl ::std::default::Default for ImageFormatProperties2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMAGE_FORMAT_PROPERTIES_2,
@@ -13800,6 +13912,7 @@ pub struct PhysicalDeviceImageFormatInfo2 {
     pub flags: ImageCreateFlags,
 }
 impl ::std::default::Default for PhysicalDeviceImageFormatInfo2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_IMAGE_FORMAT_INFO_2,
@@ -13889,6 +14002,7 @@ pub struct QueueFamilyProperties2 {
     pub queue_family_properties: QueueFamilyProperties,
 }
 impl ::std::default::Default for QueueFamilyProperties2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::QUEUE_FAMILY_PROPERTIES_2,
@@ -13961,6 +14075,7 @@ pub struct PhysicalDeviceMemoryProperties2 {
     pub memory_properties: PhysicalDeviceMemoryProperties,
 }
 impl ::std::default::Default for PhysicalDeviceMemoryProperties2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_MEMORY_PROPERTIES_2,
@@ -14030,6 +14145,7 @@ pub struct SparseImageFormatProperties2 {
     pub properties: SparseImageFormatProperties,
 }
 impl ::std::default::Default for SparseImageFormatProperties2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SPARSE_IMAGE_FORMAT_PROPERTIES_2,
@@ -14088,6 +14204,7 @@ pub struct PhysicalDeviceSparseImageFormatInfo2 {
     pub tiling: ImageTiling,
 }
 impl ::std::default::Default for PhysicalDeviceSparseImageFormatInfo2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_SPARSE_IMAGE_FORMAT_INFO_2,
@@ -14162,6 +14279,7 @@ pub struct PhysicalDevicePushDescriptorPropertiesKHR {
     pub max_push_descriptors: u32,
 }
 impl ::std::default::Default for PhysicalDevicePushDescriptorPropertiesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_PUSH_DESCRIPTOR_PROPERTIES_KHR,
@@ -14298,6 +14416,7 @@ impl fmt::Debug for PhysicalDeviceDriverProperties {
     }
 }
 impl ::std::default::Default for PhysicalDeviceDriverProperties {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_DRIVER_PROPERTIES,
@@ -14370,6 +14489,7 @@ pub struct PresentRegionsKHR {
     pub p_regions: *const PresentRegionKHR,
 }
 impl ::std::default::Default for PresentRegionsKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PRESENT_REGIONS_KHR,
@@ -14427,6 +14547,7 @@ pub struct PresentRegionKHR {
     pub p_rectangles: *const RectLayerKHR,
 }
 impl ::std::default::Default for PresentRegionKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             rectangle_count: u32::default(),
@@ -14535,6 +14656,7 @@ pub struct PhysicalDeviceVariablePointersFeatures {
     pub variable_pointers: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceVariablePointersFeatures {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_VARIABLE_POINTERS_FEATURES,
@@ -14663,6 +14785,7 @@ pub struct PhysicalDeviceExternalImageFormatInfo {
     pub handle_type: ExternalMemoryHandleTypeFlags,
 }
 impl ::std::default::Default for PhysicalDeviceExternalImageFormatInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO,
@@ -14722,6 +14845,7 @@ pub struct ExternalImageFormatProperties {
     pub external_memory_properties: ExternalMemoryProperties,
 }
 impl ::std::default::Default for ExternalImageFormatProperties {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::EXTERNAL_IMAGE_FORMAT_PROPERTIES,
@@ -14783,6 +14907,7 @@ pub struct PhysicalDeviceExternalBufferInfo {
     pub handle_type: ExternalMemoryHandleTypeFlags,
 }
 impl ::std::default::Default for PhysicalDeviceExternalBufferInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_EXTERNAL_BUFFER_INFO,
@@ -14847,6 +14972,7 @@ pub struct ExternalBufferProperties {
     pub external_memory_properties: ExternalMemoryProperties,
 }
 impl ::std::default::Default for ExternalBufferProperties {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::EXTERNAL_BUFFER_PROPERTIES,
@@ -14908,6 +15034,7 @@ pub struct PhysicalDeviceIDProperties {
     pub device_luid_valid: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceIDProperties {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_ID_PROPERTIES,
@@ -14984,6 +15111,7 @@ pub struct ExternalMemoryImageCreateInfo {
     pub handle_types: ExternalMemoryHandleTypeFlags,
 }
 impl ::std::default::Default for ExternalMemoryImageCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::EXTERNAL_MEMORY_IMAGE_CREATE_INFO,
@@ -15040,6 +15168,7 @@ pub struct ExternalMemoryBufferCreateInfo {
     pub handle_types: ExternalMemoryHandleTypeFlags,
 }
 impl ::std::default::Default for ExternalMemoryBufferCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::EXTERNAL_MEMORY_BUFFER_CREATE_INFO,
@@ -15096,6 +15225,7 @@ pub struct ExportMemoryAllocateInfo {
     pub handle_types: ExternalMemoryHandleTypeFlags,
 }
 impl ::std::default::Default for ExportMemoryAllocateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::EXPORT_MEMORY_ALLOCATE_INFO,
@@ -15154,6 +15284,7 @@ pub struct ImportMemoryWin32HandleInfoKHR {
     pub name: LPCWSTR,
 }
 impl ::std::default::Default for ImportMemoryWin32HandleInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMPORT_MEMORY_WIN32_HANDLE_INFO_KHR,
@@ -15222,6 +15353,7 @@ pub struct ExportMemoryWin32HandleInfoKHR {
     pub name: LPCWSTR,
 }
 impl ::std::default::Default for ExportMemoryWin32HandleInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::EXPORT_MEMORY_WIN32_HANDLE_INFO_KHR,
@@ -15289,6 +15421,7 @@ pub struct ImportMemoryZirconHandleInfoFUCHSIA {
     pub handle: zx_handle_t,
 }
 impl ::std::default::Default for ImportMemoryZirconHandleInfoFUCHSIA {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMPORT_MEMORY_ZIRCON_HANDLE_INFO_FUCHSIA,
@@ -15350,6 +15483,7 @@ pub struct MemoryZirconHandlePropertiesFUCHSIA {
     pub memory_type_bits: u32,
 }
 impl ::std::default::Default for MemoryZirconHandlePropertiesFUCHSIA {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::MEMORY_ZIRCON_HANDLE_PROPERTIES_FUCHSIA,
@@ -15405,6 +15539,7 @@ pub struct MemoryGetZirconHandleInfoFUCHSIA {
     pub handle_type: ExternalMemoryHandleTypeFlags,
 }
 impl ::std::default::Default for MemoryGetZirconHandleInfoFUCHSIA {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::MEMORY_GET_ZIRCON_HANDLE_INFO_FUCHSIA,
@@ -15464,6 +15599,7 @@ pub struct MemoryWin32HandlePropertiesKHR {
     pub memory_type_bits: u32,
 }
 impl ::std::default::Default for MemoryWin32HandlePropertiesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::MEMORY_WIN32_HANDLE_PROPERTIES_KHR,
@@ -15519,6 +15655,7 @@ pub struct MemoryGetWin32HandleInfoKHR {
     pub handle_type: ExternalMemoryHandleTypeFlags,
 }
 impl ::std::default::Default for MemoryGetWin32HandleInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::MEMORY_GET_WIN32_HANDLE_INFO_KHR,
@@ -15579,6 +15716,7 @@ pub struct ImportMemoryFdInfoKHR {
     pub fd: c_int,
 }
 impl ::std::default::Default for ImportMemoryFdInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMPORT_MEMORY_FD_INFO_KHR,
@@ -15640,6 +15778,7 @@ pub struct MemoryFdPropertiesKHR {
     pub memory_type_bits: u32,
 }
 impl ::std::default::Default for MemoryFdPropertiesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::MEMORY_FD_PROPERTIES_KHR,
@@ -15695,6 +15834,7 @@ pub struct MemoryGetFdInfoKHR {
     pub handle_type: ExternalMemoryHandleTypeFlags,
 }
 impl ::std::default::Default for MemoryGetFdInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::MEMORY_GET_FD_INFO_KHR,
@@ -15760,6 +15900,7 @@ pub struct Win32KeyedMutexAcquireReleaseInfoKHR {
     pub p_release_keys: *const u64,
 }
 impl ::std::default::Default for Win32KeyedMutexAcquireReleaseInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_KHR,
@@ -15845,6 +15986,7 @@ pub struct PhysicalDeviceExternalSemaphoreInfo {
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
 }
 impl ::std::default::Default for PhysicalDeviceExternalSemaphoreInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_EXTERNAL_SEMAPHORE_INFO,
@@ -15919,6 +16061,7 @@ pub struct ExternalSemaphoreProperties {
     pub external_semaphore_features: ExternalSemaphoreFeatureFlags,
 }
 impl ::std::default::Default for ExternalSemaphoreProperties {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::EXTERNAL_SEMAPHORE_PROPERTIES,
@@ -15992,6 +16135,7 @@ pub struct ExportSemaphoreCreateInfo {
     pub handle_types: ExternalSemaphoreHandleTypeFlags,
 }
 impl ::std::default::Default for ExportSemaphoreCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::EXPORT_SEMAPHORE_CREATE_INFO,
@@ -16052,6 +16196,7 @@ pub struct ImportSemaphoreWin32HandleInfoKHR {
     pub name: LPCWSTR,
 }
 impl ::std::default::Default for ImportSemaphoreWin32HandleInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMPORT_SEMAPHORE_WIN32_HANDLE_INFO_KHR,
@@ -16128,6 +16273,7 @@ pub struct ExportSemaphoreWin32HandleInfoKHR {
     pub name: LPCWSTR,
 }
 impl ::std::default::Default for ExportSemaphoreWin32HandleInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::EXPORT_SEMAPHORE_WIN32_HANDLE_INFO_KHR,
@@ -16197,6 +16343,7 @@ pub struct D3D12FenceSubmitInfoKHR {
     pub p_signal_semaphore_values: *const u64,
 }
 impl ::std::default::Default for D3D12FenceSubmitInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::D3D12_FENCE_SUBMIT_INFO_KHR,
@@ -16263,6 +16410,7 @@ pub struct SemaphoreGetWin32HandleInfoKHR {
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
 }
 impl ::std::default::Default for SemaphoreGetWin32HandleInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SEMAPHORE_GET_WIN32_HANDLE_INFO_KHR,
@@ -16325,6 +16473,7 @@ pub struct ImportSemaphoreFdInfoKHR {
     pub fd: c_int,
 }
 impl ::std::default::Default for ImportSemaphoreFdInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMPORT_SEMAPHORE_FD_INFO_KHR,
@@ -16395,6 +16544,7 @@ pub struct SemaphoreGetFdInfoKHR {
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
 }
 impl ::std::default::Default for SemaphoreGetFdInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SEMAPHORE_GET_FD_INFO_KHR,
@@ -16457,6 +16607,7 @@ pub struct ImportSemaphoreZirconHandleInfoFUCHSIA {
     pub zircon_handle: zx_handle_t,
 }
 impl ::std::default::Default for ImportSemaphoreZirconHandleInfoFUCHSIA {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMPORT_SEMAPHORE_ZIRCON_HANDLE_INFO_FUCHSIA,
@@ -16527,6 +16678,7 @@ pub struct SemaphoreGetZirconHandleInfoFUCHSIA {
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
 }
 impl ::std::default::Default for SemaphoreGetZirconHandleInfoFUCHSIA {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SEMAPHORE_GET_ZIRCON_HANDLE_INFO_FUCHSIA,
@@ -16586,6 +16738,7 @@ pub struct PhysicalDeviceExternalFenceInfo {
     pub handle_type: ExternalFenceHandleTypeFlags,
 }
 impl ::std::default::Default for PhysicalDeviceExternalFenceInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO,
@@ -16642,6 +16795,7 @@ pub struct ExternalFenceProperties {
     pub external_fence_features: ExternalFenceFeatureFlags,
 }
 impl ::std::default::Default for ExternalFenceProperties {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::EXTERNAL_FENCE_PROPERTIES,
@@ -16715,6 +16869,7 @@ pub struct ExportFenceCreateInfo {
     pub handle_types: ExternalFenceHandleTypeFlags,
 }
 impl ::std::default::Default for ExportFenceCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::EXPORT_FENCE_CREATE_INFO,
@@ -16775,6 +16930,7 @@ pub struct ImportFenceWin32HandleInfoKHR {
     pub name: LPCWSTR,
 }
 impl ::std::default::Default for ImportFenceWin32HandleInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMPORT_FENCE_WIN32_HANDLE_INFO_KHR,
@@ -16851,6 +17007,7 @@ pub struct ExportFenceWin32HandleInfoKHR {
     pub name: LPCWSTR,
 }
 impl ::std::default::Default for ExportFenceWin32HandleInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::EXPORT_FENCE_WIN32_HANDLE_INFO_KHR,
@@ -16918,6 +17075,7 @@ pub struct FenceGetWin32HandleInfoKHR {
     pub handle_type: ExternalFenceHandleTypeFlags,
 }
 impl ::std::default::Default for FenceGetWin32HandleInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::FENCE_GET_WIN32_HANDLE_INFO_KHR,
@@ -16980,6 +17138,7 @@ pub struct ImportFenceFdInfoKHR {
     pub fd: c_int,
 }
 impl ::std::default::Default for ImportFenceFdInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMPORT_FENCE_FD_INFO_KHR,
@@ -17050,6 +17209,7 @@ pub struct FenceGetFdInfoKHR {
     pub handle_type: ExternalFenceHandleTypeFlags,
 }
 impl ::std::default::Default for FenceGetFdInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::FENCE_GET_FD_INFO_KHR,
@@ -17111,6 +17271,7 @@ pub struct PhysicalDeviceMultiviewFeatures {
     pub multiview_tessellation_shader: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceMultiviewFeatures {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_MULTIVIEW_FEATURES,
@@ -17180,6 +17341,7 @@ pub struct PhysicalDeviceMultiviewProperties {
     pub max_multiview_instance_index: u32,
 }
 impl ::std::default::Default for PhysicalDeviceMultiviewProperties {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES,
@@ -17246,6 +17408,7 @@ pub struct RenderPassMultiviewCreateInfo {
     pub p_correlation_masks: *const u32,
 }
 impl ::std::default::Default for RenderPassMultiviewCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::RENDER_PASS_MULTIVIEW_CREATE_INFO,
@@ -17328,6 +17491,7 @@ pub struct SurfaceCapabilities2EXT {
     pub supported_surface_counters: SurfaceCounterFlagsEXT,
 }
 impl ::std::default::Default for SurfaceCapabilities2EXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SURFACE_CAPABILITIES_2_EXT,
@@ -17438,6 +17602,7 @@ pub struct DisplayPowerInfoEXT {
     pub power_state: DisplayPowerStateEXT,
 }
 impl ::std::default::Default for DisplayPowerInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DISPLAY_POWER_INFO_EXT,
@@ -17492,6 +17657,7 @@ pub struct DeviceEventInfoEXT {
     pub device_event: DeviceEventTypeEXT,
 }
 impl ::std::default::Default for DeviceEventInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEVICE_EVENT_INFO_EXT,
@@ -17546,6 +17712,7 @@ pub struct DisplayEventInfoEXT {
     pub display_event: DisplayEventTypeEXT,
 }
 impl ::std::default::Default for DisplayEventInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DISPLAY_EVENT_INFO_EXT,
@@ -17600,6 +17767,7 @@ pub struct SwapchainCounterCreateInfoEXT {
     pub surface_counters: SurfaceCounterFlagsEXT,
 }
 impl ::std::default::Default for SwapchainCounterCreateInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SWAPCHAIN_COUNTER_CREATE_INFO_EXT,
@@ -17658,6 +17826,7 @@ pub struct PhysicalDeviceGroupProperties {
     pub subset_allocation: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceGroupProperties {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_GROUP_PROPERTIES,
@@ -17726,6 +17895,7 @@ pub struct MemoryAllocateFlagsInfo {
     pub device_mask: u32,
 }
 impl ::std::default::Default for MemoryAllocateFlagsInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::MEMORY_ALLOCATE_FLAGS_INFO,
@@ -17789,6 +17959,7 @@ pub struct BindBufferMemoryInfo {
     pub memory_offset: DeviceSize,
 }
 impl ::std::default::Default for BindBufferMemoryInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::BIND_BUFFER_MEMORY_INFO,
@@ -17869,6 +18040,7 @@ pub struct BindBufferMemoryDeviceGroupInfo {
     pub p_device_indices: *const u32,
 }
 impl ::std::default::Default for BindBufferMemoryDeviceGroupInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::BIND_BUFFER_MEMORY_DEVICE_GROUP_INFO,
@@ -17929,6 +18101,7 @@ pub struct BindImageMemoryInfo {
     pub memory_offset: DeviceSize,
 }
 impl ::std::default::Default for BindImageMemoryInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::BIND_IMAGE_MEMORY_INFO,
@@ -18011,6 +18184,7 @@ pub struct BindImageMemoryDeviceGroupInfo {
     pub p_split_instance_bind_regions: *const Rect2D,
 }
 impl ::std::default::Default for BindImageMemoryDeviceGroupInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::BIND_IMAGE_MEMORY_DEVICE_GROUP_INFO,
@@ -18081,6 +18255,7 @@ pub struct DeviceGroupRenderPassBeginInfo {
     pub p_device_render_areas: *const Rect2D,
 }
 impl ::std::default::Default for DeviceGroupRenderPassBeginInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEVICE_GROUP_RENDER_PASS_BEGIN_INFO,
@@ -18146,6 +18321,7 @@ pub struct DeviceGroupCommandBufferBeginInfo {
     pub device_mask: u32,
 }
 impl ::std::default::Default for DeviceGroupCommandBufferBeginInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEVICE_GROUP_COMMAND_BUFFER_BEGIN_INFO,
@@ -18207,6 +18383,7 @@ pub struct DeviceGroupSubmitInfo {
     pub p_signal_semaphore_device_indices: *const u32,
 }
 impl ::std::default::Default for DeviceGroupSubmitInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEVICE_GROUP_SUBMIT_INFO,
@@ -18286,6 +18463,7 @@ pub struct DeviceGroupBindSparseInfo {
     pub memory_device_index: u32,
 }
 impl ::std::default::Default for DeviceGroupBindSparseInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEVICE_GROUP_BIND_SPARSE_INFO,
@@ -18348,6 +18526,7 @@ pub struct DeviceGroupPresentCapabilitiesKHR {
     pub modes: DeviceGroupPresentModeFlagsKHR,
 }
 impl ::std::default::Default for DeviceGroupPresentCapabilitiesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEVICE_GROUP_PRESENT_CAPABILITIES_KHR,
@@ -18407,6 +18586,7 @@ pub struct ImageSwapchainCreateInfoKHR {
     pub swapchain: SwapchainKHR,
 }
 impl ::std::default::Default for ImageSwapchainCreateInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMAGE_SWAPCHAIN_CREATE_INFO_KHR,
@@ -18464,6 +18644,7 @@ pub struct BindImageMemorySwapchainInfoKHR {
     pub image_index: u32,
 }
 impl ::std::default::Default for BindImageMemorySwapchainInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::BIND_IMAGE_MEMORY_SWAPCHAIN_INFO_KHR,
@@ -18529,6 +18710,7 @@ pub struct AcquireNextImageInfoKHR {
     pub device_mask: u32,
 }
 impl ::std::default::Default for AcquireNextImageInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::ACQUIRE_NEXT_IMAGE_INFO_KHR,
@@ -18605,6 +18787,7 @@ pub struct DeviceGroupPresentInfoKHR {
     pub mode: DeviceGroupPresentModeFlagsKHR,
 }
 impl ::std::default::Default for DeviceGroupPresentInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEVICE_GROUP_PRESENT_INFO_KHR,
@@ -18669,6 +18852,7 @@ pub struct DeviceGroupDeviceCreateInfo {
     pub p_physical_devices: *const PhysicalDevice,
 }
 impl ::std::default::Default for DeviceGroupDeviceCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEVICE_GROUP_DEVICE_CREATE_INFO,
@@ -18727,6 +18911,7 @@ pub struct DeviceGroupSwapchainCreateInfoKHR {
     pub modes: DeviceGroupPresentModeFlagsKHR,
 }
 impl ::std::default::Default for DeviceGroupSwapchainCreateInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEVICE_GROUP_SWAPCHAIN_CREATE_INFO_KHR,
@@ -18858,6 +19043,7 @@ pub struct DescriptorUpdateTemplateCreateInfo {
     pub set: u32,
 }
 impl ::std::default::Default for DescriptorUpdateTemplateCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO,
@@ -18995,6 +19181,7 @@ pub struct PhysicalDevicePresentIdFeaturesKHR {
     pub present_id: Bool32,
 }
 impl ::std::default::Default for PhysicalDevicePresentIdFeaturesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_PRESENT_ID_FEATURES_KHR,
@@ -19054,6 +19241,7 @@ pub struct PresentIdKHR {
     pub p_present_ids: *const u64,
 }
 impl ::std::default::Default for PresentIdKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PRESENT_ID_KHR,
@@ -19112,6 +19300,7 @@ pub struct PhysicalDevicePresentWaitFeaturesKHR {
     pub present_wait: Bool32,
 }
 impl ::std::default::Default for PhysicalDevicePresentWaitFeaturesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_PRESENT_WAIT_FEATURES_KHR,
@@ -19177,6 +19366,7 @@ pub struct HdrMetadataEXT {
     pub max_frame_average_light_level: f32,
 }
 impl ::std::default::Default for HdrMetadataEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::HDR_METADATA_EXT,
@@ -19266,6 +19456,7 @@ pub struct DisplayNativeHdrSurfaceCapabilitiesAMD {
     pub local_dimming_support: Bool32,
 }
 impl ::std::default::Default for DisplayNativeHdrSurfaceCapabilitiesAMD {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DISPLAY_NATIVE_HDR_SURFACE_CAPABILITIES_AMD,
@@ -19322,6 +19513,7 @@ pub struct SwapchainDisplayNativeHdrCreateInfoAMD {
     pub local_dimming_enable: Bool32,
 }
 impl ::std::default::Default for SwapchainDisplayNativeHdrCreateInfoAMD {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SWAPCHAIN_DISPLAY_NATIVE_HDR_CREATE_INFO_AMD,
@@ -19485,6 +19677,7 @@ pub struct PresentTimesInfoGOOGLE {
     pub p_times: *const PresentTimeGOOGLE,
 }
 impl ::std::default::Default for PresentTimesInfoGOOGLE {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PRESENT_TIMES_INFO_GOOGLE,
@@ -19592,6 +19785,7 @@ pub struct IOSSurfaceCreateInfoMVK {
     pub p_view: *const c_void,
 }
 impl ::std::default::Default for IOSSurfaceCreateInfoMVK {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IOS_SURFACE_CREATE_INFO_MVK,
@@ -19652,6 +19846,7 @@ pub struct MacOSSurfaceCreateInfoMVK {
     pub p_view: *const c_void,
 }
 impl ::std::default::Default for MacOSSurfaceCreateInfoMVK {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::MACOS_SURFACE_CREATE_INFO_MVK,
@@ -19712,6 +19907,7 @@ pub struct MetalSurfaceCreateInfoEXT {
     pub p_layer: *const CAMetalLayer,
 }
 impl ::std::default::Default for MetalSurfaceCreateInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::METAL_SURFACE_CREATE_INFO_EXT,
@@ -19821,6 +20017,7 @@ pub struct PipelineViewportWScalingStateCreateInfoNV {
     pub p_viewport_w_scalings: *const ViewportWScalingNV,
 }
 impl ::std::default::Default for PipelineViewportWScalingStateCreateInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_VIEWPORT_W_SCALING_STATE_CREATE_INFO_NV,
@@ -19947,6 +20144,7 @@ pub struct PipelineViewportSwizzleStateCreateInfoNV {
     pub p_viewport_swizzles: *const ViewportSwizzleNV,
 }
 impl ::std::default::Default for PipelineViewportSwizzleStateCreateInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_VIEWPORT_SWIZZLE_STATE_CREATE_INFO_NV,
@@ -20013,6 +20211,7 @@ pub struct PhysicalDeviceDiscardRectanglePropertiesEXT {
     pub max_discard_rectangles: u32,
 }
 impl ::std::default::Default for PhysicalDeviceDiscardRectanglePropertiesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_DISCARD_RECTANGLE_PROPERTIES_EXT,
@@ -20075,6 +20274,7 @@ pub struct PipelineDiscardRectangleStateCreateInfoEXT {
     pub p_discard_rectangles: *const Rect2D,
 }
 impl ::std::default::Default for PipelineDiscardRectangleStateCreateInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_DISCARD_RECTANGLE_STATE_CREATE_INFO_EXT,
@@ -20149,6 +20349,7 @@ pub struct PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX {
     pub per_view_position_all_components: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_ATTRIBUTES_PROPERTIES_NVX,
@@ -20268,6 +20469,7 @@ pub struct RenderPassInputAttachmentAspectCreateInfo {
     pub p_aspect_references: *const InputAttachmentAspectReference,
 }
 impl ::std::default::Default for RenderPassInputAttachmentAspectCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::RENDER_PASS_INPUT_ATTACHMENT_ASPECT_CREATE_INFO,
@@ -20329,6 +20531,7 @@ pub struct PhysicalDeviceSurfaceInfo2KHR {
     pub surface: SurfaceKHR,
 }
 impl ::std::default::Default for PhysicalDeviceSurfaceInfo2KHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_SURFACE_INFO_2_KHR,
@@ -20398,6 +20601,7 @@ pub struct SurfaceCapabilities2KHR {
     pub surface_capabilities: SurfaceCapabilitiesKHR,
 }
 impl ::std::default::Default for SurfaceCapabilities2KHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SURFACE_CAPABILITIES_2_KHR,
@@ -20467,6 +20671,7 @@ pub struct SurfaceFormat2KHR {
     pub surface_format: SurfaceFormatKHR,
 }
 impl ::std::default::Default for SurfaceFormat2KHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SURFACE_FORMAT_2_KHR,
@@ -20521,6 +20726,7 @@ pub struct DisplayProperties2KHR {
     pub display_properties: DisplayPropertiesKHR,
 }
 impl ::std::default::Default for DisplayProperties2KHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DISPLAY_PROPERTIES_2_KHR,
@@ -20575,6 +20781,7 @@ pub struct DisplayPlaneProperties2KHR {
     pub display_plane_properties: DisplayPlanePropertiesKHR,
 }
 impl ::std::default::Default for DisplayPlaneProperties2KHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DISPLAY_PLANE_PROPERTIES_2_KHR,
@@ -20632,6 +20839,7 @@ pub struct DisplayModeProperties2KHR {
     pub display_mode_properties: DisplayModePropertiesKHR,
 }
 impl ::std::default::Default for DisplayModeProperties2KHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DISPLAY_MODE_PROPERTIES_2_KHR,
@@ -20690,6 +20898,7 @@ pub struct DisplayPlaneInfo2KHR {
     pub plane_index: u32,
 }
 impl ::std::default::Default for DisplayPlaneInfo2KHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DISPLAY_PLANE_INFO_2_KHR,
@@ -20749,6 +20958,7 @@ pub struct DisplayPlaneCapabilities2KHR {
     pub capabilities: DisplayPlaneCapabilitiesKHR,
 }
 impl ::std::default::Default for DisplayPlaneCapabilities2KHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DISPLAY_PLANE_CAPABILITIES_2_KHR,
@@ -20803,6 +21013,7 @@ pub struct SharedPresentSurfaceCapabilitiesKHR {
     pub shared_present_supported_usage_flags: ImageUsageFlags,
 }
 impl ::std::default::Default for SharedPresentSurfaceCapabilitiesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SHARED_PRESENT_SURFACE_CAPABILITIES_KHR,
@@ -20865,6 +21076,7 @@ pub struct PhysicalDevice16BitStorageFeatures {
     pub storage_input_output16: Bool32,
 }
 impl ::std::default::Default for PhysicalDevice16BitStorageFeatures {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES,
@@ -20945,6 +21157,7 @@ pub struct PhysicalDeviceSubgroupProperties {
     pub quad_operations_in_all_stages: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceSubgroupProperties {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES,
@@ -21016,6 +21229,7 @@ pub struct PhysicalDeviceShaderSubgroupExtendedTypesFeatures {
     pub shader_subgroup_extended_types: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceShaderSubgroupExtendedTypesFeatures {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_SHADER_SUBGROUP_EXTENDED_TYPES_FEATURES,
@@ -21080,6 +21294,7 @@ pub struct BufferMemoryRequirementsInfo2 {
     pub buffer: Buffer,
 }
 impl ::std::default::Default for BufferMemoryRequirementsInfo2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::BUFFER_MEMORY_REQUIREMENTS_INFO_2,
@@ -21134,6 +21349,7 @@ pub struct DeviceBufferMemoryRequirements {
     pub p_create_info: *const BufferCreateInfo,
 }
 impl ::std::default::Default for DeviceBufferMemoryRequirements {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEVICE_BUFFER_MEMORY_REQUIREMENTS,
@@ -21188,6 +21404,7 @@ pub struct ImageMemoryRequirementsInfo2 {
     pub image: Image,
 }
 impl ::std::default::Default for ImageMemoryRequirementsInfo2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMAGE_MEMORY_REQUIREMENTS_INFO_2,
@@ -21257,6 +21474,7 @@ pub struct ImageSparseMemoryRequirementsInfo2 {
     pub image: Image,
 }
 impl ::std::default::Default for ImageSparseMemoryRequirementsInfo2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMAGE_SPARSE_MEMORY_REQUIREMENTS_INFO_2,
@@ -21312,6 +21530,7 @@ pub struct DeviceImageMemoryRequirements {
     pub plane_aspect: ImageAspectFlags,
 }
 impl ::std::default::Default for DeviceImageMemoryRequirements {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEVICE_IMAGE_MEMORY_REQUIREMENTS,
@@ -21371,6 +21590,7 @@ pub struct MemoryRequirements2 {
     pub memory_requirements: MemoryRequirements,
 }
 impl ::std::default::Default for MemoryRequirements2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::MEMORY_REQUIREMENTS_2,
@@ -21440,6 +21660,7 @@ pub struct SparseImageMemoryRequirements2 {
     pub memory_requirements: SparseImageMemoryRequirements,
 }
 impl ::std::default::Default for SparseImageMemoryRequirements2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SPARSE_IMAGE_MEMORY_REQUIREMENTS_2,
@@ -21497,6 +21718,7 @@ pub struct PhysicalDevicePointClippingProperties {
     pub point_clipping_behavior: PointClippingBehavior,
 }
 impl ::std::default::Default for PhysicalDevicePointClippingProperties {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_POINT_CLIPPING_PROPERTIES,
@@ -21557,6 +21779,7 @@ pub struct MemoryDedicatedRequirements {
     pub requires_dedicated_allocation: Bool32,
 }
 impl ::std::default::Default for MemoryDedicatedRequirements {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::MEMORY_DEDICATED_REQUIREMENTS,
@@ -21619,6 +21842,7 @@ pub struct MemoryDedicatedAllocateInfo {
     pub buffer: Buffer,
 }
 impl ::std::default::Default for MemoryDedicatedAllocateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::MEMORY_DEDICATED_ALLOCATE_INFO,
@@ -21680,6 +21904,7 @@ pub struct ImageViewUsageCreateInfo {
     pub usage: ImageUsageFlags,
 }
 impl ::std::default::Default for ImageViewUsageCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMAGE_VIEW_USAGE_CREATE_INFO,
@@ -21736,6 +21961,7 @@ pub struct PipelineTessellationDomainOriginStateCreateInfo {
     pub domain_origin: TessellationDomainOrigin,
 }
 impl ::std::default::Default for PipelineTessellationDomainOriginStateCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_TESSELLATION_DOMAIN_ORIGIN_STATE_CREATE_INFO,
@@ -21798,6 +22024,7 @@ pub struct SamplerYcbcrConversionInfo {
     pub conversion: SamplerYcbcrConversion,
 }
 impl ::std::default::Default for SamplerYcbcrConversionInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SAMPLER_YCBCR_CONVERSION_INFO,
@@ -21863,6 +22090,7 @@ pub struct SamplerYcbcrConversionCreateInfo {
     pub force_explicit_reconstruction: Bool32,
 }
 impl ::std::default::Default for SamplerYcbcrConversionCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SAMPLER_YCBCR_CONVERSION_CREATE_INFO,
@@ -21970,6 +22198,7 @@ pub struct BindImagePlaneMemoryInfo {
     pub plane_aspect: ImageAspectFlags,
 }
 impl ::std::default::Default for BindImagePlaneMemoryInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::BIND_IMAGE_PLANE_MEMORY_INFO,
@@ -22026,6 +22255,7 @@ pub struct ImagePlaneMemoryRequirementsInfo {
     pub plane_aspect: ImageAspectFlags,
 }
 impl ::std::default::Default for ImagePlaneMemoryRequirementsInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMAGE_PLANE_MEMORY_REQUIREMENTS_INFO,
@@ -22082,6 +22312,7 @@ pub struct PhysicalDeviceSamplerYcbcrConversionFeatures {
     pub sampler_ycbcr_conversion: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceSamplerYcbcrConversionFeatures {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_SAMPLER_YCBCR_CONVERSION_FEATURES,
@@ -22143,6 +22374,7 @@ pub struct SamplerYcbcrConversionImageFormatProperties {
     pub combined_image_sampler_descriptor_count: u32,
 }
 impl ::std::default::Default for SamplerYcbcrConversionImageFormatProperties {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SAMPLER_YCBCR_CONVERSION_IMAGE_FORMAT_PROPERTIES,
@@ -22206,6 +22438,7 @@ pub struct TextureLODGatherFormatPropertiesAMD {
     pub supports_texture_gather_lod_bias_amd: Bool32,
 }
 impl ::std::default::Default for TextureLODGatherFormatPropertiesAMD {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::TEXTURE_LOD_GATHER_FORMAT_PROPERTIES_AMD,
@@ -22268,6 +22501,7 @@ pub struct ConditionalRenderingBeginInfoEXT {
     pub flags: ConditionalRenderingFlagsEXT,
 }
 impl ::std::default::Default for ConditionalRenderingBeginInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::CONDITIONAL_RENDERING_BEGIN_INFO_EXT,
@@ -22332,6 +22566,7 @@ pub struct ProtectedSubmitInfo {
     pub protected_submit: Bool32,
 }
 impl ::std::default::Default for ProtectedSubmitInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PROTECTED_SUBMIT_INFO,
@@ -22388,6 +22623,7 @@ pub struct PhysicalDeviceProtectedMemoryFeatures {
     pub protected_memory: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceProtectedMemoryFeatures {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_PROTECTED_MEMORY_FEATURES,
@@ -22446,6 +22682,7 @@ pub struct PhysicalDeviceProtectedMemoryProperties {
     pub protected_no_fault: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceProtectedMemoryProperties {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_PROTECTED_MEMORY_PROPERTIES,
@@ -22507,6 +22744,7 @@ pub struct DeviceQueueInfo2 {
     pub queue_index: u32,
 }
 impl ::std::default::Default for DeviceQueueInfo2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEVICE_QUEUE_INFO_2,
@@ -22573,6 +22811,7 @@ pub struct PipelineCoverageToColorStateCreateInfoNV {
     pub coverage_to_color_location: u32,
 }
 impl ::std::default::Default for PipelineCoverageToColorStateCreateInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_COVERAGE_TO_COLOR_STATE_CREATE_INFO_NV,
@@ -22643,6 +22882,7 @@ pub struct PhysicalDeviceSamplerFilterMinmaxProperties {
     pub filter_minmax_image_component_mapping: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceSamplerFilterMinmaxProperties {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_SAMPLER_FILTER_MINMAX_PROPERTIES,
@@ -22766,6 +23006,7 @@ pub struct SampleLocationsInfoEXT {
     pub p_sample_locations: *const SampleLocationEXT,
 }
 impl ::std::default::Default for SampleLocationsInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SAMPLE_LOCATIONS_INFO_EXT,
@@ -22938,6 +23179,7 @@ pub struct RenderPassSampleLocationsBeginInfoEXT {
     pub p_post_subpass_sample_locations: *const SubpassSampleLocationsEXT,
 }
 impl ::std::default::Default for RenderPassSampleLocationsBeginInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::RENDER_PASS_SAMPLE_LOCATIONS_BEGIN_INFO_EXT,
@@ -23012,6 +23254,7 @@ pub struct PipelineSampleLocationsStateCreateInfoEXT {
     pub sample_locations_info: SampleLocationsInfoEXT,
 }
 impl ::std::default::Default for PipelineSampleLocationsStateCreateInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_SAMPLE_LOCATIONS_STATE_CREATE_INFO_EXT,
@@ -23083,6 +23326,7 @@ pub struct PhysicalDeviceSampleLocationsPropertiesEXT {
     pub variable_sample_locations: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceSampleLocationsPropertiesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_SAMPLE_LOCATIONS_PROPERTIES_EXT,
@@ -23171,6 +23415,7 @@ pub struct MultisamplePropertiesEXT {
     pub max_sample_location_grid_size: Extent2D,
 }
 impl ::std::default::Default for MultisamplePropertiesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::MULTISAMPLE_PROPERTIES_EXT,
@@ -23228,6 +23473,7 @@ pub struct SamplerReductionModeCreateInfo {
     pub reduction_mode: SamplerReductionMode,
 }
 impl ::std::default::Default for SamplerReductionModeCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SAMPLER_REDUCTION_MODE_CREATE_INFO,
@@ -23284,6 +23530,7 @@ pub struct PhysicalDeviceBlendOperationAdvancedFeaturesEXT {
     pub advanced_blend_coherent_operations: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceBlendOperationAdvancedFeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_BLEND_OPERATION_ADVANCED_FEATURES_EXT,
@@ -23348,6 +23595,7 @@ pub struct PhysicalDeviceMultiDrawFeaturesEXT {
     pub multi_draw: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceMultiDrawFeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_MULTI_DRAW_FEATURES_EXT,
@@ -23411,6 +23659,7 @@ pub struct PhysicalDeviceBlendOperationAdvancedPropertiesEXT {
     pub advanced_blend_all_operations: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceBlendOperationAdvancedPropertiesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_BLEND_OPERATION_ADVANCED_PROPERTIES_EXT,
@@ -23514,6 +23763,7 @@ pub struct PipelineColorBlendAdvancedStateCreateInfoEXT {
     pub blend_overlap: BlendOverlapEXT,
 }
 impl ::std::default::Default for PipelineColorBlendAdvancedStateCreateInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_COLOR_BLEND_ADVANCED_STATE_CREATE_INFO_EXT,
@@ -23587,6 +23837,7 @@ pub struct PhysicalDeviceInlineUniformBlockFeatures {
     pub descriptor_binding_inline_uniform_block_update_after_bind: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceInlineUniformBlockFeatures {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_FEATURES,
@@ -23659,6 +23910,7 @@ pub struct PhysicalDeviceInlineUniformBlockProperties {
     pub max_descriptor_set_update_after_bind_inline_uniform_blocks: u32,
 }
 impl ::std::default::Default for PhysicalDeviceInlineUniformBlockProperties {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_PROPERTIES,
@@ -23757,6 +24009,7 @@ pub struct WriteDescriptorSetInlineUniformBlock {
     pub p_data: *const c_void,
 }
 impl ::std::default::Default for WriteDescriptorSetInlineUniformBlock {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::WRITE_DESCRIPTOR_SET_INLINE_UNIFORM_BLOCK,
@@ -23815,6 +24068,7 @@ pub struct DescriptorPoolInlineUniformBlockCreateInfo {
     pub max_inline_uniform_block_bindings: u32,
 }
 impl ::std::default::Default for DescriptorPoolInlineUniformBlockCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DESCRIPTOR_POOL_INLINE_UNIFORM_BLOCK_CREATE_INFO,
@@ -23881,6 +24135,7 @@ pub struct PipelineCoverageModulationStateCreateInfoNV {
     pub p_coverage_modulation_table: *const f32,
 }
 impl ::std::default::Default for PipelineCoverageModulationStateCreateInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_COVERAGE_MODULATION_STATE_CREATE_INFO_NV,
@@ -23967,6 +24222,7 @@ pub struct ImageFormatListCreateInfo {
     pub p_view_formats: *const Format,
 }
 impl ::std::default::Default for ImageFormatListCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMAGE_FORMAT_LIST_CREATE_INFO,
@@ -24031,6 +24287,7 @@ pub struct ValidationCacheCreateInfoEXT {
     pub p_initial_data: *const c_void,
 }
 impl ::std::default::Default for ValidationCacheCreateInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VALIDATION_CACHE_CREATE_INFO_EXT,
@@ -24092,6 +24349,7 @@ pub struct ShaderModuleValidationCacheCreateInfoEXT {
     pub validation_cache: ValidationCacheEXT,
 }
 impl ::std::default::Default for ShaderModuleValidationCacheCreateInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SHADER_MODULE_VALIDATION_CACHE_CREATE_INFO_EXT,
@@ -24149,6 +24407,7 @@ pub struct PhysicalDeviceMaintenance3Properties {
     pub max_memory_allocation_size: DeviceSize,
 }
 impl ::std::default::Default for PhysicalDeviceMaintenance3Properties {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES,
@@ -24210,6 +24469,7 @@ pub struct PhysicalDeviceMaintenance4Features {
     pub maintenance4: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceMaintenance4Features {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_MAINTENANCE_4_FEATURES,
@@ -24268,6 +24528,7 @@ pub struct PhysicalDeviceMaintenance4Properties {
     pub max_buffer_size: DeviceSize,
 }
 impl ::std::default::Default for PhysicalDeviceMaintenance4Properties {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_MAINTENANCE_4_PROPERTIES,
@@ -24324,6 +24585,7 @@ pub struct DescriptorSetLayoutSupport {
     pub supported: Bool32,
 }
 impl ::std::default::Default for DescriptorSetLayoutSupport {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DESCRIPTOR_SET_LAYOUT_SUPPORT,
@@ -24393,6 +24655,7 @@ pub struct PhysicalDeviceShaderDrawParametersFeatures {
     pub shader_draw_parameters: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceShaderDrawParametersFeatures {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_SHADER_DRAW_PARAMETERS_FEATURES,
@@ -24455,6 +24718,7 @@ pub struct PhysicalDeviceShaderFloat16Int8Features {
     pub shader_int8: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceShaderFloat16Int8Features {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_SHADER_FLOAT16_INT8_FEATURES,
@@ -24534,6 +24798,7 @@ pub struct PhysicalDeviceFloatControlsProperties {
     pub shader_rounding_mode_rtz_float64: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceFloatControlsProperties {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_FLOAT_CONTROLS_PROPERTIES,
@@ -24715,6 +24980,7 @@ pub struct PhysicalDeviceHostQueryResetFeatures {
     pub host_query_reset: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceHostQueryResetFeatures {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_HOST_QUERY_RESET_FEATURES,
@@ -24825,6 +25091,7 @@ pub struct NativeBufferANDROID {
     pub usage2: NativeBufferUsage2ANDROID,
 }
 impl ::std::default::Default for NativeBufferANDROID {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::NATIVE_BUFFER_ANDROID,
@@ -24899,6 +25166,7 @@ pub struct SwapchainImageCreateInfoANDROID {
     pub usage: SwapchainImageUsageFlagsANDROID,
 }
 impl ::std::default::Default for SwapchainImageCreateInfoANDROID {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SWAPCHAIN_IMAGE_CREATE_INFO_ANDROID,
@@ -24953,6 +25221,7 @@ pub struct PhysicalDevicePresentationPropertiesANDROID {
     pub shared_image: Bool32,
 }
 impl ::std::default::Default for PhysicalDevicePresentationPropertiesANDROID {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_PRESENTATION_PROPERTIES_ANDROID,
@@ -25074,6 +25343,7 @@ pub struct ShaderStatisticsInfoAMD {
     pub compute_work_group_size: [u32; 3],
 }
 impl ::std::default::Default for ShaderStatisticsInfoAMD {
+    #[inline]
     fn default() -> Self {
         Self {
             shader_stage_mask: ShaderStageFlags::default(),
@@ -25156,6 +25426,7 @@ pub struct DeviceQueueGlobalPriorityCreateInfoKHR {
     pub global_priority: QueueGlobalPriorityKHR,
 }
 impl ::std::default::Default for DeviceQueueGlobalPriorityCreateInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO_KHR,
@@ -25212,6 +25483,7 @@ pub struct PhysicalDeviceGlobalPriorityQueryFeaturesKHR {
     pub global_priority_query: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceGlobalPriorityQueryFeaturesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_GLOBAL_PRIORITY_QUERY_FEATURES_KHR,
@@ -25274,6 +25546,7 @@ pub struct QueueFamilyGlobalPriorityPropertiesKHR {
     pub priorities: [QueueGlobalPriorityKHR; MAX_GLOBAL_PRIORITY_SIZE_KHR],
 }
 impl ::std::default::Default for QueueFamilyGlobalPriorityPropertiesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::QUEUE_FAMILY_GLOBAL_PRIORITY_PROPERTIES_KHR,
@@ -25340,6 +25613,7 @@ pub struct DebugUtilsObjectNameInfoEXT {
     pub p_object_name: *const c_char,
 }
 impl ::std::default::Default for DebugUtilsObjectNameInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEBUG_UTILS_OBJECT_NAME_INFO_EXT,
@@ -25408,6 +25682,7 @@ pub struct DebugUtilsObjectTagInfoEXT {
     pub p_tag: *const c_void,
 }
 impl ::std::default::Default for DebugUtilsObjectTagInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEBUG_UTILS_OBJECT_TAG_INFO_EXT,
@@ -25480,6 +25755,7 @@ pub struct DebugUtilsLabelEXT {
     pub color: [f32; 4],
 }
 impl ::std::default::Default for DebugUtilsLabelEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEBUG_UTILS_LABEL_EXT,
@@ -25559,6 +25835,7 @@ impl fmt::Debug for DebugUtilsMessengerCreateInfoEXT {
     }
 }
 impl ::std::default::Default for DebugUtilsMessengerCreateInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT,
@@ -25647,6 +25924,7 @@ pub struct DebugUtilsMessengerCallbackDataEXT {
     pub p_objects: *const DebugUtilsObjectNameInfoEXT,
 }
 impl ::std::default::Default for DebugUtilsMessengerCallbackDataEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEBUG_UTILS_MESSENGER_CALLBACK_DATA_EXT,
@@ -25737,6 +26015,7 @@ pub struct PhysicalDeviceDeviceMemoryReportFeaturesEXT {
     pub device_memory_report: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceDeviceMemoryReportFeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_DEVICE_MEMORY_REPORT_FEATURES_EXT,
@@ -25814,6 +26093,7 @@ impl fmt::Debug for DeviceDeviceMemoryReportCreateInfoEXT {
     }
 }
 impl ::std::default::Default for DeviceDeviceMemoryReportCreateInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEVICE_DEVICE_MEMORY_REPORT_CREATE_INFO_EXT,
@@ -25889,6 +26169,7 @@ pub struct DeviceMemoryReportCallbackDataEXT {
     pub heap_index: u32,
 }
 impl ::std::default::Default for DeviceMemoryReportCallbackDataEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEVICE_MEMORY_REPORT_CALLBACK_DATA_EXT,
@@ -25974,6 +26255,7 @@ pub struct ImportMemoryHostPointerInfoEXT {
     pub p_host_pointer: *mut c_void,
 }
 impl ::std::default::Default for ImportMemoryHostPointerInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMPORT_MEMORY_HOST_POINTER_INFO_EXT,
@@ -26035,6 +26317,7 @@ pub struct MemoryHostPointerPropertiesEXT {
     pub memory_type_bits: u32,
 }
 impl ::std::default::Default for MemoryHostPointerPropertiesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::MEMORY_HOST_POINTER_PROPERTIES_EXT,
@@ -26089,6 +26372,7 @@ pub struct PhysicalDeviceExternalMemoryHostPropertiesEXT {
     pub min_imported_host_pointer_alignment: DeviceSize,
 }
 impl ::std::default::Default for PhysicalDeviceExternalMemoryHostPropertiesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_EXTERNAL_MEMORY_HOST_PROPERTIES_EXT,
@@ -26159,6 +26443,7 @@ pub struct PhysicalDeviceConservativeRasterizationPropertiesEXT {
     pub conservative_rasterization_post_depth_coverage: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceConservativeRasterizationPropertiesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_CONSERVATIVE_RASTERIZATION_PROPERTIES_EXT,
@@ -26284,6 +26569,7 @@ pub struct CalibratedTimestampInfoEXT {
     pub time_domain: TimeDomainEXT,
 }
 impl ::std::default::Default for CalibratedTimestampInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::CALIBRATED_TIMESTAMP_INFO_EXT,
@@ -26351,6 +26637,7 @@ pub struct PhysicalDeviceShaderCorePropertiesAMD {
     pub vgpr_allocation_granularity: u32,
 }
 impl ::std::default::Default for PhysicalDeviceShaderCorePropertiesAMD {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_AMD,
@@ -26473,6 +26760,7 @@ pub struct PhysicalDeviceShaderCoreProperties2AMD {
     pub active_compute_unit_count: u32,
 }
 impl ::std::default::Default for PhysicalDeviceShaderCoreProperties2AMD {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_2_AMD,
@@ -26539,6 +26827,7 @@ pub struct PipelineRasterizationConservativeStateCreateInfoEXT {
     pub extra_primitive_overestimation_size: f32,
 }
 impl ::std::default::Default for PipelineRasterizationConservativeStateCreateInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_RASTERIZATION_CONSERVATIVE_STATE_CREATE_INFO_EXT,
@@ -26636,6 +26925,7 @@ pub struct PhysicalDeviceDescriptorIndexingFeatures {
     pub runtime_descriptor_array: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceDescriptorIndexingFeatures {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES,
@@ -26897,6 +27187,7 @@ pub struct PhysicalDeviceDescriptorIndexingProperties {
     pub max_descriptor_set_update_after_bind_input_attachments: u32,
 }
 impl ::std::default::Default for PhysicalDeviceDescriptorIndexingProperties {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES,
@@ -27173,6 +27464,7 @@ pub struct DescriptorSetLayoutBindingFlagsCreateInfo {
     pub p_binding_flags: *const DescriptorBindingFlags,
 }
 impl ::std::default::Default for DescriptorSetLayoutBindingFlagsCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO,
@@ -27235,6 +27527,7 @@ pub struct DescriptorSetVariableDescriptorCountAllocateInfo {
     pub p_descriptor_counts: *const u32,
 }
 impl ::std::default::Default for DescriptorSetVariableDescriptorCountAllocateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_ALLOCATE_INFO,
@@ -27296,6 +27589,7 @@ pub struct DescriptorSetVariableDescriptorCountLayoutSupport {
     pub max_variable_descriptor_count: u32,
 }
 impl ::std::default::Default for DescriptorSetVariableDescriptorCountLayoutSupport {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT,
@@ -27366,6 +27660,7 @@ pub struct AttachmentDescription2 {
     pub final_layout: ImageLayout,
 }
 impl ::std::default::Default for AttachmentDescription2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::ATTACHMENT_DESCRIPTION_2,
@@ -27477,6 +27772,7 @@ pub struct AttachmentReference2 {
     pub aspect_mask: ImageAspectFlags,
 }
 impl ::std::default::Default for AttachmentReference2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::ATTACHMENT_REFERENCE_2,
@@ -27566,6 +27862,7 @@ pub struct SubpassDescription2 {
     pub p_preserve_attachments: *const u32,
 }
 impl ::std::default::Default for SubpassDescription2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SUBPASS_DESCRIPTION_2,
@@ -27687,6 +27984,7 @@ pub struct SubpassDependency2 {
     pub view_offset: i32,
 }
 impl ::std::default::Default for SubpassDependency2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SUBPASS_DEPENDENCY_2,
@@ -27799,6 +28097,7 @@ pub struct RenderPassCreateInfo2 {
     pub p_correlated_view_masks: *const u32,
 }
 impl ::std::default::Default for RenderPassCreateInfo2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::RENDER_PASS_CREATE_INFO_2,
@@ -27896,6 +28195,7 @@ pub struct SubpassBeginInfo {
     pub contents: SubpassContents,
 }
 impl ::std::default::Default for SubpassBeginInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SUBPASS_BEGIN_INFO,
@@ -27949,6 +28249,7 @@ pub struct SubpassEndInfo {
     pub p_next: *const c_void,
 }
 impl ::std::default::Default for SubpassEndInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SUBPASS_END_INFO,
@@ -28013,6 +28314,7 @@ pub struct PhysicalDeviceTimelineSemaphoreFeatures {
     pub timeline_semaphore: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceTimelineSemaphoreFeatures {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_TIMELINE_SEMAPHORE_FEATURES,
@@ -28071,6 +28373,7 @@ pub struct PhysicalDeviceTimelineSemaphoreProperties {
     pub max_timeline_semaphore_value_difference: u64,
 }
 impl ::std::default::Default for PhysicalDeviceTimelineSemaphoreProperties {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_TIMELINE_SEMAPHORE_PROPERTIES,
@@ -28135,6 +28438,7 @@ pub struct SemaphoreTypeCreateInfo {
     pub initial_value: u64,
 }
 impl ::std::default::Default for SemaphoreTypeCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SEMAPHORE_TYPE_CREATE_INFO,
@@ -28201,6 +28505,7 @@ pub struct TimelineSemaphoreSubmitInfo {
     pub p_signal_semaphore_values: *const u64,
 }
 impl ::std::default::Default for TimelineSemaphoreSubmitInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::TIMELINE_SEMAPHORE_SUBMIT_INFO,
@@ -28271,6 +28576,7 @@ pub struct SemaphoreWaitInfo {
     pub p_values: *const u64,
 }
 impl ::std::default::Default for SemaphoreWaitInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SEMAPHORE_WAIT_INFO,
@@ -28339,6 +28645,7 @@ pub struct SemaphoreSignalInfo {
     pub value: u64,
 }
 impl ::std::default::Default for SemaphoreSignalInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SEMAPHORE_SIGNAL_INFO,
@@ -28447,6 +28754,7 @@ pub struct PipelineVertexInputDivisorStateCreateInfoEXT {
     pub p_vertex_binding_divisors: *const VertexInputBindingDivisorDescriptionEXT,
 }
 impl ::std::default::Default for PipelineVertexInputDivisorStateCreateInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_EXT,
@@ -28514,6 +28822,7 @@ pub struct PhysicalDeviceVertexAttributeDivisorPropertiesEXT {
     pub max_vertex_attrib_divisor: u32,
 }
 impl ::std::default::Default for PhysicalDeviceVertexAttributeDivisorPropertiesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_EXT,
@@ -28576,6 +28885,7 @@ pub struct PhysicalDevicePCIBusInfoPropertiesEXT {
     pub pci_function: u32,
 }
 impl ::std::default::Default for PhysicalDevicePCIBusInfoPropertiesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_PCI_BUS_INFO_PROPERTIES_EXT,
@@ -28647,6 +28957,7 @@ pub struct ImportAndroidHardwareBufferInfoANDROID {
     pub buffer: *mut AHardwareBuffer,
 }
 impl ::std::default::Default for ImportAndroidHardwareBufferInfoANDROID {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMPORT_ANDROID_HARDWARE_BUFFER_INFO_ANDROID,
@@ -28703,6 +29014,7 @@ pub struct AndroidHardwareBufferUsageANDROID {
     pub android_hardware_buffer_usage: u64,
 }
 impl ::std::default::Default for AndroidHardwareBufferUsageANDROID {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::ANDROID_HARDWARE_BUFFER_USAGE_ANDROID,
@@ -28760,6 +29072,7 @@ pub struct AndroidHardwareBufferPropertiesANDROID {
     pub memory_type_bits: u32,
 }
 impl ::std::default::Default for AndroidHardwareBufferPropertiesANDROID {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::ANDROID_HARDWARE_BUFFER_PROPERTIES_ANDROID,
@@ -28837,6 +29150,7 @@ pub struct MemoryGetAndroidHardwareBufferInfoANDROID {
     pub memory: DeviceMemory,
 }
 impl ::std::default::Default for MemoryGetAndroidHardwareBufferInfoANDROID {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::MEMORY_GET_ANDROID_HARDWARE_BUFFER_INFO_ANDROID,
@@ -28898,6 +29212,7 @@ pub struct AndroidHardwareBufferFormatPropertiesANDROID {
     pub suggested_y_chroma_offset: ChromaLocation,
 }
 impl ::std::default::Default for AndroidHardwareBufferFormatPropertiesANDROID {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::ANDROID_HARDWARE_BUFFER_FORMAT_PROPERTIES_ANDROID,
@@ -29001,6 +29316,7 @@ pub struct CommandBufferInheritanceConditionalRenderingInfoEXT {
     pub conditional_rendering_enable: Bool32,
 }
 impl ::std::default::Default for CommandBufferInheritanceConditionalRenderingInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::COMMAND_BUFFER_INHERITANCE_CONDITIONAL_RENDERING_INFO_EXT,
@@ -29063,6 +29379,7 @@ pub struct ExternalFormatANDROID {
     pub external_format: u64,
 }
 impl ::std::default::Default for ExternalFormatANDROID {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::EXTERNAL_FORMAT_ANDROID,
@@ -29123,6 +29440,7 @@ pub struct PhysicalDevice8BitStorageFeatures {
     pub storage_push_constant8: Bool32,
 }
 impl ::std::default::Default for PhysicalDevice8BitStorageFeatures {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_8BIT_STORAGE_FEATURES,
@@ -29196,6 +29514,7 @@ pub struct PhysicalDeviceConditionalRenderingFeaturesEXT {
     pub inherited_conditional_rendering: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceConditionalRenderingFeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_CONDITIONAL_RENDERING_FEATURES_EXT,
@@ -29267,6 +29586,7 @@ pub struct PhysicalDeviceVulkanMemoryModelFeatures {
     pub vulkan_memory_model_availability_visibility_chains: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceVulkanMemoryModelFeatures {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_VULKAN_MEMORY_MODEL_FEATURES,
@@ -29344,6 +29664,7 @@ pub struct PhysicalDeviceShaderAtomicInt64Features {
     pub shader_shared_int64_atomics: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceShaderAtomicInt64Features {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_SHADER_ATOMIC_INT64_FEATURES,
@@ -29418,6 +29739,7 @@ pub struct PhysicalDeviceShaderAtomicFloatFeaturesEXT {
     pub sparse_image_float32_atomic_add: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceShaderAtomicFloatFeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_FEATURES_EXT,
@@ -29563,6 +29885,7 @@ pub struct PhysicalDeviceShaderAtomicFloat2FeaturesEXT {
     pub sparse_image_float32_atomic_min_max: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceShaderAtomicFloat2FeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_2_FEATURES_EXT,
@@ -29716,6 +30039,7 @@ pub struct PhysicalDeviceVertexAttributeDivisorFeaturesEXT {
     pub vertex_attribute_instance_rate_zero_divisor: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceVertexAttributeDivisorFeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES_EXT,
@@ -29790,6 +30114,7 @@ pub struct QueueFamilyCheckpointPropertiesNV {
     pub checkpoint_execution_stage_mask: PipelineStageFlags,
 }
 impl ::std::default::Default for QueueFamilyCheckpointPropertiesNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::QUEUE_FAMILY_CHECKPOINT_PROPERTIES_NV,
@@ -29850,6 +30175,7 @@ pub struct CheckpointDataNV {
     pub p_checkpoint_marker: *mut c_void,
 }
 impl ::std::default::Default for CheckpointDataNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::CHECKPOINT_DATA_NV,
@@ -29912,6 +30238,7 @@ pub struct PhysicalDeviceDepthStencilResolveProperties {
     pub independent_resolve: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceDepthStencilResolveProperties {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_DEPTH_STENCIL_RESOLVE_PROPERTIES,
@@ -29994,6 +30321,7 @@ pub struct SubpassDescriptionDepthStencilResolve {
     pub p_depth_stencil_resolve_attachment: *const AttachmentReference2,
 }
 impl ::std::default::Default for SubpassDescriptionDepthStencilResolve {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SUBPASS_DESCRIPTION_DEPTH_STENCIL_RESOLVE,
@@ -30063,6 +30391,7 @@ pub struct ImageViewASTCDecodeModeEXT {
     pub decode_mode: Format,
 }
 impl ::std::default::Default for ImageViewASTCDecodeModeEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMAGE_VIEW_ASTC_DECODE_MODE_EXT,
@@ -30119,6 +30448,7 @@ pub struct PhysicalDeviceASTCDecodeFeaturesEXT {
     pub decode_mode_shared_exponent: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceASTCDecodeFeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_ASTC_DECODE_FEATURES_EXT,
@@ -30178,6 +30508,7 @@ pub struct PhysicalDeviceTransformFeedbackFeaturesEXT {
     pub geometry_streams: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceTransformFeedbackFeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_TRANSFORM_FEEDBACK_FEATURES_EXT,
@@ -30253,6 +30584,7 @@ pub struct PhysicalDeviceTransformFeedbackPropertiesEXT {
     pub transform_feedback_draw: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceTransformFeedbackPropertiesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_TRANSFORM_FEEDBACK_PROPERTIES_EXT,
@@ -30381,6 +30713,7 @@ pub struct PipelineRasterizationStateStreamCreateInfoEXT {
     pub rasterization_stream: u32,
 }
 impl ::std::default::Default for PipelineRasterizationStateStreamCreateInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_RASTERIZATION_STATE_STREAM_CREATE_INFO_EXT,
@@ -30448,6 +30781,7 @@ pub struct PhysicalDeviceRepresentativeFragmentTestFeaturesNV {
     pub representative_fragment_test: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceRepresentativeFragmentTestFeaturesNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_REPRESENTATIVE_FRAGMENT_TEST_FEATURES_NV,
@@ -30512,6 +30846,7 @@ pub struct PipelineRepresentativeFragmentTestStateCreateInfoNV {
     pub representative_fragment_test_enable: Bool32,
 }
 impl ::std::default::Default for PipelineRepresentativeFragmentTestStateCreateInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_REPRESENTATIVE_FRAGMENT_TEST_STATE_CREATE_INFO_NV,
@@ -30577,6 +30912,7 @@ pub struct PhysicalDeviceExclusiveScissorFeaturesNV {
     pub exclusive_scissor: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceExclusiveScissorFeaturesNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_EXCLUSIVE_SCISSOR_FEATURES_NV,
@@ -30636,6 +30972,7 @@ pub struct PipelineViewportExclusiveScissorStateCreateInfoNV {
     pub p_exclusive_scissors: *const Rect2D,
 }
 impl ::std::default::Default for PipelineViewportExclusiveScissorStateCreateInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_VIEWPORT_EXCLUSIVE_SCISSOR_STATE_CREATE_INFO_NV,
@@ -30700,6 +31037,7 @@ pub struct PhysicalDeviceCornerSampledImageFeaturesNV {
     pub corner_sampled_image: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceCornerSampledImageFeaturesNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_CORNER_SAMPLED_IMAGE_FEATURES_NV,
@@ -30762,6 +31100,7 @@ pub struct PhysicalDeviceComputeShaderDerivativesFeaturesNV {
     pub compute_derivative_group_linear: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceComputeShaderDerivativesFeaturesNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_COMPUTE_SHADER_DERIVATIVES_FEATURES_NV,
@@ -30834,6 +31173,7 @@ pub struct PhysicalDeviceFragmentShaderBarycentricFeaturesNV {
     pub fragment_shader_barycentric: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceFragmentShaderBarycentricFeaturesNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADER_BARYCENTRIC_FEATURES_NV,
@@ -30898,6 +31238,7 @@ pub struct PhysicalDeviceShaderImageFootprintFeaturesNV {
     pub image_footprint: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceShaderImageFootprintFeaturesNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_SHADER_IMAGE_FOOTPRINT_FEATURES_NV,
@@ -30959,6 +31300,7 @@ pub struct PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV {
     pub dedicated_allocation_image_aliasing: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_DEDICATED_ALLOCATION_IMAGE_ALIASING_FEATURES_NV,
@@ -31030,6 +31372,7 @@ pub struct ShadingRatePaletteNV {
     pub p_shading_rate_palette_entries: *const ShadingRatePaletteEntryNV,
 }
 impl ::std::default::Default for ShadingRatePaletteNV {
+    #[inline]
     fn default() -> Self {
         Self {
             shading_rate_palette_entry_count: u32::default(),
@@ -31089,6 +31432,7 @@ pub struct PipelineViewportShadingRateImageStateCreateInfoNV {
     pub p_shading_rate_palettes: *const ShadingRatePaletteNV,
 }
 impl ::std::default::Default for PipelineViewportShadingRateImageStateCreateInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_VIEWPORT_SHADING_RATE_IMAGE_STATE_CREATE_INFO_NV,
@@ -31162,6 +31506,7 @@ pub struct PhysicalDeviceShadingRateImageFeaturesNV {
     pub shading_rate_coarse_sample_order: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceShadingRateImageFeaturesNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_SHADING_RATE_IMAGE_FEATURES_NV,
@@ -31230,6 +31575,7 @@ pub struct PhysicalDeviceShadingRateImagePropertiesNV {
     pub shading_rate_max_coarse_samples: u32,
 }
 impl ::std::default::Default for PhysicalDeviceShadingRateImagePropertiesNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_SHADING_RATE_IMAGE_PROPERTIES_NV,
@@ -31299,6 +31645,7 @@ pub struct PhysicalDeviceInvocationMaskFeaturesHUAWEI {
     pub invocation_mask: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceInvocationMaskFeaturesHUAWEI {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_INVOCATION_MASK_FEATURES_HUAWEI,
@@ -31414,6 +31761,7 @@ pub struct CoarseSampleOrderCustomNV {
     pub p_sample_locations: *const CoarseSampleLocationNV,
 }
 impl ::std::default::Default for CoarseSampleOrderCustomNV {
+    #[inline]
     fn default() -> Self {
         Self {
             shading_rate: ShadingRatePaletteEntryNV::default(),
@@ -31480,6 +31828,7 @@ pub struct PipelineViewportCoarseSampleOrderStateCreateInfoNV {
     pub p_custom_sample_orders: *const CoarseSampleOrderCustomNV,
 }
 impl ::std::default::Default for PipelineViewportCoarseSampleOrderStateCreateInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_VIEWPORT_COARSE_SAMPLE_ORDER_STATE_CREATE_INFO_NV,
@@ -31553,6 +31902,7 @@ pub struct PhysicalDeviceMeshShaderFeaturesNV {
     pub mesh_shader: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceMeshShaderFeaturesNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_MESH_SHADER_FEATURES_NV,
@@ -31628,6 +31978,7 @@ pub struct PhysicalDeviceMeshShaderPropertiesNV {
     pub mesh_output_per_primitive_granularity: u32,
 }
 impl ::std::default::Default for PhysicalDeviceMeshShaderPropertiesNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_MESH_SHADER_PROPERTIES_NV,
@@ -31802,6 +32153,7 @@ pub struct RayTracingShaderGroupCreateInfoNV {
     pub intersection_shader: u32,
 }
 impl ::std::default::Default for RayTracingShaderGroupCreateInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::RAY_TRACING_SHADER_GROUP_CREATE_INFO_NV,
@@ -31881,6 +32233,7 @@ pub struct RayTracingShaderGroupCreateInfoKHR {
     pub p_shader_group_capture_replay_handle: *const c_void,
 }
 impl ::std::default::Default for RayTracingShaderGroupCreateInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::RAY_TRACING_SHADER_GROUP_CREATE_INFO_KHR,
@@ -31971,6 +32324,7 @@ pub struct RayTracingPipelineCreateInfoNV {
     pub base_pipeline_index: i32,
 }
 impl ::std::default::Default for RayTracingPipelineCreateInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::RAY_TRACING_PIPELINE_CREATE_INFO_NV,
@@ -32085,6 +32439,7 @@ pub struct RayTracingPipelineCreateInfoKHR {
     pub base_pipeline_index: i32,
 }
 impl ::std::default::Default for RayTracingPipelineCreateInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::RAY_TRACING_PIPELINE_CREATE_INFO_KHR,
@@ -32219,6 +32574,7 @@ pub struct GeometryTrianglesNV {
     pub transform_offset: DeviceSize,
 }
 impl ::std::default::Default for GeometryTrianglesNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::GEOMETRY_TRIANGLES_NV,
@@ -32326,6 +32682,7 @@ pub struct GeometryAABBNV {
     pub offset: DeviceSize,
 }
 impl ::std::default::Default for GeometryAABBNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::GEOMETRY_AABB_NV,
@@ -32445,6 +32802,7 @@ pub struct GeometryNV {
     pub flags: GeometryFlagsKHR,
 }
 impl ::std::default::Default for GeometryNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::GEOMETRY_NV,
@@ -32513,6 +32871,7 @@ pub struct AccelerationStructureInfoNV {
     pub p_geometries: *const GeometryNV,
 }
 impl ::std::default::Default for AccelerationStructureInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::ACCELERATION_STRUCTURE_INFO_NV,
@@ -32585,6 +32944,7 @@ pub struct AccelerationStructureCreateInfoNV {
     pub info: AccelerationStructureInfoNV,
 }
 impl ::std::default::Default for AccelerationStructureCreateInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::ACCELERATION_STRUCTURE_CREATE_INFO_NV,
@@ -32648,6 +33008,7 @@ pub struct BindAccelerationStructureMemoryInfoNV {
     pub p_device_indices: *const u32,
 }
 impl ::std::default::Default for BindAccelerationStructureMemoryInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::BIND_ACCELERATION_STRUCTURE_MEMORY_INFO_NV,
@@ -32723,6 +33084,7 @@ pub struct WriteDescriptorSetAccelerationStructureKHR {
     pub p_acceleration_structures: *const AccelerationStructureKHR,
 }
 impl ::std::default::Default for WriteDescriptorSetAccelerationStructureKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::WRITE_DESCRIPTOR_SET_ACCELERATION_STRUCTURE_KHR,
@@ -32785,6 +33147,7 @@ pub struct WriteDescriptorSetAccelerationStructureNV {
     pub p_acceleration_structures: *const AccelerationStructureNV,
 }
 impl ::std::default::Default for WriteDescriptorSetAccelerationStructureNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::WRITE_DESCRIPTOR_SET_ACCELERATION_STRUCTURE_NV,
@@ -32847,6 +33210,7 @@ pub struct AccelerationStructureMemoryRequirementsInfoNV {
     pub acceleration_structure: AccelerationStructureNV,
 }
 impl ::std::default::Default for AccelerationStructureMemoryRequirementsInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::ACCELERATION_STRUCTURE_MEMORY_REQUIREMENTS_INFO_NV,
@@ -32913,6 +33277,7 @@ pub struct PhysicalDeviceAccelerationStructureFeaturesKHR {
     pub descriptor_binding_acceleration_structure_update_after_bind: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceAccelerationStructureFeaturesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_ACCELERATION_STRUCTURE_FEATURES_KHR,
@@ -33015,6 +33380,7 @@ pub struct PhysicalDeviceRayTracingPipelineFeaturesKHR {
     pub ray_traversal_primitive_culling: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceRayTracingPipelineFeaturesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_RAY_TRACING_PIPELINE_FEATURES_KHR,
@@ -33113,6 +33479,7 @@ pub struct PhysicalDeviceRayQueryFeaturesKHR {
     pub ray_query: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceRayQueryFeaturesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_RAY_QUERY_FEATURES_KHR,
@@ -33178,6 +33545,7 @@ pub struct PhysicalDeviceAccelerationStructurePropertiesKHR {
     pub min_acceleration_structure_scratch_offset_alignment: u32,
 }
 impl ::std::default::Default for PhysicalDeviceAccelerationStructurePropertiesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_ACCELERATION_STRUCTURE_PROPERTIES_KHR,
@@ -33302,6 +33670,7 @@ pub struct PhysicalDeviceRayTracingPipelinePropertiesKHR {
     pub max_ray_hit_attribute_size: u32,
 }
 impl ::std::default::Default for PhysicalDeviceRayTracingPipelinePropertiesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_RAY_TRACING_PIPELINE_PROPERTIES_KHR,
@@ -33410,6 +33779,7 @@ pub struct PhysicalDeviceRayTracingPropertiesNV {
     pub max_descriptor_set_acceleration_structures: u32,
 }
 impl ::std::default::Default for PhysicalDeviceRayTracingPropertiesNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_RAY_TRACING_PROPERTIES_NV,
@@ -33612,6 +33982,7 @@ pub struct DrmFormatModifierPropertiesListEXT {
     pub p_drm_format_modifier_properties: *mut DrmFormatModifierPropertiesEXT,
 }
 impl ::std::default::Default for DrmFormatModifierPropertiesListEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DRM_FORMAT_MODIFIER_PROPERTIES_LIST_EXT,
@@ -33732,6 +34103,7 @@ pub struct PhysicalDeviceImageDrmFormatModifierInfoEXT {
     pub p_queue_family_indices: *const u32,
 }
 impl ::std::default::Default for PhysicalDeviceImageDrmFormatModifierInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_IMAGE_DRM_FORMAT_MODIFIER_INFO_EXT,
@@ -33804,6 +34176,7 @@ pub struct ImageDrmFormatModifierListCreateInfoEXT {
     pub p_drm_format_modifiers: *const u64,
 }
 impl ::std::default::Default for ImageDrmFormatModifierListCreateInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMAGE_DRM_FORMAT_MODIFIER_LIST_CREATE_INFO_EXT,
@@ -33864,6 +34237,7 @@ pub struct ImageDrmFormatModifierExplicitCreateInfoEXT {
     pub p_plane_layouts: *const SubresourceLayout,
 }
 impl ::std::default::Default for ImageDrmFormatModifierExplicitCreateInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMAGE_DRM_FORMAT_MODIFIER_EXPLICIT_CREATE_INFO_EXT,
@@ -33927,6 +34301,7 @@ pub struct ImageDrmFormatModifierPropertiesEXT {
     pub drm_format_modifier: u64,
 }
 impl ::std::default::Default for ImageDrmFormatModifierPropertiesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMAGE_DRM_FORMAT_MODIFIER_PROPERTIES_EXT,
@@ -33981,6 +34356,7 @@ pub struct ImageStencilUsageCreateInfo {
     pub stencil_usage: ImageUsageFlags,
 }
 impl ::std::default::Default for ImageStencilUsageCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMAGE_STENCIL_USAGE_CREATE_INFO,
@@ -34039,6 +34415,7 @@ pub struct DeviceMemoryOverallocationCreateInfoAMD {
     pub overallocation_behavior: MemoryOverallocationBehaviorAMD,
 }
 impl ::std::default::Default for DeviceMemoryOverallocationCreateInfoAMD {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEVICE_MEMORY_OVERALLOCATION_CREATE_INFO_AMD,
@@ -34100,6 +34477,7 @@ pub struct PhysicalDeviceFragmentDensityMapFeaturesEXT {
     pub fragment_density_map_non_subsampled_images: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceFragmentDensityMapFeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_FEATURES_EXT,
@@ -34175,6 +34553,7 @@ pub struct PhysicalDeviceFragmentDensityMap2FeaturesEXT {
     pub fragment_density_map_deferred: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceFragmentDensityMap2FeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_2_FEATURES_EXT,
@@ -34236,6 +34615,7 @@ pub struct PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM {
     pub fragment_density_map_offset: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_OFFSET_FEATURES_QCOM,
@@ -34302,6 +34682,7 @@ pub struct PhysicalDeviceFragmentDensityMapPropertiesEXT {
     pub fragment_density_invocations: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceFragmentDensityMapPropertiesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_PROPERTIES_EXT,
@@ -34380,6 +34761,7 @@ pub struct PhysicalDeviceFragmentDensityMap2PropertiesEXT {
     pub max_descriptor_set_subsampled_samplers: u32,
 }
 impl ::std::default::Default for PhysicalDeviceFragmentDensityMap2PropertiesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_2_PROPERTIES_EXT,
@@ -34461,6 +34843,7 @@ pub struct PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM {
     pub fragment_density_offset_granularity: Extent2D,
 }
 impl ::std::default::Default for PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_OFFSET_PROPERTIES_QCOM,
@@ -34526,6 +34909,7 @@ pub struct RenderPassFragmentDensityMapCreateInfoEXT {
     pub fragment_density_map_attachment: AttachmentReference,
 }
 impl ::std::default::Default for RenderPassFragmentDensityMapCreateInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::RENDER_PASS_FRAGMENT_DENSITY_MAP_CREATE_INFO_EXT,
@@ -34588,6 +34972,7 @@ pub struct SubpassFragmentDensityMapOffsetEndInfoQCOM {
     pub p_fragment_density_offsets: *const Offset2D,
 }
 impl ::std::default::Default for SubpassFragmentDensityMapOffsetEndInfoQCOM {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SUBPASS_FRAGMENT_DENSITY_MAP_OFFSET_END_INFO_QCOM,
@@ -34646,6 +35031,7 @@ pub struct PhysicalDeviceScalarBlockLayoutFeatures {
     pub scalar_block_layout: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceScalarBlockLayoutFeatures {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES,
@@ -34704,6 +35090,7 @@ pub struct SurfaceProtectedCapabilitiesKHR {
     pub supports_protected: Bool32,
 }
 impl ::std::default::Default for SurfaceProtectedCapabilitiesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SURFACE_PROTECTED_CAPABILITIES_KHR,
@@ -34760,6 +35147,7 @@ pub struct PhysicalDeviceUniformBufferStandardLayoutFeatures {
     pub uniform_buffer_standard_layout: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceUniformBufferStandardLayoutFeatures {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_UNIFORM_BUFFER_STANDARD_LAYOUT_FEATURES,
@@ -34824,6 +35212,7 @@ pub struct PhysicalDeviceDepthClipEnableFeaturesEXT {
     pub depth_clip_enable: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceDepthClipEnableFeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_DEPTH_CLIP_ENABLE_FEATURES_EXT,
@@ -34883,6 +35272,7 @@ pub struct PipelineRasterizationDepthClipStateCreateInfoEXT {
     pub depth_clip_enable: Bool32,
 }
 impl ::std::default::Default for PipelineRasterizationDepthClipStateCreateInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_RASTERIZATION_DEPTH_CLIP_STATE_CREATE_INFO_EXT,
@@ -34951,6 +35341,7 @@ pub struct PhysicalDeviceMemoryBudgetPropertiesEXT {
     pub heap_usage: [DeviceSize; MAX_MEMORY_HEAPS],
 }
 impl ::std::default::Default for PhysicalDeviceMemoryBudgetPropertiesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_MEMORY_BUDGET_PROPERTIES_EXT,
@@ -35015,6 +35406,7 @@ pub struct PhysicalDeviceMemoryPriorityFeaturesEXT {
     pub memory_priority: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceMemoryPriorityFeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_MEMORY_PRIORITY_FEATURES_EXT,
@@ -35073,6 +35465,7 @@ pub struct MemoryPriorityAllocateInfoEXT {
     pub priority: f32,
 }
 impl ::std::default::Default for MemoryPriorityAllocateInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::MEMORY_PRIORITY_ALLOCATE_INFO_EXT,
@@ -35129,6 +35522,7 @@ pub struct PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT {
     pub pageable_device_local_memory: Bool32,
 }
 impl ::std::default::Default for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_PAGEABLE_DEVICE_LOCAL_MEMORY_FEATURES_EXT,
@@ -35195,6 +35589,7 @@ pub struct PhysicalDeviceBufferDeviceAddressFeatures {
     pub buffer_device_address_multi_device: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceBufferDeviceAddressFeatures {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_BUFFER_DEVICE_ADDRESS_FEATURES,
@@ -35275,6 +35670,7 @@ pub struct PhysicalDeviceBufferDeviceAddressFeaturesEXT {
     pub buffer_device_address_multi_device: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceBufferDeviceAddressFeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_BUFFER_DEVICE_ADDRESS_FEATURES_EXT,
@@ -35353,6 +35749,7 @@ pub struct BufferDeviceAddressInfo {
     pub buffer: Buffer,
 }
 impl ::std::default::Default for BufferDeviceAddressInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::BUFFER_DEVICE_ADDRESS_INFO,
@@ -35407,6 +35804,7 @@ pub struct BufferOpaqueCaptureAddressCreateInfo {
     pub opaque_capture_address: u64,
 }
 impl ::std::default::Default for BufferOpaqueCaptureAddressCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::BUFFER_OPAQUE_CAPTURE_ADDRESS_CREATE_INFO,
@@ -35463,6 +35861,7 @@ pub struct BufferDeviceAddressCreateInfoEXT {
     pub device_address: DeviceAddress,
 }
 impl ::std::default::Default for BufferDeviceAddressCreateInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::BUFFER_DEVICE_ADDRESS_CREATE_INFO_EXT,
@@ -35519,6 +35918,7 @@ pub struct PhysicalDeviceImageViewImageFormatInfoEXT {
     pub image_view_type: ImageViewType,
 }
 impl ::std::default::Default for PhysicalDeviceImageViewImageFormatInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_IMAGE_VIEW_IMAGE_FORMAT_INFO_EXT,
@@ -35579,6 +35979,7 @@ pub struct FilterCubicImageViewImageFormatPropertiesEXT {
     pub filter_cubic_minmax: Bool32,
 }
 impl ::std::default::Default for FilterCubicImageViewImageFormatPropertiesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::FILTER_CUBIC_IMAGE_VIEW_IMAGE_FORMAT_PROPERTIES_EXT,
@@ -35643,6 +36044,7 @@ pub struct PhysicalDeviceImagelessFramebufferFeatures {
     pub imageless_framebuffer: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceImagelessFramebufferFeatures {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_IMAGELESS_FRAMEBUFFER_FEATURES,
@@ -35705,6 +36107,7 @@ pub struct FramebufferAttachmentsCreateInfo {
     pub p_attachment_image_infos: *const FramebufferAttachmentImageInfo,
 }
 impl ::std::default::Default for FramebufferAttachmentsCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::FRAMEBUFFER_ATTACHMENTS_CREATE_INFO,
@@ -35772,6 +36175,7 @@ pub struct FramebufferAttachmentImageInfo {
     pub p_view_formats: *const Format,
 }
 impl ::std::default::Default for FramebufferAttachmentImageInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::FRAMEBUFFER_ATTACHMENT_IMAGE_INFO,
@@ -35854,6 +36258,7 @@ pub struct RenderPassAttachmentBeginInfo {
     pub p_attachments: *const ImageView,
 }
 impl ::std::default::Default for RenderPassAttachmentBeginInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::RENDER_PASS_ATTACHMENT_BEGIN_INFO,
@@ -35912,6 +36317,7 @@ pub struct PhysicalDeviceTextureCompressionASTCHDRFeatures {
     pub texture_compression_astc_hdr: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceTextureCompressionASTCHDRFeatures {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_TEXTURE_COMPRESSION_ASTC_HDR_FEATURES,
@@ -35974,6 +36380,7 @@ pub struct PhysicalDeviceCooperativeMatrixFeaturesNV {
     pub cooperative_matrix_robust_buffer_access: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceCooperativeMatrixFeaturesNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_FEATURES_NV,
@@ -36044,6 +36451,7 @@ pub struct PhysicalDeviceCooperativeMatrixPropertiesNV {
     pub cooperative_matrix_supported_stages: ShaderStageFlags,
 }
 impl ::std::default::Default for PhysicalDeviceCooperativeMatrixPropertiesNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_PROPERTIES_NV,
@@ -36113,6 +36521,7 @@ pub struct CooperativeMatrixPropertiesNV {
     pub scope: ScopeNV,
 }
 impl ::std::default::Default for CooperativeMatrixPropertiesNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::COOPERATIVE_MATRIX_PROPERTIES_NV,
@@ -36202,6 +36611,7 @@ pub struct PhysicalDeviceYcbcrImageArraysFeaturesEXT {
     pub ycbcr_image_arrays: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceYcbcrImageArraysFeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_YCBCR_IMAGE_ARRAYS_FEATURES_EXT,
@@ -36265,6 +36675,7 @@ pub struct ImageViewHandleInfoNVX {
     pub sampler: Sampler,
 }
 impl ::std::default::Default for ImageViewHandleInfoNVX {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMAGE_VIEW_HANDLE_INFO_NVX,
@@ -36330,6 +36741,7 @@ pub struct ImageViewAddressPropertiesNVX {
     pub size: DeviceSize,
 }
 impl ::std::default::Default for ImageViewAddressPropertiesNVX {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMAGE_VIEW_ADDRESS_PROPERTIES_NVX,
@@ -36389,6 +36801,7 @@ pub struct PresentFrameTokenGGP {
     pub frame_token: GgpFrameToken,
 }
 impl ::std::default::Default for PresentFrameTokenGGP {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PRESENT_FRAME_TOKEN_GGP,
@@ -36495,6 +36908,7 @@ pub struct PipelineCreationFeedbackCreateInfo {
     pub p_pipeline_stage_creation_feedbacks: *mut PipelineCreationFeedback,
 }
 impl ::std::default::Default for PipelineCreationFeedbackCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_CREATION_FEEDBACK_CREATE_INFO,
@@ -36578,6 +36992,7 @@ pub struct SurfaceFullScreenExclusiveInfoEXT {
     pub full_screen_exclusive: FullScreenExclusiveEXT,
 }
 impl ::std::default::Default for SurfaceFullScreenExclusiveInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SURFACE_FULL_SCREEN_EXCLUSIVE_INFO_EXT,
@@ -36636,6 +37051,7 @@ pub struct SurfaceFullScreenExclusiveWin32InfoEXT {
     pub hmonitor: HMONITOR,
 }
 impl ::std::default::Default for SurfaceFullScreenExclusiveWin32InfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SURFACE_FULL_SCREEN_EXCLUSIVE_WIN32_INFO_EXT,
@@ -36697,6 +37113,7 @@ pub struct SurfaceCapabilitiesFullScreenExclusiveEXT {
     pub full_screen_exclusive_supported: Bool32,
 }
 impl ::std::default::Default for SurfaceCapabilitiesFullScreenExclusiveEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SURFACE_CAPABILITIES_FULL_SCREEN_EXCLUSIVE_EXT,
@@ -36760,6 +37177,7 @@ pub struct PhysicalDevicePerformanceQueryFeaturesKHR {
     pub performance_counter_multiple_query_pools: Bool32,
 }
 impl ::std::default::Default for PhysicalDevicePerformanceQueryFeaturesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_PERFORMANCE_QUERY_FEATURES_KHR,
@@ -36833,6 +37251,7 @@ pub struct PhysicalDevicePerformanceQueryPropertiesKHR {
     pub allow_command_buffer_query_copies: Bool32,
 }
 impl ::std::default::Default for PhysicalDevicePerformanceQueryPropertiesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_PERFORMANCE_QUERY_PROPERTIES_KHR,
@@ -36898,6 +37317,7 @@ pub struct PerformanceCounterKHR {
     pub uuid: [u8; UUID_SIZE],
 }
 impl ::std::default::Default for PerformanceCounterKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PERFORMANCE_COUNTER_KHR,
@@ -36988,6 +37408,7 @@ impl fmt::Debug for PerformanceCounterDescriptionKHR {
     }
 }
 impl ::std::default::Default for PerformanceCounterDescriptionKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PERFORMANCE_COUNTER_DESCRIPTION_KHR,
@@ -37059,6 +37480,7 @@ pub struct QueryPoolPerformanceCreateInfoKHR {
     pub p_counter_indices: *const u32,
 }
 impl ::std::default::Default for QueryPoolPerformanceCreateInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::QUERY_POOL_PERFORMANCE_CREATE_INFO_KHR,
@@ -37124,6 +37546,7 @@ pub union PerformanceCounterResultKHR {
     pub float64: f64,
 }
 impl ::std::default::Default for PerformanceCounterResultKHR {
+    #[inline]
     fn default() -> Self {
         unsafe { ::std::mem::zeroed() }
     }
@@ -37139,6 +37562,7 @@ pub struct AcquireProfilingLockInfoKHR {
     pub timeout: u64,
 }
 impl ::std::default::Default for AcquireProfilingLockInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::ACQUIRE_PROFILING_LOCK_INFO_KHR,
@@ -37198,6 +37622,7 @@ pub struct PerformanceQuerySubmitInfoKHR {
     pub counter_pass_index: u32,
 }
 impl ::std::default::Default for PerformanceQuerySubmitInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PERFORMANCE_QUERY_SUBMIT_INFO_KHR,
@@ -37256,6 +37681,7 @@ pub struct HeadlessSurfaceCreateInfoEXT {
     pub flags: HeadlessSurfaceCreateFlagsEXT,
 }
 impl ::std::default::Default for HeadlessSurfaceCreateInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::HEADLESS_SURFACE_CREATE_INFO_EXT,
@@ -37310,6 +37736,7 @@ pub struct PhysicalDeviceCoverageReductionModeFeaturesNV {
     pub coverage_reduction_mode: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceCoverageReductionModeFeaturesNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_COVERAGE_REDUCTION_MODE_FEATURES_NV,
@@ -37372,6 +37799,7 @@ pub struct PipelineCoverageReductionStateCreateInfoNV {
     pub coverage_reduction_mode: CoverageReductionModeNV,
 }
 impl ::std::default::Default for PipelineCoverageReductionStateCreateInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_COVERAGE_REDUCTION_STATE_CREATE_INFO_NV,
@@ -37445,6 +37873,7 @@ pub struct FramebufferMixedSamplesCombinationNV {
     pub color_samples: SampleCountFlags,
 }
 impl ::std::default::Default for FramebufferMixedSamplesCombinationNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::FRAMEBUFFER_MIXED_SAMPLES_COMBINATION_NV,
@@ -37517,6 +37946,7 @@ pub struct PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL {
     pub shader_integer_functions2: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_SHADER_INTEGER_FUNCTIONS_2_FEATURES_INTEL,
@@ -37582,6 +38012,7 @@ pub union PerformanceValueDataINTEL {
     pub value_string: *const c_char,
 }
 impl ::std::default::Default for PerformanceValueDataINTEL {
+    #[inline]
     fn default() -> Self {
         unsafe { ::std::mem::zeroed() }
     }
@@ -37652,6 +38083,7 @@ pub struct InitializePerformanceApiInfoINTEL {
     pub p_user_data: *mut c_void,
 }
 impl ::std::default::Default for InitializePerformanceApiInfoINTEL {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::INITIALIZE_PERFORMANCE_API_INFO_INTEL,
@@ -37706,6 +38138,7 @@ pub struct QueryPoolPerformanceQueryCreateInfoINTEL {
     pub performance_counters_sampling: QueryPoolSamplingModeINTEL,
 }
 impl ::std::default::Default for QueryPoolPerformanceQueryCreateInfoINTEL {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::QUERY_POOL_PERFORMANCE_QUERY_CREATE_INFO_INTEL,
@@ -37765,6 +38198,7 @@ pub struct PerformanceMarkerInfoINTEL {
     pub marker: u64,
 }
 impl ::std::default::Default for PerformanceMarkerInfoINTEL {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PERFORMANCE_MARKER_INFO_INTEL,
@@ -37819,6 +38253,7 @@ pub struct PerformanceStreamMarkerInfoINTEL {
     pub marker: u32,
 }
 impl ::std::default::Default for PerformanceStreamMarkerInfoINTEL {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PERFORMANCE_STREAM_MARKER_INFO_INTEL,
@@ -37875,6 +38310,7 @@ pub struct PerformanceOverrideInfoINTEL {
     pub parameter: u64,
 }
 impl ::std::default::Default for PerformanceOverrideInfoINTEL {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PERFORMANCE_OVERRIDE_INFO_INTEL,
@@ -37939,6 +38375,7 @@ pub struct PerformanceConfigurationAcquireInfoINTEL {
     pub ty: PerformanceConfigurationTypeINTEL,
 }
 impl ::std::default::Default for PerformanceConfigurationAcquireInfoINTEL {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PERFORMANCE_CONFIGURATION_ACQUIRE_INFO_INTEL,
@@ -37994,6 +38431,7 @@ pub struct PhysicalDeviceShaderClockFeaturesKHR {
     pub shader_device_clock: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceShaderClockFeaturesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_SHADER_CLOCK_FEATURES_KHR,
@@ -38057,6 +38495,7 @@ pub struct PhysicalDeviceIndexTypeUint8FeaturesEXT {
     pub index_type_uint8: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceIndexTypeUint8FeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_INDEX_TYPE_UINT8_FEATURES_EXT,
@@ -38116,6 +38555,7 @@ pub struct PhysicalDeviceShaderSMBuiltinsPropertiesNV {
     pub shader_warps_per_sm: u32,
 }
 impl ::std::default::Default for PhysicalDeviceShaderSMBuiltinsPropertiesNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_SHADER_SM_BUILTINS_PROPERTIES_NV,
@@ -38180,6 +38620,7 @@ pub struct PhysicalDeviceShaderSMBuiltinsFeaturesNV {
     pub shader_sm_builtins: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceShaderSMBuiltinsFeaturesNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_SHADER_SM_BUILTINS_FEATURES_NV,
@@ -38240,6 +38681,7 @@ pub struct PhysicalDeviceFragmentShaderInterlockFeaturesEXT {
     pub fragment_shader_shading_rate_interlock: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceFragmentShaderInterlockFeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADER_INTERLOCK_FEATURES_EXT,
@@ -38324,6 +38766,7 @@ pub struct PhysicalDeviceSeparateDepthStencilLayoutsFeatures {
     pub separate_depth_stencil_layouts: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceSeparateDepthStencilLayoutsFeatures {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_SEPARATE_DEPTH_STENCIL_LAYOUTS_FEATURES,
@@ -38388,6 +38831,7 @@ pub struct AttachmentReferenceStencilLayout {
     pub stencil_layout: ImageLayout,
 }
 impl ::std::default::Default for AttachmentReferenceStencilLayout {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::ATTACHMENT_REFERENCE_STENCIL_LAYOUT,
@@ -38445,6 +38889,7 @@ pub struct PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT {
     pub primitive_topology_patch_list_restart: Bool32,
 }
 impl ::std::default::Default for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_PRIMITIVE_TOPOLOGY_LIST_RESTART_FEATURES_EXT,
@@ -38525,6 +38970,7 @@ pub struct AttachmentDescriptionStencilLayout {
     pub stencil_final_layout: ImageLayout,
 }
 impl ::std::default::Default for AttachmentDescriptionStencilLayout {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::ATTACHMENT_DESCRIPTION_STENCIL_LAYOUT,
@@ -38586,6 +39032,7 @@ pub struct PhysicalDevicePipelineExecutablePropertiesFeaturesKHR {
     pub pipeline_executable_info: Bool32,
 }
 impl ::std::default::Default for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_PIPELINE_EXECUTABLE_PROPERTIES_FEATURES_KHR,
@@ -38653,6 +39100,7 @@ pub struct PipelineInfoKHR {
     pub pipeline: Pipeline,
 }
 impl ::std::default::Default for PipelineInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_INFO_KHR,
@@ -38726,6 +39174,7 @@ impl fmt::Debug for PipelineExecutablePropertiesKHR {
     }
 }
 impl ::std::default::Default for PipelineExecutablePropertiesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_EXECUTABLE_PROPERTIES_KHR,
@@ -38796,6 +39245,7 @@ pub struct PipelineExecutableInfoKHR {
     pub executable_index: u32,
 }
 impl ::std::default::Default for PipelineExecutableInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_EXECUTABLE_INFO_KHR,
@@ -38855,6 +39305,7 @@ pub union PipelineExecutableStatisticValueKHR {
     pub f64: f64,
 }
 impl ::std::default::Default for PipelineExecutableStatisticValueKHR {
+    #[inline]
     fn default() -> Self {
         unsafe { ::std::mem::zeroed() }
     }
@@ -38888,6 +39339,7 @@ impl fmt::Debug for PipelineExecutableStatisticKHR {
     }
 }
 impl ::std::default::Default for PipelineExecutableStatisticKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_EXECUTABLE_STATISTIC_KHR,
@@ -38978,6 +39430,7 @@ impl fmt::Debug for PipelineExecutableInternalRepresentationKHR {
     }
 }
 impl ::std::default::Default for PipelineExecutableInternalRepresentationKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_EXECUTABLE_INTERNAL_REPRESENTATION_KHR,
@@ -39049,6 +39502,7 @@ pub struct PhysicalDeviceShaderDemoteToHelperInvocationFeatures {
     pub shader_demote_to_helper_invocation: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceShaderDemoteToHelperInvocationFeatures {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_SHADER_DEMOTE_TO_HELPER_INVOCATION_FEATURES,
@@ -39119,6 +39573,7 @@ pub struct PhysicalDeviceTexelBufferAlignmentFeaturesEXT {
     pub texel_buffer_alignment: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceTexelBufferAlignmentFeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_TEXEL_BUFFER_ALIGNMENT_FEATURES_EXT,
@@ -39183,6 +39638,7 @@ pub struct PhysicalDeviceTexelBufferAlignmentProperties {
     pub uniform_texel_buffer_offset_single_texel_alignment: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceTexelBufferAlignmentProperties {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_TEXEL_BUFFER_ALIGNMENT_PROPERTIES,
@@ -39276,6 +39732,7 @@ pub struct PhysicalDeviceSubgroupSizeControlFeatures {
     pub compute_full_subgroups: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceSubgroupSizeControlFeatures {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_SUBGROUP_SIZE_CONTROL_FEATURES,
@@ -39345,6 +39802,7 @@ pub struct PhysicalDeviceSubgroupSizeControlProperties {
     pub required_subgroup_size_stages: ShaderStageFlags,
 }
 impl ::std::default::Default for PhysicalDeviceSubgroupSizeControlProperties {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_SUBGROUP_SIZE_CONTROL_PROPERTIES,
@@ -39422,6 +39880,7 @@ pub struct PipelineShaderStageRequiredSubgroupSizeCreateInfo {
     pub required_subgroup_size: u32,
 }
 impl ::std::default::Default for PipelineShaderStageRequiredSubgroupSizeCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_SHADER_STAGE_REQUIRED_SUBGROUP_SIZE_CREATE_INFO,
@@ -39485,6 +39944,7 @@ pub struct SubpassShadingPipelineCreateInfoHUAWEI {
     pub subpass: u32,
 }
 impl ::std::default::Default for SubpassShadingPipelineCreateInfoHUAWEI {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SUBPASS_SHADING_PIPELINE_CREATE_INFO_HUAWEI,
@@ -39546,6 +40006,7 @@ pub struct PhysicalDeviceSubpassShadingPropertiesHUAWEI {
     pub max_subpass_shading_workgroup_size_aspect_ratio: u32,
 }
 impl ::std::default::Default for PhysicalDeviceSubpassShadingPropertiesHUAWEI {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_SUBPASS_SHADING_PROPERTIES_HUAWEI,
@@ -39609,6 +40070,7 @@ pub struct MemoryOpaqueCaptureAddressAllocateInfo {
     pub opaque_capture_address: u64,
 }
 impl ::std::default::Default for MemoryOpaqueCaptureAddressAllocateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::MEMORY_OPAQUE_CAPTURE_ADDRESS_ALLOCATE_INFO,
@@ -39665,6 +40127,7 @@ pub struct DeviceMemoryOpaqueCaptureAddressInfo {
     pub memory: DeviceMemory,
 }
 impl ::std::default::Default for DeviceMemoryOpaqueCaptureAddressInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEVICE_MEMORY_OPAQUE_CAPTURE_ADDRESS_INFO,
@@ -39724,6 +40187,7 @@ pub struct PhysicalDeviceLineRasterizationFeaturesEXT {
     pub stippled_smooth_lines: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceLineRasterizationFeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_LINE_RASTERIZATION_FEATURES_EXT,
@@ -39810,6 +40274,7 @@ pub struct PhysicalDeviceLineRasterizationPropertiesEXT {
     pub line_sub_pixel_precision_bits: u32,
 }
 impl ::std::default::Default for PhysicalDeviceLineRasterizationPropertiesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_LINE_RASTERIZATION_PROPERTIES_EXT,
@@ -39872,6 +40337,7 @@ pub struct PipelineRasterizationLineStateCreateInfoEXT {
     pub line_stipple_pattern: u16,
 }
 impl ::std::default::Default for PipelineRasterizationLineStateCreateInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_RASTERIZATION_LINE_STATE_CREATE_INFO_EXT,
@@ -39952,6 +40418,7 @@ pub struct PhysicalDevicePipelineCreationCacheControlFeatures {
     pub pipeline_creation_cache_control: Bool32,
 }
 impl ::std::default::Default for PhysicalDevicePipelineCreationCacheControlFeatures {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_PIPELINE_CREATION_CACHE_CONTROL_FEATURES,
@@ -40030,6 +40497,7 @@ pub struct PhysicalDeviceVulkan11Features {
     pub shader_draw_parameters: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceVulkan11Features {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_VULKAN_1_1_FEATURES,
@@ -40164,6 +40632,7 @@ pub struct PhysicalDeviceVulkan11Properties {
     pub max_memory_allocation_size: DeviceSize,
 }
 impl ::std::default::Default for PhysicalDeviceVulkan11Properties {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_VULKAN_1_1_PROPERTIES,
@@ -40349,6 +40818,7 @@ pub struct PhysicalDeviceVulkan12Features {
     pub subgroup_broadcast_dynamic_id: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceVulkan12Features {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_VULKAN_1_2_FEATURES,
@@ -40995,6 +41465,7 @@ impl fmt::Debug for PhysicalDeviceVulkan12Properties {
     }
 }
 impl ::std::default::Default for PhysicalDeviceVulkan12Properties {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_VULKAN_1_2_PROPERTIES,
@@ -41493,6 +41964,7 @@ pub struct PhysicalDeviceVulkan13Features {
     pub maintenance4: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceVulkan13Features {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_VULKAN_1_3_FEATURES,
@@ -41681,6 +42153,7 @@ pub struct PhysicalDeviceVulkan13Properties {
     pub max_buffer_size: DeviceSize,
 }
 impl ::std::default::Default for PhysicalDeviceVulkan13Properties {
+    #[inline]
     fn default() -> Self {
         Self { s_type : StructureType :: PHYSICAL_DEVICE_VULKAN_1_3_PROPERTIES , p_next : :: std :: ptr :: null_mut () , min_subgroup_size : u32 :: default () , max_subgroup_size : u32 :: default () , max_compute_workgroup_subgroups : u32 :: default () , required_subgroup_size_stages : ShaderStageFlags :: default () , max_inline_uniform_block_size : u32 :: default () , max_per_stage_descriptor_inline_uniform_blocks : u32 :: default () , max_per_stage_descriptor_update_after_bind_inline_uniform_blocks : u32 :: default () , max_descriptor_set_inline_uniform_blocks : u32 :: default () , max_descriptor_set_update_after_bind_inline_uniform_blocks : u32 :: default () , max_inline_uniform_total_size : u32 :: default () , integer_dot_product8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product64_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated : Bool32 :: default () , storage_texel_buffer_offset_alignment_bytes : DeviceSize :: default () , storage_texel_buffer_offset_single_texel_alignment : Bool32 :: default () , uniform_texel_buffer_offset_alignment_bytes : DeviceSize :: default () , uniform_texel_buffer_offset_single_texel_alignment : Bool32 :: default () , max_buffer_size : DeviceSize :: default () }
     }
@@ -42088,6 +42561,7 @@ pub struct PipelineCompilerControlCreateInfoAMD {
     pub compiler_control_flags: PipelineCompilerControlFlagsAMD,
 }
 impl ::std::default::Default for PipelineCompilerControlCreateInfoAMD {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_COMPILER_CONTROL_CREATE_INFO_AMD,
@@ -42149,6 +42623,7 @@ pub struct PhysicalDeviceCoherentMemoryFeaturesAMD {
     pub device_coherent_memory: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceCoherentMemoryFeaturesAMD {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_COHERENT_MEMORY_FEATURES_AMD,
@@ -42232,6 +42707,7 @@ impl fmt::Debug for PhysicalDeviceToolProperties {
     }
 }
 impl ::std::default::Default for PhysicalDeviceToolProperties {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_TOOL_PROPERTIES,
@@ -42317,6 +42793,7 @@ impl fmt::Debug for SamplerCustomBorderColorCreateInfoEXT {
     }
 }
 impl ::std::default::Default for SamplerCustomBorderColorCreateInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SAMPLER_CUSTOM_BORDER_COLOR_CREATE_INFO_EXT,
@@ -42378,6 +42855,7 @@ pub struct PhysicalDeviceCustomBorderColorPropertiesEXT {
     pub max_custom_border_color_samplers: u32,
 }
 impl ::std::default::Default for PhysicalDeviceCustomBorderColorPropertiesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_CUSTOM_BORDER_COLOR_PROPERTIES_EXT,
@@ -42441,6 +42919,7 @@ pub struct PhysicalDeviceCustomBorderColorFeaturesEXT {
     pub custom_border_color_without_format: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceCustomBorderColorFeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_CUSTOM_BORDER_COLOR_FEATURES_EXT,
@@ -42511,6 +42990,7 @@ pub struct SamplerBorderColorComponentMappingCreateInfoEXT {
     pub srgb: Bool32,
 }
 impl ::std::default::Default for SamplerBorderColorComponentMappingCreateInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SAMPLER_BORDER_COLOR_COMPONENT_MAPPING_CREATE_INFO_EXT,
@@ -42576,6 +43056,7 @@ pub struct PhysicalDeviceBorderColorSwizzleFeaturesEXT {
     pub border_color_swizzle_from_image: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceBorderColorSwizzleFeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_BORDER_COLOR_SWIZZLE_FEATURES_EXT,
@@ -42643,6 +43124,7 @@ pub union DeviceOrHostAddressKHR {
     pub host_address: *mut c_void,
 }
 impl ::std::default::Default for DeviceOrHostAddressKHR {
+    #[inline]
     fn default() -> Self {
         unsafe { ::std::mem::zeroed() }
     }
@@ -42655,6 +43137,7 @@ pub union DeviceOrHostAddressConstKHR {
     pub host_address: *const c_void,
 }
 impl ::std::default::Default for DeviceOrHostAddressConstKHR {
+    #[inline]
     fn default() -> Self {
         unsafe { ::std::mem::zeroed() }
     }
@@ -42690,6 +43173,7 @@ impl fmt::Debug for AccelerationStructureGeometryTrianglesDataKHR {
     }
 }
 impl ::std::default::Default for AccelerationStructureGeometryTrianglesDataKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::ACCELERATION_STRUCTURE_GEOMETRY_TRIANGLES_DATA_KHR,
@@ -42803,6 +43287,7 @@ impl fmt::Debug for AccelerationStructureGeometryAabbsDataKHR {
     }
 }
 impl ::std::default::Default for AccelerationStructureGeometryAabbsDataKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::ACCELERATION_STRUCTURE_GEOMETRY_AABBS_DATA_KHR,
@@ -42873,6 +43358,7 @@ impl fmt::Debug for AccelerationStructureGeometryInstancesDataKHR {
     }
 }
 impl ::std::default::Default for AccelerationStructureGeometryInstancesDataKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::ACCELERATION_STRUCTURE_GEOMETRY_INSTANCES_DATA_KHR,
@@ -42931,6 +43417,7 @@ pub union AccelerationStructureGeometryDataKHR {
     pub instances: AccelerationStructureGeometryInstancesDataKHR,
 }
 impl ::std::default::Default for AccelerationStructureGeometryDataKHR {
+    #[inline]
     fn default() -> Self {
         unsafe { ::std::mem::zeroed() }
     }
@@ -42958,6 +43445,7 @@ impl fmt::Debug for AccelerationStructureGeometryKHR {
     }
 }
 impl ::std::default::Default for AccelerationStructureGeometryKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::ACCELERATION_STRUCTURE_GEOMETRY_KHR,
@@ -43053,6 +43541,7 @@ impl fmt::Debug for AccelerationStructureBuildGeometryInfoKHR {
     }
 }
 impl ::std::default::Default for AccelerationStructureBuildGeometryInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::ACCELERATION_STRUCTURE_BUILD_GEOMETRY_INFO_KHR,
@@ -43217,6 +43706,7 @@ pub struct AccelerationStructureCreateInfoKHR {
     pub device_address: DeviceAddress,
 }
 impl ::std::default::Default for AccelerationStructureCreateInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::ACCELERATION_STRUCTURE_CREATE_INFO_KHR,
@@ -43404,6 +43894,7 @@ pub struct AccelerationStructureDeviceAddressInfoKHR {
     pub acceleration_structure: AccelerationStructureKHR,
 }
 impl ::std::default::Default for AccelerationStructureDeviceAddressInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::ACCELERATION_STRUCTURE_DEVICE_ADDRESS_INFO_KHR,
@@ -43461,6 +43952,7 @@ pub struct AccelerationStructureVersionInfoKHR {
     pub p_version_data: *const [u8; 2 * UUID_SIZE],
 }
 impl ::std::default::Default for AccelerationStructureVersionInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::ACCELERATION_STRUCTURE_VERSION_INFO_KHR,
@@ -43517,6 +44009,7 @@ pub struct CopyAccelerationStructureInfoKHR {
     pub mode: CopyAccelerationStructureModeKHR,
 }
 impl ::std::default::Default for CopyAccelerationStructureInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::COPY_ACCELERATION_STRUCTURE_INFO_KHR,
@@ -43594,6 +44087,7 @@ impl fmt::Debug for CopyAccelerationStructureToMemoryInfoKHR {
     }
 }
 impl ::std::default::Default for CopyAccelerationStructureToMemoryInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::COPY_ACCELERATION_STRUCTURE_TO_MEMORY_INFO_KHR,
@@ -43671,6 +44165,7 @@ impl fmt::Debug for CopyMemoryToAccelerationStructureInfoKHR {
     }
 }
 impl ::std::default::Default for CopyMemoryToAccelerationStructureInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::COPY_MEMORY_TO_ACCELERATION_STRUCTURE_INFO_KHR,
@@ -43736,6 +44231,7 @@ pub struct RayTracingPipelineInterfaceCreateInfoKHR {
     pub max_pipeline_ray_hit_attribute_size: u32,
 }
 impl ::std::default::Default for RayTracingPipelineInterfaceCreateInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::RAY_TRACING_PIPELINE_INTERFACE_CREATE_INFO_KHR,
@@ -43799,6 +44295,7 @@ pub struct PipelineLibraryCreateInfoKHR {
     pub p_libraries: *const Pipeline,
 }
 impl ::std::default::Default for PipelineLibraryCreateInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_LIBRARY_CREATE_INFO_KHR,
@@ -43855,6 +44352,7 @@ pub struct PhysicalDeviceExtendedDynamicStateFeaturesEXT {
     pub extended_dynamic_state: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceExtendedDynamicStateFeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_FEATURES_EXT,
@@ -43918,6 +44416,7 @@ pub struct PhysicalDeviceExtendedDynamicState2FeaturesEXT {
     pub extended_dynamic_state2_patch_control_points: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceExtendedDynamicState2FeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_2_FEATURES_EXT,
@@ -43996,6 +44495,7 @@ pub struct RenderPassTransformBeginInfoQCOM {
     pub transform: SurfaceTransformFlagsKHR,
 }
 impl ::std::default::Default for RenderPassTransformBeginInfoQCOM {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::RENDER_PASS_TRANSFORM_BEGIN_INFO_QCOM,
@@ -44052,6 +44552,7 @@ pub struct CopyCommandTransformInfoQCOM {
     pub transform: SurfaceTransformFlagsKHR,
 }
 impl ::std::default::Default for CopyCommandTransformInfoQCOM {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::COPY_COMMAND_TRANSFORM_INFO_QCOM,
@@ -44111,6 +44612,7 @@ pub struct CommandBufferInheritanceRenderPassTransformInfoQCOM {
     pub render_area: Rect2D,
 }
 impl ::std::default::Default for CommandBufferInheritanceRenderPassTransformInfoQCOM {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::COMMAND_BUFFER_INHERITANCE_RENDER_PASS_TRANSFORM_INFO_QCOM,
@@ -44178,6 +44680,7 @@ pub struct PhysicalDeviceDiagnosticsConfigFeaturesNV {
     pub diagnostics_config: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceDiagnosticsConfigFeaturesNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_DIAGNOSTICS_CONFIG_FEATURES_NV,
@@ -44239,6 +44742,7 @@ pub struct DeviceDiagnosticsConfigCreateInfoNV {
     pub flags: DeviceDiagnosticsConfigFlagsNV,
 }
 impl ::std::default::Default for DeviceDiagnosticsConfigCreateInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEVICE_DIAGNOSTICS_CONFIG_CREATE_INFO_NV,
@@ -44295,6 +44799,7 @@ pub struct PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures {
     pub shader_zero_initialize_workgroup_memory: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_ZERO_INITIALIZE_WORKGROUP_MEMORY_FEATURES,
@@ -44363,6 +44868,7 @@ pub struct PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR {
     pub shader_subgroup_uniform_control_flow: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type:
@@ -44441,6 +44947,7 @@ pub struct PhysicalDeviceRobustness2FeaturesEXT {
     pub null_descriptor: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceRobustness2FeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_ROBUSTNESS_2_FEATURES_EXT,
@@ -44510,6 +45017,7 @@ pub struct PhysicalDeviceRobustness2PropertiesEXT {
     pub robust_uniform_buffer_access_size_alignment: DeviceSize,
 }
 impl ::std::default::Default for PhysicalDeviceRobustness2PropertiesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_ROBUSTNESS_2_PROPERTIES_EXT,
@@ -44579,6 +45087,7 @@ pub struct PhysicalDeviceImageRobustnessFeatures {
     pub robust_image_access: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceImageRobustnessFeatures {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_IMAGE_ROBUSTNESS_FEATURES,
@@ -44640,6 +45149,7 @@ pub struct PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR {
     pub workgroup_memory_explicit_layout16_bit_access: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_WORKGROUP_MEMORY_EXPLICIT_LAYOUT_FEATURES_KHR,
@@ -44754,6 +45264,7 @@ pub struct PhysicalDevicePortabilitySubsetFeaturesKHR {
     pub vertex_attribute_access_beyond_stride: Bool32,
 }
 impl ::std::default::Default for PhysicalDevicePortabilitySubsetFeaturesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_PORTABILITY_SUBSET_FEATURES_KHR,
@@ -44899,6 +45410,7 @@ pub struct PhysicalDevicePortabilitySubsetPropertiesKHR {
     pub min_vertex_input_binding_stride_alignment: u32,
 }
 impl ::std::default::Default for PhysicalDevicePortabilitySubsetPropertiesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_PORTABILITY_SUBSET_PROPERTIES_KHR,
@@ -44963,6 +45475,7 @@ pub struct PhysicalDevice4444FormatsFeaturesEXT {
     pub format_a4b4g4r4: Bool32,
 }
 impl ::std::default::Default for PhysicalDevice4444FormatsFeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT,
@@ -45026,6 +45539,7 @@ pub struct PhysicalDeviceSubpassShadingFeaturesHUAWEI {
     pub subpass_shading: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceSubpassShadingFeaturesHUAWEI {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_SUBPASS_SHADING_FEATURES_HUAWEI,
@@ -45089,6 +45603,7 @@ pub struct BufferCopy2 {
     pub size: DeviceSize,
 }
 impl ::std::default::Default for BufferCopy2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::BUFFER_COPY_2,
@@ -45157,6 +45672,7 @@ pub struct ImageCopy2 {
     pub extent: Extent3D,
 }
 impl ::std::default::Default for ImageCopy2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMAGE_COPY_2,
@@ -45234,6 +45750,7 @@ pub struct ImageBlit2 {
     pub dst_offsets: [Offset3D; 2],
 }
 impl ::std::default::Default for ImageBlit2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMAGE_BLIT_2,
@@ -45323,6 +45840,7 @@ pub struct BufferImageCopy2 {
     pub image_extent: Extent3D,
 }
 impl ::std::default::Default for BufferImageCopy2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::BUFFER_IMAGE_COPY_2,
@@ -45421,6 +45939,7 @@ pub struct ImageResolve2 {
     pub extent: Extent3D,
 }
 impl ::std::default::Default for ImageResolve2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMAGE_RESOLVE_2,
@@ -45498,6 +46017,7 @@ pub struct CopyBufferInfo2 {
     pub p_regions: *const BufferCopy2,
 }
 impl ::std::default::Default for CopyBufferInfo2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::COPY_BUFFER_INFO_2,
@@ -45569,6 +46089,7 @@ pub struct CopyImageInfo2 {
     pub p_regions: *const ImageCopy2,
 }
 impl ::std::default::Default for CopyImageInfo2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::COPY_IMAGE_INFO_2,
@@ -45651,6 +46172,7 @@ pub struct BlitImageInfo2 {
     pub filter: Filter,
 }
 impl ::std::default::Default for BlitImageInfo2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::BLIT_IMAGE_INFO_2,
@@ -45736,6 +46258,7 @@ pub struct CopyBufferToImageInfo2 {
     pub p_regions: *const BufferImageCopy2,
 }
 impl ::std::default::Default for CopyBufferToImageInfo2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::COPY_BUFFER_TO_IMAGE_INFO_2,
@@ -45811,6 +46334,7 @@ pub struct CopyImageToBufferInfo2 {
     pub p_regions: *const BufferImageCopy2,
 }
 impl ::std::default::Default for CopyImageToBufferInfo2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::COPY_IMAGE_TO_BUFFER_INFO_2,
@@ -45887,6 +46411,7 @@ pub struct ResolveImageInfo2 {
     pub p_regions: *const ImageResolve2,
 }
 impl ::std::default::Default for ResolveImageInfo2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::RESOLVE_IMAGE_INFO_2,
@@ -45964,6 +46489,7 @@ pub struct PhysicalDeviceShaderImageAtomicInt64FeaturesEXT {
     pub sparse_image_int64_atomics: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_SHADER_IMAGE_ATOMIC_INT64_FEATURES_EXT,
@@ -46031,6 +46557,7 @@ pub struct FragmentShadingRateAttachmentInfoKHR {
     pub shading_rate_attachment_texel_size: Extent2D,
 }
 impl ::std::default::Default for FragmentShadingRateAttachmentInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::FRAGMENT_SHADING_RATE_ATTACHMENT_INFO_KHR,
@@ -46099,6 +46626,7 @@ pub struct PipelineFragmentShadingRateStateCreateInfoKHR {
     pub combiner_ops: [FragmentShadingRateCombinerOpKHR; 2],
 }
 impl ::std::default::Default for PipelineFragmentShadingRateStateCreateInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_FRAGMENT_SHADING_RATE_STATE_CREATE_INFO_KHR,
@@ -46165,6 +46693,7 @@ pub struct PhysicalDeviceFragmentShadingRateFeaturesKHR {
     pub attachment_fragment_shading_rate: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceFragmentShadingRateFeaturesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_FEATURES_KHR,
@@ -46258,6 +46787,7 @@ pub struct PhysicalDeviceFragmentShadingRatePropertiesKHR {
     pub fragment_shading_rate_strict_multiply_combiner: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceFragmentShadingRatePropertiesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_PROPERTIES_KHR,
@@ -46463,6 +46993,7 @@ pub struct PhysicalDeviceFragmentShadingRateKHR {
     pub fragment_size: Extent2D,
 }
 impl ::std::default::Default for PhysicalDeviceFragmentShadingRateKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_KHR,
@@ -46522,6 +47053,7 @@ pub struct PhysicalDeviceShaderTerminateInvocationFeatures {
     pub shader_terminate_invocation: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceShaderTerminateInvocationFeatures {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_SHADER_TERMINATE_INVOCATION_FEATURES,
@@ -46585,6 +47117,7 @@ pub struct PhysicalDeviceFragmentShadingRateEnumsFeaturesNV {
     pub no_invocation_fragment_shading_rates: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_ENUMS_FEATURES_NV,
@@ -46666,6 +47199,7 @@ pub struct PhysicalDeviceFragmentShadingRateEnumsPropertiesNV {
     pub max_fragment_shading_rate_invocation_count: SampleCountFlags,
 }
 impl ::std::default::Default for PhysicalDeviceFragmentShadingRateEnumsPropertiesNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_ENUMS_PROPERTIES_NV,
@@ -46734,6 +47268,7 @@ pub struct PipelineFragmentShadingRateEnumStateCreateInfoNV {
     pub combiner_ops: [FragmentShadingRateCombinerOpKHR; 2],
 }
 impl ::std::default::Default for PipelineFragmentShadingRateEnumStateCreateInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_FRAGMENT_SHADING_RATE_ENUM_STATE_CREATE_INFO_NV,
@@ -46805,6 +47340,7 @@ pub struct AccelerationStructureBuildSizesInfoKHR {
     pub build_scratch_size: DeviceSize,
 }
 impl ::std::default::Default for AccelerationStructureBuildSizesInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::ACCELERATION_STRUCTURE_BUILD_SIZES_INFO_KHR,
@@ -46869,6 +47405,7 @@ pub struct PhysicalDeviceMutableDescriptorTypeFeaturesVALVE {
     pub mutable_descriptor_type: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceMutableDescriptorTypeFeaturesVALVE {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_VALVE,
@@ -46932,6 +47469,7 @@ pub struct MutableDescriptorTypeListVALVE {
     pub p_descriptor_types: *const DescriptorType,
 }
 impl ::std::default::Default for MutableDescriptorTypeListVALVE {
+    #[inline]
     fn default() -> Self {
         Self {
             descriptor_type_count: u32::default(),
@@ -46987,6 +47525,7 @@ pub struct MutableDescriptorTypeCreateInfoVALVE {
     pub p_mutable_descriptor_type_lists: *const MutableDescriptorTypeListVALVE,
 }
 impl ::std::default::Default for MutableDescriptorTypeCreateInfoVALVE {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_VALVE,
@@ -47053,6 +47592,7 @@ pub struct PhysicalDeviceDepthClipControlFeaturesEXT {
     pub depth_clip_control: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceDepthClipControlFeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_DEPTH_CLIP_CONTROL_FEATURES_EXT,
@@ -47114,6 +47654,7 @@ pub struct PipelineViewportDepthClipControlCreateInfoEXT {
     pub negative_one_to_one: Bool32,
 }
 impl ::std::default::Default for PipelineViewportDepthClipControlCreateInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_VIEWPORT_DEPTH_CLIP_CONTROL_CREATE_INFO_EXT,
@@ -47176,6 +47717,7 @@ pub struct PhysicalDeviceVertexInputDynamicStateFeaturesEXT {
     pub vertex_input_dynamic_state: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceVertexInputDynamicStateFeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_VERTEX_INPUT_DYNAMIC_STATE_FEATURES_EXT,
@@ -47240,6 +47782,7 @@ pub struct PhysicalDeviceExternalMemoryRDMAFeaturesNV {
     pub external_memory_rdma: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceExternalMemoryRDMAFeaturesNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_EXTERNAL_MEMORY_RDMA_FEATURES_NV,
@@ -47304,6 +47847,7 @@ pub struct VertexInputBindingDescription2EXT {
     pub divisor: u32,
 }
 impl ::std::default::Default for VertexInputBindingDescription2EXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VERTEX_INPUT_BINDING_DESCRIPTION_2_EXT,
@@ -47376,6 +47920,7 @@ pub struct VertexInputAttributeDescription2EXT {
     pub offset: u32,
 }
 impl ::std::default::Default for VertexInputAttributeDescription2EXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VERTEX_INPUT_ATTRIBUTE_DESCRIPTION_2_EXT,
@@ -47445,6 +47990,7 @@ pub struct PhysicalDeviceColorWriteEnableFeaturesEXT {
     pub color_write_enable: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceColorWriteEnableFeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_COLOR_WRITE_ENABLE_FEATURES_EXT,
@@ -47507,6 +48053,7 @@ pub struct PipelineColorWriteCreateInfoEXT {
     pub p_color_write_enables: *const Bool32,
 }
 impl ::std::default::Default for PipelineColorWriteCreateInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_COLOR_WRITE_CREATE_INFO_EXT,
@@ -47571,6 +48118,7 @@ pub struct MemoryBarrier2 {
     pub dst_access_mask: AccessFlags2,
 }
 impl ::std::default::Default for MemoryBarrier2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::MEMORY_BARRIER_2,
@@ -47651,6 +48199,7 @@ pub struct ImageMemoryBarrier2 {
     pub subresource_range: ImageSubresourceRange,
 }
 impl ::std::default::Default for ImageMemoryBarrier2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMAGE_MEMORY_BARRIER_2,
@@ -47773,6 +48322,7 @@ pub struct BufferMemoryBarrier2 {
     pub size: DeviceSize,
 }
 impl ::std::default::Default for BufferMemoryBarrier2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::BUFFER_MEMORY_BARRIER_2,
@@ -47873,6 +48423,7 @@ pub struct DependencyInfo {
     pub p_image_memory_barriers: *const ImageMemoryBarrier2,
 }
 impl ::std::default::Default for DependencyInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DEPENDENCY_INFO,
@@ -47957,6 +48508,7 @@ pub struct SemaphoreSubmitInfo {
     pub device_index: u32,
 }
 impl ::std::default::Default for SemaphoreSubmitInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SEMAPHORE_SUBMIT_INFO,
@@ -48027,6 +48579,7 @@ pub struct CommandBufferSubmitInfo {
     pub device_mask: u32,
 }
 impl ::std::default::Default for CommandBufferSubmitInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::COMMAND_BUFFER_SUBMIT_INFO,
@@ -48092,6 +48645,7 @@ pub struct SubmitInfo2 {
     pub p_signal_semaphore_infos: *const SemaphoreSubmitInfo,
 }
 impl ::std::default::Default for SubmitInfo2 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SUBMIT_INFO_2,
@@ -48188,6 +48742,7 @@ pub struct QueueFamilyCheckpointProperties2NV {
     pub checkpoint_execution_stage_mask: PipelineStageFlags2,
 }
 impl ::std::default::Default for QueueFamilyCheckpointProperties2NV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::QUEUE_FAMILY_CHECKPOINT_PROPERTIES_2_NV,
@@ -48248,6 +48803,7 @@ pub struct CheckpointData2NV {
     pub p_checkpoint_marker: *mut c_void,
 }
 impl ::std::default::Default for CheckpointData2NV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::CHECKPOINT_DATA_2_NV,
@@ -48307,6 +48863,7 @@ pub struct PhysicalDeviceSynchronization2Features {
     pub synchronization2: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceSynchronization2Features {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_SYNCHRONIZATION_2_FEATURES,
@@ -48365,6 +48922,7 @@ pub struct VideoQueueFamilyProperties2KHR {
     pub video_codec_operations: VideoCodecOperationFlagsKHR,
 }
 impl ::std::default::Default for VideoQueueFamilyProperties2KHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_QUEUE_FAMILY_PROPERTIES_2_KHR,
@@ -48424,6 +48982,7 @@ pub struct QueueFamilyQueryResultStatusProperties2KHR {
     pub supported: Bool32,
 }
 impl ::std::default::Default for QueueFamilyQueryResultStatusProperties2KHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::QUEUE_FAMILY_QUERY_RESULT_STATUS_PROPERTIES_2_KHR,
@@ -48484,6 +49043,7 @@ pub struct VideoProfilesKHR {
     pub p_profiles: *const VideoProfileKHR,
 }
 impl ::std::default::Default for VideoProfilesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_PROFILES_KHR,
@@ -48549,6 +49109,7 @@ pub struct PhysicalDeviceVideoFormatInfoKHR {
     pub p_video_profiles: *const VideoProfilesKHR,
 }
 impl ::std::default::Default for PhysicalDeviceVideoFormatInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_VIDEO_FORMAT_INFO_KHR,
@@ -48608,6 +49169,7 @@ pub struct VideoFormatPropertiesKHR {
     pub format: Format,
 }
 impl ::std::default::Default for VideoFormatPropertiesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_FORMAT_PROPERTIES_KHR,
@@ -48665,6 +49227,7 @@ pub struct VideoProfileKHR {
     pub chroma_bit_depth: VideoComponentBitDepthFlagsKHR,
 }
 impl ::std::default::Default for VideoProfileKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_PROFILE_KHR,
@@ -48773,6 +49336,7 @@ pub struct VideoCapabilitiesKHR {
     pub std_header_version: ExtensionProperties,
 }
 impl ::std::default::Default for VideoCapabilitiesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_CAPABILITIES_KHR,
@@ -48898,6 +49462,7 @@ pub struct VideoGetMemoryPropertiesKHR {
     pub p_memory_requirements: *mut MemoryRequirements2,
 }
 impl ::std::default::Default for VideoGetMemoryPropertiesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_GET_MEMORY_PROPERTIES_KHR,
@@ -48960,6 +49525,7 @@ pub struct VideoBindMemoryKHR {
     pub memory_size: DeviceSize,
 }
 impl ::std::default::Default for VideoBindMemoryKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_BIND_MEMORY_KHR,
@@ -49032,6 +49598,7 @@ pub struct VideoPictureResourceKHR {
     pub image_view_binding: ImageView,
 }
 impl ::std::default::Default for VideoPictureResourceKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_PICTURE_RESOURCE_KHR,
@@ -49102,6 +49669,7 @@ pub struct VideoReferenceSlotKHR {
     pub p_picture_resource: *const VideoPictureResourceKHR,
 }
 impl ::std::default::Default for VideoReferenceSlotKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_REFERENCE_SLOT_KHR,
@@ -49176,6 +49744,7 @@ pub struct VideoDecodeCapabilitiesKHR {
     pub flags: VideoDecodeCapabilityFlagsKHR,
 }
 impl ::std::default::Default for VideoDecodeCapabilitiesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_DECODE_CAPABILITIES_KHR,
@@ -49256,6 +49825,7 @@ pub struct VideoDecodeInfoKHR {
     pub p_reference_slots: *const VideoReferenceSlotKHR,
 }
 impl ::std::default::Default for VideoDecodeInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_DECODE_INFO_KHR,
@@ -49368,6 +49938,7 @@ pub struct VideoDecodeH264ProfileEXT {
     pub picture_layout: VideoDecodeH264PictureLayoutFlagsEXT,
 }
 impl ::std::default::Default for VideoDecodeH264ProfileEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_DECODE_H264_PROFILE_EXT,
@@ -49440,6 +50011,7 @@ pub struct VideoDecodeH264CapabilitiesEXT {
     pub field_offset_granularity: Offset2D,
 }
 impl ::std::default::Default for VideoDecodeH264CapabilitiesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_DECODE_H264_CAPABILITIES_EXT,
@@ -49504,6 +50076,7 @@ pub struct VideoDecodeH264SessionParametersAddInfoEXT {
     pub p_pps_std: *const StdVideoH264PictureParameterSet,
 }
 impl ::std::default::Default for VideoDecodeH264SessionParametersAddInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_DECODE_H264_SESSION_PARAMETERS_ADD_INFO_EXT,
@@ -49577,6 +50150,7 @@ pub struct VideoDecodeH264SessionParametersCreateInfoEXT {
     pub p_parameters_add_info: *const VideoDecodeH264SessionParametersAddInfoEXT,
 }
 impl ::std::default::Default for VideoDecodeH264SessionParametersCreateInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_DECODE_H264_SESSION_PARAMETERS_CREATE_INFO_EXT,
@@ -49654,6 +50228,7 @@ pub struct VideoDecodeH264PictureInfoEXT {
     pub p_slices_data_offsets: *const u32,
 }
 impl ::std::default::Default for VideoDecodeH264PictureInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_DECODE_H264_PICTURE_INFO_EXT,
@@ -49732,6 +50307,7 @@ pub struct VideoDecodeH264DpbSlotInfoEXT {
     pub p_std_reference_info: *const StdVideoDecodeH264ReferenceInfo,
 }
 impl ::std::default::Default for VideoDecodeH264DpbSlotInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_DECODE_H264_DPB_SLOT_INFO_EXT,
@@ -49791,6 +50367,7 @@ pub struct VideoDecodeH264MvcEXT {
     pub p_std_mvc: *const StdVideoDecodeH264Mvc,
 }
 impl ::std::default::Default for VideoDecodeH264MvcEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_DECODE_H264_MVC_EXT,
@@ -49847,6 +50424,7 @@ pub struct VideoDecodeH265ProfileEXT {
     pub std_profile_idc: StdVideoH265ProfileIdc,
 }
 impl ::std::default::Default for VideoDecodeH265ProfileEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_DECODE_H265_PROFILE_EXT,
@@ -49913,6 +50491,7 @@ pub struct VideoDecodeH265CapabilitiesEXT {
     pub max_level: u32,
 }
 impl ::std::default::Default for VideoDecodeH265CapabilitiesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_DECODE_H265_CAPABILITIES_EXT,
@@ -49974,6 +50553,7 @@ pub struct VideoDecodeH265SessionParametersAddInfoEXT {
     pub p_pps_std: *const StdVideoH265PictureParameterSet,
 }
 impl ::std::default::Default for VideoDecodeH265SessionParametersAddInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_DECODE_H265_SESSION_PARAMETERS_ADD_INFO_EXT,
@@ -50055,6 +50635,7 @@ pub struct VideoDecodeH265SessionParametersCreateInfoEXT {
     pub p_parameters_add_info: *const VideoDecodeH265SessionParametersAddInfoEXT,
 }
 impl ::std::default::Default for VideoDecodeH265SessionParametersCreateInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_DECODE_H265_SESSION_PARAMETERS_CREATE_INFO_EXT,
@@ -50137,6 +50718,7 @@ pub struct VideoDecodeH265PictureInfoEXT {
     pub p_slices_data_offsets: *const u32,
 }
 impl ::std::default::Default for VideoDecodeH265PictureInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_DECODE_H265_PICTURE_INFO_EXT,
@@ -50203,6 +50785,7 @@ pub struct VideoDecodeH265DpbSlotInfoEXT {
     pub p_std_reference_info: *const StdVideoDecodeH265ReferenceInfo,
 }
 impl ::std::default::Default for VideoDecodeH265DpbSlotInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_DECODE_H265_DPB_SLOT_INFO_EXT,
@@ -50270,6 +50853,7 @@ pub struct VideoSessionCreateInfoKHR {
     pub p_std_header_version: *const ExtensionProperties,
 }
 impl ::std::default::Default for VideoSessionCreateInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_SESSION_CREATE_INFO_KHR,
@@ -50371,6 +50955,7 @@ pub struct VideoSessionParametersCreateInfoKHR {
     pub video_session: VideoSessionKHR,
 }
 impl ::std::default::Default for VideoSessionParametersCreateInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_SESSION_PARAMETERS_CREATE_INFO_KHR,
@@ -50451,6 +51036,7 @@ pub struct VideoSessionParametersUpdateInfoKHR {
     pub update_sequence_count: u32,
 }
 impl ::std::default::Default for VideoSessionParametersUpdateInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_SESSION_PARAMETERS_UPDATE_INFO_KHR,
@@ -50528,6 +51114,7 @@ pub struct VideoBeginCodingInfoKHR {
     pub p_reference_slots: *const VideoReferenceSlotKHR,
 }
 impl ::std::default::Default for VideoBeginCodingInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_BEGIN_CODING_INFO_KHR,
@@ -50610,6 +51197,7 @@ pub struct VideoEndCodingInfoKHR {
     pub flags: VideoEndCodingFlagsKHR,
 }
 impl ::std::default::Default for VideoEndCodingInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_END_CODING_INFO_KHR,
@@ -50664,6 +51252,7 @@ pub struct VideoCodingControlInfoKHR {
     pub flags: VideoCodingControlFlagsKHR,
 }
 impl ::std::default::Default for VideoCodingControlInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_CODING_CONTROL_INFO_KHR,
@@ -50743,6 +51332,7 @@ pub struct VideoEncodeInfoKHR {
     pub preceding_externally_encoded_bytes: u32,
 }
 impl ::std::default::Default for VideoEncodeInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_INFO_KHR,
@@ -50868,6 +51458,7 @@ pub struct VideoEncodeRateControlInfoKHR {
     pub p_layer_configs: *const VideoEncodeRateControlLayerInfoKHR,
 }
 impl ::std::default::Default for VideoEncodeRateControlInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_RATE_CONTROL_INFO_KHR,
@@ -50962,6 +51553,7 @@ pub struct VideoEncodeRateControlLayerInfoKHR {
     pub initial_virtual_buffer_size_in_ms: u32,
 }
 impl ::std::default::Default for VideoEncodeRateControlLayerInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_RATE_CONTROL_LAYER_INFO_KHR,
@@ -51068,6 +51660,7 @@ pub struct VideoEncodeCapabilitiesKHR {
     pub input_image_data_fill_alignment: Extent2D,
 }
 impl ::std::default::Default for VideoEncodeCapabilitiesKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_CAPABILITIES_KHR,
@@ -51175,6 +51768,7 @@ pub struct VideoEncodeH264CapabilitiesEXT {
     pub log2_max_mv_length_vertical: u32,
 }
 impl ::std::default::Default for VideoEncodeH264CapabilitiesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_H264_CAPABILITIES_EXT,
@@ -51297,6 +51891,7 @@ pub struct VideoEncodeH264SessionParametersAddInfoEXT {
     pub p_pps_std: *const StdVideoH264PictureParameterSet,
 }
 impl ::std::default::Default for VideoEncodeH264SessionParametersAddInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_H264_SESSION_PARAMETERS_ADD_INFO_EXT,
@@ -51370,6 +51965,7 @@ pub struct VideoEncodeH264SessionParametersCreateInfoEXT {
     pub p_parameters_add_info: *const VideoEncodeH264SessionParametersAddInfoEXT,
 }
 impl ::std::default::Default for VideoEncodeH264SessionParametersCreateInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_H264_SESSION_PARAMETERS_CREATE_INFO_EXT,
@@ -51446,6 +52042,7 @@ pub struct VideoEncodeH264DpbSlotInfoEXT {
     pub p_std_reference_info: *const StdVideoEncodeH264ReferenceInfo,
 }
 impl ::std::default::Default for VideoEncodeH264DpbSlotInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_H264_DPB_SLOT_INFO_EXT,
@@ -51511,6 +52108,7 @@ pub struct VideoEncodeH264VclFrameInfoEXT {
     pub p_current_picture_info: *const StdVideoEncodeH264PictureInfo,
 }
 impl ::std::default::Default for VideoEncodeH264VclFrameInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_H264_VCL_FRAME_INFO_EXT,
@@ -51592,6 +52190,7 @@ pub struct VideoEncodeH264ReferenceListsEXT {
     pub p_mem_mgmt_ctrl_operations: *const StdVideoEncodeH264RefMemMgmtCtrlOperations,
 }
 impl ::std::default::Default for VideoEncodeH264ReferenceListsEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_H264_REFERENCE_LISTS_EXT,
@@ -51672,6 +52271,7 @@ pub struct VideoEncodeH264EmitPictureParametersEXT {
     pub pps_id_entries: *const u8,
 }
 impl ::std::default::Default for VideoEncodeH264EmitPictureParametersEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_H264_EMIT_PICTURE_PARAMETERS_EXT,
@@ -51740,6 +52340,7 @@ pub struct VideoEncodeH264ProfileEXT {
     pub std_profile_idc: StdVideoH264ProfileIdc,
 }
 impl ::std::default::Default for VideoEncodeH264ProfileEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_H264_PROFILE_EXT,
@@ -51808,6 +52409,7 @@ pub struct VideoEncodeH264NaluSliceEXT {
     pub p_slice_header_std: *const StdVideoEncodeH264SliceHeader,
 }
 impl ::std::default::Default for VideoEncodeH264NaluSliceEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_H264_NALU_SLICE_EXT,
@@ -51879,6 +52481,7 @@ pub struct VideoEncodeH264RateControlInfoEXT {
     pub temporal_layer_count: u8,
 }
 impl ::std::default::Default for VideoEncodeH264RateControlInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_H264_RATE_CONTROL_INFO_EXT,
@@ -52072,6 +52675,7 @@ pub struct VideoEncodeH264RateControlLayerInfoEXT {
     pub max_frame_size: VideoEncodeH264FrameSizeEXT,
 }
 impl ::std::default::Default for VideoEncodeH264RateControlLayerInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_H264_RATE_CONTROL_LAYER_INFO_EXT,
@@ -52190,6 +52794,7 @@ pub struct VideoEncodeH265CapabilitiesEXT {
     pub max_max_num_merge_cand: u8,
 }
 impl ::std::default::Default for VideoEncodeH265CapabilitiesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_H265_CAPABILITIES_EXT,
@@ -52390,6 +52995,7 @@ pub struct VideoEncodeH265SessionParametersAddInfoEXT {
     pub p_pps_std: *const StdVideoH265PictureParameterSet,
 }
 impl ::std::default::Default for VideoEncodeH265SessionParametersAddInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_H265_SESSION_PARAMETERS_ADD_INFO_EXT,
@@ -52471,6 +53077,7 @@ pub struct VideoEncodeH265SessionParametersCreateInfoEXT {
     pub p_parameters_add_info: *const VideoEncodeH265SessionParametersAddInfoEXT,
 }
 impl ::std::default::Default for VideoEncodeH265SessionParametersCreateInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_H265_SESSION_PARAMETERS_CREATE_INFO_EXT,
@@ -52554,6 +53161,7 @@ pub struct VideoEncodeH265VclFrameInfoEXT {
     pub p_current_picture_info: *const StdVideoEncodeH265PictureInfo,
 }
 impl ::std::default::Default for VideoEncodeH265VclFrameInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_H265_VCL_FRAME_INFO_EXT,
@@ -52636,6 +53244,7 @@ pub struct VideoEncodeH265EmitPictureParametersEXT {
     pub pps_id_entries: *const u8,
 }
 impl ::std::default::Default for VideoEncodeH265EmitPictureParametersEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_H265_EMIT_PICTURE_PARAMETERS_EXT,
@@ -52716,6 +53325,7 @@ pub struct VideoEncodeH265NaluSliceSegmentEXT {
     pub p_slice_segment_header_std: *const StdVideoEncodeH265SliceSegmentHeader,
 }
 impl ::std::default::Default for VideoEncodeH265NaluSliceSegmentEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_H265_NALU_SLICE_SEGMENT_EXT,
@@ -52790,6 +53400,7 @@ pub struct VideoEncodeH265RateControlInfoEXT {
     pub sub_layer_count: u8,
 }
 impl ::std::default::Default for VideoEncodeH265RateControlInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_H265_RATE_CONTROL_INFO_EXT,
@@ -52983,6 +53594,7 @@ pub struct VideoEncodeH265RateControlLayerInfoEXT {
     pub max_frame_size: VideoEncodeH265FrameSizeEXT,
 }
 impl ::std::default::Default for VideoEncodeH265RateControlLayerInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_H265_RATE_CONTROL_LAYER_INFO_EXT,
@@ -53082,6 +53694,7 @@ pub struct VideoEncodeH265ProfileEXT {
     pub std_profile_idc: StdVideoH265ProfileIdc,
 }
 impl ::std::default::Default for VideoEncodeH265ProfileEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_H265_PROFILE_EXT,
@@ -53149,6 +53762,7 @@ pub struct VideoEncodeH265DpbSlotInfoEXT {
     pub p_std_reference_info: *const StdVideoEncodeH265ReferenceInfo,
 }
 impl ::std::default::Default for VideoEncodeH265DpbSlotInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_H265_DPB_SLOT_INFO_EXT,
@@ -53215,6 +53829,7 @@ pub struct VideoEncodeH265ReferenceListsEXT {
     pub p_reference_modifications: *const StdVideoEncodeH265ReferenceModifications,
 }
 impl ::std::default::Default for VideoEncodeH265ReferenceListsEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_H265_REFERENCE_LISTS_EXT,
@@ -53292,6 +53907,7 @@ pub struct PhysicalDeviceInheritedViewportScissorFeaturesNV {
     pub inherited_viewport_scissor2_d: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceInheritedViewportScissorFeaturesNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_INHERITED_VIEWPORT_SCISSOR_FEATURES_NV,
@@ -53358,6 +53974,7 @@ pub struct CommandBufferInheritanceViewportScissorInfoNV {
     pub p_viewport_depths: *const Viewport,
 }
 impl ::std::default::Default for CommandBufferInheritanceViewportScissorInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::COMMAND_BUFFER_INHERITANCE_VIEWPORT_SCISSOR_INFO_NV,
@@ -53427,6 +54044,7 @@ pub struct PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT {
     pub ycbcr2plane444_formats: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_YCBCR_2_PLANE_444_FORMATS_FEATURES_EXT,
@@ -53489,6 +54107,7 @@ pub struct PhysicalDeviceProvokingVertexFeaturesEXT {
     pub transform_feedback_preserves_provoking_vertex: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceProvokingVertexFeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_PROVOKING_VERTEX_FEATURES_EXT,
@@ -53557,6 +54176,7 @@ pub struct PhysicalDeviceProvokingVertexPropertiesEXT {
     pub transform_feedback_preserves_triangle_fan_provoking_vertex: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceProvokingVertexPropertiesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_PROVOKING_VERTEX_PROPERTIES_EXT,
@@ -53629,6 +54249,7 @@ pub struct PipelineRasterizationProvokingVertexStateCreateInfoEXT {
     pub provoking_vertex_mode: ProvokingVertexModeEXT,
 }
 impl ::std::default::Default for PipelineRasterizationProvokingVertexStateCreateInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_RASTERIZATION_PROVOKING_VERTEX_STATE_CREATE_INFO_EXT,
@@ -53694,6 +54315,7 @@ pub struct CuModuleCreateInfoNVX {
     pub p_data: *const c_void,
 }
 impl ::std::default::Default for CuModuleCreateInfoNVX {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::CU_MODULE_CREATE_INFO_NVX,
@@ -53751,6 +54373,7 @@ pub struct CuFunctionCreateInfoNVX {
     pub p_name: *const c_char,
 }
 impl ::std::default::Default for CuFunctionCreateInfoNVX {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::CU_FUNCTION_CREATE_INFO_NVX,
@@ -53821,6 +54444,7 @@ pub struct CuLaunchInfoNVX {
     pub p_extras: *const *const c_void,
 }
 impl ::std::default::Default for CuLaunchInfoNVX {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::CU_LAUNCH_INFO_NVX,
@@ -53924,6 +54548,7 @@ pub struct PhysicalDeviceShaderIntegerDotProductFeatures {
     pub shader_integer_dot_product: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceShaderIntegerDotProductFeatures {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_SHADER_INTEGER_DOT_PRODUCT_FEATURES,
@@ -54015,6 +54640,7 @@ pub struct PhysicalDeviceShaderIntegerDotProductProperties {
     pub integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceShaderIntegerDotProductProperties {
+    #[inline]
     fn default() -> Self {
         Self { s_type : StructureType :: PHYSICAL_DEVICE_SHADER_INTEGER_DOT_PRODUCT_PROPERTIES , p_next : :: std :: ptr :: null_mut () , integer_dot_product8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product64_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated : Bool32 :: default () }
     }
@@ -54331,6 +54957,7 @@ pub struct PhysicalDeviceDrmPropertiesEXT {
     pub render_minor: i64,
 }
 impl ::std::default::Default for PhysicalDeviceDrmPropertiesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_DRM_PROPERTIES_EXT,
@@ -54413,6 +55040,7 @@ pub struct PhysicalDeviceRayTracingMotionBlurFeaturesNV {
     pub ray_tracing_motion_blur_pipeline_trace_rays_indirect: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceRayTracingMotionBlurFeaturesNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_RAY_TRACING_MOTION_BLUR_FEATURES_NV,
@@ -54493,6 +55121,7 @@ impl fmt::Debug for AccelerationStructureGeometryMotionTrianglesDataNV {
     }
 }
 impl ::std::default::Default for AccelerationStructureGeometryMotionTrianglesDataNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::ACCELERATION_STRUCTURE_GEOMETRY_MOTION_TRIANGLES_DATA_NV,
@@ -54556,6 +55185,7 @@ pub struct AccelerationStructureMotionInfoNV {
     pub flags: AccelerationStructureMotionInfoFlagsNV,
 }
 impl ::std::default::Default for AccelerationStructureMotionInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::ACCELERATION_STRUCTURE_MOTION_INFO_NV,
@@ -54761,6 +55391,7 @@ pub union AccelerationStructureMotionInstanceDataNV {
     pub srt_motion_instance: AccelerationStructureSRTMotionInstanceNV,
 }
 impl ::std::default::Default for AccelerationStructureMotionInstanceDataNV {
+    #[inline]
     fn default() -> Self {
         unsafe { ::std::mem::zeroed() }
     }
@@ -54840,6 +55471,7 @@ pub struct MemoryGetRemoteAddressInfoNV {
     pub handle_type: ExternalMemoryHandleTypeFlags,
 }
 impl ::std::default::Default for MemoryGetRemoteAddressInfoNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::MEMORY_GET_REMOTE_ADDRESS_INFO_NV,
@@ -54900,6 +55532,7 @@ pub struct ImportMemoryBufferCollectionFUCHSIA {
     pub index: u32,
 }
 impl ::std::default::Default for ImportMemoryBufferCollectionFUCHSIA {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMPORT_MEMORY_BUFFER_COLLECTION_FUCHSIA,
@@ -54962,6 +55595,7 @@ pub struct BufferCollectionImageCreateInfoFUCHSIA {
     pub index: u32,
 }
 impl ::std::default::Default for BufferCollectionImageCreateInfoFUCHSIA {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::BUFFER_COLLECTION_IMAGE_CREATE_INFO_FUCHSIA,
@@ -55024,6 +55658,7 @@ pub struct BufferCollectionBufferCreateInfoFUCHSIA {
     pub index: u32,
 }
 impl ::std::default::Default for BufferCollectionBufferCreateInfoFUCHSIA {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::BUFFER_COLLECTION_BUFFER_CREATE_INFO_FUCHSIA,
@@ -55085,6 +55720,7 @@ pub struct BufferCollectionCreateInfoFUCHSIA {
     pub collection_token: zx_handle_t,
 }
 impl ::std::default::Default for BufferCollectionCreateInfoFUCHSIA {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::BUFFER_COLLECTION_CREATE_INFO_FUCHSIA,
@@ -55149,6 +55785,7 @@ pub struct BufferCollectionPropertiesFUCHSIA {
     pub suggested_y_chroma_offset: ChromaLocation,
 }
 impl ::std::default::Default for BufferCollectionPropertiesFUCHSIA {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::BUFFER_COLLECTION_PROPERTIES_FUCHSIA,
@@ -55264,6 +55901,7 @@ pub struct BufferConstraintsInfoFUCHSIA {
     pub buffer_collection_constraints: BufferCollectionConstraintsInfoFUCHSIA,
 }
 impl ::std::default::Default for BufferConstraintsInfoFUCHSIA {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::BUFFER_CONSTRAINTS_INFO_FUCHSIA,
@@ -55334,6 +55972,7 @@ pub struct SysmemColorSpaceFUCHSIA {
     pub color_space: u32,
 }
 impl ::std::default::Default for SysmemColorSpaceFUCHSIA {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::SYSMEM_COLOR_SPACE_FUCHSIA,
@@ -55393,6 +56032,7 @@ pub struct ImageFormatConstraintsInfoFUCHSIA {
     pub p_color_spaces: *const SysmemColorSpaceFUCHSIA,
 }
 impl ::std::default::Default for ImageFormatConstraintsInfoFUCHSIA {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMAGE_FORMAT_CONSTRAINTS_INFO_FUCHSIA,
@@ -55475,6 +56115,7 @@ pub struct ImageConstraintsInfoFUCHSIA {
     pub flags: ImageConstraintsInfoFlagsFUCHSIA,
 }
 impl ::std::default::Default for ImageConstraintsInfoFUCHSIA {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMAGE_CONSTRAINTS_INFO_FUCHSIA,
@@ -55551,6 +56192,7 @@ pub struct BufferCollectionConstraintsInfoFUCHSIA {
     pub min_buffer_count_for_shared_slack: u32,
 }
 impl ::std::default::Default for BufferCollectionConstraintsInfoFUCHSIA {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::BUFFER_COLLECTION_CONSTRAINTS_INFO_FUCHSIA,
@@ -55631,6 +56273,7 @@ pub struct PhysicalDeviceRGBA10X6FormatsFeaturesEXT {
     pub format_rgba10x6_without_y_cb_cr_sampler: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceRGBA10X6FormatsFeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_RGBA10X6_FORMATS_FEATURES_EXT,
@@ -55695,6 +56338,7 @@ pub struct FormatProperties3 {
     pub buffer_features: FormatFeatureFlags2,
 }
 impl ::std::default::Default for FormatProperties3 {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::FORMAT_PROPERTIES_3,
@@ -55762,6 +56406,7 @@ pub struct DrmFormatModifierPropertiesList2EXT {
     pub p_drm_format_modifier_properties: *mut DrmFormatModifierProperties2EXT,
 }
 impl ::std::default::Default for DrmFormatModifierPropertiesList2EXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DRM_FORMAT_MODIFIER_PROPERTIES_LIST_2_EXT,
@@ -55886,6 +56531,7 @@ pub struct AndroidHardwareBufferFormatProperties2ANDROID {
     pub suggested_y_chroma_offset: ChromaLocation,
 }
 impl ::std::default::Default for AndroidHardwareBufferFormatProperties2ANDROID {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::ANDROID_HARDWARE_BUFFER_FORMAT_PROPERTIES_2_ANDROID,
@@ -55993,6 +56639,7 @@ pub struct PipelineRenderingCreateInfo {
     pub stencil_attachment_format: Format,
 }
 impl ::std::default::Default for PipelineRenderingCreateInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PIPELINE_RENDERING_CREATE_INFO,
@@ -56073,6 +56720,7 @@ pub struct RenderingInfo {
     pub p_stencil_attachment: *const RenderingAttachmentInfo,
 }
 impl ::std::default::Default for RenderingInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::RENDERING_INFO,
@@ -56197,6 +56845,7 @@ impl fmt::Debug for RenderingAttachmentInfo {
     }
 }
 impl ::std::default::Default for RenderingAttachmentInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::RENDERING_ATTACHMENT_INFO,
@@ -56288,6 +56937,7 @@ pub struct RenderingFragmentShadingRateAttachmentInfoKHR {
     pub shading_rate_attachment_texel_size: Extent2D,
 }
 impl ::std::default::Default for RenderingFragmentShadingRateAttachmentInfoKHR {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT_INFO_KHR,
@@ -56358,6 +57008,7 @@ pub struct RenderingFragmentDensityMapAttachmentInfoEXT {
     pub image_layout: ImageLayout,
 }
 impl ::std::default::Default for RenderingFragmentDensityMapAttachmentInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_INFO_EXT,
@@ -56419,6 +57070,7 @@ pub struct PhysicalDeviceDynamicRenderingFeatures {
     pub dynamic_rendering: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceDynamicRenderingFeatures {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_DYNAMIC_RENDERING_FEATURES,
@@ -56483,6 +57135,7 @@ pub struct CommandBufferInheritanceRenderingInfo {
     pub rasterization_samples: SampleCountFlags,
 }
 impl ::std::default::Default for CommandBufferInheritanceRenderingInfo {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::COMMAND_BUFFER_INHERITANCE_RENDERING_INFO,
@@ -56571,6 +57224,7 @@ pub struct AttachmentSampleCountInfoAMD {
     pub depth_stencil_attachment_samples: SampleCountFlags,
 }
 impl ::std::default::Default for AttachmentSampleCountInfoAMD {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::ATTACHMENT_SAMPLE_COUNT_INFO_AMD,
@@ -56643,6 +57297,7 @@ pub struct MultiviewPerViewAttributesInfoNVX {
     pub per_view_attributes_position_x_only: Bool32,
 }
 impl ::std::default::Default for MultiviewPerViewAttributesInfoNVX {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::MULTIVIEW_PER_VIEW_ATTRIBUTES_INFO_NVX,
@@ -56711,6 +57366,7 @@ pub struct PhysicalDeviceImageViewMinLodFeaturesEXT {
     pub min_lod: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceImageViewMinLodFeaturesEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_IMAGE_VIEW_MIN_LOD_FEATURES_EXT,
@@ -56769,6 +57425,7 @@ pub struct ImageViewMinLodCreateInfoEXT {
     pub min_lod: f32,
 }
 impl ::std::default::Default for ImageViewMinLodCreateInfoEXT {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::IMAGE_VIEW_MIN_LOD_CREATE_INFO_EXT,
@@ -56827,6 +57484,7 @@ pub struct PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARM {
     pub rasterization_order_stencil_attachment_access: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARM {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type:
@@ -56924,6 +57582,7 @@ pub struct PhysicalDeviceLinearColorAttachmentFeaturesNV {
     pub linear_color_attachment: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceLinearColorAttachmentFeaturesNV {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_LINEAR_COLOR_ATTACHMENT_FEATURES_NV,
@@ -56985,6 +57644,7 @@ pub struct PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE {
     pub descriptor_set_host_mapping: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_DESCRIPTOR_SET_HOST_MAPPING_FEATURES_VALVE,
@@ -57050,6 +57710,7 @@ pub struct DescriptorSetBindingReferenceVALVE {
     pub binding: u32,
 }
 impl ::std::default::Default for DescriptorSetBindingReferenceVALVE {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DESCRIPTOR_SET_BINDING_REFERENCE_VALVE,
@@ -57110,6 +57771,7 @@ pub struct DescriptorSetLayoutHostMappingInfoVALVE {
     pub descriptor_size: u32,
 }
 impl ::std::default::Default for DescriptorSetLayoutHostMappingInfoVALVE {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::DESCRIPTOR_SET_LAYOUT_HOST_MAPPING_INFO_VALVE,
