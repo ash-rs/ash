@@ -7495,7 +7495,7 @@ impl ::std::default::Default for DisplayPresentInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPresentInfoKHR for DisplayPresentInfoKHR<'a> {}
+unsafe impl ExtendsPresentInfoKHR for DisplayPresentInfoKHR<'_> {}
 impl<'a> DisplayPresentInfoKHR<'a> {
     #[inline]
     pub fn src_rect(mut self, src_rect: Rect2D) -> Self {
@@ -8235,7 +8235,7 @@ impl ::std::default::Default for DebugReportCallbackCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsInstanceCreateInfo for DebugReportCallbackCreateInfoEXT<'a> {}
+unsafe impl ExtendsInstanceCreateInfo for DebugReportCallbackCreateInfoEXT<'_> {}
 impl<'a> DebugReportCallbackCreateInfoEXT<'a> {
     #[inline]
     pub fn flags(mut self, flags: DebugReportFlagsEXT) -> Self {
@@ -8275,7 +8275,7 @@ impl ::std::default::Default for ValidationFlagsEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsInstanceCreateInfo for ValidationFlagsEXT<'a> {}
+unsafe impl ExtendsInstanceCreateInfo for ValidationFlagsEXT<'_> {}
 impl<'a> ValidationFlagsEXT<'a> {
     #[inline]
     pub fn disabled_validation_checks(
@@ -8313,7 +8313,7 @@ impl ::std::default::Default for ValidationFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsInstanceCreateInfo for ValidationFeaturesEXT<'a> {}
+unsafe impl ExtendsInstanceCreateInfo for ValidationFeaturesEXT<'_> {}
 impl<'a> ValidationFeaturesEXT<'a> {
     #[inline]
     pub fn enabled_validation_features(
@@ -8354,8 +8354,8 @@ impl ::std::default::Default for PipelineRasterizationStateRasterizationOrderAMD
         }
     }
 }
-unsafe impl<'a> ExtendsPipelineRasterizationStateCreateInfo
-    for PipelineRasterizationStateRasterizationOrderAMD<'a>
+unsafe impl ExtendsPipelineRasterizationStateCreateInfo
+    for PipelineRasterizationStateRasterizationOrderAMD<'_>
 {
 }
 impl<'a> PipelineRasterizationStateRasterizationOrderAMD<'a> {
@@ -8511,7 +8511,7 @@ impl ::std::default::Default for DedicatedAllocationImageCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsImageCreateInfo for DedicatedAllocationImageCreateInfoNV<'a> {}
+unsafe impl ExtendsImageCreateInfo for DedicatedAllocationImageCreateInfoNV<'_> {}
 impl<'a> DedicatedAllocationImageCreateInfoNV<'a> {
     #[inline]
     pub fn dedicated_allocation(mut self, dedicated_allocation: bool) -> Self {
@@ -8539,7 +8539,7 @@ impl ::std::default::Default for DedicatedAllocationBufferCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsBufferCreateInfo for DedicatedAllocationBufferCreateInfoNV<'a> {}
+unsafe impl ExtendsBufferCreateInfo for DedicatedAllocationBufferCreateInfoNV<'_> {}
 impl<'a> DedicatedAllocationBufferCreateInfoNV<'a> {
     #[inline]
     pub fn dedicated_allocation(mut self, dedicated_allocation: bool) -> Self {
@@ -8569,7 +8569,7 @@ impl ::std::default::Default for DedicatedAllocationMemoryAllocateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsMemoryAllocateInfo for DedicatedAllocationMemoryAllocateInfoNV<'a> {}
+unsafe impl ExtendsMemoryAllocateInfo for DedicatedAllocationMemoryAllocateInfoNV<'_> {}
 impl<'a> DedicatedAllocationMemoryAllocateInfoNV<'a> {
     #[inline]
     pub fn image(mut self, image: Image) -> Self {
@@ -8646,7 +8646,7 @@ impl ::std::default::Default for ExternalMemoryImageCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsImageCreateInfo for ExternalMemoryImageCreateInfoNV<'a> {}
+unsafe impl ExtendsImageCreateInfo for ExternalMemoryImageCreateInfoNV<'_> {}
 impl<'a> ExternalMemoryImageCreateInfoNV<'a> {
     #[inline]
     pub fn handle_types(mut self, handle_types: ExternalMemoryHandleTypeFlagsNV) -> Self {
@@ -8674,7 +8674,7 @@ impl ::std::default::Default for ExportMemoryAllocateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsMemoryAllocateInfo for ExportMemoryAllocateInfoNV<'a> {}
+unsafe impl ExtendsMemoryAllocateInfo for ExportMemoryAllocateInfoNV<'_> {}
 impl<'a> ExportMemoryAllocateInfoNV<'a> {
     #[inline]
     pub fn handle_types(mut self, handle_types: ExternalMemoryHandleTypeFlagsNV) -> Self {
@@ -8704,7 +8704,7 @@ impl ::std::default::Default for ImportMemoryWin32HandleInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsMemoryAllocateInfo for ImportMemoryWin32HandleInfoNV<'a> {}
+unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryWin32HandleInfoNV<'_> {}
 impl<'a> ImportMemoryWin32HandleInfoNV<'a> {
     #[inline]
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlagsNV) -> Self {
@@ -8739,7 +8739,7 @@ impl ::std::default::Default for ExportMemoryWin32HandleInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsMemoryAllocateInfo for ExportMemoryWin32HandleInfoNV<'a> {}
+unsafe impl ExtendsMemoryAllocateInfo for ExportMemoryWin32HandleInfoNV<'_> {}
 impl<'a> ExportMemoryWin32HandleInfoNV<'a> {
     #[inline]
     pub fn attributes(mut self, attributes: &'a SECURITY_ATTRIBUTES) -> Self {
@@ -8784,8 +8784,8 @@ impl ::std::default::Default for Win32KeyedMutexAcquireReleaseInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsSubmitInfo for Win32KeyedMutexAcquireReleaseInfoNV<'a> {}
-unsafe impl<'a> ExtendsSubmitInfo2 for Win32KeyedMutexAcquireReleaseInfoNV<'a> {}
+unsafe impl ExtendsSubmitInfo for Win32KeyedMutexAcquireReleaseInfoNV<'_> {}
+unsafe impl ExtendsSubmitInfo2 for Win32KeyedMutexAcquireReleaseInfoNV<'_> {}
 impl<'a> Win32KeyedMutexAcquireReleaseInfoNV<'a> {
     #[inline]
     pub fn acquire_syncs(mut self, acquire_syncs: &'a [DeviceMemory]) -> Self {
@@ -8838,11 +8838,8 @@ impl ::std::default::Default for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'a>
-{
-}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'_> {}
 impl<'a> PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'a> {
     #[inline]
     pub fn device_generated_commands(mut self, device_generated_commands: bool) -> Self {
@@ -8870,7 +8867,7 @@ impl ::std::default::Default for DevicePrivateDataCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsDeviceCreateInfo for DevicePrivateDataCreateInfo<'a> {}
+unsafe impl ExtendsDeviceCreateInfo for DevicePrivateDataCreateInfo<'_> {}
 impl<'a> DevicePrivateDataCreateInfo<'a> {
     #[inline]
     pub fn private_data_slot_request_count(mut self, private_data_slot_request_count: u32) -> Self {
@@ -8925,8 +8922,8 @@ impl ::std::default::Default for PhysicalDevicePrivateDataFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePrivateDataFeatures<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDevicePrivateDataFeatures<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePrivateDataFeatures<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePrivateDataFeatures<'_> {}
 impl<'a> PhysicalDevicePrivateDataFeatures<'a> {
     #[inline]
     pub fn private_data(mut self, private_data: bool) -> Self {
@@ -8970,8 +8967,8 @@ impl ::std::default::Default for PhysicalDeviceDeviceGeneratedCommandsProperties
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'a>
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'_>
 {
 }
 impl<'a> PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'a> {
@@ -9065,7 +9062,7 @@ impl ::std::default::Default for PhysicalDeviceMultiDrawPropertiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMultiDrawPropertiesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMultiDrawPropertiesEXT<'_> {}
 impl<'a> PhysicalDeviceMultiDrawPropertiesEXT<'a> {
     #[inline]
     pub fn max_multi_draw_count(mut self, max_multi_draw_count: u32) -> Self {
@@ -9149,7 +9146,7 @@ impl ::std::default::Default for GraphicsPipelineShaderGroupsCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsGraphicsPipelineCreateInfo for GraphicsPipelineShaderGroupsCreateInfoNV<'a> {}
+unsafe impl ExtendsGraphicsPipelineCreateInfo for GraphicsPipelineShaderGroupsCreateInfoNV<'_> {}
 impl<'a> GraphicsPipelineShaderGroupsCreateInfoNV<'a> {
     #[inline]
     pub fn groups(mut self, groups: &'a [GraphicsShaderGroupCreateInfoNV]) -> Self {
@@ -9613,7 +9610,7 @@ impl ::std::default::Default for PhysicalDeviceFeatures2<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceFeatures2<'a> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFeatures2<'_> {}
 pub unsafe trait ExtendsPhysicalDeviceFeatures2 {}
 impl<'a> PhysicalDeviceFeatures2<'a> {
     #[inline]
@@ -10024,7 +10021,7 @@ impl ::std::default::Default for PhysicalDevicePushDescriptorPropertiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDevicePushDescriptorPropertiesKHR<'a> {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePushDescriptorPropertiesKHR<'_> {}
 impl<'a> PhysicalDevicePushDescriptorPropertiesKHR<'a> {
     #[inline]
     pub fn max_push_descriptors(mut self, max_push_descriptors: u32) -> Self {
@@ -10106,7 +10103,7 @@ impl ::std::default::Default for PhysicalDeviceDriverProperties<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDriverProperties<'a> {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDriverProperties<'_> {}
 impl<'a> PhysicalDeviceDriverProperties<'a> {
     #[inline]
     pub fn driver_id(mut self, driver_id: DriverId) -> Self {
@@ -10151,7 +10148,7 @@ impl ::std::default::Default for PresentRegionsKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPresentInfoKHR for PresentRegionsKHR<'a> {}
+unsafe impl ExtendsPresentInfoKHR for PresentRegionsKHR<'_> {}
 impl<'a> PresentRegionsKHR<'a> {
     #[inline]
     pub fn regions(mut self, regions: &'a [PresentRegionKHR]) -> Self {
@@ -10234,8 +10231,8 @@ impl ::std::default::Default for PhysicalDeviceVariablePointersFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVariablePointersFeatures<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceVariablePointersFeatures<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVariablePointersFeatures<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVariablePointersFeatures<'_> {}
 impl<'a> PhysicalDeviceVariablePointersFeatures<'a> {
     #[inline]
     pub fn variable_pointers_storage_buffer(
@@ -10306,10 +10303,7 @@ impl ::std::default::Default for PhysicalDeviceExternalImageFormatInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceImageFormatInfo2
-    for PhysicalDeviceExternalImageFormatInfo<'a>
-{
-}
+unsafe impl ExtendsPhysicalDeviceImageFormatInfo2 for PhysicalDeviceExternalImageFormatInfo<'_> {}
 impl<'a> PhysicalDeviceExternalImageFormatInfo<'a> {
     #[inline]
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
@@ -10337,7 +10331,7 @@ impl ::std::default::Default for ExternalImageFormatProperties<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsImageFormatProperties2 for ExternalImageFormatProperties<'a> {}
+unsafe impl ExtendsImageFormatProperties2 for ExternalImageFormatProperties<'_> {}
 impl<'a> ExternalImageFormatProperties<'a> {
     #[inline]
     pub fn external_memory_properties(
@@ -10447,7 +10441,7 @@ impl ::std::default::Default for PhysicalDeviceIDProperties<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceIDProperties<'a> {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceIDProperties<'_> {}
 impl<'a> PhysicalDeviceIDProperties<'a> {
     #[inline]
     pub fn device_uuid(mut self, device_uuid: [u8; UUID_SIZE]) -> Self {
@@ -10495,7 +10489,7 @@ impl ::std::default::Default for ExternalMemoryImageCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsImageCreateInfo for ExternalMemoryImageCreateInfo<'a> {}
+unsafe impl ExtendsImageCreateInfo for ExternalMemoryImageCreateInfo<'_> {}
 impl<'a> ExternalMemoryImageCreateInfo<'a> {
     #[inline]
     pub fn handle_types(mut self, handle_types: ExternalMemoryHandleTypeFlags) -> Self {
@@ -10523,7 +10517,7 @@ impl ::std::default::Default for ExternalMemoryBufferCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsBufferCreateInfo for ExternalMemoryBufferCreateInfo<'a> {}
+unsafe impl ExtendsBufferCreateInfo for ExternalMemoryBufferCreateInfo<'_> {}
 impl<'a> ExternalMemoryBufferCreateInfo<'a> {
     #[inline]
     pub fn handle_types(mut self, handle_types: ExternalMemoryHandleTypeFlags) -> Self {
@@ -10551,7 +10545,7 @@ impl ::std::default::Default for ExportMemoryAllocateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsMemoryAllocateInfo for ExportMemoryAllocateInfo<'a> {}
+unsafe impl ExtendsMemoryAllocateInfo for ExportMemoryAllocateInfo<'_> {}
 impl<'a> ExportMemoryAllocateInfo<'a> {
     #[inline]
     pub fn handle_types(mut self, handle_types: ExternalMemoryHandleTypeFlags) -> Self {
@@ -10583,7 +10577,7 @@ impl ::std::default::Default for ImportMemoryWin32HandleInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsMemoryAllocateInfo for ImportMemoryWin32HandleInfoKHR<'a> {}
+unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryWin32HandleInfoKHR<'_> {}
 impl<'a> ImportMemoryWin32HandleInfoKHR<'a> {
     #[inline]
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
@@ -10625,7 +10619,7 @@ impl ::std::default::Default for ExportMemoryWin32HandleInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsMemoryAllocateInfo for ExportMemoryWin32HandleInfoKHR<'a> {}
+unsafe impl ExtendsMemoryAllocateInfo for ExportMemoryWin32HandleInfoKHR<'_> {}
 impl<'a> ExportMemoryWin32HandleInfoKHR<'a> {
     #[inline]
     pub fn attributes(mut self, attributes: &'a SECURITY_ATTRIBUTES) -> Self {
@@ -10665,7 +10659,7 @@ impl ::std::default::Default for ImportMemoryZirconHandleInfoFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsMemoryAllocateInfo for ImportMemoryZirconHandleInfoFUCHSIA<'a> {}
+unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryZirconHandleInfoFUCHSIA<'_> {}
 impl<'a> ImportMemoryZirconHandleInfoFUCHSIA<'a> {
     #[inline]
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
@@ -10822,7 +10816,7 @@ impl ::std::default::Default for ImportMemoryFdInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsMemoryAllocateInfo for ImportMemoryFdInfoKHR<'a> {}
+unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryFdInfoKHR<'_> {}
 impl<'a> ImportMemoryFdInfoKHR<'a> {
     #[inline]
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
@@ -10928,8 +10922,8 @@ impl ::std::default::Default for Win32KeyedMutexAcquireReleaseInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsSubmitInfo for Win32KeyedMutexAcquireReleaseInfoKHR<'a> {}
-unsafe impl<'a> ExtendsSubmitInfo2 for Win32KeyedMutexAcquireReleaseInfoKHR<'a> {}
+unsafe impl ExtendsSubmitInfo for Win32KeyedMutexAcquireReleaseInfoKHR<'_> {}
+unsafe impl ExtendsSubmitInfo2 for Win32KeyedMutexAcquireReleaseInfoKHR<'_> {}
 impl<'a> Win32KeyedMutexAcquireReleaseInfoKHR<'a> {
     #[inline]
     pub fn acquire_syncs(mut self, acquire_syncs: &'a [DeviceMemory]) -> Self {
@@ -11077,7 +11071,7 @@ impl ::std::default::Default for ExportSemaphoreCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsSemaphoreCreateInfo for ExportSemaphoreCreateInfo<'a> {}
+unsafe impl ExtendsSemaphoreCreateInfo for ExportSemaphoreCreateInfo<'_> {}
 impl<'a> ExportSemaphoreCreateInfo<'a> {
     #[inline]
     pub fn handle_types(mut self, handle_types: ExternalSemaphoreHandleTypeFlags) -> Self {
@@ -11164,7 +11158,7 @@ impl ::std::default::Default for ExportSemaphoreWin32HandleInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsSemaphoreCreateInfo for ExportSemaphoreWin32HandleInfoKHR<'a> {}
+unsafe impl ExtendsSemaphoreCreateInfo for ExportSemaphoreWin32HandleInfoKHR<'_> {}
 impl<'a> ExportSemaphoreWin32HandleInfoKHR<'a> {
     #[inline]
     pub fn attributes(mut self, attributes: &'a SECURITY_ATTRIBUTES) -> Self {
@@ -11208,7 +11202,7 @@ impl ::std::default::Default for D3D12FenceSubmitInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsSubmitInfo for D3D12FenceSubmitInfoKHR<'a> {}
+unsafe impl ExtendsSubmitInfo for D3D12FenceSubmitInfoKHR<'_> {}
 impl<'a> D3D12FenceSubmitInfoKHR<'a> {
     #[inline]
     pub fn wait_semaphore_values(mut self, wait_semaphore_values: &'a [u64]) -> Self {
@@ -11518,7 +11512,7 @@ impl ::std::default::Default for ExportFenceCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsFenceCreateInfo for ExportFenceCreateInfo<'a> {}
+unsafe impl ExtendsFenceCreateInfo for ExportFenceCreateInfo<'_> {}
 impl<'a> ExportFenceCreateInfo<'a> {
     #[inline]
     pub fn handle_types(mut self, handle_types: ExternalFenceHandleTypeFlags) -> Self {
@@ -11605,7 +11599,7 @@ impl ::std::default::Default for ExportFenceWin32HandleInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsFenceCreateInfo for ExportFenceWin32HandleInfoKHR<'a> {}
+unsafe impl ExtendsFenceCreateInfo for ExportFenceWin32HandleInfoKHR<'_> {}
 impl<'a> ExportFenceWin32HandleInfoKHR<'a> {
     #[inline]
     pub fn attributes(mut self, attributes: &'a SECURITY_ATTRIBUTES) -> Self {
@@ -11763,8 +11757,8 @@ impl ::std::default::Default for PhysicalDeviceMultiviewFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMultiviewFeatures<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceMultiviewFeatures<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMultiviewFeatures<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMultiviewFeatures<'_> {}
 impl<'a> PhysicalDeviceMultiviewFeatures<'a> {
     #[inline]
     pub fn multiview(mut self, multiview: bool) -> Self {
@@ -11804,7 +11798,7 @@ impl ::std::default::Default for PhysicalDeviceMultiviewProperties<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMultiviewProperties<'a> {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMultiviewProperties<'_> {}
 impl<'a> PhysicalDeviceMultiviewProperties<'a> {
     #[inline]
     pub fn max_multiview_view_count(mut self, max_multiview_view_count: u32) -> Self {
@@ -11847,7 +11841,7 @@ impl ::std::default::Default for RenderPassMultiviewCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsRenderPassCreateInfo for RenderPassMultiviewCreateInfo<'a> {}
+unsafe impl ExtendsRenderPassCreateInfo for RenderPassMultiviewCreateInfo<'_> {}
 impl<'a> RenderPassMultiviewCreateInfo<'a> {
     #[inline]
     pub fn view_masks(mut self, view_masks: &'a [u32]) -> Self {
@@ -12072,7 +12066,7 @@ impl ::std::default::Default for SwapchainCounterCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsSwapchainCreateInfoKHR for SwapchainCounterCreateInfoEXT<'a> {}
+unsafe impl ExtendsSwapchainCreateInfoKHR for SwapchainCounterCreateInfoEXT<'_> {}
 impl<'a> SwapchainCounterCreateInfoEXT<'a> {
     #[inline]
     pub fn surface_counters(mut self, surface_counters: SurfaceCounterFlagsEXT) -> Self {
@@ -12146,7 +12140,7 @@ impl ::std::default::Default for MemoryAllocateFlagsInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsMemoryAllocateInfo for MemoryAllocateFlagsInfo<'a> {}
+unsafe impl ExtendsMemoryAllocateInfo for MemoryAllocateFlagsInfo<'_> {}
 impl<'a> MemoryAllocateFlagsInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: MemoryAllocateFlags) -> Self {
@@ -12237,7 +12231,7 @@ impl ::std::default::Default for BindBufferMemoryDeviceGroupInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsBindBufferMemoryInfo for BindBufferMemoryDeviceGroupInfo<'a> {}
+unsafe impl ExtendsBindBufferMemoryInfo for BindBufferMemoryDeviceGroupInfo<'_> {}
 impl<'a> BindBufferMemoryDeviceGroupInfo<'a> {
     #[inline]
     pub fn device_indices(mut self, device_indices: &'a [u32]) -> Self {
@@ -12328,7 +12322,7 @@ impl ::std::default::Default for BindImageMemoryDeviceGroupInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsBindImageMemoryInfo for BindImageMemoryDeviceGroupInfo<'a> {}
+unsafe impl ExtendsBindImageMemoryInfo for BindImageMemoryDeviceGroupInfo<'_> {}
 impl<'a> BindImageMemoryDeviceGroupInfo<'a> {
     #[inline]
     pub fn device_indices(mut self, device_indices: &'a [u32]) -> Self {
@@ -12370,8 +12364,8 @@ impl ::std::default::Default for DeviceGroupRenderPassBeginInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsRenderPassBeginInfo for DeviceGroupRenderPassBeginInfo<'a> {}
-unsafe impl<'a> ExtendsRenderingInfo for DeviceGroupRenderPassBeginInfo<'a> {}
+unsafe impl ExtendsRenderPassBeginInfo for DeviceGroupRenderPassBeginInfo<'_> {}
+unsafe impl ExtendsRenderingInfo for DeviceGroupRenderPassBeginInfo<'_> {}
 impl<'a> DeviceGroupRenderPassBeginInfo<'a> {
     #[inline]
     pub fn device_mask(mut self, device_mask: u32) -> Self {
@@ -12405,7 +12399,7 @@ impl ::std::default::Default for DeviceGroupCommandBufferBeginInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsCommandBufferBeginInfo for DeviceGroupCommandBufferBeginInfo<'a> {}
+unsafe impl ExtendsCommandBufferBeginInfo for DeviceGroupCommandBufferBeginInfo<'_> {}
 impl<'a> DeviceGroupCommandBufferBeginInfo<'a> {
     #[inline]
     pub fn device_mask(mut self, device_mask: u32) -> Self {
@@ -12443,7 +12437,7 @@ impl ::std::default::Default for DeviceGroupSubmitInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsSubmitInfo for DeviceGroupSubmitInfo<'a> {}
+unsafe impl ExtendsSubmitInfo for DeviceGroupSubmitInfo<'_> {}
 impl<'a> DeviceGroupSubmitInfo<'a> {
     #[inline]
     pub fn wait_semaphore_device_indices(
@@ -12492,7 +12486,7 @@ impl ::std::default::Default for DeviceGroupBindSparseInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsBindSparseInfo for DeviceGroupBindSparseInfo<'a> {}
+unsafe impl ExtendsBindSparseInfo for DeviceGroupBindSparseInfo<'_> {}
 impl<'a> DeviceGroupBindSparseInfo<'a> {
     #[inline]
     pub fn resource_device_index(mut self, resource_device_index: u32) -> Self {
@@ -12559,7 +12553,7 @@ impl ::std::default::Default for ImageSwapchainCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsImageCreateInfo for ImageSwapchainCreateInfoKHR<'a> {}
+unsafe impl ExtendsImageCreateInfo for ImageSwapchainCreateInfoKHR<'_> {}
 impl<'a> ImageSwapchainCreateInfoKHR<'a> {
     #[inline]
     pub fn swapchain(mut self, swapchain: SwapchainKHR) -> Self {
@@ -12589,7 +12583,7 @@ impl ::std::default::Default for BindImageMemorySwapchainInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsBindImageMemoryInfo for BindImageMemorySwapchainInfoKHR<'a> {}
+unsafe impl ExtendsBindImageMemoryInfo for BindImageMemorySwapchainInfoKHR<'_> {}
 impl<'a> BindImageMemorySwapchainInfoKHR<'a> {
     #[inline]
     pub fn swapchain(mut self, swapchain: SwapchainKHR) -> Self {
@@ -12681,7 +12675,7 @@ impl ::std::default::Default for DeviceGroupPresentInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPresentInfoKHR for DeviceGroupPresentInfoKHR<'a> {}
+unsafe impl ExtendsPresentInfoKHR for DeviceGroupPresentInfoKHR<'_> {}
 impl<'a> DeviceGroupPresentInfoKHR<'a> {
     #[inline]
     pub fn device_masks(mut self, device_masks: &'a [u32]) -> Self {
@@ -12717,7 +12711,7 @@ impl ::std::default::Default for DeviceGroupDeviceCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsDeviceCreateInfo for DeviceGroupDeviceCreateInfo<'a> {}
+unsafe impl ExtendsDeviceCreateInfo for DeviceGroupDeviceCreateInfo<'_> {}
 impl<'a> DeviceGroupDeviceCreateInfo<'a> {
     #[inline]
     pub fn physical_devices(mut self, physical_devices: &'a [PhysicalDevice]) -> Self {
@@ -12746,7 +12740,7 @@ impl ::std::default::Default for DeviceGroupSwapchainCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsSwapchainCreateInfoKHR for DeviceGroupSwapchainCreateInfoKHR<'a> {}
+unsafe impl ExtendsSwapchainCreateInfoKHR for DeviceGroupSwapchainCreateInfoKHR<'_> {}
 impl<'a> DeviceGroupSwapchainCreateInfoKHR<'a> {
     #[inline]
     pub fn modes(mut self, modes: DeviceGroupPresentModeFlagsKHR) -> Self {
@@ -12913,8 +12907,8 @@ impl ::std::default::Default for PhysicalDevicePresentIdFeaturesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePresentIdFeaturesKHR<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDevicePresentIdFeaturesKHR<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePresentIdFeaturesKHR<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePresentIdFeaturesKHR<'_> {}
 impl<'a> PhysicalDevicePresentIdFeaturesKHR<'a> {
     #[inline]
     pub fn present_id(mut self, present_id: bool) -> Self {
@@ -12944,7 +12938,7 @@ impl ::std::default::Default for PresentIdKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPresentInfoKHR for PresentIdKHR<'a> {}
+unsafe impl ExtendsPresentInfoKHR for PresentIdKHR<'_> {}
 impl<'a> PresentIdKHR<'a> {
     #[inline]
     pub fn present_ids(mut self, present_ids: &'a [u64]) -> Self {
@@ -12973,8 +12967,8 @@ impl ::std::default::Default for PhysicalDevicePresentWaitFeaturesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePresentWaitFeaturesKHR<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDevicePresentWaitFeaturesKHR<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePresentWaitFeaturesKHR<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePresentWaitFeaturesKHR<'_> {}
 impl<'a> PhysicalDevicePresentWaitFeaturesKHR<'a> {
     #[inline]
     pub fn present_wait(mut self, present_wait: bool) -> Self {
@@ -13078,7 +13072,7 @@ impl ::std::default::Default for DisplayNativeHdrSurfaceCapabilitiesAMD<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsSurfaceCapabilities2KHR for DisplayNativeHdrSurfaceCapabilitiesAMD<'a> {}
+unsafe impl ExtendsSurfaceCapabilities2KHR for DisplayNativeHdrSurfaceCapabilitiesAMD<'_> {}
 impl<'a> DisplayNativeHdrSurfaceCapabilitiesAMD<'a> {
     #[inline]
     pub fn local_dimming_support(mut self, local_dimming_support: bool) -> Self {
@@ -13106,7 +13100,7 @@ impl ::std::default::Default for SwapchainDisplayNativeHdrCreateInfoAMD<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsSwapchainCreateInfoKHR for SwapchainDisplayNativeHdrCreateInfoAMD<'a> {}
+unsafe impl ExtendsSwapchainCreateInfoKHR for SwapchainDisplayNativeHdrCreateInfoAMD<'_> {}
 impl<'a> SwapchainDisplayNativeHdrCreateInfoAMD<'a> {
     #[inline]
     pub fn local_dimming_enable(mut self, local_dimming_enable: bool) -> Self {
@@ -13188,7 +13182,7 @@ impl ::std::default::Default for PresentTimesInfoGOOGLE<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPresentInfoKHR for PresentTimesInfoGOOGLE<'a> {}
+unsafe impl ExtendsPresentInfoKHR for PresentTimesInfoGOOGLE<'_> {}
 impl<'a> PresentTimesInfoGOOGLE<'a> {
     #[inline]
     pub fn times(mut self, times: &'a [PresentTimeGOOGLE]) -> Self {
@@ -13363,8 +13357,8 @@ impl ::std::default::Default for PipelineViewportWScalingStateCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPipelineViewportStateCreateInfo
-    for PipelineViewportWScalingStateCreateInfoNV<'a>
+unsafe impl ExtendsPipelineViewportStateCreateInfo
+    for PipelineViewportWScalingStateCreateInfoNV<'_>
 {
 }
 impl<'a> PipelineViewportWScalingStateCreateInfoNV<'a> {
@@ -13436,8 +13430,8 @@ impl ::std::default::Default for PipelineViewportSwizzleStateCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPipelineViewportStateCreateInfo
-    for PipelineViewportSwizzleStateCreateInfoNV<'a>
+unsafe impl ExtendsPipelineViewportStateCreateInfo
+    for PipelineViewportSwizzleStateCreateInfoNV<'_>
 {
 }
 impl<'a> PipelineViewportSwizzleStateCreateInfoNV<'a> {
@@ -13473,10 +13467,7 @@ impl ::std::default::Default for PhysicalDeviceDiscardRectanglePropertiesEXT<'_>
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceDiscardRectanglePropertiesEXT<'a>
-{
-}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDiscardRectanglePropertiesEXT<'_> {}
 impl<'a> PhysicalDeviceDiscardRectanglePropertiesEXT<'a> {
     #[inline]
     pub fn max_discard_rectangles(mut self, max_discard_rectangles: u32) -> Self {
@@ -13510,10 +13501,7 @@ impl ::std::default::Default for PipelineDiscardRectangleStateCreateInfoEXT<'_> 
         }
     }
 }
-unsafe impl<'a> ExtendsGraphicsPipelineCreateInfo
-    for PipelineDiscardRectangleStateCreateInfoEXT<'a>
-{
-}
+unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineDiscardRectangleStateCreateInfoEXT<'_> {}
 impl<'a> PipelineDiscardRectangleStateCreateInfoEXT<'a> {
     #[inline]
     pub fn flags(mut self, flags: PipelineDiscardRectangleStateCreateFlagsEXT) -> Self {
@@ -13555,8 +13543,8 @@ impl ::std::default::Default for PhysicalDeviceMultiviewPerViewAttributesPropert
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'a>
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'_>
 {
 }
 impl<'a> PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'a> {
@@ -13617,7 +13605,7 @@ impl ::std::default::Default for RenderPassInputAttachmentAspectCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsRenderPassCreateInfo for RenderPassInputAttachmentAspectCreateInfo<'a> {}
+unsafe impl ExtendsRenderPassCreateInfo for RenderPassInputAttachmentAspectCreateInfo<'_> {}
 impl<'a> RenderPassInputAttachmentAspectCreateInfo<'a> {
     #[inline]
     pub fn aspect_references(
@@ -13908,7 +13896,7 @@ impl ::std::default::Default for SharedPresentSurfaceCapabilitiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsSurfaceCapabilities2KHR for SharedPresentSurfaceCapabilitiesKHR<'a> {}
+unsafe impl ExtendsSurfaceCapabilities2KHR for SharedPresentSurfaceCapabilitiesKHR<'_> {}
 impl<'a> SharedPresentSurfaceCapabilitiesKHR<'a> {
     #[inline]
     pub fn shared_present_supported_usage_flags(
@@ -13945,8 +13933,8 @@ impl ::std::default::Default for PhysicalDevice16BitStorageFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDevice16BitStorageFeatures<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDevice16BitStorageFeatures<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevice16BitStorageFeatures<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevice16BitStorageFeatures<'_> {}
 impl<'a> PhysicalDevice16BitStorageFeatures<'a> {
     #[inline]
     pub fn storage_buffer16_bit_access(mut self, storage_buffer16_bit_access: bool) -> Self {
@@ -13999,7 +13987,7 @@ impl ::std::default::Default for PhysicalDeviceSubgroupProperties<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSubgroupProperties<'a> {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSubgroupProperties<'_> {}
 impl<'a> PhysicalDeviceSubgroupProperties<'a> {
     #[inline]
     pub fn subgroup_size(mut self, subgroup_size: u32) -> Self {
@@ -14042,11 +14030,11 @@ impl ::std::default::Default for PhysicalDeviceShaderSubgroupExtendedTypesFeatur
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'a>
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'_>
 {
 }
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'a> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'_> {}
 impl<'a> PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'a> {
     #[inline]
     pub fn shader_subgroup_extended_types(mut self, shader_subgroup_extended_types: bool) -> Self {
@@ -14303,7 +14291,7 @@ impl ::std::default::Default for PhysicalDevicePointClippingProperties<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDevicePointClippingProperties<'a> {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePointClippingProperties<'_> {}
 impl<'a> PhysicalDevicePointClippingProperties<'a> {
     #[inline]
     pub fn point_clipping_behavior(
@@ -14336,7 +14324,7 @@ impl ::std::default::Default for MemoryDedicatedRequirements<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsMemoryRequirements2 for MemoryDedicatedRequirements<'a> {}
+unsafe impl ExtendsMemoryRequirements2 for MemoryDedicatedRequirements<'_> {}
 impl<'a> MemoryDedicatedRequirements<'a> {
     #[inline]
     pub fn prefers_dedicated_allocation(mut self, prefers_dedicated_allocation: bool) -> Self {
@@ -14371,7 +14359,7 @@ impl ::std::default::Default for MemoryDedicatedAllocateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsMemoryAllocateInfo for MemoryDedicatedAllocateInfo<'a> {}
+unsafe impl ExtendsMemoryAllocateInfo for MemoryDedicatedAllocateInfo<'_> {}
 impl<'a> MemoryDedicatedAllocateInfo<'a> {
     #[inline]
     pub fn image(mut self, image: Image) -> Self {
@@ -14404,7 +14392,7 @@ impl ::std::default::Default for ImageViewUsageCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsImageViewCreateInfo for ImageViewUsageCreateInfo<'a> {}
+unsafe impl ExtendsImageViewCreateInfo for ImageViewUsageCreateInfo<'_> {}
 impl<'a> ImageViewUsageCreateInfo<'a> {
     #[inline]
     pub fn usage(mut self, usage: ImageUsageFlags) -> Self {
@@ -14432,8 +14420,8 @@ impl ::std::default::Default for PipelineTessellationDomainOriginStateCreateInfo
         }
     }
 }
-unsafe impl<'a> ExtendsPipelineTessellationStateCreateInfo
-    for PipelineTessellationDomainOriginStateCreateInfo<'a>
+unsafe impl ExtendsPipelineTessellationStateCreateInfo
+    for PipelineTessellationDomainOriginStateCreateInfo<'_>
 {
 }
 impl<'a> PipelineTessellationDomainOriginStateCreateInfo<'a> {
@@ -14463,8 +14451,8 @@ impl ::std::default::Default for SamplerYcbcrConversionInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsSamplerCreateInfo for SamplerYcbcrConversionInfo<'a> {}
-unsafe impl<'a> ExtendsImageViewCreateInfo for SamplerYcbcrConversionInfo<'a> {}
+unsafe impl ExtendsSamplerCreateInfo for SamplerYcbcrConversionInfo<'_> {}
+unsafe impl ExtendsImageViewCreateInfo for SamplerYcbcrConversionInfo<'_> {}
 impl<'a> SamplerYcbcrConversionInfo<'a> {
     #[inline]
     pub fn conversion(mut self, conversion: SamplerYcbcrConversion) -> Self {
@@ -14586,7 +14574,7 @@ impl ::std::default::Default for BindImagePlaneMemoryInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsBindImageMemoryInfo for BindImagePlaneMemoryInfo<'a> {}
+unsafe impl ExtendsBindImageMemoryInfo for BindImagePlaneMemoryInfo<'_> {}
 impl<'a> BindImagePlaneMemoryInfo<'a> {
     #[inline]
     pub fn plane_aspect(mut self, plane_aspect: ImageAspectFlags) -> Self {
@@ -14614,7 +14602,7 @@ impl ::std::default::Default for ImagePlaneMemoryRequirementsInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsImageMemoryRequirementsInfo2 for ImagePlaneMemoryRequirementsInfo<'a> {}
+unsafe impl ExtendsImageMemoryRequirementsInfo2 for ImagePlaneMemoryRequirementsInfo<'_> {}
 impl<'a> ImagePlaneMemoryRequirementsInfo<'a> {
     #[inline]
     pub fn plane_aspect(mut self, plane_aspect: ImageAspectFlags) -> Self {
@@ -14642,11 +14630,8 @@ impl ::std::default::Default for PhysicalDeviceSamplerYcbcrConversionFeatures<'_
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceSamplerYcbcrConversionFeatures<'a>
-{
-}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceSamplerYcbcrConversionFeatures<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSamplerYcbcrConversionFeatures<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSamplerYcbcrConversionFeatures<'_> {}
 impl<'a> PhysicalDeviceSamplerYcbcrConversionFeatures<'a> {
     #[inline]
     pub fn sampler_ycbcr_conversion(mut self, sampler_ycbcr_conversion: bool) -> Self {
@@ -14674,7 +14659,7 @@ impl ::std::default::Default for SamplerYcbcrConversionImageFormatProperties<'_>
         }
     }
 }
-unsafe impl<'a> ExtendsImageFormatProperties2 for SamplerYcbcrConversionImageFormatProperties<'a> {}
+unsafe impl ExtendsImageFormatProperties2 for SamplerYcbcrConversionImageFormatProperties<'_> {}
 impl<'a> SamplerYcbcrConversionImageFormatProperties<'a> {
     #[inline]
     pub fn combined_image_sampler_descriptor_count(
@@ -14705,7 +14690,7 @@ impl ::std::default::Default for TextureLODGatherFormatPropertiesAMD<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsImageFormatProperties2 for TextureLODGatherFormatPropertiesAMD<'a> {}
+unsafe impl ExtendsImageFormatProperties2 for TextureLODGatherFormatPropertiesAMD<'_> {}
 impl<'a> TextureLODGatherFormatPropertiesAMD<'a> {
     #[inline]
     pub fn supports_texture_gather_lod_bias_amd(
@@ -14777,7 +14762,7 @@ impl ::std::default::Default for ProtectedSubmitInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsSubmitInfo for ProtectedSubmitInfo<'a> {}
+unsafe impl ExtendsSubmitInfo for ProtectedSubmitInfo<'_> {}
 impl<'a> ProtectedSubmitInfo<'a> {
     #[inline]
     pub fn protected_submit(mut self, protected_submit: bool) -> Self {
@@ -14805,8 +14790,8 @@ impl ::std::default::Default for PhysicalDeviceProtectedMemoryFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceProtectedMemoryFeatures<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceProtectedMemoryFeatures<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceProtectedMemoryFeatures<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceProtectedMemoryFeatures<'_> {}
 impl<'a> PhysicalDeviceProtectedMemoryFeatures<'a> {
     #[inline]
     pub fn protected_memory(mut self, protected_memory: bool) -> Self {
@@ -14834,7 +14819,7 @@ impl ::std::default::Default for PhysicalDeviceProtectedMemoryProperties<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceProtectedMemoryProperties<'a> {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceProtectedMemoryProperties<'_> {}
 impl<'a> PhysicalDeviceProtectedMemoryProperties<'a> {
     #[inline]
     pub fn protected_no_fault(mut self, protected_no_fault: bool) -> Self {
@@ -14907,8 +14892,8 @@ impl ::std::default::Default for PipelineCoverageToColorStateCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPipelineMultisampleStateCreateInfo
-    for PipelineCoverageToColorStateCreateInfoNV<'a>
+unsafe impl ExtendsPipelineMultisampleStateCreateInfo
+    for PipelineCoverageToColorStateCreateInfoNV<'_>
 {
 }
 impl<'a> PipelineCoverageToColorStateCreateInfoNV<'a> {
@@ -14950,10 +14935,7 @@ impl ::std::default::Default for PhysicalDeviceSamplerFilterMinmaxProperties<'_>
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceSamplerFilterMinmaxProperties<'a>
-{
-}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSamplerFilterMinmaxProperties<'_> {}
 impl<'a> PhysicalDeviceSamplerFilterMinmaxProperties<'a> {
     #[inline]
     pub fn filter_minmax_single_component_formats(
@@ -15018,8 +15000,8 @@ impl ::std::default::Default for SampleLocationsInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsImageMemoryBarrier for SampleLocationsInfoEXT<'a> {}
-unsafe impl<'a> ExtendsImageMemoryBarrier2 for SampleLocationsInfoEXT<'a> {}
+unsafe impl ExtendsImageMemoryBarrier for SampleLocationsInfoEXT<'_> {}
+unsafe impl ExtendsImageMemoryBarrier2 for SampleLocationsInfoEXT<'_> {}
 impl<'a> SampleLocationsInfoEXT<'a> {
     #[inline]
     pub fn sample_locations_per_pixel(
@@ -15115,7 +15097,7 @@ impl ::std::default::Default for RenderPassSampleLocationsBeginInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsRenderPassBeginInfo for RenderPassSampleLocationsBeginInfoEXT<'a> {}
+unsafe impl ExtendsRenderPassBeginInfo for RenderPassSampleLocationsBeginInfoEXT<'_> {}
 impl<'a> RenderPassSampleLocationsBeginInfoEXT<'a> {
     #[inline]
     pub fn attachment_initial_sample_locations(
@@ -15159,8 +15141,8 @@ impl ::std::default::Default for PipelineSampleLocationsStateCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPipelineMultisampleStateCreateInfo
-    for PipelineSampleLocationsStateCreateInfoEXT<'a>
+unsafe impl ExtendsPipelineMultisampleStateCreateInfo
+    for PipelineSampleLocationsStateCreateInfoEXT<'_>
 {
 }
 impl<'a> PipelineSampleLocationsStateCreateInfoEXT<'a> {
@@ -15206,10 +15188,7 @@ impl ::std::default::Default for PhysicalDeviceSampleLocationsPropertiesEXT<'_> 
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceSampleLocationsPropertiesEXT<'a>
-{
-}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSampleLocationsPropertiesEXT<'_> {}
 impl<'a> PhysicalDeviceSampleLocationsPropertiesEXT<'a> {
     #[inline]
     pub fn sample_location_sample_counts(
@@ -15296,7 +15275,7 @@ impl ::std::default::Default for SamplerReductionModeCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsSamplerCreateInfo for SamplerReductionModeCreateInfo<'a> {}
+unsafe impl ExtendsSamplerCreateInfo for SamplerReductionModeCreateInfo<'_> {}
 impl<'a> SamplerReductionModeCreateInfo<'a> {
     #[inline]
     pub fn reduction_mode(mut self, reduction_mode: SamplerReductionMode) -> Self {
@@ -15324,11 +15303,8 @@ impl ::std::default::Default for PhysicalDeviceBlendOperationAdvancedFeaturesEXT
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'a>
-{
-}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'_> {}
 impl<'a> PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'a> {
     #[inline]
     pub fn advanced_blend_coherent_operations(
@@ -15359,8 +15335,8 @@ impl ::std::default::Default for PhysicalDeviceMultiDrawFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMultiDrawFeaturesEXT<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceMultiDrawFeaturesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMultiDrawFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMultiDrawFeaturesEXT<'_> {}
 impl<'a> PhysicalDeviceMultiDrawFeaturesEXT<'a> {
     #[inline]
     pub fn multi_draw(mut self, multi_draw: bool) -> Self {
@@ -15398,8 +15374,8 @@ impl ::std::default::Default for PhysicalDeviceBlendOperationAdvancedPropertiesE
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'a>
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'_>
 {
 }
 impl<'a> PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'a> {
@@ -15475,8 +15451,8 @@ impl ::std::default::Default for PipelineColorBlendAdvancedStateCreateInfoEXT<'_
         }
     }
 }
-unsafe impl<'a> ExtendsPipelineColorBlendStateCreateInfo
-    for PipelineColorBlendAdvancedStateCreateInfoEXT<'a>
+unsafe impl ExtendsPipelineColorBlendStateCreateInfo
+    for PipelineColorBlendAdvancedStateCreateInfoEXT<'_>
 {
 }
 impl<'a> PipelineColorBlendAdvancedStateCreateInfoEXT<'a> {
@@ -15518,8 +15494,8 @@ impl ::std::default::Default for PhysicalDeviceInlineUniformBlockFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceInlineUniformBlockFeatures<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceInlineUniformBlockFeatures<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceInlineUniformBlockFeatures<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceInlineUniformBlockFeatures<'_> {}
 impl<'a> PhysicalDeviceInlineUniformBlockFeatures<'a> {
     #[inline]
     pub fn inline_uniform_block(mut self, inline_uniform_block: bool) -> Self {
@@ -15564,10 +15540,7 @@ impl ::std::default::Default for PhysicalDeviceInlineUniformBlockProperties<'_> 
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceInlineUniformBlockProperties<'a>
-{
-}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceInlineUniformBlockProperties<'_> {}
 impl<'a> PhysicalDeviceInlineUniformBlockProperties<'a> {
     #[inline]
     pub fn max_inline_uniform_block_size(mut self, max_inline_uniform_block_size: u32) -> Self {
@@ -15632,7 +15605,7 @@ impl ::std::default::Default for WriteDescriptorSetInlineUniformBlock<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsWriteDescriptorSet for WriteDescriptorSetInlineUniformBlock<'a> {}
+unsafe impl ExtendsWriteDescriptorSet for WriteDescriptorSetInlineUniformBlock<'_> {}
 impl<'a> WriteDescriptorSetInlineUniformBlock<'a> {
     #[inline]
     pub fn data(mut self, data: &'a [u8]) -> Self {
@@ -15661,7 +15634,7 @@ impl ::std::default::Default for DescriptorPoolInlineUniformBlockCreateInfo<'_> 
         }
     }
 }
-unsafe impl<'a> ExtendsDescriptorPoolCreateInfo for DescriptorPoolInlineUniformBlockCreateInfo<'a> {}
+unsafe impl ExtendsDescriptorPoolCreateInfo for DescriptorPoolInlineUniformBlockCreateInfo<'_> {}
 impl<'a> DescriptorPoolInlineUniformBlockCreateInfo<'a> {
     #[inline]
     pub fn max_inline_uniform_block_bindings(
@@ -15700,8 +15673,8 @@ impl ::std::default::Default for PipelineCoverageModulationStateCreateInfoNV<'_>
         }
     }
 }
-unsafe impl<'a> ExtendsPipelineMultisampleStateCreateInfo
-    for PipelineCoverageModulationStateCreateInfoNV<'a>
+unsafe impl ExtendsPipelineMultisampleStateCreateInfo
+    for PipelineCoverageModulationStateCreateInfoNV<'_>
 {
 }
 impl<'a> PipelineCoverageModulationStateCreateInfoNV<'a> {
@@ -15755,9 +15728,9 @@ impl ::std::default::Default for ImageFormatListCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsImageCreateInfo for ImageFormatListCreateInfo<'a> {}
-unsafe impl<'a> ExtendsSwapchainCreateInfoKHR for ImageFormatListCreateInfo<'a> {}
-unsafe impl<'a> ExtendsPhysicalDeviceImageFormatInfo2 for ImageFormatListCreateInfo<'a> {}
+unsafe impl ExtendsImageCreateInfo for ImageFormatListCreateInfo<'_> {}
+unsafe impl ExtendsSwapchainCreateInfoKHR for ImageFormatListCreateInfo<'_> {}
+unsafe impl ExtendsPhysicalDeviceImageFormatInfo2 for ImageFormatListCreateInfo<'_> {}
 impl<'a> ImageFormatListCreateInfo<'a> {
     #[inline]
     pub fn view_formats(mut self, view_formats: &'a [Format]) -> Self {
@@ -15823,7 +15796,7 @@ impl ::std::default::Default for ShaderModuleValidationCacheCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsShaderModuleCreateInfo for ShaderModuleValidationCacheCreateInfoEXT<'a> {}
+unsafe impl ExtendsShaderModuleCreateInfo for ShaderModuleValidationCacheCreateInfoEXT<'_> {}
 impl<'a> ShaderModuleValidationCacheCreateInfoEXT<'a> {
     #[inline]
     pub fn validation_cache(mut self, validation_cache: ValidationCacheEXT) -> Self {
@@ -15853,7 +15826,7 @@ impl ::std::default::Default for PhysicalDeviceMaintenance3Properties<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMaintenance3Properties<'a> {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMaintenance3Properties<'_> {}
 impl<'a> PhysicalDeviceMaintenance3Properties<'a> {
     #[inline]
     pub fn max_per_set_descriptors(mut self, max_per_set_descriptors: u32) -> Self {
@@ -15886,8 +15859,8 @@ impl ::std::default::Default for PhysicalDeviceMaintenance4Features<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMaintenance4Features<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceMaintenance4Features<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMaintenance4Features<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMaintenance4Features<'_> {}
 impl<'a> PhysicalDeviceMaintenance4Features<'a> {
     #[inline]
     pub fn maintenance4(mut self, maintenance4: bool) -> Self {
@@ -15915,7 +15888,7 @@ impl ::std::default::Default for PhysicalDeviceMaintenance4Properties<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMaintenance4Properties<'a> {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMaintenance4Properties<'_> {}
 impl<'a> PhysicalDeviceMaintenance4Properties<'a> {
     #[inline]
     pub fn max_buffer_size(mut self, max_buffer_size: DeviceSize) -> Self {
@@ -15985,8 +15958,8 @@ impl ::std::default::Default for PhysicalDeviceShaderDrawParametersFeatures<'_> 
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderDrawParametersFeatures<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceShaderDrawParametersFeatures<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderDrawParametersFeatures<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderDrawParametersFeatures<'_> {}
 impl<'a> PhysicalDeviceShaderDrawParametersFeatures<'a> {
     #[inline]
     pub fn shader_draw_parameters(mut self, shader_draw_parameters: bool) -> Self {
@@ -16016,8 +15989,8 @@ impl ::std::default::Default for PhysicalDeviceShaderFloat16Int8Features<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderFloat16Int8Features<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceShaderFloat16Int8Features<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderFloat16Int8Features<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderFloat16Int8Features<'_> {}
 impl<'a> PhysicalDeviceShaderFloat16Int8Features<'a> {
     #[inline]
     pub fn shader_float16(mut self, shader_float16: bool) -> Self {
@@ -16082,7 +16055,7 @@ impl ::std::default::Default for PhysicalDeviceFloatControlsProperties<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceFloatControlsProperties<'a> {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceFloatControlsProperties<'_> {}
 impl<'a> PhysicalDeviceFloatControlsProperties<'a> {
     #[inline]
     pub fn denorm_behavior_independence(
@@ -16235,8 +16208,8 @@ impl ::std::default::Default for PhysicalDeviceHostQueryResetFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceHostQueryResetFeatures<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceHostQueryResetFeatures<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceHostQueryResetFeatures<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceHostQueryResetFeatures<'_> {}
 impl<'a> PhysicalDeviceHostQueryResetFeatures<'a> {
     #[inline]
     pub fn host_query_reset(mut self, host_query_reset: bool) -> Self {
@@ -16494,7 +16467,7 @@ impl ::std::default::Default for DeviceQueueGlobalPriorityCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsDeviceQueueCreateInfo for DeviceQueueGlobalPriorityCreateInfoKHR<'a> {}
+unsafe impl ExtendsDeviceQueueCreateInfo for DeviceQueueGlobalPriorityCreateInfoKHR<'_> {}
 impl<'a> DeviceQueueGlobalPriorityCreateInfoKHR<'a> {
     #[inline]
     pub fn global_priority(mut self, global_priority: QueueGlobalPriorityKHR) -> Self {
@@ -16522,11 +16495,8 @@ impl ::std::default::Default for PhysicalDeviceGlobalPriorityQueryFeaturesKHR<'_
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceGlobalPriorityQueryFeaturesKHR<'a>
-{
-}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceGlobalPriorityQueryFeaturesKHR<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceGlobalPriorityQueryFeaturesKHR<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceGlobalPriorityQueryFeaturesKHR<'_> {}
 impl<'a> PhysicalDeviceGlobalPriorityQueryFeaturesKHR<'a> {
     #[inline]
     pub fn global_priority_query(mut self, global_priority_query: bool) -> Self {
@@ -16556,7 +16526,7 @@ impl ::std::default::Default for QueueFamilyGlobalPriorityPropertiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsQueueFamilyProperties2 for QueueFamilyGlobalPriorityPropertiesKHR<'a> {}
+unsafe impl ExtendsQueueFamilyProperties2 for QueueFamilyGlobalPriorityPropertiesKHR<'_> {}
 impl<'a> QueueFamilyGlobalPriorityPropertiesKHR<'a> {
     #[inline]
     pub fn priority_count(mut self, priority_count: u32) -> Self {
@@ -16742,7 +16712,7 @@ impl ::std::default::Default for DebugUtilsMessengerCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsInstanceCreateInfo for DebugUtilsMessengerCreateInfoEXT<'a> {}
+unsafe impl ExtendsInstanceCreateInfo for DebugUtilsMessengerCreateInfoEXT<'_> {}
 impl<'a> DebugUtilsMessengerCreateInfoEXT<'a> {
     #[inline]
     pub fn flags(mut self, flags: DebugUtilsMessengerCreateFlagsEXT) -> Self {
@@ -16871,8 +16841,8 @@ impl ::std::default::Default for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'_>
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'_> {}
 impl<'a> PhysicalDeviceDeviceMemoryReportFeaturesEXT<'a> {
     #[inline]
     pub fn device_memory_report(mut self, device_memory_report: bool) -> Self {
@@ -16918,7 +16888,7 @@ impl ::std::default::Default for DeviceDeviceMemoryReportCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsDeviceCreateInfo for DeviceDeviceMemoryReportCreateInfoEXT<'a> {}
+unsafe impl ExtendsDeviceCreateInfo for DeviceDeviceMemoryReportCreateInfoEXT<'_> {}
 impl<'a> DeviceDeviceMemoryReportCreateInfoEXT<'a> {
     #[inline]
     pub fn flags(mut self, flags: DeviceMemoryReportFlagsEXT) -> Self {
@@ -17030,7 +17000,7 @@ impl ::std::default::Default for ImportMemoryHostPointerInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsMemoryAllocateInfo for ImportMemoryHostPointerInfoEXT<'a> {}
+unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryHostPointerInfoEXT<'_> {}
 impl<'a> ImportMemoryHostPointerInfoEXT<'a> {
     #[inline]
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
@@ -17090,10 +17060,7 @@ impl ::std::default::Default for PhysicalDeviceExternalMemoryHostPropertiesEXT<'
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceExternalMemoryHostPropertiesEXT<'a>
-{
-}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceExternalMemoryHostPropertiesEXT<'_> {}
 impl<'a> PhysicalDeviceExternalMemoryHostPropertiesEXT<'a> {
     #[inline]
     pub fn min_imported_host_pointer_alignment(
@@ -17140,8 +17107,8 @@ impl ::std::default::Default for PhysicalDeviceConservativeRasterizationProperti
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceConservativeRasterizationPropertiesEXT<'a>
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceConservativeRasterizationPropertiesEXT<'_>
 {
 }
 impl<'a> PhysicalDeviceConservativeRasterizationPropertiesEXT<'a> {
@@ -17286,7 +17253,7 @@ impl ::std::default::Default for PhysicalDeviceShaderCorePropertiesAMD<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderCorePropertiesAMD<'a> {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderCorePropertiesAMD<'_> {}
 impl<'a> PhysicalDeviceShaderCorePropertiesAMD<'a> {
     #[inline]
     pub fn shader_engine_count(mut self, shader_engine_count: u32) -> Self {
@@ -17381,7 +17348,7 @@ impl ::std::default::Default for PhysicalDeviceShaderCoreProperties2AMD<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderCoreProperties2AMD<'a> {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderCoreProperties2AMD<'_> {}
 impl<'a> PhysicalDeviceShaderCoreProperties2AMD<'a> {
     #[inline]
     pub fn shader_core_features(
@@ -17421,8 +17388,8 @@ impl ::std::default::Default for PipelineRasterizationConservativeStateCreateInf
         }
     }
 }
-unsafe impl<'a> ExtendsPipelineRasterizationStateCreateInfo
-    for PipelineRasterizationConservativeStateCreateInfoEXT<'a>
+unsafe impl ExtendsPipelineRasterizationStateCreateInfo
+    for PipelineRasterizationConservativeStateCreateInfoEXT<'_>
 {
 }
 impl<'a> PipelineRasterizationConservativeStateCreateInfoEXT<'a> {
@@ -17506,8 +17473,8 @@ impl ::std::default::Default for PhysicalDeviceDescriptorIndexingFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDescriptorIndexingFeatures<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceDescriptorIndexingFeatures<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDescriptorIndexingFeatures<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDescriptorIndexingFeatures<'_> {}
 impl<'a> PhysicalDeviceDescriptorIndexingFeatures<'a> {
     #[inline]
     pub fn shader_input_attachment_array_dynamic_indexing(
@@ -17749,10 +17716,7 @@ impl ::std::default::Default for PhysicalDeviceDescriptorIndexingProperties<'_> 
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceDescriptorIndexingProperties<'a>
-{
-}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDescriptorIndexingProperties<'_> {}
 impl<'a> PhysicalDeviceDescriptorIndexingProperties<'a> {
     #[inline]
     pub fn max_update_after_bind_descriptors_in_all_pools(
@@ -17978,10 +17942,7 @@ impl ::std::default::Default for DescriptorSetLayoutBindingFlagsCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsDescriptorSetLayoutCreateInfo
-    for DescriptorSetLayoutBindingFlagsCreateInfo<'a>
-{
-}
+unsafe impl ExtendsDescriptorSetLayoutCreateInfo for DescriptorSetLayoutBindingFlagsCreateInfo<'_> {}
 impl<'a> DescriptorSetLayoutBindingFlagsCreateInfo<'a> {
     #[inline]
     pub fn binding_flags(mut self, binding_flags: &'a [DescriptorBindingFlags]) -> Self {
@@ -18012,8 +17973,8 @@ impl ::std::default::Default for DescriptorSetVariableDescriptorCountAllocateInf
         }
     }
 }
-unsafe impl<'a> ExtendsDescriptorSetAllocateInfo
-    for DescriptorSetVariableDescriptorCountAllocateInfo<'a>
+unsafe impl ExtendsDescriptorSetAllocateInfo
+    for DescriptorSetVariableDescriptorCountAllocateInfo<'_>
 {
 }
 impl<'a> DescriptorSetVariableDescriptorCountAllocateInfo<'a> {
@@ -18044,8 +18005,8 @@ impl ::std::default::Default for DescriptorSetVariableDescriptorCountLayoutSuppo
         }
     }
 }
-unsafe impl<'a> ExtendsDescriptorSetLayoutSupport
-    for DescriptorSetVariableDescriptorCountLayoutSupport<'a>
+unsafe impl ExtendsDescriptorSetLayoutSupport
+    for DescriptorSetVariableDescriptorCountLayoutSupport<'_>
 {
 }
 impl<'a> DescriptorSetVariableDescriptorCountLayoutSupport<'a> {
@@ -18568,8 +18529,8 @@ impl ::std::default::Default for PhysicalDeviceTimelineSemaphoreFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceTimelineSemaphoreFeatures<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceTimelineSemaphoreFeatures<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceTimelineSemaphoreFeatures<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceTimelineSemaphoreFeatures<'_> {}
 impl<'a> PhysicalDeviceTimelineSemaphoreFeatures<'a> {
     #[inline]
     pub fn timeline_semaphore(mut self, timeline_semaphore: bool) -> Self {
@@ -18597,7 +18558,7 @@ impl ::std::default::Default for PhysicalDeviceTimelineSemaphoreProperties<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceTimelineSemaphoreProperties<'a> {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceTimelineSemaphoreProperties<'_> {}
 impl<'a> PhysicalDeviceTimelineSemaphoreProperties<'a> {
     #[inline]
     pub fn max_timeline_semaphore_value_difference(
@@ -18630,8 +18591,8 @@ impl ::std::default::Default for SemaphoreTypeCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsSemaphoreCreateInfo for SemaphoreTypeCreateInfo<'a> {}
-unsafe impl<'a> ExtendsPhysicalDeviceExternalSemaphoreInfo for SemaphoreTypeCreateInfo<'a> {}
+unsafe impl ExtendsSemaphoreCreateInfo for SemaphoreTypeCreateInfo<'_> {}
+unsafe impl ExtendsPhysicalDeviceExternalSemaphoreInfo for SemaphoreTypeCreateInfo<'_> {}
 impl<'a> SemaphoreTypeCreateInfo<'a> {
     #[inline]
     pub fn semaphore_type(mut self, semaphore_type: SemaphoreType) -> Self {
@@ -18670,8 +18631,8 @@ impl ::std::default::Default for TimelineSemaphoreSubmitInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsSubmitInfo for TimelineSemaphoreSubmitInfo<'a> {}
-unsafe impl<'a> ExtendsBindSparseInfo for TimelineSemaphoreSubmitInfo<'a> {}
+unsafe impl ExtendsSubmitInfo for TimelineSemaphoreSubmitInfo<'_> {}
+unsafe impl ExtendsBindSparseInfo for TimelineSemaphoreSubmitInfo<'_> {}
 impl<'a> TimelineSemaphoreSubmitInfo<'a> {
     #[inline]
     pub fn wait_semaphore_values(mut self, wait_semaphore_values: &'a [u64]) -> Self {
@@ -18807,8 +18768,8 @@ impl ::std::default::Default for PipelineVertexInputDivisorStateCreateInfoEXT<'_
         }
     }
 }
-unsafe impl<'a> ExtendsPipelineVertexInputStateCreateInfo
-    for PipelineVertexInputDivisorStateCreateInfoEXT<'a>
+unsafe impl ExtendsPipelineVertexInputStateCreateInfo
+    for PipelineVertexInputDivisorStateCreateInfoEXT<'_>
 {
 }
 impl<'a> PipelineVertexInputDivisorStateCreateInfoEXT<'a> {
@@ -18842,8 +18803,8 @@ impl ::std::default::Default for PhysicalDeviceVertexAttributeDivisorPropertiesE
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'a>
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'_>
 {
 }
 impl<'a> PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'a> {
@@ -18879,7 +18840,7 @@ impl ::std::default::Default for PhysicalDevicePCIBusInfoPropertiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDevicePCIBusInfoPropertiesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePCIBusInfoPropertiesEXT<'_> {}
 impl<'a> PhysicalDevicePCIBusInfoPropertiesEXT<'a> {
     #[inline]
     pub fn pci_domain(mut self, pci_domain: u32) -> Self {
@@ -18922,7 +18883,7 @@ impl ::std::default::Default for ImportAndroidHardwareBufferInfoANDROID<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsMemoryAllocateInfo for ImportAndroidHardwareBufferInfoANDROID<'a> {}
+unsafe impl ExtendsMemoryAllocateInfo for ImportAndroidHardwareBufferInfoANDROID<'_> {}
 impl<'a> ImportAndroidHardwareBufferInfoANDROID<'a> {
     #[inline]
     pub fn buffer(mut self, buffer: *mut AHardwareBuffer) -> Self {
@@ -18950,7 +18911,7 @@ impl ::std::default::Default for AndroidHardwareBufferUsageANDROID<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsImageFormatProperties2 for AndroidHardwareBufferUsageANDROID<'a> {}
+unsafe impl ExtendsImageFormatProperties2 for AndroidHardwareBufferUsageANDROID<'_> {}
 impl<'a> AndroidHardwareBufferUsageANDROID<'a> {
     #[inline]
     pub fn android_hardware_buffer_usage(mut self, android_hardware_buffer_usage: u64) -> Self {
@@ -19071,8 +19032,8 @@ impl ::std::default::Default for AndroidHardwareBufferFormatPropertiesANDROID<'_
         }
     }
 }
-unsafe impl<'a> ExtendsAndroidHardwareBufferPropertiesANDROID
-    for AndroidHardwareBufferFormatPropertiesANDROID<'a>
+unsafe impl ExtendsAndroidHardwareBufferPropertiesANDROID
+    for AndroidHardwareBufferFormatPropertiesANDROID<'_>
 {
 }
 impl<'a> AndroidHardwareBufferFormatPropertiesANDROID<'a> {
@@ -19143,8 +19104,8 @@ impl ::std::default::Default for CommandBufferInheritanceConditionalRenderingInf
         }
     }
 }
-unsafe impl<'a> ExtendsCommandBufferInheritanceInfo
-    for CommandBufferInheritanceConditionalRenderingInfoEXT<'a>
+unsafe impl ExtendsCommandBufferInheritanceInfo
+    for CommandBufferInheritanceConditionalRenderingInfoEXT<'_>
 {
 }
 impl<'a> CommandBufferInheritanceConditionalRenderingInfoEXT<'a> {
@@ -19174,8 +19135,8 @@ impl ::std::default::Default for ExternalFormatANDROID<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsImageCreateInfo for ExternalFormatANDROID<'a> {}
-unsafe impl<'a> ExtendsSamplerYcbcrConversionCreateInfo for ExternalFormatANDROID<'a> {}
+unsafe impl ExtendsImageCreateInfo for ExternalFormatANDROID<'_> {}
+unsafe impl ExtendsSamplerYcbcrConversionCreateInfo for ExternalFormatANDROID<'_> {}
 impl<'a> ExternalFormatANDROID<'a> {
     #[inline]
     pub fn external_format(mut self, external_format: u64) -> Self {
@@ -19207,8 +19168,8 @@ impl ::std::default::Default for PhysicalDevice8BitStorageFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDevice8BitStorageFeatures<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDevice8BitStorageFeatures<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevice8BitStorageFeatures<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevice8BitStorageFeatures<'_> {}
 impl<'a> PhysicalDevice8BitStorageFeatures<'a> {
     #[inline]
     pub fn storage_buffer8_bit_access(mut self, storage_buffer8_bit_access: bool) -> Self {
@@ -19251,11 +19212,8 @@ impl ::std::default::Default for PhysicalDeviceConditionalRenderingFeaturesEXT<'
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceConditionalRenderingFeaturesEXT<'a>
-{
-}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceConditionalRenderingFeaturesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceConditionalRenderingFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceConditionalRenderingFeaturesEXT<'_> {}
 impl<'a> PhysicalDeviceConditionalRenderingFeaturesEXT<'a> {
     #[inline]
     pub fn conditional_rendering(mut self, conditional_rendering: bool) -> Self {
@@ -19295,8 +19253,8 @@ impl ::std::default::Default for PhysicalDeviceVulkanMemoryModelFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVulkanMemoryModelFeatures<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceVulkanMemoryModelFeatures<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVulkanMemoryModelFeatures<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVulkanMemoryModelFeatures<'_> {}
 impl<'a> PhysicalDeviceVulkanMemoryModelFeatures<'a> {
     #[inline]
     pub fn vulkan_memory_model(mut self, vulkan_memory_model: bool) -> Self {
@@ -19343,8 +19301,8 @@ impl ::std::default::Default for PhysicalDeviceShaderAtomicInt64Features<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderAtomicInt64Features<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceShaderAtomicInt64Features<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderAtomicInt64Features<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderAtomicInt64Features<'_> {}
 impl<'a> PhysicalDeviceShaderAtomicInt64Features<'a> {
     #[inline]
     pub fn shader_buffer_int64_atomics(mut self, shader_buffer_int64_atomics: bool) -> Self {
@@ -19399,8 +19357,8 @@ impl ::std::default::Default for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'_> 
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'_> {}
 impl<'a> PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a> {
     #[inline]
     pub fn shader_buffer_float32_atomics(mut self, shader_buffer_float32_atomics: bool) -> Self {
@@ -19523,8 +19481,8 @@ impl ::std::default::Default for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'_>
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'_> {}
 impl<'a> PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {
     #[inline]
     pub fn shader_buffer_float16_atomics(mut self, shader_buffer_float16_atomics: bool) -> Self {
@@ -19639,11 +19597,8 @@ impl ::std::default::Default for PhysicalDeviceVertexAttributeDivisorFeaturesEXT
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceVertexAttributeDivisorFeaturesEXT<'a>
-{
-}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceVertexAttributeDivisorFeaturesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVertexAttributeDivisorFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVertexAttributeDivisorFeaturesEXT<'_> {}
 impl<'a> PhysicalDeviceVertexAttributeDivisorFeaturesEXT<'a> {
     #[inline]
     pub fn vertex_attribute_instance_rate_divisor(
@@ -19683,7 +19638,7 @@ impl ::std::default::Default for QueueFamilyCheckpointPropertiesNV<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsQueueFamilyProperties2 for QueueFamilyCheckpointPropertiesNV<'a> {}
+unsafe impl ExtendsQueueFamilyProperties2 for QueueFamilyCheckpointPropertiesNV<'_> {}
 impl<'a> QueueFamilyCheckpointPropertiesNV<'a> {
     #[inline]
     pub fn checkpoint_execution_stage_mask(
@@ -19754,10 +19709,7 @@ impl ::std::default::Default for PhysicalDeviceDepthStencilResolveProperties<'_>
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceDepthStencilResolveProperties<'a>
-{
-}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDepthStencilResolveProperties<'_> {}
 impl<'a> PhysicalDeviceDepthStencilResolveProperties<'a> {
     #[inline]
     pub fn supported_depth_resolve_modes(
@@ -19810,7 +19762,7 @@ impl ::std::default::Default for SubpassDescriptionDepthStencilResolve<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsSubpassDescription2 for SubpassDescriptionDepthStencilResolve<'a> {}
+unsafe impl ExtendsSubpassDescription2 for SubpassDescriptionDepthStencilResolve<'_> {}
 impl<'a> SubpassDescriptionDepthStencilResolve<'a> {
     #[inline]
     pub fn depth_resolve_mode(mut self, depth_resolve_mode: ResolveModeFlags) -> Self {
@@ -19851,7 +19803,7 @@ impl ::std::default::Default for ImageViewASTCDecodeModeEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsImageViewCreateInfo for ImageViewASTCDecodeModeEXT<'a> {}
+unsafe impl ExtendsImageViewCreateInfo for ImageViewASTCDecodeModeEXT<'_> {}
 impl<'a> ImageViewASTCDecodeModeEXT<'a> {
     #[inline]
     pub fn decode_mode(mut self, decode_mode: Format) -> Self {
@@ -19879,8 +19831,8 @@ impl ::std::default::Default for PhysicalDeviceASTCDecodeFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceASTCDecodeFeaturesEXT<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceASTCDecodeFeaturesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceASTCDecodeFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceASTCDecodeFeaturesEXT<'_> {}
 impl<'a> PhysicalDeviceASTCDecodeFeaturesEXT<'a> {
     #[inline]
     pub fn decode_mode_shared_exponent(mut self, decode_mode_shared_exponent: bool) -> Self {
@@ -19910,8 +19862,8 @@ impl ::std::default::Default for PhysicalDeviceTransformFeedbackFeaturesEXT<'_> 
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceTransformFeedbackFeaturesEXT<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceTransformFeedbackFeaturesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceTransformFeedbackFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceTransformFeedbackFeaturesEXT<'_> {}
 impl<'a> PhysicalDeviceTransformFeedbackFeaturesEXT<'a> {
     #[inline]
     pub fn transform_feedback(mut self, transform_feedback: bool) -> Self {
@@ -19962,10 +19914,7 @@ impl ::std::default::Default for PhysicalDeviceTransformFeedbackPropertiesEXT<'_
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceTransformFeedbackPropertiesEXT<'a>
-{
-}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceTransformFeedbackPropertiesEXT<'_> {}
 impl<'a> PhysicalDeviceTransformFeedbackPropertiesEXT<'a> {
     #[inline]
     pub fn max_transform_feedback_streams(mut self, max_transform_feedback_streams: u32) -> Self {
@@ -20060,8 +20009,8 @@ impl ::std::default::Default for PipelineRasterizationStateStreamCreateInfoEXT<'
         }
     }
 }
-unsafe impl<'a> ExtendsPipelineRasterizationStateCreateInfo
-    for PipelineRasterizationStateStreamCreateInfoEXT<'a>
+unsafe impl ExtendsPipelineRasterizationStateCreateInfo
+    for PipelineRasterizationStateStreamCreateInfoEXT<'_>
 {
 }
 impl<'a> PipelineRasterizationStateStreamCreateInfoEXT<'a> {
@@ -20096,11 +20045,11 @@ impl ::std::default::Default for PhysicalDeviceRepresentativeFragmentTestFeature
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'a>
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'_>
 {
 }
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'a> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'_> {}
 impl<'a> PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'a> {
     #[inline]
     pub fn representative_fragment_test(mut self, representative_fragment_test: bool) -> Self {
@@ -20128,8 +20077,8 @@ impl ::std::default::Default for PipelineRepresentativeFragmentTestStateCreateIn
         }
     }
 }
-unsafe impl<'a> ExtendsGraphicsPipelineCreateInfo
-    for PipelineRepresentativeFragmentTestStateCreateInfoNV<'a>
+unsafe impl ExtendsGraphicsPipelineCreateInfo
+    for PipelineRepresentativeFragmentTestStateCreateInfoNV<'_>
 {
 }
 impl<'a> PipelineRepresentativeFragmentTestStateCreateInfoNV<'a> {
@@ -20162,8 +20111,8 @@ impl ::std::default::Default for PhysicalDeviceExclusiveScissorFeaturesNV<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceExclusiveScissorFeaturesNV<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceExclusiveScissorFeaturesNV<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceExclusiveScissorFeaturesNV<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExclusiveScissorFeaturesNV<'_> {}
 impl<'a> PhysicalDeviceExclusiveScissorFeaturesNV<'a> {
     #[inline]
     pub fn exclusive_scissor(mut self, exclusive_scissor: bool) -> Self {
@@ -20193,8 +20142,8 @@ impl ::std::default::Default for PipelineViewportExclusiveScissorStateCreateInfo
         }
     }
 }
-unsafe impl<'a> ExtendsPipelineViewportStateCreateInfo
-    for PipelineViewportExclusiveScissorStateCreateInfoNV<'a>
+unsafe impl ExtendsPipelineViewportStateCreateInfo
+    for PipelineViewportExclusiveScissorStateCreateInfoNV<'_>
 {
 }
 impl<'a> PipelineViewportExclusiveScissorStateCreateInfoNV<'a> {
@@ -20225,8 +20174,8 @@ impl ::std::default::Default for PhysicalDeviceCornerSampledImageFeaturesNV<'_> 
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCornerSampledImageFeaturesNV<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceCornerSampledImageFeaturesNV<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCornerSampledImageFeaturesNV<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCornerSampledImageFeaturesNV<'_> {}
 impl<'a> PhysicalDeviceCornerSampledImageFeaturesNV<'a> {
     #[inline]
     pub fn corner_sampled_image(mut self, corner_sampled_image: bool) -> Self {
@@ -20256,11 +20205,11 @@ impl ::std::default::Default for PhysicalDeviceComputeShaderDerivativesFeaturesN
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceComputeShaderDerivativesFeaturesNV<'a>
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceComputeShaderDerivativesFeaturesNV<'_>
 {
 }
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceComputeShaderDerivativesFeaturesNV<'a> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceComputeShaderDerivativesFeaturesNV<'_> {}
 impl<'a> PhysicalDeviceComputeShaderDerivativesFeaturesNV<'a> {
     #[inline]
     pub fn compute_derivative_group_quads(mut self, compute_derivative_group_quads: bool) -> Self {
@@ -20296,11 +20245,11 @@ impl ::std::default::Default for PhysicalDeviceFragmentShaderBarycentricFeatures
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceFragmentShaderBarycentricFeaturesNV<'a>
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceFragmentShaderBarycentricFeaturesNV<'_>
 {
 }
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceFragmentShaderBarycentricFeaturesNV<'a> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentShaderBarycentricFeaturesNV<'_> {}
 impl<'a> PhysicalDeviceFragmentShaderBarycentricFeaturesNV<'a> {
     #[inline]
     pub fn fragment_shader_barycentric(mut self, fragment_shader_barycentric: bool) -> Self {
@@ -20328,11 +20277,8 @@ impl ::std::default::Default for PhysicalDeviceShaderImageFootprintFeaturesNV<'_
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceShaderImageFootprintFeaturesNV<'a>
-{
-}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceShaderImageFootprintFeaturesNV<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderImageFootprintFeaturesNV<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderImageFootprintFeaturesNV<'_> {}
 impl<'a> PhysicalDeviceShaderImageFootprintFeaturesNV<'a> {
     #[inline]
     pub fn image_footprint(mut self, image_footprint: bool) -> Self {
@@ -20360,12 +20306,12 @@ impl ::std::default::Default for PhysicalDeviceDedicatedAllocationImageAliasingF
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'a>
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'_>
 {
 }
-unsafe impl<'a> ExtendsDeviceCreateInfo
-    for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'a>
+unsafe impl ExtendsDeviceCreateInfo
+    for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'_>
 {
 }
 impl<'a> PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'a> {
@@ -20431,8 +20377,8 @@ impl ::std::default::Default for PipelineViewportShadingRateImageStateCreateInfo
         }
     }
 }
-unsafe impl<'a> ExtendsPipelineViewportStateCreateInfo
-    for PipelineViewportShadingRateImageStateCreateInfoNV<'a>
+unsafe impl ExtendsPipelineViewportStateCreateInfo
+    for PipelineViewportShadingRateImageStateCreateInfoNV<'_>
 {
 }
 impl<'a> PipelineViewportShadingRateImageStateCreateInfoNV<'a> {
@@ -20473,8 +20419,8 @@ impl ::std::default::Default for PhysicalDeviceShadingRateImageFeaturesNV<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShadingRateImageFeaturesNV<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceShadingRateImageFeaturesNV<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShadingRateImageFeaturesNV<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShadingRateImageFeaturesNV<'_> {}
 impl<'a> PhysicalDeviceShadingRateImageFeaturesNV<'a> {
     #[inline]
     pub fn shading_rate_image(mut self, shading_rate_image: bool) -> Self {
@@ -20514,10 +20460,7 @@ impl ::std::default::Default for PhysicalDeviceShadingRateImagePropertiesNV<'_> 
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceShadingRateImagePropertiesNV<'a>
-{
-}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShadingRateImagePropertiesNV<'_> {}
 impl<'a> PhysicalDeviceShadingRateImagePropertiesNV<'a> {
     #[inline]
     pub fn shading_rate_texel_size(mut self, shading_rate_texel_size: Extent2D) -> Self {
@@ -20555,8 +20498,8 @@ impl ::std::default::Default for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'_> 
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'_> {}
 impl<'a> PhysicalDeviceInvocationMaskFeaturesHUAWEI<'a> {
     #[inline]
     pub fn invocation_mask(mut self, invocation_mask: bool) -> Self {
@@ -20654,8 +20597,8 @@ impl ::std::default::Default for PipelineViewportCoarseSampleOrderStateCreateInf
         }
     }
 }
-unsafe impl<'a> ExtendsPipelineViewportStateCreateInfo
-    for PipelineViewportCoarseSampleOrderStateCreateInfoNV<'a>
+unsafe impl ExtendsPipelineViewportStateCreateInfo
+    for PipelineViewportCoarseSampleOrderStateCreateInfoNV<'_>
 {
 }
 impl<'a> PipelineViewportCoarseSampleOrderStateCreateInfoNV<'a> {
@@ -20696,8 +20639,8 @@ impl ::std::default::Default for PhysicalDeviceMeshShaderFeaturesNV<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMeshShaderFeaturesNV<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceMeshShaderFeaturesNV<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMeshShaderFeaturesNV<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMeshShaderFeaturesNV<'_> {}
 impl<'a> PhysicalDeviceMeshShaderFeaturesNV<'a> {
     #[inline]
     pub fn task_shader(mut self, task_shader: bool) -> Self {
@@ -20754,7 +20697,7 @@ impl ::std::default::Default for PhysicalDeviceMeshShaderPropertiesNV<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMeshShaderPropertiesNV<'a> {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMeshShaderPropertiesNV<'_> {}
 impl<'a> PhysicalDeviceMeshShaderPropertiesNV<'a> {
     #[inline]
     pub fn max_draw_mesh_tasks_count(mut self, max_draw_mesh_tasks_count: u32) -> Self {
@@ -21543,7 +21486,7 @@ impl ::std::default::Default for WriteDescriptorSetAccelerationStructureKHR<'_> 
         }
     }
 }
-unsafe impl<'a> ExtendsWriteDescriptorSet for WriteDescriptorSetAccelerationStructureKHR<'a> {}
+unsafe impl ExtendsWriteDescriptorSet for WriteDescriptorSetAccelerationStructureKHR<'_> {}
 impl<'a> WriteDescriptorSetAccelerationStructureKHR<'a> {
     #[inline]
     pub fn acceleration_structures(
@@ -21577,7 +21520,7 @@ impl ::std::default::Default for WriteDescriptorSetAccelerationStructureNV<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsWriteDescriptorSet for WriteDescriptorSetAccelerationStructureNV<'a> {}
+unsafe impl ExtendsWriteDescriptorSet for WriteDescriptorSetAccelerationStructureNV<'_> {}
 impl<'a> WriteDescriptorSetAccelerationStructureNV<'a> {
     #[inline]
     pub fn acceleration_structures(
@@ -21654,11 +21597,8 @@ impl ::std::default::Default for PhysicalDeviceAccelerationStructureFeaturesKHR<
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceAccelerationStructureFeaturesKHR<'a>
-{
-}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceAccelerationStructureFeaturesKHR<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceAccelerationStructureFeaturesKHR<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceAccelerationStructureFeaturesKHR<'_> {}
 impl<'a> PhysicalDeviceAccelerationStructureFeaturesKHR<'a> {
     #[inline]
     pub fn acceleration_structure(mut self, acceleration_structure: bool) -> Self {
@@ -21727,8 +21667,8 @@ impl ::std::default::Default for PhysicalDeviceRayTracingPipelineFeaturesKHR<'_>
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRayTracingPipelineFeaturesKHR<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceRayTracingPipelineFeaturesKHR<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRayTracingPipelineFeaturesKHR<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRayTracingPipelineFeaturesKHR<'_> {}
 impl<'a> PhysicalDeviceRayTracingPipelineFeaturesKHR<'a> {
     #[inline]
     pub fn ray_tracing_pipeline(mut self, ray_tracing_pipeline: bool) -> Self {
@@ -21791,8 +21731,8 @@ impl ::std::default::Default for PhysicalDeviceRayQueryFeaturesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRayQueryFeaturesKHR<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceRayQueryFeaturesKHR<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRayQueryFeaturesKHR<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRayQueryFeaturesKHR<'_> {}
 impl<'a> PhysicalDeviceRayQueryFeaturesKHR<'a> {
     #[inline]
     pub fn ray_query(mut self, ray_query: bool) -> Self {
@@ -21834,8 +21774,8 @@ impl ::std::default::Default for PhysicalDeviceAccelerationStructurePropertiesKH
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceAccelerationStructurePropertiesKHR<'a>
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceAccelerationStructurePropertiesKHR<'_>
 {
 }
 impl<'a> PhysicalDeviceAccelerationStructurePropertiesKHR<'a> {
@@ -21934,10 +21874,7 @@ impl ::std::default::Default for PhysicalDeviceRayTracingPipelinePropertiesKHR<'
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceRayTracingPipelinePropertiesKHR<'a>
-{
-}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceRayTracingPipelinePropertiesKHR<'_> {}
 impl<'a> PhysicalDeviceRayTracingPipelinePropertiesKHR<'a> {
     #[inline]
     pub fn shader_group_handle_size(mut self, shader_group_handle_size: u32) -> Self {
@@ -22020,7 +21957,7 @@ impl ::std::default::Default for PhysicalDeviceRayTracingPropertiesNV<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceRayTracingPropertiesNV<'a> {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceRayTracingPropertiesNV<'_> {}
 impl<'a> PhysicalDeviceRayTracingPropertiesNV<'a> {
     #[inline]
     pub fn shader_group_handle_size(mut self, shader_group_handle_size: u32) -> Self {
@@ -22141,7 +22078,7 @@ impl ::std::default::Default for DrmFormatModifierPropertiesListEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsFormatProperties2 for DrmFormatModifierPropertiesListEXT<'a> {}
+unsafe impl ExtendsFormatProperties2 for DrmFormatModifierPropertiesListEXT<'_> {}
 impl<'a> DrmFormatModifierPropertiesListEXT<'a> {
     #[inline]
     pub fn drm_format_modifier_properties(
@@ -22208,8 +22145,8 @@ impl ::std::default::Default for PhysicalDeviceImageDrmFormatModifierInfoEXT<'_>
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceImageFormatInfo2
-    for PhysicalDeviceImageDrmFormatModifierInfoEXT<'a>
+unsafe impl ExtendsPhysicalDeviceImageFormatInfo2
+    for PhysicalDeviceImageDrmFormatModifierInfoEXT<'_>
 {
 }
 impl<'a> PhysicalDeviceImageDrmFormatModifierInfoEXT<'a> {
@@ -22252,7 +22189,7 @@ impl ::std::default::Default for ImageDrmFormatModifierListCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsImageCreateInfo for ImageDrmFormatModifierListCreateInfoEXT<'a> {}
+unsafe impl ExtendsImageCreateInfo for ImageDrmFormatModifierListCreateInfoEXT<'_> {}
 impl<'a> ImageDrmFormatModifierListCreateInfoEXT<'a> {
     #[inline]
     pub fn drm_format_modifiers(mut self, drm_format_modifiers: &'a [u64]) -> Self {
@@ -22285,7 +22222,7 @@ impl ::std::default::Default for ImageDrmFormatModifierExplicitCreateInfoEXT<'_>
         }
     }
 }
-unsafe impl<'a> ExtendsImageCreateInfo for ImageDrmFormatModifierExplicitCreateInfoEXT<'a> {}
+unsafe impl ExtendsImageCreateInfo for ImageDrmFormatModifierExplicitCreateInfoEXT<'_> {}
 impl<'a> ImageDrmFormatModifierExplicitCreateInfoEXT<'a> {
     #[inline]
     pub fn drm_format_modifier(mut self, drm_format_modifier: u64) -> Self {
@@ -22346,8 +22283,8 @@ impl ::std::default::Default for ImageStencilUsageCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsImageCreateInfo for ImageStencilUsageCreateInfo<'a> {}
-unsafe impl<'a> ExtendsPhysicalDeviceImageFormatInfo2 for ImageStencilUsageCreateInfo<'a> {}
+unsafe impl ExtendsImageCreateInfo for ImageStencilUsageCreateInfo<'_> {}
+unsafe impl ExtendsPhysicalDeviceImageFormatInfo2 for ImageStencilUsageCreateInfo<'_> {}
 impl<'a> ImageStencilUsageCreateInfo<'a> {
     #[inline]
     pub fn stencil_usage(mut self, stencil_usage: ImageUsageFlags) -> Self {
@@ -22375,7 +22312,7 @@ impl ::std::default::Default for DeviceMemoryOverallocationCreateInfoAMD<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsDeviceCreateInfo for DeviceMemoryOverallocationCreateInfoAMD<'a> {}
+unsafe impl ExtendsDeviceCreateInfo for DeviceMemoryOverallocationCreateInfoAMD<'_> {}
 impl<'a> DeviceMemoryOverallocationCreateInfoAMD<'a> {
     #[inline]
     pub fn overallocation_behavior(
@@ -22410,8 +22347,8 @@ impl ::std::default::Default for PhysicalDeviceFragmentDensityMapFeaturesEXT<'_>
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceFragmentDensityMapFeaturesEXT<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceFragmentDensityMapFeaturesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceFragmentDensityMapFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentDensityMapFeaturesEXT<'_> {}
 impl<'a> PhysicalDeviceFragmentDensityMapFeaturesEXT<'a> {
     #[inline]
     pub fn fragment_density_map(mut self, fragment_density_map: bool) -> Self {
@@ -22453,11 +22390,8 @@ impl ::std::default::Default for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'_
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'a>
-{
-}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'_> {}
 impl<'a> PhysicalDeviceFragmentDensityMap2FeaturesEXT<'a> {
     #[inline]
     pub fn fragment_density_map_deferred(mut self, fragment_density_map_deferred: bool) -> Self {
@@ -22485,11 +22419,11 @@ impl ::std::default::Default for PhysicalDeviceFragmentDensityMapOffsetFeaturesQ
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'a>
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'_>
 {
 }
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'a> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'_> {}
 impl<'a> PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'a> {
     #[inline]
     pub fn fragment_density_map_offset(mut self, fragment_density_map_offset: bool) -> Self {
@@ -22521,10 +22455,7 @@ impl ::std::default::Default for PhysicalDeviceFragmentDensityMapPropertiesEXT<'
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceFragmentDensityMapPropertiesEXT<'a>
-{
-}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceFragmentDensityMapPropertiesEXT<'_> {}
 impl<'a> PhysicalDeviceFragmentDensityMapPropertiesEXT<'a> {
     #[inline]
     pub fn min_fragment_density_texel_size(
@@ -22574,8 +22505,8 @@ impl ::std::default::Default for PhysicalDeviceFragmentDensityMap2PropertiesEXT<
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceFragmentDensityMap2PropertiesEXT<'a>
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceFragmentDensityMap2PropertiesEXT<'_>
 {
 }
 impl<'a> PhysicalDeviceFragmentDensityMap2PropertiesEXT<'a> {
@@ -22627,8 +22558,8 @@ impl ::std::default::Default for PhysicalDeviceFragmentDensityMapOffsetPropertie
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM<'a>
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM<'_>
 {
 }
 impl<'a> PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM<'a> {
@@ -22661,8 +22592,8 @@ impl ::std::default::Default for RenderPassFragmentDensityMapCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsRenderPassCreateInfo for RenderPassFragmentDensityMapCreateInfoEXT<'a> {}
-unsafe impl<'a> ExtendsRenderPassCreateInfo2 for RenderPassFragmentDensityMapCreateInfoEXT<'a> {}
+unsafe impl ExtendsRenderPassCreateInfo for RenderPassFragmentDensityMapCreateInfoEXT<'_> {}
+unsafe impl ExtendsRenderPassCreateInfo2 for RenderPassFragmentDensityMapCreateInfoEXT<'_> {}
 impl<'a> RenderPassFragmentDensityMapCreateInfoEXT<'a> {
     #[inline]
     pub fn fragment_density_map_attachment(
@@ -22695,7 +22626,7 @@ impl ::std::default::Default for SubpassFragmentDensityMapOffsetEndInfoQCOM<'_> 
         }
     }
 }
-unsafe impl<'a> ExtendsSubpassEndInfo for SubpassFragmentDensityMapOffsetEndInfoQCOM<'a> {}
+unsafe impl ExtendsSubpassEndInfo for SubpassFragmentDensityMapOffsetEndInfoQCOM<'_> {}
 impl<'a> SubpassFragmentDensityMapOffsetEndInfoQCOM<'a> {
     #[inline]
     pub fn fragment_density_offsets(mut self, fragment_density_offsets: &'a [Offset2D]) -> Self {
@@ -22724,8 +22655,8 @@ impl ::std::default::Default for PhysicalDeviceScalarBlockLayoutFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceScalarBlockLayoutFeatures<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceScalarBlockLayoutFeatures<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceScalarBlockLayoutFeatures<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceScalarBlockLayoutFeatures<'_> {}
 impl<'a> PhysicalDeviceScalarBlockLayoutFeatures<'a> {
     #[inline]
     pub fn scalar_block_layout(mut self, scalar_block_layout: bool) -> Self {
@@ -22753,7 +22684,7 @@ impl ::std::default::Default for SurfaceProtectedCapabilitiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsSurfaceCapabilities2KHR for SurfaceProtectedCapabilitiesKHR<'a> {}
+unsafe impl ExtendsSurfaceCapabilities2KHR for SurfaceProtectedCapabilitiesKHR<'_> {}
 impl<'a> SurfaceProtectedCapabilitiesKHR<'a> {
     #[inline]
     pub fn supports_protected(mut self, supports_protected: bool) -> Self {
@@ -22781,11 +22712,11 @@ impl ::std::default::Default for PhysicalDeviceUniformBufferStandardLayoutFeatur
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceUniformBufferStandardLayoutFeatures<'a>
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceUniformBufferStandardLayoutFeatures<'_>
 {
 }
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceUniformBufferStandardLayoutFeatures<'a> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceUniformBufferStandardLayoutFeatures<'_> {}
 impl<'a> PhysicalDeviceUniformBufferStandardLayoutFeatures<'a> {
     #[inline]
     pub fn uniform_buffer_standard_layout(mut self, uniform_buffer_standard_layout: bool) -> Self {
@@ -22813,8 +22744,8 @@ impl ::std::default::Default for PhysicalDeviceDepthClipEnableFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDepthClipEnableFeaturesEXT<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceDepthClipEnableFeaturesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDepthClipEnableFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDepthClipEnableFeaturesEXT<'_> {}
 impl<'a> PhysicalDeviceDepthClipEnableFeaturesEXT<'a> {
     #[inline]
     pub fn depth_clip_enable(mut self, depth_clip_enable: bool) -> Self {
@@ -22844,8 +22775,8 @@ impl ::std::default::Default for PipelineRasterizationDepthClipStateCreateInfoEX
         }
     }
 }
-unsafe impl<'a> ExtendsPipelineRasterizationStateCreateInfo
-    for PipelineRasterizationDepthClipStateCreateInfoEXT<'a>
+unsafe impl ExtendsPipelineRasterizationStateCreateInfo
+    for PipelineRasterizationDepthClipStateCreateInfoEXT<'_>
 {
 }
 impl<'a> PipelineRasterizationDepthClipStateCreateInfoEXT<'a> {
@@ -22882,10 +22813,7 @@ impl ::std::default::Default for PhysicalDeviceMemoryBudgetPropertiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceMemoryProperties2
-    for PhysicalDeviceMemoryBudgetPropertiesEXT<'a>
-{
-}
+unsafe impl ExtendsPhysicalDeviceMemoryProperties2 for PhysicalDeviceMemoryBudgetPropertiesEXT<'_> {}
 impl<'a> PhysicalDeviceMemoryBudgetPropertiesEXT<'a> {
     #[inline]
     pub fn heap_budget(mut self, heap_budget: [DeviceSize; MAX_MEMORY_HEAPS]) -> Self {
@@ -22918,8 +22846,8 @@ impl ::std::default::Default for PhysicalDeviceMemoryPriorityFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMemoryPriorityFeaturesEXT<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceMemoryPriorityFeaturesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMemoryPriorityFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMemoryPriorityFeaturesEXT<'_> {}
 impl<'a> PhysicalDeviceMemoryPriorityFeaturesEXT<'a> {
     #[inline]
     pub fn memory_priority(mut self, memory_priority: bool) -> Self {
@@ -22947,7 +22875,7 @@ impl ::std::default::Default for MemoryPriorityAllocateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsMemoryAllocateInfo for MemoryPriorityAllocateInfoEXT<'a> {}
+unsafe impl ExtendsMemoryAllocateInfo for MemoryPriorityAllocateInfoEXT<'_> {}
 impl<'a> MemoryPriorityAllocateInfoEXT<'a> {
     #[inline]
     pub fn priority(mut self, priority: f32) -> Self {
@@ -22975,11 +22903,11 @@ impl ::std::default::Default for PhysicalDevicePageableDeviceLocalMemoryFeatures
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'a>
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'_>
 {
 }
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'a> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'_> {}
 impl<'a> PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'a> {
     #[inline]
     pub fn pageable_device_local_memory(mut self, pageable_device_local_memory: bool) -> Self {
@@ -23011,8 +22939,8 @@ impl ::std::default::Default for PhysicalDeviceBufferDeviceAddressFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceBufferDeviceAddressFeatures<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceBufferDeviceAddressFeatures<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceBufferDeviceAddressFeatures<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceBufferDeviceAddressFeatures<'_> {}
 impl<'a> PhysicalDeviceBufferDeviceAddressFeatures<'a> {
     #[inline]
     pub fn buffer_device_address(mut self, buffer_device_address: bool) -> Self {
@@ -23060,11 +22988,8 @@ impl ::std::default::Default for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'_
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'a>
-{
-}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'_> {}
 impl<'a> PhysicalDeviceBufferDeviceAddressFeaturesEXT<'a> {
     #[inline]
     pub fn buffer_device_address(mut self, buffer_device_address: bool) -> Self {
@@ -23135,7 +23060,7 @@ impl ::std::default::Default for BufferOpaqueCaptureAddressCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsBufferCreateInfo for BufferOpaqueCaptureAddressCreateInfo<'a> {}
+unsafe impl ExtendsBufferCreateInfo for BufferOpaqueCaptureAddressCreateInfo<'_> {}
 impl<'a> BufferOpaqueCaptureAddressCreateInfo<'a> {
     #[inline]
     pub fn opaque_capture_address(mut self, opaque_capture_address: u64) -> Self {
@@ -23163,7 +23088,7 @@ impl ::std::default::Default for BufferDeviceAddressCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsBufferCreateInfo for BufferDeviceAddressCreateInfoEXT<'a> {}
+unsafe impl ExtendsBufferCreateInfo for BufferDeviceAddressCreateInfoEXT<'_> {}
 impl<'a> BufferDeviceAddressCreateInfoEXT<'a> {
     #[inline]
     pub fn device_address(mut self, device_address: DeviceAddress) -> Self {
@@ -23191,8 +23116,8 @@ impl ::std::default::Default for PhysicalDeviceImageViewImageFormatInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceImageFormatInfo2
-    for PhysicalDeviceImageViewImageFormatInfoEXT<'a>
+unsafe impl ExtendsPhysicalDeviceImageFormatInfo2
+    for PhysicalDeviceImageViewImageFormatInfoEXT<'_>
 {
 }
 impl<'a> PhysicalDeviceImageViewImageFormatInfoEXT<'a> {
@@ -23224,7 +23149,7 @@ impl ::std::default::Default for FilterCubicImageViewImageFormatPropertiesEXT<'_
         }
     }
 }
-unsafe impl<'a> ExtendsImageFormatProperties2 for FilterCubicImageViewImageFormatPropertiesEXT<'a> {}
+unsafe impl ExtendsImageFormatProperties2 for FilterCubicImageViewImageFormatPropertiesEXT<'_> {}
 impl<'a> FilterCubicImageViewImageFormatPropertiesEXT<'a> {
     #[inline]
     pub fn filter_cubic(mut self, filter_cubic: bool) -> Self {
@@ -23257,8 +23182,8 @@ impl ::std::default::Default for PhysicalDeviceImagelessFramebufferFeatures<'_> 
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImagelessFramebufferFeatures<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceImagelessFramebufferFeatures<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImagelessFramebufferFeatures<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImagelessFramebufferFeatures<'_> {}
 impl<'a> PhysicalDeviceImagelessFramebufferFeatures<'a> {
     #[inline]
     pub fn imageless_framebuffer(mut self, imageless_framebuffer: bool) -> Self {
@@ -23288,7 +23213,7 @@ impl ::std::default::Default for FramebufferAttachmentsCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsFramebufferCreateInfo for FramebufferAttachmentsCreateInfo<'a> {}
+unsafe impl ExtendsFramebufferCreateInfo for FramebufferAttachmentsCreateInfo<'_> {}
 impl<'a> FramebufferAttachmentsCreateInfo<'a> {
     #[inline]
     pub fn attachment_image_infos(
@@ -23387,7 +23312,7 @@ impl ::std::default::Default for RenderPassAttachmentBeginInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsRenderPassBeginInfo for RenderPassAttachmentBeginInfo<'a> {}
+unsafe impl ExtendsRenderPassBeginInfo for RenderPassAttachmentBeginInfo<'_> {}
 impl<'a> RenderPassAttachmentBeginInfo<'a> {
     #[inline]
     pub fn attachments(mut self, attachments: &'a [ImageView]) -> Self {
@@ -23416,11 +23341,8 @@ impl ::std::default::Default for PhysicalDeviceTextureCompressionASTCHDRFeatures
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceTextureCompressionASTCHDRFeatures<'a>
-{
-}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceTextureCompressionASTCHDRFeatures<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceTextureCompressionASTCHDRFeatures<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceTextureCompressionASTCHDRFeatures<'_> {}
 impl<'a> PhysicalDeviceTextureCompressionASTCHDRFeatures<'a> {
     #[inline]
     pub fn texture_compression_astc_hdr(mut self, texture_compression_astc_hdr: bool) -> Self {
@@ -23450,8 +23372,8 @@ impl ::std::default::Default for PhysicalDeviceCooperativeMatrixFeaturesNV<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCooperativeMatrixFeaturesNV<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceCooperativeMatrixFeaturesNV<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCooperativeMatrixFeaturesNV<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCooperativeMatrixFeaturesNV<'_> {}
 impl<'a> PhysicalDeviceCooperativeMatrixFeaturesNV<'a> {
     #[inline]
     pub fn cooperative_matrix(mut self, cooperative_matrix: bool) -> Self {
@@ -23488,10 +23410,7 @@ impl ::std::default::Default for PhysicalDeviceCooperativeMatrixPropertiesNV<'_>
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceCooperativeMatrixPropertiesNV<'a>
-{
-}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceCooperativeMatrixPropertiesNV<'_> {}
 impl<'a> PhysicalDeviceCooperativeMatrixPropertiesNV<'a> {
     #[inline]
     pub fn cooperative_matrix_supported_stages(
@@ -23598,8 +23517,8 @@ impl ::std::default::Default for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'_> {}
 impl<'a> PhysicalDeviceYcbcrImageArraysFeaturesEXT<'a> {
     #[inline]
     pub fn ycbcr_image_arrays(mut self, ycbcr_image_arrays: bool) -> Self {
@@ -23702,7 +23621,7 @@ impl ::std::default::Default for PresentFrameTokenGGP<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPresentInfoKHR for PresentFrameTokenGGP<'a> {}
+unsafe impl ExtendsPresentInfoKHR for PresentFrameTokenGGP<'_> {}
 impl<'a> PresentFrameTokenGGP<'a> {
     #[inline]
     pub fn frame_token(mut self, frame_token: GgpFrameToken) -> Self {
@@ -23754,10 +23673,10 @@ impl ::std::default::Default for PipelineCreationFeedbackCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsGraphicsPipelineCreateInfo for PipelineCreationFeedbackCreateInfo<'a> {}
-unsafe impl<'a> ExtendsComputePipelineCreateInfo for PipelineCreationFeedbackCreateInfo<'a> {}
-unsafe impl<'a> ExtendsRayTracingPipelineCreateInfoNV for PipelineCreationFeedbackCreateInfo<'a> {}
-unsafe impl<'a> ExtendsRayTracingPipelineCreateInfoKHR for PipelineCreationFeedbackCreateInfo<'a> {}
+unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineCreationFeedbackCreateInfo<'_> {}
+unsafe impl ExtendsComputePipelineCreateInfo for PipelineCreationFeedbackCreateInfo<'_> {}
+unsafe impl ExtendsRayTracingPipelineCreateInfoNV for PipelineCreationFeedbackCreateInfo<'_> {}
+unsafe impl ExtendsRayTracingPipelineCreateInfoKHR for PipelineCreationFeedbackCreateInfo<'_> {}
 impl<'a> PipelineCreationFeedbackCreateInfo<'a> {
     #[inline]
     pub fn pipeline_creation_feedback(
@@ -23797,8 +23716,8 @@ impl ::std::default::Default for SurfaceFullScreenExclusiveInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceSurfaceInfo2KHR for SurfaceFullScreenExclusiveInfoEXT<'a> {}
-unsafe impl<'a> ExtendsSwapchainCreateInfoKHR for SurfaceFullScreenExclusiveInfoEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceSurfaceInfo2KHR for SurfaceFullScreenExclusiveInfoEXT<'_> {}
+unsafe impl ExtendsSwapchainCreateInfoKHR for SurfaceFullScreenExclusiveInfoEXT<'_> {}
 impl<'a> SurfaceFullScreenExclusiveInfoEXT<'a> {
     #[inline]
     pub fn full_screen_exclusive(mut self, full_screen_exclusive: FullScreenExclusiveEXT) -> Self {
@@ -23826,11 +23745,8 @@ impl ::std::default::Default for SurfaceFullScreenExclusiveWin32InfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceSurfaceInfo2KHR
-    for SurfaceFullScreenExclusiveWin32InfoEXT<'a>
-{
-}
-unsafe impl<'a> ExtendsSwapchainCreateInfoKHR for SurfaceFullScreenExclusiveWin32InfoEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceSurfaceInfo2KHR for SurfaceFullScreenExclusiveWin32InfoEXT<'_> {}
+unsafe impl ExtendsSwapchainCreateInfoKHR for SurfaceFullScreenExclusiveWin32InfoEXT<'_> {}
 impl<'a> SurfaceFullScreenExclusiveWin32InfoEXT<'a> {
     #[inline]
     pub fn hmonitor(mut self, hmonitor: HMONITOR) -> Self {
@@ -23858,7 +23774,7 @@ impl ::std::default::Default for SurfaceCapabilitiesFullScreenExclusiveEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsSurfaceCapabilities2KHR for SurfaceCapabilitiesFullScreenExclusiveEXT<'a> {}
+unsafe impl ExtendsSurfaceCapabilities2KHR for SurfaceCapabilitiesFullScreenExclusiveEXT<'_> {}
 impl<'a> SurfaceCapabilitiesFullScreenExclusiveEXT<'a> {
     #[inline]
     pub fn full_screen_exclusive_supported(
@@ -23891,8 +23807,8 @@ impl ::std::default::Default for PhysicalDevicePerformanceQueryFeaturesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePerformanceQueryFeaturesKHR<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDevicePerformanceQueryFeaturesKHR<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePerformanceQueryFeaturesKHR<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePerformanceQueryFeaturesKHR<'_> {}
 impl<'a> PhysicalDevicePerformanceQueryFeaturesKHR<'a> {
     #[inline]
     pub fn performance_counter_query_pools(
@@ -23932,10 +23848,7 @@ impl ::std::default::Default for PhysicalDevicePerformanceQueryPropertiesKHR<'_>
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2
-    for PhysicalDevicePerformanceQueryPropertiesKHR<'a>
-{
-}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePerformanceQueryPropertiesKHR<'_> {}
 impl<'a> PhysicalDevicePerformanceQueryPropertiesKHR<'a> {
     #[inline]
     pub fn allow_command_buffer_query_copies(
@@ -24084,7 +23997,7 @@ impl ::std::default::Default for QueryPoolPerformanceCreateInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsQueryPoolCreateInfo for QueryPoolPerformanceCreateInfoKHR<'a> {}
+unsafe impl ExtendsQueryPoolCreateInfo for QueryPoolPerformanceCreateInfoKHR<'_> {}
 impl<'a> QueryPoolPerformanceCreateInfoKHR<'a> {
     #[inline]
     pub fn queue_family_index(mut self, queue_family_index: u32) -> Self {
@@ -24168,8 +24081,8 @@ impl ::std::default::Default for PerformanceQuerySubmitInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsSubmitInfo for PerformanceQuerySubmitInfoKHR<'a> {}
-unsafe impl<'a> ExtendsSubmitInfo2 for PerformanceQuerySubmitInfoKHR<'a> {}
+unsafe impl ExtendsSubmitInfo for PerformanceQuerySubmitInfoKHR<'_> {}
+unsafe impl ExtendsSubmitInfo2 for PerformanceQuerySubmitInfoKHR<'_> {}
 impl<'a> PerformanceQuerySubmitInfoKHR<'a> {
     #[inline]
     pub fn counter_pass_index(mut self, counter_pass_index: u32) -> Self {
@@ -24224,11 +24137,8 @@ impl ::std::default::Default for PhysicalDeviceCoverageReductionModeFeaturesNV<'
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceCoverageReductionModeFeaturesNV<'a>
-{
-}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceCoverageReductionModeFeaturesNV<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCoverageReductionModeFeaturesNV<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCoverageReductionModeFeaturesNV<'_> {}
 impl<'a> PhysicalDeviceCoverageReductionModeFeaturesNV<'a> {
     #[inline]
     pub fn coverage_reduction_mode(mut self, coverage_reduction_mode: bool) -> Self {
@@ -24258,8 +24168,8 @@ impl ::std::default::Default for PipelineCoverageReductionStateCreateInfoNV<'_> 
         }
     }
 }
-unsafe impl<'a> ExtendsPipelineMultisampleStateCreateInfo
-    for PipelineCoverageReductionStateCreateInfoNV<'a>
+unsafe impl ExtendsPipelineMultisampleStateCreateInfo
+    for PipelineCoverageReductionStateCreateInfoNV<'_>
 {
 }
 impl<'a> PipelineCoverageReductionStateCreateInfoNV<'a> {
@@ -24348,11 +24258,11 @@ impl ::std::default::Default for PhysicalDeviceShaderIntegerFunctions2FeaturesIN
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'a>
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'_>
 {
 }
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'a> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'_> {}
 impl<'a> PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'a> {
     #[inline]
     pub fn shader_integer_functions2(mut self, shader_integer_functions2: bool) -> Self {
@@ -24450,7 +24360,7 @@ impl ::std::default::Default for QueryPoolPerformanceQueryCreateInfoINTEL<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsQueryPoolCreateInfo for QueryPoolPerformanceQueryCreateInfoINTEL<'a> {}
+unsafe impl ExtendsQueryPoolCreateInfo for QueryPoolPerformanceQueryCreateInfoINTEL<'_> {}
 impl<'a> QueryPoolPerformanceQueryCreateInfoINTEL<'a> {
     #[inline]
     pub fn performance_counters_sampling(
@@ -24605,8 +24515,8 @@ impl ::std::default::Default for PhysicalDeviceShaderClockFeaturesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderClockFeaturesKHR<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceShaderClockFeaturesKHR<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderClockFeaturesKHR<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderClockFeaturesKHR<'_> {}
 impl<'a> PhysicalDeviceShaderClockFeaturesKHR<'a> {
     #[inline]
     pub fn shader_subgroup_clock(mut self, shader_subgroup_clock: bool) -> Self {
@@ -24639,8 +24549,8 @@ impl ::std::default::Default for PhysicalDeviceIndexTypeUint8FeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceIndexTypeUint8FeaturesEXT<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceIndexTypeUint8FeaturesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceIndexTypeUint8FeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceIndexTypeUint8FeaturesEXT<'_> {}
 impl<'a> PhysicalDeviceIndexTypeUint8FeaturesEXT<'a> {
     #[inline]
     pub fn index_type_uint8(mut self, index_type_uint8: bool) -> Self {
@@ -24670,10 +24580,7 @@ impl ::std::default::Default for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'_> 
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'a>
-{
-}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'_> {}
 impl<'a> PhysicalDeviceShaderSMBuiltinsPropertiesNV<'a> {
     #[inline]
     pub fn shader_sm_count(mut self, shader_sm_count: u32) -> Self {
@@ -24706,8 +24613,8 @@ impl ::std::default::Default for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'_> {}
 impl<'a> PhysicalDeviceShaderSMBuiltinsFeaturesNV<'a> {
     #[inline]
     pub fn shader_sm_builtins(mut self, shader_sm_builtins: bool) -> Self {
@@ -24739,11 +24646,11 @@ impl ::std::default::Default for PhysicalDeviceFragmentShaderInterlockFeaturesEX
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'a>
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'_>
 {
 }
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'a> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'_> {}
 impl<'a> PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'a> {
     #[inline]
     pub fn fragment_shader_sample_interlock(
@@ -24790,11 +24697,11 @@ impl ::std::default::Default for PhysicalDeviceSeparateDepthStencilLayoutsFeatur
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'a>
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'_>
 {
 }
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'a> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'_> {}
 impl<'a> PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'a> {
     #[inline]
     pub fn separate_depth_stencil_layouts(mut self, separate_depth_stencil_layouts: bool) -> Self {
@@ -24822,7 +24729,7 @@ impl ::std::default::Default for AttachmentReferenceStencilLayout<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsAttachmentReference2 for AttachmentReferenceStencilLayout<'a> {}
+unsafe impl ExtendsAttachmentReference2 for AttachmentReferenceStencilLayout<'_> {}
 impl<'a> AttachmentReferenceStencilLayout<'a> {
     #[inline]
     pub fn stencil_layout(mut self, stencil_layout: ImageLayout) -> Self {
@@ -24852,14 +24759,11 @@ impl ::std::default::Default for PhysicalDevicePrimitiveTopologyListRestartFeatu
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'a>
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'_>
 {
 }
-unsafe impl<'a> ExtendsDeviceCreateInfo
-    for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'a>
-{
-}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'_> {}
 impl<'a> PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'a> {
     #[inline]
     pub fn primitive_topology_list_restart(
@@ -24900,7 +24804,7 @@ impl ::std::default::Default for AttachmentDescriptionStencilLayout<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsAttachmentDescription2 for AttachmentDescriptionStencilLayout<'a> {}
+unsafe impl ExtendsAttachmentDescription2 for AttachmentDescriptionStencilLayout<'_> {}
 impl<'a> AttachmentDescriptionStencilLayout<'a> {
     #[inline]
     pub fn stencil_initial_layout(mut self, stencil_initial_layout: ImageLayout) -> Self {
@@ -24933,14 +24837,11 @@ impl ::std::default::Default for PhysicalDevicePipelineExecutablePropertiesFeatu
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'a>
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'_>
 {
 }
-unsafe impl<'a> ExtendsDeviceCreateInfo
-    for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'a>
-{
-}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'_> {}
 impl<'a> PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'a> {
     #[inline]
     pub fn pipeline_executable_info(mut self, pipeline_executable_info: bool) -> Self {
@@ -25239,14 +25140,11 @@ impl ::std::default::Default for PhysicalDeviceShaderDemoteToHelperInvocationFea
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'a>
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'_>
 {
 }
-unsafe impl<'a> ExtendsDeviceCreateInfo
-    for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'a>
-{
-}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'_> {}
 impl<'a> PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'a> {
     #[inline]
     pub fn shader_demote_to_helper_invocation(
@@ -25277,11 +25175,8 @@ impl ::std::default::Default for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'a>
-{
-}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'_> {}
 impl<'a> PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'a> {
     #[inline]
     pub fn texel_buffer_alignment(mut self, texel_buffer_alignment: bool) -> Self {
@@ -25315,10 +25210,7 @@ impl ::std::default::Default for PhysicalDeviceTexelBufferAlignmentProperties<'_
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceTexelBufferAlignmentProperties<'a>
-{
-}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceTexelBufferAlignmentProperties<'_> {}
 impl<'a> PhysicalDeviceTexelBufferAlignmentProperties<'a> {
     #[inline]
     pub fn storage_texel_buffer_offset_alignment_bytes(
@@ -25379,8 +25271,8 @@ impl ::std::default::Default for PhysicalDeviceSubgroupSizeControlFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSubgroupSizeControlFeatures<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceSubgroupSizeControlFeatures<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSubgroupSizeControlFeatures<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSubgroupSizeControlFeatures<'_> {}
 impl<'a> PhysicalDeviceSubgroupSizeControlFeatures<'a> {
     #[inline]
     pub fn subgroup_size_control(mut self, subgroup_size_control: bool) -> Self {
@@ -25419,10 +25311,7 @@ impl ::std::default::Default for PhysicalDeviceSubgroupSizeControlProperties<'_>
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceSubgroupSizeControlProperties<'a>
-{
-}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSubgroupSizeControlProperties<'_> {}
 impl<'a> PhysicalDeviceSubgroupSizeControlProperties<'a> {
     #[inline]
     pub fn min_subgroup_size(mut self, min_subgroup_size: u32) -> Self {
@@ -25468,8 +25357,8 @@ impl ::std::default::Default for PipelineShaderStageRequiredSubgroupSizeCreateIn
         }
     }
 }
-unsafe impl<'a> ExtendsPipelineShaderStageCreateInfo
-    for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'a>
+unsafe impl ExtendsPipelineShaderStageCreateInfo
+    for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'_>
 {
 }
 impl<'a> PipelineShaderStageRequiredSubgroupSizeCreateInfo<'a> {
@@ -25501,7 +25390,7 @@ impl ::std::default::Default for SubpassShadingPipelineCreateInfoHUAWEI<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsComputePipelineCreateInfo for SubpassShadingPipelineCreateInfoHUAWEI<'a> {}
+unsafe impl ExtendsComputePipelineCreateInfo for SubpassShadingPipelineCreateInfoHUAWEI<'_> {}
 impl<'a> SubpassShadingPipelineCreateInfoHUAWEI<'a> {
     #[inline]
     pub fn render_pass(mut self, render_pass: RenderPass) -> Self {
@@ -25534,10 +25423,7 @@ impl ::std::default::Default for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'_
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'a>
-{
-}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'_> {}
 impl<'a> PhysicalDeviceSubpassShadingPropertiesHUAWEI<'a> {
     #[inline]
     pub fn max_subpass_shading_workgroup_size_aspect_ratio(
@@ -25569,7 +25455,7 @@ impl ::std::default::Default for MemoryOpaqueCaptureAddressAllocateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsMemoryAllocateInfo for MemoryOpaqueCaptureAddressAllocateInfo<'a> {}
+unsafe impl ExtendsMemoryAllocateInfo for MemoryOpaqueCaptureAddressAllocateInfo<'_> {}
 impl<'a> MemoryOpaqueCaptureAddressAllocateInfo<'a> {
     #[inline]
     pub fn opaque_capture_address(mut self, opaque_capture_address: u64) -> Self {
@@ -25634,8 +25520,8 @@ impl ::std::default::Default for PhysicalDeviceLineRasterizationFeaturesEXT<'_> 
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceLineRasterizationFeaturesEXT<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceLineRasterizationFeaturesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceLineRasterizationFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceLineRasterizationFeaturesEXT<'_> {}
 impl<'a> PhysicalDeviceLineRasterizationFeaturesEXT<'a> {
     #[inline]
     pub fn rectangular_lines(mut self, rectangular_lines: bool) -> Self {
@@ -25688,10 +25574,7 @@ impl ::std::default::Default for PhysicalDeviceLineRasterizationPropertiesEXT<'_
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceLineRasterizationPropertiesEXT<'a>
-{
-}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceLineRasterizationPropertiesEXT<'_> {}
 impl<'a> PhysicalDeviceLineRasterizationPropertiesEXT<'a> {
     #[inline]
     pub fn line_sub_pixel_precision_bits(mut self, line_sub_pixel_precision_bits: u32) -> Self {
@@ -25725,8 +25608,8 @@ impl ::std::default::Default for PipelineRasterizationLineStateCreateInfoEXT<'_>
         }
     }
 }
-unsafe impl<'a> ExtendsPipelineRasterizationStateCreateInfo
-    for PipelineRasterizationLineStateCreateInfoEXT<'a>
+unsafe impl ExtendsPipelineRasterizationStateCreateInfo
+    for PipelineRasterizationLineStateCreateInfoEXT<'_>
 {
 }
 impl<'a> PipelineRasterizationLineStateCreateInfoEXT<'a> {
@@ -25774,11 +25657,11 @@ impl ::std::default::Default for PhysicalDevicePipelineCreationCacheControlFeatu
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDevicePipelineCreationCacheControlFeatures<'a>
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDevicePipelineCreationCacheControlFeatures<'_>
 {
 }
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDevicePipelineCreationCacheControlFeatures<'a> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePipelineCreationCacheControlFeatures<'_> {}
 impl<'a> PhysicalDevicePipelineCreationCacheControlFeatures<'a> {
     #[inline]
     pub fn pipeline_creation_cache_control(
@@ -25831,8 +25714,8 @@ impl ::std::default::Default for PhysicalDeviceVulkan11Features<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVulkan11Features<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceVulkan11Features<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVulkan11Features<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVulkan11Features<'_> {}
 impl<'a> PhysicalDeviceVulkan11Features<'a> {
     #[inline]
     pub fn storage_buffer16_bit_access(mut self, storage_buffer16_bit_access: bool) -> Self {
@@ -25950,7 +25833,7 @@ impl ::std::default::Default for PhysicalDeviceVulkan11Properties<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceVulkan11Properties<'a> {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceVulkan11Properties<'_> {}
 impl<'a> PhysicalDeviceVulkan11Properties<'a> {
     #[inline]
     pub fn device_uuid(mut self, device_uuid: [u8; UUID_SIZE]) -> Self {
@@ -26152,8 +26035,8 @@ impl ::std::default::Default for PhysicalDeviceVulkan12Features<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVulkan12Features<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceVulkan12Features<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVulkan12Features<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVulkan12Features<'_> {}
 impl<'a> PhysicalDeviceVulkan12Features<'a> {
     #[inline]
     pub fn sampler_mirror_clamp_to_edge(mut self, sampler_mirror_clamp_to_edge: bool) -> Self {
@@ -26806,7 +26689,7 @@ impl ::std::default::Default for PhysicalDeviceVulkan12Properties<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceVulkan12Properties<'a> {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceVulkan12Properties<'_> {}
 impl<'a> PhysicalDeviceVulkan12Properties<'a> {
     #[inline]
     pub fn driver_id(mut self, driver_id: DriverId) -> Self {
@@ -27266,8 +27149,8 @@ impl ::std::default::Default for PhysicalDeviceVulkan13Features<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVulkan13Features<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceVulkan13Features<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVulkan13Features<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVulkan13Features<'_> {}
 impl<'a> PhysicalDeviceVulkan13Features<'a> {
     #[inline]
     pub fn robust_image_access(mut self, robust_image_access: bool) -> Self {
@@ -27419,7 +27302,7 @@ impl ::std::default::Default for PhysicalDeviceVulkan13Properties<'_> {
         Self { s_type : StructureType :: PHYSICAL_DEVICE_VULKAN_1_3_PROPERTIES , p_next : :: std :: ptr :: null_mut () , min_subgroup_size : u32 :: default () , max_subgroup_size : u32 :: default () , max_compute_workgroup_subgroups : u32 :: default () , required_subgroup_size_stages : ShaderStageFlags :: default () , max_inline_uniform_block_size : u32 :: default () , max_per_stage_descriptor_inline_uniform_blocks : u32 :: default () , max_per_stage_descriptor_update_after_bind_inline_uniform_blocks : u32 :: default () , max_descriptor_set_inline_uniform_blocks : u32 :: default () , max_descriptor_set_update_after_bind_inline_uniform_blocks : u32 :: default () , max_inline_uniform_total_size : u32 :: default () , integer_dot_product8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product64_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated : Bool32 :: default () , storage_texel_buffer_offset_alignment_bytes : DeviceSize :: default () , storage_texel_buffer_offset_single_texel_alignment : Bool32 :: default () , uniform_texel_buffer_offset_alignment_bytes : DeviceSize :: default () , uniform_texel_buffer_offset_single_texel_alignment : Bool32 :: default () , max_buffer_size : DeviceSize :: default () , _marker : PhantomData , }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceVulkan13Properties<'a> {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceVulkan13Properties<'_> {}
 impl<'a> PhysicalDeviceVulkan13Properties<'a> {
     #[inline]
     pub fn min_subgroup_size(mut self, min_subgroup_size: u32) -> Self {
@@ -27820,8 +27703,8 @@ impl ::std::default::Default for PipelineCompilerControlCreateInfoAMD<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsGraphicsPipelineCreateInfo for PipelineCompilerControlCreateInfoAMD<'a> {}
-unsafe impl<'a> ExtendsComputePipelineCreateInfo for PipelineCompilerControlCreateInfoAMD<'a> {}
+unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineCompilerControlCreateInfoAMD<'_> {}
+unsafe impl ExtendsComputePipelineCreateInfo for PipelineCompilerControlCreateInfoAMD<'_> {}
 impl<'a> PipelineCompilerControlCreateInfoAMD<'a> {
     #[inline]
     pub fn compiler_control_flags(
@@ -27852,8 +27735,8 @@ impl ::std::default::Default for PhysicalDeviceCoherentMemoryFeaturesAMD<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCoherentMemoryFeaturesAMD<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceCoherentMemoryFeaturesAMD<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCoherentMemoryFeaturesAMD<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCoherentMemoryFeaturesAMD<'_> {}
 impl<'a> PhysicalDeviceCoherentMemoryFeaturesAMD<'a> {
     #[inline]
     pub fn device_coherent_memory(mut self, device_coherent_memory: bool) -> Self {
@@ -27969,7 +27852,7 @@ impl ::std::default::Default for SamplerCustomBorderColorCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsSamplerCreateInfo for SamplerCustomBorderColorCreateInfoEXT<'a> {}
+unsafe impl ExtendsSamplerCreateInfo for SamplerCustomBorderColorCreateInfoEXT<'_> {}
 impl<'a> SamplerCustomBorderColorCreateInfoEXT<'a> {
     #[inline]
     pub fn custom_border_color(mut self, custom_border_color: ClearColorValue) -> Self {
@@ -28002,10 +27885,7 @@ impl ::std::default::Default for PhysicalDeviceCustomBorderColorPropertiesEXT<'_
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceCustomBorderColorPropertiesEXT<'a>
-{
-}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceCustomBorderColorPropertiesEXT<'_> {}
 impl<'a> PhysicalDeviceCustomBorderColorPropertiesEXT<'a> {
     #[inline]
     pub fn max_custom_border_color_samplers(
@@ -28038,8 +27918,8 @@ impl ::std::default::Default for PhysicalDeviceCustomBorderColorFeaturesEXT<'_> 
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCustomBorderColorFeaturesEXT<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceCustomBorderColorFeaturesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCustomBorderColorFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCustomBorderColorFeaturesEXT<'_> {}
 impl<'a> PhysicalDeviceCustomBorderColorFeaturesEXT<'a> {
     #[inline]
     pub fn custom_border_colors(mut self, custom_border_colors: bool) -> Self {
@@ -28077,7 +27957,7 @@ impl ::std::default::Default for SamplerBorderColorComponentMappingCreateInfoEXT
         }
     }
 }
-unsafe impl<'a> ExtendsSamplerCreateInfo for SamplerBorderColorComponentMappingCreateInfoEXT<'a> {}
+unsafe impl ExtendsSamplerCreateInfo for SamplerBorderColorComponentMappingCreateInfoEXT<'_> {}
 impl<'a> SamplerBorderColorComponentMappingCreateInfoEXT<'a> {
     #[inline]
     pub fn components(mut self, components: ComponentMapping) -> Self {
@@ -28112,8 +27992,8 @@ impl ::std::default::Default for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'_>
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'_> {}
 impl<'a> PhysicalDeviceBorderColorSwizzleFeaturesEXT<'a> {
     #[inline]
     pub fn border_color_swizzle(mut self, border_color_swizzle: bool) -> Self {
@@ -28987,11 +28867,8 @@ impl ::std::default::Default for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'a>
-{
-}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'_> {}
 impl<'a> PhysicalDeviceExtendedDynamicStateFeaturesEXT<'a> {
     #[inline]
     pub fn extended_dynamic_state(mut self, extended_dynamic_state: bool) -> Self {
@@ -29023,11 +28900,8 @@ impl ::std::default::Default for PhysicalDeviceExtendedDynamicState2FeaturesEXT<
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'a>
-{
-}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'_> {}
 impl<'a> PhysicalDeviceExtendedDynamicState2FeaturesEXT<'a> {
     #[inline]
     pub fn extended_dynamic_state2(mut self, extended_dynamic_state2: bool) -> Self {
@@ -29072,7 +28946,7 @@ impl ::std::default::Default for RenderPassTransformBeginInfoQCOM<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsRenderPassBeginInfo for RenderPassTransformBeginInfoQCOM<'a> {}
+unsafe impl ExtendsRenderPassBeginInfo for RenderPassTransformBeginInfoQCOM<'_> {}
 impl<'a> RenderPassTransformBeginInfoQCOM<'a> {
     #[inline]
     pub fn transform(mut self, transform: SurfaceTransformFlagsKHR) -> Self {
@@ -29100,8 +28974,8 @@ impl ::std::default::Default for CopyCommandTransformInfoQCOM<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsBufferImageCopy2 for CopyCommandTransformInfoQCOM<'a> {}
-unsafe impl<'a> ExtendsImageBlit2 for CopyCommandTransformInfoQCOM<'a> {}
+unsafe impl ExtendsBufferImageCopy2 for CopyCommandTransformInfoQCOM<'_> {}
+unsafe impl ExtendsImageBlit2 for CopyCommandTransformInfoQCOM<'_> {}
 impl<'a> CopyCommandTransformInfoQCOM<'a> {
     #[inline]
     pub fn transform(mut self, transform: SurfaceTransformFlagsKHR) -> Self {
@@ -29131,8 +29005,8 @@ impl ::std::default::Default for CommandBufferInheritanceRenderPassTransformInfo
         }
     }
 }
-unsafe impl<'a> ExtendsCommandBufferInheritanceInfo
-    for CommandBufferInheritanceRenderPassTransformInfoQCOM<'a>
+unsafe impl ExtendsCommandBufferInheritanceInfo
+    for CommandBufferInheritanceRenderPassTransformInfoQCOM<'_>
 {
 }
 impl<'a> CommandBufferInheritanceRenderPassTransformInfoQCOM<'a> {
@@ -29167,8 +29041,8 @@ impl ::std::default::Default for PhysicalDeviceDiagnosticsConfigFeaturesNV<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDiagnosticsConfigFeaturesNV<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceDiagnosticsConfigFeaturesNV<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDiagnosticsConfigFeaturesNV<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDiagnosticsConfigFeaturesNV<'_> {}
 impl<'a> PhysicalDeviceDiagnosticsConfigFeaturesNV<'a> {
     #[inline]
     pub fn diagnostics_config(mut self, diagnostics_config: bool) -> Self {
@@ -29196,7 +29070,7 @@ impl ::std::default::Default for DeviceDiagnosticsConfigCreateInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsDeviceCreateInfo for DeviceDiagnosticsConfigCreateInfoNV<'a> {}
+unsafe impl ExtendsDeviceCreateInfo for DeviceDiagnosticsConfigCreateInfoNV<'_> {}
 impl<'a> DeviceDiagnosticsConfigCreateInfoNV<'a> {
     #[inline]
     pub fn flags(mut self, flags: DeviceDiagnosticsConfigFlagsNV) -> Self {
@@ -29224,14 +29098,11 @@ impl ::std::default::Default for PhysicalDeviceZeroInitializeWorkgroupMemoryFeat
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'a>
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'_>
 {
 }
-unsafe impl<'a> ExtendsDeviceCreateInfo
-    for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'a>
-{
-}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'_> {}
 impl<'a> PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'a> {
     #[inline]
     pub fn shader_zero_initialize_workgroup_memory(
@@ -29264,12 +29135,12 @@ impl ::std::default::Default for PhysicalDeviceShaderSubgroupUniformControlFlowF
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'a>
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'_>
 {
 }
-unsafe impl<'a> ExtendsDeviceCreateInfo
-    for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'a>
+unsafe impl ExtendsDeviceCreateInfo
+    for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'_>
 {
 }
 impl<'a> PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'a> {
@@ -29306,8 +29177,8 @@ impl ::std::default::Default for PhysicalDeviceRobustness2FeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRobustness2FeaturesEXT<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceRobustness2FeaturesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRobustness2FeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRobustness2FeaturesEXT<'_> {}
 impl<'a> PhysicalDeviceRobustness2FeaturesEXT<'a> {
     #[inline]
     pub fn robust_buffer_access2(mut self, robust_buffer_access2: bool) -> Self {
@@ -29347,7 +29218,7 @@ impl ::std::default::Default for PhysicalDeviceRobustness2PropertiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceRobustness2PropertiesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceRobustness2PropertiesEXT<'_> {}
 impl<'a> PhysicalDeviceRobustness2PropertiesEXT<'a> {
     #[inline]
     pub fn robust_storage_buffer_access_size_alignment(
@@ -29388,8 +29259,8 @@ impl ::std::default::Default for PhysicalDeviceImageRobustnessFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImageRobustnessFeatures<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceImageRobustnessFeatures<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImageRobustnessFeatures<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImageRobustnessFeatures<'_> {}
 impl<'a> PhysicalDeviceImageRobustnessFeatures<'a> {
     #[inline]
     pub fn robust_image_access(mut self, robust_image_access: bool) -> Self {
@@ -29423,14 +29294,11 @@ impl ::std::default::Default for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeat
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'a>
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'_>
 {
 }
-unsafe impl<'a> ExtendsDeviceCreateInfo
-    for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'a>
-{
-}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'_> {}
 impl<'a> PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'a> {
     #[inline]
     pub fn workgroup_memory_explicit_layout(
@@ -29516,8 +29384,8 @@ impl ::std::default::Default for PhysicalDevicePortabilitySubsetFeaturesKHR<'_> 
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePortabilitySubsetFeaturesKHR<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDevicePortabilitySubsetFeaturesKHR<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePortabilitySubsetFeaturesKHR<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePortabilitySubsetFeaturesKHR<'_> {}
 impl<'a> PhysicalDevicePortabilitySubsetFeaturesKHR<'a> {
     #[inline]
     pub fn constant_alpha_color_blend_factors(
@@ -29628,10 +29496,7 @@ impl ::std::default::Default for PhysicalDevicePortabilitySubsetPropertiesKHR<'_
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2
-    for PhysicalDevicePortabilitySubsetPropertiesKHR<'a>
-{
-}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePortabilitySubsetPropertiesKHR<'_> {}
 impl<'a> PhysicalDevicePortabilitySubsetPropertiesKHR<'a> {
     #[inline]
     pub fn min_vertex_input_binding_stride_alignment(
@@ -29664,8 +29529,8 @@ impl ::std::default::Default for PhysicalDevice4444FormatsFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDevice4444FormatsFeaturesEXT<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDevice4444FormatsFeaturesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevice4444FormatsFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevice4444FormatsFeaturesEXT<'_> {}
 impl<'a> PhysicalDevice4444FormatsFeaturesEXT<'a> {
     #[inline]
     pub fn format_a4r4g4b4(mut self, format_a4r4g4b4: bool) -> Self {
@@ -29698,8 +29563,8 @@ impl ::std::default::Default for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'_> 
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'_> {}
 impl<'a> PhysicalDeviceSubpassShadingFeaturesHUAWEI<'a> {
     #[inline]
     pub fn subpass_shading(mut self, subpass_shading: bool) -> Self {
@@ -30347,11 +30212,8 @@ impl ::std::default::Default for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'a>
-{
-}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'_> {}
 impl<'a> PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'a> {
     #[inline]
     pub fn shader_image_int64_atomics(mut self, shader_image_int64_atomics: bool) -> Self {
@@ -30386,7 +30248,7 @@ impl ::std::default::Default for FragmentShadingRateAttachmentInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsSubpassDescription2 for FragmentShadingRateAttachmentInfoKHR<'a> {}
+unsafe impl ExtendsSubpassDescription2 for FragmentShadingRateAttachmentInfoKHR<'_> {}
 impl<'a> FragmentShadingRateAttachmentInfoKHR<'a> {
     #[inline]
     pub fn fragment_shading_rate_attachment(
@@ -30427,8 +30289,8 @@ impl ::std::default::Default for PipelineFragmentShadingRateStateCreateInfoKHR<'
         }
     }
 }
-unsafe impl<'a> ExtendsGraphicsPipelineCreateInfo
-    for PipelineFragmentShadingRateStateCreateInfoKHR<'a>
+unsafe impl ExtendsGraphicsPipelineCreateInfo
+    for PipelineFragmentShadingRateStateCreateInfoKHR<'_>
 {
 }
 impl<'a> PipelineFragmentShadingRateStateCreateInfoKHR<'a> {
@@ -30467,11 +30329,8 @@ impl ::std::default::Default for PhysicalDeviceFragmentShadingRateFeaturesKHR<'_
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceFragmentShadingRateFeaturesKHR<'a>
-{
-}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceFragmentShadingRateFeaturesKHR<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceFragmentShadingRateFeaturesKHR<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentShadingRateFeaturesKHR<'_> {}
 impl<'a> PhysicalDeviceFragmentShadingRateFeaturesKHR<'a> {
     #[inline]
     pub fn pipeline_fragment_shading_rate(mut self, pipeline_fragment_shading_rate: bool) -> Self {
@@ -30547,8 +30406,8 @@ impl ::std::default::Default for PhysicalDeviceFragmentShadingRatePropertiesKHR<
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceFragmentShadingRatePropertiesKHR<'a>
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceFragmentShadingRatePropertiesKHR<'_>
 {
 }
 impl<'a> PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
@@ -30750,11 +30609,8 @@ impl ::std::default::Default for PhysicalDeviceShaderTerminateInvocationFeatures
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceShaderTerminateInvocationFeatures<'a>
-{
-}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceShaderTerminateInvocationFeatures<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderTerminateInvocationFeatures<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderTerminateInvocationFeatures<'_> {}
 impl<'a> PhysicalDeviceShaderTerminateInvocationFeatures<'a> {
     #[inline]
     pub fn shader_terminate_invocation(mut self, shader_terminate_invocation: bool) -> Self {
@@ -30786,11 +30642,11 @@ impl ::std::default::Default for PhysicalDeviceFragmentShadingRateEnumsFeaturesN
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'a>
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'_>
 {
 }
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'a> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'_> {}
 impl<'a> PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'a> {
     #[inline]
     pub fn fragment_shading_rate_enums(mut self, fragment_shading_rate_enums: bool) -> Self {
@@ -30834,8 +30690,8 @@ impl ::std::default::Default for PhysicalDeviceFragmentShadingRateEnumsPropertie
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'a>
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'_>
 {
 }
 impl<'a> PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'a> {
@@ -30873,8 +30729,8 @@ impl ::std::default::Default for PipelineFragmentShadingRateEnumStateCreateInfoN
         }
     }
 }
-unsafe impl<'a> ExtendsGraphicsPipelineCreateInfo
-    for PipelineFragmentShadingRateEnumStateCreateInfoNV<'a>
+unsafe impl ExtendsGraphicsPipelineCreateInfo
+    for PipelineFragmentShadingRateEnumStateCreateInfoNV<'_>
 {
 }
 impl<'a> PipelineFragmentShadingRateEnumStateCreateInfoNV<'a> {
@@ -30955,11 +30811,11 @@ impl ::std::default::Default for PhysicalDeviceMutableDescriptorTypeFeaturesVALV
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceMutableDescriptorTypeFeaturesVALVE<'a>
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceMutableDescriptorTypeFeaturesVALVE<'_>
 {
 }
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceMutableDescriptorTypeFeaturesVALVE<'a> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMutableDescriptorTypeFeaturesVALVE<'_> {}
 impl<'a> PhysicalDeviceMutableDescriptorTypeFeaturesVALVE<'a> {
     #[inline]
     pub fn mutable_descriptor_type(mut self, mutable_descriptor_type: bool) -> Self {
@@ -31015,8 +30871,8 @@ impl ::std::default::Default for MutableDescriptorTypeCreateInfoVALVE<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsDescriptorSetLayoutCreateInfo for MutableDescriptorTypeCreateInfoVALVE<'a> {}
-unsafe impl<'a> ExtendsDescriptorPoolCreateInfo for MutableDescriptorTypeCreateInfoVALVE<'a> {}
+unsafe impl ExtendsDescriptorSetLayoutCreateInfo for MutableDescriptorTypeCreateInfoVALVE<'_> {}
+unsafe impl ExtendsDescriptorPoolCreateInfo for MutableDescriptorTypeCreateInfoVALVE<'_> {}
 impl<'a> MutableDescriptorTypeCreateInfoVALVE<'a> {
     #[inline]
     pub fn mutable_descriptor_type_lists(
@@ -31048,8 +30904,8 @@ impl ::std::default::Default for PhysicalDeviceDepthClipControlFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDepthClipControlFeaturesEXT<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceDepthClipControlFeaturesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDepthClipControlFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDepthClipControlFeaturesEXT<'_> {}
 impl<'a> PhysicalDeviceDepthClipControlFeaturesEXT<'a> {
     #[inline]
     pub fn depth_clip_control(mut self, depth_clip_control: bool) -> Self {
@@ -31077,8 +30933,8 @@ impl ::std::default::Default for PipelineViewportDepthClipControlCreateInfoEXT<'
         }
     }
 }
-unsafe impl<'a> ExtendsPipelineViewportStateCreateInfo
-    for PipelineViewportDepthClipControlCreateInfoEXT<'a>
+unsafe impl ExtendsPipelineViewportStateCreateInfo
+    for PipelineViewportDepthClipControlCreateInfoEXT<'_>
 {
 }
 impl<'a> PipelineViewportDepthClipControlCreateInfoEXT<'a> {
@@ -31108,11 +30964,11 @@ impl ::std::default::Default for PhysicalDeviceVertexInputDynamicStateFeaturesEX
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'a>
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'_>
 {
 }
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'a> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'_> {}
 impl<'a> PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'a> {
     #[inline]
     pub fn vertex_input_dynamic_state(mut self, vertex_input_dynamic_state: bool) -> Self {
@@ -31140,8 +30996,8 @@ impl ::std::default::Default for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'_> 
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'_> {}
 impl<'a> PhysicalDeviceExternalMemoryRDMAFeaturesNV<'a> {
     #[inline]
     pub fn external_memory_rdma(mut self, external_memory_rdma: bool) -> Self {
@@ -31265,8 +31121,8 @@ impl ::std::default::Default for PhysicalDeviceColorWriteEnableFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceColorWriteEnableFeaturesEXT<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceColorWriteEnableFeaturesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceColorWriteEnableFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceColorWriteEnableFeaturesEXT<'_> {}
 impl<'a> PhysicalDeviceColorWriteEnableFeaturesEXT<'a> {
     #[inline]
     pub fn color_write_enable(mut self, color_write_enable: bool) -> Self {
@@ -31296,7 +31152,7 @@ impl ::std::default::Default for PipelineColorWriteCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPipelineColorBlendStateCreateInfo for PipelineColorWriteCreateInfoEXT<'a> {}
+unsafe impl ExtendsPipelineColorBlendStateCreateInfo for PipelineColorWriteCreateInfoEXT<'_> {}
 impl<'a> PipelineColorWriteCreateInfoEXT<'a> {
     #[inline]
     pub fn color_write_enables(mut self, color_write_enables: &'a [Bool32]) -> Self {
@@ -31331,7 +31187,7 @@ impl ::std::default::Default for MemoryBarrier2<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsSubpassDependency2 for MemoryBarrier2<'a> {}
+unsafe impl ExtendsSubpassDependency2 for MemoryBarrier2<'_> {}
 impl<'a> MemoryBarrier2<'a> {
     #[inline]
     pub fn src_stage_mask(mut self, src_stage_mask: PipelineStageFlags2) -> Self {
@@ -31785,7 +31641,7 @@ impl ::std::default::Default for QueueFamilyCheckpointProperties2NV<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsQueueFamilyProperties2 for QueueFamilyCheckpointProperties2NV<'a> {}
+unsafe impl ExtendsQueueFamilyProperties2 for QueueFamilyCheckpointProperties2NV<'_> {}
 impl<'a> QueueFamilyCheckpointProperties2NV<'a> {
     #[inline]
     pub fn checkpoint_execution_stage_mask(
@@ -31850,8 +31706,8 @@ impl ::std::default::Default for PhysicalDeviceSynchronization2Features<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSynchronization2Features<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceSynchronization2Features<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSynchronization2Features<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSynchronization2Features<'_> {}
 impl<'a> PhysicalDeviceSynchronization2Features<'a> {
     #[inline]
     pub fn synchronization2(mut self, synchronization2: bool) -> Self {
@@ -31879,7 +31735,7 @@ impl ::std::default::Default for VideoQueueFamilyProperties2KHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsQueueFamilyProperties2 for VideoQueueFamilyProperties2KHR<'a> {}
+unsafe impl ExtendsQueueFamilyProperties2 for VideoQueueFamilyProperties2KHR<'_> {}
 impl<'a> VideoQueueFamilyProperties2KHR<'a> {
     #[inline]
     pub fn video_codec_operations(
@@ -31910,7 +31766,7 @@ impl ::std::default::Default for QueueFamilyQueryResultStatusProperties2KHR<'_> 
         }
     }
 }
-unsafe impl<'a> ExtendsQueueFamilyProperties2 for QueueFamilyQueryResultStatusProperties2KHR<'a> {}
+unsafe impl ExtendsQueueFamilyProperties2 for QueueFamilyQueryResultStatusProperties2KHR<'_> {}
 impl<'a> QueueFamilyQueryResultStatusProperties2KHR<'a> {
     #[inline]
     pub fn supported(mut self, supported: bool) -> Self {
@@ -31940,10 +31796,10 @@ impl ::std::default::Default for VideoProfilesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsFormatProperties2 for VideoProfilesKHR<'a> {}
-unsafe impl<'a> ExtendsImageCreateInfo for VideoProfilesKHR<'a> {}
-unsafe impl<'a> ExtendsImageViewCreateInfo for VideoProfilesKHR<'a> {}
-unsafe impl<'a> ExtendsBufferCreateInfo for VideoProfilesKHR<'a> {}
+unsafe impl ExtendsFormatProperties2 for VideoProfilesKHR<'_> {}
+unsafe impl ExtendsImageCreateInfo for VideoProfilesKHR<'_> {}
+unsafe impl ExtendsImageViewCreateInfo for VideoProfilesKHR<'_> {}
+unsafe impl ExtendsBufferCreateInfo for VideoProfilesKHR<'_> {}
 impl<'a> VideoProfilesKHR<'a> {
     #[inline]
     pub fn profiles(mut self, profiles: &'a [VideoProfileKHR]) -> Self {
@@ -32039,11 +31895,11 @@ impl ::std::default::Default for VideoProfileKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsQueryPoolCreateInfo for VideoProfileKHR<'a> {}
-unsafe impl<'a> ExtendsFormatProperties2 for VideoProfileKHR<'a> {}
-unsafe impl<'a> ExtendsImageCreateInfo for VideoProfileKHR<'a> {}
-unsafe impl<'a> ExtendsImageViewCreateInfo for VideoProfileKHR<'a> {}
-unsafe impl<'a> ExtendsBufferCreateInfo for VideoProfileKHR<'a> {}
+unsafe impl ExtendsQueryPoolCreateInfo for VideoProfileKHR<'_> {}
+unsafe impl ExtendsFormatProperties2 for VideoProfileKHR<'_> {}
+unsafe impl ExtendsImageCreateInfo for VideoProfileKHR<'_> {}
+unsafe impl ExtendsImageViewCreateInfo for VideoProfileKHR<'_> {}
+unsafe impl ExtendsBufferCreateInfo for VideoProfileKHR<'_> {}
 pub unsafe trait ExtendsVideoProfileKHR {}
 impl<'a> VideoProfileKHR<'a> {
     #[inline]
@@ -32402,7 +32258,7 @@ impl ::std::default::Default for VideoDecodeCapabilitiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsVideoCapabilitiesKHR for VideoDecodeCapabilitiesKHR<'a> {}
+unsafe impl ExtendsVideoCapabilitiesKHR for VideoDecodeCapabilitiesKHR<'_> {}
 pub unsafe trait ExtendsVideoDecodeCapabilitiesKHR {}
 impl<'a> VideoDecodeCapabilitiesKHR<'a> {
     #[inline]
@@ -32554,12 +32410,12 @@ impl ::std::default::Default for VideoDecodeH264ProfileEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsVideoProfileKHR for VideoDecodeH264ProfileEXT<'a> {}
-unsafe impl<'a> ExtendsQueryPoolCreateInfo for VideoDecodeH264ProfileEXT<'a> {}
-unsafe impl<'a> ExtendsFormatProperties2 for VideoDecodeH264ProfileEXT<'a> {}
-unsafe impl<'a> ExtendsImageCreateInfo for VideoDecodeH264ProfileEXT<'a> {}
-unsafe impl<'a> ExtendsImageViewCreateInfo for VideoDecodeH264ProfileEXT<'a> {}
-unsafe impl<'a> ExtendsBufferCreateInfo for VideoDecodeH264ProfileEXT<'a> {}
+unsafe impl ExtendsVideoProfileKHR for VideoDecodeH264ProfileEXT<'_> {}
+unsafe impl ExtendsQueryPoolCreateInfo for VideoDecodeH264ProfileEXT<'_> {}
+unsafe impl ExtendsFormatProperties2 for VideoDecodeH264ProfileEXT<'_> {}
+unsafe impl ExtendsImageCreateInfo for VideoDecodeH264ProfileEXT<'_> {}
+unsafe impl ExtendsImageViewCreateInfo for VideoDecodeH264ProfileEXT<'_> {}
+unsafe impl ExtendsBufferCreateInfo for VideoDecodeH264ProfileEXT<'_> {}
 impl<'a> VideoDecodeH264ProfileEXT<'a> {
     #[inline]
     pub fn std_profile_idc(mut self, std_profile_idc: StdVideoH264ProfileIdc) -> Self {
@@ -32594,7 +32450,7 @@ impl ::std::default::Default for VideoDecodeH264CapabilitiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsVideoDecodeCapabilitiesKHR for VideoDecodeH264CapabilitiesEXT<'a> {}
+unsafe impl ExtendsVideoDecodeCapabilitiesKHR for VideoDecodeH264CapabilitiesEXT<'_> {}
 impl<'a> VideoDecodeH264CapabilitiesEXT<'a> {
     #[inline]
     pub fn max_level(mut self, max_level: u32) -> Self {
@@ -32633,8 +32489,8 @@ impl ::std::default::Default for VideoDecodeH264SessionParametersAddInfoEXT<'_> 
         }
     }
 }
-unsafe impl<'a> ExtendsVideoSessionParametersUpdateInfoKHR
-    for VideoDecodeH264SessionParametersAddInfoEXT<'a>
+unsafe impl ExtendsVideoSessionParametersUpdateInfoKHR
+    for VideoDecodeH264SessionParametersAddInfoEXT<'_>
 {
 }
 impl<'a> VideoDecodeH264SessionParametersAddInfoEXT<'a> {
@@ -32675,8 +32531,8 @@ impl ::std::default::Default for VideoDecodeH264SessionParametersCreateInfoEXT<'
         }
     }
 }
-unsafe impl<'a> ExtendsVideoSessionParametersCreateInfoKHR
-    for VideoDecodeH264SessionParametersCreateInfoEXT<'a>
+unsafe impl ExtendsVideoSessionParametersCreateInfoKHR
+    for VideoDecodeH264SessionParametersCreateInfoEXT<'_>
 {
 }
 impl<'a> VideoDecodeH264SessionParametersCreateInfoEXT<'a> {
@@ -32723,7 +32579,7 @@ impl ::std::default::Default for VideoDecodeH264PictureInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsVideoDecodeInfoKHR for VideoDecodeH264PictureInfoEXT<'a> {}
+unsafe impl ExtendsVideoDecodeInfoKHR for VideoDecodeH264PictureInfoEXT<'_> {}
 pub unsafe trait ExtendsVideoDecodeH264PictureInfoEXT {}
 impl<'a> VideoDecodeH264PictureInfoEXT<'a> {
     #[inline]
@@ -32772,7 +32628,7 @@ impl ::std::default::Default for VideoDecodeH264DpbSlotInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsVideoReferenceSlotKHR for VideoDecodeH264DpbSlotInfoEXT<'a> {}
+unsafe impl ExtendsVideoReferenceSlotKHR for VideoDecodeH264DpbSlotInfoEXT<'_> {}
 impl<'a> VideoDecodeH264DpbSlotInfoEXT<'a> {
     #[inline]
     pub fn std_reference_info(
@@ -32803,7 +32659,7 @@ impl ::std::default::Default for VideoDecodeH264MvcEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsVideoDecodeH264PictureInfoEXT for VideoDecodeH264MvcEXT<'a> {}
+unsafe impl ExtendsVideoDecodeH264PictureInfoEXT for VideoDecodeH264MvcEXT<'_> {}
 impl<'a> VideoDecodeH264MvcEXT<'a> {
     #[inline]
     pub fn std_mvc(mut self, std_mvc: &'a StdVideoDecodeH264Mvc) -> Self {
@@ -32831,12 +32687,12 @@ impl ::std::default::Default for VideoDecodeH265ProfileEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsVideoProfileKHR for VideoDecodeH265ProfileEXT<'a> {}
-unsafe impl<'a> ExtendsQueryPoolCreateInfo for VideoDecodeH265ProfileEXT<'a> {}
-unsafe impl<'a> ExtendsFormatProperties2 for VideoDecodeH265ProfileEXT<'a> {}
-unsafe impl<'a> ExtendsImageCreateInfo for VideoDecodeH265ProfileEXT<'a> {}
-unsafe impl<'a> ExtendsImageViewCreateInfo for VideoDecodeH265ProfileEXT<'a> {}
-unsafe impl<'a> ExtendsBufferCreateInfo for VideoDecodeH265ProfileEXT<'a> {}
+unsafe impl ExtendsVideoProfileKHR for VideoDecodeH265ProfileEXT<'_> {}
+unsafe impl ExtendsQueryPoolCreateInfo for VideoDecodeH265ProfileEXT<'_> {}
+unsafe impl ExtendsFormatProperties2 for VideoDecodeH265ProfileEXT<'_> {}
+unsafe impl ExtendsImageCreateInfo for VideoDecodeH265ProfileEXT<'_> {}
+unsafe impl ExtendsImageViewCreateInfo for VideoDecodeH265ProfileEXT<'_> {}
+unsafe impl ExtendsBufferCreateInfo for VideoDecodeH265ProfileEXT<'_> {}
 impl<'a> VideoDecodeH265ProfileEXT<'a> {
     #[inline]
     pub fn std_profile_idc(mut self, std_profile_idc: StdVideoH265ProfileIdc) -> Self {
@@ -32864,7 +32720,7 @@ impl ::std::default::Default for VideoDecodeH265CapabilitiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsVideoDecodeCapabilitiesKHR for VideoDecodeH265CapabilitiesEXT<'a> {}
+unsafe impl ExtendsVideoDecodeCapabilitiesKHR for VideoDecodeH265CapabilitiesEXT<'_> {}
 impl<'a> VideoDecodeH265CapabilitiesEXT<'a> {
     #[inline]
     pub fn max_level(mut self, max_level: u32) -> Self {
@@ -32902,8 +32758,8 @@ impl ::std::default::Default for VideoDecodeH265SessionParametersAddInfoEXT<'_> 
         }
     }
 }
-unsafe impl<'a> ExtendsVideoSessionParametersUpdateInfoKHR
-    for VideoDecodeH265SessionParametersAddInfoEXT<'a>
+unsafe impl ExtendsVideoSessionParametersUpdateInfoKHR
+    for VideoDecodeH265SessionParametersAddInfoEXT<'_>
 {
 }
 impl<'a> VideoDecodeH265SessionParametersAddInfoEXT<'a> {
@@ -32952,8 +32808,8 @@ impl ::std::default::Default for VideoDecodeH265SessionParametersCreateInfoEXT<'
         }
     }
 }
-unsafe impl<'a> ExtendsVideoSessionParametersCreateInfoKHR
-    for VideoDecodeH265SessionParametersCreateInfoEXT<'a>
+unsafe impl ExtendsVideoSessionParametersCreateInfoKHR
+    for VideoDecodeH265SessionParametersCreateInfoEXT<'_>
 {
 }
 impl<'a> VideoDecodeH265SessionParametersCreateInfoEXT<'a> {
@@ -33005,7 +32861,7 @@ impl ::std::default::Default for VideoDecodeH265PictureInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsVideoDecodeInfoKHR for VideoDecodeH265PictureInfoEXT<'a> {}
+unsafe impl ExtendsVideoDecodeInfoKHR for VideoDecodeH265PictureInfoEXT<'_> {}
 impl<'a> VideoDecodeH265PictureInfoEXT<'a> {
     #[inline]
     pub fn std_picture_info(
@@ -33042,7 +32898,7 @@ impl ::std::default::Default for VideoDecodeH265DpbSlotInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsVideoReferenceSlotKHR for VideoDecodeH265DpbSlotInfoEXT<'a> {}
+unsafe impl ExtendsVideoReferenceSlotKHR for VideoDecodeH265DpbSlotInfoEXT<'_> {}
 impl<'a> VideoDecodeH265DpbSlotInfoEXT<'a> {
     #[inline]
     pub fn std_reference_info(
@@ -33521,7 +33377,7 @@ impl ::std::default::Default for VideoEncodeRateControlInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsVideoCodingControlInfoKHR for VideoEncodeRateControlInfoKHR<'a> {}
+unsafe impl ExtendsVideoCodingControlInfoKHR for VideoEncodeRateControlInfoKHR<'_> {}
 pub unsafe trait ExtendsVideoEncodeRateControlInfoKHR {}
 impl<'a> VideoEncodeRateControlInfoKHR<'a> {
     #[inline]
@@ -33591,7 +33447,7 @@ impl ::std::default::Default for VideoEncodeRateControlLayerInfoKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsVideoCodingControlInfoKHR for VideoEncodeRateControlLayerInfoKHR<'a> {}
+unsafe impl ExtendsVideoCodingControlInfoKHR for VideoEncodeRateControlLayerInfoKHR<'_> {}
 pub unsafe trait ExtendsVideoEncodeRateControlLayerInfoKHR {}
 impl<'a> VideoEncodeRateControlLayerInfoKHR<'a> {
     #[inline]
@@ -33673,7 +33529,7 @@ impl ::std::default::Default for VideoEncodeCapabilitiesKHR<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsVideoCapabilitiesKHR for VideoEncodeCapabilitiesKHR<'a> {}
+unsafe impl ExtendsVideoCapabilitiesKHR for VideoEncodeCapabilitiesKHR<'_> {}
 pub unsafe trait ExtendsVideoEncodeCapabilitiesKHR {}
 impl<'a> VideoEncodeCapabilitiesKHR<'a> {
     #[inline]
@@ -33762,7 +33618,7 @@ impl ::std::default::Default for VideoEncodeH264CapabilitiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsVideoEncodeCapabilitiesKHR for VideoEncodeH264CapabilitiesEXT<'a> {}
+unsafe impl ExtendsVideoEncodeCapabilitiesKHR for VideoEncodeH264CapabilitiesEXT<'_> {}
 impl<'a> VideoEncodeH264CapabilitiesEXT<'a> {
     #[inline]
     pub fn flags(mut self, flags: VideoEncodeH264CapabilityFlagsEXT) -> Self {
@@ -33859,8 +33715,8 @@ impl ::std::default::Default for VideoEncodeH264SessionParametersAddInfoEXT<'_> 
         }
     }
 }
-unsafe impl<'a> ExtendsVideoSessionParametersUpdateInfoKHR
-    for VideoEncodeH264SessionParametersAddInfoEXT<'a>
+unsafe impl ExtendsVideoSessionParametersUpdateInfoKHR
+    for VideoEncodeH264SessionParametersAddInfoEXT<'_>
 {
 }
 impl<'a> VideoEncodeH264SessionParametersAddInfoEXT<'a> {
@@ -33901,8 +33757,8 @@ impl ::std::default::Default for VideoEncodeH264SessionParametersCreateInfoEXT<'
         }
     }
 }
-unsafe impl<'a> ExtendsVideoSessionParametersCreateInfoKHR
-    for VideoEncodeH264SessionParametersCreateInfoEXT<'a>
+unsafe impl ExtendsVideoSessionParametersCreateInfoKHR
+    for VideoEncodeH264SessionParametersCreateInfoEXT<'_>
 {
 }
 impl<'a> VideoEncodeH264SessionParametersCreateInfoEXT<'a> {
@@ -33988,7 +33844,7 @@ impl ::std::default::Default for VideoEncodeH264VclFrameInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsVideoEncodeInfoKHR for VideoEncodeH264VclFrameInfoEXT<'a> {}
+unsafe impl ExtendsVideoEncodeInfoKHR for VideoEncodeH264VclFrameInfoEXT<'_> {}
 impl<'a> VideoEncodeH264VclFrameInfoEXT<'a> {
     #[inline]
     pub fn reference_final_lists(
@@ -34098,7 +33954,7 @@ impl ::std::default::Default for VideoEncodeH264EmitPictureParametersEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsVideoEncodeInfoKHR for VideoEncodeH264EmitPictureParametersEXT<'a> {}
+unsafe impl ExtendsVideoEncodeInfoKHR for VideoEncodeH264EmitPictureParametersEXT<'_> {}
 impl<'a> VideoEncodeH264EmitPictureParametersEXT<'a> {
     #[inline]
     pub fn sps_id(mut self, sps_id: u8) -> Self {
@@ -34137,12 +33993,12 @@ impl ::std::default::Default for VideoEncodeH264ProfileEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsVideoProfileKHR for VideoEncodeH264ProfileEXT<'a> {}
-unsafe impl<'a> ExtendsQueryPoolCreateInfo for VideoEncodeH264ProfileEXT<'a> {}
-unsafe impl<'a> ExtendsFormatProperties2 for VideoEncodeH264ProfileEXT<'a> {}
-unsafe impl<'a> ExtendsImageCreateInfo for VideoEncodeH264ProfileEXT<'a> {}
-unsafe impl<'a> ExtendsImageViewCreateInfo for VideoEncodeH264ProfileEXT<'a> {}
-unsafe impl<'a> ExtendsBufferCreateInfo for VideoEncodeH264ProfileEXT<'a> {}
+unsafe impl ExtendsVideoProfileKHR for VideoEncodeH264ProfileEXT<'_> {}
+unsafe impl ExtendsQueryPoolCreateInfo for VideoEncodeH264ProfileEXT<'_> {}
+unsafe impl ExtendsFormatProperties2 for VideoEncodeH264ProfileEXT<'_> {}
+unsafe impl ExtendsImageCreateInfo for VideoEncodeH264ProfileEXT<'_> {}
+unsafe impl ExtendsImageViewCreateInfo for VideoEncodeH264ProfileEXT<'_> {}
+unsafe impl ExtendsBufferCreateInfo for VideoEncodeH264ProfileEXT<'_> {}
 impl<'a> VideoEncodeH264ProfileEXT<'a> {
     #[inline]
     pub fn std_profile_idc(mut self, std_profile_idc: StdVideoH264ProfileIdc) -> Self {
@@ -34222,7 +34078,7 @@ impl ::std::default::Default for VideoEncodeH264RateControlInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsVideoEncodeRateControlInfoKHR for VideoEncodeH264RateControlInfoEXT<'a> {}
+unsafe impl ExtendsVideoEncodeRateControlInfoKHR for VideoEncodeH264RateControlInfoEXT<'_> {}
 impl<'a> VideoEncodeH264RateControlInfoEXT<'a> {
     #[inline]
     pub fn gop_frame_count(mut self, gop_frame_count: u32) -> Self {
@@ -34341,8 +34197,8 @@ impl ::std::default::Default for VideoEncodeH264RateControlLayerInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsVideoEncodeRateControlLayerInfoKHR
-    for VideoEncodeH264RateControlLayerInfoEXT<'a>
+unsafe impl ExtendsVideoEncodeRateControlLayerInfoKHR
+    for VideoEncodeH264RateControlLayerInfoEXT<'_>
 {
 }
 impl<'a> VideoEncodeH264RateControlLayerInfoEXT<'a> {
@@ -34450,7 +34306,7 @@ impl ::std::default::Default for VideoEncodeH265CapabilitiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsVideoEncodeCapabilitiesKHR for VideoEncodeH265CapabilitiesEXT<'a> {}
+unsafe impl ExtendsVideoEncodeCapabilitiesKHR for VideoEncodeH265CapabilitiesEXT<'_> {}
 impl<'a> VideoEncodeH265CapabilitiesEXT<'a> {
     #[inline]
     pub fn flags(mut self, flags: VideoEncodeH265CapabilityFlagsEXT) -> Self {
@@ -34623,8 +34479,8 @@ impl ::std::default::Default for VideoEncodeH265SessionParametersAddInfoEXT<'_> 
         }
     }
 }
-unsafe impl<'a> ExtendsVideoSessionParametersUpdateInfoKHR
-    for VideoEncodeH265SessionParametersAddInfoEXT<'a>
+unsafe impl ExtendsVideoSessionParametersUpdateInfoKHR
+    for VideoEncodeH265SessionParametersAddInfoEXT<'_>
 {
 }
 impl<'a> VideoEncodeH265SessionParametersAddInfoEXT<'a> {
@@ -34673,8 +34529,8 @@ impl ::std::default::Default for VideoEncodeH265SessionParametersCreateInfoEXT<'
         }
     }
 }
-unsafe impl<'a> ExtendsVideoSessionParametersCreateInfoKHR
-    for VideoEncodeH265SessionParametersCreateInfoEXT<'a>
+unsafe impl ExtendsVideoSessionParametersCreateInfoKHR
+    for VideoEncodeH265SessionParametersCreateInfoEXT<'_>
 {
 }
 impl<'a> VideoEncodeH265SessionParametersCreateInfoEXT<'a> {
@@ -34728,7 +34584,7 @@ impl ::std::default::Default for VideoEncodeH265VclFrameInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsVideoEncodeInfoKHR for VideoEncodeH265VclFrameInfoEXT<'a> {}
+unsafe impl ExtendsVideoEncodeInfoKHR for VideoEncodeH265VclFrameInfoEXT<'_> {}
 impl<'a> VideoEncodeH265VclFrameInfoEXT<'a> {
     #[inline]
     pub fn reference_final_lists(
@@ -34786,7 +34642,7 @@ impl ::std::default::Default for VideoEncodeH265EmitPictureParametersEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsVideoEncodeInfoKHR for VideoEncodeH265EmitPictureParametersEXT<'a> {}
+unsafe impl ExtendsVideoEncodeInfoKHR for VideoEncodeH265EmitPictureParametersEXT<'_> {}
 impl<'a> VideoEncodeH265EmitPictureParametersEXT<'a> {
     #[inline]
     pub fn vps_id(mut self, vps_id: u8) -> Self {
@@ -34890,7 +34746,7 @@ impl ::std::default::Default for VideoEncodeH265RateControlInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsVideoEncodeRateControlInfoKHR for VideoEncodeH265RateControlInfoEXT<'a> {}
+unsafe impl ExtendsVideoEncodeRateControlInfoKHR for VideoEncodeH265RateControlInfoEXT<'_> {}
 impl<'a> VideoEncodeH265RateControlInfoEXT<'a> {
     #[inline]
     pub fn gop_frame_count(mut self, gop_frame_count: u32) -> Self {
@@ -35009,8 +34865,8 @@ impl ::std::default::Default for VideoEncodeH265RateControlLayerInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsVideoEncodeRateControlLayerInfoKHR
-    for VideoEncodeH265RateControlLayerInfoEXT<'a>
+unsafe impl ExtendsVideoEncodeRateControlLayerInfoKHR
+    for VideoEncodeH265RateControlLayerInfoEXT<'_>
 {
 }
 impl<'a> VideoEncodeH265RateControlLayerInfoEXT<'a> {
@@ -35080,12 +34936,12 @@ impl ::std::default::Default for VideoEncodeH265ProfileEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsVideoProfileKHR for VideoEncodeH265ProfileEXT<'a> {}
-unsafe impl<'a> ExtendsQueryPoolCreateInfo for VideoEncodeH265ProfileEXT<'a> {}
-unsafe impl<'a> ExtendsFormatProperties2 for VideoEncodeH265ProfileEXT<'a> {}
-unsafe impl<'a> ExtendsImageCreateInfo for VideoEncodeH265ProfileEXT<'a> {}
-unsafe impl<'a> ExtendsImageViewCreateInfo for VideoEncodeH265ProfileEXT<'a> {}
-unsafe impl<'a> ExtendsBufferCreateInfo for VideoEncodeH265ProfileEXT<'a> {}
+unsafe impl ExtendsVideoProfileKHR for VideoEncodeH265ProfileEXT<'_> {}
+unsafe impl ExtendsQueryPoolCreateInfo for VideoEncodeH265ProfileEXT<'_> {}
+unsafe impl ExtendsFormatProperties2 for VideoEncodeH265ProfileEXT<'_> {}
+unsafe impl ExtendsImageCreateInfo for VideoEncodeH265ProfileEXT<'_> {}
+unsafe impl ExtendsImageViewCreateInfo for VideoEncodeH265ProfileEXT<'_> {}
+unsafe impl ExtendsBufferCreateInfo for VideoEncodeH265ProfileEXT<'_> {}
 impl<'a> VideoEncodeH265ProfileEXT<'a> {
     #[inline]
     pub fn std_profile_idc(mut self, std_profile_idc: StdVideoH265ProfileIdc) -> Self {
@@ -35206,11 +35062,11 @@ impl ::std::default::Default for PhysicalDeviceInheritedViewportScissorFeaturesN
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceInheritedViewportScissorFeaturesNV<'a>
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceInheritedViewportScissorFeaturesNV<'_>
 {
 }
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceInheritedViewportScissorFeaturesNV<'a> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceInheritedViewportScissorFeaturesNV<'_> {}
 impl<'a> PhysicalDeviceInheritedViewportScissorFeaturesNV<'a> {
     #[inline]
     pub fn inherited_viewport_scissor2_d(mut self, inherited_viewport_scissor2_d: bool) -> Self {
@@ -35242,8 +35098,8 @@ impl ::std::default::Default for CommandBufferInheritanceViewportScissorInfoNV<'
         }
     }
 }
-unsafe impl<'a> ExtendsCommandBufferInheritanceInfo
-    for CommandBufferInheritanceViewportScissorInfoNV<'a>
+unsafe impl ExtendsCommandBufferInheritanceInfo
+    for CommandBufferInheritanceViewportScissorInfoNV<'_>
 {
 }
 impl<'a> CommandBufferInheritanceViewportScissorInfoNV<'a> {
@@ -35283,11 +35139,8 @@ impl ::std::default::Default for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'a>
-{
-}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'_> {}
 impl<'a> PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'a> {
     #[inline]
     pub fn ycbcr2plane444_formats(mut self, ycbcr2plane444_formats: bool) -> Self {
@@ -35317,8 +35170,8 @@ impl ::std::default::Default for PhysicalDeviceProvokingVertexFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceProvokingVertexFeaturesEXT<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceProvokingVertexFeaturesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceProvokingVertexFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceProvokingVertexFeaturesEXT<'_> {}
 impl<'a> PhysicalDeviceProvokingVertexFeaturesEXT<'a> {
     #[inline]
     pub fn provoking_vertex_last(mut self, provoking_vertex_last: bool) -> Self {
@@ -35357,10 +35210,7 @@ impl ::std::default::Default for PhysicalDeviceProvokingVertexPropertiesEXT<'_> 
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceProvokingVertexPropertiesEXT<'a>
-{
-}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceProvokingVertexPropertiesEXT<'_> {}
 impl<'a> PhysicalDeviceProvokingVertexPropertiesEXT<'a> {
     #[inline]
     pub fn provoking_vertex_mode_per_pipeline(
@@ -35400,8 +35250,8 @@ impl ::std::default::Default for PipelineRasterizationProvokingVertexStateCreate
         }
     }
 }
-unsafe impl<'a> ExtendsPipelineRasterizationStateCreateInfo
-    for PipelineRasterizationProvokingVertexStateCreateInfoEXT<'a>
+unsafe impl ExtendsPipelineRasterizationStateCreateInfo
+    for PipelineRasterizationProvokingVertexStateCreateInfoEXT<'_>
 {
 }
 impl<'a> PipelineRasterizationProvokingVertexStateCreateInfoEXT<'a> {
@@ -35591,11 +35441,8 @@ impl ::std::default::Default for PhysicalDeviceShaderIntegerDotProductFeatures<'
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceShaderIntegerDotProductFeatures<'a>
-{
-}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceShaderIntegerDotProductFeatures<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderIntegerDotProductFeatures<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderIntegerDotProductFeatures<'_> {}
 impl<'a> PhysicalDeviceShaderIntegerDotProductFeatures<'a> {
     #[inline]
     pub fn shader_integer_dot_product(mut self, shader_integer_dot_product: bool) -> Self {
@@ -35648,8 +35495,8 @@ impl ::std::default::Default for PhysicalDeviceShaderIntegerDotProductProperties
         Self { s_type : StructureType :: PHYSICAL_DEVICE_SHADER_INTEGER_DOT_PRODUCT_PROPERTIES , p_next : :: std :: ptr :: null_mut () , integer_dot_product8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product64_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated : Bool32 :: default () , _marker : PhantomData , }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2
-    for PhysicalDeviceShaderIntegerDotProductProperties<'a>
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceShaderIntegerDotProductProperties<'_>
 {
 }
 impl<'a> PhysicalDeviceShaderIntegerDotProductProperties<'a> {
@@ -35953,7 +35800,7 @@ impl ::std::default::Default for PhysicalDeviceDrmPropertiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDrmPropertiesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDrmPropertiesEXT<'_> {}
 impl<'a> PhysicalDeviceDrmPropertiesEXT<'a> {
     #[inline]
     pub fn has_primary(mut self, has_primary: bool) -> Self {
@@ -36008,11 +35855,8 @@ impl ::std::default::Default for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'_
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'a>
-{
-}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'_> {}
 impl<'a> PhysicalDeviceRayTracingMotionBlurFeaturesNV<'a> {
     #[inline]
     pub fn ray_tracing_motion_blur(mut self, ray_tracing_motion_blur: bool) -> Self {
@@ -36058,8 +35902,8 @@ impl ::std::default::Default for AccelerationStructureGeometryMotionTrianglesDat
         }
     }
 }
-unsafe impl<'a> ExtendsAccelerationStructureGeometryTrianglesDataKHR
-    for AccelerationStructureGeometryMotionTrianglesDataNV<'a>
+unsafe impl ExtendsAccelerationStructureGeometryTrianglesDataKHR
+    for AccelerationStructureGeometryMotionTrianglesDataNV<'_>
 {
 }
 impl<'a> AccelerationStructureGeometryMotionTrianglesDataNV<'a> {
@@ -36091,10 +35935,7 @@ impl ::std::default::Default for AccelerationStructureMotionInfoNV<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsAccelerationStructureCreateInfoKHR
-    for AccelerationStructureMotionInfoNV<'a>
-{
-}
+unsafe impl ExtendsAccelerationStructureCreateInfoKHR for AccelerationStructureMotionInfoNV<'_> {}
 impl<'a> AccelerationStructureMotionInfoNV<'a> {
     #[inline]
     pub fn max_instances(mut self, max_instances: u32) -> Self {
@@ -36341,7 +36182,7 @@ impl ::std::default::Default for ImportMemoryBufferCollectionFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsMemoryAllocateInfo for ImportMemoryBufferCollectionFUCHSIA<'a> {}
+unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryBufferCollectionFUCHSIA<'_> {}
 impl<'a> ImportMemoryBufferCollectionFUCHSIA<'a> {
     #[inline]
     pub fn collection(mut self, collection: BufferCollectionFUCHSIA) -> Self {
@@ -36376,7 +36217,7 @@ impl ::std::default::Default for BufferCollectionImageCreateInfoFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsImageCreateInfo for BufferCollectionImageCreateInfoFUCHSIA<'a> {}
+unsafe impl ExtendsImageCreateInfo for BufferCollectionImageCreateInfoFUCHSIA<'_> {}
 impl<'a> BufferCollectionImageCreateInfoFUCHSIA<'a> {
     #[inline]
     pub fn collection(mut self, collection: BufferCollectionFUCHSIA) -> Self {
@@ -36411,7 +36252,7 @@ impl ::std::default::Default for BufferCollectionBufferCreateInfoFUCHSIA<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsBufferCreateInfo for BufferCollectionBufferCreateInfoFUCHSIA<'a> {}
+unsafe impl ExtendsBufferCreateInfo for BufferCollectionBufferCreateInfoFUCHSIA<'_> {}
 impl<'a> BufferCollectionBufferCreateInfoFUCHSIA<'a> {
     #[inline]
     pub fn collection(mut self, collection: BufferCollectionFUCHSIA) -> Self {
@@ -36823,8 +36664,8 @@ impl ::std::default::Default for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'_> {}
 impl<'a> PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'a> {
     #[inline]
     pub fn format_rgba10x6_without_y_cb_cr_sampler(
@@ -36860,7 +36701,7 @@ impl ::std::default::Default for FormatProperties3<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsFormatProperties2 for FormatProperties3<'a> {}
+unsafe impl ExtendsFormatProperties2 for FormatProperties3<'_> {}
 impl<'a> FormatProperties3<'a> {
     #[inline]
     pub fn linear_tiling_features(mut self, linear_tiling_features: FormatFeatureFlags2) -> Self {
@@ -36900,7 +36741,7 @@ impl ::std::default::Default for DrmFormatModifierPropertiesList2EXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsFormatProperties2 for DrmFormatModifierPropertiesList2EXT<'a> {}
+unsafe impl ExtendsFormatProperties2 for DrmFormatModifierPropertiesList2EXT<'_> {}
 impl<'a> DrmFormatModifierPropertiesList2EXT<'a> {
     #[inline]
     pub fn drm_format_modifier_properties(
@@ -36975,8 +36816,8 @@ impl ::std::default::Default for AndroidHardwareBufferFormatProperties2ANDROID<'
         }
     }
 }
-unsafe impl<'a> ExtendsAndroidHardwareBufferPropertiesANDROID
-    for AndroidHardwareBufferFormatProperties2ANDROID<'a>
+unsafe impl ExtendsAndroidHardwareBufferPropertiesANDROID
+    for AndroidHardwareBufferFormatProperties2ANDROID<'_>
 {
 }
 impl<'a> AndroidHardwareBufferFormatProperties2ANDROID<'a> {
@@ -37055,7 +36896,7 @@ impl ::std::default::Default for PipelineRenderingCreateInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsGraphicsPipelineCreateInfo for PipelineRenderingCreateInfo<'a> {}
+unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineRenderingCreateInfo<'_> {}
 impl<'a> PipelineRenderingCreateInfo<'a> {
     #[inline]
     pub fn view_mask(mut self, view_mask: u32) -> Self {
@@ -37285,7 +37126,7 @@ impl ::std::default::Default for RenderingFragmentShadingRateAttachmentInfoKHR<'
         }
     }
 }
-unsafe impl<'a> ExtendsRenderingInfo for RenderingFragmentShadingRateAttachmentInfoKHR<'a> {}
+unsafe impl ExtendsRenderingInfo for RenderingFragmentShadingRateAttachmentInfoKHR<'_> {}
 impl<'a> RenderingFragmentShadingRateAttachmentInfoKHR<'a> {
     #[inline]
     pub fn image_view(mut self, image_view: ImageView) -> Self {
@@ -37328,7 +37169,7 @@ impl ::std::default::Default for RenderingFragmentDensityMapAttachmentInfoEXT<'_
         }
     }
 }
-unsafe impl<'a> ExtendsRenderingInfo for RenderingFragmentDensityMapAttachmentInfoEXT<'a> {}
+unsafe impl ExtendsRenderingInfo for RenderingFragmentDensityMapAttachmentInfoEXT<'_> {}
 impl<'a> RenderingFragmentDensityMapAttachmentInfoEXT<'a> {
     #[inline]
     pub fn image_view(mut self, image_view: ImageView) -> Self {
@@ -37361,8 +37202,8 @@ impl ::std::default::Default for PhysicalDeviceDynamicRenderingFeatures<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDynamicRenderingFeatures<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceDynamicRenderingFeatures<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDynamicRenderingFeatures<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDynamicRenderingFeatures<'_> {}
 impl<'a> PhysicalDeviceDynamicRenderingFeatures<'a> {
     #[inline]
     pub fn dynamic_rendering(mut self, dynamic_rendering: bool) -> Self {
@@ -37402,7 +37243,7 @@ impl ::std::default::Default for CommandBufferInheritanceRenderingInfo<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsCommandBufferInheritanceInfo for CommandBufferInheritanceRenderingInfo<'a> {}
+unsafe impl ExtendsCommandBufferInheritanceInfo for CommandBufferInheritanceRenderingInfo<'_> {}
 impl<'a> CommandBufferInheritanceRenderingInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: RenderingFlags) -> Self {
@@ -37460,8 +37301,8 @@ impl ::std::default::Default for AttachmentSampleCountInfoAMD<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsCommandBufferInheritanceInfo for AttachmentSampleCountInfoAMD<'a> {}
-unsafe impl<'a> ExtendsGraphicsPipelineCreateInfo for AttachmentSampleCountInfoAMD<'a> {}
+unsafe impl ExtendsCommandBufferInheritanceInfo for AttachmentSampleCountInfoAMD<'_> {}
+unsafe impl ExtendsGraphicsPipelineCreateInfo for AttachmentSampleCountInfoAMD<'_> {}
 impl<'a> AttachmentSampleCountInfoAMD<'a> {
     #[inline]
     pub fn color_attachment_samples(
@@ -37503,9 +37344,9 @@ impl ::std::default::Default for MultiviewPerViewAttributesInfoNVX<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsCommandBufferInheritanceInfo for MultiviewPerViewAttributesInfoNVX<'a> {}
-unsafe impl<'a> ExtendsGraphicsPipelineCreateInfo for MultiviewPerViewAttributesInfoNVX<'a> {}
-unsafe impl<'a> ExtendsRenderingInfo for MultiviewPerViewAttributesInfoNVX<'a> {}
+unsafe impl ExtendsCommandBufferInheritanceInfo for MultiviewPerViewAttributesInfoNVX<'_> {}
+unsafe impl ExtendsGraphicsPipelineCreateInfo for MultiviewPerViewAttributesInfoNVX<'_> {}
+unsafe impl ExtendsRenderingInfo for MultiviewPerViewAttributesInfoNVX<'_> {}
 impl<'a> MultiviewPerViewAttributesInfoNVX<'a> {
     #[inline]
     pub fn per_view_attributes(mut self, per_view_attributes: bool) -> Self {
@@ -37541,8 +37382,8 @@ impl ::std::default::Default for PhysicalDeviceImageViewMinLodFeaturesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImageViewMinLodFeaturesEXT<'a> {}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceImageViewMinLodFeaturesEXT<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImageViewMinLodFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImageViewMinLodFeaturesEXT<'_> {}
 impl<'a> PhysicalDeviceImageViewMinLodFeaturesEXT<'a> {
     #[inline]
     pub fn min_lod(mut self, min_lod: bool) -> Self {
@@ -37570,7 +37411,7 @@ impl ::std::default::Default for ImageViewMinLodCreateInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> ExtendsImageViewCreateInfo for ImageViewMinLodCreateInfoEXT<'a> {}
+unsafe impl ExtendsImageViewCreateInfo for ImageViewMinLodCreateInfoEXT<'_> {}
 impl<'a> ImageViewMinLodCreateInfoEXT<'a> {
     #[inline]
     pub fn min_lod(mut self, min_lod: f32) -> Self {
@@ -37603,12 +37444,12 @@ impl ::std::default::Default for PhysicalDeviceRasterizationOrderAttachmentAcces
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARM<'a>
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARM<'_>
 {
 }
-unsafe impl<'a> ExtendsDeviceCreateInfo
-    for PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARM<'a>
+unsafe impl ExtendsDeviceCreateInfo
+    for PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARM<'_>
 {
 }
 impl<'a> PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARM<'a> {
@@ -37660,11 +37501,8 @@ impl ::std::default::Default for PhysicalDeviceLinearColorAttachmentFeaturesNV<'
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceLinearColorAttachmentFeaturesNV<'a>
-{
-}
-unsafe impl<'a> ExtendsDeviceCreateInfo for PhysicalDeviceLinearColorAttachmentFeaturesNV<'a> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceLinearColorAttachmentFeaturesNV<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceLinearColorAttachmentFeaturesNV<'_> {}
 impl<'a> PhysicalDeviceLinearColorAttachmentFeaturesNV<'a> {
     #[inline]
     pub fn linear_color_attachment(mut self, linear_color_attachment: bool) -> Self {
@@ -37692,14 +37530,11 @@ impl ::std::default::Default for PhysicalDeviceDescriptorSetHostMappingFeaturesV
         }
     }
 }
-unsafe impl<'a> ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'a>
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'_>
 {
 }
-unsafe impl<'a> ExtendsDeviceCreateInfo
-    for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'a>
-{
-}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'_> {}
 impl<'a> PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'a> {
     #[inline]
     pub fn descriptor_set_host_mapping(mut self, descriptor_set_host_mapping: bool) -> Self {

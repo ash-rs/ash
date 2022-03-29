@@ -1783,9 +1783,8 @@ pub fn derive_setters(
         .flat_map(|extends| extends.split(','))
         .map(|extends| format_ident!("Extends{}", name_to_tokens(extends)))
         .map(|extends| {
-            quote! {
-                unsafe impl #lifetime #extends for #name #lifetime {}
-            }
+            // Extension structs always have a pNext, and therefore always have a lifetime.
+            quote!(unsafe impl #extends for #name<'_> {})
         });
 
     let q = quote! {
@@ -1910,7 +1909,7 @@ pub fn generate_struct(
     });
 
     let has_lifetime = has_lifetimes.contains(&name);
-    let (generics, marker) = match has_lifetime {
+    let (lifetimes, marker) = match has_lifetime {
         true => (quote!(<'a>), quote!(pub _marker: PhantomData<&'a ()>,)),
         false => (quote!(), quote!()),
     };
@@ -1935,7 +1934,7 @@ pub fn generate_struct(
         #dbg_str
         #[derive(Copy, Clone, #default_str #manual_derive_tokens)]
         #[doc = #khronos_link]
-        pub struct #name #generics {
+        pub struct #name #lifetimes {
             #(#params,)*
             #marker
         }
@@ -2328,13 +2327,9 @@ pub fn generate_aliases_of_types(
             };
             let alias_ident = name_to_tokens(alias);
             let tokens = if has_lifetimes.contains(&alias_ident) {
-                quote! {
-                    pub type #name_ident<'a> = #alias_ident<'a>;
-                }
+                quote!(pub type #name_ident<'a> = #alias_ident<'a>;)
             } else {
-                quote! {
-                    pub type #name_ident = #alias_ident;
-                }
+                quote!(pub type #name_ident = #alias_ident;)
             };
             Some(tokens)
         });
@@ -2443,31 +2438,8 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     let mut identifier_renames = BTreeMap::new();
 
     // Identify structs that need a lifetime annotation
-    let mut member_of = HashMap::<Ident, Vec<Ident>>::new();
-    for def in &definitions {
-        let name;
-        let fields = match def {
-            vkxml::DefinitionsElement::Struct(s) => {
-                name = name_to_tokens(&s.name);
-                s.elements
-                    .iter()
-                    .filter_map(get_variant!(vkxml::StructElement::Member))
-                    .map(|field| name_to_tokens(&field.basetype))
-                    .collect::<Vec<_>>()
-            }
-            vkxml::DefinitionsElement::Union(u) => {
-                name = name_to_tokens(&u.name);
-                u.elements
-                    .iter()
-                    .map(|field| name_to_tokens(&field.basetype))
-                    .collect::<Vec<_>>()
-            }
-            _ => continue,
-        };
-        for field in fields {
-            member_of.entry(field).or_default().push(name.clone());
-        }
-    }
+    // Note that this relies on `vk.xml` defining types before they are used,
+    // as is required in C(++) too.
     let mut has_lifetimes = definitions
         .iter()
         .filter_map(get_variant!(vkxml::DefinitionsElement::Struct))
@@ -2479,22 +2451,21 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
                 .then(|| name_to_tokens(&s.name))
         })
         .collect::<HashSet<Ident>>();
-    {
-        // Propagate lifetime annotations
-        let mut stack = has_lifetimes.iter().cloned().collect::<Vec<_>>();
-        while let Some(ty) = stack.pop() {
-            let owners = match member_of.get(&ty) {
-                None => continue,
-                Some(x) => x,
-            };
-            for owner in owners {
-                if has_lifetimes.contains(owner) {
-                    continue;
-                }
-                has_lifetimes.insert(owner.clone());
-                stack.push(owner.clone());
-            }
-        }
+    for def in &definitions {
+        match def {
+            vkxml::DefinitionsElement::Struct(s) => s
+                .elements
+                .iter()
+                .filter_map(get_variant!(vkxml::StructElement::Member))
+                .any(|field| has_lifetimes.contains(&name_to_tokens(&field.basetype)))
+                .then(|| has_lifetimes.insert(name_to_tokens(&s.name))),
+            vkxml::DefinitionsElement::Union(u) => u
+                .elements
+                .iter()
+                .any(|field| has_lifetimes.contains(&name_to_tokens(&field.basetype)))
+                .then(|| has_lifetimes.insert(name_to_tokens(&u.name))),
+            _ => continue,
+        };
     }
 
     let root_structs = root_structs(&definitions);
