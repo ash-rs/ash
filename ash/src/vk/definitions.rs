@@ -56,7 +56,7 @@ pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
-pub const HEADER_VERSION: u32 = 209u32;
+pub const HEADER_VERSION: u32 = 210u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -4348,6 +4348,8 @@ pub struct ShaderModuleCreateInfoBuilder<'a> {
     inner: ShaderModuleCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPipelineShaderStageCreateInfo for ShaderModuleCreateInfoBuilder<'_> {}
+unsafe impl ExtendsPipelineShaderStageCreateInfo for ShaderModuleCreateInfo {}
 pub unsafe trait ExtendsShaderModuleCreateInfo {}
 impl<'a> ::std::ops::Deref for ShaderModuleCreateInfoBuilder<'a> {
     type Target = ShaderModuleCreateInfo;
@@ -25637,6 +25639,8 @@ pub struct DebugUtilsObjectNameInfoEXTBuilder<'a> {
     inner: DebugUtilsObjectNameInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPipelineShaderStageCreateInfo for DebugUtilsObjectNameInfoEXTBuilder<'_> {}
+unsafe impl ExtendsPipelineShaderStageCreateInfo for DebugUtilsObjectNameInfoEXT {}
 impl<'a> ::std::ops::Deref for DebugUtilsObjectNameInfoEXTBuilder<'a> {
     type Target = DebugUtilsObjectNameInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -44318,6 +44322,8 @@ pub struct PipelineLibraryCreateInfoKHRBuilder<'a> {
     inner: PipelineLibraryCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineLibraryCreateInfoKHRBuilder<'_> {}
+unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineLibraryCreateInfoKHR {}
 impl<'a> ::std::ops::Deref for PipelineLibraryCreateInfoKHRBuilder<'a> {
     type Target = PipelineLibraryCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -48909,6 +48915,92 @@ impl<'a> PhysicalDeviceSynchronization2FeaturesBuilder<'a> {
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceSynchronization2Features {
+        self.inner
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDevicePrimitivesGeneratedQueryFeaturesEXT.html>"]
+pub struct PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub primitives_generated_query: Bool32,
+    pub primitives_generated_query_with_rasterizer_discard: Bool32,
+    pub primitives_generated_query_with_non_zero_streams: Bool32,
+}
+impl ::std::default::Default for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PHYSICAL_DEVICE_PRIMITIVES_GENERATED_QUERY_FEATURES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            primitives_generated_query: Bool32::default(),
+            primitives_generated_query_with_rasterizer_discard: Bool32::default(),
+            primitives_generated_query_with_non_zero_streams: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT {
+    pub fn builder<'a>() -> PhysicalDevicePrimitivesGeneratedQueryFeaturesEXTBuilder<'a> {
+        PhysicalDevicePrimitivesGeneratedQueryFeaturesEXTBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDevicePrimitivesGeneratedQueryFeaturesEXTBuilder<'a> {
+    inner: PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT {}
+unsafe impl ExtendsDeviceCreateInfo
+    for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT {}
+impl<'a> ::std::ops::Deref for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXTBuilder<'a> {
+    type Target = PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDevicePrimitivesGeneratedQueryFeaturesEXTBuilder<'a> {
+    pub fn primitives_generated_query(mut self, primitives_generated_query: bool) -> Self {
+        self.inner.primitives_generated_query = primitives_generated_query.into();
+        self
+    }
+    pub fn primitives_generated_query_with_rasterizer_discard(
+        mut self,
+        primitives_generated_query_with_rasterizer_discard: bool,
+    ) -> Self {
+        self.inner
+            .primitives_generated_query_with_rasterizer_discard =
+            primitives_generated_query_with_rasterizer_discard.into();
+        self
+    }
+    pub fn primitives_generated_query_with_non_zero_streams(
+        mut self,
+        primitives_generated_query_with_non_zero_streams: bool,
+    ) -> Self {
+        self.inner.primitives_generated_query_with_non_zero_streams =
+            primitives_generated_query_with_non_zero_streams.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT {
         self.inner
     }
 }
@@ -57631,6 +57723,206 @@ impl<'a> PhysicalDeviceLinearColorAttachmentFeaturesNVBuilder<'a> {
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceLinearColorAttachmentFeaturesNV {
+        self.inner
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceGraphicsPipelineLibraryFeaturesEXT.html>"]
+pub struct PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub graphics_pipeline_library: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PHYSICAL_DEVICE_GRAPHICS_PIPELINE_LIBRARY_FEATURES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            graphics_pipeline_library: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT {
+    pub fn builder<'a>() -> PhysicalDeviceGraphicsPipelineLibraryFeaturesEXTBuilder<'a> {
+        PhysicalDeviceGraphicsPipelineLibraryFeaturesEXTBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceGraphicsPipelineLibraryFeaturesEXTBuilder<'a> {
+    inner: PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT {}
+unsafe impl ExtendsDeviceCreateInfo
+    for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXTBuilder<'a> {
+    type Target = PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceGraphicsPipelineLibraryFeaturesEXTBuilder<'a> {
+    pub fn graphics_pipeline_library(mut self, graphics_pipeline_library: bool) -> Self {
+        self.inner.graphics_pipeline_library = graphics_pipeline_library.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceGraphicsPipelineLibraryPropertiesEXT.html>"]
+pub struct PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub graphics_pipeline_library_fast_linking: Bool32,
+    pub graphics_pipeline_library_independent_interpolation_decoration: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PHYSICAL_DEVICE_GRAPHICS_PIPELINE_LIBRARY_PROPERTIES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            graphics_pipeline_library_fast_linking: Bool32::default(),
+            graphics_pipeline_library_independent_interpolation_decoration: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT {
+    pub fn builder<'a>() -> PhysicalDeviceGraphicsPipelineLibraryPropertiesEXTBuilder<'a> {
+        PhysicalDeviceGraphicsPipelineLibraryPropertiesEXTBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceGraphicsPipelineLibraryPropertiesEXTBuilder<'a> {
+    inner: PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT
+{
+}
+impl<'a> ::std::ops::Deref for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXTBuilder<'a> {
+    type Target = PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceGraphicsPipelineLibraryPropertiesEXTBuilder<'a> {
+    pub fn graphics_pipeline_library_fast_linking(
+        mut self,
+        graphics_pipeline_library_fast_linking: bool,
+    ) -> Self {
+        self.inner.graphics_pipeline_library_fast_linking =
+            graphics_pipeline_library_fast_linking.into();
+        self
+    }
+    pub fn graphics_pipeline_library_independent_interpolation_decoration(
+        mut self,
+        graphics_pipeline_library_independent_interpolation_decoration: bool,
+    ) -> Self {
+        self.inner
+            .graphics_pipeline_library_independent_interpolation_decoration =
+            graphics_pipeline_library_independent_interpolation_decoration.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkGraphicsPipelineLibraryCreateInfoEXT.html>"]
+pub struct GraphicsPipelineLibraryCreateInfoEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub flags: GraphicsPipelineLibraryFlagsEXT,
+}
+impl ::std::default::Default for GraphicsPipelineLibraryCreateInfoEXT {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::GRAPHICS_PIPELINE_LIBRARY_CREATE_INFO_EXT,
+            p_next: ::std::ptr::null_mut(),
+            flags: GraphicsPipelineLibraryFlagsEXT::default(),
+        }
+    }
+}
+impl GraphicsPipelineLibraryCreateInfoEXT {
+    pub fn builder<'a>() -> GraphicsPipelineLibraryCreateInfoEXTBuilder<'a> {
+        GraphicsPipelineLibraryCreateInfoEXTBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct GraphicsPipelineLibraryCreateInfoEXTBuilder<'a> {
+    inner: GraphicsPipelineLibraryCreateInfoEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsGraphicsPipelineCreateInfo for GraphicsPipelineLibraryCreateInfoEXTBuilder<'_> {}
+unsafe impl ExtendsGraphicsPipelineCreateInfo for GraphicsPipelineLibraryCreateInfoEXT {}
+impl<'a> ::std::ops::Deref for GraphicsPipelineLibraryCreateInfoEXTBuilder<'a> {
+    type Target = GraphicsPipelineLibraryCreateInfoEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for GraphicsPipelineLibraryCreateInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> GraphicsPipelineLibraryCreateInfoEXTBuilder<'a> {
+    pub fn flags(mut self, flags: GraphicsPipelineLibraryFlagsEXT) -> Self {
+        self.inner.flags = flags;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> GraphicsPipelineLibraryCreateInfoEXT {
         self.inner
     }
 }

@@ -1115,6 +1115,17 @@ vk_bitflags_wrapped!(PipelineDepthStencilStateCreateFlags, Flags);
 impl PipelineDepthStencilStateCreateFlags {}
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkGraphicsPipelineLibraryFlagBitsEXT.html>"]
+pub struct GraphicsPipelineLibraryFlagsEXT(pub(crate) Flags);
+vk_bitflags_wrapped!(GraphicsPipelineLibraryFlagsEXT, Flags);
+impl GraphicsPipelineLibraryFlagsEXT {
+    pub const VERTEX_INPUT_INTERFACE: Self = Self(0b1);
+    pub const PRE_RASTERIZATION_SHADERS: Self = Self(0b10);
+    pub const FRAGMENT_SHADER: Self = Self(0b100);
+    pub const FRAGMENT_OUTPUT_INTERFACE: Self = Self(0b1000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoCodecOperationFlagBitsKHR.html>"]
 pub struct VideoCodecOperationFlagsKHR(pub(crate) Flags);
 vk_bitflags_wrapped!(VideoCodecOperationFlagsKHR, Flags);
