@@ -32288,6 +32288,7 @@ pub struct PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'a> {
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'_> {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_PRIMITIVES_GENERATED_QUERY_FEATURES_EXT,
@@ -38237,6 +38238,7 @@ pub struct PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'a> {
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'_> {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_GRAPHICS_PIPELINE_LIBRARY_FEATURES_EXT,
@@ -38270,6 +38272,7 @@ pub struct PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'a> {
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'_> {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::PHYSICAL_DEVICE_GRAPHICS_PIPELINE_LIBRARY_PROPERTIES_EXT,
@@ -38314,6 +38317,7 @@ pub struct GraphicsPipelineLibraryCreateInfoEXT<'a> {
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for GraphicsPipelineLibraryCreateInfoEXT<'_> {
+    #[inline]
     fn default() -> Self {
         Self {
             s_type: StructureType::GRAPHICS_PIPELINE_LIBRARY_CREATE_INFO_EXT,
