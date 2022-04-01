@@ -17068,17 +17068,19 @@ impl AmdExtension320Fn {
         Self {}
     }
 }
-impl AmdExtension321Fn {
+impl ExtGraphicsPipelineLibraryFn {
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_321\0") }
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_graphics_pipeline_library\0")
+        }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct AmdExtension321Fn {}
-unsafe impl Send for AmdExtension321Fn {}
-unsafe impl Sync for AmdExtension321Fn {}
-impl AmdExtension321Fn {
+pub struct ExtGraphicsPipelineLibraryFn {}
+unsafe impl Send for ExtGraphicsPipelineLibraryFn {}
+unsafe impl Sync for ExtGraphicsPipelineLibraryFn {}
+impl ExtGraphicsPipelineLibraryFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -17086,14 +17088,20 @@ impl AmdExtension321Fn {
         Self {}
     }
 }
-#[doc = "Generated from 'VK_AMD_extension_321'"]
+#[doc = "Generated from 'VK_EXT_graphics_pipeline_library'"]
 impl PipelineCreateFlags {
-    pub const RESERVED_23_AMD: Self = Self(0b1000_0000_0000_0000_0000_0000);
-    pub const RESERVED_10_AMD: Self = Self(0b100_0000_0000);
+    pub const RETAIN_LINK_TIME_OPTIMIZATION_INFO_EXT: Self = Self(0b1000_0000_0000_0000_0000_0000);
+    pub const LINK_TIME_OPTIMIZATION_EXT: Self = Self(0b100_0000_0000);
 }
-#[doc = "Generated from 'VK_AMD_extension_321'"]
+#[doc = "Generated from 'VK_EXT_graphics_pipeline_library'"]
 impl PipelineLayoutCreateFlags {
-    pub const RESERVED_1_AMD: Self = Self(0b10);
+    pub const INDEPENDENT_SETS_EXT: Self = Self(0b10);
+}
+#[doc = "Generated from 'VK_EXT_graphics_pipeline_library'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_GRAPHICS_PIPELINE_LIBRARY_FEATURES_EXT: Self = Self(1_000_320_000);
+    pub const PHYSICAL_DEVICE_GRAPHICS_PIPELINE_LIBRARY_PROPERTIES_EXT: Self = Self(1_000_320_001);
+    pub const GRAPHICS_PIPELINE_LIBRARY_CREATE_INFO_EXT: Self = Self(1_000_320_002);
 }
 impl AmdExtension322Fn {
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -19411,23 +19419,33 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_COLOR_WRITE_ENABLE_FEATURES_EXT: Self = Self(1_000_381_000);
     pub const PIPELINE_COLOR_WRITE_CREATE_INFO_EXT: Self = Self(1_000_381_001);
 }
-impl ExtExtension383Fn {
+impl ExtPrimitivesGeneratedQueryFn {
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_383\0") }
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_primitives_generated_query\0")
+        }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct ExtExtension383Fn {}
-unsafe impl Send for ExtExtension383Fn {}
-unsafe impl Sync for ExtExtension383Fn {}
-impl ExtExtension383Fn {
+pub struct ExtPrimitivesGeneratedQueryFn {}
+unsafe impl Send for ExtPrimitivesGeneratedQueryFn {}
+unsafe impl Sync for ExtPrimitivesGeneratedQueryFn {}
+impl ExtPrimitivesGeneratedQueryFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         Self {}
     }
+}
+#[doc = "Generated from 'VK_EXT_primitives_generated_query'"]
+impl QueryType {
+    pub const PRIMITIVES_GENERATED_EXT: Self = Self(1_000_382_000);
+}
+#[doc = "Generated from 'VK_EXT_primitives_generated_query'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_PRIMITIVES_GENERATED_QUERY_FEATURES_EXT: Self = Self(1_000_382_000);
 }
 impl ExtExtension384Fn {
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -21250,6 +21268,62 @@ pub struct ExtExtension463Fn {}
 unsafe impl Send for ExtExtension463Fn {}
 unsafe impl Sync for ExtExtension463Fn {}
 impl ExtExtension463Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl NvExtension465Fn {
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_465\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct NvExtension465Fn {}
+unsafe impl Send for NvExtension465Fn {}
+unsafe impl Sync for NvExtension465Fn {}
+impl NvExtension465Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+#[doc = "Generated from 'VK_NV_extension_465'"]
+impl AccessFlags2 {
+    pub const RESERVED_42_NV: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const RESERVED_43_NV: Self = Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_NV_extension_465'"]
+impl FormatFeatureFlags2 {
+    pub const RESERVED_40_NV: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const RESERVED_41_NV: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const RESERVED_42_NV: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const RESERVED_43_NV: Self = Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_NV_extension_465'"]
+impl PipelineStageFlags2 {
+    pub const RESERVED_29_NV: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_NV_extension_465'"]
+impl QueueFlags {
+    pub const RESERVED_8_NV: Self = Self(0b1_0000_0000);
+}
+impl ExtExtension464Fn {
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_464\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct ExtExtension464Fn {}
+unsafe impl Send for ExtExtension464Fn {}
+unsafe impl Sync for ExtExtension464Fn {}
+impl ExtExtension464Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
