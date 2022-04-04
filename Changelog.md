@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Update Vulkan-Headers to 1.3.210 (#605)
 
+### Removed
+
+- Removed experimental AMD extensions (#607)
+
 ## [0.37.0] - 2022-03-23
 
 ### Changed
