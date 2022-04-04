@@ -27,17 +27,16 @@ impl AndroidSurface {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::zeroed();
-        self.fp
-            .create_android_surface_khr(
-                self.handle,
-                create_info,
-                allocation_callbacks.as_raw_ptr(),
-                &mut surface,
-            )
-            .result_with_success(surface)
+        (self.fp.create_android_surface_khr)(
+            self.handle,
+            create_info,
+            allocation_callbacks.as_raw_ptr(),
+            &mut surface,
+        )
+        .result_with_success(surface)
     }
 
-    pub fn name() -> &'static CStr {
+    pub const fn name() -> &'static CStr {
         vk::KhrAndroidSurfaceFn::name()
     }
 

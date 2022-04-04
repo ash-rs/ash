@@ -25,9 +25,7 @@ impl DebugUtils {
         device: vk::Device,
         name_info: &vk::DebugUtilsObjectNameInfoEXT,
     ) -> VkResult<()> {
-        self.fp
-            .set_debug_utils_object_name_ext(device, name_info)
-            .result()
+        (self.fp.set_debug_utils_object_name_ext)(device, name_info).result()
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkSetDebugUtilsObjectTagEXT.html>
@@ -36,9 +34,7 @@ impl DebugUtils {
         device: vk::Device,
         tag_info: &vk::DebugUtilsObjectTagInfoEXT,
     ) -> VkResult<()> {
-        self.fp
-            .set_debug_utils_object_tag_ext(device, tag_info)
-            .result()
+        (self.fp.set_debug_utils_object_tag_ext)(device, tag_info).result()
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBeginDebugUtilsLabelEXT.html>
@@ -47,13 +43,12 @@ impl DebugUtils {
         command_buffer: vk::CommandBuffer,
         label: &vk::DebugUtilsLabelEXT,
     ) {
-        self.fp
-            .cmd_begin_debug_utils_label_ext(command_buffer, label);
+        (self.fp.cmd_begin_debug_utils_label_ext)(command_buffer, label);
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdEndDebugUtilsLabelEXT.html>
     pub unsafe fn cmd_end_debug_utils_label(&self, command_buffer: vk::CommandBuffer) {
-        self.fp.cmd_end_debug_utils_label_ext(command_buffer);
+        (self.fp.cmd_end_debug_utils_label_ext)(command_buffer);
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdInsertDebugUtilsLabelEXT.html>
@@ -62,8 +57,7 @@ impl DebugUtils {
         command_buffer: vk::CommandBuffer,
         label: &vk::DebugUtilsLabelEXT,
     ) {
-        self.fp
-            .cmd_insert_debug_utils_label_ext(command_buffer, label);
+        (self.fp.cmd_insert_debug_utils_label_ext)(command_buffer, label);
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkQueueBeginDebugUtilsLabelEXT.html>
@@ -72,12 +66,12 @@ impl DebugUtils {
         queue: vk::Queue,
         label: &vk::DebugUtilsLabelEXT,
     ) {
-        self.fp.queue_begin_debug_utils_label_ext(queue, label);
+        (self.fp.queue_begin_debug_utils_label_ext)(queue, label);
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkQueueEndDebugUtilsLabelEXT.html>
     pub unsafe fn queue_end_debug_utils_label(&self, queue: vk::Queue) {
-        self.fp.queue_end_debug_utils_label_ext(queue);
+        (self.fp.queue_end_debug_utils_label_ext)(queue);
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkQueueInsertDebugUtilsLabelEXT.html>
@@ -86,7 +80,7 @@ impl DebugUtils {
         queue: vk::Queue,
         label: &vk::DebugUtilsLabelEXT,
     ) {
-        self.fp.queue_insert_debug_utils_label_ext(queue, label);
+        (self.fp.queue_insert_debug_utils_label_ext)(queue, label);
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateDebugUtilsMessengerEXT.html>
@@ -96,14 +90,13 @@ impl DebugUtils {
         allocator: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::DebugUtilsMessengerEXT> {
         let mut messenger = mem::zeroed();
-        self.fp
-            .create_debug_utils_messenger_ext(
-                self.handle,
-                create_info,
-                allocator.as_raw_ptr(),
-                &mut messenger,
-            )
-            .result_with_success(messenger)
+        (self.fp.create_debug_utils_messenger_ext)(
+            self.handle,
+            create_info,
+            allocator.as_raw_ptr(),
+            &mut messenger,
+        )
+        .result_with_success(messenger)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroyDebugUtilsMessengerEXT.html>
@@ -112,8 +105,7 @@ impl DebugUtils {
         messenger: vk::DebugUtilsMessengerEXT,
         allocator: Option<&vk::AllocationCallbacks>,
     ) {
-        self.fp
-            .destroy_debug_utils_messenger_ext(self.handle, messenger, allocator.as_raw_ptr());
+        (self.fp.destroy_debug_utils_messenger_ext)(self.handle, messenger, allocator.as_raw_ptr());
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkSubmitDebugUtilsMessageEXT.html>
@@ -123,7 +115,7 @@ impl DebugUtils {
         message_types: vk::DebugUtilsMessageTypeFlagsEXT,
         callback_data: &vk::DebugUtilsMessengerCallbackDataEXT,
     ) {
-        self.fp.submit_debug_utils_message_ext(
+        (self.fp.submit_debug_utils_message_ext)(
             self.handle,
             message_severity,
             message_types,
@@ -131,7 +123,7 @@ impl DebugUtils {
         );
     }
 
-    pub fn name() -> &'static CStr {
+    pub const fn name() -> &'static CStr {
         vk::ExtDebugUtilsFn::name()
     }
 

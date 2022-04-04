@@ -25,8 +25,11 @@ impl CalibratedTimestamps {
         physical_device: vk::PhysicalDevice,
     ) -> VkResult<Vec<vk::TimeDomainEXT>> {
         read_into_uninitialized_vector(|count, data| {
-            self.fp
-                .get_physical_device_calibrateable_time_domains_ext(physical_device, count, data)
+            (self.fp.get_physical_device_calibrateable_time_domains_ext)(
+                physical_device,
+                count,
+                data,
+            )
         })
     }
 
@@ -40,18 +43,17 @@ impl CalibratedTimestamps {
     ) -> VkResult<(Vec<u64>, Vec<u64>)> {
         let mut timestamps = vec![0u64; info.len()];
         let mut max_deviation = vec![0u64; info.len()];
-        self.fp
-            .get_calibrated_timestamps_ext(
-                device,
-                info.len() as u32,
-                info.as_ptr(),
-                timestamps.as_mut_ptr(),
-                max_deviation.as_mut_ptr(),
-            )
-            .result_with_success((timestamps, max_deviation))
+        (self.fp.get_calibrated_timestamps_ext)(
+            device,
+            info.len() as u32,
+            info.as_ptr(),
+            timestamps.as_mut_ptr(),
+            max_deviation.as_mut_ptr(),
+        )
+        .result_with_success((timestamps, max_deviation))
     }
 
-    pub fn name() -> &'static CStr {
+    pub const fn name() -> &'static CStr {
         vk::ExtCalibratedTimestampsFn::name()
     }
 

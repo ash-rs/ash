@@ -24,13 +24,12 @@ impl GetSurfaceCapabilities2 {
         surface_info: &vk::PhysicalDeviceSurfaceInfo2KHR,
     ) -> VkResult<vk::SurfaceCapabilities2KHR> {
         let mut surface_capabilities = Default::default();
-        self.fp
-            .get_physical_device_surface_capabilities2_khr(
-                physical_device,
-                surface_info,
-                &mut surface_capabilities,
-            )
-            .result_with_success(surface_capabilities)
+        (self.fp.get_physical_device_surface_capabilities2_khr)(
+            physical_device,
+            surface_info,
+            &mut surface_capabilities,
+        )
+        .result_with_success(surface_capabilities)
     }
 
     /// Retrieve the number of elements to pass to [`get_physical_device_surface_formats2()`][Self::get_physical_device_surface_formats2()]
@@ -40,7 +39,7 @@ impl GetSurfaceCapabilities2 {
         surface_info: &vk::PhysicalDeviceSurfaceInfo2KHR,
     ) -> VkResult<usize> {
         let mut count = 0;
-        let err_code = self.fp.get_physical_device_surface_formats2_khr(
+        let err_code = (self.fp.get_physical_device_surface_formats2_khr)(
             physical_device,
             surface_info,
             &mut count,
@@ -60,7 +59,7 @@ impl GetSurfaceCapabilities2 {
         out: &mut [vk::SurfaceFormat2KHR],
     ) -> VkResult<()> {
         let mut count = out.len() as u32;
-        let err_code = self.fp.get_physical_device_surface_formats2_khr(
+        let err_code = (self.fp.get_physical_device_surface_formats2_khr)(
             physical_device,
             surface_info,
             &mut count,
@@ -70,7 +69,7 @@ impl GetSurfaceCapabilities2 {
         err_code.result()
     }
 
-    pub fn name() -> &'static CStr {
+    pub const fn name() -> &'static CStr {
         vk::KhrGetSurfaceCapabilities2Fn::name()
     }
 

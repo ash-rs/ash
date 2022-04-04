@@ -1,6 +1,6 @@
 [package]
 name = "ash-window"
-version = "0.9.1"
+version = "0.10.0"
 authors = ["msiglreith <m.siglreith@gmail.com>"]
 edition = "2018"
 license = "MIT OR Apache-2.0"
@@ -12,9 +12,10 @@ keywords = ["window", "ash", "graphics"]
 categories = ["game-engines", "graphics"]
 exclude = [".github/*"]
 workspace = ".."
+rust-version = "1.59.0"
 
 [dependencies]
-ash = { path = "../ash", version = ">=0.34, <=0.36", default-features = false }
+ash = { path = "../ash", version = "0.37", default-features = false }
 raw-window-handle = "0.3.4"
 
 [target.'cfg(any(target_os = "macos", target_os = "ios"))'.dependencies]
@@ -22,7 +23,7 @@ raw-window-metal = "0.1"
 
 [dev-dependencies]
 winit = "0.19.4"
-ash = { path = "../ash", version = "0.36", default-features = false, features = ["linked"] }
+ash = { path = "../ash", version = "0.37", default-features = false, features = ["linked"] }
 
 [[example]]
 name = "winit"

@@ -2,6 +2,11 @@
 
 ## [Unreleased] - ReleaseDate
 
+## [0.10.0] - 2022-03-23
+
+- Bumped `ash` version to [`0.37`](https://github.com/MaikKlein/ash/releases/tag/0.37.0) (#600)
+- Make `enumerate_required_extensions()` return `&[*const c_char]` instead of `Vec<&CStr>` to match `ash::vk::InstanceCreateInfo` (#590)
+
 ## [0.9.1] - 2022-02-21
 
 ### Changed
@@ -63,7 +68,8 @@
 ## Version 0.1.0
 Initial release for `raw-window-handle = "0.3"` with Windows, Linux, Android, MacOS/iOS support.
 
-[Unreleased]: https://github.com/MaikKlein/ash/compare/ash-window-0.9.1...HEAD
+[Unreleased]: https://github.com/MaikKlein/ash/compare/ash-window-0.10.0...HEAD
+[0.10.0]: https://github.com/MaikKlein/ash/releases/tag/ash-window-0.10.0
 [0.9.1]: https://github.com/MaikKlein/ash/releases/tag/ash-window-0.9.1
 [0.9.0]: https://github.com/MaikKlein/ash/releases/tag/ash-window-0.9.0
 [0.8.0]: https://github.com/MaikKlein/ash/releases/tag/ash-window-0.8.0

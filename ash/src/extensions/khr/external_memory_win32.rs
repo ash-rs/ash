@@ -27,8 +27,7 @@ impl ExternalMemoryWin32 {
         create_info: &vk::MemoryGetWin32HandleInfoKHR,
     ) -> VkResult<vk::HANDLE> {
         let mut handle = ptr::null_mut();
-        self.fp
-            .get_memory_win32_handle_khr(self.handle, create_info, &mut handle)
+        (self.fp.get_memory_win32_handle_khr)(self.handle, create_info, &mut handle)
             .result_with_success(handle)
     }
 
@@ -39,17 +38,16 @@ impl ExternalMemoryWin32 {
         handle: vk::HANDLE,
     ) -> VkResult<vk::MemoryWin32HandlePropertiesKHR> {
         let mut memory_win32_handle_properties = Default::default();
-        self.fp
-            .get_memory_win32_handle_properties_khr(
-                self.handle,
-                handle_type,
-                handle,
-                &mut memory_win32_handle_properties,
-            )
-            .result_with_success(memory_win32_handle_properties)
+        (self.fp.get_memory_win32_handle_properties_khr)(
+            self.handle,
+            handle_type,
+            handle,
+            &mut memory_win32_handle_properties,
+        )
+        .result_with_success(memory_win32_handle_properties)
     }
 
-    pub fn name() -> &'static CStr {
+    pub const fn name() -> &'static CStr {
         vk::KhrExternalMemoryWin32Fn::name()
     }
 

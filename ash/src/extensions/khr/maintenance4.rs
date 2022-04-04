@@ -24,8 +24,7 @@ impl Maintenance4 {
         create_info: &vk::DeviceBufferMemoryRequirementsKHR,
         out: &mut vk::MemoryRequirements2,
     ) {
-        self.fp
-            .get_device_buffer_memory_requirements_khr(self.handle, create_info, out)
+        (self.fp.get_device_buffer_memory_requirements_khr)(self.handle, create_info, out)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceImageMemoryRequirementsKHR.html>
@@ -34,8 +33,7 @@ impl Maintenance4 {
         create_info: &vk::DeviceImageMemoryRequirementsKHR,
         out: &mut vk::MemoryRequirements2,
     ) {
-        self.fp
-            .get_device_image_memory_requirements_khr(self.handle, create_info, out)
+        (self.fp.get_device_image_memory_requirements_khr)(self.handle, create_info, out)
     }
 
     /// Retrieve the number of elements to pass to [`get_device_image_sparse_memory_requirements()`][Self::get_device_image_sparse_memory_requirements()]
@@ -44,7 +42,7 @@ impl Maintenance4 {
         create_info: &vk::DeviceImageMemoryRequirementsKHR,
     ) -> usize {
         let mut count = 0;
-        self.fp.get_device_image_sparse_memory_requirements_khr(
+        (self.fp.get_device_image_sparse_memory_requirements_khr)(
             self.handle,
             create_info,
             &mut count,
@@ -63,7 +61,7 @@ impl Maintenance4 {
         out: &mut [vk::SparseImageMemoryRequirements2],
     ) {
         let mut count = out.len() as u32;
-        self.fp.get_device_image_sparse_memory_requirements_khr(
+        (self.fp.get_device_image_sparse_memory_requirements_khr)(
             self.handle,
             create_info,
             &mut count,
@@ -72,7 +70,7 @@ impl Maintenance4 {
         assert_eq!(count as usize, out.len());
     }
 
-    pub fn name() -> &'static CStr {
+    pub const fn name() -> &'static CStr {
         vk::KhrMaintenance4Fn::name()
     }
 

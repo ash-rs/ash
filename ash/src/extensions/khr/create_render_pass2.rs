@@ -27,14 +27,13 @@ impl CreateRenderPass2 {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::RenderPass> {
         let mut renderpass = mem::zeroed();
-        self.fp
-            .create_render_pass2_khr(
-                self.handle,
-                create_info,
-                allocation_callbacks.as_raw_ptr(),
-                &mut renderpass,
-            )
-            .result_with_success(renderpass)
+        (self.fp.create_render_pass2_khr)(
+            self.handle,
+            create_info,
+            allocation_callbacks.as_raw_ptr(),
+            &mut renderpass,
+        )
+        .result_with_success(renderpass)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBeginRenderPass2.html>
@@ -44,7 +43,7 @@ impl CreateRenderPass2 {
         render_pass_begin_info: &vk::RenderPassBeginInfo,
         subpass_begin_info: &vk::SubpassBeginInfo,
     ) {
-        self.fp.cmd_begin_render_pass2_khr(
+        (self.fp.cmd_begin_render_pass2_khr)(
             command_buffer,
             render_pass_begin_info,
             subpass_begin_info,
@@ -58,8 +57,7 @@ impl CreateRenderPass2 {
         subpass_begin_info: &vk::SubpassBeginInfo,
         subpass_end_info: &vk::SubpassEndInfo,
     ) {
-        self.fp
-            .cmd_next_subpass2_khr(command_buffer, subpass_begin_info, subpass_end_info);
+        (self.fp.cmd_next_subpass2_khr)(command_buffer, subpass_begin_info, subpass_end_info);
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdEndRenderPass2.html>
@@ -68,11 +66,10 @@ impl CreateRenderPass2 {
         command_buffer: vk::CommandBuffer,
         subpass_end_info: &vk::SubpassEndInfo,
     ) {
-        self.fp
-            .cmd_end_render_pass2_khr(command_buffer, subpass_end_info);
+        (self.fp.cmd_end_render_pass2_khr)(command_buffer, subpass_end_info);
     }
 
-    pub fn name() -> &'static CStr {
+    pub const fn name() -> &'static CStr {
         vk::KhrCreateRenderpass2Fn::name()
     }
 

@@ -24,9 +24,7 @@ impl FullScreenExclusive {
         &self,
         swapchain: vk::SwapchainKHR,
     ) -> VkResult<()> {
-        self.fp
-            .acquire_full_screen_exclusive_mode_ext(self.handle, swapchain)
-            .result()
+        (self.fp.acquire_full_screen_exclusive_mode_ext)(self.handle, swapchain).result()
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfacePresentModes2EXT.html>
@@ -36,7 +34,7 @@ impl FullScreenExclusive {
         surface_info: &vk::PhysicalDeviceSurfaceInfo2KHR,
     ) -> VkResult<Vec<vk::PresentModeKHR>> {
         read_into_uninitialized_vector(|count, data| {
-            self.fp.get_physical_device_surface_present_modes2_ext(
+            (self.fp.get_physical_device_surface_present_modes2_ext)(
                 physical_device,
                 surface_info,
                 count,
@@ -50,9 +48,7 @@ impl FullScreenExclusive {
         &self,
         swapchain: vk::SwapchainKHR,
     ) -> VkResult<()> {
-        self.fp
-            .release_full_screen_exclusive_mode_ext(self.handle, swapchain)
-            .result()
+        (self.fp.release_full_screen_exclusive_mode_ext)(self.handle, swapchain).result()
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceGroupSurfacePresentModes2EXT.html>
@@ -61,16 +57,15 @@ impl FullScreenExclusive {
         surface_info: &vk::PhysicalDeviceSurfaceInfo2KHR,
     ) -> VkResult<vk::DeviceGroupPresentModeFlagsKHR> {
         let mut present_modes = mem::zeroed();
-        self.fp
-            .get_device_group_surface_present_modes2_ext(
-                self.handle,
-                surface_info,
-                &mut present_modes,
-            )
-            .result_with_success(present_modes)
+        (self.fp.get_device_group_surface_present_modes2_ext)(
+            self.handle,
+            surface_info,
+            &mut present_modes,
+        )
+        .result_with_success(present_modes)
     }
 
-    pub fn name() -> &'static CStr {
+    pub const fn name() -> &'static CStr {
         vk::ExtFullScreenExclusiveFn::name()
     }
 

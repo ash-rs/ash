@@ -24,11 +24,10 @@ impl Maintenance1 {
         command_pool: vk::CommandPool,
         flags: vk::CommandPoolTrimFlagsKHR,
     ) {
-        self.fp
-            .trim_command_pool_khr(self.handle, command_pool, flags);
+        (self.fp.trim_command_pool_khr)(self.handle, command_pool, flags);
     }
 
-    pub fn name() -> &'static CStr {
+    pub const fn name() -> &'static CStr {
         vk::KhrMaintenance1Fn::name()
     }
 

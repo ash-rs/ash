@@ -26,7 +26,7 @@ impl RayTracingPipeline {
     ) -> vk::PhysicalDeviceRayTracingPipelinePropertiesKHR {
         let mut props_rt = vk::PhysicalDeviceRayTracingPipelinePropertiesKHR::default();
         {
-            let mut props = vk::PhysicalDeviceProperties2::builder().push_next(&mut props_rt);
+            let mut props = vk::PhysicalDeviceProperties2::default().push_next(&mut props_rt);
             instance.get_physical_device_properties2(pdevice, &mut props);
         }
         props_rt
@@ -44,7 +44,7 @@ impl RayTracingPipeline {
         height: u32,
         depth: u32,
     ) {
-        self.fp.cmd_trace_rays_khr(
+        (self.fp.cmd_trace_rays_khr)(
             command_buffer,
             raygen_shader_binding_tables,
             miss_shader_binding_tables,
@@ -65,17 +65,16 @@ impl RayTracingPipeline {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<Vec<vk::Pipeline>> {
         let mut pipelines = vec![mem::zeroed(); create_info.len()];
-        self.fp
-            .create_ray_tracing_pipelines_khr(
-                self.handle,
-                deferred_operation,
-                pipeline_cache,
-                create_info.len() as u32,
-                create_info.as_ptr(),
-                allocation_callbacks.as_raw_ptr(),
-                pipelines.as_mut_ptr(),
-            )
-            .result_with_success(pipelines)
+        (self.fp.create_ray_tracing_pipelines_khr)(
+            self.handle,
+            deferred_operation,
+            pipeline_cache,
+            create_info.len() as u32,
+            create_info.as_ptr(),
+            allocation_callbacks.as_raw_ptr(),
+            pipelines.as_mut_ptr(),
+        )
+        .result_with_success(pipelines)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetRayTracingShaderGroupHandlesKHR.html>
@@ -87,7 +86,7 @@ impl RayTracingPipeline {
         data_size: usize,
     ) -> VkResult<Vec<u8>> {
         let mut data = Vec::<u8>::with_capacity(data_size);
-        let err_code = self.fp.get_ray_tracing_shader_group_handles_khr(
+        let err_code = (self.fp.get_ray_tracing_shader_group_handles_khr)(
             self.handle,
             pipeline,
             first_group,
@@ -109,16 +108,17 @@ impl RayTracingPipeline {
     ) -> VkResult<Vec<u8>> {
         let mut data: Vec<u8> = Vec::with_capacity(data_size);
 
-        self.fp
-            .get_ray_tracing_capture_replay_shader_group_handles_khr(
-                self.handle,
-                pipeline,
-                first_group,
-                group_count,
-                data_size,
-                data.as_mut_ptr() as *mut _,
-            )
-            .result_with_success(data)
+        (self
+            .fp
+            .get_ray_tracing_capture_replay_shader_group_handles_khr)(
+            self.handle,
+            pipeline,
+            first_group,
+            group_count,
+            data_size,
+            data.as_mut_ptr() as *mut _,
+        )
+        .result_with_success(data)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdTraceRaysIndirectKHR.html>
@@ -131,7 +131,7 @@ impl RayTracingPipeline {
         callable_shader_binding_table: &[vk::StridedDeviceAddressRegionKHR],
         indirect_device_address: vk::DeviceAddress,
     ) {
-        self.fp.cmd_trace_rays_indirect_khr(
+        (self.fp.cmd_trace_rays_indirect_khr)(
             command_buffer,
             raygen_shader_binding_table.as_ptr(),
             miss_shader_binding_table.as_ptr(),
@@ -148,7 +148,7 @@ impl RayTracingPipeline {
         group: u32,
         group_shader: vk::ShaderGroupShaderKHR,
     ) -> vk::DeviceSize {
-        self.fp.get_ray_tracing_shader_group_stack_size_khr(
+        (self.fp.get_ray_tracing_shader_group_stack_size_khr)(
             self.handle,
             pipeline,
             group,
@@ -162,11 +162,10 @@ impl RayTracingPipeline {
         command_buffer: vk::CommandBuffer,
         pipeline_stack_size: u32,
     ) {
-        self.fp
-            .cmd_set_ray_tracing_pipeline_stack_size_khr(command_buffer, pipeline_stack_size);
+        (self.fp.cmd_set_ray_tracing_pipeline_stack_size_khr)(command_buffer, pipeline_stack_size);
     }
 
-    pub fn name() -> &'static CStr {
+    pub const fn name() -> &'static CStr {
         vk::KhrRayTracingPipelineFn::name()
     }
 

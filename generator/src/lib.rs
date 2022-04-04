@@ -725,7 +725,6 @@ fn generate_function_pointers<'a>(
         type_name: Ident,
         function_name_c: String,
         function_name_rust: Ident,
-        parameter_names: TokenStream,
         parameters: TokenStream,
         parameters_unused: TokenStream,
         returns: TokenStream,
@@ -760,9 +759,6 @@ fn generate_function_pointers<'a>(
                 })
                 .collect();
 
-            let params_iter = params.iter().map(|(param_name, _)| param_name);
-            let parameter_names = quote!(#(#params_iter,)*);
-
             let params_iter = params
                 .iter()
                 .map(|(param_name, param_ty)| quote!(#param_name: #param_ty));
@@ -781,7 +777,6 @@ fn generate_function_pointers<'a>(
                 type_name,
                 function_name_c,
                 function_name_rust,
-                parameter_names,
                 parameters,
                 parameters_unused,
                 returns: if cmd.return_type.is_void() {
@@ -852,31 +847,12 @@ fn generate_function_pointers<'a>(
         }
     }
 
-    struct CommandToBody<'a>(&'a Command);
-    impl<'a> quote::ToTokens for CommandToBody<'a> {
-        fn to_tokens(&self, tokens: &mut TokenStream) {
-            let function_name_rust = &self.0.function_name_rust;
-            let parameters = &self.0.parameters;
-            let parameter_names = &self.0.parameter_names;
-            let returns = &self.0.returns;
-            let khronos_link = khronos_link(&self.0.function_name_c);
-            quote!(
-                #[doc = #khronos_link]
-                pub unsafe fn #function_name_rust(&self, #parameters) #returns {
-                    (self.#function_name_rust)(#parameter_names)
-                }
-            )
-            .to_tokens(tokens)
-        }
-    }
-
     let pfn_typedefs = commands
         .iter()
         .filter(|pfn| pfn.type_needs_defining)
         .map(CommandToType);
     let members = commands.iter().map(CommandToMember);
     let loaders = commands.iter().map(CommandToLoader);
-    let bodies = commands.iter().map(CommandToBody);
 
     quote! {
         #(#pfn_typedefs)*
@@ -897,7 +873,6 @@ fn generate_function_pointers<'a>(
                     #(#loaders,)*
                 }
             }
-            #(#bodies)*
         }
     }
 }
@@ -1037,7 +1012,7 @@ pub fn generate_extension_commands<'a>(
     let byte_name_ident = Literal::byte_string(format!("{}\0", extension_name).as_bytes());
     let extension_cstr = quote! {
         impl #ident {
-            pub fn name() -> &'static ::std::ffi::CStr {
+            pub const fn name() -> &'static ::std::ffi::CStr {
                 unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(#byte_name_ident) }
             }
             #spec_version
@@ -1400,7 +1375,7 @@ fn is_static_array(field: &vkxml::Field) -> bool {
         .map(|ty| matches!(ty, vkxml::ArrayType::Static))
         .unwrap_or(false)
 }
-pub fn derive_default(_struct: &vkxml::Struct) -> Option<TokenStream> {
+pub fn derive_default(_struct: &vkxml::Struct, has_lifetime: bool) -> Option<TokenStream> {
     let name = name_to_tokens(&_struct.name);
     let members = _struct
         .elements
@@ -1452,20 +1427,28 @@ pub fn derive_default(_struct: &vkxml::Struct) -> Option<TokenStream> {
             }
         }
     });
+    let lifetime = has_lifetime.then(|| quote!(<'_>));
+    let marker = has_lifetime.then(|| quote!(_marker: PhantomData,));
     let q = quote! {
-        impl ::std::default::Default for #name {
+        impl ::std::default::Default for #name #lifetime {
+            #[inline]
             fn default() -> Self {
                 Self {
                     #(
-                        #default_fields
-                    ),*
+                        #default_fields,
+                    )*
+                    #marker
                 }
             }
         }
     };
     Some(q)
 }
-pub fn derive_debug(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Option<TokenStream> {
+pub fn derive_debug(
+    _struct: &vkxml::Struct,
+    union_types: &HashSet<&str>,
+    has_lifetime: bool,
+) -> Option<TokenStream> {
     let name = name_to_tokens(&_struct.name);
     let members = _struct
         .elements
@@ -1512,9 +1495,10 @@ pub fn derive_debug(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Opt
         }
     });
     let name_str = name.to_string();
+    let lifetime = has_lifetime.then(|| quote!(<'_>));
     let q = quote! {
         #[cfg(feature = "debug")]
-        impl fmt::Debug for #name {
+        impl fmt::Debug for #name #lifetime {
             fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
                 fmt.debug_struct(#name_str)
                 #(#debug_fields)*
@@ -1528,6 +1512,7 @@ pub fn derive_debug(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Opt
 pub fn derive_setters(
     struct_: &vkxml::Struct,
     root_structs: &HashSet<Ident>,
+    has_lifetimes: &HashSet<Ident>,
 ) -> Option<TokenStream> {
     if &struct_.name == "VkBaseInStructure"
         || &struct_.name == "VkBaseOutStructure"
@@ -1538,7 +1523,6 @@ pub fn derive_setters(
     }
 
     let name = name_to_tokens(&struct_.name);
-    let name_builder = name_to_tokens(&(struct_.name.clone() + "Builder"));
 
     let members = struct_
         .elements
@@ -1601,9 +1585,10 @@ pub fn derive_setters(
             // Unique cases
             if name == "pCode" {
                 return Some(quote!{
+                    #[inline]
                     pub fn code(mut self, code: &'a [u32]) -> Self {
-                        self.inner.code_size = code.len() * 4;
-                        self.inner.p_code = code.as_ptr();
+                        self.code_size = code.len() * 4;
+                        self.p_code = code.as_ptr();
                         self
                     }
                 });
@@ -1616,8 +1601,9 @@ pub fn derive_setters(
                     ///
                     /// See <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineMultisampleStateCreateInfo.html#_description>
                     /// for more details.
+                    #[inline]
                     pub fn sample_mask(mut self, sample_mask: &'a [SampleMask]) -> Self {
-                        self.inner.p_sample_mask = if sample_mask.is_empty() {
+                        self.p_sample_mask = if sample_mask.is_empty() {
                             std::ptr::null()
                         } else {
                             sample_mask.as_ptr()
@@ -1629,9 +1615,10 @@ pub fn derive_setters(
 
             if name == "ppGeometries" {
                 return Some(quote!{
-                    pub fn geometries_ptrs(mut self, geometries: &'a [&'a AccelerationStructureGeometryKHR]) -> Self {
-                        self.inner.geometry_count = geometries.len() as _;
-                        self.inner.pp_geometries = geometries.as_ptr() as *const *const _;
+                    #[inline]
+                    pub fn geometries_ptrs(mut self, geometries: &'a [&'a AccelerationStructureGeometryKHR<'a>]) -> Self {
+                        self.geometry_count = geometries.len() as _;
+                        self.pp_geometries = geometries.as_ptr() as *const *const _;
                         self
                     }
                 });
@@ -1644,8 +1631,9 @@ pub fn derive_setters(
                 assert!(field.null_terminate);
                 assert_eq!(field.size, None);
                 return Some(quote!{
+                    #[inline]
                     pub fn #param_ident_short(mut self, #param_ident_short: &'a ::std::ffi::CStr) -> Self {
-                        self.inner.#param_ident = #param_ident_short.as_ptr();
+                        self.#param_ident = #param_ident_short.as_ptr();
                         self
                     }
                 });
@@ -1690,15 +1678,16 @@ pub fn derive_setters(
                             quote!(as _)
                         };
 
-                        quote!(self.inner.#array_size_ident = #param_ident_short.len()#cast;)
+                        quote!(self.#array_size_ident = #param_ident_short.len()#cast;)
                     };
 
                     let mutable = if field.is_const { quote!() } else { quote!(mut) };
 
                     return Some(quote! {
+                        #[inline]
                         pub fn #param_ident_short(mut self, #param_ident_short: &'a #mutable #slice_param_ty_tokens) -> Self {
                             #set_size_stmt
-                            self.inner.#param_ident = #param_ident_short#ptr;
+                            self.#param_ident = #param_ident_short#ptr;
                             self
                         }
                     });
@@ -1708,8 +1697,9 @@ pub fn derive_setters(
 
         if field.basetype == "VkBool32" {
             return Some(quote!{
+                #[inline]
                 pub fn #param_ident_short(mut self, #param_ident_short: bool) -> Self {
-                    self.inner.#param_ident = #param_ident_short.into();
+                    self.#param_ident = #param_ident_short.into();
                     self
                 }
             });
@@ -1722,9 +1712,14 @@ pub fn derive_setters(
             param_ty_tokens
         };
 
+        let lifetime = has_lifetimes
+            .contains(&name_to_tokens(&field.basetype))
+            .then(|| quote!(<'a>));
+
         Some(quote!{
-            pub fn #param_ident_short(mut self, #param_ident_short: #param_ty_tokens) -> Self {
-                self.inner.#param_ident = #param_ident_short;
+            #[inline]
+            pub fn #param_ident_short(mut self, #param_ident_short: #param_ty_tokens #lifetime) -> Self {
+                self.#param_ident = #param_ident_short;
                 self
             }
         })
@@ -1747,7 +1742,7 @@ pub fn derive_setters(
             /// Prepends the given extension struct between the root and the first pointer. This
             /// method only exists on structs that can be passed to a function directly. Only
             /// valid extension structs can be pushed into the chain.
-            /// If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the
+            /// If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the
             /// chain will look like `A -> D -> B -> C`.
             pub fn push_next<T: #extends_name>(mut self, next: &'a mut T) -> Self {
                 unsafe {
@@ -1762,8 +1757,8 @@ pub fn derive_setters(
                     //                 ^^^^^^
                     //                 next chain
                     let last_next = ptr_chain_iter(next).last().unwrap();
-                    (*last_next).p_next = self.inner.p_next as _;
-                    self.inner.p_next = next_ptr;
+                    (*last_next).p_next = self.p_next as _;
+                    self.p_next = next_ptr;
                 }
                 self
             }
@@ -1780,6 +1775,8 @@ pub fn derive_setters(
         quote!()
     };
 
+    let lifetime = has_lifetimes.contains(&name).then(|| quote!(<'a>));
+
     // If the struct extends something we need to implement the traits.
     let impl_extend_trait = struct_
         .extends
@@ -1787,57 +1784,18 @@ pub fn derive_setters(
         .flat_map(|extends| extends.split(','))
         .map(|extends| format_ident!("Extends{}", name_to_tokens(extends)))
         .map(|extends| {
-            quote! {
-                unsafe impl #extends for #name_builder<'_> {}
-                unsafe impl #extends for #name {}
-            }
+            // Extension structs always have a pNext, and therefore always have a lifetime.
+            quote!(unsafe impl #extends for #name<'_> {})
         });
 
     let q = quote! {
-        impl #name {
-            pub fn builder<'a>() -> #name_builder<'a> {
-                #name_builder {
-                    inner: Self::default(),
-                    marker: ::std::marker::PhantomData,
-                }
-            }
-        }
-
-        #[repr(transparent)]
-        pub struct #name_builder<'a> {
-            inner: #name,
-            marker: ::std::marker::PhantomData<&'a ()>,
-        }
-
         #(#impl_extend_trait)*
         #next_trait
 
-
-        impl<'a> ::std::ops::Deref for #name_builder<'a> {
-            type Target = #name;
-
-            fn deref(&self) -> &Self::Target {
-                &self.inner
-            }
-        }
-
-        impl<'a> ::std::ops::DerefMut for #name_builder<'a> {
-            fn deref_mut(&mut self) -> &mut Self::Target {
-                &mut self.inner
-            }
-        }
-
-        impl<'a> #name_builder<'a> {
+        impl #lifetime #name #lifetime {
             #(#setters)*
 
             #next_function
-
-            /// Calling build will **discard** all the lifetime information. Only call this if
-            /// necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,
-            /// so references to builders can be passed directly to Vulkan functions.
-            pub fn build(self) -> #name {
-                self.inner
-            }
         }
     };
 
@@ -1859,6 +1817,7 @@ pub fn generate_struct(
     _struct: &vkxml::Struct,
     root_structs: &HashSet<Ident>,
     union_types: &HashSet<&str>,
+    has_lifetimes: &HashSet<Ident>,
 ) -> TokenStream {
     let name = name_to_tokens(&_struct.name);
     if &_struct.name == "VkTransformMatrixKHR" {
@@ -1941,14 +1900,24 @@ pub fn generate_struct(
                 .map(|r| r.to_tokens(field.is_const));
             quote!(#pointer Self)
         } else {
-            field.type_tokens(false)
+            let lifetime = has_lifetimes
+                .contains(&name_to_tokens(&field.basetype))
+                .then(|| quote!(<'a>));
+            let ty = field.type_tokens(false);
+            quote!(#ty #lifetime)
         };
         quote! {pub #param_ident: #param_ty_tokens}
     });
 
-    let debug_tokens = derive_debug(_struct, union_types);
-    let default_tokens = derive_default(_struct);
-    let setter_tokens = derive_setters(_struct, root_structs);
+    let has_lifetime = has_lifetimes.contains(&name);
+    let (lifetimes, marker) = match has_lifetime {
+        true => (quote!(<'a>), quote!(pub _marker: PhantomData<&'a ()>,)),
+        false => (quote!(), quote!()),
+    };
+
+    let debug_tokens = derive_debug(_struct, union_types, has_lifetime);
+    let default_tokens = derive_default(_struct, has_lifetime);
+    let setter_tokens = derive_setters(_struct, root_structs, has_lifetimes);
     let manual_derive_tokens = manual_derives(_struct);
     let dbg_str = if debug_tokens.is_none() {
         quote!(#[cfg_attr(feature = "debug", derive(Debug))])
@@ -1966,8 +1935,9 @@ pub fn generate_struct(
         #dbg_str
         #[derive(Copy, Clone, #default_str #manual_derive_tokens)]
         #[doc = #khronos_link]
-        pub struct #name {
+        pub struct #name #lifetimes {
             #(#params,)*
+            #marker
         }
         #debug_tokens
         #default_tokens
@@ -2023,24 +1993,29 @@ fn generate_funcptr(fnptr: &vkxml::FunctionPointer) -> TokenStream {
     }
 }
 
-fn generate_union(union: &vkxml::Union) -> TokenStream {
+fn generate_union(union: &vkxml::Union, has_lifetimes: &HashSet<Ident>) -> TokenStream {
     let name = name_to_tokens(&union.name);
     let fields = union.elements.iter().map(|field| {
         let name = field.param_ident();
         let ty = field.type_tokens(false);
+        let lifetime = has_lifetimes
+            .contains(&name_to_tokens(&field.basetype))
+            .then(|| quote!(<'a>));
         quote! {
-            pub #name: #ty
+            pub #name: #ty #lifetime
         }
     });
     let khronos_link = khronos_link(&union.name);
+    let lifetime = has_lifetimes.contains(&name).then(|| quote!(<'a>));
     quote! {
         #[repr(C)]
         #[derive(Copy, Clone)]
         #[doc = #khronos_link]
-        pub union #name {
+        pub union #name #lifetime {
             #(#fields),*
         }
-        impl ::std::default::Default for #name {
+        impl #lifetime ::std::default::Default for #name #lifetime {
+            #[inline]
             fn default() -> Self {
                 unsafe { ::std::mem::zeroed() }
             }
@@ -2064,6 +2039,7 @@ pub fn generate_definition(
     definition: &vkxml::DefinitionsElement,
     union_types: &HashSet<&str>,
     root_structs: &HashSet<Ident>,
+    has_lifetimes: &HashSet<Ident>,
     bitflags_cache: &mut HashSet<Ident>,
     const_values: &mut BTreeMap<Ident, ConstantTypeInfo>,
     identifier_renames: &mut BTreeMap<String, Ident>,
@@ -2073,15 +2049,18 @@ pub fn generate_definition(
             Some(generate_define(define, identifier_renames))
         }
         vkxml::DefinitionsElement::Typedef(ref typedef) => Some(generate_typedef(typedef)),
-        vkxml::DefinitionsElement::Struct(ref _struct) => {
-            Some(generate_struct(_struct, root_structs, union_types))
-        }
+        vkxml::DefinitionsElement::Struct(ref _struct) => Some(generate_struct(
+            _struct,
+            root_structs,
+            union_types,
+            has_lifetimes,
+        )),
         vkxml::DefinitionsElement::Bitmask(ref mask) => {
             generate_bitmask(mask, bitflags_cache, const_values)
         }
         vkxml::DefinitionsElement::Handle(ref handle) => generate_handle(handle),
         vkxml::DefinitionsElement::FuncPtr(ref fp) => Some(generate_funcptr(fp)),
-        vkxml::DefinitionsElement::Union(ref union) => Some(generate_union(union)),
+        vkxml::DefinitionsElement::Union(ref union) => Some(generate_union(union, has_lifetimes)),
         _ => None,
     }
 }
@@ -2334,6 +2313,7 @@ pub fn extract_native_types(registry: &vk_parse::Registry) -> (Vec<(String, Stri
 }
 pub fn generate_aliases_of_types(
     types: &vk_parse::Types,
+    has_lifetimes: &HashSet<Ident>,
     ty_cache: &mut HashSet<Ident>,
 ) -> TokenStream {
     let aliases = types
@@ -2348,8 +2328,10 @@ pub fn generate_aliases_of_types(
                 return None;
             };
             let alias_ident = name_to_tokens(alias);
-            let tokens = quote! {
-                pub type #name_ident = #alias_ident;
+            let tokens = if has_lifetimes.contains(&alias_ident) {
+                quote!(pub type #name_ident<'a> = #alias_ident<'a>;)
+            } else {
+                quote!(pub type #name_ident = #alias_ident;)
             };
             Some(tokens)
         });
@@ -2368,13 +2350,6 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         .find_map(get_variant!(vk_parse::RegistryChild::Extensions))
         .map(|ext| &ext.children)
         .expect("extension");
-    let mut ty_cache = HashSet::new();
-    let aliases: Vec<_> = spec2
-        .0
-        .iter()
-        .filter_map(get_variant!(vk_parse::RegistryChild::Types))
-        .map(|ty| generate_aliases_of_types(ty, &mut ty_cache))
-        .collect();
 
     let spec = vk_parse::parse_file_as_vkxml(&vk_xml).expect("Invalid xml file.");
     let cmd_aliases: HashMap<String, String> = spec2
@@ -2464,6 +2439,37 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
 
     let mut identifier_renames = BTreeMap::new();
 
+    // Identify structs that need a lifetime annotation
+    // Note that this relies on `vk.xml` defining types before they are used,
+    // as is required in C(++) too.
+    let mut has_lifetimes = definitions
+        .iter()
+        .filter_map(get_variant!(vkxml::DefinitionsElement::Struct))
+        .filter_map(|s| {
+            s.elements
+                .iter()
+                .filter_map(get_variant!(vkxml::StructElement::Member))
+                .any(|x| x.reference.is_some())
+                .then(|| name_to_tokens(&s.name))
+        })
+        .collect::<HashSet<Ident>>();
+    for def in &definitions {
+        match def {
+            vkxml::DefinitionsElement::Struct(s) => s
+                .elements
+                .iter()
+                .filter_map(get_variant!(vkxml::StructElement::Member))
+                .any(|field| has_lifetimes.contains(&name_to_tokens(&field.basetype)))
+                .then(|| has_lifetimes.insert(name_to_tokens(&s.name))),
+            vkxml::DefinitionsElement::Union(u) => u
+                .elements
+                .iter()
+                .any(|field| has_lifetimes.contains(&name_to_tokens(&field.basetype)))
+                .then(|| has_lifetimes.insert(name_to_tokens(&u.name))),
+            _ => continue,
+        };
+    }
+
     let root_structs = root_structs(&definitions);
     let definition_code: Vec<_> = definitions
         .into_iter()
@@ -2472,11 +2478,20 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
                 def,
                 &union_types,
                 &root_structs,
+                &has_lifetimes,
                 &mut bitflags_cache,
                 &mut const_values,
                 &mut identifier_renames,
             )
         })
+        .collect();
+
+    let mut ty_cache = HashSet::new();
+    let aliases: Vec<_> = spec2
+        .0
+        .iter()
+        .filter_map(get_variant!(vk_parse::RegistryChild::Types))
+        .map(|ty| generate_aliases_of_types(ty, &has_lifetimes, &mut ty_cache))
         .collect();
 
     let feature_code: Vec<_> = features
@@ -2519,6 +2534,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     };
 
     let definition_code = quote! {
+        use std::marker::PhantomData;
         use std::fmt;
         use std::os::raw::*;
         use crate::vk::{Handle, ptr_chain_iter};
