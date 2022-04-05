@@ -305,6 +305,8 @@ impl fmt::Debug for AccessFlags2 {
                 "INVOCATION_MASK_READ_HUAWEI",
             ),
             (AccessFlags2::RESERVED_387_KHR.0, "RESERVED_387_KHR"),
+            (AccessFlags2::RESERVED_44_NV.0, "RESERVED_44_NV"),
+            (AccessFlags2::RESERVED_45_NV.0, "RESERVED_45_NV"),
             (AccessFlags2::RESERVED_42_NV.0, "RESERVED_42_NV"),
             (AccessFlags2::RESERVED_43_NV.0, "RESERVED_43_NV"),
         ];
@@ -566,6 +568,8 @@ impl fmt::Debug for BufferUsageFlags {
             ),
             (BufferUsageFlags::RESERVED_21_AMD.0, "RESERVED_21_AMD"),
             (BufferUsageFlags::RESERVED_22_AMD.0, "RESERVED_22_AMD"),
+            (BufferUsageFlags::RESERVED_23_NV.0, "RESERVED_23_NV"),
+            (BufferUsageFlags::RESERVED_24_NV.0, "RESERVED_24_NV"),
             (
                 BufferUsageFlags::SHADER_DEVICE_ADDRESS.0,
                 "SHADER_DEVICE_ADDRESS",
@@ -604,6 +608,14 @@ impl fmt::Debug for BuildAccelerationStructureFlagsKHR {
                 "LOW_MEMORY",
             ),
             (BuildAccelerationStructureFlagsKHR::MOTION_NV.0, "MOTION_NV"),
+            (
+                BuildAccelerationStructureFlagsKHR::RESERVED_6_NV.0,
+                "RESERVED_6_NV",
+            ),
+            (
+                BuildAccelerationStructureFlagsKHR::RESERVED_7_NV.0,
+                "RESERVED_7_NV",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -2051,6 +2063,8 @@ impl fmt::Debug for GeometryInstanceFlagsKHR {
                 GeometryInstanceFlagsKHR::FORCE_NO_OPAQUE.0,
                 "FORCE_NO_OPAQUE",
             ),
+            (GeometryInstanceFlagsKHR::RESERVED_4_NV.0, "RESERVED_4_NV"),
+            (GeometryInstanceFlagsKHR::RESERVED_5_NV.0, "RESERVED_5_NV"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -2167,7 +2181,10 @@ impl fmt::Debug for ImageCreateFlags {
             (ImageCreateFlags::SUBSAMPLED_EXT.0, "SUBSAMPLED_EXT"),
             (ImageCreateFlags::RESERVED_16_AMD.0, "RESERVED_16_AMD"),
             (ImageCreateFlags::RESERVED_18_EXT.0, "RESERVED_18_EXT"),
-            (ImageCreateFlags::RESERVED_394_EXT.0, "RESERVED_394_EXT"),
+            (
+                ImageCreateFlags::TYPE_2D_VIEW_COMPATIBLE_EXT.0,
+                "TYPE_2D_VIEW_COMPATIBLE_EXT",
+            ),
             (
                 ImageCreateFlags::FRAGMENT_DENSITY_MAP_OFFSET_QCOM.0,
                 "FRAGMENT_DENSITY_MAP_OFFSET_QCOM",
@@ -2891,6 +2908,7 @@ impl fmt::Debug for PipelineCreateFlags {
                 PipelineCreateFlags::RAY_TRACING_ALLOW_MOTION_NV.0,
                 "RAY_TRACING_ALLOW_MOTION_NV",
             ),
+            (PipelineCreateFlags::RESERVED_24_NV.0, "RESERVED_24_NV"),
             (
                 PipelineCreateFlags::VIEW_INDEX_FROM_DEVICE_INDEX.0,
                 "VIEW_INDEX_FROM_DEVICE_INDEX",
@@ -3192,6 +3210,7 @@ impl fmt::Debug for PipelineStageFlags2 {
                 "INVOCATION_MASK_HUAWEI",
             ),
             (PipelineStageFlags2::RESERVED_387_KHR.0, "RESERVED_387_KHR"),
+            (PipelineStageFlags2::RESERVED_30_NV.0, "RESERVED_30_NV"),
             (PipelineStageFlags2::RESERVED_29_NV.0, "RESERVED_29_NV"),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -3526,6 +3545,7 @@ impl fmt::Debug for RenderingFlags {
             ),
             (RenderingFlags::SUSPENDING.0, "SUSPENDING"),
             (RenderingFlags::RESUMING.0, "RESUMING"),
+            (RenderingFlags::RESERVED_3_EXT.0, "RESERVED_3_EXT"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -4929,6 +4949,9 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_MULTI_DRAW_PROPERTIES_EXT => {
                 Some("PHYSICAL_DEVICE_MULTI_DRAW_PROPERTIES_EXT")
             }
+            Self::PHYSICAL_DEVICE_IMAGE_2D_VIEW_OF_3D_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_IMAGE_2D_VIEW_OF_3D_FEATURES_EXT")
+            }
             Self::PHYSICAL_DEVICE_BORDER_COLOR_SWIZZLE_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_BORDER_COLOR_SWIZZLE_FEATURES_EXT")
             }
@@ -5372,6 +5395,7 @@ impl fmt::Debug for SubpassDescriptionFlags {
                 SubpassDescriptionFlags::RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_ARM.0,
                 "RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_ARM",
             ),
+            (SubpassDescriptionFlags::RESERVED_7_EXT.0, "RESERVED_7_EXT"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -5929,6 +5953,10 @@ impl fmt::Debug for VideoEncodeH265CapabilityFlagsEXT {
                 "TRANSFORM_SKIP_ENABLED",
             ),
             (
+                VideoEncodeH265CapabilityFlagsEXT::TRANSFORM_SKIP_DISABLED.0,
+                "TRANSFORM_SKIP_DISABLED",
+            ),
+            (
                 VideoEncodeH265CapabilityFlagsEXT::PPS_SLICE_CHROMA_QP_OFFSETS_PRESENT.0,
                 "PPS_SLICE_CHROMA_QP_OFFSETS_PRESENT",
             ),
@@ -5983,6 +6011,10 @@ impl fmt::Debug for VideoEncodeH265CapabilityFlagsEXT {
             (
                 VideoEncodeH265CapabilityFlagsEXT::DIFFERENT_SLICE_TYPE.0,
                 "DIFFERENT_SLICE_TYPE",
+            ),
+            (
+                VideoEncodeH265CapabilityFlagsEXT::B_FRAME_IN_L1_LIST.0,
+                "B_FRAME_IN_L1_LIST",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
