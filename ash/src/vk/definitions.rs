@@ -57,7 +57,7 @@ pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
-pub const HEADER_VERSION: u32 = 210u32;
+pub const HEADER_VERSION: u32 = 211u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -31333,6 +31333,43 @@ impl<'a> AccelerationStructureBuildSizesInfoKHR<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceImage2DViewOf3DFeaturesEXT.html>"]
+pub struct PhysicalDeviceImage2DViewOf3DFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub image2_d_view_of3_d: Bool32,
+    pub sampler2_d_view_of3_d: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PHYSICAL_DEVICE_IMAGE_2D_VIEW_OF_3D_FEATURES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            image2_d_view_of3_d: Bool32::default(),
+            sampler2_d_view_of3_d: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'_> {}
+impl<'a> PhysicalDeviceImage2DViewOf3DFeaturesEXT<'a> {
+    #[inline]
+    pub fn image2_d_view_of3_d(mut self, image2_d_view_of3_d: bool) -> Self {
+        self.image2_d_view_of3_d = image2_d_view_of3_d.into();
+        self
+    }
+    #[inline]
+    pub fn sampler2_d_view_of3_d(mut self, sampler2_d_view_of3_d: bool) -> Self {
+        self.sampler2_d_view_of3_d = sampler2_d_view_of3_d.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceMutableDescriptorTypeFeaturesVALVE.html>"]
 pub struct PhysicalDeviceMutableDescriptorTypeFeaturesVALVE<'a> {
     pub s_type: StructureType,
@@ -32916,8 +32953,6 @@ pub struct VideoDecodeInfoKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub flags: VideoDecodeFlagsKHR,
-    pub coded_offset: Offset2D,
-    pub coded_extent: Extent2D,
     pub src_buffer: Buffer,
     pub src_buffer_offset: DeviceSize,
     pub src_buffer_range: DeviceSize,
@@ -32934,8 +32969,6 @@ impl ::std::default::Default for VideoDecodeInfoKHR<'_> {
             s_type: StructureType::VIDEO_DECODE_INFO_KHR,
             p_next: ::std::ptr::null(),
             flags: VideoDecodeFlagsKHR::default(),
-            coded_offset: Offset2D::default(),
-            coded_extent: Extent2D::default(),
             src_buffer: Buffer::default(),
             src_buffer_offset: DeviceSize::default(),
             src_buffer_range: DeviceSize::default(),
@@ -32952,16 +32985,6 @@ impl<'a> VideoDecodeInfoKHR<'a> {
     #[inline]
     pub fn flags(mut self, flags: VideoDecodeFlagsKHR) -> Self {
         self.flags = flags;
-        self
-    }
-    #[inline]
-    pub fn coded_offset(mut self, coded_offset: Offset2D) -> Self {
-        self.coded_offset = coded_offset;
-        self
-    }
-    #[inline]
-    pub fn coded_extent(mut self, coded_extent: Extent2D) -> Self {
-        self.coded_extent = coded_extent;
         self
     }
     #[inline]
@@ -33064,7 +33087,7 @@ impl<'a> VideoDecodeH264ProfileEXT<'a> {
 pub struct VideoDecodeH264CapabilitiesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
-    pub max_level: u32,
+    pub max_level: StdVideoH264Level,
     pub field_offset_granularity: Offset2D,
     pub _marker: PhantomData<&'a ()>,
 }
@@ -33074,7 +33097,7 @@ impl ::std::default::Default for VideoDecodeH264CapabilitiesEXT<'_> {
         Self {
             s_type: StructureType::VIDEO_DECODE_H264_CAPABILITIES_EXT,
             p_next: ::std::ptr::null_mut(),
-            max_level: u32::default(),
+            max_level: StdVideoH264Level::default(),
             field_offset_granularity: Offset2D::default(),
             _marker: PhantomData,
         }
@@ -33083,7 +33106,7 @@ impl ::std::default::Default for VideoDecodeH264CapabilitiesEXT<'_> {
 unsafe impl ExtendsVideoDecodeCapabilitiesKHR for VideoDecodeH264CapabilitiesEXT<'_> {}
 impl<'a> VideoDecodeH264CapabilitiesEXT<'a> {
     #[inline]
-    pub fn max_level(mut self, max_level: u32) -> Self {
+    pub fn max_level(mut self, max_level: StdVideoH264Level) -> Self {
         self.max_level = max_level;
         self
     }
@@ -33343,7 +33366,7 @@ impl<'a> VideoDecodeH265ProfileEXT<'a> {
 pub struct VideoDecodeH265CapabilitiesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
-    pub max_level: u32,
+    pub max_level: StdVideoH265Level,
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for VideoDecodeH265CapabilitiesEXT<'_> {
@@ -33352,7 +33375,7 @@ impl ::std::default::Default for VideoDecodeH265CapabilitiesEXT<'_> {
         Self {
             s_type: StructureType::VIDEO_DECODE_H265_CAPABILITIES_EXT,
             p_next: ::std::ptr::null_mut(),
-            max_level: u32::default(),
+            max_level: StdVideoH265Level::default(),
             _marker: PhantomData,
         }
     }
@@ -33360,7 +33383,7 @@ impl ::std::default::Default for VideoDecodeH265CapabilitiesEXT<'_> {
 unsafe impl ExtendsVideoDecodeCapabilitiesKHR for VideoDecodeH265CapabilitiesEXT<'_> {}
 impl<'a> VideoDecodeH265CapabilitiesEXT<'a> {
     #[inline]
-    pub fn max_level(mut self, max_level: u32) -> Self {
+    pub fn max_level(mut self, max_level: StdVideoH265Level) -> Self {
         self.max_level = max_level;
         self
     }
@@ -33887,7 +33910,6 @@ pub struct VideoEncodeInfoKHR<'a> {
     pub p_next: *const c_void,
     pub flags: VideoEncodeFlagsKHR,
     pub quality_level: u32,
-    pub coded_extent: Extent2D,
     pub dst_bitstream_buffer: Buffer,
     pub dst_bitstream_buffer_offset: DeviceSize,
     pub dst_bitstream_buffer_max_range: DeviceSize,
@@ -33906,7 +33928,6 @@ impl ::std::default::Default for VideoEncodeInfoKHR<'_> {
             p_next: ::std::ptr::null(),
             flags: VideoEncodeFlagsKHR::default(),
             quality_level: u32::default(),
-            coded_extent: Extent2D::default(),
             dst_bitstream_buffer: Buffer::default(),
             dst_bitstream_buffer_offset: DeviceSize::default(),
             dst_bitstream_buffer_max_range: DeviceSize::default(),
@@ -33929,11 +33950,6 @@ impl<'a> VideoEncodeInfoKHR<'a> {
     #[inline]
     pub fn quality_level(mut self, quality_level: u32) -> Self {
         self.quality_level = quality_level;
-        self
-    }
-    #[inline]
-    pub fn coded_extent(mut self, coded_extent: Extent2D) -> Self {
-        self.coded_extent = coded_extent;
         self
     }
     #[inline]
@@ -34157,7 +34173,7 @@ impl<'a> VideoEncodeRateControlLayerInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeCapabilitiesKHR.html>"]
 pub struct VideoEncodeCapabilitiesKHR<'a> {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub flags: VideoEncodeCapabilityFlagsKHR,
     pub rate_control_modes: VideoEncodeRateControlModeFlagsKHR,
     pub rate_control_layer_count: u8,
@@ -34170,7 +34186,7 @@ impl ::std::default::Default for VideoEncodeCapabilitiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_CAPABILITIES_KHR,
-            p_next: ::std::ptr::null(),
+            p_next: ::std::ptr::null_mut(),
             flags: VideoEncodeCapabilityFlagsKHR::default(),
             rate_control_modes: VideoEncodeRateControlModeFlagsKHR::default(),
             rate_control_layer_count: u8::default(),
@@ -34221,7 +34237,7 @@ impl<'a> VideoEncodeCapabilitiesKHR<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsVideoEncodeCapabilitiesKHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = <*const T>::cast(next);
+            let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.p_next as _;
             self.p_next = next_ptr;
@@ -34235,7 +34251,7 @@ impl<'a> VideoEncodeCapabilitiesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH264CapabilitiesEXT.html>"]
 pub struct VideoEncodeH264CapabilitiesEXT<'a> {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub flags: VideoEncodeH264CapabilityFlagsEXT,
     pub input_mode_flags: VideoEncodeH264InputModeFlagsEXT,
     pub output_mode_flags: VideoEncodeH264OutputModeFlagsEXT,
@@ -34254,7 +34270,7 @@ impl ::std::default::Default for VideoEncodeH264CapabilitiesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_H264_CAPABILITIES_EXT,
-            p_next: ::std::ptr::null(),
+            p_next: ::std::ptr::null_mut(),
             flags: VideoEncodeH264CapabilityFlagsEXT::default(),
             input_mode_flags: VideoEncodeH264InputModeFlagsEXT::default(),
             output_mode_flags: VideoEncodeH264OutputModeFlagsEXT::default(),
@@ -34916,7 +34932,7 @@ impl<'a> VideoEncodeH264RateControlLayerInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265CapabilitiesEXT.html>"]
 pub struct VideoEncodeH265CapabilitiesEXT<'a> {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub flags: VideoEncodeH265CapabilityFlagsEXT,
     pub input_mode_flags: VideoEncodeH265InputModeFlagsEXT,
     pub output_mode_flags: VideoEncodeH265OutputModeFlagsEXT,
@@ -34944,7 +34960,7 @@ impl ::std::default::Default for VideoEncodeH265CapabilitiesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_ENCODE_H265_CAPABILITIES_EXT,
-            p_next: ::std::ptr::null(),
+            p_next: ::std::ptr::null_mut(),
             flags: VideoEncodeH265CapabilityFlagsEXT::default(),
             input_mode_flags: VideoEncodeH265InputModeFlagsEXT::default(),
             output_mode_flags: VideoEncodeH265OutputModeFlagsEXT::default(),
