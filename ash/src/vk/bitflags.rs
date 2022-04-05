@@ -1054,7 +1054,7 @@ impl PipelineStageFlags2 {
     pub const ALL_TRANSFER: Self = Self(0b1_0000_0000_0000);
     pub const ALL_TRANSFER_KHR: Self = Self::ALL_TRANSFER;
     pub const TRANSFER: Self = Self::ALL_TRANSFER_KHR;
-    pub const TRANSFER_KHR: Self = Self::TRANSFER;
+    pub const TRANSFER_KHR: Self = Self::ALL_TRANSFER;
     pub const BOTTOM_OF_PIPE: Self = Self(0b10_0000_0000_0000);
     pub const BOTTOM_OF_PIPE_KHR: Self = Self::BOTTOM_OF_PIPE;
     pub const HOST: Self = Self(0b100_0000_0000_0000);
@@ -1436,20 +1436,22 @@ impl VideoEncodeH265CapabilityFlagsEXT {
     pub const LOG2_PARALLEL_MERGE_LEVEL_MINUS2: Self = Self(0b1000_0000);
     pub const SIGN_DATA_HIDING_ENABLED: Self = Self(0b1_0000_0000);
     pub const TRANSFORM_SKIP_ENABLED: Self = Self(0b10_0000_0000);
-    pub const PPS_SLICE_CHROMA_QP_OFFSETS_PRESENT: Self = Self(0b100_0000_0000);
-    pub const WEIGHTED_PRED: Self = Self(0b1000_0000_0000);
-    pub const WEIGHTED_BIPRED: Self = Self(0b1_0000_0000_0000);
-    pub const WEIGHTED_PRED_NO_TABLE: Self = Self(0b10_0000_0000_0000);
-    pub const TRANSQUANT_BYPASS_ENABLED: Self = Self(0b100_0000_0000_0000);
-    pub const ENTROPY_CODING_SYNC_ENABLED: Self = Self(0b1000_0000_0000_0000);
-    pub const DEBLOCKING_FILTER_OVERRIDE_ENABLED: Self = Self(0b1_0000_0000_0000_0000);
-    pub const MULTIPLE_TILE_PER_FRAME: Self = Self(0b10_0000_0000_0000_0000);
-    pub const MULTIPLE_SLICE_PER_TILE: Self = Self(0b100_0000_0000_0000_0000);
-    pub const MULTIPLE_TILE_PER_SLICE: Self = Self(0b1000_0000_0000_0000_0000);
-    pub const SLICE_SEGMENT_CTB_COUNT: Self = Self(0b1_0000_0000_0000_0000_0000);
-    pub const ROW_UNALIGNED_SLICE_SEGMENT: Self = Self(0b10_0000_0000_0000_0000_0000);
-    pub const DEPENDENT_SLICE_SEGMENT: Self = Self(0b100_0000_0000_0000_0000_0000);
-    pub const DIFFERENT_SLICE_TYPE: Self = Self(0b1000_0000_0000_0000_0000_0000);
+    pub const TRANSFORM_SKIP_DISABLED: Self = Self(0b100_0000_0000);
+    pub const PPS_SLICE_CHROMA_QP_OFFSETS_PRESENT: Self = Self(0b1000_0000_0000);
+    pub const WEIGHTED_PRED: Self = Self(0b1_0000_0000_0000);
+    pub const WEIGHTED_BIPRED: Self = Self(0b10_0000_0000_0000);
+    pub const WEIGHTED_PRED_NO_TABLE: Self = Self(0b100_0000_0000_0000);
+    pub const TRANSQUANT_BYPASS_ENABLED: Self = Self(0b1000_0000_0000_0000);
+    pub const ENTROPY_CODING_SYNC_ENABLED: Self = Self(0b1_0000_0000_0000_0000);
+    pub const DEBLOCKING_FILTER_OVERRIDE_ENABLED: Self = Self(0b10_0000_0000_0000_0000);
+    pub const MULTIPLE_TILE_PER_FRAME: Self = Self(0b100_0000_0000_0000_0000);
+    pub const MULTIPLE_SLICE_PER_TILE: Self = Self(0b1000_0000_0000_0000_0000);
+    pub const MULTIPLE_TILE_PER_SLICE: Self = Self(0b1_0000_0000_0000_0000_0000);
+    pub const SLICE_SEGMENT_CTB_COUNT: Self = Self(0b10_0000_0000_0000_0000_0000);
+    pub const ROW_UNALIGNED_SLICE_SEGMENT: Self = Self(0b100_0000_0000_0000_0000_0000);
+    pub const DEPENDENT_SLICE_SEGMENT: Self = Self(0b1000_0000_0000_0000_0000_0000);
+    pub const DIFFERENT_SLICE_TYPE: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
+    pub const B_FRAME_IN_L1_LIST: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
