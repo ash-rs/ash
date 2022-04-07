@@ -231,11 +231,14 @@ Make sure that you have a Vulkan ready driver and install the [LunarG Vulkan SDK
 #### Linux
 Make sure that you have a Vulkan ready driver and install the [LunarG Vulkan SDK](https://lunarg.com/vulkan-sdk/). You also have to add the library and layers to your path. Have a look at my [post](http://askubuntu.com/a/803110/77183) if you are unsure how to do that.
 #### macOS
-Install the [LunarG Vulkan SDK](https://lunarg.com/vulkan-sdk/). This basically entails extracting the downloaded tarball to any location you choose and then setting a few environment variables. Specifically, if `SDK_PATH` is set to the root extracted SDK directory,
-
-* `DYLD_LIBRARY_PATH = $SDK_PATH/macOS/lib`
-* `VK_ICD_FILENAMES = $SDK_PATH/macOS/etc/vulkan/icd.d/MoltenVK_icd.json`
-* `VK_LAYER_PATH = $SDK_PATH/macOS/etc/vulkan/explicit_layer.d`
+Install the [LunarG Vulkan SDK](https://lunarg.com/vulkan-sdk/). The installer puts the SDK in `$HOME/VulkanSDK/<version>` by default. You will need to set the following environment variables when running cargo:
+```sh
+VULKAN_SDK=$HOME/VulkanSDK/<version>/macOS \
+DYLD_FALLBACK_LIBRARY_PATH=$VULKAN_SDK/lib \
+VK_ICD_FILENAMES=$VULKAN_SDK/share/vulkan/icd.d/MoltenVK_icd.json \
+VK_LAYER_PATH=$VULKAN_SDK/share/vulkan/explicit_layer.d \
+cargo run ...
+```
 
 ### [Triangle](https://github.com/MaikKlein/ash/blob/master/examples/src/bin/triangle.rs)
 Displays a triangle with vertex colors.
