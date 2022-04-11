@@ -118,12 +118,15 @@ pub unsafe fn create_surface(
     }
 }
 
-#[cfg(target_os = "windows")]
 /// Extensions necessary for creating a surface on the target platform.
+/// (Note that on Unix, this is not equal to the return value of [`enumerate_required_extensions`])
+#[cfg(target_os = "windows")]
 pub const TARGET_EXTENSIONS: &'static [*const c_char] = &[
     khr::Surface::name().as_ptr(),
     khr::Win32Surface::name().as_ptr(),
 ];
+/// Extensions necessary for creating a surface on the target platform.
+/// (Note that on Unix, this is not equal to the return value of [`enumerate_required_extensions`])
 #[cfg(any(
     target_os = "linux",
     target_os = "dragonfly",
@@ -131,27 +134,29 @@ pub const TARGET_EXTENSIONS: &'static [*const c_char] = &[
     target_os = "netbsd",
     target_os = "openbsd"
 ))]
-/// Extensions necessary for creating a surface on the target platform.
 pub const TARGET_EXTENSIONS: &'static [*const c_char] = &[
     khr::Surface::name().as_ptr(),
     khr::WaylandSurface::name().as_ptr(),
     khr::XlibSurface::name().as_ptr(),
     khr::XcbSurface::name().as_ptr(),
 ];
-#[cfg(any(target_os = "android"))]
 /// Extensions necessary for creating a surface on the target platform.
+/// (Note that on Unix, this is not equal to the return value of [`enumerate_required_extensions`])
+#[cfg(any(target_os = "android"))]
 pub const TARGET_EXTENSIONS: &'static [*const c_char] = &[
     khr::Surface::name().as_ptr(),
     khr::AndroidSurface::name().as_ptr(),
 ];
-#[cfg(any(target_os = "macos"))]
 /// Extensions necessary for creating a surface on the target platform.
+/// (Note that on Unix, this is not equal to the return value of [`enumerate_required_extensions`])
+#[cfg(any(target_os = "macos"))]
 pub const TARGET_EXTENSIONS: &'static [*const c_char] = &[
     khr::Surface::name().as_ptr(),
     ext::MetalSurface::name().as_ptr(),
 ];
-#[cfg(any(target_os = "ios"))]
 /// Extensions necessary for creating a surface on the target platform.
+/// (Note that on Unix, this is not equal to the return value of [`enumerate_required_extensions`])
+#[cfg(any(target_os = "ios"))]
 pub const TARGET_EXTENSIONS: &'static [*const c_char] = &[
     khr::Surface::name().as_ptr(),
     ext::MetalSurface::name().as_ptr(),
