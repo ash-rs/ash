@@ -119,6 +119,7 @@ pub unsafe fn create_surface(
 }
 
 #[cfg(target_os = "windows")]
+/// Extensions necessary for creating a surface on the target platform.
 pub const TARGET_EXTENSIONS: [*const c_char; 2] = [
     khr::Surface::name().as_ptr(),
     khr::Win32Surface::name().as_ptr(),
@@ -130,6 +131,7 @@ pub const TARGET_EXTENSIONS: [*const c_char; 2] = [
     target_os = "netbsd",
     target_os = "openbsd"
 ))]
+/// Extensions necessary for creating a surface on the target platform.
 pub const TARGET_EXTENSIONS: [*const c_char; 4] = [
     khr::Surface::name().as_ptr(),
     khr::WaylandSurface::name().as_ptr(),
@@ -137,16 +139,19 @@ pub const TARGET_EXTENSIONS: [*const c_char; 4] = [
     khr::XcbSurface::name().as_ptr(),
 ];
 #[cfg(any(target_os = "android"))]
+/// Extensions necessary for creating a surface on the target platform.
 pub const TARGET_EXTENSIONS: [*const c_char; 2] = [
     khr::Surface::name().as_ptr(),
     khr::AndroidSurface::name().as_ptr(),
 ];
 #[cfg(any(target_os = "macos"))]
+/// Extensions necessary for creating a surface on the target platform.
 pub const TARGET_EXTENSIONS: [*const c_char; 2] = [
     khr::Surface::name().as_ptr(),
     ext::MetalSurface::name().as_ptr(),
 ];
 #[cfg(any(target_os = "ios"))]
+/// Extensions necessary for creating a surface on the target platform.
 pub const TARGET_EXTENSIONS: [*const c_char; 2] = [
     khr::Surface::name().as_ptr(),
     ext::MetalSurface::name().as_ptr(),
