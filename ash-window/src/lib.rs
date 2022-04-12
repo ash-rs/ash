@@ -2,7 +2,7 @@
 
 use std::os::raw::c_char;
 
-use ash::{extensions::khr, prelude::*, vk, Entry, Instance};
+use ash::{extensions::ext, extensions::khr, prelude::*, vk, Entry, Instance};
 use raw_window_handle::{HasRawWindowHandle, RawWindowHandle};
 
 #[cfg(any(target_os = "macos", target_os = "ios"))]
@@ -118,49 +118,53 @@ pub unsafe fn create_surface(
     }
 }
 
-/// Extensions necessary for creating a surface on the target platform.
-/// (Note that on Unix, this is not equal to the return value of [`enumerate_required_extensions`])
-#[cfg(target_os = "windows")]
-pub const TARGET_EXTENSIONS: &'static [*const c_char] = &[
+/// Extensions necessary for creating a surface on windows.
+pub const WINDOWS_SURFACE_EXTENSIONS: &'static [*const c_char] = &[
     khr::Surface::name().as_ptr(),
     khr::Win32Surface::name().as_ptr(),
 ];
-/// Extensions necessary for creating a surface on the target platform.
-/// (Note that on Unix, this is not equal to the return value of [`enumerate_required_extensions`])
-#[cfg(any(
-    target_os = "linux",
-    target_os = "dragonfly",
-    target_os = "freebsd",
-    target_os = "netbsd",
-    target_os = "openbsd"
-))]
-pub const TARGET_EXTENSIONS: &'static [*const c_char] = &[
+/// Extensions necessary for creating a surface on unix.
+/// Note that this is not equal to the return value of [`enumerate_required_extensions`] on Unix due to the multiple window types.
+pub const UNIX_SURFACE_EXTENSIONS: &'static [*const c_char] = &[
     khr::Surface::name().as_ptr(),
     khr::WaylandSurface::name().as_ptr(),
     khr::XlibSurface::name().as_ptr(),
     khr::XcbSurface::name().as_ptr(),
 ];
-/// Extensions necessary for creating a surface on the target platform.
-/// (Note that on Unix, this is not equal to the return value of [`enumerate_required_extensions`])
-#[cfg(any(target_os = "android"))]
-pub const TARGET_EXTENSIONS: &'static [*const c_char] = &[
+/// Extensions necessary for creating a surface on android.
+pub const ANDROID_SURFACE_EXTENSIONS: &'static [*const c_char] = &[
     khr::Surface::name().as_ptr(),
     khr::AndroidSurface::name().as_ptr(),
 ];
-/// Extensions necessary for creating a surface on the target platform.
-/// (Note that on Unix, this is not equal to the return value of [`enumerate_required_extensions`])
-#[cfg(any(target_os = "macos"))]
-pub const TARGET_EXTENSIONS: &'static [*const c_char] = &[
+/// Extensions necessary for creating a surface on macos.
+pub const MACOS_SURFACE_EXTENSIONS: &'static [*const c_char] = &[
     khr::Surface::name().as_ptr(),
     ext::MetalSurface::name().as_ptr(),
 ];
-/// Extensions necessary for creating a surface on the target platform.
+/// Extensions necessary for creating a surface on ios.
+pub const IOS_SURFACE_EXTENSIONS: &'static [*const c_char] = MACOS_SURFACE_EXTENSIONS;
+
+/// Extensions necessary for creating a surface on the current target platform.
 /// (Note that on Unix, this is not equal to the return value of [`enumerate_required_extensions`])
-#[cfg(any(target_os = "ios"))]
-pub const TARGET_EXTENSIONS: &'static [*const c_char] = &[
-    khr::Surface::name().as_ptr(),
-    ext::MetalSurface::name().as_ptr(),
-];
+pub const TARGET_EXTENSIONS: &'static [*const c_char] = {
+    #[cfg(target_os = "windows")]
+    let out = WINDOWS_SURFACE_EXTENSIONS;
+    #[cfg(any(
+        target_os = "linux",
+        target_os = "dragonfly",
+        target_os = "freebsd",
+        target_os = "netbsd",
+        target_os = "openbsd"
+    ))]
+    let out = UNIX_SURFACE_EXTENSIONS;
+    #[cfg(target_os = "android")]
+    let out = ANDROID_SURFACE_EXTENSIONS;
+    #[cfg(target_os = "macos")]
+    let out = MACOS_SURFACE_EXTENSIONS;
+    #[cfg(target_os = "ios")]
+    let out = IOS_SURFACE_EXTENSIONS;
+    out
+};
 
 /// Query the required instance extensions for creating a surface from a window handle.
 ///
@@ -170,13 +174,7 @@ pub fn enumerate_required_extensions(
 ) -> VkResult<&'static [*const c_char]> {
     let extensions = match window_handle.raw_window_handle() {
         #[cfg(target_os = "windows")]
-        RawWindowHandle::Windows(_) => {
-            const WINDOWS_EXTS: [*const c_char; 2] = [
-                khr::Surface::name().as_ptr(),
-                khr::Win32Surface::name().as_ptr(),
-            ];
-            &WINDOWS_EXTS
-        }
+        RawWindowHandle::Windows(_) => &WINDOWS_SURFACE_EXTENSIONS,
 
         #[cfg(any(
             target_os = "linux",
@@ -223,32 +221,14 @@ pub fn enumerate_required_extensions(
             &XCB_EXTS
         }
 
-        #[cfg(any(target_os = "android"))]
-        RawWindowHandle::Android(_) => {
-            const ANDROID_EXTS: [*const c_char; 2] = [
-                khr::Surface::name().as_ptr(),
-                khr::AndroidSurface::name().as_ptr(),
-            ];
-            &ANDROID_EXTS
-        }
+        #[cfg(target_os = "android")]
+        RawWindowHandle::Android(_) => &ANDROID_SURFACE_EXTENSIONS,
 
-        #[cfg(any(target_os = "macos"))]
-        RawWindowHandle::MacOS(_) => {
-            const MACOS_EXTS: [*const c_char; 2] = [
-                khr::Surface::name().as_ptr(),
-                ext::MetalSurface::name().as_ptr(),
-            ];
-            &MACOS_EXTS
-        }
+        #[cfg(target_os = "macos")]
+        RawWindowHandle::MacOS(_) => &METAL_SURFACE_EXTENSIONS,
 
-        #[cfg(any(target_os = "ios"))]
-        RawWindowHandle::IOS(_) => {
-            const IOS_EXTS: [*const c_char; 2] = [
-                khr::Surface::name().as_ptr(),
-                ext::MetalSurface::name().as_ptr(),
-            ];
-            &IOS_EXTS
-        }
+        #[cfg(target_os = "ios")]
+        RawWindowHandle::IOS(_) => &IOS_SURFACE_EXTENSIONS,
 
         _ => return Err(vk::Result::ERROR_EXTENSION_NOT_PRESENT),
     };
