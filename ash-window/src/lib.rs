@@ -174,7 +174,7 @@ pub fn enumerate_required_extensions(
 ) -> VkResult<&'static [*const c_char]> {
     let extensions = match window_handle.raw_window_handle() {
         #[cfg(target_os = "windows")]
-        RawWindowHandle::Windows(_) => &WINDOWS_SURFACE_EXTENSIONS,
+        RawWindowHandle::Windows(_) => WINDOWS_SURFACE_EXTENSIONS,
 
         #[cfg(any(
             target_os = "linux",
@@ -222,13 +222,13 @@ pub fn enumerate_required_extensions(
         }
 
         #[cfg(target_os = "android")]
-        RawWindowHandle::Android(_) => &ANDROID_SURFACE_EXTENSIONS,
+        RawWindowHandle::Android(_) => ANDROID_SURFACE_EXTENSIONS,
 
         #[cfg(target_os = "macos")]
-        RawWindowHandle::MacOS(_) => &METAL_SURFACE_EXTENSIONS,
+        RawWindowHandle::MacOS(_) => METAL_SURFACE_EXTENSIONS,
 
         #[cfg(target_os = "ios")]
-        RawWindowHandle::IOS(_) => &IOS_SURFACE_EXTENSIONS,
+        RawWindowHandle::IOS(_) => IOS_SURFACE_EXTENSIONS,
 
         _ => return Err(vk::Result::ERROR_EXTENSION_NOT_PRESENT),
     };
