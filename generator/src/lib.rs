@@ -3,6 +3,7 @@
 
 use heck::{CamelCase, ShoutySnakeCase, SnakeCase};
 use itertools::Itertools;
+use nom::sequence::pair;
 use nom::{
     branch::alt,
     bytes::streaming::tag,
@@ -10,8 +11,8 @@ use nom::{
     combinator::{complete, map, opt, value},
     error::{ParseError, VerboseError},
     multi::many1,
-    sequence::{delimited, preceded, terminated, tuple},
-    IResult,
+    sequence::{delimited, preceded, terminated},
+    IResult, Parser,
 };
 use once_cell::sync::Lazy;
 use proc_macro2::{Delimiter, Group, Literal, Span, TokenStream, TokenTree};
@@ -94,12 +95,12 @@ fn parse_inverse_number<'a, E: ParseError<&'a str>>(
 ) -> IResult<&'a str, (CType, String), E> {
     (map(
         delimited(
-            tag("("),
-            tuple((
-                preceded(tag("~"), parse_decimal_number),
-                opt(preceded(tag("-"), digit1)),
-            )),
-            tag(")"),
+            char('('),
+            pair(
+                preceded(char('~'), parse_decimal_number),
+                opt(preceded(char('-'), digit1)),
+            ),
+            char(')'),
         ),
         |((ctyp, num), minus_num)| {
             let expr = if let Some(minus) = minus_num {
@@ -134,9 +135,10 @@ fn parse_c_include<'a, E: ParseError<&'a str>>(i: &'a str) -> IResult<&'a str, S
 fn parse_decimal_number<'a, E: ParseError<&'a str>>(
     i: &'a str,
 ) -> IResult<&'a str, (CType, String), E> {
-    (map(tuple((digit1, parse_ctype)), |(dig, ctype)| {
-        (ctype, dig.to_string())
-    }))(i)
+    (map(
+        pair(digit1.map(str::to_string), parse_ctype),
+        |(dig, ctype)| (ctype, dig),
+    ))(i)
 }
 
 fn parse_hexadecimal_number<'a, E: ParseError<&'a str>>(
@@ -144,7 +146,7 @@ fn parse_hexadecimal_number<'a, E: ParseError<&'a str>>(
 ) -> IResult<&'a str, (CType, String), E> {
     (preceded(
         alt((tag("0x"), tag("0X"))),
-        map(tuple((hex_digit1, parse_ctype)), |(num, typ)| {
+        map(pair(hex_digit1, parse_ctype), |(num, typ)| {
             (
                 typ,
                 format!("0x{}{}", num.to_ascii_lowercase(), typ.to_string()),
