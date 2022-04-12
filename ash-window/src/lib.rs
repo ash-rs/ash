@@ -119,30 +119,35 @@ pub unsafe fn create_surface(
 }
 
 /// Extensions necessary for creating a surface on windows.
-pub const WINDOWS_SURFACE_EXTENSIONS: &'static [*const c_char] = &[
+#[allow(dead_code)]
+const WINDOWS_SURFACE_EXTENSIONS: &'static [*const c_char] = &[
     khr::Surface::name().as_ptr(),
     khr::Win32Surface::name().as_ptr(),
 ];
 /// Extensions necessary for creating a surface on unix.
 /// Note that this is not equal to the return value of [`enumerate_required_extensions`] on Unix due to the multiple window types.
-pub const UNIX_SURFACE_EXTENSIONS: &'static [*const c_char] = &[
+#[allow(dead_code)]
+const UNIX_SURFACE_EXTENSIONS: &'static [*const c_char] = &[
     khr::Surface::name().as_ptr(),
     khr::WaylandSurface::name().as_ptr(),
     khr::XlibSurface::name().as_ptr(),
     khr::XcbSurface::name().as_ptr(),
 ];
 /// Extensions necessary for creating a surface on android.
-pub const ANDROID_SURFACE_EXTENSIONS: &'static [*const c_char] = &[
+#[allow(dead_code)]
+const ANDROID_SURFACE_EXTENSIONS: &'static [*const c_char] = &[
     khr::Surface::name().as_ptr(),
     khr::AndroidSurface::name().as_ptr(),
 ];
 /// Extensions necessary for creating a surface on macos.
-pub const MACOS_SURFACE_EXTENSIONS: &'static [*const c_char] = &[
+#[allow(dead_code)]
+const MACOS_SURFACE_EXTENSIONS: &'static [*const c_char] = &[
     khr::Surface::name().as_ptr(),
     ext::MetalSurface::name().as_ptr(),
 ];
 /// Extensions necessary for creating a surface on ios.
-pub const IOS_SURFACE_EXTENSIONS: &'static [*const c_char] = MACOS_SURFACE_EXTENSIONS;
+#[allow(dead_code)]
+const IOS_SURFACE_EXTENSIONS: &'static [*const c_char] = MACOS_SURFACE_EXTENSIONS;
 
 /// Extensions necessary for creating a surface on the current target platform.
 /// (Note that on Unix, this is not equal to the return value of [`enumerate_required_extensions`])
