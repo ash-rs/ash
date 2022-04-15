@@ -497,7 +497,6 @@ pub trait FieldExt {
     /// array types (e.g. `[f32; 3]`) will be converted to pointer types (e.g. `&[f32; 3]`),
     /// which is needed for `C` function parameters. Set to `false` for struct definitions.
     fn type_tokens(&self, is_ffi_param: bool) -> TokenStream;
-    fn is_clone(&self) -> bool;
 
     /// Whether this is C's `void` type (not to be mistaken with a void _pointer_!)
     fn is_void(&self) -> bool;
@@ -632,10 +631,6 @@ fn discard_outmost_delimiter(stream: TokenStream) -> TokenStream {
 }
 
 impl FieldExt for vkxml::Field {
-    fn is_clone(&self) -> bool {
-        true
-    }
-
     fn param_ident(&self) -> Ident {
         let name = self.name.as_deref().unwrap_or("field");
         let name_corrected = match name {
@@ -718,6 +713,42 @@ impl FieldExt for vkxml::Field {
     fn is_pointer_to_static_sized_array(&self) -> bool {
         matches!(self.array, Some(vkxml::ArrayType::Dynamic))
             && self.name.as_deref() == Some("pVersionData")
+    }
+}
+
+impl FieldExt for vk_parse::TypeMemberDefinition {
+    fn param_ident(&self) -> Ident {
+        let name = self
+            .markup
+            .iter()
+            .find_map(get_variant!(vk_parse::TypeMemberMarkup::Name))
+            .expect("Type Member must have a name!")
+            .as_str();
+        let name_corrected = match name {
+            "type" => "ty",
+            _ => name,
+        };
+        format_ident!("{}", name_corrected.to_snake_case().as_str())
+    }
+
+    fn inner_type_tokens(&self) -> TokenStream {
+        todo!()
+    }
+
+    fn safe_type_tokens(&self, _lifetime: TokenStream) -> TokenStream {
+        todo!()
+    }
+
+    fn type_tokens(&self, _is_ffi_param: bool) -> TokenStream {
+        todo!()
+    }
+
+    fn is_void(&self) -> bool {
+        todo!()
+    }
+
+    fn is_pointer_to_static_sized_array(&self) -> bool {
+        todo!()
     }
 }
 
@@ -1545,6 +1576,7 @@ pub fn derive_debug(
 
 pub fn derive_setters(
     struct_: &vkxml::Struct,
+    struct2: &vk_parse::Type,
     root_structs: &HashSet<Ident>,
     has_lifetimes: &HashSet<Ident>,
 ) -> Option<TokenStream> {
@@ -1556,6 +1588,14 @@ pub fn derive_setters(
         return None;
     }
 
+    let members2 = match &struct2.spec {
+        vk_parse::TypeSpec::Members(m) => m,
+        x => panic!("vk_parse type is not a struct with members but {:?}", x),
+    };
+    let members2 = members2
+        .iter()
+        .filter_map(get_variant!(vk_parse::TypeMember::Definition));
+
     let name = name_to_tokens(&struct_.name);
 
     let members = struct_
@@ -1566,6 +1606,13 @@ pub fn derive_setters(
     let next_field = members
         .clone()
         .find(|field| field.param_ident() == "p_next");
+
+    let structure_type_field = members2
+        .clone()
+        .find(|field| field.param_ident() == "s_type");
+
+    // Must either have both, or none:
+    assert_eq!(next_field.is_some(), structure_type_field.is_some());
 
     let nofilter_count_members = [
         ("VkPipelineViewportStateCreateInfo", "pViewports"),
@@ -1822,7 +1869,22 @@ pub fn derive_setters(
             quote!(unsafe impl #extends for #name<'_> {})
         });
 
+    let impl_structure_type_trait = structure_type_field.map(|s_type| {
+        let value = s_type
+            .values
+            .as_deref()
+            .expect("s_type field must have a value in `vk.xml`");
+
+        let value = variant_ident("VkStructureType", value);
+        quote! {
+            unsafe impl #lifetime TaggedStructure for #name #lifetime {
+                const STRUCTURE_TYPE: StructureType = StructureType::#value;
+            }
+        }
+    });
+
     let q = quote! {
+        #impl_structure_type_trait
         #(#impl_extend_trait)*
         #next_trait
 
@@ -1849,6 +1911,7 @@ pub fn manual_derives(struct_: &vkxml::Struct) -> TokenStream {
 }
 pub fn generate_struct(
     struct_: &vkxml::Struct,
+    struct2: &vk_parse::Type,
     root_structs: &HashSet<Ident>,
     union_types: &HashSet<&str>,
     has_lifetimes: &HashSet<Ident>,
@@ -1951,7 +2014,7 @@ pub fn generate_struct(
 
     let debug_tokens = derive_debug(struct_, union_types, has_lifetime);
     let default_tokens = derive_default(struct_, has_lifetime);
-    let setter_tokens = derive_setters(struct_, root_structs, has_lifetimes);
+    let setter_tokens = derive_setters(struct_, struct2, root_structs, has_lifetimes);
     let manual_derive_tokens = manual_derives(struct_);
     let dbg_str = if debug_tokens.is_none() {
         quote!(#[cfg_attr(feature = "debug", derive(Debug))])
@@ -2069,8 +2132,11 @@ pub fn root_structs(definitions: &[&vkxml::DefinitionsElement]) -> HashSet<Ident
     }
     root_structs
 }
+
+#[allow(clippy::too_many_arguments)]
 pub fn generate_definition(
     definition: &vkxml::DefinitionsElement,
+    definition2: Option<&vk_parse::Type>,
     union_types: &HashSet<&str>,
     root_structs: &HashSet<Ident>,
     has_lifetimes: &HashSet<Ident>,
@@ -2078,23 +2144,24 @@ pub fn generate_definition(
     const_values: &mut BTreeMap<Ident, ConstantTypeInfo>,
     identifier_renames: &mut BTreeMap<String, Ident>,
 ) -> Option<TokenStream> {
-    match *definition {
-        vkxml::DefinitionsElement::Define(ref define) => {
+    match (definition, definition2) {
+        (vkxml::DefinitionsElement::Define(define), _) => {
             Some(generate_define(define, identifier_renames))
         }
-        vkxml::DefinitionsElement::Typedef(ref typedef) => Some(generate_typedef(typedef)),
-        vkxml::DefinitionsElement::Struct(ref struct_) => Some(generate_struct(
+        (vkxml::DefinitionsElement::Typedef(typedef), _) => Some(generate_typedef(typedef)),
+        (vkxml::DefinitionsElement::Struct(struct_), Some(struct2)) => Some(generate_struct(
             struct_,
+            struct2,
             root_structs,
             union_types,
             has_lifetimes,
         )),
-        vkxml::DefinitionsElement::Bitmask(ref mask) => {
+        (vkxml::DefinitionsElement::Bitmask(mask), _) => {
             generate_bitmask(mask, bitflags_cache, const_values)
         }
-        vkxml::DefinitionsElement::Handle(ref handle) => generate_handle(handle),
-        vkxml::DefinitionsElement::FuncPtr(ref fp) => Some(generate_funcptr(fp)),
-        vkxml::DefinitionsElement::Union(ref union) => Some(generate_union(union, has_lifetimes)),
+        (vkxml::DefinitionsElement::Handle(handle), _) => generate_handle(handle),
+        (vkxml::DefinitionsElement::FuncPtr(fp), _) => Some(generate_funcptr(fp)),
+        (vkxml::DefinitionsElement::Union(union), _) => Some(generate_union(union, has_lifetimes)),
         _ => None,
     }
 }
@@ -2417,6 +2484,13 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         .flat_map(|definitions| &definitions.elements)
         .collect();
 
+    let definitions2: Vec<&vk_parse::TypesChild> = spec2
+        .0
+        .iter()
+        .filter_map(get_variant!(vk_parse::RegistryChild::Types))
+        .flat_map(|definitions| &definitions.children)
+        .collect();
+
     let constants: Vec<&vkxml::Constant> = spec
         .elements
         .iter()
@@ -2508,8 +2582,19 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     let definition_code: Vec<_> = definitions
         .into_iter()
         .filter_map(|def| {
+            let def2 = definitions2
+                .iter()
+                .filter_map(get_variant!(vk_parse::TypesChild::Type))
+                .find(|def2| match def {
+                    vkxml::DefinitionsElement::Struct(s) => {
+                        def2.name.as_deref() == Some(s.name.as_str())
+                    }
+                    // TODO: Compare the name for more vkxml types
+                    _ => false,
+                });
             generate_definition(
                 def,
+                def2,
                 &union_types,
                 &root_structs,
                 &has_lifetimes,
