@@ -1165,14 +1165,14 @@ static TRAILING_NUMBER: Lazy<Regex> = Lazy::new(|| Regex::new("(\\d+)$").unwrap(
 
 pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
     let variant_name = variant_name.to_uppercase();
-    let _name = enum_name.replace("FlagBits", "");
+    let name = enum_name.replace("FlagBits", "");
     // TODO: Should be read from vk.xml id:2
     // TODO: Also needs to be more robust, vendor names can be substrings from itself, id:4
     // like NVX and NV
     let vendors = [
         "_NVX", "_KHR", "_EXT", "_NV", "_AMD", "_ANDROID", "_GOOGLE", "_INTEL", "_FUCHSIA",
     ];
-    let struct_name = _name.to_shouty_snake_case();
+    let struct_name = name.to_shouty_snake_case();
     let vendor = vendors
         .iter()
         .find(|&vendor| struct_name.ends_with(vendor))
@@ -1251,8 +1251,8 @@ pub fn generate_enum<'a>(
 ) -> EnumType {
     let name = enum_.name.as_ref().unwrap();
     let clean_name = name.strip_prefix("Vk").unwrap();
-    let _name = clean_name.replace("FlagBits", "Flags");
-    let ident = format_ident!("{}", _name.as_str());
+    let clean_name = clean_name.replace("FlagBits", "Flags");
+    let ident = format_ident!("{}", clean_name.as_str());
     let constants = enum_
         .children
         .iter()
@@ -1278,8 +1278,8 @@ pub fn generate_enum<'a>(
 
     let khronos_link = khronos_link(name);
 
-    if clean_name.contains("Bit") {
-        let ident = format_ident!("{}", _name.as_str());
+    if name.contains("Bit") {
+        let ident = format_ident!("{}", clean_name.as_str());
 
         let type_ = if enum_.bitwidth == Some(64u32) {
             quote!(Flags64)
@@ -1302,7 +1302,7 @@ pub fn generate_enum<'a>(
             EnumType::Bitflags(q)
         }
     } else {
-        let (struct_attribute, special_quote) = match _name.as_str() {
+        let (struct_attribute, special_quote) = match clean_name.as_str() {
             //"StructureType" => generate_structure_type(&_name, _enum, create_info_constants),
             "Result" => (quote!(#[must_use]), generate_result(ident.clone(), enum_)),
             _ => (quote!(), quote!()),
@@ -1375,9 +1375,9 @@ fn is_static_array(field: &vkxml::Field) -> bool {
         .map(|ty| matches!(ty, vkxml::ArrayType::Static))
         .unwrap_or(false)
 }
-pub fn derive_default(_struct: &vkxml::Struct, has_lifetime: bool) -> Option<TokenStream> {
-    let name = name_to_tokens(&_struct.name);
-    let members = _struct
+pub fn derive_default(struct_: &vkxml::Struct, has_lifetime: bool) -> Option<TokenStream> {
+    let name = name_to_tokens(&struct_.name);
+    let members = struct_
         .elements
         .iter()
         .filter_map(get_variant!(vkxml::StructElement::Member));
@@ -1445,12 +1445,12 @@ pub fn derive_default(_struct: &vkxml::Struct, has_lifetime: bool) -> Option<Tok
     Some(q)
 }
 pub fn derive_debug(
-    _struct: &vkxml::Struct,
+    struct_: &vkxml::Struct,
     union_types: &HashSet<&str>,
     has_lifetime: bool,
 ) -> Option<TokenStream> {
-    let name = name_to_tokens(&_struct.name);
-    let members = _struct
+    let name = name_to_tokens(&struct_.name);
+    let members = struct_
         .elements
         .iter()
         .filter_map(get_variant!(vkxml::StructElement::Member));
@@ -1806,21 +1806,21 @@ pub fn derive_setters(
 /// like Eq, Hash etc.
 /// To Address some cases, you can add the name of the struct that you
 /// require and add the missing derives yourself.
-pub fn manual_derives(_struct: &vkxml::Struct) -> TokenStream {
-    match _struct.name.as_str() {
+pub fn manual_derives(struct_: &vkxml::Struct) -> TokenStream {
+    match struct_.name.as_str() {
         "VkClearRect" | "VkExtent2D" | "VkExtent3D" | "VkOffset2D" | "VkOffset3D" | "VkRect2D"
         | "VkSurfaceFormatKHR" => quote! {PartialEq, Eq, Hash,},
         _ => quote! {},
     }
 }
 pub fn generate_struct(
-    _struct: &vkxml::Struct,
+    struct_: &vkxml::Struct,
     root_structs: &HashSet<Ident>,
     union_types: &HashSet<&str>,
     has_lifetimes: &HashSet<Ident>,
 ) -> TokenStream {
-    let name = name_to_tokens(&_struct.name);
-    if &_struct.name == "VkTransformMatrixKHR" {
+    let name = name_to_tokens(&struct_.name);
+    if &struct_.name == "VkTransformMatrixKHR" {
         return quote! {
             #[repr(C)]
             #[derive(Copy, Clone)]
@@ -1830,7 +1830,7 @@ pub fn generate_struct(
         };
     }
 
-    if &_struct.name == "VkAccelerationStructureInstanceKHR" {
+    if &struct_.name == "VkAccelerationStructureInstanceKHR" {
         return quote! {
             #[repr(C)]
             #[derive(Copy, Clone)]
@@ -1852,7 +1852,7 @@ pub fn generate_struct(
         };
     }
 
-    if &_struct.name == "VkAccelerationStructureSRTMotionInstanceNV" {
+    if &struct_.name == "VkAccelerationStructureSRTMotionInstanceNV" {
         return quote! {
             #[repr(C)]
             #[derive(Copy, Clone)]
@@ -1869,7 +1869,7 @@ pub fn generate_struct(
         };
     }
 
-    if &_struct.name == "VkAccelerationStructureMatrixMotionInstanceNV" {
+    if &struct_.name == "VkAccelerationStructureMatrixMotionInstanceNV" {
         return quote! {
             #[repr(C)]
             #[derive(Copy, Clone)]
@@ -1886,14 +1886,14 @@ pub fn generate_struct(
         };
     }
 
-    let members = _struct
+    let members = struct_
         .elements
         .iter()
         .filter_map(get_variant!(vkxml::StructElement::Member));
 
     let params = members.clone().map(|field| {
         let param_ident = field.param_ident();
-        let param_ty_tokens = if field.basetype == _struct.name {
+        let param_ty_tokens = if field.basetype == struct_.name {
             let pointer = field
                 .reference
                 .as_ref()
@@ -1915,10 +1915,10 @@ pub fn generate_struct(
         false => (quote!(), quote!()),
     };
 
-    let debug_tokens = derive_debug(_struct, union_types, has_lifetime);
-    let default_tokens = derive_default(_struct, has_lifetime);
-    let setter_tokens = derive_setters(_struct, root_structs, has_lifetimes);
-    let manual_derive_tokens = manual_derives(_struct);
+    let debug_tokens = derive_debug(struct_, union_types, has_lifetime);
+    let default_tokens = derive_default(struct_, has_lifetime);
+    let setter_tokens = derive_setters(struct_, root_structs, has_lifetimes);
+    let manual_derive_tokens = manual_derives(struct_);
     let dbg_str = if debug_tokens.is_none() {
         quote!(#[cfg_attr(feature = "debug", derive(Debug))])
     } else {
@@ -1929,7 +1929,7 @@ pub fn generate_struct(
     } else {
         quote!()
     };
-    let khronos_link = khronos_link(&_struct.name);
+    let khronos_link = khronos_link(&struct_.name);
     quote! {
         #[repr(C)]
         #dbg_str
@@ -2027,8 +2027,8 @@ pub fn root_structs(definitions: &[&vkxml::DefinitionsElement]) -> HashSet<Ident
     let mut root_structs = HashSet::new();
     // Loop over all structs and collect their extends
     for definition in definitions {
-        if let vkxml::DefinitionsElement::Struct(ref _struct) = definition {
-            if let Some(extends) = &_struct.extends {
+        if let vkxml::DefinitionsElement::Struct(ref struct_) = definition {
+            if let Some(extends) = &struct_.extends {
                 root_structs.extend(extends.split(',').map(name_to_tokens));
             }
         };
@@ -2049,8 +2049,8 @@ pub fn generate_definition(
             Some(generate_define(define, identifier_renames))
         }
         vkxml::DefinitionsElement::Typedef(ref typedef) => Some(generate_typedef(typedef)),
-        vkxml::DefinitionsElement::Struct(ref _struct) => Some(generate_struct(
-            _struct,
+        vkxml::DefinitionsElement::Struct(ref struct_) => Some(generate_struct(
+            struct_,
             root_structs,
             union_types,
             has_lifetimes,
