@@ -194,10 +194,12 @@ impl Entry {
         unsafe {
             let mut api_version = 0;
             let enumerate_instance_version: Option<vk::PFN_vkEnumerateInstanceVersion> = {
-                let name = b"vkEnumerateInstanceVersion\0".as_ptr() as *const _;
+                let name = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkEnumerateInstanceVersion\0",
+                );
                 mem::transmute((self.static_fn.get_instance_proc_addr)(
                     vk::Instance::null(),
-                    name,
+                    name.as_ptr(),
                 ))
             };
             if let Some(enumerate_instance_version) = enumerate_instance_version {
