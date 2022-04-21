@@ -1264,29 +1264,31 @@ impl VideoEncodeRateControlModeFlagsKHR {
 pub struct VideoEncodeH264CapabilityFlagsEXT(pub(crate) Flags);
 vk_bitflags_wrapped!(VideoEncodeH264CapabilityFlagsEXT, Flags);
 impl VideoEncodeH264CapabilityFlagsEXT {
-    pub const DIRECT_8X8_INFERENCE: Self = Self(0b1);
-    pub const SEPARATE_COLOUR_PLANE: Self = Self(0b10);
-    pub const QPPRIME_Y_ZERO_TRANSFORM_BYPASS: Self = Self(0b100);
-    pub const SCALING_LISTS: Self = Self(0b1000);
-    pub const HRD_COMPLIANCE: Self = Self(0b1_0000);
-    pub const CHROMA_QP_OFFSET: Self = Self(0b10_0000);
-    pub const SECOND_CHROMA_QP_OFFSET: Self = Self(0b100_0000);
-    pub const PIC_INIT_QP_MINUS26: Self = Self(0b1000_0000);
-    pub const WEIGHTED_PRED: Self = Self(0b1_0000_0000);
-    pub const WEIGHTED_BIPRED_EXPLICIT: Self = Self(0b10_0000_0000);
-    pub const WEIGHTED_BIPRED_IMPLICIT: Self = Self(0b100_0000_0000);
-    pub const WEIGHTED_PRED_NO_TABLE: Self = Self(0b1000_0000_0000);
-    pub const TRANSFORM_8X8: Self = Self(0b1_0000_0000_0000);
-    pub const CABAC: Self = Self(0b10_0000_0000_0000);
-    pub const CAVLC: Self = Self(0b100_0000_0000_0000);
-    pub const DEBLOCKING_FILTER_DISABLED: Self = Self(0b1000_0000_0000_0000);
-    pub const DEBLOCKING_FILTER_ENABLED: Self = Self(0b1_0000_0000_0000_0000);
-    pub const DEBLOCKING_FILTER_PARTIAL: Self = Self(0b10_0000_0000_0000_0000);
-    pub const DISABLE_DIRECT_SPATIAL_MV_PRED: Self = Self(0b100_0000_0000_0000_0000);
-    pub const MULTIPLE_SLICE_PER_FRAME: Self = Self(0b1000_0000_0000_0000_0000);
-    pub const SLICE_MB_COUNT: Self = Self(0b1_0000_0000_0000_0000_0000);
-    pub const ROW_UNALIGNED_SLICE: Self = Self(0b10_0000_0000_0000_0000_0000);
-    pub const DIFFERENT_SLICE_TYPE: Self = Self(0b100_0000_0000_0000_0000_0000);
+    pub const DIRECT_8X8_INFERENCE_ENABLED: Self = Self(0b1);
+    pub const DIRECT_8X8_INFERENCE_DISABLED: Self = Self(0b10);
+    pub const SEPARATE_COLOUR_PLANE: Self = Self(0b100);
+    pub const QPPRIME_Y_ZERO_TRANSFORM_BYPASS: Self = Self(0b1000);
+    pub const SCALING_LISTS: Self = Self(0b1_0000);
+    pub const HRD_COMPLIANCE: Self = Self(0b10_0000);
+    pub const CHROMA_QP_OFFSET: Self = Self(0b100_0000);
+    pub const SECOND_CHROMA_QP_OFFSET: Self = Self(0b1000_0000);
+    pub const PIC_INIT_QP_MINUS26: Self = Self(0b1_0000_0000);
+    pub const WEIGHTED_PRED: Self = Self(0b10_0000_0000);
+    pub const WEIGHTED_BIPRED_EXPLICIT: Self = Self(0b100_0000_0000);
+    pub const WEIGHTED_BIPRED_IMPLICIT: Self = Self(0b1000_0000_0000);
+    pub const WEIGHTED_PRED_NO_TABLE: Self = Self(0b1_0000_0000_0000);
+    pub const TRANSFORM_8X8: Self = Self(0b10_0000_0000_0000);
+    pub const CABAC: Self = Self(0b100_0000_0000_0000);
+    pub const CAVLC: Self = Self(0b1000_0000_0000_0000);
+    pub const DEBLOCKING_FILTER_DISABLED: Self = Self(0b1_0000_0000_0000_0000);
+    pub const DEBLOCKING_FILTER_ENABLED: Self = Self(0b10_0000_0000_0000_0000);
+    pub const DEBLOCKING_FILTER_PARTIAL: Self = Self(0b100_0000_0000_0000_0000);
+    pub const DISABLE_DIRECT_SPATIAL_MV_PRED: Self = Self(0b1000_0000_0000_0000_0000);
+    pub const MULTIPLE_SLICE_PER_FRAME: Self = Self(0b1_0000_0000_0000_0000_0000);
+    pub const SLICE_MB_COUNT: Self = Self(0b10_0000_0000_0000_0000_0000);
+    pub const ROW_UNALIGNED_SLICE: Self = Self(0b100_0000_0000_0000_0000_0000);
+    pub const DIFFERENT_SLICE_TYPE: Self = Self(0b1000_0000_0000_0000_0000_0000);
+    pub const B_FRAME_IN_L1_LIST: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]

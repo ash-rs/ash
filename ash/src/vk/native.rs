@@ -4712,7 +4712,6 @@ pub struct StdVideoH265SequenceParameterSet {
     pub bit_depth_luma_minus8: u8,
     pub bit_depth_chroma_minus8: u8,
     pub log2_max_pic_order_cnt_lsb_minus4: u8,
-    pub sps_max_dec_pic_buffering_minus1: [u8; 8usize],
     pub log2_min_luma_coding_block_size_minus3: u8,
     pub log2_diff_max_min_luma_coding_block_size: u8,
     pub log2_min_luma_transform_block_size_minus2: u8,
@@ -4742,7 +4741,7 @@ pub struct StdVideoH265SequenceParameterSet {
 fn bindgen_test_layout_StdVideoH265SequenceParameterSet() {
     assert_eq!(
         ::std::mem::size_of::<StdVideoH265SequenceParameterSet>(),
-        104usize,
+        96usize,
         concat!("Size of: ", stringify!(StdVideoH265SequenceParameterSet))
     );
     assert_eq!(
@@ -4911,22 +4910,9 @@ fn bindgen_test_layout_StdVideoH265SequenceParameterSet() {
     assert_eq!(
         unsafe {
             &(*(::std::ptr::null::<StdVideoH265SequenceParameterSet>()))
-                .sps_max_dec_pic_buffering_minus1 as *const _ as usize
-        },
-        27usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(StdVideoH265SequenceParameterSet),
-            "::",
-            stringify!(sps_max_dec_pic_buffering_minus1)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<StdVideoH265SequenceParameterSet>()))
                 .log2_min_luma_coding_block_size_minus3 as *const _ as usize
         },
-        35usize,
+        27usize,
         concat!(
             "Offset of field: ",
             stringify!(StdVideoH265SequenceParameterSet),
@@ -4939,7 +4925,7 @@ fn bindgen_test_layout_StdVideoH265SequenceParameterSet() {
             &(*(::std::ptr::null::<StdVideoH265SequenceParameterSet>()))
                 .log2_diff_max_min_luma_coding_block_size as *const _ as usize
         },
-        36usize,
+        28usize,
         concat!(
             "Offset of field: ",
             stringify!(StdVideoH265SequenceParameterSet),
@@ -4952,7 +4938,7 @@ fn bindgen_test_layout_StdVideoH265SequenceParameterSet() {
             &(*(::std::ptr::null::<StdVideoH265SequenceParameterSet>()))
                 .log2_min_luma_transform_block_size_minus2 as *const _ as usize
         },
-        37usize,
+        29usize,
         concat!(
             "Offset of field: ",
             stringify!(StdVideoH265SequenceParameterSet),
@@ -4965,7 +4951,7 @@ fn bindgen_test_layout_StdVideoH265SequenceParameterSet() {
             &(*(::std::ptr::null::<StdVideoH265SequenceParameterSet>()))
                 .log2_diff_max_min_luma_transform_block_size as *const _ as usize
         },
-        38usize,
+        30usize,
         concat!(
             "Offset of field: ",
             stringify!(StdVideoH265SequenceParameterSet),
@@ -4978,7 +4964,7 @@ fn bindgen_test_layout_StdVideoH265SequenceParameterSet() {
             &(*(::std::ptr::null::<StdVideoH265SequenceParameterSet>()))
                 .max_transform_hierarchy_depth_inter as *const _ as usize
         },
-        39usize,
+        31usize,
         concat!(
             "Offset of field: ",
             stringify!(StdVideoH265SequenceParameterSet),
@@ -4991,7 +4977,7 @@ fn bindgen_test_layout_StdVideoH265SequenceParameterSet() {
             &(*(::std::ptr::null::<StdVideoH265SequenceParameterSet>()))
                 .max_transform_hierarchy_depth_intra as *const _ as usize
         },
-        40usize,
+        32usize,
         concat!(
             "Offset of field: ",
             stringify!(StdVideoH265SequenceParameterSet),
@@ -5004,7 +4990,7 @@ fn bindgen_test_layout_StdVideoH265SequenceParameterSet() {
             &(*(::std::ptr::null::<StdVideoH265SequenceParameterSet>())).num_short_term_ref_pic_sets
                 as *const _ as usize
         },
-        41usize,
+        33usize,
         concat!(
             "Offset of field: ",
             stringify!(StdVideoH265SequenceParameterSet),
@@ -5017,7 +5003,7 @@ fn bindgen_test_layout_StdVideoH265SequenceParameterSet() {
             &(*(::std::ptr::null::<StdVideoH265SequenceParameterSet>())).num_long_term_ref_pics_sps
                 as *const _ as usize
         },
-        42usize,
+        34usize,
         concat!(
             "Offset of field: ",
             stringify!(StdVideoH265SequenceParameterSet),
@@ -5030,7 +5016,7 @@ fn bindgen_test_layout_StdVideoH265SequenceParameterSet() {
             &(*(::std::ptr::null::<StdVideoH265SequenceParameterSet>()))
                 .pcm_sample_bit_depth_luma_minus1 as *const _ as usize
         },
-        43usize,
+        35usize,
         concat!(
             "Offset of field: ",
             stringify!(StdVideoH265SequenceParameterSet),
@@ -5043,7 +5029,7 @@ fn bindgen_test_layout_StdVideoH265SequenceParameterSet() {
             &(*(::std::ptr::null::<StdVideoH265SequenceParameterSet>()))
                 .pcm_sample_bit_depth_chroma_minus1 as *const _ as usize
         },
-        44usize,
+        36usize,
         concat!(
             "Offset of field: ",
             stringify!(StdVideoH265SequenceParameterSet),
@@ -5056,7 +5042,7 @@ fn bindgen_test_layout_StdVideoH265SequenceParameterSet() {
             &(*(::std::ptr::null::<StdVideoH265SequenceParameterSet>()))
                 .log2_min_pcm_luma_coding_block_size_minus3 as *const _ as usize
         },
-        45usize,
+        37usize,
         concat!(
             "Offset of field: ",
             stringify!(StdVideoH265SequenceParameterSet),
@@ -5069,7 +5055,7 @@ fn bindgen_test_layout_StdVideoH265SequenceParameterSet() {
             &(*(::std::ptr::null::<StdVideoH265SequenceParameterSet>()))
                 .log2_diff_max_min_pcm_luma_coding_block_size as *const _ as usize
         },
-        46usize,
+        38usize,
         concat!(
             "Offset of field: ",
             stringify!(StdVideoH265SequenceParameterSet),
@@ -5082,7 +5068,7 @@ fn bindgen_test_layout_StdVideoH265SequenceParameterSet() {
             &(*(::std::ptr::null::<StdVideoH265SequenceParameterSet>())).conf_win_left_offset
                 as *const _ as usize
         },
-        48usize,
+        40usize,
         concat!(
             "Offset of field: ",
             stringify!(StdVideoH265SequenceParameterSet),
@@ -5095,7 +5081,7 @@ fn bindgen_test_layout_StdVideoH265SequenceParameterSet() {
             &(*(::std::ptr::null::<StdVideoH265SequenceParameterSet>())).conf_win_right_offset
                 as *const _ as usize
         },
-        52usize,
+        44usize,
         concat!(
             "Offset of field: ",
             stringify!(StdVideoH265SequenceParameterSet),
@@ -5108,7 +5094,7 @@ fn bindgen_test_layout_StdVideoH265SequenceParameterSet() {
             &(*(::std::ptr::null::<StdVideoH265SequenceParameterSet>())).conf_win_top_offset
                 as *const _ as usize
         },
-        56usize,
+        48usize,
         concat!(
             "Offset of field: ",
             stringify!(StdVideoH265SequenceParameterSet),
@@ -5121,7 +5107,7 @@ fn bindgen_test_layout_StdVideoH265SequenceParameterSet() {
             &(*(::std::ptr::null::<StdVideoH265SequenceParameterSet>())).conf_win_bottom_offset
                 as *const _ as usize
         },
-        60usize,
+        52usize,
         concat!(
             "Offset of field: ",
             stringify!(StdVideoH265SequenceParameterSet),
@@ -5134,7 +5120,7 @@ fn bindgen_test_layout_StdVideoH265SequenceParameterSet() {
             &(*(::std::ptr::null::<StdVideoH265SequenceParameterSet>())).pDecPicBufMgr as *const _
                 as usize
         },
-        64usize,
+        56usize,
         concat!(
             "Offset of field: ",
             stringify!(StdVideoH265SequenceParameterSet),
@@ -5147,7 +5133,7 @@ fn bindgen_test_layout_StdVideoH265SequenceParameterSet() {
             &(*(::std::ptr::null::<StdVideoH265SequenceParameterSet>())).pScalingLists as *const _
                 as usize
         },
-        72usize,
+        64usize,
         concat!(
             "Offset of field: ",
             stringify!(StdVideoH265SequenceParameterSet),
@@ -5160,7 +5146,7 @@ fn bindgen_test_layout_StdVideoH265SequenceParameterSet() {
             &(*(::std::ptr::null::<StdVideoH265SequenceParameterSet>())).pSequenceParameterSetVui
                 as *const _ as usize
         },
-        80usize,
+        72usize,
         concat!(
             "Offset of field: ",
             stringify!(StdVideoH265SequenceParameterSet),
@@ -5173,7 +5159,7 @@ fn bindgen_test_layout_StdVideoH265SequenceParameterSet() {
             &(*(::std::ptr::null::<StdVideoH265SequenceParameterSet>())).palette_max_size
                 as *const _ as usize
         },
-        88usize,
+        80usize,
         concat!(
             "Offset of field: ",
             stringify!(StdVideoH265SequenceParameterSet),
@@ -5186,7 +5172,7 @@ fn bindgen_test_layout_StdVideoH265SequenceParameterSet() {
             &(*(::std::ptr::null::<StdVideoH265SequenceParameterSet>()))
                 .delta_palette_max_predictor_size as *const _ as usize
         },
-        89usize,
+        81usize,
         concat!(
             "Offset of field: ",
             stringify!(StdVideoH265SequenceParameterSet),
@@ -5199,7 +5185,7 @@ fn bindgen_test_layout_StdVideoH265SequenceParameterSet() {
             &(*(::std::ptr::null::<StdVideoH265SequenceParameterSet>()))
                 .motion_vector_resolution_control_idc as *const _ as usize
         },
-        90usize,
+        82usize,
         concat!(
             "Offset of field: ",
             stringify!(StdVideoH265SequenceParameterSet),
@@ -5212,7 +5198,7 @@ fn bindgen_test_layout_StdVideoH265SequenceParameterSet() {
             &(*(::std::ptr::null::<StdVideoH265SequenceParameterSet>()))
                 .sps_num_palette_predictor_initializer_minus1 as *const _ as usize
         },
-        91usize,
+        83usize,
         concat!(
             "Offset of field: ",
             stringify!(StdVideoH265SequenceParameterSet),
@@ -5225,7 +5211,7 @@ fn bindgen_test_layout_StdVideoH265SequenceParameterSet() {
             &(*(::std::ptr::null::<StdVideoH265SequenceParameterSet>())).pPredictorPaletteEntries
                 as *const _ as usize
         },
-        96usize,
+        88usize,
         concat!(
             "Offset of field: ",
             stringify!(StdVideoH265SequenceParameterSet),

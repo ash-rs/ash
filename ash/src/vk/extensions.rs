@@ -3047,7 +3047,7 @@ impl ExtVideoEncodeH264Fn {
     pub const fn name() -> &'static ::std::ffi::CStr {
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_encode_h264\0") }
     }
-    pub const SPEC_VERSION: u32 = 6u32;
+    pub const SPEC_VERSION: u32 = 7u32;
 }
 #[derive(Clone)]
 pub struct ExtVideoEncodeH264Fn {}
@@ -17730,6 +17730,11 @@ impl ExtExtension340Fn {
 impl ImageUsageFlags {
     pub const RESERVED_19_EXT: Self = Self(0b1000_0000_0000_0000_0000);
 }
+#[doc = "Generated from 'VK_EXT_extension_340'"]
+impl PipelineCreateFlags {
+    pub const RESERVED_25_EXT: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
+    pub const RESERVED_26_EXT: Self = Self(0b100_0000_0000_0000_0000_0000_0000);
+}
 impl Ext4444FormatsFn {
     pub const fn name() -> &'static ::std::ffi::CStr {
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_4444_formats\0") }
@@ -19027,7 +19032,6 @@ impl ExternalFenceHandleTypeFlags {
 #[doc = "Generated from 'VK_NV_extension_374'"]
 impl ExternalSemaphoreHandleTypeFlags {
     pub const RESERVED_5_NV: Self = Self(0b10_0000);
-    pub const RESERVED_6_NV: Self = Self(0b100_0000);
 }
 impl NvExtension375Fn {
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -21421,6 +21425,24 @@ pub struct ExtExtension468Fn {}
 unsafe impl Send for ExtExtension468Fn {}
 unsafe impl Sync for ExtExtension468Fn {}
 impl ExtExtension468Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl AndroidExtension469Fn {
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_ANDROID_extension_469\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct AndroidExtension469Fn {}
+unsafe impl Send for AndroidExtension469Fn {}
+unsafe impl Sync for AndroidExtension469Fn {}
+impl AndroidExtension469Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,

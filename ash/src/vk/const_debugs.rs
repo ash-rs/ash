@@ -1576,10 +1576,6 @@ impl fmt::Debug for ExternalSemaphoreHandleTypeFlags {
                 ExternalSemaphoreHandleTypeFlags::RESERVED_5_NV.0,
                 "RESERVED_5_NV",
             ),
-            (
-                ExternalSemaphoreHandleTypeFlags::RESERVED_6_NV.0,
-                "RESERVED_6_NV",
-            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -2908,6 +2904,8 @@ impl fmt::Debug for PipelineCreateFlags {
                 PipelineCreateFlags::RAY_TRACING_ALLOW_MOTION_NV.0,
                 "RAY_TRACING_ALLOW_MOTION_NV",
             ),
+            (PipelineCreateFlags::RESERVED_25_EXT.0, "RESERVED_25_EXT"),
+            (PipelineCreateFlags::RESERVED_26_EXT.0, "RESERVED_26_EXT"),
             (PipelineCreateFlags::RESERVED_24_NV.0, "RESERVED_24_NV"),
             (
                 PipelineCreateFlags::VIEW_INDEX_FROM_DEVICE_INDEX.0,
@@ -5784,8 +5782,12 @@ impl fmt::Debug for VideoEncodeH264CapabilityFlagsEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                VideoEncodeH264CapabilityFlagsEXT::DIRECT_8X8_INFERENCE.0,
-                "DIRECT_8X8_INFERENCE",
+                VideoEncodeH264CapabilityFlagsEXT::DIRECT_8X8_INFERENCE_ENABLED.0,
+                "DIRECT_8X8_INFERENCE_ENABLED",
+            ),
+            (
+                VideoEncodeH264CapabilityFlagsEXT::DIRECT_8X8_INFERENCE_DISABLED.0,
+                "DIRECT_8X8_INFERENCE_DISABLED",
             ),
             (
                 VideoEncodeH264CapabilityFlagsEXT::SEPARATE_COLOUR_PLANE.0,
@@ -5868,6 +5870,10 @@ impl fmt::Debug for VideoEncodeH264CapabilityFlagsEXT {
             (
                 VideoEncodeH264CapabilityFlagsEXT::DIFFERENT_SLICE_TYPE.0,
                 "DIFFERENT_SLICE_TYPE",
+            ),
+            (
+                VideoEncodeH264CapabilityFlagsEXT::B_FRAME_IN_L1_LIST.0,
+                "B_FRAME_IN_L1_LIST",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
