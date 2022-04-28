@@ -12,6 +12,7 @@ pub use self::headless_surface::HeadlessSurface;
 pub use self::metal_surface::MetalSurface;
 pub use self::physical_device_drm::PhysicalDeviceDrm;
 pub use self::private_data::PrivateData;
+pub use self::sample_locations::SampleLocations;
 pub use self::tooling_info::ToolingInfo;
 
 mod buffer_device_address;
@@ -28,4 +29,5 @@ mod headless_surface;
 mod metal_surface;
 mod physical_device_drm;
 mod private_data;
+mod sample_locations;
 mod tooling_info;
