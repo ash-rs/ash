@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Update Vulkan-Headers to 1.3.211 (#605, #608)
+- Added `VK_EXT_image_drm_format_modifier` device extension (#603)
 
 ### Removed
 
