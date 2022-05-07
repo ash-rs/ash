@@ -1460,15 +1460,9 @@ pub fn derive_default(struct_: &vkxml::Struct, has_lifetime: bool) -> Option<Tok
     let default_fields = members.clone().map(|field| {
         let param_ident = field.param_ident();
         if is_structure_type(field) {
-            let ty = field
-                .type_enums
-                .as_ref()
-                .and_then(|ty| ty.split(',').next());
-            if let Some(variant) = ty {
-                let variant_ident = variant_ident("VkStructureType", variant);
-
+            if field.type_enums.is_some() {
                 quote! {
-                    #param_ident: StructureType::#variant_ident
+                    #param_ident: Self::STRUCTURE_TYPE
                 }
             } else {
                 quote! {

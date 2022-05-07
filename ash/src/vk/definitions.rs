@@ -959,7 +959,7 @@ impl ::std::default::Default for ApplicationInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::APPLICATION_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             p_application_name: ::std::ptr::null(),
             application_version: u32::default(),
@@ -1103,7 +1103,7 @@ impl ::std::default::Default for DeviceQueueCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEVICE_QUEUE_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: DeviceQueueCreateFlags::default(),
             queue_family_index: u32::default(),
@@ -1170,7 +1170,7 @@ impl ::std::default::Default for DeviceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEVICE_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: DeviceCreateFlags::default(),
             queue_create_info_count: u32::default(),
@@ -1251,7 +1251,7 @@ impl ::std::default::Default for InstanceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::INSTANCE_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: InstanceCreateFlags::default(),
             p_application_info: ::std::ptr::null(),
@@ -1398,7 +1398,7 @@ impl ::std::default::Default for MemoryAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::MEMORY_ALLOCATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             allocation_size: DeviceSize::default(),
             memory_type_index: u32::default(),
@@ -1582,7 +1582,7 @@ impl ::std::default::Default for MappedMemoryRange<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::MAPPED_MEMORY_RANGE,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             memory: DeviceMemory::default(),
             offset: DeviceSize::default(),
@@ -1748,7 +1748,7 @@ impl ::std::default::Default for WriteDescriptorSet<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::WRITE_DESCRIPTOR_SET,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             dst_set: DescriptorSet::default(),
             dst_binding: u32::default(),
@@ -1840,7 +1840,7 @@ impl ::std::default::Default for CopyDescriptorSet<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::COPY_DESCRIPTOR_SET,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             src_set: DescriptorSet::default(),
             src_binding: u32::default(),
@@ -1912,7 +1912,7 @@ impl ::std::default::Default for BufferCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::BUFFER_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: BufferCreateFlags::default(),
             size: DeviceSize::default(),
@@ -1988,7 +1988,7 @@ impl ::std::default::Default for BufferViewCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::BUFFER_VIEW_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: BufferViewCreateFlags::default(),
             buffer: Buffer::default(),
@@ -2155,7 +2155,7 @@ impl ::std::default::Default for MemoryBarrier<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::MEMORY_BARRIER,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             src_access_mask: AccessFlags::default(),
             dst_access_mask: AccessFlags::default(),
@@ -2198,7 +2198,7 @@ impl ::std::default::Default for BufferMemoryBarrier<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::BUFFER_MEMORY_BARRIER,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             src_access_mask: AccessFlags::default(),
             dst_access_mask: AccessFlags::default(),
@@ -2272,7 +2272,7 @@ impl ::std::default::Default for ImageMemoryBarrier<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMAGE_MEMORY_BARRIER,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             src_access_mask: AccessFlags::default(),
             dst_access_mask: AccessFlags::default(),
@@ -2372,7 +2372,7 @@ impl ::std::default::Default for ImageCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMAGE_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: ImageCreateFlags::default(),
             image_type: ImageType::default(),
@@ -2529,7 +2529,7 @@ impl ::std::default::Default for ImageViewCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMAGE_VIEW_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: ImageViewCreateFlags::default(),
             image: Image::default(),
@@ -2824,7 +2824,7 @@ impl ::std::default::Default for BindSparseInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::BIND_SPARSE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             wait_semaphore_count: u32::default(),
             p_wait_semaphores: ::std::ptr::null(),
@@ -3072,7 +3072,7 @@ impl ::std::default::Default for ShaderModuleCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SHADER_MODULE_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: ShaderModuleCreateFlags::default(),
             code_size: usize::default(),
@@ -3182,7 +3182,7 @@ impl ::std::default::Default for DescriptorSetLayoutCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DESCRIPTOR_SET_LAYOUT_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: DescriptorSetLayoutCreateFlags::default(),
             binding_count: u32::default(),
@@ -3259,7 +3259,7 @@ impl ::std::default::Default for DescriptorPoolCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DESCRIPTOR_POOL_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: DescriptorPoolCreateFlags::default(),
             max_sets: u32::default(),
@@ -3321,7 +3321,7 @@ impl ::std::default::Default for DescriptorSetAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DESCRIPTOR_SET_ALLOCATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             descriptor_pool: DescriptorPool::default(),
             descriptor_set_count: u32::default(),
@@ -3442,7 +3442,7 @@ impl ::std::default::Default for PipelineShaderStageCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_SHADER_STAGE_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: PipelineShaderStageCreateFlags::default(),
             stage: ShaderStageFlags::default(),
@@ -3516,7 +3516,7 @@ impl ::std::default::Default for ComputePipelineCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::COMPUTE_PIPELINE_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: PipelineCreateFlags::default(),
             stage: PipelineShaderStageCreateInfo::default(),
@@ -3648,7 +3648,7 @@ impl ::std::default::Default for PipelineVertexInputStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: PipelineVertexInputStateCreateFlags::default(),
             vertex_binding_description_count: u32::default(),
@@ -3721,7 +3721,7 @@ impl ::std::default::Default for PipelineInputAssemblyStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: PipelineInputAssemblyStateCreateFlags::default(),
             topology: PrimitiveTopology::default(),
@@ -3765,7 +3765,7 @@ impl ::std::default::Default for PipelineTessellationStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_TESSELLATION_STATE_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: PipelineTessellationStateCreateFlags::default(),
             patch_control_points: u32::default(),
@@ -3824,7 +3824,7 @@ impl ::std::default::Default for PipelineViewportStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_VIEWPORT_STATE_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: PipelineViewportStateCreateFlags::default(),
             viewport_count: u32::default(),
@@ -3906,7 +3906,7 @@ impl ::std::default::Default for PipelineRasterizationStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_RASTERIZATION_STATE_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: PipelineRasterizationStateCreateFlags::default(),
             depth_clamp_enable: Bool32::default(),
@@ -4021,7 +4021,7 @@ impl ::std::default::Default for PipelineMultisampleStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_MULTISAMPLE_STATE_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: PipelineMultisampleStateCreateFlags::default(),
             rasterization_samples: SampleCountFlags::default(),
@@ -4176,7 +4176,7 @@ impl ::std::default::Default for PipelineColorBlendStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_COLOR_BLEND_STATE_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: PipelineColorBlendStateCreateFlags::default(),
             logic_op_enable: Bool32::default(),
@@ -4253,7 +4253,7 @@ impl ::std::default::Default for PipelineDynamicStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_DYNAMIC_STATE_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: PipelineDynamicStateCreateFlags::default(),
             dynamic_state_count: u32::default(),
@@ -4351,7 +4351,7 @@ impl ::std::default::Default for PipelineDepthStencilStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: PipelineDepthStencilStateCreateFlags::default(),
             depth_test_enable: Bool32::default(),
@@ -4452,7 +4452,7 @@ impl ::std::default::Default for GraphicsPipelineCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::GRAPHICS_PIPELINE_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: PipelineCreateFlags::default(),
             stage_count: u32::default(),
@@ -4616,7 +4616,7 @@ impl ::std::default::Default for PipelineCacheCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_CACHE_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: PipelineCacheCreateFlags::default(),
             initial_data_size: usize::default(),
@@ -4735,7 +4735,7 @@ impl ::std::default::Default for PipelineLayoutCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_LAYOUT_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: PipelineLayoutCreateFlags::default(),
             set_layout_count: u32::default(),
@@ -4797,7 +4797,7 @@ impl ::std::default::Default for SamplerCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SAMPLER_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: SamplerCreateFlags::default(),
             mag_filter: Filter::default(),
@@ -4934,7 +4934,7 @@ impl ::std::default::Default for CommandPoolCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::COMMAND_POOL_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: CommandPoolCreateFlags::default(),
             queue_family_index: u32::default(),
@@ -4973,7 +4973,7 @@ impl ::std::default::Default for CommandBufferAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::COMMAND_BUFFER_ALLOCATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             command_pool: CommandPool::default(),
             level: CommandBufferLevel::default(),
@@ -5021,7 +5021,7 @@ impl ::std::default::Default for CommandBufferInheritanceInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::COMMAND_BUFFER_INHERITANCE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             render_pass: RenderPass::default(),
             subpass: u32::default(),
@@ -5098,7 +5098,7 @@ impl ::std::default::Default for CommandBufferBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::COMMAND_BUFFER_BEGIN_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: CommandBufferUsageFlags::default(),
             p_inheritance_info: ::std::ptr::null(),
@@ -5170,7 +5170,7 @@ impl ::std::default::Default for RenderPassBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::RENDER_PASS_BEGIN_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             render_pass: RenderPass::default(),
             framebuffer: Framebuffer::default(),
@@ -5535,7 +5535,7 @@ impl ::std::default::Default for RenderPassCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::RENDER_PASS_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: RenderPassCreateFlags::default(),
             attachment_count: u32::default(),
@@ -5605,7 +5605,7 @@ impl ::std::default::Default for EventCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::EVENT_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: EventCreateFlags::default(),
             _marker: PhantomData,
@@ -5651,7 +5651,7 @@ impl ::std::default::Default for FenceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::FENCE_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: FenceCreateFlags::default(),
             _marker: PhantomData,
@@ -7009,7 +7009,7 @@ impl ::std::default::Default for SemaphoreCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SEMAPHORE_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: SemaphoreCreateFlags::default(),
             _marker: PhantomData,
@@ -7058,7 +7058,7 @@ impl ::std::default::Default for QueryPoolCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::QUERY_POOL_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: QueryPoolCreateFlags::default(),
             query_type: QueryType::default(),
@@ -7128,7 +7128,7 @@ impl ::std::default::Default for FramebufferCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::FRAMEBUFFER_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: FramebufferCreateFlags::default(),
             render_pass: RenderPass::default(),
@@ -7354,7 +7354,7 @@ impl ::std::default::Default for SubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SUBMIT_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             wait_semaphore_count: u32::default(),
             p_wait_semaphores: ::std::ptr::null(),
@@ -7552,7 +7552,7 @@ impl ::std::default::Default for DisplayModeCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DISPLAY_MODE_CREATE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: DisplayModeCreateFlagsKHR::default(),
             parameters: DisplayModeParametersKHR::default(),
@@ -7658,7 +7658,7 @@ impl ::std::default::Default for DisplaySurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DISPLAY_SURFACE_CREATE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: DisplaySurfaceCreateFlagsKHR::default(),
             display_mode: DisplayModeKHR::default(),
@@ -7733,7 +7733,7 @@ impl ::std::default::Default for DisplayPresentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DISPLAY_PRESENT_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             src_rect: Rect2D::default(),
             dst_rect: Rect2D::default(),
@@ -7849,7 +7849,7 @@ impl ::std::default::Default for AndroidSurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::ANDROID_SURFACE_CREATE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: AndroidSurfaceCreateFlagsKHR::default(),
             window: ::std::ptr::null_mut(),
@@ -7887,7 +7887,7 @@ impl ::std::default::Default for ViSurfaceCreateInfoNN<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VI_SURFACE_CREATE_INFO_NN,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: ViSurfaceCreateFlagsNN::default(),
             window: ::std::ptr::null_mut(),
@@ -7926,7 +7926,7 @@ impl ::std::default::Default for WaylandSurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::WAYLAND_SURFACE_CREATE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: WaylandSurfaceCreateFlagsKHR::default(),
             display: ::std::ptr::null_mut(),
@@ -7971,7 +7971,7 @@ impl ::std::default::Default for Win32SurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::WIN32_SURFACE_CREATE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: Win32SurfaceCreateFlagsKHR::default(),
             hinstance: unsafe { ::std::mem::zeroed() },
@@ -8016,7 +8016,7 @@ impl ::std::default::Default for XlibSurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::XLIB_SURFACE_CREATE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: XlibSurfaceCreateFlagsKHR::default(),
             dpy: ::std::ptr::null_mut(),
@@ -8061,7 +8061,7 @@ impl ::std::default::Default for XcbSurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::XCB_SURFACE_CREATE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: XcbSurfaceCreateFlagsKHR::default(),
             connection: ::std::ptr::null_mut(),
@@ -8106,7 +8106,7 @@ impl ::std::default::Default for DirectFBSurfaceCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DIRECTFB_SURFACE_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: DirectFBSurfaceCreateFlagsEXT::default(),
             dfb: ::std::ptr::null_mut(),
@@ -8150,7 +8150,7 @@ impl ::std::default::Default for ImagePipeSurfaceCreateInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMAGEPIPE_SURFACE_CREATE_INFO_FUCHSIA,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: ImagePipeSurfaceCreateFlagsFUCHSIA::default(),
             image_pipe_handle: zx_handle_t::default(),
@@ -8188,7 +8188,7 @@ impl ::std::default::Default for StreamDescriptorSurfaceCreateInfoGGP<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::STREAM_DESCRIPTOR_SURFACE_CREATE_INFO_GGP,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: StreamDescriptorSurfaceCreateFlagsGGP::default(),
             stream_descriptor: GgpStreamDescriptor::default(),
@@ -8227,7 +8227,7 @@ impl ::std::default::Default for ScreenSurfaceCreateInfoQNX<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SCREEN_SURFACE_CREATE_INFO_QNX,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: ScreenSurfaceCreateFlagsQNX::default(),
             context: ::std::ptr::null_mut(),
@@ -8305,7 +8305,7 @@ impl ::std::default::Default for SwapchainCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SWAPCHAIN_CREATE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: SwapchainCreateFlagsKHR::default(),
             surface: SurfaceKHR::default(),
@@ -8442,7 +8442,7 @@ impl ::std::default::Default for PresentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PRESENT_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             wait_semaphore_count: u32::default(),
             p_wait_semaphores: ::std::ptr::null(),
@@ -8525,7 +8525,7 @@ impl ::std::default::Default for DebugReportCallbackCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: DebugReportFlagsEXT::default(),
             pfn_callback: PFN_vkDebugReportCallbackEXT::default(),
@@ -8570,7 +8570,7 @@ impl ::std::default::Default for ValidationFlagsEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VALIDATION_FLAGS_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             disabled_validation_check_count: u32::default(),
             p_disabled_validation_checks: ::std::ptr::null(),
@@ -8610,7 +8610,7 @@ impl ::std::default::Default for ValidationFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VALIDATION_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             enabled_validation_feature_count: u32::default(),
             p_enabled_validation_features: ::std::ptr::null(),
@@ -8658,7 +8658,7 @@ impl ::std::default::Default for PipelineRasterizationStateRasterizationOrderAMD
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_RASTERIZATION_STATE_RASTERIZATION_ORDER_AMD,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             rasterization_order: RasterizationOrderAMD::default(),
             _marker: PhantomData,
@@ -8696,7 +8696,7 @@ impl ::std::default::Default for DebugMarkerObjectNameInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEBUG_MARKER_OBJECT_NAME_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             object_type: DebugReportObjectTypeEXT::default(),
             object: u64::default(),
@@ -8743,7 +8743,7 @@ impl ::std::default::Default for DebugMarkerObjectTagInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEBUG_MARKER_OBJECT_TAG_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             object_type: DebugReportObjectTypeEXT::default(),
             object: u64::default(),
@@ -8795,7 +8795,7 @@ impl ::std::default::Default for DebugMarkerMarkerInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEBUG_MARKER_MARKER_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             p_marker_name: ::std::ptr::null(),
             color: unsafe { ::std::mem::zeroed() },
@@ -8832,7 +8832,7 @@ impl ::std::default::Default for DedicatedAllocationImageCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEDICATED_ALLOCATION_IMAGE_CREATE_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             dedicated_allocation: Bool32::default(),
             _marker: PhantomData,
@@ -8864,7 +8864,7 @@ impl ::std::default::Default for DedicatedAllocationBufferCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEDICATED_ALLOCATION_BUFFER_CREATE_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             dedicated_allocation: Bool32::default(),
             _marker: PhantomData,
@@ -8897,7 +8897,7 @@ impl ::std::default::Default for DedicatedAllocationMemoryAllocateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEDICATED_ALLOCATION_MEMORY_ALLOCATE_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             image: Image::default(),
             buffer: Buffer::default(),
@@ -8980,7 +8980,7 @@ impl ::std::default::Default for ExternalMemoryImageCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::EXTERNAL_MEMORY_IMAGE_CREATE_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             handle_types: ExternalMemoryHandleTypeFlagsNV::default(),
             _marker: PhantomData,
@@ -9012,7 +9012,7 @@ impl ::std::default::Default for ExportMemoryAllocateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::EXPORT_MEMORY_ALLOCATE_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             handle_types: ExternalMemoryHandleTypeFlagsNV::default(),
             _marker: PhantomData,
@@ -9045,7 +9045,7 @@ impl ::std::default::Default for ImportMemoryWin32HandleInfoNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMPORT_MEMORY_WIN32_HANDLE_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             handle_type: ExternalMemoryHandleTypeFlagsNV::default(),
             handle: unsafe { ::std::mem::zeroed() },
@@ -9084,7 +9084,7 @@ impl ::std::default::Default for ExportMemoryWin32HandleInfoNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::EXPORT_MEMORY_WIN32_HANDLE_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             p_attributes: ::std::ptr::null(),
             dw_access: DWORD::default(),
@@ -9128,7 +9128,7 @@ impl ::std::default::Default for Win32KeyedMutexAcquireReleaseInfoNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             acquire_count: u32::default(),
             p_acquire_syncs: ::std::ptr::null(),
@@ -9192,7 +9192,7 @@ impl ::std::default::Default for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_FEATURES_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             device_generated_commands: Bool32::default(),
             _marker: PhantomData,
@@ -9226,7 +9226,7 @@ impl ::std::default::Default for DevicePrivateDataCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEVICE_PRIVATE_DATA_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             private_data_slot_request_count: u32::default(),
             _marker: PhantomData,
@@ -9258,7 +9258,7 @@ impl ::std::default::Default for PrivateDataSlotCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PRIVATE_DATA_SLOT_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: PrivateDataSlotCreateFlags::default(),
             _marker: PhantomData,
@@ -9289,7 +9289,7 @@ impl ::std::default::Default for PhysicalDevicePrivateDataFeatures<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_PRIVATE_DATA_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             private_data: Bool32::default(),
             _marker: PhantomData,
@@ -9330,7 +9330,7 @@ impl ::std::default::Default for PhysicalDeviceDeviceGeneratedCommandsProperties
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_PROPERTIES_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             max_graphics_shader_group_count: u32::default(),
             max_indirect_sequence_count: u32::default(),
@@ -9438,7 +9438,7 @@ impl ::std::default::Default for PhysicalDeviceMultiDrawPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_MULTI_DRAW_PROPERTIES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             max_multi_draw_count: u32::default(),
             _marker: PhantomData,
@@ -9473,7 +9473,7 @@ impl ::std::default::Default for GraphicsShaderGroupCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::GRAPHICS_SHADER_GROUP_CREATE_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             stage_count: u32::default(),
             p_stages: ::std::ptr::null(),
@@ -9527,7 +9527,7 @@ impl ::std::default::Default for GraphicsPipelineShaderGroupsCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::GRAPHICS_PIPELINE_SHADER_GROUPS_CREATE_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             group_count: u32::default(),
             p_groups: ::std::ptr::null(),
@@ -9682,7 +9682,7 @@ impl ::std::default::Default for IndirectCommandsLayoutTokenNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::INDIRECT_COMMANDS_LAYOUT_TOKEN_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             token_type: IndirectCommandsTokenTypeNV::default(),
             stream: u32::default(),
@@ -9793,7 +9793,7 @@ impl ::std::default::Default for IndirectCommandsLayoutCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::INDIRECT_COMMANDS_LAYOUT_CREATE_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: IndirectCommandsLayoutUsageFlagsNV::default(),
             pipeline_bind_point: PipelineBindPoint::default(),
@@ -9858,7 +9858,7 @@ impl ::std::default::Default for GeneratedCommandsInfoNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::GENERATED_COMMANDS_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             pipeline_bind_point: PipelineBindPoint::default(),
             pipeline: Pipeline::default(),
@@ -9963,7 +9963,7 @@ impl ::std::default::Default for GeneratedCommandsMemoryRequirementsInfoNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::GENERATED_COMMANDS_MEMORY_REQUIREMENTS_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             pipeline_bind_point: PipelineBindPoint::default(),
             pipeline: Pipeline::default(),
@@ -10016,7 +10016,7 @@ impl ::std::default::Default for PhysicalDeviceFeatures2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_FEATURES_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             features: PhysicalDeviceFeatures::default(),
             _marker: PhantomData,
@@ -10063,7 +10063,7 @@ impl ::std::default::Default for PhysicalDeviceProperties2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_PROPERTIES_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             properties: PhysicalDeviceProperties::default(),
             _marker: PhantomData,
@@ -10109,7 +10109,7 @@ impl ::std::default::Default for FormatProperties2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::FORMAT_PROPERTIES_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             format_properties: FormatProperties::default(),
             _marker: PhantomData,
@@ -10155,7 +10155,7 @@ impl ::std::default::Default for ImageFormatProperties2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMAGE_FORMAT_PROPERTIES_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             image_format_properties: ImageFormatProperties::default(),
             _marker: PhantomData,
@@ -10208,7 +10208,7 @@ impl ::std::default::Default for PhysicalDeviceImageFormatInfo2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_IMAGE_FORMAT_INFO_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             format: Format::default(),
             ty: ImageType::default(),
@@ -10278,7 +10278,7 @@ impl ::std::default::Default for QueueFamilyProperties2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::QUEUE_FAMILY_PROPERTIES_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             queue_family_properties: QueueFamilyProperties::default(),
             _marker: PhantomData,
@@ -10327,7 +10327,7 @@ impl ::std::default::Default for PhysicalDeviceMemoryProperties2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_MEMORY_PROPERTIES_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             memory_properties: PhysicalDeviceMemoryProperties::default(),
             _marker: PhantomData,
@@ -10373,7 +10373,7 @@ impl ::std::default::Default for SparseImageFormatProperties2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SPARSE_IMAGE_FORMAT_PROPERTIES_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             properties: SparseImageFormatProperties::default(),
             _marker: PhantomData,
@@ -10408,7 +10408,7 @@ impl ::std::default::Default for PhysicalDeviceSparseImageFormatInfo2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SPARSE_IMAGE_FORMAT_INFO_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             format: Format::default(),
             ty: ImageType::default(),
@@ -10463,7 +10463,7 @@ impl ::std::default::Default for PhysicalDevicePushDescriptorPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_PUSH_DESCRIPTOR_PROPERTIES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             max_push_descriptors: u32::default(),
             _marker: PhantomData,
@@ -10547,7 +10547,7 @@ impl ::std::default::Default for PhysicalDeviceDriverProperties<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_DRIVER_PROPERTIES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             driver_id: DriverId::default(),
             driver_name: unsafe { ::std::mem::zeroed() },
@@ -10598,7 +10598,7 @@ impl ::std::default::Default for PresentRegionsKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PRESENT_REGIONS_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             swapchain_count: u32::default(),
             p_regions: ::std::ptr::null(),
@@ -10686,7 +10686,7 @@ impl ::std::default::Default for PhysicalDeviceVariablePointersFeatures<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_VARIABLE_POINTERS_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             variable_pointers_storage_buffer: Bool32::default(),
             variable_pointers: Bool32::default(),
@@ -10763,7 +10763,7 @@ impl ::std::default::Default for PhysicalDeviceExternalImageFormatInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             handle_type: ExternalMemoryHandleTypeFlags::default(),
             _marker: PhantomData,
@@ -10795,7 +10795,7 @@ impl ::std::default::Default for ExternalImageFormatProperties<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::EXTERNAL_IMAGE_FORMAT_PROPERTIES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             external_memory_properties: ExternalMemoryProperties::default(),
             _marker: PhantomData,
@@ -10832,7 +10832,7 @@ impl ::std::default::Default for PhysicalDeviceExternalBufferInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_EXTERNAL_BUFFER_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: BufferCreateFlags::default(),
             usage: BufferUsageFlags::default(),
@@ -10875,7 +10875,7 @@ impl ::std::default::Default for ExternalBufferProperties<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::EXTERNAL_BUFFER_PROPERTIES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             external_memory_properties: ExternalMemoryProperties::default(),
             _marker: PhantomData,
@@ -10913,7 +10913,7 @@ impl ::std::default::Default for PhysicalDeviceIDProperties<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_ID_PROPERTIES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             device_uuid: unsafe { ::std::mem::zeroed() },
             driver_uuid: unsafe { ::std::mem::zeroed() },
@@ -10969,7 +10969,7 @@ impl ::std::default::Default for ExternalMemoryImageCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::EXTERNAL_MEMORY_IMAGE_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             handle_types: ExternalMemoryHandleTypeFlags::default(),
             _marker: PhantomData,
@@ -11001,7 +11001,7 @@ impl ::std::default::Default for ExternalMemoryBufferCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::EXTERNAL_MEMORY_BUFFER_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             handle_types: ExternalMemoryHandleTypeFlags::default(),
             _marker: PhantomData,
@@ -11033,7 +11033,7 @@ impl ::std::default::Default for ExportMemoryAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::EXPORT_MEMORY_ALLOCATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             handle_types: ExternalMemoryHandleTypeFlags::default(),
             _marker: PhantomData,
@@ -11067,7 +11067,7 @@ impl ::std::default::Default for ImportMemoryWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMPORT_MEMORY_WIN32_HANDLE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             handle_type: ExternalMemoryHandleTypeFlags::default(),
             handle: unsafe { ::std::mem::zeroed() },
@@ -11113,7 +11113,7 @@ impl ::std::default::Default for ExportMemoryWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::EXPORT_MEMORY_WIN32_HANDLE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             p_attributes: ::std::ptr::null(),
             dw_access: DWORD::default(),
@@ -11158,7 +11158,7 @@ impl ::std::default::Default for ImportMemoryZirconHandleInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMPORT_MEMORY_ZIRCON_HANDLE_INFO_FUCHSIA,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             handle_type: ExternalMemoryHandleTypeFlags::default(),
             handle: zx_handle_t::default(),
@@ -11196,7 +11196,7 @@ impl ::std::default::Default for MemoryZirconHandlePropertiesFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::MEMORY_ZIRCON_HANDLE_PROPERTIES_FUCHSIA,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             memory_type_bits: u32::default(),
             _marker: PhantomData,
@@ -11228,7 +11228,7 @@ impl ::std::default::Default for MemoryGetZirconHandleInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::MEMORY_GET_ZIRCON_HANDLE_INFO_FUCHSIA,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             memory: DeviceMemory::default(),
             handle_type: ExternalMemoryHandleTypeFlags::default(),
@@ -11265,7 +11265,7 @@ impl ::std::default::Default for MemoryWin32HandlePropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::MEMORY_WIN32_HANDLE_PROPERTIES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             memory_type_bits: u32::default(),
             _marker: PhantomData,
@@ -11297,7 +11297,7 @@ impl ::std::default::Default for MemoryGetWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::MEMORY_GET_WIN32_HANDLE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             memory: DeviceMemory::default(),
             handle_type: ExternalMemoryHandleTypeFlags::default(),
@@ -11335,7 +11335,7 @@ impl ::std::default::Default for ImportMemoryFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMPORT_MEMORY_FD_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             handle_type: ExternalMemoryHandleTypeFlags::default(),
             fd: c_int::default(),
@@ -11373,7 +11373,7 @@ impl ::std::default::Default for MemoryFdPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::MEMORY_FD_PROPERTIES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             memory_type_bits: u32::default(),
             _marker: PhantomData,
@@ -11405,7 +11405,7 @@ impl ::std::default::Default for MemoryGetFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::MEMORY_GET_FD_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             memory: DeviceMemory::default(),
             handle_type: ExternalMemoryHandleTypeFlags::default(),
@@ -11448,7 +11448,7 @@ impl ::std::default::Default for Win32KeyedMutexAcquireReleaseInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             acquire_count: u32::default(),
             p_acquire_syncs: ::std::ptr::null(),
@@ -11512,7 +11512,7 @@ impl ::std::default::Default for PhysicalDeviceExternalSemaphoreInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_EXTERNAL_SEMAPHORE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             handle_type: ExternalSemaphoreHandleTypeFlags::default(),
             _marker: PhantomData,
@@ -11563,7 +11563,7 @@ impl ::std::default::Default for ExternalSemaphoreProperties<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::EXTERNAL_SEMAPHORE_PROPERTIES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             export_from_imported_handle_types: ExternalSemaphoreHandleTypeFlags::default(),
             compatible_handle_types: ExternalSemaphoreHandleTypeFlags::default(),
@@ -11615,7 +11615,7 @@ impl ::std::default::Default for ExportSemaphoreCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::EXPORT_SEMAPHORE_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             handle_types: ExternalSemaphoreHandleTypeFlags::default(),
             _marker: PhantomData,
@@ -11651,7 +11651,7 @@ impl ::std::default::Default for ImportSemaphoreWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMPORT_SEMAPHORE_WIN32_HANDLE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             semaphore: Semaphore::default(),
             flags: SemaphoreImportFlags::default(),
@@ -11708,7 +11708,7 @@ impl ::std::default::Default for ExportSemaphoreWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::EXPORT_SEMAPHORE_WIN32_HANDLE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             p_attributes: ::std::ptr::null(),
             dw_access: DWORD::default(),
@@ -11755,7 +11755,7 @@ impl ::std::default::Default for D3D12FenceSubmitInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::D3D12_FENCE_SUBMIT_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             wait_semaphore_values_count: u32::default(),
             p_wait_semaphore_values: ::std::ptr::null(),
@@ -11798,7 +11798,7 @@ impl ::std::default::Default for SemaphoreGetWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SEMAPHORE_GET_WIN32_HANDLE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             semaphore: Semaphore::default(),
             handle_type: ExternalSemaphoreHandleTypeFlags::default(),
@@ -11838,7 +11838,7 @@ impl ::std::default::Default for ImportSemaphoreFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMPORT_SEMAPHORE_FD_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             semaphore: Semaphore::default(),
             flags: SemaphoreImportFlags::default(),
@@ -11888,7 +11888,7 @@ impl ::std::default::Default for SemaphoreGetFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SEMAPHORE_GET_FD_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             semaphore: Semaphore::default(),
             handle_type: ExternalSemaphoreHandleTypeFlags::default(),
@@ -11928,7 +11928,7 @@ impl ::std::default::Default for ImportSemaphoreZirconHandleInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMPORT_SEMAPHORE_ZIRCON_HANDLE_INFO_FUCHSIA,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             semaphore: Semaphore::default(),
             flags: SemaphoreImportFlags::default(),
@@ -11979,7 +11979,7 @@ impl ::std::default::Default for SemaphoreGetZirconHandleInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SEMAPHORE_GET_ZIRCON_HANDLE_INFO_FUCHSIA,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             semaphore: Semaphore::default(),
             handle_type: ExternalSemaphoreHandleTypeFlags::default(),
@@ -12016,7 +12016,7 @@ impl ::std::default::Default for PhysicalDeviceExternalFenceInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             handle_type: ExternalFenceHandleTypeFlags::default(),
             _marker: PhantomData,
@@ -12049,7 +12049,7 @@ impl ::std::default::Default for ExternalFenceProperties<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::EXTERNAL_FENCE_PROPERTIES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             export_from_imported_handle_types: ExternalFenceHandleTypeFlags::default(),
             compatible_handle_types: ExternalFenceHandleTypeFlags::default(),
@@ -12101,7 +12101,7 @@ impl ::std::default::Default for ExportFenceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::EXPORT_FENCE_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             handle_types: ExternalFenceHandleTypeFlags::default(),
             _marker: PhantomData,
@@ -12137,7 +12137,7 @@ impl ::std::default::Default for ImportFenceWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMPORT_FENCE_WIN32_HANDLE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             fence: Fence::default(),
             flags: FenceImportFlags::default(),
@@ -12194,7 +12194,7 @@ impl ::std::default::Default for ExportFenceWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::EXPORT_FENCE_WIN32_HANDLE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             p_attributes: ::std::ptr::null(),
             dw_access: DWORD::default(),
@@ -12239,7 +12239,7 @@ impl ::std::default::Default for FenceGetWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::FENCE_GET_WIN32_HANDLE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             fence: Fence::default(),
             handle_type: ExternalFenceHandleTypeFlags::default(),
@@ -12279,7 +12279,7 @@ impl ::std::default::Default for ImportFenceFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMPORT_FENCE_FD_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             fence: Fence::default(),
             flags: FenceImportFlags::default(),
@@ -12329,7 +12329,7 @@ impl ::std::default::Default for FenceGetFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::FENCE_GET_FD_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             fence: Fence::default(),
             handle_type: ExternalFenceHandleTypeFlags::default(),
@@ -12368,7 +12368,7 @@ impl ::std::default::Default for PhysicalDeviceMultiviewFeatures<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_MULTIVIEW_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             multiview: Bool32::default(),
             multiview_geometry_shader: Bool32::default(),
@@ -12414,7 +12414,7 @@ impl ::std::default::Default for PhysicalDeviceMultiviewProperties<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             max_multiview_view_count: u32::default(),
             max_multiview_instance_index: u32::default(),
@@ -12457,7 +12457,7 @@ impl ::std::default::Default for RenderPassMultiviewCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::RENDER_PASS_MULTIVIEW_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             subpass_count: u32::default(),
             p_view_masks: ::std::ptr::null(),
@@ -12517,7 +12517,7 @@ impl ::std::default::Default for SurfaceCapabilities2EXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SURFACE_CAPABILITIES_2_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             min_image_count: u32::default(),
             max_image_count: u32::default(),
@@ -12614,7 +12614,7 @@ impl ::std::default::Default for DisplayPowerInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DISPLAY_POWER_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             power_state: DisplayPowerStateEXT::default(),
             _marker: PhantomData,
@@ -12645,7 +12645,7 @@ impl ::std::default::Default for DeviceEventInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEVICE_EVENT_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             device_event: DeviceEventTypeEXT::default(),
             _marker: PhantomData,
@@ -12676,7 +12676,7 @@ impl ::std::default::Default for DisplayEventInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DISPLAY_EVENT_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             display_event: DisplayEventTypeEXT::default(),
             _marker: PhantomData,
@@ -12707,7 +12707,7 @@ impl ::std::default::Default for SwapchainCounterCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SWAPCHAIN_COUNTER_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             surface_counters: SurfaceCounterFlagsEXT::default(),
             _marker: PhantomData,
@@ -12741,7 +12741,7 @@ impl ::std::default::Default for PhysicalDeviceGroupProperties<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_GROUP_PROPERTIES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             physical_device_count: u32::default(),
             physical_devices: unsafe { ::std::mem::zeroed() },
@@ -12788,7 +12788,7 @@ impl ::std::default::Default for MemoryAllocateFlagsInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::MEMORY_ALLOCATE_FLAGS_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: MemoryAllocateFlags::default(),
             device_mask: u32::default(),
@@ -12828,7 +12828,7 @@ impl ::std::default::Default for BindBufferMemoryInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::BIND_BUFFER_MEMORY_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             buffer: Buffer::default(),
             memory: DeviceMemory::default(),
@@ -12887,7 +12887,7 @@ impl ::std::default::Default for BindBufferMemoryDeviceGroupInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::BIND_BUFFER_MEMORY_DEVICE_GROUP_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             device_index_count: u32::default(),
             p_device_indices: ::std::ptr::null(),
@@ -12923,7 +12923,7 @@ impl ::std::default::Default for BindImageMemoryInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::BIND_IMAGE_MEMORY_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             image: Image::default(),
             memory: DeviceMemory::default(),
@@ -12984,7 +12984,7 @@ impl ::std::default::Default for BindImageMemoryDeviceGroupInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::BIND_IMAGE_MEMORY_DEVICE_GROUP_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             device_index_count: u32::default(),
             p_device_indices: ::std::ptr::null(),
@@ -13031,7 +13031,7 @@ impl ::std::default::Default for DeviceGroupRenderPassBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEVICE_GROUP_RENDER_PASS_BEGIN_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             device_mask: u32::default(),
             device_render_area_count: u32::default(),
@@ -13072,7 +13072,7 @@ impl ::std::default::Default for DeviceGroupCommandBufferBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEVICE_GROUP_COMMAND_BUFFER_BEGIN_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             device_mask: u32::default(),
             _marker: PhantomData,
@@ -13109,7 +13109,7 @@ impl ::std::default::Default for DeviceGroupSubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEVICE_GROUP_SUBMIT_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             wait_semaphore_count: u32::default(),
             p_wait_semaphore_device_indices: ::std::ptr::null(),
@@ -13166,7 +13166,7 @@ impl ::std::default::Default for DeviceGroupBindSparseInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEVICE_GROUP_BIND_SPARSE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             resource_device_index: u32::default(),
             memory_device_index: u32::default(),
@@ -13205,7 +13205,7 @@ impl ::std::default::Default for DeviceGroupPresentCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEVICE_GROUP_PRESENT_CAPABILITIES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             present_mask: unsafe { ::std::mem::zeroed() },
             modes: DeviceGroupPresentModeFlagsKHR::default(),
@@ -13242,7 +13242,7 @@ impl ::std::default::Default for ImageSwapchainCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMAGE_SWAPCHAIN_CREATE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             swapchain: SwapchainKHR::default(),
             _marker: PhantomData,
@@ -13275,7 +13275,7 @@ impl ::std::default::Default for BindImageMemorySwapchainInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::BIND_IMAGE_MEMORY_SWAPCHAIN_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             swapchain: SwapchainKHR::default(),
             image_index: u32::default(),
@@ -13317,7 +13317,7 @@ impl ::std::default::Default for AcquireNextImageInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::ACQUIRE_NEXT_IMAGE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             swapchain: SwapchainKHR::default(),
             timeout: u64::default(),
@@ -13374,7 +13374,7 @@ impl ::std::default::Default for DeviceGroupPresentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEVICE_GROUP_PRESENT_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             swapchain_count: u32::default(),
             p_device_masks: ::std::ptr::null(),
@@ -13415,7 +13415,7 @@ impl ::std::default::Default for DeviceGroupDeviceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEVICE_GROUP_DEVICE_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             physical_device_count: u32::default(),
             p_physical_devices: ::std::ptr::null(),
@@ -13449,7 +13449,7 @@ impl ::std::default::Default for DeviceGroupSwapchainCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEVICE_GROUP_SWAPCHAIN_CREATE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             modes: DeviceGroupPresentModeFlagsKHR::default(),
             _marker: PhantomData,
@@ -13532,7 +13532,7 @@ impl ::std::default::Default for DescriptorUpdateTemplateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: DescriptorUpdateTemplateCreateFlags::default(),
             descriptor_update_entry_count: u32::default(),
@@ -13624,7 +13624,7 @@ impl ::std::default::Default for PhysicalDevicePresentIdFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_PRESENT_ID_FEATURES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             present_id: Bool32::default(),
             _marker: PhantomData,
@@ -13658,7 +13658,7 @@ impl ::std::default::Default for PresentIdKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PRESENT_ID_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             swapchain_count: u32::default(),
             p_present_ids: ::std::ptr::null(),
@@ -13692,7 +13692,7 @@ impl ::std::default::Default for PhysicalDevicePresentWaitFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_PRESENT_WAIT_FEATURES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             present_wait: Bool32::default(),
             _marker: PhantomData,
@@ -13732,7 +13732,7 @@ impl ::std::default::Default for HdrMetadataEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::HDR_METADATA_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             display_primary_red: XYColorEXT::default(),
             display_primary_green: XYColorEXT::default(),
@@ -13805,7 +13805,7 @@ impl ::std::default::Default for DisplayNativeHdrSurfaceCapabilitiesAMD<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DISPLAY_NATIVE_HDR_SURFACE_CAPABILITIES_AMD,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             local_dimming_support: Bool32::default(),
             _marker: PhantomData,
@@ -13838,7 +13838,7 @@ impl ::std::default::Default for SwapchainDisplayNativeHdrCreateInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SWAPCHAIN_DISPLAY_NATIVE_HDR_CREATE_INFO_AMD,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             local_dimming_enable: Bool32::default(),
             _marker: PhantomData,
@@ -13924,7 +13924,7 @@ impl ::std::default::Default for PresentTimesInfoGOOGLE<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PRESENT_TIMES_INFO_GOOGLE,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             swapchain_count: u32::default(),
             p_times: ::std::ptr::null(),
@@ -13979,7 +13979,7 @@ impl ::std::default::Default for IOSSurfaceCreateInfoMVK<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IOS_SURFACE_CREATE_INFO_MVK,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: IOSSurfaceCreateFlagsMVK::default(),
             p_view: ::std::ptr::null(),
@@ -14017,7 +14017,7 @@ impl ::std::default::Default for MacOSSurfaceCreateInfoMVK<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::MACOS_SURFACE_CREATE_INFO_MVK,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: MacOSSurfaceCreateFlagsMVK::default(),
             p_view: ::std::ptr::null(),
@@ -14055,7 +14055,7 @@ impl ::std::default::Default for MetalSurfaceCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::METAL_SURFACE_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: MetalSurfaceCreateFlagsEXT::default(),
             p_layer: ::std::ptr::null(),
@@ -14114,7 +14114,7 @@ impl ::std::default::Default for PipelineViewportWScalingStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_VIEWPORT_W_SCALING_STATE_CREATE_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             viewport_w_scaling_enable: Bool32::default(),
             viewport_count: u32::default(),
@@ -14192,7 +14192,7 @@ impl ::std::default::Default for PipelineViewportSwizzleStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_VIEWPORT_SWIZZLE_STATE_CREATE_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: PipelineViewportSwizzleStateCreateFlagsNV::default(),
             viewport_count: u32::default(),
@@ -14236,7 +14236,7 @@ impl ::std::default::Default for PhysicalDeviceDiscardRectanglePropertiesEXT<'_>
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_DISCARD_RECTANGLE_PROPERTIES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             max_discard_rectangles: u32::default(),
             _marker: PhantomData,
@@ -14272,7 +14272,7 @@ impl ::std::default::Default for PipelineDiscardRectangleStateCreateInfoEXT<'_> 
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_DISCARD_RECTANGLE_STATE_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: PipelineDiscardRectangleStateCreateFlagsEXT::default(),
             discard_rectangle_mode: DiscardRectangleModeEXT::default(),
@@ -14322,7 +14322,7 @@ impl ::std::default::Default for PhysicalDeviceMultiviewPerViewAttributesPropert
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_ATTRIBUTES_PROPERTIES_NVX,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             per_view_position_all_components: Bool32::default(),
             _marker: PhantomData,
@@ -14388,7 +14388,7 @@ impl ::std::default::Default for RenderPassInputAttachmentAspectCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::RENDER_PASS_INPUT_ATTACHMENT_ASPECT_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             aspect_reference_count: u32::default(),
             p_aspect_references: ::std::ptr::null(),
@@ -14426,7 +14426,7 @@ impl ::std::default::Default for PhysicalDeviceSurfaceInfo2KHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SURFACE_INFO_2_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             surface: SurfaceKHR::default(),
             _marker: PhantomData,
@@ -14472,7 +14472,7 @@ impl ::std::default::Default for SurfaceCapabilities2KHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SURFACE_CAPABILITIES_2_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             surface_capabilities: SurfaceCapabilitiesKHR::default(),
             _marker: PhantomData,
@@ -14518,7 +14518,7 @@ impl ::std::default::Default for SurfaceFormat2KHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SURFACE_FORMAT_2_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             surface_format: SurfaceFormatKHR::default(),
             _marker: PhantomData,
@@ -14564,7 +14564,7 @@ impl ::std::default::Default for DisplayProperties2KHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DISPLAY_PROPERTIES_2_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             display_properties: DisplayPropertiesKHR::default(),
             _marker: PhantomData,
@@ -14595,7 +14595,7 @@ impl ::std::default::Default for DisplayPlaneProperties2KHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DISPLAY_PLANE_PROPERTIES_2_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             display_plane_properties: DisplayPlanePropertiesKHR::default(),
             _marker: PhantomData,
@@ -14629,7 +14629,7 @@ impl ::std::default::Default for DisplayModeProperties2KHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DISPLAY_MODE_PROPERTIES_2_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             display_mode_properties: DisplayModePropertiesKHR::default(),
             _marker: PhantomData,
@@ -14664,7 +14664,7 @@ impl ::std::default::Default for DisplayPlaneInfo2KHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DISPLAY_PLANE_INFO_2_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             mode: DisplayModeKHR::default(),
             plane_index: u32::default(),
@@ -14701,7 +14701,7 @@ impl ::std::default::Default for DisplayPlaneCapabilities2KHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DISPLAY_PLANE_CAPABILITIES_2_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             capabilities: DisplayPlaneCapabilitiesKHR::default(),
             _marker: PhantomData,
@@ -14732,7 +14732,7 @@ impl ::std::default::Default for SharedPresentSurfaceCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SHARED_PRESENT_SURFACE_CAPABILITIES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             shared_present_supported_usage_flags: ImageUsageFlags::default(),
             _marker: PhantomData,
@@ -14770,7 +14770,7 @@ impl ::std::default::Default for PhysicalDevice16BitStorageFeatures<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             storage_buffer16_bit_access: Bool32::default(),
             uniform_and_storage_buffer16_bit_access: Bool32::default(),
@@ -14828,7 +14828,7 @@ impl ::std::default::Default for PhysicalDeviceSubgroupProperties<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             subgroup_size: u32::default(),
             supported_stages: ShaderStageFlags::default(),
@@ -14878,7 +14878,7 @@ impl ::std::default::Default for PhysicalDeviceShaderSubgroupExtendedTypesFeatur
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SHADER_SUBGROUP_EXTENDED_TYPES_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             shader_subgroup_extended_types: Bool32::default(),
             _marker: PhantomData,
@@ -14915,7 +14915,7 @@ impl ::std::default::Default for BufferMemoryRequirementsInfo2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::BUFFER_MEMORY_REQUIREMENTS_INFO_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             buffer: Buffer::default(),
             _marker: PhantomData,
@@ -14946,7 +14946,7 @@ impl ::std::default::Default for DeviceBufferMemoryRequirements<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEVICE_BUFFER_MEMORY_REQUIREMENTS,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             p_create_info: ::std::ptr::null(),
             _marker: PhantomData,
@@ -14977,7 +14977,7 @@ impl ::std::default::Default for ImageMemoryRequirementsInfo2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMAGE_MEMORY_REQUIREMENTS_INFO_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             image: Image::default(),
             _marker: PhantomData,
@@ -15023,7 +15023,7 @@ impl ::std::default::Default for ImageSparseMemoryRequirementsInfo2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMAGE_SPARSE_MEMORY_REQUIREMENTS_INFO_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             image: Image::default(),
             _marker: PhantomData,
@@ -15055,7 +15055,7 @@ impl ::std::default::Default for DeviceImageMemoryRequirements<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEVICE_IMAGE_MEMORY_REQUIREMENTS,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             p_create_info: ::std::ptr::null(),
             plane_aspect: ImageAspectFlags::default(),
@@ -15092,7 +15092,7 @@ impl ::std::default::Default for MemoryRequirements2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::MEMORY_REQUIREMENTS_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             memory_requirements: MemoryRequirements::default(),
             _marker: PhantomData,
@@ -15138,7 +15138,7 @@ impl ::std::default::Default for SparseImageMemoryRequirements2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SPARSE_IMAGE_MEMORY_REQUIREMENTS_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             memory_requirements: SparseImageMemoryRequirements::default(),
             _marker: PhantomData,
@@ -15172,7 +15172,7 @@ impl ::std::default::Default for PhysicalDevicePointClippingProperties<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_POINT_CLIPPING_PROPERTIES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             point_clipping_behavior: PointClippingBehavior::default(),
             _marker: PhantomData,
@@ -15208,7 +15208,7 @@ impl ::std::default::Default for MemoryDedicatedRequirements<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::MEMORY_DEDICATED_REQUIREMENTS,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             prefers_dedicated_allocation: Bool32::default(),
             requires_dedicated_allocation: Bool32::default(),
@@ -15247,7 +15247,7 @@ impl ::std::default::Default for MemoryDedicatedAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::MEMORY_DEDICATED_ALLOCATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             image: Image::default(),
             buffer: Buffer::default(),
@@ -15285,7 +15285,7 @@ impl ::std::default::Default for ImageViewUsageCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMAGE_VIEW_USAGE_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             usage: ImageUsageFlags::default(),
             _marker: PhantomData,
@@ -15317,7 +15317,7 @@ impl ::std::default::Default for PipelineTessellationDomainOriginStateCreateInfo
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_TESSELLATION_DOMAIN_ORIGIN_STATE_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             domain_origin: TessellationDomainOrigin::default(),
             _marker: PhantomData,
@@ -15353,7 +15353,7 @@ impl ::std::default::Default for SamplerYcbcrConversionInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SAMPLER_YCBCR_CONVERSION_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             conversion: SamplerYcbcrConversion::default(),
             _marker: PhantomData,
@@ -15393,7 +15393,7 @@ impl ::std::default::Default for SamplerYcbcrConversionCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SAMPLER_YCBCR_CONVERSION_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             format: Format::default(),
             ycbcr_model: SamplerYcbcrModelConversion::default(),
@@ -15484,7 +15484,7 @@ impl ::std::default::Default for BindImagePlaneMemoryInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::BIND_IMAGE_PLANE_MEMORY_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             plane_aspect: ImageAspectFlags::default(),
             _marker: PhantomData,
@@ -15516,7 +15516,7 @@ impl ::std::default::Default for ImagePlaneMemoryRequirementsInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMAGE_PLANE_MEMORY_REQUIREMENTS_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             plane_aspect: ImageAspectFlags::default(),
             _marker: PhantomData,
@@ -15548,7 +15548,7 @@ impl ::std::default::Default for PhysicalDeviceSamplerYcbcrConversionFeatures<'_
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SAMPLER_YCBCR_CONVERSION_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             sampler_ycbcr_conversion: Bool32::default(),
             _marker: PhantomData,
@@ -15582,7 +15582,7 @@ impl ::std::default::Default for SamplerYcbcrConversionImageFormatProperties<'_>
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SAMPLER_YCBCR_CONVERSION_IMAGE_FORMAT_PROPERTIES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             combined_image_sampler_descriptor_count: u32::default(),
             _marker: PhantomData,
@@ -15618,7 +15618,7 @@ impl ::std::default::Default for TextureLODGatherFormatPropertiesAMD<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::TEXTURE_LOD_GATHER_FORMAT_PROPERTIES_AMD,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             supports_texture_gather_lod_bias_amd: Bool32::default(),
             _marker: PhantomData,
@@ -15655,7 +15655,7 @@ impl ::std::default::Default for ConditionalRenderingBeginInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::CONDITIONAL_RENDERING_BEGIN_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             buffer: Buffer::default(),
             offset: DeviceSize::default(),
@@ -15698,7 +15698,7 @@ impl ::std::default::Default for ProtectedSubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PROTECTED_SUBMIT_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             protected_submit: Bool32::default(),
             _marker: PhantomData,
@@ -15730,7 +15730,7 @@ impl ::std::default::Default for PhysicalDeviceProtectedMemoryFeatures<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_PROTECTED_MEMORY_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             protected_memory: Bool32::default(),
             _marker: PhantomData,
@@ -15763,7 +15763,7 @@ impl ::std::default::Default for PhysicalDeviceProtectedMemoryProperties<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_PROTECTED_MEMORY_PROPERTIES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             protected_no_fault: Bool32::default(),
             _marker: PhantomData,
@@ -15798,7 +15798,7 @@ impl ::std::default::Default for DeviceQueueInfo2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEVICE_QUEUE_INFO_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: DeviceQueueCreateFlags::default(),
             queue_family_index: u32::default(),
@@ -15843,7 +15843,7 @@ impl ::std::default::Default for PipelineCoverageToColorStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_COVERAGE_TO_COLOR_STATE_CREATE_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: PipelineCoverageToColorStateCreateFlagsNV::default(),
             coverage_to_color_enable: Bool32::default(),
@@ -15892,7 +15892,7 @@ impl ::std::default::Default for PhysicalDeviceSamplerFilterMinmaxProperties<'_>
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SAMPLER_FILTER_MINMAX_PROPERTIES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             filter_minmax_single_component_formats: Bool32::default(),
             filter_minmax_image_component_mapping: Bool32::default(),
@@ -15960,7 +15960,7 @@ impl ::std::default::Default for SampleLocationsInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SAMPLE_LOCATIONS_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             sample_locations_per_pixel: SampleCountFlags::default(),
             sample_location_grid_size: Extent2D::default(),
@@ -16061,7 +16061,7 @@ impl ::std::default::Default for RenderPassSampleLocationsBeginInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::RENDER_PASS_SAMPLE_LOCATIONS_BEGIN_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             attachment_initial_sample_locations_count: u32::default(),
             p_attachment_initial_sample_locations: ::std::ptr::null(),
@@ -16112,7 +16112,7 @@ impl ::std::default::Default for PipelineSampleLocationsStateCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_SAMPLE_LOCATIONS_STATE_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             sample_locations_enable: Bool32::default(),
             sample_locations_info: SampleLocationsInfoEXT::default(),
@@ -16161,7 +16161,7 @@ impl ::std::default::Default for PhysicalDeviceSampleLocationsPropertiesEXT<'_> 
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SAMPLE_LOCATIONS_PROPERTIES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             sample_location_sample_counts: SampleCountFlags::default(),
             max_sample_location_grid_size: Extent2D::default(),
@@ -16227,7 +16227,7 @@ impl ::std::default::Default for MultisamplePropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::MULTISAMPLE_PROPERTIES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             max_sample_location_grid_size: Extent2D::default(),
             _marker: PhantomData,
@@ -16261,7 +16261,7 @@ impl ::std::default::Default for SamplerReductionModeCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SAMPLER_REDUCTION_MODE_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             reduction_mode: SamplerReductionMode::default(),
             _marker: PhantomData,
@@ -16293,7 +16293,7 @@ impl ::std::default::Default for PhysicalDeviceBlendOperationAdvancedFeaturesEXT
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_BLEND_OPERATION_ADVANCED_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             advanced_blend_coherent_operations: Bool32::default(),
             _marker: PhantomData,
@@ -16330,7 +16330,7 @@ impl ::std::default::Default for PhysicalDeviceMultiDrawFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_MULTI_DRAW_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             multi_draw: Bool32::default(),
             _marker: PhantomData,
@@ -16368,7 +16368,7 @@ impl ::std::default::Default for PhysicalDeviceBlendOperationAdvancedPropertiesE
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_BLEND_OPERATION_ADVANCED_PROPERTIES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             advanced_blend_max_color_attachments: u32::default(),
             advanced_blend_independent_blend: Bool32::default(),
@@ -16453,7 +16453,7 @@ impl ::std::default::Default for PipelineColorBlendAdvancedStateCreateInfoEXT<'_
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_COLOR_BLEND_ADVANCED_STATE_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             src_premultiplied: Bool32::default(),
             dst_premultiplied: Bool32::default(),
@@ -16502,7 +16502,7 @@ impl ::std::default::Default for PhysicalDeviceInlineUniformBlockFeatures<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             inline_uniform_block: Bool32::default(),
             descriptor_binding_inline_uniform_block_update_after_bind: Bool32::default(),
@@ -16550,7 +16550,7 @@ impl ::std::default::Default for PhysicalDeviceInlineUniformBlockProperties<'_> 
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_PROPERTIES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             max_inline_uniform_block_size: u32::default(),
             max_per_stage_descriptor_inline_uniform_blocks: u32::default(),
@@ -16623,7 +16623,7 @@ impl ::std::default::Default for WriteDescriptorSetInlineUniformBlock<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::WRITE_DESCRIPTOR_SET_INLINE_UNIFORM_BLOCK,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             data_size: u32::default(),
             p_data: ::std::ptr::null(),
@@ -16657,7 +16657,7 @@ impl ::std::default::Default for DescriptorPoolInlineUniformBlockCreateInfo<'_> 
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DESCRIPTOR_POOL_INLINE_UNIFORM_BLOCK_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             max_inline_uniform_block_bindings: u32::default(),
             _marker: PhantomData,
@@ -16697,7 +16697,7 @@ impl ::std::default::Default for PipelineCoverageModulationStateCreateInfoNV<'_>
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_COVERAGE_MODULATION_STATE_CREATE_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: PipelineCoverageModulationStateCreateFlagsNV::default(),
             coverage_modulation_mode: CoverageModulationModeNV::default(),
@@ -16760,7 +16760,7 @@ impl ::std::default::Default for ImageFormatListCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMAGE_FORMAT_LIST_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             view_format_count: u32::default(),
             p_view_formats: ::std::ptr::null(),
@@ -16798,7 +16798,7 @@ impl ::std::default::Default for ValidationCacheCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VALIDATION_CACHE_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: ValidationCacheCreateFlagsEXT::default(),
             initial_data_size: usize::default(),
@@ -16837,7 +16837,7 @@ impl ::std::default::Default for ShaderModuleValidationCacheCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SHADER_MODULE_VALIDATION_CACHE_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             validation_cache: ValidationCacheEXT::default(),
             _marker: PhantomData,
@@ -16871,7 +16871,7 @@ impl ::std::default::Default for PhysicalDeviceMaintenance3Properties<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             max_per_set_descriptors: u32::default(),
             max_memory_allocation_size: DeviceSize::default(),
@@ -16909,7 +16909,7 @@ impl ::std::default::Default for PhysicalDeviceMaintenance4Features<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_MAINTENANCE_4_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             maintenance4: Bool32::default(),
             _marker: PhantomData,
@@ -16942,7 +16942,7 @@ impl ::std::default::Default for PhysicalDeviceMaintenance4Properties<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_MAINTENANCE_4_PROPERTIES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             max_buffer_size: DeviceSize::default(),
             _marker: PhantomData,
@@ -16974,7 +16974,7 @@ impl ::std::default::Default for DescriptorSetLayoutSupport<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DESCRIPTOR_SET_LAYOUT_SUPPORT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             supported: Bool32::default(),
             _marker: PhantomData,
@@ -17020,7 +17020,7 @@ impl ::std::default::Default for PhysicalDeviceShaderDrawParametersFeatures<'_> 
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SHADER_DRAW_PARAMETERS_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             shader_draw_parameters: Bool32::default(),
             _marker: PhantomData,
@@ -17055,7 +17055,7 @@ impl ::std::default::Default for PhysicalDeviceShaderFloat16Int8Features<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SHADER_FLOAT16_INT8_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             shader_float16: Bool32::default(),
             shader_int8: Bool32::default(),
@@ -17111,7 +17111,7 @@ impl ::std::default::Default for PhysicalDeviceFloatControlsProperties<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_FLOAT_CONTROLS_PROPERTIES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             denorm_behavior_independence: ShaderFloatControlsIndependence::default(),
             rounding_mode_independence: ShaderFloatControlsIndependence::default(),
@@ -17284,7 +17284,7 @@ impl ::std::default::Default for PhysicalDeviceHostQueryResetFeatures<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_HOST_QUERY_RESET_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             host_query_reset: Bool32::default(),
             _marker: PhantomData,
@@ -17341,7 +17341,7 @@ impl ::std::default::Default for NativeBufferANDROID<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::NATIVE_BUFFER_ANDROID,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             handle: ::std::ptr::null(),
             stride: c_int::default(),
@@ -17396,7 +17396,7 @@ impl ::std::default::Default for SwapchainImageCreateInfoANDROID<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SWAPCHAIN_IMAGE_CREATE_INFO_ANDROID,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             usage: SwapchainImageUsageFlagsANDROID::default(),
             _marker: PhantomData,
@@ -17427,7 +17427,7 @@ impl ::std::default::Default for PhysicalDevicePresentationPropertiesANDROID<'_>
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_PRESENTATION_PROPERTIES_ANDROID,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             shared_image: Bool32::default(),
             _marker: PhantomData,
@@ -17561,7 +17561,7 @@ impl ::std::default::Default for DeviceQueueGlobalPriorityCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             global_priority: QueueGlobalPriorityKHR::default(),
             _marker: PhantomData,
@@ -17594,7 +17594,7 @@ impl ::std::default::Default for PhysicalDeviceGlobalPriorityQueryFeaturesKHR<'_
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_GLOBAL_PRIORITY_QUERY_FEATURES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             global_priority_query: Bool32::default(),
             _marker: PhantomData,
@@ -17629,7 +17629,7 @@ impl ::std::default::Default for QueueFamilyGlobalPriorityPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::QUEUE_FAMILY_GLOBAL_PRIORITY_PROPERTIES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             priority_count: u32::default(),
             priorities: unsafe { ::std::mem::zeroed() },
@@ -17673,7 +17673,7 @@ impl ::std::default::Default for DebugUtilsObjectNameInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEBUG_UTILS_OBJECT_NAME_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             object_type: ObjectType::default(),
             object_handle: u64::default(),
@@ -17721,7 +17721,7 @@ impl ::std::default::Default for DebugUtilsObjectTagInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEBUG_UTILS_OBJECT_TAG_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             object_type: ObjectType::default(),
             object_handle: u64::default(),
@@ -17773,7 +17773,7 @@ impl ::std::default::Default for DebugUtilsLabelEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEBUG_UTILS_LABEL_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             p_label_name: ::std::ptr::null(),
             color: unsafe { ::std::mem::zeroed() },
@@ -17830,7 +17830,7 @@ impl ::std::default::Default for DebugUtilsMessengerCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: DebugUtilsMessengerCreateFlagsEXT::default(),
             message_severity: DebugUtilsMessageSeverityFlagsEXT::default(),
@@ -17898,7 +17898,7 @@ impl ::std::default::Default for DebugUtilsMessengerCallbackDataEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEBUG_UTILS_MESSENGER_CALLBACK_DATA_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: DebugUtilsMessengerCallbackDataFlagsEXT::default(),
             p_message_id_name: ::std::ptr::null(),
@@ -17971,7 +17971,7 @@ impl ::std::default::Default for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'_>
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_DEVICE_MEMORY_REPORT_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             device_memory_report: Bool32::default(),
             _marker: PhantomData,
@@ -18021,7 +18021,7 @@ impl ::std::default::Default for DeviceDeviceMemoryReportCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEVICE_DEVICE_MEMORY_REPORT_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: DeviceMemoryReportFlagsEXT::default(),
             pfn_user_callback: PFN_vkDeviceMemoryReportCallbackEXT::default(),
@@ -18075,7 +18075,7 @@ impl ::std::default::Default for DeviceMemoryReportCallbackDataEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEVICE_MEMORY_REPORT_CALLBACK_DATA_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             flags: DeviceMemoryReportFlagsEXT::default(),
             ty: DeviceMemoryReportEventTypeEXT::default(),
@@ -18143,7 +18143,7 @@ impl ::std::default::Default for ImportMemoryHostPointerInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMPORT_MEMORY_HOST_POINTER_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             handle_type: ExternalMemoryHandleTypeFlags::default(),
             p_host_pointer: ::std::ptr::null_mut(),
@@ -18181,7 +18181,7 @@ impl ::std::default::Default for MemoryHostPointerPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::MEMORY_HOST_POINTER_PROPERTIES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             memory_type_bits: u32::default(),
             _marker: PhantomData,
@@ -18212,7 +18212,7 @@ impl ::std::default::Default for PhysicalDeviceExternalMemoryHostPropertiesEXT<'
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_EXTERNAL_MEMORY_HOST_PROPERTIES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             min_imported_host_pointer_alignment: DeviceSize::default(),
             _marker: PhantomData,
@@ -18256,7 +18256,7 @@ impl ::std::default::Default for PhysicalDeviceConservativeRasterizationProperti
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_CONSERVATIVE_RASTERIZATION_PROPERTIES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             primitive_overestimation_size: f32::default(),
             max_extra_primitive_overestimation_size: f32::default(),
@@ -18362,7 +18362,7 @@ impl ::std::default::Default for CalibratedTimestampInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::CALIBRATED_TIMESTAMP_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             time_domain: TimeDomainEXT::default(),
             _marker: PhantomData,
@@ -18406,7 +18406,7 @@ impl ::std::default::Default for PhysicalDeviceShaderCorePropertiesAMD<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_AMD,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             shader_engine_count: u32::default(),
             shader_arrays_per_engine_count: u32::default(),
@@ -18517,7 +18517,7 @@ impl ::std::default::Default for PhysicalDeviceShaderCoreProperties2AMD<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_2_AMD,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             shader_core_features: ShaderCorePropertiesFlagsAMD::default(),
             active_compute_unit_count: u32::default(),
@@ -18561,7 +18561,7 @@ impl ::std::default::Default for PipelineRasterizationConservativeStateCreateInf
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_RASTERIZATION_CONSERVATIVE_STATE_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: PipelineRasterizationConservativeStateCreateFlagsEXT::default(),
             conservative_rasterization_mode: ConservativeRasterizationModeEXT::default(),
@@ -18634,7 +18634,7 @@ impl ::std::default::Default for PhysicalDeviceDescriptorIndexingFeatures<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             shader_input_attachment_array_dynamic_indexing: Bool32::default(),
             shader_uniform_texel_buffer_array_dynamic_indexing: Bool32::default(),
@@ -18879,7 +18879,7 @@ impl ::std::default::Default for PhysicalDeviceDescriptorIndexingProperties<'_> 
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             max_update_after_bind_descriptors_in_all_pools: u32::default(),
             shader_uniform_buffer_array_non_uniform_indexing_native: Bool32::default(),
@@ -19131,7 +19131,7 @@ impl ::std::default::Default for DescriptorSetLayoutBindingFlagsCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             binding_count: u32::default(),
             p_binding_flags: ::std::ptr::null(),
@@ -19167,7 +19167,7 @@ impl ::std::default::Default for DescriptorSetVariableDescriptorCountAllocateInf
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_ALLOCATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             descriptor_set_count: u32::default(),
             p_descriptor_counts: ::std::ptr::null(),
@@ -19205,7 +19205,7 @@ impl ::std::default::Default for DescriptorSetVariableDescriptorCountLayoutSuppo
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             max_variable_descriptor_count: u32::default(),
             _marker: PhantomData,
@@ -19249,7 +19249,7 @@ impl ::std::default::Default for AttachmentDescription2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::ATTACHMENT_DESCRIPTION_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: AttachmentDescriptionFlags::default(),
             format: Format::default(),
@@ -19345,7 +19345,7 @@ impl ::std::default::Default for AttachmentReference2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::ATTACHMENT_REFERENCE_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             attachment: u32::default(),
             layout: ImageLayout::default(),
@@ -19413,7 +19413,7 @@ impl ::std::default::Default for SubpassDescription2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SUBPASS_DESCRIPTION_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: SubpassDescriptionFlags::default(),
             pipeline_bind_point: PipelineBindPoint::default(),
@@ -19518,7 +19518,7 @@ impl ::std::default::Default for SubpassDependency2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SUBPASS_DEPENDENCY_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             src_subpass: u32::default(),
             dst_subpass: u32::default(),
@@ -19614,7 +19614,7 @@ impl ::std::default::Default for RenderPassCreateInfo2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::RENDER_PASS_CREATE_INFO_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: RenderPassCreateFlags::default(),
             attachment_count: u32::default(),
@@ -19692,7 +19692,7 @@ impl ::std::default::Default for SubpassBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SUBPASS_BEGIN_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             contents: SubpassContents::default(),
             _marker: PhantomData,
@@ -19722,7 +19722,7 @@ impl ::std::default::Default for SubpassEndInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SUBPASS_END_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             _marker: PhantomData,
         }
@@ -19762,7 +19762,7 @@ impl ::std::default::Default for PhysicalDeviceTimelineSemaphoreFeatures<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_TIMELINE_SEMAPHORE_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             timeline_semaphore: Bool32::default(),
             _marker: PhantomData,
@@ -19796,7 +19796,7 @@ impl ::std::default::Default for PhysicalDeviceTimelineSemaphoreProperties<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_TIMELINE_SEMAPHORE_PROPERTIES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             max_timeline_semaphore_value_difference: u64::default(),
             _marker: PhantomData,
@@ -19833,7 +19833,7 @@ impl ::std::default::Default for SemaphoreTypeCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SEMAPHORE_TYPE_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             semaphore_type: SemaphoreType::default(),
             initial_value: u64::default(),
@@ -19875,7 +19875,7 @@ impl ::std::default::Default for TimelineSemaphoreSubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::TIMELINE_SEMAPHORE_SUBMIT_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             wait_semaphore_value_count: u32::default(),
             p_wait_semaphore_values: ::std::ptr::null(),
@@ -19921,7 +19921,7 @@ impl ::std::default::Default for SemaphoreWaitInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SEMAPHORE_WAIT_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: SemaphoreWaitFlags::default(),
             semaphore_count: u32::default(),
@@ -19968,7 +19968,7 @@ impl ::std::default::Default for SemaphoreSignalInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SEMAPHORE_SIGNAL_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             semaphore: Semaphore::default(),
             value: u64::default(),
@@ -20026,7 +20026,7 @@ impl ::std::default::Default for PipelineVertexInputDivisorStateCreateInfoEXT<'_
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             vertex_binding_divisor_count: u32::default(),
             p_vertex_binding_divisors: ::std::ptr::null(),
@@ -20067,7 +20067,7 @@ impl ::std::default::Default for PhysicalDeviceVertexAttributeDivisorPropertiesE
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             max_vertex_attrib_divisor: u32::default(),
             _marker: PhantomData,
@@ -20106,7 +20106,7 @@ impl ::std::default::Default for PhysicalDevicePCIBusInfoPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_PCI_BUS_INFO_PROPERTIES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             pci_domain: u32::default(),
             pci_bus: u32::default(),
@@ -20157,7 +20157,7 @@ impl ::std::default::Default for ImportAndroidHardwareBufferInfoANDROID<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMPORT_ANDROID_HARDWARE_BUFFER_INFO_ANDROID,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             buffer: ::std::ptr::null_mut(),
             _marker: PhantomData,
@@ -20190,7 +20190,7 @@ impl ::std::default::Default for AndroidHardwareBufferUsageANDROID<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::ANDROID_HARDWARE_BUFFER_USAGE_ANDROID,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             android_hardware_buffer_usage: u64::default(),
             _marker: PhantomData,
@@ -20223,7 +20223,7 @@ impl ::std::default::Default for AndroidHardwareBufferPropertiesANDROID<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::ANDROID_HARDWARE_BUFFER_PROPERTIES_ANDROID,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             allocation_size: DeviceSize::default(),
             memory_type_bits: u32::default(),
@@ -20278,7 +20278,7 @@ impl ::std::default::Default for MemoryGetAndroidHardwareBufferInfoANDROID<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::MEMORY_GET_ANDROID_HARDWARE_BUFFER_INFO_ANDROID,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             memory: DeviceMemory::default(),
             _marker: PhantomData,
@@ -20317,7 +20317,7 @@ impl ::std::default::Default for AndroidHardwareBufferFormatPropertiesANDROID<'_
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::ANDROID_HARDWARE_BUFFER_FORMAT_PROPERTIES_ANDROID,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             format: Format::default(),
             external_format: u64::default(),
@@ -20401,7 +20401,7 @@ impl ::std::default::Default for CommandBufferInheritanceConditionalRenderingInf
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::COMMAND_BUFFER_INHERITANCE_CONDITIONAL_RENDERING_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             conditional_rendering_enable: Bool32::default(),
             _marker: PhantomData,
@@ -20437,7 +20437,7 @@ impl ::std::default::Default for ExternalFormatANDROID<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::EXTERNAL_FORMAT_ANDROID,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             external_format: u64::default(),
             _marker: PhantomData,
@@ -20472,7 +20472,7 @@ impl ::std::default::Default for PhysicalDevice8BitStorageFeatures<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_8BIT_STORAGE_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             storage_buffer8_bit_access: Bool32::default(),
             uniform_and_storage_buffer8_bit_access: Bool32::default(),
@@ -20521,7 +20521,7 @@ impl ::std::default::Default for PhysicalDeviceConditionalRenderingFeaturesEXT<'
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_CONDITIONAL_RENDERING_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             conditional_rendering: Bool32::default(),
             inherited_conditional_rendering: Bool32::default(),
@@ -20566,7 +20566,7 @@ impl ::std::default::Default for PhysicalDeviceVulkanMemoryModelFeatures<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_VULKAN_MEMORY_MODEL_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             vulkan_memory_model: Bool32::default(),
             vulkan_memory_model_device_scope: Bool32::default(),
@@ -20620,7 +20620,7 @@ impl ::std::default::Default for PhysicalDeviceShaderAtomicInt64Features<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SHADER_ATOMIC_INT64_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             shader_buffer_int64_atomics: Bool32::default(),
             shader_shared_int64_atomics: Bool32::default(),
@@ -20671,7 +20671,7 @@ impl ::std::default::Default for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'_> 
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             shader_buffer_float32_atomics: Bool32::default(),
             shader_buffer_float32_atomic_add: Bool32::default(),
@@ -20800,7 +20800,7 @@ impl ::std::default::Default for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'_>
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_2_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             shader_buffer_float16_atomics: Bool32::default(),
             shader_buffer_float16_atomic_add: Bool32::default(),
@@ -20931,7 +20931,7 @@ impl ::std::default::Default for PhysicalDeviceVertexAttributeDivisorFeaturesEXT
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             vertex_attribute_instance_rate_divisor: Bool32::default(),
             vertex_attribute_instance_rate_zero_divisor: Bool32::default(),
@@ -20978,7 +20978,7 @@ impl ::std::default::Default for QueueFamilyCheckpointPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::QUEUE_FAMILY_CHECKPOINT_PROPERTIES_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             checkpoint_execution_stage_mask: PipelineStageFlags::default(),
             _marker: PhantomData,
@@ -21014,7 +21014,7 @@ impl ::std::default::Default for CheckpointDataNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::CHECKPOINT_DATA_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             stage: PipelineStageFlags::default(),
             p_checkpoint_marker: ::std::ptr::null_mut(),
@@ -21054,7 +21054,7 @@ impl ::std::default::Default for PhysicalDeviceDepthStencilResolveProperties<'_>
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_DEPTH_STENCIL_RESOLVE_PROPERTIES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             supported_depth_resolve_modes: ResolveModeFlags::default(),
             supported_stencil_resolve_modes: ResolveModeFlags::default(),
@@ -21113,7 +21113,7 @@ impl ::std::default::Default for SubpassDescriptionDepthStencilResolve<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SUBPASS_DESCRIPTION_DEPTH_STENCIL_RESOLVE,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             depth_resolve_mode: ResolveModeFlags::default(),
             stencil_resolve_mode: ResolveModeFlags::default(),
@@ -21160,7 +21160,7 @@ impl ::std::default::Default for ImageViewASTCDecodeModeEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMAGE_VIEW_ASTC_DECODE_MODE_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             decode_mode: Format::default(),
             _marker: PhantomData,
@@ -21192,7 +21192,7 @@ impl ::std::default::Default for PhysicalDeviceASTCDecodeFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_ASTC_DECODE_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             decode_mode_shared_exponent: Bool32::default(),
             _marker: PhantomData,
@@ -21226,7 +21226,7 @@ impl ::std::default::Default for PhysicalDeviceTransformFeedbackFeaturesEXT<'_> 
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_TRANSFORM_FEEDBACK_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             transform_feedback: Bool32::default(),
             geometry_streams: Bool32::default(),
@@ -21275,7 +21275,7 @@ impl ::std::default::Default for PhysicalDeviceTransformFeedbackPropertiesEXT<'_
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_TRANSFORM_FEEDBACK_PROPERTIES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             max_transform_feedback_streams: u32::default(),
             max_transform_feedback_buffers: u32::default(),
@@ -21383,7 +21383,7 @@ impl ::std::default::Default for PipelineRasterizationStateStreamCreateInfoEXT<'
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_RASTERIZATION_STATE_STREAM_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: PipelineRasterizationStateStreamCreateFlagsEXT::default(),
             rasterization_stream: u32::default(),
@@ -21425,7 +21425,7 @@ impl ::std::default::Default for PhysicalDeviceRepresentativeFragmentTestFeature
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_REPRESENTATIVE_FRAGMENT_TEST_FEATURES_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             representative_fragment_test: Bool32::default(),
             _marker: PhantomData,
@@ -21462,7 +21462,7 @@ impl ::std::default::Default for PipelineRepresentativeFragmentTestStateCreateIn
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_REPRESENTATIVE_FRAGMENT_TEST_STATE_CREATE_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             representative_fragment_test_enable: Bool32::default(),
             _marker: PhantomData,
@@ -21501,7 +21501,7 @@ impl ::std::default::Default for PhysicalDeviceExclusiveScissorFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_EXCLUSIVE_SCISSOR_FEATURES_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             exclusive_scissor: Bool32::default(),
             _marker: PhantomData,
@@ -21536,7 +21536,7 @@ impl ::std::default::Default for PipelineViewportExclusiveScissorStateCreateInfo
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_VIEWPORT_EXCLUSIVE_SCISSOR_STATE_CREATE_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             exclusive_scissor_count: u32::default(),
             p_exclusive_scissors: ::std::ptr::null(),
@@ -21574,7 +21574,7 @@ impl ::std::default::Default for PhysicalDeviceCornerSampledImageFeaturesNV<'_> 
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_CORNER_SAMPLED_IMAGE_FEATURES_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             corner_sampled_image: Bool32::default(),
             _marker: PhantomData,
@@ -21609,7 +21609,7 @@ impl ::std::default::Default for PhysicalDeviceComputeShaderDerivativesFeaturesN
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_COMPUTE_SHADER_DERIVATIVES_FEATURES_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             compute_derivative_group_quads: Bool32::default(),
             compute_derivative_group_linear: Bool32::default(),
@@ -21655,7 +21655,7 @@ impl ::std::default::Default for PhysicalDeviceShaderImageFootprintFeaturesNV<'_
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SHADER_IMAGE_FOOTPRINT_FEATURES_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             image_footprint: Bool32::default(),
             _marker: PhantomData,
@@ -21689,7 +21689,7 @@ impl ::std::default::Default for PhysicalDeviceDedicatedAllocationImageAliasingF
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_DEDICATED_ALLOCATION_IMAGE_ALIASING_FEATURES_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             dedicated_allocation_image_aliasing: Bool32::default(),
             _marker: PhantomData,
@@ -21764,7 +21764,7 @@ impl ::std::default::Default for PipelineViewportShadingRateImageStateCreateInfo
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_VIEWPORT_SHADING_RATE_IMAGE_STATE_CREATE_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             shading_rate_image_enable: Bool32::default(),
             viewport_count: u32::default(),
@@ -21812,7 +21812,7 @@ impl ::std::default::Default for PhysicalDeviceShadingRateImageFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SHADING_RATE_IMAGE_FEATURES_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             shading_rate_image: Bool32::default(),
             shading_rate_coarse_sample_order: Bool32::default(),
@@ -21857,7 +21857,7 @@ impl ::std::default::Default for PhysicalDeviceShadingRateImagePropertiesNV<'_> 
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SHADING_RATE_IMAGE_PROPERTIES_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             shading_rate_texel_size: Extent2D::default(),
             shading_rate_palette_size: u32::default(),
@@ -21902,7 +21902,7 @@ impl ::std::default::Default for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'_> 
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_INVOCATION_MASK_FEATURES_HUAWEI,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             invocation_mask: Bool32::default(),
             _marker: PhantomData,
@@ -22005,7 +22005,7 @@ impl ::std::default::Default for PipelineViewportCoarseSampleOrderStateCreateInf
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_VIEWPORT_COARSE_SAMPLE_ORDER_STATE_CREATE_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             sample_order_type: CoarseSampleOrderTypeNV::default(),
             custom_sample_order_count: u32::default(),
@@ -22053,7 +22053,7 @@ impl ::std::default::Default for PhysicalDeviceMeshShaderFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_MESH_SHADER_FEATURES_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             task_shader: Bool32::default(),
             mesh_shader: Bool32::default(),
@@ -22104,7 +22104,7 @@ impl ::std::default::Default for PhysicalDeviceMeshShaderPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_MESH_SHADER_PROPERTIES_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             max_draw_mesh_tasks_count: u32::default(),
             max_task_work_group_invocations: u32::default(),
@@ -22238,7 +22238,7 @@ impl ::std::default::Default for RayTracingShaderGroupCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::RAY_TRACING_SHADER_GROUP_CREATE_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             ty: RayTracingShaderGroupTypeKHR::default(),
             general_shader: u32::default(),
@@ -22298,7 +22298,7 @@ impl ::std::default::Default for RayTracingShaderGroupCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::RAY_TRACING_SHADER_GROUP_CREATE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             ty: RayTracingShaderGroupTypeKHR::default(),
             general_shader: u32::default(),
@@ -22370,7 +22370,7 @@ impl ::std::default::Default for RayTracingPipelineCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::RAY_TRACING_PIPELINE_CREATE_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: PipelineCreateFlags::default(),
             stage_count: u32::default(),
@@ -22467,7 +22467,7 @@ impl ::std::default::Default for RayTracingPipelineCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::RAY_TRACING_PIPELINE_CREATE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: PipelineCreateFlags::default(),
             stage_count: u32::default(),
@@ -22587,7 +22587,7 @@ impl ::std::default::Default for GeometryTrianglesNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::GEOMETRY_TRIANGLES_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             vertex_data: Buffer::default(),
             vertex_offset: DeviceSize::default(),
@@ -22681,7 +22681,7 @@ impl ::std::default::Default for GeometryAABBNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::GEOMETRY_AABB_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             aabb_data: Buffer::default(),
             num_aab_bs: u32::default(),
@@ -22753,7 +22753,7 @@ impl ::std::default::Default for GeometryNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::GEOMETRY_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             geometry_type: GeometryTypeKHR::default(),
             geometry: GeometryDataNV::default(),
@@ -22800,7 +22800,7 @@ impl ::std::default::Default for AccelerationStructureInfoNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::ACCELERATION_STRUCTURE_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             ty: AccelerationStructureTypeNV::default(),
             flags: BuildAccelerationStructureFlagsNV::default(),
@@ -22852,7 +22852,7 @@ impl ::std::default::Default for AccelerationStructureCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::ACCELERATION_STRUCTURE_CREATE_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             compacted_size: DeviceSize::default(),
             info: AccelerationStructureInfoNV::default(),
@@ -22893,7 +22893,7 @@ impl ::std::default::Default for BindAccelerationStructureMemoryInfoNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::BIND_ACCELERATION_STRUCTURE_MEMORY_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             acceleration_structure: AccelerationStructureNV::default(),
             memory: DeviceMemory::default(),
@@ -22948,7 +22948,7 @@ impl ::std::default::Default for WriteDescriptorSetAccelerationStructureKHR<'_> 
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::WRITE_DESCRIPTOR_SET_ACCELERATION_STRUCTURE_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             acceleration_structure_count: u32::default(),
             p_acceleration_structures: ::std::ptr::null(),
@@ -22987,7 +22987,7 @@ impl ::std::default::Default for WriteDescriptorSetAccelerationStructureNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::WRITE_DESCRIPTOR_SET_ACCELERATION_STRUCTURE_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             acceleration_structure_count: u32::default(),
             p_acceleration_structures: ::std::ptr::null(),
@@ -23026,7 +23026,7 @@ impl ::std::default::Default for AccelerationStructureMemoryRequirementsInfoNV<'
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::ACCELERATION_STRUCTURE_MEMORY_REQUIREMENTS_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             ty: AccelerationStructureMemoryRequirementsTypeNV::default(),
             acceleration_structure: AccelerationStructureNV::default(),
@@ -23071,7 +23071,7 @@ impl ::std::default::Default for PhysicalDeviceAccelerationStructureFeaturesKHR<
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_ACCELERATION_STRUCTURE_FEATURES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             acceleration_structure: Bool32::default(),
             acceleration_structure_capture_replay: Bool32::default(),
@@ -23146,7 +23146,7 @@ impl ::std::default::Default for PhysicalDeviceRayTracingPipelineFeaturesKHR<'_>
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_RAY_TRACING_PIPELINE_FEATURES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             ray_tracing_pipeline: Bool32::default(),
             ray_tracing_pipeline_shader_group_handle_capture_replay: Bool32::default(),
@@ -23219,7 +23219,7 @@ impl ::std::default::Default for PhysicalDeviceRayQueryFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_RAY_QUERY_FEATURES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             ray_query: Bool32::default(),
             _marker: PhantomData,
@@ -23259,7 +23259,7 @@ impl ::std::default::Default for PhysicalDeviceAccelerationStructurePropertiesKH
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_ACCELERATION_STRUCTURE_PROPERTIES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             max_geometry_count: u64::default(),
             max_instance_count: u64::default(),
@@ -23364,7 +23364,7 @@ impl ::std::default::Default for PhysicalDeviceRayTracingPipelinePropertiesKHR<'
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_RAY_TRACING_PIPELINE_PROPERTIES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             shader_group_handle_size: u32::default(),
             max_ray_recursion_depth: u32::default(),
@@ -23452,7 +23452,7 @@ impl ::std::default::Default for PhysicalDeviceRayTracingPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_RAY_TRACING_PROPERTIES_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             shader_group_handle_size: u32::default(),
             max_recursion_depth: u32::default(),
@@ -23705,7 +23705,7 @@ impl ::std::default::Default for PhysicalDeviceRayTracingMaintenance1FeaturesKHR
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_RAY_TRACING_MAINTENANCE_1_FEATURES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             ray_tracing_maintenance1: Bool32::default(),
             ray_tracing_pipeline_trace_rays_indirect2: Bool32::default(),
@@ -23750,7 +23750,7 @@ impl ::std::default::Default for DrmFormatModifierPropertiesListEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DRM_FORMAT_MODIFIER_PROPERTIES_LIST_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             drm_format_modifier_count: u32::default(),
             p_drm_format_modifier_properties: ::std::ptr::null_mut(),
@@ -23819,7 +23819,7 @@ impl ::std::default::Default for PhysicalDeviceImageDrmFormatModifierInfoEXT<'_>
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_IMAGE_DRM_FORMAT_MODIFIER_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             drm_format_modifier: u64::default(),
             sharing_mode: SharingMode::default(),
@@ -23870,7 +23870,7 @@ impl ::std::default::Default for ImageDrmFormatModifierListCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMAGE_DRM_FORMAT_MODIFIER_LIST_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             drm_format_modifier_count: u32::default(),
             p_drm_format_modifiers: ::std::ptr::null(),
@@ -23907,7 +23907,7 @@ impl ::std::default::Default for ImageDrmFormatModifierExplicitCreateInfoEXT<'_>
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMAGE_DRM_FORMAT_MODIFIER_EXPLICIT_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             drm_format_modifier: u64::default(),
             drm_format_modifier_plane_count: u32::default(),
@@ -23948,7 +23948,7 @@ impl ::std::default::Default for ImageDrmFormatModifierPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMAGE_DRM_FORMAT_MODIFIER_PROPERTIES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             drm_format_modifier: u64::default(),
             _marker: PhantomData,
@@ -23979,7 +23979,7 @@ impl ::std::default::Default for ImageStencilUsageCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMAGE_STENCIL_USAGE_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             stencil_usage: ImageUsageFlags::default(),
             _marker: PhantomData,
@@ -24012,7 +24012,7 @@ impl ::std::default::Default for DeviceMemoryOverallocationCreateInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEVICE_MEMORY_OVERALLOCATION_CREATE_INFO_AMD,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             overallocation_behavior: MemoryOverallocationBehaviorAMD::default(),
             _marker: PhantomData,
@@ -24050,7 +24050,7 @@ impl ::std::default::Default for PhysicalDeviceFragmentDensityMapFeaturesEXT<'_>
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             fragment_density_map: Bool32::default(),
             fragment_density_map_dynamic: Bool32::default(),
@@ -24100,7 +24100,7 @@ impl ::std::default::Default for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'_
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_2_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             fragment_density_map_deferred: Bool32::default(),
             _marker: PhantomData,
@@ -24134,7 +24134,7 @@ impl ::std::default::Default for PhysicalDeviceFragmentDensityMapOffsetFeaturesQ
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_OFFSET_FEATURES_QCOM,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             fragment_density_map_offset: Bool32::default(),
             _marker: PhantomData,
@@ -24173,7 +24173,7 @@ impl ::std::default::Default for PhysicalDeviceFragmentDensityMapPropertiesEXT<'
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_PROPERTIES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             min_fragment_density_texel_size: Extent2D::default(),
             max_fragment_density_texel_size: Extent2D::default(),
@@ -24227,7 +24227,7 @@ impl ::std::default::Default for PhysicalDeviceFragmentDensityMap2PropertiesEXT<
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_2_PROPERTIES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             subsampled_loads: Bool32::default(),
             subsampled_coarse_reconstruction_early_access: Bool32::default(),
@@ -24288,7 +24288,7 @@ impl ::std::default::Default for PhysicalDeviceFragmentDensityMapOffsetPropertie
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_OFFSET_PROPERTIES_QCOM,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             fragment_density_offset_granularity: Extent2D::default(),
             _marker: PhantomData,
@@ -24327,7 +24327,7 @@ impl ::std::default::Default for RenderPassFragmentDensityMapCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::RENDER_PASS_FRAGMENT_DENSITY_MAP_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             fragment_density_map_attachment: AttachmentReference::default(),
             _marker: PhantomData,
@@ -24365,7 +24365,7 @@ impl ::std::default::Default for SubpassFragmentDensityMapOffsetEndInfoQCOM<'_> 
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SUBPASS_FRAGMENT_DENSITY_MAP_OFFSET_END_INFO_QCOM,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             fragment_density_offset_count: u32::default(),
             p_fragment_density_offsets: ::std::ptr::null(),
@@ -24400,7 +24400,7 @@ impl ::std::default::Default for PhysicalDeviceScalarBlockLayoutFeatures<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             scalar_block_layout: Bool32::default(),
             _marker: PhantomData,
@@ -24434,7 +24434,7 @@ impl ::std::default::Default for SurfaceProtectedCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SURFACE_PROTECTED_CAPABILITIES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             supports_protected: Bool32::default(),
             _marker: PhantomData,
@@ -24466,7 +24466,7 @@ impl ::std::default::Default for PhysicalDeviceUniformBufferStandardLayoutFeatur
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_UNIFORM_BUFFER_STANDARD_LAYOUT_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             uniform_buffer_standard_layout: Bool32::default(),
             _marker: PhantomData,
@@ -24503,7 +24503,7 @@ impl ::std::default::Default for PhysicalDeviceDepthClipEnableFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_DEPTH_CLIP_ENABLE_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             depth_clip_enable: Bool32::default(),
             _marker: PhantomData,
@@ -24538,7 +24538,7 @@ impl ::std::default::Default for PipelineRasterizationDepthClipStateCreateInfoEX
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_RASTERIZATION_DEPTH_CLIP_STATE_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: PipelineRasterizationDepthClipStateCreateFlagsEXT::default(),
             depth_clip_enable: Bool32::default(),
@@ -24581,7 +24581,7 @@ impl ::std::default::Default for PhysicalDeviceMemoryBudgetPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_MEMORY_BUDGET_PROPERTIES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             heap_budget: unsafe { ::std::mem::zeroed() },
             heap_usage: unsafe { ::std::mem::zeroed() },
@@ -24620,7 +24620,7 @@ impl ::std::default::Default for PhysicalDeviceMemoryPriorityFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_MEMORY_PRIORITY_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             memory_priority: Bool32::default(),
             _marker: PhantomData,
@@ -24654,7 +24654,7 @@ impl ::std::default::Default for MemoryPriorityAllocateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::MEMORY_PRIORITY_ALLOCATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             priority: f32::default(),
             _marker: PhantomData,
@@ -24686,7 +24686,7 @@ impl ::std::default::Default for PhysicalDevicePageableDeviceLocalMemoryFeatures
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_PAGEABLE_DEVICE_LOCAL_MEMORY_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             pageable_device_local_memory: Bool32::default(),
             _marker: PhantomData,
@@ -24725,7 +24725,7 @@ impl ::std::default::Default for PhysicalDeviceBufferDeviceAddressFeatures<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_BUFFER_DEVICE_ADDRESS_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             buffer_device_address: Bool32::default(),
             buffer_device_address_capture_replay: Bool32::default(),
@@ -24779,7 +24779,7 @@ impl ::std::default::Default for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'_
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_BUFFER_DEVICE_ADDRESS_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             buffer_device_address: Bool32::default(),
             buffer_device_address_capture_replay: Bool32::default(),
@@ -24831,7 +24831,7 @@ impl ::std::default::Default for BufferDeviceAddressInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::BUFFER_DEVICE_ADDRESS_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             buffer: Buffer::default(),
             _marker: PhantomData,
@@ -24862,7 +24862,7 @@ impl ::std::default::Default for BufferOpaqueCaptureAddressCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::BUFFER_OPAQUE_CAPTURE_ADDRESS_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             opaque_capture_address: u64::default(),
             _marker: PhantomData,
@@ -24894,7 +24894,7 @@ impl ::std::default::Default for BufferDeviceAddressCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::BUFFER_DEVICE_ADDRESS_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             device_address: DeviceAddress::default(),
             _marker: PhantomData,
@@ -24926,7 +24926,7 @@ impl ::std::default::Default for PhysicalDeviceImageViewImageFormatInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_IMAGE_VIEW_IMAGE_FORMAT_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             image_view_type: ImageViewType::default(),
             _marker: PhantomData,
@@ -24963,7 +24963,7 @@ impl ::std::default::Default for FilterCubicImageViewImageFormatPropertiesEXT<'_
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::FILTER_CUBIC_IMAGE_VIEW_IMAGE_FORMAT_PROPERTIES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             filter_cubic: Bool32::default(),
             filter_cubic_minmax: Bool32::default(),
@@ -25002,7 +25002,7 @@ impl ::std::default::Default for PhysicalDeviceImagelessFramebufferFeatures<'_> 
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_IMAGELESS_FRAMEBUFFER_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             imageless_framebuffer: Bool32::default(),
             _marker: PhantomData,
@@ -25037,7 +25037,7 @@ impl ::std::default::Default for FramebufferAttachmentsCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::FRAMEBUFFER_ATTACHMENTS_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             attachment_image_info_count: u32::default(),
             p_attachment_image_infos: ::std::ptr::null(),
@@ -25080,7 +25080,7 @@ impl ::std::default::Default for FramebufferAttachmentImageInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::FRAMEBUFFER_ATTACHMENT_IMAGE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: ImageCreateFlags::default(),
             usage: ImageUsageFlags::default(),
@@ -25144,7 +25144,7 @@ impl ::std::default::Default for RenderPassAttachmentBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::RENDER_PASS_ATTACHMENT_BEGIN_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             attachment_count: u32::default(),
             p_attachments: ::std::ptr::null(),
@@ -25178,7 +25178,7 @@ impl ::std::default::Default for PhysicalDeviceTextureCompressionASTCHDRFeatures
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_TEXTURE_COMPRESSION_ASTC_HDR_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             texture_compression_astc_hdr: Bool32::default(),
             _marker: PhantomData,
@@ -25213,7 +25213,7 @@ impl ::std::default::Default for PhysicalDeviceCooperativeMatrixFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_FEATURES_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             cooperative_matrix: Bool32::default(),
             cooperative_matrix_robust_buffer_access: Bool32::default(),
@@ -25257,7 +25257,7 @@ impl ::std::default::Default for PhysicalDeviceCooperativeMatrixPropertiesNV<'_>
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_PROPERTIES_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             cooperative_matrix_supported_stages: ShaderStageFlags::default(),
             _marker: PhantomData,
@@ -25300,7 +25300,7 @@ impl ::std::default::Default for CooperativeMatrixPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::COOPERATIVE_MATRIX_PROPERTIES_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             m_size: u32::default(),
             n_size: u32::default(),
@@ -25373,7 +25373,7 @@ impl ::std::default::Default for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_YCBCR_IMAGE_ARRAYS_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             ycbcr_image_arrays: Bool32::default(),
             _marker: PhantomData,
@@ -25409,7 +25409,7 @@ impl ::std::default::Default for ImageViewHandleInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMAGE_VIEW_HANDLE_INFO_NVX,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             image_view: ImageView::default(),
             descriptor_type: DescriptorType::default(),
@@ -25453,7 +25453,7 @@ impl ::std::default::Default for ImageViewAddressPropertiesNVX<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMAGE_VIEW_ADDRESS_PROPERTIES_NVX,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             device_address: DeviceAddress::default(),
             size: DeviceSize::default(),
@@ -25490,7 +25490,7 @@ impl ::std::default::Default for PresentFrameTokenGGP<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PRESENT_FRAME_TOKEN_GGP,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             frame_token: GgpFrameToken::default(),
             _marker: PhantomData,
@@ -25544,7 +25544,7 @@ impl ::std::default::Default for PipelineCreationFeedbackCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_CREATION_FEEDBACK_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             p_pipeline_creation_feedback: ::std::ptr::null_mut(),
             pipeline_stage_creation_feedback_count: u32::default(),
@@ -25593,7 +25593,7 @@ impl ::std::default::Default for SurfaceFullScreenExclusiveInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SURFACE_FULL_SCREEN_EXCLUSIVE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             full_screen_exclusive: FullScreenExclusiveEXT::default(),
             _marker: PhantomData,
@@ -25626,7 +25626,7 @@ impl ::std::default::Default for SurfaceFullScreenExclusiveWin32InfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SURFACE_FULL_SCREEN_EXCLUSIVE_WIN32_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             hmonitor: unsafe { ::std::mem::zeroed() },
             _marker: PhantomData,
@@ -25660,7 +25660,7 @@ impl ::std::default::Default for SurfaceCapabilitiesFullScreenExclusiveEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SURFACE_CAPABILITIES_FULL_SCREEN_EXCLUSIVE_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             full_screen_exclusive_supported: Bool32::default(),
             _marker: PhantomData,
@@ -25697,7 +25697,7 @@ impl ::std::default::Default for PhysicalDevicePerformanceQueryFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_PERFORMANCE_QUERY_FEATURES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             performance_counter_query_pools: Bool32::default(),
             performance_counter_multiple_query_pools: Bool32::default(),
@@ -25744,7 +25744,7 @@ impl ::std::default::Default for PhysicalDevicePerformanceQueryPropertiesKHR<'_>
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_PERFORMANCE_QUERY_PROPERTIES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             allow_command_buffer_query_copies: Bool32::default(),
             _marker: PhantomData,
@@ -25783,7 +25783,7 @@ impl ::std::default::Default for PerformanceCounterKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PERFORMANCE_COUNTER_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             unit: PerformanceCounterUnitKHR::default(),
             scope: PerformanceCounterScopeKHR::default(),
@@ -25853,7 +25853,7 @@ impl ::std::default::Default for PerformanceCounterDescriptionKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PERFORMANCE_COUNTER_DESCRIPTION_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             flags: PerformanceCounterDescriptionFlagsKHR::default(),
             name: unsafe { ::std::mem::zeroed() },
@@ -25904,7 +25904,7 @@ impl ::std::default::Default for QueryPoolPerformanceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::QUERY_POOL_PERFORMANCE_CREATE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             queue_family_index: u32::default(),
             counter_index_count: u32::default(),
@@ -25962,7 +25962,7 @@ impl ::std::default::Default for AcquireProfilingLockInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::ACQUIRE_PROFILING_LOCK_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: AcquireProfilingLockFlagsKHR::default(),
             timeout: u64::default(),
@@ -25999,7 +25999,7 @@ impl ::std::default::Default for PerformanceQuerySubmitInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PERFORMANCE_QUERY_SUBMIT_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             counter_pass_index: u32::default(),
             _marker: PhantomData,
@@ -26032,7 +26032,7 @@ impl ::std::default::Default for HeadlessSurfaceCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::HEADLESS_SURFACE_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: HeadlessSurfaceCreateFlagsEXT::default(),
             _marker: PhantomData,
@@ -26063,7 +26063,7 @@ impl ::std::default::Default for PhysicalDeviceCoverageReductionModeFeaturesNV<'
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_COVERAGE_REDUCTION_MODE_FEATURES_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             coverage_reduction_mode: Bool32::default(),
             _marker: PhantomData,
@@ -26098,7 +26098,7 @@ impl ::std::default::Default for PipelineCoverageReductionStateCreateInfoNV<'_> 
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_COVERAGE_REDUCTION_STATE_CREATE_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: PipelineCoverageReductionStateCreateFlagsNV::default(),
             coverage_reduction_mode: CoverageReductionModeNV::default(),
@@ -26146,7 +26146,7 @@ impl ::std::default::Default for FramebufferMixedSamplesCombinationNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::FRAMEBUFFER_MIXED_SAMPLES_COMBINATION_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             coverage_reduction_mode: CoverageReductionModeNV::default(),
             rasterization_samples: SampleCountFlags::default(),
@@ -26198,7 +26198,7 @@ impl ::std::default::Default for PhysicalDeviceShaderIntegerFunctions2FeaturesIN
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SHADER_INTEGER_FUNCTIONS_2_FEATURES_INTEL,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             shader_integer_functions2: Bool32::default(),
             _marker: PhantomData,
@@ -26279,7 +26279,7 @@ impl ::std::default::Default for InitializePerformanceApiInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::INITIALIZE_PERFORMANCE_API_INFO_INTEL,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             p_user_data: ::std::ptr::null_mut(),
             _marker: PhantomData,
@@ -26310,7 +26310,7 @@ impl ::std::default::Default for QueryPoolPerformanceQueryCreateInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::QUERY_POOL_PERFORMANCE_QUERY_CREATE_INFO_INTEL,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             performance_counters_sampling: QueryPoolSamplingModeINTEL::default(),
             _marker: PhantomData,
@@ -26346,7 +26346,7 @@ impl ::std::default::Default for PerformanceMarkerInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PERFORMANCE_MARKER_INFO_INTEL,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             marker: u64::default(),
             _marker: PhantomData,
@@ -26377,7 +26377,7 @@ impl ::std::default::Default for PerformanceStreamMarkerInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PERFORMANCE_STREAM_MARKER_INFO_INTEL,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             marker: u32::default(),
             _marker: PhantomData,
@@ -26410,7 +26410,7 @@ impl ::std::default::Default for PerformanceOverrideInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PERFORMANCE_OVERRIDE_INFO_INTEL,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             ty: PerformanceOverrideTypeINTEL::default(),
             enable: Bool32::default(),
@@ -26453,7 +26453,7 @@ impl ::std::default::Default for PerformanceConfigurationAcquireInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PERFORMANCE_CONFIGURATION_ACQUIRE_INFO_INTEL,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             ty: PerformanceConfigurationTypeINTEL::default(),
             _marker: PhantomData,
@@ -26486,7 +26486,7 @@ impl ::std::default::Default for PhysicalDeviceShaderClockFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SHADER_CLOCK_FEATURES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             shader_subgroup_clock: Bool32::default(),
             shader_device_clock: Bool32::default(),
@@ -26525,7 +26525,7 @@ impl ::std::default::Default for PhysicalDeviceIndexTypeUint8FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_INDEX_TYPE_UINT8_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             index_type_uint8: Bool32::default(),
             _marker: PhantomData,
@@ -26560,7 +26560,7 @@ impl ::std::default::Default for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'_> 
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SHADER_SM_BUILTINS_PROPERTIES_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             shader_sm_count: u32::default(),
             shader_warps_per_sm: u32::default(),
@@ -26599,7 +26599,7 @@ impl ::std::default::Default for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SHADER_SM_BUILTINS_FEATURES_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             shader_sm_builtins: Bool32::default(),
             _marker: PhantomData,
@@ -26635,7 +26635,7 @@ impl ::std::default::Default for PhysicalDeviceFragmentShaderInterlockFeaturesEX
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADER_INTERLOCK_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             fragment_shader_sample_interlock: Bool32::default(),
             fragment_shader_pixel_interlock: Bool32::default(),
@@ -26693,7 +26693,7 @@ impl ::std::default::Default for PhysicalDeviceSeparateDepthStencilLayoutsFeatur
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SEPARATE_DEPTH_STENCIL_LAYOUTS_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             separate_depth_stencil_layouts: Bool32::default(),
             _marker: PhantomData,
@@ -26730,7 +26730,7 @@ impl ::std::default::Default for AttachmentReferenceStencilLayout<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::ATTACHMENT_REFERENCE_STENCIL_LAYOUT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             stencil_layout: ImageLayout::default(),
             _marker: PhantomData,
@@ -26763,7 +26763,7 @@ impl ::std::default::Default for PhysicalDevicePrimitiveTopologyListRestartFeatu
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_PRIMITIVE_TOPOLOGY_LIST_RESTART_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             primitive_topology_list_restart: Bool32::default(),
             primitive_topology_patch_list_restart: Bool32::default(),
@@ -26813,7 +26813,7 @@ impl ::std::default::Default for AttachmentDescriptionStencilLayout<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::ATTACHMENT_DESCRIPTION_STENCIL_LAYOUT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             stencil_initial_layout: ImageLayout::default(),
             stencil_final_layout: ImageLayout::default(),
@@ -26851,7 +26851,7 @@ impl ::std::default::Default for PhysicalDevicePipelineExecutablePropertiesFeatu
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_PIPELINE_EXECUTABLE_PROPERTIES_FEATURES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             pipeline_executable_info: Bool32::default(),
             _marker: PhantomData,
@@ -26888,7 +26888,7 @@ impl ::std::default::Default for PipelineInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             pipeline: Pipeline::default(),
             _marker: PhantomData,
@@ -26938,7 +26938,7 @@ impl ::std::default::Default for PipelineExecutablePropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_EXECUTABLE_PROPERTIES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             stages: ShaderStageFlags::default(),
             name: unsafe { ::std::mem::zeroed() },
@@ -26988,7 +26988,7 @@ impl ::std::default::Default for PipelineExecutableInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_EXECUTABLE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             pipeline: Pipeline::default(),
             executable_index: u32::default(),
@@ -27059,7 +27059,7 @@ impl ::std::default::Default for PipelineExecutableStatisticKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_EXECUTABLE_STATISTIC_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             name: unsafe { ::std::mem::zeroed() },
             description: unsafe { ::std::mem::zeroed() },
@@ -27129,7 +27129,7 @@ impl ::std::default::Default for PipelineExecutableInternalRepresentationKHR<'_>
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_EXECUTABLE_INTERNAL_REPRESENTATION_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             name: unsafe { ::std::mem::zeroed() },
             description: unsafe { ::std::mem::zeroed() },
@@ -27181,7 +27181,7 @@ impl ::std::default::Default for PhysicalDeviceShaderDemoteToHelperInvocationFea
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SHADER_DEMOTE_TO_HELPER_INVOCATION_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             shader_demote_to_helper_invocation: Bool32::default(),
             _marker: PhantomData,
@@ -27221,7 +27221,7 @@ impl ::std::default::Default for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_TEXEL_BUFFER_ALIGNMENT_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             texel_buffer_alignment: Bool32::default(),
             _marker: PhantomData,
@@ -27258,7 +27258,7 @@ impl ::std::default::Default for PhysicalDeviceTexelBufferAlignmentProperties<'_
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_TEXEL_BUFFER_ALIGNMENT_PROPERTIES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             storage_texel_buffer_offset_alignment_bytes: DeviceSize::default(),
             storage_texel_buffer_offset_single_texel_alignment: Bool32::default(),
@@ -27326,7 +27326,7 @@ impl ::std::default::Default for PhysicalDeviceSubgroupSizeControlFeatures<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SUBGROUP_SIZE_CONTROL_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             subgroup_size_control: Bool32::default(),
             compute_full_subgroups: Bool32::default(),
@@ -27369,7 +27369,7 @@ impl ::std::default::Default for PhysicalDeviceSubgroupSizeControlProperties<'_>
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SUBGROUP_SIZE_CONTROL_PROPERTIES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             min_subgroup_size: u32::default(),
             max_subgroup_size: u32::default(),
@@ -27423,7 +27423,7 @@ impl ::std::default::Default for PipelineShaderStageRequiredSubgroupSizeCreateIn
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_SHADER_STAGE_REQUIRED_SUBGROUP_SIZE_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             required_subgroup_size: u32::default(),
             _marker: PhantomData,
@@ -27460,7 +27460,7 @@ impl ::std::default::Default for SubpassShadingPipelineCreateInfoHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SUBPASS_SHADING_PIPELINE_CREATE_INFO_HUAWEI,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             render_pass: RenderPass::default(),
             subpass: u32::default(),
@@ -27499,7 +27499,7 @@ impl ::std::default::Default for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'_
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SUBPASS_SHADING_PROPERTIES_HUAWEI,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             max_subpass_shading_workgroup_size_aspect_ratio: u32::default(),
             _marker: PhantomData,
@@ -27536,7 +27536,7 @@ impl ::std::default::Default for MemoryOpaqueCaptureAddressAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::MEMORY_OPAQUE_CAPTURE_ADDRESS_ALLOCATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             opaque_capture_address: u64::default(),
             _marker: PhantomData,
@@ -27569,7 +27569,7 @@ impl ::std::default::Default for DeviceMemoryOpaqueCaptureAddressInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEVICE_MEMORY_OPAQUE_CAPTURE_ADDRESS_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             memory: DeviceMemory::default(),
             _marker: PhantomData,
@@ -27605,7 +27605,7 @@ impl ::std::default::Default for PhysicalDeviceLineRasterizationFeaturesEXT<'_> 
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_LINE_RASTERIZATION_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             rectangular_lines: Bool32::default(),
             bresenham_lines: Bool32::default(),
@@ -27669,7 +27669,7 @@ impl ::std::default::Default for PhysicalDeviceLineRasterizationPropertiesEXT<'_
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_LINE_RASTERIZATION_PROPERTIES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             line_sub_pixel_precision_bits: u32::default(),
             _marker: PhantomData,
@@ -27705,7 +27705,7 @@ impl ::std::default::Default for PipelineRasterizationLineStateCreateInfoEXT<'_>
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_RASTERIZATION_LINE_STATE_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             line_rasterization_mode: LineRasterizationModeEXT::default(),
             stippled_line_enable: Bool32::default(),
@@ -27762,7 +27762,7 @@ impl ::std::default::Default for PhysicalDevicePipelineCreationCacheControlFeatu
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_PIPELINE_CREATION_CACHE_CONTROL_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             pipeline_creation_cache_control: Bool32::default(),
             _marker: PhantomData,
@@ -27813,7 +27813,7 @@ impl ::std::default::Default for PhysicalDeviceVulkan11Features<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_VULKAN_1_1_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             storage_buffer16_bit_access: Bool32::default(),
             uniform_and_storage_buffer16_bit_access: Bool32::default(),
@@ -27933,7 +27933,7 @@ impl ::std::default::Default for PhysicalDeviceVulkan11Properties<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_VULKAN_1_1_PROPERTIES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             device_uuid: unsafe { ::std::mem::zeroed() },
             driver_uuid: unsafe { ::std::mem::zeroed() },
@@ -28107,7 +28107,7 @@ impl ::std::default::Default for PhysicalDeviceVulkan12Features<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_VULKAN_1_2_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             sampler_mirror_clamp_to_edge: Bool32::default(),
             draw_indirect_count: Bool32::default(),
@@ -28760,7 +28760,7 @@ impl ::std::default::Default for PhysicalDeviceVulkan12Properties<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_VULKAN_1_2_PROPERTIES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             driver_id: DriverId::default(),
             driver_name: unsafe { ::std::mem::zeroed() },
@@ -29261,7 +29261,7 @@ impl ::std::default::Default for PhysicalDeviceVulkan13Features<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_VULKAN_1_3_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             robust_image_access: Bool32::default(),
             inline_uniform_block: Bool32::default(),
@@ -29436,7 +29436,7 @@ pub struct PhysicalDeviceVulkan13Properties<'a> {
 impl ::std::default::Default for PhysicalDeviceVulkan13Properties<'_> {
     #[inline]
     fn default() -> Self {
-        Self { s_type : StructureType :: PHYSICAL_DEVICE_VULKAN_1_3_PROPERTIES , p_next : :: std :: ptr :: null_mut () , min_subgroup_size : u32 :: default () , max_subgroup_size : u32 :: default () , max_compute_workgroup_subgroups : u32 :: default () , required_subgroup_size_stages : ShaderStageFlags :: default () , max_inline_uniform_block_size : u32 :: default () , max_per_stage_descriptor_inline_uniform_blocks : u32 :: default () , max_per_stage_descriptor_update_after_bind_inline_uniform_blocks : u32 :: default () , max_descriptor_set_inline_uniform_blocks : u32 :: default () , max_descriptor_set_update_after_bind_inline_uniform_blocks : u32 :: default () , max_inline_uniform_total_size : u32 :: default () , integer_dot_product8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product64_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated : Bool32 :: default () , storage_texel_buffer_offset_alignment_bytes : DeviceSize :: default () , storage_texel_buffer_offset_single_texel_alignment : Bool32 :: default () , uniform_texel_buffer_offset_alignment_bytes : DeviceSize :: default () , uniform_texel_buffer_offset_single_texel_alignment : Bool32 :: default () , max_buffer_size : DeviceSize :: default () , _marker : PhantomData , }
+        Self { s_type : Self :: STRUCTURE_TYPE , p_next : :: std :: ptr :: null_mut () , min_subgroup_size : u32 :: default () , max_subgroup_size : u32 :: default () , max_compute_workgroup_subgroups : u32 :: default () , required_subgroup_size_stages : ShaderStageFlags :: default () , max_inline_uniform_block_size : u32 :: default () , max_per_stage_descriptor_inline_uniform_blocks : u32 :: default () , max_per_stage_descriptor_update_after_bind_inline_uniform_blocks : u32 :: default () , max_descriptor_set_inline_uniform_blocks : u32 :: default () , max_descriptor_set_update_after_bind_inline_uniform_blocks : u32 :: default () , max_inline_uniform_total_size : u32 :: default () , integer_dot_product8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product64_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated : Bool32 :: default () , storage_texel_buffer_offset_alignment_bytes : DeviceSize :: default () , storage_texel_buffer_offset_single_texel_alignment : Bool32 :: default () , uniform_texel_buffer_offset_alignment_bytes : DeviceSize :: default () , uniform_texel_buffer_offset_single_texel_alignment : Bool32 :: default () , max_buffer_size : DeviceSize :: default () , _marker : PhantomData , }
     }
 }
 unsafe impl<'a> TaggedStructure for PhysicalDeviceVulkan13Properties<'a> {
@@ -29837,7 +29837,7 @@ impl ::std::default::Default for PipelineCompilerControlCreateInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_COMPILER_CONTROL_CREATE_INFO_AMD,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             compiler_control_flags: PipelineCompilerControlFlagsAMD::default(),
             _marker: PhantomData,
@@ -29873,7 +29873,7 @@ impl ::std::default::Default for PhysicalDeviceCoherentMemoryFeaturesAMD<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_COHERENT_MEMORY_FEATURES_AMD,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             device_coherent_memory: Bool32::default(),
             _marker: PhantomData,
@@ -29932,7 +29932,7 @@ impl ::std::default::Default for PhysicalDeviceToolProperties<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_TOOL_PROPERTIES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             name: unsafe { ::std::mem::zeroed() },
             version: unsafe { ::std::mem::zeroed() },
@@ -29998,7 +29998,7 @@ impl ::std::default::Default for SamplerCustomBorderColorCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SAMPLER_CUSTOM_BORDER_COLOR_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             custom_border_color: ClearColorValue::default(),
             format: Format::default(),
@@ -30037,7 +30037,7 @@ impl ::std::default::Default for PhysicalDeviceCustomBorderColorPropertiesEXT<'_
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_CUSTOM_BORDER_COLOR_PROPERTIES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             max_custom_border_color_samplers: u32::default(),
             _marker: PhantomData,
@@ -30074,7 +30074,7 @@ impl ::std::default::Default for PhysicalDeviceCustomBorderColorFeaturesEXT<'_> 
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_CUSTOM_BORDER_COLOR_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             custom_border_colors: Bool32::default(),
             custom_border_color_without_format: Bool32::default(),
@@ -30118,7 +30118,7 @@ impl ::std::default::Default for SamplerBorderColorComponentMappingCreateInfoEXT
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SAMPLER_BORDER_COLOR_COMPONENT_MAPPING_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             components: ComponentMapping::default(),
             srgb: Bool32::default(),
@@ -30158,7 +30158,7 @@ impl ::std::default::Default for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'_>
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_BORDER_COLOR_SWIZZLE_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             border_color_swizzle: Bool32::default(),
             border_color_swizzle_from_image: Bool32::default(),
@@ -30248,7 +30248,7 @@ impl ::std::default::Default for AccelerationStructureGeometryTrianglesDataKHR<'
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::ACCELERATION_STRUCTURE_GEOMETRY_TRIANGLES_DATA_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             vertex_format: Format::default(),
             vertex_data: DeviceOrHostAddressConstKHR::default(),
@@ -30345,7 +30345,7 @@ impl ::std::default::Default for AccelerationStructureGeometryAabbsDataKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::ACCELERATION_STRUCTURE_GEOMETRY_AABBS_DATA_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             data: DeviceOrHostAddressConstKHR::default(),
             stride: DeviceSize::default(),
@@ -30394,7 +30394,7 @@ impl ::std::default::Default for AccelerationStructureGeometryInstancesDataKHR<'
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::ACCELERATION_STRUCTURE_GEOMETRY_INSTANCES_DATA_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             array_of_pointers: Bool32::default(),
             data: DeviceOrHostAddressConstKHR::default(),
@@ -30459,7 +30459,7 @@ impl ::std::default::Default for AccelerationStructureGeometryKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::ACCELERATION_STRUCTURE_GEOMETRY_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             geometry_type: GeometryTypeKHR::default(),
             geometry: AccelerationStructureGeometryDataKHR::default(),
@@ -30533,7 +30533,7 @@ impl ::std::default::Default for AccelerationStructureBuildGeometryInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::ACCELERATION_STRUCTURE_BUILD_GEOMETRY_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             ty: AccelerationStructureTypeKHR::default(),
             flags: BuildAccelerationStructureFlagsKHR::default(),
@@ -30656,7 +30656,7 @@ impl ::std::default::Default for AccelerationStructureCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::ACCELERATION_STRUCTURE_CREATE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             create_flags: AccelerationStructureCreateFlagsKHR::default(),
             buffer: Buffer::default(),
@@ -30801,7 +30801,7 @@ impl ::std::default::Default for AccelerationStructureDeviceAddressInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::ACCELERATION_STRUCTURE_DEVICE_ADDRESS_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             acceleration_structure: AccelerationStructureKHR::default(),
             _marker: PhantomData,
@@ -30836,7 +30836,7 @@ impl ::std::default::Default for AccelerationStructureVersionInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::ACCELERATION_STRUCTURE_VERSION_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             p_version_data: ::std::ptr::null(),
             _marker: PhantomData,
@@ -30869,7 +30869,7 @@ impl ::std::default::Default for CopyAccelerationStructureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::COPY_ACCELERATION_STRUCTURE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             src: AccelerationStructureKHR::default(),
             dst: AccelerationStructureKHR::default(),
@@ -30925,7 +30925,7 @@ impl ::std::default::Default for CopyAccelerationStructureToMemoryInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::COPY_ACCELERATION_STRUCTURE_TO_MEMORY_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             src: AccelerationStructureKHR::default(),
             dst: DeviceOrHostAddressKHR::default(),
@@ -30982,7 +30982,7 @@ impl ::std::default::Default for CopyMemoryToAccelerationStructureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::COPY_MEMORY_TO_ACCELERATION_STRUCTURE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             src: DeviceOrHostAddressConstKHR::default(),
             dst: AccelerationStructureKHR::default(),
@@ -31027,7 +31027,7 @@ impl ::std::default::Default for RayTracingPipelineInterfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::RAY_TRACING_PIPELINE_INTERFACE_CREATE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             max_pipeline_ray_payload_size: u32::default(),
             max_pipeline_ray_hit_attribute_size: u32::default(),
@@ -31069,7 +31069,7 @@ impl ::std::default::Default for PipelineLibraryCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_LIBRARY_CREATE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             library_count: u32::default(),
             p_libraries: ::std::ptr::null(),
@@ -31103,7 +31103,7 @@ impl ::std::default::Default for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             extended_dynamic_state: Bool32::default(),
             _marker: PhantomData,
@@ -31139,7 +31139,7 @@ impl ::std::default::Default for PhysicalDeviceExtendedDynamicState2FeaturesEXT<
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_2_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             extended_dynamic_state2: Bool32::default(),
             extended_dynamic_state2_logic_op: Bool32::default(),
@@ -31192,7 +31192,7 @@ impl ::std::default::Default for RenderPassTransformBeginInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::RENDER_PASS_TRANSFORM_BEGIN_INFO_QCOM,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             transform: SurfaceTransformFlagsKHR::default(),
             _marker: PhantomData,
@@ -31224,7 +31224,7 @@ impl ::std::default::Default for CopyCommandTransformInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::COPY_COMMAND_TRANSFORM_INFO_QCOM,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             transform: SurfaceTransformFlagsKHR::default(),
             _marker: PhantomData,
@@ -31258,7 +31258,7 @@ impl ::std::default::Default for CommandBufferInheritanceRenderPassTransformInfo
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::COMMAND_BUFFER_INHERITANCE_RENDER_PASS_TRANSFORM_INFO_QCOM,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             transform: SurfaceTransformFlagsKHR::default(),
             render_area: Rect2D::default(),
@@ -31300,7 +31300,7 @@ impl ::std::default::Default for PhysicalDeviceDiagnosticsConfigFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_DIAGNOSTICS_CONFIG_FEATURES_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             diagnostics_config: Bool32::default(),
             _marker: PhantomData,
@@ -31334,7 +31334,7 @@ impl ::std::default::Default for DeviceDiagnosticsConfigCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEVICE_DIAGNOSTICS_CONFIG_CREATE_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: DeviceDiagnosticsConfigFlagsNV::default(),
             _marker: PhantomData,
@@ -31366,7 +31366,7 @@ impl ::std::default::Default for PhysicalDeviceZeroInitializeWorkgroupMemoryFeat
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_ZERO_INITIALIZE_WORKGROUP_MEMORY_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             shader_zero_initialize_workgroup_memory: Bool32::default(),
             _marker: PhantomData,
@@ -31407,8 +31407,7 @@ impl ::std::default::Default for PhysicalDeviceShaderSubgroupUniformControlFlowF
     #[inline]
     fn default() -> Self {
         Self {
-            s_type:
-                StructureType::PHYSICAL_DEVICE_SHADER_SUBGROUP_UNIFORM_CONTROL_FLOW_FEATURES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             shader_subgroup_uniform_control_flow: Bool32::default(),
             _marker: PhantomData,
@@ -31453,7 +31452,7 @@ impl ::std::default::Default for PhysicalDeviceRobustness2FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_ROBUSTNESS_2_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             robust_buffer_access2: Bool32::default(),
             robust_image_access2: Bool32::default(),
@@ -31499,7 +31498,7 @@ impl ::std::default::Default for PhysicalDeviceRobustness2PropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_ROBUSTNESS_2_PROPERTIES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             robust_storage_buffer_access_size_alignment: DeviceSize::default(),
             robust_uniform_buffer_access_size_alignment: DeviceSize::default(),
@@ -31546,7 +31545,7 @@ impl ::std::default::Default for PhysicalDeviceImageRobustnessFeatures<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_IMAGE_ROBUSTNESS_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             robust_image_access: Bool32::default(),
             _marker: PhantomData,
@@ -31582,7 +31581,7 @@ impl ::std::default::Default for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeat
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_WORKGROUP_MEMORY_EXPLICIT_LAYOUT_FEATURES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             workgroup_memory_explicit_layout: Bool32::default(),
             workgroup_memory_explicit_layout_scalar_block_layout: Bool32::default(),
@@ -31666,7 +31665,7 @@ impl ::std::default::Default for PhysicalDevicePortabilitySubsetFeaturesKHR<'_> 
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_PORTABILITY_SUBSET_FEATURES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             constant_alpha_color_blend_factors: Bool32::default(),
             events: Bool32::default(),
@@ -31797,7 +31796,7 @@ impl ::std::default::Default for PhysicalDevicePortabilitySubsetPropertiesKHR<'_
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_PORTABILITY_SUBSET_PROPERTIES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             min_vertex_input_binding_stride_alignment: u32::default(),
             _marker: PhantomData,
@@ -31834,7 +31833,7 @@ impl ::std::default::Default for PhysicalDevice4444FormatsFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             format_a4r4g4b4: Bool32::default(),
             format_a4b4g4r4: Bool32::default(),
@@ -31873,7 +31872,7 @@ impl ::std::default::Default for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'_> 
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SUBPASS_SHADING_FEATURES_HUAWEI,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             subpass_shading: Bool32::default(),
             _marker: PhantomData,
@@ -31909,7 +31908,7 @@ impl ::std::default::Default for BufferCopy2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::BUFFER_COPY_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             src_offset: DeviceSize::default(),
             dst_offset: DeviceSize::default(),
@@ -31956,7 +31955,7 @@ impl ::std::default::Default for ImageCopy2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMAGE_COPY_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             src_subresource: ImageSubresourceLayers::default(),
             src_offset: Offset3D::default(),
@@ -32014,7 +32013,7 @@ impl ::std::default::Default for ImageBlit2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMAGE_BLIT_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             src_subresource: ImageSubresourceLayers::default(),
             src_offsets: unsafe { ::std::mem::zeroed() },
@@ -32083,7 +32082,7 @@ impl ::std::default::Default for BufferImageCopy2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::BUFFER_IMAGE_COPY_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             buffer_offset: DeviceSize::default(),
             buffer_row_length: u32::default(),
@@ -32163,7 +32162,7 @@ impl ::std::default::Default for ImageResolve2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMAGE_RESOLVE_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             src_subresource: ImageSubresourceLayers::default(),
             src_offset: Offset3D::default(),
@@ -32221,7 +32220,7 @@ impl ::std::default::Default for CopyBufferInfo2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::COPY_BUFFER_INFO_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             src_buffer: Buffer::default(),
             dst_buffer: Buffer::default(),
@@ -32271,7 +32270,7 @@ impl ::std::default::Default for CopyImageInfo2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::COPY_IMAGE_INFO_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             src_image: Image::default(),
             src_image_layout: ImageLayout::default(),
@@ -32334,7 +32333,7 @@ impl ::std::default::Default for BlitImageInfo2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::BLIT_IMAGE_INFO_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             src_image: Image::default(),
             src_image_layout: ImageLayout::default(),
@@ -32401,7 +32400,7 @@ impl ::std::default::Default for CopyBufferToImageInfo2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::COPY_BUFFER_TO_IMAGE_INFO_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             src_buffer: Buffer::default(),
             dst_image: Image::default(),
@@ -32456,7 +32455,7 @@ impl ::std::default::Default for CopyImageToBufferInfo2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::COPY_IMAGE_TO_BUFFER_INFO_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             src_image: Image::default(),
             src_image_layout: ImageLayout::default(),
@@ -32512,7 +32511,7 @@ impl ::std::default::Default for ResolveImageInfo2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::RESOLVE_IMAGE_INFO_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             src_image: Image::default(),
             src_image_layout: ImageLayout::default(),
@@ -32570,7 +32569,7 @@ impl ::std::default::Default for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SHADER_IMAGE_ATOMIC_INT64_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             shader_image_int64_atomics: Bool32::default(),
             sparse_image_int64_atomics: Bool32::default(),
@@ -32611,7 +32610,7 @@ impl ::std::default::Default for FragmentShadingRateAttachmentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::FRAGMENT_SHADING_RATE_ATTACHMENT_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             p_fragment_shading_rate_attachment: ::std::ptr::null(),
             shading_rate_attachment_texel_size: Extent2D::default(),
@@ -32656,7 +32655,7 @@ impl ::std::default::Default for PipelineFragmentShadingRateStateCreateInfoKHR<'
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_FRAGMENT_SHADING_RATE_STATE_CREATE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             fragment_size: Extent2D::default(),
             combiner_ops: unsafe { ::std::mem::zeroed() },
@@ -32700,7 +32699,7 @@ impl ::std::default::Default for PhysicalDeviceFragmentShadingRateFeaturesKHR<'_
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_FEATURES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             pipeline_fragment_shading_rate: Bool32::default(),
             primitive_fragment_shading_rate: Bool32::default(),
@@ -32768,7 +32767,7 @@ impl ::std::default::Default for PhysicalDeviceFragmentShadingRatePropertiesKHR<
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_PROPERTIES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             min_fragment_shading_rate_attachment_texel_size: Extent2D::default(),
             max_fragment_shading_rate_attachment_texel_size: Extent2D::default(),
@@ -32959,7 +32958,7 @@ impl ::std::default::Default for PhysicalDeviceFragmentShadingRateKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             sample_counts: SampleCountFlags::default(),
             fragment_size: Extent2D::default(),
@@ -32996,7 +32995,7 @@ impl ::std::default::Default for PhysicalDeviceShaderTerminateInvocationFeatures
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SHADER_TERMINATE_INVOCATION_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             shader_terminate_invocation: Bool32::default(),
             _marker: PhantomData,
@@ -33032,7 +33031,7 @@ impl ::std::default::Default for PhysicalDeviceFragmentShadingRateEnumsFeaturesN
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_ENUMS_FEATURES_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             fragment_shading_rate_enums: Bool32::default(),
             supersample_fragment_shading_rates: Bool32::default(),
@@ -33087,7 +33086,7 @@ impl ::std::default::Default for PhysicalDeviceFragmentShadingRateEnumsPropertie
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_ENUMS_PROPERTIES_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             max_fragment_shading_rate_invocation_count: SampleCountFlags::default(),
             _marker: PhantomData,
@@ -33129,7 +33128,7 @@ impl ::std::default::Default for PipelineFragmentShadingRateEnumStateCreateInfoN
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_FRAGMENT_SHADING_RATE_ENUM_STATE_CREATE_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             shading_rate_type: FragmentShadingRateTypeNV::default(),
             shading_rate: FragmentShadingRateNV::default(),
@@ -33179,7 +33178,7 @@ impl ::std::default::Default for AccelerationStructureBuildSizesInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::ACCELERATION_STRUCTURE_BUILD_SIZES_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             acceleration_structure_size: DeviceSize::default(),
             update_scratch_size: DeviceSize::default(),
@@ -33224,7 +33223,7 @@ impl ::std::default::Default for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_IMAGE_2D_VIEW_OF_3D_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             image2_d_view_of3_d: Bool32::default(),
             sampler2_d_view_of3_d: Bool32::default(),
@@ -33264,7 +33263,7 @@ impl ::std::default::Default for PhysicalDeviceMutableDescriptorTypeFeaturesVALV
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_VALVE,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             mutable_descriptor_type: Bool32::default(),
             _marker: PhantomData,
@@ -33329,7 +33328,7 @@ impl ::std::default::Default for MutableDescriptorTypeCreateInfoVALVE<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_VALVE,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             mutable_descriptor_type_list_count: u32::default(),
             p_mutable_descriptor_type_lists: ::std::ptr::null(),
@@ -33367,7 +33366,7 @@ impl ::std::default::Default for PhysicalDeviceDepthClipControlFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_DEPTH_CLIP_CONTROL_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             depth_clip_control: Bool32::default(),
             _marker: PhantomData,
@@ -33401,7 +33400,7 @@ impl ::std::default::Default for PipelineViewportDepthClipControlCreateInfoEXT<'
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_VIEWPORT_DEPTH_CLIP_CONTROL_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             negative_one_to_one: Bool32::default(),
             _marker: PhantomData,
@@ -33437,7 +33436,7 @@ impl ::std::default::Default for PhysicalDeviceVertexInputDynamicStateFeaturesEX
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_VERTEX_INPUT_DYNAMIC_STATE_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             vertex_input_dynamic_state: Bool32::default(),
             _marker: PhantomData,
@@ -33474,7 +33473,7 @@ impl ::std::default::Default for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'_> 
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_EXTERNAL_MEMORY_RDMA_FEATURES_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             external_memory_rdma: Bool32::default(),
             _marker: PhantomData,
@@ -33511,7 +33510,7 @@ impl ::std::default::Default for VertexInputBindingDescription2EXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VERTEX_INPUT_BINDING_DESCRIPTION_2_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             binding: u32::default(),
             stride: u32::default(),
@@ -33563,7 +33562,7 @@ impl ::std::default::Default for VertexInputAttributeDescription2EXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VERTEX_INPUT_ATTRIBUTE_DESCRIPTION_2_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             location: u32::default(),
             binding: u32::default(),
@@ -33612,7 +33611,7 @@ impl ::std::default::Default for PhysicalDeviceColorWriteEnableFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_COLOR_WRITE_ENABLE_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             color_write_enable: Bool32::default(),
             _marker: PhantomData,
@@ -33647,7 +33646,7 @@ impl ::std::default::Default for PipelineColorWriteCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_COLOR_WRITE_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             attachment_count: u32::default(),
             p_color_write_enables: ::std::ptr::null(),
@@ -33684,7 +33683,7 @@ impl ::std::default::Default for MemoryBarrier2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::MEMORY_BARRIER_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             src_stage_mask: PipelineStageFlags2::default(),
             src_access_mask: AccessFlags2::default(),
@@ -33743,7 +33742,7 @@ impl ::std::default::Default for ImageMemoryBarrier2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMAGE_MEMORY_BARRIER_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             src_stage_mask: PipelineStageFlags2::default(),
             src_access_mask: AccessFlags2::default(),
@@ -33851,7 +33850,7 @@ impl ::std::default::Default for BufferMemoryBarrier2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::BUFFER_MEMORY_BARRIER_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             src_stage_mask: PipelineStageFlags2::default(),
             src_access_mask: AccessFlags2::default(),
@@ -33936,7 +33935,7 @@ impl ::std::default::Default for DependencyInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DEPENDENCY_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             dependency_flags: DependencyFlags::default(),
             memory_barrier_count: u32::default(),
@@ -34000,7 +33999,7 @@ impl ::std::default::Default for SemaphoreSubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SEMAPHORE_SUBMIT_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             semaphore: Semaphore::default(),
             value: u64::default(),
@@ -34050,7 +34049,7 @@ impl ::std::default::Default for CommandBufferSubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::COMMAND_BUFFER_SUBMIT_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             command_buffer: CommandBuffer::default(),
             device_mask: u32::default(),
@@ -34093,7 +34092,7 @@ impl ::std::default::Default for SubmitInfo2<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SUBMIT_INFO_2,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: SubmitFlags::default(),
             wait_semaphore_info_count: u32::default(),
@@ -34169,7 +34168,7 @@ impl ::std::default::Default for QueueFamilyCheckpointProperties2NV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::QUEUE_FAMILY_CHECKPOINT_PROPERTIES_2_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             checkpoint_execution_stage_mask: PipelineStageFlags2::default(),
             _marker: PhantomData,
@@ -34205,7 +34204,7 @@ impl ::std::default::Default for CheckpointData2NV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::CHECKPOINT_DATA_2_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             stage: PipelineStageFlags2::default(),
             p_checkpoint_marker: ::std::ptr::null_mut(),
@@ -34242,7 +34241,7 @@ impl ::std::default::Default for PhysicalDeviceSynchronization2Features<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SYNCHRONIZATION_2_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             synchronization2: Bool32::default(),
             _marker: PhantomData,
@@ -34277,7 +34276,7 @@ impl ::std::default::Default for PhysicalDevicePrimitivesGeneratedQueryFeaturesE
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_PRIMITIVES_GENERATED_QUERY_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             primitives_generated_query: Bool32::default(),
             primitives_generated_query_with_rasterizer_discard: Bool32::default(),
@@ -34334,8 +34333,7 @@ impl ::std::default::Default for PhysicalDeviceMultisampledRenderToSingleSampled
     #[inline]
     fn default() -> Self {
         Self {
-            s_type:
-                StructureType::PHYSICAL_DEVICE_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             multisampled_render_to_single_sampled: Bool32::default(),
             _marker: PhantomData,
@@ -34378,7 +34376,7 @@ impl ::std::default::Default for SubpassResolvePerformanceQueryEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SUBPASS_RESOLVE_PERFORMANCE_QUERY_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             optimal: Bool32::default(),
             _marker: PhantomData,
@@ -34411,7 +34409,7 @@ impl ::std::default::Default for MultisampledRenderToSingleSampledInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             multisampled_render_to_single_sampled_enable: Bool32::default(),
             rasterization_samples: SampleCountFlags::default(),
@@ -34455,7 +34453,7 @@ impl ::std::default::Default for VideoQueueFamilyProperties2KHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_QUEUE_FAMILY_PROPERTIES_2_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             video_codec_operations: VideoCodecOperationFlagsKHR::default(),
             _marker: PhantomData,
@@ -34490,7 +34488,7 @@ impl ::std::default::Default for QueueFamilyQueryResultStatusProperties2KHR<'_> 
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::QUEUE_FAMILY_QUERY_RESULT_STATUS_PROPERTIES_2_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             query_result_status_support: Bool32::default(),
             _marker: PhantomData,
@@ -34524,7 +34522,7 @@ impl ::std::default::Default for VideoProfilesKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_PROFILES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             profile_count: u32::default(),
             p_profiles: ::std::ptr::null(),
@@ -34561,7 +34559,7 @@ impl ::std::default::Default for PhysicalDeviceVideoFormatInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_VIDEO_FORMAT_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             image_usage: ImageUsageFlags::default(),
             _marker: PhantomData,
@@ -34615,7 +34613,7 @@ impl ::std::default::Default for VideoFormatPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_FORMAT_PROPERTIES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             format: Format::default(),
             component_mapping: ComponentMapping::default(),
@@ -34679,7 +34677,7 @@ impl ::std::default::Default for VideoProfileKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_PROFILE_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             video_codec_operation: VideoCodecOperationFlagsKHR::default(),
             chroma_subsampling: VideoChromaSubsamplingFlagsKHR::default(),
@@ -34758,7 +34756,7 @@ impl ::std::default::Default for VideoCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_CAPABILITIES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             capability_flags: VideoCapabilityFlagsKHR::default(),
             min_bitstream_buffer_offset_alignment: DeviceSize::default(),
@@ -34868,7 +34866,7 @@ impl ::std::default::Default for VideoGetMemoryPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_GET_MEMORY_PROPERTIES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             memory_bind_index: u32::default(),
             p_memory_requirements: ::std::ptr::null_mut(),
@@ -34911,7 +34909,7 @@ impl ::std::default::Default for VideoBindMemoryKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_BIND_MEMORY_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             memory_bind_index: u32::default(),
             memory: DeviceMemory::default(),
@@ -34963,7 +34961,7 @@ impl ::std::default::Default for VideoPictureResourceKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_PICTURE_RESOURCE_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             coded_offset: Offset2D::default(),
             coded_extent: Extent2D::default(),
@@ -35013,7 +35011,7 @@ impl ::std::default::Default for VideoReferenceSlotKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_REFERENCE_SLOT_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             slot_index: i8::default(),
             p_picture_resource: ::std::ptr::null(),
@@ -35065,7 +35063,7 @@ impl ::std::default::Default for VideoDecodeCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_DECODE_CAPABILITIES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             flags: VideoDecodeCapabilityFlagsKHR::default(),
             _marker: PhantomData,
@@ -35119,7 +35117,7 @@ impl ::std::default::Default for VideoDecodeInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_DECODE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: VideoDecodeFlagsKHR::default(),
             src_buffer: Buffer::default(),
@@ -35210,7 +35208,7 @@ impl ::std::default::Default for VideoDecodeH264ProfileEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_DECODE_H264_PROFILE_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             std_profile_idc: StdVideoH264ProfileIdc::default(),
             picture_layout: VideoDecodeH264PictureLayoutFlagsEXT::default(),
@@ -35250,7 +35248,7 @@ impl ::std::default::Default for VideoDecodeH264CapabilitiesEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_DECODE_H264_CAPABILITIES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             max_level: StdVideoH264Level::default(),
             field_offset_granularity: Offset2D::default(),
@@ -35291,7 +35289,7 @@ impl ::std::default::Default for VideoDecodeH264SessionParametersAddInfoEXT<'_> 
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_DECODE_H264_SESSION_PARAMETERS_ADD_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             sps_std_count: u32::default(),
             p_sps_std: ::std::ptr::null(),
@@ -35339,7 +35337,7 @@ impl ::std::default::Default for VideoDecodeH264SessionParametersCreateInfoEXT<'
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_DECODE_H264_SESSION_PARAMETERS_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             max_sps_std_count: u32::default(),
             max_pps_std_count: u32::default(),
@@ -35392,7 +35390,7 @@ impl ::std::default::Default for VideoDecodeH264PictureInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_DECODE_H264_PICTURE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             p_std_picture_info: ::std::ptr::null(),
             slices_count: u32::default(),
@@ -35447,7 +35445,7 @@ impl ::std::default::Default for VideoDecodeH264DpbSlotInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_DECODE_H264_DPB_SLOT_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             p_std_reference_info: ::std::ptr::null(),
             _marker: PhantomData,
@@ -35482,7 +35480,7 @@ impl ::std::default::Default for VideoDecodeH264MvcEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_DECODE_H264_MVC_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             p_std_mvc: ::std::ptr::null(),
             _marker: PhantomData,
@@ -35514,7 +35512,7 @@ impl ::std::default::Default for VideoDecodeH265ProfileEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_DECODE_H265_PROFILE_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             std_profile_idc: StdVideoH265ProfileIdc::default(),
             _marker: PhantomData,
@@ -35547,7 +35545,7 @@ impl ::std::default::Default for VideoDecodeH265CapabilitiesEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_DECODE_H265_CAPABILITIES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             max_level: StdVideoH265Level::default(),
             _marker: PhantomData,
@@ -35584,7 +35582,7 @@ impl ::std::default::Default for VideoDecodeH265SessionParametersAddInfoEXT<'_> 
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_DECODE_H265_SESSION_PARAMETERS_ADD_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             vps_std_count: u32::default(),
             p_vps_std: ::std::ptr::null(),
@@ -35641,7 +35639,7 @@ impl ::std::default::Default for VideoDecodeH265SessionParametersCreateInfoEXT<'
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_DECODE_H265_SESSION_PARAMETERS_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             max_vps_std_count: u32::default(),
             max_sps_std_count: u32::default(),
@@ -35700,7 +35698,7 @@ impl ::std::default::Default for VideoDecodeH265PictureInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_DECODE_H265_PICTURE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             p_std_picture_info: ::std::ptr::null_mut(),
             slices_count: u32::default(),
@@ -35743,7 +35741,7 @@ impl ::std::default::Default for VideoDecodeH265DpbSlotInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_DECODE_H265_DPB_SLOT_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             p_std_reference_info: ::std::ptr::null(),
             _marker: PhantomData,
@@ -35786,7 +35784,7 @@ impl ::std::default::Default for VideoSessionCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_SESSION_CREATE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             queue_family_index: u32::default(),
             flags: VideoSessionCreateFlagsKHR::default(),
@@ -35872,7 +35870,7 @@ impl ::std::default::Default for VideoSessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_SESSION_PARAMETERS_CREATE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             video_session_parameters_template: VideoSessionParametersKHR::default(),
             video_session: VideoSessionKHR::default(),
@@ -35930,7 +35928,7 @@ impl ::std::default::Default for VideoSessionParametersUpdateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_SESSION_PARAMETERS_UPDATE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             update_sequence_count: u32::default(),
             _marker: PhantomData,
@@ -35984,7 +35982,7 @@ impl ::std::default::Default for VideoBeginCodingInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_BEGIN_CODING_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: VideoBeginCodingFlagsKHR::default(),
             codec_quality_preset: VideoCodingQualityPresetFlagsKHR::default(),
@@ -36047,7 +36045,7 @@ impl ::std::default::Default for VideoEndCodingInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_END_CODING_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: VideoEndCodingFlagsKHR::default(),
             _marker: PhantomData,
@@ -36078,7 +36076,7 @@ impl ::std::default::Default for VideoCodingControlInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_CODING_CONTROL_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: VideoCodingControlFlagsKHR::default(),
             _marker: PhantomData,
@@ -36133,7 +36131,7 @@ impl ::std::default::Default for VideoEncodeInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_ENCODE_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: VideoEncodeFlagsKHR::default(),
             quality_level: u32::default(),
@@ -36244,7 +36242,7 @@ impl ::std::default::Default for VideoEncodeRateControlInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_ENCODE_RATE_CONTROL_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: VideoEncodeRateControlFlagsKHR::default(),
             rate_control_mode: VideoEncodeRateControlModeFlagsKHR::default(),
@@ -36316,7 +36314,7 @@ impl ::std::default::Default for VideoEncodeRateControlLayerInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_ENCODE_RATE_CONTROL_LAYER_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             average_bitrate: u32::default(),
             max_bitrate: u32::default(),
@@ -36403,7 +36401,7 @@ impl ::std::default::Default for VideoEncodeCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_ENCODE_CAPABILITIES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             flags: VideoEncodeCapabilityFlagsKHR::default(),
             rate_control_modes: VideoEncodeRateControlModeFlagsKHR::default(),
@@ -36490,7 +36488,7 @@ impl ::std::default::Default for VideoEncodeH264CapabilitiesEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_ENCODE_H264_CAPABILITIES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             flags: VideoEncodeH264CapabilityFlagsEXT::default(),
             input_mode_flags: VideoEncodeH264InputModeFlagsEXT::default(),
@@ -36598,7 +36596,7 @@ impl ::std::default::Default for VideoEncodeH264SessionParametersAddInfoEXT<'_> 
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_ENCODE_H264_SESSION_PARAMETERS_ADD_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             sps_std_count: u32::default(),
             p_sps_std: ::std::ptr::null(),
@@ -36646,7 +36644,7 @@ impl ::std::default::Default for VideoEncodeH264SessionParametersCreateInfoEXT<'
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_ENCODE_H264_SESSION_PARAMETERS_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             max_sps_std_count: u32::default(),
             max_pps_std_count: u32::default(),
@@ -36698,7 +36696,7 @@ impl ::std::default::Default for VideoEncodeH264DpbSlotInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_ENCODE_H264_DPB_SLOT_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             slot_index: i8::default(),
             p_std_reference_info: ::std::ptr::null(),
@@ -36741,7 +36739,7 @@ impl ::std::default::Default for VideoEncodeH264VclFrameInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_ENCODE_H264_VCL_FRAME_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             p_reference_final_lists: ::std::ptr::null(),
             nalu_slice_entry_count: u32::default(),
@@ -36800,7 +36798,7 @@ impl ::std::default::Default for VideoEncodeH264ReferenceListsEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_ENCODE_H264_REFERENCE_LISTS_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             reference_list0_entry_count: u8::default(),
             p_reference_list0_entries: ::std::ptr::null(),
@@ -36859,7 +36857,7 @@ impl ::std::default::Default for VideoEncodeH264EmitPictureParametersEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_ENCODE_H264_EMIT_PICTURE_PARAMETERS_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             sps_id: u8::default(),
             emit_sps_enable: Bool32::default(),
@@ -36906,7 +36904,7 @@ impl ::std::default::Default for VideoEncodeH264ProfileEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_ENCODE_H264_PROFILE_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             std_profile_idc: StdVideoH264ProfileIdc::default(),
             _marker: PhantomData,
@@ -36941,7 +36939,7 @@ impl ::std::default::Default for VideoEncodeH264NaluSliceEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_ENCODE_H264_NALU_SLICE_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             mb_count: u32::default(),
             p_reference_final_lists: ::std::ptr::null(),
@@ -36991,7 +36989,7 @@ impl ::std::default::Default for VideoEncodeH264RateControlInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_ENCODE_H264_RATE_CONTROL_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             gop_frame_count: u32::default(),
             idr_period: u32::default(),
@@ -37110,7 +37108,7 @@ impl ::std::default::Default for VideoEncodeH264RateControlLayerInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_ENCODE_H264_RATE_CONTROL_LAYER_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             temporal_layer_id: u8::default(),
             use_initial_rc_qp: Bool32::default(),
@@ -37213,7 +37211,7 @@ impl ::std::default::Default for VideoEncodeH265CapabilitiesEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_ENCODE_H265_CAPABILITIES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             flags: VideoEncodeH265CapabilityFlagsEXT::default(),
             input_mode_flags: VideoEncodeH265InputModeFlagsEXT::default(),
@@ -37404,7 +37402,7 @@ impl ::std::default::Default for VideoEncodeH265SessionParametersAddInfoEXT<'_> 
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_ENCODE_H265_SESSION_PARAMETERS_ADD_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             vps_std_count: u32::default(),
             p_vps_std: ::std::ptr::null(),
@@ -37461,7 +37459,7 @@ impl ::std::default::Default for VideoEncodeH265SessionParametersCreateInfoEXT<'
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_ENCODE_H265_SESSION_PARAMETERS_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             max_vps_std_count: u32::default(),
             max_sps_std_count: u32::default(),
@@ -37521,7 +37519,7 @@ impl ::std::default::Default for VideoEncodeH265VclFrameInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_ENCODE_H265_VCL_FRAME_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             p_reference_final_lists: ::std::ptr::null(),
             nalu_slice_segment_entry_count: u32::default(),
@@ -37581,7 +37579,7 @@ impl ::std::default::Default for VideoEncodeH265EmitPictureParametersEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_ENCODE_H265_EMIT_PICTURE_PARAMETERS_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             vps_id: u8::default(),
             sps_id: u8::default(),
@@ -37642,7 +37640,7 @@ impl ::std::default::Default for VideoEncodeH265NaluSliceSegmentEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_ENCODE_H265_NALU_SLICE_SEGMENT_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             ctb_count: u32::default(),
             p_reference_final_lists: ::std::ptr::null(),
@@ -37695,7 +37693,7 @@ impl ::std::default::Default for VideoEncodeH265RateControlInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_ENCODE_H265_RATE_CONTROL_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             gop_frame_count: u32::default(),
             idr_period: u32::default(),
@@ -37814,7 +37812,7 @@ impl ::std::default::Default for VideoEncodeH265RateControlLayerInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_ENCODE_H265_RATE_CONTROL_LAYER_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             temporal_id: u8::default(),
             use_initial_rc_qp: Bool32::default(),
@@ -37898,7 +37896,7 @@ impl ::std::default::Default for VideoEncodeH265ProfileEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_ENCODE_H265_PROFILE_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             std_profile_idc: StdVideoH265ProfileIdc::default(),
             _marker: PhantomData,
@@ -37932,7 +37930,7 @@ impl ::std::default::Default for VideoEncodeH265DpbSlotInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_ENCODE_H265_DPB_SLOT_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             slot_index: i8::default(),
             p_std_reference_info: ::std::ptr::null(),
@@ -37976,7 +37974,7 @@ impl ::std::default::Default for VideoEncodeH265ReferenceListsEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::VIDEO_ENCODE_H265_REFERENCE_LISTS_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             reference_list0_entry_count: u8::default(),
             p_reference_list0_entries: ::std::ptr::null(),
@@ -38032,7 +38030,7 @@ impl ::std::default::Default for PhysicalDeviceInheritedViewportScissorFeaturesN
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_INHERITED_VIEWPORT_SCISSOR_FEATURES_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             inherited_viewport_scissor2_d: Bool32::default(),
             _marker: PhantomData,
@@ -38071,7 +38069,7 @@ impl ::std::default::Default for CommandBufferInheritanceViewportScissorInfoNV<'
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::COMMAND_BUFFER_INHERITANCE_VIEWPORT_SCISSOR_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             viewport_scissor2_d: Bool32::default(),
             viewport_depth_count: u32::default(),
@@ -38119,7 +38117,7 @@ impl ::std::default::Default for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_YCBCR_2_PLANE_444_FORMATS_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             ycbcr2plane444_formats: Bool32::default(),
             _marker: PhantomData,
@@ -38154,7 +38152,7 @@ impl ::std::default::Default for PhysicalDeviceProvokingVertexFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_PROVOKING_VERTEX_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             provoking_vertex_last: Bool32::default(),
             transform_feedback_preserves_provoking_vertex: Bool32::default(),
@@ -38199,7 +38197,7 @@ impl ::std::default::Default for PhysicalDeviceProvokingVertexPropertiesEXT<'_> 
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_PROVOKING_VERTEX_PROPERTIES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             provoking_vertex_mode_per_pipeline: Bool32::default(),
             transform_feedback_preserves_triangle_fan_provoking_vertex: Bool32::default(),
@@ -38245,7 +38243,7 @@ impl ::std::default::Default for PipelineRasterizationProvokingVertexStateCreate
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_RASTERIZATION_PROVOKING_VERTEX_STATE_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             provoking_vertex_mode: ProvokingVertexModeEXT::default(),
             _marker: PhantomData,
@@ -38282,7 +38280,7 @@ impl ::std::default::Default for CuModuleCreateInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::CU_MODULE_CREATE_INFO_NVX,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             data_size: usize::default(),
             p_data: ::std::ptr::null(),
@@ -38316,7 +38314,7 @@ impl ::std::default::Default for CuFunctionCreateInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::CU_FUNCTION_CREATE_INFO_NVX,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             module: CuModuleNVX::default(),
             p_name: ::std::ptr::null(),
@@ -38364,7 +38362,7 @@ impl ::std::default::Default for CuLaunchInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::CU_LAUNCH_INFO_NVX,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             function: CuFunctionNVX::default(),
             grid_dim_x: u32::default(),
@@ -38453,7 +38451,7 @@ impl ::std::default::Default for PhysicalDeviceShaderIntegerDotProductFeatures<'
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SHADER_INTEGER_DOT_PRODUCT_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             shader_integer_dot_product: Bool32::default(),
             _marker: PhantomData,
@@ -38516,7 +38514,7 @@ pub struct PhysicalDeviceShaderIntegerDotProductProperties<'a> {
 impl ::std::default::Default for PhysicalDeviceShaderIntegerDotProductProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self { s_type : StructureType :: PHYSICAL_DEVICE_SHADER_INTEGER_DOT_PRODUCT_PROPERTIES , p_next : :: std :: ptr :: null_mut () , integer_dot_product8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product64_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated : Bool32 :: default () , _marker : PhantomData , }
+        Self { s_type : Self :: STRUCTURE_TYPE , p_next : :: std :: ptr :: null_mut () , integer_dot_product8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product64_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated : Bool32 :: default () , _marker : PhantomData , }
     }
 }
 unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderIntegerDotProductProperties<'a> {
@@ -38817,7 +38815,7 @@ impl ::std::default::Default for PhysicalDeviceDrmPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_DRM_PROPERTIES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             has_primary: Bool32::default(),
             has_render: Bool32::default(),
@@ -38879,7 +38877,7 @@ impl ::std::default::Default for PhysicalDeviceFragmentShaderBarycentricFeatures
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADER_BARYCENTRIC_FEATURES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             fragment_shader_barycentric: Bool32::default(),
             _marker: PhantomData,
@@ -38916,7 +38914,7 @@ impl ::std::default::Default for PhysicalDeviceFragmentShaderBarycentricProperti
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADER_BARYCENTRIC_PROPERTIES_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             tri_strip_vertex_order_independent_of_provoking_vertex: Bool32::default(),
             _marker: PhantomData,
@@ -38957,7 +38955,7 @@ impl ::std::default::Default for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'_
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_RAY_TRACING_MOTION_BLUR_FEATURES_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             ray_tracing_motion_blur: Bool32::default(),
             ray_tracing_motion_blur_pipeline_trace_rays_indirect: Bool32::default(),
@@ -39010,7 +39008,7 @@ impl ::std::default::Default for AccelerationStructureGeometryMotionTrianglesDat
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::ACCELERATION_STRUCTURE_GEOMETRY_MOTION_TRIANGLES_DATA_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             vertex_data: DeviceOrHostAddressConstKHR::default(),
             _marker: PhantomData,
@@ -39047,7 +39045,7 @@ impl ::std::default::Default for AccelerationStructureMotionInfoNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::ACCELERATION_STRUCTURE_MOTION_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             max_instances: u32::default(),
             flags: AccelerationStructureMotionInfoFlagsNV::default(),
@@ -39265,7 +39263,7 @@ impl ::std::default::Default for MemoryGetRemoteAddressInfoNV<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::MEMORY_GET_REMOTE_ADDRESS_INFO_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             memory: DeviceMemory::default(),
             handle_type: ExternalMemoryHandleTypeFlags::default(),
@@ -39303,7 +39301,7 @@ impl ::std::default::Default for ImportMemoryBufferCollectionFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMPORT_MEMORY_BUFFER_COLLECTION_FUCHSIA,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             collection: BufferCollectionFUCHSIA::default(),
             index: u32::default(),
@@ -39342,7 +39340,7 @@ impl ::std::default::Default for BufferCollectionImageCreateInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::BUFFER_COLLECTION_IMAGE_CREATE_INFO_FUCHSIA,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             collection: BufferCollectionFUCHSIA::default(),
             index: u32::default(),
@@ -39382,7 +39380,7 @@ impl ::std::default::Default for BufferCollectionBufferCreateInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::BUFFER_COLLECTION_BUFFER_CREATE_INFO_FUCHSIA,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             collection: BufferCollectionFUCHSIA::default(),
             index: u32::default(),
@@ -39421,7 +39419,7 @@ impl ::std::default::Default for BufferCollectionCreateInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::BUFFER_COLLECTION_CREATE_INFO_FUCHSIA,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             collection_token: zx_handle_t::default(),
             _marker: PhantomData,
@@ -39462,7 +39460,7 @@ impl ::std::default::Default for BufferCollectionPropertiesFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::BUFFER_COLLECTION_PROPERTIES_FUCHSIA,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             memory_type_bits: u32::default(),
             buffer_count: u32::default(),
@@ -39564,7 +39562,7 @@ impl ::std::default::Default for BufferConstraintsInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::BUFFER_CONSTRAINTS_INFO_FUCHSIA,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             create_info: BufferCreateInfo::default(),
             required_format_features: FormatFeatureFlags::default(),
@@ -39613,7 +39611,7 @@ impl ::std::default::Default for SysmemColorSpaceFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SYSMEM_COLOR_SPACE_FUCHSIA,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             color_space: u32::default(),
             _marker: PhantomData,
@@ -39649,7 +39647,7 @@ impl ::std::default::Default for ImageFormatConstraintsInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMAGE_FORMAT_CONSTRAINTS_INFO_FUCHSIA,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             image_create_info: ImageCreateInfo::default(),
             required_format_features: FormatFeatureFlags::default(),
@@ -39712,7 +39710,7 @@ impl ::std::default::Default for ImageConstraintsInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMAGE_CONSTRAINTS_INFO_FUCHSIA,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             format_constraints_count: u32::default(),
             p_format_constraints: ::std::ptr::null(),
@@ -39767,7 +39765,7 @@ impl ::std::default::Default for BufferCollectionConstraintsInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::BUFFER_COLLECTION_CONSTRAINTS_INFO_FUCHSIA,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             min_buffer_count: u32::default(),
             max_buffer_count: u32::default(),
@@ -39828,7 +39826,7 @@ impl ::std::default::Default for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_RGBA10X6_FORMATS_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             format_rgba10x6_without_y_cb_cr_sampler: Bool32::default(),
             _marker: PhantomData,
@@ -39868,7 +39866,7 @@ impl ::std::default::Default for FormatProperties3<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::FORMAT_PROPERTIES_3,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             linear_tiling_features: FormatFeatureFlags2::default(),
             optimal_tiling_features: FormatFeatureFlags2::default(),
@@ -39913,7 +39911,7 @@ impl ::std::default::Default for DrmFormatModifierPropertiesList2EXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DRM_FORMAT_MODIFIER_PROPERTIES_LIST_2_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             drm_format_modifier_count: u32::default(),
             p_drm_format_modifier_properties: ::std::ptr::null_mut(),
@@ -39986,7 +39984,7 @@ impl ::std::default::Default for AndroidHardwareBufferFormatProperties2ANDROID<'
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::ANDROID_HARDWARE_BUFFER_FORMAT_PROPERTIES_2_ANDROID,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             format: Format::default(),
             external_format: u64::default(),
@@ -40074,7 +40072,7 @@ impl ::std::default::Default for PipelineRenderingCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_RENDERING_CREATE_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             view_mask: u32::default(),
             color_attachment_count: u32::default(),
@@ -40133,7 +40131,7 @@ impl ::std::default::Default for RenderingInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::RENDERING_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: RenderingFlags::default(),
             render_area: Rect2D::default(),
@@ -40243,7 +40241,7 @@ impl ::std::default::Default for RenderingAttachmentInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::RENDERING_ATTACHMENT_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             image_view: ImageView::default(),
             image_layout: ImageLayout::default(),
@@ -40318,7 +40316,7 @@ impl ::std::default::Default for RenderingFragmentShadingRateAttachmentInfoKHR<'
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT_INFO_KHR,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             image_view: ImageView::default(),
             image_layout: ImageLayout::default(),
@@ -40367,7 +40365,7 @@ impl ::std::default::Default for RenderingFragmentDensityMapAttachmentInfoEXT<'_
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             image_view: ImageView::default(),
             image_layout: ImageLayout::default(),
@@ -40406,7 +40404,7 @@ impl ::std::default::Default for PhysicalDeviceDynamicRenderingFeatures<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_DYNAMIC_RENDERING_FEATURES,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             dynamic_rendering: Bool32::default(),
             _marker: PhantomData,
@@ -40445,7 +40443,7 @@ impl ::std::default::Default for CommandBufferInheritanceRenderingInfo<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::COMMAND_BUFFER_INHERITANCE_RENDERING_INFO,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: RenderingFlags::default(),
             view_mask: u32::default(),
@@ -40511,7 +40509,7 @@ impl ::std::default::Default for AttachmentSampleCountInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::ATTACHMENT_SAMPLE_COUNT_INFO_AMD,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             color_attachment_count: u32::default(),
             p_color_attachment_samples: ::std::ptr::null(),
@@ -40559,7 +40557,7 @@ impl ::std::default::Default for MultiviewPerViewAttributesInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::MULTIVIEW_PER_VIEW_ATTRIBUTES_INFO_NVX,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             per_view_attributes: Bool32::default(),
             per_view_attributes_position_x_only: Bool32::default(),
@@ -40602,7 +40600,7 @@ impl ::std::default::Default for PhysicalDeviceImageViewMinLodFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_IMAGE_VIEW_MIN_LOD_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             min_lod: Bool32::default(),
             _marker: PhantomData,
@@ -40636,7 +40634,7 @@ impl ::std::default::Default for ImageViewMinLodCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMAGE_VIEW_MIN_LOD_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             min_lod: f32::default(),
             _marker: PhantomData,
@@ -40670,8 +40668,7 @@ impl ::std::default::Default for PhysicalDeviceRasterizationOrderAttachmentAcces
     #[inline]
     fn default() -> Self {
         Self {
-            s_type:
-                StructureType::PHYSICAL_DEVICE_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_FEATURES_ARM,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             rasterization_order_color_attachment_access: Bool32::default(),
             rasterization_order_depth_attachment_access: Bool32::default(),
@@ -40737,7 +40734,7 @@ impl ::std::default::Default for PhysicalDeviceLinearColorAttachmentFeaturesNV<'
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_LINEAR_COLOR_ATTACHMENT_FEATURES_NV,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             linear_color_attachment: Bool32::default(),
             _marker: PhantomData,
@@ -40771,7 +40768,7 @@ impl ::std::default::Default for PhysicalDeviceGraphicsPipelineLibraryFeaturesEX
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_GRAPHICS_PIPELINE_LIBRARY_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             graphics_pipeline_library: Bool32::default(),
             _marker: PhantomData,
@@ -40809,7 +40806,7 @@ impl ::std::default::Default for PhysicalDeviceGraphicsPipelineLibraryProperties
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_GRAPHICS_PIPELINE_LIBRARY_PROPERTIES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             graphics_pipeline_library_fast_linking: Bool32::default(),
             graphics_pipeline_library_independent_interpolation_decoration: Bool32::default(),
@@ -40858,7 +40855,7 @@ impl ::std::default::Default for GraphicsPipelineLibraryCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::GRAPHICS_PIPELINE_LIBRARY_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             flags: GraphicsPipelineLibraryFlagsEXT::default(),
             _marker: PhantomData,
@@ -40890,7 +40887,7 @@ impl ::std::default::Default for PhysicalDeviceDescriptorSetHostMappingFeaturesV
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_DESCRIPTOR_SET_HOST_MAPPING_FEATURES_VALVE,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             descriptor_set_host_mapping: Bool32::default(),
             _marker: PhantomData,
@@ -40928,7 +40925,7 @@ impl ::std::default::Default for DescriptorSetBindingReferenceVALVE<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DESCRIPTOR_SET_BINDING_REFERENCE_VALVE,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             descriptor_set_layout: DescriptorSetLayout::default(),
             binding: u32::default(),
@@ -40966,7 +40963,7 @@ impl ::std::default::Default for DescriptorSetLayoutHostMappingInfoVALVE<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::DESCRIPTOR_SET_LAYOUT_HOST_MAPPING_INFO_VALVE,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             descriptor_offset: usize::default(),
             descriptor_size: u32::default(),
@@ -41004,7 +41001,7 @@ impl ::std::default::Default for PhysicalDeviceShaderModuleIdentifierFeaturesEXT
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SHADER_MODULE_IDENTIFIER_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             shader_module_identifier: Bool32::default(),
             _marker: PhantomData,
@@ -41038,7 +41035,7 @@ impl ::std::default::Default for PhysicalDeviceShaderModuleIdentifierPropertiesE
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SHADER_MODULE_IDENTIFIER_PROPERTIES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             shader_module_identifier_algorithm_uuid: unsafe { ::std::mem::zeroed() },
             _marker: PhantomData,
@@ -41078,7 +41075,7 @@ impl ::std::default::Default for PipelineShaderStageModuleIdentifierCreateInfoEX
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_SHADER_STAGE_MODULE_IDENTIFIER_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             identifier_size: u32::default(),
             p_identifier: ::std::ptr::null(),
@@ -41117,7 +41114,7 @@ impl ::std::default::Default for ShaderModuleIdentifierEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SHADER_MODULE_IDENTIFIER_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             identifier_size: u32::default(),
             identifier: unsafe { ::std::mem::zeroed() },
@@ -41156,7 +41153,7 @@ impl ::std::default::Default for ImageCompressionControlEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMAGE_COMPRESSION_CONTROL_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: ImageCompressionFlagsEXT::default(),
             compression_control_plane_count: u32::default(),
@@ -41201,7 +41198,7 @@ impl ::std::default::Default for PhysicalDeviceImageCompressionControlFeaturesEX
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             image_compression_control: Bool32::default(),
             _marker: PhantomData,
@@ -41239,7 +41236,7 @@ impl ::std::default::Default for ImageCompressionPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMAGE_COMPRESSION_PROPERTIES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             image_compression_flags: ImageCompressionFlagsEXT::default(),
             image_compression_fixed_rate_flags: ImageCompressionFixedRateFlagsEXT::default(),
@@ -41285,7 +41282,7 @@ impl ::std::default::Default for PhysicalDeviceImageCompressionControlSwapchainF
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_SWAPCHAIN_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             image_compression_control_swapchain: Bool32::default(),
             _marker: PhantomData,
@@ -41328,7 +41325,7 @@ impl ::std::default::Default for ImageSubresource2EXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMAGE_SUBRESOURCE_2_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             image_subresource: ImageSubresource::default(),
             _marker: PhantomData,
@@ -41359,7 +41356,7 @@ impl ::std::default::Default for SubresourceLayout2EXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::SUBRESOURCE_LAYOUT_2_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             subresource_layout: SubresourceLayout::default(),
             _marker: PhantomData,
@@ -41405,7 +41402,7 @@ impl ::std::default::Default for RenderPassCreationControlEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::RENDER_PASS_CREATION_CONTROL_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             disallow_merging: Bool32::default(),
             _marker: PhantomData,
@@ -41452,7 +41449,7 @@ impl ::std::default::Default for RenderPassCreationFeedbackCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::RENDER_PASS_CREATION_FEEDBACK_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             p_render_pass_feedback: ::std::ptr::null_mut(),
             _marker: PhantomData,
@@ -41535,7 +41532,7 @@ impl ::std::default::Default for RenderPassSubpassFeedbackCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::RENDER_PASS_SUBPASS_FEEDBACK_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             p_subpass_feedback: ::std::ptr::null_mut(),
             _marker: PhantomData,
@@ -41571,7 +41568,7 @@ impl ::std::default::Default for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_SUBPASS_MERGE_FEEDBACK_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             subpass_merge_feedback: Bool32::default(),
             _marker: PhantomData,
@@ -41605,7 +41602,7 @@ impl ::std::default::Default for PipelinePropertiesIdentifierEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PIPELINE_PROPERTIES_IDENTIFIER_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             pipeline_identifier: unsafe { ::std::mem::zeroed() },
             _marker: PhantomData,
@@ -41636,7 +41633,7 @@ impl ::std::default::Default for PhysicalDevicePipelinePropertiesFeaturesEXT<'_>
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_PIPELINE_PROPERTIES_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             pipeline_properties_identifier: Bool32::default(),
             _marker: PhantomData,
@@ -41670,8 +41667,7 @@ impl ::std::default::Default for PhysicalDeviceShaderEarlyAndLateFragmentTestsFe
     #[inline]
     fn default() -> Self {
         Self {
-            s_type:
-                StructureType::PHYSICAL_DEVICE_SHADER_EARLY_AND_LATE_FRAGMENT_TESTS_FEATURES_AMD,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             shader_early_and_late_fragment_tests: Bool32::default(),
             _marker: PhantomData,
@@ -41714,7 +41710,7 @@ impl ::std::default::Default for ExportMetalObjectCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::EXPORT_METAL_OBJECT_CREATE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             export_object_type: ExportMetalObjectTypeFlagsEXT::default(),
             _marker: PhantomData,
@@ -41751,7 +41747,7 @@ impl ::std::default::Default for ExportMetalObjectsInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::EXPORT_METAL_OBJECTS_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             _marker: PhantomData,
         }
@@ -41791,7 +41787,7 @@ impl ::std::default::Default for ExportMetalDeviceInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::EXPORT_METAL_DEVICE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             mtl_device: unsafe { ::std::mem::zeroed() },
             _marker: PhantomData,
@@ -41824,7 +41820,7 @@ impl ::std::default::Default for ExportMetalCommandQueueInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::EXPORT_METAL_COMMAND_QUEUE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             queue: Queue::default(),
             mtl_command_queue: unsafe { ::std::mem::zeroed() },
@@ -41863,7 +41859,7 @@ impl ::std::default::Default for ExportMetalBufferInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::EXPORT_METAL_BUFFER_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             memory: DeviceMemory::default(),
             mtl_buffer: unsafe { ::std::mem::zeroed() },
@@ -41901,7 +41897,7 @@ impl ::std::default::Default for ImportMetalBufferInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMPORT_METAL_BUFFER_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             mtl_buffer: unsafe { ::std::mem::zeroed() },
             _marker: PhantomData,
@@ -41937,7 +41933,7 @@ impl ::std::default::Default for ExportMetalTextureInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::EXPORT_METAL_TEXTURE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             image: Image::default(),
             image_view: ImageView::default(),
@@ -41994,7 +41990,7 @@ impl ::std::default::Default for ImportMetalTextureInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMPORT_METAL_TEXTURE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             plane: ImageAspectFlags::default(),
             mtl_texture: unsafe { ::std::mem::zeroed() },
@@ -42033,7 +42029,7 @@ impl ::std::default::Default for ExportMetalIOSurfaceInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::EXPORT_METAL_IO_SURFACE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             image: Image::default(),
             io_surface: unsafe { ::std::mem::zeroed() },
@@ -42071,7 +42067,7 @@ impl ::std::default::Default for ImportMetalIOSurfaceInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMPORT_METAL_IO_SURFACE_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             io_surface: unsafe { ::std::mem::zeroed() },
             _marker: PhantomData,
@@ -42105,7 +42101,7 @@ impl ::std::default::Default for ExportMetalSharedEventInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::EXPORT_METAL_SHARED_EVENT_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             semaphore: Semaphore::default(),
             event: Event::default(),
@@ -42149,7 +42145,7 @@ impl ::std::default::Default for ImportMetalSharedEventInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::IMPORT_METAL_SHARED_EVENT_INFO_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             mtl_shared_event: unsafe { ::std::mem::zeroed() },
             _marker: PhantomData,
@@ -42182,7 +42178,7 @@ impl ::std::default::Default for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'_>
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_NON_SEAMLESS_CUBE_MAP_FEATURES_EXT,
+            s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             non_seamless_cube_map: Bool32::default(),
             _marker: PhantomData,
