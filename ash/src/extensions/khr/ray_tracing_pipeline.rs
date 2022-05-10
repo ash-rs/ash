@@ -122,6 +122,8 @@ impl RayTracingPipeline {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdTraceRaysIndirectKHR.html>
+    ///
+    /// `indirect_device_address` is a buffer device address which is a pointer to a [`vk::TraceRaysIndirectCommandKHR`] structure containing the trace ray parameters.
     pub unsafe fn cmd_trace_rays_indirect(
         &self,
         command_buffer: vk::CommandBuffer,
