@@ -13,6 +13,7 @@ pub use self::image_drm_format_modifier::ImageDrmFormatModifier;
 pub use self::metal_surface::MetalSurface;
 pub use self::physical_device_drm::PhysicalDeviceDrm;
 pub use self::private_data::PrivateData;
+pub use self::sample_locations::SampleLocations;
 pub use self::tooling_info::ToolingInfo;
 
 mod buffer_device_address;
@@ -30,4 +31,5 @@ mod image_drm_format_modifier;
 mod metal_surface;
 mod physical_device_drm;
 mod private_data;
+mod sample_locations;
 mod tooling_info;
