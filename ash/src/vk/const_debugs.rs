@@ -304,7 +304,10 @@ impl fmt::Debug for AccessFlags2 {
                 AccessFlags2::INVOCATION_MASK_READ_HUAWEI.0,
                 "INVOCATION_MASK_READ_HUAWEI",
             ),
-            (AccessFlags2::RESERVED_387_KHR.0, "RESERVED_387_KHR"),
+            (
+                AccessFlags2::SHADER_BINDING_TABLE_READ_KHR.0,
+                "SHADER_BINDING_TABLE_READ_KHR",
+            ),
             (AccessFlags2::RESERVED_44_NV.0, "RESERVED_44_NV"),
             (AccessFlags2::RESERVED_45_NV.0, "RESERVED_45_NV"),
             (AccessFlags2::RESERVED_42_NV.0, "RESERVED_42_NV"),
@@ -2134,6 +2137,100 @@ impl fmt::Debug for ImageAspectFlags {
         debug_flags(f, KNOWN, self.0)
     }
 }
+impl fmt::Debug for ImageCompressionFixedRateFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (ImageCompressionFixedRateFlagsEXT::NONE.0, "NONE"),
+            (ImageCompressionFixedRateFlagsEXT::TYPE_1BPC.0, "TYPE_1BPC"),
+            (ImageCompressionFixedRateFlagsEXT::TYPE_2BPC.0, "TYPE_2BPC"),
+            (ImageCompressionFixedRateFlagsEXT::TYPE_3BPC.0, "TYPE_3BPC"),
+            (ImageCompressionFixedRateFlagsEXT::TYPE_4BPC.0, "TYPE_4BPC"),
+            (ImageCompressionFixedRateFlagsEXT::TYPE_5BPC.0, "TYPE_5BPC"),
+            (ImageCompressionFixedRateFlagsEXT::TYPE_6BPC.0, "TYPE_6BPC"),
+            (ImageCompressionFixedRateFlagsEXT::TYPE_7BPC.0, "TYPE_7BPC"),
+            (ImageCompressionFixedRateFlagsEXT::TYPE_8BPC.0, "TYPE_8BPC"),
+            (ImageCompressionFixedRateFlagsEXT::TYPE_9BPC.0, "TYPE_9BPC"),
+            (
+                ImageCompressionFixedRateFlagsEXT::TYPE_10BPC.0,
+                "TYPE_10BPC",
+            ),
+            (
+                ImageCompressionFixedRateFlagsEXT::TYPE_11BPC.0,
+                "TYPE_11BPC",
+            ),
+            (
+                ImageCompressionFixedRateFlagsEXT::TYPE_12BPC.0,
+                "TYPE_12BPC",
+            ),
+            (
+                ImageCompressionFixedRateFlagsEXT::TYPE_13BPC.0,
+                "TYPE_13BPC",
+            ),
+            (
+                ImageCompressionFixedRateFlagsEXT::TYPE_14BPC.0,
+                "TYPE_14BPC",
+            ),
+            (
+                ImageCompressionFixedRateFlagsEXT::TYPE_15BPC.0,
+                "TYPE_15BPC",
+            ),
+            (
+                ImageCompressionFixedRateFlagsEXT::TYPE_16BPC.0,
+                "TYPE_16BPC",
+            ),
+            (
+                ImageCompressionFixedRateFlagsEXT::TYPE_17BPC.0,
+                "TYPE_17BPC",
+            ),
+            (
+                ImageCompressionFixedRateFlagsEXT::TYPE_18BPC.0,
+                "TYPE_18BPC",
+            ),
+            (
+                ImageCompressionFixedRateFlagsEXT::TYPE_19BPC.0,
+                "TYPE_19BPC",
+            ),
+            (
+                ImageCompressionFixedRateFlagsEXT::TYPE_20BPC.0,
+                "TYPE_20BPC",
+            ),
+            (
+                ImageCompressionFixedRateFlagsEXT::TYPE_21BPC.0,
+                "TYPE_21BPC",
+            ),
+            (
+                ImageCompressionFixedRateFlagsEXT::TYPE_22BPC.0,
+                "TYPE_22BPC",
+            ),
+            (
+                ImageCompressionFixedRateFlagsEXT::TYPE_23BPC.0,
+                "TYPE_23BPC",
+            ),
+            (
+                ImageCompressionFixedRateFlagsEXT::TYPE_24BPC.0,
+                "TYPE_24BPC",
+            ),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for ImageCompressionFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (ImageCompressionFlagsEXT::DEFAULT.0, "DEFAULT"),
+            (
+                ImageCompressionFlagsEXT::FIXED_RATE_DEFAULT.0,
+                "FIXED_RATE_DEFAULT",
+            ),
+            (
+                ImageCompressionFlagsEXT::FIXED_RATE_EXPLICIT.0,
+                "FIXED_RATE_EXPLICIT",
+            ),
+            (ImageCompressionFlagsEXT::DISABLED.0, "DISABLED"),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
 impl fmt::Debug for ImageConstraintsInfoFlagsFUCHSIA {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
@@ -3207,7 +3304,10 @@ impl fmt::Debug for PipelineStageFlags2 {
                 PipelineStageFlags2::INVOCATION_MASK_HUAWEI.0,
                 "INVOCATION_MASK_HUAWEI",
             ),
-            (PipelineStageFlags2::RESERVED_387_KHR.0, "RESERVED_387_KHR"),
+            (
+                PipelineStageFlags2::ACCELERATION_STRUCTURE_COPY_KHR.0,
+                "ACCELERATION_STRUCTURE_COPY_KHR",
+            ),
             (PipelineStageFlags2::RESERVED_30_NV.0, "RESERVED_30_NV"),
             (PipelineStageFlags2::RESERVED_29_NV.0, "RESERVED_29_NV"),
         ];
@@ -3455,6 +3555,10 @@ impl fmt::Debug for QueryType {
                 Some("VIDEO_ENCODESTREAM_BUFFER_RANGE_KHR")
             }
             Self::PRIMITIVES_GENERATED_EXT => Some("PRIMITIVES_GENERATED_EXT"),
+            Self::ACCELERATION_STRUCTURE_SERIALIZATION_BOTTOM_LEVEL_POINTERS_KHR => {
+                Some("ACCELERATION_STRUCTURE_SERIALIZATION_BOTTOM_LEVEL_POINTERS_KHR")
+            }
+            Self::ACCELERATION_STRUCTURE_SIZE_KHR => Some("ACCELERATION_STRUCTURE_SIZE_KHR"),
             _ => None,
         };
         if let Some(x) = name {
@@ -4834,6 +4938,13 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_WORKGROUP_MEMORY_EXPLICIT_LAYOUT_FEATURES_KHR => {
                 Some("PHYSICAL_DEVICE_WORKGROUP_MEMORY_EXPLICIT_LAYOUT_FEATURES_KHR")
             }
+            Self::PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_FEATURES_EXT")
+            }
+            Self::IMAGE_COMPRESSION_CONTROL_EXT => Some("IMAGE_COMPRESSION_CONTROL_EXT"),
+            Self::SUBRESOURCE_LAYOUT_2_EXT => Some("SUBRESOURCE_LAYOUT_2_EXT"),
+            Self::IMAGE_SUBRESOURCE_2_EXT => Some("IMAGE_SUBRESOURCE_2_EXT"),
+            Self::IMAGE_COMPRESSION_PROPERTIES_EXT => Some("IMAGE_COMPRESSION_PROPERTIES_EXT"),
             Self::PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT")
             }
@@ -4924,6 +5035,10 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_EXTERNAL_MEMORY_RDMA_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_EXTERNAL_MEMORY_RDMA_FEATURES_NV")
             }
+            Self::PIPELINE_PROPERTIES_IDENTIFIER_EXT => Some("PIPELINE_PROPERTIES_IDENTIFIER_EXT"),
+            Self::PHYSICAL_DEVICE_PIPELINE_PROPERTIES_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_PIPELINE_PROPERTIES_FEATURES_EXT")
+            }
             Self::PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_2_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_2_FEATURES_EXT")
             }
@@ -4936,6 +5051,9 @@ impl fmt::Debug for StructureType {
             }
             Self::PHYSICAL_DEVICE_PRIMITIVES_GENERATED_QUERY_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_PRIMITIVES_GENERATED_QUERY_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_RAY_TRACING_MAINTENANCE_1_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_RAY_TRACING_MAINTENANCE_1_FEATURES_KHR")
             }
             Self::PHYSICAL_DEVICE_IMAGE_VIEW_MIN_LOD_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_IMAGE_VIEW_MIN_LOD_FEATURES_EXT")
@@ -4979,6 +5097,19 @@ impl fmt::Debug for StructureType {
             }
             Self::PHYSICAL_DEVICE_LINEAR_COLOR_ATTACHMENT_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_LINEAR_COLOR_ATTACHMENT_FEATURES_NV")
+            }
+            Self::PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_SWAPCHAIN_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_SWAPCHAIN_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_SUBPASS_MERGE_FEEDBACK_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_SUBPASS_MERGE_FEEDBACK_FEATURES_EXT")
+            }
+            Self::RENDER_PASS_CREATION_CONTROL_EXT => Some("RENDER_PASS_CREATION_CONTROL_EXT"),
+            Self::RENDER_PASS_CREATION_FEEDBACK_INFO_EXT => {
+                Some("RENDER_PASS_CREATION_FEEDBACK_INFO_EXT")
+            }
+            Self::RENDER_PASS_SUBPASS_FEEDBACK_INFO_EXT => {
+                Some("RENDER_PASS_SUBPASS_FEEDBACK_INFO_EXT")
             }
             Self::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES => {
                 Some("PHYSICAL_DEVICE_SUBGROUP_PROPERTIES")
@@ -5396,6 +5527,36 @@ impl fmt::Debug for SubpassDescriptionFlags {
             (SubpassDescriptionFlags::RESERVED_7_EXT.0, "RESERVED_7_EXT"),
         ];
         debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for SubpassMergeStatusEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::MERGED => Some("MERGED"),
+            Self::DISALLOWED => Some("DISALLOWED"),
+            Self::NOT_MERGED_SIDE_EFFECTS => Some("NOT_MERGED_SIDE_EFFECTS"),
+            Self::NOT_MERGED_SAMPLES_MISMATCH => Some("NOT_MERGED_SAMPLES_MISMATCH"),
+            Self::NOT_MERGED_VIEWS_MISMATCH => Some("NOT_MERGED_VIEWS_MISMATCH"),
+            Self::NOT_MERGED_ALIASING => Some("NOT_MERGED_ALIASING"),
+            Self::NOT_MERGED_DEPENDENCIES => Some("NOT_MERGED_DEPENDENCIES"),
+            Self::NOT_MERGED_INCOMPATIBLE_INPUT_ATTACHMENT => {
+                Some("NOT_MERGED_INCOMPATIBLE_INPUT_ATTACHMENT")
+            }
+            Self::NOT_MERGED_TOO_MANY_ATTACHMENTS => Some("NOT_MERGED_TOO_MANY_ATTACHMENTS"),
+            Self::NOT_MERGED_INSUFFICIENT_STORAGE => Some("NOT_MERGED_INSUFFICIENT_STORAGE"),
+            Self::NOT_MERGED_DEPTH_STENCIL_COUNT => Some("NOT_MERGED_DEPTH_STENCIL_COUNT"),
+            Self::NOT_MERGED_RESOLVE_ATTACHMENT_REUSE => {
+                Some("NOT_MERGED_RESOLVE_ATTACHMENT_REUSE")
+            }
+            Self::NOT_MERGED_SINGLE_SUBPASS => Some("NOT_MERGED_SINGLE_SUBPASS"),
+            Self::NOT_MERGED_UNSPECIFIED => Some("NOT_MERGED_UNSPECIFIED"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
     }
 }
 impl fmt::Debug for SurfaceCounterFlagsEXT {

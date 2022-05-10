@@ -57,7 +57,7 @@ pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
-pub const HEADER_VERSION: u32 = 212u32;
+pub const HEADER_VERSION: u32 = 213u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -13927,10 +13927,25 @@ impl ::std::default::Default for SurfaceFormat2KHR<'_> {
         }
     }
 }
+pub unsafe trait ExtendsSurfaceFormat2KHR {}
 impl<'a> SurfaceFormat2KHR<'a> {
     #[inline]
     pub fn surface_format(mut self, surface_format: SurfaceFormatKHR) -> Self {
         self.surface_format = surface_format;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsSurfaceFormat2KHR>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = <*mut T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
         self
     }
 }
@@ -22425,6 +22440,169 @@ impl TraceRaysIndirectCommandKHR {
     #[inline]
     pub fn depth(mut self, depth: u32) -> Self {
         self.depth = depth;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone, Default)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkTraceRaysIndirectCommand2KHR.html>"]
+pub struct TraceRaysIndirectCommand2KHR {
+    pub raygen_shader_record_address: DeviceAddress,
+    pub raygen_shader_record_size: DeviceSize,
+    pub miss_shader_binding_table_address: DeviceAddress,
+    pub miss_shader_binding_table_size: DeviceSize,
+    pub miss_shader_binding_table_stride: DeviceSize,
+    pub hit_shader_binding_table_address: DeviceAddress,
+    pub hit_shader_binding_table_size: DeviceSize,
+    pub hit_shader_binding_table_stride: DeviceSize,
+    pub callable_shader_binding_table_address: DeviceAddress,
+    pub callable_shader_binding_table_size: DeviceSize,
+    pub callable_shader_binding_table_stride: DeviceSize,
+    pub width: u32,
+    pub height: u32,
+    pub depth: u32,
+}
+impl TraceRaysIndirectCommand2KHR {
+    #[inline]
+    pub fn raygen_shader_record_address(
+        mut self,
+        raygen_shader_record_address: DeviceAddress,
+    ) -> Self {
+        self.raygen_shader_record_address = raygen_shader_record_address;
+        self
+    }
+    #[inline]
+    pub fn raygen_shader_record_size(mut self, raygen_shader_record_size: DeviceSize) -> Self {
+        self.raygen_shader_record_size = raygen_shader_record_size;
+        self
+    }
+    #[inline]
+    pub fn miss_shader_binding_table_address(
+        mut self,
+        miss_shader_binding_table_address: DeviceAddress,
+    ) -> Self {
+        self.miss_shader_binding_table_address = miss_shader_binding_table_address;
+        self
+    }
+    #[inline]
+    pub fn miss_shader_binding_table_size(
+        mut self,
+        miss_shader_binding_table_size: DeviceSize,
+    ) -> Self {
+        self.miss_shader_binding_table_size = miss_shader_binding_table_size;
+        self
+    }
+    #[inline]
+    pub fn miss_shader_binding_table_stride(
+        mut self,
+        miss_shader_binding_table_stride: DeviceSize,
+    ) -> Self {
+        self.miss_shader_binding_table_stride = miss_shader_binding_table_stride;
+        self
+    }
+    #[inline]
+    pub fn hit_shader_binding_table_address(
+        mut self,
+        hit_shader_binding_table_address: DeviceAddress,
+    ) -> Self {
+        self.hit_shader_binding_table_address = hit_shader_binding_table_address;
+        self
+    }
+    #[inline]
+    pub fn hit_shader_binding_table_size(
+        mut self,
+        hit_shader_binding_table_size: DeviceSize,
+    ) -> Self {
+        self.hit_shader_binding_table_size = hit_shader_binding_table_size;
+        self
+    }
+    #[inline]
+    pub fn hit_shader_binding_table_stride(
+        mut self,
+        hit_shader_binding_table_stride: DeviceSize,
+    ) -> Self {
+        self.hit_shader_binding_table_stride = hit_shader_binding_table_stride;
+        self
+    }
+    #[inline]
+    pub fn callable_shader_binding_table_address(
+        mut self,
+        callable_shader_binding_table_address: DeviceAddress,
+    ) -> Self {
+        self.callable_shader_binding_table_address = callable_shader_binding_table_address;
+        self
+    }
+    #[inline]
+    pub fn callable_shader_binding_table_size(
+        mut self,
+        callable_shader_binding_table_size: DeviceSize,
+    ) -> Self {
+        self.callable_shader_binding_table_size = callable_shader_binding_table_size;
+        self
+    }
+    #[inline]
+    pub fn callable_shader_binding_table_stride(
+        mut self,
+        callable_shader_binding_table_stride: DeviceSize,
+    ) -> Self {
+        self.callable_shader_binding_table_stride = callable_shader_binding_table_stride;
+        self
+    }
+    #[inline]
+    pub fn width(mut self, width: u32) -> Self {
+        self.width = width;
+        self
+    }
+    #[inline]
+    pub fn height(mut self, height: u32) -> Self {
+        self.height = height;
+        self
+    }
+    #[inline]
+    pub fn depth(mut self, depth: u32) -> Self {
+        self.depth = depth;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceRayTracingMaintenance1FeaturesKHR.html>"]
+pub struct PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub ray_tracing_maintenance1: Bool32,
+    pub ray_tracing_pipeline_trace_rays_indirect2: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PHYSICAL_DEVICE_RAY_TRACING_MAINTENANCE_1_FEATURES_KHR,
+            p_next: ::std::ptr::null_mut(),
+            ray_tracing_maintenance1: Bool32::default(),
+            ray_tracing_pipeline_trace_rays_indirect2: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'_> {}
+impl<'a> PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'a> {
+    #[inline]
+    pub fn ray_tracing_maintenance1(mut self, ray_tracing_maintenance1: bool) -> Self {
+        self.ray_tracing_maintenance1 = ray_tracing_maintenance1.into();
+        self
+    }
+    #[inline]
+    pub fn ray_tracing_pipeline_trace_rays_indirect2(
+        mut self,
+        ray_tracing_pipeline_trace_rays_indirect2: bool,
+    ) -> Self {
+        self.ray_tracing_pipeline_trace_rays_indirect2 =
+            ray_tracing_pipeline_trace_rays_indirect2.into();
         self
     }
 }
@@ -38451,6 +38629,460 @@ impl<'a> DescriptorSetLayoutHostMappingInfoVALVE<'a> {
     #[inline]
     pub fn descriptor_size(mut self, descriptor_size: u32) -> Self {
         self.descriptor_size = descriptor_size;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImageCompressionControlEXT.html>"]
+pub struct ImageCompressionControlEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub flags: ImageCompressionFlagsEXT,
+    pub compression_control_plane_count: u32,
+    pub p_fixed_rate_flags: *mut ImageCompressionFixedRateFlagsEXT,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ImageCompressionControlEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::IMAGE_COMPRESSION_CONTROL_EXT,
+            p_next: ::std::ptr::null(),
+            flags: ImageCompressionFlagsEXT::default(),
+            compression_control_plane_count: u32::default(),
+            p_fixed_rate_flags: ::std::ptr::null_mut(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsImageCreateInfo for ImageCompressionControlEXT<'_> {}
+unsafe impl ExtendsSwapchainCreateInfoKHR for ImageCompressionControlEXT<'_> {}
+unsafe impl ExtendsPhysicalDeviceImageFormatInfo2 for ImageCompressionControlEXT<'_> {}
+impl<'a> ImageCompressionControlEXT<'a> {
+    #[inline]
+    pub fn flags(mut self, flags: ImageCompressionFlagsEXT) -> Self {
+        self.flags = flags;
+        self
+    }
+    #[inline]
+    pub fn fixed_rate_flags(
+        mut self,
+        fixed_rate_flags: &'a mut [ImageCompressionFixedRateFlagsEXT],
+    ) -> Self {
+        self.compression_control_plane_count = fixed_rate_flags.len() as _;
+        self.p_fixed_rate_flags = fixed_rate_flags.as_mut_ptr();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceImageCompressionControlFeaturesEXT.html>"]
+pub struct PhysicalDeviceImageCompressionControlFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub image_compression_control: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceImageCompressionControlFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_FEATURES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            image_compression_control: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceImageCompressionControlFeaturesEXT<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImageCompressionControlFeaturesEXT<'_> {}
+impl<'a> PhysicalDeviceImageCompressionControlFeaturesEXT<'a> {
+    #[inline]
+    pub fn image_compression_control(mut self, image_compression_control: bool) -> Self {
+        self.image_compression_control = image_compression_control.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImageCompressionPropertiesEXT.html>"]
+pub struct ImageCompressionPropertiesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub image_compression_flags: ImageCompressionFlagsEXT,
+    pub image_compression_fixed_rate_flags: ImageCompressionFixedRateFlagsEXT,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ImageCompressionPropertiesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::IMAGE_COMPRESSION_PROPERTIES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            image_compression_flags: ImageCompressionFlagsEXT::default(),
+            image_compression_fixed_rate_flags: ImageCompressionFixedRateFlagsEXT::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsImageFormatProperties2 for ImageCompressionPropertiesEXT<'_> {}
+unsafe impl ExtendsSurfaceFormat2KHR for ImageCompressionPropertiesEXT<'_> {}
+unsafe impl ExtendsSubresourceLayout2EXT for ImageCompressionPropertiesEXT<'_> {}
+impl<'a> ImageCompressionPropertiesEXT<'a> {
+    #[inline]
+    pub fn image_compression_flags(
+        mut self,
+        image_compression_flags: ImageCompressionFlagsEXT,
+    ) -> Self {
+        self.image_compression_flags = image_compression_flags;
+        self
+    }
+    #[inline]
+    pub fn image_compression_fixed_rate_flags(
+        mut self,
+        image_compression_fixed_rate_flags: ImageCompressionFixedRateFlagsEXT,
+    ) -> Self {
+        self.image_compression_fixed_rate_flags = image_compression_fixed_rate_flags;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT.html>"]
+pub struct PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub image_compression_control_swapchain: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_SWAPCHAIN_FEATURES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            image_compression_control_swapchain: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo
+    for PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'_>
+{
+}
+impl<'a> PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'a> {
+    #[inline]
+    pub fn image_compression_control_swapchain(
+        mut self,
+        image_compression_control_swapchain: bool,
+    ) -> Self {
+        self.image_compression_control_swapchain = image_compression_control_swapchain.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImageSubresource2EXT.html>"]
+pub struct ImageSubresource2EXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub image_subresource: ImageSubresource,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ImageSubresource2EXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::IMAGE_SUBRESOURCE_2_EXT,
+            p_next: ::std::ptr::null_mut(),
+            image_subresource: ImageSubresource::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+impl<'a> ImageSubresource2EXT<'a> {
+    #[inline]
+    pub fn image_subresource(mut self, image_subresource: ImageSubresource) -> Self {
+        self.image_subresource = image_subresource;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSubresourceLayout2EXT.html>"]
+pub struct SubresourceLayout2EXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub subresource_layout: SubresourceLayout,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for SubresourceLayout2EXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::SUBRESOURCE_LAYOUT_2_EXT,
+            p_next: ::std::ptr::null_mut(),
+            subresource_layout: SubresourceLayout::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+pub unsafe trait ExtendsSubresourceLayout2EXT {}
+impl<'a> SubresourceLayout2EXT<'a> {
+    #[inline]
+    pub fn subresource_layout(mut self, subresource_layout: SubresourceLayout) -> Self {
+        self.subresource_layout = subresource_layout;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsSubresourceLayout2EXT>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = <*mut T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkRenderPassCreationControlEXT.html>"]
+pub struct RenderPassCreationControlEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub disallow_merging: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for RenderPassCreationControlEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::RENDER_PASS_CREATION_CONTROL_EXT,
+            p_next: ::std::ptr::null(),
+            disallow_merging: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsRenderPassCreateInfo2 for RenderPassCreationControlEXT<'_> {}
+unsafe impl ExtendsSubpassDescription2 for RenderPassCreationControlEXT<'_> {}
+pub unsafe trait ExtendsRenderPassCreationControlEXT {}
+impl<'a> RenderPassCreationControlEXT<'a> {
+    #[inline]
+    pub fn disallow_merging(mut self, disallow_merging: bool) -> Self {
+        self.disallow_merging = disallow_merging.into();
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsRenderPassCreationControlEXT>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = <*const T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkRenderPassCreationFeedbackInfoEXT.html>"]
+pub struct RenderPassCreationFeedbackInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub post_merge_subpass_count: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for RenderPassCreationFeedbackInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::RENDER_PASS_CREATION_FEEDBACK_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            post_merge_subpass_count: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsRenderPassCreateInfo2 for RenderPassCreationFeedbackInfoEXT<'_> {}
+unsafe impl ExtendsRenderPassCreationControlEXT for RenderPassCreationFeedbackInfoEXT<'_> {}
+impl<'a> RenderPassCreationFeedbackInfoEXT<'a> {
+    #[inline]
+    pub fn post_merge_subpass_count(mut self, post_merge_subpass_count: u32) -> Self {
+        self.post_merge_subpass_count = post_merge_subpass_count;
+        self
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkRenderPassSubpassFeedbackInfoEXT.html>"]
+pub struct RenderPassSubpassFeedbackInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub subpass_merge_status: SubpassMergeStatusEXT,
+    pub description: [c_char; MAX_DESCRIPTION_SIZE],
+    pub post_merge_index: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+#[cfg(feature = "debug")]
+impl fmt::Debug for RenderPassSubpassFeedbackInfoEXT<'_> {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+        fmt.debug_struct("RenderPassSubpassFeedbackInfoEXT")
+            .field("s_type", &self.s_type)
+            .field("p_next", &self.p_next)
+            .field("subpass_merge_status", &self.subpass_merge_status)
+            .field("description", &unsafe {
+                ::std::ffi::CStr::from_ptr(self.description.as_ptr())
+            })
+            .field("post_merge_index", &self.post_merge_index)
+            .finish()
+    }
+}
+impl ::std::default::Default for RenderPassSubpassFeedbackInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::RENDER_PASS_SUBPASS_FEEDBACK_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            subpass_merge_status: SubpassMergeStatusEXT::default(),
+            description: unsafe { ::std::mem::zeroed() },
+            post_merge_index: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsSubpassDescription2 for RenderPassSubpassFeedbackInfoEXT<'_> {}
+unsafe impl ExtendsRenderPassCreationControlEXT for RenderPassSubpassFeedbackInfoEXT<'_> {}
+impl<'a> RenderPassSubpassFeedbackInfoEXT<'a> {
+    #[inline]
+    pub fn subpass_merge_status(mut self, subpass_merge_status: SubpassMergeStatusEXT) -> Self {
+        self.subpass_merge_status = subpass_merge_status;
+        self
+    }
+    #[inline]
+    pub fn description(mut self, description: [c_char; MAX_DESCRIPTION_SIZE]) -> Self {
+        self.description = description;
+        self
+    }
+    #[inline]
+    pub fn post_merge_index(mut self, post_merge_index: u32) -> Self {
+        self.post_merge_index = post_merge_index;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceSubpassMergeFeedbackFeaturesEXT.html>"]
+pub struct PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub subpass_merge_feedback: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PHYSICAL_DEVICE_SUBPASS_MERGE_FEEDBACK_FEATURES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            subpass_merge_feedback: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'_> {}
+impl<'a> PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'a> {
+    #[inline]
+    pub fn subpass_merge_feedback(mut self, subpass_merge_feedback: bool) -> Self {
+        self.subpass_merge_feedback = subpass_merge_feedback.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelinePropertiesIdentifierEXT.html>"]
+pub struct PipelinePropertiesIdentifierEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub pipeline_identifier: [u8; UUID_SIZE],
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PipelinePropertiesIdentifierEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PIPELINE_PROPERTIES_IDENTIFIER_EXT,
+            p_next: ::std::ptr::null_mut(),
+            pipeline_identifier: unsafe { ::std::mem::zeroed() },
+            _marker: PhantomData,
+        }
+    }
+}
+// XXX: Manually removed to make this compile, actual solution will be resolved inside Khronos
+// https://gitlab.khronos.org/vulkan/vulkan/-/merge_requests/5184
+// unsafe impl ExtendsBaseOutStructure for PipelinePropertiesIdentifierEXT<'_> {}
+impl<'a> PipelinePropertiesIdentifierEXT<'a> {
+    #[inline]
+    pub fn pipeline_identifier(mut self, pipeline_identifier: [u8; UUID_SIZE]) -> Self {
+        self.pipeline_identifier = pipeline_identifier;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDevicePipelinePropertiesFeaturesEXT.html>"]
+pub struct PhysicalDevicePipelinePropertiesFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub pipeline_properties_identifier: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDevicePipelinePropertiesFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PHYSICAL_DEVICE_PIPELINE_PROPERTIES_FEATURES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            pipeline_properties_identifier: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePipelinePropertiesFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePipelinePropertiesFeaturesEXT<'_> {}
+impl<'a> PhysicalDevicePipelinePropertiesFeaturesEXT<'a> {
+    #[inline]
+    pub fn pipeline_properties_identifier(mut self, pipeline_properties_identifier: bool) -> Self {
+        self.pipeline_properties_identifier = pipeline_properties_identifier.into();
         self
     }
 }

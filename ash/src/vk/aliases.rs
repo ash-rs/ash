@@ -205,6 +205,7 @@ pub type PhysicalDeviceSeparateDepthStencilLayoutsFeaturesKHR<'a> =
     PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'a>;
 pub type AttachmentReferenceStencilLayoutKHR<'a> = AttachmentReferenceStencilLayout<'a>;
 pub type AttachmentDescriptionStencilLayoutKHR<'a> = AttachmentDescriptionStencilLayout<'a>;
+pub type PipelineInfoEXT<'a> = PipelineInfoKHR<'a>;
 pub type PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT<'a> =
     PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'a>;
 pub type PhysicalDeviceTexelBufferAlignmentPropertiesEXT<'a> =

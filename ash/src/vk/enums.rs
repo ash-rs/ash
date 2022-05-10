@@ -2200,6 +2200,34 @@ impl FragmentShadingRateTypeNV {
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSubpassMergeStatusEXT.html>"]
+pub struct SubpassMergeStatusEXT(pub(crate) i32);
+impl SubpassMergeStatusEXT {
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl SubpassMergeStatusEXT {
+    pub const MERGED: Self = Self(0);
+    pub const DISALLOWED: Self = Self(1);
+    pub const NOT_MERGED_SIDE_EFFECTS: Self = Self(2);
+    pub const NOT_MERGED_SAMPLES_MISMATCH: Self = Self(3);
+    pub const NOT_MERGED_VIEWS_MISMATCH: Self = Self(4);
+    pub const NOT_MERGED_ALIASING: Self = Self(5);
+    pub const NOT_MERGED_DEPENDENCIES: Self = Self(6);
+    pub const NOT_MERGED_INCOMPATIBLE_INPUT_ATTACHMENT: Self = Self(7);
+    pub const NOT_MERGED_TOO_MANY_ATTACHMENTS: Self = Self(8);
+    pub const NOT_MERGED_INSUFFICIENT_STORAGE: Self = Self(9);
+    pub const NOT_MERGED_DEPTH_STENCIL_COUNT: Self = Self(10);
+    pub const NOT_MERGED_RESOLVE_ATTACHMENT_REUSE: Self = Self(11);
+    pub const NOT_MERGED_SINGLE_SUBPASS: Self = Self(12);
+    pub const NOT_MERGED_UNSPECIFIED: Self = Self(13);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkProvokingVertexModeEXT.html>"]
 pub struct ProvokingVertexModeEXT(pub(crate) i32);
 impl ProvokingVertexModeEXT {
@@ -2346,6 +2374,7 @@ impl fmt::Debug for Result {
             Self::THREAD_DONE_KHR => Some("THREAD_DONE_KHR"),
             Self::OPERATION_DEFERRED_KHR => Some("OPERATION_DEFERRED_KHR"),
             Self::OPERATION_NOT_DEFERRED_KHR => Some("OPERATION_NOT_DEFERRED_KHR"),
+            Self::ERROR_COMPRESSION_EXHAUSTED_EXT => Some("ERROR_COMPRESSION_EXHAUSTED_EXT"),
             Self::ERROR_OUT_OF_POOL_MEMORY => Some("ERROR_OUT_OF_POOL_MEMORY"),
             Self::ERROR_INVALID_EXTERNAL_HANDLE => Some("ERROR_INVALID_EXTERNAL_HANDLE"),
             Self::ERROR_FRAGMENTATION => Some("ERROR_FRAGMENTATION"),

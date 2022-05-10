@@ -1512,3 +1512,46 @@ impl VideoEncodeH265TransformBlockSizeFlagsEXT {
 pub struct InstanceCreateFlags(pub(crate) Flags);
 vk_bitflags_wrapped!(InstanceCreateFlags, Flags);
 impl InstanceCreateFlags {}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImageCompressionFlagBitsEXT.html>"]
+pub struct ImageCompressionFlagsEXT(pub(crate) Flags);
+vk_bitflags_wrapped!(ImageCompressionFlagsEXT, Flags);
+impl ImageCompressionFlagsEXT {
+    pub const DEFAULT: Self = Self(0);
+    pub const FIXED_RATE_DEFAULT: Self = Self(0b1);
+    pub const FIXED_RATE_EXPLICIT: Self = Self(0b10);
+    pub const DISABLED: Self = Self(0b100);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImageCompressionFixedRateFlagBitsEXT.html>"]
+pub struct ImageCompressionFixedRateFlagsEXT(pub(crate) Flags);
+vk_bitflags_wrapped!(ImageCompressionFixedRateFlagsEXT, Flags);
+impl ImageCompressionFixedRateFlagsEXT {
+    pub const NONE: Self = Self(0);
+    pub const TYPE_1BPC: Self = Self(0b1);
+    pub const TYPE_2BPC: Self = Self(0b10);
+    pub const TYPE_3BPC: Self = Self(0b100);
+    pub const TYPE_4BPC: Self = Self(0b1000);
+    pub const TYPE_5BPC: Self = Self(0b1_0000);
+    pub const TYPE_6BPC: Self = Self(0b10_0000);
+    pub const TYPE_7BPC: Self = Self(0b100_0000);
+    pub const TYPE_8BPC: Self = Self(0b1000_0000);
+    pub const TYPE_9BPC: Self = Self(0b1_0000_0000);
+    pub const TYPE_10BPC: Self = Self(0b10_0000_0000);
+    pub const TYPE_11BPC: Self = Self(0b100_0000_0000);
+    pub const TYPE_12BPC: Self = Self(0b1000_0000_0000);
+    pub const TYPE_13BPC: Self = Self(0b1_0000_0000_0000);
+    pub const TYPE_14BPC: Self = Self(0b10_0000_0000_0000);
+    pub const TYPE_15BPC: Self = Self(0b100_0000_0000_0000);
+    pub const TYPE_16BPC: Self = Self(0b1000_0000_0000_0000);
+    pub const TYPE_17BPC: Self = Self(0b1_0000_0000_0000_0000);
+    pub const TYPE_18BPC: Self = Self(0b10_0000_0000_0000_0000);
+    pub const TYPE_19BPC: Self = Self(0b100_0000_0000_0000_0000);
+    pub const TYPE_20BPC: Self = Self(0b1000_0000_0000_0000_0000);
+    pub const TYPE_21BPC: Self = Self(0b1_0000_0000_0000_0000_0000);
+    pub const TYPE_22BPC: Self = Self(0b10_0000_0000_0000_0000_0000);
+    pub const TYPE_23BPC: Self = Self(0b100_0000_0000_0000_0000_0000);
+    pub const TYPE_24BPC: Self = Self(0b1000_0000_0000_0000_0000_0000);
+}
