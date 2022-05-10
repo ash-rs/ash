@@ -3,19 +3,26 @@
 
 use heck::{CamelCase, ShoutySnakeCase, SnakeCase};
 use itertools::Itertools;
+use nom::sequence::pair;
 use nom::{
-    alt, char,
-    character::complete::{digit1, hex_digit1, multispace1},
-    complete, delimited, do_parse, many1, map, named, none_of, one_of, opt, pair, preceded, tag,
-    terminated, value,
+    branch::alt,
+    bytes::streaming::tag,
+    character::complete::{char, digit1, hex_digit1, multispace1, none_of, one_of},
+    combinator::{complete, map, opt, value},
+    error::{ParseError, VerboseError},
+    multi::many1,
+    sequence::{delimited, preceded, terminated},
+    IResult, Parser,
 };
 use once_cell::sync::Lazy;
 use proc_macro2::{Delimiter, Group, Literal, Span, TokenStream, TokenTree};
 use quote::*;
 use regex::Regex;
-use std::collections::{BTreeMap, HashMap, HashSet};
-use std::fmt::Display;
-use std::path::Path;
+use std::{
+    collections::{BTreeMap, HashMap, HashSet},
+    fmt::Display,
+    path::Path,
+};
 use syn::Ident;
 
 macro_rules! get_variant {
@@ -63,83 +70,90 @@ impl quote::ToTokens for CType {
     }
 }
 
-named!(ctype<&str, CType>,
-    alt!(
-        value!(CType::U64, complete!(tag!("ULL"))) |
-        value!(CType::U32, complete!(tag!("U")))
-    )
-);
+fn parse_ctype<'a, E: ParseError<&'a str>>(i: &'a str) -> IResult<&'a str, CType, E> {
+    (alt((
+        value(CType::U64, complete(tag("ULL"))),
+        value(CType::U32, complete(tag("U"))),
+    )))(i)
+}
 
-named!(cexpr<&str, (CType, String)>,
-    alt!(
-        map!(cfloat, |f| (CType::Float, format!("{:.2}", f))) |
-        inverse_number |
-        decimal_number |
-        hexadecimal_number
-    )
-);
+fn parse_cexpr<'a, E: ParseError<&'a str>>(i: &'a str) -> IResult<&'a str, (CType, String), E> {
+    (alt((
+        map(parse_cfloat, |f| (CType::Float, format!("{:.2}", f))),
+        parse_inverse_number,
+        parse_decimal_number,
+        parse_hexadecimal_number,
+    )))(i)
+}
 
-named!(decimal_number<&str, (CType, String)>,
-    do_parse!(
-        num: digit1 >>
-        typ: ctype >>
-        ((typ, num.to_string()))
-    )
-);
+fn parse_cfloat<'a, E: ParseError<&'a str>>(i: &'a str) -> IResult<&'a str, f32, E> {
+    (terminated(nom::number::complete::float, one_of("fF")))(i)
+}
 
-named!(hexadecimal_number<&str, (CType, String)>,
-        preceded!(
-            alt!(tag!("0x") | tag!("0X")),
-            map!(
-                pair!(hex_digit1, ctype),
-                |(num, typ)| (typ, format!("0x{}{}", num.to_ascii_lowercase(), typ.to_string())
-            )
-        )
-    )
-);
-
-named!(inverse_number<&str, (CType, String)>,
-    map!(
-        delimited!(
-            tag!("("),
-            pair!(
-                preceded!(tag!("~"), decimal_number),
-                opt!(preceded!(tag!("-"), digit1))
+fn parse_inverse_number<'a, E: ParseError<&'a str>>(
+    i: &'a str,
+) -> IResult<&'a str, (CType, String), E> {
+    (map(
+        delimited(
+            char('('),
+            pair(
+                preceded(char('~'), parse_decimal_number),
+                opt(preceded(char('-'), digit1)),
             ),
-            tag!(")")
+            char(')'),
         ),
         |((ctyp, num), minus_num)| {
             let expr = if let Some(minus) = minus_num {
                 format!("!{}-{}", num, minus)
-            }
-            else{
+            } else {
                 format!("!{}", num)
             };
             (ctyp, expr)
-        }
-    )
-);
-
-named!(cfloat<&str, f32>,
-    terminated!(nom::number::complete::float, one_of!("fF"))
-);
+        },
+    ))(i)
+}
 
 // Like a C string, but does not support quote escaping and expects at least one character.
 // If needed, use https://github.com/Geal/nom/blob/8e09f0c3029d32421b5b69fb798cef6855d0c8df/tests/json.rs#L61-L81
-named!(c_include_string<&str, String>,
-    delimited!(
-        char!('"'),
-        map!(
-            many1!(none_of!("\"")),
-            |chars| chars.iter().map(char::to_string).join("")
-        ),
-        char!('"')
-    )
-);
+fn parse_c_include_string<'a, E: ParseError<&'a str>>(i: &'a str) -> IResult<&'a str, String, E> {
+    (delimited(
+        char('"'),
+        map(many1(none_of("\"")), |c| {
+            c.iter().map(char::to_string).join("")
+        }),
+        char('"'),
+    ))(i)
+}
 
-named!(c_include<&str, String>,
-    preceded!(tag!("#include"), preceded!(multispace1, c_include_string))
-);
+fn parse_c_include<'a, E: ParseError<&'a str>>(i: &'a str) -> IResult<&'a str, String, E> {
+    (preceded(
+        tag("#include"),
+        preceded(multispace1, parse_c_include_string),
+    ))(i)
+}
+
+fn parse_decimal_number<'a, E: ParseError<&'a str>>(
+    i: &'a str,
+) -> IResult<&'a str, (CType, String), E> {
+    (map(
+        pair(digit1.map(str::to_string), parse_ctype),
+        |(dig, ctype)| (ctype, dig),
+    ))(i)
+}
+
+fn parse_hexadecimal_number<'a, E: ParseError<&'a str>>(
+    i: &'a str,
+) -> IResult<&'a str, (CType, String), E> {
+    (preceded(
+        alt((tag("0x"), tag("0X"))),
+        map(pair(hex_digit1, parse_ctype), |(num, typ)| {
+            (
+                typ,
+                format!("0x{}{}", num.to_ascii_lowercase(), typ.to_string()),
+            )
+        }),
+    ))(i)
+}
 
 fn khronos_link<S: Display + ?Sized>(name: &S) -> Literal {
     Literal::string(&format!(
@@ -265,7 +279,8 @@ impl quote::ToTokens for Constant {
             }
             Constant::Text(ref text) => text.to_tokens(tokens),
             Constant::CExpr(ref expr) => {
-                let (_, (_, rexpr)) = cexpr(expr).expect("Unable to parse cexpr");
+                let (_, (_, rexpr)) =
+                    parse_cexpr::<VerboseError<&str>>(expr).expect("Unable to parse cexpr");
                 tokens.extend(rexpr.parse::<TokenStream>());
             }
             Constant::BitPos(pos) => {
@@ -318,7 +333,8 @@ impl Constant {
         match self {
             Constant::Number(_) | Constant::Hex(_) => CType::USize,
             Constant::CExpr(expr) => {
-                let (_, (ty, _)) = cexpr(expr).expect("Unable to parse cexpr");
+                let (_, (ty, _)) =
+                    parse_cexpr::<VerboseError<&str>>(expr).expect("Unable to parse cexpr");
                 ty
             }
             _ => unimplemented!(),
@@ -549,12 +565,12 @@ fn name_to_tokens(type_name: &str) -> Ident {
 /// Parses and rewrites a C literal into Rust
 ///
 /// If no special pattern is recognized the original literal is returned.
-/// Any new conversions need to be added to the [`cexpr()`] [`nom`] parser.
+/// Any new conversions need to be added to the [`parse_cexpr()`] [`nom`] parser.
 ///
 /// Examples:
 /// - `0x3FFU` -> `0x3ffu32`
 fn convert_c_literal(lit: Literal) -> Literal {
-    if let Ok((_, (_, rexpr))) = cexpr(&lit.to_string()) {
+    if let Ok((_, (_, rexpr))) = parse_cexpr::<VerboseError<&str>>(&lit.to_string()) {
         // lit::SynInt uses the same `.parse` method to create hexadecimal
         // literals because there is no `Literal` constructor for it.
         let mut stream = rexpr.parse::<TokenStream>().unwrap().into_iter();
@@ -2289,7 +2305,7 @@ pub fn extract_native_types(registry: &vk_parse::Registry) -> (Vec<(String, Stri
                         name
                     );
 
-                    let (rem, path) = c_include(&code.code)
+                    let (rem, path) = parse_c_include::<VerboseError<&str>>(&code.code)
                         .expect("Failed to parse `#include` from `category=\"include\"` directive");
                     assert!(rem.is_empty());
                     header_includes.push((name, path));
