@@ -1,4 +1,4 @@
-use crate::prelude::{read_into_uninitialized_vector, VkResult};
+use crate::prelude::*;
 use crate::vk;
 use crate::{Entry, Instance};
 use std::ffi::CStr;
