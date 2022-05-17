@@ -906,6 +906,7 @@ impl DeviceDiagnosticsConfigFlagsNV {
     pub const ENABLE_SHADER_DEBUG_INFO: Self = Self(0b1);
     pub const ENABLE_RESOURCE_TRACKING: Self = Self(0b10);
     pub const ENABLE_AUTOMATIC_CHECKPOINTS: Self = Self(0b100);
+    pub const ENABLE_SHADER_ERROR_REPORTING: Self = Self(0b1000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]

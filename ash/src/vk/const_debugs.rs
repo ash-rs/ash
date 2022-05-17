@@ -1036,6 +1036,7 @@ impl fmt::Debug for DependencyFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (DependencyFlags::BY_REGION.0, "BY_REGION"),
+            (DependencyFlags::RESERVED_3_EXT.0, "RESERVED_3_EXT"),
             (DependencyFlags::DEVICE_GROUP.0, "DEVICE_GROUP"),
             (DependencyFlags::VIEW_LOCAL.0, "VIEW_LOCAL"),
         ];
@@ -1182,6 +1183,10 @@ impl fmt::Debug for DeviceDiagnosticsConfigFlagsNV {
             (
                 DeviceDiagnosticsConfigFlagsNV::ENABLE_AUTOMATIC_CHECKPOINTS.0,
                 "ENABLE_AUTOMATIC_CHECKPOINTS",
+            ),
+            (
+                DeviceDiagnosticsConfigFlagsNV::ENABLE_SHADER_ERROR_REPORTING.0,
+                "ENABLE_SHADER_ERROR_REPORTING",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -3004,6 +3009,7 @@ impl fmt::Debug for PipelineCreateFlags {
             (PipelineCreateFlags::RESERVED_25_EXT.0, "RESERVED_25_EXT"),
             (PipelineCreateFlags::RESERVED_26_EXT.0, "RESERVED_26_EXT"),
             (PipelineCreateFlags::RESERVED_24_NV.0, "RESERVED_24_NV"),
+            (PipelineCreateFlags::RESERVED_27_EXT.0, "RESERVED_27_EXT"),
             (
                 PipelineCreateFlags::VIEW_INDEX_FROM_DEVICE_INDEX.0,
                 "VIEW_INDEX_FROM_DEVICE_INDEX",
@@ -4903,6 +4909,9 @@ impl fmt::Debug for StructureType {
             }
             Self::GRAPHICS_PIPELINE_LIBRARY_CREATE_INFO_EXT => {
                 Some("GRAPHICS_PIPELINE_LIBRARY_CREATE_INFO_EXT")
+            }
+            Self::PHYSICAL_DEVICE_SHADER_EARLY_AND_LATE_FRAGMENT_TESTS_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_SHADER_EARLY_AND_LATE_FRAGMENT_TESTS_FEATURES_EXT")
             }
             Self::PHYSICAL_DEVICE_SHADER_SUBGROUP_UNIFORM_CONTROL_FLOW_FEATURES_KHR => {
                 Some("PHYSICAL_DEVICE_SHADER_SUBGROUP_UNIFORM_CONTROL_FLOW_FEATURES_KHR")

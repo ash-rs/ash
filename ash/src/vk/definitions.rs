@@ -57,7 +57,7 @@ pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
-pub const HEADER_VERSION: u32 = 213u32;
+pub const HEADER_VERSION: u32 = 214u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -39083,6 +39083,46 @@ impl<'a> PhysicalDevicePipelinePropertiesFeaturesEXT<'a> {
     #[inline]
     pub fn pipeline_properties_identifier(mut self, pipeline_properties_identifier: bool) -> Self {
         self.pipeline_properties_identifier = pipeline_properties_identifier.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesEXT.html>"]
+pub struct PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub shader_early_and_late_fragment_tests: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type:
+                StructureType::PHYSICAL_DEVICE_SHADER_EARLY_AND_LATE_FRAGMENT_TESTS_FEATURES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            shader_early_and_late_fragment_tests: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesEXT<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo
+    for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesEXT<'_>
+{
+}
+impl<'a> PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesEXT<'a> {
+    #[inline]
+    pub fn shader_early_and_late_fragment_tests(
+        mut self,
+        shader_early_and_late_fragment_tests: bool,
+    ) -> Self {
+        self.shader_early_and_late_fragment_tests = shader_early_and_late_fragment_tests.into();
         self
     }
 }
