@@ -179,6 +179,8 @@ pub type PhysicalDeviceShaderAtomicInt64FeaturesKHR<'a> =
 pub type PhysicalDeviceDepthStencilResolvePropertiesKHR<'a> =
     PhysicalDeviceDepthStencilResolveProperties<'a>;
 pub type SubpassDescriptionDepthStencilResolveKHR<'a> = SubpassDescriptionDepthStencilResolve<'a>;
+pub type PhysicalDeviceFragmentShaderBarycentricFeaturesNV<'a> =
+    PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'a>;
 pub type ImageStencilUsageCreateInfoEXT<'a> = ImageStencilUsageCreateInfo<'a>;
 pub type PhysicalDeviceScalarBlockLayoutFeaturesEXT<'a> =
     PhysicalDeviceScalarBlockLayoutFeatures<'a>;

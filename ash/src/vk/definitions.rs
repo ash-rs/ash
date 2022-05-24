@@ -57,7 +57,7 @@ pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
-pub const HEADER_VERSION: u32 = 214u32;
+pub const HEADER_VERSION: u32 = 215u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -20584,39 +20584,6 @@ impl<'a> PhysicalDeviceComputeShaderDerivativesFeaturesNV<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceFragmentShaderBarycentricFeaturesNV.html>"]
-pub struct PhysicalDeviceFragmentShaderBarycentricFeaturesNV<'a> {
-    pub s_type: StructureType,
-    pub p_next: *mut c_void,
-    pub fragment_shader_barycentric: Bool32,
-    pub _marker: PhantomData<&'a ()>,
-}
-impl ::std::default::Default for PhysicalDeviceFragmentShaderBarycentricFeaturesNV<'_> {
-    #[inline]
-    fn default() -> Self {
-        Self {
-            s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADER_BARYCENTRIC_FEATURES_NV,
-            p_next: ::std::ptr::null_mut(),
-            fragment_shader_barycentric: Bool32::default(),
-            _marker: PhantomData,
-        }
-    }
-}
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceFragmentShaderBarycentricFeaturesNV<'_>
-{
-}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentShaderBarycentricFeaturesNV<'_> {}
-impl<'a> PhysicalDeviceFragmentShaderBarycentricFeaturesNV<'a> {
-    #[inline]
-    pub fn fragment_shader_barycentric(mut self, fragment_shader_barycentric: bool) -> Self {
-        self.fragment_shader_barycentric = fragment_shader_barycentric.into();
-        self
-    }
-}
-#[repr(C)]
-#[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderImageFootprintFeaturesNV.html>"]
 pub struct PhysicalDeviceShaderImageFootprintFeaturesNV<'a> {
     pub s_type: StructureType,
@@ -36715,6 +36682,75 @@ impl<'a> PhysicalDeviceDrmPropertiesEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceFragmentShaderBarycentricFeaturesKHR.html>"]
+pub struct PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub fragment_shader_barycentric: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADER_BARYCENTRIC_FEATURES_KHR,
+            p_next: ::std::ptr::null_mut(),
+            fragment_shader_barycentric: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'_> {}
+impl<'a> PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'a> {
+    #[inline]
+    pub fn fragment_shader_barycentric(mut self, fragment_shader_barycentric: bool) -> Self {
+        self.fragment_shader_barycentric = fragment_shader_barycentric.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceFragmentShaderBarycentricPropertiesKHR.html>"]
+pub struct PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub tri_strip_vertex_order_independent_of_provoking_vertex: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_SHADER_BARYCENTRIC_PROPERTIES_KHR,
+            p_next: ::std::ptr::null_mut(),
+            tri_strip_vertex_order_independent_of_provoking_vertex: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'_>
+{
+}
+impl<'a> PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'a> {
+    #[inline]
+    pub fn tri_strip_vertex_order_independent_of_provoking_vertex(
+        mut self,
+        tri_strip_vertex_order_independent_of_provoking_vertex: bool,
+    ) -> Self {
+        self.tri_strip_vertex_order_independent_of_provoking_vertex =
+            tri_strip_vertex_order_independent_of_provoking_vertex.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceRayTracingMotionBlurFeaturesNV.html>"]
 pub struct PhysicalDeviceRayTracingMotionBlurFeaturesNV<'a> {
     pub s_type: StructureType,
@@ -39089,19 +39125,19 @@ impl<'a> PhysicalDevicePipelinePropertiesFeaturesEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesEXT.html>"]
-pub struct PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesEXT<'a> {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD.html>"]
+pub struct PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub shader_early_and_late_fragment_tests: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
-impl ::std::default::Default for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesEXT<'_> {
+impl ::std::default::Default for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'_> {
     #[inline]
     fn default() -> Self {
         Self {
             s_type:
-                StructureType::PHYSICAL_DEVICE_SHADER_EARLY_AND_LATE_FRAGMENT_TESTS_FEATURES_EXT,
+                StructureType::PHYSICAL_DEVICE_SHADER_EARLY_AND_LATE_FRAGMENT_TESTS_FEATURES_AMD,
             p_next: ::std::ptr::null_mut(),
             shader_early_and_late_fragment_tests: Bool32::default(),
             _marker: PhantomData,
@@ -39109,14 +39145,14 @@ impl ::std::default::Default for PhysicalDeviceShaderEarlyAndLateFragmentTestsFe
     }
 }
 unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesEXT<'_>
+    for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'_>
 {
 }
 unsafe impl ExtendsDeviceCreateInfo
-    for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesEXT<'_>
+    for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'_>
 {
 }
-impl<'a> PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesEXT<'a> {
+impl<'a> PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'a> {
     #[inline]
     pub fn shader_early_and_late_fragment_tests(
         mut self,

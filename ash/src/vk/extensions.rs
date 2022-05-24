@@ -12024,7 +12024,8 @@ impl NvFragmentShaderBarycentricFn {
 }
 #[doc = "Generated from 'VK_NV_fragment_shader_barycentric'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_FRAGMENT_SHADER_BARYCENTRIC_FEATURES_NV: Self = Self(1_000_203_000);
+    pub const PHYSICAL_DEVICE_FRAGMENT_SHADER_BARYCENTRIC_FEATURES_NV: Self =
+        Self::PHYSICAL_DEVICE_FRAGMENT_SHADER_BARYCENTRIC_FEATURES_KHR;
 }
 impl NvShaderImageFootprintFn {
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -17127,26 +17128,34 @@ impl AmdShaderEarlyAndLateFragmentTestsFn {
 }
 #[doc = "Generated from 'VK_AMD_shader_early_and_late_fragment_tests'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_SHADER_EARLY_AND_LATE_FRAGMENT_TESTS_FEATURES_EXT: Self =
+    pub const PHYSICAL_DEVICE_SHADER_EARLY_AND_LATE_FRAGMENT_TESTS_FEATURES_AMD: Self =
         Self(1_000_321_000);
 }
-impl AmdExtension323Fn {
+impl KhrFragmentShaderBarycentricFn {
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_323\0") }
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_fragment_shader_barycentric\0")
+        }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct AmdExtension323Fn {}
-unsafe impl Send for AmdExtension323Fn {}
-unsafe impl Sync for AmdExtension323Fn {}
-impl AmdExtension323Fn {
+pub struct KhrFragmentShaderBarycentricFn {}
+unsafe impl Send for KhrFragmentShaderBarycentricFn {}
+unsafe impl Sync for KhrFragmentShaderBarycentricFn {}
+impl KhrFragmentShaderBarycentricFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         Self {}
     }
+}
+#[doc = "Generated from 'VK_KHR_fragment_shader_barycentric'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_FRAGMENT_SHADER_BARYCENTRIC_FEATURES_KHR: Self = Self(1_000_203_000);
+    pub const PHYSICAL_DEVICE_FRAGMENT_SHADER_BARYCENTRIC_PROPERTIES_KHR: Self =
+        Self(1_000_322_000);
 }
 impl KhrShaderSubgroupUniformControlFlowFn {
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -21817,6 +21826,24 @@ pub struct ExtExtension481Fn {}
 unsafe impl Send for ExtExtension481Fn {}
 unsafe impl Sync for ExtExtension481Fn {}
 impl ExtExtension481Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl ExtExtension482Fn {
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_482\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct ExtExtension482Fn {}
+unsafe impl Send for ExtExtension482Fn {}
+unsafe impl Sync for ExtExtension482Fn {}
+impl ExtExtension482Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
