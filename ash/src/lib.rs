@@ -33,6 +33,12 @@
 //! Load the Vulkan library linked at compile time using [`Entry::linked()`], or load it at runtime
 //! using [`Entry::load()`], which uses `libloading`. If you want to perform entry point loading
 //! yourself, call [`Entry::from_static_fn()`].
+//!
+//! ## Create features
+//!
+//! * **linked** - Link the Vulkan loader at compile time.
+//! * **loaded** (default) - Support searching for the Vulkan loader manually at runtime.
+//! * **debug** (default) - Whether Vulkan structs should implement Debug
 
 pub use crate::device::Device;
 pub use crate::entry::Entry;
