@@ -15,6 +15,11 @@ use std::ffi::CStr;
 use std::ops::Drop;
 use std::os::raw::c_char;
 
+#[cfg(any(target_os = "macos", target_os = "ios"))]
+use ash::vk::{
+    KhrGetPhysicalDeviceProperties2Fn, KhrPortabilityEnumerationFn, KhrPortabilitySubsetFn,
+};
+
 use winit::{
     event::{ElementState, Event, KeyboardInput, VirtualKeyCode, WindowEvent},
     event_loop::{ControlFlow, EventLoop},
@@ -233,6 +238,13 @@ impl ExampleBase {
                 .to_vec();
             extension_names.push(DebugUtils::name().as_ptr());
 
+            #[cfg(any(target_os = "macos", target_os = "ios"))]
+            {
+                extension_names.push(KhrPortabilityEnumerationFn::name().as_ptr());
+                // Enabling this extension is a requirement when using `VK_KHR_portability_subset`
+                extension_names.push(KhrGetPhysicalDeviceProperties2Fn::name().as_ptr());
+            }
+
             let appinfo = vk::ApplicationInfo::builder()
                 .application_name(app_name)
                 .application_version(0)
@@ -240,10 +252,17 @@ impl ExampleBase {
                 .engine_version(0)
                 .api_version(vk::make_api_version(0, 1, 0, 0));
 
+            let create_flags = if cfg!(any(target_os = "macos", target_os = "ios")) {
+                vk::InstanceCreateFlags::ENUMERATE_PORTABILITY_KHR
+            } else {
+                vk::InstanceCreateFlags::default()
+            };
+
             let create_info = vk::InstanceCreateInfo::builder()
                 .application_info(&appinfo)
                 .enabled_layer_names(&layers_names_raw)
-                .enabled_extension_names(&extension_names);
+                .enabled_extension_names(&extension_names)
+                .flags(create_flags);
 
             let instance: Instance = entry
                 .create_instance(&create_info, None)
@@ -297,7 +316,11 @@ impl ExampleBase {
                 })
                 .expect("Couldn't find suitable device.");
             let queue_family_index = queue_family_index as u32;
-            let device_extension_names_raw = [Swapchain::name().as_ptr()];
+            let device_extension_names_raw = [
+                Swapchain::name().as_ptr(),
+                #[cfg(any(target_os = "macos", target_os = "ios"))]
+                KhrPortabilitySubsetFn::name().as_ptr(),
+            ];
             let features = vk::PhysicalDeviceFeatures {
                 shader_clip_distance: 1,
                 ..Default::default()
