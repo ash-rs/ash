@@ -36,9 +36,9 @@
 //!
 //! ## Create features
 //!
-//! * **linked** - Link the Vulkan loader at compile time.
-//! * **loaded** (default) - Support searching for the Vulkan loader manually at runtime.
-//! * **debug** (default) - Whether Vulkan structs should implement Debug
+//! * __debug__ (default): Whether Vulkan structs should implement Debug.
+//! * __loaded__ (default): Support searching for the Vulkan loader manually at runtime.
+//! * __linked__: Link the Vulkan loader at compile time.
 
 pub use crate::device::Device;
 pub use crate::entry::Entry;

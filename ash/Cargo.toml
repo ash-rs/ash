@@ -14,14 +14,13 @@ rust-version = "1.59.0"
 [dependencies]
 libloading = { version = "0.7", optional = true }
 
-# note: features are also documented at the top of lib.rs
 [features]
 default = ["loaded", "debug"]
 # Link the Vulkan loader at compile time.
 linked = []
 # Support searching for the Vulkan loader manually at runtime.
 loaded = ["libloading"]
-# Whether Vulkan structs should implement Debug
+# Whether Vulkan structs should implement Debug.
 debug = []
 
 [package.metadata.release]
