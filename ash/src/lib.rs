@@ -36,7 +36,7 @@
 //!
 //! ## Crate features
 //!
-//! * **debug** (default): Whether Vulkan structs should implement Debug.
+//! * **debug** (default): Whether Vulkan structs should implement `Debug`.
 //! * **loaded** (default): Support searching for the Vulkan loader manually at runtime.
 //! * **linked**: Link the Vulkan loader at compile time.
 
