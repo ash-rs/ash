@@ -34,11 +34,11 @@
 //! using [`Entry::load()`], which uses `libloading`. If you want to perform entry point loading
 //! yourself, call [`Entry::from_static_fn()`].
 //!
-//! ## Create features
+//! ## Crate features
 //!
-//! * __debug__ (default): Whether Vulkan structs should implement Debug.
-//! * __loaded__ (default): Support searching for the Vulkan loader manually at runtime.
-//! * __linked__: Link the Vulkan loader at compile time.
+//! * **debug** (default): Whether Vulkan structs should implement Debug.
+//! * **loaded** (default): Support searching for the Vulkan loader manually at runtime.
+//! * **linked**: Link the Vulkan loader at compile time.
 
 pub use crate::device::Device;
 pub use crate::entry::Entry;
