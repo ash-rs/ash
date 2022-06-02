@@ -2469,6 +2469,7 @@ impl fmt::Debug for ImageViewCreateFlags {
                 ImageViewCreateFlags::FRAGMENT_DENSITY_MAP_DEFERRED_EXT.0,
                 "FRAGMENT_DENSITY_MAP_DEFERRED_EXT",
             ),
+            (ImageViewCreateFlags::RESERVED_3_EXT.0, "RESERVED_3_EXT"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -5117,11 +5118,11 @@ impl fmt::Debug for StructureType {
                 Some("PHYSICAL_DEVICE_SUBPASS_MERGE_FEEDBACK_FEATURES_EXT")
             }
             Self::RENDER_PASS_CREATION_CONTROL_EXT => Some("RENDER_PASS_CREATION_CONTROL_EXT"),
-            Self::RENDER_PASS_CREATION_FEEDBACK_INFO_EXT => {
-                Some("RENDER_PASS_CREATION_FEEDBACK_INFO_EXT")
+            Self::RENDER_PASS_CREATION_FEEDBACK_CREATE_INFO_EXT => {
+                Some("RENDER_PASS_CREATION_FEEDBACK_CREATE_INFO_EXT")
             }
-            Self::RENDER_PASS_SUBPASS_FEEDBACK_INFO_EXT => {
-                Some("RENDER_PASS_SUBPASS_FEEDBACK_INFO_EXT")
+            Self::RENDER_PASS_SUBPASS_FEEDBACK_CREATE_INFO_EXT => {
+                Some("RENDER_PASS_SUBPASS_FEEDBACK_CREATE_INFO_EXT")
             }
             Self::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES => {
                 Some("PHYSICAL_DEVICE_SUBGROUP_PROPERTIES")

@@ -20532,6 +20532,10 @@ impl ExtExtension419Fn {
         Self {}
     }
 }
+#[doc = "Generated from 'VK_EXT_extension_419'"]
+impl ImageViewCreateFlags {
+    pub const RESERVED_3_EXT: Self = Self(0b1000);
+}
 impl ExtExtension420Fn {
     pub const fn name() -> &'static ::std::ffi::CStr {
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_420\0") }
@@ -21380,7 +21384,7 @@ impl ExtSubpassMergeFeedbackFn {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_subpass_merge_feedback\0")
         }
     }
-    pub const SPEC_VERSION: u32 = 1u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
 pub struct ExtSubpassMergeFeedbackFn {}
@@ -21398,8 +21402,8 @@ impl ExtSubpassMergeFeedbackFn {
 impl StructureType {
     pub const PHYSICAL_DEVICE_SUBPASS_MERGE_FEEDBACK_FEATURES_EXT: Self = Self(1_000_458_000);
     pub const RENDER_PASS_CREATION_CONTROL_EXT: Self = Self(1_000_458_001);
-    pub const RENDER_PASS_CREATION_FEEDBACK_INFO_EXT: Self = Self(1_000_458_002);
-    pub const RENDER_PASS_SUBPASS_FEEDBACK_INFO_EXT: Self = Self(1_000_458_003);
+    pub const RENDER_PASS_CREATION_FEEDBACK_CREATE_INFO_EXT: Self = Self(1_000_458_002);
+    pub const RENDER_PASS_SUBPASS_FEEDBACK_CREATE_INFO_EXT: Self = Self(1_000_458_003);
 }
 impl ExtExtension460Fn {
     pub const fn name() -> &'static ::std::ffi::CStr {

@@ -896,7 +896,7 @@ impl Result {
     pub const ERROR_OUT_OF_HOST_MEMORY: Self = Self(-1);
     #[doc = "A device memory allocation has failed"]
     pub const ERROR_OUT_OF_DEVICE_MEMORY: Self = Self(-2);
-    #[doc = "Initialization of a object has failed"]
+    #[doc = "Initialization of an object has failed"]
     pub const ERROR_INITIALIZATION_FAILED: Self = Self(-3);
     #[doc = "The logical device has been lost. See <<devsandqueues-lost-device>>"]
     pub const ERROR_DEVICE_LOST: Self = Self(-4);
@@ -931,7 +931,7 @@ impl fmt::Display for Result {
             Self::INCOMPLETE => Some("A return array was too small for the result"),
             Self::ERROR_OUT_OF_HOST_MEMORY => Some("A host memory allocation has failed"),
             Self::ERROR_OUT_OF_DEVICE_MEMORY => Some("A device memory allocation has failed"),
-            Self::ERROR_INITIALIZATION_FAILED => Some("Initialization of a object has failed"),
+            Self::ERROR_INITIALIZATION_FAILED => Some("Initialization of an object has failed"),
             Self::ERROR_DEVICE_LOST => {
                 Some("The logical device has been lost. See <<devsandqueues-lost-device>>")
             }

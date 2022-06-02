@@ -57,7 +57,7 @@ pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
-pub const HEADER_VERSION: u32 = 215u32;
+pub const HEADER_VERSION: u32 = 216u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -38922,52 +38922,21 @@ impl ::std::default::Default for RenderPassCreationControlEXT<'_> {
 }
 unsafe impl ExtendsRenderPassCreateInfo2 for RenderPassCreationControlEXT<'_> {}
 unsafe impl ExtendsSubpassDescription2 for RenderPassCreationControlEXT<'_> {}
-pub unsafe trait ExtendsRenderPassCreationControlEXT {}
 impl<'a> RenderPassCreationControlEXT<'a> {
     #[inline]
     pub fn disallow_merging(mut self, disallow_merging: bool) -> Self {
         self.disallow_merging = disallow_merging.into();
         self
     }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsRenderPassCreationControlEXT>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
-        self
-    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkRenderPassCreationFeedbackInfoEXT.html>"]
-pub struct RenderPassCreationFeedbackInfoEXT<'a> {
-    pub s_type: StructureType,
-    pub p_next: *const c_void,
+pub struct RenderPassCreationFeedbackInfoEXT {
     pub post_merge_subpass_count: u32,
-    pub _marker: PhantomData<&'a ()>,
 }
-impl ::std::default::Default for RenderPassCreationFeedbackInfoEXT<'_> {
-    #[inline]
-    fn default() -> Self {
-        Self {
-            s_type: StructureType::RENDER_PASS_CREATION_FEEDBACK_INFO_EXT,
-            p_next: ::std::ptr::null(),
-            post_merge_subpass_count: u32::default(),
-            _marker: PhantomData,
-        }
-    }
-}
-unsafe impl ExtendsRenderPassCreateInfo2 for RenderPassCreationFeedbackInfoEXT<'_> {}
-unsafe impl ExtendsRenderPassCreationControlEXT for RenderPassCreationFeedbackInfoEXT<'_> {}
-impl<'a> RenderPassCreationFeedbackInfoEXT<'a> {
+impl RenderPassCreationFeedbackInfoEXT {
     #[inline]
     pub fn post_merge_subpass_count(mut self, post_merge_subpass_count: u32) -> Self {
         self.post_merge_subpass_count = post_merge_subpass_count;
@@ -38975,22 +38944,49 @@ impl<'a> RenderPassCreationFeedbackInfoEXT<'a> {
     }
 }
 #[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkRenderPassSubpassFeedbackInfoEXT.html>"]
-pub struct RenderPassSubpassFeedbackInfoEXT<'a> {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkRenderPassCreationFeedbackCreateInfoEXT.html>"]
+pub struct RenderPassCreationFeedbackCreateInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
+    pub p_render_pass_feedback: *mut RenderPassCreationFeedbackInfoEXT,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for RenderPassCreationFeedbackCreateInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::RENDER_PASS_CREATION_FEEDBACK_CREATE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            p_render_pass_feedback: ::std::ptr::null_mut(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsRenderPassCreateInfo2 for RenderPassCreationFeedbackCreateInfoEXT<'_> {}
+impl<'a> RenderPassCreationFeedbackCreateInfoEXT<'a> {
+    #[inline]
+    pub fn render_pass_feedback(
+        mut self,
+        render_pass_feedback: &'a mut RenderPassCreationFeedbackInfoEXT,
+    ) -> Self {
+        self.p_render_pass_feedback = render_pass_feedback;
+        self
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkRenderPassSubpassFeedbackInfoEXT.html>"]
+pub struct RenderPassSubpassFeedbackInfoEXT {
     pub subpass_merge_status: SubpassMergeStatusEXT,
     pub description: [c_char; MAX_DESCRIPTION_SIZE],
     pub post_merge_index: u32,
-    pub _marker: PhantomData<&'a ()>,
 }
 #[cfg(feature = "debug")]
-impl fmt::Debug for RenderPassSubpassFeedbackInfoEXT<'_> {
+impl fmt::Debug for RenderPassSubpassFeedbackInfoEXT {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         fmt.debug_struct("RenderPassSubpassFeedbackInfoEXT")
-            .field("s_type", &self.s_type)
-            .field("p_next", &self.p_next)
             .field("subpass_merge_status", &self.subpass_merge_status)
             .field("description", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.description.as_ptr())
@@ -38999,22 +38995,17 @@ impl fmt::Debug for RenderPassSubpassFeedbackInfoEXT<'_> {
             .finish()
     }
 }
-impl ::std::default::Default for RenderPassSubpassFeedbackInfoEXT<'_> {
+impl ::std::default::Default for RenderPassSubpassFeedbackInfoEXT {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::RENDER_PASS_SUBPASS_FEEDBACK_INFO_EXT,
-            p_next: ::std::ptr::null(),
             subpass_merge_status: SubpassMergeStatusEXT::default(),
             description: unsafe { ::std::mem::zeroed() },
             post_merge_index: u32::default(),
-            _marker: PhantomData,
         }
     }
 }
-unsafe impl ExtendsSubpassDescription2 for RenderPassSubpassFeedbackInfoEXT<'_> {}
-unsafe impl ExtendsRenderPassCreationControlEXT for RenderPassSubpassFeedbackInfoEXT<'_> {}
-impl<'a> RenderPassSubpassFeedbackInfoEXT<'a> {
+impl RenderPassSubpassFeedbackInfoEXT {
     #[inline]
     pub fn subpass_merge_status(mut self, subpass_merge_status: SubpassMergeStatusEXT) -> Self {
         self.subpass_merge_status = subpass_merge_status;
@@ -39028,6 +39019,38 @@ impl<'a> RenderPassSubpassFeedbackInfoEXT<'a> {
     #[inline]
     pub fn post_merge_index(mut self, post_merge_index: u32) -> Self {
         self.post_merge_index = post_merge_index;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkRenderPassSubpassFeedbackCreateInfoEXT.html>"]
+pub struct RenderPassSubpassFeedbackCreateInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub p_subpass_feedback: *mut RenderPassSubpassFeedbackInfoEXT,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for RenderPassSubpassFeedbackCreateInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::RENDER_PASS_SUBPASS_FEEDBACK_CREATE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            p_subpass_feedback: ::std::ptr::null_mut(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsSubpassDescription2 for RenderPassSubpassFeedbackCreateInfoEXT<'_> {}
+impl<'a> RenderPassSubpassFeedbackCreateInfoEXT<'a> {
+    #[inline]
+    pub fn subpass_feedback(
+        mut self,
+        subpass_feedback: &'a mut RenderPassSubpassFeedbackInfoEXT,
+    ) -> Self {
+        self.p_subpass_feedback = subpass_feedback;
         self
     }
 }
