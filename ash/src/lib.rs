@@ -73,8 +73,8 @@ impl<'r, T> RawPtr<T> for Option<&'r T> {
 }
 
 /// Given a mutable raw pointer to a type with an `s_type` member such as [`vk::BaseOutStructure`],
-/// match on a set of Vulkan structures. The struct will be rebound to the
-/// given variable of the type of the given Vulkan structure.
+/// match on a set of Vulkan structures. The struct will be rebound to the given variable of the
+/// type of the given Vulkan structure.
 ///
 /// Note that all match bodies have to be enclosed by curly braces due to macro parsing limitations.
 /// It is unfortunately not possible to write `x @ ash::vk::SomeStruct => one_line_expression(),`.
@@ -94,8 +94,10 @@ impl<'r, T> RawPtr<T> for Option<&'r T> {
 /// }
 /// ```
 ///
-/// In addition this macro propagates implicit return values just like normal `match` blocks, as long
-/// as a default value or expression in the "any" match arm (`_ => { some_value() }).
+/// In addition this macro propagates implicit return values just like normal `match` blocks, as
+/// long as a default value or expression is provided in the "any" match arm
+/// (`_ => { some_value() }`). For the time being said arm must be wrapped in curly braces; an
+/// expression like `_ => None` is not yet supported.
 ///
 /// ```
 /// # let mut info = ash::vk::DeviceCreateInfo::default();
@@ -133,8 +135,8 @@ macro_rules! match_out_struct {
 }
 
 /// Given an immutable raw pointer to a type with an `s_type` member such as [`vk::BaseInStructure`],
-/// match on a set of Vulkan structures. The struct will be rebound to the
-/// given variable of the type of the given Vulkan structure.
+/// match on a set of Vulkan structures. The struct will be rebound to the given variable of the
+/// type of the given Vulkan structure.
 ///
 /// Note that all match bodies have to be enclosed by curly braces due to macro parsing limitations.
 /// It is unfortunately not possible to write `x @ ash::vk::SomeStruct => one_line_expression(),`.
