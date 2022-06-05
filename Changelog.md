@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - ReleaseDate
 
+### Changed
+
+- Replaced builders with lifetimes/setters directly on Vulkan structs (#602)
+- Inlined struct setters (#602)
+- Inlined `Default` impls and trivial `Instance`/`Device`/`Entry` wrapper methods (#606, #632)
+
 ### Added
 
 - Added `VK_NV_coverage_reduction_mode` device extension (#617)
