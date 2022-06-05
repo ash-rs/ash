@@ -20,6 +20,22 @@ impl Swapchain {
         Self { handle, fp }
     }
 
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateSwapchainKHR.html>
+    pub unsafe fn create_swapchain(
+        &self,
+        create_info: &vk::SwapchainCreateInfoKHR,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+    ) -> VkResult<vk::SwapchainKHR> {
+        let mut swapchain = mem::zeroed();
+        (self.fp.create_swapchain_khr)(
+            self.handle,
+            create_info,
+            allocation_callbacks.as_raw_ptr(),
+            &mut swapchain,
+        )
+        .result_with_success(swapchain)
+    }
+
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroySwapchainKHR.html>
     pub unsafe fn destroy_swapchain(
         &self,
@@ -29,7 +45,18 @@ impl Swapchain {
         (self.fp.destroy_swapchain_khr)(self.handle, swapchain, allocation_callbacks.as_raw_ptr());
     }
 
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetSwapchainImagesKHR.html>
+    pub unsafe fn get_swapchain_images(
+        &self,
+        swapchain: vk::SwapchainKHR,
+    ) -> VkResult<Vec<vk::Image>> {
+        read_into_uninitialized_vector(|count, data| {
+            (self.fp.get_swapchain_images_khr)(self.handle, swapchain, count, data)
+        })
+    }
+
     /// On success, returns the next image's index and whether the swapchain is suboptimal for the surface.
+    ///
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkAcquireNextImageKHR.html>
     pub unsafe fn acquire_next_image(
         &self,
@@ -54,23 +81,8 @@ impl Swapchain {
         }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateSwapchainKHR.html>
-    pub unsafe fn create_swapchain(
-        &self,
-        create_info: &vk::SwapchainCreateInfoKHR,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
-    ) -> VkResult<vk::SwapchainKHR> {
-        let mut swapchain = mem::zeroed();
-        (self.fp.create_swapchain_khr)(
-            self.handle,
-            create_info,
-            allocation_callbacks.as_raw_ptr(),
-            &mut swapchain,
-        )
-        .result_with_success(swapchain)
-    }
-
     /// On success, returns whether the swapchain is suboptimal for the surface.
+    ///
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkQueuePresentKHR.html>
     pub unsafe fn queue_present(
         &self,
@@ -85,14 +97,66 @@ impl Swapchain {
         }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetSwapchainImagesKHR.html>
-    pub unsafe fn get_swapchain_images(
+    /// Only available since Vulkan 1.1.
+    ///
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceGroupPresentCapabilitiesKHR.html>
+    pub unsafe fn get_device_group_present_capabilities(
         &self,
-        swapchain: vk::SwapchainKHR,
-    ) -> VkResult<Vec<vk::Image>> {
+        device_group_present_capabilities: &mut vk::DeviceGroupPresentCapabilitiesKHR,
+    ) -> VkResult<()> {
+        (self.fp.get_device_group_present_capabilities_khr)(
+            self.handle,
+            device_group_present_capabilities,
+        )
+        .result()
+    }
+
+    /// Only available since Vulkan 1.1.
+    ///
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceGroupSurfacePresentModesKHR.html>
+    pub unsafe fn get_device_group_surface_present_modes(
+        &self,
+        surface: vk::SurfaceKHR,
+    ) -> VkResult<vk::DeviceGroupPresentModeFlagsKHR> {
+        let mut modes = mem::zeroed();
+        (self.fp.get_device_group_surface_present_modes_khr)(self.handle, surface, &mut modes)
+            .result_with_success(modes)
+    }
+
+    /// Only available since Vulkan 1.1.
+    ///
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDevicePresentRectanglesKHR.html>
+    pub unsafe fn get_physical_device_present_rectangles(
+        &self,
+        physical_device: vk::PhysicalDevice,
+        surface: vk::SurfaceKHR,
+    ) -> VkResult<Vec<vk::Rect2D>> {
         read_into_uninitialized_vector(|count, data| {
-            (self.fp.get_swapchain_images_khr)(self.handle, swapchain, count, data)
+            (self.fp.get_physical_device_present_rectangles_khr)(
+                physical_device,
+                surface,
+                count,
+                data,
+            )
         })
+    }
+
+    /// On success, returns the next image's index and whether the swapchain is suboptimal for the surface.
+    ///
+    /// Only available since Vulkan 1.1.
+    ///
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkAcquireNextImage2KHR.html>
+    pub unsafe fn acquire_next_image2(
+        &self,
+        acquire_info: &vk::AcquireNextImageInfoKHR,
+    ) -> VkResult<(u32, bool)> {
+        let mut index = 0;
+        let err_code = (self.fp.acquire_next_image2_khr)(self.handle, acquire_info, &mut index);
+        match err_code {
+            vk::Result::SUCCESS => Ok((index, false)),
+            vk::Result::SUBOPTIMAL_KHR => Ok((index, true)),
+            _ => Err(err_code),
+        }
     }
 
     pub const fn name() -> &'static CStr {
