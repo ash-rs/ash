@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Inlined builder setters (partial backport from #602)
-- Inlined `Default` impls and trivial `Instance`/`Device` wrapper methods (#606)
+- Inlined `Default` impls and trivial `Instance`/`Device`/`Entry` wrapper methods (#606, #632)
 
 ### Added
 

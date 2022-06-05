@@ -165,10 +165,12 @@ impl Entry {
         }
     }
 
+    #[inline]
     pub fn fp_v1_0(&self) -> &vk::EntryFnV1_0 {
         &self.entry_fn_1_0
     }
 
+    #[inline]
     pub fn static_fn(&self) -> &vk::StaticFn {
         &self.static_fn
     }
@@ -190,6 +192,7 @@ impl Entry {
     /// }
     /// # Ok(()) }
     /// ```
+    #[inline]
     pub fn try_enumerate_instance_version(&self) -> VkResult<Option<u32>> {
         unsafe {
             let mut api_version = 0;
@@ -217,6 +220,7 @@ impl Entry {
     /// In order for the created [`Instance`] to be valid for the duration of its
     /// usage, the [`Entry`](Self) this was called on must be dropped later than the
     /// resulting [`Instance`].
+    #[inline]
     pub unsafe fn create_instance(
         &self,
         create_info: &vk::InstanceCreateInfo,
@@ -233,6 +237,7 @@ impl Entry {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceLayerProperties.html>
+    #[inline]
     pub fn enumerate_instance_layer_properties(&self) -> VkResult<Vec<vk::LayerProperties>> {
         unsafe {
             read_into_uninitialized_vector(|count, data| {
@@ -242,6 +247,7 @@ impl Entry {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceExtensionProperties.html>
+    #[inline]
     pub fn enumerate_instance_extension_properties(
         &self,
         layer_name: Option<&CStr>,
@@ -258,6 +264,7 @@ impl Entry {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetInstanceProcAddr.html>
+    #[inline]
     pub unsafe fn get_instance_proc_addr(
         &self,
         instance: vk::Instance,
@@ -270,6 +277,7 @@ impl Entry {
 /// Vulkan core 1.1
 #[allow(non_camel_case_types)]
 impl Entry {
+    #[inline]
     pub fn fp_v1_1(&self) -> &vk::EntryFnV1_1 {
         &self.entry_fn_1_1
     }
@@ -278,6 +286,7 @@ impl Entry {
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceVersion.html>
     ///
     /// Please use [`try_enumerate_instance_version()`][Self::try_enumerate_instance_version()] instead.
+    #[inline]
     pub fn enumerate_instance_version(&self) -> VkResult<u32> {
         unsafe {
             let mut api_version = 0;
@@ -290,6 +299,7 @@ impl Entry {
 /// Vulkan core 1.2
 #[allow(non_camel_case_types)]
 impl Entry {
+    #[inline]
     pub fn fp_v1_2(&self) -> &vk::EntryFnV1_2 {
         &self.entry_fn_1_2
     }
@@ -298,6 +308,7 @@ impl Entry {
 /// Vulkan core 1.3
 #[allow(non_camel_case_types)]
 impl Entry {
+    #[inline]
     pub fn fp_v1_3(&self) -> &vk::EntryFnV1_3 {
         &self.entry_fn_1_3
     }
@@ -306,6 +317,7 @@ impl Entry {
 #[cfg(feature = "linked")]
 #[cfg_attr(docsrs, doc(cfg(feature = "linked")))]
 impl Default for Entry {
+    #[inline]
     fn default() -> Self {
         Self::linked()
     }
