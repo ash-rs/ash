@@ -16589,23 +16589,63 @@ impl NvExtension311Fn {
         Self {}
     }
 }
-impl ExtExtension312Fn {
+impl ExtMetalObjectsFn {
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_312\0") }
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_metal_objects\0") }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
+#[allow(non_camel_case_types)]
+pub type PFN_vkExportMetalObjectsEXT =
+    unsafe extern "system" fn(device: Device, p_metal_objects_info: *mut ExportMetalObjectsInfoEXT);
 #[derive(Clone)]
-pub struct ExtExtension312Fn {}
-unsafe impl Send for ExtExtension312Fn {}
-unsafe impl Sync for ExtExtension312Fn {}
-impl ExtExtension312Fn {
+pub struct ExtMetalObjectsFn {
+    pub export_metal_objects_ext: PFN_vkExportMetalObjectsEXT,
+}
+unsafe impl Send for ExtMetalObjectsFn {}
+unsafe impl Sync for ExtMetalObjectsFn {}
+impl ExtMetalObjectsFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        Self {}
+        Self {
+            export_metal_objects_ext: unsafe {
+                unsafe extern "system" fn export_metal_objects_ext(
+                    _device: Device,
+                    _p_metal_objects_info: *mut ExportMetalObjectsInfoEXT,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(export_metal_objects_ext)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkExportMetalObjectsEXT\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    export_metal_objects_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
     }
+}
+#[doc = "Generated from 'VK_EXT_metal_objects'"]
+impl StructureType {
+    pub const EXPORT_METAL_OBJECT_CREATE_INFO_EXT: Self = Self(1_000_311_000);
+    pub const EXPORT_METAL_OBJECTS_INFO_EXT: Self = Self(1_000_311_001);
+    pub const EXPORT_METAL_DEVICE_INFO_EXT: Self = Self(1_000_311_002);
+    pub const EXPORT_METAL_COMMAND_QUEUE_INFO_EXT: Self = Self(1_000_311_003);
+    pub const EXPORT_METAL_BUFFER_INFO_EXT: Self = Self(1_000_311_004);
+    pub const IMPORT_METAL_BUFFER_INFO_EXT: Self = Self(1_000_311_005);
+    pub const EXPORT_METAL_TEXTURE_INFO_EXT: Self = Self(1_000_311_006);
+    pub const IMPORT_METAL_TEXTURE_INFO_EXT: Self = Self(1_000_311_007);
+    pub const EXPORT_METAL_IO_SURFACE_INFO_EXT: Self = Self(1_000_311_008);
+    pub const IMPORT_METAL_IO_SURFACE_INFO_EXT: Self = Self(1_000_311_009);
+    pub const EXPORT_METAL_SHARED_EVENT_INFO_EXT: Self = Self(1_000_311_010);
+    pub const IMPORT_METAL_SHARED_EVENT_INFO_EXT: Self = Self(1_000_311_011);
 }
 impl ExtExtension313Fn {
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -20660,19 +20700,19 @@ impl ExtExtension422Fn {
         Self {}
     }
 }
-impl ExtDisableCubeMapWrapFn {
+impl ExtNonSeamlessCubeMapFn {
     pub const fn name() -> &'static ::std::ffi::CStr {
         unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_disable_cube_map_wrap\0")
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_non_seamless_cube_map\0")
         }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct ExtDisableCubeMapWrapFn {}
-unsafe impl Send for ExtDisableCubeMapWrapFn {}
-unsafe impl Sync for ExtDisableCubeMapWrapFn {}
-impl ExtDisableCubeMapWrapFn {
+pub struct ExtNonSeamlessCubeMapFn {}
+unsafe impl Send for ExtNonSeamlessCubeMapFn {}
+unsafe impl Sync for ExtNonSeamlessCubeMapFn {}
+impl ExtNonSeamlessCubeMapFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -20680,9 +20720,13 @@ impl ExtDisableCubeMapWrapFn {
         Self {}
     }
 }
-#[doc = "Generated from 'VK_EXT_disable_cube_map_wrap'"]
+#[doc = "Generated from 'VK_EXT_non_seamless_cube_map'"]
 impl SamplerCreateFlags {
-    pub const RESERVED_2_EXT: Self = Self(0b100);
+    pub const NON_SEAMLESS_CUBE_MAP_EXT: Self = Self(0b100);
+}
+#[doc = "Generated from 'VK_EXT_non_seamless_cube_map'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_NON_SEAMLESS_CUBE_MAP_FEATURES_EXT: Self = Self(1_000_422_000);
 }
 impl ArmExtension424Fn {
     pub const fn name() -> &'static ::std::ffi::CStr {

@@ -1509,6 +1509,19 @@ impl VideoEncodeH265TransformBlockSizeFlagsEXT {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkExportMetalObjectTypeFlagBitsEXT.html>"]
+pub struct ExportMetalObjectTypeFlagsEXT(pub(crate) Flags);
+vk_bitflags_wrapped!(ExportMetalObjectTypeFlagsEXT, Flags);
+impl ExportMetalObjectTypeFlagsEXT {
+    pub const METAL_DEVICE: Self = Self(0b1);
+    pub const METAL_COMMAND_QUEUE: Self = Self(0b10);
+    pub const METAL_BUFFER: Self = Self(0b100);
+    pub const METAL_TEXTURE: Self = Self(0b1000);
+    pub const METAL_IOSURFACE: Self = Self(0b1_0000);
+    pub const METAL_SHARED_EVENT: Self = Self(0b10_0000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkInstanceCreateFlagBits.html>"]
 pub struct InstanceCreateFlags(pub(crate) Flags);
 vk_bitflags_wrapped!(InstanceCreateFlags, Flags);

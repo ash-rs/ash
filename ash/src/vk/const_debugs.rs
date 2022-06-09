@@ -1416,6 +1416,37 @@ impl fmt::Debug for EventCreateFlags {
         debug_flags(f, KNOWN, self.0)
     }
 }
+impl fmt::Debug for ExportMetalObjectTypeFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                ExportMetalObjectTypeFlagsEXT::METAL_DEVICE.0,
+                "METAL_DEVICE",
+            ),
+            (
+                ExportMetalObjectTypeFlagsEXT::METAL_COMMAND_QUEUE.0,
+                "METAL_COMMAND_QUEUE",
+            ),
+            (
+                ExportMetalObjectTypeFlagsEXT::METAL_BUFFER.0,
+                "METAL_BUFFER",
+            ),
+            (
+                ExportMetalObjectTypeFlagsEXT::METAL_TEXTURE.0,
+                "METAL_TEXTURE",
+            ),
+            (
+                ExportMetalObjectTypeFlagsEXT::METAL_IOSURFACE.0,
+                "METAL_IOSURFACE",
+            ),
+            (
+                ExportMetalObjectTypeFlagsEXT::METAL_SHARED_EVENT.0,
+                "METAL_SHARED_EVENT",
+            ),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
 impl fmt::Debug for ExternalFenceFeatureFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
@@ -3711,7 +3742,10 @@ impl fmt::Debug for SamplerCreateFlags {
                 "SUBSAMPLED_COARSE_RECONSTRUCTION_EXT",
             ),
             (SamplerCreateFlags::RESERVED_3_AMD.0, "RESERVED_3_AMD"),
-            (SamplerCreateFlags::RESERVED_2_EXT.0, "RESERVED_2_EXT"),
+            (
+                SamplerCreateFlags::NON_SEAMLESS_CUBE_MAP_EXT.0,
+                "NON_SEAMLESS_CUBE_MAP_EXT",
+            ),
             (
                 SamplerCreateFlags::IMAGE_PROCESSING_QCOM.0,
                 "IMAGE_PROCESSING_QCOM",
@@ -4895,6 +4929,22 @@ impl fmt::Debug for StructureType {
                 Some("DEVICE_DIAGNOSTICS_CONFIG_CREATE_INFO_NV")
             }
             Self::RESERVED_QCOM => Some("RESERVED_QCOM"),
+            Self::EXPORT_METAL_OBJECT_CREATE_INFO_EXT => {
+                Some("EXPORT_METAL_OBJECT_CREATE_INFO_EXT")
+            }
+            Self::EXPORT_METAL_OBJECTS_INFO_EXT => Some("EXPORT_METAL_OBJECTS_INFO_EXT"),
+            Self::EXPORT_METAL_DEVICE_INFO_EXT => Some("EXPORT_METAL_DEVICE_INFO_EXT"),
+            Self::EXPORT_METAL_COMMAND_QUEUE_INFO_EXT => {
+                Some("EXPORT_METAL_COMMAND_QUEUE_INFO_EXT")
+            }
+            Self::EXPORT_METAL_BUFFER_INFO_EXT => Some("EXPORT_METAL_BUFFER_INFO_EXT"),
+            Self::IMPORT_METAL_BUFFER_INFO_EXT => Some("IMPORT_METAL_BUFFER_INFO_EXT"),
+            Self::EXPORT_METAL_TEXTURE_INFO_EXT => Some("EXPORT_METAL_TEXTURE_INFO_EXT"),
+            Self::IMPORT_METAL_TEXTURE_INFO_EXT => Some("IMPORT_METAL_TEXTURE_INFO_EXT"),
+            Self::EXPORT_METAL_IO_SURFACE_INFO_EXT => Some("EXPORT_METAL_IO_SURFACE_INFO_EXT"),
+            Self::IMPORT_METAL_IO_SURFACE_INFO_EXT => Some("IMPORT_METAL_IO_SURFACE_INFO_EXT"),
+            Self::EXPORT_METAL_SHARED_EVENT_INFO_EXT => Some("EXPORT_METAL_SHARED_EVENT_INFO_EXT"),
+            Self::IMPORT_METAL_SHARED_EVENT_INFO_EXT => Some("IMPORT_METAL_SHARED_EVENT_INFO_EXT"),
             Self::QUEUE_FAMILY_CHECKPOINT_PROPERTIES_2_NV => {
                 Some("QUEUE_FAMILY_CHECKPOINT_PROPERTIES_2_NV")
             }
@@ -5098,6 +5148,9 @@ impl fmt::Debug for StructureType {
             }
             Self::DESCRIPTOR_SET_LAYOUT_HOST_MAPPING_INFO_VALVE => {
                 Some("DESCRIPTOR_SET_LAYOUT_HOST_MAPPING_INFO_VALVE")
+            }
+            Self::PHYSICAL_DEVICE_NON_SEAMLESS_CUBE_MAP_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_NON_SEAMLESS_CUBE_MAP_FEATURES_EXT")
             }
             Self::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_OFFSET_FEATURES_QCOM => {
                 Some("PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_OFFSET_FEATURES_QCOM")

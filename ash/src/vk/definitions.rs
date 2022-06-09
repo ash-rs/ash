@@ -57,7 +57,7 @@ pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
-pub const HEADER_VERSION: u32 = 216u32;
+pub const HEADER_VERSION: u32 = 217u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -1972,6 +1972,7 @@ impl ::std::default::Default for BufferViewCreateInfo<'_> {
         }
     }
 }
+pub unsafe trait ExtendsBufferViewCreateInfo {}
 impl<'a> BufferViewCreateInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: BufferViewCreateFlags) -> Self {
@@ -1996,6 +1997,20 @@ impl<'a> BufferViewCreateInfo<'a> {
     #[inline]
     pub fn range(mut self, range: DeviceSize) -> Self {
         self.range = range;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsBufferViewCreateInfo>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = <*const T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
         self
     }
 }
@@ -5474,10 +5489,25 @@ impl ::std::default::Default for EventCreateInfo<'_> {
         }
     }
 }
+pub unsafe trait ExtendsEventCreateInfo {}
 impl<'a> EventCreateInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: EventCreateFlags) -> Self {
         self.flags = flags;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsEventCreateInfo>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = <*const T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
         self
     }
 }
@@ -39182,6 +39212,468 @@ impl<'a> PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'a> {
         shader_early_and_late_fragment_tests: bool,
     ) -> Self {
         self.shader_early_and_late_fragment_tests = shader_early_and_late_fragment_tests.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkExportMetalObjectCreateInfoEXT.html>"]
+pub struct ExportMetalObjectCreateInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub export_object_type: ExportMetalObjectTypeFlagsEXT,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ExportMetalObjectCreateInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::EXPORT_METAL_OBJECT_CREATE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            export_object_type: ExportMetalObjectTypeFlagsEXT::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsInstanceCreateInfo for ExportMetalObjectCreateInfoEXT<'_> {}
+unsafe impl ExtendsMemoryAllocateInfo for ExportMetalObjectCreateInfoEXT<'_> {}
+unsafe impl ExtendsImageCreateInfo for ExportMetalObjectCreateInfoEXT<'_> {}
+unsafe impl ExtendsImageViewCreateInfo for ExportMetalObjectCreateInfoEXT<'_> {}
+unsafe impl ExtendsBufferViewCreateInfo for ExportMetalObjectCreateInfoEXT<'_> {}
+unsafe impl ExtendsSemaphoreCreateInfo for ExportMetalObjectCreateInfoEXT<'_> {}
+unsafe impl ExtendsEventCreateInfo for ExportMetalObjectCreateInfoEXT<'_> {}
+impl<'a> ExportMetalObjectCreateInfoEXT<'a> {
+    #[inline]
+    pub fn export_object_type(mut self, export_object_type: ExportMetalObjectTypeFlagsEXT) -> Self {
+        self.export_object_type = export_object_type;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkExportMetalObjectsInfoEXT.html>"]
+pub struct ExportMetalObjectsInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ExportMetalObjectsInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::EXPORT_METAL_OBJECTS_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+pub unsafe trait ExtendsExportMetalObjectsInfoEXT {}
+impl<'a> ExportMetalObjectsInfoEXT<'a> {
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsExportMetalObjectsInfoEXT>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = <*const T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkExportMetalDeviceInfoEXT.html>"]
+pub struct ExportMetalDeviceInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub mtl_device: MTLDevice_id,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ExportMetalDeviceInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::EXPORT_METAL_DEVICE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            mtl_device: unsafe { ::std::mem::zeroed() },
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsExportMetalObjectsInfoEXT for ExportMetalDeviceInfoEXT<'_> {}
+impl<'a> ExportMetalDeviceInfoEXT<'a> {
+    #[inline]
+    pub fn mtl_device(mut self, mtl_device: MTLDevice_id) -> Self {
+        self.mtl_device = mtl_device;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkExportMetalCommandQueueInfoEXT.html>"]
+pub struct ExportMetalCommandQueueInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub queue: Queue,
+    pub mtl_command_queue: MTLCommandQueue_id,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ExportMetalCommandQueueInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::EXPORT_METAL_COMMAND_QUEUE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            queue: Queue::default(),
+            mtl_command_queue: unsafe { ::std::mem::zeroed() },
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsExportMetalObjectsInfoEXT for ExportMetalCommandQueueInfoEXT<'_> {}
+impl<'a> ExportMetalCommandQueueInfoEXT<'a> {
+    #[inline]
+    pub fn queue(mut self, queue: Queue) -> Self {
+        self.queue = queue;
+        self
+    }
+    #[inline]
+    pub fn mtl_command_queue(mut self, mtl_command_queue: MTLCommandQueue_id) -> Self {
+        self.mtl_command_queue = mtl_command_queue;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkExportMetalBufferInfoEXT.html>"]
+pub struct ExportMetalBufferInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub memory: DeviceMemory,
+    pub mtl_buffer: MTLBuffer_id,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ExportMetalBufferInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::EXPORT_METAL_BUFFER_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            memory: DeviceMemory::default(),
+            mtl_buffer: unsafe { ::std::mem::zeroed() },
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsExportMetalObjectsInfoEXT for ExportMetalBufferInfoEXT<'_> {}
+impl<'a> ExportMetalBufferInfoEXT<'a> {
+    #[inline]
+    pub fn memory(mut self, memory: DeviceMemory) -> Self {
+        self.memory = memory;
+        self
+    }
+    #[inline]
+    pub fn mtl_buffer(mut self, mtl_buffer: MTLBuffer_id) -> Self {
+        self.mtl_buffer = mtl_buffer;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImportMetalBufferInfoEXT.html>"]
+pub struct ImportMetalBufferInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub mtl_buffer: MTLBuffer_id,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ImportMetalBufferInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::IMPORT_METAL_BUFFER_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            mtl_buffer: unsafe { ::std::mem::zeroed() },
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsMemoryAllocateInfo for ImportMetalBufferInfoEXT<'_> {}
+impl<'a> ImportMetalBufferInfoEXT<'a> {
+    #[inline]
+    pub fn mtl_buffer(mut self, mtl_buffer: MTLBuffer_id) -> Self {
+        self.mtl_buffer = mtl_buffer;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkExportMetalTextureInfoEXT.html>"]
+pub struct ExportMetalTextureInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub image: Image,
+    pub image_view: ImageView,
+    pub buffer_view: BufferView,
+    pub plane: ImageAspectFlags,
+    pub mtl_texture: MTLTexture_id,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ExportMetalTextureInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::EXPORT_METAL_TEXTURE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            image: Image::default(),
+            image_view: ImageView::default(),
+            buffer_view: BufferView::default(),
+            plane: ImageAspectFlags::default(),
+            mtl_texture: unsafe { ::std::mem::zeroed() },
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsExportMetalObjectsInfoEXT for ExportMetalTextureInfoEXT<'_> {}
+impl<'a> ExportMetalTextureInfoEXT<'a> {
+    #[inline]
+    pub fn image(mut self, image: Image) -> Self {
+        self.image = image;
+        self
+    }
+    #[inline]
+    pub fn image_view(mut self, image_view: ImageView) -> Self {
+        self.image_view = image_view;
+        self
+    }
+    #[inline]
+    pub fn buffer_view(mut self, buffer_view: BufferView) -> Self {
+        self.buffer_view = buffer_view;
+        self
+    }
+    #[inline]
+    pub fn plane(mut self, plane: ImageAspectFlags) -> Self {
+        self.plane = plane;
+        self
+    }
+    #[inline]
+    pub fn mtl_texture(mut self, mtl_texture: MTLTexture_id) -> Self {
+        self.mtl_texture = mtl_texture;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImportMetalTextureInfoEXT.html>"]
+pub struct ImportMetalTextureInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub plane: ImageAspectFlags,
+    pub mtl_texture: MTLTexture_id,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ImportMetalTextureInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::IMPORT_METAL_TEXTURE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            plane: ImageAspectFlags::default(),
+            mtl_texture: unsafe { ::std::mem::zeroed() },
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsImageCreateInfo for ImportMetalTextureInfoEXT<'_> {}
+impl<'a> ImportMetalTextureInfoEXT<'a> {
+    #[inline]
+    pub fn plane(mut self, plane: ImageAspectFlags) -> Self {
+        self.plane = plane;
+        self
+    }
+    #[inline]
+    pub fn mtl_texture(mut self, mtl_texture: MTLTexture_id) -> Self {
+        self.mtl_texture = mtl_texture;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkExportMetalIOSurfaceInfoEXT.html>"]
+pub struct ExportMetalIOSurfaceInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub image: Image,
+    pub io_surface: IOSurfaceRef,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ExportMetalIOSurfaceInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::EXPORT_METAL_IO_SURFACE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            image: Image::default(),
+            io_surface: unsafe { ::std::mem::zeroed() },
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsExportMetalObjectsInfoEXT for ExportMetalIOSurfaceInfoEXT<'_> {}
+impl<'a> ExportMetalIOSurfaceInfoEXT<'a> {
+    #[inline]
+    pub fn image(mut self, image: Image) -> Self {
+        self.image = image;
+        self
+    }
+    #[inline]
+    pub fn io_surface(mut self, io_surface: IOSurfaceRef) -> Self {
+        self.io_surface = io_surface;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImportMetalIOSurfaceInfoEXT.html>"]
+pub struct ImportMetalIOSurfaceInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub io_surface: IOSurfaceRef,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ImportMetalIOSurfaceInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::IMPORT_METAL_IO_SURFACE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            io_surface: unsafe { ::std::mem::zeroed() },
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsImageCreateInfo for ImportMetalIOSurfaceInfoEXT<'_> {}
+impl<'a> ImportMetalIOSurfaceInfoEXT<'a> {
+    #[inline]
+    pub fn io_surface(mut self, io_surface: IOSurfaceRef) -> Self {
+        self.io_surface = io_surface;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkExportMetalSharedEventInfoEXT.html>"]
+pub struct ExportMetalSharedEventInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub semaphore: Semaphore,
+    pub event: Event,
+    pub mtl_shared_event: MTLSharedEvent_id,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ExportMetalSharedEventInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::EXPORT_METAL_SHARED_EVENT_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            semaphore: Semaphore::default(),
+            event: Event::default(),
+            mtl_shared_event: unsafe { ::std::mem::zeroed() },
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsExportMetalObjectsInfoEXT for ExportMetalSharedEventInfoEXT<'_> {}
+impl<'a> ExportMetalSharedEventInfoEXT<'a> {
+    #[inline]
+    pub fn semaphore(mut self, semaphore: Semaphore) -> Self {
+        self.semaphore = semaphore;
+        self
+    }
+    #[inline]
+    pub fn event(mut self, event: Event) -> Self {
+        self.event = event;
+        self
+    }
+    #[inline]
+    pub fn mtl_shared_event(mut self, mtl_shared_event: MTLSharedEvent_id) -> Self {
+        self.mtl_shared_event = mtl_shared_event;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImportMetalSharedEventInfoEXT.html>"]
+pub struct ImportMetalSharedEventInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub mtl_shared_event: MTLSharedEvent_id,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ImportMetalSharedEventInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::IMPORT_METAL_SHARED_EVENT_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            mtl_shared_event: unsafe { ::std::mem::zeroed() },
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsSemaphoreCreateInfo for ImportMetalSharedEventInfoEXT<'_> {}
+unsafe impl ExtendsEventCreateInfo for ImportMetalSharedEventInfoEXT<'_> {}
+impl<'a> ImportMetalSharedEventInfoEXT<'a> {
+    #[inline]
+    pub fn mtl_shared_event(mut self, mtl_shared_event: MTLSharedEvent_id) -> Self {
+        self.mtl_shared_event = mtl_shared_event;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceNonSeamlessCubeMapFeaturesEXT.html>"]
+pub struct PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub non_seamless_cube_map: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PHYSICAL_DEVICE_NON_SEAMLESS_CUBE_MAP_FEATURES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            non_seamless_cube_map: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'_> {}
+impl<'a> PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'a> {
+    #[inline]
+    pub fn non_seamless_cube_map(mut self, non_seamless_cube_map: bool) -> Self {
+        self.non_seamless_cube_map = non_seamless_cube_map.into();
         self
     }
 }
