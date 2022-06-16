@@ -3956,6 +3956,9 @@ impl fmt::Debug for ShaderStageFlags {
                 ShaderStageFlags::SUBPASS_SHADING_HUAWEI.0,
                 "SUBPASS_SHADING_HUAWEI",
             ),
+            (ShaderStageFlags::EXT_483_RESERVE_15.0, "EXT_483_RESERVE_15"),
+            (ShaderStageFlags::EXT_483_RESERVE_16.0, "EXT_483_RESERVE_16"),
+            (ShaderStageFlags::EXT_483_RESERVE_17.0, "EXT_483_RESERVE_17"),
         ];
         debug_flags(f, KNOWN, self.0)
     }

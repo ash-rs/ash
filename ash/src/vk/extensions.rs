@@ -1822,7 +1822,7 @@ impl KhrVideoQueueFn {
     pub const fn name() -> &'static ::std::ffi::CStr {
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_queue\0") }
     }
-    pub const SPEC_VERSION: u32 = 3u32;
+    pub const SPEC_VERSION: u32 = 4u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceVideoCapabilitiesKHR = unsafe extern "system" fn(
@@ -2189,6 +2189,15 @@ impl QueryResultFlags {
 #[doc = "Generated from 'VK_KHR_video_queue'"]
 impl QueryType {
     pub const RESULT_STATUS_ONLY_KHR: Self = Self(1_000_023_000);
+}
+#[doc = "Generated from 'VK_KHR_video_queue'"]
+impl Result {
+    pub const ERROR_IMAGE_USAGE_NOT_SUPPORTED_KHR: Self = Self(-1_000_023_000);
+    pub const ERROR_VIDEO_PICTURE_LAYOUT_NOT_SUPPORTED_KHR: Self = Self(-1_000_023_001);
+    pub const ERROR_VIDEO_PROFILE_OPERATION_NOT_SUPPORTED_KHR: Self = Self(-1_000_023_002);
+    pub const ERROR_VIDEO_PROFILE_FORMAT_NOT_SUPPORTED_KHR: Self = Self(-1_000_023_003);
+    pub const ERROR_VIDEO_PROFILE_CODEC_NOT_SUPPORTED_KHR: Self = Self(-1_000_023_004);
+    pub const ERROR_VIDEO_STD_VERSION_NOT_SUPPORTED_KHR: Self = Self(-1_000_023_005);
 }
 #[doc = "Generated from 'VK_KHR_video_queue'"]
 impl StructureType {
@@ -21898,4 +21907,28 @@ impl ExtExtension482Fn {
     {
         Self {}
     }
+}
+impl ExtExtension483Fn {
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_483\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct ExtExtension483Fn {}
+unsafe impl Send for ExtExtension483Fn {}
+unsafe impl Sync for ExtExtension483Fn {}
+impl ExtExtension483Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+#[doc = "Generated from 'VK_EXT_extension_483'"]
+impl ShaderStageFlags {
+    pub const EXT_483_RESERVE_15: Self = Self(0b1000_0000_0000_0000);
+    pub const EXT_483_RESERVE_16: Self = Self(0b1_0000_0000_0000_0000);
+    pub const EXT_483_RESERVE_17: Self = Self(0b10_0000_0000_0000_0000);
 }

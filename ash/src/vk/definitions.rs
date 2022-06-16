@@ -57,7 +57,7 @@ pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
-pub const HEADER_VERSION: u32 = 217u32;
+pub const HEADER_VERSION: u32 = 218u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -32581,7 +32581,7 @@ impl<'a> VideoQueueFamilyProperties2KHR<'a> {
 pub struct QueueFamilyQueryResultStatusProperties2KHR<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
-    pub supported: Bool32,
+    pub query_result_status_support: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for QueueFamilyQueryResultStatusProperties2KHR<'_> {
@@ -32590,7 +32590,7 @@ impl ::std::default::Default for QueueFamilyQueryResultStatusProperties2KHR<'_> 
         Self {
             s_type: StructureType::QUEUE_FAMILY_QUERY_RESULT_STATUS_PROPERTIES_2_KHR,
             p_next: ::std::ptr::null_mut(),
-            supported: Bool32::default(),
+            query_result_status_support: Bool32::default(),
             _marker: PhantomData,
         }
     }
@@ -32598,8 +32598,8 @@ impl ::std::default::Default for QueueFamilyQueryResultStatusProperties2KHR<'_> 
 unsafe impl ExtendsQueueFamilyProperties2 for QueueFamilyQueryResultStatusProperties2KHR<'_> {}
 impl<'a> QueueFamilyQueryResultStatusProperties2KHR<'a> {
     #[inline]
-    pub fn supported(mut self, supported: bool) -> Self {
-        self.supported = supported.into();
+    pub fn query_result_status_support(mut self, query_result_status_support: bool) -> Self {
+        self.query_result_status_support = query_result_status_support.into();
         self
     }
 }
@@ -32609,7 +32609,7 @@ impl<'a> QueueFamilyQueryResultStatusProperties2KHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoProfilesKHR.html>"]
 pub struct VideoProfilesKHR<'a> {
     pub s_type: StructureType,
-    pub p_next: *mut c_void,
+    pub p_next: *const c_void,
     pub profile_count: u32,
     pub p_profiles: *const VideoProfileKHR<'a>,
     pub _marker: PhantomData<&'a ()>,
@@ -32619,16 +32619,16 @@ impl ::std::default::Default for VideoProfilesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_PROFILES_KHR,
-            p_next: ::std::ptr::null_mut(),
+            p_next: ::std::ptr::null(),
             profile_count: u32::default(),
             p_profiles: ::std::ptr::null(),
             _marker: PhantomData,
         }
     }
 }
-unsafe impl ExtendsFormatProperties2 for VideoProfilesKHR<'_> {}
+unsafe impl ExtendsPhysicalDeviceImageFormatInfo2 for VideoProfilesKHR<'_> {}
+unsafe impl ExtendsPhysicalDeviceVideoFormatInfoKHR for VideoProfilesKHR<'_> {}
 unsafe impl ExtendsImageCreateInfo for VideoProfilesKHR<'_> {}
-unsafe impl ExtendsImageViewCreateInfo for VideoProfilesKHR<'_> {}
 unsafe impl ExtendsBufferCreateInfo for VideoProfilesKHR<'_> {}
 impl<'a> VideoProfilesKHR<'a> {
     #[inline]
@@ -32646,7 +32646,6 @@ pub struct PhysicalDeviceVideoFormatInfoKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub image_usage: ImageUsageFlags,
-    pub p_video_profiles: *const VideoProfilesKHR<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for PhysicalDeviceVideoFormatInfoKHR<'_> {
@@ -32656,20 +32655,32 @@ impl ::std::default::Default for PhysicalDeviceVideoFormatInfoKHR<'_> {
             s_type: StructureType::PHYSICAL_DEVICE_VIDEO_FORMAT_INFO_KHR,
             p_next: ::std::ptr::null_mut(),
             image_usage: ImageUsageFlags::default(),
-            p_video_profiles: ::std::ptr::null(),
             _marker: PhantomData,
         }
     }
 }
+pub unsafe trait ExtendsPhysicalDeviceVideoFormatInfoKHR {}
 impl<'a> PhysicalDeviceVideoFormatInfoKHR<'a> {
     #[inline]
     pub fn image_usage(mut self, image_usage: ImageUsageFlags) -> Self {
         self.image_usage = image_usage;
         self
     }
-    #[inline]
-    pub fn video_profiles(mut self, video_profiles: &'a VideoProfilesKHR<'a>) -> Self {
-        self.p_video_profiles = video_profiles;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsPhysicalDeviceVideoFormatInfoKHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        unsafe {
+            let next_ptr = <*mut T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
         self
     }
 }
@@ -32681,6 +32692,11 @@ pub struct VideoFormatPropertiesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub format: Format,
+    pub component_mapping: ComponentMapping,
+    pub image_create_flags: ImageCreateFlags,
+    pub image_type: ImageType,
+    pub image_tiling: ImageTiling,
+    pub image_usage_flags: ImageUsageFlags,
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for VideoFormatPropertiesKHR<'_> {
@@ -32690,6 +32706,11 @@ impl ::std::default::Default for VideoFormatPropertiesKHR<'_> {
             s_type: StructureType::VIDEO_FORMAT_PROPERTIES_KHR,
             p_next: ::std::ptr::null_mut(),
             format: Format::default(),
+            component_mapping: ComponentMapping::default(),
+            image_create_flags: ImageCreateFlags::default(),
+            image_type: ImageType::default(),
+            image_tiling: ImageTiling::default(),
+            image_usage_flags: ImageUsageFlags::default(),
             _marker: PhantomData,
         }
     }
@@ -32700,6 +32721,31 @@ impl<'a> VideoFormatPropertiesKHR<'a> {
         self.format = format;
         self
     }
+    #[inline]
+    pub fn component_mapping(mut self, component_mapping: ComponentMapping) -> Self {
+        self.component_mapping = component_mapping;
+        self
+    }
+    #[inline]
+    pub fn image_create_flags(mut self, image_create_flags: ImageCreateFlags) -> Self {
+        self.image_create_flags = image_create_flags;
+        self
+    }
+    #[inline]
+    pub fn image_type(mut self, image_type: ImageType) -> Self {
+        self.image_type = image_type;
+        self
+    }
+    #[inline]
+    pub fn image_tiling(mut self, image_tiling: ImageTiling) -> Self {
+        self.image_tiling = image_tiling;
+        self
+    }
+    #[inline]
+    pub fn image_usage_flags(mut self, image_usage_flags: ImageUsageFlags) -> Self {
+        self.image_usage_flags = image_usage_flags;
+        self
+    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -32707,7 +32753,7 @@ impl<'a> VideoFormatPropertiesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoProfileKHR.html>"]
 pub struct VideoProfileKHR<'a> {
     pub s_type: StructureType,
-    pub p_next: *mut c_void,
+    pub p_next: *const c_void,
     pub video_codec_operation: VideoCodecOperationFlagsKHR,
     pub chroma_subsampling: VideoChromaSubsamplingFlagsKHR,
     pub luma_bit_depth: VideoComponentBitDepthFlagsKHR,
@@ -32719,7 +32765,7 @@ impl ::std::default::Default for VideoProfileKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: StructureType::VIDEO_PROFILE_KHR,
-            p_next: ::std::ptr::null_mut(),
+            p_next: ::std::ptr::null(),
             video_codec_operation: VideoCodecOperationFlagsKHR::default(),
             chroma_subsampling: VideoChromaSubsamplingFlagsKHR::default(),
             luma_bit_depth: VideoComponentBitDepthFlagsKHR::default(),
@@ -32729,10 +32775,6 @@ impl ::std::default::Default for VideoProfileKHR<'_> {
     }
 }
 unsafe impl ExtendsQueryPoolCreateInfo for VideoProfileKHR<'_> {}
-unsafe impl ExtendsFormatProperties2 for VideoProfileKHR<'_> {}
-unsafe impl ExtendsImageCreateInfo for VideoProfileKHR<'_> {}
-unsafe impl ExtendsImageViewCreateInfo for VideoProfileKHR<'_> {}
-unsafe impl ExtendsBufferCreateInfo for VideoProfileKHR<'_> {}
 pub unsafe trait ExtendsVideoProfileKHR {}
 impl<'a> VideoProfileKHR<'a> {
     #[inline]
@@ -32768,7 +32810,7 @@ impl<'a> VideoProfileKHR<'a> {
     #[doc = r" chain will look like `A -> D -> B -> C`."]
     pub fn push_next<T: ExtendsVideoProfileKHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
-            let next_ptr = <*mut T>::cast(next);
+            let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
             (*last_next).p_next = self.p_next as _;
             self.p_next = next_ptr;
@@ -33239,10 +33281,6 @@ impl ::std::default::Default for VideoDecodeH264ProfileEXT<'_> {
 }
 unsafe impl ExtendsVideoProfileKHR for VideoDecodeH264ProfileEXT<'_> {}
 unsafe impl ExtendsQueryPoolCreateInfo for VideoDecodeH264ProfileEXT<'_> {}
-unsafe impl ExtendsFormatProperties2 for VideoDecodeH264ProfileEXT<'_> {}
-unsafe impl ExtendsImageCreateInfo for VideoDecodeH264ProfileEXT<'_> {}
-unsafe impl ExtendsImageViewCreateInfo for VideoDecodeH264ProfileEXT<'_> {}
-unsafe impl ExtendsBufferCreateInfo for VideoDecodeH264ProfileEXT<'_> {}
 impl<'a> VideoDecodeH264ProfileEXT<'a> {
     #[inline]
     pub fn std_profile_idc(mut self, std_profile_idc: StdVideoH264ProfileIdc) -> Self {
@@ -33523,10 +33561,6 @@ impl ::std::default::Default for VideoDecodeH265ProfileEXT<'_> {
 }
 unsafe impl ExtendsVideoProfileKHR for VideoDecodeH265ProfileEXT<'_> {}
 unsafe impl ExtendsQueryPoolCreateInfo for VideoDecodeH265ProfileEXT<'_> {}
-unsafe impl ExtendsFormatProperties2 for VideoDecodeH265ProfileEXT<'_> {}
-unsafe impl ExtendsImageCreateInfo for VideoDecodeH265ProfileEXT<'_> {}
-unsafe impl ExtendsImageViewCreateInfo for VideoDecodeH265ProfileEXT<'_> {}
-unsafe impl ExtendsBufferCreateInfo for VideoDecodeH265ProfileEXT<'_> {}
 impl<'a> VideoDecodeH265ProfileEXT<'a> {
     #[inline]
     pub fn std_profile_idc(mut self, std_profile_idc: StdVideoH265ProfileIdc) -> Self {
@@ -34845,10 +34879,6 @@ impl ::std::default::Default for VideoEncodeH264ProfileEXT<'_> {
 }
 unsafe impl ExtendsVideoProfileKHR for VideoEncodeH264ProfileEXT<'_> {}
 unsafe impl ExtendsQueryPoolCreateInfo for VideoEncodeH264ProfileEXT<'_> {}
-unsafe impl ExtendsFormatProperties2 for VideoEncodeH264ProfileEXT<'_> {}
-unsafe impl ExtendsImageCreateInfo for VideoEncodeH264ProfileEXT<'_> {}
-unsafe impl ExtendsImageViewCreateInfo for VideoEncodeH264ProfileEXT<'_> {}
-unsafe impl ExtendsBufferCreateInfo for VideoEncodeH264ProfileEXT<'_> {}
 impl<'a> VideoEncodeH264ProfileEXT<'a> {
     #[inline]
     pub fn std_profile_idc(mut self, std_profile_idc: StdVideoH264ProfileIdc) -> Self {
@@ -35800,10 +35830,6 @@ impl ::std::default::Default for VideoEncodeH265ProfileEXT<'_> {
 }
 unsafe impl ExtendsVideoProfileKHR for VideoEncodeH265ProfileEXT<'_> {}
 unsafe impl ExtendsQueryPoolCreateInfo for VideoEncodeH265ProfileEXT<'_> {}
-unsafe impl ExtendsFormatProperties2 for VideoEncodeH265ProfileEXT<'_> {}
-unsafe impl ExtendsImageCreateInfo for VideoEncodeH265ProfileEXT<'_> {}
-unsafe impl ExtendsImageViewCreateInfo for VideoEncodeH265ProfileEXT<'_> {}
-unsafe impl ExtendsBufferCreateInfo for VideoEncodeH265ProfileEXT<'_> {}
 impl<'a> VideoEncodeH265ProfileEXT<'a> {
     #[inline]
     pub fn std_profile_idc(mut self, std_profile_idc: StdVideoH265ProfileIdc) -> Self {
