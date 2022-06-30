@@ -57,7 +57,7 @@ pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
-pub const HEADER_VERSION: u32 = 218u32;
+pub const HEADER_VERSION: u32 = 219u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -32545,6 +32545,116 @@ impl<'a> PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT.html>"]
+pub struct PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub multisampled_render_to_single_sampled: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type:
+                StructureType::PHYSICAL_DEVICE_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_FEATURES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            multisampled_render_to_single_sampled: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo
+    for PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'_>
+{
+}
+impl<'a> PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'a> {
+    #[inline]
+    pub fn multisampled_render_to_single_sampled(
+        mut self,
+        multisampled_render_to_single_sampled: bool,
+    ) -> Self {
+        self.multisampled_render_to_single_sampled = multisampled_render_to_single_sampled.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSubpassResolvePerformanceQueryEXT.html>"]
+pub struct SubpassResolvePerformanceQueryEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub optimal: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for SubpassResolvePerformanceQueryEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::SUBPASS_RESOLVE_PERFORMANCE_QUERY_EXT,
+            p_next: ::std::ptr::null_mut(),
+            optimal: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsFormatProperties2 for SubpassResolvePerformanceQueryEXT<'_> {}
+impl<'a> SubpassResolvePerformanceQueryEXT<'a> {
+    #[inline]
+    pub fn optimal(mut self, optimal: bool) -> Self {
+        self.optimal = optimal.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMultisampledRenderToSingleSampledInfoEXT.html>"]
+pub struct MultisampledRenderToSingleSampledInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub multisampled_render_to_single_sampled_enable: Bool32,
+    pub rasterization_samples: SampleCountFlags,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for MultisampledRenderToSingleSampledInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            multisampled_render_to_single_sampled_enable: Bool32::default(),
+            rasterization_samples: SampleCountFlags::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsSubpassDescription2 for MultisampledRenderToSingleSampledInfoEXT<'_> {}
+unsafe impl ExtendsRenderingInfo for MultisampledRenderToSingleSampledInfoEXT<'_> {}
+impl<'a> MultisampledRenderToSingleSampledInfoEXT<'a> {
+    #[inline]
+    pub fn multisampled_render_to_single_sampled_enable(
+        mut self,
+        multisampled_render_to_single_sampled_enable: bool,
+    ) -> Self {
+        self.multisampled_render_to_single_sampled_enable =
+            multisampled_render_to_single_sampled_enable.into();
+        self
+    }
+    #[inline]
+    pub fn rasterization_samples(mut self, rasterization_samples: SampleCountFlags) -> Self {
+        self.rasterization_samples = rasterization_samples;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoQueueFamilyProperties2KHR.html>"]
 pub struct VideoQueueFamilyProperties2KHR<'a> {
     pub s_type: StructureType,
@@ -38727,6 +38837,141 @@ impl<'a> DescriptorSetLayoutHostMappingInfoVALVE<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderModuleIdentifierFeaturesEXT.html>"]
+pub struct PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub shader_module_identifier: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PHYSICAL_DEVICE_SHADER_MODULE_IDENTIFIER_FEATURES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            shader_module_identifier: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'_> {}
+impl<'a> PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'a> {
+    #[inline]
+    pub fn shader_module_identifier(mut self, shader_module_identifier: bool) -> Self {
+        self.shader_module_identifier = shader_module_identifier.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderModuleIdentifierPropertiesEXT.html>"]
+pub struct PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub shader_module_identifier_algorithm_uuid: [u8; UUID_SIZE],
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PHYSICAL_DEVICE_SHADER_MODULE_IDENTIFIER_PROPERTIES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            shader_module_identifier_algorithm_uuid: unsafe { ::std::mem::zeroed() },
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'_>
+{
+}
+impl<'a> PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'a> {
+    #[inline]
+    pub fn shader_module_identifier_algorithm_uuid(
+        mut self,
+        shader_module_identifier_algorithm_uuid: [u8; UUID_SIZE],
+    ) -> Self {
+        self.shader_module_identifier_algorithm_uuid = shader_module_identifier_algorithm_uuid;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineShaderStageModuleIdentifierCreateInfoEXT.html>"]
+pub struct PipelineShaderStageModuleIdentifierCreateInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub identifier_size: u32,
+    pub p_identifier: *const u8,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PipelineShaderStageModuleIdentifierCreateInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PIPELINE_SHADER_STAGE_MODULE_IDENTIFIER_CREATE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            identifier_size: u32::default(),
+            p_identifier: ::std::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsPipelineShaderStageCreateInfo
+    for PipelineShaderStageModuleIdentifierCreateInfoEXT<'_>
+{
+}
+impl<'a> PipelineShaderStageModuleIdentifierCreateInfoEXT<'a> {
+    #[inline]
+    pub fn identifier(mut self, identifier: &'a [u8]) -> Self {
+        self.identifier_size = identifier.len() as _;
+        self.p_identifier = identifier.as_ptr();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkShaderModuleIdentifierEXT.html>"]
+pub struct ShaderModuleIdentifierEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub identifier_size: u32,
+    pub identifier: [u8; MAX_SHADER_MODULE_IDENTIFIER_SIZE_EXT],
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ShaderModuleIdentifierEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::SHADER_MODULE_IDENTIFIER_EXT,
+            p_next: ::std::ptr::null_mut(),
+            identifier_size: u32::default(),
+            identifier: unsafe { ::std::mem::zeroed() },
+            _marker: PhantomData,
+        }
+    }
+}
+impl<'a> ShaderModuleIdentifierEXT<'a> {
+    #[inline]
+    pub fn identifier_size(mut self, identifier_size: u32) -> Self {
+        self.identifier_size = identifier_size;
+        self
+    }
+    #[inline]
+    pub fn identifier(mut self, identifier: [u8; MAX_SHADER_MODULE_IDENTIFIER_SIZE_EXT]) -> Self {
+        self.identifier = identifier;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImageCompressionControlEXT.html>"]
 pub struct ImageCompressionControlEXT<'a> {
     pub s_type: StructureType,
@@ -39161,9 +39406,6 @@ impl ::std::default::Default for PipelinePropertiesIdentifierEXT<'_> {
         }
     }
 }
-// XXX: Manually removed to make this compile, actual solution will be resolved inside Khronos
-// https://gitlab.khronos.org/vulkan/vulkan/-/merge_requests/5184
-// unsafe impl ExtendsBaseOutStructure for PipelinePropertiesIdentifierEXT<'_> {}
 impl<'a> PipelinePropertiesIdentifierEXT<'a> {
     #[inline]
     pub fn pipeline_identifier(mut self, pipeline_identifier: [u8; UUID_SIZE]) -> Self {

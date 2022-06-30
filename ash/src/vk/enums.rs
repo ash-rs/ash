@@ -1665,6 +1665,8 @@ impl DriverId {
     pub const SAMSUNG_PROPRIETARY: Self = Self(21);
     #[doc = "Mesa open source project"]
     pub const MESA_VENUS: Self = Self(22);
+    #[doc = "Mesa open source project"]
+    pub const MESA_DOZEN: Self = Self(23);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]

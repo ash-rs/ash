@@ -8050,6 +8050,10 @@ impl AmdExtension135Fn {
         Self {}
     }
 }
+#[doc = "Generated from 'VK_AMD_extension_135'"]
+impl BufferUsageFlags {
+    pub const RESERVED_25_AMD: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
+}
 impl AmdExtension136Fn {
     pub const fn name() -> &'static ::std::ffi::CStr {
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_136\0") }
@@ -19226,17 +19230,21 @@ impl ExtExtension376Fn {
         Self {}
     }
 }
-impl ExtExtension377Fn {
+impl ExtMultisampledRenderToSingleSampledFn {
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_377\0") }
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_EXT_multisampled_render_to_single_sampled\0",
+            )
+        }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct ExtExtension377Fn {}
-unsafe impl Send for ExtExtension377Fn {}
-unsafe impl Sync for ExtExtension377Fn {}
-impl ExtExtension377Fn {
+pub struct ExtMultisampledRenderToSingleSampledFn {}
+unsafe impl Send for ExtMultisampledRenderToSingleSampledFn {}
+unsafe impl Sync for ExtMultisampledRenderToSingleSampledFn {}
+impl ExtMultisampledRenderToSingleSampledFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -19244,9 +19252,16 @@ impl ExtExtension377Fn {
         Self {}
     }
 }
-#[doc = "Generated from 'VK_EXT_extension_377'"]
+#[doc = "Generated from 'VK_EXT_multisampled_render_to_single_sampled'"]
 impl ImageCreateFlags {
-    pub const RESERVED_18_EXT: Self = Self(0b100_0000_0000_0000_0000);
+    pub const MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_EXT: Self = Self(0b100_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_multisampled_render_to_single_sampled'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_FEATURES_EXT: Self =
+        Self(1_000_376_000);
+    pub const SUBPASS_RESOLVE_PERFORMANCE_QUERY_EXT: Self = Self(1_000_376_001);
+    pub const MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_INFO_EXT: Self = Self(1_000_376_002);
 }
 impl ExtExtendedDynamicState2Fn {
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -21516,23 +21531,90 @@ impl ExtExtension462Fn {
         Self {}
     }
 }
-impl ExtExtension463Fn {
+impl ExtShaderModuleIdentifierFn {
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_463\0") }
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_module_identifier\0")
+        }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetShaderModuleIdentifierEXT = unsafe extern "system" fn(
+    device: Device,
+    shader_module: ShaderModule,
+    p_identifier: *mut ShaderModuleIdentifierEXT,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetShaderModuleCreateInfoIdentifierEXT = unsafe extern "system" fn(
+    device: Device,
+    p_create_info: *const ShaderModuleCreateInfo,
+    p_identifier: *mut ShaderModuleIdentifierEXT,
+);
 #[derive(Clone)]
-pub struct ExtExtension463Fn {}
-unsafe impl Send for ExtExtension463Fn {}
-unsafe impl Sync for ExtExtension463Fn {}
-impl ExtExtension463Fn {
+pub struct ExtShaderModuleIdentifierFn {
+    pub get_shader_module_identifier_ext: PFN_vkGetShaderModuleIdentifierEXT,
+    pub get_shader_module_create_info_identifier_ext: PFN_vkGetShaderModuleCreateInfoIdentifierEXT,
+}
+unsafe impl Send for ExtShaderModuleIdentifierFn {}
+unsafe impl Sync for ExtShaderModuleIdentifierFn {}
+impl ExtShaderModuleIdentifierFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        Self {}
+        Self {
+            get_shader_module_identifier_ext: unsafe {
+                unsafe extern "system" fn get_shader_module_identifier_ext(
+                    _device: Device,
+                    _shader_module: ShaderModule,
+                    _p_identifier: *mut ShaderModuleIdentifierEXT,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_shader_module_identifier_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetShaderModuleIdentifierEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_shader_module_identifier_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_shader_module_create_info_identifier_ext: unsafe {
+                unsafe extern "system" fn get_shader_module_create_info_identifier_ext(
+                    _device: Device,
+                    _p_create_info: *const ShaderModuleCreateInfo,
+                    _p_identifier: *mut ShaderModuleIdentifierEXT,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_shader_module_create_info_identifier_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetShaderModuleCreateInfoIdentifierEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_shader_module_create_info_identifier_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
     }
+}
+#[doc = "Generated from 'VK_EXT_shader_module_identifier'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_MODULE_IDENTIFIER_FEATURES_EXT: Self = Self(1_000_462_000);
+    pub const PHYSICAL_DEVICE_SHADER_MODULE_IDENTIFIER_PROPERTIES_EXT: Self = Self(1_000_462_001);
+    pub const PIPELINE_SHADER_STAGE_MODULE_IDENTIFIER_CREATE_INFO_EXT: Self = Self(1_000_462_002);
+    pub const SHADER_MODULE_IDENTIFIER_EXT: Self = Self(1_000_462_003);
 }
 impl ExtExtension464Fn {
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -21931,4 +22013,22 @@ impl ShaderStageFlags {
     pub const EXT_483_RESERVE_15: Self = Self(0b1000_0000_0000_0000);
     pub const EXT_483_RESERVE_16: Self = Self(0b1_0000_0000_0000_0000);
     pub const EXT_483_RESERVE_17: Self = Self(0b10_0000_0000_0000_0000);
+}
+impl ExtExtension484Fn {
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_484\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct ExtExtension484Fn {}
+unsafe impl Send for ExtExtension484Fn {}
+unsafe impl Sync for ExtExtension484Fn {}
+impl ExtExtension484Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
 }

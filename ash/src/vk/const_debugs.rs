@@ -548,6 +548,7 @@ impl fmt::Debug for BufferUsageFlags {
                 BufferUsageFlags::CONDITIONAL_RENDERING_EXT.0,
                 "CONDITIONAL_RENDERING_EXT",
             ),
+            (BufferUsageFlags::RESERVED_25_AMD.0, "RESERVED_25_AMD"),
             (
                 BufferUsageFlags::ACCELERATION_STRUCTURE_BUILD_INPUT_READ_ONLY_KHR.0,
                 "ACCELERATION_STRUCTURE_BUILD_INPUT_READ_ONLY_KHR",
@@ -1350,6 +1351,7 @@ impl fmt::Debug for DriverId {
             Self::MESA_PANVK => Some("MESA_PANVK"),
             Self::SAMSUNG_PROPRIETARY => Some("SAMSUNG_PROPRIETARY"),
             Self::MESA_VENUS => Some("MESA_VENUS"),
+            Self::MESA_DOZEN => Some("MESA_DOZEN"),
             _ => None,
         };
         if let Some(x) = name {
@@ -2309,7 +2311,10 @@ impl fmt::Debug for ImageCreateFlags {
             ),
             (ImageCreateFlags::SUBSAMPLED_EXT.0, "SUBSAMPLED_EXT"),
             (ImageCreateFlags::RESERVED_16_AMD.0, "RESERVED_16_AMD"),
-            (ImageCreateFlags::RESERVED_18_EXT.0, "RESERVED_18_EXT"),
+            (
+                ImageCreateFlags::MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_EXT.0,
+                "MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_EXT",
+            ),
             (
                 ImageCreateFlags::TYPE_2D_VIEW_COMPATIBLE_EXT.0,
                 "TYPE_2D_VIEW_COMPATIBLE_EXT",
@@ -5105,6 +5110,15 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_PIPELINE_PROPERTIES_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_PIPELINE_PROPERTIES_FEATURES_EXT")
             }
+            Self::PHYSICAL_DEVICE_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_FEATURES_EXT")
+            }
+            Self::SUBPASS_RESOLVE_PERFORMANCE_QUERY_EXT => {
+                Some("SUBPASS_RESOLVE_PERFORMANCE_QUERY_EXT")
+            }
+            Self::MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_INFO_EXT => {
+                Some("MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_INFO_EXT")
+            }
             Self::PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_2_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_2_FEATURES_EXT")
             }
@@ -5180,6 +5194,16 @@ impl fmt::Debug for StructureType {
             Self::RENDER_PASS_SUBPASS_FEEDBACK_CREATE_INFO_EXT => {
                 Some("RENDER_PASS_SUBPASS_FEEDBACK_CREATE_INFO_EXT")
             }
+            Self::PHYSICAL_DEVICE_SHADER_MODULE_IDENTIFIER_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_SHADER_MODULE_IDENTIFIER_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_SHADER_MODULE_IDENTIFIER_PROPERTIES_EXT => {
+                Some("PHYSICAL_DEVICE_SHADER_MODULE_IDENTIFIER_PROPERTIES_EXT")
+            }
+            Self::PIPELINE_SHADER_STAGE_MODULE_IDENTIFIER_CREATE_INFO_EXT => {
+                Some("PIPELINE_SHADER_STAGE_MODULE_IDENTIFIER_CREATE_INFO_EXT")
+            }
+            Self::SHADER_MODULE_IDENTIFIER_EXT => Some("SHADER_MODULE_IDENTIFIER_EXT"),
             Self::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES => {
                 Some("PHYSICAL_DEVICE_SUBGROUP_PROPERTIES")
             }
