@@ -20,6 +20,7 @@ impl PresentWait {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkWaitForPresentKHR.html>
+    #[inline]
     pub unsafe fn wait_for_present(
         &self,
         swapchain: vk::SwapchainKHR,

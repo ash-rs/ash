@@ -6,6 +6,7 @@ use std::ffi::CStr;
 pub struct PhysicalDeviceDrm;
 
 impl PhysicalDeviceDrm {
+    #[inline]
     pub unsafe fn get_properties(
         instance: &Instance,
         pdevice: vk::PhysicalDevice,

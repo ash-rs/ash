@@ -21,6 +21,7 @@ impl XlibSurface {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateXlibSurfaceKHR.html>
+    #[inline]
     pub unsafe fn create_xlib_surface(
         &self,
         create_info: &vk::XlibSurfaceCreateInfoKHR,
@@ -37,6 +38,7 @@ impl XlibSurface {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceXlibPresentationSupportKHR.html>
+    #[inline]
     pub unsafe fn get_physical_device_xlib_presentation_support(
         &self,
         physical_device: vk::PhysicalDevice,

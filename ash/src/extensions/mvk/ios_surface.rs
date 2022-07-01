@@ -21,6 +21,7 @@ impl IOSSurface {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateIOSSurfaceMVK.html>
+    #[inline]
     pub unsafe fn create_ios_surface(
         &self,
         create_info: &vk::IOSSurfaceCreateInfoMVK,

@@ -22,6 +22,7 @@ impl ExternalMemoryWin32 {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetMemoryWin32HandleKHR.html>
+    #[inline]
     pub unsafe fn get_memory_win32_handle(
         &self,
         create_info: &vk::MemoryGetWin32HandleInfoKHR,
@@ -32,6 +33,7 @@ impl ExternalMemoryWin32 {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetMemoryWin32HandlePropertiesKHR.html>
+    #[inline]
     pub unsafe fn get_memory_win32_handle_properties(
         &self,
         handle_type: vk::ExternalMemoryHandleTypeFlags,

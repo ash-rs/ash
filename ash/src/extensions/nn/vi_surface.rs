@@ -21,6 +21,7 @@ impl ViSurface {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateViSurfaceNN.html>
+    #[inline]
     pub unsafe fn create_vi_surface(
         &self,
         create_info: &vk::ViSurfaceCreateInfoNN,

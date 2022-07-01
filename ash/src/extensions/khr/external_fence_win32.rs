@@ -22,6 +22,7 @@ impl ExternalFenceWin32 {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkImportFenceWin32HandleKHR.html>
+    #[inline]
     pub unsafe fn import_fence_win32_handle(
         &self,
         import_info: &vk::ImportFenceWin32HandleInfoKHR,
@@ -30,6 +31,7 @@ impl ExternalFenceWin32 {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetFenceWin32HandleKHR.html>
+    #[inline]
     pub unsafe fn get_fence_win32_handle(
         &self,
         get_info: &vk::FenceGetWin32HandleInfoKHR,

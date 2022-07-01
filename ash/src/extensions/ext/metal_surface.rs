@@ -21,6 +21,7 @@ impl MetalSurface {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateMetalSurfaceEXT.html>
+    #[inline]
     pub unsafe fn create_metal_surface(
         &self,
         create_info: &vk::MetalSurfaceCreateInfoEXT,

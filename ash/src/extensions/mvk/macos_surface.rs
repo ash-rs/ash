@@ -21,6 +21,7 @@ impl MacOSSurface {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateMacOSSurfaceMVK.html>
+    #[inline]
     pub unsafe fn create_mac_os_surface(
         &self,
         create_info: &vk::MacOSSurfaceCreateInfoMVK,

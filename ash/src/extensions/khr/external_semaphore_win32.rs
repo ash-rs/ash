@@ -22,6 +22,7 @@ impl ExternalSemaphoreWin32 {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkImportSemaphoreWin32HandleKHR.html>
+    #[inline]
     pub unsafe fn import_semaphore_win32_handle(
         &self,
         import_info: &vk::ImportSemaphoreWin32HandleInfoKHR,
@@ -30,6 +31,7 @@ impl ExternalSemaphoreWin32 {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetSemaphoreWin32HandleKHR.html>
+    #[inline]
     pub unsafe fn get_semaphore_win32_handle(
         &self,
         get_info: &vk::SemaphoreGetWin32HandleInfoKHR,

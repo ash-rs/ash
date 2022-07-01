@@ -21,6 +21,7 @@ impl DebugReport {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroyDebugReportCallbackEXT.html>
+    #[inline]
     pub unsafe fn destroy_debug_report_callback(
         &self,
         debug: vk::DebugReportCallbackEXT,
@@ -34,6 +35,7 @@ impl DebugReport {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateDebugReportCallbackEXT.html>
+    #[inline]
     pub unsafe fn create_debug_report_callback(
         &self,
         create_info: &vk::DebugReportCallbackCreateInfoEXT,
