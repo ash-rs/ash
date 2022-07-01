@@ -6,11 +6,12 @@ use itertools::Itertools;
 use nom::{
     branch::alt,
     bytes::complete::{tag, take_until, take_while1},
-    character::complete::{char, digit1, hex_digit1, multispace1, newline, none_of, one_of},
-    combinator::{map, opt, value},
-    error::{ParseError, VerboseError},
+    character::complete::{
+        char, digit1, hex_digit1, multispace0, multispace1, newline, none_of, one_of,
+    },
+    combinator::{map, map_res, opt, value},
     multi::{many1, separated_list1},
-    sequence::{delimited, pair, preceded, terminated},
+    sequence::{delimited, pair, preceded, separated_pair, terminated, tuple},
     IResult, Parser,
 };
 use once_cell::sync::Lazy;
@@ -70,11 +71,11 @@ impl quote::ToTokens for CType {
     }
 }
 
-fn parse_ctype<'a, E: ParseError<&'a str>>(i: &'a str) -> IResult<&'a str, CType, E> {
+fn parse_ctype(i: &str) -> IResult<&str, CType> {
     (alt((value(CType::U64, tag("ULL")), value(CType::U32, tag("U")))))(i)
 }
 
-fn parse_cexpr<'a, E: ParseError<&'a str>>(i: &'a str) -> IResult<&'a str, (CType, String), E> {
+fn parse_cexpr(i: &str) -> IResult<&str, (CType, String)> {
     (alt((
         map(parse_cfloat, |f| (CType::Float, format!("{f:.2}"))),
         parse_inverse_number,
@@ -83,13 +84,11 @@ fn parse_cexpr<'a, E: ParseError<&'a str>>(i: &'a str) -> IResult<&'a str, (CTyp
     )))(i)
 }
 
-fn parse_cfloat<'a, E: ParseError<&'a str>>(i: &'a str) -> IResult<&'a str, f32, E> {
+fn parse_cfloat(i: &str) -> IResult<&str, f32> {
     (terminated(nom::number::complete::float, one_of("fF")))(i)
 }
 
-fn parse_inverse_number<'a, E: ParseError<&'a str>>(
-    i: &'a str,
-) -> IResult<&'a str, (CType, String), E> {
+fn parse_inverse_number(i: &str) -> IResult<&str, (CType, String)> {
     (map(
         delimited(
             char('('),
@@ -112,7 +111,7 @@ fn parse_inverse_number<'a, E: ParseError<&'a str>>(
 
 // Like a C string, but does not support quote escaping and expects at least one character.
 // If needed, use https://github.com/Geal/nom/blob/8e09f0c3029d32421b5b69fb798cef6855d0c8df/tests/json.rs#L61-L81
-fn parse_c_include_string<'a, E: ParseError<&'a str>>(i: &'a str) -> IResult<&'a str, String, E> {
+fn parse_c_include_string(i: &str) -> IResult<&str, String> {
     (delimited(
         char('"'),
         map(many1(none_of("\"")), |c| {
@@ -122,25 +121,21 @@ fn parse_c_include_string<'a, E: ParseError<&'a str>>(i: &'a str) -> IResult<&'a
     ))(i)
 }
 
-fn parse_c_include<'a, E: ParseError<&'a str>>(i: &'a str) -> IResult<&'a str, String, E> {
+fn parse_c_include(i: &str) -> IResult<&str, String> {
     (preceded(
         tag("#include"),
         preceded(multispace1, parse_c_include_string),
     ))(i)
 }
 
-fn parse_decimal_number<'a, E: ParseError<&'a str>>(
-    i: &'a str,
-) -> IResult<&'a str, (CType, String), E> {
+fn parse_decimal_number(i: &str) -> IResult<&str, (CType, String)> {
     (map(
         pair(digit1.map(str::to_string), parse_ctype),
         |(dig, ctype)| (ctype, dig),
     ))(i)
 }
 
-fn parse_hexadecimal_number<'a, E: ParseError<&'a str>>(
-    i: &'a str,
-) -> IResult<&'a str, (CType, String), E> {
+fn parse_hexadecimal_number(i: &str) -> IResult<&str, (CType, String)> {
     (preceded(
         alt((tag("0x"), tag("0X"))),
         map(pair(hex_digit1, parse_ctype), |(num, typ)| {
@@ -152,19 +147,15 @@ fn parse_hexadecimal_number<'a, E: ParseError<&'a str>>(
     ))(i)
 }
 
-fn parse_c_identifier<'a, E: ParseError<&'a str>>(i: &'a str) -> IResult<&'a str, &'a str, E> {
+fn parse_c_identifier(i: &str) -> IResult<&str, &str> {
     take_while1(|c: char| c == '_' || c.is_alphanumeric())(i)
 }
 
-fn parse_comment_suffix<'a, E: ParseError<&'a str>>(
-    i: &'a str,
-) -> IResult<&'a str, Option<&'a str>, E> {
+fn parse_comment_suffix(i: &str) -> IResult<&str, Option<&str>> {
     opt(delimited(tag("//"), take_until("\n"), newline))(i)
 }
 
-fn parse_parameter_names<'a, E: ParseError<&'a str>>(
-    i: &'a str,
-) -> IResult<&'a str, Vec<&'a str>, E> {
+fn parse_parameter_names(i: &str) -> IResult<&str, Vec<&str>> {
     delimited(
         char('('),
         separated_list1(tag(", "), parse_c_identifier),
@@ -175,15 +166,96 @@ fn parse_parameter_names<'a, E: ParseError<&'a str>>(
 /// Parses a C macro define optionally prefixed by a comment and optionally
 /// containing parameter names. The expression is left in the remainder
 #[allow(clippy::type_complexity)]
-fn parse_c_define_header<'a, E: ParseError<&'a str>>(
-    i: &'a str,
-) -> IResult<&'a str, (Option<&'a str>, (&'a str, Option<Vec<&'a str>>)), E> {
+fn parse_c_define_header(i: &str) -> IResult<&str, (Option<&str>, (&str, Option<Vec<&str>>))> {
     (pair(
         parse_comment_suffix,
         preceded(
             tag("#define "),
             pair(parse_c_identifier, opt(parse_parameter_names)),
         ),
+    ))(i)
+}
+
+#[derive(Debug)]
+enum CReferenceType {
+    Value,
+    PointerToConst,
+    Pointer,
+    PointerToPointer,
+    PointerToPointerToConst,
+    PointerToConstPointer,
+    PointerToConstPointerToConst,
+}
+
+#[derive(Debug)]
+struct CParameterType<'a> {
+    name: &'a str,
+    reference_type: CReferenceType,
+}
+
+fn parse_c_type(i: &str) -> IResult<&str, CParameterType> {
+    (map(
+        separated_pair(
+            tuple((
+                opt(tag("const ")),
+                preceded(opt(tag("struct ")), parse_c_identifier),
+                opt(char('*')),
+            )),
+            multispace0,
+            opt(pair(opt(tag("const")), char('*'))),
+        ),
+        |((const_, name, firstptr), secondptr)| CParameterType {
+            name,
+            reference_type: match (firstptr, secondptr) {
+                (None, None) => CReferenceType::Value,
+
+                (Some(_), None) if const_.is_some() => CReferenceType::PointerToConst,
+                (Some(_), None) => CReferenceType::Pointer,
+
+                (Some(_), Some((Some(_), _))) if const_.is_some() => {
+                    CReferenceType::PointerToConstPointerToConst
+                }
+                (Some(_), Some((Some(_), _))) => CReferenceType::PointerToConstPointer,
+
+                (Some(_), Some((None, _))) if const_.is_some() => {
+                    CReferenceType::PointerToPointerToConst
+                }
+                (Some(_), Some((None, _))) => CReferenceType::PointerToPointer,
+                (None, Some(_)) => unreachable!(),
+            },
+        },
+    ))(i)
+}
+
+#[derive(Debug)]
+struct CParameter<'a> {
+    type_: CParameterType<'a>,
+    // Code only used to dissect the type surrounding this field name,
+    // not interested in the name itself.
+    _name: &'a str,
+    static_array: Option<usize>,
+}
+
+/// Parses a single C parameter instance, for example:
+///
+/// ```c
+/// VkSparseImageMemoryRequirements2* pSparseMemoryRequirements
+/// ```
+fn parse_c_parameter(i: &str) -> IResult<&str, CParameter> {
+    (map(
+        separated_pair(
+            parse_c_type,
+            multispace0,
+            pair(
+                parse_c_identifier,
+                opt(delimited(char('['), map_res(digit1, str::parse), char(']'))),
+            ),
+        ),
+        |(type_, (name, static_array))| CParameter {
+            type_,
+            _name: name,
+            static_array,
+        },
     ))(i)
 }
 
@@ -317,8 +389,8 @@ impl quote::ToTokens for Constant {
             }
             Constant::Text(ref text) => text.to_tokens(tokens),
             Constant::CExpr(ref expr) => {
-                let (_, (_, rexpr)) =
-                    parse_cexpr::<VerboseError<&str>>(expr).expect("Unable to parse cexpr");
+                let (rem, (_, rexpr)) = parse_cexpr(expr).expect("Unable to parse cexpr");
+                assert!(rem.is_empty());
                 tokens.extend(rexpr.parse::<TokenStream>());
             }
             Constant::BitPos(pos) => {
@@ -371,8 +443,8 @@ impl Constant {
         match self {
             Constant::Number(_) | Constant::Hex(_) => CType::USize,
             Constant::CExpr(expr) => {
-                let (_, (ty, _)) =
-                    parse_cexpr::<VerboseError<&str>>(expr).expect("Unable to parse cexpr");
+                let (rem, (ty, _)) = parse_cexpr(expr).expect("Unable to parse cexpr");
+                assert!(rem.is_empty());
                 ty
             }
             _ => unimplemented!(),
@@ -476,31 +548,18 @@ pub enum FunctionType {
     Device,
 }
 pub trait CommandExt {
-    /// Returns the ident in snake_case and without the 'vk' prefix.
     fn function_type(&self) -> FunctionType;
-    ///
-    /// Returns true if the command is a device level command. This is indicated by
-    /// the type of the first parameter.
-    fn command_ident(&self) -> Ident;
 }
 
-impl CommandExt for vkxml::Command {
-    fn command_ident(&self) -> Ident {
-        format_ident!("{}", self.name.strip_prefix("vk").unwrap().to_snake_case())
-    }
-
+impl CommandExt for vk_parse::CommandDefinition {
     fn function_type(&self) -> FunctionType {
-        let is_first_param_device = self
-            .param
-            .get(0)
-            .map(|field| {
-                matches!(
-                    field.basetype.as_str(),
-                    "VkDevice" | "VkCommandBuffer" | "VkQueue"
-                )
-            })
-            .unwrap_or(false);
-        match self.name.as_str() {
+        let is_first_param_device = self.params.get(0).map_or(false, |field| {
+            matches!(
+                field.definition.type_name.as_deref(),
+                Some("VkDevice" | "VkCommandBuffer" | "VkQueue")
+            )
+        });
+        match self.proto.name.as_str() {
             "vkGetInstanceProcAddr" => FunctionType::Static,
             "vkCreateInstance"
             | "vkEnumerateInstanceLayerProperties"
@@ -508,13 +567,8 @@ impl CommandExt for vkxml::Command {
             | "vkEnumerateInstanceVersion" => FunctionType::Entry,
             // This is actually not a device level function
             "vkGetDeviceProcAddr" => FunctionType::Instance,
-            _ => {
-                if is_first_param_device {
-                    FunctionType::Device
-                } else {
-                    FunctionType::Instance
-                }
-            }
+            _ if is_first_param_device => FunctionType::Device,
+            _ => FunctionType::Instance,
         }
     }
 }
@@ -600,7 +654,7 @@ fn name_to_tokens(type_name: &str) -> Ident {
         _ => type_name.strip_prefix("Vk").unwrap_or(type_name),
     };
     let new_name = new_name.replace("FlagBits", "Flags");
-    format_ident!("{}", new_name.as_str())
+    format_ident!("{}", new_name)
 }
 
 /// Parses and rewrites a C literal into Rust
@@ -611,7 +665,7 @@ fn name_to_tokens(type_name: &str) -> Ident {
 /// Examples:
 /// - `0x3FFU` -> `0x3ffu32`
 fn convert_c_literal(lit: Literal) -> Literal {
-    if let Ok((_, (_, rexpr))) = parse_cexpr::<VerboseError<&str>>(&lit.to_string()) {
+    if let Ok(("", (_, rexpr))) = parse_cexpr(&lit.to_string()) {
         // lit::SynInt uses the same `.parse` method to create hexadecimal
         // literals because there is no `Literal` constructor for it.
         let mut stream = rexpr.parse::<TokenStream>().unwrap().into_iter();
@@ -679,7 +733,7 @@ impl FieldExt for vkxml::Field {
             "type" => "ty",
             _ => name,
         };
-        format_ident!("{}", name_corrected.to_snake_case().as_str())
+        format_ident!("{}", name_corrected.to_snake_case())
     }
 
     fn inner_type_tokens(
@@ -768,11 +822,72 @@ impl FieldExt for vkxml::Field {
     }
 }
 
-pub type CommandMap<'a> = HashMap<vkxml::Identifier, &'a vkxml::Command>;
+impl FieldExt for vk_parse::CommandParam {
+    fn param_ident(&self) -> Ident {
+        let name = self.definition.name.as_str();
+        let name_corrected = match name {
+            "type" => "ty",
+            _ => name,
+        };
+        format_ident!("{}", name_corrected.to_snake_case())
+    }
+
+    fn inner_type_tokens(
+        &self,
+        _lifetime: Option<TokenStream>,
+        _inner_length: Option<usize>,
+    ) -> TokenStream {
+        unimplemented!()
+    }
+
+    fn safe_type_tokens(
+        &self,
+        _lifetime: TokenStream,
+        _inner_length: Option<usize>,
+    ) -> TokenStream {
+        unimplemented!()
+    }
+
+    fn type_tokens(&self, is_ffi_param: bool) -> TokenStream {
+        assert!(!self.is_void(), "{:?}", self);
+        let (rem, ty) = parse_c_parameter(&self.definition.code).unwrap();
+        assert!(rem.is_empty());
+        let type_name = name_to_tokens(ty.type_.name);
+        let inner_ty = match ty.type_.reference_type {
+            CReferenceType::Value => quote!(#type_name),
+            CReferenceType::Pointer => {
+                quote!(*mut #type_name)
+            }
+            CReferenceType::PointerToConst => quote!(*const #type_name),
+            CReferenceType::PointerToPointer => quote!(*mut *mut #type_name),
+            CReferenceType::PointerToPointerToConst => quote!(*mut *const #type_name),
+            CReferenceType::PointerToConstPointer => quote!(*const *mut #type_name),
+            CReferenceType::PointerToConstPointerToConst => quote!(*const *const #type_name),
+        };
+
+        match ty.static_array {
+            None => inner_ty,
+            Some(len) if is_ffi_param => quote!(*const [#inner_ty; #len]),
+            Some(len) => quote!([#inner_ty; #len]),
+        }
+    }
+
+    fn is_void(&self) -> bool {
+        self.definition.type_name.as_deref() == Some("void")
+            && self.len.is_none()
+            && !self.definition.name.starts_with('p')
+    }
+
+    fn is_pointer_to_static_sized_array(&self) -> bool {
+        unimplemented!()
+    }
+}
+
+pub type CommandMap<'a> = HashMap<vkxml::Identifier, &'a vk_parse::CommandDefinition>;
 
 fn generate_function_pointers<'a>(
     ident: Ident,
-    commands: &[&'a vkxml::Command],
+    commands: &[&'a vk_parse::CommandDefinition],
     aliases: &HashMap<String, String>,
     fn_cache: &mut HashSet<&'a str>,
 ) -> TokenStream {
@@ -780,7 +895,7 @@ fn generate_function_pointers<'a>(
     // really want to generate one function pointer.
     let commands = commands
         .iter()
-        .unique_by(|cmd| cmd.name.as_str())
+        .unique_by(|cmd| cmd.proto.name.as_str())
         .collect::<Vec<_>>();
 
     struct Command {
@@ -796,28 +911,25 @@ fn generate_function_pointers<'a>(
     let commands = commands
         .iter()
         .map(|cmd| {
-            let type_name = format_ident!("PFN_{}", cmd.name);
+            let name = &cmd.proto.name;
+            let type_name = format_ident!("PFN_{}", name);
 
-            let function_name_c = if let Some(alias_name) = aliases.get(&cmd.name) {
+            let function_name_c = if let Some(alias_name) = aliases.get(name) {
                 alias_name.to_string()
             } else {
-                cmd.name.to_string()
+                name.to_string()
             };
             let function_name_rust = format_ident!(
                 "{}",
-                function_name_c
-                    .strip_prefix("vk")
-                    .unwrap()
-                    .to_snake_case()
-                    .as_str()
+                function_name_c.strip_prefix("vk").unwrap().to_snake_case()
             );
 
             let params: Vec<_> = cmd
-                .param
+                .params
                 .iter()
-                .map(|field| {
-                    let name = field.param_ident();
-                    let ty = field.type_tokens(true);
+                .map(|param| {
+                    let name = param.param_ident();
+                    let ty = param.type_tokens(true);
                     (name, ty)
                 })
                 .collect();
@@ -833,19 +945,25 @@ fn generate_function_pointers<'a>(
             });
             let parameters_unused = quote!(#(#params_iter,)*);
 
+            let ret = cmd
+                .proto
+                .type_name
+                .as_ref()
+                .expect("Command must have return type");
+
             Command {
                 // PFN function pointers are global and can not have duplicates.
                 // This can happen because there are aliases to commands
-                type_needs_defining: fn_cache.insert(cmd.name.as_str()),
+                type_needs_defining: fn_cache.insert(name),
                 type_name,
                 function_name_c,
                 function_name_rust,
                 parameters,
                 parameters_unused,
-                returns: if cmd.return_type.is_void() {
+                returns: if ret == "void" {
                     quote!()
                 } else {
-                    let ret_ty_tokens = cmd.return_type.type_tokens(true);
+                    let ret_ty_tokens = name_to_tokens(ret);
                     quote!(-> #ret_ty_tokens)
                 },
             }
@@ -1042,11 +1160,9 @@ pub fn generate_extension_commands<'a>(
     for name in names {
         if let Some(cmd) = cmd_map.get(name).copied() {
             commands.push(cmd);
-        } else if let Some(cmd) = cmd_aliases
-            .get(name)
-            .and_then(|alias_name| cmd_map.get(alias_name).copied())
-        {
-            aliases.insert(cmd.name.clone(), name.to_string());
+        } else if let Some(cmd) = cmd_aliases.get(name) {
+            aliases.insert(cmd.clone(), name.to_string());
+            let cmd = cmd_map.get(cmd).copied().unwrap();
             commands.push(cmd);
         }
     }
@@ -1097,12 +1213,6 @@ pub fn generate_extension<'a>(
     cmd_aliases: &HashMap<String, String>,
     fn_cache: &mut HashSet<&'a str>,
 ) -> Option<TokenStream> {
-    // Okay this is a little bit odd. We need to generate all extensions, even disabled ones,
-    // because otherwise some StructureTypes won't get generated. But we don't generate extensions
-    // that are reserved
-    if extension.name.contains("RESERVED") {
-        return None;
-    }
     let extension_tokens = generate_extension_constants(
         &extension.name,
         extension.number.unwrap_or(0),
@@ -1138,8 +1248,7 @@ pub fn generate_define(
 
     if define_name.contains("VERSION") && !spec.code.contains("//#define") {
         let link = khronos_link(define_name);
-        let (c_expr, (comment, (_name, parameters))) =
-            parse_c_define_header::<VerboseError<&str>>(&spec.code).unwrap();
+        let (c_expr, (comment, (_name, parameters))) = parse_c_define_header(&spec.code).unwrap();
         let c_expr = c_expr.trim().trim_start_matches('\\');
         let c_expr = c_expr.replace("(uint32_t)", "");
         let c_expr = convert_c_expression(&c_expr, identifier_renames);
@@ -1348,7 +1457,7 @@ pub fn generate_enum<'a>(
     let name = enum_.name.as_ref().unwrap();
     let clean_name = name.strip_prefix("Vk").unwrap();
     let clean_name = clean_name.replace("FlagBits", "Flags");
-    let ident = format_ident!("{}", clean_name.as_str());
+    let ident = format_ident!("{}", clean_name);
     let constants = enum_
         .children
         .iter()
@@ -1375,7 +1484,7 @@ pub fn generate_enum<'a>(
     let khronos_link = khronos_link(name);
 
     if name.contains("Bit") {
-        let ident = format_ident!("{}", clean_name.as_str());
+        let ident = format_ident!("{}", clean_name);
 
         let type_ = if enum_.bitwidth == Some(64u32) {
             quote!(Flags64)
@@ -1430,9 +1539,9 @@ pub fn generate_enum<'a>(
 
 pub fn generate_result(ident: Ident, enum_: &vk_parse::Enums) -> TokenStream {
     let notation = enum_.children.iter().filter_map(|elem| {
-        let (variant_name, notation) = match *elem {
-            vk_parse::EnumsChild::Enum(ref constant) => (
-                constant.name.as_str(),
+        let (variant_name, notation) = match elem {
+            vk_parse::EnumsChild::Enum(constant) => (
+                &constant.name,
                 constant.formatted_notation().unwrap_or(Cow::Borrowed("")),
             ),
             _ => {
@@ -1776,7 +1885,7 @@ pub fn derive_setters(
                             array_size
                         };
 
-                        let array_size_ident = format_ident!("{}", array_size.to_snake_case().as_str());
+                        let array_size_ident = format_ident!("{}", array_size.to_snake_case());
 
                         let size_field = members.clone().find(|m| m.name.as_deref() == Some(array_size)).unwrap();
 
@@ -2096,7 +2205,7 @@ pub fn generate_handle(handle: &vkxml::Handle) -> Option<TokenStream> {
     Some(tokens)
 }
 fn generate_funcptr(fnptr: &vkxml::FunctionPointer) -> TokenStream {
-    let name = format_ident!("{}", fnptr.name.as_str());
+    let name = format_ident!("{}", fnptr.name);
     let ret_ty_tokens = if fnptr.return_type.is_void() {
         quote!()
     } else {
@@ -2420,7 +2529,7 @@ pub fn extract_native_types(registry: &vk_parse::Registry) -> (Vec<(String, Stri
                         "Header `{name}` being redefined",
                     );
 
-                    let (rem, path) = parse_c_include::<VerboseError<&str>>(&code.code)
+                    let (rem, path) = parse_c_include(&code.code)
                         .expect("Failed to parse `#include` from `category=\"include\"` directive");
                     assert!(rem.is_empty());
                     header_includes.push((name, path));
@@ -2490,12 +2599,13 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         .map(|(name, alias)| (name.to_string(), alias.to_string()))
         .collect();
 
-    let commands: HashMap<vkxml::Identifier, &vkxml::Command> = spec
-        .elements
+    let commands: CommandMap<'_> = spec2
+        .0
         .iter()
-        .filter_map(get_variant!(vkxml::RegistryElement::Commands))
-        .flat_map(|cmds| &cmds.elements)
-        .map(|cmd| (cmd.name.clone(), cmd))
+        .filter_map(get_variant!(vk_parse::RegistryChild::Commands))
+        .flat_map(|cmds| &cmds.children)
+        .filter_map(get_variant!(vk_parse::Command::Definition))
+        .map(|cmd| (cmd.proto.name.clone(), cmd))
         .collect();
 
     let features: Vec<&vkxml::Feature> = spec
