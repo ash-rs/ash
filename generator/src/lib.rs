@@ -1219,7 +1219,7 @@ pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
     let is_digit = new_variant_name
         .chars()
         .next()
-        .map(|c| c.is_digit(10))
+        .map(|c| c.is_ascii_digit())
         .unwrap_or(false);
     if is_digit {
         format_ident!("TYPE_{}", new_variant_name)
