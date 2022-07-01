@@ -64,14 +64,17 @@ impl PipelineExecutableProperties {
         })
     }
 
+    #[inline]
     pub const fn name() -> &'static CStr {
         vk::KhrPipelineExecutablePropertiesFn::name()
     }
 
+    #[inline]
     pub fn fp(&self) -> &vk::KhrPipelineExecutablePropertiesFn {
         &self.fp
     }
 
+    #[inline]
     pub fn device(&self) -> vk::Device {
         self.handle
     }

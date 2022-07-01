@@ -70,14 +70,17 @@ impl Maintenance4 {
         assert_eq!(count as usize, out.len());
     }
 
+    #[inline]
     pub const fn name() -> &'static CStr {
         vk::KhrMaintenance4Fn::name()
     }
 
+    #[inline]
     pub fn fp(&self) -> &vk::KhrMaintenance4Fn {
         &self.fp
     }
 
+    #[inline]
     pub fn device(&self) -> vk::Device {
         self.handle
     }

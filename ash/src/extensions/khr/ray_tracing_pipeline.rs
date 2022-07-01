@@ -167,14 +167,17 @@ impl RayTracingPipeline {
         (self.fp.cmd_set_ray_tracing_pipeline_stack_size_khr)(command_buffer, pipeline_stack_size);
     }
 
+    #[inline]
     pub const fn name() -> &'static CStr {
         vk::KhrRayTracingPipelineFn::name()
     }
 
+    #[inline]
     pub fn fp(&self) -> &vk::KhrRayTracingPipelineFn {
         &self.fp
     }
 
+    #[inline]
     pub fn device(&self) -> vk::Device {
         self.handle
     }

@@ -54,10 +54,12 @@ impl PushDescriptor {
         );
     }
 
+    #[inline]
     pub const fn name() -> &'static CStr {
         vk::KhrPushDescriptorFn::name()
     }
 
+    #[inline]
     pub fn fp(&self) -> &vk::KhrPushDescriptorFn {
         &self.fp
     }

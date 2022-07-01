@@ -66,10 +66,12 @@ impl MeshShader {
         );
     }
 
+    #[inline]
     pub const fn name() -> &'static CStr {
         vk::NvMeshShaderFn::name()
     }
 
+    #[inline]
     pub fn fp(&self) -> &vk::NvMeshShaderFn {
         &self.fp
     }

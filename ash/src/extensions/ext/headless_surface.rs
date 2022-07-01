@@ -37,14 +37,17 @@ impl HeadlessSurface {
         .result_with_success(surface)
     }
 
+    #[inline]
     pub const fn name() -> &'static CStr {
         vk::ExtHeadlessSurfaceFn::name()
     }
 
+    #[inline]
     pub fn fp(&self) -> &vk::ExtHeadlessSurfaceFn {
         &self.fp
     }
 
+    #[inline]
     pub fn instance(&self) -> vk::Instance {
         self.handle
     }

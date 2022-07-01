@@ -41,14 +41,17 @@ impl ExternalMemoryFd {
         .result_with_success(memory_fd_properties)
     }
 
+    #[inline]
     pub const fn name() -> &'static CStr {
         vk::KhrExternalMemoryFdFn::name()
     }
 
+    #[inline]
     pub fn fp(&self) -> &vk::KhrExternalMemoryFdFn {
         &self.fp
     }
 
+    #[inline]
     pub fn device(&self) -> vk::Device {
         self.handle
     }

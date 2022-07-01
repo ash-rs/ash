@@ -49,14 +49,17 @@ impl DebugReport {
         .result_with_success(debug_cb)
     }
 
+    #[inline]
     pub const fn name() -> &'static CStr {
         vk::ExtDebugReportFn::name()
     }
 
+    #[inline]
     pub fn fp(&self) -> &vk::ExtDebugReportFn {
         &self.fp
     }
 
+    #[inline]
     pub fn instance(&self) -> vk::Instance {
         self.handle
     }

@@ -36,14 +36,17 @@ impl ViSurface {
         .result_with_success(surface)
     }
 
+    #[inline]
     pub const fn name() -> &'static CStr {
         vk::NnViSurfaceFn::name()
     }
 
+    #[inline]
     pub fn fp(&self) -> &vk::NnViSurfaceFn {
         &self.fp
     }
 
+    #[inline]
     pub fn instance(&self) -> vk::Instance {
         self.handle
     }

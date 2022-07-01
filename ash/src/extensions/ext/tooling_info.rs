@@ -27,10 +27,12 @@ impl ToolingInfo {
         })
     }
 
+    #[inline]
     pub const fn name() -> &'static CStr {
         vk::ExtToolingInfoFn::name()
     }
 
+    #[inline]
     pub fn fp(&self) -> &vk::ExtToolingInfoFn {
         &self.fp
     }

@@ -30,14 +30,17 @@ impl ExternalFenceFd {
         (self.fp.get_fence_fd_khr)(self.handle, get_info, &mut fd).result_with_success(fd)
     }
 
+    #[inline]
     pub const fn name() -> &'static CStr {
         vk::KhrExternalFenceFdFn::name()
     }
 
+    #[inline]
     pub fn fp(&self) -> &vk::KhrExternalFenceFdFn {
         &self.fp
     }
 
+    #[inline]
     pub fn device(&self) -> vk::Device {
         self.handle
     }

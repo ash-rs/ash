@@ -36,14 +36,17 @@ impl MacOSSurface {
         .result_with_success(surface)
     }
 
+    #[inline]
     pub const fn name() -> &'static CStr {
         vk::MvkMacosSurfaceFn::name()
     }
 
+    #[inline]
     pub fn fp(&self) -> &vk::MvkMacosSurfaceFn {
         &self.fp
     }
 
+    #[inline]
     pub fn instance(&self) -> vk::Instance {
         self.handle
     }

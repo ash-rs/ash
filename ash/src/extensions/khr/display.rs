@@ -119,14 +119,17 @@ impl Display {
         .result_with_success(surface.assume_init())
     }
 
+    #[inline]
     pub const fn name() -> &'static CStr {
         vk::KhrDisplayFn::name()
     }
 
+    #[inline]
     pub fn fp(&self) -> &vk::KhrDisplayFn {
         &self.fp
     }
 
+    #[inline]
     pub fn instance(&self) -> vk::Instance {
         self.handle
     }

@@ -36,14 +36,17 @@ impl MetalSurface {
         .result_with_success(surface)
     }
 
+    #[inline]
     pub const fn name() -> &'static CStr {
         vk::ExtMetalSurfaceFn::name()
     }
 
+    #[inline]
     pub fn fp(&self) -> &vk::ExtMetalSurfaceFn {
         &self.fp
     }
 
+    #[inline]
     pub fn instance(&self) -> vk::Instance {
         self.handle
     }

@@ -40,14 +40,17 @@ impl TimelineSemaphore {
         (self.fp.signal_semaphore_khr)(self.handle, signal_info).result()
     }
 
+    #[inline]
     pub const fn name() -> &'static CStr {
         vk::KhrTimelineSemaphoreFn::name()
     }
 
+    #[inline]
     pub fn fp(&self) -> &vk::KhrTimelineSemaphoreFn {
         &self.fp
     }
 
+    #[inline]
     pub fn device(&self) -> vk::Device {
         self.handle
     }

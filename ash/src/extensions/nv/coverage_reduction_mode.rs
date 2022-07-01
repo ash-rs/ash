@@ -56,10 +56,12 @@ impl CoverageReductionMode {
         Ok(())
     }
 
+    #[inline]
     pub const fn name() -> &'static CStr {
         vk::NvCoverageReductionModeFn::name()
     }
 
+    #[inline]
     pub fn fp(&self) -> &vk::NvCoverageReductionModeFn {
         &self.fp
     }

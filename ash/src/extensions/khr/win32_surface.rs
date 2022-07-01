@@ -50,14 +50,17 @@ impl Win32Surface {
         b > 0
     }
 
+    #[inline]
     pub const fn name() -> &'static CStr {
         vk::KhrWin32SurfaceFn::name()
     }
 
+    #[inline]
     pub fn fp(&self) -> &vk::KhrWin32SurfaceFn {
         &self.fp
     }
 
+    #[inline]
     pub fn instance(&self) -> vk::Instance {
         self.handle
     }

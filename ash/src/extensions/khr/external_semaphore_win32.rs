@@ -39,14 +39,17 @@ impl ExternalSemaphoreWin32 {
             .result_with_success(handle)
     }
 
+    #[inline]
     pub const fn name() -> &'static CStr {
         vk::KhrExternalSemaphoreWin32Fn::name()
     }
 
+    #[inline]
     pub fn fp(&self) -> &vk::KhrExternalSemaphoreWin32Fn {
         &self.fp
     }
 
+    #[inline]
     pub fn device(&self) -> vk::Device {
         self.handle
     }

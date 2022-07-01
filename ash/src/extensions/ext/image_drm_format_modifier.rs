@@ -30,14 +30,17 @@ impl ImageDrmFormatModifier {
             .result()
     }
 
+    #[inline]
     pub const fn name() -> &'static CStr {
         vk::ExtImageDrmFormatModifierFn::name()
     }
 
+    #[inline]
     pub fn fp(&self) -> &vk::ExtImageDrmFormatModifierFn {
         &self.fp
     }
 
+    #[inline]
     pub fn device(&self) -> vk::Device {
         self.handle
     }

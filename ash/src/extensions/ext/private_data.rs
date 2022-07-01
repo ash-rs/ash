@@ -84,14 +84,17 @@ impl PrivateData {
         data
     }
 
+    #[inline]
     pub const fn name() -> &'static CStr {
         vk::ExtPrivateDataFn::name()
     }
 
+    #[inline]
     pub fn fp(&self) -> &vk::ExtPrivateDataFn {
         &self.fp
     }
 
+    #[inline]
     pub fn device(&self) -> vk::Device {
         self.handle
     }

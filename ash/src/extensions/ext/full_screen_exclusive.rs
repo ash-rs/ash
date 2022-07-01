@@ -65,14 +65,17 @@ impl FullScreenExclusive {
         .result_with_success(present_modes)
     }
 
+    #[inline]
     pub const fn name() -> &'static CStr {
         vk::ExtFullScreenExclusiveFn::name()
     }
 
+    #[inline]
     pub fn fp(&self) -> &vk::ExtFullScreenExclusiveFn {
         &self.fp
     }
 
+    #[inline]
     pub fn device(&self) -> vk::Device {
         self.handle
     }

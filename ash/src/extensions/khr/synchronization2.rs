@@ -83,10 +83,12 @@ impl Synchronization2 {
         (self.fp.queue_submit2_khr)(queue, submits.len() as u32, submits.as_ptr(), fence).result()
     }
 
+    #[inline]
     pub const fn name() -> &'static CStr {
         vk::KhrSynchronization2Fn::name()
     }
 
+    #[inline]
     pub fn fp(&self) -> &vk::KhrSynchronization2Fn {
         &self.fp
     }

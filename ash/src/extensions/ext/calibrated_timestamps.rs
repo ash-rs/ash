@@ -53,14 +53,17 @@ impl CalibratedTimestamps {
         .result_with_success((timestamps, max_deviation))
     }
 
+    #[inline]
     pub const fn name() -> &'static CStr {
         vk::ExtCalibratedTimestampsFn::name()
     }
 
+    #[inline]
     pub fn fp(&self) -> &vk::ExtCalibratedTimestampsFn {
         &self.fp
     }
 
+    #[inline]
     pub fn instance(&self) -> vk::Instance {
         self.handle
     }

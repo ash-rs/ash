@@ -66,10 +66,12 @@ impl CopyCommands2 {
         (self.fp.cmd_resolve_image2_khr)(command_buffer, resolve_image_info)
     }
 
+    #[inline]
     pub const fn name() -> &'static CStr {
         vk::KhrCopyCommands2Fn::name()
     }
 
+    #[inline]
     pub fn fp(&self) -> &vk::KhrCopyCommands2Fn {
         &self.fp
     }

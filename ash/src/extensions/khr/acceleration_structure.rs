@@ -288,14 +288,17 @@ impl AccelerationStructure {
         size_info
     }
 
+    #[inline]
     pub const fn name() -> &'static CStr {
         vk::KhrAccelerationStructureFn::name()
     }
 
+    #[inline]
     pub fn fp(&self) -> &vk::KhrAccelerationStructureFn {
         &self.fp
     }
 
+    #[inline]
     pub fn device(&self) -> vk::Device {
         self.handle
     }

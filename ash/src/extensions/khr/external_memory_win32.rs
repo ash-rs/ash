@@ -47,14 +47,17 @@ impl ExternalMemoryWin32 {
         .result_with_success(memory_win32_handle_properties)
     }
 
+    #[inline]
     pub const fn name() -> &'static CStr {
         vk::KhrExternalMemoryWin32Fn::name()
     }
 
+    #[inline]
     pub fn fp(&self) -> &vk::KhrExternalMemoryWin32Fn {
         &self.fp
     }
 
+    #[inline]
     pub fn device(&self) -> vk::Device {
         self.handle
     }
