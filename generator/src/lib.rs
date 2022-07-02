@@ -1333,7 +1333,9 @@ pub fn generate_enum<'a>(
             #struct_attribute
             pub struct #ident(pub(crate) i32);
             impl #ident {
+                #[inline]
                 pub const fn from_raw(x: i32) -> Self { Self(x) }
+                #[inline]
                 pub const fn as_raw(self) -> i32 { self.0 }
             }
             #impl_block
