@@ -166,6 +166,8 @@ pub type PhysicalDeviceShaderAtomicInt64FeaturesKHR = PhysicalDeviceShaderAtomic
 pub type PhysicalDeviceDepthStencilResolvePropertiesKHR =
     PhysicalDeviceDepthStencilResolveProperties;
 pub type SubpassDescriptionDepthStencilResolveKHR = SubpassDescriptionDepthStencilResolve;
+pub type PhysicalDeviceFragmentShaderBarycentricFeaturesNV =
+    PhysicalDeviceFragmentShaderBarycentricFeaturesKHR;
 pub type ImageStencilUsageCreateInfoEXT = ImageStencilUsageCreateInfo;
 pub type PhysicalDeviceScalarBlockLayoutFeaturesEXT = PhysicalDeviceScalarBlockLayoutFeatures;
 pub type PhysicalDeviceUniformBufferStandardLayoutFeaturesKHR =
@@ -188,6 +190,7 @@ pub type PhysicalDeviceSeparateDepthStencilLayoutsFeaturesKHR =
     PhysicalDeviceSeparateDepthStencilLayoutsFeatures;
 pub type AttachmentReferenceStencilLayoutKHR = AttachmentReferenceStencilLayout;
 pub type AttachmentDescriptionStencilLayoutKHR = AttachmentDescriptionStencilLayout;
+pub type PipelineInfoEXT = PipelineInfoKHR;
 pub type PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT =
     PhysicalDeviceShaderDemoteToHelperInvocationFeatures;
 pub type PhysicalDeviceTexelBufferAlignmentPropertiesEXT =
