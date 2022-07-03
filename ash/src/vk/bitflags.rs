@@ -906,6 +906,7 @@ impl DeviceDiagnosticsConfigFlagsNV {
     pub const ENABLE_SHADER_DEBUG_INFO: Self = Self(0b1);
     pub const ENABLE_RESOURCE_TRACKING: Self = Self(0b10);
     pub const ENABLE_AUTOMATIC_CHECKPOINTS: Self = Self(0b100);
+    pub const ENABLE_SHADER_ERROR_REPORTING: Self = Self(0b1000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -1264,29 +1265,31 @@ impl VideoEncodeRateControlModeFlagsKHR {
 pub struct VideoEncodeH264CapabilityFlagsEXT(pub(crate) Flags);
 vk_bitflags_wrapped!(VideoEncodeH264CapabilityFlagsEXT, Flags);
 impl VideoEncodeH264CapabilityFlagsEXT {
-    pub const DIRECT_8X8_INFERENCE: Self = Self(0b1);
-    pub const SEPARATE_COLOUR_PLANE: Self = Self(0b10);
-    pub const QPPRIME_Y_ZERO_TRANSFORM_BYPASS: Self = Self(0b100);
-    pub const SCALING_LISTS: Self = Self(0b1000);
-    pub const HRD_COMPLIANCE: Self = Self(0b1_0000);
-    pub const CHROMA_QP_OFFSET: Self = Self(0b10_0000);
-    pub const SECOND_CHROMA_QP_OFFSET: Self = Self(0b100_0000);
-    pub const PIC_INIT_QP_MINUS26: Self = Self(0b1000_0000);
-    pub const WEIGHTED_PRED: Self = Self(0b1_0000_0000);
-    pub const WEIGHTED_BIPRED_EXPLICIT: Self = Self(0b10_0000_0000);
-    pub const WEIGHTED_BIPRED_IMPLICIT: Self = Self(0b100_0000_0000);
-    pub const WEIGHTED_PRED_NO_TABLE: Self = Self(0b1000_0000_0000);
-    pub const TRANSFORM_8X8: Self = Self(0b1_0000_0000_0000);
-    pub const CABAC: Self = Self(0b10_0000_0000_0000);
-    pub const CAVLC: Self = Self(0b100_0000_0000_0000);
-    pub const DEBLOCKING_FILTER_DISABLED: Self = Self(0b1000_0000_0000_0000);
-    pub const DEBLOCKING_FILTER_ENABLED: Self = Self(0b1_0000_0000_0000_0000);
-    pub const DEBLOCKING_FILTER_PARTIAL: Self = Self(0b10_0000_0000_0000_0000);
-    pub const DISABLE_DIRECT_SPATIAL_MV_PRED: Self = Self(0b100_0000_0000_0000_0000);
-    pub const MULTIPLE_SLICE_PER_FRAME: Self = Self(0b1000_0000_0000_0000_0000);
-    pub const SLICE_MB_COUNT: Self = Self(0b1_0000_0000_0000_0000_0000);
-    pub const ROW_UNALIGNED_SLICE: Self = Self(0b10_0000_0000_0000_0000_0000);
-    pub const DIFFERENT_SLICE_TYPE: Self = Self(0b100_0000_0000_0000_0000_0000);
+    pub const DIRECT_8X8_INFERENCE_ENABLED: Self = Self(0b1);
+    pub const DIRECT_8X8_INFERENCE_DISABLED: Self = Self(0b10);
+    pub const SEPARATE_COLOUR_PLANE: Self = Self(0b100);
+    pub const QPPRIME_Y_ZERO_TRANSFORM_BYPASS: Self = Self(0b1000);
+    pub const SCALING_LISTS: Self = Self(0b1_0000);
+    pub const HRD_COMPLIANCE: Self = Self(0b10_0000);
+    pub const CHROMA_QP_OFFSET: Self = Self(0b100_0000);
+    pub const SECOND_CHROMA_QP_OFFSET: Self = Self(0b1000_0000);
+    pub const PIC_INIT_QP_MINUS26: Self = Self(0b1_0000_0000);
+    pub const WEIGHTED_PRED: Self = Self(0b10_0000_0000);
+    pub const WEIGHTED_BIPRED_EXPLICIT: Self = Self(0b100_0000_0000);
+    pub const WEIGHTED_BIPRED_IMPLICIT: Self = Self(0b1000_0000_0000);
+    pub const WEIGHTED_PRED_NO_TABLE: Self = Self(0b1_0000_0000_0000);
+    pub const TRANSFORM_8X8: Self = Self(0b10_0000_0000_0000);
+    pub const CABAC: Self = Self(0b100_0000_0000_0000);
+    pub const CAVLC: Self = Self(0b1000_0000_0000_0000);
+    pub const DEBLOCKING_FILTER_DISABLED: Self = Self(0b1_0000_0000_0000_0000);
+    pub const DEBLOCKING_FILTER_ENABLED: Self = Self(0b10_0000_0000_0000_0000);
+    pub const DEBLOCKING_FILTER_PARTIAL: Self = Self(0b100_0000_0000_0000_0000);
+    pub const DISABLE_DIRECT_SPATIAL_MV_PRED: Self = Self(0b1000_0000_0000_0000_0000);
+    pub const MULTIPLE_SLICE_PER_FRAME: Self = Self(0b1_0000_0000_0000_0000_0000);
+    pub const SLICE_MB_COUNT: Self = Self(0b10_0000_0000_0000_0000_0000);
+    pub const ROW_UNALIGNED_SLICE: Self = Self(0b100_0000_0000_0000_0000_0000);
+    pub const DIFFERENT_SLICE_TYPE: Self = Self(0b1000_0000_0000_0000_0000_0000);
+    pub const B_FRAME_IN_L1_LIST: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -1506,7 +1509,63 @@ impl VideoEncodeH265TransformBlockSizeFlagsEXT {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkExportMetalObjectTypeFlagBitsEXT.html>"]
+pub struct ExportMetalObjectTypeFlagsEXT(pub(crate) Flags);
+vk_bitflags_wrapped!(ExportMetalObjectTypeFlagsEXT, Flags);
+impl ExportMetalObjectTypeFlagsEXT {
+    pub const METAL_DEVICE: Self = Self(0b1);
+    pub const METAL_COMMAND_QUEUE: Self = Self(0b10);
+    pub const METAL_BUFFER: Self = Self(0b100);
+    pub const METAL_TEXTURE: Self = Self(0b1000);
+    pub const METAL_IOSURFACE: Self = Self(0b1_0000);
+    pub const METAL_SHARED_EVENT: Self = Self(0b10_0000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkInstanceCreateFlagBits.html>"]
 pub struct InstanceCreateFlags(pub(crate) Flags);
 vk_bitflags_wrapped!(InstanceCreateFlags, Flags);
 impl InstanceCreateFlags {}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImageCompressionFlagBitsEXT.html>"]
+pub struct ImageCompressionFlagsEXT(pub(crate) Flags);
+vk_bitflags_wrapped!(ImageCompressionFlagsEXT, Flags);
+impl ImageCompressionFlagsEXT {
+    pub const DEFAULT: Self = Self(0);
+    pub const FIXED_RATE_DEFAULT: Self = Self(0b1);
+    pub const FIXED_RATE_EXPLICIT: Self = Self(0b10);
+    pub const DISABLED: Self = Self(0b100);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImageCompressionFixedRateFlagBitsEXT.html>"]
+pub struct ImageCompressionFixedRateFlagsEXT(pub(crate) Flags);
+vk_bitflags_wrapped!(ImageCompressionFixedRateFlagsEXT, Flags);
+impl ImageCompressionFixedRateFlagsEXT {
+    pub const NONE: Self = Self(0);
+    pub const TYPE_1BPC: Self = Self(0b1);
+    pub const TYPE_2BPC: Self = Self(0b10);
+    pub const TYPE_3BPC: Self = Self(0b100);
+    pub const TYPE_4BPC: Self = Self(0b1000);
+    pub const TYPE_5BPC: Self = Self(0b1_0000);
+    pub const TYPE_6BPC: Self = Self(0b10_0000);
+    pub const TYPE_7BPC: Self = Self(0b100_0000);
+    pub const TYPE_8BPC: Self = Self(0b1000_0000);
+    pub const TYPE_9BPC: Self = Self(0b1_0000_0000);
+    pub const TYPE_10BPC: Self = Self(0b10_0000_0000);
+    pub const TYPE_11BPC: Self = Self(0b100_0000_0000);
+    pub const TYPE_12BPC: Self = Self(0b1000_0000_0000);
+    pub const TYPE_13BPC: Self = Self(0b1_0000_0000_0000);
+    pub const TYPE_14BPC: Self = Self(0b10_0000_0000_0000);
+    pub const TYPE_15BPC: Self = Self(0b100_0000_0000_0000);
+    pub const TYPE_16BPC: Self = Self(0b1000_0000_0000_0000);
+    pub const TYPE_17BPC: Self = Self(0b1_0000_0000_0000_0000);
+    pub const TYPE_18BPC: Self = Self(0b10_0000_0000_0000_0000);
+    pub const TYPE_19BPC: Self = Self(0b100_0000_0000_0000_0000);
+    pub const TYPE_20BPC: Self = Self(0b1000_0000_0000_0000_0000);
+    pub const TYPE_21BPC: Self = Self(0b1_0000_0000_0000_0000_0000);
+    pub const TYPE_22BPC: Self = Self(0b10_0000_0000_0000_0000_0000);
+    pub const TYPE_23BPC: Self = Self(0b100_0000_0000_0000_0000_0000);
+    pub const TYPE_24BPC: Self = Self(0b1000_0000_0000_0000_0000_0000);
+}

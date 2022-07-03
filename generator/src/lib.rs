@@ -1399,9 +1399,21 @@ pub fn derive_default(struct_: &vkxml::Struct, has_lifetime: bool) -> Option<Tok
         .filter_map(get_variant!(vkxml::StructElement::Member));
     let is_structure_type = |field: &vkxml::Field| field.basetype == "VkStructureType";
 
-    // This are also pointers, and therefor also don't implement Default. The spec
+    // These are also pointers, and therefor also don't implement Default. The spec
     // also doesn't mark them as pointers
-    let handles = ["LPCWSTR", "HANDLE", "HINSTANCE", "HWND", "HMONITOR"];
+    let handles = [
+        "LPCWSTR",
+        "HANDLE",
+        "HINSTANCE",
+        "HWND",
+        "HMONITOR",
+        "IOSurfaceRef",
+        "MTLBuffer_id",
+        "MTLCommandQueue_id",
+        "MTLDevice_id",
+        "MTLSharedEvent_id",
+        "MTLTexture_id",
+    ];
     let contains_ptr = members.clone().any(|field| field.reference.is_some());
     let contains_structure_type = members.clone().any(is_structure_type);
     let contains_static_array = members.clone().any(is_static_array);

@@ -179,6 +179,8 @@ pub type PhysicalDeviceShaderAtomicInt64FeaturesKHR<'a> =
 pub type PhysicalDeviceDepthStencilResolvePropertiesKHR<'a> =
     PhysicalDeviceDepthStencilResolveProperties<'a>;
 pub type SubpassDescriptionDepthStencilResolveKHR<'a> = SubpassDescriptionDepthStencilResolve<'a>;
+pub type PhysicalDeviceFragmentShaderBarycentricFeaturesNV<'a> =
+    PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'a>;
 pub type ImageStencilUsageCreateInfoEXT<'a> = ImageStencilUsageCreateInfo<'a>;
 pub type PhysicalDeviceScalarBlockLayoutFeaturesEXT<'a> =
     PhysicalDeviceScalarBlockLayoutFeatures<'a>;
@@ -205,6 +207,7 @@ pub type PhysicalDeviceSeparateDepthStencilLayoutsFeaturesKHR<'a> =
     PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'a>;
 pub type AttachmentReferenceStencilLayoutKHR<'a> = AttachmentReferenceStencilLayout<'a>;
 pub type AttachmentDescriptionStencilLayoutKHR<'a> = AttachmentDescriptionStencilLayout<'a>;
+pub type PipelineInfoEXT<'a> = PipelineInfoKHR<'a>;
 pub type PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT<'a> =
     PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'a>;
 pub type PhysicalDeviceTexelBufferAlignmentPropertiesEXT<'a> =
