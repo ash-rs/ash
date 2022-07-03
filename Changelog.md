@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `VK_EXT_sample_locations` device extension (#616)
 - Added `VK_NV_coverage_reduction_mode` device extension (#617)
 - Added `VK_KHR_ray_tracing_maintenance1` device extension (#620)
+- Added `VK_EXT_image_compression_control` device extension (#621)
 - Added new functions to `VK_KHR_swapchain`, available since Vulkan 1.1 (#629)
 - Added `VK_KHR_device_group_creation` instance extension (#630)
 - Added `VK_KHR_device_group` device extension (#631)
