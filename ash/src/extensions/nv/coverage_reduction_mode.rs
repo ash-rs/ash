@@ -19,6 +19,7 @@ impl CoverageReductionMode {
     }
 
     /// Retrieve the number of elements to pass to [`get_physical_device_supported_framebuffer_mixed_samples_combinations()`][Self::get_physical_device_supported_framebuffer_mixed_samples_combinations()]
+    #[inline]
     pub unsafe fn get_physical_device_supported_framebuffer_mixed_samples_combinations_len(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -38,6 +39,7 @@ impl CoverageReductionMode {
     ///
     /// Call [`get_physical_device_supported_framebuffer_mixed_samples_combinations_len()`][Self::get_physical_device_supported_framebuffer_mixed_samples_combinations_len()] to query the number of elements to pass to `out`.
     /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.
+    #[inline]
     pub unsafe fn get_physical_device_supported_framebuffer_mixed_samples_combinations(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -56,10 +58,12 @@ impl CoverageReductionMode {
         Ok(())
     }
 
+    #[inline]
     pub const fn name() -> &'static CStr {
         vk::NvCoverageReductionModeFn::name()
     }
 
+    #[inline]
     pub fn fp(&self) -> &vk::NvCoverageReductionModeFn {
         &self.fp
     }

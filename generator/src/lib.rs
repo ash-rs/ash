@@ -1028,6 +1028,7 @@ pub fn generate_extension_commands<'a>(
     let byte_name_ident = Literal::byte_string(format!("{}\0", extension_name).as_bytes());
     let extension_cstr = quote! {
         impl #ident {
+            #[inline]
             pub const fn name() -> &'static ::std::ffi::CStr {
                 unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(#byte_name_ident) }
             }
@@ -1332,7 +1333,9 @@ pub fn generate_enum<'a>(
             #struct_attribute
             pub struct #ident(pub(crate) i32);
             impl #ident {
+                #[inline]
                 pub const fn from_raw(x: i32) -> Self { Self(x) }
+                #[inline]
                 pub const fn as_raw(self) -> i32 { self.0 }
             }
             #impl_block

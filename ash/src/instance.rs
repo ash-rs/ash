@@ -440,6 +440,7 @@ impl Instance {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceQueueFamilyProperties.html>
+    #[inline]
     pub unsafe fn get_physical_device_queue_family_properties(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -468,6 +469,7 @@ impl Instance {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumeratePhysicalDevices.html>
+    #[inline]
     pub unsafe fn enumerate_physical_devices(&self) -> VkResult<Vec<vk::PhysicalDevice>> {
         read_into_uninitialized_vector(|count, data| {
             (self.instance_fn_1_0.enumerate_physical_devices)(self.handle(), count, data)
@@ -475,6 +477,7 @@ impl Instance {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumerateDeviceExtensionProperties.html>
+    #[inline]
     pub unsafe fn enumerate_device_extension_properties(
         &self,
         device: vk::PhysicalDevice,
@@ -490,6 +493,7 @@ impl Instance {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumerateDeviceLayerProperties.html>
+    #[inline]
     pub unsafe fn enumerate_device_layer_properties(
         &self,
         device: vk::PhysicalDevice,
@@ -500,6 +504,7 @@ impl Instance {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSparseImageFormatProperties.html>
+    #[inline]
     pub unsafe fn get_physical_device_sparse_image_format_properties(
         &self,
         physical_device: vk::PhysicalDevice,

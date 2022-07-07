@@ -21,6 +21,7 @@ impl DisplaySwapchain {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateSharedSwapchainsKHR.html>
+    #[inline]
     pub unsafe fn create_shared_swapchains(
         &self,
         create_infos: &[vk::SwapchainCreateInfoKHR],
@@ -38,14 +39,17 @@ impl DisplaySwapchain {
         err_code.result_with_success(swapchains)
     }
 
+    #[inline]
     pub const fn name() -> &'static CStr {
         vk::KhrDisplaySwapchainFn::name()
     }
 
+    #[inline]
     pub fn fp(&self) -> &vk::KhrDisplaySwapchainFn {
         &self.fp
     }
 
+    #[inline]
     pub fn device(&self) -> vk::Device {
         self.handle
     }

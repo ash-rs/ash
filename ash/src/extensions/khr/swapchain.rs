@@ -23,6 +23,7 @@ impl Swapchain {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateSwapchainKHR.html>
+    #[inline]
     pub unsafe fn create_swapchain(
         &self,
         create_info: &vk::SwapchainCreateInfoKHR,
@@ -39,6 +40,7 @@ impl Swapchain {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroySwapchainKHR.html>
+    #[inline]
     pub unsafe fn destroy_swapchain(
         &self,
         swapchain: vk::SwapchainKHR,
@@ -48,6 +50,7 @@ impl Swapchain {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetSwapchainImagesKHR.html>
+    #[inline]
     pub unsafe fn get_swapchain_images(
         &self,
         swapchain: vk::SwapchainKHR,
@@ -60,6 +63,7 @@ impl Swapchain {
     /// On success, returns the next image's index and whether the swapchain is suboptimal for the surface.
     ///
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkAcquireNextImageKHR.html>
+    #[inline]
     pub unsafe fn acquire_next_image(
         &self,
         swapchain: vk::SwapchainKHR,
@@ -86,6 +90,7 @@ impl Swapchain {
     /// On success, returns whether the swapchain is suboptimal for the surface.
     ///
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkQueuePresentKHR.html>
+    #[inline]
     pub unsafe fn queue_present(
         &self,
         queue: vk::Queue,
@@ -108,6 +113,7 @@ impl Swapchain {
     ///
     /// [Vulkan 1.1]: https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_VERSION_1_1.html
     /// [`VK_KHR_surface`]: https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_surface.html
+    #[inline]
     pub unsafe fn get_device_group_present_capabilities(
         &self,
         device_group_present_capabilities: &mut vk::DeviceGroupPresentCapabilitiesKHR,
@@ -128,6 +134,7 @@ impl Swapchain {
     ///
     /// [Vulkan 1.1]: https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_VERSION_1_1.html
     /// [`VK_KHR_surface`]: https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_surface.html
+    #[inline]
     pub unsafe fn get_device_group_surface_present_modes(
         &self,
         surface: vk::SurfaceKHR,
@@ -146,6 +153,7 @@ impl Swapchain {
     ///
     /// [Vulkan 1.1]: https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_VERSION_1_1.html
     /// [`VK_KHR_surface`]: https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_surface.html
+    #[inline]
     pub unsafe fn get_physical_device_present_rectangles(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -172,6 +180,7 @@ impl Swapchain {
     ///
     /// [Vulkan 1.1]: https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_VERSION_1_1.html
     /// [`VK_KHR_swapchain`]: https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_swapchain.html
+    #[inline]
     pub unsafe fn acquire_next_image2(
         &self,
         acquire_info: &vk::AcquireNextImageInfoKHR,
@@ -185,14 +194,17 @@ impl Swapchain {
         }
     }
 
+    #[inline]
     pub const fn name() -> &'static CStr {
         vk::KhrSwapchainFn::name()
     }
 
+    #[inline]
     pub fn fp(&self) -> &vk::KhrSwapchainFn {
         &self.fp
     }
 
+    #[inline]
     pub fn device(&self) -> vk::Device {
         self.handle
     }
