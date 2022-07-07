@@ -18,6 +18,7 @@ impl SampleLocations {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceMultisamplePropertiesEXT.html>
+    #[inline]
     pub unsafe fn get_physical_device_multisample_properties(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -32,6 +33,7 @@ impl SampleLocations {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetSampleLocationsEXT.html>
+    #[inline]
     pub unsafe fn cmd_set_sample_locations(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -40,10 +42,12 @@ impl SampleLocations {
         (self.fp.cmd_set_sample_locations_ext)(command_buffer, sample_locations_info)
     }
 
+    #[inline]
     pub const fn name() -> &'static CStr {
         vk::ExtSampleLocationsFn::name()
     }
 
+    #[inline]
     pub fn fp(&self) -> &vk::ExtSampleLocationsFn {
         &self.fp
     }

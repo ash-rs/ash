@@ -21,6 +21,7 @@ impl ImageDrmFormatModifier {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetImageDrmFormatModifierPropertiesEXT.html>
+    #[inline]
     pub unsafe fn get_image_drm_format_modifier_properties(
         &self,
         image: vk::Image,
@@ -30,14 +31,17 @@ impl ImageDrmFormatModifier {
             .result()
     }
 
+    #[inline]
     pub const fn name() -> &'static CStr {
         vk::ExtImageDrmFormatModifierFn::name()
     }
 
+    #[inline]
     pub fn fp(&self) -> &vk::ExtImageDrmFormatModifierFn {
         &self.fp
     }
 
+    #[inline]
     pub fn device(&self) -> vk::Device {
         self.handle
     }

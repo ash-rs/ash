@@ -21,6 +21,7 @@ impl Display {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceDisplayPropertiesKHR.html>
+    #[inline]
     pub unsafe fn get_physical_device_display_properties(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -31,6 +32,7 @@ impl Display {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceDisplayPlanePropertiesKHR.html>
+    #[inline]
     pub unsafe fn get_physical_device_display_plane_properties(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -41,6 +43,7 @@ impl Display {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDisplayPlaneSupportedDisplaysKHR.html>
+    #[inline]
     pub unsafe fn get_display_plane_supported_displays(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -57,6 +60,7 @@ impl Display {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDisplayModePropertiesKHR.html>
+    #[inline]
     pub unsafe fn get_display_mode_properties(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -68,6 +72,7 @@ impl Display {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateDisplayModeKHR.html>
+    #[inline]
     pub unsafe fn create_display_mode(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -87,6 +92,7 @@ impl Display {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDisplayPlaneCapabilitiesKHR.html>
+    #[inline]
     pub unsafe fn get_display_plane_capabilities(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -104,6 +110,7 @@ impl Display {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateDisplayPlaneSurfaceKHR.html>
+    #[inline]
     pub unsafe fn create_display_plane_surface(
         &self,
         create_info: &vk::DisplaySurfaceCreateInfoKHR,
@@ -119,14 +126,17 @@ impl Display {
         .result_with_success(surface.assume_init())
     }
 
+    #[inline]
     pub const fn name() -> &'static CStr {
         vk::KhrDisplayFn::name()
     }
 
+    #[inline]
     pub fn fp(&self) -> &vk::KhrDisplayFn {
         &self.fp
     }
 
+    #[inline]
     pub fn instance(&self) -> vk::Instance {
         self.handle
     }
