@@ -57,7 +57,7 @@ pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
-pub const HEADER_VERSION: u32 = 219u32;
+pub const HEADER_VERSION: u32 = 220u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -16101,6 +16101,7 @@ impl ::std::default::Default for ShaderModuleValidationCacheCreateInfoEXT<'_> {
     }
 }
 unsafe impl ExtendsShaderModuleCreateInfo for ShaderModuleValidationCacheCreateInfoEXT<'_> {}
+unsafe impl ExtendsPipelineShaderStageCreateInfo for ShaderModuleValidationCacheCreateInfoEXT<'_> {}
 impl<'a> ShaderModuleValidationCacheCreateInfoEXT<'a> {
     #[inline]
     pub fn validation_cache(mut self, validation_cache: ValidationCacheEXT) -> Self {

@@ -17349,6 +17349,10 @@ impl AmdExtension317Fn {
     }
 }
 #[doc = "Generated from 'VK_AMD_extension_317'"]
+impl AccelerationStructureCreateFlagsKHR {
+    pub const RESERVED_3_AMD: Self = Self(0b1000);
+}
+#[doc = "Generated from 'VK_AMD_extension_317'"]
 impl AccessFlags2 {
     pub const RESERVED_41_AMD: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
 }
@@ -17364,6 +17368,7 @@ impl BufferUsageFlags {
 #[doc = "Generated from 'VK_AMD_extension_317'"]
 impl DescriptorSetLayoutCreateFlags {
     pub const RESERVED_4_AMD: Self = Self(0b1_0000);
+    pub const RESERVED_5_AMD: Self = Self(0b10_0000);
 }
 #[doc = "Generated from 'VK_AMD_extension_317'"]
 impl ImageCreateFlags {

@@ -40,6 +40,10 @@ impl fmt::Debug for AccelerationStructureCreateFlagsKHR {
                 "DEVICE_ADDRESS_CAPTURE_REPLAY",
             ),
             (
+                AccelerationStructureCreateFlagsKHR::RESERVED_3_AMD.0,
+                "RESERVED_3_AMD",
+            ),
+            (
                 AccelerationStructureCreateFlagsKHR::MOTION_NV.0,
                 "MOTION_NV",
             ),
@@ -1100,6 +1104,10 @@ impl fmt::Debug for DescriptorSetLayoutCreateFlags {
             (
                 DescriptorSetLayoutCreateFlags::RESERVED_4_AMD.0,
                 "RESERVED_4_AMD",
+            ),
+            (
+                DescriptorSetLayoutCreateFlags::RESERVED_5_AMD.0,
+                "RESERVED_5_AMD",
             ),
             (
                 DescriptorSetLayoutCreateFlags::RESERVED_3_AMD.0,
