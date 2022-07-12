@@ -2025,7 +2025,7 @@ impl Device {
             data_length <= data.len(),
             "query_count was higher than the length of the slice"
         );
-        let data_size = mem::size_of::<T>() * data.len();
+        let data_size = mem::size_of_val(data);
         (self.device_fn_1_0.get_query_pool_results)(
             self.handle(),
             query_pool,
