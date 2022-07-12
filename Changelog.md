@@ -28,6 +28,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Removed experimental AMD extensions (#607)
 
+### Fixed
+
+-  Fix invalid data length calculated inside of `get_query_pool_results` when called with `WITH_AVAILABILITY` flag (#640)
+
 ## [0.37.0] - 2022-03-23
 
 ### Changed
