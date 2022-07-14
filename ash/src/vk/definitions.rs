@@ -57,7 +57,7 @@ pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
-pub const HEADER_VERSION: u32 = 220u32;
+pub const HEADER_VERSION: u32 = 221u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -39943,6 +39943,151 @@ impl<'a> PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'a> {
     #[inline]
     pub fn non_seamless_cube_map(mut self, non_seamless_cube_map: bool) -> Self {
         self.non_seamless_cube_map = non_seamless_cube_map.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDevicePipelineRobustnessFeaturesEXT.html>"]
+pub struct PhysicalDevicePipelineRobustnessFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub pipeline_robustness: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDevicePipelineRobustnessFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PHYSICAL_DEVICE_PIPELINE_ROBUSTNESS_FEATURES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            pipeline_robustness: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePipelineRobustnessFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePipelineRobustnessFeaturesEXT<'_> {}
+impl<'a> PhysicalDevicePipelineRobustnessFeaturesEXT<'a> {
+    #[inline]
+    pub fn pipeline_robustness(mut self, pipeline_robustness: bool) -> Self {
+        self.pipeline_robustness = pipeline_robustness.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineRobustnessCreateInfoEXT.html>"]
+pub struct PipelineRobustnessCreateInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub storage_buffers: PipelineRobustnessBufferBehaviorEXT,
+    pub uniform_buffers: PipelineRobustnessBufferBehaviorEXT,
+    pub vertex_inputs: PipelineRobustnessBufferBehaviorEXT,
+    pub images: PipelineRobustnessImageBehaviorEXT,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PipelineRobustnessCreateInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PIPELINE_ROBUSTNESS_CREATE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            storage_buffers: PipelineRobustnessBufferBehaviorEXT::default(),
+            uniform_buffers: PipelineRobustnessBufferBehaviorEXT::default(),
+            vertex_inputs: PipelineRobustnessBufferBehaviorEXT::default(),
+            images: PipelineRobustnessImageBehaviorEXT::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineRobustnessCreateInfoEXT<'_> {}
+unsafe impl ExtendsComputePipelineCreateInfo for PipelineRobustnessCreateInfoEXT<'_> {}
+unsafe impl ExtendsPipelineShaderStageCreateInfo for PipelineRobustnessCreateInfoEXT<'_> {}
+unsafe impl ExtendsRayTracingPipelineCreateInfoKHR for PipelineRobustnessCreateInfoEXT<'_> {}
+impl<'a> PipelineRobustnessCreateInfoEXT<'a> {
+    #[inline]
+    pub fn storage_buffers(mut self, storage_buffers: PipelineRobustnessBufferBehaviorEXT) -> Self {
+        self.storage_buffers = storage_buffers;
+        self
+    }
+    #[inline]
+    pub fn uniform_buffers(mut self, uniform_buffers: PipelineRobustnessBufferBehaviorEXT) -> Self {
+        self.uniform_buffers = uniform_buffers;
+        self
+    }
+    #[inline]
+    pub fn vertex_inputs(mut self, vertex_inputs: PipelineRobustnessBufferBehaviorEXT) -> Self {
+        self.vertex_inputs = vertex_inputs;
+        self
+    }
+    #[inline]
+    pub fn images(mut self, images: PipelineRobustnessImageBehaviorEXT) -> Self {
+        self.images = images;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDevicePipelineRobustnessPropertiesEXT.html>"]
+pub struct PhysicalDevicePipelineRobustnessPropertiesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub default_robustness_storage_buffers: PipelineRobustnessBufferBehaviorEXT,
+    pub default_robustness_uniform_buffers: PipelineRobustnessBufferBehaviorEXT,
+    pub default_robustness_vertex_inputs: PipelineRobustnessBufferBehaviorEXT,
+    pub default_robustness_images: PipelineRobustnessImageBehaviorEXT,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDevicePipelineRobustnessPropertiesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PHYSICAL_DEVICE_PIPELINE_ROBUSTNESS_PROPERTIES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            default_robustness_storage_buffers: PipelineRobustnessBufferBehaviorEXT::default(),
+            default_robustness_uniform_buffers: PipelineRobustnessBufferBehaviorEXT::default(),
+            default_robustness_vertex_inputs: PipelineRobustnessBufferBehaviorEXT::default(),
+            default_robustness_images: PipelineRobustnessImageBehaviorEXT::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePipelineRobustnessPropertiesEXT<'_> {}
+impl<'a> PhysicalDevicePipelineRobustnessPropertiesEXT<'a> {
+    #[inline]
+    pub fn default_robustness_storage_buffers(
+        mut self,
+        default_robustness_storage_buffers: PipelineRobustnessBufferBehaviorEXT,
+    ) -> Self {
+        self.default_robustness_storage_buffers = default_robustness_storage_buffers;
+        self
+    }
+    #[inline]
+    pub fn default_robustness_uniform_buffers(
+        mut self,
+        default_robustness_uniform_buffers: PipelineRobustnessBufferBehaviorEXT,
+    ) -> Self {
+        self.default_robustness_uniform_buffers = default_robustness_uniform_buffers;
+        self
+    }
+    #[inline]
+    pub fn default_robustness_vertex_inputs(
+        mut self,
+        default_robustness_vertex_inputs: PipelineRobustnessBufferBehaviorEXT,
+    ) -> Self {
+        self.default_robustness_vertex_inputs = default_robustness_vertex_inputs;
+        self
+    }
+    #[inline]
+    pub fn default_robustness_images(
+        mut self,
+        default_robustness_images: PipelineRobustnessImageBehaviorEXT,
+    ) -> Self {
+        self.default_robustness_images = default_robustness_images;
         self
     }
 }

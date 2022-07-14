@@ -1562,12 +1562,12 @@ impl ImgFilterCubicFn {
 }
 #[doc = "Generated from 'VK_IMG_filter_cubic'"]
 impl Filter {
-    pub const CUBIC_IMG: Self = Self(1_000_015_000);
+    pub const CUBIC_IMG: Self = Self::CUBIC_EXT;
 }
 #[doc = "Generated from 'VK_IMG_filter_cubic'"]
 impl FormatFeatureFlags {
     #[doc = "Format can be filtered with VK_FILTER_CUBIC_IMG when being sampled"]
-    pub const SAMPLED_IMAGE_FILTER_CUBIC_IMG: Self = Self(0b10_0000_0000_0000);
+    pub const SAMPLED_IMAGE_FILTER_CUBIC_IMG: Self = Self::SAMPLED_IMAGE_FILTER_CUBIC_EXT;
 }
 impl AmdExtension17Fn {
     #[inline]
@@ -4494,24 +4494,30 @@ impl StructureType {
     pub const IMAGE_VIEW_ASTC_DECODE_MODE_EXT: Self = Self(1_000_067_000);
     pub const PHYSICAL_DEVICE_ASTC_DECODE_FEATURES_EXT: Self = Self(1_000_067_001);
 }
-impl ImgExtension69Fn {
+impl ExtPipelineRobustnessFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_IMG_extension_69\0") }
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pipeline_robustness\0") }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct ImgExtension69Fn {}
-unsafe impl Send for ImgExtension69Fn {}
-unsafe impl Sync for ImgExtension69Fn {}
-impl ImgExtension69Fn {
+pub struct ExtPipelineRobustnessFn {}
+unsafe impl Send for ExtPipelineRobustnessFn {}
+unsafe impl Sync for ExtPipelineRobustnessFn {}
+impl ExtPipelineRobustnessFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         Self {}
     }
+}
+#[doc = "Generated from 'VK_EXT_pipeline_robustness'"]
+impl StructureType {
+    pub const PIPELINE_ROBUSTNESS_CREATE_INFO_EXT: Self = Self(1_000_068_000);
+    pub const PHYSICAL_DEVICE_PIPELINE_ROBUSTNESS_FEATURES_EXT: Self = Self(1_000_068_001);
+    pub const PHYSICAL_DEVICE_PIPELINE_ROBUSTNESS_PROPERTIES_EXT: Self = Self(1_000_068_002);
 }
 impl KhrMaintenance1Fn {
     #[inline]
@@ -11164,11 +11170,11 @@ impl ExtFilterCubicFn {
 }
 #[doc = "Generated from 'VK_EXT_filter_cubic'"]
 impl Filter {
-    pub const CUBIC_EXT: Self = Self::CUBIC_IMG;
+    pub const CUBIC_EXT: Self = Self(1_000_015_000);
 }
 #[doc = "Generated from 'VK_EXT_filter_cubic'"]
 impl FormatFeatureFlags {
-    pub const SAMPLED_IMAGE_FILTER_CUBIC_EXT: Self = Self::SAMPLED_IMAGE_FILTER_CUBIC_IMG;
+    pub const SAMPLED_IMAGE_FILTER_CUBIC_EXT: Self = Self(0b10_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_EXT_filter_cubic'"]
 impl StructureType {
@@ -22512,6 +22518,25 @@ pub struct ExtExtension484Fn {}
 unsafe impl Send for ExtExtension484Fn {}
 unsafe impl Sync for ExtExtension484Fn {}
 impl ExtExtension484Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl QcomExtension485Fn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_extension_485\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct QcomExtension485Fn {}
+unsafe impl Send for QcomExtension485Fn {}
+unsafe impl Sync for QcomExtension485Fn {}
+impl QcomExtension485Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
