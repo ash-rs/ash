@@ -21551,18 +21551,18 @@ impl DeviceQueueCreateFlags {
 impl QueueFlags {
     pub const RESERVED_7_QCOM: Self = Self(0b1000_0000);
 }
-impl QcomExtension441Fn {
+impl QcomImageProcessingFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_extension_441\0") }
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_image_processing\0") }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct QcomExtension441Fn {}
-unsafe impl Send for QcomExtension441Fn {}
-unsafe impl Sync for QcomExtension441Fn {}
-impl QcomExtension441Fn {
+pub struct QcomImageProcessingFn {}
+unsafe impl Send for QcomImageProcessingFn {}
+unsafe impl Sync for QcomImageProcessingFn {}
+impl QcomImageProcessingFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -21570,21 +21570,34 @@ impl QcomExtension441Fn {
         Self {}
     }
 }
-#[doc = "Generated from 'VK_QCOM_extension_441'"]
+#[doc = "Generated from 'VK_QCOM_image_processing'"]
+impl DescriptorType {
+    pub const SAMPLE_WEIGHT_IMAGE_QCOM: Self = Self(1_000_440_000);
+    pub const BLOCK_MATCH_IMAGE_QCOM: Self = Self(1_000_440_001);
+}
+#[doc = "Generated from 'VK_QCOM_image_processing'"]
 impl FormatFeatureFlags2 {
-    pub const RESERVED_34_QCOM: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000);
-    pub const RESERVED_35_QCOM: Self = Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000);
-    pub const RESERVED_36_QCOM: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000_0000);
-    pub const RESERVED_37_QCOM: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const WEIGHT_IMAGE_QCOM: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const WEIGHT_SAMPLED_IMAGE_QCOM: Self =
+        Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const BLOCK_MATCHING_QCOM: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const BOX_FILTER_SAMPLED_QCOM: Self =
+        Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from 'VK_QCOM_extension_441'"]
+#[doc = "Generated from 'VK_QCOM_image_processing'"]
 impl ImageUsageFlags {
-    pub const RESERVED_20_QCOM: Self = Self(0b1_0000_0000_0000_0000_0000);
-    pub const RESERVED_21_QCOM: Self = Self(0b10_0000_0000_0000_0000_0000);
+    pub const SAMPLE_WEIGHT_QCOM: Self = Self(0b1_0000_0000_0000_0000_0000);
+    pub const SAMPLE_BLOCK_MATCH_QCOM: Self = Self(0b10_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from 'VK_QCOM_extension_441'"]
+#[doc = "Generated from 'VK_QCOM_image_processing'"]
 impl SamplerCreateFlags {
     pub const IMAGE_PROCESSING_QCOM: Self = Self(0b1_0000);
+}
+#[doc = "Generated from 'VK_QCOM_image_processing'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_IMAGE_PROCESSING_FEATURES_QCOM: Self = Self(1_000_440_000);
+    pub const PHYSICAL_DEVICE_IMAGE_PROCESSING_PROPERTIES_QCOM: Self = Self(1_000_440_001);
+    pub const IMAGE_VIEW_SAMPLE_WEIGHT_CREATE_INFO_QCOM: Self = Self(1_000_440_002);
 }
 impl CoreaviExtension442Fn {
     #[inline]
@@ -22525,22 +22538,87 @@ impl ExtExtension484Fn {
         Self {}
     }
 }
-impl QcomExtension485Fn {
+impl QcomTilePropertiesFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_extension_485\0") }
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_tile_properties\0") }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetFramebufferTilePropertiesQCOM = unsafe extern "system" fn(
+    device: Device,
+    framebuffer: Framebuffer,
+    p_properties_count: *mut u32,
+    p_properties: *mut TilePropertiesQCOM,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetDynamicRenderingTilePropertiesQCOM = unsafe extern "system" fn(
+    device: Device,
+    p_rendering_info: *const RenderingInfo,
+    p_properties: *mut TilePropertiesQCOM,
+) -> Result;
 #[derive(Clone)]
-pub struct QcomExtension485Fn {}
-unsafe impl Send for QcomExtension485Fn {}
-unsafe impl Sync for QcomExtension485Fn {}
-impl QcomExtension485Fn {
+pub struct QcomTilePropertiesFn {
+    pub get_framebuffer_tile_properties_qcom: PFN_vkGetFramebufferTilePropertiesQCOM,
+    pub get_dynamic_rendering_tile_properties_qcom: PFN_vkGetDynamicRenderingTilePropertiesQCOM,
+}
+unsafe impl Send for QcomTilePropertiesFn {}
+unsafe impl Sync for QcomTilePropertiesFn {}
+impl QcomTilePropertiesFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        Self {}
+        Self {
+            get_framebuffer_tile_properties_qcom: unsafe {
+                unsafe extern "system" fn get_framebuffer_tile_properties_qcom(
+                    _device: Device,
+                    _framebuffer: Framebuffer,
+                    _p_properties_count: *mut u32,
+                    _p_properties: *mut TilePropertiesQCOM,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_framebuffer_tile_properties_qcom)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetFramebufferTilePropertiesQCOM\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_framebuffer_tile_properties_qcom
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_dynamic_rendering_tile_properties_qcom: unsafe {
+                unsafe extern "system" fn get_dynamic_rendering_tile_properties_qcom(
+                    _device: Device,
+                    _p_rendering_info: *const RenderingInfo,
+                    _p_properties: *mut TilePropertiesQCOM,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_dynamic_rendering_tile_properties_qcom)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetDynamicRenderingTilePropertiesQCOM\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_dynamic_rendering_tile_properties_qcom
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
     }
+}
+#[doc = "Generated from 'VK_QCOM_tile_properties'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_TILE_PROPERTIES_FEATURES_QCOM: Self = Self(1_000_484_000);
+    pub const TILE_PROPERTIES_QCOM: Self = Self(1_000_484_001);
 }

@@ -57,7 +57,7 @@ pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
-pub const HEADER_VERSION: u32 = 221u32;
+pub const HEADER_VERSION: u32 = 222u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -40088,6 +40088,215 @@ impl<'a> PhysicalDevicePipelineRobustnessPropertiesEXT<'a> {
         default_robustness_images: PipelineRobustnessImageBehaviorEXT,
     ) -> Self {
         self.default_robustness_images = default_robustness_images;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImageViewSampleWeightCreateInfoQCOM.html>"]
+pub struct ImageViewSampleWeightCreateInfoQCOM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub filter_center: Offset2D,
+    pub filter_size: Extent2D,
+    pub num_phases: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ImageViewSampleWeightCreateInfoQCOM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::IMAGE_VIEW_SAMPLE_WEIGHT_CREATE_INFO_QCOM,
+            p_next: ::std::ptr::null(),
+            filter_center: Offset2D::default(),
+            filter_size: Extent2D::default(),
+            num_phases: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsImageViewCreateInfo for ImageViewSampleWeightCreateInfoQCOM<'_> {}
+impl<'a> ImageViewSampleWeightCreateInfoQCOM<'a> {
+    #[inline]
+    pub fn filter_center(mut self, filter_center: Offset2D) -> Self {
+        self.filter_center = filter_center;
+        self
+    }
+    #[inline]
+    pub fn filter_size(mut self, filter_size: Extent2D) -> Self {
+        self.filter_size = filter_size;
+        self
+    }
+    #[inline]
+    pub fn num_phases(mut self, num_phases: u32) -> Self {
+        self.num_phases = num_phases;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceImageProcessingFeaturesQCOM.html>"]
+pub struct PhysicalDeviceImageProcessingFeaturesQCOM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub texture_sample_weighted: Bool32,
+    pub texture_box_filter: Bool32,
+    pub texture_block_match: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceImageProcessingFeaturesQCOM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PHYSICAL_DEVICE_IMAGE_PROCESSING_FEATURES_QCOM,
+            p_next: ::std::ptr::null_mut(),
+            texture_sample_weighted: Bool32::default(),
+            texture_box_filter: Bool32::default(),
+            texture_block_match: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImageProcessingFeaturesQCOM<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImageProcessingFeaturesQCOM<'_> {}
+impl<'a> PhysicalDeviceImageProcessingFeaturesQCOM<'a> {
+    #[inline]
+    pub fn texture_sample_weighted(mut self, texture_sample_weighted: bool) -> Self {
+        self.texture_sample_weighted = texture_sample_weighted.into();
+        self
+    }
+    #[inline]
+    pub fn texture_box_filter(mut self, texture_box_filter: bool) -> Self {
+        self.texture_box_filter = texture_box_filter.into();
+        self
+    }
+    #[inline]
+    pub fn texture_block_match(mut self, texture_block_match: bool) -> Self {
+        self.texture_block_match = texture_block_match.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceImageProcessingPropertiesQCOM.html>"]
+pub struct PhysicalDeviceImageProcessingPropertiesQCOM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub max_weight_filter_phases: u32,
+    pub max_weight_filter_dimension: Extent2D,
+    pub max_block_match_region: Extent2D,
+    pub max_box_filter_block_size: Extent2D,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceImageProcessingPropertiesQCOM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PHYSICAL_DEVICE_IMAGE_PROCESSING_PROPERTIES_QCOM,
+            p_next: ::std::ptr::null_mut(),
+            max_weight_filter_phases: u32::default(),
+            max_weight_filter_dimension: Extent2D::default(),
+            max_block_match_region: Extent2D::default(),
+            max_box_filter_block_size: Extent2D::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceImageProcessingPropertiesQCOM<'_> {}
+impl<'a> PhysicalDeviceImageProcessingPropertiesQCOM<'a> {
+    #[inline]
+    pub fn max_weight_filter_phases(mut self, max_weight_filter_phases: u32) -> Self {
+        self.max_weight_filter_phases = max_weight_filter_phases;
+        self
+    }
+    #[inline]
+    pub fn max_weight_filter_dimension(mut self, max_weight_filter_dimension: Extent2D) -> Self {
+        self.max_weight_filter_dimension = max_weight_filter_dimension;
+        self
+    }
+    #[inline]
+    pub fn max_block_match_region(mut self, max_block_match_region: Extent2D) -> Self {
+        self.max_block_match_region = max_block_match_region;
+        self
+    }
+    #[inline]
+    pub fn max_box_filter_block_size(mut self, max_box_filter_block_size: Extent2D) -> Self {
+        self.max_box_filter_block_size = max_box_filter_block_size;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceTilePropertiesFeaturesQCOM.html>"]
+pub struct PhysicalDeviceTilePropertiesFeaturesQCOM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub tile_properties: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceTilePropertiesFeaturesQCOM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PHYSICAL_DEVICE_TILE_PROPERTIES_FEATURES_QCOM,
+            p_next: ::std::ptr::null_mut(),
+            tile_properties: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceTilePropertiesFeaturesQCOM<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceTilePropertiesFeaturesQCOM<'_> {}
+impl<'a> PhysicalDeviceTilePropertiesFeaturesQCOM<'a> {
+    #[inline]
+    pub fn tile_properties(mut self, tile_properties: bool) -> Self {
+        self.tile_properties = tile_properties.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkTilePropertiesQCOM.html>"]
+pub struct TilePropertiesQCOM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub tile_size: Extent3D,
+    pub apron_size: Extent2D,
+    pub origin: Offset2D,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for TilePropertiesQCOM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::TILE_PROPERTIES_QCOM,
+            p_next: ::std::ptr::null_mut(),
+            tile_size: Extent3D::default(),
+            apron_size: Extent2D::default(),
+            origin: Offset2D::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+impl<'a> TilePropertiesQCOM<'a> {
+    #[inline]
+    pub fn tile_size(mut self, tile_size: Extent3D) -> Self {
+        self.tile_size = tile_size;
+        self
+    }
+    #[inline]
+    pub fn apron_size(mut self, apron_size: Extent2D) -> Self {
+        self.apron_size = apron_size;
+        self
+    }
+    #[inline]
+    pub fn origin(mut self, origin: Offset2D) -> Self {
+        self.origin = origin;
         self
     }
 }
