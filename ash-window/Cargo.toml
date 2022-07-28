@@ -22,7 +22,7 @@ raw-window-handle = "0.3.4"
 raw-window-metal = "0.1"
 
 [dev-dependencies]
-winit = "0.19.4"
+winit = "0.26"
 ash = { path = "../ash", version = "0.37", default-features = false, features = ["linked"] }
 
 [[example]]
