@@ -6,7 +6,7 @@ A very lightweight wrapper around Vulkan
 [![Documentation](https://docs.rs/ash/badge.svg)](https://docs.rs/ash)
 [![Build Status](https://github.com/MaikKlein/ash/workflows/CI/badge.svg)](https://github.com/MaikKlein/ash/actions?workflow=CI)
 [![LICENSE](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE-MIT)
-[![LICENSE](https://img.shields.io/badge/license-apache-blue.svg)](LICENSE-APACHE)
+[![LICENSE](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE-APACHE)
 [![Join the chat at https://gitter.im/MaikKlein/ash](https://badges.gitter.im/MaikKlein/ash.svg)](https://gitter.im/MaikKlein/ash?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Overview
