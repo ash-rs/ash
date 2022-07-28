@@ -6,6 +6,7 @@
 
 ### Changed
 
+- Bumped `raw-window-handle` to `0.5.0` (#645)
 - Bumped `raw-window-handle` to `0.4.2` (#505)
 
 ## [0.10.0] - 2022-03-23

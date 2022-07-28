@@ -7,7 +7,9 @@ use ash::{
     prelude::*,
     vk, Entry, Instance,
 };
-use raw_window_handle::{HasRawWindowHandle, RawWindowHandle};
+use raw_window_handle::{
+    HasRawDisplayHandle, HasRawWindowHandle, RawDisplayHandle, RawWindowHandle,
+};
 
 /// Create a surface from a raw surface handle.
 ///
@@ -21,54 +23,59 @@ use raw_window_handle::{HasRawWindowHandle, RawWindowHandle};
 pub unsafe fn create_surface(
     entry: &Entry,
     instance: &Instance,
+    // TODO: Cannot write `&dyn HasRawDisplayHandle + HasRawWindowHandle :/
+    display_handle: &dyn HasRawDisplayHandle,
     window_handle: &dyn HasRawWindowHandle,
     allocation_callbacks: Option<&vk::AllocationCallbacks>,
 ) -> VkResult<vk::SurfaceKHR> {
-    match window_handle.raw_window_handle() {
-        RawWindowHandle::Win32(handle) => {
+    match (
+        display_handle.raw_display_handle(),
+        window_handle.raw_window_handle(),
+    ) {
+        (RawDisplayHandle::Windows(_), RawWindowHandle::Win32(window)) => {
             let surface_desc = vk::Win32SurfaceCreateInfoKHR::default()
-                .hinstance(handle.hinstance)
-                .hwnd(handle.hwnd);
+                .hinstance(window.hinstance)
+                .hwnd(window.hwnd);
             let surface_fn = khr::Win32Surface::new(entry, instance);
             surface_fn.create_win32_surface(&surface_desc, allocation_callbacks)
         }
 
-        RawWindowHandle::Wayland(handle) => {
+        (RawDisplayHandle::Wayland(display), RawWindowHandle::Wayland(window)) => {
             let surface_desc = vk::WaylandSurfaceCreateInfoKHR::default()
-                .display(handle.display)
-                .surface(handle.surface);
+                .display(display.display)
+                .surface(window.surface);
             let surface_fn = khr::WaylandSurface::new(entry, instance);
             surface_fn.create_wayland_surface(&surface_desc, allocation_callbacks)
         }
 
-        RawWindowHandle::Xlib(handle) => {
+        (RawDisplayHandle::Xlib(display), RawWindowHandle::Xlib(window)) => {
             let surface_desc = vk::XlibSurfaceCreateInfoKHR::default()
-                .dpy(handle.display as *mut _)
-                .window(handle.window);
+                .dpy(display.display as *mut _)
+                .window(window.window);
             let surface_fn = khr::XlibSurface::new(entry, instance);
             surface_fn.create_xlib_surface(&surface_desc, allocation_callbacks)
         }
 
-        RawWindowHandle::Xcb(handle) => {
+        (RawDisplayHandle::Xcb(display), RawWindowHandle::Xcb(window)) => {
             let surface_desc = vk::XcbSurfaceCreateInfoKHR::default()
-                .connection(handle.connection)
-                .window(handle.window);
+                .connection(display.connection)
+                .window(window.window);
             let surface_fn = khr::XcbSurface::new(entry, instance);
             surface_fn.create_xcb_surface(&surface_desc, allocation_callbacks)
         }
 
-        RawWindowHandle::AndroidNdk(handle) => {
+        (RawDisplayHandle::Android(_), RawWindowHandle::AndroidNdk(window)) => {
             let surface_desc =
-                vk::AndroidSurfaceCreateInfoKHR::default().window(handle.a_native_window);
+                vk::AndroidSurfaceCreateInfoKHR::default().window(window.a_native_window);
             let surface_fn = khr::AndroidSurface::new(entry, instance);
             surface_fn.create_android_surface(&surface_desc, allocation_callbacks)
         }
 
         #[cfg(target_os = "macos")]
-        RawWindowHandle::AppKit(handle) => {
+        (RawDisplayHandle::AppKit(_), RawWindowHandle::AppKit(window)) => {
             use raw_window_metal::{appkit, Layer};
 
-            let layer = match appkit::metal_layer_from_handle(handle) {
+            let layer = match appkit::metal_layer_from_handle(window) {
                 Layer::Existing(layer) | Layer::Allocated(layer) => layer as *mut _,
                 Layer::None => return Err(vk::Result::ERROR_INITIALIZATION_FAILED),
             };
@@ -79,10 +86,10 @@ pub unsafe fn create_surface(
         }
 
         #[cfg(target_os = "ios")]
-        RawWindowHandle::UiKit(handle) => {
+        (RawDisplayHandle::UiKit(_), RawWindowHandle::UiKit(window)) => {
             use raw_window_metal::{uikit, Layer};
 
-            let layer = match uikit::metal_layer_from_handle(handle) {
+            let layer = match uikit::metal_layer_from_handle(window) {
                 Layer::Existing(layer) | Layer::Allocated(layer) => layer as *mut _,
                 Layer::None => return Err(vk::Result::ERROR_INITIALIZATION_FAILED),
             };
