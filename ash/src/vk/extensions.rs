@@ -14615,6 +14615,21 @@ impl ExtExtension259Fn {
         Self {}
     }
 }
+#[doc = "Generated from 'VK_EXT_extension_259'"]
+impl FormatFeatureFlags2 {
+    pub const RESERVED_44_EXT: Self =
+        Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const RESERVED_45_EXT: Self =
+        Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_extension_259'"]
+impl ImageCreateFlags {
+    pub const RESERVED_19_EXT: Self = Self(0b1000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_extension_259'"]
+impl QueueFlags {
+    pub const RESERVED_9_EXT: Self = Self(0b10_0000_0000);
+}
 impl ExtLineRasterizationFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -15982,7 +15997,7 @@ impl QcomRenderPassTransformFn {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_render_pass_transform\0")
         }
     }
-    pub const SPEC_VERSION: u32 = 2u32;
+    pub const SPEC_VERSION: u32 = 3u32;
 }
 #[derive(Clone)]
 pub struct QcomRenderPassTransformFn {}
