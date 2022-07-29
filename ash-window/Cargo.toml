@@ -19,7 +19,7 @@ ash = { path = "../ash", version = "0.37", default-features = false }
 raw-window-handle = "0.5"
 
 [target.'cfg(any(target_os = "macos", target_os = "ios"))'.dependencies]
-raw-window-metal = { git = "https://github.com/MarijnS95/raw-window-metal", rev = "0f7971c" }
+raw-window-metal = "0.3"
 
 [dev-dependencies]
 winit = "0.27"
