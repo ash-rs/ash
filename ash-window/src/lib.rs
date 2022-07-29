@@ -11,6 +11,16 @@ use raw_window_handle::{
     HasRawDisplayHandle, HasRawWindowHandle, RawDisplayHandle, RawWindowHandle,
 };
 
+pub trait HasRawDisplayAndWindowHandle: HasRawDisplayHandle + HasRawWindowHandle {
+    fn raw_display_and_window_handle(&self) -> (RawDisplayHandle, RawWindowHandle);
+}
+
+impl<T: HasRawDisplayHandle + HasRawWindowHandle> HasRawDisplayAndWindowHandle for T {
+    fn raw_display_and_window_handle(&self) -> (RawDisplayHandle, RawWindowHandle) {
+        (self.raw_display_handle(), self.raw_window_handle())
+    }
+}
+
 /// Create a surface from a raw surface handle.
 ///
 /// `instance` must have created with platform specific surface extensions enabled.
@@ -23,15 +33,10 @@ use raw_window_handle::{
 pub unsafe fn create_surface(
     entry: &Entry,
     instance: &Instance,
-    // TODO: Cannot write `&dyn HasRawDisplayHandle + HasRawWindowHandle :/
-    display_handle: &dyn HasRawDisplayHandle,
-    window_handle: &dyn HasRawWindowHandle,
+    handle: &dyn HasRawDisplayAndWindowHandle,
     allocation_callbacks: Option<&vk::AllocationCallbacks>,
 ) -> VkResult<vk::SurfaceKHR> {
-    match (
-        display_handle.raw_display_handle(),
-        window_handle.raw_window_handle(),
-    ) {
+    match handle.raw_display_and_window_handle() {
         (RawDisplayHandle::Windows(_), RawWindowHandle::Win32(window)) => {
             let surface_desc = vk::Win32SurfaceCreateInfoKHR::default()
                 .hinstance(window.hinstance)

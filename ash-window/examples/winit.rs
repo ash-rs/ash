@@ -34,7 +34,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             .build(&event_loop)?;
 
         // Create a surface from winit window.
-        let surface = ash_window::create_surface(&entry, &instance, &window, &window, None)?;
+        let surface = ash_window::create_surface(&entry, &instance, &window, None)?;
         let surface_fn = ash::extensions::khr::Surface::new(&entry, &instance);
         println!("surface: {:?}", surface);
 

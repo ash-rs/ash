@@ -281,8 +281,7 @@ impl ExampleBase {
             let debug_call_back = debug_utils_loader
                 .create_debug_utils_messenger(&debug_info, None)
                 .unwrap();
-            let surface =
-                ash_window::create_surface(&entry, &instance, &window, &window, None).unwrap();
+            let surface = ash_window::create_surface(&entry, &instance, &window, None).unwrap();
             let pdevices = instance
                 .enumerate_physical_devices()
                 .expect("Physical device error");
