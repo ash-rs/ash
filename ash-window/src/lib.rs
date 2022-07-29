@@ -2,11 +2,12 @@
 
 use std::os::raw::c_char;
 
-use ash::{extensions::khr, prelude::*, vk, Entry, Instance};
+use ash::{
+    extensions::{ext, khr},
+    prelude::*,
+    vk, Entry, Instance,
+};
 use raw_window_handle::{HasRawWindowHandle, RawWindowHandle};
-
-#[cfg(any(target_os = "macos", target_os = "ios"))]
-use ash::extensions::ext; // portability extensions
 
 /// Create a surface from a raw surface handle.
 ///
@@ -24,8 +25,7 @@ pub unsafe fn create_surface(
     allocation_callbacks: Option<&vk::AllocationCallbacks>,
 ) -> VkResult<vk::SurfaceKHR> {
     match window_handle.raw_window_handle() {
-        #[cfg(target_os = "windows")]
-        RawWindowHandle::Windows(handle) => {
+        RawWindowHandle::Win32(handle) => {
             let surface_desc = vk::Win32SurfaceCreateInfoKHR::builder()
                 .hinstance(handle.hinstance)
                 .hwnd(handle.hwnd);
@@ -33,13 +33,6 @@ pub unsafe fn create_surface(
             surface_fn.create_win32_surface(&surface_desc, allocation_callbacks)
         }
 
-        #[cfg(any(
-            target_os = "linux",
-            target_os = "dragonfly",
-            target_os = "freebsd",
-            target_os = "netbsd",
-            target_os = "openbsd"
-        ))]
         RawWindowHandle::Wayland(handle) => {
             let surface_desc = vk::WaylandSurfaceCreateInfoKHR::builder()
                 .display(handle.display)
@@ -48,13 +41,6 @@ pub unsafe fn create_surface(
             surface_fn.create_wayland_surface(&surface_desc, allocation_callbacks)
         }
 
-        #[cfg(any(
-            target_os = "linux",
-            target_os = "dragonfly",
-            target_os = "freebsd",
-            target_os = "netbsd",
-            target_os = "openbsd"
-        ))]
         RawWindowHandle::Xlib(handle) => {
             let surface_desc = vk::XlibSurfaceCreateInfoKHR::builder()
                 .dpy(handle.display as *mut _)
@@ -63,13 +49,6 @@ pub unsafe fn create_surface(
             surface_fn.create_xlib_surface(&surface_desc, allocation_callbacks)
         }
 
-        #[cfg(any(
-            target_os = "linux",
-            target_os = "dragonfly",
-            target_os = "freebsd",
-            target_os = "netbsd",
-            target_os = "openbsd"
-        ))]
         RawWindowHandle::Xcb(handle) => {
             let surface_desc = vk::XcbSurfaceCreateInfoKHR::builder()
                 .connection(handle.connection)
@@ -78,19 +57,18 @@ pub unsafe fn create_surface(
             surface_fn.create_xcb_surface(&surface_desc, allocation_callbacks)
         }
 
-        #[cfg(any(target_os = "android"))]
-        RawWindowHandle::Android(handle) => {
+        RawWindowHandle::AndroidNdk(handle) => {
             let surface_desc =
                 vk::AndroidSurfaceCreateInfoKHR::builder().window(handle.a_native_window);
             let surface_fn = khr::AndroidSurface::new(entry, instance);
             surface_fn.create_android_surface(&surface_desc, allocation_callbacks)
         }
 
-        #[cfg(any(target_os = "macos"))]
-        RawWindowHandle::MacOS(handle) => {
-            use raw_window_metal::{macos, Layer};
+        #[cfg(target_os = "macos")]
+        RawWindowHandle::AppKit(handle) => {
+            use raw_window_metal::{appkit, Layer};
 
-            let layer = match macos::metal_layer_from_handle(handle) {
+            let layer = match appkit::metal_layer_from_handle(handle) {
                 Layer::Existing(layer) | Layer::Allocated(layer) => layer as *mut _,
                 Layer::None => return Err(vk::Result::ERROR_INITIALIZATION_FAILED),
             };
@@ -100,11 +78,11 @@ pub unsafe fn create_surface(
             surface_fn.create_metal_surface(&surface_desc, allocation_callbacks)
         }
 
-        #[cfg(any(target_os = "ios"))]
-        RawWindowHandle::IOS(handle) => {
-            use raw_window_metal::{ios, Layer};
+        #[cfg(target_os = "ios")]
+        RawWindowHandle::UiKit(handle) => {
+            use raw_window_metal::{uikit, Layer};
 
-            let layer = match ios::metal_layer_from_handle(handle) {
+            let layer = match uikit::metal_layer_from_handle(handle) {
                 Layer::Existing(layer) | Layer::Allocated(layer) => layer as *mut _,
                 Layer::None => return Err(vk::Result::ERROR_INITIALIZATION_FAILED),
             };
@@ -114,7 +92,7 @@ pub unsafe fn create_surface(
             surface_fn.create_metal_surface(&surface_desc, allocation_callbacks)
         }
 
-        _ => Err(vk::Result::ERROR_EXTENSION_NOT_PRESENT), // not supported
+        _ => Err(vk::Result::ERROR_EXTENSION_NOT_PRESENT),
     }
 }
 
@@ -125,8 +103,7 @@ pub fn enumerate_required_extensions(
     window_handle: &dyn HasRawWindowHandle,
 ) -> VkResult<&'static [*const c_char]> {
     let extensions = match window_handle.raw_window_handle() {
-        #[cfg(target_os = "windows")]
-        RawWindowHandle::Windows(_) => {
+        RawWindowHandle::Win32(_) => {
             const WINDOWS_EXTS: [*const c_char; 2] = [
                 khr::Surface::name().as_ptr(),
                 khr::Win32Surface::name().as_ptr(),
@@ -134,13 +111,6 @@ pub fn enumerate_required_extensions(
             &WINDOWS_EXTS
         }
 
-        #[cfg(any(
-            target_os = "linux",
-            target_os = "dragonfly",
-            target_os = "freebsd",
-            target_os = "netbsd",
-            target_os = "openbsd"
-        ))]
         RawWindowHandle::Wayland(_) => {
             const WAYLAND_EXTS: [*const c_char; 2] = [
                 khr::Surface::name().as_ptr(),
@@ -149,13 +119,6 @@ pub fn enumerate_required_extensions(
             &WAYLAND_EXTS
         }
 
-        #[cfg(any(
-            target_os = "linux",
-            target_os = "dragonfly",
-            target_os = "freebsd",
-            target_os = "netbsd",
-            target_os = "openbsd"
-        ))]
         RawWindowHandle::Xlib(_) => {
             const XLIB_EXTS: [*const c_char; 2] = [
                 khr::Surface::name().as_ptr(),
@@ -164,13 +127,6 @@ pub fn enumerate_required_extensions(
             &XLIB_EXTS
         }
 
-        #[cfg(any(
-            target_os = "linux",
-            target_os = "dragonfly",
-            target_os = "freebsd",
-            target_os = "netbsd",
-            target_os = "openbsd"
-        ))]
         RawWindowHandle::Xcb(_) => {
             const XCB_EXTS: [*const c_char; 2] = [
                 khr::Surface::name().as_ptr(),
@@ -179,8 +135,7 @@ pub fn enumerate_required_extensions(
             &XCB_EXTS
         }
 
-        #[cfg(any(target_os = "android"))]
-        RawWindowHandle::Android(_) => {
+        RawWindowHandle::AndroidNdk(_) => {
             const ANDROID_EXTS: [*const c_char; 2] = [
                 khr::Surface::name().as_ptr(),
                 khr::AndroidSurface::name().as_ptr(),
@@ -188,22 +143,12 @@ pub fn enumerate_required_extensions(
             &ANDROID_EXTS
         }
 
-        #[cfg(any(target_os = "macos"))]
-        RawWindowHandle::MacOS(_) => {
-            const MACOS_EXTS: [*const c_char; 2] = [
+        RawWindowHandle::AppKit(_) | RawWindowHandle::UiKit(_) => {
+            const METAL_EXTS: [*const c_char; 2] = [
                 khr::Surface::name().as_ptr(),
                 ext::MetalSurface::name().as_ptr(),
             ];
-            &MACOS_EXTS
-        }
-
-        #[cfg(any(target_os = "ios"))]
-        RawWindowHandle::IOS(_) => {
-            const IOS_EXTS: [*const c_char; 2] = [
-                khr::Surface::name().as_ptr(),
-                ext::MetalSurface::name().as_ptr(),
-            ];
-            &IOS_EXTS
+            &METAL_EXTS
         }
 
         _ => return Err(vk::Result::ERROR_EXTENSION_NOT_PRESENT),

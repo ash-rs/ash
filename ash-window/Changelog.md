@@ -2,7 +2,13 @@
 
 ## [Unreleased] - ReleaseDate
 
+### Changed
+
+- Bumped `raw-window-handle` to `0.4.2` (#505)
+
 ## [0.10.0] - 2022-03-23
+
+### Changed
 
 - Bumped `ash` version to [`0.37`](https://github.com/MaikKlein/ash/releases/tag/0.37.0) (#600)
 - Make `enumerate_required_extensions()` return `&[*const c_char]` instead of `Vec<&CStr>` to match `ash::vk::InstanceCreateInfo` (#590)
