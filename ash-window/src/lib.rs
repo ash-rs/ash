@@ -23,7 +23,8 @@ impl<T: HasRawDisplayHandle + HasRawWindowHandle> HasRawDisplayAndWindowHandle f
 
 /// Create a surface from a raw surface handle.
 ///
-/// `instance` must have created with platform specific surface extensions enabled.
+/// `instance` must have created with platform specific surface extensions enabled, acquired
+/// through [`enumerate_required_extensions()`].
 ///
 /// # Safety
 ///
