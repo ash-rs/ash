@@ -2016,21 +2016,15 @@ impl Device {
         &self,
         query_pool: vk::QueryPool,
         first_query: u32,
-        query_count: u32,
         data: &mut [T],
         flags: vk::QueryResultFlags,
     ) -> VkResult<()> {
-        let data_length = query_count as usize;
-        assert!(
-            data_length <= data.len(),
-            "query_count was higher than the length of the slice"
-        );
-        let data_size = mem::size_of::<T>() * data_length;
+        let data_size = mem::size_of_val(data);
         (self.device_fn_1_0.get_query_pool_results)(
             self.handle(),
             query_pool,
             first_query,
-            query_count,
+            data.len() as u32,
             data_size,
             data.as_mut_ptr() as *mut _,
             mem::size_of::<T>() as _,
