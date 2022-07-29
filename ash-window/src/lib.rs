@@ -103,14 +103,18 @@ pub unsafe fn create_surface(
     }
 }
 
-/// Query the required instance extensions for creating a surface from a window handle.
+/// Query the required instance extensions for creating a surface from a display handle.
+///
+/// This [`HasRawDisplayHandle`] can typically be acquired from a window, but is usually also
+/// accessible earlier through an "event loop" concept to allow querying required instance
+/// extensions and creation of a compatible Vulkan instance prior to creating a window.
 ///
 /// The returned extensions will include all extension dependencies.
 pub fn enumerate_required_extensions(
-    window_handle: &dyn HasRawWindowHandle,
+    display_handle: &dyn HasRawDisplayHandle,
 ) -> VkResult<&'static [*const c_char]> {
-    let extensions = match window_handle.raw_window_handle() {
-        RawWindowHandle::Win32(_) => {
+    let extensions = match display_handle.raw_display_handle() {
+        RawDisplayHandle::Windows(_) => {
             const WINDOWS_EXTS: [*const c_char; 2] = [
                 khr::Surface::name().as_ptr(),
                 khr::Win32Surface::name().as_ptr(),
@@ -118,7 +122,7 @@ pub fn enumerate_required_extensions(
             &WINDOWS_EXTS
         }
 
-        RawWindowHandle::Wayland(_) => {
+        RawDisplayHandle::Wayland(_) => {
             const WAYLAND_EXTS: [*const c_char; 2] = [
                 khr::Surface::name().as_ptr(),
                 khr::WaylandSurface::name().as_ptr(),
@@ -126,7 +130,7 @@ pub fn enumerate_required_extensions(
             &WAYLAND_EXTS
         }
 
-        RawWindowHandle::Xlib(_) => {
+        RawDisplayHandle::Xlib(_) => {
             const XLIB_EXTS: [*const c_char; 2] = [
                 khr::Surface::name().as_ptr(),
                 khr::XlibSurface::name().as_ptr(),
@@ -134,7 +138,7 @@ pub fn enumerate_required_extensions(
             &XLIB_EXTS
         }
 
-        RawWindowHandle::Xcb(_) => {
+        RawDisplayHandle::Xcb(_) => {
             const XCB_EXTS: [*const c_char; 2] = [
                 khr::Surface::name().as_ptr(),
                 khr::XcbSurface::name().as_ptr(),
@@ -142,7 +146,7 @@ pub fn enumerate_required_extensions(
             &XCB_EXTS
         }
 
-        RawWindowHandle::AndroidNdk(_) => {
+        RawDisplayHandle::Android(_) => {
             const ANDROID_EXTS: [*const c_char; 2] = [
                 khr::Surface::name().as_ptr(),
                 khr::AndroidSurface::name().as_ptr(),
@@ -150,7 +154,7 @@ pub fn enumerate_required_extensions(
             &ANDROID_EXTS
         }
 
-        RawWindowHandle::AppKit(_) | RawWindowHandle::UiKit(_) => {
+        RawDisplayHandle::AppKit(_) | RawDisplayHandle::UiKit(_) => {
             const METAL_EXTS: [*const c_char; 2] = [
                 khr::Surface::name().as_ptr(),
                 ext::MetalSurface::name().as_ptr(),

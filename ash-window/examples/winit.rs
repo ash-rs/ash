@@ -6,7 +6,7 @@
 //! On instance extensions platform specific extensions need to be enabled.
 
 use ash::vk;
-use std::error::Error;
+use std::{error::Error, ops::Deref};
 use winit::{
     dpi::PhysicalSize,
     event::{Event, VirtualKeyCode, WindowEvent},
@@ -16,19 +16,22 @@ use winit::{
 
 fn main() -> Result<(), Box<dyn Error>> {
     let event_loop = EventLoop::new();
-    let window = WindowBuilder::new()
-        .with_inner_size(PhysicalSize::<u32>::from((800, 600)))
-        .build(&event_loop)?;
 
     unsafe {
         let entry = ash::Entry::linked();
-        let surface_extensions = ash_window::enumerate_required_extensions(&window)?;
+        let surface_extensions = ash_window::enumerate_required_extensions(
+            /* Deref into EventLoopWindowTarget */ event_loop.deref(),
+        )?;
         let app_desc = vk::ApplicationInfo::default().api_version(vk::make_api_version(0, 1, 0, 0));
         let instance_desc = vk::InstanceCreateInfo::default()
             .application_info(&app_desc)
             .enabled_extension_names(surface_extensions);
 
         let instance = entry.create_instance(&instance_desc, None)?;
+
+        let window = WindowBuilder::new()
+            .with_inner_size(PhysicalSize::<u32>::from((800, 600)))
+            .build(&event_loop)?;
 
         // Create a surface from winit window.
         let surface = ash_window::create_surface(&entry, &instance, &window, &window, None)?;
