@@ -57,7 +57,7 @@ pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
-pub const HEADER_VERSION: u32 = 223u32;
+pub const HEADER_VERSION: u32 = 224u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -33251,25 +33251,10 @@ impl ::std::default::Default for VideoDecodeCapabilitiesKHR<'_> {
     }
 }
 unsafe impl ExtendsVideoCapabilitiesKHR for VideoDecodeCapabilitiesKHR<'_> {}
-pub unsafe trait ExtendsVideoDecodeCapabilitiesKHR {}
 impl<'a> VideoDecodeCapabilitiesKHR<'a> {
     #[inline]
     pub fn flags(mut self, flags: VideoDecodeCapabilityFlagsKHR) -> Self {
         self.flags = flags;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoDecodeCapabilitiesKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -33427,7 +33412,7 @@ impl ::std::default::Default for VideoDecodeH264CapabilitiesEXT<'_> {
         }
     }
 }
-unsafe impl ExtendsVideoDecodeCapabilitiesKHR for VideoDecodeH264CapabilitiesEXT<'_> {}
+unsafe impl ExtendsVideoCapabilitiesKHR for VideoDecodeH264CapabilitiesEXT<'_> {}
 impl<'a> VideoDecodeH264CapabilitiesEXT<'a> {
     #[inline]
     pub fn max_level(mut self, max_level: StdVideoH264Level) -> Self {
@@ -33700,7 +33685,7 @@ impl ::std::default::Default for VideoDecodeH265CapabilitiesEXT<'_> {
         }
     }
 }
-unsafe impl ExtendsVideoDecodeCapabilitiesKHR for VideoDecodeH265CapabilitiesEXT<'_> {}
+unsafe impl ExtendsVideoCapabilitiesKHR for VideoDecodeH265CapabilitiesEXT<'_> {}
 impl<'a> VideoDecodeH265CapabilitiesEXT<'a> {
     #[inline]
     pub fn max_level(mut self, max_level: StdVideoH265Level) -> Self {
@@ -34517,7 +34502,6 @@ impl ::std::default::Default for VideoEncodeCapabilitiesKHR<'_> {
     }
 }
 unsafe impl ExtendsVideoCapabilitiesKHR for VideoEncodeCapabilitiesKHR<'_> {}
-pub unsafe trait ExtendsVideoEncodeCapabilitiesKHR {}
 impl<'a> VideoEncodeCapabilitiesKHR<'a> {
     #[inline]
     pub fn flags(mut self, flags: VideoEncodeCapabilityFlagsKHR) -> Self {
@@ -34548,20 +34532,6 @@ impl<'a> VideoEncodeCapabilitiesKHR<'a> {
         input_image_data_fill_alignment: Extent2D,
     ) -> Self {
         self.input_image_data_fill_alignment = input_image_data_fill_alignment;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoEncodeCapabilitiesKHR>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*mut T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -34606,7 +34576,7 @@ impl ::std::default::Default for VideoEncodeH264CapabilitiesEXT<'_> {
         }
     }
 }
-unsafe impl ExtendsVideoEncodeCapabilitiesKHR for VideoEncodeH264CapabilitiesEXT<'_> {}
+unsafe impl ExtendsVideoCapabilitiesKHR for VideoEncodeH264CapabilitiesEXT<'_> {}
 impl<'a> VideoEncodeH264CapabilitiesEXT<'a> {
     #[inline]
     pub fn flags(mut self, flags: VideoEncodeH264CapabilityFlagsEXT) -> Self {
@@ -35301,7 +35271,7 @@ impl ::std::default::Default for VideoEncodeH265CapabilitiesEXT<'_> {
         }
     }
 }
-unsafe impl ExtendsVideoEncodeCapabilitiesKHR for VideoEncodeH265CapabilitiesEXT<'_> {}
+unsafe impl ExtendsVideoCapabilitiesKHR for VideoEncodeH265CapabilitiesEXT<'_> {}
 impl<'a> VideoEncodeH265CapabilitiesEXT<'a> {
     #[inline]
     pub fn flags(mut self, flags: VideoEncodeH265CapabilityFlagsEXT) -> Self {
@@ -40297,6 +40267,108 @@ impl<'a> TilePropertiesQCOM<'a> {
     #[inline]
     pub fn origin(mut self, origin: Offset2D) -> Self {
         self.origin = origin;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceAmigoProfilingFeaturesSEC.html>"]
+pub struct PhysicalDeviceAmigoProfilingFeaturesSEC<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub amigo_profiling: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceAmigoProfilingFeaturesSEC<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PHYSICAL_DEVICE_AMIGO_PROFILING_FEATURES_SEC,
+            p_next: ::std::ptr::null_mut(),
+            amigo_profiling: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceAmigoProfilingFeaturesSEC<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceAmigoProfilingFeaturesSEC<'_> {}
+impl<'a> PhysicalDeviceAmigoProfilingFeaturesSEC<'a> {
+    #[inline]
+    pub fn amigo_profiling(mut self, amigo_profiling: bool) -> Self {
+        self.amigo_profiling = amigo_profiling.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkAmigoProfilingSubmitInfoSEC.html>"]
+pub struct AmigoProfilingSubmitInfoSEC<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub first_draw_timestamp: u64,
+    pub swap_buffer_timestamp: u64,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for AmigoProfilingSubmitInfoSEC<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::AMIGO_PROFILING_SUBMIT_INFO_SEC,
+            p_next: ::std::ptr::null(),
+            first_draw_timestamp: u64::default(),
+            swap_buffer_timestamp: u64::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsSubmitInfo for AmigoProfilingSubmitInfoSEC<'_> {}
+impl<'a> AmigoProfilingSubmitInfoSEC<'a> {
+    #[inline]
+    pub fn first_draw_timestamp(mut self, first_draw_timestamp: u64) -> Self {
+        self.first_draw_timestamp = first_draw_timestamp;
+        self
+    }
+    #[inline]
+    pub fn swap_buffer_timestamp(mut self, swap_buffer_timestamp: u64) -> Self {
+        self.swap_buffer_timestamp = swap_buffer_timestamp;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT.html>"]
+pub struct PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub attachment_feedback_loop_layout: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: StructureType::PHYSICAL_DEVICE_ATTACHMENT_FEEDBACK_LOOP_LAYOUT_FEATURES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            attachment_feedback_loop_layout: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'_> {}
+impl<'a> PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'a> {
+    #[inline]
+    pub fn attachment_feedback_loop_layout(
+        mut self,
+        attachment_feedback_loop_layout: bool,
+    ) -> Self {
+        self.attachment_feedback_loop_layout = attachment_feedback_loop_layout.into();
         self
     }
 }

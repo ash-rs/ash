@@ -17400,6 +17400,10 @@ impl ImageViewCreateFlags {
     pub const RESERVED_2_AMD: Self = Self(0b100);
 }
 #[doc = "Generated from 'VK_AMD_extension_317'"]
+impl PipelineCreateFlags {
+    pub const RESERVED_29_AMD: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_AMD_extension_317'"]
 impl SamplerCreateFlags {
     pub const RESERVED_3_AMD: Self = Self(0b1000);
 }
@@ -18190,18 +18194,22 @@ impl StructureType {
     pub const IMAGE_SUBRESOURCE_2_EXT: Self = Self(1_000_338_003);
     pub const IMAGE_COMPRESSION_PROPERTIES_EXT: Self = Self(1_000_338_004);
 }
-impl ExtExtension340Fn {
+impl ExtAttachmentFeedbackLoopLayoutFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_340\0") }
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_EXT_attachment_feedback_loop_layout\0",
+            )
+        }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
-pub struct ExtExtension340Fn {}
-unsafe impl Send for ExtExtension340Fn {}
-unsafe impl Sync for ExtExtension340Fn {}
-impl ExtExtension340Fn {
+pub struct ExtAttachmentFeedbackLoopLayoutFn {}
+unsafe impl Send for ExtAttachmentFeedbackLoopLayoutFn {}
+unsafe impl Sync for ExtAttachmentFeedbackLoopLayoutFn {}
+impl ExtAttachmentFeedbackLoopLayoutFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -18209,18 +18217,29 @@ impl ExtExtension340Fn {
         Self {}
     }
 }
-#[doc = "Generated from 'VK_EXT_extension_340'"]
+#[doc = "Generated from 'VK_EXT_attachment_feedback_loop_layout'"]
 impl DependencyFlags {
-    pub const RESERVED_3_EXT: Self = Self(0b1000);
+    #[doc = "Dependency may be a feedback loop"]
+    pub const FEEDBACK_LOOP_EXT: Self = Self(0b1000);
 }
-#[doc = "Generated from 'VK_EXT_extension_340'"]
+#[doc = "Generated from 'VK_EXT_attachment_feedback_loop_layout'"]
+impl ImageLayout {
+    pub const ATTACHMENT_FEEDBACK_LOOP_OPTIMAL_EXT: Self = Self(1_000_339_000);
+}
+#[doc = "Generated from 'VK_EXT_attachment_feedback_loop_layout'"]
 impl ImageUsageFlags {
-    pub const RESERVED_19_EXT: Self = Self(0b1000_0000_0000_0000_0000);
+    pub const ATTACHMENT_FEEDBACK_LOOP_EXT: Self = Self(0b1000_0000_0000_0000_0000);
 }
-#[doc = "Generated from 'VK_EXT_extension_340'"]
+#[doc = "Generated from 'VK_EXT_attachment_feedback_loop_layout'"]
 impl PipelineCreateFlags {
-    pub const RESERVED_25_EXT: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
-    pub const RESERVED_26_EXT: Self = Self(0b100_0000_0000_0000_0000_0000_0000);
+    pub const COLOR_ATTACHMENT_FEEDBACK_LOOP_EXT: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
+    pub const DEPTH_STENCIL_ATTACHMENT_FEEDBACK_LOOP_EXT: Self =
+        Self(0b100_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_attachment_feedback_loop_layout'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_ATTACHMENT_FEEDBACK_LOOP_LAYOUT_FEATURES_EXT: Self =
+        Self(1_000_339_000);
 }
 impl Ext4444FormatsFn {
     #[inline]
@@ -20490,6 +20509,15 @@ impl NvExtension398Fn {
         Self {}
     }
 }
+#[doc = "Generated from 'VK_NV_extension_398'"]
+impl BuildAccelerationStructureFlagsKHR {
+    pub const RESERVED_9_NV: Self = Self(0b10_0000_0000);
+    pub const RESERVED_10_NV: Self = Self(0b100_0000_0000);
+}
+#[doc = "Generated from 'VK_NV_extension_398'"]
+impl PipelineCreateFlags {
+    pub const RESERVED_28_NV: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000);
+}
 impl JuiceExtension399Fn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -22636,4 +22664,28 @@ impl QcomTilePropertiesFn {
 impl StructureType {
     pub const PHYSICAL_DEVICE_TILE_PROPERTIES_FEATURES_QCOM: Self = Self(1_000_484_000);
     pub const TILE_PROPERTIES_QCOM: Self = Self(1_000_484_001);
+}
+impl SecAmigoProfilingFn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_SEC_amigo_profiling\0") }
+    }
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct SecAmigoProfilingFn {}
+unsafe impl Send for SecAmigoProfilingFn {}
+unsafe impl Sync for SecAmigoProfilingFn {}
+impl SecAmigoProfilingFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+#[doc = "Generated from 'VK_SEC_amigo_profiling'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_AMIGO_PROFILING_FEATURES_SEC: Self = Self(1_000_485_000);
+    pub const AMIGO_PROFILING_SUBMIT_INFO_SEC: Self = Self(1_000_485_001);
 }

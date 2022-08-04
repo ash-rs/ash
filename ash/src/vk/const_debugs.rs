@@ -624,6 +624,14 @@ impl fmt::Debug for BuildAccelerationStructureFlagsKHR {
                 BuildAccelerationStructureFlagsKHR::RESERVED_7_NV.0,
                 "RESERVED_7_NV",
             ),
+            (
+                BuildAccelerationStructureFlagsKHR::RESERVED_9_NV.0,
+                "RESERVED_9_NV",
+            ),
+            (
+                BuildAccelerationStructureFlagsKHR::RESERVED_10_NV.0,
+                "RESERVED_10_NV",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -1041,7 +1049,7 @@ impl fmt::Debug for DependencyFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (DependencyFlags::BY_REGION.0, "BY_REGION"),
-            (DependencyFlags::RESERVED_3_EXT.0, "RESERVED_3_EXT"),
+            (DependencyFlags::FEEDBACK_LOOP_EXT.0, "FEEDBACK_LOOP_EXT"),
             (DependencyFlags::DEVICE_GROUP.0, "DEVICE_GROUP"),
             (DependencyFlags::VIEW_LOCAL.0, "VIEW_LOCAL"),
         ];
@@ -2384,6 +2392,9 @@ impl fmt::Debug for ImageLayout {
             Self::VIDEO_ENCODE_DST_KHR => Some("VIDEO_ENCODE_DST_KHR"),
             Self::VIDEO_ENCODE_SRC_KHR => Some("VIDEO_ENCODE_SRC_KHR"),
             Self::VIDEO_ENCODE_DPB_KHR => Some("VIDEO_ENCODE_DPB_KHR"),
+            Self::ATTACHMENT_FEEDBACK_LOOP_OPTIMAL_EXT => {
+                Some("ATTACHMENT_FEEDBACK_LOOP_OPTIMAL_EXT")
+            }
             Self::DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL => {
                 Some("DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL")
             }
@@ -2493,7 +2504,10 @@ impl fmt::Debug for ImageUsageFlags {
                 ImageUsageFlags::VIDEO_ENCODE_DPB_KHR.0,
                 "VIDEO_ENCODE_DPB_KHR",
             ),
-            (ImageUsageFlags::RESERVED_19_EXT.0, "RESERVED_19_EXT"),
+            (
+                ImageUsageFlags::ATTACHMENT_FEEDBACK_LOOP_EXT.0,
+                "ATTACHMENT_FEEDBACK_LOOP_EXT",
+            ),
             (
                 ImageUsageFlags::INVOCATION_MASK_HUAWEI.0,
                 "INVOCATION_MASK_HUAWEI",
@@ -3045,6 +3059,7 @@ impl fmt::Debug for PipelineCreateFlags {
                 "INDIRECT_BINDABLE_NV",
             ),
             (PipelineCreateFlags::LIBRARY_KHR.0, "LIBRARY_KHR"),
+            (PipelineCreateFlags::RESERVED_29_AMD.0, "RESERVED_29_AMD"),
             (
                 PipelineCreateFlags::RETAIN_LINK_TIME_OPTIMIZATION_INFO_EXT.0,
                 "RETAIN_LINK_TIME_OPTIMIZATION_INFO_EXT",
@@ -3057,9 +3072,16 @@ impl fmt::Debug for PipelineCreateFlags {
                 PipelineCreateFlags::RAY_TRACING_ALLOW_MOTION_NV.0,
                 "RAY_TRACING_ALLOW_MOTION_NV",
             ),
-            (PipelineCreateFlags::RESERVED_25_EXT.0, "RESERVED_25_EXT"),
-            (PipelineCreateFlags::RESERVED_26_EXT.0, "RESERVED_26_EXT"),
+            (
+                PipelineCreateFlags::COLOR_ATTACHMENT_FEEDBACK_LOOP_EXT.0,
+                "COLOR_ATTACHMENT_FEEDBACK_LOOP_EXT",
+            ),
+            (
+                PipelineCreateFlags::DEPTH_STENCIL_ATTACHMENT_FEEDBACK_LOOP_EXT.0,
+                "DEPTH_STENCIL_ATTACHMENT_FEEDBACK_LOOP_EXT",
+            ),
             (PipelineCreateFlags::RESERVED_24_NV.0, "RESERVED_24_NV"),
+            (PipelineCreateFlags::RESERVED_28_NV.0, "RESERVED_28_NV"),
             (PipelineCreateFlags::RESERVED_27_EXT.0, "RESERVED_27_EXT"),
             (
                 PipelineCreateFlags::VIEW_INDEX_FROM_DEVICE_INDEX.0,
@@ -5072,6 +5094,9 @@ impl fmt::Debug for StructureType {
             Self::SUBRESOURCE_LAYOUT_2_EXT => Some("SUBRESOURCE_LAYOUT_2_EXT"),
             Self::IMAGE_SUBRESOURCE_2_EXT => Some("IMAGE_SUBRESOURCE_2_EXT"),
             Self::IMAGE_COMPRESSION_PROPERTIES_EXT => Some("IMAGE_COMPRESSION_PROPERTIES_EXT"),
+            Self::PHYSICAL_DEVICE_ATTACHMENT_FEEDBACK_LOOP_LAYOUT_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_ATTACHMENT_FEEDBACK_LOOP_LAYOUT_FEATURES_EXT")
+            }
             Self::PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT")
             }
@@ -5273,6 +5298,10 @@ impl fmt::Debug for StructureType {
                 Some("PHYSICAL_DEVICE_TILE_PROPERTIES_FEATURES_QCOM")
             }
             Self::TILE_PROPERTIES_QCOM => Some("TILE_PROPERTIES_QCOM"),
+            Self::PHYSICAL_DEVICE_AMIGO_PROFILING_FEATURES_SEC => {
+                Some("PHYSICAL_DEVICE_AMIGO_PROFILING_FEATURES_SEC")
+            }
+            Self::AMIGO_PROFILING_SUBMIT_INFO_SEC => Some("AMIGO_PROFILING_SUBMIT_INFO_SEC"),
             Self::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES => {
                 Some("PHYSICAL_DEVICE_SUBGROUP_PROPERTIES")
             }
