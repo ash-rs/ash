@@ -21,16 +21,18 @@ impl PipelineProperties {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPipelinePropertiesEXT.html>
-    ///
-    /// Currently only accepts [`vk::PipelinePropertiesIdentifierEXT`].
     #[inline]
     pub unsafe fn get_pipeline_properties(
         &self,
         pipeline_info: &vk::PipelineInfoEXT,
-        pipeline_properties: *mut vk::BaseOutStructure,
+        pipeline_properties: &mut impl vk::GetPipelinePropertiesEXTParamPipelineProperties,
     ) -> VkResult<()> {
-        (self.fp.get_pipeline_properties_ext)(self.handle, pipeline_info, pipeline_properties)
-            .result()
+        (self.fp.get_pipeline_properties_ext)(
+            self.handle,
+            pipeline_info,
+            <*mut _>::cast(pipeline_properties),
+        )
+        .result()
     }
 
     pub const NAME: &'static CStr = vk::ExtPipelinePropertiesFn::NAME;

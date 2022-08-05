@@ -37,7 +37,7 @@ jobs:
       - name: Run generator
         run: cargo run -p generator
       - name: Diff autogen result
-        run: git diff --quiet || (echo "::error::Generated files are different, please regenerate with cargo run -p generator!"; git diff; false)
+        run: test -z "$(git status --porcelain)" || (echo "::error::Generated files are different, please regenerate with cargo run -p generator!"; git diff; false)
 
   test:
     name: Test Suite
