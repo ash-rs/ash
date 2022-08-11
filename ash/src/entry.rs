@@ -377,8 +377,8 @@ mod loaded {
     impl fmt::Display for LoadingError {
         fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
             match self {
-                LoadingError::LibraryLoadFailure(err) => fmt::Display::fmt(err, f),
-                LoadingError::MissingEntryPoint(err) => fmt::Display::fmt(err, f),
+                Self::LibraryLoadFailure(err) => fmt::Display::fmt(err, f),
+                Self::MissingEntryPoint(err) => fmt::Display::fmt(err, f),
             }
         }
     }
@@ -386,8 +386,8 @@ mod loaded {
     impl Error for LoadingError {
         fn source(&self) -> Option<&(dyn Error + 'static)> {
             Some(match self {
-                LoadingError::LibraryLoadFailure(err) => err,
-                LoadingError::MissingEntryPoint(err) => err,
+                Self::LibraryLoadFailure(err) => err,
+                Self::MissingEntryPoint(err) => err,
             })
         }
     }
