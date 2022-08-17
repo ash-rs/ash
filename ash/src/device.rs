@@ -2680,6 +2680,7 @@ impl Device {
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetImageSparseMemoryRequirements.html>
     #[inline]
+    #[cfg(not(feature = "smallvec"))]
     pub unsafe fn get_image_sparse_memory_requirements(
         &self,
         image: vk::Image,
@@ -2695,5 +2696,25 @@ impl Device {
         })
         // The closure always returns SUCCESS
         .unwrap()
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetImageSparseMemoryRequirements.html>
+    #[inline]
+    #[cfg(feature = "smallvec")]
+    pub unsafe fn get_image_sparse_memory_requirements(
+        &self,
+        image: vk::Image,
+    ) -> smallvec::SmallVec<[vk::SparseImageMemoryRequirements; SMALLVEC_SIZE]> {
+        read_into_uninitialized_small_vector(|count, data| {
+            (self.device_fn_1_0.get_image_sparse_memory_requirements)(
+                self.handle(),
+                image,
+                count,
+                data,
+            );
+            vk::Result::SUCCESS
+        })
+            // The closure always returns SUCCESS
+            .unwrap()
     }
 }

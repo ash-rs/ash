@@ -441,6 +441,7 @@ impl Instance {
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceQueueFamilyProperties.html>
     #[inline]
+    #[cfg(not(feature = "smallvec"))]
     pub unsafe fn get_physical_device_queue_family_properties(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -457,6 +458,25 @@ impl Instance {
         .unwrap()
     }
 
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceQueueFamilyProperties.html>
+    #[inline]
+    #[cfg(feature = "smallvec")]
+    pub unsafe fn get_physical_device_queue_family_properties(
+        &self,
+        physical_device: vk::PhysicalDevice,
+    ) -> smallvec::SmallVec<[vk::QueueFamilyProperties; SMALLVEC_SIZE]> {
+        read_into_uninitialized_small_vector(|count, data| {
+            (self
+                .instance_fn_1_0
+                .get_physical_device_queue_family_properties)(
+                physical_device, count, data
+            );
+            vk::Result::SUCCESS
+        })
+            // The closure always returns SUCCESS
+            .unwrap()
+    }
+
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceFeatures.html>
     #[inline]
     pub unsafe fn get_physical_device_features(
@@ -470,14 +490,25 @@ impl Instance {
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumeratePhysicalDevices.html>
     #[inline]
+    #[cfg(not(feature = "smallvec"))]
     pub unsafe fn enumerate_physical_devices(&self) -> VkResult<Vec<vk::PhysicalDevice>> {
         read_into_uninitialized_vector(|count, data| {
             (self.instance_fn_1_0.enumerate_physical_devices)(self.handle(), count, data)
         })
     }
 
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumeratePhysicalDevices.html>
+    #[inline]
+    #[cfg(feature = "smallvec")]
+    pub unsafe fn enumerate_physical_devices(&self) -> VkResult<smallvec::SmallVec<[vk::PhysicalDevice; SMALLVEC_SIZE]>> {
+        read_into_uninitialized_small_vector(|count, data| {
+            (self.instance_fn_1_0.enumerate_physical_devices)(self.handle(), count, data)
+        })
+    }
+
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumerateDeviceExtensionProperties.html>
     #[inline]
+    #[cfg(not(feature = "smallvec"))]
     pub unsafe fn enumerate_device_extension_properties(
         &self,
         device: vk::PhysicalDevice,
@@ -492,8 +523,26 @@ impl Instance {
         })
     }
 
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumerateDeviceExtensionProperties.html>
+    #[inline]
+    #[cfg(feature = "smallvec")]
+    pub unsafe fn enumerate_device_extension_properties(
+        &self,
+        device: vk::PhysicalDevice,
+    ) -> VkResult<smallvec::SmallVec<[vk::ExtensionProperties; SMALLVEC_SIZE]>> {
+        read_into_uninitialized_small_vector(|count, data| {
+            (self.instance_fn_1_0.enumerate_device_extension_properties)(
+                device,
+                ptr::null(),
+                count,
+                data,
+            )
+        })
+    }
+
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumerateDeviceLayerProperties.html>
     #[inline]
+    #[cfg(not(feature = "smallvec"))]
     pub unsafe fn enumerate_device_layer_properties(
         &self,
         device: vk::PhysicalDevice,
@@ -503,8 +552,21 @@ impl Instance {
         })
     }
 
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumerateDeviceLayerProperties.html>
+    #[inline]
+    #[cfg(feature = "smallvec")]
+    pub unsafe fn enumerate_device_layer_properties(
+        &self,
+        device: vk::PhysicalDevice,
+    ) -> VkResult<smallvec::SmallVec<[vk::LayerProperties; SMALLVEC_SIZE]>> {
+        read_into_uninitialized_small_vector(|count, data| {
+            (self.instance_fn_1_0.enumerate_device_layer_properties)(device, count, data)
+        })
+    }
+
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSparseImageFormatProperties.html>
     #[inline]
+    #[cfg(not(feature = "smallvec"))]
     pub unsafe fn get_physical_device_sparse_image_format_properties(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -531,5 +593,36 @@ impl Instance {
         })
         // The closure always returns SUCCESS
         .unwrap()
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSparseImageFormatProperties.html>
+    #[inline]
+    #[cfg(feature = "smallvec")]
+    pub unsafe fn get_physical_device_sparse_image_format_properties(
+        &self,
+        physical_device: vk::PhysicalDevice,
+        format: vk::Format,
+        typ: vk::ImageType,
+        samples: vk::SampleCountFlags,
+        usage: vk::ImageUsageFlags,
+        tiling: vk::ImageTiling,
+    ) -> smallvec::SmallVec<[vk::SparseImageFormatProperties; SMALLVEC_SIZE]> {
+        read_into_uninitialized_small_vector(|count, data| {
+            (self
+                .instance_fn_1_0
+                .get_physical_device_sparse_image_format_properties)(
+                physical_device,
+                format,
+                typ,
+                samples,
+                usage,
+                tiling,
+                count,
+                data,
+            );
+            vk::Result::SUCCESS
+        })
+            // The closure always returns SUCCESS
+            .unwrap()
     }
 }

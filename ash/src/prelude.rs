@@ -49,6 +49,39 @@ where
     }
 }
 
+#[cfg(feature = "smallvec")]
+pub(crate) const SMALLVEC_SIZE: usize = 16;
+
+/// Repeatedly calls `f` until it does not return [`vk::Result::INCOMPLETE`] anymore,
+/// ensuring all available data has been read into the small vector.
+///
+/// See for example [`vkEnumerateInstanceExtensionProperties`]: the number of available
+/// items may change between calls; [`vk::Result::INCOMPLETE`] is returned when the count
+/// increased (and the small vector is not large enough after querying the initial size),
+/// requiring Ash to try again.
+///
+/// [`vkEnumerateInstanceExtensionProperties`]: https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceExtensionProperties.html
+#[cfg(feature="smallvec")]
+pub(crate) unsafe fn read_into_uninitialized_small_vector<N: Copy + Default + TryInto<usize>, T>(
+    f: impl Fn(&mut N, *mut T) -> vk::Result,
+) -> VkResult<smallvec::SmallVec<[T; SMALLVEC_SIZE]>>
+    where
+        <N as TryInto<usize>>::Error: std::fmt::Debug,
+{
+    loop {
+        let mut count = N::default();
+        f(&mut count, std::ptr::null_mut()).result()?;
+        let mut data =
+            smallvec::SmallVec::with_capacity(count.try_into().expect("`N` failed to convert to `usize`"));
+
+        let err_code = f(&mut count, data.as_mut_ptr());
+        if err_code != vk::Result::INCOMPLETE {
+            data.set_len(count.try_into().expect("`N` failed to convert to `usize`"));
+            break err_code.result_with_success(data);
+        }
+    }
+}
+
 /// Repeatedly calls `f` until it does not return [`vk::Result::INCOMPLETE`] anymore,
 /// ensuring all available data has been read into the vector.
 ///

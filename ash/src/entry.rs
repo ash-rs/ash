@@ -238,6 +238,7 @@ impl Entry {
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceLayerProperties.html>
     #[inline]
+    #[cfg(not(feature = "smallvec"))]
     pub fn enumerate_instance_layer_properties(&self) -> VkResult<Vec<vk::LayerProperties>> {
         unsafe {
             read_into_uninitialized_vector(|count, data| {
@@ -246,14 +247,44 @@ impl Entry {
         }
     }
 
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceLayerProperties.html>
+    #[inline]
+    #[cfg(feature = "smallvec")]
+    pub fn enumerate_instance_layer_properties(&self) -> VkResult<smallvec::SmallVec<[vk::LayerProperties; SMALLVEC_SIZE]>> {
+        unsafe {
+            read_into_uninitialized_small_vector(|count, data| {
+                (self.entry_fn_1_0.enumerate_instance_layer_properties)(count, data)
+            })
+        }
+    }
+
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceExtensionProperties.html>
     #[inline]
+    #[cfg(not(feature = "smallvec"))]
     pub fn enumerate_instance_extension_properties(
         &self,
         layer_name: Option<&CStr>,
     ) -> VkResult<Vec<vk::ExtensionProperties>> {
         unsafe {
             read_into_uninitialized_vector(|count, data| {
+                (self.entry_fn_1_0.enumerate_instance_extension_properties)(
+                    layer_name.map_or(ptr::null(), |str| str.as_ptr()),
+                    count,
+                    data,
+                )
+            })
+        }
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceExtensionProperties.html>
+    #[inline]
+    #[cfg(feature = "smallvec")]
+    pub fn enumerate_instance_extension_properties(
+        &self,
+        layer_name: Option<&CStr>,
+    ) -> VkResult<smallvec::SmallVec<[vk::ExtensionProperties; SMALLVEC_SIZE]>> {
+        unsafe {
+            read_into_uninitialized_small_vector(|count, data| {
                 (self.entry_fn_1_0.enumerate_instance_extension_properties)(
                     layer_name.map_or(ptr::null(), |str| str.as_ptr()),
                     count,
