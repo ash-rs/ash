@@ -22,6 +22,7 @@ impl Display {
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceDisplayPropertiesKHR.html>
     #[inline]
+    #[cfg(not(feature = "smallvec"))]
     pub unsafe fn get_physical_device_display_properties(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -31,8 +32,21 @@ impl Display {
         })
     }
 
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceDisplayPropertiesKHR.html>
+    #[inline]
+    #[cfg(feature = "smallvec")]
+    pub unsafe fn get_physical_device_display_properties(
+        &self,
+        physical_device: vk::PhysicalDevice,
+    ) -> VkResult<smallvec::SmallVec<[vk::DisplayPropertiesKHR; SMALLVEC_SIZE]>> {
+        read_into_uninitialized_small_vector(|count, data| {
+            (self.fp.get_physical_device_display_properties_khr)(physical_device, count, data)
+        })
+    }
+
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceDisplayPlanePropertiesKHR.html>
     #[inline]
+    #[cfg(not(feature = "smallvec"))]
     pub unsafe fn get_physical_device_display_plane_properties(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -42,8 +56,21 @@ impl Display {
         })
     }
 
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceDisplayPlanePropertiesKHR.html>
+    #[inline]
+    #[cfg(feature = "smallvec")]
+    pub unsafe fn get_physical_device_display_plane_properties(
+        &self,
+        physical_device: vk::PhysicalDevice,
+    ) -> VkResult<smallvec::SmallVec<[vk::DisplayPlanePropertiesKHR; SMALLVEC_SIZE]>> {
+        read_into_uninitialized_small_vector(|count, data| {
+            (self.fp.get_physical_device_display_plane_properties_khr)(physical_device, count, data)
+        })
+    }
+
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDisplayPlaneSupportedDisplaysKHR.html>
     #[inline]
+    #[cfg(not(feature = "smallvec"))]
     pub unsafe fn get_display_plane_supported_displays(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -59,14 +86,46 @@ impl Display {
         })
     }
 
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDisplayPlaneSupportedDisplaysKHR.html>
+    #[inline]
+    #[cfg(feature = "smallvec")]
+    pub unsafe fn get_display_plane_supported_displays(
+        &self,
+        physical_device: vk::PhysicalDevice,
+        plane_index: u32,
+    ) -> VkResult<smallvec::SmallVec<[vk::DisplayKHR; SMALLVEC_SIZE]>> {
+        read_into_uninitialized_small_vector(|count, data| {
+            (self.fp.get_display_plane_supported_displays_khr)(
+                physical_device,
+                plane_index,
+                count,
+                data,
+            )
+        })
+    }
+
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDisplayModePropertiesKHR.html>
     #[inline]
+    #[cfg(not(feature = "smallvec"))]
     pub unsafe fn get_display_mode_properties(
         &self,
         physical_device: vk::PhysicalDevice,
         display: vk::DisplayKHR,
     ) -> VkResult<Vec<vk::DisplayModePropertiesKHR>> {
         read_into_uninitialized_vector(|count, data| {
+            (self.fp.get_display_mode_properties_khr)(physical_device, display, count, data)
+        })
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDisplayModePropertiesKHR.html>
+    #[inline]
+    #[cfg(feature = "smallvec")]
+    pub unsafe fn get_display_mode_properties(
+        &self,
+        physical_device: vk::PhysicalDevice,
+        display: vk::DisplayKHR,
+    ) -> VkResult<smallvec::SmallVec<[vk::DisplayModePropertiesKHR; SMALLVEC_SIZE]>> {
+        read_into_uninitialized_small_vector(|count, data| {
             (self.fp.get_display_mode_properties_khr)(physical_device, display, count, data)
         })
     }

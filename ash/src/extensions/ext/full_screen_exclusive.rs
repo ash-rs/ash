@@ -30,12 +30,31 @@ impl FullScreenExclusive {
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfacePresentModes2EXT.html>
     #[inline]
+    #[cfg(not(feature = "smallvec"))]
     pub unsafe fn get_physical_device_surface_present_modes2(
         &self,
         physical_device: vk::PhysicalDevice,
         surface_info: &vk::PhysicalDeviceSurfaceInfo2KHR,
     ) -> VkResult<Vec<vk::PresentModeKHR>> {
         read_into_uninitialized_vector(|count, data| {
+            (self.fp.get_physical_device_surface_present_modes2_ext)(
+                physical_device,
+                surface_info,
+                count,
+                data,
+            )
+        })
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfacePresentModes2EXT.html>
+    #[inline]
+    #[cfg(feature = "smallvec")]
+    pub unsafe fn get_physical_device_surface_present_modes2(
+        &self,
+        physical_device: vk::PhysicalDevice,
+        surface_info: &vk::PhysicalDeviceSurfaceInfo2KHR,
+    ) -> VkResult<smallvec::SmallVec<[vk::PresentModeKHR; SMALLVEC_SIZE]>> {
+        read_into_uninitialized_small_vector(|count, data| {
             (self.fp.get_physical_device_surface_present_modes2_ext)(
                 physical_device,
                 surface_info,

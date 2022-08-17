@@ -51,11 +51,24 @@ impl Swapchain {
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetSwapchainImagesKHR.html>
     #[inline]
+    #[cfg(not(feature = "smallvec"))]
     pub unsafe fn get_swapchain_images(
         &self,
         swapchain: vk::SwapchainKHR,
     ) -> VkResult<Vec<vk::Image>> {
         read_into_uninitialized_vector(|count, data| {
+            (self.fp.get_swapchain_images_khr)(self.handle, swapchain, count, data)
+        })
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetSwapchainImagesKHR.html>
+    #[inline]
+    #[cfg(feature = "smallvec")]
+    pub unsafe fn get_swapchain_images(
+        &self,
+        swapchain: vk::SwapchainKHR,
+    ) -> VkResult<smallvec::SmallVec<[vk::Image; SMALLVEC_SIZE]>> {
+        read_into_uninitialized_small_vector(|count, data| {
             (self.fp.get_swapchain_images_khr)(self.handle, swapchain, count, data)
         })
     }
@@ -154,6 +167,7 @@ impl Swapchain {
     /// [Vulkan 1.1]: https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_VERSION_1_1.html
     /// [`VK_KHR_surface`]: https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_surface.html
     #[inline]
+    #[cfg(not(feature = "smallvec"))]
     pub unsafe fn get_physical_device_present_rectangles(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -169,6 +183,31 @@ impl Swapchain {
         })
     }
 
+    /// Only available since [Vulkan 1.1].
+    ///
+    /// Also available as [`DeviceGroup::get_physical_device_present_rectangles()`]
+    /// when [`VK_KHR_surface`] is enabled.
+    ///
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDevicePresentRectanglesKHR.html>
+    ///
+    /// [Vulkan 1.1]: https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_VERSION_1_1.html
+    /// [`VK_KHR_surface`]: https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_surface.html
+    #[inline]
+    #[cfg(feature = "smallvec")]
+    pub unsafe fn get_physical_device_present_rectangles(
+        &self,
+        physical_device: vk::PhysicalDevice,
+        surface: vk::SurfaceKHR,
+    ) -> VkResult<smallvec::SmallVec<[vk::Rect2D; SMALLVEC_SIZE]>> {
+        read_into_uninitialized_small_vector(|count, data| {
+            (self.fp.get_physical_device_present_rectangles_khr)(
+                physical_device,
+                surface,
+                count,
+                data,
+            )
+        })
+    }
     /// On success, returns the next image's index and whether the swapchain is suboptimal for the surface.
     ///
     /// Only available since [Vulkan 1.1].

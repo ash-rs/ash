@@ -40,12 +40,31 @@ impl Surface {
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfacePresentModesKHR.html>
     #[inline]
+    #[cfg(not(feature = "smallvec"))]
     pub unsafe fn get_physical_device_surface_present_modes(
         &self,
         physical_device: vk::PhysicalDevice,
         surface: vk::SurfaceKHR,
     ) -> VkResult<Vec<vk::PresentModeKHR>> {
         read_into_uninitialized_vector(|count, data| {
+            (self.fp.get_physical_device_surface_present_modes_khr)(
+                physical_device,
+                surface,
+                count,
+                data,
+            )
+        })
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfacePresentModesKHR.html>
+    #[inline]
+    #[cfg(feature = "smallvec")]
+    pub unsafe fn get_physical_device_surface_present_modes(
+        &self,
+        physical_device: vk::PhysicalDevice,
+        surface: vk::SurfaceKHR,
+    ) -> VkResult<smallvec::SmallVec<[vk::PresentModeKHR; SMALLVEC_SIZE]>> {
+        read_into_uninitialized_small_vector(|count, data| {
             (self.fp.get_physical_device_surface_present_modes_khr)(
                 physical_device,
                 surface,
@@ -73,12 +92,26 @@ impl Surface {
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceFormatsKHR.html>
     #[inline]
+    #[cfg(not(feature = "smallvec"))]
     pub unsafe fn get_physical_device_surface_formats(
         &self,
         physical_device: vk::PhysicalDevice,
         surface: vk::SurfaceKHR,
     ) -> VkResult<Vec<vk::SurfaceFormatKHR>> {
         read_into_uninitialized_vector(|count, data| {
+            (self.fp.get_physical_device_surface_formats_khr)(physical_device, surface, count, data)
+        })
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceFormatsKHR.html>
+    #[inline]
+    #[cfg(feature = "smallvec")]
+    pub unsafe fn get_physical_device_surface_formats(
+        &self,
+        physical_device: vk::PhysicalDevice,
+        surface: vk::SurfaceKHR,
+    ) -> VkResult<smallvec::SmallVec<[vk::SurfaceFormatKHR; SMALLVEC_SIZE]>> {
+        read_into_uninitialized_small_vector(|count, data| {
             (self.fp.get_physical_device_surface_formats_khr)(physical_device, surface, count, data)
         })
     }
