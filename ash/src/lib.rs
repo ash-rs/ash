@@ -39,6 +39,7 @@
 //! * **debug** (default): Whether Vulkan structs should implement `Debug`.
 //! * **loaded** (default): Support searching for the Vulkan loader manually at runtime.
 //! * **linked**: Link the Vulkan loader at compile time.
+//! * **smallvec**: Make most functions that would normally return a Vec return a SmallVec
 
 pub use crate::device::Device;
 pub use crate::entry::Entry;

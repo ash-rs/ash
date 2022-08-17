@@ -49,6 +49,7 @@ where
     }
 }
 
+/// Size of the internal array for SmallVec
 #[cfg(feature = "smallvec")]
 pub(crate) const SMALLVEC_SIZE: usize = 16;
 
