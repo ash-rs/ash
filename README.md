@@ -268,7 +268,6 @@ cargo run --bin texture
 ### Utility libraries
 * [vk-sync](https://github.com/gwihlidal/vk-sync-rs) - Simplified Vulkan synchronization logic, written in rust.
 * [vk-mem-rs](https://github.com/gwihlidal/vk-mem-rs) - This crate provides an FFI layer and idiomatic rust wrappers for the excellent AMD Vulkan Memory Allocator (VMA) C/C++ library.
-* [vk-mem-alloc-rs](https://github.com/projectkml/vk-mem-alloc-rs) - A very lightweight wrapper around the AMD Vulkan Memory Allocator
 * [gpu-allocator](https://github.com/Traverse-Research/gpu-allocator) - Memory allocator written in pure Rust for GPU memory in Vulkan and in the future DirectX 12
 * [lahar](https://github.com/Ralith/lahar) - Tools for asynchronously uploading data to a Vulkan device.
 
