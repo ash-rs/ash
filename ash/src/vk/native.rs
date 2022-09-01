@@ -80,15 +80,7 @@ where
         }
     }
 }
-pub type size_t = ::std::os::raw::c_ulong;
-pub type __int8_t = ::std::os::raw::c_schar;
-pub type __uint8_t = ::std::os::raw::c_uchar;
-pub type __int16_t = ::std::os::raw::c_short;
-pub type __uint16_t = ::std::os::raw::c_ushort;
-pub type __int32_t = ::std::os::raw::c_int;
-pub type __uint32_t = ::std::os::raw::c_uint;
-pub type __int64_t = ::std::os::raw::c_long;
-pub type __uint64_t = ::std::os::raw::c_ulong;
+pub type size_t = ::std::os::raw::c_ulonglong;
 pub const StdVideoH264ChromaFormatIdc_STD_VIDEO_H264_CHROMA_FORMAT_IDC_MONOCHROME:
     StdVideoH264ChromaFormatIdc = 0;
 pub const StdVideoH264ChromaFormatIdc_STD_VIDEO_H264_CHROMA_FORMAT_IDC_420:
@@ -99,7 +91,7 @@ pub const StdVideoH264ChromaFormatIdc_STD_VIDEO_H264_CHROMA_FORMAT_IDC_444:
     StdVideoH264ChromaFormatIdc = 3;
 pub const StdVideoH264ChromaFormatIdc_STD_VIDEO_H264_CHROMA_FORMAT_IDC_INVALID:
     StdVideoH264ChromaFormatIdc = 2147483647;
-pub type StdVideoH264ChromaFormatIdc = ::std::os::raw::c_uint;
+pub type StdVideoH264ChromaFormatIdc = ::std::os::raw::c_int;
 pub const StdVideoH264ProfileIdc_STD_VIDEO_H264_PROFILE_IDC_BASELINE: StdVideoH264ProfileIdc = 66;
 pub const StdVideoH264ProfileIdc_STD_VIDEO_H264_PROFILE_IDC_MAIN: StdVideoH264ProfileIdc = 77;
 pub const StdVideoH264ProfileIdc_STD_VIDEO_H264_PROFILE_IDC_HIGH: StdVideoH264ProfileIdc = 100;
@@ -107,7 +99,7 @@ pub const StdVideoH264ProfileIdc_STD_VIDEO_H264_PROFILE_IDC_HIGH_444_PREDICTIVE:
     StdVideoH264ProfileIdc = 244;
 pub const StdVideoH264ProfileIdc_STD_VIDEO_H264_PROFILE_IDC_INVALID: StdVideoH264ProfileIdc =
     2147483647;
-pub type StdVideoH264ProfileIdc = ::std::os::raw::c_uint;
+pub type StdVideoH264ProfileIdc = ::std::os::raw::c_int;
 pub const StdVideoH264Level_STD_VIDEO_H264_LEVEL_1_0: StdVideoH264Level = 0;
 pub const StdVideoH264Level_STD_VIDEO_H264_LEVEL_1_1: StdVideoH264Level = 1;
 pub const StdVideoH264Level_STD_VIDEO_H264_LEVEL_1_2: StdVideoH264Level = 2;
@@ -128,12 +120,12 @@ pub const StdVideoH264Level_STD_VIDEO_H264_LEVEL_6_0: StdVideoH264Level = 16;
 pub const StdVideoH264Level_STD_VIDEO_H264_LEVEL_6_1: StdVideoH264Level = 17;
 pub const StdVideoH264Level_STD_VIDEO_H264_LEVEL_6_2: StdVideoH264Level = 18;
 pub const StdVideoH264Level_STD_VIDEO_H264_LEVEL_INVALID: StdVideoH264Level = 2147483647;
-pub type StdVideoH264Level = ::std::os::raw::c_uint;
+pub type StdVideoH264Level = ::std::os::raw::c_int;
 pub const StdVideoH264PocType_STD_VIDEO_H264_POC_TYPE_0: StdVideoH264PocType = 0;
 pub const StdVideoH264PocType_STD_VIDEO_H264_POC_TYPE_1: StdVideoH264PocType = 1;
 pub const StdVideoH264PocType_STD_VIDEO_H264_POC_TYPE_2: StdVideoH264PocType = 2;
 pub const StdVideoH264PocType_STD_VIDEO_H264_POC_TYPE_INVALID: StdVideoH264PocType = 2147483647;
-pub type StdVideoH264PocType = ::std::os::raw::c_uint;
+pub type StdVideoH264PocType = ::std::os::raw::c_int;
 pub const StdVideoH264AspectRatioIdc_STD_VIDEO_H264_ASPECT_RATIO_IDC_UNSPECIFIED:
     StdVideoH264AspectRatioIdc = 0;
 pub const StdVideoH264AspectRatioIdc_STD_VIDEO_H264_ASPECT_RATIO_IDC_SQUARE:
@@ -172,7 +164,7 @@ pub const StdVideoH264AspectRatioIdc_STD_VIDEO_H264_ASPECT_RATIO_IDC_EXTENDED_SA
     StdVideoH264AspectRatioIdc = 255;
 pub const StdVideoH264AspectRatioIdc_STD_VIDEO_H264_ASPECT_RATIO_IDC_INVALID:
     StdVideoH264AspectRatioIdc = 2147483647;
-pub type StdVideoH264AspectRatioIdc = ::std::os::raw::c_uint;
+pub type StdVideoH264AspectRatioIdc = ::std::os::raw::c_int;
 pub const StdVideoH264WeightedBipredIdc_STD_VIDEO_H264_WEIGHTED_BIPRED_IDC_DEFAULT:
     StdVideoH264WeightedBipredIdc = 0;
 pub const StdVideoH264WeightedBipredIdc_STD_VIDEO_H264_WEIGHTED_BIPRED_IDC_EXPLICIT:
@@ -181,14 +173,14 @@ pub const StdVideoH264WeightedBipredIdc_STD_VIDEO_H264_WEIGHTED_BIPRED_IDC_IMPLI
     StdVideoH264WeightedBipredIdc = 2;
 pub const StdVideoH264WeightedBipredIdc_STD_VIDEO_H264_WEIGHTED_BIPRED_IDC_INVALID:
     StdVideoH264WeightedBipredIdc = 2147483647;
-pub type StdVideoH264WeightedBipredIdc = ::std::os::raw::c_uint;
+pub type StdVideoH264WeightedBipredIdc = ::std::os::raw::c_int;
 pub const StdVideoH264ModificationOfPicNumsIdc_STD_VIDEO_H264_MODIFICATION_OF_PIC_NUMS_IDC_SHORT_TERM_SUBTRACT : StdVideoH264ModificationOfPicNumsIdc = 0 ;
 pub const StdVideoH264ModificationOfPicNumsIdc_STD_VIDEO_H264_MODIFICATION_OF_PIC_NUMS_IDC_SHORT_TERM_ADD : StdVideoH264ModificationOfPicNumsIdc = 1 ;
 pub const StdVideoH264ModificationOfPicNumsIdc_STD_VIDEO_H264_MODIFICATION_OF_PIC_NUMS_IDC_LONG_TERM : StdVideoH264ModificationOfPicNumsIdc = 2 ;
 pub const StdVideoH264ModificationOfPicNumsIdc_STD_VIDEO_H264_MODIFICATION_OF_PIC_NUMS_IDC_END:
     StdVideoH264ModificationOfPicNumsIdc = 3;
 pub const StdVideoH264ModificationOfPicNumsIdc_STD_VIDEO_H264_MODIFICATION_OF_PIC_NUMS_IDC_INVALID : StdVideoH264ModificationOfPicNumsIdc = 2147483647 ;
-pub type StdVideoH264ModificationOfPicNumsIdc = ::std::os::raw::c_uint;
+pub type StdVideoH264ModificationOfPicNumsIdc = ::std::os::raw::c_int;
 pub const StdVideoH264MemMgmtControlOp_STD_VIDEO_H264_MEM_MGMT_CONTROL_OP_END:
     StdVideoH264MemMgmtControlOp = 0;
 pub const StdVideoH264MemMgmtControlOp_STD_VIDEO_H264_MEM_MGMT_CONTROL_OP_UNMARK_SHORT_TERM:
@@ -203,31 +195,31 @@ pub const StdVideoH264MemMgmtControlOp_STD_VIDEO_H264_MEM_MGMT_CONTROL_OP_UNMARK
 pub const StdVideoH264MemMgmtControlOp_STD_VIDEO_H264_MEM_MGMT_CONTROL_OP_MARK_CURRENT_AS_LONG_TERM : StdVideoH264MemMgmtControlOp = 6 ;
 pub const StdVideoH264MemMgmtControlOp_STD_VIDEO_H264_MEM_MGMT_CONTROL_OP_INVALID:
     StdVideoH264MemMgmtControlOp = 2147483647;
-pub type StdVideoH264MemMgmtControlOp = ::std::os::raw::c_uint;
+pub type StdVideoH264MemMgmtControlOp = ::std::os::raw::c_int;
 pub const StdVideoH264CabacInitIdc_STD_VIDEO_H264_CABAC_INIT_IDC_0: StdVideoH264CabacInitIdc = 0;
 pub const StdVideoH264CabacInitIdc_STD_VIDEO_H264_CABAC_INIT_IDC_1: StdVideoH264CabacInitIdc = 1;
 pub const StdVideoH264CabacInitIdc_STD_VIDEO_H264_CABAC_INIT_IDC_2: StdVideoH264CabacInitIdc = 2;
 pub const StdVideoH264CabacInitIdc_STD_VIDEO_H264_CABAC_INIT_IDC_INVALID: StdVideoH264CabacInitIdc =
     2147483647;
-pub type StdVideoH264CabacInitIdc = ::std::os::raw::c_uint;
+pub type StdVideoH264CabacInitIdc = ::std::os::raw::c_int;
 pub const StdVideoH264DisableDeblockingFilterIdc_STD_VIDEO_H264_DISABLE_DEBLOCKING_FILTER_IDC_DISABLED : StdVideoH264DisableDeblockingFilterIdc = 0 ;
 pub const StdVideoH264DisableDeblockingFilterIdc_STD_VIDEO_H264_DISABLE_DEBLOCKING_FILTER_IDC_ENABLED : StdVideoH264DisableDeblockingFilterIdc = 1 ;
 pub const StdVideoH264DisableDeblockingFilterIdc_STD_VIDEO_H264_DISABLE_DEBLOCKING_FILTER_IDC_PARTIAL : StdVideoH264DisableDeblockingFilterIdc = 2 ;
 pub const StdVideoH264DisableDeblockingFilterIdc_STD_VIDEO_H264_DISABLE_DEBLOCKING_FILTER_IDC_INVALID : StdVideoH264DisableDeblockingFilterIdc = 2147483647 ;
-pub type StdVideoH264DisableDeblockingFilterIdc = ::std::os::raw::c_uint;
+pub type StdVideoH264DisableDeblockingFilterIdc = ::std::os::raw::c_int;
 pub const StdVideoH264SliceType_STD_VIDEO_H264_SLICE_TYPE_P: StdVideoH264SliceType = 0;
 pub const StdVideoH264SliceType_STD_VIDEO_H264_SLICE_TYPE_B: StdVideoH264SliceType = 1;
 pub const StdVideoH264SliceType_STD_VIDEO_H264_SLICE_TYPE_I: StdVideoH264SliceType = 2;
 pub const StdVideoH264SliceType_STD_VIDEO_H264_SLICE_TYPE_INVALID: StdVideoH264SliceType =
     2147483647;
-pub type StdVideoH264SliceType = ::std::os::raw::c_uint;
+pub type StdVideoH264SliceType = ::std::os::raw::c_int;
 pub const StdVideoH264PictureType_STD_VIDEO_H264_PICTURE_TYPE_P: StdVideoH264PictureType = 0;
 pub const StdVideoH264PictureType_STD_VIDEO_H264_PICTURE_TYPE_B: StdVideoH264PictureType = 1;
 pub const StdVideoH264PictureType_STD_VIDEO_H264_PICTURE_TYPE_I: StdVideoH264PictureType = 2;
 pub const StdVideoH264PictureType_STD_VIDEO_H264_PICTURE_TYPE_IDR: StdVideoH264PictureType = 5;
 pub const StdVideoH264PictureType_STD_VIDEO_H264_PICTURE_TYPE_INVALID: StdVideoH264PictureType =
     2147483647;
-pub type StdVideoH264PictureType = ::std::os::raw::c_uint;
+pub type StdVideoH264PictureType = ::std::os::raw::c_int;
 #[repr(C)]
 #[repr(align(4))]
 #[derive(Debug, Copy, Clone)]
@@ -3015,7 +3007,7 @@ pub const StdVideoH265ProfileIdc_STD_VIDEO_H265_PROFILE_IDC_SCC_EXTENSIONS: StdV
     9;
 pub const StdVideoH265ProfileIdc_STD_VIDEO_H265_PROFILE_IDC_INVALID: StdVideoH265ProfileIdc =
     2147483647;
-pub type StdVideoH265ProfileIdc = ::std::os::raw::c_uint;
+pub type StdVideoH265ProfileIdc = ::std::os::raw::c_int;
 pub const StdVideoH265Level_STD_VIDEO_H265_LEVEL_1_0: StdVideoH265Level = 0;
 pub const StdVideoH265Level_STD_VIDEO_H265_LEVEL_2_0: StdVideoH265Level = 1;
 pub const StdVideoH265Level_STD_VIDEO_H265_LEVEL_2_1: StdVideoH265Level = 2;
@@ -3030,20 +3022,20 @@ pub const StdVideoH265Level_STD_VIDEO_H265_LEVEL_6_0: StdVideoH265Level = 10;
 pub const StdVideoH265Level_STD_VIDEO_H265_LEVEL_6_1: StdVideoH265Level = 11;
 pub const StdVideoH265Level_STD_VIDEO_H265_LEVEL_6_2: StdVideoH265Level = 12;
 pub const StdVideoH265Level_STD_VIDEO_H265_LEVEL_INVALID: StdVideoH265Level = 2147483647;
-pub type StdVideoH265Level = ::std::os::raw::c_uint;
+pub type StdVideoH265Level = ::std::os::raw::c_int;
 pub const StdVideoH265SliceType_STD_VIDEO_H265_SLICE_TYPE_B: StdVideoH265SliceType = 0;
 pub const StdVideoH265SliceType_STD_VIDEO_H265_SLICE_TYPE_P: StdVideoH265SliceType = 1;
 pub const StdVideoH265SliceType_STD_VIDEO_H265_SLICE_TYPE_I: StdVideoH265SliceType = 2;
 pub const StdVideoH265SliceType_STD_VIDEO_H265_SLICE_TYPE_INVALID: StdVideoH265SliceType =
     2147483647;
-pub type StdVideoH265SliceType = ::std::os::raw::c_uint;
+pub type StdVideoH265SliceType = ::std::os::raw::c_int;
 pub const StdVideoH265PictureType_STD_VIDEO_H265_PICTURE_TYPE_P: StdVideoH265PictureType = 0;
 pub const StdVideoH265PictureType_STD_VIDEO_H265_PICTURE_TYPE_B: StdVideoH265PictureType = 1;
 pub const StdVideoH265PictureType_STD_VIDEO_H265_PICTURE_TYPE_I: StdVideoH265PictureType = 2;
 pub const StdVideoH265PictureType_STD_VIDEO_H265_PICTURE_TYPE_IDR: StdVideoH265PictureType = 3;
 pub const StdVideoH265PictureType_STD_VIDEO_H265_PICTURE_TYPE_INVALID: StdVideoH265PictureType =
     2147483647;
-pub type StdVideoH265PictureType = ::std::os::raw::c_uint;
+pub type StdVideoH265PictureType = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct StdVideoH265DecPicBufMgr {

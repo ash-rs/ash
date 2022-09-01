@@ -1562,12 +1562,12 @@ impl ImgFilterCubicFn {
 }
 #[doc = "Generated from 'VK_IMG_filter_cubic'"]
 impl Filter {
-    pub const CUBIC_IMG: Self = Self(1_000_015_000);
+    pub const CUBIC_IMG: Self = Self::CUBIC_EXT;
 }
 #[doc = "Generated from 'VK_IMG_filter_cubic'"]
 impl FormatFeatureFlags {
     #[doc = "Format can be filtered with VK_FILTER_CUBIC_IMG when being sampled"]
-    pub const SAMPLED_IMAGE_FILTER_CUBIC_IMG: Self = Self(0b10_0000_0000_0000);
+    pub const SAMPLED_IMAGE_FILTER_CUBIC_IMG: Self = Self::SAMPLED_IMAGE_FILTER_CUBIC_EXT;
 }
 impl AmdExtension17Fn {
     #[inline]
@@ -1846,12 +1846,12 @@ impl KhrVideoQueueFn {
     pub const fn name() -> &'static ::std::ffi::CStr {
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_queue\0") }
     }
-    pub const SPEC_VERSION: u32 = 4u32;
+    pub const SPEC_VERSION: u32 = 5u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceVideoCapabilitiesKHR = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
-    p_video_profile: *const VideoProfileKHR,
+    p_video_profile: *const VideoProfileInfoKHR,
     p_capabilities: *mut VideoCapabilitiesKHR,
 ) -> Result;
 #[allow(non_camel_case_types)]
@@ -1878,15 +1878,15 @@ pub type PFN_vkDestroyVideoSessionKHR = unsafe extern "system" fn(
 pub type PFN_vkGetVideoSessionMemoryRequirementsKHR = unsafe extern "system" fn(
     device: Device,
     video_session: VideoSessionKHR,
-    p_video_session_memory_requirements_count: *mut u32,
-    p_video_session_memory_requirements: *mut VideoGetMemoryPropertiesKHR,
+    p_memory_requirements_count: *mut u32,
+    p_memory_requirements: *mut VideoSessionMemoryRequirementsKHR,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkBindVideoSessionMemoryKHR = unsafe extern "system" fn(
     device: Device,
     video_session: VideoSessionKHR,
-    video_session_bind_memory_count: u32,
-    p_video_session_bind_memories: *const VideoBindMemoryKHR,
+    bind_session_memory_info_count: u32,
+    p_bind_session_memory_infos: *const BindVideoSessionMemoryInfoKHR,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateVideoSessionParametersKHR = unsafe extern "system" fn(
@@ -1949,7 +1949,7 @@ impl KhrVideoQueueFn {
             get_physical_device_video_capabilities_khr: unsafe {
                 unsafe extern "system" fn get_physical_device_video_capabilities_khr(
                     _physical_device: PhysicalDevice,
-                    _p_video_profile: *const VideoProfileKHR,
+                    _p_video_profile: *const VideoProfileInfoKHR,
                     _p_capabilities: *mut VideoCapabilitiesKHR,
                 ) -> Result {
                     panic!(concat!(
@@ -2034,8 +2034,8 @@ impl KhrVideoQueueFn {
                 unsafe extern "system" fn get_video_session_memory_requirements_khr(
                     _device: Device,
                     _video_session: VideoSessionKHR,
-                    _p_video_session_memory_requirements_count: *mut u32,
-                    _p_video_session_memory_requirements: *mut VideoGetMemoryPropertiesKHR,
+                    _p_memory_requirements_count: *mut u32,
+                    _p_memory_requirements: *mut VideoSessionMemoryRequirementsKHR,
                 ) -> Result {
                     panic!(concat!(
                         "Unable to load ",
@@ -2056,8 +2056,8 @@ impl KhrVideoQueueFn {
                 unsafe extern "system" fn bind_video_session_memory_khr(
                     _device: Device,
                     _video_session: VideoSessionKHR,
-                    _video_session_bind_memory_count: u32,
-                    _p_video_session_bind_memories: *const VideoBindMemoryKHR,
+                    _bind_session_memory_info_count: u32,
+                    _p_bind_session_memory_infos: *const BindVideoSessionMemoryInfoKHR,
                 ) -> Result {
                     panic!(concat!(
                         "Unable to load ",
@@ -2225,30 +2225,30 @@ impl Result {
 }
 #[doc = "Generated from 'VK_KHR_video_queue'"]
 impl StructureType {
-    pub const VIDEO_PROFILE_KHR: Self = Self(1_000_023_000);
+    pub const VIDEO_PROFILE_INFO_KHR: Self = Self(1_000_023_000);
     pub const VIDEO_CAPABILITIES_KHR: Self = Self(1_000_023_001);
-    pub const VIDEO_PICTURE_RESOURCE_KHR: Self = Self(1_000_023_002);
-    pub const VIDEO_GET_MEMORY_PROPERTIES_KHR: Self = Self(1_000_023_003);
-    pub const VIDEO_BIND_MEMORY_KHR: Self = Self(1_000_023_004);
+    pub const VIDEO_PICTURE_RESOURCE_INFO_KHR: Self = Self(1_000_023_002);
+    pub const VIDEO_SESSION_MEMORY_REQUIREMENTS_KHR: Self = Self(1_000_023_003);
+    pub const BIND_VIDEO_SESSION_MEMORY_INFO_KHR: Self = Self(1_000_023_004);
     pub const VIDEO_SESSION_CREATE_INFO_KHR: Self = Self(1_000_023_005);
     pub const VIDEO_SESSION_PARAMETERS_CREATE_INFO_KHR: Self = Self(1_000_023_006);
     pub const VIDEO_SESSION_PARAMETERS_UPDATE_INFO_KHR: Self = Self(1_000_023_007);
     pub const VIDEO_BEGIN_CODING_INFO_KHR: Self = Self(1_000_023_008);
     pub const VIDEO_END_CODING_INFO_KHR: Self = Self(1_000_023_009);
     pub const VIDEO_CODING_CONTROL_INFO_KHR: Self = Self(1_000_023_010);
-    pub const VIDEO_REFERENCE_SLOT_KHR: Self = Self(1_000_023_011);
-    pub const VIDEO_QUEUE_FAMILY_PROPERTIES_2_KHR: Self = Self(1_000_023_012);
-    pub const VIDEO_PROFILES_KHR: Self = Self(1_000_023_013);
+    pub const VIDEO_REFERENCE_SLOT_INFO_KHR: Self = Self(1_000_023_011);
+    pub const QUEUE_FAMILY_VIDEO_PROPERTIES_KHR: Self = Self(1_000_023_012);
+    pub const VIDEO_PROFILE_LIST_INFO_KHR: Self = Self(1_000_023_013);
     pub const PHYSICAL_DEVICE_VIDEO_FORMAT_INFO_KHR: Self = Self(1_000_023_014);
     pub const VIDEO_FORMAT_PROPERTIES_KHR: Self = Self(1_000_023_015);
-    pub const QUEUE_FAMILY_QUERY_RESULT_STATUS_PROPERTIES_2_KHR: Self = Self(1_000_023_016);
+    pub const QUEUE_FAMILY_QUERY_RESULT_STATUS_PROPERTIES_KHR: Self = Self(1_000_023_016);
 }
 impl KhrVideoDecodeQueueFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_decode_queue\0") }
     }
-    pub const SPEC_VERSION: u32 = 4u32;
+    pub const SPEC_VERSION: u32 = 6u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDecodeVideoKHR = unsafe extern "system" fn(
@@ -2330,6 +2330,7 @@ impl QueueFlags {
 impl StructureType {
     pub const VIDEO_DECODE_INFO_KHR: Self = Self(1_000_024_000);
     pub const VIDEO_DECODE_CAPABILITIES_KHR: Self = Self(1_000_024_001);
+    pub const VIDEO_DECODE_USAGE_INFO_KHR: Self = Self(1_000_024_002);
 }
 impl AmdGcnShaderFn {
     #[inline]
@@ -3095,7 +3096,7 @@ impl ExtVideoEncodeH264Fn {
     pub const fn name() -> &'static ::std::ffi::CStr {
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_encode_h264\0") }
     }
-    pub const SPEC_VERSION: u32 = 7u32;
+    pub const SPEC_VERSION: u32 = 8u32;
 }
 #[derive(Clone)]
 pub struct ExtVideoEncodeH264Fn {}
@@ -3116,12 +3117,12 @@ impl StructureType {
     pub const VIDEO_ENCODE_H264_SESSION_PARAMETERS_ADD_INFO_EXT: Self = Self(1_000_038_002);
     pub const VIDEO_ENCODE_H264_VCL_FRAME_INFO_EXT: Self = Self(1_000_038_003);
     pub const VIDEO_ENCODE_H264_DPB_SLOT_INFO_EXT: Self = Self(1_000_038_004);
-    pub const VIDEO_ENCODE_H264_NALU_SLICE_EXT: Self = Self(1_000_038_005);
-    pub const VIDEO_ENCODE_H264_EMIT_PICTURE_PARAMETERS_EXT: Self = Self(1_000_038_006);
-    pub const VIDEO_ENCODE_H264_PROFILE_EXT: Self = Self(1_000_038_007);
+    pub const VIDEO_ENCODE_H264_NALU_SLICE_INFO_EXT: Self = Self(1_000_038_005);
+    pub const VIDEO_ENCODE_H264_EMIT_PICTURE_PARAMETERS_INFO_EXT: Self = Self(1_000_038_006);
+    pub const VIDEO_ENCODE_H264_PROFILE_INFO_EXT: Self = Self(1_000_038_007);
     pub const VIDEO_ENCODE_H264_RATE_CONTROL_INFO_EXT: Self = Self(1_000_038_008);
     pub const VIDEO_ENCODE_H264_RATE_CONTROL_LAYER_INFO_EXT: Self = Self(1_000_038_009);
-    pub const VIDEO_ENCODE_H264_REFERENCE_LISTS_EXT: Self = Self(1_000_038_010);
+    pub const VIDEO_ENCODE_H264_REFERENCE_LISTS_INFO_EXT: Self = Self(1_000_038_010);
 }
 #[doc = "Generated from 'VK_EXT_video_encode_h264'"]
 impl VideoCodecOperationFlagsKHR {
@@ -3132,7 +3133,7 @@ impl ExtVideoEncodeH265Fn {
     pub const fn name() -> &'static ::std::ffi::CStr {
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_encode_h265\0") }
     }
-    pub const SPEC_VERSION: u32 = 7u32;
+    pub const SPEC_VERSION: u32 = 8u32;
 }
 #[derive(Clone)]
 pub struct ExtVideoEncodeH265Fn {}
@@ -3153,10 +3154,10 @@ impl StructureType {
     pub const VIDEO_ENCODE_H265_SESSION_PARAMETERS_ADD_INFO_EXT: Self = Self(1_000_039_002);
     pub const VIDEO_ENCODE_H265_VCL_FRAME_INFO_EXT: Self = Self(1_000_039_003);
     pub const VIDEO_ENCODE_H265_DPB_SLOT_INFO_EXT: Self = Self(1_000_039_004);
-    pub const VIDEO_ENCODE_H265_NALU_SLICE_SEGMENT_EXT: Self = Self(1_000_039_005);
-    pub const VIDEO_ENCODE_H265_EMIT_PICTURE_PARAMETERS_EXT: Self = Self(1_000_039_006);
-    pub const VIDEO_ENCODE_H265_PROFILE_EXT: Self = Self(1_000_039_007);
-    pub const VIDEO_ENCODE_H265_REFERENCE_LISTS_EXT: Self = Self(1_000_039_008);
+    pub const VIDEO_ENCODE_H265_NALU_SLICE_SEGMENT_INFO_EXT: Self = Self(1_000_039_005);
+    pub const VIDEO_ENCODE_H265_EMIT_PICTURE_PARAMETERS_INFO_EXT: Self = Self(1_000_039_006);
+    pub const VIDEO_ENCODE_H265_PROFILE_INFO_EXT: Self = Self(1_000_039_007);
+    pub const VIDEO_ENCODE_H265_REFERENCE_LISTS_INFO_EXT: Self = Self(1_000_039_008);
     pub const VIDEO_ENCODE_H265_RATE_CONTROL_INFO_EXT: Self = Self(1_000_039_009);
     pub const VIDEO_ENCODE_H265_RATE_CONTROL_LAYER_INFO_EXT: Self = Self(1_000_039_010);
 }
@@ -3169,7 +3170,7 @@ impl ExtVideoDecodeH264Fn {
     pub const fn name() -> &'static ::std::ffi::CStr {
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_decode_h264\0") }
     }
-    pub const SPEC_VERSION: u32 = 5u32;
+    pub const SPEC_VERSION: u32 = 6u32;
 }
 #[derive(Clone)]
 pub struct ExtVideoDecodeH264Fn {}
@@ -3187,8 +3188,8 @@ impl ExtVideoDecodeH264Fn {
 impl StructureType {
     pub const VIDEO_DECODE_H264_CAPABILITIES_EXT: Self = Self(1_000_040_000);
     pub const VIDEO_DECODE_H264_PICTURE_INFO_EXT: Self = Self(1_000_040_001);
-    pub const VIDEO_DECODE_H264_MVC_EXT: Self = Self(1_000_040_002);
-    pub const VIDEO_DECODE_H264_PROFILE_EXT: Self = Self(1_000_040_003);
+    pub const VIDEO_DECODE_H264_MVC_INFO_EXT: Self = Self(1_000_040_002);
+    pub const VIDEO_DECODE_H264_PROFILE_INFO_EXT: Self = Self(1_000_040_003);
     pub const VIDEO_DECODE_H264_SESSION_PARAMETERS_CREATE_INFO_EXT: Self = Self(1_000_040_004);
     pub const VIDEO_DECODE_H264_SESSION_PARAMETERS_ADD_INFO_EXT: Self = Self(1_000_040_005);
     pub const VIDEO_DECODE_H264_DPB_SLOT_INFO_EXT: Self = Self(1_000_040_006);
@@ -3563,14 +3564,6 @@ impl NvExtension52Fn {
     {
         Self {}
     }
-}
-#[doc = "Generated from 'VK_NV_extension_52'"]
-impl PipelineShaderStageCreateFlags {
-    pub const RESERVED_2_NV: Self = Self(0b100);
-}
-#[doc = "Generated from 'VK_NV_extension_52'"]
-impl ShaderModuleCreateFlags {
-    pub const RESERVED_0_NV: Self = Self(0b1);
 }
 impl NvExtension53Fn {
     #[inline]
@@ -4494,24 +4487,30 @@ impl StructureType {
     pub const IMAGE_VIEW_ASTC_DECODE_MODE_EXT: Self = Self(1_000_067_000);
     pub const PHYSICAL_DEVICE_ASTC_DECODE_FEATURES_EXT: Self = Self(1_000_067_001);
 }
-impl ImgExtension69Fn {
+impl ExtPipelineRobustnessFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_IMG_extension_69\0") }
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pipeline_robustness\0") }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct ImgExtension69Fn {}
-unsafe impl Send for ImgExtension69Fn {}
-unsafe impl Sync for ImgExtension69Fn {}
-impl ImgExtension69Fn {
+pub struct ExtPipelineRobustnessFn {}
+unsafe impl Send for ExtPipelineRobustnessFn {}
+unsafe impl Sync for ExtPipelineRobustnessFn {}
+impl ExtPipelineRobustnessFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         Self {}
     }
+}
+#[doc = "Generated from 'VK_EXT_pipeline_robustness'"]
+impl StructureType {
+    pub const PIPELINE_ROBUSTNESS_CREATE_INFO_EXT: Self = Self(1_000_068_000);
+    pub const PHYSICAL_DEVICE_PIPELINE_ROBUSTNESS_FEATURES_EXT: Self = Self(1_000_068_001);
+    pub const PHYSICAL_DEVICE_PIPELINE_ROBUSTNESS_PROPERTIES_EXT: Self = Self(1_000_068_002);
 }
 impl KhrMaintenance1Fn {
     #[inline]
@@ -11164,11 +11163,11 @@ impl ExtFilterCubicFn {
 }
 #[doc = "Generated from 'VK_EXT_filter_cubic'"]
 impl Filter {
-    pub const CUBIC_EXT: Self = Self::CUBIC_IMG;
+    pub const CUBIC_EXT: Self = Self(1_000_015_000);
 }
 #[doc = "Generated from 'VK_EXT_filter_cubic'"]
 impl FormatFeatureFlags {
-    pub const SAMPLED_IMAGE_FILTER_CUBIC_EXT: Self = Self::SAMPLED_IMAGE_FILTER_CUBIC_IMG;
+    pub const SAMPLED_IMAGE_FILTER_CUBIC_EXT: Self = Self(0b10_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_EXT_filter_cubic'"]
 impl StructureType {
@@ -11689,7 +11688,7 @@ impl ExtVideoDecodeH265Fn {
     pub const fn name() -> &'static ::std::ffi::CStr {
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_decode_h265\0") }
     }
-    pub const SPEC_VERSION: u32 = 3u32;
+    pub const SPEC_VERSION: u32 = 4u32;
 }
 #[derive(Clone)]
 pub struct ExtVideoDecodeH265Fn {}
@@ -11708,7 +11707,7 @@ impl StructureType {
     pub const VIDEO_DECODE_H265_CAPABILITIES_EXT: Self = Self(1_000_187_000);
     pub const VIDEO_DECODE_H265_SESSION_PARAMETERS_CREATE_INFO_EXT: Self = Self(1_000_187_001);
     pub const VIDEO_DECODE_H265_SESSION_PARAMETERS_ADD_INFO_EXT: Self = Self(1_000_187_002);
-    pub const VIDEO_DECODE_H265_PROFILE_EXT: Self = Self(1_000_187_003);
+    pub const VIDEO_DECODE_H265_PROFILE_INFO_EXT: Self = Self(1_000_187_003);
     pub const VIDEO_DECODE_H265_PICTURE_INFO_EXT: Self = Self(1_000_187_004);
     pub const VIDEO_DECODE_H265_DPB_SLOT_INFO_EXT: Self = Self(1_000_187_005);
 }
@@ -12205,13 +12204,13 @@ impl NvMeshShaderFn {
 }
 #[doc = "Generated from 'VK_NV_mesh_shader'"]
 impl PipelineStageFlags {
-    pub const TASK_SHADER_NV: Self = Self(0b1000_0000_0000_0000_0000);
-    pub const MESH_SHADER_NV: Self = Self(0b1_0000_0000_0000_0000_0000);
+    pub const TASK_SHADER_NV: Self = Self::TASK_SHADER_EXT;
+    pub const MESH_SHADER_NV: Self = Self::MESH_SHADER_EXT;
 }
 #[doc = "Generated from 'VK_NV_mesh_shader'"]
 impl ShaderStageFlags {
-    pub const TASK_NV: Self = Self(0b100_0000);
-    pub const MESH_NV: Self = Self(0b1000_0000);
+    pub const TASK_NV: Self = Self::TASK_EXT;
+    pub const MESH_NV: Self = Self::MESH_EXT;
 }
 #[doc = "Generated from 'VK_NV_mesh_shader'"]
 impl StructureType {
@@ -14609,6 +14608,21 @@ impl ExtExtension259Fn {
         Self {}
     }
 }
+#[doc = "Generated from 'VK_EXT_extension_259'"]
+impl FormatFeatureFlags2 {
+    pub const RESERVED_44_EXT: Self =
+        Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const RESERVED_45_EXT: Self =
+        Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_extension_259'"]
+impl ImageCreateFlags {
+    pub const RESERVED_19_EXT: Self = Self(0b1000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_extension_259'"]
+impl QueueFlags {
+    pub const RESERVED_9_EXT: Self = Self(0b10_0000_0000);
+}
 impl ExtLineRasterizationFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -15976,7 +15990,7 @@ impl QcomRenderPassTransformFn {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_render_pass_transform\0")
         }
     }
-    pub const SPEC_VERSION: u32 = 2u32;
+    pub const SPEC_VERSION: u32 = 3u32;
 }
 #[derive(Clone)]
 pub struct QcomRenderPassTransformFn {}
@@ -16597,7 +16611,7 @@ impl KhrVideoEncodeQueueFn {
     pub const fn name() -> &'static ::std::ffi::CStr {
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_encode_queue\0") }
     }
-    pub const SPEC_VERSION: u32 = 5u32;
+    pub const SPEC_VERSION: u32 = 7u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdEncodeVideoKHR = unsafe extern "system" fn(
@@ -16686,6 +16700,12 @@ impl StructureType {
     pub const VIDEO_ENCODE_RATE_CONTROL_INFO_KHR: Self = Self(1_000_299_001);
     pub const VIDEO_ENCODE_RATE_CONTROL_LAYER_INFO_KHR: Self = Self(1_000_299_002);
     pub const VIDEO_ENCODE_CAPABILITIES_KHR: Self = Self(1_000_299_003);
+    pub const VIDEO_ENCODE_USAGE_INFO_KHR: Self = Self(1_000_299_004);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl VideoCodingControlFlagsKHR {
+    pub const ENCODE_RATE_CONTROL: Self = Self(0b10);
+    pub const ENCODE_RATE_CONTROL_LAYER: Self = Self(0b100);
 }
 impl NvDeviceDiagnosticsConfigFn {
     #[inline]
@@ -17293,8 +17313,10 @@ impl PipelineStageFlags2 {
     pub const RAY_TRACING_SHADER_NV: Self = Self::RAY_TRACING_SHADER_KHR;
     pub const ACCELERATION_STRUCTURE_BUILD_NV: Self = Self::ACCELERATION_STRUCTURE_BUILD_KHR;
     pub const FRAGMENT_DENSITY_PROCESS_EXT: Self = Self(0b1000_0000_0000_0000_0000_0000);
-    pub const TASK_SHADER_NV: Self = Self(0b1000_0000_0000_0000_0000);
-    pub const MESH_SHADER_NV: Self = Self(0b1_0000_0000_0000_0000_0000);
+    pub const TASK_SHADER_NV: Self = Self::TASK_SHADER_EXT;
+    pub const MESH_SHADER_NV: Self = Self::MESH_SHADER_EXT;
+    pub const TASK_SHADER_EXT: Self = Self(0b1000_0000_0000_0000_0000);
+    pub const MESH_SHADER_EXT: Self = Self(0b1_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_synchronization2'"]
 impl StructureType {
@@ -17349,6 +17371,10 @@ impl AmdExtension317Fn {
     }
 }
 #[doc = "Generated from 'VK_AMD_extension_317'"]
+impl AccelerationStructureCreateFlagsKHR {
+    pub const RESERVED_3_AMD: Self = Self(0b1000);
+}
+#[doc = "Generated from 'VK_AMD_extension_317'"]
 impl AccessFlags2 {
     pub const RESERVED_41_AMD: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
 }
@@ -17364,6 +17390,7 @@ impl BufferUsageFlags {
 #[doc = "Generated from 'VK_AMD_extension_317'"]
 impl DescriptorSetLayoutCreateFlags {
     pub const RESERVED_4_AMD: Self = Self(0b1_0000);
+    pub const RESERVED_5_AMD: Self = Self(0b10_0000);
 }
 #[doc = "Generated from 'VK_AMD_extension_317'"]
 impl ImageCreateFlags {
@@ -17372,6 +17399,10 @@ impl ImageCreateFlags {
 #[doc = "Generated from 'VK_AMD_extension_317'"]
 impl ImageViewCreateFlags {
     pub const RESERVED_2_AMD: Self = Self(0b100);
+}
+#[doc = "Generated from 'VK_AMD_extension_317'"]
+impl PipelineCreateFlags {
+    pub const RESERVED_29_AMD: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_AMD_extension_317'"]
 impl SamplerCreateFlags {
@@ -17704,24 +17735,151 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_RAY_TRACING_MOTION_BLUR_FEATURES_NV: Self = Self(1_000_327_001);
     pub const ACCELERATION_STRUCTURE_MOTION_INFO_NV: Self = Self(1_000_327_002);
 }
-impl NvExtension329Fn {
+impl ExtMeshShaderFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_329\0") }
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_mesh_shader\0") }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDrawMeshTasksEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    group_count_x: u32,
+    group_count_y: u32,
+    group_count_z: u32,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDrawMeshTasksIndirectEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    buffer: Buffer,
+    offset: DeviceSize,
+    draw_count: u32,
+    stride: u32,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDrawMeshTasksIndirectCountEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    buffer: Buffer,
+    offset: DeviceSize,
+    count_buffer: Buffer,
+    count_buffer_offset: DeviceSize,
+    max_draw_count: u32,
+    stride: u32,
+);
 #[derive(Clone)]
-pub struct NvExtension329Fn {}
-unsafe impl Send for NvExtension329Fn {}
-unsafe impl Sync for NvExtension329Fn {}
-impl NvExtension329Fn {
+pub struct ExtMeshShaderFn {
+    pub cmd_draw_mesh_tasks_ext: PFN_vkCmdDrawMeshTasksEXT,
+    pub cmd_draw_mesh_tasks_indirect_ext: PFN_vkCmdDrawMeshTasksIndirectEXT,
+    pub cmd_draw_mesh_tasks_indirect_count_ext: PFN_vkCmdDrawMeshTasksIndirectCountEXT,
+}
+unsafe impl Send for ExtMeshShaderFn {}
+unsafe impl Sync for ExtMeshShaderFn {}
+impl ExtMeshShaderFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        Self {}
+        Self {
+            cmd_draw_mesh_tasks_ext: unsafe {
+                unsafe extern "system" fn cmd_draw_mesh_tasks_ext(
+                    _command_buffer: CommandBuffer,
+                    _group_count_x: u32,
+                    _group_count_y: u32,
+                    _group_count_z: u32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_draw_mesh_tasks_ext)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawMeshTasksEXT\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_draw_mesh_tasks_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_draw_mesh_tasks_indirect_ext: unsafe {
+                unsafe extern "system" fn cmd_draw_mesh_tasks_indirect_ext(
+                    _command_buffer: CommandBuffer,
+                    _buffer: Buffer,
+                    _offset: DeviceSize,
+                    _draw_count: u32,
+                    _stride: u32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_draw_mesh_tasks_indirect_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdDrawMeshTasksIndirectEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_draw_mesh_tasks_indirect_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_draw_mesh_tasks_indirect_count_ext: unsafe {
+                unsafe extern "system" fn cmd_draw_mesh_tasks_indirect_count_ext(
+                    _command_buffer: CommandBuffer,
+                    _buffer: Buffer,
+                    _offset: DeviceSize,
+                    _count_buffer: Buffer,
+                    _count_buffer_offset: DeviceSize,
+                    _max_draw_count: u32,
+                    _stride: u32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_draw_mesh_tasks_indirect_count_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdDrawMeshTasksIndirectCountEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_draw_mesh_tasks_indirect_count_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
     }
+}
+#[doc = "Generated from 'VK_EXT_mesh_shader'"]
+impl IndirectCommandsTokenTypeNV {
+    pub const DRAW_MESH_TASKS: Self = Self(1_000_328_000);
+}
+#[doc = "Generated from 'VK_EXT_mesh_shader'"]
+impl PipelineStageFlags {
+    pub const TASK_SHADER_EXT: Self = Self(0b1000_0000_0000_0000_0000);
+    pub const MESH_SHADER_EXT: Self = Self(0b1_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_mesh_shader'"]
+impl QueryPipelineStatisticFlags {
+    pub const TASK_SHADER_INVOCATIONS_EXT: Self = Self(0b1000_0000_0000);
+    pub const MESH_SHADER_INVOCATIONS_EXT: Self = Self(0b1_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_mesh_shader'"]
+impl QueryType {
+    pub const MESH_PRIMITIVES_GENERATED_EXT: Self = Self(1_000_328_000);
+}
+#[doc = "Generated from 'VK_EXT_mesh_shader'"]
+impl ShaderStageFlags {
+    pub const TASK_EXT: Self = Self(0b100_0000);
+    pub const MESH_EXT: Self = Self(0b1000_0000);
+}
+#[doc = "Generated from 'VK_EXT_mesh_shader'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_MESH_SHADER_FEATURES_EXT: Self = Self(1_000_328_000);
+    pub const PHYSICAL_DEVICE_MESH_SHADER_PROPERTIES_EXT: Self = Self(1_000_328_001);
 }
 impl NvExtension330Fn {
     #[inline]
@@ -18164,18 +18322,22 @@ impl StructureType {
     pub const IMAGE_SUBRESOURCE_2_EXT: Self = Self(1_000_338_003);
     pub const IMAGE_COMPRESSION_PROPERTIES_EXT: Self = Self(1_000_338_004);
 }
-impl ExtExtension340Fn {
+impl ExtAttachmentFeedbackLoopLayoutFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_340\0") }
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_EXT_attachment_feedback_loop_layout\0",
+            )
+        }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
-pub struct ExtExtension340Fn {}
-unsafe impl Send for ExtExtension340Fn {}
-unsafe impl Sync for ExtExtension340Fn {}
-impl ExtExtension340Fn {
+pub struct ExtAttachmentFeedbackLoopLayoutFn {}
+unsafe impl Send for ExtAttachmentFeedbackLoopLayoutFn {}
+unsafe impl Sync for ExtAttachmentFeedbackLoopLayoutFn {}
+impl ExtAttachmentFeedbackLoopLayoutFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -18183,18 +18345,29 @@ impl ExtExtension340Fn {
         Self {}
     }
 }
-#[doc = "Generated from 'VK_EXT_extension_340'"]
+#[doc = "Generated from 'VK_EXT_attachment_feedback_loop_layout'"]
 impl DependencyFlags {
-    pub const RESERVED_3_EXT: Self = Self(0b1000);
+    #[doc = "Dependency may be a feedback loop"]
+    pub const FEEDBACK_LOOP_EXT: Self = Self(0b1000);
 }
-#[doc = "Generated from 'VK_EXT_extension_340'"]
+#[doc = "Generated from 'VK_EXT_attachment_feedback_loop_layout'"]
+impl ImageLayout {
+    pub const ATTACHMENT_FEEDBACK_LOOP_OPTIMAL_EXT: Self = Self(1_000_339_000);
+}
+#[doc = "Generated from 'VK_EXT_attachment_feedback_loop_layout'"]
 impl ImageUsageFlags {
-    pub const RESERVED_19_EXT: Self = Self(0b1000_0000_0000_0000_0000);
+    pub const ATTACHMENT_FEEDBACK_LOOP_EXT: Self = Self(0b1000_0000_0000_0000_0000);
 }
-#[doc = "Generated from 'VK_EXT_extension_340'"]
+#[doc = "Generated from 'VK_EXT_attachment_feedback_loop_layout'"]
 impl PipelineCreateFlags {
-    pub const RESERVED_25_EXT: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
-    pub const RESERVED_26_EXT: Self = Self(0b100_0000_0000_0000_0000_0000_0000);
+    pub const COLOR_ATTACHMENT_FEEDBACK_LOOP_EXT: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
+    pub const DEPTH_STENCIL_ATTACHMENT_FEEDBACK_LOOP_EXT: Self =
+        Self(0b100_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_attachment_feedback_loop_layout'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_ATTACHMENT_FEEDBACK_LOOP_LAYOUT_FEATURES_EXT: Self =
+        Self(1_000_339_000);
 }
 impl Ext4444FormatsFn {
     #[inline]
@@ -18268,23 +18441,29 @@ impl ArmRasterizationOrderAttachmentAccessFn {
 }
 #[doc = "Generated from 'VK_ARM_rasterization_order_attachment_access'"]
 impl PipelineColorBlendStateCreateFlags {
-    pub const RASTERIZATION_ORDER_ATTACHMENT_ACCESS_ARM: Self = Self(0b1);
+    pub const RASTERIZATION_ORDER_ATTACHMENT_ACCESS_ARM: Self =
+        Self::RASTERIZATION_ORDER_ATTACHMENT_ACCESS_EXT;
 }
 #[doc = "Generated from 'VK_ARM_rasterization_order_attachment_access'"]
 impl PipelineDepthStencilStateCreateFlags {
-    pub const RASTERIZATION_ORDER_ATTACHMENT_DEPTH_ACCESS_ARM: Self = Self(0b1);
-    pub const RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_ARM: Self = Self(0b10);
+    pub const RASTERIZATION_ORDER_ATTACHMENT_DEPTH_ACCESS_ARM: Self =
+        Self::RASTERIZATION_ORDER_ATTACHMENT_DEPTH_ACCESS_EXT;
+    pub const RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_ARM: Self =
+        Self::RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_EXT;
 }
 #[doc = "Generated from 'VK_ARM_rasterization_order_attachment_access'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_FEATURES_ARM: Self =
-        Self(1_000_342_000);
+        Self::PHYSICAL_DEVICE_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_FEATURES_EXT;
 }
 #[doc = "Generated from 'VK_ARM_rasterization_order_attachment_access'"]
 impl SubpassDescriptionFlags {
-    pub const RASTERIZATION_ORDER_ATTACHMENT_COLOR_ACCESS_ARM: Self = Self(0b1_0000);
-    pub const RASTERIZATION_ORDER_ATTACHMENT_DEPTH_ACCESS_ARM: Self = Self(0b10_0000);
-    pub const RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_ARM: Self = Self(0b100_0000);
+    pub const RASTERIZATION_ORDER_ATTACHMENT_COLOR_ACCESS_ARM: Self =
+        Self::RASTERIZATION_ORDER_ATTACHMENT_COLOR_ACCESS_EXT;
+    pub const RASTERIZATION_ORDER_ATTACHMENT_DEPTH_ACCESS_ARM: Self =
+        Self::RASTERIZATION_ORDER_ATTACHMENT_DEPTH_ACCESS_EXT;
+    pub const RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_ARM: Self =
+        Self::RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_EXT;
 }
 impl ArmExtension344Fn {
     #[inline]
@@ -18779,7 +18958,7 @@ impl KhrFormatFeatureFlags2Fn {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_format_feature_flags2\0")
         }
     }
-    pub const SPEC_VERSION: u32 = 1u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
 pub struct KhrFormatFeatureFlags2Fn {}
@@ -20464,6 +20643,15 @@ impl NvExtension398Fn {
         Self {}
     }
 }
+#[doc = "Generated from 'VK_NV_extension_398'"]
+impl BuildAccelerationStructureFlagsKHR {
+    pub const RESERVED_9_NV: Self = Self(0b10_0000_0000);
+    pub const RESERVED_10_NV: Self = Self(0b100_0000_0000);
+}
+#[doc = "Generated from 'VK_NV_extension_398'"]
+impl PipelineCreateFlags {
+    pub const RESERVED_28_NV: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000);
+}
 impl JuiceExtension399Fn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -21125,24 +21313,28 @@ impl StructureType {
     pub const DESCRIPTOR_SET_BINDING_REFERENCE_VALVE: Self = Self(1_000_420_001);
     pub const DESCRIPTOR_SET_LAYOUT_HOST_MAPPING_INFO_VALVE: Self = Self(1_000_420_002);
 }
-impl ExtExtension422Fn {
+impl ExtDepthClampZeroOneFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_422\0") }
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_depth_clamp_zero_one\0") }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct ExtExtension422Fn {}
-unsafe impl Send for ExtExtension422Fn {}
-unsafe impl Sync for ExtExtension422Fn {}
-impl ExtExtension422Fn {
+pub struct ExtDepthClampZeroOneFn {}
+unsafe impl Send for ExtDepthClampZeroOneFn {}
+unsafe impl Sync for ExtDepthClampZeroOneFn {}
+impl ExtDepthClampZeroOneFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         Self {}
     }
+}
+#[doc = "Generated from 'VK_EXT_depth_clamp_zero_one'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_DEPTH_CLAMP_ZERO_ONE_FEATURES_EXT: Self = Self(1_000_421_000);
 }
 impl ExtNonSeamlessCubeMapFn {
     #[inline]
@@ -21540,18 +21732,18 @@ impl DeviceQueueCreateFlags {
 impl QueueFlags {
     pub const RESERVED_7_QCOM: Self = Self(0b1000_0000);
 }
-impl QcomExtension441Fn {
+impl QcomImageProcessingFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_extension_441\0") }
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_image_processing\0") }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct QcomExtension441Fn {}
-unsafe impl Send for QcomExtension441Fn {}
-unsafe impl Sync for QcomExtension441Fn {}
-impl QcomExtension441Fn {
+pub struct QcomImageProcessingFn {}
+unsafe impl Send for QcomImageProcessingFn {}
+unsafe impl Sync for QcomImageProcessingFn {}
+impl QcomImageProcessingFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -21559,21 +21751,34 @@ impl QcomExtension441Fn {
         Self {}
     }
 }
-#[doc = "Generated from 'VK_QCOM_extension_441'"]
+#[doc = "Generated from 'VK_QCOM_image_processing'"]
+impl DescriptorType {
+    pub const SAMPLE_WEIGHT_IMAGE_QCOM: Self = Self(1_000_440_000);
+    pub const BLOCK_MATCH_IMAGE_QCOM: Self = Self(1_000_440_001);
+}
+#[doc = "Generated from 'VK_QCOM_image_processing'"]
 impl FormatFeatureFlags2 {
-    pub const RESERVED_34_QCOM: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000);
-    pub const RESERVED_35_QCOM: Self = Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000);
-    pub const RESERVED_36_QCOM: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000_0000);
-    pub const RESERVED_37_QCOM: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const WEIGHT_IMAGE_QCOM: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const WEIGHT_SAMPLED_IMAGE_QCOM: Self =
+        Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const BLOCK_MATCHING_QCOM: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const BOX_FILTER_SAMPLED_QCOM: Self =
+        Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from 'VK_QCOM_extension_441'"]
+#[doc = "Generated from 'VK_QCOM_image_processing'"]
 impl ImageUsageFlags {
-    pub const RESERVED_20_QCOM: Self = Self(0b1_0000_0000_0000_0000_0000);
-    pub const RESERVED_21_QCOM: Self = Self(0b10_0000_0000_0000_0000_0000);
+    pub const SAMPLE_WEIGHT_QCOM: Self = Self(0b1_0000_0000_0000_0000_0000);
+    pub const SAMPLE_BLOCK_MATCH_QCOM: Self = Self(0b10_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from 'VK_QCOM_extension_441'"]
+#[doc = "Generated from 'VK_QCOM_image_processing'"]
 impl SamplerCreateFlags {
     pub const IMAGE_PROCESSING_QCOM: Self = Self(0b1_0000);
+}
+#[doc = "Generated from 'VK_QCOM_image_processing'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_IMAGE_PROCESSING_FEATURES_QCOM: Self = Self(1_000_440_000);
+    pub const PHYSICAL_DEVICE_IMAGE_PROCESSING_PROPERTIES_QCOM: Self = Self(1_000_440_001);
+    pub const IMAGE_VIEW_SAMPLE_WEIGHT_CREATE_INFO_QCOM: Self = Self(1_000_440_002);
 }
 impl CoreaviExtension442Fn {
     #[inline]
@@ -21711,6 +21916,10 @@ impl SecExtension448Fn {
     {
         Self {}
     }
+}
+#[doc = "Generated from 'VK_SEC_extension_448'"]
+impl SwapchainCreateFlagsKHR {
+    pub const RESERVED_3_SEC: Self = Self(0b1000);
 }
 impl SecExtension449Fn {
     #[inline]
@@ -22077,24 +22286,48 @@ impl StructureType {
     pub const PIPELINE_SHADER_STAGE_MODULE_IDENTIFIER_CREATE_INFO_EXT: Self = Self(1_000_462_002);
     pub const SHADER_MODULE_IDENTIFIER_EXT: Self = Self(1_000_462_003);
 }
-impl ExtExtension464Fn {
+impl ExtRasterizationOrderAttachmentAccessFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_464\0") }
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_EXT_rasterization_order_attachment_access\0",
+            )
+        }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct ExtExtension464Fn {}
-unsafe impl Send for ExtExtension464Fn {}
-unsafe impl Sync for ExtExtension464Fn {}
-impl ExtExtension464Fn {
+pub struct ExtRasterizationOrderAttachmentAccessFn {}
+unsafe impl Send for ExtRasterizationOrderAttachmentAccessFn {}
+unsafe impl Sync for ExtRasterizationOrderAttachmentAccessFn {}
+impl ExtRasterizationOrderAttachmentAccessFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         Self {}
     }
+}
+#[doc = "Generated from 'VK_EXT_rasterization_order_attachment_access'"]
+impl PipelineColorBlendStateCreateFlags {
+    pub const RASTERIZATION_ORDER_ATTACHMENT_ACCESS_EXT: Self = Self(0b1);
+}
+#[doc = "Generated from 'VK_EXT_rasterization_order_attachment_access'"]
+impl PipelineDepthStencilStateCreateFlags {
+    pub const RASTERIZATION_ORDER_ATTACHMENT_DEPTH_ACCESS_EXT: Self = Self(0b1);
+    pub const RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_EXT: Self = Self(0b10);
+}
+#[doc = "Generated from 'VK_EXT_rasterization_order_attachment_access'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_FEATURES_EXT: Self =
+        Self(1_000_342_000);
+}
+#[doc = "Generated from 'VK_EXT_rasterization_order_attachment_access'"]
+impl SubpassDescriptionFlags {
+    pub const RASTERIZATION_ORDER_ATTACHMENT_COLOR_ACCESS_EXT: Self = Self(0b1_0000);
+    pub const RASTERIZATION_ORDER_ATTACHMENT_DEPTH_ACCESS_EXT: Self = Self(0b10_0000);
+    pub const RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_EXT: Self = Self(0b100_0000);
 }
 impl NvExtension465Fn {
     #[inline]
@@ -22184,6 +22417,7 @@ impl ExtExtension467Fn {
 #[doc = "Generated from 'VK_EXT_extension_467'"]
 impl PipelineCreateFlags {
     pub const RESERVED_27_EXT: Self = Self(0b1000_0000_0000_0000_0000_0000_0000);
+    pub const RESERVED_30_EXT: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000);
 }
 impl ExtExtension468Fn {
     #[inline]
@@ -22507,6 +22741,285 @@ pub struct ExtExtension484Fn {}
 unsafe impl Send for ExtExtension484Fn {}
 unsafe impl Sync for ExtExtension484Fn {}
 impl ExtExtension484Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl QcomTilePropertiesFn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_tile_properties\0") }
+    }
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetFramebufferTilePropertiesQCOM = unsafe extern "system" fn(
+    device: Device,
+    framebuffer: Framebuffer,
+    p_properties_count: *mut u32,
+    p_properties: *mut TilePropertiesQCOM,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetDynamicRenderingTilePropertiesQCOM = unsafe extern "system" fn(
+    device: Device,
+    p_rendering_info: *const RenderingInfo,
+    p_properties: *mut TilePropertiesQCOM,
+) -> Result;
+#[derive(Clone)]
+pub struct QcomTilePropertiesFn {
+    pub get_framebuffer_tile_properties_qcom: PFN_vkGetFramebufferTilePropertiesQCOM,
+    pub get_dynamic_rendering_tile_properties_qcom: PFN_vkGetDynamicRenderingTilePropertiesQCOM,
+}
+unsafe impl Send for QcomTilePropertiesFn {}
+unsafe impl Sync for QcomTilePropertiesFn {}
+impl QcomTilePropertiesFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {
+            get_framebuffer_tile_properties_qcom: unsafe {
+                unsafe extern "system" fn get_framebuffer_tile_properties_qcom(
+                    _device: Device,
+                    _framebuffer: Framebuffer,
+                    _p_properties_count: *mut u32,
+                    _p_properties: *mut TilePropertiesQCOM,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_framebuffer_tile_properties_qcom)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetFramebufferTilePropertiesQCOM\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_framebuffer_tile_properties_qcom
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_dynamic_rendering_tile_properties_qcom: unsafe {
+                unsafe extern "system" fn get_dynamic_rendering_tile_properties_qcom(
+                    _device: Device,
+                    _p_rendering_info: *const RenderingInfo,
+                    _p_properties: *mut TilePropertiesQCOM,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_dynamic_rendering_tile_properties_qcom)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetDynamicRenderingTilePropertiesQCOM\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_dynamic_rendering_tile_properties_qcom
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+}
+#[doc = "Generated from 'VK_QCOM_tile_properties'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_TILE_PROPERTIES_FEATURES_QCOM: Self = Self(1_000_484_000);
+    pub const TILE_PROPERTIES_QCOM: Self = Self(1_000_484_001);
+}
+impl SecAmigoProfilingFn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_SEC_amigo_profiling\0") }
+    }
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct SecAmigoProfilingFn {}
+unsafe impl Send for SecAmigoProfilingFn {}
+unsafe impl Sync for SecAmigoProfilingFn {}
+impl SecAmigoProfilingFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+#[doc = "Generated from 'VK_SEC_amigo_profiling'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_AMIGO_PROFILING_FEATURES_SEC: Self = Self(1_000_485_000);
+    pub const AMIGO_PROFILING_SUBMIT_INFO_SEC: Self = Self(1_000_485_001);
+}
+impl ExtExtension487Fn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_487\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct ExtExtension487Fn {}
+unsafe impl Send for ExtExtension487Fn {}
+unsafe impl Sync for ExtExtension487Fn {}
+impl ExtExtension487Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl ExtExtension488Fn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_488\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct ExtExtension488Fn {}
+unsafe impl Send for ExtExtension488Fn {}
+unsafe impl Sync for ExtExtension488Fn {}
+impl ExtExtension488Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl QcomExtension489Fn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_extension_489\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct QcomExtension489Fn {}
+unsafe impl Send for QcomExtension489Fn {}
+unsafe impl Sync for QcomExtension489Fn {}
+impl QcomExtension489Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl NvExtension490Fn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_490\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct NvExtension490Fn {}
+unsafe impl Send for NvExtension490Fn {}
+unsafe impl Sync for NvExtension490Fn {}
+impl NvExtension490Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl NvExtension491Fn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_491\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct NvExtension491Fn {}
+unsafe impl Send for NvExtension491Fn {}
+unsafe impl Sync for NvExtension491Fn {}
+impl NvExtension491Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl NvExtension492Fn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_492\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct NvExtension492Fn {}
+unsafe impl Send for NvExtension492Fn {}
+unsafe impl Sync for NvExtension492Fn {}
+impl NvExtension492Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl NvExtension493Fn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_493\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct NvExtension493Fn {}
+unsafe impl Send for NvExtension493Fn {}
+unsafe impl Sync for NvExtension493Fn {}
+impl NvExtension493Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl NvExtension494Fn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_494\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct NvExtension494Fn {}
+unsafe impl Send for NvExtension494Fn {}
+unsafe impl Sync for NvExtension494Fn {}
+impl NvExtension494Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl ExtExtension495Fn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_495\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct ExtExtension495Fn {}
+unsafe impl Send for ExtExtension495Fn {}
+unsafe impl Sync for ExtExtension495Fn {}
+impl ExtExtension495Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,

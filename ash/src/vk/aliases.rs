@@ -261,3 +261,5 @@ pub type RenderingAttachmentInfoKHR<'a> = RenderingAttachmentInfo<'a>;
 pub type PhysicalDeviceDynamicRenderingFeaturesKHR<'a> = PhysicalDeviceDynamicRenderingFeatures<'a>;
 pub type CommandBufferInheritanceRenderingInfoKHR<'a> = CommandBufferInheritanceRenderingInfo<'a>;
 pub type AttachmentSampleCountInfoNV<'a> = AttachmentSampleCountInfoAMD<'a>;
+pub type PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARM<'a> =
+    PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT<'a>;
