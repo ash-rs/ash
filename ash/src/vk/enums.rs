@@ -2480,6 +2480,105 @@ impl QueryResultStatusKHR {
     pub const NOT_READY: Self = Self(0);
     pub const COMPLETE: Self = Self(1);
 }
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeTuningModeKHR.html>"]
+pub struct VideoEncodeTuningModeKHR(pub(crate) i32);
+impl VideoEncodeTuningModeKHR {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl VideoEncodeTuningModeKHR {
+    pub const DEFAULT: Self = Self(0);
+    pub const HIGH_QUALITY: Self = Self(1);
+    pub const LOW_LATENCY: Self = Self(2);
+    pub const ULTRA_LOW_LATENCY: Self = Self(3);
+    pub const LOSSLESS: Self = Self(4);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH264RateControlStructureEXT.html>"]
+pub struct VideoEncodeH264RateControlStructureEXT(pub(crate) i32);
+impl VideoEncodeH264RateControlStructureEXT {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl VideoEncodeH264RateControlStructureEXT {
+    pub const UNKNOWN: Self = Self(0);
+    pub const FLAT: Self = Self(1);
+    pub const DYADIC: Self = Self(2);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265RateControlStructureEXT.html>"]
+pub struct VideoEncodeH265RateControlStructureEXT(pub(crate) i32);
+impl VideoEncodeH265RateControlStructureEXT {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl VideoEncodeH265RateControlStructureEXT {
+    pub const UNKNOWN: Self = Self(0);
+    pub const FLAT: Self = Self(1);
+    pub const DYADIC: Self = Self(2);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineRobustnessBufferBehaviorEXT.html>"]
+pub struct PipelineRobustnessBufferBehaviorEXT(pub(crate) i32);
+impl PipelineRobustnessBufferBehaviorEXT {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl PipelineRobustnessBufferBehaviorEXT {
+    pub const DEVICE_DEFAULT: Self = Self(0);
+    pub const DISABLED: Self = Self(1);
+    pub const ROBUST_BUFFER_ACCESS: Self = Self(2);
+    pub const ROBUST_BUFFER_ACCESS_2: Self = Self(3);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineRobustnessImageBehaviorEXT.html>"]
+pub struct PipelineRobustnessImageBehaviorEXT(pub(crate) i32);
+impl PipelineRobustnessImageBehaviorEXT {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl PipelineRobustnessImageBehaviorEXT {
+    pub const DEVICE_DEFAULT: Self = Self(0);
+    pub const DISABLED: Self = Self(1);
+    pub const ROBUST_IMAGE_ACCESS: Self = Self(2);
+    pub const ROBUST_IMAGE_ACCESS_2: Self = Self(3);
+}
 impl fmt::Debug for ObjectType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
