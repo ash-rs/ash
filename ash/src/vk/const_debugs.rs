@@ -2967,8 +2967,8 @@ impl fmt::Debug for PipelineCacheHeaderVersion {
 impl fmt::Debug for PipelineColorBlendStateCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[(
-            PipelineColorBlendStateCreateFlags::RASTERIZATION_ORDER_ATTACHMENT_ACCESS_ARM.0,
-            "RASTERIZATION_ORDER_ATTACHMENT_ACCESS_ARM",
+            PipelineColorBlendStateCreateFlags::RASTERIZATION_ORDER_ATTACHMENT_ACCESS_EXT.0,
+            "RASTERIZATION_ORDER_ATTACHMENT_ACCESS_EXT",
         )];
         debug_flags(f, KNOWN, self.0)
     }
@@ -3118,7 +3118,7 @@ impl fmt::Debug for PipelineCreationFeedbackFlags {
 }
 impl fmt::Debug for PipelineDepthStencilStateCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN : & [(Flags , & str)] = & [(PipelineDepthStencilStateCreateFlags :: RASTERIZATION_ORDER_ATTACHMENT_DEPTH_ACCESS_ARM . 0 , "RASTERIZATION_ORDER_ATTACHMENT_DEPTH_ACCESS_ARM") , (PipelineDepthStencilStateCreateFlags :: RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_ARM . 0 , "RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_ARM")] ;
+        const KNOWN : & [(Flags , & str)] = & [(PipelineDepthStencilStateCreateFlags :: RASTERIZATION_ORDER_ATTACHMENT_DEPTH_ACCESS_EXT . 0 , "RASTERIZATION_ORDER_ATTACHMENT_DEPTH_ACCESS_EXT") , (PipelineDepthStencilStateCreateFlags :: RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_EXT . 0 , "RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_EXT")] ;
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -3236,10 +3236,6 @@ impl fmt::Debug for PipelineRobustnessImageBehaviorEXT {
 impl fmt::Debug for PipelineShaderStageCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (
-                PipelineShaderStageCreateFlags::RESERVED_2_NV.0,
-                "RESERVED_2_NV",
-            ),
             (
                 PipelineShaderStageCreateFlags::RESERVED_3_KHR.0,
                 "RESERVED_3_KHR",
@@ -3996,8 +3992,7 @@ impl fmt::Debug for ShaderInfoTypeAMD {
 }
 impl fmt::Debug for ShaderModuleCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] =
-            &[(ShaderModuleCreateFlags::RESERVED_0_NV.0, "RESERVED_0_NV")];
+        const KNOWN: &[(Flags, &str)] = &[];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -4239,11 +4234,13 @@ impl fmt::Debug for StructureType {
             Self::DEBUG_MARKER_OBJECT_NAME_INFO_EXT => Some("DEBUG_MARKER_OBJECT_NAME_INFO_EXT"),
             Self::DEBUG_MARKER_OBJECT_TAG_INFO_EXT => Some("DEBUG_MARKER_OBJECT_TAG_INFO_EXT"),
             Self::DEBUG_MARKER_MARKER_INFO_EXT => Some("DEBUG_MARKER_MARKER_INFO_EXT"),
-            Self::VIDEO_PROFILE_KHR => Some("VIDEO_PROFILE_KHR"),
+            Self::VIDEO_PROFILE_INFO_KHR => Some("VIDEO_PROFILE_INFO_KHR"),
             Self::VIDEO_CAPABILITIES_KHR => Some("VIDEO_CAPABILITIES_KHR"),
-            Self::VIDEO_PICTURE_RESOURCE_KHR => Some("VIDEO_PICTURE_RESOURCE_KHR"),
-            Self::VIDEO_GET_MEMORY_PROPERTIES_KHR => Some("VIDEO_GET_MEMORY_PROPERTIES_KHR"),
-            Self::VIDEO_BIND_MEMORY_KHR => Some("VIDEO_BIND_MEMORY_KHR"),
+            Self::VIDEO_PICTURE_RESOURCE_INFO_KHR => Some("VIDEO_PICTURE_RESOURCE_INFO_KHR"),
+            Self::VIDEO_SESSION_MEMORY_REQUIREMENTS_KHR => {
+                Some("VIDEO_SESSION_MEMORY_REQUIREMENTS_KHR")
+            }
+            Self::BIND_VIDEO_SESSION_MEMORY_INFO_KHR => Some("BIND_VIDEO_SESSION_MEMORY_INFO_KHR"),
             Self::VIDEO_SESSION_CREATE_INFO_KHR => Some("VIDEO_SESSION_CREATE_INFO_KHR"),
             Self::VIDEO_SESSION_PARAMETERS_CREATE_INFO_KHR => {
                 Some("VIDEO_SESSION_PARAMETERS_CREATE_INFO_KHR")
@@ -4254,17 +4251,15 @@ impl fmt::Debug for StructureType {
             Self::VIDEO_BEGIN_CODING_INFO_KHR => Some("VIDEO_BEGIN_CODING_INFO_KHR"),
             Self::VIDEO_END_CODING_INFO_KHR => Some("VIDEO_END_CODING_INFO_KHR"),
             Self::VIDEO_CODING_CONTROL_INFO_KHR => Some("VIDEO_CODING_CONTROL_INFO_KHR"),
-            Self::VIDEO_REFERENCE_SLOT_KHR => Some("VIDEO_REFERENCE_SLOT_KHR"),
-            Self::VIDEO_QUEUE_FAMILY_PROPERTIES_2_KHR => {
-                Some("VIDEO_QUEUE_FAMILY_PROPERTIES_2_KHR")
-            }
-            Self::VIDEO_PROFILES_KHR => Some("VIDEO_PROFILES_KHR"),
+            Self::VIDEO_REFERENCE_SLOT_INFO_KHR => Some("VIDEO_REFERENCE_SLOT_INFO_KHR"),
+            Self::QUEUE_FAMILY_VIDEO_PROPERTIES_KHR => Some("QUEUE_FAMILY_VIDEO_PROPERTIES_KHR"),
+            Self::VIDEO_PROFILE_LIST_INFO_KHR => Some("VIDEO_PROFILE_LIST_INFO_KHR"),
             Self::PHYSICAL_DEVICE_VIDEO_FORMAT_INFO_KHR => {
                 Some("PHYSICAL_DEVICE_VIDEO_FORMAT_INFO_KHR")
             }
             Self::VIDEO_FORMAT_PROPERTIES_KHR => Some("VIDEO_FORMAT_PROPERTIES_KHR"),
-            Self::QUEUE_FAMILY_QUERY_RESULT_STATUS_PROPERTIES_2_KHR => {
-                Some("QUEUE_FAMILY_QUERY_RESULT_STATUS_PROPERTIES_2_KHR")
+            Self::QUEUE_FAMILY_QUERY_RESULT_STATUS_PROPERTIES_KHR => {
+                Some("QUEUE_FAMILY_QUERY_RESULT_STATUS_PROPERTIES_KHR")
             }
             Self::VIDEO_DECODE_INFO_KHR => Some("VIDEO_DECODE_INFO_KHR"),
             Self::VIDEO_DECODE_CAPABILITIES_KHR => Some("VIDEO_DECODE_CAPABILITIES_KHR"),
@@ -4304,19 +4299,21 @@ impl fmt::Debug for StructureType {
             Self::VIDEO_ENCODE_H264_DPB_SLOT_INFO_EXT => {
                 Some("VIDEO_ENCODE_H264_DPB_SLOT_INFO_EXT")
             }
-            Self::VIDEO_ENCODE_H264_NALU_SLICE_EXT => Some("VIDEO_ENCODE_H264_NALU_SLICE_EXT"),
-            Self::VIDEO_ENCODE_H264_EMIT_PICTURE_PARAMETERS_EXT => {
-                Some("VIDEO_ENCODE_H264_EMIT_PICTURE_PARAMETERS_EXT")
+            Self::VIDEO_ENCODE_H264_NALU_SLICE_INFO_EXT => {
+                Some("VIDEO_ENCODE_H264_NALU_SLICE_INFO_EXT")
             }
-            Self::VIDEO_ENCODE_H264_PROFILE_EXT => Some("VIDEO_ENCODE_H264_PROFILE_EXT"),
+            Self::VIDEO_ENCODE_H264_EMIT_PICTURE_PARAMETERS_INFO_EXT => {
+                Some("VIDEO_ENCODE_H264_EMIT_PICTURE_PARAMETERS_INFO_EXT")
+            }
+            Self::VIDEO_ENCODE_H264_PROFILE_INFO_EXT => Some("VIDEO_ENCODE_H264_PROFILE_INFO_EXT"),
             Self::VIDEO_ENCODE_H264_RATE_CONTROL_INFO_EXT => {
                 Some("VIDEO_ENCODE_H264_RATE_CONTROL_INFO_EXT")
             }
             Self::VIDEO_ENCODE_H264_RATE_CONTROL_LAYER_INFO_EXT => {
                 Some("VIDEO_ENCODE_H264_RATE_CONTROL_LAYER_INFO_EXT")
             }
-            Self::VIDEO_ENCODE_H264_REFERENCE_LISTS_EXT => {
-                Some("VIDEO_ENCODE_H264_REFERENCE_LISTS_EXT")
+            Self::VIDEO_ENCODE_H264_REFERENCE_LISTS_INFO_EXT => {
+                Some("VIDEO_ENCODE_H264_REFERENCE_LISTS_INFO_EXT")
             }
             Self::VIDEO_ENCODE_H265_CAPABILITIES_EXT => Some("VIDEO_ENCODE_H265_CAPABILITIES_EXT"),
             Self::VIDEO_ENCODE_H265_SESSION_PARAMETERS_CREATE_INFO_EXT => {
@@ -4331,15 +4328,15 @@ impl fmt::Debug for StructureType {
             Self::VIDEO_ENCODE_H265_DPB_SLOT_INFO_EXT => {
                 Some("VIDEO_ENCODE_H265_DPB_SLOT_INFO_EXT")
             }
-            Self::VIDEO_ENCODE_H265_NALU_SLICE_SEGMENT_EXT => {
-                Some("VIDEO_ENCODE_H265_NALU_SLICE_SEGMENT_EXT")
+            Self::VIDEO_ENCODE_H265_NALU_SLICE_SEGMENT_INFO_EXT => {
+                Some("VIDEO_ENCODE_H265_NALU_SLICE_SEGMENT_INFO_EXT")
             }
-            Self::VIDEO_ENCODE_H265_EMIT_PICTURE_PARAMETERS_EXT => {
-                Some("VIDEO_ENCODE_H265_EMIT_PICTURE_PARAMETERS_EXT")
+            Self::VIDEO_ENCODE_H265_EMIT_PICTURE_PARAMETERS_INFO_EXT => {
+                Some("VIDEO_ENCODE_H265_EMIT_PICTURE_PARAMETERS_INFO_EXT")
             }
-            Self::VIDEO_ENCODE_H265_PROFILE_EXT => Some("VIDEO_ENCODE_H265_PROFILE_EXT"),
-            Self::VIDEO_ENCODE_H265_REFERENCE_LISTS_EXT => {
-                Some("VIDEO_ENCODE_H265_REFERENCE_LISTS_EXT")
+            Self::VIDEO_ENCODE_H265_PROFILE_INFO_EXT => Some("VIDEO_ENCODE_H265_PROFILE_INFO_EXT"),
+            Self::VIDEO_ENCODE_H265_REFERENCE_LISTS_INFO_EXT => {
+                Some("VIDEO_ENCODE_H265_REFERENCE_LISTS_INFO_EXT")
             }
             Self::VIDEO_ENCODE_H265_RATE_CONTROL_INFO_EXT => {
                 Some("VIDEO_ENCODE_H265_RATE_CONTROL_INFO_EXT")
@@ -4349,8 +4346,8 @@ impl fmt::Debug for StructureType {
             }
             Self::VIDEO_DECODE_H264_CAPABILITIES_EXT => Some("VIDEO_DECODE_H264_CAPABILITIES_EXT"),
             Self::VIDEO_DECODE_H264_PICTURE_INFO_EXT => Some("VIDEO_DECODE_H264_PICTURE_INFO_EXT"),
-            Self::VIDEO_DECODE_H264_MVC_EXT => Some("VIDEO_DECODE_H264_MVC_EXT"),
-            Self::VIDEO_DECODE_H264_PROFILE_EXT => Some("VIDEO_DECODE_H264_PROFILE_EXT"),
+            Self::VIDEO_DECODE_H264_MVC_INFO_EXT => Some("VIDEO_DECODE_H264_MVC_INFO_EXT"),
+            Self::VIDEO_DECODE_H264_PROFILE_INFO_EXT => Some("VIDEO_DECODE_H264_PROFILE_INFO_EXT"),
             Self::VIDEO_DECODE_H264_SESSION_PARAMETERS_CREATE_INFO_EXT => {
                 Some("VIDEO_DECODE_H264_SESSION_PARAMETERS_CREATE_INFO_EXT")
             }
@@ -4733,7 +4730,7 @@ impl fmt::Debug for StructureType {
             Self::VIDEO_DECODE_H265_SESSION_PARAMETERS_ADD_INFO_EXT => {
                 Some("VIDEO_DECODE_H265_SESSION_PARAMETERS_ADD_INFO_EXT")
             }
-            Self::VIDEO_DECODE_H265_PROFILE_EXT => Some("VIDEO_DECODE_H265_PROFILE_EXT"),
+            Self::VIDEO_DECODE_H265_PROFILE_INFO_EXT => Some("VIDEO_DECODE_H265_PROFILE_INFO_EXT"),
             Self::VIDEO_DECODE_H265_PICTURE_INFO_EXT => Some("VIDEO_DECODE_H265_PICTURE_INFO_EXT"),
             Self::VIDEO_DECODE_H265_DPB_SLOT_INFO_EXT => {
                 Some("VIDEO_DECODE_H265_DPB_SLOT_INFO_EXT")
@@ -5100,9 +5097,6 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT")
             }
-            Self::PHYSICAL_DEVICE_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_FEATURES_ARM => {
-                Some("PHYSICAL_DEVICE_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_FEATURES_ARM")
-            }
             Self::PHYSICAL_DEVICE_RGBA10X6_FORMATS_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_RGBA10X6_FORMATS_FEATURES_EXT")
             }
@@ -5294,6 +5288,9 @@ impl fmt::Debug for StructureType {
                 Some("PIPELINE_SHADER_STAGE_MODULE_IDENTIFIER_CREATE_INFO_EXT")
             }
             Self::SHADER_MODULE_IDENTIFIER_EXT => Some("SHADER_MODULE_IDENTIFIER_EXT"),
+            Self::PHYSICAL_DEVICE_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_FEATURES_EXT")
+            }
             Self::PHYSICAL_DEVICE_TILE_PROPERTIES_FEATURES_QCOM => {
                 Some("PHYSICAL_DEVICE_TILE_PROPERTIES_FEATURES_QCOM")
             }
@@ -5704,16 +5701,16 @@ impl fmt::Debug for SubpassDescriptionFlags {
                 "SHADER_RESOLVE_QCOM",
             ),
             (
-                SubpassDescriptionFlags::RASTERIZATION_ORDER_ATTACHMENT_COLOR_ACCESS_ARM.0,
-                "RASTERIZATION_ORDER_ATTACHMENT_COLOR_ACCESS_ARM",
+                SubpassDescriptionFlags::RASTERIZATION_ORDER_ATTACHMENT_COLOR_ACCESS_EXT.0,
+                "RASTERIZATION_ORDER_ATTACHMENT_COLOR_ACCESS_EXT",
             ),
             (
-                SubpassDescriptionFlags::RASTERIZATION_ORDER_ATTACHMENT_DEPTH_ACCESS_ARM.0,
-                "RASTERIZATION_ORDER_ATTACHMENT_DEPTH_ACCESS_ARM",
+                SubpassDescriptionFlags::RASTERIZATION_ORDER_ATTACHMENT_DEPTH_ACCESS_EXT.0,
+                "RASTERIZATION_ORDER_ATTACHMENT_DEPTH_ACCESS_EXT",
             ),
             (
-                SubpassDescriptionFlags::RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_ARM.0,
-                "RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_ARM",
+                SubpassDescriptionFlags::RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_EXT.0,
+                "RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_EXT",
             ),
             (SubpassDescriptionFlags::RESERVED_7_EXT.0, "RESERVED_7_EXT"),
         ];
@@ -5793,6 +5790,7 @@ impl fmt::Debug for SwapchainCreateFlagsKHR {
             ),
             (SwapchainCreateFlagsKHR::PROTECTED.0, "PROTECTED"),
             (SwapchainCreateFlagsKHR::MUTABLE_FORMAT.0, "MUTABLE_FORMAT"),
+            (SwapchainCreateFlagsKHR::RESERVED_3_SEC.0, "RESERVED_3_SEC"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -6014,7 +6012,7 @@ impl fmt::Debug for VideoChromaSubsamplingFlagsKHR {
 impl fmt::Debug for VideoCodecOperationFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (VideoCodecOperationFlagsKHR::INVALID.0, "INVALID"),
+            (VideoCodecOperationFlagsKHR::NONE.0, "NONE"),
             (
                 VideoCodecOperationFlagsKHR::ENCODE_H264_EXT.0,
                 "ENCODE_H264_EXT",
@@ -6038,18 +6036,15 @@ impl fmt::Debug for VideoCodecOperationFlagsKHR {
 impl fmt::Debug for VideoCodingControlFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (VideoCodingControlFlagsKHR::DEFAULT.0, "DEFAULT"),
             (VideoCodingControlFlagsKHR::RESET.0, "RESET"),
-        ];
-        debug_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Debug for VideoCodingQualityPresetFlagsKHR {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (VideoCodingQualityPresetFlagsKHR::NORMAL.0, "NORMAL"),
-            (VideoCodingQualityPresetFlagsKHR::POWER.0, "POWER"),
-            (VideoCodingQualityPresetFlagsKHR::QUALITY.0, "QUALITY"),
+            (
+                VideoCodingControlFlagsKHR::ENCODE_RATE_CONTROL.0,
+                "ENCODE_RATE_CONTROL",
+            ),
+            (
+                VideoCodingControlFlagsKHR::ENCODE_RATE_CONTROL_LAYER.0,
+                "ENCODE_RATE_CONTROL_LAYER",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -6068,7 +6063,6 @@ impl fmt::Debug for VideoComponentBitDepthFlagsKHR {
 impl fmt::Debug for VideoDecodeCapabilityFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (VideoDecodeCapabilityFlagsKHR::DEFAULT.0, "DEFAULT"),
             (
                 VideoDecodeCapabilityFlagsKHR::DPB_AND_OUTPUT_COINCIDE.0,
                 "DPB_AND_OUTPUT_COINCIDE",
@@ -6083,10 +6077,7 @@ impl fmt::Debug for VideoDecodeCapabilityFlagsKHR {
 }
 impl fmt::Debug for VideoDecodeFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (VideoDecodeFlagsKHR::DEFAULT.0, "DEFAULT"),
-            (VideoDecodeFlagsKHR::RESERVED_0.0, "RESERVED_0"),
-        ];
+        const KNOWN: &[(Flags, &str)] = &[];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -6111,22 +6102,16 @@ impl fmt::Debug for VideoDecodeH264PictureLayoutFlagsEXT {
 }
 impl fmt::Debug for VideoEncodeCapabilityFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (VideoEncodeCapabilityFlagsKHR::DEFAULT.0, "DEFAULT"),
-            (
-                VideoEncodeCapabilityFlagsKHR::PRECEDING_EXTERNALLY_ENCODED_BYTES.0,
-                "PRECEDING_EXTERNALLY_ENCODED_BYTES",
-            ),
-        ];
+        const KNOWN: &[(Flags, &str)] = &[(
+            VideoEncodeCapabilityFlagsKHR::PRECEDING_EXTERNALLY_ENCODED_BYTES.0,
+            "PRECEDING_EXTERNALLY_ENCODED_BYTES",
+        )];
         debug_flags(f, KNOWN, self.0)
     }
 }
 impl fmt::Debug for VideoEncodeFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (VideoEncodeFlagsKHR::DEFAULT.0, "DEFAULT"),
-            (VideoEncodeFlagsKHR::RESERVED_0.0, "RESERVED_0"),
-        ];
+        const KNOWN: &[(Flags, &str)] = &[];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -6251,20 +6236,19 @@ impl fmt::Debug for VideoEncodeH264OutputModeFlagsEXT {
         debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Debug for VideoEncodeH264RateControlStructureFlagsEXT {
+impl fmt::Debug for VideoEncodeH264RateControlStructureEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                VideoEncodeH264RateControlStructureFlagsEXT::UNKNOWN.0,
-                "UNKNOWN",
-            ),
-            (VideoEncodeH264RateControlStructureFlagsEXT::FLAT.0, "FLAT"),
-            (
-                VideoEncodeH264RateControlStructureFlagsEXT::DYADIC.0,
-                "DYADIC",
-            ),
-        ];
-        debug_flags(f, KNOWN, self.0)
+        let name = match *self {
+            Self::UNKNOWN => Some("UNKNOWN"),
+            Self::FLAT => Some("FLAT"),
+            Self::DYADIC => Some("DYADIC"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
     }
 }
 impl fmt::Debug for VideoEncodeH265CapabilityFlagsEXT {
@@ -6414,20 +6398,19 @@ impl fmt::Debug for VideoEncodeH265OutputModeFlagsEXT {
         debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Debug for VideoEncodeH265RateControlStructureFlagsEXT {
+impl fmt::Debug for VideoEncodeH265RateControlStructureEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                VideoEncodeH265RateControlStructureFlagsEXT::UNKNOWN.0,
-                "UNKNOWN",
-            ),
-            (VideoEncodeH265RateControlStructureFlagsEXT::FLAT.0, "FLAT"),
-            (
-                VideoEncodeH265RateControlStructureFlagsEXT::DYADIC.0,
-                "DYADIC",
-            ),
-        ];
-        debug_flags(f, KNOWN, self.0)
+        let name = match *self {
+            Self::UNKNOWN => Some("UNKNOWN"),
+            Self::FLAT => Some("FLAT"),
+            Self::DYADIC => Some("DYADIC"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
     }
 }
 impl fmt::Debug for VideoEncodeH265TransformBlockSizeFlagsEXT {
@@ -6455,10 +6438,7 @@ impl fmt::Debug for VideoEncodeH265TransformBlockSizeFlagsEXT {
 }
 impl fmt::Debug for VideoEncodeRateControlFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (VideoEncodeRateControlFlagsKHR::DEFAULT.0, "DEFAULT"),
-            (VideoEncodeRateControlFlagsKHR::RESERVED_0.0, "RESERVED_0"),
-        ];
+        const KNOWN: &[(Flags, &str)] = &[];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -6480,13 +6460,16 @@ impl fmt::Debug for VideoEndCodingFlagsKHR {
 }
 impl fmt::Debug for VideoSessionCreateFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (VideoSessionCreateFlagsKHR::DEFAULT.0, "DEFAULT"),
-            (
-                VideoSessionCreateFlagsKHR::PROTECTED_CONTENT.0,
-                "PROTECTED_CONTENT",
-            ),
-        ];
+        const KNOWN: &[(Flags, &str)] = &[(
+            VideoSessionCreateFlagsKHR::PROTECTED_CONTENT.0,
+            "PROTECTED_CONTENT",
+        )];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for VideoSessionParametersCreateFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
         debug_flags(f, KNOWN, self.0)
     }
 }
