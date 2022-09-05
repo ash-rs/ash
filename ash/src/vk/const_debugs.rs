@@ -2603,6 +2603,7 @@ impl fmt::Debug for IndirectCommandsTokenTypeNV {
             Self::DRAW_INDEXED => Some("DRAW_INDEXED"),
             Self::DRAW => Some("DRAW"),
             Self::DRAW_TASKS => Some("DRAW_TASKS"),
+            Self::DRAW_MESH_TASKS => Some("DRAW_MESH_TASKS"),
             _ => None,
         };
         if let Some(x) = name {
@@ -3083,6 +3084,7 @@ impl fmt::Debug for PipelineCreateFlags {
             (PipelineCreateFlags::RESERVED_24_NV.0, "RESERVED_24_NV"),
             (PipelineCreateFlags::RESERVED_28_NV.0, "RESERVED_28_NV"),
             (PipelineCreateFlags::RESERVED_27_EXT.0, "RESERVED_27_EXT"),
+            (PipelineCreateFlags::RESERVED_30_EXT.0, "RESERVED_30_EXT"),
             (
                 PipelineCreateFlags::VIEW_INDEX_FROM_DEVICE_INDEX.0,
                 "VIEW_INDEX_FROM_DEVICE_INDEX",
@@ -3303,8 +3305,6 @@ impl fmt::Debug for PipelineStageFlags {
                 PipelineStageFlags::RAY_TRACING_SHADER_KHR.0,
                 "RAY_TRACING_SHADER_KHR",
             ),
-            (PipelineStageFlags::TASK_SHADER_NV.0, "TASK_SHADER_NV"),
-            (PipelineStageFlags::MESH_SHADER_NV.0, "MESH_SHADER_NV"),
             (
                 PipelineStageFlags::FRAGMENT_DENSITY_PROCESS_EXT.0,
                 "FRAGMENT_DENSITY_PROCESS_EXT",
@@ -3317,6 +3317,8 @@ impl fmt::Debug for PipelineStageFlags {
                 PipelineStageFlags::COMMAND_PREPROCESS_NV.0,
                 "COMMAND_PREPROCESS_NV",
             ),
+            (PipelineStageFlags::TASK_SHADER_EXT.0, "TASK_SHADER_EXT"),
+            (PipelineStageFlags::MESH_SHADER_EXT.0, "MESH_SHADER_EXT"),
             (PipelineStageFlags::NONE.0, "NONE"),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -3401,8 +3403,8 @@ impl fmt::Debug for PipelineStageFlags2 {
                 PipelineStageFlags2::FRAGMENT_DENSITY_PROCESS_EXT.0,
                 "FRAGMENT_DENSITY_PROCESS_EXT",
             ),
-            (PipelineStageFlags2::TASK_SHADER_NV.0, "TASK_SHADER_NV"),
-            (PipelineStageFlags2::MESH_SHADER_NV.0, "MESH_SHADER_NV"),
+            (PipelineStageFlags2::TASK_SHADER_EXT.0, "TASK_SHADER_EXT"),
+            (PipelineStageFlags2::MESH_SHADER_EXT.0, "MESH_SHADER_EXT"),
             (
                 PipelineStageFlags2::SUBPASS_SHADING_HUAWEI.0,
                 "SUBPASS_SHADING_HUAWEI",
@@ -3589,6 +3591,14 @@ impl fmt::Debug for QueryPipelineStatisticFlags {
                 QueryPipelineStatisticFlags::COMPUTE_SHADER_INVOCATIONS.0,
                 "COMPUTE_SHADER_INVOCATIONS",
             ),
+            (
+                QueryPipelineStatisticFlags::TASK_SHADER_INVOCATIONS_EXT.0,
+                "TASK_SHADER_INVOCATIONS_EXT",
+            ),
+            (
+                QueryPipelineStatisticFlags::MESH_SHADER_INVOCATIONS_EXT.0,
+                "MESH_SHADER_INVOCATIONS_EXT",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -3661,6 +3671,7 @@ impl fmt::Debug for QueryType {
             Self::VIDEO_ENCODESTREAM_BUFFER_RANGE_KHR => {
                 Some("VIDEO_ENCODESTREAM_BUFFER_RANGE_KHR")
             }
+            Self::MESH_PRIMITIVES_GENERATED_EXT => Some("MESH_PRIMITIVES_GENERATED_EXT"),
             Self::PRIMITIVES_GENERATED_EXT => Some("PRIMITIVES_GENERATED_EXT"),
             Self::ACCELERATION_STRUCTURE_SERIALIZATION_BOTTOM_LEVEL_POINTERS_KHR => {
                 Some("ACCELERATION_STRUCTURE_SERIALIZATION_BOTTOM_LEVEL_POINTERS_KHR")
@@ -4019,8 +4030,8 @@ impl fmt::Debug for ShaderStageFlags {
             (ShaderStageFlags::MISS_KHR.0, "MISS_KHR"),
             (ShaderStageFlags::INTERSECTION_KHR.0, "INTERSECTION_KHR"),
             (ShaderStageFlags::CALLABLE_KHR.0, "CALLABLE_KHR"),
-            (ShaderStageFlags::TASK_NV.0, "TASK_NV"),
-            (ShaderStageFlags::MESH_NV.0, "MESH_NV"),
+            (ShaderStageFlags::TASK_EXT.0, "TASK_EXT"),
+            (ShaderStageFlags::MESH_EXT.0, "MESH_EXT"),
             (
                 ShaderStageFlags::SUBPASS_SHADING_HUAWEI.0,
                 "SUBPASS_SHADING_HUAWEI",
@@ -4263,6 +4274,7 @@ impl fmt::Debug for StructureType {
             }
             Self::VIDEO_DECODE_INFO_KHR => Some("VIDEO_DECODE_INFO_KHR"),
             Self::VIDEO_DECODE_CAPABILITIES_KHR => Some("VIDEO_DECODE_CAPABILITIES_KHR"),
+            Self::VIDEO_DECODE_USAGE_INFO_KHR => Some("VIDEO_DECODE_USAGE_INFO_KHR"),
             Self::DEDICATED_ALLOCATION_IMAGE_CREATE_INFO_NV => {
                 Some("DEDICATED_ALLOCATION_IMAGE_CREATE_INFO_NV")
             }
@@ -5005,6 +5017,7 @@ impl fmt::Debug for StructureType {
                 Some("VIDEO_ENCODE_RATE_CONTROL_LAYER_INFO_KHR")
             }
             Self::VIDEO_ENCODE_CAPABILITIES_KHR => Some("VIDEO_ENCODE_CAPABILITIES_KHR"),
+            Self::VIDEO_ENCODE_USAGE_INFO_KHR => Some("VIDEO_ENCODE_USAGE_INFO_KHR"),
             Self::PHYSICAL_DEVICE_DIAGNOSTICS_CONFIG_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_DIAGNOSTICS_CONFIG_FEATURES_NV")
             }
@@ -5070,6 +5083,12 @@ impl fmt::Debug for StructureType {
             }
             Self::ACCELERATION_STRUCTURE_MOTION_INFO_NV => {
                 Some("ACCELERATION_STRUCTURE_MOTION_INFO_NV")
+            }
+            Self::PHYSICAL_DEVICE_MESH_SHADER_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_MESH_SHADER_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_MESH_SHADER_PROPERTIES_EXT => {
+                Some("PHYSICAL_DEVICE_MESH_SHADER_PROPERTIES_EXT")
             }
             Self::PHYSICAL_DEVICE_YCBCR_2_PLANE_444_FORMATS_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_YCBCR_2_PLANE_444_FORMATS_FEATURES_EXT")
@@ -5240,6 +5259,9 @@ impl fmt::Debug for StructureType {
             }
             Self::DESCRIPTOR_SET_LAYOUT_HOST_MAPPING_INFO_VALVE => {
                 Some("DESCRIPTOR_SET_LAYOUT_HOST_MAPPING_INFO_VALVE")
+            }
+            Self::PHYSICAL_DEVICE_DEPTH_CLAMP_ZERO_ONE_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_DEPTH_CLAMP_ZERO_ONE_FEATURES_EXT")
             }
             Self::PHYSICAL_DEVICE_NON_SEAMLESS_CUBE_MAP_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_NON_SEAMLESS_CUBE_MAP_FEATURES_EXT")
@@ -6100,12 +6122,34 @@ impl fmt::Debug for VideoDecodeH264PictureLayoutFlagsEXT {
         debug_flags(f, KNOWN, self.0)
     }
 }
+impl fmt::Debug for VideoDecodeUsageFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (VideoDecodeUsageFlagsKHR::DEFAULT.0, "DEFAULT"),
+            (VideoDecodeUsageFlagsKHR::TRANSCODING.0, "TRANSCODING"),
+            (VideoDecodeUsageFlagsKHR::OFFLINE.0, "OFFLINE"),
+            (VideoDecodeUsageFlagsKHR::STREAMING.0, "STREAMING"),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
 impl fmt::Debug for VideoEncodeCapabilityFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[(
             VideoEncodeCapabilityFlagsKHR::PRECEDING_EXTERNALLY_ENCODED_BYTES.0,
             "PRECEDING_EXTERNALLY_ENCODED_BYTES",
         )];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for VideoEncodeContentFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (VideoEncodeContentFlagsKHR::DEFAULT.0, "DEFAULT"),
+            (VideoEncodeContentFlagsKHR::CAMERA.0, "CAMERA"),
+            (VideoEncodeContentFlagsKHR::DESKTOP.0, "DESKTOP"),
+            (VideoEncodeContentFlagsKHR::RENDERED.0, "RENDERED"),
+        ];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -6448,6 +6492,35 @@ impl fmt::Debug for VideoEncodeRateControlModeFlagsKHR {
             (VideoEncodeRateControlModeFlagsKHR::NONE.0, "NONE"),
             (VideoEncodeRateControlModeFlagsKHR::CBR.0, "CBR"),
             (VideoEncodeRateControlModeFlagsKHR::VBR.0, "VBR"),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for VideoEncodeTuningModeKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::DEFAULT => Some("DEFAULT"),
+            Self::HIGH_QUALITY => Some("HIGH_QUALITY"),
+            Self::LOW_LATENCY => Some("LOW_LATENCY"),
+            Self::ULTRA_LOW_LATENCY => Some("ULTRA_LOW_LATENCY"),
+            Self::LOSSLESS => Some("LOSSLESS"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
+impl fmt::Debug for VideoEncodeUsageFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (VideoEncodeUsageFlagsKHR::DEFAULT.0, "DEFAULT"),
+            (VideoEncodeUsageFlagsKHR::TRANSCODING.0, "TRANSCODING"),
+            (VideoEncodeUsageFlagsKHR::STREAMING.0, "STREAMING"),
+            (VideoEncodeUsageFlagsKHR::RECORDING.0, "RECORDING"),
+            (VideoEncodeUsageFlagsKHR::CONFERENCING.0, "CONFERENCING"),
         ];
         debug_flags(f, KNOWN, self.0)
     }

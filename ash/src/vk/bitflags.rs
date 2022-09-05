@@ -1193,12 +1193,46 @@ impl VideoCodingControlFlagsKHR {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeUsageFlagBitsKHR.html>"]
+pub struct VideoDecodeUsageFlagsKHR(pub(crate) Flags);
+vk_bitflags_wrapped!(VideoDecodeUsageFlagsKHR, Flags);
+impl VideoDecodeUsageFlagsKHR {
+    pub const DEFAULT: Self = Self(0);
+    pub const TRANSCODING: Self = Self(0b1);
+    pub const OFFLINE: Self = Self(0b10);
+    pub const STREAMING: Self = Self(0b100);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeCapabilityFlagBitsKHR.html>"]
 pub struct VideoDecodeCapabilityFlagsKHR(pub(crate) Flags);
 vk_bitflags_wrapped!(VideoDecodeCapabilityFlagsKHR, Flags);
 impl VideoDecodeCapabilityFlagsKHR {
     pub const DPB_AND_OUTPUT_COINCIDE: Self = Self(0b1);
     pub const DPB_AND_OUTPUT_DISTINCT: Self = Self(0b10);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeUsageFlagBitsKHR.html>"]
+pub struct VideoEncodeUsageFlagsKHR(pub(crate) Flags);
+vk_bitflags_wrapped!(VideoEncodeUsageFlagsKHR, Flags);
+impl VideoEncodeUsageFlagsKHR {
+    pub const DEFAULT: Self = Self(0);
+    pub const TRANSCODING: Self = Self(0b1);
+    pub const STREAMING: Self = Self(0b10);
+    pub const RECORDING: Self = Self(0b100);
+    pub const CONFERENCING: Self = Self(0b1000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeContentFlagBitsKHR.html>"]
+pub struct VideoEncodeContentFlagsKHR(pub(crate) Flags);
+vk_bitflags_wrapped!(VideoEncodeContentFlagsKHR, Flags);
+impl VideoEncodeContentFlagsKHR {
+    pub const DEFAULT: Self = Self(0);
+    pub const CAMERA: Self = Self(0b1);
+    pub const DESKTOP: Self = Self(0b10);
+    pub const RENDERED: Self = Self(0b100);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]

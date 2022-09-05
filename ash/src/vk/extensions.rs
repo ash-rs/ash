@@ -2248,7 +2248,7 @@ impl KhrVideoDecodeQueueFn {
     pub const fn name() -> &'static ::std::ffi::CStr {
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_decode_queue\0") }
     }
-    pub const SPEC_VERSION: u32 = 5u32;
+    pub const SPEC_VERSION: u32 = 6u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDecodeVideoKHR = unsafe extern "system" fn(
@@ -2330,6 +2330,7 @@ impl QueueFlags {
 impl StructureType {
     pub const VIDEO_DECODE_INFO_KHR: Self = Self(1_000_024_000);
     pub const VIDEO_DECODE_CAPABILITIES_KHR: Self = Self(1_000_024_001);
+    pub const VIDEO_DECODE_USAGE_INFO_KHR: Self = Self(1_000_024_002);
 }
 impl AmdGcnShaderFn {
     #[inline]
@@ -12203,13 +12204,13 @@ impl NvMeshShaderFn {
 }
 #[doc = "Generated from 'VK_NV_mesh_shader'"]
 impl PipelineStageFlags {
-    pub const TASK_SHADER_NV: Self = Self(0b1000_0000_0000_0000_0000);
-    pub const MESH_SHADER_NV: Self = Self(0b1_0000_0000_0000_0000_0000);
+    pub const TASK_SHADER_NV: Self = Self::TASK_SHADER_EXT;
+    pub const MESH_SHADER_NV: Self = Self::MESH_SHADER_EXT;
 }
 #[doc = "Generated from 'VK_NV_mesh_shader'"]
 impl ShaderStageFlags {
-    pub const TASK_NV: Self = Self(0b100_0000);
-    pub const MESH_NV: Self = Self(0b1000_0000);
+    pub const TASK_NV: Self = Self::TASK_EXT;
+    pub const MESH_NV: Self = Self::MESH_EXT;
 }
 #[doc = "Generated from 'VK_NV_mesh_shader'"]
 impl StructureType {
@@ -16610,7 +16611,7 @@ impl KhrVideoEncodeQueueFn {
     pub const fn name() -> &'static ::std::ffi::CStr {
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_encode_queue\0") }
     }
-    pub const SPEC_VERSION: u32 = 6u32;
+    pub const SPEC_VERSION: u32 = 7u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdEncodeVideoKHR = unsafe extern "system" fn(
@@ -16699,6 +16700,7 @@ impl StructureType {
     pub const VIDEO_ENCODE_RATE_CONTROL_INFO_KHR: Self = Self(1_000_299_001);
     pub const VIDEO_ENCODE_RATE_CONTROL_LAYER_INFO_KHR: Self = Self(1_000_299_002);
     pub const VIDEO_ENCODE_CAPABILITIES_KHR: Self = Self(1_000_299_003);
+    pub const VIDEO_ENCODE_USAGE_INFO_KHR: Self = Self(1_000_299_004);
 }
 #[doc = "Generated from 'VK_KHR_video_encode_queue'"]
 impl VideoCodingControlFlagsKHR {
@@ -17311,8 +17313,10 @@ impl PipelineStageFlags2 {
     pub const RAY_TRACING_SHADER_NV: Self = Self::RAY_TRACING_SHADER_KHR;
     pub const ACCELERATION_STRUCTURE_BUILD_NV: Self = Self::ACCELERATION_STRUCTURE_BUILD_KHR;
     pub const FRAGMENT_DENSITY_PROCESS_EXT: Self = Self(0b1000_0000_0000_0000_0000_0000);
-    pub const TASK_SHADER_NV: Self = Self(0b1000_0000_0000_0000_0000);
-    pub const MESH_SHADER_NV: Self = Self(0b1_0000_0000_0000_0000_0000);
+    pub const TASK_SHADER_NV: Self = Self::TASK_SHADER_EXT;
+    pub const MESH_SHADER_NV: Self = Self::MESH_SHADER_EXT;
+    pub const TASK_SHADER_EXT: Self = Self(0b1000_0000_0000_0000_0000);
+    pub const MESH_SHADER_EXT: Self = Self(0b1_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_synchronization2'"]
 impl StructureType {
@@ -17731,24 +17735,151 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_RAY_TRACING_MOTION_BLUR_FEATURES_NV: Self = Self(1_000_327_001);
     pub const ACCELERATION_STRUCTURE_MOTION_INFO_NV: Self = Self(1_000_327_002);
 }
-impl NvExtension329Fn {
+impl ExtMeshShaderFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_329\0") }
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_mesh_shader\0") }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDrawMeshTasksEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    group_count_x: u32,
+    group_count_y: u32,
+    group_count_z: u32,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDrawMeshTasksIndirectEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    buffer: Buffer,
+    offset: DeviceSize,
+    draw_count: u32,
+    stride: u32,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDrawMeshTasksIndirectCountEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    buffer: Buffer,
+    offset: DeviceSize,
+    count_buffer: Buffer,
+    count_buffer_offset: DeviceSize,
+    max_draw_count: u32,
+    stride: u32,
+);
 #[derive(Clone)]
-pub struct NvExtension329Fn {}
-unsafe impl Send for NvExtension329Fn {}
-unsafe impl Sync for NvExtension329Fn {}
-impl NvExtension329Fn {
+pub struct ExtMeshShaderFn {
+    pub cmd_draw_mesh_tasks_ext: PFN_vkCmdDrawMeshTasksEXT,
+    pub cmd_draw_mesh_tasks_indirect_ext: PFN_vkCmdDrawMeshTasksIndirectEXT,
+    pub cmd_draw_mesh_tasks_indirect_count_ext: PFN_vkCmdDrawMeshTasksIndirectCountEXT,
+}
+unsafe impl Send for ExtMeshShaderFn {}
+unsafe impl Sync for ExtMeshShaderFn {}
+impl ExtMeshShaderFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        Self {}
+        Self {
+            cmd_draw_mesh_tasks_ext: unsafe {
+                unsafe extern "system" fn cmd_draw_mesh_tasks_ext(
+                    _command_buffer: CommandBuffer,
+                    _group_count_x: u32,
+                    _group_count_y: u32,
+                    _group_count_z: u32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_draw_mesh_tasks_ext)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawMeshTasksEXT\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_draw_mesh_tasks_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_draw_mesh_tasks_indirect_ext: unsafe {
+                unsafe extern "system" fn cmd_draw_mesh_tasks_indirect_ext(
+                    _command_buffer: CommandBuffer,
+                    _buffer: Buffer,
+                    _offset: DeviceSize,
+                    _draw_count: u32,
+                    _stride: u32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_draw_mesh_tasks_indirect_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdDrawMeshTasksIndirectEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_draw_mesh_tasks_indirect_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_draw_mesh_tasks_indirect_count_ext: unsafe {
+                unsafe extern "system" fn cmd_draw_mesh_tasks_indirect_count_ext(
+                    _command_buffer: CommandBuffer,
+                    _buffer: Buffer,
+                    _offset: DeviceSize,
+                    _count_buffer: Buffer,
+                    _count_buffer_offset: DeviceSize,
+                    _max_draw_count: u32,
+                    _stride: u32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_draw_mesh_tasks_indirect_count_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdDrawMeshTasksIndirectCountEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_draw_mesh_tasks_indirect_count_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
     }
+}
+#[doc = "Generated from 'VK_EXT_mesh_shader'"]
+impl IndirectCommandsTokenTypeNV {
+    pub const DRAW_MESH_TASKS: Self = Self(1_000_328_000);
+}
+#[doc = "Generated from 'VK_EXT_mesh_shader'"]
+impl PipelineStageFlags {
+    pub const TASK_SHADER_EXT: Self = Self(0b1000_0000_0000_0000_0000);
+    pub const MESH_SHADER_EXT: Self = Self(0b1_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_mesh_shader'"]
+impl QueryPipelineStatisticFlags {
+    pub const TASK_SHADER_INVOCATIONS_EXT: Self = Self(0b1000_0000_0000);
+    pub const MESH_SHADER_INVOCATIONS_EXT: Self = Self(0b1_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_mesh_shader'"]
+impl QueryType {
+    pub const MESH_PRIMITIVES_GENERATED_EXT: Self = Self(1_000_328_000);
+}
+#[doc = "Generated from 'VK_EXT_mesh_shader'"]
+impl ShaderStageFlags {
+    pub const TASK_EXT: Self = Self(0b100_0000);
+    pub const MESH_EXT: Self = Self(0b1000_0000);
+}
+#[doc = "Generated from 'VK_EXT_mesh_shader'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_MESH_SHADER_FEATURES_EXT: Self = Self(1_000_328_000);
+    pub const PHYSICAL_DEVICE_MESH_SHADER_PROPERTIES_EXT: Self = Self(1_000_328_001);
 }
 impl NvExtension330Fn {
     #[inline]
@@ -21182,24 +21313,28 @@ impl StructureType {
     pub const DESCRIPTOR_SET_BINDING_REFERENCE_VALVE: Self = Self(1_000_420_001);
     pub const DESCRIPTOR_SET_LAYOUT_HOST_MAPPING_INFO_VALVE: Self = Self(1_000_420_002);
 }
-impl ExtExtension422Fn {
+impl ExtDepthClampZeroOneFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_422\0") }
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_depth_clamp_zero_one\0") }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct ExtExtension422Fn {}
-unsafe impl Send for ExtExtension422Fn {}
-unsafe impl Sync for ExtExtension422Fn {}
-impl ExtExtension422Fn {
+pub struct ExtDepthClampZeroOneFn {}
+unsafe impl Send for ExtDepthClampZeroOneFn {}
+unsafe impl Sync for ExtDepthClampZeroOneFn {}
+impl ExtDepthClampZeroOneFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         Self {}
     }
+}
+#[doc = "Generated from 'VK_EXT_depth_clamp_zero_one'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_DEPTH_CLAMP_ZERO_ONE_FEATURES_EXT: Self = Self(1_000_421_000);
 }
 impl ExtNonSeamlessCubeMapFn {
     #[inline]
@@ -22282,6 +22417,7 @@ impl ExtExtension467Fn {
 #[doc = "Generated from 'VK_EXT_extension_467'"]
 impl PipelineCreateFlags {
     pub const RESERVED_27_EXT: Self = Self(0b1000_0000_0000_0000_0000_0000_0000);
+    pub const RESERVED_30_EXT: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000);
 }
 impl ExtExtension468Fn {
     #[inline]
@@ -22770,6 +22906,120 @@ pub struct QcomExtension489Fn {}
 unsafe impl Send for QcomExtension489Fn {}
 unsafe impl Sync for QcomExtension489Fn {}
 impl QcomExtension489Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl NvExtension490Fn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_490\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct NvExtension490Fn {}
+unsafe impl Send for NvExtension490Fn {}
+unsafe impl Sync for NvExtension490Fn {}
+impl NvExtension490Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl NvExtension491Fn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_491\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct NvExtension491Fn {}
+unsafe impl Send for NvExtension491Fn {}
+unsafe impl Sync for NvExtension491Fn {}
+impl NvExtension491Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl NvExtension492Fn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_492\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct NvExtension492Fn {}
+unsafe impl Send for NvExtension492Fn {}
+unsafe impl Sync for NvExtension492Fn {}
+impl NvExtension492Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl NvExtension493Fn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_493\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct NvExtension493Fn {}
+unsafe impl Send for NvExtension493Fn {}
+unsafe impl Sync for NvExtension493Fn {}
+impl NvExtension493Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl NvExtension494Fn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_494\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct NvExtension494Fn {}
+unsafe impl Send for NvExtension494Fn {}
+unsafe impl Sync for NvExtension494Fn {}
+impl NvExtension494Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl ExtExtension495Fn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_495\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct ExtExtension495Fn {}
+unsafe impl Send for ExtExtension495Fn {}
+unsafe impl Sync for ExtExtension495Fn {}
+impl ExtExtension495Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
