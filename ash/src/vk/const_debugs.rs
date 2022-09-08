@@ -3766,7 +3766,10 @@ impl fmt::Debug for RenderingFlags {
             ),
             (RenderingFlags::SUSPENDING.0, "SUSPENDING"),
             (RenderingFlags::RESUMING.0, "RESUMING"),
-            (RenderingFlags::RESERVED_3_EXT.0, "RESERVED_3_EXT"),
+            (
+                RenderingFlags::ENABLE_LEGACY_DITHERING_EXT.0,
+                "ENABLE_LEGACY_DITHERING_EXT",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -5313,6 +5316,9 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_FEATURES_EXT")
             }
+            Self::PHYSICAL_DEVICE_LEGACY_DITHERING_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_LEGACY_DITHERING_FEATURES_EXT")
+            }
             Self::PHYSICAL_DEVICE_TILE_PROPERTIES_FEATURES_QCOM => {
                 Some("PHYSICAL_DEVICE_TILE_PROPERTIES_FEATURES_QCOM")
             }
@@ -5734,7 +5740,10 @@ impl fmt::Debug for SubpassDescriptionFlags {
                 SubpassDescriptionFlags::RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_EXT.0,
                 "RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_EXT",
             ),
-            (SubpassDescriptionFlags::RESERVED_7_EXT.0, "RESERVED_7_EXT"),
+            (
+                SubpassDescriptionFlags::ENABLE_LEGACY_DITHERING_EXT.0,
+                "ENABLE_LEGACY_DITHERING_EXT",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }

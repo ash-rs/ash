@@ -22368,18 +22368,18 @@ impl PipelineStageFlags2 {
 impl QueueFlags {
     pub const RESERVED_8_NV: Self = Self(0b1_0000_0000);
 }
-impl ExtExtension466Fn {
+impl ExtLegacyDitheringFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_466\0") }
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_legacy_dithering\0") }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct ExtExtension466Fn {}
-unsafe impl Send for ExtExtension466Fn {}
-unsafe impl Sync for ExtExtension466Fn {}
-impl ExtExtension466Fn {
+pub struct ExtLegacyDitheringFn {}
+unsafe impl Send for ExtLegacyDitheringFn {}
+unsafe impl Sync for ExtLegacyDitheringFn {}
+impl ExtLegacyDitheringFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -22387,13 +22387,17 @@ impl ExtExtension466Fn {
         Self {}
     }
 }
-#[doc = "Generated from 'VK_EXT_extension_466'"]
+#[doc = "Generated from 'VK_EXT_legacy_dithering'"]
 impl RenderingFlags {
-    pub const RESERVED_3_EXT: Self = Self(0b1000);
+    pub const ENABLE_LEGACY_DITHERING_EXT: Self = Self(0b1000);
 }
-#[doc = "Generated from 'VK_EXT_extension_466'"]
+#[doc = "Generated from 'VK_EXT_legacy_dithering'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_LEGACY_DITHERING_FEATURES_EXT: Self = Self(1_000_465_000);
+}
+#[doc = "Generated from 'VK_EXT_legacy_dithering'"]
 impl SubpassDescriptionFlags {
-    pub const RESERVED_7_EXT: Self = Self(0b1000_0000);
+    pub const ENABLE_LEGACY_DITHERING_EXT: Self = Self(0b1000_0000);
 }
 impl ExtExtension467Fn {
     #[inline]
