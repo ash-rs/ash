@@ -251,6 +251,7 @@ impl fmt::Debug for AccessFlags2 {
                 AccessFlags2::VIDEO_DECODE_WRITE_KHR.0,
                 "VIDEO_DECODE_WRITE_KHR",
             ),
+            (AccessFlags2::RESERVED_46_EXT.0, "RESERVED_46_EXT"),
             (
                 AccessFlags2::VIDEO_ENCODE_READ_KHR.0,
                 "VIDEO_ENCODE_READ_KHR",
@@ -1084,10 +1085,7 @@ impl fmt::Debug for DescriptorPoolCreateFlags {
                 DescriptorPoolCreateFlags::FREE_DESCRIPTOR_SET.0,
                 "FREE_DESCRIPTOR_SET",
             ),
-            (
-                DescriptorPoolCreateFlags::HOST_ONLY_VALVE.0,
-                "HOST_ONLY_VALVE",
-            ),
+            (DescriptorPoolCreateFlags::HOST_ONLY_EXT.0, "HOST_ONLY_EXT"),
             (
                 DescriptorPoolCreateFlags::UPDATE_AFTER_BIND.0,
                 "UPDATE_AFTER_BIND",
@@ -1122,8 +1120,8 @@ impl fmt::Debug for DescriptorSetLayoutCreateFlags {
                 "RESERVED_3_AMD",
             ),
             (
-                DescriptorSetLayoutCreateFlags::HOST_ONLY_POOL_VALVE.0,
-                "HOST_ONLY_POOL_VALVE",
+                DescriptorSetLayoutCreateFlags::HOST_ONLY_POOL_EXT.0,
+                "HOST_ONLY_POOL_EXT",
             ),
             (
                 DescriptorSetLayoutCreateFlags::UPDATE_AFTER_BIND_POOL.0,
@@ -1149,9 +1147,9 @@ impl fmt::Debug for DescriptorType {
             Self::INPUT_ATTACHMENT => Some("INPUT_ATTACHMENT"),
             Self::ACCELERATION_STRUCTURE_KHR => Some("ACCELERATION_STRUCTURE_KHR"),
             Self::ACCELERATION_STRUCTURE_NV => Some("ACCELERATION_STRUCTURE_NV"),
-            Self::MUTABLE_VALVE => Some("MUTABLE_VALVE"),
             Self::SAMPLE_WEIGHT_IMAGE_QCOM => Some("SAMPLE_WEIGHT_IMAGE_QCOM"),
             Self::BLOCK_MATCH_IMAGE_QCOM => Some("BLOCK_MATCH_IMAGE_QCOM"),
+            Self::MUTABLE_EXT => Some("MUTABLE_EXT"),
             Self::INLINE_UNIFORM_BLOCK => Some("INLINE_UNIFORM_BLOCK"),
             _ => None,
         };
@@ -5123,12 +5121,6 @@ impl fmt::Debug for StructureType {
                 Some("PHYSICAL_DEVICE_RGBA10X6_FORMATS_FEATURES_EXT")
             }
             Self::DIRECTFB_SURFACE_CREATE_INFO_EXT => Some("DIRECTFB_SURFACE_CREATE_INFO_EXT"),
-            Self::PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_VALVE => {
-                Some("PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_VALVE")
-            }
-            Self::MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_VALVE => {
-                Some("MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_VALVE")
-            }
             Self::PHYSICAL_DEVICE_VERTEX_INPUT_DYNAMIC_STATE_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_VERTEX_INPUT_DYNAMIC_STATE_FEATURES_EXT")
             }
@@ -5327,6 +5319,12 @@ impl fmt::Debug for StructureType {
                 Some("PHYSICAL_DEVICE_AMIGO_PROFILING_FEATURES_SEC")
             }
             Self::AMIGO_PROFILING_SUBMIT_INFO_SEC => Some("AMIGO_PROFILING_SUBMIT_INFO_SEC"),
+            Self::PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_EXT")
+            }
+            Self::MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_EXT => {
+                Some("MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_EXT")
+            }
             Self::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES => {
                 Some("PHYSICAL_DEVICE_SUBGROUP_PROPERTIES")
             }

@@ -57,7 +57,7 @@ pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
-pub const HEADER_VERSION: u32 = 227u32;
+pub const HEADER_VERSION: u32 = 228u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -31903,30 +31903,27 @@ impl<'a> PhysicalDeviceImage2DViewOf3DFeaturesEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceMutableDescriptorTypeFeaturesVALVE.html>"]
-pub struct PhysicalDeviceMutableDescriptorTypeFeaturesVALVE<'a> {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceMutableDescriptorTypeFeaturesEXT.html>"]
+pub struct PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub mutable_descriptor_type: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
-impl ::std::default::Default for PhysicalDeviceMutableDescriptorTypeFeaturesVALVE<'_> {
+impl ::std::default::Default for PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_VALVE,
+            s_type: StructureType::PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_EXT,
             p_next: ::std::ptr::null_mut(),
             mutable_descriptor_type: Bool32::default(),
             _marker: PhantomData,
         }
     }
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2
-    for PhysicalDeviceMutableDescriptorTypeFeaturesVALVE<'_>
-{
-}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMutableDescriptorTypeFeaturesVALVE<'_> {}
-impl<'a> PhysicalDeviceMutableDescriptorTypeFeaturesVALVE<'a> {
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'_> {}
+impl<'a> PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'a> {
     #[inline]
     pub fn mutable_descriptor_type(mut self, mutable_descriptor_type: bool) -> Self {
         self.mutable_descriptor_type = mutable_descriptor_type.into();
@@ -31936,13 +31933,13 @@ impl<'a> PhysicalDeviceMutableDescriptorTypeFeaturesVALVE<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMutableDescriptorTypeListVALVE.html>"]
-pub struct MutableDescriptorTypeListVALVE<'a> {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMutableDescriptorTypeListEXT.html>"]
+pub struct MutableDescriptorTypeListEXT<'a> {
     pub descriptor_type_count: u32,
     pub p_descriptor_types: *const DescriptorType,
     pub _marker: PhantomData<&'a ()>,
 }
-impl ::std::default::Default for MutableDescriptorTypeListVALVE<'_> {
+impl ::std::default::Default for MutableDescriptorTypeListEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
@@ -31952,7 +31949,7 @@ impl ::std::default::Default for MutableDescriptorTypeListVALVE<'_> {
         }
     }
 }
-impl<'a> MutableDescriptorTypeListVALVE<'a> {
+impl<'a> MutableDescriptorTypeListEXT<'a> {
     #[inline]
     pub fn descriptor_types(mut self, descriptor_types: &'a [DescriptorType]) -> Self {
         self.descriptor_type_count = descriptor_types.len() as _;
@@ -31963,19 +31960,19 @@ impl<'a> MutableDescriptorTypeListVALVE<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMutableDescriptorTypeCreateInfoVALVE.html>"]
-pub struct MutableDescriptorTypeCreateInfoVALVE<'a> {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMutableDescriptorTypeCreateInfoEXT.html>"]
+pub struct MutableDescriptorTypeCreateInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub mutable_descriptor_type_list_count: u32,
-    pub p_mutable_descriptor_type_lists: *const MutableDescriptorTypeListVALVE<'a>,
+    pub p_mutable_descriptor_type_lists: *const MutableDescriptorTypeListEXT<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
-impl ::std::default::Default for MutableDescriptorTypeCreateInfoVALVE<'_> {
+impl ::std::default::Default for MutableDescriptorTypeCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
-            s_type: StructureType::MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_VALVE,
+            s_type: StructureType::MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_EXT,
             p_next: ::std::ptr::null(),
             mutable_descriptor_type_list_count: u32::default(),
             p_mutable_descriptor_type_lists: ::std::ptr::null(),
@@ -31983,13 +31980,13 @@ impl ::std::default::Default for MutableDescriptorTypeCreateInfoVALVE<'_> {
         }
     }
 }
-unsafe impl ExtendsDescriptorSetLayoutCreateInfo for MutableDescriptorTypeCreateInfoVALVE<'_> {}
-unsafe impl ExtendsDescriptorPoolCreateInfo for MutableDescriptorTypeCreateInfoVALVE<'_> {}
-impl<'a> MutableDescriptorTypeCreateInfoVALVE<'a> {
+unsafe impl ExtendsDescriptorSetLayoutCreateInfo for MutableDescriptorTypeCreateInfoEXT<'_> {}
+unsafe impl ExtendsDescriptorPoolCreateInfo for MutableDescriptorTypeCreateInfoEXT<'_> {}
+impl<'a> MutableDescriptorTypeCreateInfoEXT<'a> {
     #[inline]
     pub fn mutable_descriptor_type_lists(
         mut self,
-        mutable_descriptor_type_lists: &'a [MutableDescriptorTypeListVALVE],
+        mutable_descriptor_type_lists: &'a [MutableDescriptorTypeListEXT],
     ) -> Self {
         self.mutable_descriptor_type_list_count = mutable_descriptor_type_lists.len() as _;
         self.p_mutable_descriptor_type_lists = mutable_descriptor_type_lists.as_ptr();

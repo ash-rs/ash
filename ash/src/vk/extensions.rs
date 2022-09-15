@@ -13805,6 +13805,11 @@ impl IntelExtension243Fn {
         Self {}
     }
 }
+#[doc = "Generated from 'VK_INTEL_extension_243'"]
+impl AccessFlags2 {
+    pub const RESERVED_46_EXT: Self =
+        Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
 impl MesaExtension244Fn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -18721,20 +18726,22 @@ impl ValveMutableDescriptorTypeFn {
 }
 #[doc = "Generated from 'VK_VALVE_mutable_descriptor_type'"]
 impl DescriptorPoolCreateFlags {
-    pub const HOST_ONLY_VALVE: Self = Self(0b100);
+    pub const HOST_ONLY_VALVE: Self = Self::HOST_ONLY_EXT;
 }
 #[doc = "Generated from 'VK_VALVE_mutable_descriptor_type'"]
 impl DescriptorSetLayoutCreateFlags {
-    pub const HOST_ONLY_POOL_VALVE: Self = Self(0b100);
+    pub const HOST_ONLY_POOL_VALVE: Self = Self::HOST_ONLY_POOL_EXT;
 }
 #[doc = "Generated from 'VK_VALVE_mutable_descriptor_type'"]
 impl DescriptorType {
-    pub const MUTABLE_VALVE: Self = Self(1_000_351_000);
+    pub const MUTABLE_VALVE: Self = Self::MUTABLE_EXT;
 }
 #[doc = "Generated from 'VK_VALVE_mutable_descriptor_type'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_VALVE: Self = Self(1_000_351_000);
-    pub const MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_VALVE: Self = Self(1_000_351_002);
+    pub const PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_VALVE: Self =
+        Self::PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_EXT;
+    pub const MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_VALVE: Self =
+        Self::MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_EXT;
 }
 impl ExtVertexInputDynamicStateFn {
     #[inline]
@@ -21587,7 +21594,7 @@ impl GoogleSurfacelessQueryFn {
     pub const fn name() -> &'static ::std::ffi::CStr {
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_surfaceless_query\0") }
     }
-    pub const SPEC_VERSION: u32 = 1u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
 pub struct GoogleSurfacelessQueryFn {}
@@ -23012,22 +23019,41 @@ impl NvExtension494Fn {
         Self {}
     }
 }
-impl ExtExtension495Fn {
+impl ExtMutableDescriptorTypeFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_495\0") }
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_mutable_descriptor_type\0")
+        }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct ExtExtension495Fn {}
-unsafe impl Send for ExtExtension495Fn {}
-unsafe impl Sync for ExtExtension495Fn {}
-impl ExtExtension495Fn {
+pub struct ExtMutableDescriptorTypeFn {}
+unsafe impl Send for ExtMutableDescriptorTypeFn {}
+unsafe impl Sync for ExtMutableDescriptorTypeFn {}
+impl ExtMutableDescriptorTypeFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         Self {}
     }
+}
+#[doc = "Generated from 'VK_EXT_mutable_descriptor_type'"]
+impl DescriptorPoolCreateFlags {
+    pub const HOST_ONLY_EXT: Self = Self(0b100);
+}
+#[doc = "Generated from 'VK_EXT_mutable_descriptor_type'"]
+impl DescriptorSetLayoutCreateFlags {
+    pub const HOST_ONLY_POOL_EXT: Self = Self(0b100);
+}
+#[doc = "Generated from 'VK_EXT_mutable_descriptor_type'"]
+impl DescriptorType {
+    pub const MUTABLE_EXT: Self = Self(1_000_351_000);
+}
+#[doc = "Generated from 'VK_EXT_mutable_descriptor_type'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_EXT: Self = Self(1_000_351_000);
+    pub const MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_EXT: Self = Self(1_000_351_002);
 }
