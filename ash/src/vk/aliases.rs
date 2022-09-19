@@ -224,6 +224,10 @@ pub type CopyImageToBufferInfo2KHR = CopyImageToBufferInfo2;
 pub type ResolveImageInfo2KHR = ResolveImageInfo2;
 pub type PhysicalDeviceShaderTerminateInvocationFeaturesKHR =
     PhysicalDeviceShaderTerminateInvocationFeatures;
+pub type PhysicalDeviceMutableDescriptorTypeFeaturesVALVE =
+    PhysicalDeviceMutableDescriptorTypeFeaturesEXT;
+pub type MutableDescriptorTypeListVALVE = MutableDescriptorTypeListEXT;
+pub type MutableDescriptorTypeCreateInfoVALVE = MutableDescriptorTypeCreateInfoEXT;
 pub type MemoryBarrier2KHR = MemoryBarrier2;
 pub type ImageMemoryBarrier2KHR = ImageMemoryBarrier2;
 pub type BufferMemoryBarrier2KHR = BufferMemoryBarrier2;
@@ -243,3 +247,5 @@ pub type RenderingAttachmentInfoKHR = RenderingAttachmentInfo;
 pub type PhysicalDeviceDynamicRenderingFeaturesKHR = PhysicalDeviceDynamicRenderingFeatures;
 pub type CommandBufferInheritanceRenderingInfoKHR = CommandBufferInheritanceRenderingInfo;
 pub type AttachmentSampleCountInfoNV = AttachmentSampleCountInfoAMD;
+pub type PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARM =
+    PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT;
