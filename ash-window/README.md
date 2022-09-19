@@ -17,9 +17,9 @@ ash-window = "0.11.0"
 
 The library exposes two functions:
 
-- [`enumerate_required_extensions`] returns the required instance extensions needed for surface creation from a specific window handle.
+- [`enumerate_required_extensions`] returns the required instance extensions needed for surface creation from a specific display handle.
 
-- [`create_surface`] allows to create a surface from a type implementing [`HasRawWindowHandle`]:
+- [`create_surface`] allows to create a surface from a type implementing [`RawDisplayHandle`] and [`RawWindowHandle`]:
 
   ```rust
   ash_window::create_surface(&entry, &instance, &window, None)?;
@@ -27,7 +27,8 @@ The library exposes two functions:
 
 [`enumerate_required_extensions`]: https://docs.rs/ash-window/latest/ash_window/fn.enumerate_required_extensions.html
 [`create_surface`]: https://docs.rs/ash-window/latest/ash_window/fn.create_surface.html
-[`HasRawWindowHandle`]: https://docs.rs/raw-window-handle/latest/raw_window_handle/trait.HasRawWindowHandle.html
+[`RawDisplayHandle`]: https://docs.rs/raw-window-handle/latest/raw_window_handle/enum.RawDisplayHandle.html
+[`RawWindowHandle`]: https://docs.rs/raw-window-handle/latest/raw_window_handle/enum.RawWindowHandle.html
 
 ## Versions
 ```toml

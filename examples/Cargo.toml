@@ -5,8 +5,9 @@ authors = ["maik klein <maikklein@googlemail.com>"]
 edition = "2018"
 
 [dependencies]
-winit = "0.27.1"
 image = "0.24"
+raw-window-handle = "0.5"
+winit = "0.27.1"
 # The examples require the validation layers, which means the SDK or
 # equivalent development packages should be present, so we can link
 # directly and benefit from the infallible `Entry` constructor.

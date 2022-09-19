@@ -7,19 +7,7 @@ use ash::{
     prelude::*,
     vk, Entry, Instance,
 };
-use raw_window_handle::{
-    HasRawDisplayHandle, HasRawWindowHandle, RawDisplayHandle, RawWindowHandle,
-};
-
-pub trait HasRawDisplayAndWindowHandle: HasRawDisplayHandle + HasRawWindowHandle {
-    fn raw_display_and_window_handle(&self) -> (RawDisplayHandle, RawWindowHandle);
-}
-
-impl<T: HasRawDisplayHandle + HasRawWindowHandle> HasRawDisplayAndWindowHandle for T {
-    fn raw_display_and_window_handle(&self) -> (RawDisplayHandle, RawWindowHandle) {
-        (self.raw_display_handle(), self.raw_window_handle())
-    }
-}
+use raw_window_handle::{RawDisplayHandle, RawWindowHandle};
 
 /// Create a surface from a raw surface handle.
 ///
@@ -31,13 +19,20 @@ impl<T: HasRawDisplayHandle + HasRawWindowHandle> HasRawDisplayAndWindowHandle f
 /// In order for the created [`vk::SurfaceKHR`] to be valid for the duration of its
 /// usage, the [`Instance`] this was called on must be dropped later than the
 /// resulting [`vk::SurfaceKHR`].
+///
+/// The window represented by `window_handle` must be associated with the display connection
+/// in `display_handle`.
+///
+/// `window_handle` and `display_handle` must be associated with a valid window and display
+/// connection, which must not be destroyed for the lifetime of the returned [`vk::SurfaceKHR`].
 pub unsafe fn create_surface(
     entry: &Entry,
     instance: &Instance,
-    handle: &dyn HasRawDisplayAndWindowHandle,
+    display_handle: RawDisplayHandle,
+    window_handle: RawWindowHandle,
     allocation_callbacks: Option<&vk::AllocationCallbacks>,
 ) -> VkResult<vk::SurfaceKHR> {
-    match handle.raw_display_and_window_handle() {
+    match (display_handle, window_handle) {
         (RawDisplayHandle::Windows(_), RawWindowHandle::Win32(window)) => {
             let surface_desc = vk::Win32SurfaceCreateInfoKHR::default()
                 .hinstance(window.hinstance)
@@ -111,15 +106,15 @@ pub unsafe fn create_surface(
 
 /// Query the required instance extensions for creating a surface from a display handle.
 ///
-/// This [`HasRawDisplayHandle`] can typically be acquired from a window, but is usually also
+/// This [`RawDisplayHandle`] can typically be acquired from a window, but is usually also
 /// accessible earlier through an "event loop" concept to allow querying required instance
 /// extensions and creation of a compatible Vulkan instance prior to creating a window.
 ///
 /// The returned extensions will include all extension dependencies.
 pub fn enumerate_required_extensions(
-    display_handle: &dyn HasRawDisplayHandle,
+    display_handle: RawDisplayHandle,
 ) -> VkResult<&'static [*const c_char]> {
-    let extensions = match display_handle.raw_display_handle() {
+    let extensions = match display_handle {
         RawDisplayHandle::Windows(_) => {
             const WINDOWS_EXTS: [*const c_char; 2] = [
                 khr::Surface::name().as_ptr(),

@@ -5,9 +5,9 @@ use ash::extensions::{
     ext::DebugUtils,
     khr::{Surface, Swapchain},
 };
-
 use ash::{vk, Entry};
 pub use ash::{Device, Instance};
+use raw_window_handle::{HasRawDisplayHandle, HasRawWindowHandle};
 use std::borrow::Cow;
 use std::cell::RefCell;
 use std::default::Default;
@@ -229,9 +229,10 @@ impl ExampleBase {
                 .map(|raw_name| raw_name.as_ptr())
                 .collect();
 
-            let mut extension_names = ash_window::enumerate_required_extensions(&window)
-                .unwrap()
-                .to_vec();
+            let mut extension_names =
+                ash_window::enumerate_required_extensions(window.raw_display_handle())
+                    .unwrap()
+                    .to_vec();
             extension_names.push(DebugUtils::name().as_ptr());
 
             #[cfg(any(target_os = "macos", target_os = "ios"))]
@@ -281,7 +282,14 @@ impl ExampleBase {
             let debug_call_back = debug_utils_loader
                 .create_debug_utils_messenger(&debug_info, None)
                 .unwrap();
-            let surface = ash_window::create_surface(&entry, &instance, &window, None).unwrap();
+            let surface = ash_window::create_surface(
+                &entry,
+                &instance,
+                window.raw_display_handle(),
+                window.raw_window_handle(),
+                None,
+            )
+            .unwrap();
             let pdevices = instance
                 .enumerate_physical_devices()
                 .expect("Physical device error");
