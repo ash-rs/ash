@@ -52,3 +52,10 @@ impl From<vk::Extent2D> for vk::Rect2D {
         }
     }
 }
+
+/// Structures implementing this trait are layout-compatible with [`vk::BaseInStructure`] and
+/// [`vk::BaseOutStructure`]. Such structures have an `s_type` field indicating its type, which
+/// must always match the value of [`TaggedStructure::STRUCTURE_TYPE`].
+pub unsafe trait TaggedStructure {
+    const STRUCTURE_TYPE: vk::StructureType;
+}
