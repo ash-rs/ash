@@ -242,6 +242,10 @@ pub type CopyImageToBufferInfo2KHR<'a> = CopyImageToBufferInfo2<'a>;
 pub type ResolveImageInfo2KHR<'a> = ResolveImageInfo2<'a>;
 pub type PhysicalDeviceShaderTerminateInvocationFeaturesKHR<'a> =
     PhysicalDeviceShaderTerminateInvocationFeatures<'a>;
+pub type PhysicalDeviceMutableDescriptorTypeFeaturesVALVE<'a> =
+    PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'a>;
+pub type MutableDescriptorTypeListVALVE<'a> = MutableDescriptorTypeListEXT<'a>;
+pub type MutableDescriptorTypeCreateInfoVALVE<'a> = MutableDescriptorTypeCreateInfoEXT<'a>;
 pub type MemoryBarrier2KHR<'a> = MemoryBarrier2<'a>;
 pub type ImageMemoryBarrier2KHR<'a> = ImageMemoryBarrier2<'a>;
 pub type BufferMemoryBarrier2KHR<'a> = BufferMemoryBarrier2<'a>;
@@ -261,3 +265,5 @@ pub type RenderingAttachmentInfoKHR<'a> = RenderingAttachmentInfo<'a>;
 pub type PhysicalDeviceDynamicRenderingFeaturesKHR<'a> = PhysicalDeviceDynamicRenderingFeatures<'a>;
 pub type CommandBufferInheritanceRenderingInfoKHR<'a> = CommandBufferInheritanceRenderingInfo<'a>;
 pub type AttachmentSampleCountInfoNV<'a> = AttachmentSampleCountInfoAMD<'a>;
+pub type PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARM<'a> =
+    PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT<'a>;
