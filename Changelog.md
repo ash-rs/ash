@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added `VK_EXT_image_drm_format_modifier` device extension (#603)
 - Update Vulkan-Headers to 1.3.228 (#605, #608, #619, #655)
+- Added `const STRUCTURE_TYPE` to all Vulkan structures for matching with `match_struct!` macro (#614)
 - Added `VK_EXT_sample_locations` device extension (#616)
 - Added `VK_NV_coverage_reduction_mode` device extension (#617)
 - Added `VK_KHR_ray_tracing_maintenance1` device extension (#620)
