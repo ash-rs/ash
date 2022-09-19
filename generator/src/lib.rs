@@ -497,7 +497,6 @@ pub trait FieldExt {
     /// array types (e.g. `[f32; 3]`) will be converted to pointer types (e.g. `&[f32; 3]`),
     /// which is needed for `C` function parameters. Set to `false` for struct definitions.
     fn type_tokens(&self, is_ffi_param: bool) -> TokenStream;
-    fn is_clone(&self) -> bool;
 
     /// Whether this is C's `void` type (not to be mistaken with a void _pointer_!)
     fn is_void(&self) -> bool;
@@ -632,10 +631,6 @@ fn discard_outmost_delimiter(stream: TokenStream) -> TokenStream {
 }
 
 impl FieldExt for vkxml::Field {
-    fn is_clone(&self) -> bool {
-        true
-    }
-
     fn param_ident(&self) -> Ident {
         let name = self.name.as_deref().unwrap_or("field");
         let name_corrected = match name {
@@ -1429,15 +1424,9 @@ pub fn derive_default(struct_: &vkxml::Struct) -> Option<TokenStream> {
     let default_fields = members.clone().map(|field| {
         let param_ident = field.param_ident();
         if is_structure_type(field) {
-            let ty = field
-                .type_enums
-                .as_ref()
-                .and_then(|ty| ty.split(',').next());
-            if let Some(variant) = ty {
-                let variant_ident = variant_ident("VkStructureType", variant);
-
+            if field.type_enums.is_some() {
                 quote! {
-                    #param_ident: StructureType::#variant_ident
+                    #param_ident: Self::STRUCTURE_TYPE
                 }
             } else {
                 quote! {
@@ -1558,6 +1547,13 @@ pub fn derive_setters(
     let next_field = members
         .clone()
         .find(|field| field.param_ident() == "p_next");
+
+    let structure_type_field = members
+        .clone()
+        .find(|field| field.param_ident() == "s_type");
+
+    // Must either have both, or none:
+    assert_eq!(next_field.is_some(), structure_type_field.is_some());
 
     let nofilter_count_members = [
         ("VkPipelineViewportStateCreateInfo", "pViewports"),
@@ -1810,7 +1806,24 @@ pub fn derive_setters(
             }
         });
 
+    let impl_structure_type_trait = structure_type_field.map(|s_type| {
+        let value = s_type
+            .type_enums
+            .as_deref()
+            .expect("s_type field must have a value in `vk.xml`");
+
+        assert!(!value.contains(','));
+
+        let value = variant_ident("VkStructureType", value);
+        quote! {
+            unsafe impl TaggedStructure for #name {
+                const STRUCTURE_TYPE: StructureType = StructureType::#value;
+            }
+        }
+    });
+
     let q = quote! {
+        #impl_structure_type_trait
         impl #name {
             pub fn builder<'a>() -> #name_builder<'a> {
                 #name_builder {
@@ -1825,7 +1838,6 @@ pub fn derive_setters(
             inner: #name,
             marker: ::std::marker::PhantomData<&'a ()>,
         }
-
         #(#impl_extend_trait)*
         #next_trait
 
