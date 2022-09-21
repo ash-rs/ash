@@ -112,7 +112,6 @@ impl RayTracingPipeline {
         data_size: usize,
     ) -> VkResult<Vec<u8>> {
         let mut data: Vec<u8> = Vec::with_capacity(data_size);
-
         let err_code = (self
             .fp
             .get_ray_tracing_capture_replay_shader_group_handles_khr)(
