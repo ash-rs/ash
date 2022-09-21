@@ -35,6 +35,8 @@ impl MeshShader {
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksIndirectEXT.html>
+    ///
+    /// `buffer` is a buffer which contains [`vk::DrawMeshTasksIndirectCommandEXT`] structures containing the draw parameters.
     #[inline]
     pub unsafe fn cmd_draw_mesh_tasks_indirect(
         &self,
@@ -54,6 +56,8 @@ impl MeshShader {
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksIndirectCountEXT.html>
+    ///
+    /// `buffer` is a buffer which contains [`vk::DrawMeshTasksIndirectCommandEXT`] structures containing the draw parameters.
     #[inline]
     pub unsafe fn cmd_draw_mesh_tasks_indirect_count(
         &self,
