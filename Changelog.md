@@ -24,6 +24,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `VK_KHR_device_group_creation` instance extension (#630)
 - Added `VK_KHR_device_group` device extension (#631)
 
+
+### Fixed
+
+- `khr::RayTracingPipeline`: Set the buffer length in `get_ray_tracing_capture_replay_shader_group_handles` so it no longer always returns an empty `Vec` (#658)
+
 ## [0.37.0] - 2022-03-23
 
 ### Changed
