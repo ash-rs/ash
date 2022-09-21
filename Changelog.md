@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added new functions to `VK_KHR_swapchain`, available since Vulkan 1.1 (#629)
 - Added `VK_KHR_device_group_creation` instance extension (#630)
 - Added `VK_KHR_device_group` device extension (#631)
+- Added `VK_EXT_mesh_shader` device extension (#657)
 
 ### Removed
 
