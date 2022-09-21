@@ -113,7 +113,7 @@ impl RayTracingPipeline {
     ) -> VkResult<Vec<u8>> {
         let mut data: Vec<u8> = Vec::with_capacity(data_size);
 
-        (self
+        let err_code = (self
             .fp
             .get_ray_tracing_capture_replay_shader_group_handles_khr)(
             self.handle,
@@ -122,8 +122,9 @@ impl RayTracingPipeline {
             group_count,
             data_size,
             data.as_mut_ptr() as *mut _,
-        )
-        .result_with_success(data)
+        );
+        data.set_len(data_size);
+        err_code.result_with_success(data)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdTraceRaysIndirectKHR.html>
