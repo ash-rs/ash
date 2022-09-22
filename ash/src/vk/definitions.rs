@@ -57,7 +57,7 @@ pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
-pub const HEADER_VERSION: u32 = 228u32;
+pub const HEADER_VERSION: u32 = 229u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -35136,14 +35136,14 @@ impl<'a> VideoProfileInfoKHR<'a> {
 pub struct VideoCapabilitiesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
-    pub capability_flags: VideoCapabilityFlagsKHR,
+    pub flags: VideoCapabilityFlagsKHR,
     pub min_bitstream_buffer_offset_alignment: DeviceSize,
     pub min_bitstream_buffer_size_alignment: DeviceSize,
-    pub video_picture_extent_granularity: Extent2D,
-    pub min_extent: Extent2D,
-    pub max_extent: Extent2D,
-    pub max_reference_pictures_slots_count: u32,
-    pub max_reference_pictures_active_count: u32,
+    pub picture_access_granularity: Extent2D,
+    pub min_coded_extent: Extent2D,
+    pub max_coded_extent: Extent2D,
+    pub max_dpb_slots: u32,
+    pub max_active_reference_pictures: u32,
     pub std_header_version: ExtensionProperties,
     pub _marker: PhantomData<&'a ()>,
 }
@@ -35153,14 +35153,14 @@ impl ::std::default::Default for VideoCapabilitiesKHR<'_> {
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
-            capability_flags: VideoCapabilityFlagsKHR::default(),
+            flags: VideoCapabilityFlagsKHR::default(),
             min_bitstream_buffer_offset_alignment: DeviceSize::default(),
             min_bitstream_buffer_size_alignment: DeviceSize::default(),
-            video_picture_extent_granularity: Extent2D::default(),
-            min_extent: Extent2D::default(),
-            max_extent: Extent2D::default(),
-            max_reference_pictures_slots_count: u32::default(),
-            max_reference_pictures_active_count: u32::default(),
+            picture_access_granularity: Extent2D::default(),
+            min_coded_extent: Extent2D::default(),
+            max_coded_extent: Extent2D::default(),
+            max_dpb_slots: u32::default(),
+            max_active_reference_pictures: u32::default(),
             std_header_version: ExtensionProperties::default(),
             _marker: PhantomData,
         }
@@ -35172,8 +35172,8 @@ unsafe impl<'a> TaggedStructure for VideoCapabilitiesKHR<'a> {
 pub unsafe trait ExtendsVideoCapabilitiesKHR {}
 impl<'a> VideoCapabilitiesKHR<'a> {
     #[inline]
-    pub fn capability_flags(mut self, capability_flags: VideoCapabilityFlagsKHR) -> Self {
-        self.capability_flags = capability_flags;
+    pub fn flags(mut self, flags: VideoCapabilityFlagsKHR) -> Self {
+        self.flags = flags;
         self
     }
     #[inline]
@@ -35193,37 +35193,28 @@ impl<'a> VideoCapabilitiesKHR<'a> {
         self
     }
     #[inline]
-    pub fn video_picture_extent_granularity(
-        mut self,
-        video_picture_extent_granularity: Extent2D,
-    ) -> Self {
-        self.video_picture_extent_granularity = video_picture_extent_granularity;
+    pub fn picture_access_granularity(mut self, picture_access_granularity: Extent2D) -> Self {
+        self.picture_access_granularity = picture_access_granularity;
         self
     }
     #[inline]
-    pub fn min_extent(mut self, min_extent: Extent2D) -> Self {
-        self.min_extent = min_extent;
+    pub fn min_coded_extent(mut self, min_coded_extent: Extent2D) -> Self {
+        self.min_coded_extent = min_coded_extent;
         self
     }
     #[inline]
-    pub fn max_extent(mut self, max_extent: Extent2D) -> Self {
-        self.max_extent = max_extent;
+    pub fn max_coded_extent(mut self, max_coded_extent: Extent2D) -> Self {
+        self.max_coded_extent = max_coded_extent;
         self
     }
     #[inline]
-    pub fn max_reference_pictures_slots_count(
-        mut self,
-        max_reference_pictures_slots_count: u32,
-    ) -> Self {
-        self.max_reference_pictures_slots_count = max_reference_pictures_slots_count;
+    pub fn max_dpb_slots(mut self, max_dpb_slots: u32) -> Self {
+        self.max_dpb_slots = max_dpb_slots;
         self
     }
     #[inline]
-    pub fn max_reference_pictures_active_count(
-        mut self,
-        max_reference_pictures_active_count: u32,
-    ) -> Self {
-        self.max_reference_pictures_active_count = max_reference_pictures_active_count;
+    pub fn max_active_reference_pictures(mut self, max_active_reference_pictures: u32) -> Self {
+        self.max_active_reference_pictures = max_active_reference_pictures;
         self
     }
     #[inline]
@@ -35501,6 +35492,7 @@ unsafe impl<'a> TaggedStructure for VideoDecodeUsageInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_USAGE_INFO_KHR;
 }
 unsafe impl ExtendsVideoProfileInfoKHR for VideoDecodeUsageInfoKHR<'_> {}
+unsafe impl ExtendsQueryPoolCreateInfo for VideoDecodeUsageInfoKHR<'_> {}
 impl<'a> VideoDecodeUsageInfoKHR<'a> {
     #[inline]
     pub fn video_usage_hints(mut self, video_usage_hints: VideoDecodeUsageFlagsKHR) -> Self {
@@ -35652,7 +35644,7 @@ impl<'a> VideoDecodeH264ProfileInfoEXT<'a> {
 pub struct VideoDecodeH264CapabilitiesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
-    pub max_level: StdVideoH264Level,
+    pub max_level_idc: StdVideoH264LevelIdc,
     pub field_offset_granularity: Offset2D,
     pub _marker: PhantomData<&'a ()>,
 }
@@ -35662,7 +35654,7 @@ impl ::std::default::Default for VideoDecodeH264CapabilitiesEXT<'_> {
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
-            max_level: StdVideoH264Level::default(),
+            max_level_idc: StdVideoH264LevelIdc::default(),
             field_offset_granularity: Offset2D::default(),
             _marker: PhantomData,
         }
@@ -35674,8 +35666,8 @@ unsafe impl<'a> TaggedStructure for VideoDecodeH264CapabilitiesEXT<'a> {
 unsafe impl ExtendsVideoCapabilitiesKHR for VideoDecodeH264CapabilitiesEXT<'_> {}
 impl<'a> VideoDecodeH264CapabilitiesEXT<'a> {
     #[inline]
-    pub fn max_level(mut self, max_level: StdVideoH264Level) -> Self {
-        self.max_level = max_level;
+    pub fn max_level_idc(mut self, max_level_idc: StdVideoH264LevelIdc) -> Self {
+        self.max_level_idc = max_level_idc;
         self
     }
     #[inline]
@@ -35691,10 +35683,10 @@ impl<'a> VideoDecodeH264CapabilitiesEXT<'a> {
 pub struct VideoDecodeH264SessionParametersAddInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub sps_std_count: u32,
-    pub p_sps_std: *const StdVideoH264SequenceParameterSet,
-    pub pps_std_count: u32,
-    pub p_pps_std: *const StdVideoH264PictureParameterSet,
+    pub std_sps_count: u32,
+    pub p_std_sp_ss: *const StdVideoH264SequenceParameterSet,
+    pub std_pps_count: u32,
+    pub p_std_pp_ss: *const StdVideoH264PictureParameterSet,
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for VideoDecodeH264SessionParametersAddInfoEXT<'_> {
@@ -35703,10 +35695,10 @@ impl ::std::default::Default for VideoDecodeH264SessionParametersAddInfoEXT<'_> 
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            sps_std_count: u32::default(),
-            p_sps_std: ::std::ptr::null(),
-            pps_std_count: u32::default(),
-            p_pps_std: ::std::ptr::null(),
+            std_sps_count: u32::default(),
+            p_std_sp_ss: ::std::ptr::null(),
+            std_pps_count: u32::default(),
+            p_std_pp_ss: ::std::ptr::null(),
             _marker: PhantomData,
         }
     }
@@ -35721,15 +35713,15 @@ unsafe impl ExtendsVideoSessionParametersUpdateInfoKHR
 }
 impl<'a> VideoDecodeH264SessionParametersAddInfoEXT<'a> {
     #[inline]
-    pub fn sps_std(mut self, sps_std: &'a [StdVideoH264SequenceParameterSet]) -> Self {
-        self.sps_std_count = sps_std.len() as _;
-        self.p_sps_std = sps_std.as_ptr();
+    pub fn std_sp_ss(mut self, std_sp_ss: &'a [StdVideoH264SequenceParameterSet]) -> Self {
+        self.std_sps_count = std_sp_ss.len() as _;
+        self.p_std_sp_ss = std_sp_ss.as_ptr();
         self
     }
     #[inline]
-    pub fn pps_std(mut self, pps_std: &'a [StdVideoH264PictureParameterSet]) -> Self {
-        self.pps_std_count = pps_std.len() as _;
-        self.p_pps_std = pps_std.as_ptr();
+    pub fn std_pp_ss(mut self, std_pp_ss: &'a [StdVideoH264PictureParameterSet]) -> Self {
+        self.std_pps_count = std_pp_ss.len() as _;
+        self.p_std_pp_ss = std_pp_ss.as_ptr();
         self
     }
 }
@@ -35740,8 +35732,8 @@ impl<'a> VideoDecodeH264SessionParametersAddInfoEXT<'a> {
 pub struct VideoDecodeH264SessionParametersCreateInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub max_sps_std_count: u32,
-    pub max_pps_std_count: u32,
+    pub max_std_sps_count: u32,
+    pub max_std_pps_count: u32,
     pub p_parameters_add_info: *const VideoDecodeH264SessionParametersAddInfoEXT<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
@@ -35751,8 +35743,8 @@ impl ::std::default::Default for VideoDecodeH264SessionParametersCreateInfoEXT<'
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            max_sps_std_count: u32::default(),
-            max_pps_std_count: u32::default(),
+            max_std_sps_count: u32::default(),
+            max_std_pps_count: u32::default(),
             p_parameters_add_info: ::std::ptr::null(),
             _marker: PhantomData,
         }
@@ -35768,13 +35760,13 @@ unsafe impl ExtendsVideoSessionParametersCreateInfoKHR
 }
 impl<'a> VideoDecodeH264SessionParametersCreateInfoEXT<'a> {
     #[inline]
-    pub fn max_sps_std_count(mut self, max_sps_std_count: u32) -> Self {
-        self.max_sps_std_count = max_sps_std_count;
+    pub fn max_std_sps_count(mut self, max_std_sps_count: u32) -> Self {
+        self.max_std_sps_count = max_std_sps_count;
         self
     }
     #[inline]
-    pub fn max_pps_std_count(mut self, max_pps_std_count: u32) -> Self {
-        self.max_pps_std_count = max_pps_std_count;
+    pub fn max_std_pps_count(mut self, max_std_pps_count: u32) -> Self {
+        self.max_std_pps_count = max_std_pps_count;
         self
     }
     #[inline]
@@ -35794,8 +35786,8 @@ pub struct VideoDecodeH264PictureInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub p_std_picture_info: *const StdVideoDecodeH264PictureInfo,
-    pub slices_count: u32,
-    pub p_slices_data_offsets: *const u32,
+    pub slice_count: u32,
+    pub p_slice_offsets: *const u32,
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for VideoDecodeH264PictureInfoEXT<'_> {
@@ -35805,8 +35797,8 @@ impl ::std::default::Default for VideoDecodeH264PictureInfoEXT<'_> {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             p_std_picture_info: ::std::ptr::null(),
-            slices_count: u32::default(),
-            p_slices_data_offsets: ::std::ptr::null(),
+            slice_count: u32::default(),
+            p_slice_offsets: ::std::ptr::null(),
             _marker: PhantomData,
         }
     }
@@ -35815,7 +35807,6 @@ unsafe impl<'a> TaggedStructure for VideoDecodeH264PictureInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H264_PICTURE_INFO_EXT;
 }
 unsafe impl ExtendsVideoDecodeInfoKHR for VideoDecodeH264PictureInfoEXT<'_> {}
-pub unsafe trait ExtendsVideoDecodeH264PictureInfoEXT {}
 impl<'a> VideoDecodeH264PictureInfoEXT<'a> {
     #[inline]
     pub fn std_picture_info(mut self, std_picture_info: &'a StdVideoDecodeH264PictureInfo) -> Self {
@@ -35823,23 +35814,9 @@ impl<'a> VideoDecodeH264PictureInfoEXT<'a> {
         self
     }
     #[inline]
-    pub fn slices_data_offsets(mut self, slices_data_offsets: &'a [u32]) -> Self {
-        self.slices_count = slices_data_offsets.len() as _;
-        self.p_slices_data_offsets = slices_data_offsets.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoDecodeH264PictureInfoEXT>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    pub fn slice_offsets(mut self, slice_offsets: &'a [u32]) -> Self {
+        self.slice_count = slice_offsets.len() as _;
+        self.p_slice_offsets = slice_offsets.as_ptr();
         self
     }
 }
@@ -35875,38 +35852,6 @@ impl<'a> VideoDecodeH264DpbSlotInfoEXT<'a> {
         std_reference_info: &'a StdVideoDecodeH264ReferenceInfo,
     ) -> Self {
         self.p_std_reference_info = std_reference_info;
-        self
-    }
-}
-#[repr(C)]
-#[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH264MvcInfoEXT.html>"]
-pub struct VideoDecodeH264MvcInfoEXT<'a> {
-    pub s_type: StructureType,
-    pub p_next: *const c_void,
-    pub p_std_mvc: *const StdVideoDecodeH264Mvc,
-    pub _marker: PhantomData<&'a ()>,
-}
-impl ::std::default::Default for VideoDecodeH264MvcInfoEXT<'_> {
-    #[inline]
-    fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::std::ptr::null(),
-            p_std_mvc: ::std::ptr::null(),
-            _marker: PhantomData,
-        }
-    }
-}
-unsafe impl<'a> TaggedStructure for VideoDecodeH264MvcInfoEXT<'a> {
-    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H264_MVC_INFO_EXT;
-}
-unsafe impl ExtendsVideoDecodeH264PictureInfoEXT for VideoDecodeH264MvcInfoEXT<'_> {}
-impl<'a> VideoDecodeH264MvcInfoEXT<'a> {
-    #[inline]
-    pub fn std_mvc(mut self, std_mvc: &'a StdVideoDecodeH264Mvc) -> Self {
-        self.p_std_mvc = std_mvc;
         self
     }
 }
@@ -35950,7 +35895,7 @@ impl<'a> VideoDecodeH265ProfileInfoEXT<'a> {
 pub struct VideoDecodeH265CapabilitiesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
-    pub max_level: StdVideoH265Level,
+    pub max_level_idc: StdVideoH265LevelIdc,
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for VideoDecodeH265CapabilitiesEXT<'_> {
@@ -35959,7 +35904,7 @@ impl ::std::default::Default for VideoDecodeH265CapabilitiesEXT<'_> {
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
-            max_level: StdVideoH265Level::default(),
+            max_level_idc: StdVideoH265LevelIdc::default(),
             _marker: PhantomData,
         }
     }
@@ -35970,8 +35915,8 @@ unsafe impl<'a> TaggedStructure for VideoDecodeH265CapabilitiesEXT<'a> {
 unsafe impl ExtendsVideoCapabilitiesKHR for VideoDecodeH265CapabilitiesEXT<'_> {}
 impl<'a> VideoDecodeH265CapabilitiesEXT<'a> {
     #[inline]
-    pub fn max_level(mut self, max_level: StdVideoH265Level) -> Self {
-        self.max_level = max_level;
+    pub fn max_level_idc(mut self, max_level_idc: StdVideoH265LevelIdc) -> Self {
+        self.max_level_idc = max_level_idc;
         self
     }
 }
@@ -35982,12 +35927,12 @@ impl<'a> VideoDecodeH265CapabilitiesEXT<'a> {
 pub struct VideoDecodeH265SessionParametersAddInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub vps_std_count: u32,
-    pub p_vps_std: *const StdVideoH265VideoParameterSet,
-    pub sps_std_count: u32,
-    pub p_sps_std: *const StdVideoH265SequenceParameterSet,
-    pub pps_std_count: u32,
-    pub p_pps_std: *const StdVideoH265PictureParameterSet,
+    pub std_vps_count: u32,
+    pub p_std_vp_ss: *const StdVideoH265VideoParameterSet,
+    pub std_sps_count: u32,
+    pub p_std_sp_ss: *const StdVideoH265SequenceParameterSet,
+    pub std_pps_count: u32,
+    pub p_std_pp_ss: *const StdVideoH265PictureParameterSet,
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for VideoDecodeH265SessionParametersAddInfoEXT<'_> {
@@ -35996,12 +35941,12 @@ impl ::std::default::Default for VideoDecodeH265SessionParametersAddInfoEXT<'_> 
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            vps_std_count: u32::default(),
-            p_vps_std: ::std::ptr::null(),
-            sps_std_count: u32::default(),
-            p_sps_std: ::std::ptr::null(),
-            pps_std_count: u32::default(),
-            p_pps_std: ::std::ptr::null(),
+            std_vps_count: u32::default(),
+            p_std_vp_ss: ::std::ptr::null(),
+            std_sps_count: u32::default(),
+            p_std_sp_ss: ::std::ptr::null(),
+            std_pps_count: u32::default(),
+            p_std_pp_ss: ::std::ptr::null(),
             _marker: PhantomData,
         }
     }
@@ -36016,21 +35961,21 @@ unsafe impl ExtendsVideoSessionParametersUpdateInfoKHR
 }
 impl<'a> VideoDecodeH265SessionParametersAddInfoEXT<'a> {
     #[inline]
-    pub fn vps_std(mut self, vps_std: &'a [StdVideoH265VideoParameterSet]) -> Self {
-        self.vps_std_count = vps_std.len() as _;
-        self.p_vps_std = vps_std.as_ptr();
+    pub fn std_vp_ss(mut self, std_vp_ss: &'a [StdVideoH265VideoParameterSet]) -> Self {
+        self.std_vps_count = std_vp_ss.len() as _;
+        self.p_std_vp_ss = std_vp_ss.as_ptr();
         self
     }
     #[inline]
-    pub fn sps_std(mut self, sps_std: &'a [StdVideoH265SequenceParameterSet]) -> Self {
-        self.sps_std_count = sps_std.len() as _;
-        self.p_sps_std = sps_std.as_ptr();
+    pub fn std_sp_ss(mut self, std_sp_ss: &'a [StdVideoH265SequenceParameterSet]) -> Self {
+        self.std_sps_count = std_sp_ss.len() as _;
+        self.p_std_sp_ss = std_sp_ss.as_ptr();
         self
     }
     #[inline]
-    pub fn pps_std(mut self, pps_std: &'a [StdVideoH265PictureParameterSet]) -> Self {
-        self.pps_std_count = pps_std.len() as _;
-        self.p_pps_std = pps_std.as_ptr();
+    pub fn std_pp_ss(mut self, std_pp_ss: &'a [StdVideoH265PictureParameterSet]) -> Self {
+        self.std_pps_count = std_pp_ss.len() as _;
+        self.p_std_pp_ss = std_pp_ss.as_ptr();
         self
     }
 }
@@ -36041,9 +35986,9 @@ impl<'a> VideoDecodeH265SessionParametersAddInfoEXT<'a> {
 pub struct VideoDecodeH265SessionParametersCreateInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub max_vps_std_count: u32,
-    pub max_sps_std_count: u32,
-    pub max_pps_std_count: u32,
+    pub max_std_vps_count: u32,
+    pub max_std_sps_count: u32,
+    pub max_std_pps_count: u32,
     pub p_parameters_add_info: *const VideoDecodeH265SessionParametersAddInfoEXT<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
@@ -36053,9 +35998,9 @@ impl ::std::default::Default for VideoDecodeH265SessionParametersCreateInfoEXT<'
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            max_vps_std_count: u32::default(),
-            max_sps_std_count: u32::default(),
-            max_pps_std_count: u32::default(),
+            max_std_vps_count: u32::default(),
+            max_std_sps_count: u32::default(),
+            max_std_pps_count: u32::default(),
             p_parameters_add_info: ::std::ptr::null(),
             _marker: PhantomData,
         }
@@ -36071,18 +36016,18 @@ unsafe impl ExtendsVideoSessionParametersCreateInfoKHR
 }
 impl<'a> VideoDecodeH265SessionParametersCreateInfoEXT<'a> {
     #[inline]
-    pub fn max_vps_std_count(mut self, max_vps_std_count: u32) -> Self {
-        self.max_vps_std_count = max_vps_std_count;
+    pub fn max_std_vps_count(mut self, max_std_vps_count: u32) -> Self {
+        self.max_std_vps_count = max_std_vps_count;
         self
     }
     #[inline]
-    pub fn max_sps_std_count(mut self, max_sps_std_count: u32) -> Self {
-        self.max_sps_std_count = max_sps_std_count;
+    pub fn max_std_sps_count(mut self, max_std_sps_count: u32) -> Self {
+        self.max_std_sps_count = max_std_sps_count;
         self
     }
     #[inline]
-    pub fn max_pps_std_count(mut self, max_pps_std_count: u32) -> Self {
-        self.max_pps_std_count = max_pps_std_count;
+    pub fn max_std_pps_count(mut self, max_std_pps_count: u32) -> Self {
+        self.max_std_pps_count = max_std_pps_count;
         self
     }
     #[inline]
@@ -36102,8 +36047,8 @@ pub struct VideoDecodeH265PictureInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub p_std_picture_info: *mut StdVideoDecodeH265PictureInfo,
-    pub slices_count: u32,
-    pub p_slices_data_offsets: *const u32,
+    pub slice_count: u32,
+    pub p_slice_offsets: *const u32,
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for VideoDecodeH265PictureInfoEXT<'_> {
@@ -36113,8 +36058,8 @@ impl ::std::default::Default for VideoDecodeH265PictureInfoEXT<'_> {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             p_std_picture_info: ::std::ptr::null_mut(),
-            slices_count: u32::default(),
-            p_slices_data_offsets: ::std::ptr::null(),
+            slice_count: u32::default(),
+            p_slice_offsets: ::std::ptr::null(),
             _marker: PhantomData,
         }
     }
@@ -36133,9 +36078,9 @@ impl<'a> VideoDecodeH265PictureInfoEXT<'a> {
         self
     }
     #[inline]
-    pub fn slices_data_offsets(mut self, slices_data_offsets: &'a [u32]) -> Self {
-        self.slices_count = slices_data_offsets.len() as _;
-        self.p_slices_data_offsets = slices_data_offsets.as_ptr();
+    pub fn slice_offsets(mut self, slice_offsets: &'a [u32]) -> Self {
+        self.slice_count = slice_offsets.len() as _;
+        self.p_slice_offsets = slice_offsets.as_ptr();
         self
     }
 }
@@ -36186,9 +36131,9 @@ pub struct VideoSessionCreateInfoKHR<'a> {
     pub p_video_profile: *const VideoProfileInfoKHR<'a>,
     pub picture_format: Format,
     pub max_coded_extent: Extent2D,
-    pub reference_pictures_format: Format,
-    pub max_reference_pictures_slots_count: u32,
-    pub max_reference_pictures_active_count: u32,
+    pub reference_picture_format: Format,
+    pub max_dpb_slots: u32,
+    pub max_active_reference_pictures: u32,
     pub p_std_header_version: *const ExtensionProperties,
     pub _marker: PhantomData<&'a ()>,
 }
@@ -36203,9 +36148,9 @@ impl ::std::default::Default for VideoSessionCreateInfoKHR<'_> {
             p_video_profile: ::std::ptr::null(),
             picture_format: Format::default(),
             max_coded_extent: Extent2D::default(),
-            reference_pictures_format: Format::default(),
-            max_reference_pictures_slots_count: u32::default(),
-            max_reference_pictures_active_count: u32::default(),
+            reference_picture_format: Format::default(),
+            max_dpb_slots: u32::default(),
+            max_active_reference_pictures: u32::default(),
             p_std_header_version: ::std::ptr::null(),
             _marker: PhantomData,
         }
@@ -36241,24 +36186,18 @@ impl<'a> VideoSessionCreateInfoKHR<'a> {
         self
     }
     #[inline]
-    pub fn reference_pictures_format(mut self, reference_pictures_format: Format) -> Self {
-        self.reference_pictures_format = reference_pictures_format;
+    pub fn reference_picture_format(mut self, reference_picture_format: Format) -> Self {
+        self.reference_picture_format = reference_picture_format;
         self
     }
     #[inline]
-    pub fn max_reference_pictures_slots_count(
-        mut self,
-        max_reference_pictures_slots_count: u32,
-    ) -> Self {
-        self.max_reference_pictures_slots_count = max_reference_pictures_slots_count;
+    pub fn max_dpb_slots(mut self, max_dpb_slots: u32) -> Self {
+        self.max_dpb_slots = max_dpb_slots;
         self
     }
     #[inline]
-    pub fn max_reference_pictures_active_count(
-        mut self,
-        max_reference_pictures_active_count: u32,
-    ) -> Self {
-        self.max_reference_pictures_active_count = max_reference_pictures_active_count;
+    pub fn max_active_reference_pictures(mut self, max_active_reference_pictures: u32) -> Self {
+        self.max_active_reference_pictures = max_active_reference_pictures;
         self
     }
     #[inline]
@@ -36546,6 +36485,7 @@ unsafe impl<'a> TaggedStructure for VideoEncodeUsageInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_USAGE_INFO_KHR;
 }
 unsafe impl ExtendsVideoProfileInfoKHR for VideoEncodeUsageInfoKHR<'_> {}
+unsafe impl ExtendsQueryPoolCreateInfo for VideoEncodeUsageInfoKHR<'_> {}
 impl<'a> VideoEncodeUsageInfoKHR<'a> {
     #[inline]
     pub fn video_usage_hints(mut self, video_usage_hints: VideoEncodeUsageFlagsKHR) -> Self {
@@ -37011,10 +36951,10 @@ impl<'a> VideoEncodeH264CapabilitiesEXT<'a> {
 pub struct VideoEncodeH264SessionParametersAddInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub sps_std_count: u32,
-    pub p_sps_std: *const StdVideoH264SequenceParameterSet,
-    pub pps_std_count: u32,
-    pub p_pps_std: *const StdVideoH264PictureParameterSet,
+    pub std_sps_count: u32,
+    pub p_std_sp_ss: *const StdVideoH264SequenceParameterSet,
+    pub std_pps_count: u32,
+    pub p_std_pp_ss: *const StdVideoH264PictureParameterSet,
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for VideoEncodeH264SessionParametersAddInfoEXT<'_> {
@@ -37023,10 +36963,10 @@ impl ::std::default::Default for VideoEncodeH264SessionParametersAddInfoEXT<'_> 
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            sps_std_count: u32::default(),
-            p_sps_std: ::std::ptr::null(),
-            pps_std_count: u32::default(),
-            p_pps_std: ::std::ptr::null(),
+            std_sps_count: u32::default(),
+            p_std_sp_ss: ::std::ptr::null(),
+            std_pps_count: u32::default(),
+            p_std_pp_ss: ::std::ptr::null(),
             _marker: PhantomData,
         }
     }
@@ -37041,15 +36981,15 @@ unsafe impl ExtendsVideoSessionParametersUpdateInfoKHR
 }
 impl<'a> VideoEncodeH264SessionParametersAddInfoEXT<'a> {
     #[inline]
-    pub fn sps_std(mut self, sps_std: &'a [StdVideoH264SequenceParameterSet]) -> Self {
-        self.sps_std_count = sps_std.len() as _;
-        self.p_sps_std = sps_std.as_ptr();
+    pub fn std_sp_ss(mut self, std_sp_ss: &'a [StdVideoH264SequenceParameterSet]) -> Self {
+        self.std_sps_count = std_sp_ss.len() as _;
+        self.p_std_sp_ss = std_sp_ss.as_ptr();
         self
     }
     #[inline]
-    pub fn pps_std(mut self, pps_std: &'a [StdVideoH264PictureParameterSet]) -> Self {
-        self.pps_std_count = pps_std.len() as _;
-        self.p_pps_std = pps_std.as_ptr();
+    pub fn std_pp_ss(mut self, std_pp_ss: &'a [StdVideoH264PictureParameterSet]) -> Self {
+        self.std_pps_count = std_pp_ss.len() as _;
+        self.p_std_pp_ss = std_pp_ss.as_ptr();
         self
     }
 }
@@ -37060,8 +37000,8 @@ impl<'a> VideoEncodeH264SessionParametersAddInfoEXT<'a> {
 pub struct VideoEncodeH264SessionParametersCreateInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub max_sps_std_count: u32,
-    pub max_pps_std_count: u32,
+    pub max_std_sps_count: u32,
+    pub max_std_pps_count: u32,
     pub p_parameters_add_info: *const VideoEncodeH264SessionParametersAddInfoEXT<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
@@ -37071,8 +37011,8 @@ impl ::std::default::Default for VideoEncodeH264SessionParametersCreateInfoEXT<'
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            max_sps_std_count: u32::default(),
-            max_pps_std_count: u32::default(),
+            max_std_sps_count: u32::default(),
+            max_std_pps_count: u32::default(),
             p_parameters_add_info: ::std::ptr::null(),
             _marker: PhantomData,
         }
@@ -37088,13 +37028,13 @@ unsafe impl ExtendsVideoSessionParametersCreateInfoKHR
 }
 impl<'a> VideoEncodeH264SessionParametersCreateInfoEXT<'a> {
     #[inline]
-    pub fn max_sps_std_count(mut self, max_sps_std_count: u32) -> Self {
-        self.max_sps_std_count = max_sps_std_count;
+    pub fn max_std_sps_count(mut self, max_std_sps_count: u32) -> Self {
+        self.max_std_sps_count = max_std_sps_count;
         self
     }
     #[inline]
-    pub fn max_pps_std_count(mut self, max_pps_std_count: u32) -> Self {
-        self.max_pps_std_count = max_pps_std_count;
+    pub fn max_std_pps_count(mut self, max_std_pps_count: u32) -> Self {
+        self.max_std_pps_count = max_std_pps_count;
         self
     }
     #[inline]
@@ -37816,12 +37756,12 @@ impl<'a> VideoEncodeH265CapabilitiesEXT<'a> {
 pub struct VideoEncodeH265SessionParametersAddInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub vps_std_count: u32,
-    pub p_vps_std: *const StdVideoH265VideoParameterSet,
-    pub sps_std_count: u32,
-    pub p_sps_std: *const StdVideoH265SequenceParameterSet,
-    pub pps_std_count: u32,
-    pub p_pps_std: *const StdVideoH265PictureParameterSet,
+    pub std_vps_count: u32,
+    pub p_std_vp_ss: *const StdVideoH265VideoParameterSet,
+    pub std_sps_count: u32,
+    pub p_std_sp_ss: *const StdVideoH265SequenceParameterSet,
+    pub std_pps_count: u32,
+    pub p_std_pp_ss: *const StdVideoH265PictureParameterSet,
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for VideoEncodeH265SessionParametersAddInfoEXT<'_> {
@@ -37830,12 +37770,12 @@ impl ::std::default::Default for VideoEncodeH265SessionParametersAddInfoEXT<'_> 
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            vps_std_count: u32::default(),
-            p_vps_std: ::std::ptr::null(),
-            sps_std_count: u32::default(),
-            p_sps_std: ::std::ptr::null(),
-            pps_std_count: u32::default(),
-            p_pps_std: ::std::ptr::null(),
+            std_vps_count: u32::default(),
+            p_std_vp_ss: ::std::ptr::null(),
+            std_sps_count: u32::default(),
+            p_std_sp_ss: ::std::ptr::null(),
+            std_pps_count: u32::default(),
+            p_std_pp_ss: ::std::ptr::null(),
             _marker: PhantomData,
         }
     }
@@ -37850,21 +37790,21 @@ unsafe impl ExtendsVideoSessionParametersUpdateInfoKHR
 }
 impl<'a> VideoEncodeH265SessionParametersAddInfoEXT<'a> {
     #[inline]
-    pub fn vps_std(mut self, vps_std: &'a [StdVideoH265VideoParameterSet]) -> Self {
-        self.vps_std_count = vps_std.len() as _;
-        self.p_vps_std = vps_std.as_ptr();
+    pub fn std_vp_ss(mut self, std_vp_ss: &'a [StdVideoH265VideoParameterSet]) -> Self {
+        self.std_vps_count = std_vp_ss.len() as _;
+        self.p_std_vp_ss = std_vp_ss.as_ptr();
         self
     }
     #[inline]
-    pub fn sps_std(mut self, sps_std: &'a [StdVideoH265SequenceParameterSet]) -> Self {
-        self.sps_std_count = sps_std.len() as _;
-        self.p_sps_std = sps_std.as_ptr();
+    pub fn std_sp_ss(mut self, std_sp_ss: &'a [StdVideoH265SequenceParameterSet]) -> Self {
+        self.std_sps_count = std_sp_ss.len() as _;
+        self.p_std_sp_ss = std_sp_ss.as_ptr();
         self
     }
     #[inline]
-    pub fn pps_std(mut self, pps_std: &'a [StdVideoH265PictureParameterSet]) -> Self {
-        self.pps_std_count = pps_std.len() as _;
-        self.p_pps_std = pps_std.as_ptr();
+    pub fn std_pp_ss(mut self, std_pp_ss: &'a [StdVideoH265PictureParameterSet]) -> Self {
+        self.std_pps_count = std_pp_ss.len() as _;
+        self.p_std_pp_ss = std_pp_ss.as_ptr();
         self
     }
 }
@@ -37875,9 +37815,9 @@ impl<'a> VideoEncodeH265SessionParametersAddInfoEXT<'a> {
 pub struct VideoEncodeH265SessionParametersCreateInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub max_vps_std_count: u32,
-    pub max_sps_std_count: u32,
-    pub max_pps_std_count: u32,
+    pub max_std_vps_count: u32,
+    pub max_std_sps_count: u32,
+    pub max_std_pps_count: u32,
     pub p_parameters_add_info: *const VideoEncodeH265SessionParametersAddInfoEXT<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
@@ -37887,9 +37827,9 @@ impl ::std::default::Default for VideoEncodeH265SessionParametersCreateInfoEXT<'
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            max_vps_std_count: u32::default(),
-            max_sps_std_count: u32::default(),
-            max_pps_std_count: u32::default(),
+            max_std_vps_count: u32::default(),
+            max_std_sps_count: u32::default(),
+            max_std_pps_count: u32::default(),
             p_parameters_add_info: ::std::ptr::null(),
             _marker: PhantomData,
         }
@@ -37905,18 +37845,18 @@ unsafe impl ExtendsVideoSessionParametersCreateInfoKHR
 }
 impl<'a> VideoEncodeH265SessionParametersCreateInfoEXT<'a> {
     #[inline]
-    pub fn max_vps_std_count(mut self, max_vps_std_count: u32) -> Self {
-        self.max_vps_std_count = max_vps_std_count;
+    pub fn max_std_vps_count(mut self, max_std_vps_count: u32) -> Self {
+        self.max_std_vps_count = max_std_vps_count;
         self
     }
     #[inline]
-    pub fn max_sps_std_count(mut self, max_sps_std_count: u32) -> Self {
-        self.max_sps_std_count = max_sps_std_count;
+    pub fn max_std_sps_count(mut self, max_std_sps_count: u32) -> Self {
+        self.max_std_sps_count = max_std_sps_count;
         self
     }
     #[inline]
-    pub fn max_pps_std_count(mut self, max_pps_std_count: u32) -> Self {
-        self.max_pps_std_count = max_pps_std_count;
+    pub fn max_std_pps_count(mut self, max_std_pps_count: u32) -> Self {
+        self.max_std_pps_count = max_std_pps_count;
         self
     }
     #[inline]

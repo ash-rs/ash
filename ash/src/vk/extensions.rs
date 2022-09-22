@@ -1846,7 +1846,7 @@ impl KhrVideoQueueFn {
     pub const fn name() -> &'static ::std::ffi::CStr {
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_queue\0") }
     }
-    pub const SPEC_VERSION: u32 = 5u32;
+    pub const SPEC_VERSION: u32 = 6u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceVideoCapabilitiesKHR = unsafe extern "system" fn(
@@ -2253,7 +2253,7 @@ impl KhrVideoDecodeQueueFn {
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDecodeVideoKHR = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
-    p_frame_info: *const VideoDecodeInfoKHR,
+    p_decode_info: *const VideoDecodeInfoKHR,
 );
 #[derive(Clone)]
 pub struct KhrVideoDecodeQueueFn {
@@ -2270,7 +2270,7 @@ impl KhrVideoDecodeQueueFn {
             cmd_decode_video_khr: unsafe {
                 unsafe extern "system" fn cmd_decode_video_khr(
                     _command_buffer: CommandBuffer,
-                    _p_frame_info: *const VideoDecodeInfoKHR,
+                    _p_decode_info: *const VideoDecodeInfoKHR,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_decode_video_khr)))
                 }
@@ -3096,7 +3096,7 @@ impl ExtVideoEncodeH264Fn {
     pub const fn name() -> &'static ::std::ffi::CStr {
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_encode_h264\0") }
     }
-    pub const SPEC_VERSION: u32 = 8u32;
+    pub const SPEC_VERSION: u32 = 9u32;
 }
 #[derive(Clone)]
 pub struct ExtVideoEncodeH264Fn {}
@@ -3133,7 +3133,7 @@ impl ExtVideoEncodeH265Fn {
     pub const fn name() -> &'static ::std::ffi::CStr {
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_encode_h265\0") }
     }
-    pub const SPEC_VERSION: u32 = 8u32;
+    pub const SPEC_VERSION: u32 = 9u32;
 }
 #[derive(Clone)]
 pub struct ExtVideoEncodeH265Fn {}
@@ -3170,7 +3170,7 @@ impl ExtVideoDecodeH264Fn {
     pub const fn name() -> &'static ::std::ffi::CStr {
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_decode_h264\0") }
     }
-    pub const SPEC_VERSION: u32 = 6u32;
+    pub const SPEC_VERSION: u32 = 7u32;
 }
 #[derive(Clone)]
 pub struct ExtVideoDecodeH264Fn {}
@@ -3188,7 +3188,6 @@ impl ExtVideoDecodeH264Fn {
 impl StructureType {
     pub const VIDEO_DECODE_H264_CAPABILITIES_EXT: Self = Self(1_000_040_000);
     pub const VIDEO_DECODE_H264_PICTURE_INFO_EXT: Self = Self(1_000_040_001);
-    pub const VIDEO_DECODE_H264_MVC_INFO_EXT: Self = Self(1_000_040_002);
     pub const VIDEO_DECODE_H264_PROFILE_INFO_EXT: Self = Self(1_000_040_003);
     pub const VIDEO_DECODE_H264_SESSION_PARAMETERS_CREATE_INFO_EXT: Self = Self(1_000_040_004);
     pub const VIDEO_DECODE_H264_SESSION_PARAMETERS_ADD_INFO_EXT: Self = Self(1_000_040_005);
@@ -11688,7 +11687,7 @@ impl ExtVideoDecodeH265Fn {
     pub const fn name() -> &'static ::std::ffi::CStr {
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_decode_h265\0") }
     }
-    pub const SPEC_VERSION: u32 = 4u32;
+    pub const SPEC_VERSION: u32 = 5u32;
 }
 #[derive(Clone)]
 pub struct ExtVideoDecodeH265Fn {}
