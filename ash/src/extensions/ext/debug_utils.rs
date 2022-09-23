@@ -20,6 +20,7 @@ impl DebugUtils {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkSetDebugUtilsObjectNameEXT.html>
+    /// Use `set_debug_utils_object_name` instead for consistency
     #[deprecated]
     #[inline]
     pub unsafe fn debug_utils_set_object_name(
@@ -41,6 +42,7 @@ impl DebugUtils {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkSetDebugUtilsObjectTagEXT.html>
+    /// Use `set_debug_utils_object_tag` instead for consistency
     #[deprecated]
     #[inline]
     pub unsafe fn debug_utils_set_object_tag(
