@@ -7,68 +7,76 @@ use ash::{
     prelude::*,
     vk, Entry, Instance,
 };
-use raw_window_handle::{HasRawWindowHandle, RawWindowHandle};
+use raw_window_handle::{RawDisplayHandle, RawWindowHandle};
 
 /// Create a surface from a raw surface handle.
 ///
-/// `instance` must have created with platform specific surface extensions enabled.
+/// `instance` must have created with platform specific surface extensions enabled, acquired
+/// through [`enumerate_required_extensions()`].
 ///
 /// # Safety
 ///
 /// In order for the created [`vk::SurfaceKHR`] to be valid for the duration of its
 /// usage, the [`Instance`] this was called on must be dropped later than the
 /// resulting [`vk::SurfaceKHR`].
+///
+/// The window represented by `window_handle` must be associated with the display connection
+/// in `display_handle`.
+///
+/// `window_handle` and `display_handle` must be associated with a valid window and display
+/// connection, which must not be destroyed for the lifetime of the returned [`vk::SurfaceKHR`].
 pub unsafe fn create_surface(
     entry: &Entry,
     instance: &Instance,
-    window_handle: &dyn HasRawWindowHandle,
+    display_handle: RawDisplayHandle,
+    window_handle: RawWindowHandle,
     allocation_callbacks: Option<&vk::AllocationCallbacks>,
 ) -> VkResult<vk::SurfaceKHR> {
-    match window_handle.raw_window_handle() {
-        RawWindowHandle::Win32(handle) => {
+    match (display_handle, window_handle) {
+        (RawDisplayHandle::Windows(_), RawWindowHandle::Win32(window)) => {
             let surface_desc = vk::Win32SurfaceCreateInfoKHR::default()
-                .hinstance(handle.hinstance)
-                .hwnd(handle.hwnd);
+                .hinstance(window.hinstance)
+                .hwnd(window.hwnd);
             let surface_fn = khr::Win32Surface::new(entry, instance);
             surface_fn.create_win32_surface(&surface_desc, allocation_callbacks)
         }
 
-        RawWindowHandle::Wayland(handle) => {
+        (RawDisplayHandle::Wayland(display), RawWindowHandle::Wayland(window)) => {
             let surface_desc = vk::WaylandSurfaceCreateInfoKHR::default()
-                .display(handle.display)
-                .surface(handle.surface);
+                .display(display.display)
+                .surface(window.surface);
             let surface_fn = khr::WaylandSurface::new(entry, instance);
             surface_fn.create_wayland_surface(&surface_desc, allocation_callbacks)
         }
 
-        RawWindowHandle::Xlib(handle) => {
+        (RawDisplayHandle::Xlib(display), RawWindowHandle::Xlib(window)) => {
             let surface_desc = vk::XlibSurfaceCreateInfoKHR::default()
-                .dpy(handle.display as *mut _)
-                .window(handle.window);
+                .dpy(display.display as *mut _)
+                .window(window.window);
             let surface_fn = khr::XlibSurface::new(entry, instance);
             surface_fn.create_xlib_surface(&surface_desc, allocation_callbacks)
         }
 
-        RawWindowHandle::Xcb(handle) => {
+        (RawDisplayHandle::Xcb(display), RawWindowHandle::Xcb(window)) => {
             let surface_desc = vk::XcbSurfaceCreateInfoKHR::default()
-                .connection(handle.connection)
-                .window(handle.window);
+                .connection(display.connection)
+                .window(window.window);
             let surface_fn = khr::XcbSurface::new(entry, instance);
             surface_fn.create_xcb_surface(&surface_desc, allocation_callbacks)
         }
 
-        RawWindowHandle::AndroidNdk(handle) => {
+        (RawDisplayHandle::Android(_), RawWindowHandle::AndroidNdk(window)) => {
             let surface_desc =
-                vk::AndroidSurfaceCreateInfoKHR::default().window(handle.a_native_window);
+                vk::AndroidSurfaceCreateInfoKHR::default().window(window.a_native_window);
             let surface_fn = khr::AndroidSurface::new(entry, instance);
             surface_fn.create_android_surface(&surface_desc, allocation_callbacks)
         }
 
         #[cfg(target_os = "macos")]
-        RawWindowHandle::AppKit(handle) => {
+        (RawDisplayHandle::AppKit(_), RawWindowHandle::AppKit(window)) => {
             use raw_window_metal::{appkit, Layer};
 
-            let layer = match appkit::metal_layer_from_handle(handle) {
+            let layer = match appkit::metal_layer_from_handle(window) {
                 Layer::Existing(layer) | Layer::Allocated(layer) => layer as *mut _,
                 Layer::None => return Err(vk::Result::ERROR_INITIALIZATION_FAILED),
             };
@@ -79,10 +87,10 @@ pub unsafe fn create_surface(
         }
 
         #[cfg(target_os = "ios")]
-        RawWindowHandle::UiKit(handle) => {
+        (RawDisplayHandle::UiKit(_), RawWindowHandle::UiKit(window)) => {
             use raw_window_metal::{uikit, Layer};
 
-            let layer = match uikit::metal_layer_from_handle(handle) {
+            let layer = match uikit::metal_layer_from_handle(window) {
                 Layer::Existing(layer) | Layer::Allocated(layer) => layer as *mut _,
                 Layer::None => return Err(vk::Result::ERROR_INITIALIZATION_FAILED),
             };
@@ -96,14 +104,18 @@ pub unsafe fn create_surface(
     }
 }
 
-/// Query the required instance extensions for creating a surface from a window handle.
+/// Query the required instance extensions for creating a surface from a display handle.
+///
+/// This [`RawDisplayHandle`] can typically be acquired from a window, but is usually also
+/// accessible earlier through an "event loop" concept to allow querying required instance
+/// extensions and creation of a compatible Vulkan instance prior to creating a window.
 ///
 /// The returned extensions will include all extension dependencies.
 pub fn enumerate_required_extensions(
-    window_handle: &dyn HasRawWindowHandle,
+    display_handle: RawDisplayHandle,
 ) -> VkResult<&'static [*const c_char]> {
-    let extensions = match window_handle.raw_window_handle() {
-        RawWindowHandle::Win32(_) => {
+    let extensions = match display_handle {
+        RawDisplayHandle::Windows(_) => {
             const WINDOWS_EXTS: [*const c_char; 2] = [
                 khr::Surface::name().as_ptr(),
                 khr::Win32Surface::name().as_ptr(),
@@ -111,7 +123,7 @@ pub fn enumerate_required_extensions(
             &WINDOWS_EXTS
         }
 
-        RawWindowHandle::Wayland(_) => {
+        RawDisplayHandle::Wayland(_) => {
             const WAYLAND_EXTS: [*const c_char; 2] = [
                 khr::Surface::name().as_ptr(),
                 khr::WaylandSurface::name().as_ptr(),
@@ -119,7 +131,7 @@ pub fn enumerate_required_extensions(
             &WAYLAND_EXTS
         }
 
-        RawWindowHandle::Xlib(_) => {
+        RawDisplayHandle::Xlib(_) => {
             const XLIB_EXTS: [*const c_char; 2] = [
                 khr::Surface::name().as_ptr(),
                 khr::XlibSurface::name().as_ptr(),
@@ -127,7 +139,7 @@ pub fn enumerate_required_extensions(
             &XLIB_EXTS
         }
 
-        RawWindowHandle::Xcb(_) => {
+        RawDisplayHandle::Xcb(_) => {
             const XCB_EXTS: [*const c_char; 2] = [
                 khr::Surface::name().as_ptr(),
                 khr::XcbSurface::name().as_ptr(),
@@ -135,7 +147,7 @@ pub fn enumerate_required_extensions(
             &XCB_EXTS
         }
 
-        RawWindowHandle::AndroidNdk(_) => {
+        RawDisplayHandle::Android(_) => {
             const ANDROID_EXTS: [*const c_char; 2] = [
                 khr::Surface::name().as_ptr(),
                 khr::AndroidSurface::name().as_ptr(),
@@ -143,7 +155,7 @@ pub fn enumerate_required_extensions(
             &ANDROID_EXTS
         }
 
-        RawWindowHandle::AppKit(_) | RawWindowHandle::UiKit(_) => {
+        RawDisplayHandle::AppKit(_) | RawDisplayHandle::UiKit(_) => {
             const METAL_EXTS: [*const c_char; 2] = [
                 khr::Surface::name().as_ptr(),
                 ext::MetalSurface::name().as_ptr(),

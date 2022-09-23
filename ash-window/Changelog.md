@@ -2,6 +2,9 @@
 
 ## [Unreleased] - ReleaseDate
 
+- Bumped `raw-window-handle` to `0.5.0`, now taking `RawDisplayHandle` and `RawWindowHandle` directly
+  instead of requiring dynamic dispatch through the `HasRaw{Display,Window}Handle` traits (#645)
+
 ## [0.11.0] - 2022-07-29
 
 ### Changed

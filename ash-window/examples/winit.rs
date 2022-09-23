@@ -6,6 +6,7 @@
 //! On instance extensions platform specific extensions need to be enabled.
 
 use ash::vk;
+use raw_window_handle::{HasRawDisplayHandle, HasRawWindowHandle};
 use std::error::Error;
 use winit::{
     dpi::PhysicalSize,
@@ -16,13 +17,11 @@ use winit::{
 
 fn main() -> Result<(), Box<dyn Error>> {
     let event_loop = EventLoop::new();
-    let window = WindowBuilder::new()
-        .with_inner_size(PhysicalSize::<u32>::from((800, 600)))
-        .build(&event_loop)?;
 
     unsafe {
         let entry = ash::Entry::linked();
-        let surface_extensions = ash_window::enumerate_required_extensions(&window)?;
+        let surface_extensions =
+            ash_window::enumerate_required_extensions(event_loop.raw_display_handle())?;
         let app_desc = vk::ApplicationInfo::default().api_version(vk::make_api_version(0, 1, 0, 0));
         let instance_desc = vk::InstanceCreateInfo::default()
             .application_info(&app_desc)
@@ -30,8 +29,18 @@ fn main() -> Result<(), Box<dyn Error>> {
 
         let instance = entry.create_instance(&instance_desc, None)?;
 
+        let window = WindowBuilder::new()
+            .with_inner_size(PhysicalSize::<u32>::from((800, 600)))
+            .build(&event_loop)?;
+
         // Create a surface from winit window.
-        let surface = ash_window::create_surface(&entry, &instance, &window, None)?;
+        let surface = ash_window::create_surface(
+            &entry,
+            &instance,
+            window.raw_display_handle(),
+            window.raw_window_handle(),
+            None,
+        )?;
         let surface_fn = ash::extensions::khr::Surface::new(&entry, &instance);
         println!("surface: {:?}", surface);
 
