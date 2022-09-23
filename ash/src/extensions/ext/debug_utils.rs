@@ -20,8 +20,19 @@ impl DebugUtils {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkSetDebugUtilsObjectNameEXT.html>
+    #[deprecated]
     #[inline]
     pub unsafe fn debug_utils_set_object_name(
+        &self,
+        device: vk::Device,
+        name_info: &vk::DebugUtilsObjectNameInfoEXT,
+    ) -> VkResult<()> {
+        self.set_debug_utils_object_name(device, name_info)
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkSetDebugUtilsObjectNameEXT.html>
+    #[inline]
+    pub unsafe fn set_debug_utils_object_name(
         &self,
         device: vk::Device,
         name_info: &vk::DebugUtilsObjectNameInfoEXT,
@@ -30,8 +41,19 @@ impl DebugUtils {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkSetDebugUtilsObjectTagEXT.html>
+    #[deprecated]
     #[inline]
     pub unsafe fn debug_utils_set_object_tag(
+        &self,
+        device: vk::Device,
+        tag_info: &vk::DebugUtilsObjectTagInfoEXT,
+    ) -> VkResult<()> {
+        self.set_debug_utils_object_tag(device, tag_info)
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkSetDebugUtilsObjectTagEXT.html>
+    #[inline]
+    pub unsafe fn set_debug_utils_object_tag(
         &self,
         device: vk::Device,
         tag_info: &vk::DebugUtilsObjectTagInfoEXT,
