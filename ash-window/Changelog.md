@@ -2,6 +2,10 @@
 
 ## [Unreleased] - ReleaseDate
 
+## [0.12.0] - 2022-09-23
+
+### Changed
+
 - Bumped `raw-window-handle` to `0.5.0`, now taking `RawDisplayHandle` and `RawWindowHandle` directly
   instead of requiring dynamic dispatch through the `HasRaw{Display,Window}Handle` traits (#645)
 
@@ -79,7 +83,8 @@
 ## Version 0.1.0
 Initial release for `raw-window-handle = "0.3"` with Windows, Linux, Android, MacOS/iOS support.
 
-[Unreleased]: https://github.com/MaikKlein/ash/compare/ash-window-0.11.0...HEAD
+[Unreleased]: https://github.com/MaikKlein/ash/compare/ash-window-0.12.0...HEAD
+[0.12.0]: https://github.com/MaikKlein/ash/releases/tag/ash-window-0.12.0
 [0.11.0]: https://github.com/MaikKlein/ash/releases/tag/ash-window-0.11.0
 [0.10.0]: https://github.com/MaikKlein/ash/releases/tag/ash-window-0.10.0
 [0.9.1]: https://github.com/MaikKlein/ash/releases/tag/ash-window-0.9.1
