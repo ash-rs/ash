@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Inlined builder setters (partial backport from #602)
 - Inlined `Default` impls and trivial `Instance`/`Device`/`Entry` wrapper methods (#606, #632)
+- Renamed `debug_utils_set_object_name()` to `set_debug_utils_object_name()` and `debug_utils_set_object_tag()` to `set_debug_utils_object_tag()` for consistency and deprecated old ones (#661)
 
 ### Added
 
