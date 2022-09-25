@@ -1,5 +1,8 @@
+#[allow(clippy::wildcard_imports)]
 use crate::vk::bitflags::*;
+#[allow(clippy::wildcard_imports)]
 use crate::vk::definitions::*;
+#[allow(clippy::wildcard_imports)]
 use crate::vk::enums::*;
 pub type GeometryFlagsNV = GeometryFlagsKHR;
 pub type GeometryInstanceFlagsNV = GeometryInstanceFlagsKHR;

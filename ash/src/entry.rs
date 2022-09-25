@@ -365,7 +365,7 @@ mod loaded {
     use std::error::Error;
     use std::fmt;
 
-    use super::*;
+    use super::MissingEntryPoint;
 
     #[derive(Debug)]
     #[cfg_attr(docsrs, doc(cfg(feature = "loaded")))]

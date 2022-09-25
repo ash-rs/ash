@@ -2573,9 +2573,13 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     let mut vk_aliases_file = File::create(vk_dir.join("aliases.rs")).expect("vk/aliases.rs");
 
     let feature_code = quote! {
-        use std::os::raw::*;
+        use std::os::raw::c_char;
+        use std::os::raw::c_void;
+        #[allow(clippy::wildcard_imports)]
         use crate::vk::bitflags::*;
+        #[allow(clippy::wildcard_imports)]
         use crate::vk::definitions::*;
+        #[allow(clippy::wildcard_imports)]
         use crate::vk::enums::*;
         #(#feature_code)*
     };
@@ -2583,14 +2587,23 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     let definition_code = quote! {
         use std::marker::PhantomData;
         use std::fmt;
-        use std::os::raw::*;
+        use std::os::raw::c_char;
+        use std::os::raw::c_int;
+        use std::os::raw::c_void;
         use crate::vk::{Handle, ptr_chain_iter};
+        #[allow(clippy::wildcard_imports)]
         use crate::vk::aliases::*;
+        #[allow(clippy::wildcard_imports)]
         use crate::vk::bitflags::*;
+        #[allow(clippy::wildcard_imports)]
         use crate::vk::constants::*;
+        #[allow(clippy::wildcard_imports)]
         use crate::vk::enums::*;
+        #[allow(clippy::wildcard_imports)]
         use crate::vk::native::*;
+        #[allow(clippy::wildcard_imports)]
         use crate::vk::platform_types::*;
+        #[allow(clippy::wildcard_imports)]
         use crate::vk::prelude::*;
         #(#definition_code)*
     };
@@ -2602,43 +2615,60 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     };
 
     let bitflags_code = quote! {
+        #[allow(clippy::wildcard_imports)]
         use crate::vk::definitions::*;
         #(#bitflags_code)*
     };
 
     let constants_code = quote! {
+        #[allow(clippy::wildcard_imports)]
         use crate::vk::definitions::*;
         #(#constants_code)*
     };
 
     let extension_code = quote! {
-        use std::os::raw::*;
+        use std::os::raw::c_char;
+        use std::os::raw::c_int;
+        use std::os::raw::c_void;
+        #[allow(clippy::wildcard_imports)]
         use crate::vk::platform_types::*;
+        #[allow(clippy::wildcard_imports)]
         use crate::vk::aliases::*;
+        #[allow(clippy::wildcard_imports)]
         use crate::vk::bitflags::*;
+        #[allow(clippy::wildcard_imports)]
         use crate::vk::definitions::*;
+        #[allow(clippy::wildcard_imports)]
         use crate::vk::enums::*;
         #(#extension_code)*
     };
 
     let feature_extensions_code = quote! {
+        #[allow(clippy::wildcard_imports)]
         use crate::vk::bitflags::*;
+        #[allow(clippy::wildcard_imports)]
         use crate::vk::enums::*;
-       #feature_extensions_code
+        #feature_extensions_code
     };
 
     let const_debugs = quote! {
         use std::fmt;
+        #[allow(clippy::wildcard_imports)]
         use crate::vk::bitflags::*;
+        #[allow(clippy::wildcard_imports)]
         use crate::vk::definitions::*;
+        #[allow(clippy::wildcard_imports)]
         use crate::vk::enums::*;
         use crate::prelude::debug_flags;
         #const_debugs
     };
 
     let aliases = quote! {
+        #[allow(clippy::wildcard_imports)]
         use crate::vk::bitflags::*;
+        #[allow(clippy::wildcard_imports)]
         use crate::vk::definitions::*;
+        #[allow(clippy::wildcard_imports)]
         use crate::vk::enums::*;
         #(#aliases)*
     };

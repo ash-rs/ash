@@ -1,4 +1,6 @@
+#[allow(clippy::wildcard_imports)]
 use crate::vk::bitflags::*;
+#[allow(clippy::wildcard_imports)]
 use crate::vk::enums::*;
 #[doc = "Generated from 'VK_VERSION_1_1'"]
 impl BufferCreateFlags {

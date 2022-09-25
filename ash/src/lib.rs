@@ -1,4 +1,5 @@
 #![deny(clippy::use_self)]
+#![deny(clippy::wildcard_imports)]
 #![warn(trivial_casts, trivial_numeric_casts)]
 #![allow(
     clippy::too_many_arguments,

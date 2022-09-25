@@ -1,3 +1,4 @@
+#[allow(clippy::wildcard_imports)]
 use crate::vk::definitions::*;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]

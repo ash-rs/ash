@@ -1,14 +1,23 @@
+#[allow(clippy::wildcard_imports)]
 use crate::vk::aliases::*;
+#[allow(clippy::wildcard_imports)]
 use crate::vk::bitflags::*;
+#[allow(clippy::wildcard_imports)]
 use crate::vk::constants::*;
+#[allow(clippy::wildcard_imports)]
 use crate::vk::enums::*;
+#[allow(clippy::wildcard_imports)]
 use crate::vk::native::*;
+#[allow(clippy::wildcard_imports)]
 use crate::vk::platform_types::*;
+#[allow(clippy::wildcard_imports)]
 use crate::vk::prelude::*;
 use crate::vk::{ptr_chain_iter, Handle};
 use std::fmt;
 use std::marker::PhantomData;
-use std::os::raw::*;
+use std::os::raw::c_char;
+use std::os::raw::c_int;
+use std::os::raw::c_void;
 #[deprecated = "This define is deprecated. VK_MAKE_API_VERSION should be used instead."]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_MAKE_VERSION.html>"]
 pub const fn make_version(major: u32, minor: u32, patch: u32) -> u32 {

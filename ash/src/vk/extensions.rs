@@ -1,9 +1,16 @@
+#[allow(clippy::wildcard_imports)]
 use crate::vk::aliases::*;
+#[allow(clippy::wildcard_imports)]
 use crate::vk::bitflags::*;
+#[allow(clippy::wildcard_imports)]
 use crate::vk::definitions::*;
+#[allow(clippy::wildcard_imports)]
 use crate::vk::enums::*;
+#[allow(clippy::wildcard_imports)]
 use crate::vk::platform_types::*;
-use std::os::raw::*;
+use std::os::raw::c_char;
+use std::os::raw::c_int;
+use std::os::raw::c_void;
 impl KhrSurfaceFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {

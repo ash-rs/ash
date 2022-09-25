@@ -1,7 +1,11 @@
+#[allow(clippy::wildcard_imports)]
 use crate::vk::bitflags::*;
+#[allow(clippy::wildcard_imports)]
 use crate::vk::definitions::*;
+#[allow(clippy::wildcard_imports)]
 use crate::vk::enums::*;
-use std::os::raw::*;
+use std::os::raw::c_char;
+use std::os::raw::c_void;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetInstanceProcAddr =
     unsafe extern "system" fn(instance: Instance, p_name: *const c_char) -> PFN_vkVoidFunction;

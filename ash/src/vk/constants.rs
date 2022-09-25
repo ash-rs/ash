@@ -1,3 +1,4 @@
+#[allow(clippy::wildcard_imports)]
 use crate::vk::definitions::*;
 pub const MAX_PHYSICAL_DEVICE_NAME_SIZE: usize = 256;
 pub const UUID_SIZE: usize = 16;

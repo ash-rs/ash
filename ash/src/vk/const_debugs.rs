@@ -1,6 +1,9 @@
 use crate::prelude::debug_flags;
+#[allow(clippy::wildcard_imports)]
 use crate::vk::bitflags::*;
+#[allow(clippy::wildcard_imports)]
 use crate::vk::definitions::*;
+#[allow(clippy::wildcard_imports)]
 use crate::vk::enums::*;
 use std::fmt;
 impl fmt::Debug for AccelerationStructureBuildTypeKHR {
