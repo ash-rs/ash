@@ -2463,6 +2463,24 @@ impl AccelerationStructureMotionInstanceTypeNV {
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDeviceAddressBindingTypeEXT.html>"]
+pub struct DeviceAddressBindingTypeEXT(pub(crate) i32);
+impl DeviceAddressBindingTypeEXT {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl DeviceAddressBindingTypeEXT {
+    pub const BIND: Self = Self(0);
+    pub const UNBIND: Self = Self(1);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkQueryResultStatusKHR.html>"]
 pub struct QueryResultStatusKHR(pub(crate) i32);
 impl QueryResultStatusKHR {
@@ -2579,6 +2597,184 @@ impl PipelineRobustnessImageBehaviorEXT {
     pub const ROBUST_IMAGE_ACCESS: Self = Self(2);
     pub const ROBUST_IMAGE_ACCESS_2: Self = Self(3);
 }
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkOpticalFlowPerformanceLevelNV.html>"]
+pub struct OpticalFlowPerformanceLevelNV(pub(crate) i32);
+impl OpticalFlowPerformanceLevelNV {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl OpticalFlowPerformanceLevelNV {
+    pub const UNKNOWN: Self = Self(0);
+    pub const SLOW: Self = Self(1);
+    pub const MEDIUM: Self = Self(2);
+    pub const FAST: Self = Self(3);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkOpticalFlowSessionBindingPointNV.html>"]
+pub struct OpticalFlowSessionBindingPointNV(pub(crate) i32);
+impl OpticalFlowSessionBindingPointNV {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl OpticalFlowSessionBindingPointNV {
+    pub const UNKNOWN: Self = Self(0);
+    pub const INPUT: Self = Self(1);
+    pub const REFERENCE: Self = Self(2);
+    pub const HINT: Self = Self(3);
+    pub const FLOW_VECTOR: Self = Self(4);
+    pub const BACKWARD_FLOW_VECTOR: Self = Self(5);
+    pub const COST: Self = Self(6);
+    pub const BACKWARD_COST: Self = Self(7);
+    pub const GLOBAL_FLOW: Self = Self(8);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMicromapTypeEXT.html>"]
+pub struct MicromapTypeEXT(pub(crate) i32);
+impl MicromapTypeEXT {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl MicromapTypeEXT {
+    pub const OPACITY_MICROMAP: Self = Self(0);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCopyMicromapModeEXT.html>"]
+pub struct CopyMicromapModeEXT(pub(crate) i32);
+impl CopyMicromapModeEXT {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl CopyMicromapModeEXT {
+    pub const CLONE: Self = Self(0);
+    pub const SERIALIZE: Self = Self(1);
+    pub const DESERIALIZE: Self = Self(2);
+    pub const COMPACT: Self = Self(3);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkBuildMicromapModeEXT.html>"]
+pub struct BuildMicromapModeEXT(pub(crate) i32);
+impl BuildMicromapModeEXT {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl BuildMicromapModeEXT {
+    pub const BUILD: Self = Self(0);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkOpacityMicromapFormatEXT.html>"]
+pub struct OpacityMicromapFormatEXT(pub(crate) i32);
+impl OpacityMicromapFormatEXT {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl OpacityMicromapFormatEXT {
+    pub const TYPE_2_STATE: Self = Self(1);
+    pub const TYPE_4_STATE: Self = Self(2);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkOpacityMicromapSpecialIndexEXT.html>"]
+pub struct OpacityMicromapSpecialIndexEXT(pub(crate) i32);
+impl OpacityMicromapSpecialIndexEXT {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl OpacityMicromapSpecialIndexEXT {
+    pub const FULLY_TRANSPARENT: Self = Self(-1);
+    pub const FULLY_OPAQUE: Self = Self(-2);
+    pub const FULLY_UNKNOWN_TRANSPARENT: Self = Self(-3);
+    pub const FULLY_UNKNOWN_OPAQUE: Self = Self(-4);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDeviceFaultAddressTypeEXT.html>"]
+pub struct DeviceFaultAddressTypeEXT(pub(crate) i32);
+impl DeviceFaultAddressTypeEXT {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl DeviceFaultAddressTypeEXT {
+    #[doc = "Currently unused"]
+    pub const NONE: Self = Self(0);
+    pub const READ_INVALID: Self = Self(1);
+    pub const WRITE_INVALID: Self = Self(2);
+    pub const EXECUTE_INVALID: Self = Self(3);
+    pub const INSTRUCTION_POINTER_UNKNOWN: Self = Self(4);
+    pub const INSTRUCTION_POINTER_INVALID: Self = Self(5);
+    pub const INSTRUCTION_POINTER_FAULT: Self = Self(6);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDeviceFaultVendorBinaryHeaderVersionEXT.html>"]
+pub struct DeviceFaultVendorBinaryHeaderVersionEXT(pub(crate) i32);
+impl DeviceFaultVendorBinaryHeaderVersionEXT {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl DeviceFaultVendorBinaryHeaderVersionEXT {
+    pub const ONE: Self = Self(1);
+}
 impl fmt::Debug for ObjectType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
@@ -2625,6 +2821,8 @@ impl fmt::Debug for ObjectType {
             Self::DEFERRED_OPERATION_KHR => Some("DEFERRED_OPERATION_KHR"),
             Self::INDIRECT_COMMANDS_LAYOUT_NV => Some("INDIRECT_COMMANDS_LAYOUT_NV"),
             Self::BUFFER_COLLECTION_FUCHSIA => Some("BUFFER_COLLECTION_FUCHSIA"),
+            Self::MICROMAP_EXT => Some("MICROMAP_EXT"),
+            Self::OPTICAL_FLOW_SESSION_NV => Some("OPTICAL_FLOW_SESSION_NV"),
             Self::SAMPLER_YCBCR_CONVERSION => Some("SAMPLER_YCBCR_CONVERSION"),
             Self::DESCRIPTOR_UPDATE_TEMPLATE => Some("DESCRIPTOR_UPDATE_TEMPLATE"),
             Self::PRIVATE_DATA_SLOT => Some("PRIVATE_DATA_SLOT"),

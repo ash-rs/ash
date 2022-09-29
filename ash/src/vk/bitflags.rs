@@ -1127,6 +1127,14 @@ impl GraphicsPipelineLibraryFlagsEXT {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDeviceAddressBindingFlagBitsEXT.html>"]
+pub struct DeviceAddressBindingFlagsEXT(pub(crate) Flags);
+vk_bitflags_wrapped!(DeviceAddressBindingFlagsEXT, Flags);
+impl DeviceAddressBindingFlagsEXT {
+    pub const INTERNAL_OBJECT: Self = Self(0b1);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoCodecOperationFlagBitsKHR.html>"]
 pub struct VideoCodecOperationFlagsKHR(pub(crate) Flags);
 vk_bitflags_wrapped!(VideoCodecOperationFlagsKHR, Flags);
@@ -1541,4 +1549,67 @@ impl ImageCompressionFixedRateFlagsEXT {
     pub const TYPE_22BPC: Self = Self(0b10_0000_0000_0000_0000_0000);
     pub const TYPE_23BPC: Self = Self(0b100_0000_0000_0000_0000_0000);
     pub const TYPE_24BPC: Self = Self(0b1000_0000_0000_0000_0000_0000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkOpticalFlowGridSizeFlagBitsNV.html>"]
+pub struct OpticalFlowGridSizeFlagsNV(pub(crate) Flags);
+vk_bitflags_wrapped!(OpticalFlowGridSizeFlagsNV, Flags);
+impl OpticalFlowGridSizeFlagsNV {
+    pub const UNKNOWN: Self = Self(0);
+    pub const TYPE_1X1: Self = Self(0b1);
+    pub const TYPE_2X2: Self = Self(0b10);
+    pub const TYPE_4X4: Self = Self(0b100);
+    pub const TYPE_8X8: Self = Self(0b1000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkOpticalFlowUsageFlagBitsNV.html>"]
+pub struct OpticalFlowUsageFlagsNV(pub(crate) Flags);
+vk_bitflags_wrapped!(OpticalFlowUsageFlagsNV, Flags);
+impl OpticalFlowUsageFlagsNV {
+    pub const UNKNOWN: Self = Self(0);
+    pub const INPUT: Self = Self(0b1);
+    pub const OUTPUT: Self = Self(0b10);
+    pub const HINT: Self = Self(0b100);
+    pub const COST: Self = Self(0b1000);
+    pub const GLOBAL_FLOW: Self = Self(0b1_0000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkOpticalFlowSessionCreateFlagBitsNV.html>"]
+pub struct OpticalFlowSessionCreateFlagsNV(pub(crate) Flags);
+vk_bitflags_wrapped!(OpticalFlowSessionCreateFlagsNV, Flags);
+impl OpticalFlowSessionCreateFlagsNV {
+    pub const ENABLE_HINT: Self = Self(0b1);
+    pub const ENABLE_COST: Self = Self(0b10);
+    pub const ENABLE_GLOBAL_FLOW: Self = Self(0b100);
+    pub const ALLOW_REGIONS: Self = Self(0b1000);
+    pub const BOTH_DIRECTIONS: Self = Self(0b1_0000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkOpticalFlowExecuteFlagBitsNV.html>"]
+pub struct OpticalFlowExecuteFlagsNV(pub(crate) Flags);
+vk_bitflags_wrapped!(OpticalFlowExecuteFlagsNV, Flags);
+impl OpticalFlowExecuteFlagsNV {
+    pub const DISABLE_TEMPORAL_HINTS: Self = Self(0b1);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkBuildMicromapFlagBitsEXT.html>"]
+pub struct BuildMicromapFlagsEXT(pub(crate) Flags);
+vk_bitflags_wrapped!(BuildMicromapFlagsEXT, Flags);
+impl BuildMicromapFlagsEXT {
+    pub const PREFER_FAST_TRACE: Self = Self(0b1);
+    pub const PREFER_FAST_BUILD: Self = Self(0b10);
+    pub const ALLOW_COMPACTION: Self = Self(0b100);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMicromapCreateFlagBitsEXT.html>"]
+pub struct MicromapCreateFlagsEXT(pub(crate) Flags);
+vk_bitflags_wrapped!(MicromapCreateFlagsEXT, Flags);
+impl MicromapCreateFlagsEXT {
+    pub const DEVICE_ADDRESS_CAPTURE_REPLAY: Self = Self(0b1);
 }

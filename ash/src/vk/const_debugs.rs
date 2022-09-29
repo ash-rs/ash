@@ -313,10 +313,13 @@ impl fmt::Debug for AccessFlags2 {
                 AccessFlags2::SHADER_BINDING_TABLE_READ_KHR.0,
                 "SHADER_BINDING_TABLE_READ_KHR",
             ),
-            (AccessFlags2::RESERVED_44_NV.0, "RESERVED_44_NV"),
-            (AccessFlags2::RESERVED_45_NV.0, "RESERVED_45_NV"),
-            (AccessFlags2::RESERVED_42_NV.0, "RESERVED_42_NV"),
-            (AccessFlags2::RESERVED_43_NV.0, "RESERVED_43_NV"),
+            (AccessFlags2::MICROMAP_READ_EXT.0, "MICROMAP_READ_EXT"),
+            (AccessFlags2::MICROMAP_WRITE_EXT.0, "MICROMAP_WRITE_EXT"),
+            (AccessFlags2::OPTICAL_FLOW_READ_NV.0, "OPTICAL_FLOW_READ_NV"),
+            (
+                AccessFlags2::OPTICAL_FLOW_WRITE_NV.0,
+                "OPTICAL_FLOW_WRITE_NV",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -577,8 +580,14 @@ impl fmt::Debug for BufferUsageFlags {
             ),
             (BufferUsageFlags::RESERVED_21_AMD.0, "RESERVED_21_AMD"),
             (BufferUsageFlags::RESERVED_22_AMD.0, "RESERVED_22_AMD"),
-            (BufferUsageFlags::RESERVED_23_NV.0, "RESERVED_23_NV"),
-            (BufferUsageFlags::RESERVED_24_NV.0, "RESERVED_24_NV"),
+            (
+                BufferUsageFlags::MICROMAP_BUILD_INPUT_READ_ONLY_EXT.0,
+                "MICROMAP_BUILD_INPUT_READ_ONLY_EXT",
+            ),
+            (
+                BufferUsageFlags::MICROMAP_STORAGE_EXT.0,
+                "MICROMAP_STORAGE_EXT",
+            ),
             (
                 BufferUsageFlags::SHADER_DEVICE_ADDRESS.0,
                 "SHADER_DEVICE_ADDRESS",
@@ -618,12 +627,16 @@ impl fmt::Debug for BuildAccelerationStructureFlagsKHR {
             ),
             (BuildAccelerationStructureFlagsKHR::MOTION_NV.0, "MOTION_NV"),
             (
-                BuildAccelerationStructureFlagsKHR::RESERVED_6_NV.0,
-                "RESERVED_6_NV",
+                BuildAccelerationStructureFlagsKHR::ALLOW_OPACITY_MICROMAP_UPDATE_EXT.0,
+                "ALLOW_OPACITY_MICROMAP_UPDATE_EXT",
             ),
             (
-                BuildAccelerationStructureFlagsKHR::RESERVED_7_NV.0,
-                "RESERVED_7_NV",
+                BuildAccelerationStructureFlagsKHR::ALLOW_DISABLE_OPACITY_MICROMAPS_EXT.0,
+                "ALLOW_DISABLE_OPACITY_MICROMAPS_EXT",
+            ),
+            (
+                BuildAccelerationStructureFlagsKHR::ALLOW_OPACITY_MICROMAP_DATA_UPDATE_EXT.0,
+                "ALLOW_OPACITY_MICROMAP_DATA_UPDATE_EXT",
             ),
             (
                 BuildAccelerationStructureFlagsKHR::RESERVED_9_NV.0,
@@ -642,6 +655,38 @@ impl fmt::Debug for BuildAccelerationStructureModeKHR {
         let name = match *self {
             Self::BUILD => Some("BUILD"),
             Self::UPDATE => Some("UPDATE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
+impl fmt::Debug for BuildMicromapFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                BuildMicromapFlagsEXT::PREFER_FAST_TRACE.0,
+                "PREFER_FAST_TRACE",
+            ),
+            (
+                BuildMicromapFlagsEXT::PREFER_FAST_BUILD.0,
+                "PREFER_FAST_BUILD",
+            ),
+            (
+                BuildMicromapFlagsEXT::ALLOW_COMPACTION.0,
+                "ALLOW_COMPACTION",
+            ),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for BuildMicromapModeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::BUILD => Some("BUILD"),
             _ => None,
         };
         if let Some(x) = name {
@@ -906,6 +951,22 @@ impl fmt::Debug for CopyAccelerationStructureModeKHR {
         }
     }
 }
+impl fmt::Debug for CopyMicromapModeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::CLONE => Some("CLONE"),
+            Self::SERIALIZE => Some("SERIALIZE"),
+            Self::DESERIALIZE => Some("DESERIALIZE"),
+            Self::COMPACT => Some("COMPACT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
 impl fmt::Debug for CoverageModulationModeNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
@@ -1030,6 +1091,10 @@ impl fmt::Debug for DebugUtilsMessageTypeFlagsEXT {
             (DebugUtilsMessageTypeFlagsEXT::GENERAL.0, "GENERAL"),
             (DebugUtilsMessageTypeFlagsEXT::VALIDATION.0, "VALIDATION"),
             (DebugUtilsMessageTypeFlagsEXT::PERFORMANCE.0, "PERFORMANCE"),
+            (
+                DebugUtilsMessageTypeFlagsEXT::DEVICE_ADDRESS_BINDING.0,
+                "DEVICE_ADDRESS_BINDING",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -1180,6 +1245,29 @@ impl fmt::Debug for DescriptorUpdateTemplateType {
         }
     }
 }
+impl fmt::Debug for DeviceAddressBindingFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(
+            DeviceAddressBindingFlagsEXT::INTERNAL_OBJECT.0,
+            "INTERNAL_OBJECT",
+        )];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for DeviceAddressBindingTypeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::BIND => Some("BIND"),
+            Self::UNBIND => Some("UNBIND"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
 impl fmt::Debug for DeviceCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[];
@@ -1213,6 +1301,38 @@ impl fmt::Debug for DeviceEventTypeEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::DISPLAY_HOTPLUG => Some("DISPLAY_HOTPLUG"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
+impl fmt::Debug for DeviceFaultAddressTypeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::NONE => Some("NONE"),
+            Self::READ_INVALID => Some("READ_INVALID"),
+            Self::WRITE_INVALID => Some("WRITE_INVALID"),
+            Self::EXECUTE_INVALID => Some("EXECUTE_INVALID"),
+            Self::INSTRUCTION_POINTER_UNKNOWN => Some("INSTRUCTION_POINTER_UNKNOWN"),
+            Self::INSTRUCTION_POINTER_INVALID => Some("INSTRUCTION_POINTER_INVALID"),
+            Self::INSTRUCTION_POINTER_FAULT => Some("INSTRUCTION_POINTER_FAULT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
+impl fmt::Debug for DeviceFaultVendorBinaryHeaderVersionEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::ONE => Some("ONE"),
             _ => None,
         };
         if let Some(x) = name {
@@ -1404,6 +1524,45 @@ impl fmt::Debug for DynamicState {
             Self::PATCH_CONTROL_POINTS_EXT => Some("PATCH_CONTROL_POINTS_EXT"),
             Self::LOGIC_OP_EXT => Some("LOGIC_OP_EXT"),
             Self::COLOR_WRITE_ENABLE_EXT => Some("COLOR_WRITE_ENABLE_EXT"),
+            Self::TESSELLATION_DOMAIN_ORIGIN_EXT => Some("TESSELLATION_DOMAIN_ORIGIN_EXT"),
+            Self::DEPTH_CLAMP_ENABLE_EXT => Some("DEPTH_CLAMP_ENABLE_EXT"),
+            Self::POLYGON_MODE_EXT => Some("POLYGON_MODE_EXT"),
+            Self::RASTERIZATION_SAMPLES_EXT => Some("RASTERIZATION_SAMPLES_EXT"),
+            Self::SAMPLE_MASK_EXT => Some("SAMPLE_MASK_EXT"),
+            Self::ALPHA_TO_COVERAGE_ENABLE_EXT => Some("ALPHA_TO_COVERAGE_ENABLE_EXT"),
+            Self::ALPHA_TO_ONE_ENABLE_EXT => Some("ALPHA_TO_ONE_ENABLE_EXT"),
+            Self::LOGIC_OP_ENABLE_EXT => Some("LOGIC_OP_ENABLE_EXT"),
+            Self::COLOR_BLEND_ENABLE_EXT => Some("COLOR_BLEND_ENABLE_EXT"),
+            Self::COLOR_BLEND_EQUATION_EXT => Some("COLOR_BLEND_EQUATION_EXT"),
+            Self::COLOR_WRITE_MASK_EXT => Some("COLOR_WRITE_MASK_EXT"),
+            Self::RASTERIZATION_STREAM_EXT => Some("RASTERIZATION_STREAM_EXT"),
+            Self::CONSERVATIVE_RASTERIZATION_MODE_EXT => {
+                Some("CONSERVATIVE_RASTERIZATION_MODE_EXT")
+            }
+            Self::EXTRA_PRIMITIVE_OVERESTIMATION_SIZE_EXT => {
+                Some("EXTRA_PRIMITIVE_OVERESTIMATION_SIZE_EXT")
+            }
+            Self::DEPTH_CLIP_ENABLE_EXT => Some("DEPTH_CLIP_ENABLE_EXT"),
+            Self::SAMPLE_LOCATIONS_ENABLE_EXT => Some("SAMPLE_LOCATIONS_ENABLE_EXT"),
+            Self::COLOR_BLEND_ADVANCED_EXT => Some("COLOR_BLEND_ADVANCED_EXT"),
+            Self::PROVOKING_VERTEX_MODE_EXT => Some("PROVOKING_VERTEX_MODE_EXT"),
+            Self::LINE_RASTERIZATION_MODE_EXT => Some("LINE_RASTERIZATION_MODE_EXT"),
+            Self::LINE_STIPPLE_ENABLE_EXT => Some("LINE_STIPPLE_ENABLE_EXT"),
+            Self::DEPTH_CLIP_NEGATIVE_ONE_TO_ONE_EXT => Some("DEPTH_CLIP_NEGATIVE_ONE_TO_ONE_EXT"),
+            Self::VIEWPORT_W_SCALING_ENABLE_NV => Some("VIEWPORT_W_SCALING_ENABLE_NV"),
+            Self::VIEWPORT_SWIZZLE_NV => Some("VIEWPORT_SWIZZLE_NV"),
+            Self::COVERAGE_TO_COLOR_ENABLE_NV => Some("COVERAGE_TO_COLOR_ENABLE_NV"),
+            Self::COVERAGE_TO_COLOR_LOCATION_NV => Some("COVERAGE_TO_COLOR_LOCATION_NV"),
+            Self::COVERAGE_MODULATION_MODE_NV => Some("COVERAGE_MODULATION_MODE_NV"),
+            Self::COVERAGE_MODULATION_TABLE_ENABLE_NV => {
+                Some("COVERAGE_MODULATION_TABLE_ENABLE_NV")
+            }
+            Self::COVERAGE_MODULATION_TABLE_NV => Some("COVERAGE_MODULATION_TABLE_NV"),
+            Self::SHADING_RATE_IMAGE_ENABLE_NV => Some("SHADING_RATE_IMAGE_ENABLE_NV"),
+            Self::REPRESENTATIVE_FRAGMENT_TEST_ENABLE_NV => {
+                Some("REPRESENTATIVE_FRAGMENT_TEST_ENABLE_NV")
+            }
+            Self::COVERAGE_REDUCTION_MODE_NV => Some("COVERAGE_REDUCTION_MODE_NV"),
             Self::CULL_MODE => Some("CULL_MODE"),
             Self::FRONT_FACE => Some("FRONT_FACE"),
             Self::PRIMITIVE_TOPOLOGY => Some("PRIMITIVE_TOPOLOGY"),
@@ -1890,6 +2049,7 @@ impl fmt::Debug for Format {
             Self::ASTC_6X6X6_UNORM_BLOCK_EXT => Some("ASTC_6X6X6_UNORM_BLOCK_EXT"),
             Self::ASTC_6X6X6_SRGB_BLOCK_EXT => Some("ASTC_6X6X6_SRGB_BLOCK_EXT"),
             Self::ASTC_6X6X6_SFLOAT_BLOCK_EXT => Some("ASTC_6X6X6_SFLOAT_BLOCK_EXT"),
+            Self::R16G16_S10_5_NV => Some("R16G16_S10_5_NV"),
             Self::G8B8G8R8_422_UNORM => Some("G8B8G8R8_422_UNORM"),
             Self::B8G8R8G8_422_UNORM => Some("B8G8R8G8_422_UNORM"),
             Self::G8_B8_R8_3PLANE_420_UNORM => Some("G8_B8_R8_3PLANE_420_UNORM"),
@@ -1993,7 +2153,7 @@ impl fmt::Debug for FormatFeatureFlags {
 }
 impl fmt::Debug for FormatFeatureFlags2 {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN : & [(Flags64 , & str)] = & [(FormatFeatureFlags2 :: SAMPLED_IMAGE . 0 , "SAMPLED_IMAGE") , (FormatFeatureFlags2 :: STORAGE_IMAGE . 0 , "STORAGE_IMAGE") , (FormatFeatureFlags2 :: STORAGE_IMAGE_ATOMIC . 0 , "STORAGE_IMAGE_ATOMIC") , (FormatFeatureFlags2 :: UNIFORM_TEXEL_BUFFER . 0 , "UNIFORM_TEXEL_BUFFER") , (FormatFeatureFlags2 :: STORAGE_TEXEL_BUFFER . 0 , "STORAGE_TEXEL_BUFFER") , (FormatFeatureFlags2 :: STORAGE_TEXEL_BUFFER_ATOMIC . 0 , "STORAGE_TEXEL_BUFFER_ATOMIC") , (FormatFeatureFlags2 :: VERTEX_BUFFER . 0 , "VERTEX_BUFFER") , (FormatFeatureFlags2 :: COLOR_ATTACHMENT . 0 , "COLOR_ATTACHMENT") , (FormatFeatureFlags2 :: COLOR_ATTACHMENT_BLEND . 0 , "COLOR_ATTACHMENT_BLEND") , (FormatFeatureFlags2 :: DEPTH_STENCIL_ATTACHMENT . 0 , "DEPTH_STENCIL_ATTACHMENT") , (FormatFeatureFlags2 :: BLIT_SRC . 0 , "BLIT_SRC") , (FormatFeatureFlags2 :: BLIT_DST . 0 , "BLIT_DST") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_FILTER_LINEAR . 0 , "SAMPLED_IMAGE_FILTER_LINEAR") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_FILTER_CUBIC . 0 , "SAMPLED_IMAGE_FILTER_CUBIC") , (FormatFeatureFlags2 :: TRANSFER_SRC . 0 , "TRANSFER_SRC") , (FormatFeatureFlags2 :: TRANSFER_DST . 0 , "TRANSFER_DST") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_FILTER_MINMAX . 0 , "SAMPLED_IMAGE_FILTER_MINMAX") , (FormatFeatureFlags2 :: MIDPOINT_CHROMA_SAMPLES . 0 , "MIDPOINT_CHROMA_SAMPLES") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE") , (FormatFeatureFlags2 :: DISJOINT . 0 , "DISJOINT") , (FormatFeatureFlags2 :: COSITED_CHROMA_SAMPLES . 0 , "COSITED_CHROMA_SAMPLES") , (FormatFeatureFlags2 :: STORAGE_READ_WITHOUT_FORMAT . 0 , "STORAGE_READ_WITHOUT_FORMAT") , (FormatFeatureFlags2 :: STORAGE_WRITE_WITHOUT_FORMAT . 0 , "STORAGE_WRITE_WITHOUT_FORMAT") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_DEPTH_COMPARISON . 0 , "SAMPLED_IMAGE_DEPTH_COMPARISON") , (FormatFeatureFlags2 :: VIDEO_DECODE_OUTPUT_KHR . 0 , "VIDEO_DECODE_OUTPUT_KHR") , (FormatFeatureFlags2 :: VIDEO_DECODE_DPB_KHR . 0 , "VIDEO_DECODE_DPB_KHR") , (FormatFeatureFlags2 :: ACCELERATION_STRUCTURE_VERTEX_BUFFER_KHR . 0 , "ACCELERATION_STRUCTURE_VERTEX_BUFFER_KHR") , (FormatFeatureFlags2 :: FRAGMENT_DENSITY_MAP_EXT . 0 , "FRAGMENT_DENSITY_MAP_EXT") , (FormatFeatureFlags2 :: FRAGMENT_SHADING_RATE_ATTACHMENT_KHR . 0 , "FRAGMENT_SHADING_RATE_ATTACHMENT_KHR") , (FormatFeatureFlags2 :: RESERVED_44_EXT . 0 , "RESERVED_44_EXT") , (FormatFeatureFlags2 :: RESERVED_45_EXT . 0 , "RESERVED_45_EXT") , (FormatFeatureFlags2 :: VIDEO_ENCODE_INPUT_KHR . 0 , "VIDEO_ENCODE_INPUT_KHR") , (FormatFeatureFlags2 :: VIDEO_ENCODE_DPB_KHR . 0 , "VIDEO_ENCODE_DPB_KHR") , (FormatFeatureFlags2 :: LINEAR_COLOR_ATTACHMENT_NV . 0 , "LINEAR_COLOR_ATTACHMENT_NV") , (FormatFeatureFlags2 :: WEIGHT_IMAGE_QCOM . 0 , "WEIGHT_IMAGE_QCOM") , (FormatFeatureFlags2 :: WEIGHT_SAMPLED_IMAGE_QCOM . 0 , "WEIGHT_SAMPLED_IMAGE_QCOM") , (FormatFeatureFlags2 :: BLOCK_MATCHING_QCOM . 0 , "BLOCK_MATCHING_QCOM") , (FormatFeatureFlags2 :: BOX_FILTER_SAMPLED_QCOM . 0 , "BOX_FILTER_SAMPLED_QCOM") , (FormatFeatureFlags2 :: RESERVED_39_EXT . 0 , "RESERVED_39_EXT") , (FormatFeatureFlags2 :: RESERVED_40_NV . 0 , "RESERVED_40_NV") , (FormatFeatureFlags2 :: RESERVED_41_NV . 0 , "RESERVED_41_NV") , (FormatFeatureFlags2 :: RESERVED_42_NV . 0 , "RESERVED_42_NV") , (FormatFeatureFlags2 :: RESERVED_43_NV . 0 , "RESERVED_43_NV")] ;
+        const KNOWN : & [(Flags64 , & str)] = & [(FormatFeatureFlags2 :: SAMPLED_IMAGE . 0 , "SAMPLED_IMAGE") , (FormatFeatureFlags2 :: STORAGE_IMAGE . 0 , "STORAGE_IMAGE") , (FormatFeatureFlags2 :: STORAGE_IMAGE_ATOMIC . 0 , "STORAGE_IMAGE_ATOMIC") , (FormatFeatureFlags2 :: UNIFORM_TEXEL_BUFFER . 0 , "UNIFORM_TEXEL_BUFFER") , (FormatFeatureFlags2 :: STORAGE_TEXEL_BUFFER . 0 , "STORAGE_TEXEL_BUFFER") , (FormatFeatureFlags2 :: STORAGE_TEXEL_BUFFER_ATOMIC . 0 , "STORAGE_TEXEL_BUFFER_ATOMIC") , (FormatFeatureFlags2 :: VERTEX_BUFFER . 0 , "VERTEX_BUFFER") , (FormatFeatureFlags2 :: COLOR_ATTACHMENT . 0 , "COLOR_ATTACHMENT") , (FormatFeatureFlags2 :: COLOR_ATTACHMENT_BLEND . 0 , "COLOR_ATTACHMENT_BLEND") , (FormatFeatureFlags2 :: DEPTH_STENCIL_ATTACHMENT . 0 , "DEPTH_STENCIL_ATTACHMENT") , (FormatFeatureFlags2 :: BLIT_SRC . 0 , "BLIT_SRC") , (FormatFeatureFlags2 :: BLIT_DST . 0 , "BLIT_DST") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_FILTER_LINEAR . 0 , "SAMPLED_IMAGE_FILTER_LINEAR") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_FILTER_CUBIC . 0 , "SAMPLED_IMAGE_FILTER_CUBIC") , (FormatFeatureFlags2 :: TRANSFER_SRC . 0 , "TRANSFER_SRC") , (FormatFeatureFlags2 :: TRANSFER_DST . 0 , "TRANSFER_DST") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_FILTER_MINMAX . 0 , "SAMPLED_IMAGE_FILTER_MINMAX") , (FormatFeatureFlags2 :: MIDPOINT_CHROMA_SAMPLES . 0 , "MIDPOINT_CHROMA_SAMPLES") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE") , (FormatFeatureFlags2 :: DISJOINT . 0 , "DISJOINT") , (FormatFeatureFlags2 :: COSITED_CHROMA_SAMPLES . 0 , "COSITED_CHROMA_SAMPLES") , (FormatFeatureFlags2 :: STORAGE_READ_WITHOUT_FORMAT . 0 , "STORAGE_READ_WITHOUT_FORMAT") , (FormatFeatureFlags2 :: STORAGE_WRITE_WITHOUT_FORMAT . 0 , "STORAGE_WRITE_WITHOUT_FORMAT") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_DEPTH_COMPARISON . 0 , "SAMPLED_IMAGE_DEPTH_COMPARISON") , (FormatFeatureFlags2 :: VIDEO_DECODE_OUTPUT_KHR . 0 , "VIDEO_DECODE_OUTPUT_KHR") , (FormatFeatureFlags2 :: VIDEO_DECODE_DPB_KHR . 0 , "VIDEO_DECODE_DPB_KHR") , (FormatFeatureFlags2 :: ACCELERATION_STRUCTURE_VERTEX_BUFFER_KHR . 0 , "ACCELERATION_STRUCTURE_VERTEX_BUFFER_KHR") , (FormatFeatureFlags2 :: FRAGMENT_DENSITY_MAP_EXT . 0 , "FRAGMENT_DENSITY_MAP_EXT") , (FormatFeatureFlags2 :: FRAGMENT_SHADING_RATE_ATTACHMENT_KHR . 0 , "FRAGMENT_SHADING_RATE_ATTACHMENT_KHR") , (FormatFeatureFlags2 :: RESERVED_44_EXT . 0 , "RESERVED_44_EXT") , (FormatFeatureFlags2 :: RESERVED_45_EXT . 0 , "RESERVED_45_EXT") , (FormatFeatureFlags2 :: VIDEO_ENCODE_INPUT_KHR . 0 , "VIDEO_ENCODE_INPUT_KHR") , (FormatFeatureFlags2 :: VIDEO_ENCODE_DPB_KHR . 0 , "VIDEO_ENCODE_DPB_KHR") , (FormatFeatureFlags2 :: LINEAR_COLOR_ATTACHMENT_NV . 0 , "LINEAR_COLOR_ATTACHMENT_NV") , (FormatFeatureFlags2 :: WEIGHT_IMAGE_QCOM . 0 , "WEIGHT_IMAGE_QCOM") , (FormatFeatureFlags2 :: WEIGHT_SAMPLED_IMAGE_QCOM . 0 , "WEIGHT_SAMPLED_IMAGE_QCOM") , (FormatFeatureFlags2 :: BLOCK_MATCHING_QCOM . 0 , "BLOCK_MATCHING_QCOM") , (FormatFeatureFlags2 :: BOX_FILTER_SAMPLED_QCOM . 0 , "BOX_FILTER_SAMPLED_QCOM") , (FormatFeatureFlags2 :: RESERVED_39_EXT . 0 , "RESERVED_39_EXT") , (FormatFeatureFlags2 :: OPTICAL_FLOW_IMAGE_NV . 0 , "OPTICAL_FLOW_IMAGE_NV") , (FormatFeatureFlags2 :: OPTICAL_FLOW_VECTOR_NV . 0 , "OPTICAL_FLOW_VECTOR_NV") , (FormatFeatureFlags2 :: OPTICAL_FLOW_COST_NV . 0 , "OPTICAL_FLOW_COST_NV")] ;
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -2116,8 +2276,14 @@ impl fmt::Debug for GeometryInstanceFlagsKHR {
                 GeometryInstanceFlagsKHR::FORCE_NO_OPAQUE.0,
                 "FORCE_NO_OPAQUE",
             ),
-            (GeometryInstanceFlagsKHR::RESERVED_4_NV.0, "RESERVED_4_NV"),
-            (GeometryInstanceFlagsKHR::RESERVED_5_NV.0, "RESERVED_5_NV"),
+            (
+                GeometryInstanceFlagsKHR::FORCE_OPACITY_MICROMAP_2_STATE_EXT.0,
+                "FORCE_OPACITY_MICROMAP_2_STATE_EXT",
+            ),
+            (
+                GeometryInstanceFlagsKHR::DISABLE_OPACITY_MICROMAPS_EXT.0,
+                "DISABLE_OPACITY_MICROMAPS_EXT",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -2762,6 +2928,156 @@ impl fmt::Debug for MetalSurfaceCreateFlagsEXT {
         debug_flags(f, KNOWN, self.0)
     }
 }
+impl fmt::Debug for MicromapCreateFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(
+            MicromapCreateFlagsEXT::DEVICE_ADDRESS_CAPTURE_REPLAY.0,
+            "DEVICE_ADDRESS_CAPTURE_REPLAY",
+        )];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for MicromapTypeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::OPACITY_MICROMAP => Some("OPACITY_MICROMAP"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
+impl fmt::Debug for OpacityMicromapFormatEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::TYPE_2_STATE => Some("TYPE_2_STATE"),
+            Self::TYPE_4_STATE => Some("TYPE_4_STATE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
+impl fmt::Debug for OpacityMicromapSpecialIndexEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::FULLY_TRANSPARENT => Some("FULLY_TRANSPARENT"),
+            Self::FULLY_OPAQUE => Some("FULLY_OPAQUE"),
+            Self::FULLY_UNKNOWN_TRANSPARENT => Some("FULLY_UNKNOWN_TRANSPARENT"),
+            Self::FULLY_UNKNOWN_OPAQUE => Some("FULLY_UNKNOWN_OPAQUE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
+impl fmt::Debug for OpticalFlowExecuteFlagsNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(
+            OpticalFlowExecuteFlagsNV::DISABLE_TEMPORAL_HINTS.0,
+            "DISABLE_TEMPORAL_HINTS",
+        )];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for OpticalFlowGridSizeFlagsNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (OpticalFlowGridSizeFlagsNV::UNKNOWN.0, "UNKNOWN"),
+            (OpticalFlowGridSizeFlagsNV::TYPE_1X1.0, "TYPE_1X1"),
+            (OpticalFlowGridSizeFlagsNV::TYPE_2X2.0, "TYPE_2X2"),
+            (OpticalFlowGridSizeFlagsNV::TYPE_4X4.0, "TYPE_4X4"),
+            (OpticalFlowGridSizeFlagsNV::TYPE_8X8.0, "TYPE_8X8"),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for OpticalFlowPerformanceLevelNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::UNKNOWN => Some("UNKNOWN"),
+            Self::SLOW => Some("SLOW"),
+            Self::MEDIUM => Some("MEDIUM"),
+            Self::FAST => Some("FAST"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
+impl fmt::Debug for OpticalFlowSessionBindingPointNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::UNKNOWN => Some("UNKNOWN"),
+            Self::INPUT => Some("INPUT"),
+            Self::REFERENCE => Some("REFERENCE"),
+            Self::HINT => Some("HINT"),
+            Self::FLOW_VECTOR => Some("FLOW_VECTOR"),
+            Self::BACKWARD_FLOW_VECTOR => Some("BACKWARD_FLOW_VECTOR"),
+            Self::COST => Some("COST"),
+            Self::BACKWARD_COST => Some("BACKWARD_COST"),
+            Self::GLOBAL_FLOW => Some("GLOBAL_FLOW"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
+impl fmt::Debug for OpticalFlowSessionCreateFlagsNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                OpticalFlowSessionCreateFlagsNV::ENABLE_HINT.0,
+                "ENABLE_HINT",
+            ),
+            (
+                OpticalFlowSessionCreateFlagsNV::ENABLE_COST.0,
+                "ENABLE_COST",
+            ),
+            (
+                OpticalFlowSessionCreateFlagsNV::ENABLE_GLOBAL_FLOW.0,
+                "ENABLE_GLOBAL_FLOW",
+            ),
+            (
+                OpticalFlowSessionCreateFlagsNV::ALLOW_REGIONS.0,
+                "ALLOW_REGIONS",
+            ),
+            (
+                OpticalFlowSessionCreateFlagsNV::BOTH_DIRECTIONS.0,
+                "BOTH_DIRECTIONS",
+            ),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for OpticalFlowUsageFlagsNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (OpticalFlowUsageFlagsNV::UNKNOWN.0, "UNKNOWN"),
+            (OpticalFlowUsageFlagsNV::INPUT.0, "INPUT"),
+            (OpticalFlowUsageFlagsNV::OUTPUT.0, "OUTPUT"),
+            (OpticalFlowUsageFlagsNV::HINT.0, "HINT"),
+            (OpticalFlowUsageFlagsNV::COST.0, "COST"),
+            (OpticalFlowUsageFlagsNV::GLOBAL_FLOW.0, "GLOBAL_FLOW"),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
 impl fmt::Debug for PeerMemoryFeatureFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
@@ -3079,10 +3395,19 @@ impl fmt::Debug for PipelineCreateFlags {
                 PipelineCreateFlags::DEPTH_STENCIL_ATTACHMENT_FEEDBACK_LOOP_EXT.0,
                 "DEPTH_STENCIL_ATTACHMENT_FEEDBACK_LOOP_EXT",
             ),
-            (PipelineCreateFlags::RESERVED_24_NV.0, "RESERVED_24_NV"),
+            (
+                PipelineCreateFlags::RAY_TRACING_OPACITY_MICROMAP_EXT.0,
+                "RAY_TRACING_OPACITY_MICROMAP_EXT",
+            ),
             (PipelineCreateFlags::RESERVED_28_NV.0, "RESERVED_28_NV"),
-            (PipelineCreateFlags::RESERVED_27_EXT.0, "RESERVED_27_EXT"),
-            (PipelineCreateFlags::RESERVED_30_EXT.0, "RESERVED_30_EXT"),
+            (
+                PipelineCreateFlags::NO_PROTECTED_ACCESS_EXT.0,
+                "NO_PROTECTED_ACCESS_EXT",
+            ),
+            (
+                PipelineCreateFlags::PROTECTED_ACCESS_ONLY_EXT.0,
+                "PROTECTED_ACCESS_ONLY_EXT",
+            ),
             (
                 PipelineCreateFlags::VIEW_INDEX_FROM_DEVICE_INDEX.0,
                 "VIEW_INDEX_FROM_DEVICE_INDEX",
@@ -3415,8 +3740,11 @@ impl fmt::Debug for PipelineStageFlags2 {
                 PipelineStageFlags2::ACCELERATION_STRUCTURE_COPY_KHR.0,
                 "ACCELERATION_STRUCTURE_COPY_KHR",
             ),
-            (PipelineStageFlags2::RESERVED_30_NV.0, "RESERVED_30_NV"),
-            (PipelineStageFlags2::RESERVED_29_NV.0, "RESERVED_29_NV"),
+            (
+                PipelineStageFlags2::MICROMAP_BUILD_EXT.0,
+                "MICROMAP_BUILD_EXT",
+            ),
+            (PipelineStageFlags2::OPTICAL_FLOW_NV.0, "OPTICAL_FLOW_NV"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -3675,6 +4003,8 @@ impl fmt::Debug for QueryType {
                 Some("ACCELERATION_STRUCTURE_SERIALIZATION_BOTTOM_LEVEL_POINTERS_KHR")
             }
             Self::ACCELERATION_STRUCTURE_SIZE_KHR => Some("ACCELERATION_STRUCTURE_SIZE_KHR"),
+            Self::MICROMAP_SERIALIZATION_SIZE_EXT => Some("MICROMAP_SERIALIZATION_SIZE_EXT"),
+            Self::MICROMAP_COMPACTED_SIZE_EXT => Some("MICROMAP_COMPACTED_SIZE_EXT"),
             _ => None,
         };
         if let Some(x) = name {
@@ -3695,7 +4025,7 @@ impl fmt::Debug for QueueFlags {
             (QueueFlags::RESERVED_9_EXT.0, "RESERVED_9_EXT"),
             (QueueFlags::VIDEO_ENCODE_KHR.0, "VIDEO_ENCODE_KHR"),
             (QueueFlags::RESERVED_7_QCOM.0, "RESERVED_7_QCOM"),
-            (QueueFlags::RESERVED_8_NV.0, "RESERVED_8_NV"),
+            (QueueFlags::OPTICAL_FLOW_NV.0, "OPTICAL_FLOW_NV"),
             (QueueFlags::PROTECTED.0, "PROTECTED"),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -5007,6 +5337,15 @@ impl fmt::Debug for StructureType {
                 Some("PHYSICAL_DEVICE_CUSTOM_BORDER_COLOR_FEATURES_EXT")
             }
             Self::PIPELINE_LIBRARY_CREATE_INFO_KHR => Some("PIPELINE_LIBRARY_CREATE_INFO_KHR"),
+            Self::PHYSICAL_DEVICE_PRESENT_BARRIER_FEATURES_NV => {
+                Some("PHYSICAL_DEVICE_PRESENT_BARRIER_FEATURES_NV")
+            }
+            Self::SURFACE_CAPABILITIES_PRESENT_BARRIER_NV => {
+                Some("SURFACE_CAPABILITIES_PRESENT_BARRIER_NV")
+            }
+            Self::SWAPCHAIN_PRESENT_BARRIER_CREATE_INFO_NV => {
+                Some("SWAPCHAIN_PRESENT_BARRIER_CREATE_INFO_NV")
+            }
             Self::PRESENT_ID_KHR => Some("PRESENT_ID_KHR"),
             Self::PHYSICAL_DEVICE_PRESENT_ID_FEATURES_KHR => {
                 Some("PHYSICAL_DEVICE_PRESENT_ID_FEATURES_KHR")
@@ -5116,6 +5455,9 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT")
             }
+            Self::PHYSICAL_DEVICE_FAULT_FEATURES_EXT => Some("PHYSICAL_DEVICE_FAULT_FEATURES_EXT"),
+            Self::DEVICE_FAULT_COUNTS_EXT => Some("DEVICE_FAULT_COUNTS_EXT"),
+            Self::DEVICE_FAULT_INFO_EXT => Some("DEVICE_FAULT_INFO_EXT"),
             Self::PHYSICAL_DEVICE_RGBA10X6_FORMATS_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_RGBA10X6_FORMATS_FEATURES_EXT")
             }
@@ -5130,6 +5472,12 @@ impl fmt::Debug for StructureType {
                 Some("VERTEX_INPUT_ATTRIBUTE_DESCRIPTION_2_EXT")
             }
             Self::PHYSICAL_DEVICE_DRM_PROPERTIES_EXT => Some("PHYSICAL_DEVICE_DRM_PROPERTIES_EXT"),
+            Self::PHYSICAL_DEVICE_ADDRESS_BINDING_REPORT_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_ADDRESS_BINDING_REPORT_FEATURES_EXT")
+            }
+            Self::DEVICE_ADDRESS_BINDING_CALLBACK_DATA_EXT => {
+                Some("DEVICE_ADDRESS_BINDING_CALLBACK_DATA_EXT")
+            }
             Self::PHYSICAL_DEVICE_DEPTH_CLIP_CONTROL_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_DEPTH_CLIP_CONTROL_FEATURES_EXT")
             }
@@ -5236,6 +5584,22 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_IMAGE_2D_VIEW_OF_3D_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_IMAGE_2D_VIEW_OF_3D_FEATURES_EXT")
             }
+            Self::MICROMAP_BUILD_INFO_EXT => Some("MICROMAP_BUILD_INFO_EXT"),
+            Self::MICROMAP_VERSION_INFO_EXT => Some("MICROMAP_VERSION_INFO_EXT"),
+            Self::COPY_MICROMAP_INFO_EXT => Some("COPY_MICROMAP_INFO_EXT"),
+            Self::COPY_MICROMAP_TO_MEMORY_INFO_EXT => Some("COPY_MICROMAP_TO_MEMORY_INFO_EXT"),
+            Self::COPY_MEMORY_TO_MICROMAP_INFO_EXT => Some("COPY_MEMORY_TO_MICROMAP_INFO_EXT"),
+            Self::PHYSICAL_DEVICE_OPACITY_MICROMAP_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_OPACITY_MICROMAP_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_OPACITY_MICROMAP_PROPERTIES_EXT => {
+                Some("PHYSICAL_DEVICE_OPACITY_MICROMAP_PROPERTIES_EXT")
+            }
+            Self::MICROMAP_CREATE_INFO_EXT => Some("MICROMAP_CREATE_INFO_EXT"),
+            Self::MICROMAP_BUILD_SIZES_INFO_EXT => Some("MICROMAP_BUILD_SIZES_INFO_EXT"),
+            Self::ACCELERATION_STRUCTURE_TRIANGLES_OPACITY_MICROMAP_EXT => {
+                Some("ACCELERATION_STRUCTURE_TRIANGLES_OPACITY_MICROMAP_EXT")
+            }
             Self::PHYSICAL_DEVICE_BORDER_COLOR_SWIZZLE_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_BORDER_COLOR_SWIZZLE_FEATURES_EXT")
             }
@@ -5284,6 +5648,12 @@ impl fmt::Debug for StructureType {
             Self::IMAGE_VIEW_SAMPLE_WEIGHT_CREATE_INFO_QCOM => {
                 Some("IMAGE_VIEW_SAMPLE_WEIGHT_CREATE_INFO_QCOM")
             }
+            Self::PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_3_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_3_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_3_PROPERTIES_EXT => {
+                Some("PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_3_PROPERTIES_EXT")
+            }
             Self::PHYSICAL_DEVICE_SUBPASS_MERGE_FEEDBACK_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_SUBPASS_MERGE_FEEDBACK_FEATURES_EXT")
             }
@@ -5307,8 +5677,28 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_FEATURES_EXT")
             }
+            Self::PHYSICAL_DEVICE_OPTICAL_FLOW_FEATURES_NV => {
+                Some("PHYSICAL_DEVICE_OPTICAL_FLOW_FEATURES_NV")
+            }
+            Self::PHYSICAL_DEVICE_OPTICAL_FLOW_PROPERTIES_NV => {
+                Some("PHYSICAL_DEVICE_OPTICAL_FLOW_PROPERTIES_NV")
+            }
+            Self::OPTICAL_FLOW_IMAGE_FORMAT_INFO_NV => Some("OPTICAL_FLOW_IMAGE_FORMAT_INFO_NV"),
+            Self::OPTICAL_FLOW_IMAGE_FORMAT_PROPERTIES_NV => {
+                Some("OPTICAL_FLOW_IMAGE_FORMAT_PROPERTIES_NV")
+            }
+            Self::OPTICAL_FLOW_SESSION_CREATE_INFO_NV => {
+                Some("OPTICAL_FLOW_SESSION_CREATE_INFO_NV")
+            }
+            Self::OPTICAL_FLOW_EXECUTE_INFO_NV => Some("OPTICAL_FLOW_EXECUTE_INFO_NV"),
+            Self::OPTICAL_FLOW_SESSION_CREATE_PRIVATE_DATA_INFO_NV => {
+                Some("OPTICAL_FLOW_SESSION_CREATE_PRIVATE_DATA_INFO_NV")
+            }
             Self::PHYSICAL_DEVICE_LEGACY_DITHERING_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_LEGACY_DITHERING_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES_EXT")
             }
             Self::PHYSICAL_DEVICE_TILE_PROPERTIES_FEATURES_QCOM => {
                 Some("PHYSICAL_DEVICE_TILE_PROPERTIES_FEATURES_QCOM")

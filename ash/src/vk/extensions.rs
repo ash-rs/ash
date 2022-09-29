@@ -1846,7 +1846,7 @@ impl KhrVideoQueueFn {
     pub const fn name() -> &'static ::std::ffi::CStr {
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_queue\0") }
     }
-    pub const SPEC_VERSION: u32 = 6u32;
+    pub const SPEC_VERSION: u32 = 7u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceVideoCapabilitiesKHR = unsafe extern "system" fn(
@@ -16307,24 +16307,30 @@ impl NvExtension292Fn {
         Self {}
     }
 }
-impl NvExtension293Fn {
+impl NvPresentBarrierFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_293\0") }
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_present_barrier\0") }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct NvExtension293Fn {}
-unsafe impl Send for NvExtension293Fn {}
-unsafe impl Sync for NvExtension293Fn {}
-impl NvExtension293Fn {
+pub struct NvPresentBarrierFn {}
+unsafe impl Send for NvPresentBarrierFn {}
+unsafe impl Sync for NvPresentBarrierFn {}
+impl NvPresentBarrierFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         Self {}
     }
+}
+#[doc = "Generated from 'VK_NV_present_barrier'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_PRESENT_BARRIER_FEATURES_NV: Self = Self(1_000_292_000);
+    pub const SURFACE_CAPABILITIES_PRESENT_BARRIER_NV: Self = Self(1_000_292_001);
+    pub const SWAPCHAIN_PRESENT_BARRIER_CREATE_INFO_NV: Self = Self(1_000_292_002);
 }
 impl KhrShaderNonSemanticInfoFn {
     #[inline]
@@ -18401,24 +18407,59 @@ impl Format {
 impl StructureType {
     pub const PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT: Self = Self(1_000_340_000);
 }
-impl ExtExtension342Fn {
+impl ExtDeviceFaultFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_342\0") }
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_device_fault\0") }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetDeviceFaultInfoEXT = unsafe extern "system" fn(
+    device: Device,
+    p_fault_counts: *mut DeviceFaultCountsEXT,
+    p_fault_info: *mut DeviceFaultInfoEXT,
+) -> Result;
 #[derive(Clone)]
-pub struct ExtExtension342Fn {}
-unsafe impl Send for ExtExtension342Fn {}
-unsafe impl Sync for ExtExtension342Fn {}
-impl ExtExtension342Fn {
+pub struct ExtDeviceFaultFn {
+    pub get_device_fault_info_ext: PFN_vkGetDeviceFaultInfoEXT,
+}
+unsafe impl Send for ExtDeviceFaultFn {}
+unsafe impl Sync for ExtDeviceFaultFn {}
+impl ExtDeviceFaultFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        Self {}
+        Self {
+            get_device_fault_info_ext: unsafe {
+                unsafe extern "system" fn get_device_fault_info_ext(
+                    _device: Device,
+                    _p_fault_counts: *mut DeviceFaultCountsEXT,
+                    _p_fault_info: *mut DeviceFaultInfoEXT,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_device_fault_info_ext)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkGetDeviceFaultInfoEXT\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    get_device_fault_info_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
     }
+}
+#[doc = "Generated from 'VK_EXT_device_fault'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_FAULT_FEATURES_EXT: Self = Self(1_000_341_000);
+    pub const DEVICE_FAULT_COUNTS_EXT: Self = Self(1_000_341_001);
+    pub const DEVICE_FAULT_INFO_EXT: Self = Self(1_000_341_002);
 }
 impl ArmRasterizationOrderAttachmentAccessFn {
     #[inline]
@@ -18829,24 +18870,37 @@ impl ExtPhysicalDeviceDrmFn {
 impl StructureType {
     pub const PHYSICAL_DEVICE_DRM_PROPERTIES_EXT: Self = Self(1_000_353_000);
 }
-impl ExtExtension355Fn {
+impl ExtDeviceAddressBindingReportFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_355\0") }
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_EXT_device_address_binding_report\0",
+            )
+        }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct ExtExtension355Fn {}
-unsafe impl Send for ExtExtension355Fn {}
-unsafe impl Sync for ExtExtension355Fn {}
-impl ExtExtension355Fn {
+pub struct ExtDeviceAddressBindingReportFn {}
+unsafe impl Send for ExtDeviceAddressBindingReportFn {}
+unsafe impl Sync for ExtDeviceAddressBindingReportFn {}
+impl ExtDeviceAddressBindingReportFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         Self {}
     }
+}
+#[doc = "Generated from 'VK_EXT_device_address_binding_report'"]
+impl DebugUtilsMessageTypeFlagsEXT {
+    pub const DEVICE_ADDRESS_BINDING: Self = Self(0b1000);
+}
+#[doc = "Generated from 'VK_EXT_device_address_binding_report'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_ADDRESS_BINDING_REPORT_FEATURES_EXT: Self = Self(1_000_354_000);
+    pub const DEVICE_ADDRESS_BINDING_CALLBACK_DATA_EXT: Self = Self(1_000_354_001);
 }
 impl ExtDepthClipControlFn {
     #[inline]
@@ -20581,54 +20635,462 @@ impl KhrExtension396Fn {
         Self {}
     }
 }
-impl NvExtension397Fn {
+impl ExtOpacityMicromapFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_397\0") }
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_opacity_micromap\0") }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
+#[allow(non_camel_case_types)]
+pub type PFN_vkCreateMicromapEXT = unsafe extern "system" fn(
+    device: Device,
+    p_create_info: *const MicromapCreateInfoEXT,
+    p_allocator: *const AllocationCallbacks,
+    p_micromap: *mut MicromapEXT,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkDestroyMicromapEXT = unsafe extern "system" fn(
+    device: Device,
+    micromap: MicromapEXT,
+    p_allocator: *const AllocationCallbacks,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBuildMicromapsEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    info_count: u32,
+    p_infos: *const MicromapBuildInfoEXT,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkBuildMicromapsEXT = unsafe extern "system" fn(
+    device: Device,
+    deferred_operation: DeferredOperationKHR,
+    info_count: u32,
+    p_infos: *const MicromapBuildInfoEXT,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCopyMicromapEXT = unsafe extern "system" fn(
+    device: Device,
+    deferred_operation: DeferredOperationKHR,
+    p_info: *const CopyMicromapInfoEXT,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCopyMicromapToMemoryEXT = unsafe extern "system" fn(
+    device: Device,
+    deferred_operation: DeferredOperationKHR,
+    p_info: *const CopyMicromapToMemoryInfoEXT,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCopyMemoryToMicromapEXT = unsafe extern "system" fn(
+    device: Device,
+    deferred_operation: DeferredOperationKHR,
+    p_info: *const CopyMemoryToMicromapInfoEXT,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkWriteMicromapsPropertiesEXT = unsafe extern "system" fn(
+    device: Device,
+    micromap_count: u32,
+    p_micromaps: *const MicromapEXT,
+    query_type: QueryType,
+    data_size: usize,
+    p_data: *mut c_void,
+    stride: usize,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdCopyMicromapEXT =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, p_info: *const CopyMicromapInfoEXT);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdCopyMicromapToMemoryEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_info: *const CopyMicromapToMemoryInfoEXT,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdCopyMemoryToMicromapEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_info: *const CopyMemoryToMicromapInfoEXT,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdWriteMicromapsPropertiesEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    micromap_count: u32,
+    p_micromaps: *const MicromapEXT,
+    query_type: QueryType,
+    query_pool: QueryPool,
+    first_query: u32,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetDeviceMicromapCompatibilityEXT = unsafe extern "system" fn(
+    device: Device,
+    p_version_info: *const MicromapVersionInfoEXT,
+    p_compatibility: *mut AccelerationStructureCompatibilityKHR,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetMicromapBuildSizesEXT = unsafe extern "system" fn(
+    device: Device,
+    build_type: AccelerationStructureBuildTypeKHR,
+    p_build_info: *const MicromapBuildInfoEXT,
+    p_size_info: *mut MicromapBuildSizesInfoEXT,
+);
 #[derive(Clone)]
-pub struct NvExtension397Fn {}
-unsafe impl Send for NvExtension397Fn {}
-unsafe impl Sync for NvExtension397Fn {}
-impl NvExtension397Fn {
+pub struct ExtOpacityMicromapFn {
+    pub create_micromap_ext: PFN_vkCreateMicromapEXT,
+    pub destroy_micromap_ext: PFN_vkDestroyMicromapEXT,
+    pub cmd_build_micromaps_ext: PFN_vkCmdBuildMicromapsEXT,
+    pub build_micromaps_ext: PFN_vkBuildMicromapsEXT,
+    pub copy_micromap_ext: PFN_vkCopyMicromapEXT,
+    pub copy_micromap_to_memory_ext: PFN_vkCopyMicromapToMemoryEXT,
+    pub copy_memory_to_micromap_ext: PFN_vkCopyMemoryToMicromapEXT,
+    pub write_micromaps_properties_ext: PFN_vkWriteMicromapsPropertiesEXT,
+    pub cmd_copy_micromap_ext: PFN_vkCmdCopyMicromapEXT,
+    pub cmd_copy_micromap_to_memory_ext: PFN_vkCmdCopyMicromapToMemoryEXT,
+    pub cmd_copy_memory_to_micromap_ext: PFN_vkCmdCopyMemoryToMicromapEXT,
+    pub cmd_write_micromaps_properties_ext: PFN_vkCmdWriteMicromapsPropertiesEXT,
+    pub get_device_micromap_compatibility_ext: PFN_vkGetDeviceMicromapCompatibilityEXT,
+    pub get_micromap_build_sizes_ext: PFN_vkGetMicromapBuildSizesEXT,
+}
+unsafe impl Send for ExtOpacityMicromapFn {}
+unsafe impl Sync for ExtOpacityMicromapFn {}
+impl ExtOpacityMicromapFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        Self {}
+        Self {
+            create_micromap_ext: unsafe {
+                unsafe extern "system" fn create_micromap_ext(
+                    _device: Device,
+                    _p_create_info: *const MicromapCreateInfoEXT,
+                    _p_allocator: *const AllocationCallbacks,
+                    _p_micromap: *mut MicromapEXT,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(create_micromap_ext)))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCreateMicromapEXT\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    create_micromap_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            destroy_micromap_ext: unsafe {
+                unsafe extern "system" fn destroy_micromap_ext(
+                    _device: Device,
+                    _micromap: MicromapEXT,
+                    _p_allocator: *const AllocationCallbacks,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(destroy_micromap_ext)))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkDestroyMicromapEXT\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    destroy_micromap_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_build_micromaps_ext: unsafe {
+                unsafe extern "system" fn cmd_build_micromaps_ext(
+                    _command_buffer: CommandBuffer,
+                    _info_count: u32,
+                    _p_infos: *const MicromapBuildInfoEXT,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_build_micromaps_ext)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdBuildMicromapsEXT\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_build_micromaps_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            build_micromaps_ext: unsafe {
+                unsafe extern "system" fn build_micromaps_ext(
+                    _device: Device,
+                    _deferred_operation: DeferredOperationKHR,
+                    _info_count: u32,
+                    _p_infos: *const MicromapBuildInfoEXT,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(build_micromaps_ext)))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkBuildMicromapsEXT\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    build_micromaps_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            copy_micromap_ext: unsafe {
+                unsafe extern "system" fn copy_micromap_ext(
+                    _device: Device,
+                    _deferred_operation: DeferredOperationKHR,
+                    _p_info: *const CopyMicromapInfoEXT,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(copy_micromap_ext)))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCopyMicromapEXT\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    copy_micromap_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            copy_micromap_to_memory_ext: unsafe {
+                unsafe extern "system" fn copy_micromap_to_memory_ext(
+                    _device: Device,
+                    _deferred_operation: DeferredOperationKHR,
+                    _p_info: *const CopyMicromapToMemoryInfoEXT,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(copy_micromap_to_memory_ext)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCopyMicromapToMemoryEXT\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    copy_micromap_to_memory_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            copy_memory_to_micromap_ext: unsafe {
+                unsafe extern "system" fn copy_memory_to_micromap_ext(
+                    _device: Device,
+                    _deferred_operation: DeferredOperationKHR,
+                    _p_info: *const CopyMemoryToMicromapInfoEXT,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(copy_memory_to_micromap_ext)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCopyMemoryToMicromapEXT\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    copy_memory_to_micromap_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            write_micromaps_properties_ext: unsafe {
+                unsafe extern "system" fn write_micromaps_properties_ext(
+                    _device: Device,
+                    _micromap_count: u32,
+                    _p_micromaps: *const MicromapEXT,
+                    _query_type: QueryType,
+                    _data_size: usize,
+                    _p_data: *mut c_void,
+                    _stride: usize,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(write_micromaps_properties_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkWriteMicromapsPropertiesEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    write_micromaps_properties_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_copy_micromap_ext: unsafe {
+                unsafe extern "system" fn cmd_copy_micromap_ext(
+                    _command_buffer: CommandBuffer,
+                    _p_info: *const CopyMicromapInfoEXT,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_copy_micromap_ext)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyMicromapEXT\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_copy_micromap_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_copy_micromap_to_memory_ext: unsafe {
+                unsafe extern "system" fn cmd_copy_micromap_to_memory_ext(
+                    _command_buffer: CommandBuffer,
+                    _p_info: *const CopyMicromapToMemoryInfoEXT,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_copy_micromap_to_memory_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdCopyMicromapToMemoryEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_copy_micromap_to_memory_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_copy_memory_to_micromap_ext: unsafe {
+                unsafe extern "system" fn cmd_copy_memory_to_micromap_ext(
+                    _command_buffer: CommandBuffer,
+                    _p_info: *const CopyMemoryToMicromapInfoEXT,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_copy_memory_to_micromap_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdCopyMemoryToMicromapEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_copy_memory_to_micromap_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_write_micromaps_properties_ext: unsafe {
+                unsafe extern "system" fn cmd_write_micromaps_properties_ext(
+                    _command_buffer: CommandBuffer,
+                    _micromap_count: u32,
+                    _p_micromaps: *const MicromapEXT,
+                    _query_type: QueryType,
+                    _query_pool: QueryPool,
+                    _first_query: u32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_write_micromaps_properties_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdWriteMicromapsPropertiesEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_write_micromaps_properties_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_device_micromap_compatibility_ext: unsafe {
+                unsafe extern "system" fn get_device_micromap_compatibility_ext(
+                    _device: Device,
+                    _p_version_info: *const MicromapVersionInfoEXT,
+                    _p_compatibility: *mut AccelerationStructureCompatibilityKHR,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_device_micromap_compatibility_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetDeviceMicromapCompatibilityEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_device_micromap_compatibility_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_micromap_build_sizes_ext: unsafe {
+                unsafe extern "system" fn get_micromap_build_sizes_ext(
+                    _device: Device,
+                    _build_type: AccelerationStructureBuildTypeKHR,
+                    _p_build_info: *const MicromapBuildInfoEXT,
+                    _p_size_info: *mut MicromapBuildSizesInfoEXT,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_micromap_build_sizes_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetMicromapBuildSizesEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_micromap_build_sizes_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
     }
 }
-#[doc = "Generated from 'VK_NV_extension_397'"]
+#[doc = "Generated from 'VK_EXT_opacity_micromap'"]
 impl AccessFlags2 {
-    pub const RESERVED_44_NV: Self =
+    pub const MICROMAP_READ_EXT: Self =
         Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
-    pub const RESERVED_45_NV: Self =
+    pub const MICROMAP_WRITE_EXT: Self =
         Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from 'VK_NV_extension_397'"]
+#[doc = "Generated from 'VK_EXT_opacity_micromap'"]
 impl BufferUsageFlags {
-    pub const RESERVED_23_NV: Self = Self(0b1000_0000_0000_0000_0000_0000);
-    pub const RESERVED_24_NV: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
+    pub const MICROMAP_BUILD_INPUT_READ_ONLY_EXT: Self = Self(0b1000_0000_0000_0000_0000_0000);
+    pub const MICROMAP_STORAGE_EXT: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from 'VK_NV_extension_397'"]
+#[doc = "Generated from 'VK_EXT_opacity_micromap'"]
 impl BuildAccelerationStructureFlagsKHR {
-    pub const RESERVED_6_NV: Self = Self(0b100_0000);
-    pub const RESERVED_7_NV: Self = Self(0b1000_0000);
+    pub const ALLOW_OPACITY_MICROMAP_UPDATE_EXT: Self = Self(0b100_0000);
+    pub const ALLOW_DISABLE_OPACITY_MICROMAPS_EXT: Self = Self(0b1000_0000);
+    pub const ALLOW_OPACITY_MICROMAP_DATA_UPDATE_EXT: Self = Self(0b1_0000_0000);
 }
-#[doc = "Generated from 'VK_NV_extension_397'"]
+#[doc = "Generated from 'VK_EXT_opacity_micromap'"]
 impl GeometryInstanceFlagsKHR {
-    pub const RESERVED_4_NV: Self = Self(0b1_0000);
-    pub const RESERVED_5_NV: Self = Self(0b10_0000);
+    pub const FORCE_OPACITY_MICROMAP_2_STATE_EXT: Self = Self(0b1_0000);
+    pub const DISABLE_OPACITY_MICROMAPS_EXT: Self = Self(0b10_0000);
 }
-#[doc = "Generated from 'VK_NV_extension_397'"]
+#[doc = "Generated from 'VK_EXT_opacity_micromap'"]
+impl ObjectType {
+    pub const MICROMAP_EXT: Self = Self(1_000_396_000);
+}
+#[doc = "Generated from 'VK_EXT_opacity_micromap'"]
 impl PipelineCreateFlags {
-    pub const RESERVED_24_NV: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
+    pub const RAY_TRACING_OPACITY_MICROMAP_EXT: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from 'VK_NV_extension_397'"]
+#[doc = "Generated from 'VK_EXT_opacity_micromap'"]
 impl PipelineStageFlags2 {
-    pub const RESERVED_30_NV: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000);
+    pub const MICROMAP_BUILD_EXT: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_opacity_micromap'"]
+impl QueryType {
+    pub const MICROMAP_SERIALIZATION_SIZE_EXT: Self = Self(1_000_396_000);
+    pub const MICROMAP_COMPACTED_SIZE_EXT: Self = Self(1_000_396_001);
+}
+#[doc = "Generated from 'VK_EXT_opacity_micromap'"]
+impl StructureType {
+    pub const MICROMAP_BUILD_INFO_EXT: Self = Self(1_000_396_000);
+    pub const MICROMAP_VERSION_INFO_EXT: Self = Self(1_000_396_001);
+    pub const COPY_MICROMAP_INFO_EXT: Self = Self(1_000_396_002);
+    pub const COPY_MICROMAP_TO_MEMORY_INFO_EXT: Self = Self(1_000_396_003);
+    pub const COPY_MEMORY_TO_MICROMAP_INFO_EXT: Self = Self(1_000_396_004);
+    pub const PHYSICAL_DEVICE_OPACITY_MICROMAP_FEATURES_EXT: Self = Self(1_000_396_005);
+    pub const PHYSICAL_DEVICE_OPACITY_MICROMAP_PROPERTIES_EXT: Self = Self(1_000_396_006);
+    pub const MICROMAP_CREATE_INFO_EXT: Self = Self(1_000_396_007);
+    pub const MICROMAP_BUILD_SIZES_INFO_EXT: Self = Self(1_000_396_008);
+    pub const ACCELERATION_STRUCTURE_TRIANGLES_OPACITY_MICROMAP_EXT: Self = Self(1_000_396_009);
 }
 impl NvExtension398Fn {
     #[inline]
@@ -22060,24 +22522,866 @@ impl GoogleExtension455Fn {
         Self {}
     }
 }
-impl NvExtension456Fn {
+impl ExtExtendedDynamicState3Fn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_456\0") }
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extended_dynamic_state3\0")
+        }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetTessellationDomainOriginEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    domain_origin: TessellationDomainOrigin,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetDepthClampEnableEXT =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, depth_clamp_enable: Bool32);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetPolygonModeEXT =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, polygon_mode: PolygonMode);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetRasterizationSamplesEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    rasterization_samples: SampleCountFlags,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetSampleMaskEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    samples: SampleCountFlags,
+    p_sample_mask: *const SampleMask,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetAlphaToCoverageEnableEXT =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, alpha_to_coverage_enable: Bool32);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetAlphaToOneEnableEXT =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, alpha_to_one_enable: Bool32);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetLogicOpEnableEXT =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, logic_op_enable: Bool32);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetColorBlendEnableEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    first_attachment: u32,
+    attachment_count: u32,
+    p_color_blend_enables: *const Bool32,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetColorBlendEquationEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    first_attachment: u32,
+    attachment_count: u32,
+    p_color_blend_equations: *const ColorBlendEquationEXT,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetColorWriteMaskEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    first_attachment: u32,
+    attachment_count: u32,
+    p_color_write_masks: *const ColorComponentFlags,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetRasterizationStreamEXT =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, rasterization_stream: u32);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetConservativeRasterizationModeEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    conservative_rasterization_mode: ConservativeRasterizationModeEXT,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetExtraPrimitiveOverestimationSizeEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    extra_primitive_overestimation_size: f32,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetDepthClipEnableEXT =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, depth_clip_enable: Bool32);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetSampleLocationsEnableEXT =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, sample_locations_enable: Bool32);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetColorBlendAdvancedEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    first_attachment: u32,
+    attachment_count: u32,
+    p_color_blend_advanced: *const ColorBlendAdvancedEXT,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetProvokingVertexModeEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    provoking_vertex_mode: ProvokingVertexModeEXT,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetLineRasterizationModeEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    line_rasterization_mode: LineRasterizationModeEXT,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetLineStippleEnableEXT =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, stippled_line_enable: Bool32);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetDepthClipNegativeOneToOneEXT =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, negative_one_to_one: Bool32);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetViewportWScalingEnableNV =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, viewport_w_scaling_enable: Bool32);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetViewportSwizzleNV = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    first_viewport: u32,
+    viewport_count: u32,
+    p_viewport_swizzles: *const ViewportSwizzleNV,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetCoverageToColorEnableNV =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, coverage_to_color_enable: Bool32);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetCoverageToColorLocationNV =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, coverage_to_color_location: u32);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetCoverageModulationModeNV = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    coverage_modulation_mode: CoverageModulationModeNV,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetCoverageModulationTableEnableNV = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    coverage_modulation_table_enable: Bool32,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetCoverageModulationTableNV = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    coverage_modulation_table_count: u32,
+    p_coverage_modulation_table: *const f32,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetShadingRateImageEnableNV =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, shading_rate_image_enable: Bool32);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetRepresentativeFragmentTestEnableNV = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    representative_fragment_test_enable: Bool32,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetCoverageReductionModeNV = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    coverage_reduction_mode: CoverageReductionModeNV,
+);
 #[derive(Clone)]
-pub struct NvExtension456Fn {}
-unsafe impl Send for NvExtension456Fn {}
-unsafe impl Sync for NvExtension456Fn {}
-impl NvExtension456Fn {
+pub struct ExtExtendedDynamicState3Fn {
+    pub cmd_set_tessellation_domain_origin_ext: PFN_vkCmdSetTessellationDomainOriginEXT,
+    pub cmd_set_depth_clamp_enable_ext: PFN_vkCmdSetDepthClampEnableEXT,
+    pub cmd_set_polygon_mode_ext: PFN_vkCmdSetPolygonModeEXT,
+    pub cmd_set_rasterization_samples_ext: PFN_vkCmdSetRasterizationSamplesEXT,
+    pub cmd_set_sample_mask_ext: PFN_vkCmdSetSampleMaskEXT,
+    pub cmd_set_alpha_to_coverage_enable_ext: PFN_vkCmdSetAlphaToCoverageEnableEXT,
+    pub cmd_set_alpha_to_one_enable_ext: PFN_vkCmdSetAlphaToOneEnableEXT,
+    pub cmd_set_logic_op_enable_ext: PFN_vkCmdSetLogicOpEnableEXT,
+    pub cmd_set_color_blend_enable_ext: PFN_vkCmdSetColorBlendEnableEXT,
+    pub cmd_set_color_blend_equation_ext: PFN_vkCmdSetColorBlendEquationEXT,
+    pub cmd_set_color_write_mask_ext: PFN_vkCmdSetColorWriteMaskEXT,
+    pub cmd_set_rasterization_stream_ext: PFN_vkCmdSetRasterizationStreamEXT,
+    pub cmd_set_conservative_rasterization_mode_ext: PFN_vkCmdSetConservativeRasterizationModeEXT,
+    pub cmd_set_extra_primitive_overestimation_size_ext:
+        PFN_vkCmdSetExtraPrimitiveOverestimationSizeEXT,
+    pub cmd_set_depth_clip_enable_ext: PFN_vkCmdSetDepthClipEnableEXT,
+    pub cmd_set_sample_locations_enable_ext: PFN_vkCmdSetSampleLocationsEnableEXT,
+    pub cmd_set_color_blend_advanced_ext: PFN_vkCmdSetColorBlendAdvancedEXT,
+    pub cmd_set_provoking_vertex_mode_ext: PFN_vkCmdSetProvokingVertexModeEXT,
+    pub cmd_set_line_rasterization_mode_ext: PFN_vkCmdSetLineRasterizationModeEXT,
+    pub cmd_set_line_stipple_enable_ext: PFN_vkCmdSetLineStippleEnableEXT,
+    pub cmd_set_depth_clip_negative_one_to_one_ext: PFN_vkCmdSetDepthClipNegativeOneToOneEXT,
+    pub cmd_set_viewport_w_scaling_enable_nv: PFN_vkCmdSetViewportWScalingEnableNV,
+    pub cmd_set_viewport_swizzle_nv: PFN_vkCmdSetViewportSwizzleNV,
+    pub cmd_set_coverage_to_color_enable_nv: PFN_vkCmdSetCoverageToColorEnableNV,
+    pub cmd_set_coverage_to_color_location_nv: PFN_vkCmdSetCoverageToColorLocationNV,
+    pub cmd_set_coverage_modulation_mode_nv: PFN_vkCmdSetCoverageModulationModeNV,
+    pub cmd_set_coverage_modulation_table_enable_nv: PFN_vkCmdSetCoverageModulationTableEnableNV,
+    pub cmd_set_coverage_modulation_table_nv: PFN_vkCmdSetCoverageModulationTableNV,
+    pub cmd_set_shading_rate_image_enable_nv: PFN_vkCmdSetShadingRateImageEnableNV,
+    pub cmd_set_representative_fragment_test_enable_nv:
+        PFN_vkCmdSetRepresentativeFragmentTestEnableNV,
+    pub cmd_set_coverage_reduction_mode_nv: PFN_vkCmdSetCoverageReductionModeNV,
+}
+unsafe impl Send for ExtExtendedDynamicState3Fn {}
+unsafe impl Sync for ExtExtendedDynamicState3Fn {}
+impl ExtExtendedDynamicState3Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        Self {}
+        Self {
+            cmd_set_tessellation_domain_origin_ext: unsafe {
+                unsafe extern "system" fn cmd_set_tessellation_domain_origin_ext(
+                    _command_buffer: CommandBuffer,
+                    _domain_origin: TessellationDomainOrigin,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_tessellation_domain_origin_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetTessellationDomainOriginEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_tessellation_domain_origin_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_depth_clamp_enable_ext: unsafe {
+                unsafe extern "system" fn cmd_set_depth_clamp_enable_ext(
+                    _command_buffer: CommandBuffer,
+                    _depth_clamp_enable: Bool32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_depth_clamp_enable_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetDepthClampEnableEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_depth_clamp_enable_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_polygon_mode_ext: unsafe {
+                unsafe extern "system" fn cmd_set_polygon_mode_ext(
+                    _command_buffer: CommandBuffer,
+                    _polygon_mode: PolygonMode,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_polygon_mode_ext)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetPolygonModeEXT\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_polygon_mode_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_rasterization_samples_ext: unsafe {
+                unsafe extern "system" fn cmd_set_rasterization_samples_ext(
+                    _command_buffer: CommandBuffer,
+                    _rasterization_samples: SampleCountFlags,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_rasterization_samples_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetRasterizationSamplesEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_rasterization_samples_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_sample_mask_ext: unsafe {
+                unsafe extern "system" fn cmd_set_sample_mask_ext(
+                    _command_buffer: CommandBuffer,
+                    _samples: SampleCountFlags,
+                    _p_sample_mask: *const SampleMask,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_sample_mask_ext)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetSampleMaskEXT\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_sample_mask_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_alpha_to_coverage_enable_ext: unsafe {
+                unsafe extern "system" fn cmd_set_alpha_to_coverage_enable_ext(
+                    _command_buffer: CommandBuffer,
+                    _alpha_to_coverage_enable: Bool32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_alpha_to_coverage_enable_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetAlphaToCoverageEnableEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_alpha_to_coverage_enable_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_alpha_to_one_enable_ext: unsafe {
+                unsafe extern "system" fn cmd_set_alpha_to_one_enable_ext(
+                    _command_buffer: CommandBuffer,
+                    _alpha_to_one_enable: Bool32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_alpha_to_one_enable_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetAlphaToOneEnableEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_alpha_to_one_enable_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_logic_op_enable_ext: unsafe {
+                unsafe extern "system" fn cmd_set_logic_op_enable_ext(
+                    _command_buffer: CommandBuffer,
+                    _logic_op_enable: Bool32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_logic_op_enable_ext)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetLogicOpEnableEXT\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_logic_op_enable_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_color_blend_enable_ext: unsafe {
+                unsafe extern "system" fn cmd_set_color_blend_enable_ext(
+                    _command_buffer: CommandBuffer,
+                    _first_attachment: u32,
+                    _attachment_count: u32,
+                    _p_color_blend_enables: *const Bool32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_color_blend_enable_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetColorBlendEnableEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_color_blend_enable_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_color_blend_equation_ext: unsafe {
+                unsafe extern "system" fn cmd_set_color_blend_equation_ext(
+                    _command_buffer: CommandBuffer,
+                    _first_attachment: u32,
+                    _attachment_count: u32,
+                    _p_color_blend_equations: *const ColorBlendEquationEXT,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_color_blend_equation_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetColorBlendEquationEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_color_blend_equation_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_color_write_mask_ext: unsafe {
+                unsafe extern "system" fn cmd_set_color_write_mask_ext(
+                    _command_buffer: CommandBuffer,
+                    _first_attachment: u32,
+                    _attachment_count: u32,
+                    _p_color_write_masks: *const ColorComponentFlags,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_color_write_mask_ext)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetColorWriteMaskEXT\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_color_write_mask_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_rasterization_stream_ext: unsafe {
+                unsafe extern "system" fn cmd_set_rasterization_stream_ext(
+                    _command_buffer: CommandBuffer,
+                    _rasterization_stream: u32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_rasterization_stream_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetRasterizationStreamEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_rasterization_stream_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_conservative_rasterization_mode_ext: unsafe {
+                unsafe extern "system" fn cmd_set_conservative_rasterization_mode_ext(
+                    _command_buffer: CommandBuffer,
+                    _conservative_rasterization_mode: ConservativeRasterizationModeEXT,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_conservative_rasterization_mode_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetConservativeRasterizationModeEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_conservative_rasterization_mode_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_extra_primitive_overestimation_size_ext: unsafe {
+                unsafe extern "system" fn cmd_set_extra_primitive_overestimation_size_ext(
+                    _command_buffer: CommandBuffer,
+                    _extra_primitive_overestimation_size: f32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_extra_primitive_overestimation_size_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetExtraPrimitiveOverestimationSizeEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_extra_primitive_overestimation_size_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_depth_clip_enable_ext: unsafe {
+                unsafe extern "system" fn cmd_set_depth_clip_enable_ext(
+                    _command_buffer: CommandBuffer,
+                    _depth_clip_enable: Bool32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_depth_clip_enable_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetDepthClipEnableEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_depth_clip_enable_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_sample_locations_enable_ext: unsafe {
+                unsafe extern "system" fn cmd_set_sample_locations_enable_ext(
+                    _command_buffer: CommandBuffer,
+                    _sample_locations_enable: Bool32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_sample_locations_enable_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetSampleLocationsEnableEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_sample_locations_enable_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_color_blend_advanced_ext: unsafe {
+                unsafe extern "system" fn cmd_set_color_blend_advanced_ext(
+                    _command_buffer: CommandBuffer,
+                    _first_attachment: u32,
+                    _attachment_count: u32,
+                    _p_color_blend_advanced: *const ColorBlendAdvancedEXT,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_color_blend_advanced_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetColorBlendAdvancedEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_color_blend_advanced_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_provoking_vertex_mode_ext: unsafe {
+                unsafe extern "system" fn cmd_set_provoking_vertex_mode_ext(
+                    _command_buffer: CommandBuffer,
+                    _provoking_vertex_mode: ProvokingVertexModeEXT,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_provoking_vertex_mode_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetProvokingVertexModeEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_provoking_vertex_mode_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_line_rasterization_mode_ext: unsafe {
+                unsafe extern "system" fn cmd_set_line_rasterization_mode_ext(
+                    _command_buffer: CommandBuffer,
+                    _line_rasterization_mode: LineRasterizationModeEXT,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_line_rasterization_mode_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetLineRasterizationModeEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_line_rasterization_mode_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_line_stipple_enable_ext: unsafe {
+                unsafe extern "system" fn cmd_set_line_stipple_enable_ext(
+                    _command_buffer: CommandBuffer,
+                    _stippled_line_enable: Bool32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_line_stipple_enable_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetLineStippleEnableEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_line_stipple_enable_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_depth_clip_negative_one_to_one_ext: unsafe {
+                unsafe extern "system" fn cmd_set_depth_clip_negative_one_to_one_ext(
+                    _command_buffer: CommandBuffer,
+                    _negative_one_to_one: Bool32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_depth_clip_negative_one_to_one_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetDepthClipNegativeOneToOneEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_depth_clip_negative_one_to_one_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_viewport_w_scaling_enable_nv: unsafe {
+                unsafe extern "system" fn cmd_set_viewport_w_scaling_enable_nv(
+                    _command_buffer: CommandBuffer,
+                    _viewport_w_scaling_enable: Bool32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_viewport_w_scaling_enable_nv)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetViewportWScalingEnableNV\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_viewport_w_scaling_enable_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_viewport_swizzle_nv: unsafe {
+                unsafe extern "system" fn cmd_set_viewport_swizzle_nv(
+                    _command_buffer: CommandBuffer,
+                    _first_viewport: u32,
+                    _viewport_count: u32,
+                    _p_viewport_swizzles: *const ViewportSwizzleNV,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_viewport_swizzle_nv)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetViewportSwizzleNV\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_viewport_swizzle_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_coverage_to_color_enable_nv: unsafe {
+                unsafe extern "system" fn cmd_set_coverage_to_color_enable_nv(
+                    _command_buffer: CommandBuffer,
+                    _coverage_to_color_enable: Bool32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_coverage_to_color_enable_nv)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetCoverageToColorEnableNV\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_coverage_to_color_enable_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_coverage_to_color_location_nv: unsafe {
+                unsafe extern "system" fn cmd_set_coverage_to_color_location_nv(
+                    _command_buffer: CommandBuffer,
+                    _coverage_to_color_location: u32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_coverage_to_color_location_nv)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetCoverageToColorLocationNV\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_coverage_to_color_location_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_coverage_modulation_mode_nv: unsafe {
+                unsafe extern "system" fn cmd_set_coverage_modulation_mode_nv(
+                    _command_buffer: CommandBuffer,
+                    _coverage_modulation_mode: CoverageModulationModeNV,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_coverage_modulation_mode_nv)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetCoverageModulationModeNV\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_coverage_modulation_mode_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_coverage_modulation_table_enable_nv: unsafe {
+                unsafe extern "system" fn cmd_set_coverage_modulation_table_enable_nv(
+                    _command_buffer: CommandBuffer,
+                    _coverage_modulation_table_enable: Bool32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_coverage_modulation_table_enable_nv)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetCoverageModulationTableEnableNV\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_coverage_modulation_table_enable_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_coverage_modulation_table_nv: unsafe {
+                unsafe extern "system" fn cmd_set_coverage_modulation_table_nv(
+                    _command_buffer: CommandBuffer,
+                    _coverage_modulation_table_count: u32,
+                    _p_coverage_modulation_table: *const f32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_coverage_modulation_table_nv)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetCoverageModulationTableNV\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_coverage_modulation_table_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_shading_rate_image_enable_nv: unsafe {
+                unsafe extern "system" fn cmd_set_shading_rate_image_enable_nv(
+                    _command_buffer: CommandBuffer,
+                    _shading_rate_image_enable: Bool32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_shading_rate_image_enable_nv)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetShadingRateImageEnableNV\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_shading_rate_image_enable_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_representative_fragment_test_enable_nv: unsafe {
+                unsafe extern "system" fn cmd_set_representative_fragment_test_enable_nv(
+                    _command_buffer: CommandBuffer,
+                    _representative_fragment_test_enable: Bool32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_representative_fragment_test_enable_nv)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetRepresentativeFragmentTestEnableNV\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_representative_fragment_test_enable_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_coverage_reduction_mode_nv: unsafe {
+                unsafe extern "system" fn cmd_set_coverage_reduction_mode_nv(
+                    _command_buffer: CommandBuffer,
+                    _coverage_reduction_mode: CoverageReductionModeNV,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_coverage_reduction_mode_nv)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetCoverageReductionModeNV\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_coverage_reduction_mode_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
     }
+}
+#[doc = "Generated from 'VK_EXT_extended_dynamic_state3'"]
+impl DynamicState {
+    pub const TESSELLATION_DOMAIN_ORIGIN_EXT: Self = Self(1_000_455_002);
+    pub const DEPTH_CLAMP_ENABLE_EXT: Self = Self(1_000_455_003);
+    pub const POLYGON_MODE_EXT: Self = Self(1_000_455_004);
+    pub const RASTERIZATION_SAMPLES_EXT: Self = Self(1_000_455_005);
+    pub const SAMPLE_MASK_EXT: Self = Self(1_000_455_006);
+    pub const ALPHA_TO_COVERAGE_ENABLE_EXT: Self = Self(1_000_455_007);
+    pub const ALPHA_TO_ONE_ENABLE_EXT: Self = Self(1_000_455_008);
+    pub const LOGIC_OP_ENABLE_EXT: Self = Self(1_000_455_009);
+    pub const COLOR_BLEND_ENABLE_EXT: Self = Self(1_000_455_010);
+    pub const COLOR_BLEND_EQUATION_EXT: Self = Self(1_000_455_011);
+    pub const COLOR_WRITE_MASK_EXT: Self = Self(1_000_455_012);
+    pub const RASTERIZATION_STREAM_EXT: Self = Self(1_000_455_013);
+    pub const CONSERVATIVE_RASTERIZATION_MODE_EXT: Self = Self(1_000_455_014);
+    pub const EXTRA_PRIMITIVE_OVERESTIMATION_SIZE_EXT: Self = Self(1_000_455_015);
+    pub const DEPTH_CLIP_ENABLE_EXT: Self = Self(1_000_455_016);
+    pub const SAMPLE_LOCATIONS_ENABLE_EXT: Self = Self(1_000_455_017);
+    pub const COLOR_BLEND_ADVANCED_EXT: Self = Self(1_000_455_018);
+    pub const PROVOKING_VERTEX_MODE_EXT: Self = Self(1_000_455_019);
+    pub const LINE_RASTERIZATION_MODE_EXT: Self = Self(1_000_455_020);
+    pub const LINE_STIPPLE_ENABLE_EXT: Self = Self(1_000_455_021);
+    pub const DEPTH_CLIP_NEGATIVE_ONE_TO_ONE_EXT: Self = Self(1_000_455_022);
+    pub const VIEWPORT_W_SCALING_ENABLE_NV: Self = Self(1_000_455_023);
+    pub const VIEWPORT_SWIZZLE_NV: Self = Self(1_000_455_024);
+    pub const COVERAGE_TO_COLOR_ENABLE_NV: Self = Self(1_000_455_025);
+    pub const COVERAGE_TO_COLOR_LOCATION_NV: Self = Self(1_000_455_026);
+    pub const COVERAGE_MODULATION_MODE_NV: Self = Self(1_000_455_027);
+    pub const COVERAGE_MODULATION_TABLE_ENABLE_NV: Self = Self(1_000_455_028);
+    pub const COVERAGE_MODULATION_TABLE_NV: Self = Self(1_000_455_029);
+    pub const SHADING_RATE_IMAGE_ENABLE_NV: Self = Self(1_000_455_030);
+    pub const REPRESENTATIVE_FRAGMENT_TEST_ENABLE_NV: Self = Self(1_000_455_031);
+    pub const COVERAGE_REDUCTION_MODE_NV: Self = Self(1_000_455_032);
+}
+#[doc = "Generated from 'VK_EXT_extended_dynamic_state3'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_3_FEATURES_EXT: Self = Self(1_000_455_000);
+    pub const PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_3_PROPERTIES_EXT: Self = Self(1_000_455_001);
 }
 impl ExtExtension457Fn {
     #[inline]
@@ -22335,44 +23639,216 @@ impl SubpassDescriptionFlags {
     pub const RASTERIZATION_ORDER_ATTACHMENT_DEPTH_ACCESS_EXT: Self = Self(0b10_0000);
     pub const RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_EXT: Self = Self(0b100_0000);
 }
-impl NvExtension465Fn {
+impl NvOpticalFlowFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_465\0") }
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_optical_flow\0") }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPhysicalDeviceOpticalFlowImageFormatsNV = unsafe extern "system" fn(
+    physical_device: PhysicalDevice,
+    p_optical_flow_image_format_info: *const OpticalFlowImageFormatInfoNV,
+    p_format_count: *mut u32,
+    p_image_format_properties: *mut OpticalFlowImageFormatPropertiesNV,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCreateOpticalFlowSessionNV = unsafe extern "system" fn(
+    device: Device,
+    p_create_info: *const OpticalFlowSessionCreateInfoNV,
+    p_allocator: *const AllocationCallbacks,
+    p_session: *mut OpticalFlowSessionNV,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkDestroyOpticalFlowSessionNV = unsafe extern "system" fn(
+    device: Device,
+    session: OpticalFlowSessionNV,
+    p_allocator: *const AllocationCallbacks,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkBindOpticalFlowSessionImageNV = unsafe extern "system" fn(
+    device: Device,
+    session: OpticalFlowSessionNV,
+    binding_point: OpticalFlowSessionBindingPointNV,
+    view: ImageView,
+    layout: ImageLayout,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdOpticalFlowExecuteNV = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    session: OpticalFlowSessionNV,
+    p_execute_info: *const OpticalFlowExecuteInfoNV,
+);
 #[derive(Clone)]
-pub struct NvExtension465Fn {}
-unsafe impl Send for NvExtension465Fn {}
-unsafe impl Sync for NvExtension465Fn {}
-impl NvExtension465Fn {
+pub struct NvOpticalFlowFn {
+    pub get_physical_device_optical_flow_image_formats_nv:
+        PFN_vkGetPhysicalDeviceOpticalFlowImageFormatsNV,
+    pub create_optical_flow_session_nv: PFN_vkCreateOpticalFlowSessionNV,
+    pub destroy_optical_flow_session_nv: PFN_vkDestroyOpticalFlowSessionNV,
+    pub bind_optical_flow_session_image_nv: PFN_vkBindOpticalFlowSessionImageNV,
+    pub cmd_optical_flow_execute_nv: PFN_vkCmdOpticalFlowExecuteNV,
+}
+unsafe impl Send for NvOpticalFlowFn {}
+unsafe impl Sync for NvOpticalFlowFn {}
+impl NvOpticalFlowFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        Self {}
+        Self {
+            get_physical_device_optical_flow_image_formats_nv: unsafe {
+                unsafe extern "system" fn get_physical_device_optical_flow_image_formats_nv(
+                    _physical_device: PhysicalDevice,
+                    _p_optical_flow_image_format_info: *const OpticalFlowImageFormatInfoNV,
+                    _p_format_count: *mut u32,
+                    _p_image_format_properties: *mut OpticalFlowImageFormatPropertiesNV,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_physical_device_optical_flow_image_formats_nv)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetPhysicalDeviceOpticalFlowImageFormatsNV\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_physical_device_optical_flow_image_formats_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            create_optical_flow_session_nv: unsafe {
+                unsafe extern "system" fn create_optical_flow_session_nv(
+                    _device: Device,
+                    _p_create_info: *const OpticalFlowSessionCreateInfoNV,
+                    _p_allocator: *const AllocationCallbacks,
+                    _p_session: *mut OpticalFlowSessionNV,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(create_optical_flow_session_nv)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCreateOpticalFlowSessionNV\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    create_optical_flow_session_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            destroy_optical_flow_session_nv: unsafe {
+                unsafe extern "system" fn destroy_optical_flow_session_nv(
+                    _device: Device,
+                    _session: OpticalFlowSessionNV,
+                    _p_allocator: *const AllocationCallbacks,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(destroy_optical_flow_session_nv)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkDestroyOpticalFlowSessionNV\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    destroy_optical_flow_session_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            bind_optical_flow_session_image_nv: unsafe {
+                unsafe extern "system" fn bind_optical_flow_session_image_nv(
+                    _device: Device,
+                    _session: OpticalFlowSessionNV,
+                    _binding_point: OpticalFlowSessionBindingPointNV,
+                    _view: ImageView,
+                    _layout: ImageLayout,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(bind_optical_flow_session_image_nv)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkBindOpticalFlowSessionImageNV\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    bind_optical_flow_session_image_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_optical_flow_execute_nv: unsafe {
+                unsafe extern "system" fn cmd_optical_flow_execute_nv(
+                    _command_buffer: CommandBuffer,
+                    _session: OpticalFlowSessionNV,
+                    _p_execute_info: *const OpticalFlowExecuteInfoNV,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_optical_flow_execute_nv)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdOpticalFlowExecuteNV\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_optical_flow_execute_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
     }
 }
-#[doc = "Generated from 'VK_NV_extension_465'"]
+#[doc = "Generated from 'VK_NV_optical_flow'"]
 impl AccessFlags2 {
-    pub const RESERVED_42_NV: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
-    pub const RESERVED_43_NV: Self = Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const OPTICAL_FLOW_READ_NV: Self =
+        Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const OPTICAL_FLOW_WRITE_NV: Self =
+        Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from 'VK_NV_extension_465'"]
+#[doc = "Generated from 'VK_NV_optical_flow'"]
+impl Format {
+    pub const R16G16_S10_5_NV: Self = Self(1_000_464_000);
+}
+#[doc = "Generated from 'VK_NV_optical_flow'"]
 impl FormatFeatureFlags2 {
-    pub const RESERVED_40_NV: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
-    pub const RESERVED_41_NV: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
-    pub const RESERVED_42_NV: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
-    pub const RESERVED_43_NV: Self = Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const OPTICAL_FLOW_IMAGE_NV: Self =
+        Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const OPTICAL_FLOW_VECTOR_NV: Self =
+        Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const OPTICAL_FLOW_COST_NV: Self =
+        Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from 'VK_NV_extension_465'"]
+#[doc = "Generated from 'VK_NV_optical_flow'"]
+impl ObjectType {
+    pub const OPTICAL_FLOW_SESSION_NV: Self = Self(1_000_464_000);
+}
+#[doc = "Generated from 'VK_NV_optical_flow'"]
 impl PipelineStageFlags2 {
-    pub const RESERVED_29_NV: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000);
+    pub const OPTICAL_FLOW_NV: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from 'VK_NV_extension_465'"]
+#[doc = "Generated from 'VK_NV_optical_flow'"]
 impl QueueFlags {
-    pub const RESERVED_8_NV: Self = Self(0b1_0000_0000);
+    pub const OPTICAL_FLOW_NV: Self = Self(0b1_0000_0000);
+}
+#[doc = "Generated from 'VK_NV_optical_flow'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_OPTICAL_FLOW_FEATURES_NV: Self = Self(1_000_464_000);
+    pub const PHYSICAL_DEVICE_OPTICAL_FLOW_PROPERTIES_NV: Self = Self(1_000_464_001);
+    pub const OPTICAL_FLOW_IMAGE_FORMAT_INFO_NV: Self = Self(1_000_464_002);
+    pub const OPTICAL_FLOW_IMAGE_FORMAT_PROPERTIES_NV: Self = Self(1_000_464_003);
+    pub const OPTICAL_FLOW_SESSION_CREATE_INFO_NV: Self = Self(1_000_464_004);
+    pub const OPTICAL_FLOW_EXECUTE_INFO_NV: Self = Self(1_000_464_005);
+    pub const OPTICAL_FLOW_SESSION_CREATE_PRIVATE_DATA_INFO_NV: Self = Self(1_000_464_010);
 }
 impl ExtLegacyDitheringFn {
     #[inline]
@@ -22405,18 +23881,20 @@ impl StructureType {
 impl SubpassDescriptionFlags {
     pub const ENABLE_LEGACY_DITHERING_EXT: Self = Self(0b1000_0000);
 }
-impl ExtExtension467Fn {
+impl ExtPipelineProtectedAccessFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_467\0") }
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pipeline_protected_access\0")
+        }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct ExtExtension467Fn {}
-unsafe impl Send for ExtExtension467Fn {}
-unsafe impl Sync for ExtExtension467Fn {}
-impl ExtExtension467Fn {
+pub struct ExtPipelineProtectedAccessFn {}
+unsafe impl Send for ExtPipelineProtectedAccessFn {}
+unsafe impl Sync for ExtPipelineProtectedAccessFn {}
+impl ExtPipelineProtectedAccessFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -22424,10 +23902,14 @@ impl ExtExtension467Fn {
         Self {}
     }
 }
-#[doc = "Generated from 'VK_EXT_extension_467'"]
+#[doc = "Generated from 'VK_EXT_pipeline_protected_access'"]
 impl PipelineCreateFlags {
-    pub const RESERVED_27_EXT: Self = Self(0b1000_0000_0000_0000_0000_0000_0000);
-    pub const RESERVED_30_EXT: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000);
+    pub const NO_PROTECTED_ACCESS_EXT: Self = Self(0b1000_0000_0000_0000_0000_0000_0000);
+    pub const PROTECTED_ACCESS_ONLY_EXT: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_pipeline_protected_access'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES_EXT: Self = Self(1_000_466_000);
 }
 impl ExtExtension468Fn {
     #[inline]
@@ -23055,4 +24537,42 @@ impl DescriptorType {
 impl StructureType {
     pub const PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_EXT: Self = Self(1_000_351_000);
     pub const MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_EXT: Self = Self(1_000_351_002);
+}
+impl ExtExtension496Fn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_496\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct ExtExtension496Fn {}
+unsafe impl Send for ExtExtension496Fn {}
+unsafe impl Sync for ExtExtension496Fn {}
+impl ExtExtension496Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl ExtExtension497Fn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_497\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct ExtExtension497Fn {}
+unsafe impl Send for ExtExtension497Fn {}
+unsafe impl Sync for ExtExtension497Fn {}
+impl ExtExtension497Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
 }
