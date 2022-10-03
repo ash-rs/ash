@@ -47837,10 +47837,10 @@ impl<'a> AccelerationStructureBuildGeometryInfoKHRBuilder<'a> {
     #[inline]
     pub fn geometries_ptrs(
         mut self,
-        geometries: &'a [&'a AccelerationStructureGeometryKHR],
+        geometries_ptrs: &'a [&'a AccelerationStructureGeometryKHR],
     ) -> Self {
-        self.inner.geometry_count = geometries.len() as _;
-        self.inner.pp_geometries = geometries.as_ptr() as *const *const _;
+        self.inner.geometry_count = geometries_ptrs.len() as _;
+        self.inner.pp_geometries = geometries_ptrs.as_ptr() as *const *const _;
         self
     }
     #[inline]

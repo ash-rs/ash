@@ -487,11 +487,15 @@ pub trait FieldExt {
     fn param_ident(&self) -> Ident;
 
     /// The inner type of this field, with one level of pointers removed
-    fn inner_type_tokens(&self) -> TokenStream;
+    fn inner_type_tokens(
+        &self,
+        lifetime: Option<TokenStream>,
+        inner_length: Option<usize>,
+    ) -> TokenStream;
 
     /// Returns reference-types wrapped in their safe variant. (Dynamic) arrays become
     /// slices, pointers become Rust references.
-    fn safe_type_tokens(&self, lifetime: TokenStream) -> TokenStream;
+    fn safe_type_tokens(&self, lifetime: TokenStream, inner_length: Option<usize>) -> TokenStream;
 
     /// Returns the basetype ident and removes the 'Vk' prefix. When `is_ffi_param` is `true`
     /// array types (e.g. `[f32; 3]`) will be converted to pointer types (e.g. `&[f32; 3]`),
@@ -640,24 +644,34 @@ impl FieldExt for vkxml::Field {
         format_ident!("{}", name_corrected.to_snake_case().as_str())
     }
 
-    fn inner_type_tokens(&self) -> TokenStream {
+    fn inner_type_tokens(
+        &self,
+        lifetime: Option<TokenStream>,
+        inner_length: Option<usize>,
+    ) -> TokenStream {
         assert!(!self.is_void());
         let ty = name_to_tokens(&self.basetype);
 
+        let (const_, borrow) = match (lifetime, inner_length) {
+            // If the nested "dynamic array" has length 1, it's just a pointer which we convert to a safe borrow for convenience
+            (Some(lifetime), Some(1)) => (quote!(), quote!(&#lifetime)),
+            _ => (quote!(const), quote!(*)),
+        };
+
         match self.reference {
-            Some(vkxml::ReferenceType::PointerToPointer) => quote!(*mut #ty),
-            Some(vkxml::ReferenceType::PointerToConstPointer) => quote!(*const #ty),
+            Some(vkxml::ReferenceType::PointerToPointer) => quote!(#borrow mut #ty),
+            Some(vkxml::ReferenceType::PointerToConstPointer) => quote!(#borrow #const_ #ty),
             _ => quote!(#ty),
         }
     }
 
-    fn safe_type_tokens(&self, lifetime: TokenStream) -> TokenStream {
+    fn safe_type_tokens(&self, lifetime: TokenStream, inner_length: Option<usize>) -> TokenStream {
         assert!(!self.is_void());
         match self.array {
             // The outer type fn type_tokens() returns is [], which fits our "safe" prescription
             Some(vkxml::ArrayType::Static) => self.type_tokens(false),
             Some(vkxml::ArrayType::Dynamic) => {
-                let ty = self.inner_type_tokens();
+                let ty = self.inner_type_tokens(Some(lifetime), inner_length);
                 quote!([#ty])
             }
             None => {
@@ -1585,7 +1599,7 @@ pub fn derive_setters(
 
     let setters = members.clone().filter_map(|field| {
         let param_ident = field.param_ident();
-        let param_ty_tokens = field.safe_type_tokens(quote!('a));
+        let param_ty_tokens = field.safe_type_tokens(quote!('a), None);
 
         let param_ident_string = param_ident.to_string();
         if param_ident_string == "s_type" || param_ident_string == "p_next" {
@@ -1596,7 +1610,7 @@ pub fn derive_setters(
             .strip_prefix("p_")
             .or_else(|| param_ident_string.strip_prefix("pp_"))
             .unwrap_or(&param_ident_string);
-        let param_ident_short = format_ident!("{}", &param_ident_short);
+        let mut param_ident_short = format_ident!("{}", param_ident_short);
 
         if let Some(name) = field.name.as_ref() {
             // Filter
@@ -1634,17 +1648,6 @@ pub fn derive_setters(
                     }
                 });
             }
-
-            if name == "ppGeometries" {
-                return Some(quote!{
-                    #[inline]
-                    pub fn geometries_ptrs(mut self, geometries: &'a [&'a AccelerationStructureGeometryKHR]) -> Self {
-                        self.inner.geometry_count = geometries.len() as _;
-                        self.inner.pp_geometries = geometries.as_ptr() as *const *const _;
-                        self
-                    }
-                });
-            }
         }
 
         // TODO: Improve in future when https://github.com/rust-lang/rust/issues/53667 is merged id:6
@@ -1663,7 +1666,7 @@ pub fn derive_setters(
 
             if matches!(field.array, Some(vkxml::ArrayType::Dynamic)) {
                 if let Some(ref array_size) = field.size {
-                    let mut slice_param_ty_tokens = field.safe_type_tokens(quote!('a));
+                    let mut slice_param_ty_tokens = field.safe_type_tokens(quote!('a), None);
 
                     let mut ptr = if field.is_const {
                         quote!(.as_ptr())
@@ -1683,20 +1686,30 @@ pub fn derive_setters(
                         // this is a pointer to a piece of memory with statically known size.
                         let array_size = field.c_size.as_ref().unwrap();
                         let c_size = convert_c_expression(array_size, &BTreeMap::new());
-                        let inner_type = field.inner_type_tokens();
+                        let inner_type = field.inner_type_tokens(None, None);
 
                         slice_param_ty_tokens = quote!([#inner_type; #c_size]);
                         ptr = quote!();
 
                         quote!()
                     } else {
+                        // Deal with a "special" 2D dynamic array with an inner size of 1 (effectively an array containing pointers to single objects)
+                        let array_size = if let Some(array_size) = array_size.strip_suffix(",1") {
+                            param_ident_short = format_ident!("{}_ptrs", param_ident_short);
+                            slice_param_ty_tokens = field.safe_type_tokens(quote!('a), Some(1));
+                            ptr = quote!(#ptr as *const *const _);
+                            array_size
+                        } else {
+                            array_size
+                        };
+
                         let array_size_ident = format_ident!("{}", array_size.to_snake_case().as_str());
 
-                        let size_field = members.clone().find(|m| m.name.as_ref() == Some(array_size)).unwrap();
+                        let size_field = members.clone().find(|m| m.name.as_deref() == Some(array_size)).unwrap();
 
                         let cast = if size_field.basetype == "size_t" {
                             quote!()
-                        }else{
+                        } else {
                             quote!(as _)
                         };
 
