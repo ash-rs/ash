@@ -26,14 +26,9 @@ impl AcquireDrmDisplay {
         &self,
         physical_device: vk::PhysicalDevice,
         drm_fd: i32,
-        display: vk::DisplayKHR
+        display: vk::DisplayKHR,
     ) -> VkResult<()> {
-        (self.fp.acquire_drm_display_ext)(
-            physical_device,
-            drm_fd,
-            display
-        )
-        .result()
+        (self.fp.acquire_drm_display_ext)(physical_device, drm_fd, display).result()
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDrmDisplayEXT.html>
@@ -42,16 +37,11 @@ impl AcquireDrmDisplay {
         &self,
         physical_device: vk::PhysicalDevice,
         drm_fd: i32,
-        connector_id: u32
+        connector_id: u32,
     ) -> VkResult<vk::DisplayKHR> {
         let mut display = mem::MaybeUninit::uninit();
-        (self.fp.get_drm_display_ext)(
-            physical_device,
-            drm_fd,
-            connector_id,
-            display.as_mut_ptr()
-        )
-        .result_with_success(display.assume_init())
+        (self.fp.get_drm_display_ext)(physical_device, drm_fd, connector_id, display.as_mut_ptr())
+            .result_with_success(display.assume_init())
     }
 
     #[inline]
