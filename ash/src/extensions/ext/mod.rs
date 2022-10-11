@@ -1,3 +1,4 @@
+pub use self::acquire_drm_display::AcquireDrmDisplay;
 pub use self::buffer_device_address::BufferDeviceAddress;
 pub use self::calibrated_timestamps::CalibratedTimestamps;
 #[allow(deprecated)]
@@ -18,6 +19,7 @@ pub use self::private_data::PrivateData;
 pub use self::sample_locations::SampleLocations;
 pub use self::tooling_info::ToolingInfo;
 
+mod acquire_drm_display;
 mod buffer_device_address;
 mod calibrated_timestamps;
 #[deprecated(note = "Please use the [DebugUtils](struct.DebugUtils.html) extension instead.")]
