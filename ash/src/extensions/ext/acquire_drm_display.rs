@@ -40,7 +40,7 @@ impl AcquireDrmDisplay {
     ) -> VkResult<vk::DisplayKHR> {
         let mut display = mem::MaybeUninit::uninit();
         (self.fp.get_drm_display_ext)(physical_device, drm_fd, connector_id, display.as_mut_ptr())
-            .result_with_success(display.assume_init())
+            .assume_init_on_success(display)
     }
 
     #[inline]
