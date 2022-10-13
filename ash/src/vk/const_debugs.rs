@@ -5714,6 +5714,12 @@ impl fmt::Debug for StructureType {
             Self::MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_EXT => {
                 Some("MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_EXT")
             }
+            Self::PHYSICAL_DEVICE_SHADER_CORE_BUILTINS_FEATURES_ARM => {
+                Some("PHYSICAL_DEVICE_SHADER_CORE_BUILTINS_FEATURES_ARM")
+            }
+            Self::PHYSICAL_DEVICE_SHADER_CORE_BUILTINS_PROPERTIES_ARM => {
+                Some("PHYSICAL_DEVICE_SHADER_CORE_BUILTINS_PROPERTIES_ARM")
+            }
             Self::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES => {
                 Some("PHYSICAL_DEVICE_SUBGROUP_PROPERTIES")
             }

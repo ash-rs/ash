@@ -24576,3 +24576,46 @@ impl ExtExtension497Fn {
         Self {}
     }
 }
+impl ArmShaderCoreBuiltinsFn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_ARM_shader_core_builtins\0") }
+    }
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct ArmShaderCoreBuiltinsFn {}
+unsafe impl Send for ArmShaderCoreBuiltinsFn {}
+unsafe impl Sync for ArmShaderCoreBuiltinsFn {}
+impl ArmShaderCoreBuiltinsFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+#[doc = "Generated from 'VK_ARM_shader_core_builtins'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_CORE_BUILTINS_FEATURES_ARM: Self = Self(1_000_497_000);
+    pub const PHYSICAL_DEVICE_SHADER_CORE_BUILTINS_PROPERTIES_ARM: Self = Self(1_000_497_001);
+}
+impl ExtExtension499Fn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_499\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct ExtExtension499Fn {}
+unsafe impl Send for ExtExtension499Fn {}
+unsafe impl Sync for ExtExtension499Fn {}
+impl ExtExtension499Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
