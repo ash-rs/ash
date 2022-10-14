@@ -88,7 +88,7 @@ impl Display {
             allocation_callbacks.as_raw_ptr(),
             display_mode.as_mut_ptr(),
         )
-        .result_with_success(display_mode.assume_init())
+        .assume_init_on_success(display_mode)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDisplayPlaneCapabilitiesKHR.html>
@@ -106,7 +106,7 @@ impl Display {
             plane_index,
             display_plane_capabilities.as_mut_ptr(),
         )
-        .result_with_success(display_plane_capabilities.assume_init())
+        .assume_init_on_success(display_plane_capabilities)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateDisplayPlaneSurfaceKHR.html>
@@ -123,7 +123,7 @@ impl Display {
             allocation_callbacks.as_raw_ptr(),
             surface.as_mut_ptr(),
         )
-        .result_with_success(surface.assume_init())
+        .assume_init_on_success(surface)
     }
 
     #[inline]
