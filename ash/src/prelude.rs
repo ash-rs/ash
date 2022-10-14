@@ -1,6 +1,7 @@
 use std::convert::TryInto;
 #[cfg(feature = "debug")]
 use std::fmt;
+use std::mem;
 
 use crate::vk;
 pub type VkResult<T> = Result<T, vk::Result>;
@@ -17,6 +18,11 @@ impl vk::Result {
             Self::SUCCESS => Ok(v),
             _ => Err(self),
         }
+    }
+
+    #[inline]
+    pub unsafe fn assume_init_on_success<T>(self, v: mem::MaybeUninit<T>) -> VkResult<T> {
+        self.result().map(move |()| v.assume_init())
     }
 }
 
