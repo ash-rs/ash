@@ -6214,6 +6214,7 @@ impl fmt::Debug for SwapchainCreateFlagsKHR {
             ),
             (SwapchainCreateFlagsKHR::PROTECTED.0, "PROTECTED"),
             (SwapchainCreateFlagsKHR::MUTABLE_FORMAT.0, "MUTABLE_FORMAT"),
+            (SwapchainCreateFlagsKHR::RESERVED_4_EXT.0, "RESERVED_4_EXT"),
             (SwapchainCreateFlagsKHR::RESERVED_3_SEC.0, "RESERVED_3_SEC"),
         ];
         debug_flags(f, KNOWN, self.0)

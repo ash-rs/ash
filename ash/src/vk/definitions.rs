@@ -57,7 +57,7 @@ pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
-pub const HEADER_VERSION: u32 = 231u32;
+pub const HEADER_VERSION: u32 = 232u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -45196,6 +45196,7 @@ impl DeviceFaultVendorBinaryHeaderVersionOneEXT {
 pub struct PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
+    pub shader_core_mask: u64,
     pub shader_core_count: u32,
     pub shader_warps_per_core: u32,
     pub _marker: PhantomData<&'a ()>,
@@ -45206,6 +45207,7 @@ impl ::std::default::Default for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
+            shader_core_mask: u64::default(),
             shader_core_count: u32::default(),
             shader_warps_per_core: u32::default(),
             _marker: PhantomData,
@@ -45218,6 +45220,11 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderCoreBuiltinsPropertiesAR
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'_> {}
 impl<'a> PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'a> {
+    #[inline]
+    pub fn shader_core_mask(mut self, shader_core_mask: u64) -> Self {
+        self.shader_core_mask = shader_core_mask;
+        self
+    }
     #[inline]
     pub fn shader_core_count(mut self, shader_core_count: u32) -> Self {
         self.shader_core_count = shader_core_count;

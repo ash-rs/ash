@@ -21692,6 +21692,10 @@ impl ExtExtension420Fn {
         Self {}
     }
 }
+#[doc = "Generated from 'VK_EXT_extension_420'"]
+impl SwapchainCreateFlagsKHR {
+    pub const RESERVED_4_EXT: Self = Self(0b1_0000);
+}
 impl ValveDescriptorSetHostMappingFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -24581,7 +24585,7 @@ impl ArmShaderCoreBuiltinsFn {
     pub const fn name() -> &'static ::std::ffi::CStr {
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_ARM_shader_core_builtins\0") }
     }
-    pub const SPEC_VERSION: u32 = 1u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
 pub struct ArmShaderCoreBuiltinsFn {}
