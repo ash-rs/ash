@@ -21909,43 +21909,179 @@ impl StructureType {
         Self(1_000_425_001);
     pub const SUBPASS_FRAGMENT_DENSITY_MAP_OFFSET_END_INFO_QCOM: Self = Self(1_000_425_002);
 }
-impl NvExtension427Fn {
+impl NvCopyMemoryIndirectFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_427\0") }
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_copy_memory_indirect\0") }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdCopyMemoryIndirectNV = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    copy_buffer_address: DeviceAddress,
+    copy_count: u32,
+    stride: u32,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdCopyMemoryToImageIndirectNV = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    copy_buffer_address: DeviceAddress,
+    copy_count: u32,
+    stride: u32,
+    dst_image: Image,
+    dst_image_layout: ImageLayout,
+    p_image_subresources: *const ImageSubresourceLayers,
+);
 #[derive(Clone)]
-pub struct NvExtension427Fn {}
-unsafe impl Send for NvExtension427Fn {}
-unsafe impl Sync for NvExtension427Fn {}
-impl NvExtension427Fn {
+pub struct NvCopyMemoryIndirectFn {
+    pub cmd_copy_memory_indirect_nv: PFN_vkCmdCopyMemoryIndirectNV,
+    pub cmd_copy_memory_to_image_indirect_nv: PFN_vkCmdCopyMemoryToImageIndirectNV,
+}
+unsafe impl Send for NvCopyMemoryIndirectFn {}
+unsafe impl Sync for NvCopyMemoryIndirectFn {}
+impl NvCopyMemoryIndirectFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        Self {}
+        Self {
+            cmd_copy_memory_indirect_nv: unsafe {
+                unsafe extern "system" fn cmd_copy_memory_indirect_nv(
+                    _command_buffer: CommandBuffer,
+                    _copy_buffer_address: DeviceAddress,
+                    _copy_count: u32,
+                    _stride: u32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_copy_memory_indirect_nv)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyMemoryIndirectNV\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_copy_memory_indirect_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_copy_memory_to_image_indirect_nv: unsafe {
+                unsafe extern "system" fn cmd_copy_memory_to_image_indirect_nv(
+                    _command_buffer: CommandBuffer,
+                    _copy_buffer_address: DeviceAddress,
+                    _copy_count: u32,
+                    _stride: u32,
+                    _dst_image: Image,
+                    _dst_image_layout: ImageLayout,
+                    _p_image_subresources: *const ImageSubresourceLayers,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_copy_memory_to_image_indirect_nv)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdCopyMemoryToImageIndirectNV\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_copy_memory_to_image_indirect_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
     }
 }
-impl NvExtension428Fn {
+#[doc = "Generated from 'VK_NV_copy_memory_indirect'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_COPY_MEMORY_INDIRECT_FEATURES_NV: Self = Self(1_000_426_000);
+    pub const PHYSICAL_DEVICE_COPY_MEMORY_INDIRECT_PROPERTIES_NV: Self = Self(1_000_426_001);
+}
+impl NvMemoryDecompressionFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_428\0") }
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_memory_decompression\0") }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDecompressMemoryNV = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    decompress_region_count: u32,
+    p_decompress_memory_regions: *const DecompressMemoryRegionNV,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDecompressMemoryIndirectCountNV = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    indirect_commands_address: DeviceAddress,
+    indirect_commands_count_address: DeviceAddress,
+    stride: u32,
+);
 #[derive(Clone)]
-pub struct NvExtension428Fn {}
-unsafe impl Send for NvExtension428Fn {}
-unsafe impl Sync for NvExtension428Fn {}
-impl NvExtension428Fn {
+pub struct NvMemoryDecompressionFn {
+    pub cmd_decompress_memory_nv: PFN_vkCmdDecompressMemoryNV,
+    pub cmd_decompress_memory_indirect_count_nv: PFN_vkCmdDecompressMemoryIndirectCountNV,
+}
+unsafe impl Send for NvMemoryDecompressionFn {}
+unsafe impl Sync for NvMemoryDecompressionFn {}
+impl NvMemoryDecompressionFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        Self {}
+        Self {
+            cmd_decompress_memory_nv: unsafe {
+                unsafe extern "system" fn cmd_decompress_memory_nv(
+                    _command_buffer: CommandBuffer,
+                    _decompress_region_count: u32,
+                    _p_decompress_memory_regions: *const DecompressMemoryRegionNV,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_decompress_memory_nv)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdDecompressMemoryNV\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_decompress_memory_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_decompress_memory_indirect_count_nv: unsafe {
+                unsafe extern "system" fn cmd_decompress_memory_indirect_count_nv(
+                    _command_buffer: CommandBuffer,
+                    _indirect_commands_address: DeviceAddress,
+                    _indirect_commands_count_address: DeviceAddress,
+                    _stride: u32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_decompress_memory_indirect_count_nv)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdDecompressMemoryIndirectCountNV\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_decompress_memory_indirect_count_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
     }
+}
+#[doc = "Generated from 'VK_NV_memory_decompression'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_FEATURES_NV: Self = Self(1_000_427_000);
+    pub const PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_PROPERTIES_NV: Self = Self(1_000_427_001);
 }
 impl NvExtension429Fn {
     #[inline]
@@ -24428,24 +24564,35 @@ impl NvExtension490Fn {
         Self {}
     }
 }
-impl NvExtension491Fn {
+impl NvRayTracingInvocationReorderFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_491\0") }
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_NV_ray_tracing_invocation_reorder\0",
+            )
+        }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct NvExtension491Fn {}
-unsafe impl Send for NvExtension491Fn {}
-unsafe impl Sync for NvExtension491Fn {}
-impl NvExtension491Fn {
+pub struct NvRayTracingInvocationReorderFn {}
+unsafe impl Send for NvRayTracingInvocationReorderFn {}
+unsafe impl Sync for NvRayTracingInvocationReorderFn {}
+impl NvRayTracingInvocationReorderFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         Self {}
     }
+}
+#[doc = "Generated from 'VK_NV_ray_tracing_invocation_reorder'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_FEATURES_NV: Self =
+        Self(1_000_490_000);
+    pub const PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_PROPERTIES_NV: Self =
+        Self(1_000_490_001);
 }
 impl NvExtension492Fn {
     #[inline]
@@ -24616,6 +24763,25 @@ pub struct ExtExtension499Fn {}
 unsafe impl Send for ExtExtension499Fn {}
 unsafe impl Sync for ExtExtension499Fn {}
 impl ExtExtension499Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl ExtExtension500Fn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_500\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct ExtExtension500Fn {}
+unsafe impl Send for ExtExtension500Fn {}
+unsafe impl Sync for ExtExtension500Fn {}
+impl ExtExtension500Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,

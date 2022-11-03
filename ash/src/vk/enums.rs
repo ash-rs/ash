@@ -1118,6 +1118,24 @@ impl ObjectType {
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkRayTracingInvocationReorderModeNV.html>"]
+pub struct RayTracingInvocationReorderModeNV(pub(crate) i32);
+impl RayTracingInvocationReorderModeNV {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl RayTracingInvocationReorderModeNV {
+    pub const NONE: Self = Self(0);
+    pub const REORDER: Self = Self(1);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSemaphoreType.html>"]
 pub struct SemaphoreType(pub(crate) i32);
 impl SemaphoreType {

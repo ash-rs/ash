@@ -2869,6 +2869,15 @@ impl fmt::Debug for MemoryAllocateFlags {
         debug_flags(f, KNOWN, self.0)
     }
 }
+impl fmt::Debug for MemoryDecompressionMethodFlagsNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags64, &str)] = &[(
+            MemoryDecompressionMethodFlagsNV::GDEFLATE_1_0.0,
+            "GDEFLATE_1_0",
+        )];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
 impl fmt::Debug for MemoryHeapFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
@@ -4052,6 +4061,20 @@ impl fmt::Debug for RasterizationOrderAMD {
         let name = match *self {
             Self::STRICT => Some("STRICT"),
             Self::RELAXED => Some("RELAXED"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
+impl fmt::Debug for RayTracingInvocationReorderModeNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::NONE => Some("NONE"),
+            Self::REORDER => Some("REORDER"),
             _ => None,
         };
         if let Some(x) = name {
@@ -5633,6 +5656,18 @@ impl fmt::Debug for StructureType {
             Self::SUBPASS_FRAGMENT_DENSITY_MAP_OFFSET_END_INFO_QCOM => {
                 Some("SUBPASS_FRAGMENT_DENSITY_MAP_OFFSET_END_INFO_QCOM")
             }
+            Self::PHYSICAL_DEVICE_COPY_MEMORY_INDIRECT_FEATURES_NV => {
+                Some("PHYSICAL_DEVICE_COPY_MEMORY_INDIRECT_FEATURES_NV")
+            }
+            Self::PHYSICAL_DEVICE_COPY_MEMORY_INDIRECT_PROPERTIES_NV => {
+                Some("PHYSICAL_DEVICE_COPY_MEMORY_INDIRECT_PROPERTIES_NV")
+            }
+            Self::PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_FEATURES_NV => {
+                Some("PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_FEATURES_NV")
+            }
+            Self::PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_PROPERTIES_NV => {
+                Some("PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_PROPERTIES_NV")
+            }
             Self::PHYSICAL_DEVICE_LINEAR_COLOR_ATTACHMENT_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_LINEAR_COLOR_ATTACHMENT_FEATURES_NV")
             }
@@ -5708,6 +5743,12 @@ impl fmt::Debug for StructureType {
                 Some("PHYSICAL_DEVICE_AMIGO_PROFILING_FEATURES_SEC")
             }
             Self::AMIGO_PROFILING_SUBMIT_INFO_SEC => Some("AMIGO_PROFILING_SUBMIT_INFO_SEC"),
+            Self::PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_FEATURES_NV => {
+                Some("PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_FEATURES_NV")
+            }
+            Self::PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_PROPERTIES_NV => {
+                Some("PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_PROPERTIES_NV")
+            }
             Self::PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_EXT")
             }

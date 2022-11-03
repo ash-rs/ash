@@ -923,6 +923,14 @@ impl PipelineCreationFeedbackFlags {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMemoryDecompressionMethodFlagBitsNV.html>"]
+pub struct MemoryDecompressionMethodFlagsNV(pub(crate) Flags64);
+vk_bitflags_wrapped!(MemoryDecompressionMethodFlagsNV, Flags64);
+impl MemoryDecompressionMethodFlagsNV {
+    pub const GDEFLATE_1_0: Self = Self(0b1);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPerformanceCounterDescriptionFlagBitsKHR.html>"]
 pub struct PerformanceCounterDescriptionFlagsKHR(pub(crate) Flags);
 vk_bitflags_wrapped!(PerformanceCounterDescriptionFlagsKHR, Flags);

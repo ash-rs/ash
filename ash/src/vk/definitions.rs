@@ -57,7 +57,7 @@ pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
-pub const HEADER_VERSION: u32 = 232u32;
+pub const HEADER_VERSION: u32 = 233u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -3012,6 +3012,76 @@ impl BufferImageCopy {
     #[inline]
     pub fn buffer_offset(mut self, buffer_offset: DeviceSize) -> Self {
         self.buffer_offset = buffer_offset;
+        self
+    }
+    #[inline]
+    pub fn buffer_row_length(mut self, buffer_row_length: u32) -> Self {
+        self.buffer_row_length = buffer_row_length;
+        self
+    }
+    #[inline]
+    pub fn buffer_image_height(mut self, buffer_image_height: u32) -> Self {
+        self.buffer_image_height = buffer_image_height;
+        self
+    }
+    #[inline]
+    pub fn image_subresource(mut self, image_subresource: ImageSubresourceLayers) -> Self {
+        self.image_subresource = image_subresource;
+        self
+    }
+    #[inline]
+    pub fn image_offset(mut self, image_offset: Offset3D) -> Self {
+        self.image_offset = image_offset;
+        self
+    }
+    #[inline]
+    pub fn image_extent(mut self, image_extent: Extent3D) -> Self {
+        self.image_extent = image_extent;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone, Default)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCopyMemoryIndirectCommandNV.html>"]
+pub struct CopyMemoryIndirectCommandNV {
+    pub src_address: DeviceAddress,
+    pub dst_address: DeviceAddress,
+    pub size: DeviceSize,
+}
+impl CopyMemoryIndirectCommandNV {
+    #[inline]
+    pub fn src_address(mut self, src_address: DeviceAddress) -> Self {
+        self.src_address = src_address;
+        self
+    }
+    #[inline]
+    pub fn dst_address(mut self, dst_address: DeviceAddress) -> Self {
+        self.dst_address = dst_address;
+        self
+    }
+    #[inline]
+    pub fn size(mut self, size: DeviceSize) -> Self {
+        self.size = size;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone, Default)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCopyMemoryToImageIndirectCommandNV.html>"]
+pub struct CopyMemoryToImageIndirectCommandNV {
+    pub src_address: DeviceAddress,
+    pub buffer_row_length: u32,
+    pub buffer_image_height: u32,
+    pub image_subresource: ImageSubresourceLayers,
+    pub image_offset: Offset3D,
+    pub image_extent: Extent3D,
+}
+impl CopyMemoryToImageIndirectCommandNV {
+    #[inline]
+    pub fn src_address(mut self, src_address: DeviceAddress) -> Self {
+        self.src_address = src_address;
         self
     }
     #[inline]
@@ -21756,6 +21826,153 @@ impl<'a> PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'a> {
         dedicated_allocation_image_aliasing: bool,
     ) -> Self {
         self.dedicated_allocation_image_aliasing = dedicated_allocation_image_aliasing.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceCopyMemoryIndirectFeaturesNV.html>"]
+pub struct PhysicalDeviceCopyMemoryIndirectFeaturesNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub indirect_copy: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            indirect_copy: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_COPY_MEMORY_INDIRECT_FEATURES_NV;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'_> {}
+impl<'a> PhysicalDeviceCopyMemoryIndirectFeaturesNV<'a> {
+    #[inline]
+    pub fn indirect_copy(mut self, indirect_copy: bool) -> Self {
+        self.indirect_copy = indirect_copy.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceCopyMemoryIndirectPropertiesNV.html>"]
+pub struct PhysicalDeviceCopyMemoryIndirectPropertiesNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub supported_queues: QueueFlags,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceCopyMemoryIndirectPropertiesNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            supported_queues: QueueFlags::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceCopyMemoryIndirectPropertiesNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_COPY_MEMORY_INDIRECT_PROPERTIES_NV;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceCopyMemoryIndirectPropertiesNV<'_> {}
+impl<'a> PhysicalDeviceCopyMemoryIndirectPropertiesNV<'a> {
+    #[inline]
+    pub fn supported_queues(mut self, supported_queues: QueueFlags) -> Self {
+        self.supported_queues = supported_queues;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceMemoryDecompressionFeaturesNV.html>"]
+pub struct PhysicalDeviceMemoryDecompressionFeaturesNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub memory_decompression: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceMemoryDecompressionFeaturesNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            memory_decompression: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceMemoryDecompressionFeaturesNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_FEATURES_NV;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMemoryDecompressionFeaturesNV<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMemoryDecompressionFeaturesNV<'_> {}
+impl<'a> PhysicalDeviceMemoryDecompressionFeaturesNV<'a> {
+    #[inline]
+    pub fn memory_decompression(mut self, memory_decompression: bool) -> Self {
+        self.memory_decompression = memory_decompression.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceMemoryDecompressionPropertiesNV.html>"]
+pub struct PhysicalDeviceMemoryDecompressionPropertiesNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub decompression_methods: MemoryDecompressionMethodFlagsNV,
+    pub max_decompression_indirect_count: u64,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceMemoryDecompressionPropertiesNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            decompression_methods: MemoryDecompressionMethodFlagsNV::default(),
+            max_decompression_indirect_count: u64::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceMemoryDecompressionPropertiesNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_PROPERTIES_NV;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMemoryDecompressionPropertiesNV<'_> {}
+impl<'a> PhysicalDeviceMemoryDecompressionPropertiesNV<'a> {
+    #[inline]
+    pub fn decompression_methods(
+        mut self,
+        decompression_methods: MemoryDecompressionMethodFlagsNV,
+    ) -> Self {
+        self.decompression_methods = decompression_methods;
+        self
+    }
+    #[inline]
+    pub fn max_decompression_indirect_count(
+        mut self,
+        max_decompression_indirect_count: u64,
+    ) -> Self {
+        self.max_decompression_indirect_count = max_decompression_indirect_count;
         self
     }
 }
@@ -45191,6 +45408,47 @@ impl DeviceFaultVendorBinaryHeaderVersionOneEXT {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone, Default)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDecompressMemoryRegionNV.html>"]
+pub struct DecompressMemoryRegionNV {
+    pub src_address: DeviceAddress,
+    pub dst_address: DeviceAddress,
+    pub compressed_size: DeviceSize,
+    pub decompressed_size: DeviceSize,
+    pub decompression_method: MemoryDecompressionMethodFlagsNV,
+}
+impl DecompressMemoryRegionNV {
+    #[inline]
+    pub fn src_address(mut self, src_address: DeviceAddress) -> Self {
+        self.src_address = src_address;
+        self
+    }
+    #[inline]
+    pub fn dst_address(mut self, dst_address: DeviceAddress) -> Self {
+        self.dst_address = dst_address;
+        self
+    }
+    #[inline]
+    pub fn compressed_size(mut self, compressed_size: DeviceSize) -> Self {
+        self.compressed_size = compressed_size;
+        self
+    }
+    #[inline]
+    pub fn decompressed_size(mut self, decompressed_size: DeviceSize) -> Self {
+        self.decompressed_size = decompressed_size;
+        self
+    }
+    #[inline]
+    pub fn decompression_method(
+        mut self,
+        decompression_method: MemoryDecompressionMethodFlagsNV,
+    ) -> Self {
+        self.decompression_method = decompression_method;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderCoreBuiltinsPropertiesARM.html>"]
 pub struct PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'a> {
@@ -45267,6 +45525,84 @@ impl<'a> PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a> {
     #[inline]
     pub fn shader_core_builtins(mut self, shader_core_builtins: bool) -> Self {
         self.shader_core_builtins = shader_core_builtins.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceRayTracingInvocationReorderFeaturesNV.html>"]
+pub struct PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub ray_tracing_invocation_reorder: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            ray_tracing_invocation_reorder: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_FEATURES_NV;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'_> {}
+impl<'a> PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'a> {
+    #[inline]
+    pub fn ray_tracing_invocation_reorder(mut self, ray_tracing_invocation_reorder: bool) -> Self {
+        self.ray_tracing_invocation_reorder = ray_tracing_invocation_reorder.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceRayTracingInvocationReorderPropertiesNV.html>"]
+pub struct PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub ray_tracing_invocation_reorder_reordering_hint: RayTracingInvocationReorderModeNV,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            ray_tracing_invocation_reorder_reordering_hint:
+                RayTracingInvocationReorderModeNV::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_PROPERTIES_NV;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'_>
+{
+}
+impl<'a> PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'a> {
+    #[inline]
+    pub fn ray_tracing_invocation_reorder_reordering_hint(
+        mut self,
+        ray_tracing_invocation_reorder_reordering_hint: RayTracingInvocationReorderModeNV,
+    ) -> Self {
+        self.ray_tracing_invocation_reorder_reordering_hint =
+            ray_tracing_invocation_reorder_reordering_hint;
         self
     }
 }
