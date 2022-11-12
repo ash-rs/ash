@@ -31,13 +31,11 @@ use winit::{
 #[macro_export]
 macro_rules! offset_of {
     ($base:path, $field:ident) => {{
-        #[allow(unused_unsafe)]
-        unsafe {
-            let b: $base = mem::zeroed();
-            (&b.$field as *const _ as isize) - (&b as *const _ as isize)
-        }
+        let b: std::mem::MaybeUninit<$base> = std::mem::MaybeUninit::uninit();
+        unsafe { std::ptr::addr_of!((*b.as_ptr()).$field) as isize - b.as_ptr() as isize }
     }};
 }
+
 /// Helper function for submitting command buffers. Immediately waits for the fence before the command buffer
 /// is executed. That way we can delay the waiting for the fences by 1 frame which is good for performance.
 /// Make sure to create the fence in a signaled state on the first use.
