@@ -1821,6 +1821,8 @@ impl DriverId {
     pub const MESA_VENUS: Self = Self(22);
     #[doc = "Mesa open source project"]
     pub const MESA_DOZEN: Self = Self(23);
+    #[doc = "Mesa open source project"]
+    pub const MESA_NVK: Self = Self(24);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]

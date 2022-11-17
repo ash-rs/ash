@@ -57,7 +57,7 @@ pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
-pub const HEADER_VERSION: u32 = 233u32;
+pub const HEADER_VERSION: u32 = 235u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -23464,6 +23464,7 @@ impl ::std::default::Default for AccelerationStructureCreateInfoNV<'_> {
 unsafe impl<'a> TaggedStructure for AccelerationStructureCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACCELERATION_STRUCTURE_CREATE_INFO_NV;
 }
+pub unsafe trait ExtendsAccelerationStructureCreateInfoNV {}
 impl<'a> AccelerationStructureCreateInfoNV<'a> {
     #[inline]
     pub fn compacted_size(mut self, compacted_size: DeviceSize) -> Self {
@@ -23473,6 +23474,23 @@ impl<'a> AccelerationStructureCreateInfoNV<'a> {
     #[inline]
     pub fn info(mut self, info: AccelerationStructureInfoNV<'a>) -> Self {
         self.info = info;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsAccelerationStructureCreateInfoNV>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        unsafe {
+            let next_ptr = <*const T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
         self
     }
 }
@@ -39662,6 +39680,872 @@ impl<'a> CuLaunchInfoNVX<'a> {
     pub fn extras(mut self, extras: &'a [*const c_void]) -> Self {
         self.extra_count = extras.len();
         self.p_extras = extras.as_ptr();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDescriptorBufferFeaturesEXT.html>"]
+pub struct PhysicalDeviceDescriptorBufferFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub descriptor_buffer: Bool32,
+    pub descriptor_buffer_capture_replay: Bool32,
+    pub descriptor_buffer_image_layout_ignored: Bool32,
+    pub descriptor_buffer_push_descriptors: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceDescriptorBufferFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            descriptor_buffer: Bool32::default(),
+            descriptor_buffer_capture_replay: Bool32::default(),
+            descriptor_buffer_image_layout_ignored: Bool32::default(),
+            descriptor_buffer_push_descriptors: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceDescriptorBufferFeaturesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_FEATURES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDescriptorBufferFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDescriptorBufferFeaturesEXT<'_> {}
+impl<'a> PhysicalDeviceDescriptorBufferFeaturesEXT<'a> {
+    #[inline]
+    pub fn descriptor_buffer(mut self, descriptor_buffer: bool) -> Self {
+        self.descriptor_buffer = descriptor_buffer.into();
+        self
+    }
+    #[inline]
+    pub fn descriptor_buffer_capture_replay(
+        mut self,
+        descriptor_buffer_capture_replay: bool,
+    ) -> Self {
+        self.descriptor_buffer_capture_replay = descriptor_buffer_capture_replay.into();
+        self
+    }
+    #[inline]
+    pub fn descriptor_buffer_image_layout_ignored(
+        mut self,
+        descriptor_buffer_image_layout_ignored: bool,
+    ) -> Self {
+        self.descriptor_buffer_image_layout_ignored = descriptor_buffer_image_layout_ignored.into();
+        self
+    }
+    #[inline]
+    pub fn descriptor_buffer_push_descriptors(
+        mut self,
+        descriptor_buffer_push_descriptors: bool,
+    ) -> Self {
+        self.descriptor_buffer_push_descriptors = descriptor_buffer_push_descriptors.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDescriptorBufferPropertiesEXT.html>"]
+pub struct PhysicalDeviceDescriptorBufferPropertiesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub combined_image_sampler_descriptor_single_array: Bool32,
+    pub bufferless_push_descriptors: Bool32,
+    pub allow_sampler_image_view_post_submit_creation: Bool32,
+    pub descriptor_buffer_offset_alignment: DeviceSize,
+    pub max_descriptor_buffer_bindings: u32,
+    pub max_resource_descriptor_buffer_bindings: u32,
+    pub max_sampler_descriptor_buffer_bindings: u32,
+    pub max_embedded_immutable_sampler_bindings: u32,
+    pub max_embedded_immutable_samplers: u32,
+    pub buffer_capture_replay_descriptor_data_size: usize,
+    pub image_capture_replay_descriptor_data_size: usize,
+    pub image_view_capture_replay_descriptor_data_size: usize,
+    pub sampler_capture_replay_descriptor_data_size: usize,
+    pub acceleration_structure_capture_replay_descriptor_data_size: usize,
+    pub sampler_descriptor_size: usize,
+    pub combined_image_sampler_descriptor_size: usize,
+    pub sampled_image_descriptor_size: usize,
+    pub storage_image_descriptor_size: usize,
+    pub uniform_texel_buffer_descriptor_size: usize,
+    pub robust_uniform_texel_buffer_descriptor_size: usize,
+    pub storage_texel_buffer_descriptor_size: usize,
+    pub robust_storage_texel_buffer_descriptor_size: usize,
+    pub uniform_buffer_descriptor_size: usize,
+    pub robust_uniform_buffer_descriptor_size: usize,
+    pub storage_buffer_descriptor_size: usize,
+    pub robust_storage_buffer_descriptor_size: usize,
+    pub input_attachment_descriptor_size: usize,
+    pub acceleration_structure_descriptor_size: usize,
+    pub max_sampler_descriptor_buffer_range: DeviceSize,
+    pub max_resource_descriptor_buffer_range: DeviceSize,
+    pub sampler_descriptor_buffer_address_space_size: DeviceSize,
+    pub resource_descriptor_buffer_address_space_size: DeviceSize,
+    pub descriptor_buffer_address_space_size: DeviceSize,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceDescriptorBufferPropertiesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            combined_image_sampler_descriptor_single_array: Bool32::default(),
+            bufferless_push_descriptors: Bool32::default(),
+            allow_sampler_image_view_post_submit_creation: Bool32::default(),
+            descriptor_buffer_offset_alignment: DeviceSize::default(),
+            max_descriptor_buffer_bindings: u32::default(),
+            max_resource_descriptor_buffer_bindings: u32::default(),
+            max_sampler_descriptor_buffer_bindings: u32::default(),
+            max_embedded_immutable_sampler_bindings: u32::default(),
+            max_embedded_immutable_samplers: u32::default(),
+            buffer_capture_replay_descriptor_data_size: usize::default(),
+            image_capture_replay_descriptor_data_size: usize::default(),
+            image_view_capture_replay_descriptor_data_size: usize::default(),
+            sampler_capture_replay_descriptor_data_size: usize::default(),
+            acceleration_structure_capture_replay_descriptor_data_size: usize::default(),
+            sampler_descriptor_size: usize::default(),
+            combined_image_sampler_descriptor_size: usize::default(),
+            sampled_image_descriptor_size: usize::default(),
+            storage_image_descriptor_size: usize::default(),
+            uniform_texel_buffer_descriptor_size: usize::default(),
+            robust_uniform_texel_buffer_descriptor_size: usize::default(),
+            storage_texel_buffer_descriptor_size: usize::default(),
+            robust_storage_texel_buffer_descriptor_size: usize::default(),
+            uniform_buffer_descriptor_size: usize::default(),
+            robust_uniform_buffer_descriptor_size: usize::default(),
+            storage_buffer_descriptor_size: usize::default(),
+            robust_storage_buffer_descriptor_size: usize::default(),
+            input_attachment_descriptor_size: usize::default(),
+            acceleration_structure_descriptor_size: usize::default(),
+            max_sampler_descriptor_buffer_range: DeviceSize::default(),
+            max_resource_descriptor_buffer_range: DeviceSize::default(),
+            sampler_descriptor_buffer_address_space_size: DeviceSize::default(),
+            resource_descriptor_buffer_address_space_size: DeviceSize::default(),
+            descriptor_buffer_address_space_size: DeviceSize::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceDescriptorBufferPropertiesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_PROPERTIES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDescriptorBufferPropertiesEXT<'_> {}
+impl<'a> PhysicalDeviceDescriptorBufferPropertiesEXT<'a> {
+    #[inline]
+    pub fn combined_image_sampler_descriptor_single_array(
+        mut self,
+        combined_image_sampler_descriptor_single_array: bool,
+    ) -> Self {
+        self.combined_image_sampler_descriptor_single_array =
+            combined_image_sampler_descriptor_single_array.into();
+        self
+    }
+    #[inline]
+    pub fn bufferless_push_descriptors(mut self, bufferless_push_descriptors: bool) -> Self {
+        self.bufferless_push_descriptors = bufferless_push_descriptors.into();
+        self
+    }
+    #[inline]
+    pub fn allow_sampler_image_view_post_submit_creation(
+        mut self,
+        allow_sampler_image_view_post_submit_creation: bool,
+    ) -> Self {
+        self.allow_sampler_image_view_post_submit_creation =
+            allow_sampler_image_view_post_submit_creation.into();
+        self
+    }
+    #[inline]
+    pub fn descriptor_buffer_offset_alignment(
+        mut self,
+        descriptor_buffer_offset_alignment: DeviceSize,
+    ) -> Self {
+        self.descriptor_buffer_offset_alignment = descriptor_buffer_offset_alignment;
+        self
+    }
+    #[inline]
+    pub fn max_descriptor_buffer_bindings(mut self, max_descriptor_buffer_bindings: u32) -> Self {
+        self.max_descriptor_buffer_bindings = max_descriptor_buffer_bindings;
+        self
+    }
+    #[inline]
+    pub fn max_resource_descriptor_buffer_bindings(
+        mut self,
+        max_resource_descriptor_buffer_bindings: u32,
+    ) -> Self {
+        self.max_resource_descriptor_buffer_bindings = max_resource_descriptor_buffer_bindings;
+        self
+    }
+    #[inline]
+    pub fn max_sampler_descriptor_buffer_bindings(
+        mut self,
+        max_sampler_descriptor_buffer_bindings: u32,
+    ) -> Self {
+        self.max_sampler_descriptor_buffer_bindings = max_sampler_descriptor_buffer_bindings;
+        self
+    }
+    #[inline]
+    pub fn max_embedded_immutable_sampler_bindings(
+        mut self,
+        max_embedded_immutable_sampler_bindings: u32,
+    ) -> Self {
+        self.max_embedded_immutable_sampler_bindings = max_embedded_immutable_sampler_bindings;
+        self
+    }
+    #[inline]
+    pub fn max_embedded_immutable_samplers(mut self, max_embedded_immutable_samplers: u32) -> Self {
+        self.max_embedded_immutable_samplers = max_embedded_immutable_samplers;
+        self
+    }
+    #[inline]
+    pub fn buffer_capture_replay_descriptor_data_size(
+        mut self,
+        buffer_capture_replay_descriptor_data_size: usize,
+    ) -> Self {
+        self.buffer_capture_replay_descriptor_data_size =
+            buffer_capture_replay_descriptor_data_size;
+        self
+    }
+    #[inline]
+    pub fn image_capture_replay_descriptor_data_size(
+        mut self,
+        image_capture_replay_descriptor_data_size: usize,
+    ) -> Self {
+        self.image_capture_replay_descriptor_data_size = image_capture_replay_descriptor_data_size;
+        self
+    }
+    #[inline]
+    pub fn image_view_capture_replay_descriptor_data_size(
+        mut self,
+        image_view_capture_replay_descriptor_data_size: usize,
+    ) -> Self {
+        self.image_view_capture_replay_descriptor_data_size =
+            image_view_capture_replay_descriptor_data_size;
+        self
+    }
+    #[inline]
+    pub fn sampler_capture_replay_descriptor_data_size(
+        mut self,
+        sampler_capture_replay_descriptor_data_size: usize,
+    ) -> Self {
+        self.sampler_capture_replay_descriptor_data_size =
+            sampler_capture_replay_descriptor_data_size;
+        self
+    }
+    #[inline]
+    pub fn acceleration_structure_capture_replay_descriptor_data_size(
+        mut self,
+        acceleration_structure_capture_replay_descriptor_data_size: usize,
+    ) -> Self {
+        self.acceleration_structure_capture_replay_descriptor_data_size =
+            acceleration_structure_capture_replay_descriptor_data_size;
+        self
+    }
+    #[inline]
+    pub fn sampler_descriptor_size(mut self, sampler_descriptor_size: usize) -> Self {
+        self.sampler_descriptor_size = sampler_descriptor_size;
+        self
+    }
+    #[inline]
+    pub fn combined_image_sampler_descriptor_size(
+        mut self,
+        combined_image_sampler_descriptor_size: usize,
+    ) -> Self {
+        self.combined_image_sampler_descriptor_size = combined_image_sampler_descriptor_size;
+        self
+    }
+    #[inline]
+    pub fn sampled_image_descriptor_size(mut self, sampled_image_descriptor_size: usize) -> Self {
+        self.sampled_image_descriptor_size = sampled_image_descriptor_size;
+        self
+    }
+    #[inline]
+    pub fn storage_image_descriptor_size(mut self, storage_image_descriptor_size: usize) -> Self {
+        self.storage_image_descriptor_size = storage_image_descriptor_size;
+        self
+    }
+    #[inline]
+    pub fn uniform_texel_buffer_descriptor_size(
+        mut self,
+        uniform_texel_buffer_descriptor_size: usize,
+    ) -> Self {
+        self.uniform_texel_buffer_descriptor_size = uniform_texel_buffer_descriptor_size;
+        self
+    }
+    #[inline]
+    pub fn robust_uniform_texel_buffer_descriptor_size(
+        mut self,
+        robust_uniform_texel_buffer_descriptor_size: usize,
+    ) -> Self {
+        self.robust_uniform_texel_buffer_descriptor_size =
+            robust_uniform_texel_buffer_descriptor_size;
+        self
+    }
+    #[inline]
+    pub fn storage_texel_buffer_descriptor_size(
+        mut self,
+        storage_texel_buffer_descriptor_size: usize,
+    ) -> Self {
+        self.storage_texel_buffer_descriptor_size = storage_texel_buffer_descriptor_size;
+        self
+    }
+    #[inline]
+    pub fn robust_storage_texel_buffer_descriptor_size(
+        mut self,
+        robust_storage_texel_buffer_descriptor_size: usize,
+    ) -> Self {
+        self.robust_storage_texel_buffer_descriptor_size =
+            robust_storage_texel_buffer_descriptor_size;
+        self
+    }
+    #[inline]
+    pub fn uniform_buffer_descriptor_size(mut self, uniform_buffer_descriptor_size: usize) -> Self {
+        self.uniform_buffer_descriptor_size = uniform_buffer_descriptor_size;
+        self
+    }
+    #[inline]
+    pub fn robust_uniform_buffer_descriptor_size(
+        mut self,
+        robust_uniform_buffer_descriptor_size: usize,
+    ) -> Self {
+        self.robust_uniform_buffer_descriptor_size = robust_uniform_buffer_descriptor_size;
+        self
+    }
+    #[inline]
+    pub fn storage_buffer_descriptor_size(mut self, storage_buffer_descriptor_size: usize) -> Self {
+        self.storage_buffer_descriptor_size = storage_buffer_descriptor_size;
+        self
+    }
+    #[inline]
+    pub fn robust_storage_buffer_descriptor_size(
+        mut self,
+        robust_storage_buffer_descriptor_size: usize,
+    ) -> Self {
+        self.robust_storage_buffer_descriptor_size = robust_storage_buffer_descriptor_size;
+        self
+    }
+    #[inline]
+    pub fn input_attachment_descriptor_size(
+        mut self,
+        input_attachment_descriptor_size: usize,
+    ) -> Self {
+        self.input_attachment_descriptor_size = input_attachment_descriptor_size;
+        self
+    }
+    #[inline]
+    pub fn acceleration_structure_descriptor_size(
+        mut self,
+        acceleration_structure_descriptor_size: usize,
+    ) -> Self {
+        self.acceleration_structure_descriptor_size = acceleration_structure_descriptor_size;
+        self
+    }
+    #[inline]
+    pub fn max_sampler_descriptor_buffer_range(
+        mut self,
+        max_sampler_descriptor_buffer_range: DeviceSize,
+    ) -> Self {
+        self.max_sampler_descriptor_buffer_range = max_sampler_descriptor_buffer_range;
+        self
+    }
+    #[inline]
+    pub fn max_resource_descriptor_buffer_range(
+        mut self,
+        max_resource_descriptor_buffer_range: DeviceSize,
+    ) -> Self {
+        self.max_resource_descriptor_buffer_range = max_resource_descriptor_buffer_range;
+        self
+    }
+    #[inline]
+    pub fn sampler_descriptor_buffer_address_space_size(
+        mut self,
+        sampler_descriptor_buffer_address_space_size: DeviceSize,
+    ) -> Self {
+        self.sampler_descriptor_buffer_address_space_size =
+            sampler_descriptor_buffer_address_space_size;
+        self
+    }
+    #[inline]
+    pub fn resource_descriptor_buffer_address_space_size(
+        mut self,
+        resource_descriptor_buffer_address_space_size: DeviceSize,
+    ) -> Self {
+        self.resource_descriptor_buffer_address_space_size =
+            resource_descriptor_buffer_address_space_size;
+        self
+    }
+    #[inline]
+    pub fn descriptor_buffer_address_space_size(
+        mut self,
+        descriptor_buffer_address_space_size: DeviceSize,
+    ) -> Self {
+        self.descriptor_buffer_address_space_size = descriptor_buffer_address_space_size;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDescriptorBufferDensityMapPropertiesEXT.html>"]
+pub struct PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub combined_image_sampler_density_map_descriptor_size: usize,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            combined_image_sampler_density_map_descriptor_size: usize::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_DENSITY_MAP_PROPERTIES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'_>
+{
+}
+impl<'a> PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'a> {
+    #[inline]
+    pub fn combined_image_sampler_density_map_descriptor_size(
+        mut self,
+        combined_image_sampler_density_map_descriptor_size: usize,
+    ) -> Self {
+        self.combined_image_sampler_density_map_descriptor_size =
+            combined_image_sampler_density_map_descriptor_size;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDescriptorAddressInfoEXT.html>"]
+pub struct DescriptorAddressInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub address: DeviceAddress,
+    pub range: DeviceSize,
+    pub format: Format,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for DescriptorAddressInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            address: DeviceAddress::default(),
+            range: DeviceSize::default(),
+            format: Format::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for DescriptorAddressInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_ADDRESS_INFO_EXT;
+}
+impl<'a> DescriptorAddressInfoEXT<'a> {
+    #[inline]
+    pub fn address(mut self, address: DeviceAddress) -> Self {
+        self.address = address;
+        self
+    }
+    #[inline]
+    pub fn range(mut self, range: DeviceSize) -> Self {
+        self.range = range;
+        self
+    }
+    #[inline]
+    pub fn format(mut self, format: Format) -> Self {
+        self.format = format;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDescriptorBufferBindingInfoEXT.html>"]
+pub struct DescriptorBufferBindingInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub address: DeviceAddress,
+    pub usage: BufferUsageFlags,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for DescriptorBufferBindingInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            address: DeviceAddress::default(),
+            usage: BufferUsageFlags::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for DescriptorBufferBindingInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_BUFFER_BINDING_INFO_EXT;
+}
+pub unsafe trait ExtendsDescriptorBufferBindingInfoEXT {}
+impl<'a> DescriptorBufferBindingInfoEXT<'a> {
+    #[inline]
+    pub fn address(mut self, address: DeviceAddress) -> Self {
+        self.address = address;
+        self
+    }
+    #[inline]
+    pub fn usage(mut self, usage: BufferUsageFlags) -> Self {
+        self.usage = usage;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDescriptorBufferBindingInfoEXT>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = <*mut T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDescriptorBufferBindingPushDescriptorBufferHandleEXT.html>"]
+pub struct DescriptorBufferBindingPushDescriptorBufferHandleEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub buffer: Buffer,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for DescriptorBufferBindingPushDescriptorBufferHandleEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            buffer: Buffer::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for DescriptorBufferBindingPushDescriptorBufferHandleEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::DESCRIPTOR_BUFFER_BINDING_PUSH_DESCRIPTOR_BUFFER_HANDLE_EXT;
+}
+unsafe impl ExtendsDescriptorBufferBindingInfoEXT
+    for DescriptorBufferBindingPushDescriptorBufferHandleEXT<'_>
+{
+}
+impl<'a> DescriptorBufferBindingPushDescriptorBufferHandleEXT<'a> {
+    #[inline]
+    pub fn buffer(mut self, buffer: Buffer) -> Self {
+        self.buffer = buffer;
+        self
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDescriptorDataEXT.html>"]
+pub union DescriptorDataEXT<'a> {
+    pub p_sampler: *const Sampler,
+    pub p_combined_image_sampler: *const DescriptorImageInfo,
+    pub p_input_attachment_image: *const DescriptorImageInfo,
+    pub p_sampled_image: *const DescriptorImageInfo,
+    pub p_storage_image: *const DescriptorImageInfo,
+    pub p_uniform_texel_buffer: *const DescriptorAddressInfoEXT<'a>,
+    pub p_storage_texel_buffer: *const DescriptorAddressInfoEXT<'a>,
+    pub p_uniform_buffer: *const DescriptorAddressInfoEXT<'a>,
+    pub p_storage_buffer: *const DescriptorAddressInfoEXT<'a>,
+    pub acceleration_structure: DeviceAddress,
+}
+impl<'a> ::std::default::Default for DescriptorDataEXT<'a> {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDescriptorGetInfoEXT.html>"]
+pub struct DescriptorGetInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub ty: DescriptorType,
+    pub data: DescriptorDataEXT<'a>,
+    pub _marker: PhantomData<&'a ()>,
+}
+#[cfg(feature = "debug")]
+impl fmt::Debug for DescriptorGetInfoEXT<'_> {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+        fmt.debug_struct("DescriptorGetInfoEXT")
+            .field("s_type", &self.s_type)
+            .field("p_next", &self.p_next)
+            .field("ty", &self.ty)
+            .field("data", &"union")
+            .finish()
+    }
+}
+impl ::std::default::Default for DescriptorGetInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            ty: DescriptorType::default(),
+            data: DescriptorDataEXT::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for DescriptorGetInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_GET_INFO_EXT;
+}
+impl<'a> DescriptorGetInfoEXT<'a> {
+    #[inline]
+    pub fn ty(mut self, ty: DescriptorType) -> Self {
+        self.ty = ty;
+        self
+    }
+    #[inline]
+    pub fn data(mut self, data: DescriptorDataEXT<'a>) -> Self {
+        self.data = data;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkBufferCaptureDescriptorDataInfoEXT.html>"]
+pub struct BufferCaptureDescriptorDataInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub buffer: Buffer,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for BufferCaptureDescriptorDataInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            buffer: Buffer::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for BufferCaptureDescriptorDataInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_CAPTURE_DESCRIPTOR_DATA_INFO_EXT;
+}
+impl<'a> BufferCaptureDescriptorDataInfoEXT<'a> {
+    #[inline]
+    pub fn buffer(mut self, buffer: Buffer) -> Self {
+        self.buffer = buffer;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImageCaptureDescriptorDataInfoEXT.html>"]
+pub struct ImageCaptureDescriptorDataInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub image: Image,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ImageCaptureDescriptorDataInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            image: Image::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for ImageCaptureDescriptorDataInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_CAPTURE_DESCRIPTOR_DATA_INFO_EXT;
+}
+impl<'a> ImageCaptureDescriptorDataInfoEXT<'a> {
+    #[inline]
+    pub fn image(mut self, image: Image) -> Self {
+        self.image = image;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImageViewCaptureDescriptorDataInfoEXT.html>"]
+pub struct ImageViewCaptureDescriptorDataInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub image_view: ImageView,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ImageViewCaptureDescriptorDataInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            image_view: ImageView::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for ImageViewCaptureDescriptorDataInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::IMAGE_VIEW_CAPTURE_DESCRIPTOR_DATA_INFO_EXT;
+}
+impl<'a> ImageViewCaptureDescriptorDataInfoEXT<'a> {
+    #[inline]
+    pub fn image_view(mut self, image_view: ImageView) -> Self {
+        self.image_view = image_view;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSamplerCaptureDescriptorDataInfoEXT.html>"]
+pub struct SamplerCaptureDescriptorDataInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub sampler: Sampler,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for SamplerCaptureDescriptorDataInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            sampler: Sampler::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for SamplerCaptureDescriptorDataInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::SAMPLER_CAPTURE_DESCRIPTOR_DATA_INFO_EXT;
+}
+impl<'a> SamplerCaptureDescriptorDataInfoEXT<'a> {
+    #[inline]
+    pub fn sampler(mut self, sampler: Sampler) -> Self {
+        self.sampler = sampler;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureCaptureDescriptorDataInfoEXT.html>"]
+pub struct AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub acceleration_structure: AccelerationStructureKHR,
+    pub acceleration_structure_nv: AccelerationStructureNV,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for AccelerationStructureCaptureDescriptorDataInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            acceleration_structure: AccelerationStructureKHR::default(),
+            acceleration_structure_nv: AccelerationStructureNV::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::ACCELERATION_STRUCTURE_CAPTURE_DESCRIPTOR_DATA_INFO_EXT;
+}
+impl<'a> AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {
+    #[inline]
+    pub fn acceleration_structure(
+        mut self,
+        acceleration_structure: AccelerationStructureKHR,
+    ) -> Self {
+        self.acceleration_structure = acceleration_structure;
+        self
+    }
+    #[inline]
+    pub fn acceleration_structure_nv(
+        mut self,
+        acceleration_structure_nv: AccelerationStructureNV,
+    ) -> Self {
+        self.acceleration_structure_nv = acceleration_structure_nv;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkOpaqueCaptureDescriptorDataCreateInfoEXT.html>"]
+pub struct OpaqueCaptureDescriptorDataCreateInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub opaque_capture_descriptor_data: *const c_void,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            opaque_capture_descriptor_data: ::std::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for OpaqueCaptureDescriptorDataCreateInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::OPAQUE_CAPTURE_DESCRIPTOR_DATA_CREATE_INFO_EXT;
+}
+unsafe impl ExtendsBufferCreateInfo for OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {}
+unsafe impl ExtendsImageCreateInfo for OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {}
+unsafe impl ExtendsImageViewCreateInfo for OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {}
+unsafe impl ExtendsSamplerCreateInfo for OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {}
+unsafe impl ExtendsAccelerationStructureCreateInfoKHR
+    for OpaqueCaptureDescriptorDataCreateInfoEXT<'_>
+{
+}
+unsafe impl ExtendsAccelerationStructureCreateInfoNV
+    for OpaqueCaptureDescriptorDataCreateInfoEXT<'_>
+{
+}
+impl<'a> OpaqueCaptureDescriptorDataCreateInfoEXT<'a> {
+    #[inline]
+    pub fn opaque_capture_descriptor_data(
+        mut self,
+        opaque_capture_descriptor_data: *const c_void,
+    ) -> Self {
+        self.opaque_capture_descriptor_data = opaque_capture_descriptor_data;
         self
     }
 }

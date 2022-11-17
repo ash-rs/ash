@@ -40,8 +40,8 @@ impl fmt::Debug for AccelerationStructureCreateFlagsKHR {
                 "DEVICE_ADDRESS_CAPTURE_REPLAY",
             ),
             (
-                AccelerationStructureCreateFlagsKHR::RESERVED_3_AMD.0,
-                "RESERVED_3_AMD",
+                AccelerationStructureCreateFlagsKHR::DESCRIPTOR_BUFFER_CAPTURE_REPLAY_EXT.0,
+                "DESCRIPTOR_BUFFER_CAPTURE_REPLAY_EXT",
             ),
             (
                 AccelerationStructureCreateFlagsKHR::MOTION_NV.0,
@@ -304,7 +304,10 @@ impl fmt::Debug for AccessFlags2 {
                 AccessFlags2::COLOR_ATTACHMENT_READ_NONCOHERENT_EXT.0,
                 "COLOR_ATTACHMENT_READ_NONCOHERENT_EXT",
             ),
-            (AccessFlags2::RESERVED_41_AMD.0, "RESERVED_41_AMD"),
+            (
+                AccessFlags2::DESCRIPTOR_BUFFER_READ_EXT.0,
+                "DESCRIPTOR_BUFFER_READ_EXT",
+            ),
             (
                 AccessFlags2::INVOCATION_MASK_READ_HUAWEI.0,
                 "INVOCATION_MASK_READ_HUAWEI",
@@ -508,7 +511,10 @@ impl fmt::Debug for BufferCreateFlags {
             (BufferCreateFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
             (BufferCreateFlags::SPARSE_RESIDENCY.0, "SPARSE_RESIDENCY"),
             (BufferCreateFlags::SPARSE_ALIASED.0, "SPARSE_ALIASED"),
-            (BufferCreateFlags::RESERVED_5_AMD.0, "RESERVED_5_AMD"),
+            (
+                BufferCreateFlags::DESCRIPTOR_BUFFER_CAPTURE_REPLAY_EXT.0,
+                "DESCRIPTOR_BUFFER_CAPTURE_REPLAY_EXT",
+            ),
             (BufferCreateFlags::PROTECTED.0, "PROTECTED"),
             (
                 BufferCreateFlags::DEVICE_ADDRESS_CAPTURE_REPLAY.0,
@@ -578,8 +584,18 @@ impl fmt::Debug for BufferUsageFlags {
                 BufferUsageFlags::VIDEO_ENCODE_SRC_KHR.0,
                 "VIDEO_ENCODE_SRC_KHR",
             ),
-            (BufferUsageFlags::RESERVED_21_AMD.0, "RESERVED_21_AMD"),
-            (BufferUsageFlags::RESERVED_22_AMD.0, "RESERVED_22_AMD"),
+            (
+                BufferUsageFlags::SAMPLER_DESCRIPTOR_BUFFER_EXT.0,
+                "SAMPLER_DESCRIPTOR_BUFFER_EXT",
+            ),
+            (
+                BufferUsageFlags::RESOURCE_DESCRIPTOR_BUFFER_EXT.0,
+                "RESOURCE_DESCRIPTOR_BUFFER_EXT",
+            ),
+            (
+                BufferUsageFlags::PUSH_DESCRIPTORS_DESCRIPTOR_BUFFER_EXT.0,
+                "PUSH_DESCRIPTORS_DESCRIPTOR_BUFFER_EXT",
+            ),
             (
                 BufferUsageFlags::MICROMAP_BUILD_INPUT_READ_ONLY_EXT.0,
                 "MICROMAP_BUILD_INPUT_READ_ONLY_EXT",
@@ -1173,12 +1189,12 @@ impl fmt::Debug for DescriptorSetLayoutCreateFlags {
                 "PUSH_DESCRIPTOR_KHR",
             ),
             (
-                DescriptorSetLayoutCreateFlags::RESERVED_4_AMD.0,
-                "RESERVED_4_AMD",
+                DescriptorSetLayoutCreateFlags::DESCRIPTOR_BUFFER_EXT.0,
+                "DESCRIPTOR_BUFFER_EXT",
             ),
             (
-                DescriptorSetLayoutCreateFlags::RESERVED_5_AMD.0,
-                "RESERVED_5_AMD",
+                DescriptorSetLayoutCreateFlags::EMBEDDED_IMMUTABLE_SAMPLERS_EXT.0,
+                "EMBEDDED_IMMUTABLE_SAMPLERS_EXT",
             ),
             (
                 DescriptorSetLayoutCreateFlags::RESERVED_3_AMD.0,
@@ -1488,6 +1504,7 @@ impl fmt::Debug for DriverId {
             Self::SAMSUNG_PROPRIETARY => Some("SAMSUNG_PROPRIETARY"),
             Self::MESA_VENUS => Some("MESA_VENUS"),
             Self::MESA_DOZEN => Some("MESA_DOZEN"),
+            Self::MESA_NVK => Some("MESA_NVK"),
             _ => None,
         };
         if let Some(x) = name {
@@ -2493,7 +2510,10 @@ impl fmt::Debug for ImageCreateFlags {
             ),
             (ImageCreateFlags::SUBSAMPLED_EXT.0, "SUBSAMPLED_EXT"),
             (ImageCreateFlags::RESERVED_19_EXT.0, "RESERVED_19_EXT"),
-            (ImageCreateFlags::RESERVED_16_AMD.0, "RESERVED_16_AMD"),
+            (
+                ImageCreateFlags::DESCRIPTOR_BUFFER_CAPTURE_REPLAY_EXT.0,
+                "DESCRIPTOR_BUFFER_CAPTURE_REPLAY_EXT",
+            ),
             (
                 ImageCreateFlags::MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_EXT.0,
                 "MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_EXT",
@@ -2692,7 +2712,10 @@ impl fmt::Debug for ImageViewCreateFlags {
                 ImageViewCreateFlags::FRAGMENT_DENSITY_MAP_DYNAMIC_EXT.0,
                 "FRAGMENT_DENSITY_MAP_DYNAMIC_EXT",
             ),
-            (ImageViewCreateFlags::RESERVED_2_AMD.0, "RESERVED_2_AMD"),
+            (
+                ImageViewCreateFlags::DESCRIPTOR_BUFFER_CAPTURE_REPLAY_EXT.0,
+                "DESCRIPTOR_BUFFER_CAPTURE_REPLAY_EXT",
+            ),
             (
                 ImageViewCreateFlags::FRAGMENT_DENSITY_MAP_DEFERRED_EXT.0,
                 "FRAGMENT_DENSITY_MAP_DEFERRED_EXT",
@@ -3383,7 +3406,10 @@ impl fmt::Debug for PipelineCreateFlags {
                 "INDIRECT_BINDABLE_NV",
             ),
             (PipelineCreateFlags::LIBRARY_KHR.0, "LIBRARY_KHR"),
-            (PipelineCreateFlags::RESERVED_29_AMD.0, "RESERVED_29_AMD"),
+            (
+                PipelineCreateFlags::DESCRIPTOR_BUFFER_EXT.0,
+                "DESCRIPTOR_BUFFER_EXT",
+            ),
             (
                 PipelineCreateFlags::RETAIN_LINK_TIME_OPTIMIZATION_INFO_EXT.0,
                 "RETAIN_LINK_TIME_OPTIMIZATION_INFO_EXT",
@@ -3752,6 +3778,10 @@ impl fmt::Debug for PipelineStageFlags2 {
             (
                 PipelineStageFlags2::MICROMAP_BUILD_EXT.0,
                 "MICROMAP_BUILD_EXT",
+            ),
+            (
+                PipelineStageFlags2::RESEVED_41_HUAWEI.0,
+                "RESEVED_41_HUAWEI",
             ),
             (PipelineStageFlags2::OPTICAL_FLOW_NV.0, "OPTICAL_FLOW_NV"),
         ];
@@ -4176,7 +4206,10 @@ impl fmt::Debug for SamplerCreateFlags {
                 SamplerCreateFlags::SUBSAMPLED_COARSE_RECONSTRUCTION_EXT.0,
                 "SUBSAMPLED_COARSE_RECONSTRUCTION_EXT",
             ),
-            (SamplerCreateFlags::RESERVED_3_AMD.0, "RESERVED_3_AMD"),
+            (
+                SamplerCreateFlags::DESCRIPTOR_BUFFER_CAPTURE_REPLAY_EXT.0,
+                "DESCRIPTOR_BUFFER_CAPTURE_REPLAY_EXT",
+            ),
             (
                 SamplerCreateFlags::NON_SEAMLESS_CUBE_MAP_EXT.0,
                 "NON_SEAMLESS_CUBE_MAP_EXT",
@@ -4390,6 +4423,7 @@ impl fmt::Debug for ShaderStageFlags {
                 ShaderStageFlags::SUBPASS_SHADING_HUAWEI.0,
                 "SUBPASS_SHADING_HUAWEI",
             ),
+            (ShaderStageFlags::RESERVED_19_HUAWEI.0, "RESERVED_19_HUAWEI"),
             (ShaderStageFlags::EXT_483_RESERVE_15.0, "EXT_483_RESERVE_15"),
             (ShaderStageFlags::EXT_483_RESERVE_16.0, "EXT_483_RESERVE_16"),
             (ShaderStageFlags::EXT_483_RESERVE_17.0, "EXT_483_RESERVE_17"),
@@ -5407,6 +5441,39 @@ impl fmt::Debug for StructureType {
                 Some("QUEUE_FAMILY_CHECKPOINT_PROPERTIES_2_NV")
             }
             Self::CHECKPOINT_DATA_2_NV => Some("CHECKPOINT_DATA_2_NV"),
+            Self::PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_PROPERTIES_EXT => {
+                Some("PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_PROPERTIES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_DENSITY_MAP_PROPERTIES_EXT => {
+                Some("PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_DENSITY_MAP_PROPERTIES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_FEATURES_EXT")
+            }
+            Self::DESCRIPTOR_ADDRESS_INFO_EXT => Some("DESCRIPTOR_ADDRESS_INFO_EXT"),
+            Self::DESCRIPTOR_GET_INFO_EXT => Some("DESCRIPTOR_GET_INFO_EXT"),
+            Self::BUFFER_CAPTURE_DESCRIPTOR_DATA_INFO_EXT => {
+                Some("BUFFER_CAPTURE_DESCRIPTOR_DATA_INFO_EXT")
+            }
+            Self::IMAGE_CAPTURE_DESCRIPTOR_DATA_INFO_EXT => {
+                Some("IMAGE_CAPTURE_DESCRIPTOR_DATA_INFO_EXT")
+            }
+            Self::IMAGE_VIEW_CAPTURE_DESCRIPTOR_DATA_INFO_EXT => {
+                Some("IMAGE_VIEW_CAPTURE_DESCRIPTOR_DATA_INFO_EXT")
+            }
+            Self::SAMPLER_CAPTURE_DESCRIPTOR_DATA_INFO_EXT => {
+                Some("SAMPLER_CAPTURE_DESCRIPTOR_DATA_INFO_EXT")
+            }
+            Self::OPAQUE_CAPTURE_DESCRIPTOR_DATA_CREATE_INFO_EXT => {
+                Some("OPAQUE_CAPTURE_DESCRIPTOR_DATA_CREATE_INFO_EXT")
+            }
+            Self::DESCRIPTOR_BUFFER_BINDING_INFO_EXT => Some("DESCRIPTOR_BUFFER_BINDING_INFO_EXT"),
+            Self::DESCRIPTOR_BUFFER_BINDING_PUSH_DESCRIPTOR_BUFFER_HANDLE_EXT => {
+                Some("DESCRIPTOR_BUFFER_BINDING_PUSH_DESCRIPTOR_BUFFER_HANDLE_EXT")
+            }
+            Self::ACCELERATION_STRUCTURE_CAPTURE_DESCRIPTOR_DATA_INFO_EXT => {
+                Some("ACCELERATION_STRUCTURE_CAPTURE_DESCRIPTOR_DATA_INFO_EXT")
+            }
             Self::PHYSICAL_DEVICE_GRAPHICS_PIPELINE_LIBRARY_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_GRAPHICS_PIPELINE_LIBRARY_FEATURES_EXT")
             }

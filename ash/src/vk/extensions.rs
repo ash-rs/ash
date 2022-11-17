@@ -17361,62 +17361,409 @@ impl AmdExtension316Fn {
         Self {}
     }
 }
-impl AmdExtension317Fn {
+impl ExtDescriptorBufferFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_317\0") }
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_descriptor_buffer\0") }
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetDescriptorSetLayoutSizeEXT = unsafe extern "system" fn(
+    device: Device,
+    layout: DescriptorSetLayout,
+    p_layout_size_in_bytes: *mut DeviceSize,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetDescriptorSetLayoutBindingOffsetEXT = unsafe extern "system" fn(
+    device: Device,
+    layout: DescriptorSetLayout,
+    binding: u32,
+    p_offset: *mut DeviceSize,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetDescriptorEXT = unsafe extern "system" fn(
+    device: Device,
+    p_descriptor_info: *const DescriptorGetInfoEXT,
+    data_size: usize,
+    p_descriptor: *mut c_void,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBindDescriptorBuffersEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    buffer_count: u32,
+    p_binding_infos: *const DescriptorBufferBindingInfoEXT,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetDescriptorBufferOffsetsEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    pipeline_bind_point: PipelineBindPoint,
+    layout: PipelineLayout,
+    first_set: u32,
+    set_count: u32,
+    p_buffer_indices: *const u32,
+    p_offsets: *const DeviceSize,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBindDescriptorBufferEmbeddedSamplersEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    pipeline_bind_point: PipelineBindPoint,
+    layout: PipelineLayout,
+    set: u32,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetBufferOpaqueCaptureDescriptorDataEXT = unsafe extern "system" fn(
+    device: Device,
+    p_info: *const BufferCaptureDescriptorDataInfoEXT,
+    p_data: *mut c_void,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetImageOpaqueCaptureDescriptorDataEXT = unsafe extern "system" fn(
+    device: Device,
+    p_info: *const ImageCaptureDescriptorDataInfoEXT,
+    p_data: *mut c_void,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetImageViewOpaqueCaptureDescriptorDataEXT = unsafe extern "system" fn(
+    device: Device,
+    p_info: *const ImageViewCaptureDescriptorDataInfoEXT,
+    p_data: *mut c_void,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetSamplerOpaqueCaptureDescriptorDataEXT = unsafe extern "system" fn(
+    device: Device,
+    p_info: *const SamplerCaptureDescriptorDataInfoEXT,
+    p_data: *mut c_void,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT =
+    unsafe extern "system" fn(
+        device: Device,
+        p_info: *const AccelerationStructureCaptureDescriptorDataInfoEXT,
+        p_data: *mut c_void,
+    ) -> Result;
 #[derive(Clone)]
-pub struct AmdExtension317Fn {}
-unsafe impl Send for AmdExtension317Fn {}
-unsafe impl Sync for AmdExtension317Fn {}
-impl AmdExtension317Fn {
+pub struct ExtDescriptorBufferFn {
+    pub get_descriptor_set_layout_size_ext: PFN_vkGetDescriptorSetLayoutSizeEXT,
+    pub get_descriptor_set_layout_binding_offset_ext: PFN_vkGetDescriptorSetLayoutBindingOffsetEXT,
+    pub get_descriptor_ext: PFN_vkGetDescriptorEXT,
+    pub cmd_bind_descriptor_buffers_ext: PFN_vkCmdBindDescriptorBuffersEXT,
+    pub cmd_set_descriptor_buffer_offsets_ext: PFN_vkCmdSetDescriptorBufferOffsetsEXT,
+    pub cmd_bind_descriptor_buffer_embedded_samplers_ext:
+        PFN_vkCmdBindDescriptorBufferEmbeddedSamplersEXT,
+    pub get_buffer_opaque_capture_descriptor_data_ext:
+        PFN_vkGetBufferOpaqueCaptureDescriptorDataEXT,
+    pub get_image_opaque_capture_descriptor_data_ext: PFN_vkGetImageOpaqueCaptureDescriptorDataEXT,
+    pub get_image_view_opaque_capture_descriptor_data_ext:
+        PFN_vkGetImageViewOpaqueCaptureDescriptorDataEXT,
+    pub get_sampler_opaque_capture_descriptor_data_ext:
+        PFN_vkGetSamplerOpaqueCaptureDescriptorDataEXT,
+    pub get_acceleration_structure_opaque_capture_descriptor_data_ext:
+        PFN_vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT,
+}
+unsafe impl Send for ExtDescriptorBufferFn {}
+unsafe impl Sync for ExtDescriptorBufferFn {}
+impl ExtDescriptorBufferFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        Self {}
+        Self {
+            get_descriptor_set_layout_size_ext: unsafe {
+                unsafe extern "system" fn get_descriptor_set_layout_size_ext(
+                    _device: Device,
+                    _layout: DescriptorSetLayout,
+                    _p_layout_size_in_bytes: *mut DeviceSize,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_descriptor_set_layout_size_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetDescriptorSetLayoutSizeEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_descriptor_set_layout_size_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_descriptor_set_layout_binding_offset_ext: unsafe {
+                unsafe extern "system" fn get_descriptor_set_layout_binding_offset_ext(
+                    _device: Device,
+                    _layout: DescriptorSetLayout,
+                    _binding: u32,
+                    _p_offset: *mut DeviceSize,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_descriptor_set_layout_binding_offset_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetDescriptorSetLayoutBindingOffsetEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_descriptor_set_layout_binding_offset_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_descriptor_ext: unsafe {
+                unsafe extern "system" fn get_descriptor_ext(
+                    _device: Device,
+                    _p_descriptor_info: *const DescriptorGetInfoEXT,
+                    _data_size: usize,
+                    _p_descriptor: *mut c_void,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(get_descriptor_ext)))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkGetDescriptorEXT\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    get_descriptor_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_bind_descriptor_buffers_ext: unsafe {
+                unsafe extern "system" fn cmd_bind_descriptor_buffers_ext(
+                    _command_buffer: CommandBuffer,
+                    _buffer_count: u32,
+                    _p_binding_infos: *const DescriptorBufferBindingInfoEXT,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_bind_descriptor_buffers_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdBindDescriptorBuffersEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_bind_descriptor_buffers_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_descriptor_buffer_offsets_ext: unsafe {
+                unsafe extern "system" fn cmd_set_descriptor_buffer_offsets_ext(
+                    _command_buffer: CommandBuffer,
+                    _pipeline_bind_point: PipelineBindPoint,
+                    _layout: PipelineLayout,
+                    _first_set: u32,
+                    _set_count: u32,
+                    _p_buffer_indices: *const u32,
+                    _p_offsets: *const DeviceSize,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_descriptor_buffer_offsets_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetDescriptorBufferOffsetsEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_descriptor_buffer_offsets_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_bind_descriptor_buffer_embedded_samplers_ext: unsafe {
+                unsafe extern "system" fn cmd_bind_descriptor_buffer_embedded_samplers_ext(
+                    _command_buffer: CommandBuffer,
+                    _pipeline_bind_point: PipelineBindPoint,
+                    _layout: PipelineLayout,
+                    _set: u32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_bind_descriptor_buffer_embedded_samplers_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdBindDescriptorBufferEmbeddedSamplersEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_bind_descriptor_buffer_embedded_samplers_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_buffer_opaque_capture_descriptor_data_ext: unsafe {
+                unsafe extern "system" fn get_buffer_opaque_capture_descriptor_data_ext(
+                    _device: Device,
+                    _p_info: *const BufferCaptureDescriptorDataInfoEXT,
+                    _p_data: *mut c_void,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_buffer_opaque_capture_descriptor_data_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetBufferOpaqueCaptureDescriptorDataEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_buffer_opaque_capture_descriptor_data_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_image_opaque_capture_descriptor_data_ext: unsafe {
+                unsafe extern "system" fn get_image_opaque_capture_descriptor_data_ext(
+                    _device: Device,
+                    _p_info: *const ImageCaptureDescriptorDataInfoEXT,
+                    _p_data: *mut c_void,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_image_opaque_capture_descriptor_data_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetImageOpaqueCaptureDescriptorDataEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_image_opaque_capture_descriptor_data_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_image_view_opaque_capture_descriptor_data_ext: unsafe {
+                unsafe extern "system" fn get_image_view_opaque_capture_descriptor_data_ext(
+                    _device: Device,
+                    _p_info: *const ImageViewCaptureDescriptorDataInfoEXT,
+                    _p_data: *mut c_void,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_image_view_opaque_capture_descriptor_data_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetImageViewOpaqueCaptureDescriptorDataEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_image_view_opaque_capture_descriptor_data_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_sampler_opaque_capture_descriptor_data_ext: unsafe {
+                unsafe extern "system" fn get_sampler_opaque_capture_descriptor_data_ext(
+                    _device: Device,
+                    _p_info: *const SamplerCaptureDescriptorDataInfoEXT,
+                    _p_data: *mut c_void,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_sampler_opaque_capture_descriptor_data_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetSamplerOpaqueCaptureDescriptorDataEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_sampler_opaque_capture_descriptor_data_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_acceleration_structure_opaque_capture_descriptor_data_ext: unsafe {
+                unsafe extern "system" fn get_acceleration_structure_opaque_capture_descriptor_data_ext(
+                    _device: Device,
+                    _p_info: *const AccelerationStructureCaptureDescriptorDataInfoEXT,
+                    _p_data: *mut c_void,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_acceleration_structure_opaque_capture_descriptor_data_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_acceleration_structure_opaque_capture_descriptor_data_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
     }
 }
-#[doc = "Generated from 'VK_AMD_extension_317'"]
+#[doc = "Generated from 'VK_EXT_descriptor_buffer'"]
 impl AccelerationStructureCreateFlagsKHR {
-    pub const RESERVED_3_AMD: Self = Self(0b1000);
+    pub const DESCRIPTOR_BUFFER_CAPTURE_REPLAY_EXT: Self = Self(0b1000);
 }
-#[doc = "Generated from 'VK_AMD_extension_317'"]
+#[doc = "Generated from 'VK_EXT_descriptor_buffer'"]
 impl AccessFlags2 {
-    pub const RESERVED_41_AMD: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+    pub const DESCRIPTOR_BUFFER_READ_EXT: Self =
+        Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from 'VK_AMD_extension_317'"]
+#[doc = "Generated from 'VK_EXT_descriptor_buffer'"]
 impl BufferCreateFlags {
-    pub const RESERVED_5_AMD: Self = Self(0b10_0000);
+    pub const DESCRIPTOR_BUFFER_CAPTURE_REPLAY_EXT: Self = Self(0b10_0000);
 }
-#[doc = "Generated from 'VK_AMD_extension_317'"]
+#[doc = "Generated from 'VK_EXT_descriptor_buffer'"]
 impl BufferUsageFlags {
-    pub const RESERVED_21_AMD: Self = Self(0b10_0000_0000_0000_0000_0000);
-    pub const RESERVED_22_AMD: Self = Self(0b100_0000_0000_0000_0000_0000);
+    pub const SAMPLER_DESCRIPTOR_BUFFER_EXT: Self = Self(0b10_0000_0000_0000_0000_0000);
+    pub const RESOURCE_DESCRIPTOR_BUFFER_EXT: Self = Self(0b100_0000_0000_0000_0000_0000);
+    pub const PUSH_DESCRIPTORS_DESCRIPTOR_BUFFER_EXT: Self =
+        Self(0b100_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from 'VK_AMD_extension_317'"]
+#[doc = "Generated from 'VK_EXT_descriptor_buffer'"]
 impl DescriptorSetLayoutCreateFlags {
-    pub const RESERVED_4_AMD: Self = Self(0b1_0000);
-    pub const RESERVED_5_AMD: Self = Self(0b10_0000);
+    pub const DESCRIPTOR_BUFFER_EXT: Self = Self(0b1_0000);
+    pub const EMBEDDED_IMMUTABLE_SAMPLERS_EXT: Self = Self(0b10_0000);
 }
-#[doc = "Generated from 'VK_AMD_extension_317'"]
+#[doc = "Generated from 'VK_EXT_descriptor_buffer'"]
 impl ImageCreateFlags {
-    pub const RESERVED_16_AMD: Self = Self(0b1_0000_0000_0000_0000);
+    pub const DESCRIPTOR_BUFFER_CAPTURE_REPLAY_EXT: Self = Self(0b1_0000_0000_0000_0000);
 }
-#[doc = "Generated from 'VK_AMD_extension_317'"]
+#[doc = "Generated from 'VK_EXT_descriptor_buffer'"]
 impl ImageViewCreateFlags {
-    pub const RESERVED_2_AMD: Self = Self(0b100);
+    pub const DESCRIPTOR_BUFFER_CAPTURE_REPLAY_EXT: Self = Self(0b100);
 }
-#[doc = "Generated from 'VK_AMD_extension_317'"]
+#[doc = "Generated from 'VK_EXT_descriptor_buffer'"]
 impl PipelineCreateFlags {
-    pub const RESERVED_29_AMD: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000);
+    pub const DESCRIPTOR_BUFFER_EXT: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from 'VK_AMD_extension_317'"]
+#[doc = "Generated from 'VK_EXT_descriptor_buffer'"]
 impl SamplerCreateFlags {
-    pub const RESERVED_3_AMD: Self = Self(0b1000);
+    pub const DESCRIPTOR_BUFFER_CAPTURE_REPLAY_EXT: Self = Self(0b1000);
+}
+#[doc = "Generated from 'VK_EXT_descriptor_buffer'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_PROPERTIES_EXT: Self = Self(1_000_316_000);
+    pub const PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_DENSITY_MAP_PROPERTIES_EXT: Self =
+        Self(1_000_316_001);
+    pub const PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_FEATURES_EXT: Self = Self(1_000_316_002);
+    pub const DESCRIPTOR_ADDRESS_INFO_EXT: Self = Self(1_000_316_003);
+    pub const DESCRIPTOR_GET_INFO_EXT: Self = Self(1_000_316_004);
+    pub const BUFFER_CAPTURE_DESCRIPTOR_DATA_INFO_EXT: Self = Self(1_000_316_005);
+    pub const IMAGE_CAPTURE_DESCRIPTOR_DATA_INFO_EXT: Self = Self(1_000_316_006);
+    pub const IMAGE_VIEW_CAPTURE_DESCRIPTOR_DATA_INFO_EXT: Self = Self(1_000_316_007);
+    pub const SAMPLER_CAPTURE_DESCRIPTOR_DATA_INFO_EXT: Self = Self(1_000_316_008);
+    pub const OPAQUE_CAPTURE_DESCRIPTOR_DATA_CREATE_INFO_EXT: Self = Self(1_000_316_010);
+    pub const DESCRIPTOR_BUFFER_BINDING_INFO_EXT: Self = Self(1_000_316_011);
+    pub const DESCRIPTOR_BUFFER_BINDING_PUSH_DESCRIPTOR_BUFFER_HANDLE_EXT: Self =
+        Self(1_000_316_012);
+    pub const ACCELERATION_STRUCTURE_CAPTURE_DESCRIPTOR_DATA_INFO_EXT: Self = Self(1_000_316_009);
 }
 impl AmdExtension318Fn {
     #[inline]
@@ -21261,6 +21608,15 @@ impl HuaweiExtension405Fn {
         Self {}
     }
 }
+#[doc = "Generated from 'VK_HUAWEI_extension_405'"]
+impl PipelineStageFlags2 {
+    pub const RESEVED_41_HUAWEI: Self =
+        Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_HUAWEI_extension_405'"]
+impl ShaderStageFlags {
+    pub const RESERVED_19_HUAWEI: Self = Self(0b1000_0000_0000_0000_0000);
+}
 impl HuaweiExtension406Fn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -24782,6 +25138,82 @@ pub struct ExtExtension500Fn {}
 unsafe impl Send for ExtExtension500Fn {}
 unsafe impl Sync for ExtExtension500Fn {}
 impl ExtExtension500Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl ExtExtension501Fn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_501\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct ExtExtension501Fn {}
+unsafe impl Send for ExtExtension501Fn {}
+unsafe impl Sync for ExtExtension501Fn {}
+impl ExtExtension501Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl ExtExtension502Fn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_502\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct ExtExtension502Fn {}
+unsafe impl Send for ExtExtension502Fn {}
+unsafe impl Sync for ExtExtension502Fn {}
+impl ExtExtension502Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl ExtExtension503Fn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_503\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct ExtExtension503Fn {}
+unsafe impl Send for ExtExtension503Fn {}
+unsafe impl Sync for ExtExtension503Fn {}
+impl ExtExtension503Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+impl NvExtension504Fn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_504\0") }
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct NvExtension504Fn {}
+unsafe impl Send for NvExtension504Fn {}
+unsafe impl Sync for NvExtension504Fn {}
+impl NvExtension504Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
