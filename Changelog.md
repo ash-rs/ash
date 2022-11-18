@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `VK_EXT_mesh_shader` device extension (#657)
 - Added `VK_EXT_acquire_drm_display` instance extension (#668)
 - Added `VK_EXT_extended_dynamic_state3` device extension (#671)
+- Added `VK_EXT_descriptor_buffer` instance extension (#679)
 
 ### Removed
 
