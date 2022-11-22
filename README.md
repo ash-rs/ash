@@ -18,6 +18,11 @@ A very lightweight wrapper around Vulkan
 - [x] Generated from `vk.xml`
 - [x] Support for Vulkan `1.1`, `1.2`, `1.3`
 
+## ⚠️ Semver compatibility warning
+The Vulkan Video bindings are experimental and still seeing breaking changes in their upstream specification, and are only provided by Ash for early adopters. All related functions and types are semver-exempt [^1] (we allow breaking API changes while releasing Ash with non-breaking semver bumps).
+
+[^1]: `generator` complexity makes it so that we cannot easily hide these bindings behind a non-`default` feature flag, and they are widespread across the generated codebase.
+
 ## Features
 ### Explicit returns with `Result`
 ```rust
