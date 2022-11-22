@@ -57,7 +57,7 @@ pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
-pub const HEADER_VERSION: u32 = 228u32;
+pub const HEADER_VERSION: u32 = 235u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -420,6 +420,8 @@ handle_nondispatchable ! (DeferredOperationKHR , DEFERRED_OPERATION_KHR , doc = 
 handle_nondispatchable ! (PrivateDataSlot , PRIVATE_DATA_SLOT , doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPrivateDataSlot.html>") ;
 handle_nondispatchable ! (CuModuleNVX , CU_MODULE_NVX , doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCuModuleNVX.html>") ;
 handle_nondispatchable ! (CuFunctionNVX , CU_FUNCTION_NVX , doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCuFunctionNVX.html>") ;
+handle_nondispatchable ! (OpticalFlowSessionNV , OPTICAL_FLOW_SESSION_NV , doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkOpticalFlowSessionNV.html>") ;
+handle_nondispatchable ! (MicromapEXT , MICROMAP_EXT , doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMicromapEXT.html>") ;
 handle_nondispatchable!(
     DisplayKHR,
     DISPLAY_KHR,
@@ -3010,6 +3012,76 @@ impl BufferImageCopy {
     #[inline]
     pub fn buffer_offset(mut self, buffer_offset: DeviceSize) -> Self {
         self.buffer_offset = buffer_offset;
+        self
+    }
+    #[inline]
+    pub fn buffer_row_length(mut self, buffer_row_length: u32) -> Self {
+        self.buffer_row_length = buffer_row_length;
+        self
+    }
+    #[inline]
+    pub fn buffer_image_height(mut self, buffer_image_height: u32) -> Self {
+        self.buffer_image_height = buffer_image_height;
+        self
+    }
+    #[inline]
+    pub fn image_subresource(mut self, image_subresource: ImageSubresourceLayers) -> Self {
+        self.image_subresource = image_subresource;
+        self
+    }
+    #[inline]
+    pub fn image_offset(mut self, image_offset: Offset3D) -> Self {
+        self.image_offset = image_offset;
+        self
+    }
+    #[inline]
+    pub fn image_extent(mut self, image_extent: Extent3D) -> Self {
+        self.image_extent = image_extent;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone, Default)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCopyMemoryIndirectCommandNV.html>"]
+pub struct CopyMemoryIndirectCommandNV {
+    pub src_address: DeviceAddress,
+    pub dst_address: DeviceAddress,
+    pub size: DeviceSize,
+}
+impl CopyMemoryIndirectCommandNV {
+    #[inline]
+    pub fn src_address(mut self, src_address: DeviceAddress) -> Self {
+        self.src_address = src_address;
+        self
+    }
+    #[inline]
+    pub fn dst_address(mut self, dst_address: DeviceAddress) -> Self {
+        self.dst_address = dst_address;
+        self
+    }
+    #[inline]
+    pub fn size(mut self, size: DeviceSize) -> Self {
+        self.size = size;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone, Default)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCopyMemoryToImageIndirectCommandNV.html>"]
+pub struct CopyMemoryToImageIndirectCommandNV {
+    pub src_address: DeviceAddress,
+    pub buffer_row_length: u32,
+    pub buffer_image_height: u32,
+    pub image_subresource: ImageSubresourceLayers,
+    pub image_offset: Offset3D,
+    pub image_extent: Extent3D,
+}
+impl CopyMemoryToImageIndirectCommandNV {
+    #[inline]
+    pub fn src_address(mut self, src_address: DeviceAddress) -> Self {
+        self.src_address = src_address;
         self
     }
     #[inline]
@@ -17938,6 +18010,7 @@ impl ::std::default::Default for DebugUtilsMessengerCallbackDataEXT<'_> {
 unsafe impl<'a> TaggedStructure for DebugUtilsMessengerCallbackDataEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DEBUG_UTILS_MESSENGER_CALLBACK_DATA_EXT;
 }
+pub unsafe trait ExtendsDebugUtilsMessengerCallbackDataEXT {}
 impl<'a> DebugUtilsMessengerCallbackDataEXT<'a> {
     #[inline]
     pub fn flags(mut self, flags: DebugUtilsMessengerCallbackDataFlagsEXT) -> Self {
@@ -17975,6 +18048,23 @@ impl<'a> DebugUtilsMessengerCallbackDataEXT<'a> {
     pub fn objects(mut self, objects: &'a [DebugUtilsObjectNameInfoEXT]) -> Self {
         self.object_count = objects.len() as _;
         self.p_objects = objects.as_ptr();
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDebugUtilsMessengerCallbackDataEXT>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        unsafe {
+            let next_ptr = <*const T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
         self
     }
 }
@@ -21742,6 +21832,153 @@ impl<'a> PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceCopyMemoryIndirectFeaturesNV.html>"]
+pub struct PhysicalDeviceCopyMemoryIndirectFeaturesNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub indirect_copy: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            indirect_copy: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_COPY_MEMORY_INDIRECT_FEATURES_NV;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'_> {}
+impl<'a> PhysicalDeviceCopyMemoryIndirectFeaturesNV<'a> {
+    #[inline]
+    pub fn indirect_copy(mut self, indirect_copy: bool) -> Self {
+        self.indirect_copy = indirect_copy.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceCopyMemoryIndirectPropertiesNV.html>"]
+pub struct PhysicalDeviceCopyMemoryIndirectPropertiesNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub supported_queues: QueueFlags,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceCopyMemoryIndirectPropertiesNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            supported_queues: QueueFlags::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceCopyMemoryIndirectPropertiesNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_COPY_MEMORY_INDIRECT_PROPERTIES_NV;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceCopyMemoryIndirectPropertiesNV<'_> {}
+impl<'a> PhysicalDeviceCopyMemoryIndirectPropertiesNV<'a> {
+    #[inline]
+    pub fn supported_queues(mut self, supported_queues: QueueFlags) -> Self {
+        self.supported_queues = supported_queues;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceMemoryDecompressionFeaturesNV.html>"]
+pub struct PhysicalDeviceMemoryDecompressionFeaturesNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub memory_decompression: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceMemoryDecompressionFeaturesNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            memory_decompression: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceMemoryDecompressionFeaturesNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_FEATURES_NV;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMemoryDecompressionFeaturesNV<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMemoryDecompressionFeaturesNV<'_> {}
+impl<'a> PhysicalDeviceMemoryDecompressionFeaturesNV<'a> {
+    #[inline]
+    pub fn memory_decompression(mut self, memory_decompression: bool) -> Self {
+        self.memory_decompression = memory_decompression.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceMemoryDecompressionPropertiesNV.html>"]
+pub struct PhysicalDeviceMemoryDecompressionPropertiesNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub decompression_methods: MemoryDecompressionMethodFlagsNV,
+    pub max_decompression_indirect_count: u64,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceMemoryDecompressionPropertiesNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            decompression_methods: MemoryDecompressionMethodFlagsNV::default(),
+            max_decompression_indirect_count: u64::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceMemoryDecompressionPropertiesNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_PROPERTIES_NV;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMemoryDecompressionPropertiesNV<'_> {}
+impl<'a> PhysicalDeviceMemoryDecompressionPropertiesNV<'a> {
+    #[inline]
+    pub fn decompression_methods(
+        mut self,
+        decompression_methods: MemoryDecompressionMethodFlagsNV,
+    ) -> Self {
+        self.decompression_methods = decompression_methods;
+        self
+    }
+    #[inline]
+    pub fn max_decompression_indirect_count(
+        mut self,
+        max_decompression_indirect_count: u64,
+    ) -> Self {
+        self.max_decompression_indirect_count = max_decompression_indirect_count;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkShadingRatePaletteNV.html>"]
 pub struct ShadingRatePaletteNV<'a> {
     pub shading_rate_palette_entry_count: u32,
@@ -23227,6 +23464,7 @@ impl ::std::default::Default for AccelerationStructureCreateInfoNV<'_> {
 unsafe impl<'a> TaggedStructure for AccelerationStructureCreateInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACCELERATION_STRUCTURE_CREATE_INFO_NV;
 }
+pub unsafe trait ExtendsAccelerationStructureCreateInfoNV {}
 impl<'a> AccelerationStructureCreateInfoNV<'a> {
     #[inline]
     pub fn compacted_size(mut self, compacted_size: DeviceSize) -> Self {
@@ -23236,6 +23474,23 @@ impl<'a> AccelerationStructureCreateInfoNV<'a> {
     #[inline]
     pub fn info(mut self, info: AccelerationStructureInfoNV<'a>) -> Self {
         self.info = info;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsAccelerationStructureCreateInfoNV>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        unsafe {
+            let next_ptr = <*const T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
         self
     }
 }
@@ -26043,6 +26298,104 @@ impl<'a> SurfaceCapabilitiesFullScreenExclusiveEXT<'a> {
         full_screen_exclusive_supported: bool,
     ) -> Self {
         self.full_screen_exclusive_supported = full_screen_exclusive_supported.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDevicePresentBarrierFeaturesNV.html>"]
+pub struct PhysicalDevicePresentBarrierFeaturesNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub present_barrier: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDevicePresentBarrierFeaturesNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            present_barrier: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDevicePresentBarrierFeaturesNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_PRESENT_BARRIER_FEATURES_NV;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePresentBarrierFeaturesNV<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePresentBarrierFeaturesNV<'_> {}
+impl<'a> PhysicalDevicePresentBarrierFeaturesNV<'a> {
+    #[inline]
+    pub fn present_barrier(mut self, present_barrier: bool) -> Self {
+        self.present_barrier = present_barrier.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSurfaceCapabilitiesPresentBarrierNV.html>"]
+pub struct SurfaceCapabilitiesPresentBarrierNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub present_barrier_supported: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for SurfaceCapabilitiesPresentBarrierNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            present_barrier_supported: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for SurfaceCapabilitiesPresentBarrierNV<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_CAPABILITIES_PRESENT_BARRIER_NV;
+}
+unsafe impl ExtendsSurfaceCapabilities2KHR for SurfaceCapabilitiesPresentBarrierNV<'_> {}
+impl<'a> SurfaceCapabilitiesPresentBarrierNV<'a> {
+    #[inline]
+    pub fn present_barrier_supported(mut self, present_barrier_supported: bool) -> Self {
+        self.present_barrier_supported = present_barrier_supported.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSwapchainPresentBarrierCreateInfoNV.html>"]
+pub struct SwapchainPresentBarrierCreateInfoNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub present_barrier_enable: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for SwapchainPresentBarrierCreateInfoNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            present_barrier_enable: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for SwapchainPresentBarrierCreateInfoNV<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_PRESENT_BARRIER_CREATE_INFO_NV;
+}
+unsafe impl ExtendsSwapchainCreateInfoKHR for SwapchainPresentBarrierCreateInfoNV<'_> {}
+impl<'a> SwapchainPresentBarrierCreateInfoNV<'a> {
+    #[inline]
+    pub fn present_barrier_enable(mut self, present_barrier_enable: bool) -> Self {
+        self.present_barrier_enable = present_barrier_enable.into();
         self
     }
 }
@@ -31545,6 +31898,494 @@ impl<'a> PhysicalDeviceExtendedDynamicState2FeaturesEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceExtendedDynamicState3FeaturesEXT.html>"]
+pub struct PhysicalDeviceExtendedDynamicState3FeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub extended_dynamic_state3_tessellation_domain_origin: Bool32,
+    pub extended_dynamic_state3_depth_clamp_enable: Bool32,
+    pub extended_dynamic_state3_polygon_mode: Bool32,
+    pub extended_dynamic_state3_rasterization_samples: Bool32,
+    pub extended_dynamic_state3_sample_mask: Bool32,
+    pub extended_dynamic_state3_alpha_to_coverage_enable: Bool32,
+    pub extended_dynamic_state3_alpha_to_one_enable: Bool32,
+    pub extended_dynamic_state3_logic_op_enable: Bool32,
+    pub extended_dynamic_state3_color_blend_enable: Bool32,
+    pub extended_dynamic_state3_color_blend_equation: Bool32,
+    pub extended_dynamic_state3_color_write_mask: Bool32,
+    pub extended_dynamic_state3_rasterization_stream: Bool32,
+    pub extended_dynamic_state3_conservative_rasterization_mode: Bool32,
+    pub extended_dynamic_state3_extra_primitive_overestimation_size: Bool32,
+    pub extended_dynamic_state3_depth_clip_enable: Bool32,
+    pub extended_dynamic_state3_sample_locations_enable: Bool32,
+    pub extended_dynamic_state3_color_blend_advanced: Bool32,
+    pub extended_dynamic_state3_provoking_vertex_mode: Bool32,
+    pub extended_dynamic_state3_line_rasterization_mode: Bool32,
+    pub extended_dynamic_state3_line_stipple_enable: Bool32,
+    pub extended_dynamic_state3_depth_clip_negative_one_to_one: Bool32,
+    pub extended_dynamic_state3_viewport_w_scaling_enable: Bool32,
+    pub extended_dynamic_state3_viewport_swizzle: Bool32,
+    pub extended_dynamic_state3_coverage_to_color_enable: Bool32,
+    pub extended_dynamic_state3_coverage_to_color_location: Bool32,
+    pub extended_dynamic_state3_coverage_modulation_mode: Bool32,
+    pub extended_dynamic_state3_coverage_modulation_table_enable: Bool32,
+    pub extended_dynamic_state3_coverage_modulation_table: Bool32,
+    pub extended_dynamic_state3_coverage_reduction_mode: Bool32,
+    pub extended_dynamic_state3_representative_fragment_test_enable: Bool32,
+    pub extended_dynamic_state3_shading_rate_image_enable: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceExtendedDynamicState3FeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            extended_dynamic_state3_tessellation_domain_origin: Bool32::default(),
+            extended_dynamic_state3_depth_clamp_enable: Bool32::default(),
+            extended_dynamic_state3_polygon_mode: Bool32::default(),
+            extended_dynamic_state3_rasterization_samples: Bool32::default(),
+            extended_dynamic_state3_sample_mask: Bool32::default(),
+            extended_dynamic_state3_alpha_to_coverage_enable: Bool32::default(),
+            extended_dynamic_state3_alpha_to_one_enable: Bool32::default(),
+            extended_dynamic_state3_logic_op_enable: Bool32::default(),
+            extended_dynamic_state3_color_blend_enable: Bool32::default(),
+            extended_dynamic_state3_color_blend_equation: Bool32::default(),
+            extended_dynamic_state3_color_write_mask: Bool32::default(),
+            extended_dynamic_state3_rasterization_stream: Bool32::default(),
+            extended_dynamic_state3_conservative_rasterization_mode: Bool32::default(),
+            extended_dynamic_state3_extra_primitive_overestimation_size: Bool32::default(),
+            extended_dynamic_state3_depth_clip_enable: Bool32::default(),
+            extended_dynamic_state3_sample_locations_enable: Bool32::default(),
+            extended_dynamic_state3_color_blend_advanced: Bool32::default(),
+            extended_dynamic_state3_provoking_vertex_mode: Bool32::default(),
+            extended_dynamic_state3_line_rasterization_mode: Bool32::default(),
+            extended_dynamic_state3_line_stipple_enable: Bool32::default(),
+            extended_dynamic_state3_depth_clip_negative_one_to_one: Bool32::default(),
+            extended_dynamic_state3_viewport_w_scaling_enable: Bool32::default(),
+            extended_dynamic_state3_viewport_swizzle: Bool32::default(),
+            extended_dynamic_state3_coverage_to_color_enable: Bool32::default(),
+            extended_dynamic_state3_coverage_to_color_location: Bool32::default(),
+            extended_dynamic_state3_coverage_modulation_mode: Bool32::default(),
+            extended_dynamic_state3_coverage_modulation_table_enable: Bool32::default(),
+            extended_dynamic_state3_coverage_modulation_table: Bool32::default(),
+            extended_dynamic_state3_coverage_reduction_mode: Bool32::default(),
+            extended_dynamic_state3_representative_fragment_test_enable: Bool32::default(),
+            extended_dynamic_state3_shading_rate_image_enable: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceExtendedDynamicState3FeaturesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_3_FEATURES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceExtendedDynamicState3FeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExtendedDynamicState3FeaturesEXT<'_> {}
+impl<'a> PhysicalDeviceExtendedDynamicState3FeaturesEXT<'a> {
+    #[inline]
+    pub fn extended_dynamic_state3_tessellation_domain_origin(
+        mut self,
+        extended_dynamic_state3_tessellation_domain_origin: bool,
+    ) -> Self {
+        self.extended_dynamic_state3_tessellation_domain_origin =
+            extended_dynamic_state3_tessellation_domain_origin.into();
+        self
+    }
+    #[inline]
+    pub fn extended_dynamic_state3_depth_clamp_enable(
+        mut self,
+        extended_dynamic_state3_depth_clamp_enable: bool,
+    ) -> Self {
+        self.extended_dynamic_state3_depth_clamp_enable =
+            extended_dynamic_state3_depth_clamp_enable.into();
+        self
+    }
+    #[inline]
+    pub fn extended_dynamic_state3_polygon_mode(
+        mut self,
+        extended_dynamic_state3_polygon_mode: bool,
+    ) -> Self {
+        self.extended_dynamic_state3_polygon_mode = extended_dynamic_state3_polygon_mode.into();
+        self
+    }
+    #[inline]
+    pub fn extended_dynamic_state3_rasterization_samples(
+        mut self,
+        extended_dynamic_state3_rasterization_samples: bool,
+    ) -> Self {
+        self.extended_dynamic_state3_rasterization_samples =
+            extended_dynamic_state3_rasterization_samples.into();
+        self
+    }
+    #[inline]
+    pub fn extended_dynamic_state3_sample_mask(
+        mut self,
+        extended_dynamic_state3_sample_mask: bool,
+    ) -> Self {
+        self.extended_dynamic_state3_sample_mask = extended_dynamic_state3_sample_mask.into();
+        self
+    }
+    #[inline]
+    pub fn extended_dynamic_state3_alpha_to_coverage_enable(
+        mut self,
+        extended_dynamic_state3_alpha_to_coverage_enable: bool,
+    ) -> Self {
+        self.extended_dynamic_state3_alpha_to_coverage_enable =
+            extended_dynamic_state3_alpha_to_coverage_enable.into();
+        self
+    }
+    #[inline]
+    pub fn extended_dynamic_state3_alpha_to_one_enable(
+        mut self,
+        extended_dynamic_state3_alpha_to_one_enable: bool,
+    ) -> Self {
+        self.extended_dynamic_state3_alpha_to_one_enable =
+            extended_dynamic_state3_alpha_to_one_enable.into();
+        self
+    }
+    #[inline]
+    pub fn extended_dynamic_state3_logic_op_enable(
+        mut self,
+        extended_dynamic_state3_logic_op_enable: bool,
+    ) -> Self {
+        self.extended_dynamic_state3_logic_op_enable =
+            extended_dynamic_state3_logic_op_enable.into();
+        self
+    }
+    #[inline]
+    pub fn extended_dynamic_state3_color_blend_enable(
+        mut self,
+        extended_dynamic_state3_color_blend_enable: bool,
+    ) -> Self {
+        self.extended_dynamic_state3_color_blend_enable =
+            extended_dynamic_state3_color_blend_enable.into();
+        self
+    }
+    #[inline]
+    pub fn extended_dynamic_state3_color_blend_equation(
+        mut self,
+        extended_dynamic_state3_color_blend_equation: bool,
+    ) -> Self {
+        self.extended_dynamic_state3_color_blend_equation =
+            extended_dynamic_state3_color_blend_equation.into();
+        self
+    }
+    #[inline]
+    pub fn extended_dynamic_state3_color_write_mask(
+        mut self,
+        extended_dynamic_state3_color_write_mask: bool,
+    ) -> Self {
+        self.extended_dynamic_state3_color_write_mask =
+            extended_dynamic_state3_color_write_mask.into();
+        self
+    }
+    #[inline]
+    pub fn extended_dynamic_state3_rasterization_stream(
+        mut self,
+        extended_dynamic_state3_rasterization_stream: bool,
+    ) -> Self {
+        self.extended_dynamic_state3_rasterization_stream =
+            extended_dynamic_state3_rasterization_stream.into();
+        self
+    }
+    #[inline]
+    pub fn extended_dynamic_state3_conservative_rasterization_mode(
+        mut self,
+        extended_dynamic_state3_conservative_rasterization_mode: bool,
+    ) -> Self {
+        self.extended_dynamic_state3_conservative_rasterization_mode =
+            extended_dynamic_state3_conservative_rasterization_mode.into();
+        self
+    }
+    #[inline]
+    pub fn extended_dynamic_state3_extra_primitive_overestimation_size(
+        mut self,
+        extended_dynamic_state3_extra_primitive_overestimation_size: bool,
+    ) -> Self {
+        self.extended_dynamic_state3_extra_primitive_overestimation_size =
+            extended_dynamic_state3_extra_primitive_overestimation_size.into();
+        self
+    }
+    #[inline]
+    pub fn extended_dynamic_state3_depth_clip_enable(
+        mut self,
+        extended_dynamic_state3_depth_clip_enable: bool,
+    ) -> Self {
+        self.extended_dynamic_state3_depth_clip_enable =
+            extended_dynamic_state3_depth_clip_enable.into();
+        self
+    }
+    #[inline]
+    pub fn extended_dynamic_state3_sample_locations_enable(
+        mut self,
+        extended_dynamic_state3_sample_locations_enable: bool,
+    ) -> Self {
+        self.extended_dynamic_state3_sample_locations_enable =
+            extended_dynamic_state3_sample_locations_enable.into();
+        self
+    }
+    #[inline]
+    pub fn extended_dynamic_state3_color_blend_advanced(
+        mut self,
+        extended_dynamic_state3_color_blend_advanced: bool,
+    ) -> Self {
+        self.extended_dynamic_state3_color_blend_advanced =
+            extended_dynamic_state3_color_blend_advanced.into();
+        self
+    }
+    #[inline]
+    pub fn extended_dynamic_state3_provoking_vertex_mode(
+        mut self,
+        extended_dynamic_state3_provoking_vertex_mode: bool,
+    ) -> Self {
+        self.extended_dynamic_state3_provoking_vertex_mode =
+            extended_dynamic_state3_provoking_vertex_mode.into();
+        self
+    }
+    #[inline]
+    pub fn extended_dynamic_state3_line_rasterization_mode(
+        mut self,
+        extended_dynamic_state3_line_rasterization_mode: bool,
+    ) -> Self {
+        self.extended_dynamic_state3_line_rasterization_mode =
+            extended_dynamic_state3_line_rasterization_mode.into();
+        self
+    }
+    #[inline]
+    pub fn extended_dynamic_state3_line_stipple_enable(
+        mut self,
+        extended_dynamic_state3_line_stipple_enable: bool,
+    ) -> Self {
+        self.extended_dynamic_state3_line_stipple_enable =
+            extended_dynamic_state3_line_stipple_enable.into();
+        self
+    }
+    #[inline]
+    pub fn extended_dynamic_state3_depth_clip_negative_one_to_one(
+        mut self,
+        extended_dynamic_state3_depth_clip_negative_one_to_one: bool,
+    ) -> Self {
+        self.extended_dynamic_state3_depth_clip_negative_one_to_one =
+            extended_dynamic_state3_depth_clip_negative_one_to_one.into();
+        self
+    }
+    #[inline]
+    pub fn extended_dynamic_state3_viewport_w_scaling_enable(
+        mut self,
+        extended_dynamic_state3_viewport_w_scaling_enable: bool,
+    ) -> Self {
+        self.extended_dynamic_state3_viewport_w_scaling_enable =
+            extended_dynamic_state3_viewport_w_scaling_enable.into();
+        self
+    }
+    #[inline]
+    pub fn extended_dynamic_state3_viewport_swizzle(
+        mut self,
+        extended_dynamic_state3_viewport_swizzle: bool,
+    ) -> Self {
+        self.extended_dynamic_state3_viewport_swizzle =
+            extended_dynamic_state3_viewport_swizzle.into();
+        self
+    }
+    #[inline]
+    pub fn extended_dynamic_state3_coverage_to_color_enable(
+        mut self,
+        extended_dynamic_state3_coverage_to_color_enable: bool,
+    ) -> Self {
+        self.extended_dynamic_state3_coverage_to_color_enable =
+            extended_dynamic_state3_coverage_to_color_enable.into();
+        self
+    }
+    #[inline]
+    pub fn extended_dynamic_state3_coverage_to_color_location(
+        mut self,
+        extended_dynamic_state3_coverage_to_color_location: bool,
+    ) -> Self {
+        self.extended_dynamic_state3_coverage_to_color_location =
+            extended_dynamic_state3_coverage_to_color_location.into();
+        self
+    }
+    #[inline]
+    pub fn extended_dynamic_state3_coverage_modulation_mode(
+        mut self,
+        extended_dynamic_state3_coverage_modulation_mode: bool,
+    ) -> Self {
+        self.extended_dynamic_state3_coverage_modulation_mode =
+            extended_dynamic_state3_coverage_modulation_mode.into();
+        self
+    }
+    #[inline]
+    pub fn extended_dynamic_state3_coverage_modulation_table_enable(
+        mut self,
+        extended_dynamic_state3_coverage_modulation_table_enable: bool,
+    ) -> Self {
+        self.extended_dynamic_state3_coverage_modulation_table_enable =
+            extended_dynamic_state3_coverage_modulation_table_enable.into();
+        self
+    }
+    #[inline]
+    pub fn extended_dynamic_state3_coverage_modulation_table(
+        mut self,
+        extended_dynamic_state3_coverage_modulation_table: bool,
+    ) -> Self {
+        self.extended_dynamic_state3_coverage_modulation_table =
+            extended_dynamic_state3_coverage_modulation_table.into();
+        self
+    }
+    #[inline]
+    pub fn extended_dynamic_state3_coverage_reduction_mode(
+        mut self,
+        extended_dynamic_state3_coverage_reduction_mode: bool,
+    ) -> Self {
+        self.extended_dynamic_state3_coverage_reduction_mode =
+            extended_dynamic_state3_coverage_reduction_mode.into();
+        self
+    }
+    #[inline]
+    pub fn extended_dynamic_state3_representative_fragment_test_enable(
+        mut self,
+        extended_dynamic_state3_representative_fragment_test_enable: bool,
+    ) -> Self {
+        self.extended_dynamic_state3_representative_fragment_test_enable =
+            extended_dynamic_state3_representative_fragment_test_enable.into();
+        self
+    }
+    #[inline]
+    pub fn extended_dynamic_state3_shading_rate_image_enable(
+        mut self,
+        extended_dynamic_state3_shading_rate_image_enable: bool,
+    ) -> Self {
+        self.extended_dynamic_state3_shading_rate_image_enable =
+            extended_dynamic_state3_shading_rate_image_enable.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceExtendedDynamicState3PropertiesEXT.html>"]
+pub struct PhysicalDeviceExtendedDynamicState3PropertiesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub dynamic_primitive_topology_unrestricted: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceExtendedDynamicState3PropertiesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            dynamic_primitive_topology_unrestricted: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceExtendedDynamicState3PropertiesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_3_PROPERTIES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceExtendedDynamicState3PropertiesEXT<'_>
+{
+}
+impl<'a> PhysicalDeviceExtendedDynamicState3PropertiesEXT<'a> {
+    #[inline]
+    pub fn dynamic_primitive_topology_unrestricted(
+        mut self,
+        dynamic_primitive_topology_unrestricted: bool,
+    ) -> Self {
+        self.dynamic_primitive_topology_unrestricted =
+            dynamic_primitive_topology_unrestricted.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone, Default)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkColorBlendEquationEXT.html>"]
+pub struct ColorBlendEquationEXT {
+    pub src_color_blend_factor: BlendFactor,
+    pub dst_color_blend_factor: BlendFactor,
+    pub color_blend_op: BlendOp,
+    pub src_alpha_blend_factor: BlendFactor,
+    pub dst_alpha_blend_factor: BlendFactor,
+    pub alpha_blend_op: BlendOp,
+}
+impl ColorBlendEquationEXT {
+    #[inline]
+    pub fn src_color_blend_factor(mut self, src_color_blend_factor: BlendFactor) -> Self {
+        self.src_color_blend_factor = src_color_blend_factor;
+        self
+    }
+    #[inline]
+    pub fn dst_color_blend_factor(mut self, dst_color_blend_factor: BlendFactor) -> Self {
+        self.dst_color_blend_factor = dst_color_blend_factor;
+        self
+    }
+    #[inline]
+    pub fn color_blend_op(mut self, color_blend_op: BlendOp) -> Self {
+        self.color_blend_op = color_blend_op;
+        self
+    }
+    #[inline]
+    pub fn src_alpha_blend_factor(mut self, src_alpha_blend_factor: BlendFactor) -> Self {
+        self.src_alpha_blend_factor = src_alpha_blend_factor;
+        self
+    }
+    #[inline]
+    pub fn dst_alpha_blend_factor(mut self, dst_alpha_blend_factor: BlendFactor) -> Self {
+        self.dst_alpha_blend_factor = dst_alpha_blend_factor;
+        self
+    }
+    #[inline]
+    pub fn alpha_blend_op(mut self, alpha_blend_op: BlendOp) -> Self {
+        self.alpha_blend_op = alpha_blend_op;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone, Default)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkColorBlendAdvancedEXT.html>"]
+pub struct ColorBlendAdvancedEXT {
+    pub advanced_blend_op: BlendOp,
+    pub src_premultiplied: Bool32,
+    pub dst_premultiplied: Bool32,
+    pub blend_overlap: BlendOverlapEXT,
+    pub clamp_results: Bool32,
+}
+impl ColorBlendAdvancedEXT {
+    #[inline]
+    pub fn advanced_blend_op(mut self, advanced_blend_op: BlendOp) -> Self {
+        self.advanced_blend_op = advanced_blend_op;
+        self
+    }
+    #[inline]
+    pub fn src_premultiplied(mut self, src_premultiplied: bool) -> Self {
+        self.src_premultiplied = src_premultiplied.into();
+        self
+    }
+    #[inline]
+    pub fn dst_premultiplied(mut self, dst_premultiplied: bool) -> Self {
+        self.dst_premultiplied = dst_premultiplied.into();
+        self
+    }
+    #[inline]
+    pub fn blend_overlap(mut self, blend_overlap: BlendOverlapEXT) -> Self {
+        self.blend_overlap = blend_overlap;
+        self
+    }
+    #[inline]
+    pub fn clamp_results(mut self, clamp_results: bool) -> Self {
+        self.clamp_results = clamp_results.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkRenderPassTransformBeginInfoQCOM.html>"]
 pub struct RenderPassTransformBeginInfoQCOM<'a> {
     pub s_type: StructureType,
@@ -34837,6 +35678,43 @@ impl<'a> MultisampledRenderToSingleSampledInfoEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDevicePipelineProtectedAccessFeaturesEXT.html>"]
+pub struct PhysicalDevicePipelineProtectedAccessFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub pipeline_protected_access: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDevicePipelineProtectedAccessFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            pipeline_protected_access: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDevicePipelineProtectedAccessFeaturesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDevicePipelineProtectedAccessFeaturesEXT<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePipelineProtectedAccessFeaturesEXT<'_> {}
+impl<'a> PhysicalDevicePipelineProtectedAccessFeaturesEXT<'a> {
+    #[inline]
+    pub fn pipeline_protected_access(mut self, pipeline_protected_access: bool) -> Self {
+        self.pipeline_protected_access = pipeline_protected_access.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkQueueFamilyVideoPropertiesKHR.html>"]
 pub struct QueueFamilyVideoPropertiesKHR<'a> {
     pub s_type: StructureType,
@@ -35136,14 +36014,14 @@ impl<'a> VideoProfileInfoKHR<'a> {
 pub struct VideoCapabilitiesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
-    pub capability_flags: VideoCapabilityFlagsKHR,
+    pub flags: VideoCapabilityFlagsKHR,
     pub min_bitstream_buffer_offset_alignment: DeviceSize,
     pub min_bitstream_buffer_size_alignment: DeviceSize,
-    pub video_picture_extent_granularity: Extent2D,
-    pub min_extent: Extent2D,
-    pub max_extent: Extent2D,
-    pub max_reference_pictures_slots_count: u32,
-    pub max_reference_pictures_active_count: u32,
+    pub picture_access_granularity: Extent2D,
+    pub min_coded_extent: Extent2D,
+    pub max_coded_extent: Extent2D,
+    pub max_dpb_slots: u32,
+    pub max_active_reference_pictures: u32,
     pub std_header_version: ExtensionProperties,
     pub _marker: PhantomData<&'a ()>,
 }
@@ -35153,14 +36031,14 @@ impl ::std::default::Default for VideoCapabilitiesKHR<'_> {
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
-            capability_flags: VideoCapabilityFlagsKHR::default(),
+            flags: VideoCapabilityFlagsKHR::default(),
             min_bitstream_buffer_offset_alignment: DeviceSize::default(),
             min_bitstream_buffer_size_alignment: DeviceSize::default(),
-            video_picture_extent_granularity: Extent2D::default(),
-            min_extent: Extent2D::default(),
-            max_extent: Extent2D::default(),
-            max_reference_pictures_slots_count: u32::default(),
-            max_reference_pictures_active_count: u32::default(),
+            picture_access_granularity: Extent2D::default(),
+            min_coded_extent: Extent2D::default(),
+            max_coded_extent: Extent2D::default(),
+            max_dpb_slots: u32::default(),
+            max_active_reference_pictures: u32::default(),
             std_header_version: ExtensionProperties::default(),
             _marker: PhantomData,
         }
@@ -35172,8 +36050,8 @@ unsafe impl<'a> TaggedStructure for VideoCapabilitiesKHR<'a> {
 pub unsafe trait ExtendsVideoCapabilitiesKHR {}
 impl<'a> VideoCapabilitiesKHR<'a> {
     #[inline]
-    pub fn capability_flags(mut self, capability_flags: VideoCapabilityFlagsKHR) -> Self {
-        self.capability_flags = capability_flags;
+    pub fn flags(mut self, flags: VideoCapabilityFlagsKHR) -> Self {
+        self.flags = flags;
         self
     }
     #[inline]
@@ -35193,37 +36071,28 @@ impl<'a> VideoCapabilitiesKHR<'a> {
         self
     }
     #[inline]
-    pub fn video_picture_extent_granularity(
-        mut self,
-        video_picture_extent_granularity: Extent2D,
-    ) -> Self {
-        self.video_picture_extent_granularity = video_picture_extent_granularity;
+    pub fn picture_access_granularity(mut self, picture_access_granularity: Extent2D) -> Self {
+        self.picture_access_granularity = picture_access_granularity;
         self
     }
     #[inline]
-    pub fn min_extent(mut self, min_extent: Extent2D) -> Self {
-        self.min_extent = min_extent;
+    pub fn min_coded_extent(mut self, min_coded_extent: Extent2D) -> Self {
+        self.min_coded_extent = min_coded_extent;
         self
     }
     #[inline]
-    pub fn max_extent(mut self, max_extent: Extent2D) -> Self {
-        self.max_extent = max_extent;
+    pub fn max_coded_extent(mut self, max_coded_extent: Extent2D) -> Self {
+        self.max_coded_extent = max_coded_extent;
         self
     }
     #[inline]
-    pub fn max_reference_pictures_slots_count(
-        mut self,
-        max_reference_pictures_slots_count: u32,
-    ) -> Self {
-        self.max_reference_pictures_slots_count = max_reference_pictures_slots_count;
+    pub fn max_dpb_slots(mut self, max_dpb_slots: u32) -> Self {
+        self.max_dpb_slots = max_dpb_slots;
         self
     }
     #[inline]
-    pub fn max_reference_pictures_active_count(
-        mut self,
-        max_reference_pictures_active_count: u32,
-    ) -> Self {
-        self.max_reference_pictures_active_count = max_reference_pictures_active_count;
+    pub fn max_active_reference_pictures(mut self, max_active_reference_pictures: u32) -> Self {
+        self.max_active_reference_pictures = max_active_reference_pictures;
         self
     }
     #[inline]
@@ -35395,7 +36264,7 @@ impl<'a> VideoPictureResourceInfoKHR<'a> {
 pub struct VideoReferenceSlotInfoKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub slot_index: i8,
+    pub slot_index: i32,
     pub p_picture_resource: *const VideoPictureResourceInfoKHR<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
@@ -35405,7 +36274,7 @@ impl ::std::default::Default for VideoReferenceSlotInfoKHR<'_> {
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            slot_index: i8::default(),
+            slot_index: i32::default(),
             p_picture_resource: ::std::ptr::null(),
             _marker: PhantomData,
         }
@@ -35417,7 +36286,7 @@ unsafe impl<'a> TaggedStructure for VideoReferenceSlotInfoKHR<'a> {
 pub unsafe trait ExtendsVideoReferenceSlotInfoKHR {}
 impl<'a> VideoReferenceSlotInfoKHR<'a> {
     #[inline]
-    pub fn slot_index(mut self, slot_index: i8) -> Self {
+    pub fn slot_index(mut self, slot_index: i32) -> Self {
         self.slot_index = slot_index;
         self
     }
@@ -35501,6 +36370,7 @@ unsafe impl<'a> TaggedStructure for VideoDecodeUsageInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_USAGE_INFO_KHR;
 }
 unsafe impl ExtendsVideoProfileInfoKHR for VideoDecodeUsageInfoKHR<'_> {}
+unsafe impl ExtendsQueryPoolCreateInfo for VideoDecodeUsageInfoKHR<'_> {}
 impl<'a> VideoDecodeUsageInfoKHR<'a> {
     #[inline]
     pub fn video_usage_hints(mut self, video_usage_hints: VideoDecodeUsageFlagsKHR) -> Self {
@@ -35652,7 +36522,7 @@ impl<'a> VideoDecodeH264ProfileInfoEXT<'a> {
 pub struct VideoDecodeH264CapabilitiesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
-    pub max_level: StdVideoH264Level,
+    pub max_level_idc: StdVideoH264LevelIdc,
     pub field_offset_granularity: Offset2D,
     pub _marker: PhantomData<&'a ()>,
 }
@@ -35662,7 +36532,7 @@ impl ::std::default::Default for VideoDecodeH264CapabilitiesEXT<'_> {
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
-            max_level: StdVideoH264Level::default(),
+            max_level_idc: StdVideoH264LevelIdc::default(),
             field_offset_granularity: Offset2D::default(),
             _marker: PhantomData,
         }
@@ -35674,8 +36544,8 @@ unsafe impl<'a> TaggedStructure for VideoDecodeH264CapabilitiesEXT<'a> {
 unsafe impl ExtendsVideoCapabilitiesKHR for VideoDecodeH264CapabilitiesEXT<'_> {}
 impl<'a> VideoDecodeH264CapabilitiesEXT<'a> {
     #[inline]
-    pub fn max_level(mut self, max_level: StdVideoH264Level) -> Self {
-        self.max_level = max_level;
+    pub fn max_level_idc(mut self, max_level_idc: StdVideoH264LevelIdc) -> Self {
+        self.max_level_idc = max_level_idc;
         self
     }
     #[inline]
@@ -35691,10 +36561,10 @@ impl<'a> VideoDecodeH264CapabilitiesEXT<'a> {
 pub struct VideoDecodeH264SessionParametersAddInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub sps_std_count: u32,
-    pub p_sps_std: *const StdVideoH264SequenceParameterSet,
-    pub pps_std_count: u32,
-    pub p_pps_std: *const StdVideoH264PictureParameterSet,
+    pub std_sps_count: u32,
+    pub p_std_sp_ss: *const StdVideoH264SequenceParameterSet,
+    pub std_pps_count: u32,
+    pub p_std_pp_ss: *const StdVideoH264PictureParameterSet,
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for VideoDecodeH264SessionParametersAddInfoEXT<'_> {
@@ -35703,10 +36573,10 @@ impl ::std::default::Default for VideoDecodeH264SessionParametersAddInfoEXT<'_> 
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            sps_std_count: u32::default(),
-            p_sps_std: ::std::ptr::null(),
-            pps_std_count: u32::default(),
-            p_pps_std: ::std::ptr::null(),
+            std_sps_count: u32::default(),
+            p_std_sp_ss: ::std::ptr::null(),
+            std_pps_count: u32::default(),
+            p_std_pp_ss: ::std::ptr::null(),
             _marker: PhantomData,
         }
     }
@@ -35721,15 +36591,15 @@ unsafe impl ExtendsVideoSessionParametersUpdateInfoKHR
 }
 impl<'a> VideoDecodeH264SessionParametersAddInfoEXT<'a> {
     #[inline]
-    pub fn sps_std(mut self, sps_std: &'a [StdVideoH264SequenceParameterSet]) -> Self {
-        self.sps_std_count = sps_std.len() as _;
-        self.p_sps_std = sps_std.as_ptr();
+    pub fn std_sp_ss(mut self, std_sp_ss: &'a [StdVideoH264SequenceParameterSet]) -> Self {
+        self.std_sps_count = std_sp_ss.len() as _;
+        self.p_std_sp_ss = std_sp_ss.as_ptr();
         self
     }
     #[inline]
-    pub fn pps_std(mut self, pps_std: &'a [StdVideoH264PictureParameterSet]) -> Self {
-        self.pps_std_count = pps_std.len() as _;
-        self.p_pps_std = pps_std.as_ptr();
+    pub fn std_pp_ss(mut self, std_pp_ss: &'a [StdVideoH264PictureParameterSet]) -> Self {
+        self.std_pps_count = std_pp_ss.len() as _;
+        self.p_std_pp_ss = std_pp_ss.as_ptr();
         self
     }
 }
@@ -35740,8 +36610,8 @@ impl<'a> VideoDecodeH264SessionParametersAddInfoEXT<'a> {
 pub struct VideoDecodeH264SessionParametersCreateInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub max_sps_std_count: u32,
-    pub max_pps_std_count: u32,
+    pub max_std_sps_count: u32,
+    pub max_std_pps_count: u32,
     pub p_parameters_add_info: *const VideoDecodeH264SessionParametersAddInfoEXT<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
@@ -35751,8 +36621,8 @@ impl ::std::default::Default for VideoDecodeH264SessionParametersCreateInfoEXT<'
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            max_sps_std_count: u32::default(),
-            max_pps_std_count: u32::default(),
+            max_std_sps_count: u32::default(),
+            max_std_pps_count: u32::default(),
             p_parameters_add_info: ::std::ptr::null(),
             _marker: PhantomData,
         }
@@ -35768,13 +36638,13 @@ unsafe impl ExtendsVideoSessionParametersCreateInfoKHR
 }
 impl<'a> VideoDecodeH264SessionParametersCreateInfoEXT<'a> {
     #[inline]
-    pub fn max_sps_std_count(mut self, max_sps_std_count: u32) -> Self {
-        self.max_sps_std_count = max_sps_std_count;
+    pub fn max_std_sps_count(mut self, max_std_sps_count: u32) -> Self {
+        self.max_std_sps_count = max_std_sps_count;
         self
     }
     #[inline]
-    pub fn max_pps_std_count(mut self, max_pps_std_count: u32) -> Self {
-        self.max_pps_std_count = max_pps_std_count;
+    pub fn max_std_pps_count(mut self, max_std_pps_count: u32) -> Self {
+        self.max_std_pps_count = max_std_pps_count;
         self
     }
     #[inline]
@@ -35794,8 +36664,8 @@ pub struct VideoDecodeH264PictureInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub p_std_picture_info: *const StdVideoDecodeH264PictureInfo,
-    pub slices_count: u32,
-    pub p_slices_data_offsets: *const u32,
+    pub slice_count: u32,
+    pub p_slice_offsets: *const u32,
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for VideoDecodeH264PictureInfoEXT<'_> {
@@ -35805,8 +36675,8 @@ impl ::std::default::Default for VideoDecodeH264PictureInfoEXT<'_> {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             p_std_picture_info: ::std::ptr::null(),
-            slices_count: u32::default(),
-            p_slices_data_offsets: ::std::ptr::null(),
+            slice_count: u32::default(),
+            p_slice_offsets: ::std::ptr::null(),
             _marker: PhantomData,
         }
     }
@@ -35815,7 +36685,6 @@ unsafe impl<'a> TaggedStructure for VideoDecodeH264PictureInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H264_PICTURE_INFO_EXT;
 }
 unsafe impl ExtendsVideoDecodeInfoKHR for VideoDecodeH264PictureInfoEXT<'_> {}
-pub unsafe trait ExtendsVideoDecodeH264PictureInfoEXT {}
 impl<'a> VideoDecodeH264PictureInfoEXT<'a> {
     #[inline]
     pub fn std_picture_info(mut self, std_picture_info: &'a StdVideoDecodeH264PictureInfo) -> Self {
@@ -35823,23 +36692,9 @@ impl<'a> VideoDecodeH264PictureInfoEXT<'a> {
         self
     }
     #[inline]
-    pub fn slices_data_offsets(mut self, slices_data_offsets: &'a [u32]) -> Self {
-        self.slices_count = slices_data_offsets.len() as _;
-        self.p_slices_data_offsets = slices_data_offsets.as_ptr();
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsVideoDecodeH264PictureInfoEXT>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
+    pub fn slice_offsets(mut self, slice_offsets: &'a [u32]) -> Self {
+        self.slice_count = slice_offsets.len() as _;
+        self.p_slice_offsets = slice_offsets.as_ptr();
         self
     }
 }
@@ -35875,38 +36730,6 @@ impl<'a> VideoDecodeH264DpbSlotInfoEXT<'a> {
         std_reference_info: &'a StdVideoDecodeH264ReferenceInfo,
     ) -> Self {
         self.p_std_reference_info = std_reference_info;
-        self
-    }
-}
-#[repr(C)]
-#[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH264MvcInfoEXT.html>"]
-pub struct VideoDecodeH264MvcInfoEXT<'a> {
-    pub s_type: StructureType,
-    pub p_next: *const c_void,
-    pub p_std_mvc: *const StdVideoDecodeH264Mvc,
-    pub _marker: PhantomData<&'a ()>,
-}
-impl ::std::default::Default for VideoDecodeH264MvcInfoEXT<'_> {
-    #[inline]
-    fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::std::ptr::null(),
-            p_std_mvc: ::std::ptr::null(),
-            _marker: PhantomData,
-        }
-    }
-}
-unsafe impl<'a> TaggedStructure for VideoDecodeH264MvcInfoEXT<'a> {
-    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H264_MVC_INFO_EXT;
-}
-unsafe impl ExtendsVideoDecodeH264PictureInfoEXT for VideoDecodeH264MvcInfoEXT<'_> {}
-impl<'a> VideoDecodeH264MvcInfoEXT<'a> {
-    #[inline]
-    pub fn std_mvc(mut self, std_mvc: &'a StdVideoDecodeH264Mvc) -> Self {
-        self.p_std_mvc = std_mvc;
         self
     }
 }
@@ -35950,7 +36773,7 @@ impl<'a> VideoDecodeH265ProfileInfoEXT<'a> {
 pub struct VideoDecodeH265CapabilitiesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
-    pub max_level: StdVideoH265Level,
+    pub max_level_idc: StdVideoH265LevelIdc,
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for VideoDecodeH265CapabilitiesEXT<'_> {
@@ -35959,7 +36782,7 @@ impl ::std::default::Default for VideoDecodeH265CapabilitiesEXT<'_> {
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
-            max_level: StdVideoH265Level::default(),
+            max_level_idc: StdVideoH265LevelIdc::default(),
             _marker: PhantomData,
         }
     }
@@ -35970,8 +36793,8 @@ unsafe impl<'a> TaggedStructure for VideoDecodeH265CapabilitiesEXT<'a> {
 unsafe impl ExtendsVideoCapabilitiesKHR for VideoDecodeH265CapabilitiesEXT<'_> {}
 impl<'a> VideoDecodeH265CapabilitiesEXT<'a> {
     #[inline]
-    pub fn max_level(mut self, max_level: StdVideoH265Level) -> Self {
-        self.max_level = max_level;
+    pub fn max_level_idc(mut self, max_level_idc: StdVideoH265LevelIdc) -> Self {
+        self.max_level_idc = max_level_idc;
         self
     }
 }
@@ -35982,12 +36805,12 @@ impl<'a> VideoDecodeH265CapabilitiesEXT<'a> {
 pub struct VideoDecodeH265SessionParametersAddInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub vps_std_count: u32,
-    pub p_vps_std: *const StdVideoH265VideoParameterSet,
-    pub sps_std_count: u32,
-    pub p_sps_std: *const StdVideoH265SequenceParameterSet,
-    pub pps_std_count: u32,
-    pub p_pps_std: *const StdVideoH265PictureParameterSet,
+    pub std_vps_count: u32,
+    pub p_std_vp_ss: *const StdVideoH265VideoParameterSet,
+    pub std_sps_count: u32,
+    pub p_std_sp_ss: *const StdVideoH265SequenceParameterSet,
+    pub std_pps_count: u32,
+    pub p_std_pp_ss: *const StdVideoH265PictureParameterSet,
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for VideoDecodeH265SessionParametersAddInfoEXT<'_> {
@@ -35996,12 +36819,12 @@ impl ::std::default::Default for VideoDecodeH265SessionParametersAddInfoEXT<'_> 
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            vps_std_count: u32::default(),
-            p_vps_std: ::std::ptr::null(),
-            sps_std_count: u32::default(),
-            p_sps_std: ::std::ptr::null(),
-            pps_std_count: u32::default(),
-            p_pps_std: ::std::ptr::null(),
+            std_vps_count: u32::default(),
+            p_std_vp_ss: ::std::ptr::null(),
+            std_sps_count: u32::default(),
+            p_std_sp_ss: ::std::ptr::null(),
+            std_pps_count: u32::default(),
+            p_std_pp_ss: ::std::ptr::null(),
             _marker: PhantomData,
         }
     }
@@ -36016,21 +36839,21 @@ unsafe impl ExtendsVideoSessionParametersUpdateInfoKHR
 }
 impl<'a> VideoDecodeH265SessionParametersAddInfoEXT<'a> {
     #[inline]
-    pub fn vps_std(mut self, vps_std: &'a [StdVideoH265VideoParameterSet]) -> Self {
-        self.vps_std_count = vps_std.len() as _;
-        self.p_vps_std = vps_std.as_ptr();
+    pub fn std_vp_ss(mut self, std_vp_ss: &'a [StdVideoH265VideoParameterSet]) -> Self {
+        self.std_vps_count = std_vp_ss.len() as _;
+        self.p_std_vp_ss = std_vp_ss.as_ptr();
         self
     }
     #[inline]
-    pub fn sps_std(mut self, sps_std: &'a [StdVideoH265SequenceParameterSet]) -> Self {
-        self.sps_std_count = sps_std.len() as _;
-        self.p_sps_std = sps_std.as_ptr();
+    pub fn std_sp_ss(mut self, std_sp_ss: &'a [StdVideoH265SequenceParameterSet]) -> Self {
+        self.std_sps_count = std_sp_ss.len() as _;
+        self.p_std_sp_ss = std_sp_ss.as_ptr();
         self
     }
     #[inline]
-    pub fn pps_std(mut self, pps_std: &'a [StdVideoH265PictureParameterSet]) -> Self {
-        self.pps_std_count = pps_std.len() as _;
-        self.p_pps_std = pps_std.as_ptr();
+    pub fn std_pp_ss(mut self, std_pp_ss: &'a [StdVideoH265PictureParameterSet]) -> Self {
+        self.std_pps_count = std_pp_ss.len() as _;
+        self.p_std_pp_ss = std_pp_ss.as_ptr();
         self
     }
 }
@@ -36041,9 +36864,9 @@ impl<'a> VideoDecodeH265SessionParametersAddInfoEXT<'a> {
 pub struct VideoDecodeH265SessionParametersCreateInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub max_vps_std_count: u32,
-    pub max_sps_std_count: u32,
-    pub max_pps_std_count: u32,
+    pub max_std_vps_count: u32,
+    pub max_std_sps_count: u32,
+    pub max_std_pps_count: u32,
     pub p_parameters_add_info: *const VideoDecodeH265SessionParametersAddInfoEXT<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
@@ -36053,9 +36876,9 @@ impl ::std::default::Default for VideoDecodeH265SessionParametersCreateInfoEXT<'
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            max_vps_std_count: u32::default(),
-            max_sps_std_count: u32::default(),
-            max_pps_std_count: u32::default(),
+            max_std_vps_count: u32::default(),
+            max_std_sps_count: u32::default(),
+            max_std_pps_count: u32::default(),
             p_parameters_add_info: ::std::ptr::null(),
             _marker: PhantomData,
         }
@@ -36071,18 +36894,18 @@ unsafe impl ExtendsVideoSessionParametersCreateInfoKHR
 }
 impl<'a> VideoDecodeH265SessionParametersCreateInfoEXT<'a> {
     #[inline]
-    pub fn max_vps_std_count(mut self, max_vps_std_count: u32) -> Self {
-        self.max_vps_std_count = max_vps_std_count;
+    pub fn max_std_vps_count(mut self, max_std_vps_count: u32) -> Self {
+        self.max_std_vps_count = max_std_vps_count;
         self
     }
     #[inline]
-    pub fn max_sps_std_count(mut self, max_sps_std_count: u32) -> Self {
-        self.max_sps_std_count = max_sps_std_count;
+    pub fn max_std_sps_count(mut self, max_std_sps_count: u32) -> Self {
+        self.max_std_sps_count = max_std_sps_count;
         self
     }
     #[inline]
-    pub fn max_pps_std_count(mut self, max_pps_std_count: u32) -> Self {
-        self.max_pps_std_count = max_pps_std_count;
+    pub fn max_std_pps_count(mut self, max_std_pps_count: u32) -> Self {
+        self.max_std_pps_count = max_std_pps_count;
         self
     }
     #[inline]
@@ -36102,8 +36925,8 @@ pub struct VideoDecodeH265PictureInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub p_std_picture_info: *mut StdVideoDecodeH265PictureInfo,
-    pub slices_count: u32,
-    pub p_slices_data_offsets: *const u32,
+    pub slice_count: u32,
+    pub p_slice_offsets: *const u32,
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for VideoDecodeH265PictureInfoEXT<'_> {
@@ -36113,8 +36936,8 @@ impl ::std::default::Default for VideoDecodeH265PictureInfoEXT<'_> {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             p_std_picture_info: ::std::ptr::null_mut(),
-            slices_count: u32::default(),
-            p_slices_data_offsets: ::std::ptr::null(),
+            slice_count: u32::default(),
+            p_slice_offsets: ::std::ptr::null(),
             _marker: PhantomData,
         }
     }
@@ -36133,9 +36956,9 @@ impl<'a> VideoDecodeH265PictureInfoEXT<'a> {
         self
     }
     #[inline]
-    pub fn slices_data_offsets(mut self, slices_data_offsets: &'a [u32]) -> Self {
-        self.slices_count = slices_data_offsets.len() as _;
-        self.p_slices_data_offsets = slices_data_offsets.as_ptr();
+    pub fn slice_offsets(mut self, slice_offsets: &'a [u32]) -> Self {
+        self.slice_count = slice_offsets.len() as _;
+        self.p_slice_offsets = slice_offsets.as_ptr();
         self
     }
 }
@@ -36186,9 +37009,9 @@ pub struct VideoSessionCreateInfoKHR<'a> {
     pub p_video_profile: *const VideoProfileInfoKHR<'a>,
     pub picture_format: Format,
     pub max_coded_extent: Extent2D,
-    pub reference_pictures_format: Format,
-    pub max_reference_pictures_slots_count: u32,
-    pub max_reference_pictures_active_count: u32,
+    pub reference_picture_format: Format,
+    pub max_dpb_slots: u32,
+    pub max_active_reference_pictures: u32,
     pub p_std_header_version: *const ExtensionProperties,
     pub _marker: PhantomData<&'a ()>,
 }
@@ -36203,9 +37026,9 @@ impl ::std::default::Default for VideoSessionCreateInfoKHR<'_> {
             p_video_profile: ::std::ptr::null(),
             picture_format: Format::default(),
             max_coded_extent: Extent2D::default(),
-            reference_pictures_format: Format::default(),
-            max_reference_pictures_slots_count: u32::default(),
-            max_reference_pictures_active_count: u32::default(),
+            reference_picture_format: Format::default(),
+            max_dpb_slots: u32::default(),
+            max_active_reference_pictures: u32::default(),
             p_std_header_version: ::std::ptr::null(),
             _marker: PhantomData,
         }
@@ -36241,24 +37064,18 @@ impl<'a> VideoSessionCreateInfoKHR<'a> {
         self
     }
     #[inline]
-    pub fn reference_pictures_format(mut self, reference_pictures_format: Format) -> Self {
-        self.reference_pictures_format = reference_pictures_format;
+    pub fn reference_picture_format(mut self, reference_picture_format: Format) -> Self {
+        self.reference_picture_format = reference_picture_format;
         self
     }
     #[inline]
-    pub fn max_reference_pictures_slots_count(
-        mut self,
-        max_reference_pictures_slots_count: u32,
-    ) -> Self {
-        self.max_reference_pictures_slots_count = max_reference_pictures_slots_count;
+    pub fn max_dpb_slots(mut self, max_dpb_slots: u32) -> Self {
+        self.max_dpb_slots = max_dpb_slots;
         self
     }
     #[inline]
-    pub fn max_reference_pictures_active_count(
-        mut self,
-        max_reference_pictures_active_count: u32,
-    ) -> Self {
-        self.max_reference_pictures_active_count = max_reference_pictures_active_count;
+    pub fn max_active_reference_pictures(mut self, max_active_reference_pictures: u32) -> Self {
+        self.max_active_reference_pictures = max_active_reference_pictures;
         self
     }
     #[inline]
@@ -36546,6 +37363,7 @@ unsafe impl<'a> TaggedStructure for VideoEncodeUsageInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_USAGE_INFO_KHR;
 }
 unsafe impl ExtendsVideoProfileInfoKHR for VideoEncodeUsageInfoKHR<'_> {}
+unsafe impl ExtendsQueryPoolCreateInfo for VideoEncodeUsageInfoKHR<'_> {}
 impl<'a> VideoEncodeUsageInfoKHR<'a> {
     #[inline]
     pub fn video_usage_hints(mut self, video_usage_hints: VideoEncodeUsageFlagsKHR) -> Self {
@@ -37011,10 +37829,10 @@ impl<'a> VideoEncodeH264CapabilitiesEXT<'a> {
 pub struct VideoEncodeH264SessionParametersAddInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub sps_std_count: u32,
-    pub p_sps_std: *const StdVideoH264SequenceParameterSet,
-    pub pps_std_count: u32,
-    pub p_pps_std: *const StdVideoH264PictureParameterSet,
+    pub std_sps_count: u32,
+    pub p_std_sp_ss: *const StdVideoH264SequenceParameterSet,
+    pub std_pps_count: u32,
+    pub p_std_pp_ss: *const StdVideoH264PictureParameterSet,
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for VideoEncodeH264SessionParametersAddInfoEXT<'_> {
@@ -37023,10 +37841,10 @@ impl ::std::default::Default for VideoEncodeH264SessionParametersAddInfoEXT<'_> 
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            sps_std_count: u32::default(),
-            p_sps_std: ::std::ptr::null(),
-            pps_std_count: u32::default(),
-            p_pps_std: ::std::ptr::null(),
+            std_sps_count: u32::default(),
+            p_std_sp_ss: ::std::ptr::null(),
+            std_pps_count: u32::default(),
+            p_std_pp_ss: ::std::ptr::null(),
             _marker: PhantomData,
         }
     }
@@ -37041,15 +37859,15 @@ unsafe impl ExtendsVideoSessionParametersUpdateInfoKHR
 }
 impl<'a> VideoEncodeH264SessionParametersAddInfoEXT<'a> {
     #[inline]
-    pub fn sps_std(mut self, sps_std: &'a [StdVideoH264SequenceParameterSet]) -> Self {
-        self.sps_std_count = sps_std.len() as _;
-        self.p_sps_std = sps_std.as_ptr();
+    pub fn std_sp_ss(mut self, std_sp_ss: &'a [StdVideoH264SequenceParameterSet]) -> Self {
+        self.std_sps_count = std_sp_ss.len() as _;
+        self.p_std_sp_ss = std_sp_ss.as_ptr();
         self
     }
     #[inline]
-    pub fn pps_std(mut self, pps_std: &'a [StdVideoH264PictureParameterSet]) -> Self {
-        self.pps_std_count = pps_std.len() as _;
-        self.p_pps_std = pps_std.as_ptr();
+    pub fn std_pp_ss(mut self, std_pp_ss: &'a [StdVideoH264PictureParameterSet]) -> Self {
+        self.std_pps_count = std_pp_ss.len() as _;
+        self.p_std_pp_ss = std_pp_ss.as_ptr();
         self
     }
 }
@@ -37060,8 +37878,8 @@ impl<'a> VideoEncodeH264SessionParametersAddInfoEXT<'a> {
 pub struct VideoEncodeH264SessionParametersCreateInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub max_sps_std_count: u32,
-    pub max_pps_std_count: u32,
+    pub max_std_sps_count: u32,
+    pub max_std_pps_count: u32,
     pub p_parameters_add_info: *const VideoEncodeH264SessionParametersAddInfoEXT<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
@@ -37071,8 +37889,8 @@ impl ::std::default::Default for VideoEncodeH264SessionParametersCreateInfoEXT<'
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            max_sps_std_count: u32::default(),
-            max_pps_std_count: u32::default(),
+            max_std_sps_count: u32::default(),
+            max_std_pps_count: u32::default(),
             p_parameters_add_info: ::std::ptr::null(),
             _marker: PhantomData,
         }
@@ -37088,13 +37906,13 @@ unsafe impl ExtendsVideoSessionParametersCreateInfoKHR
 }
 impl<'a> VideoEncodeH264SessionParametersCreateInfoEXT<'a> {
     #[inline]
-    pub fn max_sps_std_count(mut self, max_sps_std_count: u32) -> Self {
-        self.max_sps_std_count = max_sps_std_count;
+    pub fn max_std_sps_count(mut self, max_std_sps_count: u32) -> Self {
+        self.max_std_sps_count = max_std_sps_count;
         self
     }
     #[inline]
-    pub fn max_pps_std_count(mut self, max_pps_std_count: u32) -> Self {
-        self.max_pps_std_count = max_pps_std_count;
+    pub fn max_std_pps_count(mut self, max_std_pps_count: u32) -> Self {
+        self.max_std_pps_count = max_std_pps_count;
         self
     }
     #[inline]
@@ -37816,12 +38634,12 @@ impl<'a> VideoEncodeH265CapabilitiesEXT<'a> {
 pub struct VideoEncodeH265SessionParametersAddInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub vps_std_count: u32,
-    pub p_vps_std: *const StdVideoH265VideoParameterSet,
-    pub sps_std_count: u32,
-    pub p_sps_std: *const StdVideoH265SequenceParameterSet,
-    pub pps_std_count: u32,
-    pub p_pps_std: *const StdVideoH265PictureParameterSet,
+    pub std_vps_count: u32,
+    pub p_std_vp_ss: *const StdVideoH265VideoParameterSet,
+    pub std_sps_count: u32,
+    pub p_std_sp_ss: *const StdVideoH265SequenceParameterSet,
+    pub std_pps_count: u32,
+    pub p_std_pp_ss: *const StdVideoH265PictureParameterSet,
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for VideoEncodeH265SessionParametersAddInfoEXT<'_> {
@@ -37830,12 +38648,12 @@ impl ::std::default::Default for VideoEncodeH265SessionParametersAddInfoEXT<'_> 
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            vps_std_count: u32::default(),
-            p_vps_std: ::std::ptr::null(),
-            sps_std_count: u32::default(),
-            p_sps_std: ::std::ptr::null(),
-            pps_std_count: u32::default(),
-            p_pps_std: ::std::ptr::null(),
+            std_vps_count: u32::default(),
+            p_std_vp_ss: ::std::ptr::null(),
+            std_sps_count: u32::default(),
+            p_std_sp_ss: ::std::ptr::null(),
+            std_pps_count: u32::default(),
+            p_std_pp_ss: ::std::ptr::null(),
             _marker: PhantomData,
         }
     }
@@ -37850,21 +38668,21 @@ unsafe impl ExtendsVideoSessionParametersUpdateInfoKHR
 }
 impl<'a> VideoEncodeH265SessionParametersAddInfoEXT<'a> {
     #[inline]
-    pub fn vps_std(mut self, vps_std: &'a [StdVideoH265VideoParameterSet]) -> Self {
-        self.vps_std_count = vps_std.len() as _;
-        self.p_vps_std = vps_std.as_ptr();
+    pub fn std_vp_ss(mut self, std_vp_ss: &'a [StdVideoH265VideoParameterSet]) -> Self {
+        self.std_vps_count = std_vp_ss.len() as _;
+        self.p_std_vp_ss = std_vp_ss.as_ptr();
         self
     }
     #[inline]
-    pub fn sps_std(mut self, sps_std: &'a [StdVideoH265SequenceParameterSet]) -> Self {
-        self.sps_std_count = sps_std.len() as _;
-        self.p_sps_std = sps_std.as_ptr();
+    pub fn std_sp_ss(mut self, std_sp_ss: &'a [StdVideoH265SequenceParameterSet]) -> Self {
+        self.std_sps_count = std_sp_ss.len() as _;
+        self.p_std_sp_ss = std_sp_ss.as_ptr();
         self
     }
     #[inline]
-    pub fn pps_std(mut self, pps_std: &'a [StdVideoH265PictureParameterSet]) -> Self {
-        self.pps_std_count = pps_std.len() as _;
-        self.p_pps_std = pps_std.as_ptr();
+    pub fn std_pp_ss(mut self, std_pp_ss: &'a [StdVideoH265PictureParameterSet]) -> Self {
+        self.std_pps_count = std_pp_ss.len() as _;
+        self.p_std_pp_ss = std_pp_ss.as_ptr();
         self
     }
 }
@@ -37875,9 +38693,9 @@ impl<'a> VideoEncodeH265SessionParametersAddInfoEXT<'a> {
 pub struct VideoEncodeH265SessionParametersCreateInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub max_vps_std_count: u32,
-    pub max_sps_std_count: u32,
-    pub max_pps_std_count: u32,
+    pub max_std_vps_count: u32,
+    pub max_std_sps_count: u32,
+    pub max_std_pps_count: u32,
     pub p_parameters_add_info: *const VideoEncodeH265SessionParametersAddInfoEXT<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
@@ -37887,9 +38705,9 @@ impl ::std::default::Default for VideoEncodeH265SessionParametersCreateInfoEXT<'
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            max_vps_std_count: u32::default(),
-            max_sps_std_count: u32::default(),
-            max_pps_std_count: u32::default(),
+            max_std_vps_count: u32::default(),
+            max_std_sps_count: u32::default(),
+            max_std_pps_count: u32::default(),
             p_parameters_add_info: ::std::ptr::null(),
             _marker: PhantomData,
         }
@@ -37905,18 +38723,18 @@ unsafe impl ExtendsVideoSessionParametersCreateInfoKHR
 }
 impl<'a> VideoEncodeH265SessionParametersCreateInfoEXT<'a> {
     #[inline]
-    pub fn max_vps_std_count(mut self, max_vps_std_count: u32) -> Self {
-        self.max_vps_std_count = max_vps_std_count;
+    pub fn max_std_vps_count(mut self, max_std_vps_count: u32) -> Self {
+        self.max_std_vps_count = max_std_vps_count;
         self
     }
     #[inline]
-    pub fn max_sps_std_count(mut self, max_sps_std_count: u32) -> Self {
-        self.max_sps_std_count = max_sps_std_count;
+    pub fn max_std_sps_count(mut self, max_std_sps_count: u32) -> Self {
+        self.max_std_sps_count = max_std_sps_count;
         self
     }
     #[inline]
-    pub fn max_pps_std_count(mut self, max_pps_std_count: u32) -> Self {
-        self.max_pps_std_count = max_pps_std_count;
+    pub fn max_std_pps_count(mut self, max_std_pps_count: u32) -> Self {
+        self.max_std_pps_count = max_std_pps_count;
         self
     }
     #[inline]
@@ -38862,6 +39680,872 @@ impl<'a> CuLaunchInfoNVX<'a> {
     pub fn extras(mut self, extras: &'a [*const c_void]) -> Self {
         self.extra_count = extras.len();
         self.p_extras = extras.as_ptr();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDescriptorBufferFeaturesEXT.html>"]
+pub struct PhysicalDeviceDescriptorBufferFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub descriptor_buffer: Bool32,
+    pub descriptor_buffer_capture_replay: Bool32,
+    pub descriptor_buffer_image_layout_ignored: Bool32,
+    pub descriptor_buffer_push_descriptors: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceDescriptorBufferFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            descriptor_buffer: Bool32::default(),
+            descriptor_buffer_capture_replay: Bool32::default(),
+            descriptor_buffer_image_layout_ignored: Bool32::default(),
+            descriptor_buffer_push_descriptors: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceDescriptorBufferFeaturesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_FEATURES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDescriptorBufferFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDescriptorBufferFeaturesEXT<'_> {}
+impl<'a> PhysicalDeviceDescriptorBufferFeaturesEXT<'a> {
+    #[inline]
+    pub fn descriptor_buffer(mut self, descriptor_buffer: bool) -> Self {
+        self.descriptor_buffer = descriptor_buffer.into();
+        self
+    }
+    #[inline]
+    pub fn descriptor_buffer_capture_replay(
+        mut self,
+        descriptor_buffer_capture_replay: bool,
+    ) -> Self {
+        self.descriptor_buffer_capture_replay = descriptor_buffer_capture_replay.into();
+        self
+    }
+    #[inline]
+    pub fn descriptor_buffer_image_layout_ignored(
+        mut self,
+        descriptor_buffer_image_layout_ignored: bool,
+    ) -> Self {
+        self.descriptor_buffer_image_layout_ignored = descriptor_buffer_image_layout_ignored.into();
+        self
+    }
+    #[inline]
+    pub fn descriptor_buffer_push_descriptors(
+        mut self,
+        descriptor_buffer_push_descriptors: bool,
+    ) -> Self {
+        self.descriptor_buffer_push_descriptors = descriptor_buffer_push_descriptors.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDescriptorBufferPropertiesEXT.html>"]
+pub struct PhysicalDeviceDescriptorBufferPropertiesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub combined_image_sampler_descriptor_single_array: Bool32,
+    pub bufferless_push_descriptors: Bool32,
+    pub allow_sampler_image_view_post_submit_creation: Bool32,
+    pub descriptor_buffer_offset_alignment: DeviceSize,
+    pub max_descriptor_buffer_bindings: u32,
+    pub max_resource_descriptor_buffer_bindings: u32,
+    pub max_sampler_descriptor_buffer_bindings: u32,
+    pub max_embedded_immutable_sampler_bindings: u32,
+    pub max_embedded_immutable_samplers: u32,
+    pub buffer_capture_replay_descriptor_data_size: usize,
+    pub image_capture_replay_descriptor_data_size: usize,
+    pub image_view_capture_replay_descriptor_data_size: usize,
+    pub sampler_capture_replay_descriptor_data_size: usize,
+    pub acceleration_structure_capture_replay_descriptor_data_size: usize,
+    pub sampler_descriptor_size: usize,
+    pub combined_image_sampler_descriptor_size: usize,
+    pub sampled_image_descriptor_size: usize,
+    pub storage_image_descriptor_size: usize,
+    pub uniform_texel_buffer_descriptor_size: usize,
+    pub robust_uniform_texel_buffer_descriptor_size: usize,
+    pub storage_texel_buffer_descriptor_size: usize,
+    pub robust_storage_texel_buffer_descriptor_size: usize,
+    pub uniform_buffer_descriptor_size: usize,
+    pub robust_uniform_buffer_descriptor_size: usize,
+    pub storage_buffer_descriptor_size: usize,
+    pub robust_storage_buffer_descriptor_size: usize,
+    pub input_attachment_descriptor_size: usize,
+    pub acceleration_structure_descriptor_size: usize,
+    pub max_sampler_descriptor_buffer_range: DeviceSize,
+    pub max_resource_descriptor_buffer_range: DeviceSize,
+    pub sampler_descriptor_buffer_address_space_size: DeviceSize,
+    pub resource_descriptor_buffer_address_space_size: DeviceSize,
+    pub descriptor_buffer_address_space_size: DeviceSize,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceDescriptorBufferPropertiesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            combined_image_sampler_descriptor_single_array: Bool32::default(),
+            bufferless_push_descriptors: Bool32::default(),
+            allow_sampler_image_view_post_submit_creation: Bool32::default(),
+            descriptor_buffer_offset_alignment: DeviceSize::default(),
+            max_descriptor_buffer_bindings: u32::default(),
+            max_resource_descriptor_buffer_bindings: u32::default(),
+            max_sampler_descriptor_buffer_bindings: u32::default(),
+            max_embedded_immutable_sampler_bindings: u32::default(),
+            max_embedded_immutable_samplers: u32::default(),
+            buffer_capture_replay_descriptor_data_size: usize::default(),
+            image_capture_replay_descriptor_data_size: usize::default(),
+            image_view_capture_replay_descriptor_data_size: usize::default(),
+            sampler_capture_replay_descriptor_data_size: usize::default(),
+            acceleration_structure_capture_replay_descriptor_data_size: usize::default(),
+            sampler_descriptor_size: usize::default(),
+            combined_image_sampler_descriptor_size: usize::default(),
+            sampled_image_descriptor_size: usize::default(),
+            storage_image_descriptor_size: usize::default(),
+            uniform_texel_buffer_descriptor_size: usize::default(),
+            robust_uniform_texel_buffer_descriptor_size: usize::default(),
+            storage_texel_buffer_descriptor_size: usize::default(),
+            robust_storage_texel_buffer_descriptor_size: usize::default(),
+            uniform_buffer_descriptor_size: usize::default(),
+            robust_uniform_buffer_descriptor_size: usize::default(),
+            storage_buffer_descriptor_size: usize::default(),
+            robust_storage_buffer_descriptor_size: usize::default(),
+            input_attachment_descriptor_size: usize::default(),
+            acceleration_structure_descriptor_size: usize::default(),
+            max_sampler_descriptor_buffer_range: DeviceSize::default(),
+            max_resource_descriptor_buffer_range: DeviceSize::default(),
+            sampler_descriptor_buffer_address_space_size: DeviceSize::default(),
+            resource_descriptor_buffer_address_space_size: DeviceSize::default(),
+            descriptor_buffer_address_space_size: DeviceSize::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceDescriptorBufferPropertiesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_PROPERTIES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDescriptorBufferPropertiesEXT<'_> {}
+impl<'a> PhysicalDeviceDescriptorBufferPropertiesEXT<'a> {
+    #[inline]
+    pub fn combined_image_sampler_descriptor_single_array(
+        mut self,
+        combined_image_sampler_descriptor_single_array: bool,
+    ) -> Self {
+        self.combined_image_sampler_descriptor_single_array =
+            combined_image_sampler_descriptor_single_array.into();
+        self
+    }
+    #[inline]
+    pub fn bufferless_push_descriptors(mut self, bufferless_push_descriptors: bool) -> Self {
+        self.bufferless_push_descriptors = bufferless_push_descriptors.into();
+        self
+    }
+    #[inline]
+    pub fn allow_sampler_image_view_post_submit_creation(
+        mut self,
+        allow_sampler_image_view_post_submit_creation: bool,
+    ) -> Self {
+        self.allow_sampler_image_view_post_submit_creation =
+            allow_sampler_image_view_post_submit_creation.into();
+        self
+    }
+    #[inline]
+    pub fn descriptor_buffer_offset_alignment(
+        mut self,
+        descriptor_buffer_offset_alignment: DeviceSize,
+    ) -> Self {
+        self.descriptor_buffer_offset_alignment = descriptor_buffer_offset_alignment;
+        self
+    }
+    #[inline]
+    pub fn max_descriptor_buffer_bindings(mut self, max_descriptor_buffer_bindings: u32) -> Self {
+        self.max_descriptor_buffer_bindings = max_descriptor_buffer_bindings;
+        self
+    }
+    #[inline]
+    pub fn max_resource_descriptor_buffer_bindings(
+        mut self,
+        max_resource_descriptor_buffer_bindings: u32,
+    ) -> Self {
+        self.max_resource_descriptor_buffer_bindings = max_resource_descriptor_buffer_bindings;
+        self
+    }
+    #[inline]
+    pub fn max_sampler_descriptor_buffer_bindings(
+        mut self,
+        max_sampler_descriptor_buffer_bindings: u32,
+    ) -> Self {
+        self.max_sampler_descriptor_buffer_bindings = max_sampler_descriptor_buffer_bindings;
+        self
+    }
+    #[inline]
+    pub fn max_embedded_immutable_sampler_bindings(
+        mut self,
+        max_embedded_immutable_sampler_bindings: u32,
+    ) -> Self {
+        self.max_embedded_immutable_sampler_bindings = max_embedded_immutable_sampler_bindings;
+        self
+    }
+    #[inline]
+    pub fn max_embedded_immutable_samplers(mut self, max_embedded_immutable_samplers: u32) -> Self {
+        self.max_embedded_immutable_samplers = max_embedded_immutable_samplers;
+        self
+    }
+    #[inline]
+    pub fn buffer_capture_replay_descriptor_data_size(
+        mut self,
+        buffer_capture_replay_descriptor_data_size: usize,
+    ) -> Self {
+        self.buffer_capture_replay_descriptor_data_size =
+            buffer_capture_replay_descriptor_data_size;
+        self
+    }
+    #[inline]
+    pub fn image_capture_replay_descriptor_data_size(
+        mut self,
+        image_capture_replay_descriptor_data_size: usize,
+    ) -> Self {
+        self.image_capture_replay_descriptor_data_size = image_capture_replay_descriptor_data_size;
+        self
+    }
+    #[inline]
+    pub fn image_view_capture_replay_descriptor_data_size(
+        mut self,
+        image_view_capture_replay_descriptor_data_size: usize,
+    ) -> Self {
+        self.image_view_capture_replay_descriptor_data_size =
+            image_view_capture_replay_descriptor_data_size;
+        self
+    }
+    #[inline]
+    pub fn sampler_capture_replay_descriptor_data_size(
+        mut self,
+        sampler_capture_replay_descriptor_data_size: usize,
+    ) -> Self {
+        self.sampler_capture_replay_descriptor_data_size =
+            sampler_capture_replay_descriptor_data_size;
+        self
+    }
+    #[inline]
+    pub fn acceleration_structure_capture_replay_descriptor_data_size(
+        mut self,
+        acceleration_structure_capture_replay_descriptor_data_size: usize,
+    ) -> Self {
+        self.acceleration_structure_capture_replay_descriptor_data_size =
+            acceleration_structure_capture_replay_descriptor_data_size;
+        self
+    }
+    #[inline]
+    pub fn sampler_descriptor_size(mut self, sampler_descriptor_size: usize) -> Self {
+        self.sampler_descriptor_size = sampler_descriptor_size;
+        self
+    }
+    #[inline]
+    pub fn combined_image_sampler_descriptor_size(
+        mut self,
+        combined_image_sampler_descriptor_size: usize,
+    ) -> Self {
+        self.combined_image_sampler_descriptor_size = combined_image_sampler_descriptor_size;
+        self
+    }
+    #[inline]
+    pub fn sampled_image_descriptor_size(mut self, sampled_image_descriptor_size: usize) -> Self {
+        self.sampled_image_descriptor_size = sampled_image_descriptor_size;
+        self
+    }
+    #[inline]
+    pub fn storage_image_descriptor_size(mut self, storage_image_descriptor_size: usize) -> Self {
+        self.storage_image_descriptor_size = storage_image_descriptor_size;
+        self
+    }
+    #[inline]
+    pub fn uniform_texel_buffer_descriptor_size(
+        mut self,
+        uniform_texel_buffer_descriptor_size: usize,
+    ) -> Self {
+        self.uniform_texel_buffer_descriptor_size = uniform_texel_buffer_descriptor_size;
+        self
+    }
+    #[inline]
+    pub fn robust_uniform_texel_buffer_descriptor_size(
+        mut self,
+        robust_uniform_texel_buffer_descriptor_size: usize,
+    ) -> Self {
+        self.robust_uniform_texel_buffer_descriptor_size =
+            robust_uniform_texel_buffer_descriptor_size;
+        self
+    }
+    #[inline]
+    pub fn storage_texel_buffer_descriptor_size(
+        mut self,
+        storage_texel_buffer_descriptor_size: usize,
+    ) -> Self {
+        self.storage_texel_buffer_descriptor_size = storage_texel_buffer_descriptor_size;
+        self
+    }
+    #[inline]
+    pub fn robust_storage_texel_buffer_descriptor_size(
+        mut self,
+        robust_storage_texel_buffer_descriptor_size: usize,
+    ) -> Self {
+        self.robust_storage_texel_buffer_descriptor_size =
+            robust_storage_texel_buffer_descriptor_size;
+        self
+    }
+    #[inline]
+    pub fn uniform_buffer_descriptor_size(mut self, uniform_buffer_descriptor_size: usize) -> Self {
+        self.uniform_buffer_descriptor_size = uniform_buffer_descriptor_size;
+        self
+    }
+    #[inline]
+    pub fn robust_uniform_buffer_descriptor_size(
+        mut self,
+        robust_uniform_buffer_descriptor_size: usize,
+    ) -> Self {
+        self.robust_uniform_buffer_descriptor_size = robust_uniform_buffer_descriptor_size;
+        self
+    }
+    #[inline]
+    pub fn storage_buffer_descriptor_size(mut self, storage_buffer_descriptor_size: usize) -> Self {
+        self.storage_buffer_descriptor_size = storage_buffer_descriptor_size;
+        self
+    }
+    #[inline]
+    pub fn robust_storage_buffer_descriptor_size(
+        mut self,
+        robust_storage_buffer_descriptor_size: usize,
+    ) -> Self {
+        self.robust_storage_buffer_descriptor_size = robust_storage_buffer_descriptor_size;
+        self
+    }
+    #[inline]
+    pub fn input_attachment_descriptor_size(
+        mut self,
+        input_attachment_descriptor_size: usize,
+    ) -> Self {
+        self.input_attachment_descriptor_size = input_attachment_descriptor_size;
+        self
+    }
+    #[inline]
+    pub fn acceleration_structure_descriptor_size(
+        mut self,
+        acceleration_structure_descriptor_size: usize,
+    ) -> Self {
+        self.acceleration_structure_descriptor_size = acceleration_structure_descriptor_size;
+        self
+    }
+    #[inline]
+    pub fn max_sampler_descriptor_buffer_range(
+        mut self,
+        max_sampler_descriptor_buffer_range: DeviceSize,
+    ) -> Self {
+        self.max_sampler_descriptor_buffer_range = max_sampler_descriptor_buffer_range;
+        self
+    }
+    #[inline]
+    pub fn max_resource_descriptor_buffer_range(
+        mut self,
+        max_resource_descriptor_buffer_range: DeviceSize,
+    ) -> Self {
+        self.max_resource_descriptor_buffer_range = max_resource_descriptor_buffer_range;
+        self
+    }
+    #[inline]
+    pub fn sampler_descriptor_buffer_address_space_size(
+        mut self,
+        sampler_descriptor_buffer_address_space_size: DeviceSize,
+    ) -> Self {
+        self.sampler_descriptor_buffer_address_space_size =
+            sampler_descriptor_buffer_address_space_size;
+        self
+    }
+    #[inline]
+    pub fn resource_descriptor_buffer_address_space_size(
+        mut self,
+        resource_descriptor_buffer_address_space_size: DeviceSize,
+    ) -> Self {
+        self.resource_descriptor_buffer_address_space_size =
+            resource_descriptor_buffer_address_space_size;
+        self
+    }
+    #[inline]
+    pub fn descriptor_buffer_address_space_size(
+        mut self,
+        descriptor_buffer_address_space_size: DeviceSize,
+    ) -> Self {
+        self.descriptor_buffer_address_space_size = descriptor_buffer_address_space_size;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDescriptorBufferDensityMapPropertiesEXT.html>"]
+pub struct PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub combined_image_sampler_density_map_descriptor_size: usize,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            combined_image_sampler_density_map_descriptor_size: usize::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_DESCRIPTOR_BUFFER_DENSITY_MAP_PROPERTIES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'_>
+{
+}
+impl<'a> PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'a> {
+    #[inline]
+    pub fn combined_image_sampler_density_map_descriptor_size(
+        mut self,
+        combined_image_sampler_density_map_descriptor_size: usize,
+    ) -> Self {
+        self.combined_image_sampler_density_map_descriptor_size =
+            combined_image_sampler_density_map_descriptor_size;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDescriptorAddressInfoEXT.html>"]
+pub struct DescriptorAddressInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub address: DeviceAddress,
+    pub range: DeviceSize,
+    pub format: Format,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for DescriptorAddressInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            address: DeviceAddress::default(),
+            range: DeviceSize::default(),
+            format: Format::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for DescriptorAddressInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_ADDRESS_INFO_EXT;
+}
+impl<'a> DescriptorAddressInfoEXT<'a> {
+    #[inline]
+    pub fn address(mut self, address: DeviceAddress) -> Self {
+        self.address = address;
+        self
+    }
+    #[inline]
+    pub fn range(mut self, range: DeviceSize) -> Self {
+        self.range = range;
+        self
+    }
+    #[inline]
+    pub fn format(mut self, format: Format) -> Self {
+        self.format = format;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDescriptorBufferBindingInfoEXT.html>"]
+pub struct DescriptorBufferBindingInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub address: DeviceAddress,
+    pub usage: BufferUsageFlags,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for DescriptorBufferBindingInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            address: DeviceAddress::default(),
+            usage: BufferUsageFlags::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for DescriptorBufferBindingInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_BUFFER_BINDING_INFO_EXT;
+}
+pub unsafe trait ExtendsDescriptorBufferBindingInfoEXT {}
+impl<'a> DescriptorBufferBindingInfoEXT<'a> {
+    #[inline]
+    pub fn address(mut self, address: DeviceAddress) -> Self {
+        self.address = address;
+        self
+    }
+    #[inline]
+    pub fn usage(mut self, usage: BufferUsageFlags) -> Self {
+        self.usage = usage;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDescriptorBufferBindingInfoEXT>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = <*mut T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDescriptorBufferBindingPushDescriptorBufferHandleEXT.html>"]
+pub struct DescriptorBufferBindingPushDescriptorBufferHandleEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub buffer: Buffer,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for DescriptorBufferBindingPushDescriptorBufferHandleEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            buffer: Buffer::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for DescriptorBufferBindingPushDescriptorBufferHandleEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::DESCRIPTOR_BUFFER_BINDING_PUSH_DESCRIPTOR_BUFFER_HANDLE_EXT;
+}
+unsafe impl ExtendsDescriptorBufferBindingInfoEXT
+    for DescriptorBufferBindingPushDescriptorBufferHandleEXT<'_>
+{
+}
+impl<'a> DescriptorBufferBindingPushDescriptorBufferHandleEXT<'a> {
+    #[inline]
+    pub fn buffer(mut self, buffer: Buffer) -> Self {
+        self.buffer = buffer;
+        self
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDescriptorDataEXT.html>"]
+pub union DescriptorDataEXT<'a> {
+    pub p_sampler: *const Sampler,
+    pub p_combined_image_sampler: *const DescriptorImageInfo,
+    pub p_input_attachment_image: *const DescriptorImageInfo,
+    pub p_sampled_image: *const DescriptorImageInfo,
+    pub p_storage_image: *const DescriptorImageInfo,
+    pub p_uniform_texel_buffer: *const DescriptorAddressInfoEXT<'a>,
+    pub p_storage_texel_buffer: *const DescriptorAddressInfoEXT<'a>,
+    pub p_uniform_buffer: *const DescriptorAddressInfoEXT<'a>,
+    pub p_storage_buffer: *const DescriptorAddressInfoEXT<'a>,
+    pub acceleration_structure: DeviceAddress,
+}
+impl<'a> ::std::default::Default for DescriptorDataEXT<'a> {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDescriptorGetInfoEXT.html>"]
+pub struct DescriptorGetInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub ty: DescriptorType,
+    pub data: DescriptorDataEXT<'a>,
+    pub _marker: PhantomData<&'a ()>,
+}
+#[cfg(feature = "debug")]
+impl fmt::Debug for DescriptorGetInfoEXT<'_> {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+        fmt.debug_struct("DescriptorGetInfoEXT")
+            .field("s_type", &self.s_type)
+            .field("p_next", &self.p_next)
+            .field("ty", &self.ty)
+            .field("data", &"union")
+            .finish()
+    }
+}
+impl ::std::default::Default for DescriptorGetInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            ty: DescriptorType::default(),
+            data: DescriptorDataEXT::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for DescriptorGetInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::DESCRIPTOR_GET_INFO_EXT;
+}
+impl<'a> DescriptorGetInfoEXT<'a> {
+    #[inline]
+    pub fn ty(mut self, ty: DescriptorType) -> Self {
+        self.ty = ty;
+        self
+    }
+    #[inline]
+    pub fn data(mut self, data: DescriptorDataEXT<'a>) -> Self {
+        self.data = data;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkBufferCaptureDescriptorDataInfoEXT.html>"]
+pub struct BufferCaptureDescriptorDataInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub buffer: Buffer,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for BufferCaptureDescriptorDataInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            buffer: Buffer::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for BufferCaptureDescriptorDataInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_CAPTURE_DESCRIPTOR_DATA_INFO_EXT;
+}
+impl<'a> BufferCaptureDescriptorDataInfoEXT<'a> {
+    #[inline]
+    pub fn buffer(mut self, buffer: Buffer) -> Self {
+        self.buffer = buffer;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImageCaptureDescriptorDataInfoEXT.html>"]
+pub struct ImageCaptureDescriptorDataInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub image: Image,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ImageCaptureDescriptorDataInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            image: Image::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for ImageCaptureDescriptorDataInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_CAPTURE_DESCRIPTOR_DATA_INFO_EXT;
+}
+impl<'a> ImageCaptureDescriptorDataInfoEXT<'a> {
+    #[inline]
+    pub fn image(mut self, image: Image) -> Self {
+        self.image = image;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImageViewCaptureDescriptorDataInfoEXT.html>"]
+pub struct ImageViewCaptureDescriptorDataInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub image_view: ImageView,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ImageViewCaptureDescriptorDataInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            image_view: ImageView::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for ImageViewCaptureDescriptorDataInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::IMAGE_VIEW_CAPTURE_DESCRIPTOR_DATA_INFO_EXT;
+}
+impl<'a> ImageViewCaptureDescriptorDataInfoEXT<'a> {
+    #[inline]
+    pub fn image_view(mut self, image_view: ImageView) -> Self {
+        self.image_view = image_view;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSamplerCaptureDescriptorDataInfoEXT.html>"]
+pub struct SamplerCaptureDescriptorDataInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub sampler: Sampler,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for SamplerCaptureDescriptorDataInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            sampler: Sampler::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for SamplerCaptureDescriptorDataInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::SAMPLER_CAPTURE_DESCRIPTOR_DATA_INFO_EXT;
+}
+impl<'a> SamplerCaptureDescriptorDataInfoEXT<'a> {
+    #[inline]
+    pub fn sampler(mut self, sampler: Sampler) -> Self {
+        self.sampler = sampler;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureCaptureDescriptorDataInfoEXT.html>"]
+pub struct AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub acceleration_structure: AccelerationStructureKHR,
+    pub acceleration_structure_nv: AccelerationStructureNV,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for AccelerationStructureCaptureDescriptorDataInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            acceleration_structure: AccelerationStructureKHR::default(),
+            acceleration_structure_nv: AccelerationStructureNV::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::ACCELERATION_STRUCTURE_CAPTURE_DESCRIPTOR_DATA_INFO_EXT;
+}
+impl<'a> AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {
+    #[inline]
+    pub fn acceleration_structure(
+        mut self,
+        acceleration_structure: AccelerationStructureKHR,
+    ) -> Self {
+        self.acceleration_structure = acceleration_structure;
+        self
+    }
+    #[inline]
+    pub fn acceleration_structure_nv(
+        mut self,
+        acceleration_structure_nv: AccelerationStructureNV,
+    ) -> Self {
+        self.acceleration_structure_nv = acceleration_structure_nv;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkOpaqueCaptureDescriptorDataCreateInfoEXT.html>"]
+pub struct OpaqueCaptureDescriptorDataCreateInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub opaque_capture_descriptor_data: *const c_void,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            opaque_capture_descriptor_data: ::std::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for OpaqueCaptureDescriptorDataCreateInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::OPAQUE_CAPTURE_DESCRIPTOR_DATA_CREATE_INFO_EXT;
+}
+unsafe impl ExtendsBufferCreateInfo for OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {}
+unsafe impl ExtendsImageCreateInfo for OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {}
+unsafe impl ExtendsImageViewCreateInfo for OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {}
+unsafe impl ExtendsSamplerCreateInfo for OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {}
+unsafe impl ExtendsAccelerationStructureCreateInfoKHR
+    for OpaqueCaptureDescriptorDataCreateInfoEXT<'_>
+{
+}
+unsafe impl ExtendsAccelerationStructureCreateInfoNV
+    for OpaqueCaptureDescriptorDataCreateInfoEXT<'_>
+{
+}
+impl<'a> OpaqueCaptureDescriptorDataCreateInfoEXT<'a> {
+    #[inline]
+    pub fn opaque_capture_descriptor_data(
+        mut self,
+        opaque_capture_descriptor_data: *const c_void,
+    ) -> Self {
+        self.opaque_capture_descriptor_data = opaque_capture_descriptor_data;
         self
     }
 }
@@ -42017,6 +43701,666 @@ impl<'a> PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'a> {
     }
 }
 #[repr(C)]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMicromapBuildInfoEXT.html>"]
+pub struct MicromapBuildInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub ty: MicromapTypeEXT,
+    pub flags: BuildMicromapFlagsEXT,
+    pub mode: BuildMicromapModeEXT,
+    pub dst_micromap: MicromapEXT,
+    pub usage_counts_count: u32,
+    pub p_usage_counts: *const MicromapUsageEXT,
+    pub pp_usage_counts: *const *const MicromapUsageEXT,
+    pub data: DeviceOrHostAddressConstKHR,
+    pub scratch_data: DeviceOrHostAddressKHR,
+    pub triangle_array: DeviceOrHostAddressConstKHR,
+    pub triangle_array_stride: DeviceSize,
+    pub _marker: PhantomData<&'a ()>,
+}
+#[cfg(feature = "debug")]
+impl fmt::Debug for MicromapBuildInfoEXT<'_> {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+        fmt.debug_struct("MicromapBuildInfoEXT")
+            .field("s_type", &self.s_type)
+            .field("p_next", &self.p_next)
+            .field("ty", &self.ty)
+            .field("flags", &self.flags)
+            .field("mode", &self.mode)
+            .field("dst_micromap", &self.dst_micromap)
+            .field("usage_counts_count", &self.usage_counts_count)
+            .field("p_usage_counts", &self.p_usage_counts)
+            .field("pp_usage_counts", &self.pp_usage_counts)
+            .field("data", &"union")
+            .field("scratch_data", &"union")
+            .field("triangle_array", &"union")
+            .field("triangle_array_stride", &self.triangle_array_stride)
+            .finish()
+    }
+}
+impl ::std::default::Default for MicromapBuildInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            ty: MicromapTypeEXT::default(),
+            flags: BuildMicromapFlagsEXT::default(),
+            mode: BuildMicromapModeEXT::default(),
+            dst_micromap: MicromapEXT::default(),
+            usage_counts_count: u32::default(),
+            p_usage_counts: ::std::ptr::null(),
+            pp_usage_counts: ::std::ptr::null(),
+            data: DeviceOrHostAddressConstKHR::default(),
+            scratch_data: DeviceOrHostAddressKHR::default(),
+            triangle_array: DeviceOrHostAddressConstKHR::default(),
+            triangle_array_stride: DeviceSize::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for MicromapBuildInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::MICROMAP_BUILD_INFO_EXT;
+}
+impl<'a> MicromapBuildInfoEXT<'a> {
+    #[inline]
+    pub fn ty(mut self, ty: MicromapTypeEXT) -> Self {
+        self.ty = ty;
+        self
+    }
+    #[inline]
+    pub fn flags(mut self, flags: BuildMicromapFlagsEXT) -> Self {
+        self.flags = flags;
+        self
+    }
+    #[inline]
+    pub fn mode(mut self, mode: BuildMicromapModeEXT) -> Self {
+        self.mode = mode;
+        self
+    }
+    #[inline]
+    pub fn dst_micromap(mut self, dst_micromap: MicromapEXT) -> Self {
+        self.dst_micromap = dst_micromap;
+        self
+    }
+    #[inline]
+    pub fn usage_counts(mut self, usage_counts: &'a [MicromapUsageEXT]) -> Self {
+        self.usage_counts_count = usage_counts.len() as _;
+        self.p_usage_counts = usage_counts.as_ptr();
+        self
+    }
+    #[inline]
+    pub fn usage_counts_ptrs(mut self, usage_counts_ptrs: &'a [&'a MicromapUsageEXT]) -> Self {
+        self.usage_counts_count = usage_counts_ptrs.len() as _;
+        self.pp_usage_counts = usage_counts_ptrs.as_ptr().cast();
+        self
+    }
+    #[inline]
+    pub fn data(mut self, data: DeviceOrHostAddressConstKHR) -> Self {
+        self.data = data;
+        self
+    }
+    #[inline]
+    pub fn scratch_data(mut self, scratch_data: DeviceOrHostAddressKHR) -> Self {
+        self.scratch_data = scratch_data;
+        self
+    }
+    #[inline]
+    pub fn triangle_array(mut self, triangle_array: DeviceOrHostAddressConstKHR) -> Self {
+        self.triangle_array = triangle_array;
+        self
+    }
+    #[inline]
+    pub fn triangle_array_stride(mut self, triangle_array_stride: DeviceSize) -> Self {
+        self.triangle_array_stride = triangle_array_stride;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMicromapCreateInfoEXT.html>"]
+pub struct MicromapCreateInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub create_flags: MicromapCreateFlagsEXT,
+    pub buffer: Buffer,
+    pub offset: DeviceSize,
+    pub size: DeviceSize,
+    pub ty: MicromapTypeEXT,
+    pub device_address: DeviceAddress,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for MicromapCreateInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            create_flags: MicromapCreateFlagsEXT::default(),
+            buffer: Buffer::default(),
+            offset: DeviceSize::default(),
+            size: DeviceSize::default(),
+            ty: MicromapTypeEXT::default(),
+            device_address: DeviceAddress::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for MicromapCreateInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::MICROMAP_CREATE_INFO_EXT;
+}
+impl<'a> MicromapCreateInfoEXT<'a> {
+    #[inline]
+    pub fn create_flags(mut self, create_flags: MicromapCreateFlagsEXT) -> Self {
+        self.create_flags = create_flags;
+        self
+    }
+    #[inline]
+    pub fn buffer(mut self, buffer: Buffer) -> Self {
+        self.buffer = buffer;
+        self
+    }
+    #[inline]
+    pub fn offset(mut self, offset: DeviceSize) -> Self {
+        self.offset = offset;
+        self
+    }
+    #[inline]
+    pub fn size(mut self, size: DeviceSize) -> Self {
+        self.size = size;
+        self
+    }
+    #[inline]
+    pub fn ty(mut self, ty: MicromapTypeEXT) -> Self {
+        self.ty = ty;
+        self
+    }
+    #[inline]
+    pub fn device_address(mut self, device_address: DeviceAddress) -> Self {
+        self.device_address = device_address;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMicromapVersionInfoEXT.html>"]
+pub struct MicromapVersionInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub p_version_data: *const [u8; 2 * UUID_SIZE],
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for MicromapVersionInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            p_version_data: ::std::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for MicromapVersionInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::MICROMAP_VERSION_INFO_EXT;
+}
+impl<'a> MicromapVersionInfoEXT<'a> {
+    #[inline]
+    pub fn version_data(mut self, version_data: &'a [u8; 2 * UUID_SIZE]) -> Self {
+        self.p_version_data = version_data;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCopyMicromapInfoEXT.html>"]
+pub struct CopyMicromapInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub src: MicromapEXT,
+    pub dst: MicromapEXT,
+    pub mode: CopyMicromapModeEXT,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for CopyMicromapInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            src: MicromapEXT::default(),
+            dst: MicromapEXT::default(),
+            mode: CopyMicromapModeEXT::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for CopyMicromapInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::COPY_MICROMAP_INFO_EXT;
+}
+impl<'a> CopyMicromapInfoEXT<'a> {
+    #[inline]
+    pub fn src(mut self, src: MicromapEXT) -> Self {
+        self.src = src;
+        self
+    }
+    #[inline]
+    pub fn dst(mut self, dst: MicromapEXT) -> Self {
+        self.dst = dst;
+        self
+    }
+    #[inline]
+    pub fn mode(mut self, mode: CopyMicromapModeEXT) -> Self {
+        self.mode = mode;
+        self
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCopyMicromapToMemoryInfoEXT.html>"]
+pub struct CopyMicromapToMemoryInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub src: MicromapEXT,
+    pub dst: DeviceOrHostAddressKHR,
+    pub mode: CopyMicromapModeEXT,
+    pub _marker: PhantomData<&'a ()>,
+}
+#[cfg(feature = "debug")]
+impl fmt::Debug for CopyMicromapToMemoryInfoEXT<'_> {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+        fmt.debug_struct("CopyMicromapToMemoryInfoEXT")
+            .field("s_type", &self.s_type)
+            .field("p_next", &self.p_next)
+            .field("src", &self.src)
+            .field("dst", &"union")
+            .field("mode", &self.mode)
+            .finish()
+    }
+}
+impl ::std::default::Default for CopyMicromapToMemoryInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            src: MicromapEXT::default(),
+            dst: DeviceOrHostAddressKHR::default(),
+            mode: CopyMicromapModeEXT::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for CopyMicromapToMemoryInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::COPY_MICROMAP_TO_MEMORY_INFO_EXT;
+}
+impl<'a> CopyMicromapToMemoryInfoEXT<'a> {
+    #[inline]
+    pub fn src(mut self, src: MicromapEXT) -> Self {
+        self.src = src;
+        self
+    }
+    #[inline]
+    pub fn dst(mut self, dst: DeviceOrHostAddressKHR) -> Self {
+        self.dst = dst;
+        self
+    }
+    #[inline]
+    pub fn mode(mut self, mode: CopyMicromapModeEXT) -> Self {
+        self.mode = mode;
+        self
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCopyMemoryToMicromapInfoEXT.html>"]
+pub struct CopyMemoryToMicromapInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub src: DeviceOrHostAddressConstKHR,
+    pub dst: MicromapEXT,
+    pub mode: CopyMicromapModeEXT,
+    pub _marker: PhantomData<&'a ()>,
+}
+#[cfg(feature = "debug")]
+impl fmt::Debug for CopyMemoryToMicromapInfoEXT<'_> {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+        fmt.debug_struct("CopyMemoryToMicromapInfoEXT")
+            .field("s_type", &self.s_type)
+            .field("p_next", &self.p_next)
+            .field("src", &"union")
+            .field("dst", &self.dst)
+            .field("mode", &self.mode)
+            .finish()
+    }
+}
+impl ::std::default::Default for CopyMemoryToMicromapInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            src: DeviceOrHostAddressConstKHR::default(),
+            dst: MicromapEXT::default(),
+            mode: CopyMicromapModeEXT::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for CopyMemoryToMicromapInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::COPY_MEMORY_TO_MICROMAP_INFO_EXT;
+}
+impl<'a> CopyMemoryToMicromapInfoEXT<'a> {
+    #[inline]
+    pub fn src(mut self, src: DeviceOrHostAddressConstKHR) -> Self {
+        self.src = src;
+        self
+    }
+    #[inline]
+    pub fn dst(mut self, dst: MicromapEXT) -> Self {
+        self.dst = dst;
+        self
+    }
+    #[inline]
+    pub fn mode(mut self, mode: CopyMicromapModeEXT) -> Self {
+        self.mode = mode;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMicromapBuildSizesInfoEXT.html>"]
+pub struct MicromapBuildSizesInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub micromap_size: DeviceSize,
+    pub build_scratch_size: DeviceSize,
+    pub discardable: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for MicromapBuildSizesInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            micromap_size: DeviceSize::default(),
+            build_scratch_size: DeviceSize::default(),
+            discardable: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for MicromapBuildSizesInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::MICROMAP_BUILD_SIZES_INFO_EXT;
+}
+impl<'a> MicromapBuildSizesInfoEXT<'a> {
+    #[inline]
+    pub fn micromap_size(mut self, micromap_size: DeviceSize) -> Self {
+        self.micromap_size = micromap_size;
+        self
+    }
+    #[inline]
+    pub fn build_scratch_size(mut self, build_scratch_size: DeviceSize) -> Self {
+        self.build_scratch_size = build_scratch_size;
+        self
+    }
+    #[inline]
+    pub fn discardable(mut self, discardable: bool) -> Self {
+        self.discardable = discardable.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone, Default)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMicromapUsageEXT.html>"]
+pub struct MicromapUsageEXT {
+    pub count: u32,
+    pub subdivision_level: u32,
+    pub format: u32,
+}
+impl MicromapUsageEXT {
+    #[inline]
+    pub fn count(mut self, count: u32) -> Self {
+        self.count = count;
+        self
+    }
+    #[inline]
+    pub fn subdivision_level(mut self, subdivision_level: u32) -> Self {
+        self.subdivision_level = subdivision_level;
+        self
+    }
+    #[inline]
+    pub fn format(mut self, format: u32) -> Self {
+        self.format = format;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone, Default)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMicromapTriangleEXT.html>"]
+pub struct MicromapTriangleEXT {
+    pub data_offset: u32,
+    pub subdivision_level: u16,
+    pub format: u16,
+}
+impl MicromapTriangleEXT {
+    #[inline]
+    pub fn data_offset(mut self, data_offset: u32) -> Self {
+        self.data_offset = data_offset;
+        self
+    }
+    #[inline]
+    pub fn subdivision_level(mut self, subdivision_level: u16) -> Self {
+        self.subdivision_level = subdivision_level;
+        self
+    }
+    #[inline]
+    pub fn format(mut self, format: u16) -> Self {
+        self.format = format;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceOpacityMicromapFeaturesEXT.html>"]
+pub struct PhysicalDeviceOpacityMicromapFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub micromap: Bool32,
+    pub micromap_capture_replay: Bool32,
+    pub micromap_host_commands: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceOpacityMicromapFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            micromap: Bool32::default(),
+            micromap_capture_replay: Bool32::default(),
+            micromap_host_commands: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceOpacityMicromapFeaturesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_OPACITY_MICROMAP_FEATURES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceOpacityMicromapFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceOpacityMicromapFeaturesEXT<'_> {}
+impl<'a> PhysicalDeviceOpacityMicromapFeaturesEXT<'a> {
+    #[inline]
+    pub fn micromap(mut self, micromap: bool) -> Self {
+        self.micromap = micromap.into();
+        self
+    }
+    #[inline]
+    pub fn micromap_capture_replay(mut self, micromap_capture_replay: bool) -> Self {
+        self.micromap_capture_replay = micromap_capture_replay.into();
+        self
+    }
+    #[inline]
+    pub fn micromap_host_commands(mut self, micromap_host_commands: bool) -> Self {
+        self.micromap_host_commands = micromap_host_commands.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceOpacityMicromapPropertiesEXT.html>"]
+pub struct PhysicalDeviceOpacityMicromapPropertiesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub max_opacity2_state_subdivision_level: u32,
+    pub max_opacity4_state_subdivision_level: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceOpacityMicromapPropertiesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            max_opacity2_state_subdivision_level: u32::default(),
+            max_opacity4_state_subdivision_level: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceOpacityMicromapPropertiesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_OPACITY_MICROMAP_PROPERTIES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceOpacityMicromapPropertiesEXT<'_> {}
+impl<'a> PhysicalDeviceOpacityMicromapPropertiesEXT<'a> {
+    #[inline]
+    pub fn max_opacity2_state_subdivision_level(
+        mut self,
+        max_opacity2_state_subdivision_level: u32,
+    ) -> Self {
+        self.max_opacity2_state_subdivision_level = max_opacity2_state_subdivision_level;
+        self
+    }
+    #[inline]
+    pub fn max_opacity4_state_subdivision_level(
+        mut self,
+        max_opacity4_state_subdivision_level: u32,
+    ) -> Self {
+        self.max_opacity4_state_subdivision_level = max_opacity4_state_subdivision_level;
+        self
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureTrianglesOpacityMicromapEXT.html>"]
+pub struct AccelerationStructureTrianglesOpacityMicromapEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub index_type: IndexType,
+    pub index_buffer: DeviceOrHostAddressConstKHR,
+    pub index_stride: DeviceSize,
+    pub base_triangle: u32,
+    pub usage_counts_count: u32,
+    pub p_usage_counts: *const MicromapUsageEXT,
+    pub pp_usage_counts: *const *const MicromapUsageEXT,
+    pub micromap: MicromapEXT,
+    pub _marker: PhantomData<&'a ()>,
+}
+#[cfg(feature = "debug")]
+impl fmt::Debug for AccelerationStructureTrianglesOpacityMicromapEXT<'_> {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+        fmt.debug_struct("AccelerationStructureTrianglesOpacityMicromapEXT")
+            .field("s_type", &self.s_type)
+            .field("p_next", &self.p_next)
+            .field("index_type", &self.index_type)
+            .field("index_buffer", &"union")
+            .field("index_stride", &self.index_stride)
+            .field("base_triangle", &self.base_triangle)
+            .field("usage_counts_count", &self.usage_counts_count)
+            .field("p_usage_counts", &self.p_usage_counts)
+            .field("pp_usage_counts", &self.pp_usage_counts)
+            .field("micromap", &self.micromap)
+            .finish()
+    }
+}
+impl ::std::default::Default for AccelerationStructureTrianglesOpacityMicromapEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            index_type: IndexType::default(),
+            index_buffer: DeviceOrHostAddressConstKHR::default(),
+            index_stride: DeviceSize::default(),
+            base_triangle: u32::default(),
+            usage_counts_count: u32::default(),
+            p_usage_counts: ::std::ptr::null(),
+            pp_usage_counts: ::std::ptr::null(),
+            micromap: MicromapEXT::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for AccelerationStructureTrianglesOpacityMicromapEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::ACCELERATION_STRUCTURE_TRIANGLES_OPACITY_MICROMAP_EXT;
+}
+unsafe impl ExtendsAccelerationStructureGeometryTrianglesDataKHR
+    for AccelerationStructureTrianglesOpacityMicromapEXT<'_>
+{
+}
+impl<'a> AccelerationStructureTrianglesOpacityMicromapEXT<'a> {
+    #[inline]
+    pub fn index_type(mut self, index_type: IndexType) -> Self {
+        self.index_type = index_type;
+        self
+    }
+    #[inline]
+    pub fn index_buffer(mut self, index_buffer: DeviceOrHostAddressConstKHR) -> Self {
+        self.index_buffer = index_buffer;
+        self
+    }
+    #[inline]
+    pub fn index_stride(mut self, index_stride: DeviceSize) -> Self {
+        self.index_stride = index_stride;
+        self
+    }
+    #[inline]
+    pub fn base_triangle(mut self, base_triangle: u32) -> Self {
+        self.base_triangle = base_triangle;
+        self
+    }
+    #[inline]
+    pub fn usage_counts(mut self, usage_counts: &'a [MicromapUsageEXT]) -> Self {
+        self.usage_counts_count = usage_counts.len() as _;
+        self.p_usage_counts = usage_counts.as_ptr();
+        self
+    }
+    #[inline]
+    pub fn usage_counts_ptrs(mut self, usage_counts_ptrs: &'a [&'a MicromapUsageEXT]) -> Self {
+        self.usage_counts_count = usage_counts_ptrs.len() as _;
+        self.pp_usage_counts = usage_counts_ptrs.as_ptr().cast();
+        self
+    }
+    #[inline]
+    pub fn micromap(mut self, micromap: MicromapEXT) -> Self {
+        self.micromap = micromap;
+        self
+    }
+}
+#[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelinePropertiesIdentifierEXT.html>"]
@@ -43153,6 +45497,996 @@ impl<'a> PhysicalDeviceDepthClampZeroOneFeaturesEXT<'a> {
     #[inline]
     pub fn depth_clamp_zero_one(mut self, depth_clamp_zero_one: bool) -> Self {
         self.depth_clamp_zero_one = depth_clamp_zero_one.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceAddressBindingReportFeaturesEXT.html>"]
+pub struct PhysicalDeviceAddressBindingReportFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub report_address_binding: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceAddressBindingReportFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            report_address_binding: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceAddressBindingReportFeaturesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_ADDRESS_BINDING_REPORT_FEATURES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceAddressBindingReportFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceAddressBindingReportFeaturesEXT<'_> {}
+impl<'a> PhysicalDeviceAddressBindingReportFeaturesEXT<'a> {
+    #[inline]
+    pub fn report_address_binding(mut self, report_address_binding: bool) -> Self {
+        self.report_address_binding = report_address_binding.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDeviceAddressBindingCallbackDataEXT.html>"]
+pub struct DeviceAddressBindingCallbackDataEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub flags: DeviceAddressBindingFlagsEXT,
+    pub base_address: DeviceAddress,
+    pub size: DeviceSize,
+    pub binding_type: DeviceAddressBindingTypeEXT,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for DeviceAddressBindingCallbackDataEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            flags: DeviceAddressBindingFlagsEXT::default(),
+            base_address: DeviceAddress::default(),
+            size: DeviceSize::default(),
+            binding_type: DeviceAddressBindingTypeEXT::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for DeviceAddressBindingCallbackDataEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_ADDRESS_BINDING_CALLBACK_DATA_EXT;
+}
+unsafe impl ExtendsDebugUtilsMessengerCallbackDataEXT for DeviceAddressBindingCallbackDataEXT<'_> {}
+impl<'a> DeviceAddressBindingCallbackDataEXT<'a> {
+    #[inline]
+    pub fn flags(mut self, flags: DeviceAddressBindingFlagsEXT) -> Self {
+        self.flags = flags;
+        self
+    }
+    #[inline]
+    pub fn base_address(mut self, base_address: DeviceAddress) -> Self {
+        self.base_address = base_address;
+        self
+    }
+    #[inline]
+    pub fn size(mut self, size: DeviceSize) -> Self {
+        self.size = size;
+        self
+    }
+    #[inline]
+    pub fn binding_type(mut self, binding_type: DeviceAddressBindingTypeEXT) -> Self {
+        self.binding_type = binding_type;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceOpticalFlowFeaturesNV.html>"]
+pub struct PhysicalDeviceOpticalFlowFeaturesNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub optical_flow: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceOpticalFlowFeaturesNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            optical_flow: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceOpticalFlowFeaturesNV<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_OPTICAL_FLOW_FEATURES_NV;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceOpticalFlowFeaturesNV<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceOpticalFlowFeaturesNV<'_> {}
+impl<'a> PhysicalDeviceOpticalFlowFeaturesNV<'a> {
+    #[inline]
+    pub fn optical_flow(mut self, optical_flow: bool) -> Self {
+        self.optical_flow = optical_flow.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceOpticalFlowPropertiesNV.html>"]
+pub struct PhysicalDeviceOpticalFlowPropertiesNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub supported_output_grid_sizes: OpticalFlowGridSizeFlagsNV,
+    pub supported_hint_grid_sizes: OpticalFlowGridSizeFlagsNV,
+    pub hint_supported: Bool32,
+    pub cost_supported: Bool32,
+    pub bidirectional_flow_supported: Bool32,
+    pub global_flow_supported: Bool32,
+    pub min_width: u32,
+    pub min_height: u32,
+    pub max_width: u32,
+    pub max_height: u32,
+    pub max_num_regions_of_interest: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceOpticalFlowPropertiesNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            supported_output_grid_sizes: OpticalFlowGridSizeFlagsNV::default(),
+            supported_hint_grid_sizes: OpticalFlowGridSizeFlagsNV::default(),
+            hint_supported: Bool32::default(),
+            cost_supported: Bool32::default(),
+            bidirectional_flow_supported: Bool32::default(),
+            global_flow_supported: Bool32::default(),
+            min_width: u32::default(),
+            min_height: u32::default(),
+            max_width: u32::default(),
+            max_height: u32::default(),
+            max_num_regions_of_interest: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceOpticalFlowPropertiesNV<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_OPTICAL_FLOW_PROPERTIES_NV;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceOpticalFlowPropertiesNV<'_> {}
+impl<'a> PhysicalDeviceOpticalFlowPropertiesNV<'a> {
+    #[inline]
+    pub fn supported_output_grid_sizes(
+        mut self,
+        supported_output_grid_sizes: OpticalFlowGridSizeFlagsNV,
+    ) -> Self {
+        self.supported_output_grid_sizes = supported_output_grid_sizes;
+        self
+    }
+    #[inline]
+    pub fn supported_hint_grid_sizes(
+        mut self,
+        supported_hint_grid_sizes: OpticalFlowGridSizeFlagsNV,
+    ) -> Self {
+        self.supported_hint_grid_sizes = supported_hint_grid_sizes;
+        self
+    }
+    #[inline]
+    pub fn hint_supported(mut self, hint_supported: bool) -> Self {
+        self.hint_supported = hint_supported.into();
+        self
+    }
+    #[inline]
+    pub fn cost_supported(mut self, cost_supported: bool) -> Self {
+        self.cost_supported = cost_supported.into();
+        self
+    }
+    #[inline]
+    pub fn bidirectional_flow_supported(mut self, bidirectional_flow_supported: bool) -> Self {
+        self.bidirectional_flow_supported = bidirectional_flow_supported.into();
+        self
+    }
+    #[inline]
+    pub fn global_flow_supported(mut self, global_flow_supported: bool) -> Self {
+        self.global_flow_supported = global_flow_supported.into();
+        self
+    }
+    #[inline]
+    pub fn min_width(mut self, min_width: u32) -> Self {
+        self.min_width = min_width;
+        self
+    }
+    #[inline]
+    pub fn min_height(mut self, min_height: u32) -> Self {
+        self.min_height = min_height;
+        self
+    }
+    #[inline]
+    pub fn max_width(mut self, max_width: u32) -> Self {
+        self.max_width = max_width;
+        self
+    }
+    #[inline]
+    pub fn max_height(mut self, max_height: u32) -> Self {
+        self.max_height = max_height;
+        self
+    }
+    #[inline]
+    pub fn max_num_regions_of_interest(mut self, max_num_regions_of_interest: u32) -> Self {
+        self.max_num_regions_of_interest = max_num_regions_of_interest;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkOpticalFlowImageFormatInfoNV.html>"]
+pub struct OpticalFlowImageFormatInfoNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub usage: OpticalFlowUsageFlagsNV,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for OpticalFlowImageFormatInfoNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            usage: OpticalFlowUsageFlagsNV::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for OpticalFlowImageFormatInfoNV<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::OPTICAL_FLOW_IMAGE_FORMAT_INFO_NV;
+}
+unsafe impl ExtendsPhysicalDeviceImageFormatInfo2 for OpticalFlowImageFormatInfoNV<'_> {}
+unsafe impl ExtendsImageCreateInfo for OpticalFlowImageFormatInfoNV<'_> {}
+impl<'a> OpticalFlowImageFormatInfoNV<'a> {
+    #[inline]
+    pub fn usage(mut self, usage: OpticalFlowUsageFlagsNV) -> Self {
+        self.usage = usage;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkOpticalFlowImageFormatPropertiesNV.html>"]
+pub struct OpticalFlowImageFormatPropertiesNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub format: Format,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for OpticalFlowImageFormatPropertiesNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            format: Format::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for OpticalFlowImageFormatPropertiesNV<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::OPTICAL_FLOW_IMAGE_FORMAT_PROPERTIES_NV;
+}
+impl<'a> OpticalFlowImageFormatPropertiesNV<'a> {
+    #[inline]
+    pub fn format(mut self, format: Format) -> Self {
+        self.format = format;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkOpticalFlowSessionCreateInfoNV.html>"]
+pub struct OpticalFlowSessionCreateInfoNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub width: u32,
+    pub height: u32,
+    pub image_format: Format,
+    pub flow_vector_format: Format,
+    pub cost_format: Format,
+    pub output_grid_size: OpticalFlowGridSizeFlagsNV,
+    pub hint_grid_size: OpticalFlowGridSizeFlagsNV,
+    pub performance_level: OpticalFlowPerformanceLevelNV,
+    pub flags: OpticalFlowSessionCreateFlagsNV,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for OpticalFlowSessionCreateInfoNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            width: u32::default(),
+            height: u32::default(),
+            image_format: Format::default(),
+            flow_vector_format: Format::default(),
+            cost_format: Format::default(),
+            output_grid_size: OpticalFlowGridSizeFlagsNV::default(),
+            hint_grid_size: OpticalFlowGridSizeFlagsNV::default(),
+            performance_level: OpticalFlowPerformanceLevelNV::default(),
+            flags: OpticalFlowSessionCreateFlagsNV::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for OpticalFlowSessionCreateInfoNV<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::OPTICAL_FLOW_SESSION_CREATE_INFO_NV;
+}
+pub unsafe trait ExtendsOpticalFlowSessionCreateInfoNV {}
+impl<'a> OpticalFlowSessionCreateInfoNV<'a> {
+    #[inline]
+    pub fn width(mut self, width: u32) -> Self {
+        self.width = width;
+        self
+    }
+    #[inline]
+    pub fn height(mut self, height: u32) -> Self {
+        self.height = height;
+        self
+    }
+    #[inline]
+    pub fn image_format(mut self, image_format: Format) -> Self {
+        self.image_format = image_format;
+        self
+    }
+    #[inline]
+    pub fn flow_vector_format(mut self, flow_vector_format: Format) -> Self {
+        self.flow_vector_format = flow_vector_format;
+        self
+    }
+    #[inline]
+    pub fn cost_format(mut self, cost_format: Format) -> Self {
+        self.cost_format = cost_format;
+        self
+    }
+    #[inline]
+    pub fn output_grid_size(mut self, output_grid_size: OpticalFlowGridSizeFlagsNV) -> Self {
+        self.output_grid_size = output_grid_size;
+        self
+    }
+    #[inline]
+    pub fn hint_grid_size(mut self, hint_grid_size: OpticalFlowGridSizeFlagsNV) -> Self {
+        self.hint_grid_size = hint_grid_size;
+        self
+    }
+    #[inline]
+    pub fn performance_level(mut self, performance_level: OpticalFlowPerformanceLevelNV) -> Self {
+        self.performance_level = performance_level;
+        self
+    }
+    #[inline]
+    pub fn flags(mut self, flags: OpticalFlowSessionCreateFlagsNV) -> Self {
+        self.flags = flags;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsOpticalFlowSessionCreateInfoNV>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = <*mut T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkOpticalFlowSessionCreatePrivateDataInfoNV.html>"]
+pub struct OpticalFlowSessionCreatePrivateDataInfoNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub id: u32,
+    pub size: u32,
+    pub p_private_data: *const c_void,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for OpticalFlowSessionCreatePrivateDataInfoNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            id: u32::default(),
+            size: u32::default(),
+            p_private_data: ::std::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for OpticalFlowSessionCreatePrivateDataInfoNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::OPTICAL_FLOW_SESSION_CREATE_PRIVATE_DATA_INFO_NV;
+}
+unsafe impl ExtendsOpticalFlowSessionCreateInfoNV
+    for OpticalFlowSessionCreatePrivateDataInfoNV<'_>
+{
+}
+impl<'a> OpticalFlowSessionCreatePrivateDataInfoNV<'a> {
+    #[inline]
+    pub fn id(mut self, id: u32) -> Self {
+        self.id = id;
+        self
+    }
+    #[inline]
+    pub fn size(mut self, size: u32) -> Self {
+        self.size = size;
+        self
+    }
+    #[inline]
+    pub fn private_data(mut self, private_data: *const c_void) -> Self {
+        self.p_private_data = private_data;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkOpticalFlowExecuteInfoNV.html>"]
+pub struct OpticalFlowExecuteInfoNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub flags: OpticalFlowExecuteFlagsNV,
+    pub region_count: u32,
+    pub p_regions: *const Rect2D,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for OpticalFlowExecuteInfoNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            flags: OpticalFlowExecuteFlagsNV::default(),
+            region_count: u32::default(),
+            p_regions: ::std::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for OpticalFlowExecuteInfoNV<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::OPTICAL_FLOW_EXECUTE_INFO_NV;
+}
+impl<'a> OpticalFlowExecuteInfoNV<'a> {
+    #[inline]
+    pub fn flags(mut self, flags: OpticalFlowExecuteFlagsNV) -> Self {
+        self.flags = flags;
+        self
+    }
+    #[inline]
+    pub fn regions(mut self, regions: &'a [Rect2D]) -> Self {
+        self.region_count = regions.len() as _;
+        self.p_regions = regions.as_ptr();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceFaultFeaturesEXT.html>"]
+pub struct PhysicalDeviceFaultFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub device_fault: Bool32,
+    pub device_fault_vendor_binary: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceFaultFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            device_fault: Bool32::default(),
+            device_fault_vendor_binary: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceFaultFeaturesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_FAULT_FEATURES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceFaultFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFaultFeaturesEXT<'_> {}
+impl<'a> PhysicalDeviceFaultFeaturesEXT<'a> {
+    #[inline]
+    pub fn device_fault(mut self, device_fault: bool) -> Self {
+        self.device_fault = device_fault.into();
+        self
+    }
+    #[inline]
+    pub fn device_fault_vendor_binary(mut self, device_fault_vendor_binary: bool) -> Self {
+        self.device_fault_vendor_binary = device_fault_vendor_binary.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone, Default)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDeviceFaultAddressInfoEXT.html>"]
+pub struct DeviceFaultAddressInfoEXT {
+    pub address_type: DeviceFaultAddressTypeEXT,
+    pub reported_address: DeviceAddress,
+    pub address_precision: DeviceSize,
+}
+impl DeviceFaultAddressInfoEXT {
+    #[inline]
+    pub fn address_type(mut self, address_type: DeviceFaultAddressTypeEXT) -> Self {
+        self.address_type = address_type;
+        self
+    }
+    #[inline]
+    pub fn reported_address(mut self, reported_address: DeviceAddress) -> Self {
+        self.reported_address = reported_address;
+        self
+    }
+    #[inline]
+    pub fn address_precision(mut self, address_precision: DeviceSize) -> Self {
+        self.address_precision = address_precision;
+        self
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDeviceFaultVendorInfoEXT.html>"]
+pub struct DeviceFaultVendorInfoEXT {
+    pub description: [c_char; MAX_DESCRIPTION_SIZE],
+    pub vendor_fault_code: u64,
+    pub vendor_fault_data: u64,
+}
+#[cfg(feature = "debug")]
+impl fmt::Debug for DeviceFaultVendorInfoEXT {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+        fmt.debug_struct("DeviceFaultVendorInfoEXT")
+            .field("description", &unsafe {
+                ::std::ffi::CStr::from_ptr(self.description.as_ptr())
+            })
+            .field("vendor_fault_code", &self.vendor_fault_code)
+            .field("vendor_fault_data", &self.vendor_fault_data)
+            .finish()
+    }
+}
+impl ::std::default::Default for DeviceFaultVendorInfoEXT {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            description: unsafe { ::std::mem::zeroed() },
+            vendor_fault_code: u64::default(),
+            vendor_fault_data: u64::default(),
+        }
+    }
+}
+impl DeviceFaultVendorInfoEXT {
+    #[inline]
+    pub fn description(mut self, description: [c_char; MAX_DESCRIPTION_SIZE]) -> Self {
+        self.description = description;
+        self
+    }
+    #[inline]
+    pub fn vendor_fault_code(mut self, vendor_fault_code: u64) -> Self {
+        self.vendor_fault_code = vendor_fault_code;
+        self
+    }
+    #[inline]
+    pub fn vendor_fault_data(mut self, vendor_fault_data: u64) -> Self {
+        self.vendor_fault_data = vendor_fault_data;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDeviceFaultCountsEXT.html>"]
+pub struct DeviceFaultCountsEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub address_info_count: u32,
+    pub vendor_info_count: u32,
+    pub vendor_binary_size: DeviceSize,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for DeviceFaultCountsEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            address_info_count: u32::default(),
+            vendor_info_count: u32::default(),
+            vendor_binary_size: DeviceSize::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for DeviceFaultCountsEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_FAULT_COUNTS_EXT;
+}
+impl<'a> DeviceFaultCountsEXT<'a> {
+    #[inline]
+    pub fn address_info_count(mut self, address_info_count: u32) -> Self {
+        self.address_info_count = address_info_count;
+        self
+    }
+    #[inline]
+    pub fn vendor_info_count(mut self, vendor_info_count: u32) -> Self {
+        self.vendor_info_count = vendor_info_count;
+        self
+    }
+    #[inline]
+    pub fn vendor_binary_size(mut self, vendor_binary_size: DeviceSize) -> Self {
+        self.vendor_binary_size = vendor_binary_size;
+        self
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDeviceFaultInfoEXT.html>"]
+pub struct DeviceFaultInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub description: [c_char; MAX_DESCRIPTION_SIZE],
+    pub p_address_infos: *mut DeviceFaultAddressInfoEXT,
+    pub p_vendor_infos: *mut DeviceFaultVendorInfoEXT,
+    pub p_vendor_binary_data: *mut c_void,
+    pub _marker: PhantomData<&'a ()>,
+}
+#[cfg(feature = "debug")]
+impl fmt::Debug for DeviceFaultInfoEXT<'_> {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+        fmt.debug_struct("DeviceFaultInfoEXT")
+            .field("s_type", &self.s_type)
+            .field("p_next", &self.p_next)
+            .field("description", &unsafe {
+                ::std::ffi::CStr::from_ptr(self.description.as_ptr())
+            })
+            .field("p_address_infos", &self.p_address_infos)
+            .field("p_vendor_infos", &self.p_vendor_infos)
+            .field("p_vendor_binary_data", &self.p_vendor_binary_data)
+            .finish()
+    }
+}
+impl ::std::default::Default for DeviceFaultInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            description: unsafe { ::std::mem::zeroed() },
+            p_address_infos: ::std::ptr::null_mut(),
+            p_vendor_infos: ::std::ptr::null_mut(),
+            p_vendor_binary_data: ::std::ptr::null_mut(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for DeviceFaultInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_FAULT_INFO_EXT;
+}
+impl<'a> DeviceFaultInfoEXT<'a> {
+    #[inline]
+    pub fn description(mut self, description: [c_char; MAX_DESCRIPTION_SIZE]) -> Self {
+        self.description = description;
+        self
+    }
+    #[inline]
+    pub fn address_infos(mut self, address_infos: &'a mut DeviceFaultAddressInfoEXT) -> Self {
+        self.p_address_infos = address_infos;
+        self
+    }
+    #[inline]
+    pub fn vendor_infos(mut self, vendor_infos: &'a mut DeviceFaultVendorInfoEXT) -> Self {
+        self.p_vendor_infos = vendor_infos;
+        self
+    }
+    #[inline]
+    pub fn vendor_binary_data(mut self, vendor_binary_data: *mut c_void) -> Self {
+        self.p_vendor_binary_data = vendor_binary_data;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDeviceFaultVendorBinaryHeaderVersionOneEXT.html>"]
+pub struct DeviceFaultVendorBinaryHeaderVersionOneEXT {
+    pub header_size: u32,
+    pub header_version: DeviceFaultVendorBinaryHeaderVersionEXT,
+    pub vendor_id: u32,
+    pub device_id: u32,
+    pub driver_version: u32,
+    pub pipeline_cache_uuid: [u8; UUID_SIZE],
+    pub application_name_offset: u32,
+    pub application_version: u32,
+    pub engine_name_offset: u32,
+}
+impl ::std::default::Default for DeviceFaultVendorBinaryHeaderVersionOneEXT {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            header_size: u32::default(),
+            header_version: DeviceFaultVendorBinaryHeaderVersionEXT::default(),
+            vendor_id: u32::default(),
+            device_id: u32::default(),
+            driver_version: u32::default(),
+            pipeline_cache_uuid: unsafe { ::std::mem::zeroed() },
+            application_name_offset: u32::default(),
+            application_version: u32::default(),
+            engine_name_offset: u32::default(),
+        }
+    }
+}
+impl DeviceFaultVendorBinaryHeaderVersionOneEXT {
+    #[inline]
+    pub fn header_size(mut self, header_size: u32) -> Self {
+        self.header_size = header_size;
+        self
+    }
+    #[inline]
+    pub fn header_version(
+        mut self,
+        header_version: DeviceFaultVendorBinaryHeaderVersionEXT,
+    ) -> Self {
+        self.header_version = header_version;
+        self
+    }
+    #[inline]
+    pub fn vendor_id(mut self, vendor_id: u32) -> Self {
+        self.vendor_id = vendor_id;
+        self
+    }
+    #[inline]
+    pub fn device_id(mut self, device_id: u32) -> Self {
+        self.device_id = device_id;
+        self
+    }
+    #[inline]
+    pub fn driver_version(mut self, driver_version: u32) -> Self {
+        self.driver_version = driver_version;
+        self
+    }
+    #[inline]
+    pub fn pipeline_cache_uuid(mut self, pipeline_cache_uuid: [u8; UUID_SIZE]) -> Self {
+        self.pipeline_cache_uuid = pipeline_cache_uuid;
+        self
+    }
+    #[inline]
+    pub fn application_name_offset(mut self, application_name_offset: u32) -> Self {
+        self.application_name_offset = application_name_offset;
+        self
+    }
+    #[inline]
+    pub fn application_version(mut self, application_version: u32) -> Self {
+        self.application_version = application_version;
+        self
+    }
+    #[inline]
+    pub fn engine_name_offset(mut self, engine_name_offset: u32) -> Self {
+        self.engine_name_offset = engine_name_offset;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone, Default)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDecompressMemoryRegionNV.html>"]
+pub struct DecompressMemoryRegionNV {
+    pub src_address: DeviceAddress,
+    pub dst_address: DeviceAddress,
+    pub compressed_size: DeviceSize,
+    pub decompressed_size: DeviceSize,
+    pub decompression_method: MemoryDecompressionMethodFlagsNV,
+}
+impl DecompressMemoryRegionNV {
+    #[inline]
+    pub fn src_address(mut self, src_address: DeviceAddress) -> Self {
+        self.src_address = src_address;
+        self
+    }
+    #[inline]
+    pub fn dst_address(mut self, dst_address: DeviceAddress) -> Self {
+        self.dst_address = dst_address;
+        self
+    }
+    #[inline]
+    pub fn compressed_size(mut self, compressed_size: DeviceSize) -> Self {
+        self.compressed_size = compressed_size;
+        self
+    }
+    #[inline]
+    pub fn decompressed_size(mut self, decompressed_size: DeviceSize) -> Self {
+        self.decompressed_size = decompressed_size;
+        self
+    }
+    #[inline]
+    pub fn decompression_method(
+        mut self,
+        decompression_method: MemoryDecompressionMethodFlagsNV,
+    ) -> Self {
+        self.decompression_method = decompression_method;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderCoreBuiltinsPropertiesARM.html>"]
+pub struct PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub shader_core_mask: u64,
+    pub shader_core_count: u32,
+    pub shader_warps_per_core: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            shader_core_mask: u64::default(),
+            shader_core_count: u32::default(),
+            shader_warps_per_core: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_SHADER_CORE_BUILTINS_PROPERTIES_ARM;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'_> {}
+impl<'a> PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'a> {
+    #[inline]
+    pub fn shader_core_mask(mut self, shader_core_mask: u64) -> Self {
+        self.shader_core_mask = shader_core_mask;
+        self
+    }
+    #[inline]
+    pub fn shader_core_count(mut self, shader_core_count: u32) -> Self {
+        self.shader_core_count = shader_core_count;
+        self
+    }
+    #[inline]
+    pub fn shader_warps_per_core(mut self, shader_warps_per_core: u32) -> Self {
+        self.shader_warps_per_core = shader_warps_per_core;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderCoreBuiltinsFeaturesARM.html>"]
+pub struct PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub shader_core_builtins: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            shader_core_builtins: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_SHADER_CORE_BUILTINS_FEATURES_ARM;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'_> {}
+impl<'a> PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a> {
+    #[inline]
+    pub fn shader_core_builtins(mut self, shader_core_builtins: bool) -> Self {
+        self.shader_core_builtins = shader_core_builtins.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceRayTracingInvocationReorderFeaturesNV.html>"]
+pub struct PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub ray_tracing_invocation_reorder: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            ray_tracing_invocation_reorder: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_FEATURES_NV;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'_> {}
+impl<'a> PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'a> {
+    #[inline]
+    pub fn ray_tracing_invocation_reorder(mut self, ray_tracing_invocation_reorder: bool) -> Self {
+        self.ray_tracing_invocation_reorder = ray_tracing_invocation_reorder.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceRayTracingInvocationReorderPropertiesNV.html>"]
+pub struct PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub ray_tracing_invocation_reorder_reordering_hint: RayTracingInvocationReorderModeNV,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            ray_tracing_invocation_reorder_reordering_hint:
+                RayTracingInvocationReorderModeNV::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_PROPERTIES_NV;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'_>
+{
+}
+impl<'a> PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'a> {
+    #[inline]
+    pub fn ray_tracing_invocation_reorder_reordering_hint(
+        mut self,
+        ray_tracing_invocation_reorder_reordering_hint: RayTracingInvocationReorderModeNV,
+    ) -> Self {
+        self.ray_tracing_invocation_reorder_reordering_hint =
+            ray_tracing_invocation_reorder_reordering_hint;
         self
     }
 }
