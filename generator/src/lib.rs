@@ -1720,10 +1720,8 @@ pub fn derive_setters(
 
                     // Interpret void array as byte array
                     if field.basetype == "void" && matches!(field.reference, Some(vkxml::ReferenceType::Pointer)) {
-                        let mutable = if field.is_const { quote!(const) } else { quote!(mut) };
-
                         slice_param_ty_tokens = quote!([u8]);
-                        ptr = quote!(#ptr as *#mutable c_void);
+                        ptr = quote!(#ptr.cast());
                     };
 
                     let set_size_stmt = if field.is_pointer_to_static_sized_array() {
@@ -1741,7 +1739,7 @@ pub fn derive_setters(
                         let array_size = if let Some(array_size) = array_size.strip_suffix(",1") {
                             param_ident_short = format_ident!("{}_ptrs", param_ident_short);
                             slice_param_ty_tokens = field.safe_type_tokens(quote!('a), Some(1));
-                            ptr = quote!(#ptr as *const *const _);
+                            ptr = quote!(#ptr.cast());
                             array_size
                         } else {
                             array_size
