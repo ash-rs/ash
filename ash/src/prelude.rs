@@ -49,8 +49,9 @@ where
 
         let err_code = f(&mut count, data.as_mut_ptr());
         if err_code != vk::Result::INCOMPLETE {
+            err_code.result()?;
             data.set_len(count.try_into().expect("`N` failed to convert to `usize`"));
-            break err_code.result_with_success(data);
+            break Ok(data);
         }
     }
 }

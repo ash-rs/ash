@@ -1502,14 +1502,15 @@ impl Device {
         create_info: &vk::DescriptorSetAllocateInfo,
     ) -> VkResult<Vec<vk::DescriptorSet>> {
         let mut desc_set = Vec::with_capacity(create_info.descriptor_set_count as usize);
-        let err_code = (self.device_fn_1_0.allocate_descriptor_sets)(
+        (self.device_fn_1_0.allocate_descriptor_sets)(
             self.handle(),
             create_info,
             desc_set.as_mut_ptr(),
-        );
+        )
+        .result()?;
 
         desc_set.set_len(create_info.descriptor_set_count as usize);
-        err_code.result_with_success(desc_set)
+        Ok(desc_set)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateDescriptorSetLayout.html>
@@ -2490,13 +2491,14 @@ impl Device {
         create_info: &vk::CommandBufferAllocateInfo,
     ) -> VkResult<Vec<vk::CommandBuffer>> {
         let mut buffers = Vec::with_capacity(create_info.command_buffer_count as usize);
-        let err_code = (self.device_fn_1_0.allocate_command_buffers)(
+        (self.device_fn_1_0.allocate_command_buffers)(
             self.handle(),
             create_info,
             buffers.as_mut_ptr(),
-        );
+        )
+        .result()?;
         buffers.set_len(create_info.command_buffer_count as usize);
-        err_code.result_with_success(buffers)
+        Ok(buffers)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateCommandPool.html>
