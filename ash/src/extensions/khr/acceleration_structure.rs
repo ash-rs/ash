@@ -200,7 +200,7 @@ impl AccelerationStructure {
             acceleration_structures.as_ptr(),
             query_type,
             data.len(),
-            data.as_mut_ptr() as *mut std::ffi::c_void,
+            data.as_mut_ptr().cast(),
             stride,
         )
         .result()

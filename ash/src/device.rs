@@ -2032,7 +2032,7 @@ impl Device {
             first_query,
             query_count,
             data_size,
-            data.as_mut_ptr() as *mut _,
+            data.as_mut_ptr().cast(),
             mem::size_of::<T>() as _,
             flags,
         )

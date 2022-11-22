@@ -5208,7 +5208,7 @@ impl<'a> SpecializationInfoBuilder<'a> {
     #[inline]
     pub fn data(mut self, data: &'a [u8]) -> Self {
         self.inner.data_size = data.len();
-        self.inner.p_data = data.as_ptr() as *const c_void;
+        self.inner.p_data = data.as_ptr().cast();
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -6906,7 +6906,7 @@ impl<'a> PipelineCacheCreateInfoBuilder<'a> {
     #[inline]
     pub fn initial_data(mut self, initial_data: &'a [u8]) -> Self {
         self.inner.initial_data_size = initial_data.len();
-        self.inner.p_initial_data = initial_data.as_ptr() as *const c_void;
+        self.inner.p_initial_data = initial_data.as_ptr().cast();
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -12726,7 +12726,7 @@ impl<'a> DebugMarkerObjectTagInfoEXTBuilder<'a> {
     #[inline]
     pub fn tag(mut self, tag: &'a [u8]) -> Self {
         self.inner.tag_size = tag.len();
-        self.inner.p_tag = tag.as_ptr() as *const c_void;
+        self.inner.p_tag = tag.as_ptr().cast();
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -26002,7 +26002,7 @@ impl<'a> WriteDescriptorSetInlineUniformBlockBuilder<'a> {
     #[inline]
     pub fn data(mut self, data: &'a [u8]) -> Self {
         self.inner.data_size = data.len() as _;
-        self.inner.p_data = data.as_ptr() as *const c_void;
+        self.inner.p_data = data.as_ptr().cast();
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -26305,7 +26305,7 @@ impl<'a> ValidationCacheCreateInfoEXTBuilder<'a> {
     #[inline]
     pub fn initial_data(mut self, initial_data: &'a [u8]) -> Self {
         self.inner.initial_data_size = initial_data.len();
-        self.inner.p_initial_data = initial_data.as_ptr() as *const c_void;
+        self.inner.p_initial_data = initial_data.as_ptr().cast();
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -27834,7 +27834,7 @@ impl<'a> DebugUtilsObjectTagInfoEXTBuilder<'a> {
     #[inline]
     pub fn tag(mut self, tag: &'a [u8]) -> Self {
         self.inner.tag_size = tag.len();
-        self.inner.p_tag = tag.as_ptr() as *const c_void;
+        self.inner.p_tag = tag.as_ptr().cast();
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -43328,7 +43328,7 @@ impl<'a> PipelineExecutableInternalRepresentationKHRBuilder<'a> {
     #[inline]
     pub fn data(mut self, data: &'a mut [u8]) -> Self {
         self.inner.data_size = data.len();
-        self.inner.p_data = data.as_mut_ptr() as *mut c_void;
+        self.inner.p_data = data.as_mut_ptr().cast();
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -47840,7 +47840,7 @@ impl<'a> AccelerationStructureBuildGeometryInfoKHRBuilder<'a> {
         geometries_ptrs: &'a [&'a AccelerationStructureGeometryKHR],
     ) -> Self {
         self.inner.geometry_count = geometries_ptrs.len() as _;
-        self.inner.pp_geometries = geometries_ptrs.as_ptr() as *const *const _;
+        self.inner.pp_geometries = geometries_ptrs.as_ptr().cast();
         self
     }
     #[inline]
@@ -59999,7 +59999,7 @@ impl<'a> CuModuleCreateInfoNVXBuilder<'a> {
     #[inline]
     pub fn data(mut self, data: &'a [u8]) -> Self {
         self.inner.data_size = data.len();
-        self.inner.p_data = data.as_ptr() as *const c_void;
+        self.inner.p_data = data.as_ptr().cast();
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]

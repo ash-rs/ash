@@ -34,7 +34,7 @@ macro_rules! offset_of {
         #[allow(unused_unsafe)]
         unsafe {
             let b: $base = mem::zeroed();
-            (&b.$field as *const _ as isize) - (&b as *const _ as isize)
+            std::ptr::addr_of!(b.$field) as isize - std::ptr::addr_of!(b) as isize
         }
     }};
 }
