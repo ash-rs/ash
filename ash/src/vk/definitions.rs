@@ -3440,7 +3440,7 @@ impl<'a> SpecializationInfo<'a> {
     #[inline]
     pub fn data(mut self, data: &'a [u8]) -> Self {
         self.data_size = data.len();
-        self.p_data = data.as_ptr() as *const c_void;
+        self.p_data = data.as_ptr().cast();
         self
     }
 }
@@ -4657,7 +4657,7 @@ impl<'a> PipelineCacheCreateInfo<'a> {
     #[inline]
     pub fn initial_data(mut self, initial_data: &'a [u8]) -> Self {
         self.initial_data_size = initial_data.len();
-        self.p_initial_data = initial_data.as_ptr() as *const c_void;
+        self.p_initial_data = initial_data.as_ptr().cast();
         self
     }
 }
@@ -8796,7 +8796,7 @@ impl<'a> DebugMarkerObjectTagInfoEXT<'a> {
     #[inline]
     pub fn tag(mut self, tag: &'a [u8]) -> Self {
         self.tag_size = tag.len();
-        self.p_tag = tag.as_ptr() as *const c_void;
+        self.p_tag = tag.as_ptr().cast();
         self
     }
 }
@@ -16659,7 +16659,7 @@ impl<'a> WriteDescriptorSetInlineUniformBlock<'a> {
     #[inline]
     pub fn data(mut self, data: &'a [u8]) -> Self {
         self.data_size = data.len() as _;
-        self.p_data = data.as_ptr() as *const c_void;
+        self.p_data = data.as_ptr().cast();
         self
     }
 }
@@ -16839,7 +16839,7 @@ impl<'a> ValidationCacheCreateInfoEXT<'a> {
     #[inline]
     pub fn initial_data(mut self, initial_data: &'a [u8]) -> Self {
         self.initial_data_size = initial_data.len();
-        self.p_initial_data = initial_data.as_ptr() as *const c_void;
+        self.p_initial_data = initial_data.as_ptr().cast();
         self
     }
 }
@@ -17775,7 +17775,7 @@ impl<'a> DebugUtilsObjectTagInfoEXT<'a> {
     #[inline]
     pub fn tag(mut self, tag: &'a [u8]) -> Self {
         self.tag_size = tag.len();
-        self.p_tag = tag.as_ptr() as *const c_void;
+        self.p_tag = tag.as_ptr().cast();
         self
     }
 }
@@ -27527,7 +27527,7 @@ impl<'a> PipelineExecutableInternalRepresentationKHR<'a> {
     #[inline]
     pub fn data(mut self, data: &'a mut [u8]) -> Self {
         self.data_size = data.len();
-        self.p_data = data.as_mut_ptr() as *mut c_void;
+        self.p_data = data.as_mut_ptr().cast();
         self
     }
 }
@@ -30960,7 +30960,7 @@ impl<'a> AccelerationStructureBuildGeometryInfoKHR<'a> {
         geometries_ptrs: &'a [&'a AccelerationStructureGeometryKHR],
     ) -> Self {
         self.geometry_count = geometries_ptrs.len() as _;
-        self.pp_geometries = geometries_ptrs.as_ptr() as *const *const _;
+        self.pp_geometries = geometries_ptrs.as_ptr().cast();
         self
     }
     #[inline]
@@ -38723,7 +38723,7 @@ impl<'a> CuModuleCreateInfoNVX<'a> {
     #[inline]
     pub fn data(mut self, data: &'a [u8]) -> Self {
         self.data_size = data.len();
-        self.p_data = data.as_ptr() as *const c_void;
+        self.p_data = data.as_ptr().cast();
         self
     }
 }

@@ -51,7 +51,7 @@ pub unsafe fn create_surface(
 
         (RawDisplayHandle::Xlib(display), RawWindowHandle::Xlib(window)) => {
             let surface_desc = vk::XlibSurfaceCreateInfoKHR::default()
-                .dpy(display.display as *mut _)
+                .dpy(display.display.cast())
                 .window(window.window);
             let surface_fn = khr::XlibSurface::new(entry, instance);
             surface_fn.create_xlib_surface(&surface_desc, allocation_callbacks)
@@ -77,7 +77,7 @@ pub unsafe fn create_surface(
             use raw_window_metal::{appkit, Layer};
 
             let layer = match appkit::metal_layer_from_handle(window) {
-                Layer::Existing(layer) | Layer::Allocated(layer) => layer as *mut _,
+                Layer::Existing(layer) | Layer::Allocated(layer) => layer.cast(),
                 Layer::None => return Err(vk::Result::ERROR_INITIALIZATION_FAILED),
             };
 
@@ -91,7 +91,7 @@ pub unsafe fn create_surface(
             use raw_window_metal::{uikit, Layer};
 
             let layer = match uikit::metal_layer_from_handle(window) {
-                Layer::Existing(layer) | Layer::Allocated(layer) => layer as *mut _,
+                Layer::Existing(layer) | Layer::Allocated(layer) => layer.cast(),
                 Layer::None => return Err(vk::Result::ERROR_INITIALIZATION_FAILED),
             };
 

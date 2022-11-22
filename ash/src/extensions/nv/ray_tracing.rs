@@ -206,7 +206,7 @@ impl RayTracing {
             first_group,
             group_count,
             data.len(),
-            data.as_mut_ptr() as *mut std::ffi::c_void,
+            data.as_mut_ptr().cast(),
         )
         .result()
     }
@@ -223,7 +223,7 @@ impl RayTracing {
             self.handle,
             accel_struct,
             std::mem::size_of::<u64>(),
-            handle_ptr as *mut std::ffi::c_void,
+            handle_ptr.cast(),
         )
         .result_with_success(handle)
     }
