@@ -10,12 +10,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Replaced builders with lifetimes/setters directly on Vulkan structs (#602)
 - Inlined struct setters (#602)
+
+### Removed
+
+- Removed experimental AMD extensions (#607)
+- Removed misnamed, deprecated `debug_utils_set_object_name()` and `debug_utils_set_object_tag()` entirely, use `set_debug_utils_object_name()` and `set_debug_utils_object_tag()` instead
+
+## [0.37.1] - 2022-11-23
+
+### Changed
+
+- Inlined builder setters (partial backport from #602)
 - Inlined `Default` impls and trivial `Instance`/`Device`/`Entry` wrapper methods (#606, #632)
 - Renamed `debug_utils_set_object_name()` to `set_debug_utils_object_name()` and `debug_utils_set_object_tag()` to `set_debug_utils_object_tag()` for consistency and deprecated old ones (#661)
 
 ### Added
 
 - Added `VK_EXT_image_drm_format_modifier` device extension (#603)
+- Set MSRV (Minimum Supported Rust Version) in `Cargo.toml` for clearer errors (#604)
 - Update Vulkan-Headers to 1.3.235 (#605, #608, #619, #655, #667)
 - Added `const STRUCTURE_TYPE` to all Vulkan structures for matching with `match_struct!` macro (#614)
 - Added `VK_EXT_sample_locations` device extension (#616)
@@ -29,11 +41,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `VK_EXT_acquire_drm_display` instance extension (#668)
 - Added `VK_EXT_extended_dynamic_state3` device extension (#671)
 - Added `VK_EXT_descriptor_buffer` instance extension (#679)
-
-### Removed
-
-- Removed experimental AMD extensions (#607)
-- Removed misnamed, deprecated `debug_utils_set_object_name()` and `debug_utils_set_object_tag()` entirely, use `set_debug_utils_object_name()` and `set_debug_utils_object_tag()` instead
 
 ### Fixed
 
@@ -354,7 +361,8 @@ flags: vk::CommandPoolCreateFlags::RESET_COMMAND_BUFFER_BIT,
 can write to aligned memory.
 
 
-[Unreleased]: https://github.com/MaikKlein/ash/compare/0.37.0...HEAD
+[Unreleased]: https://github.com/MaikKlein/ash/compare/0.37.1...HEAD
+[0.37.1]: https://github.com/MaikKlein/ash/releases/tag/0.37.1
 [0.37.0]: https://github.com/MaikKlein/ash/releases/tag/0.37.0
 [0.36.0]: https://github.com/MaikKlein/ash/releases/tag/0.36.0
 [0.35.2]: https://github.com/MaikKlein/ash/releases/tag/0.35.2
