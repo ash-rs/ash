@@ -1165,7 +1165,7 @@ impl<'a> DeviceQueueCreateInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -1248,7 +1248,7 @@ impl<'a> DeviceCreateInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -1321,7 +1321,7 @@ impl<'a> InstanceCreateInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -1452,7 +1452,7 @@ impl<'a> MemoryAllocateInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -1836,7 +1836,7 @@ impl<'a> WriteDescriptorSet<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -1986,7 +1986,7 @@ impl<'a> BufferCreateInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -2060,7 +2060,7 @@ impl<'a> BufferViewCreateInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -2362,7 +2362,7 @@ impl<'a> ImageMemoryBarrier<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -2488,7 +2488,7 @@ impl<'a> ImageCreateInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -2607,7 +2607,7 @@ impl<'a> ImageViewCreateInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -2909,7 +2909,7 @@ impl<'a> BindSparseInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -3199,7 +3199,7 @@ impl<'a> ShaderModuleCreateInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -3308,7 +3308,7 @@ impl<'a> DescriptorSetLayoutCreateInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -3391,7 +3391,7 @@ impl<'a> DescriptorPoolCreateInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -3447,7 +3447,7 @@ impl<'a> DescriptorSetAllocateInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -3584,7 +3584,7 @@ impl<'a> PipelineShaderStageCreateInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -3658,7 +3658,7 @@ impl<'a> ComputePipelineCreateInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -3791,7 +3791,7 @@ impl<'a> PipelineVertexInputStateCreateInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -3892,7 +3892,7 @@ impl<'a> PipelineTessellationStateCreateInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -3968,7 +3968,7 @@ impl<'a> PipelineViewportStateCreateInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -4087,7 +4087,7 @@ impl<'a> PipelineRasterizationStateCreateInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -4187,7 +4187,7 @@ impl<'a> PipelineMultisampleStateCreateInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -4323,7 +4323,7 @@ impl<'a> PipelineColorBlendStateCreateInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -4686,7 +4686,7 @@ impl<'a> GraphicsPipelineCreateInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -5005,7 +5005,7 @@ impl<'a> SamplerCreateInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -5169,7 +5169,7 @@ impl<'a> CommandBufferInheritanceInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -5225,7 +5225,7 @@ impl<'a> CommandBufferBeginInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -5308,7 +5308,7 @@ impl<'a> RenderPassBeginInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -5677,7 +5677,7 @@ impl<'a> RenderPassCreateInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -5723,7 +5723,7 @@ impl<'a> EventCreateInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -5769,7 +5769,7 @@ impl<'a> FenceCreateInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -7127,7 +7127,7 @@ impl<'a> SemaphoreCreateInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -7194,7 +7194,7 @@ impl<'a> QueryPoolCreateInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -7278,7 +7278,7 @@ impl<'a> FramebufferCreateInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -7497,7 +7497,7 @@ impl<'a> SubmitInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -8509,7 +8509,7 @@ impl<'a> SwapchainCreateInfoKHR<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -8584,7 +8584,7 @@ impl<'a> PresentInfoKHR<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -10135,7 +10135,7 @@ impl<'a> PhysicalDeviceFeatures2<'a> {
         unsafe {
             let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast();
             self.p_next = next_ptr;
         }
         self
@@ -10181,7 +10181,7 @@ impl<'a> PhysicalDeviceProperties2<'a> {
         unsafe {
             let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast();
             self.p_next = next_ptr;
         }
         self
@@ -10227,7 +10227,7 @@ impl<'a> FormatProperties2<'a> {
         unsafe {
             let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast();
             self.p_next = next_ptr;
         }
         self
@@ -10276,7 +10276,7 @@ impl<'a> ImageFormatProperties2<'a> {
         unsafe {
             let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast();
             self.p_next = next_ptr;
         }
         self
@@ -10350,7 +10350,7 @@ impl<'a> PhysicalDeviceImageFormatInfo2<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -10399,7 +10399,7 @@ impl<'a> QueueFamilyProperties2<'a> {
         unsafe {
             let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast();
             self.p_next = next_ptr;
         }
         self
@@ -10445,7 +10445,7 @@ impl<'a> PhysicalDeviceMemoryProperties2<'a> {
         unsafe {
             let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast();
             self.p_next = next_ptr;
         }
         self
@@ -11633,7 +11633,7 @@ impl<'a> PhysicalDeviceExternalSemaphoreInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -12958,7 +12958,7 @@ impl<'a> BindBufferMemoryInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -13053,7 +13053,7 @@ impl<'a> BindImageMemoryInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -14544,7 +14544,7 @@ impl<'a> PhysicalDeviceSurfaceInfo2KHR<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -14590,7 +14590,7 @@ impl<'a> SurfaceCapabilities2KHR<'a> {
         unsafe {
             let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast();
             self.p_next = next_ptr;
         }
         self
@@ -14636,7 +14636,7 @@ impl<'a> SurfaceFormat2KHR<'a> {
         unsafe {
             let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast();
             self.p_next = next_ptr;
         }
         self
@@ -15095,7 +15095,7 @@ impl<'a> ImageMemoryRequirementsInfo2<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -15210,7 +15210,7 @@ impl<'a> MemoryRequirements2<'a> {
         unsafe {
             let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast();
             self.p_next = next_ptr;
         }
         self
@@ -15556,7 +15556,7 @@ impl<'a> SamplerYcbcrConversionCreateInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -17093,7 +17093,7 @@ impl<'a> DescriptorSetLayoutSupport<'a> {
         unsafe {
             let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast();
             self.p_next = next_ptr;
         }
         self
@@ -18062,7 +18062,7 @@ impl<'a> DebugUtilsMessengerCallbackDataEXT<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -19434,7 +19434,7 @@ impl<'a> AttachmentDescription2<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -19494,7 +19494,7 @@ impl<'a> AttachmentReference2<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -19602,7 +19602,7 @@ impl<'a> SubpassDescription2<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -19697,7 +19697,7 @@ impl<'a> SubpassDependency2<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -19783,7 +19783,7 @@ impl<'a> RenderPassCreateInfo2<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -19853,7 +19853,7 @@ impl<'a> SubpassEndInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -20369,7 +20369,7 @@ impl<'a> AndroidHardwareBufferPropertiesANDROID<'a> {
         unsafe {
             let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast();
             self.p_next = next_ptr;
         }
         self
@@ -23037,7 +23037,7 @@ impl<'a> RayTracingPipelineCreateInfoNV<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -23158,7 +23158,7 @@ impl<'a> RayTracingPipelineCreateInfoKHR<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -23488,7 +23488,7 @@ impl<'a> AccelerationStructureCreateInfoNV<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -31031,7 +31031,7 @@ impl<'a> AccelerationStructureGeometryTrianglesDataKHR<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -31432,7 +31432,7 @@ impl<'a> AccelerationStructureCreateInfoKHR<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -33262,7 +33262,7 @@ impl<'a> ImageBlit2<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -33343,7 +33343,7 @@ impl<'a> BufferImageCopy2<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -35024,7 +35024,7 @@ impl<'a> ImageMemoryBarrier2<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -35350,7 +35350,7 @@ impl<'a> SubmitInfo2<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -35861,7 +35861,7 @@ impl<'a> PhysicalDeviceVideoFormatInfoKHR<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -36001,7 +36001,7 @@ impl<'a> VideoProfileInfoKHR<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -36109,7 +36109,7 @@ impl<'a> VideoCapabilitiesKHR<'a> {
         unsafe {
             let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast();
             self.p_next = next_ptr;
         }
         self
@@ -36307,7 +36307,7 @@ impl<'a> VideoReferenceSlotInfoKHR<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -36469,7 +36469,7 @@ impl<'a> VideoDecodeInfoKHR<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -37144,7 +37144,7 @@ impl<'a> VideoSessionParametersCreateInfoKHR<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -37193,7 +37193,7 @@ impl<'a> VideoSessionParametersUpdateInfoKHR<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -37328,7 +37328,7 @@ impl<'a> VideoCodingControlInfoKHR<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -37492,7 +37492,7 @@ impl<'a> VideoEncodeInfoKHR<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -37635,7 +37635,7 @@ impl<'a> VideoEncodeRateControlLayerInfoKHR<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -40221,7 +40221,7 @@ impl<'a> DescriptorBufferBindingInfoEXT<'a> {
         unsafe {
             let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast();
             self.p_next = next_ptr;
         }
         self
@@ -42310,7 +42310,7 @@ impl<'a> RenderingInfo<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -43494,7 +43494,7 @@ impl<'a> SubresourceLayout2EXT<'a> {
         unsafe {
             let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast();
             self.p_next = next_ptr;
         }
         self
@@ -44539,7 +44539,7 @@ impl<'a> ExportMetalObjectsInfoEXT<'a> {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast_mut().cast();
             self.p_next = next_ptr;
         }
         self
@@ -45888,7 +45888,7 @@ impl<'a> OpticalFlowSessionCreateInfoNV<'a> {
         unsafe {
             let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
+            (*last_next).p_next = self.p_next.cast();
             self.p_next = next_ptr;
         }
         self

@@ -1411,7 +1411,7 @@ impl Device {
             buffer,
             offset,
             data.len() as u64,
-            data.as_ptr() as _,
+            data.as_ptr().cast(),
         );
     }
 
@@ -1776,8 +1776,8 @@ impl Device {
             layout,
             stage_flags,
             offset,
-            constants.len() as _,
-            constants.as_ptr() as _,
+            constants.len() as u32,
+            constants.as_ptr().cast(),
         );
     }
 
@@ -2203,12 +2203,12 @@ impl Device {
         &self,
         pipeline_cache: vk::PipelineCache,
     ) -> VkResult<Vec<u8>> {
-        read_into_uninitialized_vector(|count, data| {
+        read_into_uninitialized_vector(|count, data: *mut u8| {
             (self.device_fn_1_0.get_pipeline_cache_data)(
                 self.handle(),
                 pipeline_cache,
                 count,
-                data as _,
+                data.cast(),
             )
         })
     }

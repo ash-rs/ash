@@ -1,4 +1,4 @@
-#![deny(clippy::use_self)]
+#![deny(clippy::use_self, clippy::ptr_as_ptr/* , clippy::as_underscore */)]
 #![warn(trivial_casts, trivial_numeric_casts)]
 #![allow(
     clippy::too_many_arguments,
