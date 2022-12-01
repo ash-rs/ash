@@ -10988,7 +10988,7 @@ impl ExtVideoDecodeH265Fn {
     pub const fn name() -> &'static ::std::ffi::CStr {
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_decode_h265\0") }
     }
-    pub const SPEC_VERSION: u32 = 5u32;
+    pub const SPEC_VERSION: u32 = 6u32;
 }
 #[derive(Clone)]
 pub struct ExtVideoDecodeH265Fn {}
@@ -20817,6 +20817,32 @@ impl StructureType {
     pub const RENDER_PASS_CREATION_FEEDBACK_CREATE_INFO_EXT: Self = Self(1_000_458_002);
     pub const RENDER_PASS_SUBPASS_FEEDBACK_CREATE_INFO_EXT: Self = Self(1_000_458_003);
 }
+impl LunargDirectDriverLoadingFn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_LUNARG_direct_driver_loading\0")
+        }
+    }
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct LunargDirectDriverLoadingFn {}
+unsafe impl Send for LunargDirectDriverLoadingFn {}
+unsafe impl Sync for LunargDirectDriverLoadingFn {}
+impl LunargDirectDriverLoadingFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+#[doc = "Generated from 'VK_LUNARG_direct_driver_loading'"]
+impl StructureType {
+    pub const DIRECT_DRIVER_LOADING_INFO_LUNARG: Self = Self(1_000_459_000);
+    pub const DIRECT_DRIVER_LOADING_LIST_LUNARG: Self = Self(1_000_459_001);
+}
 impl ExtShaderModuleIdentifierFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -21325,6 +21351,34 @@ impl SecAmigoProfilingFn {
 impl StructureType {
     pub const PHYSICAL_DEVICE_AMIGO_PROFILING_FEATURES_SEC: Self = Self(1_000_485_000);
     pub const AMIGO_PROFILING_SUBMIT_INFO_SEC: Self = Self(1_000_485_001);
+}
+impl QcomMultiviewPerViewViewportsFn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_QCOM_multiview_per_view_viewports\0",
+            )
+        }
+    }
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct QcomMultiviewPerViewViewportsFn {}
+unsafe impl Send for QcomMultiviewPerViewViewportsFn {}
+unsafe impl Sync for QcomMultiviewPerViewViewportsFn {}
+impl QcomMultiviewPerViewViewportsFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+#[doc = "Generated from 'VK_QCOM_multiview_per_view_viewports'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_VIEWPORTS_FEATURES_QCOM: Self =
+        Self(1_000_488_000);
 }
 impl NvRayTracingInvocationReorderFn {
     #[inline]

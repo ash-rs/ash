@@ -57,7 +57,7 @@ pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
-pub const HEADER_VERSION: u32 = 235u32;
+pub const HEADER_VERSION: u32 = 236u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -147,6 +147,11 @@ vk_bitflags_wrapped!(AccelerationStructureMotionInfoFlagsNV, Flags);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureMotionInstanceFlagsNV.html>"]
 pub struct AccelerationStructureMotionInstanceFlagsNV(pub(crate) Flags);
 vk_bitflags_wrapped!(AccelerationStructureMotionInstanceFlagsNV, Flags);
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDirectDriverLoadingFlagsLUNARG.html>"]
+pub struct DirectDriverLoadingFlagsLUNARG(pub(crate) Flags);
+vk_bitflags_wrapped!(DirectDriverLoadingFlagsLUNARG, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDisplayModeCreateFlagsKHR.html>"]
@@ -519,6 +524,11 @@ pub type PFN_vkDeviceMemoryReportCallbackEXT = Option<
         p_callback_data: *const DeviceMemoryReportCallbackDataEXT,
         p_user_data: *mut c_void,
     ),
+>;
+#[allow(non_camel_case_types)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/PFN_vkGetInstanceProcAddr.html>"]
+pub type PFN_vkGetInstanceProcAddr = Option<
+    unsafe extern "system" fn(instance: Instance, p_name: *const c_char) -> PFN_vkVoidFunction,
 >;
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -36925,8 +36935,8 @@ pub struct VideoDecodeH265PictureInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub p_std_picture_info: *mut StdVideoDecodeH265PictureInfo,
-    pub slice_count: u32,
-    pub p_slice_offsets: *const u32,
+    pub slice_segment_count: u32,
+    pub p_slice_segment_offsets: *const u32,
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for VideoDecodeH265PictureInfoEXT<'_> {
@@ -36936,8 +36946,8 @@ impl ::std::default::Default for VideoDecodeH265PictureInfoEXT<'_> {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             p_std_picture_info: ::std::ptr::null_mut(),
-            slice_count: u32::default(),
-            p_slice_offsets: ::std::ptr::null(),
+            slice_segment_count: u32::default(),
+            p_slice_segment_offsets: ::std::ptr::null(),
             _marker: PhantomData,
         }
     }
@@ -36956,9 +36966,9 @@ impl<'a> VideoDecodeH265PictureInfoEXT<'a> {
         self
     }
     #[inline]
-    pub fn slice_offsets(mut self, slice_offsets: &'a [u32]) -> Self {
-        self.slice_count = slice_offsets.len() as _;
-        self.p_slice_offsets = slice_offsets.as_ptr();
+    pub fn slice_segment_offsets(mut self, slice_segment_offsets: &'a [u32]) -> Self {
+        self.slice_segment_count = slice_segment_offsets.len() as _;
+        self.p_slice_segment_offsets = slice_segment_offsets.as_ptr();
         self
     }
 }
@@ -46487,6 +46497,139 @@ impl<'a> PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'a> {
     ) -> Self {
         self.ray_tracing_invocation_reorder_reordering_hint =
             ray_tracing_invocation_reorder_reordering_hint;
+        self
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDirectDriverLoadingInfoLUNARG.html>"]
+pub struct DirectDriverLoadingInfoLUNARG<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub flags: DirectDriverLoadingFlagsLUNARG,
+    pub pfn_get_instance_proc_addr: PFN_vkGetInstanceProcAddr,
+    pub _marker: PhantomData<&'a ()>,
+}
+#[cfg(feature = "debug")]
+impl fmt::Debug for DirectDriverLoadingInfoLUNARG<'_> {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+        fmt.debug_struct("DirectDriverLoadingInfoLUNARG")
+            .field("s_type", &self.s_type)
+            .field("p_next", &self.p_next)
+            .field("flags", &self.flags)
+            .field(
+                "pfn_get_instance_proc_addr",
+                &(self.pfn_get_instance_proc_addr.map(|x| x as *const ())),
+            )
+            .finish()
+    }
+}
+impl ::std::default::Default for DirectDriverLoadingInfoLUNARG<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            flags: DirectDriverLoadingFlagsLUNARG::default(),
+            pfn_get_instance_proc_addr: PFN_vkGetInstanceProcAddr::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for DirectDriverLoadingInfoLUNARG<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::DIRECT_DRIVER_LOADING_INFO_LUNARG;
+}
+impl<'a> DirectDriverLoadingInfoLUNARG<'a> {
+    #[inline]
+    pub fn flags(mut self, flags: DirectDriverLoadingFlagsLUNARG) -> Self {
+        self.flags = flags;
+        self
+    }
+    #[inline]
+    pub fn pfn_get_instance_proc_addr(
+        mut self,
+        pfn_get_instance_proc_addr: PFN_vkGetInstanceProcAddr,
+    ) -> Self {
+        self.pfn_get_instance_proc_addr = pfn_get_instance_proc_addr;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDirectDriverLoadingListLUNARG.html>"]
+pub struct DirectDriverLoadingListLUNARG<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub mode: DirectDriverLoadingModeLUNARG,
+    pub driver_count: u32,
+    pub p_drivers: *const DirectDriverLoadingInfoLUNARG<'a>,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for DirectDriverLoadingListLUNARG<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            mode: DirectDriverLoadingModeLUNARG::default(),
+            driver_count: u32::default(),
+            p_drivers: ::std::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for DirectDriverLoadingListLUNARG<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::DIRECT_DRIVER_LOADING_LIST_LUNARG;
+}
+unsafe impl ExtendsInstanceCreateInfo for DirectDriverLoadingListLUNARG<'_> {}
+impl<'a> DirectDriverLoadingListLUNARG<'a> {
+    #[inline]
+    pub fn mode(mut self, mode: DirectDriverLoadingModeLUNARG) -> Self {
+        self.mode = mode;
+        self
+    }
+    #[inline]
+    pub fn drivers(mut self, drivers: &'a [DirectDriverLoadingInfoLUNARG]) -> Self {
+        self.driver_count = drivers.len() as _;
+        self.p_drivers = drivers.as_ptr();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM.html>"]
+pub struct PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub multiview_per_view_viewports: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            multiview_per_view_viewports: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_VIEWPORTS_FEATURES_QCOM;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'_> {}
+impl<'a> PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'a> {
+    #[inline]
+    pub fn multiview_per_view_viewports(mut self, multiview_per_view_viewports: bool) -> Self {
+        self.multiview_per_view_viewports = multiview_per_view_viewports.into();
         self
     }
 }
