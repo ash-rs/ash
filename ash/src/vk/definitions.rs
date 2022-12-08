@@ -57,7 +57,7 @@ pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
-pub const HEADER_VERSION: u32 = 236u32;
+pub const HEADER_VERSION: u32 = 237u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -526,8 +526,8 @@ pub type PFN_vkDeviceMemoryReportCallbackEXT = Option<
     ),
 >;
 #[allow(non_camel_case_types)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/PFN_vkGetInstanceProcAddr.html>"]
-pub type PFN_vkGetInstanceProcAddr = Option<
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/PFN_vkGetInstanceProcAddrLUNARG.html>"]
+pub type PFN_vkGetInstanceProcAddrLUNARG = Option<
     unsafe extern "system" fn(instance: Instance, p_name: *const c_char) -> PFN_vkVoidFunction,
 >;
 #[repr(C)]
@@ -46425,6 +46425,368 @@ impl<'a> PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSurfacePresentModeEXT.html>"]
+pub struct SurfacePresentModeEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub present_mode: PresentModeKHR,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for SurfacePresentModeEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            present_mode: PresentModeKHR::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for SurfacePresentModeEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_PRESENT_MODE_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceSurfaceInfo2KHR for SurfacePresentModeEXT<'_> {}
+impl<'a> SurfacePresentModeEXT<'a> {
+    #[inline]
+    pub fn present_mode(mut self, present_mode: PresentModeKHR) -> Self {
+        self.present_mode = present_mode;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSurfacePresentScalingCapabilitiesEXT.html>"]
+pub struct SurfacePresentScalingCapabilitiesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub supported_present_scaling: PresentScalingFlagsEXT,
+    pub supported_present_gravity_x: PresentGravityFlagsEXT,
+    pub supported_present_gravity_y: PresentGravityFlagsEXT,
+    pub min_scaled_image_extent: Extent2D,
+    pub max_scaled_image_extent: Extent2D,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for SurfacePresentScalingCapabilitiesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            supported_present_scaling: PresentScalingFlagsEXT::default(),
+            supported_present_gravity_x: PresentGravityFlagsEXT::default(),
+            supported_present_gravity_y: PresentGravityFlagsEXT::default(),
+            min_scaled_image_extent: Extent2D::default(),
+            max_scaled_image_extent: Extent2D::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for SurfacePresentScalingCapabilitiesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_PRESENT_SCALING_CAPABILITIES_EXT;
+}
+unsafe impl ExtendsSurfaceCapabilities2KHR for SurfacePresentScalingCapabilitiesEXT<'_> {}
+impl<'a> SurfacePresentScalingCapabilitiesEXT<'a> {
+    #[inline]
+    pub fn supported_present_scaling(
+        mut self,
+        supported_present_scaling: PresentScalingFlagsEXT,
+    ) -> Self {
+        self.supported_present_scaling = supported_present_scaling;
+        self
+    }
+    #[inline]
+    pub fn supported_present_gravity_x(
+        mut self,
+        supported_present_gravity_x: PresentGravityFlagsEXT,
+    ) -> Self {
+        self.supported_present_gravity_x = supported_present_gravity_x;
+        self
+    }
+    #[inline]
+    pub fn supported_present_gravity_y(
+        mut self,
+        supported_present_gravity_y: PresentGravityFlagsEXT,
+    ) -> Self {
+        self.supported_present_gravity_y = supported_present_gravity_y;
+        self
+    }
+    #[inline]
+    pub fn min_scaled_image_extent(mut self, min_scaled_image_extent: Extent2D) -> Self {
+        self.min_scaled_image_extent = min_scaled_image_extent;
+        self
+    }
+    #[inline]
+    pub fn max_scaled_image_extent(mut self, max_scaled_image_extent: Extent2D) -> Self {
+        self.max_scaled_image_extent = max_scaled_image_extent;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSurfacePresentModeCompatibilityEXT.html>"]
+pub struct SurfacePresentModeCompatibilityEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub present_mode_count: u32,
+    pub p_present_modes: *mut PresentModeKHR,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for SurfacePresentModeCompatibilityEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            present_mode_count: u32::default(),
+            p_present_modes: ::std::ptr::null_mut(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for SurfacePresentModeCompatibilityEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::SURFACE_PRESENT_MODE_COMPATIBILITY_EXT;
+}
+unsafe impl ExtendsSurfaceCapabilities2KHR for SurfacePresentModeCompatibilityEXT<'_> {}
+impl<'a> SurfacePresentModeCompatibilityEXT<'a> {
+    #[inline]
+    pub fn present_modes(mut self, present_modes: &'a mut [PresentModeKHR]) -> Self {
+        self.present_mode_count = present_modes.len() as _;
+        self.p_present_modes = present_modes.as_mut_ptr();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceSwapchainMaintenance1FeaturesEXT.html>"]
+pub struct PhysicalDeviceSwapchainMaintenance1FeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub swapchain_maintenance1: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceSwapchainMaintenance1FeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            swapchain_maintenance1: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceSwapchainMaintenance1FeaturesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_SWAPCHAIN_MAINTENANCE_1_FEATURES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSwapchainMaintenance1FeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSwapchainMaintenance1FeaturesEXT<'_> {}
+impl<'a> PhysicalDeviceSwapchainMaintenance1FeaturesEXT<'a> {
+    #[inline]
+    pub fn swapchain_maintenance1(mut self, swapchain_maintenance1: bool) -> Self {
+        self.swapchain_maintenance1 = swapchain_maintenance1.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSwapchainPresentFenceInfoEXT.html>"]
+pub struct SwapchainPresentFenceInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub swapchain_count: u32,
+    pub p_fences: *const Fence,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for SwapchainPresentFenceInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            swapchain_count: u32::default(),
+            p_fences: ::std::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for SwapchainPresentFenceInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_PRESENT_FENCE_INFO_EXT;
+}
+unsafe impl ExtendsPresentInfoKHR for SwapchainPresentFenceInfoEXT<'_> {}
+impl<'a> SwapchainPresentFenceInfoEXT<'a> {
+    #[inline]
+    pub fn fences(mut self, fences: &'a [Fence]) -> Self {
+        self.swapchain_count = fences.len() as _;
+        self.p_fences = fences.as_ptr();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSwapchainPresentModesCreateInfoEXT.html>"]
+pub struct SwapchainPresentModesCreateInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub present_mode_count: u32,
+    pub p_present_modes: *const PresentModeKHR,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for SwapchainPresentModesCreateInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            present_mode_count: u32::default(),
+            p_present_modes: ::std::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for SwapchainPresentModesCreateInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_PRESENT_MODES_CREATE_INFO_EXT;
+}
+unsafe impl ExtendsSwapchainCreateInfoKHR for SwapchainPresentModesCreateInfoEXT<'_> {}
+impl<'a> SwapchainPresentModesCreateInfoEXT<'a> {
+    #[inline]
+    pub fn present_modes(mut self, present_modes: &'a [PresentModeKHR]) -> Self {
+        self.present_mode_count = present_modes.len() as _;
+        self.p_present_modes = present_modes.as_ptr();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSwapchainPresentModeInfoEXT.html>"]
+pub struct SwapchainPresentModeInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub swapchain_count: u32,
+    pub p_present_modes: *const PresentModeKHR,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for SwapchainPresentModeInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            swapchain_count: u32::default(),
+            p_present_modes: ::std::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for SwapchainPresentModeInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_PRESENT_MODE_INFO_EXT;
+}
+unsafe impl ExtendsPresentInfoKHR for SwapchainPresentModeInfoEXT<'_> {}
+impl<'a> SwapchainPresentModeInfoEXT<'a> {
+    #[inline]
+    pub fn present_modes(mut self, present_modes: &'a [PresentModeKHR]) -> Self {
+        self.swapchain_count = present_modes.len() as _;
+        self.p_present_modes = present_modes.as_ptr();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSwapchainPresentScalingCreateInfoEXT.html>"]
+pub struct SwapchainPresentScalingCreateInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub scaling_behavior: PresentScalingFlagsEXT,
+    pub present_gravity_x: PresentGravityFlagsEXT,
+    pub present_gravity_y: PresentGravityFlagsEXT,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for SwapchainPresentScalingCreateInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            scaling_behavior: PresentScalingFlagsEXT::default(),
+            present_gravity_x: PresentGravityFlagsEXT::default(),
+            present_gravity_y: PresentGravityFlagsEXT::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for SwapchainPresentScalingCreateInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::SWAPCHAIN_PRESENT_SCALING_CREATE_INFO_EXT;
+}
+unsafe impl ExtendsSwapchainCreateInfoKHR for SwapchainPresentScalingCreateInfoEXT<'_> {}
+impl<'a> SwapchainPresentScalingCreateInfoEXT<'a> {
+    #[inline]
+    pub fn scaling_behavior(mut self, scaling_behavior: PresentScalingFlagsEXT) -> Self {
+        self.scaling_behavior = scaling_behavior;
+        self
+    }
+    #[inline]
+    pub fn present_gravity_x(mut self, present_gravity_x: PresentGravityFlagsEXT) -> Self {
+        self.present_gravity_x = present_gravity_x;
+        self
+    }
+    #[inline]
+    pub fn present_gravity_y(mut self, present_gravity_y: PresentGravityFlagsEXT) -> Self {
+        self.present_gravity_y = present_gravity_y;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkReleaseSwapchainImagesInfoEXT.html>"]
+pub struct ReleaseSwapchainImagesInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub swapchain: SwapchainKHR,
+    pub image_index_count: u32,
+    pub p_image_indices: *const u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ReleaseSwapchainImagesInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            swapchain: SwapchainKHR::default(),
+            image_index_count: u32::default(),
+            p_image_indices: ::std::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for ReleaseSwapchainImagesInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::RELEASE_SWAPCHAIN_IMAGES_INFO_EXT;
+}
+impl<'a> ReleaseSwapchainImagesInfoEXT<'a> {
+    #[inline]
+    pub fn swapchain(mut self, swapchain: SwapchainKHR) -> Self {
+        self.swapchain = swapchain;
+        self
+    }
+    #[inline]
+    pub fn image_indices(mut self, image_indices: &'a [u32]) -> Self {
+        self.image_index_count = image_indices.len() as _;
+        self.p_image_indices = image_indices.as_ptr();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceRayTracingInvocationReorderFeaturesNV.html>"]
 pub struct PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'a> {
     pub s_type: StructureType,
@@ -46507,7 +46869,7 @@ pub struct DirectDriverLoadingInfoLUNARG<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub flags: DirectDriverLoadingFlagsLUNARG,
-    pub pfn_get_instance_proc_addr: PFN_vkGetInstanceProcAddr,
+    pub pfn_get_instance_proc_addr: PFN_vkGetInstanceProcAddrLUNARG,
     pub _marker: PhantomData<&'a ()>,
 }
 #[cfg(feature = "debug")]
@@ -46531,7 +46893,7 @@ impl ::std::default::Default for DirectDriverLoadingInfoLUNARG<'_> {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             flags: DirectDriverLoadingFlagsLUNARG::default(),
-            pfn_get_instance_proc_addr: PFN_vkGetInstanceProcAddr::default(),
+            pfn_get_instance_proc_addr: PFN_vkGetInstanceProcAddrLUNARG::default(),
             _marker: PhantomData,
         }
     }
@@ -46548,7 +46910,7 @@ impl<'a> DirectDriverLoadingInfoLUNARG<'a> {
     #[inline]
     pub fn pfn_get_instance_proc_addr(
         mut self,
-        pfn_get_instance_proc_addr: PFN_vkGetInstanceProcAddr,
+        pfn_get_instance_proc_addr: PFN_vkGetInstanceProcAddrLUNARG,
     ) -> Self {
         self.pfn_get_instance_proc_addr = pfn_get_instance_proc_addr;
         self

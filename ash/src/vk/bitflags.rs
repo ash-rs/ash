@@ -1143,6 +1143,26 @@ impl DeviceAddressBindingFlagsEXT {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPresentScalingFlagBitsEXT.html>"]
+pub struct PresentScalingFlagsEXT(pub(crate) Flags);
+vk_bitflags_wrapped!(PresentScalingFlagsEXT, Flags);
+impl PresentScalingFlagsEXT {
+    pub const ONE_TO_ONE: Self = Self(0b1);
+    pub const ASPECT_RATIO_STRETCH: Self = Self(0b10);
+    pub const STRETCH: Self = Self(0b100);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPresentGravityFlagBitsEXT.html>"]
+pub struct PresentGravityFlagsEXT(pub(crate) Flags);
+vk_bitflags_wrapped!(PresentGravityFlagsEXT, Flags);
+impl PresentGravityFlagsEXT {
+    pub const MIN: Self = Self(0b1);
+    pub const MAX: Self = Self(0b10);
+    pub const CENTERED: Self = Self(0b100);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoCodecOperationFlagBitsKHR.html>"]
 pub struct VideoCodecOperationFlagsKHR(pub(crate) Flags);
 vk_bitflags_wrapped!(VideoCodecOperationFlagsKHR, Flags);

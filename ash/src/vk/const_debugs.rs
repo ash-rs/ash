@@ -3766,6 +3766,16 @@ impl fmt::Debug for PolygonMode {
         }
     }
 }
+impl fmt::Debug for PresentGravityFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (PresentGravityFlagsEXT::MIN.0, "MIN"),
+            (PresentGravityFlagsEXT::MAX.0, "MAX"),
+            (PresentGravityFlagsEXT::CENTERED.0, "CENTERED"),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
 impl fmt::Debug for PresentModeKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
@@ -3782,6 +3792,19 @@ impl fmt::Debug for PresentModeKHR {
         } else {
             self.0.fmt(f)
         }
+    }
+}
+impl fmt::Debug for PresentScalingFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (PresentScalingFlagsEXT::ONE_TO_ONE.0, "ONE_TO_ONE"),
+            (
+                PresentScalingFlagsEXT::ASPECT_RATIO_STRETCH.0,
+                "ASPECT_RATIO_STRETCH",
+            ),
+            (PresentScalingFlagsEXT::STRETCH.0, "STRETCH"),
+        ];
+        debug_flags(f, KNOWN, self.0)
     }
 }
 impl fmt::Debug for PrimitiveTopology {
@@ -5250,6 +5273,25 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_2_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_2_FEATURES_EXT")
             }
+            Self::SURFACE_PRESENT_MODE_EXT => Some("SURFACE_PRESENT_MODE_EXT"),
+            Self::SURFACE_PRESENT_SCALING_CAPABILITIES_EXT => {
+                Some("SURFACE_PRESENT_SCALING_CAPABILITIES_EXT")
+            }
+            Self::SURFACE_PRESENT_MODE_COMPATIBILITY_EXT => {
+                Some("SURFACE_PRESENT_MODE_COMPATIBILITY_EXT")
+            }
+            Self::PHYSICAL_DEVICE_SWAPCHAIN_MAINTENANCE_1_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_SWAPCHAIN_MAINTENANCE_1_FEATURES_EXT")
+            }
+            Self::SWAPCHAIN_PRESENT_FENCE_INFO_EXT => Some("SWAPCHAIN_PRESENT_FENCE_INFO_EXT"),
+            Self::SWAPCHAIN_PRESENT_MODES_CREATE_INFO_EXT => {
+                Some("SWAPCHAIN_PRESENT_MODES_CREATE_INFO_EXT")
+            }
+            Self::SWAPCHAIN_PRESENT_MODE_INFO_EXT => Some("SWAPCHAIN_PRESENT_MODE_INFO_EXT"),
+            Self::SWAPCHAIN_PRESENT_SCALING_CREATE_INFO_EXT => {
+                Some("SWAPCHAIN_PRESENT_SCALING_CREATE_INFO_EXT")
+            }
+            Self::RELEASE_SWAPCHAIN_IMAGES_INFO_EXT => Some("RELEASE_SWAPCHAIN_IMAGES_INFO_EXT"),
             Self::PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_PROPERTIES_NV => {
                 Some("PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_PROPERTIES_NV")
             }
@@ -6242,6 +6284,10 @@ impl fmt::Debug for SwapchainCreateFlagsKHR {
             ),
             (SwapchainCreateFlagsKHR::PROTECTED.0, "PROTECTED"),
             (SwapchainCreateFlagsKHR::MUTABLE_FORMAT.0, "MUTABLE_FORMAT"),
+            (
+                SwapchainCreateFlagsKHR::DEFERRED_MEMORY_ALLOCATION_EXT.0,
+                "DEFERRED_MEMORY_ALLOCATION_EXT",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }

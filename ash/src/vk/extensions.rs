@@ -14411,6 +14411,93 @@ impl ExtShaderAtomicFloat2Fn {
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_2_FEATURES_EXT: Self = Self(1_000_273_000);
 }
+impl ExtSurfaceMaintenance1Fn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_surface_maintenance1\0") }
+    }
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct ExtSurfaceMaintenance1Fn {}
+unsafe impl Send for ExtSurfaceMaintenance1Fn {}
+unsafe impl Sync for ExtSurfaceMaintenance1Fn {}
+impl ExtSurfaceMaintenance1Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+#[doc = "Generated from 'VK_EXT_surface_maintenance1'"]
+impl StructureType {
+    pub const SURFACE_PRESENT_MODE_EXT: Self = Self(1_000_274_000);
+    pub const SURFACE_PRESENT_SCALING_CAPABILITIES_EXT: Self = Self(1_000_274_001);
+    pub const SURFACE_PRESENT_MODE_COMPATIBILITY_EXT: Self = Self(1_000_274_002);
+}
+impl ExtSwapchainMaintenance1Fn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_swapchain_maintenance1\0")
+        }
+    }
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[allow(non_camel_case_types)]
+pub type PFN_vkReleaseSwapchainImagesEXT = unsafe extern "system" fn(
+    device: Device,
+    p_release_info: *const ReleaseSwapchainImagesInfoEXT,
+) -> Result;
+#[derive(Clone)]
+pub struct ExtSwapchainMaintenance1Fn {
+    pub release_swapchain_images_ext: PFN_vkReleaseSwapchainImagesEXT,
+}
+unsafe impl Send for ExtSwapchainMaintenance1Fn {}
+unsafe impl Sync for ExtSwapchainMaintenance1Fn {}
+impl ExtSwapchainMaintenance1Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {
+            release_swapchain_images_ext: unsafe {
+                unsafe extern "system" fn release_swapchain_images_ext(
+                    _device: Device,
+                    _p_release_info: *const ReleaseSwapchainImagesInfoEXT,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(release_swapchain_images_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkReleaseSwapchainImagesEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    release_swapchain_images_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+}
+#[doc = "Generated from 'VK_EXT_swapchain_maintenance1'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SWAPCHAIN_MAINTENANCE_1_FEATURES_EXT: Self = Self(1_000_275_000);
+    pub const SWAPCHAIN_PRESENT_FENCE_INFO_EXT: Self = Self(1_000_275_001);
+    pub const SWAPCHAIN_PRESENT_MODES_CREATE_INFO_EXT: Self = Self(1_000_275_002);
+    pub const SWAPCHAIN_PRESENT_MODE_INFO_EXT: Self = Self(1_000_275_003);
+    pub const SWAPCHAIN_PRESENT_SCALING_CREATE_INFO_EXT: Self = Self(1_000_275_004);
+    pub const RELEASE_SWAPCHAIN_IMAGES_INFO_EXT: Self = Self(1_000_275_005);
+}
+#[doc = "Generated from 'VK_EXT_swapchain_maintenance1'"]
+impl SwapchainCreateFlagsKHR {
+    pub const DEFERRED_MEMORY_ALLOCATION_EXT: Self = Self(0b1000);
+}
 impl ExtShaderDemoteToHelperInvocationFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
