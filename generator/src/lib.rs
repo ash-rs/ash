@@ -2513,6 +2513,16 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
 
     let extension_code = extensions
         .iter()
+        .filter(|e| {
+            // Note that there will be multiple Vulkan API variants in the future, communicated
+            // through the supported= attribute:
+            // https://github.com/KhronosGroup/Vulkan-Docs/issues/1549#issuecomment-855831740
+            e.supported.as_deref() != Some("disabled") ||
+                // VK_ANDROID_native_buffer is for internal use only, but types defined elsewhere
+                // reference enum extension constants.  Exempt the extension from this check until
+                // types are properly folded in with their extension (where applicable).
+                e.name == "VK_ANDROID_native_buffer"
+        })
         .filter_map(|ext| {
             generate_extension(
                 ext,

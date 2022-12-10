@@ -1028,25 +1028,6 @@ impl KhrWaylandSurfaceFn {
 impl StructureType {
     pub const WAYLAND_SURFACE_CREATE_INFO_KHR: Self = Self(1_000_006_000);
 }
-impl KhrMirSurfaceFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_mir_surface\0") }
-    }
-    pub const SPEC_VERSION: u32 = 4u32;
-}
-#[derive(Clone)]
-pub struct KhrMirSurfaceFn {}
-unsafe impl Send for KhrMirSurfaceFn {}
-unsafe impl Sync for KhrMirSurfaceFn {}
-impl KhrMirSurfaceFn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl KhrAndroidSurfaceFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -1569,44 +1550,6 @@ impl FormatFeatureFlags {
     #[doc = "Format can be filtered with VK_FILTER_CUBIC_IMG when being sampled"]
     pub const SAMPLED_IMAGE_FILTER_CUBIC_IMG: Self = Self::SAMPLED_IMAGE_FILTER_CUBIC_EXT;
 }
-impl AmdExtension17Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_17\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension17Fn {}
-unsafe impl Send for AmdExtension17Fn {}
-unsafe impl Sync for AmdExtension17Fn {}
-impl AmdExtension17Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl AmdExtension18Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_18\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension18Fn {}
-unsafe impl Send for AmdExtension18Fn {}
-unsafe impl Sync for AmdExtension18Fn {}
-impl AmdExtension18Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl AmdRasterizationOrderFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -1629,25 +1572,6 @@ impl AmdRasterizationOrderFn {
 #[doc = "Generated from 'VK_AMD_rasterization_order'"]
 impl StructureType {
     pub const PIPELINE_RASTERIZATION_STATE_RASTERIZATION_ORDER_AMD: Self = Self(1_000_018_000);
-}
-impl AmdExtension20Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_20\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension20Fn {}
-unsafe impl Send for AmdExtension20Fn {}
-unsafe impl Sync for AmdExtension20Fn {}
-impl AmdExtension20Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
 }
 impl AmdShaderTrinaryMinmaxFn {
     #[inline]
@@ -2376,25 +2300,6 @@ impl StructureType {
     pub const DEDICATED_ALLOCATION_BUFFER_CREATE_INFO_NV: Self = Self(1_000_026_001);
     pub const DEDICATED_ALLOCATION_MEMORY_ALLOCATE_INFO_NV: Self = Self(1_000_026_002);
 }
-impl ExtExtension28Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_28\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension28Fn {}
-unsafe impl Send for ExtExtension28Fn {}
-unsafe impl Sync for ExtExtension28Fn {}
-impl ExtExtension28Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl ExtTransformFeedbackFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -2881,44 +2786,6 @@ impl StructureType {
     pub const IMAGE_VIEW_HANDLE_INFO_NVX: Self = Self(1_000_030_000);
     pub const IMAGE_VIEW_ADDRESS_PROPERTIES_NVX: Self = Self(1_000_030_001);
 }
-impl AmdExtension32Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_32\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension32Fn {}
-unsafe impl Send for AmdExtension32Fn {}
-unsafe impl Sync for AmdExtension32Fn {}
-impl AmdExtension32Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl AmdExtension33Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_33\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension33Fn {}
-unsafe impl Send for AmdExtension33Fn {}
-unsafe impl Sync for AmdExtension33Fn {}
-impl AmdExtension33Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl AmdDrawIndirectCountFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -3009,25 +2876,6 @@ impl AmdDrawIndirectCountFn {
                 }
             },
         }
-    }
-}
-impl AmdExtension35Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_35\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension35Fn {}
-unsafe impl Send for AmdExtension35Fn {}
-unsafe impl Sync for AmdExtension35Fn {}
-impl AmdExtension35Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
     }
 }
 impl AmdNegativeViewportHeightFn {
@@ -3273,25 +3121,6 @@ impl AmdShaderInfoFn {
         }
     }
 }
-impl AmdExtension44Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_44\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension44Fn {}
-unsafe impl Send for AmdExtension44Fn {}
-unsafe impl Sync for AmdExtension44Fn {}
-impl AmdExtension44Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl KhrDynamicRenderingFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -3383,25 +3212,6 @@ impl StructureType {
     pub const ATTACHMENT_SAMPLE_COUNT_INFO_NV: Self = Self::ATTACHMENT_SAMPLE_COUNT_INFO_AMD;
     pub const MULTIVIEW_PER_VIEW_ATTRIBUTES_INFO_NVX: Self = Self(1_000_044_009);
 }
-impl AmdExtension46Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_46\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension46Fn {}
-unsafe impl Send for AmdExtension46Fn {}
-unsafe impl Sync for AmdExtension46Fn {}
-impl AmdExtension46Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl AmdShaderImageLoadStoreLodFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -3416,44 +3226,6 @@ pub struct AmdShaderImageLoadStoreLodFn {}
 unsafe impl Send for AmdShaderImageLoadStoreLodFn {}
 unsafe impl Sync for AmdShaderImageLoadStoreLodFn {}
 impl AmdShaderImageLoadStoreLodFn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl NvxExtension48Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NVX_extension_48\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct NvxExtension48Fn {}
-unsafe impl Send for NvxExtension48Fn {}
-unsafe impl Sync for NvxExtension48Fn {}
-impl NvxExtension48Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl GoogleExtension49Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_extension_49\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct GoogleExtension49Fn {}
-unsafe impl Send for GoogleExtension49Fn {}
-unsafe impl Sync for GoogleExtension49Fn {}
-impl GoogleExtension49Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -3544,44 +3316,6 @@ impl ImageCreateFlags {
 #[doc = "Generated from 'VK_NV_corner_sampled_image'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_CORNER_SAMPLED_IMAGE_FEATURES_NV: Self = Self(1_000_050_000);
-}
-impl NvExtension52Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_52\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct NvExtension52Fn {}
-unsafe impl Send for NvExtension52Fn {}
-unsafe impl Sync for NvExtension52Fn {}
-impl NvExtension52Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl NvExtension53Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_53\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct NvExtension53Fn {}
-unsafe impl Send for NvExtension53Fn {}
-unsafe impl Sync for NvExtension53Fn {}
-impl NvExtension53Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
 }
 impl KhrMultiviewFn {
     #[inline]
@@ -5612,27 +5346,6 @@ impl StructureType {
     pub const DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO_KHR: Self =
         Self::DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO;
 }
-impl NvxDeviceGeneratedCommandsFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NVX_device_generated_commands\0")
-        }
-    }
-    pub const SPEC_VERSION: u32 = 3u32;
-}
-#[derive(Clone)]
-pub struct NvxDeviceGeneratedCommandsFn {}
-unsafe impl Send for NvxDeviceGeneratedCommandsFn {}
-unsafe impl Sync for NvxDeviceGeneratedCommandsFn {}
-impl NvxDeviceGeneratedCommandsFn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl NvClipSpaceWScalingFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -6273,25 +5986,6 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_DISCARD_RECTANGLE_PROPERTIES_EXT: Self = Self(1_000_099_000);
     pub const PIPELINE_DISCARD_RECTANGLE_STATE_CREATE_INFO_EXT: Self = Self(1_000_099_001);
 }
-impl NvExtension101Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_101\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct NvExtension101Fn {}
-unsafe impl Send for NvExtension101Fn {}
-unsafe impl Sync for NvExtension101Fn {}
-impl NvExtension101Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl ExtConservativeRasterizationFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -6341,25 +6035,6 @@ impl ExtDepthClipEnableFn {
 impl StructureType {
     pub const PHYSICAL_DEVICE_DEPTH_CLIP_ENABLE_FEATURES_EXT: Self = Self(1_000_102_000);
     pub const PIPELINE_RASTERIZATION_DEPTH_CLIP_STATE_CREATE_INFO_EXT: Self = Self(1_000_102_001);
-}
-impl NvExtension104Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_104\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct NvExtension104Fn {}
-unsafe impl Send for NvExtension104Fn {}
-unsafe impl Sync for NvExtension104Fn {}
-impl NvExtension104Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
 }
 impl ExtSwapchainColorspaceFn {
     #[inline]
@@ -6447,44 +6122,6 @@ impl ExtHdrMetadataFn {
 #[doc = "Generated from 'VK_EXT_hdr_metadata'"]
 impl StructureType {
     pub const HDR_METADATA_EXT: Self = Self(1_000_105_000);
-}
-impl ImgExtension107Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_IMG_extension_107\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ImgExtension107Fn {}
-unsafe impl Send for ImgExtension107Fn {}
-unsafe impl Sync for ImgExtension107Fn {}
-impl ImgExtension107Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl ImgExtension108Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_IMG_extension_108\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ImgExtension108Fn {}
-unsafe impl Send for ImgExtension108Fn {}
-unsafe impl Sync for ImgExtension108Fn {}
-impl ImgExtension108Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
 }
 impl KhrImagelessFramebufferFn {
     #[inline]
@@ -6658,25 +6295,6 @@ impl StructureType {
     pub const RENDER_PASS_CREATE_INFO_2_KHR: Self = Self::RENDER_PASS_CREATE_INFO_2;
     pub const SUBPASS_BEGIN_INFO_KHR: Self = Self::SUBPASS_BEGIN_INFO;
     pub const SUBPASS_END_INFO_KHR: Self = Self::SUBPASS_END_INFO;
-}
-impl ImgExtension111Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_IMG_extension_111\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ImgExtension111Fn {}
-unsafe impl Send for ImgExtension111Fn {}
-unsafe impl Sync for ImgExtension111Fn {}
-impl ImgExtension111Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
 }
 impl KhrSharedPresentableImageFn {
     #[inline]
@@ -7179,25 +6797,6 @@ impl TessellationDomainOrigin {
     pub const UPPER_LEFT_KHR: Self = Self::UPPER_LEFT;
     pub const LOWER_LEFT_KHR: Self = Self::LOWER_LEFT;
 }
-impl KhrExtension119Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_119\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct KhrExtension119Fn {}
-unsafe impl Send for KhrExtension119Fn {}
-unsafe impl Sync for KhrExtension119Fn {}
-impl KhrExtension119Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl KhrGetSurfaceCapabilities2Fn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -7565,25 +7164,6 @@ impl MvkMacosSurfaceFn {
 #[doc = "Generated from 'VK_MVK_macos_surface'"]
 impl StructureType {
     pub const MACOS_SURFACE_CREATE_INFO_MVK: Self = Self(1_000_123_000);
-}
-impl MvkMoltenvkFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_MVK_moltenvk\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct MvkMoltenvkFn {}
-unsafe impl Send for MvkMoltenvkFn {}
-unsafe impl Sync for MvkMoltenvkFn {}
-impl MvkMoltenvkFn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
 }
 impl ExtExternalMemoryDmaBufFn {
     #[inline]
@@ -8144,67 +7724,6 @@ impl AmdGpuShaderInt16Fn {
         Self {}
     }
 }
-impl AmdExtension134Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_134\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension134Fn {}
-unsafe impl Send for AmdExtension134Fn {}
-unsafe impl Sync for AmdExtension134Fn {}
-impl AmdExtension134Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl AmdExtension135Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_135\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension135Fn {}
-unsafe impl Send for AmdExtension135Fn {}
-unsafe impl Sync for AmdExtension135Fn {}
-impl AmdExtension135Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-#[doc = "Generated from 'VK_AMD_extension_135'"]
-impl BufferUsageFlags {
-    pub const RESERVED_25_AMD: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
-}
-impl AmdExtension136Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_136\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension136Fn {}
-unsafe impl Send for AmdExtension136Fn {}
-unsafe impl Sync for AmdExtension136Fn {}
-impl AmdExtension136Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl AmdMixedAttachmentSamplesFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -8279,25 +7798,6 @@ impl StructureType {
     pub const DESCRIPTOR_POOL_INLINE_UNIFORM_BLOCK_CREATE_INFO_EXT: Self =
         Self::DESCRIPTOR_POOL_INLINE_UNIFORM_BLOCK_CREATE_INFO;
 }
-impl AmdExtension140Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_140\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension140Fn {}
-unsafe impl Send for AmdExtension140Fn {}
-unsafe impl Sync for AmdExtension140Fn {}
-impl AmdExtension140Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl ExtShaderStencilExportFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -8312,44 +7812,6 @@ pub struct ExtShaderStencilExportFn {}
 unsafe impl Send for ExtShaderStencilExportFn {}
 unsafe impl Sync for ExtShaderStencilExportFn {}
 impl ExtShaderStencilExportFn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl AmdExtension142Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_142\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension142Fn {}
-unsafe impl Send for AmdExtension142Fn {}
-unsafe impl Sync for AmdExtension142Fn {}
-impl AmdExtension142Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl AmdExtension143Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_143\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension143Fn {}
-unsafe impl Send for AmdExtension143Fn {}
-unsafe impl Sync for AmdExtension143Fn {}
-impl AmdExtension143Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -9596,25 +9058,6 @@ impl KhrRayQueryFn {
 impl StructureType {
     pub const PHYSICAL_DEVICE_RAY_QUERY_FEATURES_KHR: Self = Self(1_000_348_013);
 }
-impl NvExtension152Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_152\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct NvExtension152Fn {}
-unsafe impl Send for NvExtension152Fn {}
-unsafe impl Sync for NvExtension152Fn {}
-impl NvExtension152Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl NvFramebufferMixedSamplesFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -10061,25 +9504,6 @@ impl StructureType {
     pub const IMAGE_DRM_FORMAT_MODIFIER_EXPLICIT_CREATE_INFO_EXT: Self = Self(1_000_158_004);
     pub const IMAGE_DRM_FORMAT_MODIFIER_PROPERTIES_EXT: Self = Self(1_000_158_005);
     pub const DRM_FORMAT_MODIFIER_PROPERTIES_LIST_2_EXT: Self = Self(1_000_158_006);
-}
-impl ExtExtension160Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_160\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension160Fn {}
-unsafe impl Send for ExtExtension160Fn {}
-unsafe impl Sync for ExtExtension160Fn {}
-impl ExtExtension160Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
 }
 impl ExtValidationCacheFn {
     #[inline]
@@ -10995,25 +10419,6 @@ impl StructureType {
     pub const PIPELINE_REPRESENTATIVE_FRAGMENT_TEST_STATE_CREATE_INFO_NV: Self =
         Self(1_000_166_001);
 }
-impl NvExtension168Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_168\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct NvExtension168Fn {}
-unsafe impl Send for NvExtension168Fn {}
-unsafe impl Sync for NvExtension168Fn {}
-impl NvExtension168Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl KhrMaintenance3Fn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -11199,53 +10604,6 @@ impl SubpassDescriptionFlags {
     pub const FRAGMENT_REGION_QCOM: Self = Self(0b100);
     pub const SHADER_RESOLVE_QCOM: Self = Self(0b1000);
 }
-impl QcomExtension173Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_extension_173\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct QcomExtension173Fn {}
-unsafe impl Send for QcomExtension173Fn {}
-unsafe impl Sync for QcomExtension173Fn {}
-impl QcomExtension173Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-#[doc = "Generated from 'VK_QCOM_extension_173'"]
-impl BufferUsageFlags {
-    pub const RESERVED_18_QCOM: Self = Self(0b100_0000_0000_0000_0000);
-}
-#[doc = "Generated from 'VK_QCOM_extension_173'"]
-impl ImageUsageFlags {
-    pub const RESERVED_16_QCOM: Self = Self(0b1_0000_0000_0000_0000);
-    pub const RESERVED_17_QCOM: Self = Self(0b10_0000_0000_0000_0000);
-}
-impl QcomExtension174Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_extension_174\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct QcomExtension174Fn {}
-unsafe impl Send for QcomExtension174Fn {}
-unsafe impl Sync for QcomExtension174Fn {}
-impl QcomExtension174Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl ExtGlobalPriorityFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -11301,25 +10659,6 @@ impl KhrShaderSubgroupExtendedTypesFn {
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_SUBGROUP_EXTENDED_TYPES_FEATURES_KHR: Self =
         Self::PHYSICAL_DEVICE_SHADER_SUBGROUP_EXTENDED_TYPES_FEATURES;
-}
-impl ExtExtension177Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_177\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension177Fn {}
-unsafe impl Send for ExtExtension177Fn {}
-unsafe impl Sync for ExtExtension177Fn {}
-impl ExtExtension177Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
 }
 impl Khr8bitStorageFn {
     #[inline]
@@ -11506,25 +10845,6 @@ impl KhrShaderClockFn {
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_CLOCK_FEATURES_KHR: Self = Self(1_000_181_000);
 }
-impl AmdExtension183Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_183\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension183Fn {}
-unsafe impl Send for AmdExtension183Fn {}
-unsafe impl Sync for AmdExtension183Fn {}
-impl AmdExtension183Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl AmdPipelineCompilerControlFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -11662,25 +10982,6 @@ impl AmdShaderCorePropertiesFn {
 #[doc = "Generated from 'VK_AMD_shader_core_properties'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_AMD: Self = Self(1_000_185_000);
-}
-impl AmdExtension187Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_187\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension187Fn {}
-unsafe impl Send for AmdExtension187Fn {}
-unsafe impl Sync for AmdExtension187Fn {}
-impl AmdExtension187Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
 }
 impl ExtVideoDecodeH265Fn {
     #[inline]
@@ -11845,67 +11146,6 @@ impl ExtPipelineCreationFeedbackFn {
 impl StructureType {
     pub const PIPELINE_CREATION_FEEDBACK_CREATE_INFO_EXT: Self =
         Self::PIPELINE_CREATION_FEEDBACK_CREATE_INFO;
-}
-impl GoogleExtension194Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_extension_194\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct GoogleExtension194Fn {}
-unsafe impl Send for GoogleExtension194Fn {}
-unsafe impl Sync for GoogleExtension194Fn {}
-impl GoogleExtension194Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl GoogleExtension195Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_extension_195\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct GoogleExtension195Fn {}
-unsafe impl Send for GoogleExtension195Fn {}
-unsafe impl Sync for GoogleExtension195Fn {}
-impl GoogleExtension195Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl GoogleExtension196Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_extension_196\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct GoogleExtension196Fn {}
-unsafe impl Send for GoogleExtension196Fn {}
-unsafe impl Sync for GoogleExtension196Fn {}
-impl GoogleExtension196Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-#[doc = "Generated from 'VK_GOOGLE_extension_196'"]
-impl PipelineCacheCreateFlags {
-    pub const RESERVED_1_EXT: Self = Self(0b10);
 }
 impl KhrDriverPropertiesFn {
     #[inline]
@@ -12518,25 +11758,6 @@ impl StructureType {
     pub const SEMAPHORE_WAIT_INFO_KHR: Self = Self::SEMAPHORE_WAIT_INFO;
     pub const SEMAPHORE_SIGNAL_INFO_KHR: Self = Self::SEMAPHORE_SIGNAL_INFO;
 }
-impl KhrExtension209Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_209\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct KhrExtension209Fn {}
-unsafe impl Send for KhrExtension209Fn {}
-unsafe impl Sync for KhrExtension209Fn {}
-impl KhrExtension209Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl IntelShaderIntegerFunctions2Fn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -13017,25 +12238,6 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_TERMINATE_INVOCATION_FEATURES_KHR: Self =
         Self::PHYSICAL_DEVICE_SHADER_TERMINATE_INVOCATION_FEATURES;
 }
-impl GoogleExtension217Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_extension_217\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct GoogleExtension217Fn {}
-unsafe impl Send for GoogleExtension217Fn {}
-unsafe impl Sync for GoogleExtension217Fn {}
-impl GoogleExtension217Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl ExtMetalSurfaceFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -13152,48 +12354,6 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_PROPERTIES_EXT: Self = Self(1_000_218_001);
     pub const RENDER_PASS_FRAGMENT_DENSITY_MAP_CREATE_INFO_EXT: Self = Self(1_000_218_002);
 }
-impl ExtExtension220Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_220\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension220Fn {}
-unsafe impl Send for ExtExtension220Fn {}
-unsafe impl Sync for ExtExtension220Fn {}
-impl ExtExtension220Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl KhrExtension221Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_221\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct KhrExtension221Fn {}
-unsafe impl Send for KhrExtension221Fn {}
-unsafe impl Sync for KhrExtension221Fn {}
-impl KhrExtension221Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-#[doc = "Generated from 'VK_KHR_extension_221'"]
-impl RenderPassCreateFlags {
-    pub const RESERVED_0_KHR: Self = Self(0b1);
-}
 impl ExtScalarBlockLayoutFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -13217,25 +12377,6 @@ impl ExtScalarBlockLayoutFn {
 impl StructureType {
     pub const PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES_EXT: Self =
         Self::PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES;
-}
-impl ExtExtension223Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_223\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension223Fn {}
-unsafe impl Send for ExtExtension223Fn {}
-unsafe impl Sync for ExtExtension223Fn {}
-impl ExtExtension223Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
 }
 impl GoogleHlslFunctionality1Fn {
     #[inline]
@@ -13456,25 +12597,6 @@ impl AmdShaderCoreProperties2Fn {
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_2_AMD: Self = Self(1_000_227_000);
 }
-impl AmdExtension229Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_229\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension229Fn {}
-unsafe impl Send for AmdExtension229Fn {}
-unsafe impl Sync for AmdExtension229Fn {}
-impl AmdExtension229Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl AmdDeviceCoherentMemoryFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -13505,82 +12627,6 @@ impl MemoryPropertyFlags {
 impl StructureType {
     pub const PHYSICAL_DEVICE_COHERENT_MEMORY_FEATURES_AMD: Self = Self(1_000_229_000);
 }
-impl AmdExtension231Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_231\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension231Fn {}
-unsafe impl Send for AmdExtension231Fn {}
-unsafe impl Sync for AmdExtension231Fn {}
-impl AmdExtension231Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl AmdExtension232Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_232\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension232Fn {}
-unsafe impl Send for AmdExtension232Fn {}
-unsafe impl Sync for AmdExtension232Fn {}
-impl AmdExtension232Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl AmdExtension233Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_233\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension233Fn {}
-unsafe impl Send for AmdExtension233Fn {}
-unsafe impl Sync for AmdExtension233Fn {}
-impl AmdExtension233Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl AmdExtension234Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_234\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension234Fn {}
-unsafe impl Send for AmdExtension234Fn {}
-unsafe impl Sync for AmdExtension234Fn {}
-impl AmdExtension234Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl ExtShaderImageAtomicInt64Fn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -13605,25 +12651,6 @@ impl ExtShaderImageAtomicInt64Fn {
 #[doc = "Generated from 'VK_EXT_shader_image_atomic_int64'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_IMAGE_ATOMIC_INT64_FEATURES_EXT: Self = Self(1_000_234_000);
-}
-impl AmdExtension236Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_236\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension236Fn {}
-unsafe impl Send for AmdExtension236Fn {}
-unsafe impl Sync for AmdExtension236Fn {}
-impl AmdExtension236Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
 }
 impl KhrSpirv14Fn {
     #[inline]
@@ -13784,49 +12811,6 @@ impl StructureType {
         Self::ATTACHMENT_REFERENCE_STENCIL_LAYOUT;
     pub const ATTACHMENT_DESCRIPTION_STENCIL_LAYOUT_KHR: Self =
         Self::ATTACHMENT_DESCRIPTION_STENCIL_LAYOUT;
-}
-impl IntelExtension243Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_INTEL_extension_243\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct IntelExtension243Fn {}
-unsafe impl Send for IntelExtension243Fn {}
-unsafe impl Sync for IntelExtension243Fn {}
-impl IntelExtension243Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-#[doc = "Generated from 'VK_INTEL_extension_243'"]
-impl AccessFlags2 {
-    pub const RESERVED_46_EXT: Self =
-        Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
-}
-impl MesaExtension244Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_MESA_extension_244\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct MesaExtension244Fn {}
-unsafe impl Send for MesaExtension244Fn {}
-unsafe impl Sync for MesaExtension244Fn {}
-impl MesaExtension244Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
 }
 impl ExtBufferDeviceAddressFn {
     #[inline]
@@ -14593,40 +13577,6 @@ impl StructureType {
     pub const DEVICE_MEMORY_OPAQUE_CAPTURE_ADDRESS_INFO_KHR: Self =
         Self::DEVICE_MEMORY_OPAQUE_CAPTURE_ADDRESS_INFO;
 }
-impl ExtExtension259Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_259\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension259Fn {}
-unsafe impl Send for ExtExtension259Fn {}
-unsafe impl Sync for ExtExtension259Fn {}
-impl ExtExtension259Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-#[doc = "Generated from 'VK_EXT_extension_259'"]
-impl FormatFeatureFlags2 {
-    pub const RESERVED_44_EXT: Self =
-        Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
-    pub const RESERVED_45_EXT: Self =
-        Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
-}
-#[doc = "Generated from 'VK_EXT_extension_259'"]
-impl ImageCreateFlags {
-    pub const RESERVED_19_EXT: Self = Self(0b1000_0000_0000_0000_0000);
-}
-#[doc = "Generated from 'VK_EXT_extension_259'"]
-impl QueueFlags {
-    pub const RESERVED_9_EXT: Self = Self(0b10_0000_0000);
-}
 impl ExtLineRasterizationFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -14760,63 +13710,6 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_HOST_QUERY_RESET_FEATURES_EXT: Self =
         Self::PHYSICAL_DEVICE_HOST_QUERY_RESET_FEATURES;
 }
-impl GgpExtension263Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GGP_extension_263\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct GgpExtension263Fn {}
-unsafe impl Send for GgpExtension263Fn {}
-unsafe impl Sync for GgpExtension263Fn {}
-impl GgpExtension263Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl BrcmExtension264Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_BRCM_extension_264\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct BrcmExtension264Fn {}
-unsafe impl Send for BrcmExtension264Fn {}
-unsafe impl Sync for BrcmExtension264Fn {}
-impl BrcmExtension264Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl BrcmExtension265Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_BRCM_extension_265\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct BrcmExtension265Fn {}
-unsafe impl Send for BrcmExtension265Fn {}
-unsafe impl Sync for BrcmExtension265Fn {}
-impl BrcmExtension265Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl ExtIndexTypeUint8Fn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -14843,25 +13736,6 @@ impl IndexType {
 #[doc = "Generated from 'VK_EXT_index_type_uint8'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_INDEX_TYPE_UINT8_FEATURES_EXT: Self = Self(1_000_265_000);
-}
-impl ExtExtension267Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_267\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension267Fn {}
-unsafe impl Send for ExtExtension267Fn {}
-unsafe impl Sync for ExtExtension267Fn {}
-impl ExtExtension267Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
 }
 impl ExtExtendedDynamicStateFn {
     #[inline]
@@ -15514,67 +14388,6 @@ impl StructureType {
     pub const PIPELINE_EXECUTABLE_STATISTIC_KHR: Self = Self(1_000_269_004);
     pub const PIPELINE_EXECUTABLE_INTERNAL_REPRESENTATION_KHR: Self = Self(1_000_269_005);
 }
-impl IntelExtension271Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_INTEL_extension_271\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct IntelExtension271Fn {}
-unsafe impl Send for IntelExtension271Fn {}
-unsafe impl Sync for IntelExtension271Fn {}
-impl IntelExtension271Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-#[doc = "Generated from 'VK_INTEL_extension_271'"]
-impl ImageUsageFlags {
-    pub const RESERVED_22_EXT: Self = Self(0b100_0000_0000_0000_0000_0000);
-}
-impl IntelExtension272Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_INTEL_extension_272\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct IntelExtension272Fn {}
-unsafe impl Send for IntelExtension272Fn {}
-unsafe impl Sync for IntelExtension272Fn {}
-impl IntelExtension272Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl IntelExtension273Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_INTEL_extension_273\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct IntelExtension273Fn {}
-unsafe impl Send for IntelExtension273Fn {}
-unsafe impl Sync for IntelExtension273Fn {}
-impl IntelExtension273Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl ExtShaderAtomicFloat2Fn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -15597,44 +14410,6 @@ impl ExtShaderAtomicFloat2Fn {
 #[doc = "Generated from 'VK_EXT_shader_atomic_float2'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_2_FEATURES_EXT: Self = Self(1_000_273_000);
-}
-impl KhrExtension275Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_275\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct KhrExtension275Fn {}
-unsafe impl Send for KhrExtension275Fn {}
-unsafe impl Sync for KhrExtension275Fn {}
-impl KhrExtension275Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl KhrExtension276Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_276\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct KhrExtension276Fn {}
-unsafe impl Send for KhrExtension276Fn {}
-unsafe impl Sync for KhrExtension276Fn {}
-impl KhrExtension276Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
 }
 impl ExtShaderDemoteToHelperInvocationFn {
     #[inline]
@@ -15912,25 +14687,6 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_INHERITED_VIEWPORT_SCISSOR_FEATURES_NV: Self = Self(1_000_278_000);
     pub const COMMAND_BUFFER_INHERITANCE_VIEWPORT_SCISSOR_INFO_NV: Self = Self(1_000_278_001);
 }
-impl KhrExtension280Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_280\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct KhrExtension280Fn {}
-unsafe impl Send for KhrExtension280Fn {}
-unsafe impl Sync for KhrExtension280Fn {}
-impl KhrExtension280Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl KhrShaderIntegerDotProductFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -16017,25 +14773,6 @@ impl StructureType {
     pub const COMMAND_BUFFER_INHERITANCE_RENDER_PASS_TRANSFORM_INFO_QCOM: Self =
         Self(1_000_282_000);
     pub const RENDER_PASS_TRANSFORM_BEGIN_INFO_QCOM: Self = Self(1_000_282_001);
-}
-impl ExtExtension284Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_284\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension284Fn {}
-unsafe impl Send for ExtExtension284Fn {}
-unsafe impl Sync for ExtExtension284Fn {}
-impl ExtExtension284Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
 }
 impl ExtDeviceMemoryReportFn {
     #[inline]
@@ -16190,58 +14927,6 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_CUSTOM_BORDER_COLOR_PROPERTIES_EXT: Self = Self(1_000_287_001);
     pub const PHYSICAL_DEVICE_CUSTOM_BORDER_COLOR_FEATURES_EXT: Self = Self(1_000_287_002);
 }
-impl ExtExtension289Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_289\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension289Fn {}
-unsafe impl Send for ExtExtension289Fn {}
-unsafe impl Sync for ExtExtension289Fn {}
-impl ExtExtension289Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-#[doc = "Generated from 'VK_EXT_extension_289'"]
-impl Format {
-    pub const ASTC_3X3X3_UNORM_BLOCK_EXT: Self = Self(1_000_288_000);
-    pub const ASTC_3X3X3_SRGB_BLOCK_EXT: Self = Self(1_000_288_001);
-    pub const ASTC_3X3X3_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_002);
-    pub const ASTC_4X3X3_UNORM_BLOCK_EXT: Self = Self(1_000_288_003);
-    pub const ASTC_4X3X3_SRGB_BLOCK_EXT: Self = Self(1_000_288_004);
-    pub const ASTC_4X3X3_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_005);
-    pub const ASTC_4X4X3_UNORM_BLOCK_EXT: Self = Self(1_000_288_006);
-    pub const ASTC_4X4X3_SRGB_BLOCK_EXT: Self = Self(1_000_288_007);
-    pub const ASTC_4X4X3_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_008);
-    pub const ASTC_4X4X4_UNORM_BLOCK_EXT: Self = Self(1_000_288_009);
-    pub const ASTC_4X4X4_SRGB_BLOCK_EXT: Self = Self(1_000_288_010);
-    pub const ASTC_4X4X4_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_011);
-    pub const ASTC_5X4X4_UNORM_BLOCK_EXT: Self = Self(1_000_288_012);
-    pub const ASTC_5X4X4_SRGB_BLOCK_EXT: Self = Self(1_000_288_013);
-    pub const ASTC_5X4X4_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_014);
-    pub const ASTC_5X5X4_UNORM_BLOCK_EXT: Self = Self(1_000_288_015);
-    pub const ASTC_5X5X4_SRGB_BLOCK_EXT: Self = Self(1_000_288_016);
-    pub const ASTC_5X5X4_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_017);
-    pub const ASTC_5X5X5_UNORM_BLOCK_EXT: Self = Self(1_000_288_018);
-    pub const ASTC_5X5X5_SRGB_BLOCK_EXT: Self = Self(1_000_288_019);
-    pub const ASTC_5X5X5_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_020);
-    pub const ASTC_6X5X5_UNORM_BLOCK_EXT: Self = Self(1_000_288_021);
-    pub const ASTC_6X5X5_SRGB_BLOCK_EXT: Self = Self(1_000_288_022);
-    pub const ASTC_6X5X5_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_023);
-    pub const ASTC_6X6X5_UNORM_BLOCK_EXT: Self = Self(1_000_288_024);
-    pub const ASTC_6X6X5_SRGB_BLOCK_EXT: Self = Self(1_000_288_025);
-    pub const ASTC_6X6X5_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_026);
-    pub const ASTC_6X6X6_UNORM_BLOCK_EXT: Self = Self(1_000_288_027);
-    pub const ASTC_6X6X6_SRGB_BLOCK_EXT: Self = Self(1_000_288_028);
-    pub const ASTC_6X6X6_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_029);
-}
 impl GoogleUserTypeFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -16287,25 +14972,6 @@ impl PipelineCreateFlags {
 #[doc = "Generated from 'VK_KHR_pipeline_library'"]
 impl StructureType {
     pub const PIPELINE_LIBRARY_CREATE_INFO_KHR: Self = Self(1_000_290_000);
-}
-impl NvExtension292Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_292\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct NvExtension292Fn {}
-unsafe impl Send for NvExtension292Fn {}
-unsafe impl Sync for NvExtension292Fn {}
-impl NvExtension292Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
 }
 impl NvPresentBarrierFn {
     #[inline]
@@ -16523,29 +15189,6 @@ impl StructureType {
     pub const DEVICE_PRIVATE_DATA_CREATE_INFO_EXT: Self = Self::DEVICE_PRIVATE_DATA_CREATE_INFO;
     pub const PRIVATE_DATA_SLOT_CREATE_INFO_EXT: Self = Self::PRIVATE_DATA_SLOT_CREATE_INFO;
 }
-impl KhrExtension297Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_297\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct KhrExtension297Fn {}
-unsafe impl Send for KhrExtension297Fn {}
-unsafe impl Sync for KhrExtension297Fn {}
-impl KhrExtension297Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-#[doc = "Generated from 'VK_KHR_extension_297'"]
-impl PipelineShaderStageCreateFlags {
-    pub const RESERVED_3_KHR: Self = Self(0b1000);
-}
 impl ExtPipelineCreationCacheControlFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -16587,34 +15230,6 @@ impl Result {
 impl StructureType {
     pub const PHYSICAL_DEVICE_PIPELINE_CREATION_CACHE_CONTROL_FEATURES_EXT: Self =
         Self::PHYSICAL_DEVICE_PIPELINE_CREATION_CACHE_CONTROL_FEATURES;
-}
-impl KhrExtension299Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_299\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct KhrExtension299Fn {}
-unsafe impl Send for KhrExtension299Fn {}
-unsafe impl Sync for KhrExtension299Fn {}
-impl KhrExtension299Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-#[doc = "Generated from 'VK_KHR_extension_299'"]
-impl MemoryHeapFlags {
-    pub const RESERVED_2_KHR: Self = Self(0b100);
-}
-#[doc = "Generated from 'VK_KHR_extension_299'"]
-impl PipelineCacheCreateFlags {
-    pub const RESERVED_1_KHR: Self = Self::RESERVED_1_EXT;
-    pub const RESERVED_2_KHR: Self = Self(0b100);
 }
 impl KhrVideoEncodeQueueFn {
     #[inline]
@@ -16768,181 +15383,6 @@ impl QcomRenderPassStoreOpsFn {
 impl AttachmentStoreOp {
     pub const NONE_QCOM: Self = Self::NONE;
 }
-impl QcomExtension303Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_extension_303\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct QcomExtension303Fn {}
-unsafe impl Send for QcomExtension303Fn {}
-unsafe impl Sync for QcomExtension303Fn {}
-impl QcomExtension303Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl QcomExtension304Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_extension_304\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct QcomExtension304Fn {}
-unsafe impl Send for QcomExtension304Fn {}
-unsafe impl Sync for QcomExtension304Fn {}
-impl QcomExtension304Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl QcomExtension305Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_extension_305\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct QcomExtension305Fn {}
-unsafe impl Send for QcomExtension305Fn {}
-unsafe impl Sync for QcomExtension305Fn {}
-impl QcomExtension305Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl QcomExtension306Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_extension_306\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct QcomExtension306Fn {}
-unsafe impl Send for QcomExtension306Fn {}
-unsafe impl Sync for QcomExtension306Fn {}
-impl QcomExtension306Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl QcomExtension307Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_extension_307\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct QcomExtension307Fn {}
-unsafe impl Send for QcomExtension307Fn {}
-unsafe impl Sync for QcomExtension307Fn {}
-impl QcomExtension307Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl NvExtension308Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_308\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct NvExtension308Fn {}
-unsafe impl Send for NvExtension308Fn {}
-unsafe impl Sync for NvExtension308Fn {}
-impl NvExtension308Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl KhrExtension309Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_309\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct KhrExtension309Fn {}
-unsafe impl Send for KhrExtension309Fn {}
-unsafe impl Sync for KhrExtension309Fn {}
-impl KhrExtension309Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl QcomExtension310Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_extension_310\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct QcomExtension310Fn {}
-unsafe impl Send for QcomExtension310Fn {}
-unsafe impl Sync for QcomExtension310Fn {}
-impl QcomExtension310Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-#[doc = "Generated from 'VK_QCOM_extension_310'"]
-impl StructureType {
-    pub const RESERVED_QCOM: Self = Self(1_000_309_000);
-}
-impl NvExtension311Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_311\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct NvExtension311Fn {}
-unsafe impl Send for NvExtension311Fn {}
-unsafe impl Sync for NvExtension311Fn {}
-impl NvExtension311Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl ExtMetalObjectsFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -17001,44 +15441,6 @@ impl StructureType {
     pub const IMPORT_METAL_IO_SURFACE_INFO_EXT: Self = Self(1_000_311_009);
     pub const EXPORT_METAL_SHARED_EVENT_INFO_EXT: Self = Self(1_000_311_010);
     pub const IMPORT_METAL_SHARED_EVENT_INFO_EXT: Self = Self(1_000_311_011);
-}
-impl ExtExtension313Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_313\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension313Fn {}
-unsafe impl Send for ExtExtension313Fn {}
-unsafe impl Sync for ExtExtension313Fn {}
-impl ExtExtension313Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl AmdExtension314Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_314\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension314Fn {}
-unsafe impl Send for AmdExtension314Fn {}
-unsafe impl Sync for AmdExtension314Fn {}
-impl AmdExtension314Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
 }
 impl KhrSynchronization2Fn {
     #[inline]
@@ -17341,25 +15743,6 @@ impl StructureType {
         Self::PHYSICAL_DEVICE_SYNCHRONIZATION_2_FEATURES;
     pub const QUEUE_FAMILY_CHECKPOINT_PROPERTIES_2_NV: Self = Self(1_000_314_008);
     pub const CHECKPOINT_DATA_2_NV: Self = Self(1_000_314_009);
-}
-impl AmdExtension316Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_316\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension316Fn {}
-unsafe impl Send for AmdExtension316Fn {}
-unsafe impl Sync for AmdExtension316Fn {}
-impl AmdExtension316Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
 }
 impl ExtDescriptorBufferFn {
     #[inline]
@@ -17765,71 +16148,6 @@ impl StructureType {
         Self(1_000_316_012);
     pub const ACCELERATION_STRUCTURE_CAPTURE_DESCRIPTOR_DATA_INFO_EXT: Self = Self(1_000_316_009);
 }
-impl AmdExtension318Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_318\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension318Fn {}
-unsafe impl Send for AmdExtension318Fn {}
-unsafe impl Sync for AmdExtension318Fn {}
-impl AmdExtension318Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl AmdExtension319Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_319\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension319Fn {}
-unsafe impl Send for AmdExtension319Fn {}
-unsafe impl Sync for AmdExtension319Fn {}
-impl AmdExtension319Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-#[doc = "Generated from 'VK_AMD_extension_319'"]
-impl DescriptorSetLayoutCreateFlags {
-    pub const RESERVED_3_AMD: Self = Self(0b1000);
-}
-#[doc = "Generated from 'VK_AMD_extension_319'"]
-impl PipelineLayoutCreateFlags {
-    pub const RESERVED_0_AMD: Self = Self(0b1);
-}
-impl AmdExtension320Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_320\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension320Fn {}
-unsafe impl Send for AmdExtension320Fn {}
-unsafe impl Sync for AmdExtension320Fn {}
-impl AmdExtension320Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl ExtGraphicsPipelineLibraryFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -17948,25 +16266,6 @@ impl KhrShaderSubgroupUniformControlFlowFn {
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_SUBGROUP_UNIFORM_CONTROL_FLOW_FEATURES_KHR: Self =
         Self(1_000_323_000);
-}
-impl KhrExtension325Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_325\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct KhrExtension325Fn {}
-unsafe impl Send for KhrExtension325Fn {}
-unsafe impl Sync for KhrExtension325Fn {}
-impl KhrExtension325Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
 }
 impl KhrZeroInitializeWorkgroupMemoryFn {
     #[inline]
@@ -18238,25 +16537,6 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_MESH_SHADER_FEATURES_EXT: Self = Self(1_000_328_000);
     pub const PHYSICAL_DEVICE_MESH_SHADER_PROPERTIES_EXT: Self = Self(1_000_328_001);
 }
-impl NvExtension330Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_330\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct NvExtension330Fn {}
-unsafe impl Send for NvExtension330Fn {}
-unsafe impl Sync for NvExtension330Fn {}
-impl NvExtension330Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl ExtYcbcr2plane444FormatsFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -18290,25 +16570,6 @@ impl Format {
 #[doc = "Generated from 'VK_EXT_ycbcr_2plane_444_formats'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_YCBCR_2_PLANE_444_FORMATS_FEATURES_EXT: Self = Self(1_000_330_000);
-}
-impl NvExtension332Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_332\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct NvExtension332Fn {}
-unsafe impl Send for NvExtension332Fn {}
-unsafe impl Sync for NvExtension332Fn {}
-impl NvExtension332Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
 }
 impl ExtFragmentDensityMap2Fn {
     #[inline]
@@ -18364,25 +16625,6 @@ impl QcomRotatedCopyCommandsFn {
 #[doc = "Generated from 'VK_QCOM_rotated_copy_commands'"]
 impl StructureType {
     pub const COPY_COMMAND_TRANSFORM_INFO_QCOM: Self = Self(1_000_333_000);
-}
-impl KhrExtension335Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_335\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct KhrExtension335Fn {}
-unsafe impl Send for KhrExtension335Fn {}
-unsafe impl Sync for KhrExtension335Fn {}
-impl KhrExtension335Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
 }
 impl ExtImageRobustnessFn {
     #[inline]
@@ -18857,25 +17099,6 @@ impl SubpassDescriptionFlags {
     pub const RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_ARM: Self =
         Self::RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_EXT;
 }
-impl ArmExtension344Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_ARM_extension_344\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ArmExtension344Fn {}
-unsafe impl Send for ArmExtension344Fn {}
-unsafe impl Sync for ArmExtension344Fn {}
-impl ArmExtension344Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl ExtRgba10x6FormatsFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -19051,44 +17274,6 @@ impl ExtDirectfbSurfaceFn {
 #[doc = "Generated from 'VK_EXT_directfb_surface'"]
 impl StructureType {
     pub const DIRECTFB_SURFACE_CREATE_INFO_EXT: Self = Self(1_000_346_000);
-}
-impl KhrExtension350Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_350\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct KhrExtension350Fn {}
-unsafe impl Send for KhrExtension350Fn {}
-unsafe impl Sync for KhrExtension350Fn {}
-impl KhrExtension350Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl NvExtension351Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_351\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct NvExtension351Fn {}
-unsafe impl Send for NvExtension351Fn {}
-unsafe impl Sync for NvExtension351Fn {}
-impl NvExtension351Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
 }
 impl ValveMutableDescriptorTypeFn {
     #[inline]
@@ -19301,63 +17486,6 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_PRIMITIVE_TOPOLOGY_LIST_RESTART_FEATURES_EXT: Self =
         Self(1_000_356_000);
 }
-impl KhrExtension358Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_358\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct KhrExtension358Fn {}
-unsafe impl Send for KhrExtension358Fn {}
-unsafe impl Sync for KhrExtension358Fn {}
-impl KhrExtension358Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl ExtExtension359Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_359\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension359Fn {}
-unsafe impl Send for ExtExtension359Fn {}
-unsafe impl Sync for ExtExtension359Fn {}
-impl ExtExtension359Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl ExtExtension360Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_360\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension360Fn {}
-unsafe impl Send for ExtExtension360Fn {}
-unsafe impl Sync for ExtExtension360Fn {}
-impl ExtExtension360Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl KhrFormatFeatureFlags2Fn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -19382,63 +17510,6 @@ impl KhrFormatFeatureFlags2Fn {
 #[doc = "Generated from 'VK_KHR_format_feature_flags2'"]
 impl StructureType {
     pub const FORMAT_PROPERTIES_3_KHR: Self = Self::FORMAT_PROPERTIES_3;
-}
-impl ExtExtension362Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_362\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension362Fn {}
-unsafe impl Send for ExtExtension362Fn {}
-unsafe impl Sync for ExtExtension362Fn {}
-impl ExtExtension362Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl ExtExtension363Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_363\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension363Fn {}
-unsafe impl Send for ExtExtension363Fn {}
-unsafe impl Sync for ExtExtension363Fn {}
-impl ExtExtension363Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl FuchsiaExtension364Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_FUCHSIA_extension_364\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct FuchsiaExtension364Fn {}
-unsafe impl Send for FuchsiaExtension364Fn {}
-unsafe impl Sync for FuchsiaExtension364Fn {}
-impl FuchsiaExtension364Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
 }
 impl FuchsiaExternalMemoryFn {
     #[inline]
@@ -19804,48 +17875,6 @@ impl StructureType {
     pub const SYSMEM_COLOR_SPACE_FUCHSIA: Self = Self(1_000_366_008);
     pub const BUFFER_COLLECTION_CONSTRAINTS_INFO_FUCHSIA: Self = Self(1_000_366_009);
 }
-impl FuchsiaExtension368Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_FUCHSIA_extension_368\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct FuchsiaExtension368Fn {}
-unsafe impl Send for FuchsiaExtension368Fn {}
-unsafe impl Sync for FuchsiaExtension368Fn {}
-impl FuchsiaExtension368Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl QcomExtension369Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_extension_369\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct QcomExtension369Fn {}
-unsafe impl Send for QcomExtension369Fn {}
-unsafe impl Sync for QcomExtension369Fn {}
-impl QcomExtension369Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-#[doc = "Generated from 'VK_QCOM_extension_369'"]
-impl DescriptorBindingFlags {
-    pub const RESERVED_4_QCOM: Self = Self(0b1_0000);
-}
 impl HuaweiSubpassShadingFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -20120,76 +18149,6 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_PIPELINE_PROPERTIES_FEATURES_EXT: Self = Self(1_000_372_001);
     pub const PIPELINE_INFO_EXT: Self = Self::PIPELINE_INFO_KHR;
 }
-impl NvExtension374Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_374\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct NvExtension374Fn {}
-unsafe impl Send for NvExtension374Fn {}
-unsafe impl Sync for NvExtension374Fn {}
-impl NvExtension374Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-#[doc = "Generated from 'VK_NV_extension_374'"]
-impl ExternalFenceHandleTypeFlags {
-    pub const RESERVED_4_NV: Self = Self(0b1_0000);
-    pub const RESERVED_5_NV: Self = Self(0b10_0000);
-}
-#[doc = "Generated from 'VK_NV_extension_374'"]
-impl ExternalSemaphoreHandleTypeFlags {
-    pub const RESERVED_5_NV: Self = Self(0b10_0000);
-}
-impl NvExtension375Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_375\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct NvExtension375Fn {}
-unsafe impl Send for NvExtension375Fn {}
-unsafe impl Sync for NvExtension375Fn {}
-impl NvExtension375Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-#[doc = "Generated from 'VK_NV_extension_375'"]
-impl ExternalMemoryHandleTypeFlags {
-    pub const RESERVED_13_NV: Self = Self(0b10_0000_0000_0000);
-}
-impl ExtExtension376Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_376\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension376Fn {}
-unsafe impl Send for ExtExtension376Fn {}
-unsafe impl Sync for ExtExtension376Fn {}
-impl ExtExtension376Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl ExtMultisampledRenderToSingleSampledFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -20461,44 +18420,6 @@ impl QnxScreenSurfaceFn {
 impl StructureType {
     pub const SCREEN_SURFACE_CREATE_INFO_QNX: Self = Self(1_000_378_000);
 }
-impl KhrExtension380Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_380\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct KhrExtension380Fn {}
-unsafe impl Send for KhrExtension380Fn {}
-unsafe impl Sync for KhrExtension380Fn {}
-impl KhrExtension380Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl KhrExtension381Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_381\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct KhrExtension381Fn {}
-unsafe impl Send for KhrExtension381Fn {}
-unsafe impl Sync for KhrExtension381Fn {}
-impl KhrExtension381Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl ExtColorWriteEnableFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -20586,63 +18507,6 @@ impl QueryType {
 impl StructureType {
     pub const PHYSICAL_DEVICE_PRIMITIVES_GENERATED_QUERY_FEATURES_EXT: Self = Self(1_000_382_000);
 }
-impl ExtExtension384Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_384\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension384Fn {}
-unsafe impl Send for ExtExtension384Fn {}
-unsafe impl Sync for ExtExtension384Fn {}
-impl ExtExtension384Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl MesaExtension385Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_MESA_extension_385\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct MesaExtension385Fn {}
-unsafe impl Send for MesaExtension385Fn {}
-unsafe impl Sync for MesaExtension385Fn {}
-impl MesaExtension385Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl GoogleExtension386Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_extension_386\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct GoogleExtension386Fn {}
-unsafe impl Send for GoogleExtension386Fn {}
-unsafe impl Sync for GoogleExtension386Fn {}
-impl GoogleExtension386Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl KhrRayTracingMaintenance1Fn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -20711,25 +18575,6 @@ impl QueryType {
 impl StructureType {
     pub const PHYSICAL_DEVICE_RAY_TRACING_MAINTENANCE_1_FEATURES_KHR: Self = Self(1_000_386_000);
 }
-impl ExtExtension388Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_388\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension388Fn {}
-unsafe impl Send for ExtExtension388Fn {}
-unsafe impl Sync for ExtExtension388Fn {}
-impl ExtExtension388Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl ExtGlobalPriorityQueryFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -20757,44 +18602,6 @@ impl StructureType {
         Self::PHYSICAL_DEVICE_GLOBAL_PRIORITY_QUERY_FEATURES_KHR;
     pub const QUEUE_FAMILY_GLOBAL_PRIORITY_PROPERTIES_EXT: Self =
         Self::QUEUE_FAMILY_GLOBAL_PRIORITY_PROPERTIES_KHR;
-}
-impl ExtExtension390Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_390\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension390Fn {}
-unsafe impl Send for ExtExtension390Fn {}
-unsafe impl Sync for ExtExtension390Fn {}
-impl ExtExtension390Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl ExtExtension391Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_391\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension391Fn {}
-unsafe impl Send for ExtExtension391Fn {}
-unsafe impl Sync for ExtExtension391Fn {}
-impl ExtExtension391Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
 }
 impl ExtImageViewMinLodFn {
     #[inline]
@@ -20962,25 +18769,6 @@ impl KhrPortabilityEnumerationFn {
 #[doc = "Generated from 'VK_KHR_portability_enumeration'"]
 impl InstanceCreateFlags {
     pub const ENUMERATE_PORTABILITY_KHR: Self = Self(0b1);
-}
-impl KhrExtension396Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_396\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct KhrExtension396Fn {}
-unsafe impl Send for KhrExtension396Fn {}
-unsafe impl Sync for KhrExtension396Fn {}
-impl KhrExtension396Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
 }
 impl ExtOpacityMicromapFn {
     #[inline]
@@ -21439,72 +19227,6 @@ impl StructureType {
     pub const MICROMAP_BUILD_SIZES_INFO_EXT: Self = Self(1_000_396_008);
     pub const ACCELERATION_STRUCTURE_TRIANGLES_OPACITY_MICROMAP_EXT: Self = Self(1_000_396_009);
 }
-impl NvExtension398Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_398\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct NvExtension398Fn {}
-unsafe impl Send for NvExtension398Fn {}
-unsafe impl Sync for NvExtension398Fn {}
-impl NvExtension398Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-#[doc = "Generated from 'VK_NV_extension_398'"]
-impl BuildAccelerationStructureFlagsKHR {
-    pub const RESERVED_9_NV: Self = Self(0b10_0000_0000);
-    pub const RESERVED_10_NV: Self = Self(0b100_0000_0000);
-}
-#[doc = "Generated from 'VK_NV_extension_398'"]
-impl PipelineCreateFlags {
-    pub const RESERVED_28_NV: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000);
-}
-impl JuiceExtension399Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_JUICE_extension_399\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct JuiceExtension399Fn {}
-unsafe impl Send for JuiceExtension399Fn {}
-unsafe impl Sync for JuiceExtension399Fn {}
-impl JuiceExtension399Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl JuiceExtension400Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_JUICE_extension_400\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct JuiceExtension400Fn {}
-unsafe impl Send for JuiceExtension400Fn {}
-unsafe impl Sync for JuiceExtension400Fn {}
-impl JuiceExtension400Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl ExtLoadStoreOpNoneFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -21531,205 +19253,6 @@ impl AttachmentLoadOp {
 #[doc = "Generated from 'VK_EXT_load_store_op_none'"]
 impl AttachmentStoreOp {
     pub const NONE_EXT: Self = Self::NONE;
-}
-impl FbExtension402Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_FB_extension_402\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct FbExtension402Fn {}
-unsafe impl Send for FbExtension402Fn {}
-unsafe impl Sync for FbExtension402Fn {}
-impl FbExtension402Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl FbExtension403Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_FB_extension_403\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct FbExtension403Fn {}
-unsafe impl Send for FbExtension403Fn {}
-unsafe impl Sync for FbExtension403Fn {}
-impl FbExtension403Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl FbExtension404Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_FB_extension_404\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct FbExtension404Fn {}
-unsafe impl Send for FbExtension404Fn {}
-unsafe impl Sync for FbExtension404Fn {}
-impl FbExtension404Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl HuaweiExtension405Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_HUAWEI_extension_405\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct HuaweiExtension405Fn {}
-unsafe impl Send for HuaweiExtension405Fn {}
-unsafe impl Sync for HuaweiExtension405Fn {}
-impl HuaweiExtension405Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-#[doc = "Generated from 'VK_HUAWEI_extension_405'"]
-impl PipelineStageFlags2 {
-    pub const RESEVED_41_HUAWEI: Self =
-        Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
-}
-#[doc = "Generated from 'VK_HUAWEI_extension_405'"]
-impl ShaderStageFlags {
-    pub const RESERVED_19_HUAWEI: Self = Self(0b1000_0000_0000_0000_0000);
-}
-impl HuaweiExtension406Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_HUAWEI_extension_406\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct HuaweiExtension406Fn {}
-unsafe impl Send for HuaweiExtension406Fn {}
-unsafe impl Sync for HuaweiExtension406Fn {}
-impl HuaweiExtension406Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl GgpExtension407Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GGP_extension_407\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct GgpExtension407Fn {}
-unsafe impl Send for GgpExtension407Fn {}
-unsafe impl Sync for GgpExtension407Fn {}
-impl GgpExtension407Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl GgpExtension408Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GGP_extension_408\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct GgpExtension408Fn {}
-unsafe impl Send for GgpExtension408Fn {}
-unsafe impl Sync for GgpExtension408Fn {}
-impl GgpExtension408Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl GgpExtension409Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GGP_extension_409\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct GgpExtension409Fn {}
-unsafe impl Send for GgpExtension409Fn {}
-unsafe impl Sync for GgpExtension409Fn {}
-impl GgpExtension409Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl GgpExtension410Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GGP_extension_410\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct GgpExtension410Fn {}
-unsafe impl Send for GgpExtension410Fn {}
-unsafe impl Sync for GgpExtension410Fn {}
-impl GgpExtension410Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl GgpExtension411Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GGP_extension_411\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct GgpExtension411Fn {}
-unsafe impl Send for GgpExtension411Fn {}
-unsafe impl Sync for GgpExtension411Fn {}
-impl GgpExtension411Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
 }
 impl ExtBorderColorSwizzleFn {
     #[inline]
@@ -21930,128 +19453,6 @@ impl StructureType {
     pub const DEVICE_BUFFER_MEMORY_REQUIREMENTS_KHR: Self = Self::DEVICE_BUFFER_MEMORY_REQUIREMENTS;
     pub const DEVICE_IMAGE_MEMORY_REQUIREMENTS_KHR: Self = Self::DEVICE_IMAGE_MEMORY_REQUIREMENTS;
 }
-impl HuaweiExtension415Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_HUAWEI_extension_415\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct HuaweiExtension415Fn {}
-unsafe impl Send for HuaweiExtension415Fn {}
-unsafe impl Sync for HuaweiExtension415Fn {}
-impl HuaweiExtension415Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl ArmExtension416Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_ARM_extension_416\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ArmExtension416Fn {}
-unsafe impl Send for ArmExtension416Fn {}
-unsafe impl Sync for ArmExtension416Fn {}
-impl ArmExtension416Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl KhrExtension417Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_417\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct KhrExtension417Fn {}
-unsafe impl Send for KhrExtension417Fn {}
-unsafe impl Sync for KhrExtension417Fn {}
-impl KhrExtension417Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl ArmExtension418Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_ARM_extension_418\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ArmExtension418Fn {}
-unsafe impl Send for ArmExtension418Fn {}
-unsafe impl Sync for ArmExtension418Fn {}
-impl ArmExtension418Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl ExtExtension419Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_419\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension419Fn {}
-unsafe impl Send for ExtExtension419Fn {}
-unsafe impl Sync for ExtExtension419Fn {}
-impl ExtExtension419Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-#[doc = "Generated from 'VK_EXT_extension_419'"]
-impl ImageViewCreateFlags {
-    pub const RESERVED_3_EXT: Self = Self(0b1000);
-}
-impl ExtExtension420Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_420\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension420Fn {}
-unsafe impl Send for ExtExtension420Fn {}
-unsafe impl Sync for ExtExtension420Fn {}
-impl ExtExtension420Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-#[doc = "Generated from 'VK_EXT_extension_420'"]
-impl SwapchainCreateFlagsKHR {
-    pub const RESERVED_4_EXT: Self = Self(0b1_0000);
-}
 impl ValveDescriptorSetHostMappingFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -22192,44 +19593,6 @@ impl SamplerCreateFlags {
 #[doc = "Generated from 'VK_EXT_non_seamless_cube_map'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_NON_SEAMLESS_CUBE_MAP_FEATURES_EXT: Self = Self(1_000_422_000);
-}
-impl ArmExtension424Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_ARM_extension_424\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ArmExtension424Fn {}
-unsafe impl Send for ArmExtension424Fn {}
-unsafe impl Sync for ArmExtension424Fn {}
-impl ArmExtension424Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl ArmExtension425Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_ARM_extension_425\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ArmExtension425Fn {}
-unsafe impl Send for ArmExtension425Fn {}
-unsafe impl Sync for ArmExtension425Fn {}
-impl ArmExtension425Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
 }
 impl QcomFragmentDensityMapOffsetFn {
     #[inline]
@@ -22439,44 +19802,6 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_FEATURES_NV: Self = Self(1_000_427_000);
     pub const PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_PROPERTIES_NV: Self = Self(1_000_427_001);
 }
-impl NvExtension429Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_429\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct NvExtension429Fn {}
-unsafe impl Send for NvExtension429Fn {}
-unsafe impl Sync for NvExtension429Fn {}
-impl NvExtension429Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl NvExtension430Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_430\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct NvExtension430Fn {}
-unsafe impl Send for NvExtension430Fn {}
-unsafe impl Sync for NvExtension430Fn {}
-impl NvExtension430Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl NvLinearColorAttachmentFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -22508,44 +19833,6 @@ impl FormatFeatureFlags2 {
 impl StructureType {
     pub const PHYSICAL_DEVICE_LINEAR_COLOR_ATTACHMENT_FEATURES_NV: Self = Self(1_000_430_000);
 }
-impl NvExtension432Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_432\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct NvExtension432Fn {}
-unsafe impl Send for NvExtension432Fn {}
-unsafe impl Sync for NvExtension432Fn {}
-impl NvExtension432Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl NvExtension433Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_433\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct NvExtension433Fn {}
-unsafe impl Send for NvExtension433Fn {}
-unsafe impl Sync for NvExtension433Fn {}
-impl NvExtension433Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl GoogleSurfacelessQueryFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -22558,63 +19845,6 @@ pub struct GoogleSurfacelessQueryFn {}
 unsafe impl Send for GoogleSurfacelessQueryFn {}
 unsafe impl Sync for GoogleSurfacelessQueryFn {}
 impl GoogleSurfacelessQueryFn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl KhrExtension435Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extension_435\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct KhrExtension435Fn {}
-unsafe impl Send for KhrExtension435Fn {}
-unsafe impl Sync for KhrExtension435Fn {}
-impl KhrExtension435Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl NvExtension436Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_436\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct NvExtension436Fn {}
-unsafe impl Send for NvExtension436Fn {}
-unsafe impl Sync for NvExtension436Fn {}
-impl NvExtension436Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl ExtExtension437Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_437\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension437Fn {}
-unsafe impl Send for ExtExtension437Fn {}
-unsafe impl Sync for ExtExtension437Fn {}
-impl ExtExtension437Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -22649,52 +19879,6 @@ impl ExtImageCompressionControlSwapchainFn {
 impl StructureType {
     pub const PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_SWAPCHAIN_FEATURES_EXT: Self =
         Self(1_000_437_000);
-}
-impl SecExtension439Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_SEC_extension_439\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct SecExtension439Fn {}
-unsafe impl Send for SecExtension439Fn {}
-unsafe impl Sync for SecExtension439Fn {}
-impl SecExtension439Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl QcomExtension440Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_extension_440\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct QcomExtension440Fn {}
-unsafe impl Send for QcomExtension440Fn {}
-unsafe impl Sync for QcomExtension440Fn {}
-impl QcomExtension440Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-#[doc = "Generated from 'VK_QCOM_extension_440'"]
-impl DeviceQueueCreateFlags {
-    pub const RESERVED_1_QCOM: Self = Self(0b10);
-}
-#[doc = "Generated from 'VK_QCOM_extension_440'"]
-impl QueueFlags {
-    pub const RESERVED_7_QCOM: Self = Self(0b1000_0000);
 }
 impl QcomImageProcessingFn {
     #[inline]
@@ -22743,280 +19927,6 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_IMAGE_PROCESSING_FEATURES_QCOM: Self = Self(1_000_440_000);
     pub const PHYSICAL_DEVICE_IMAGE_PROCESSING_PROPERTIES_QCOM: Self = Self(1_000_440_001);
     pub const IMAGE_VIEW_SAMPLE_WEIGHT_CREATE_INFO_QCOM: Self = Self(1_000_440_002);
-}
-impl CoreaviExtension442Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_COREAVI_extension_442\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct CoreaviExtension442Fn {}
-unsafe impl Send for CoreaviExtension442Fn {}
-unsafe impl Sync for CoreaviExtension442Fn {}
-impl CoreaviExtension442Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl CoreaviExtension443Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_COREAVI_extension_443\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct CoreaviExtension443Fn {}
-unsafe impl Send for CoreaviExtension443Fn {}
-unsafe impl Sync for CoreaviExtension443Fn {}
-impl CoreaviExtension443Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl CoreaviExtension444Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_COREAVI_extension_444\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct CoreaviExtension444Fn {}
-unsafe impl Send for CoreaviExtension444Fn {}
-unsafe impl Sync for CoreaviExtension444Fn {}
-impl CoreaviExtension444Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-#[doc = "Generated from 'VK_COREAVI_extension_444'"]
-impl CommandPoolResetFlags {
-    pub const RESERVED_1_COREAVI: Self = Self(0b10);
-}
-impl CoreaviExtension445Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_COREAVI_extension_445\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct CoreaviExtension445Fn {}
-unsafe impl Send for CoreaviExtension445Fn {}
-unsafe impl Sync for CoreaviExtension445Fn {}
-impl CoreaviExtension445Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl CoreaviExtension446Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_COREAVI_extension_446\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct CoreaviExtension446Fn {}
-unsafe impl Send for CoreaviExtension446Fn {}
-unsafe impl Sync for CoreaviExtension446Fn {}
-impl CoreaviExtension446Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl CoreaviExtension447Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_COREAVI_extension_447\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct CoreaviExtension447Fn {}
-unsafe impl Send for CoreaviExtension447Fn {}
-unsafe impl Sync for CoreaviExtension447Fn {}
-impl CoreaviExtension447Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl SecExtension448Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_SEC_extension_448\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct SecExtension448Fn {}
-unsafe impl Send for SecExtension448Fn {}
-unsafe impl Sync for SecExtension448Fn {}
-impl SecExtension448Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-#[doc = "Generated from 'VK_SEC_extension_448'"]
-impl SwapchainCreateFlagsKHR {
-    pub const RESERVED_3_SEC: Self = Self(0b1000);
-}
-impl SecExtension449Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_SEC_extension_449\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct SecExtension449Fn {}
-unsafe impl Send for SecExtension449Fn {}
-unsafe impl Sync for SecExtension449Fn {}
-impl SecExtension449Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl SecExtension450Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_SEC_extension_450\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct SecExtension450Fn {}
-unsafe impl Send for SecExtension450Fn {}
-unsafe impl Sync for SecExtension450Fn {}
-impl SecExtension450Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl SecExtension451Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_SEC_extension_451\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct SecExtension451Fn {}
-unsafe impl Send for SecExtension451Fn {}
-unsafe impl Sync for SecExtension451Fn {}
-impl SecExtension451Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl NvExtension452Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_452\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct NvExtension452Fn {}
-unsafe impl Send for NvExtension452Fn {}
-unsafe impl Sync for NvExtension452Fn {}
-impl NvExtension452Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl ArmExtension453Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_ARM_extension_453\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ArmExtension453Fn {}
-unsafe impl Send for ArmExtension453Fn {}
-unsafe impl Sync for ArmExtension453Fn {}
-impl ArmExtension453Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl GoogleExtension454Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_extension_454\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct GoogleExtension454Fn {}
-unsafe impl Send for GoogleExtension454Fn {}
-unsafe impl Sync for GoogleExtension454Fn {}
-impl GoogleExtension454Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl GoogleExtension455Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_extension_455\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct GoogleExtension455Fn {}
-unsafe impl Send for GoogleExtension455Fn {}
-unsafe impl Sync for GoogleExtension455Fn {}
-impl GoogleExtension455Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
 }
 impl ExtExtendedDynamicState3Fn {
     #[inline]
@@ -23879,44 +20789,6 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_3_FEATURES_EXT: Self = Self(1_000_455_000);
     pub const PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_3_PROPERTIES_EXT: Self = Self(1_000_455_001);
 }
-impl ExtExtension457Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_457\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension457Fn {}
-unsafe impl Send for ExtExtension457Fn {}
-unsafe impl Sync for ExtExtension457Fn {}
-impl ExtExtension457Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl ExtExtension458Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_458\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension458Fn {}
-unsafe impl Send for ExtExtension458Fn {}
-unsafe impl Sync for ExtExtension458Fn {}
-impl ExtExtension458Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl ExtSubpassMergeFeedbackFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -23944,67 +20816,6 @@ impl StructureType {
     pub const RENDER_PASS_CREATION_CONTROL_EXT: Self = Self(1_000_458_001);
     pub const RENDER_PASS_CREATION_FEEDBACK_CREATE_INFO_EXT: Self = Self(1_000_458_002);
     pub const RENDER_PASS_SUBPASS_FEEDBACK_CREATE_INFO_EXT: Self = Self(1_000_458_003);
-}
-impl ExtExtension460Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_460\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension460Fn {}
-unsafe impl Send for ExtExtension460Fn {}
-unsafe impl Sync for ExtExtension460Fn {}
-impl ExtExtension460Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl ExtExtension461Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_461\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension461Fn {}
-unsafe impl Send for ExtExtension461Fn {}
-unsafe impl Sync for ExtExtension461Fn {}
-impl ExtExtension461Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-#[doc = "Generated from 'VK_EXT_extension_461'"]
-impl FormatFeatureFlags2 {
-    pub const RESERVED_39_EXT: Self = Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
-}
-impl ExtExtension462Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_462\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension462Fn {}
-unsafe impl Send for ExtExtension462Fn {}
-unsafe impl Sync for ExtExtension462Fn {}
-impl ExtExtension462Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
 }
 impl ExtShaderModuleIdentifierFn {
     #[inline]
@@ -24407,335 +21218,6 @@ impl PipelineCreateFlags {
 impl StructureType {
     pub const PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES_EXT: Self = Self(1_000_466_000);
 }
-impl ExtExtension468Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_468\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension468Fn {}
-unsafe impl Send for ExtExtension468Fn {}
-unsafe impl Sync for ExtExtension468Fn {}
-impl ExtExtension468Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl AndroidExtension469Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_ANDROID_extension_469\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AndroidExtension469Fn {}
-unsafe impl Send for AndroidExtension469Fn {}
-unsafe impl Sync for AndroidExtension469Fn {}
-impl AndroidExtension469Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl AmdExtension470Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_470\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension470Fn {}
-unsafe impl Send for AmdExtension470Fn {}
-unsafe impl Sync for AmdExtension470Fn {}
-impl AmdExtension470Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl AmdExtension471Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_471\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension471Fn {}
-unsafe impl Send for AmdExtension471Fn {}
-unsafe impl Sync for AmdExtension471Fn {}
-impl AmdExtension471Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl AmdExtension472Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_472\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension472Fn {}
-unsafe impl Send for AmdExtension472Fn {}
-unsafe impl Sync for AmdExtension472Fn {}
-impl AmdExtension472Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl AmdExtension473Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_473\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension473Fn {}
-unsafe impl Send for AmdExtension473Fn {}
-unsafe impl Sync for AmdExtension473Fn {}
-impl AmdExtension473Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl AmdExtension474Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_474\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension474Fn {}
-unsafe impl Send for AmdExtension474Fn {}
-unsafe impl Sync for AmdExtension474Fn {}
-impl AmdExtension474Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl AmdExtension475Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_475\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension475Fn {}
-unsafe impl Send for AmdExtension475Fn {}
-unsafe impl Sync for AmdExtension475Fn {}
-impl AmdExtension475Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl AmdExtension476Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_476\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension476Fn {}
-unsafe impl Send for AmdExtension476Fn {}
-unsafe impl Sync for AmdExtension476Fn {}
-impl AmdExtension476Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl AmdExtension477Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_477\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension477Fn {}
-unsafe impl Send for AmdExtension477Fn {}
-unsafe impl Sync for AmdExtension477Fn {}
-impl AmdExtension477Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl AmdExtension478Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_478\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension478Fn {}
-unsafe impl Send for AmdExtension478Fn {}
-unsafe impl Sync for AmdExtension478Fn {}
-impl AmdExtension478Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl AmdExtension479Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_extension_479\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct AmdExtension479Fn {}
-unsafe impl Send for AmdExtension479Fn {}
-unsafe impl Sync for AmdExtension479Fn {}
-impl AmdExtension479Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl ExtExtension480Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_480\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension480Fn {}
-unsafe impl Send for ExtExtension480Fn {}
-unsafe impl Sync for ExtExtension480Fn {}
-impl ExtExtension480Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl ExtExtension481Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_481\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension481Fn {}
-unsafe impl Send for ExtExtension481Fn {}
-unsafe impl Sync for ExtExtension481Fn {}
-impl ExtExtension481Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl ExtExtension482Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_482\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension482Fn {}
-unsafe impl Send for ExtExtension482Fn {}
-unsafe impl Sync for ExtExtension482Fn {}
-impl ExtExtension482Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl ExtExtension483Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_483\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension483Fn {}
-unsafe impl Send for ExtExtension483Fn {}
-unsafe impl Sync for ExtExtension483Fn {}
-impl ExtExtension483Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-#[doc = "Generated from 'VK_EXT_extension_483'"]
-impl ShaderStageFlags {
-    pub const EXT_483_RESERVE_15: Self = Self(0b1000_0000_0000_0000);
-    pub const EXT_483_RESERVE_16: Self = Self(0b1_0000_0000_0000_0000);
-    pub const EXT_483_RESERVE_17: Self = Self(0b10_0000_0000_0000_0000);
-}
-impl ExtExtension484Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_484\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension484Fn {}
-unsafe impl Send for ExtExtension484Fn {}
-unsafe impl Sync for ExtExtension484Fn {}
-impl ExtExtension484Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl QcomTilePropertiesFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -24844,82 +21326,6 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_AMIGO_PROFILING_FEATURES_SEC: Self = Self(1_000_485_000);
     pub const AMIGO_PROFILING_SUBMIT_INFO_SEC: Self = Self(1_000_485_001);
 }
-impl ExtExtension487Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_487\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension487Fn {}
-unsafe impl Send for ExtExtension487Fn {}
-unsafe impl Sync for ExtExtension487Fn {}
-impl ExtExtension487Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl ExtExtension488Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_488\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension488Fn {}
-unsafe impl Send for ExtExtension488Fn {}
-unsafe impl Sync for ExtExtension488Fn {}
-impl ExtExtension488Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl QcomExtension489Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_extension_489\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct QcomExtension489Fn {}
-unsafe impl Send for QcomExtension489Fn {}
-unsafe impl Sync for QcomExtension489Fn {}
-impl QcomExtension489Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl NvExtension490Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_490\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct NvExtension490Fn {}
-unsafe impl Send for NvExtension490Fn {}
-unsafe impl Sync for NvExtension490Fn {}
-impl NvExtension490Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl NvRayTracingInvocationReorderFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -24949,63 +21355,6 @@ impl StructureType {
         Self(1_000_490_000);
     pub const PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_PROPERTIES_NV: Self =
         Self(1_000_490_001);
-}
-impl NvExtension492Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_492\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct NvExtension492Fn {}
-unsafe impl Send for NvExtension492Fn {}
-unsafe impl Sync for NvExtension492Fn {}
-impl NvExtension492Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl NvExtension493Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_493\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct NvExtension493Fn {}
-unsafe impl Send for NvExtension493Fn {}
-unsafe impl Sync for NvExtension493Fn {}
-impl NvExtension493Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl NvExtension494Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_494\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct NvExtension494Fn {}
-unsafe impl Send for NvExtension494Fn {}
-unsafe impl Sync for NvExtension494Fn {}
-impl NvExtension494Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
 }
 impl ExtMutableDescriptorTypeFn {
     #[inline]
@@ -25045,44 +21394,6 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_EXT: Self = Self(1_000_351_000);
     pub const MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_EXT: Self = Self(1_000_351_002);
 }
-impl ExtExtension496Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_496\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension496Fn {}
-unsafe impl Send for ExtExtension496Fn {}
-unsafe impl Sync for ExtExtension496Fn {}
-impl ExtExtension496Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl ExtExtension497Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_497\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension497Fn {}
-unsafe impl Send for ExtExtension497Fn {}
-unsafe impl Sync for ExtExtension497Fn {}
-impl ExtExtension497Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
 impl ArmShaderCoreBuiltinsFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -25106,118 +21417,4 @@ impl ArmShaderCoreBuiltinsFn {
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_CORE_BUILTINS_FEATURES_ARM: Self = Self(1_000_497_000);
     pub const PHYSICAL_DEVICE_SHADER_CORE_BUILTINS_PROPERTIES_ARM: Self = Self(1_000_497_001);
-}
-impl ExtExtension499Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_499\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension499Fn {}
-unsafe impl Send for ExtExtension499Fn {}
-unsafe impl Sync for ExtExtension499Fn {}
-impl ExtExtension499Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl ExtExtension500Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_500\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension500Fn {}
-unsafe impl Send for ExtExtension500Fn {}
-unsafe impl Sync for ExtExtension500Fn {}
-impl ExtExtension500Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl ExtExtension501Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_501\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension501Fn {}
-unsafe impl Send for ExtExtension501Fn {}
-unsafe impl Sync for ExtExtension501Fn {}
-impl ExtExtension501Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl ExtExtension502Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_502\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension502Fn {}
-unsafe impl Send for ExtExtension502Fn {}
-unsafe impl Sync for ExtExtension502Fn {}
-impl ExtExtension502Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl ExtExtension503Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extension_503\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct ExtExtension503Fn {}
-unsafe impl Send for ExtExtension503Fn {}
-unsafe impl Sync for ExtExtension503Fn {}
-impl ExtExtension503Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
-impl NvExtension504Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extension_504\0") }
-    }
-    pub const SPEC_VERSION: u32 = 0u32;
-}
-#[derive(Clone)]
-pub struct NvExtension504Fn {}
-unsafe impl Send for NvExtension504Fn {}
-unsafe impl Sync for NvExtension504Fn {}
-impl NvExtension504Fn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
 }
