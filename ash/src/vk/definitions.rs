@@ -57,7 +57,7 @@ pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
-pub const HEADER_VERSION: u32 = 237u32;
+pub const HEADER_VERSION: u32 = 238u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -36488,39 +36488,39 @@ impl<'a> VideoDecodeInfoKHR<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH264ProfileInfoEXT.html>"]
-pub struct VideoDecodeH264ProfileInfoEXT<'a> {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH264ProfileInfoKHR.html>"]
+pub struct VideoDecodeH264ProfileInfoKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub std_profile_idc: StdVideoH264ProfileIdc,
-    pub picture_layout: VideoDecodeH264PictureLayoutFlagsEXT,
+    pub picture_layout: VideoDecodeH264PictureLayoutFlagsKHR,
     pub _marker: PhantomData<&'a ()>,
 }
-impl ::std::default::Default for VideoDecodeH264ProfileInfoEXT<'_> {
+impl ::std::default::Default for VideoDecodeH264ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             std_profile_idc: StdVideoH264ProfileIdc::default(),
-            picture_layout: VideoDecodeH264PictureLayoutFlagsEXT::default(),
+            picture_layout: VideoDecodeH264PictureLayoutFlagsKHR::default(),
             _marker: PhantomData,
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH264ProfileInfoEXT<'a> {
-    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H264_PROFILE_INFO_EXT;
+unsafe impl<'a> TaggedStructure for VideoDecodeH264ProfileInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H264_PROFILE_INFO_KHR;
 }
-unsafe impl ExtendsVideoProfileInfoKHR for VideoDecodeH264ProfileInfoEXT<'_> {}
-unsafe impl ExtendsQueryPoolCreateInfo for VideoDecodeH264ProfileInfoEXT<'_> {}
-impl<'a> VideoDecodeH264ProfileInfoEXT<'a> {
+unsafe impl ExtendsVideoProfileInfoKHR for VideoDecodeH264ProfileInfoKHR<'_> {}
+unsafe impl ExtendsQueryPoolCreateInfo for VideoDecodeH264ProfileInfoKHR<'_> {}
+impl<'a> VideoDecodeH264ProfileInfoKHR<'a> {
     #[inline]
     pub fn std_profile_idc(mut self, std_profile_idc: StdVideoH264ProfileIdc) -> Self {
         self.std_profile_idc = std_profile_idc;
         self
     }
     #[inline]
-    pub fn picture_layout(mut self, picture_layout: VideoDecodeH264PictureLayoutFlagsEXT) -> Self {
+    pub fn picture_layout(mut self, picture_layout: VideoDecodeH264PictureLayoutFlagsKHR) -> Self {
         self.picture_layout = picture_layout;
         self
     }
@@ -36528,15 +36528,15 @@ impl<'a> VideoDecodeH264ProfileInfoEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH264CapabilitiesEXT.html>"]
-pub struct VideoDecodeH264CapabilitiesEXT<'a> {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH264CapabilitiesKHR.html>"]
+pub struct VideoDecodeH264CapabilitiesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub max_level_idc: StdVideoH264LevelIdc,
     pub field_offset_granularity: Offset2D,
     pub _marker: PhantomData<&'a ()>,
 }
-impl ::std::default::Default for VideoDecodeH264CapabilitiesEXT<'_> {
+impl ::std::default::Default for VideoDecodeH264CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
@@ -36548,11 +36548,11 @@ impl ::std::default::Default for VideoDecodeH264CapabilitiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH264CapabilitiesEXT<'a> {
-    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H264_CAPABILITIES_EXT;
+unsafe impl<'a> TaggedStructure for VideoDecodeH264CapabilitiesKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H264_CAPABILITIES_KHR;
 }
-unsafe impl ExtendsVideoCapabilitiesKHR for VideoDecodeH264CapabilitiesEXT<'_> {}
-impl<'a> VideoDecodeH264CapabilitiesEXT<'a> {
+unsafe impl ExtendsVideoCapabilitiesKHR for VideoDecodeH264CapabilitiesKHR<'_> {}
+impl<'a> VideoDecodeH264CapabilitiesKHR<'a> {
     #[inline]
     pub fn max_level_idc(mut self, max_level_idc: StdVideoH264LevelIdc) -> Self {
         self.max_level_idc = max_level_idc;
@@ -36567,8 +36567,8 @@ impl<'a> VideoDecodeH264CapabilitiesEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH264SessionParametersAddInfoEXT.html>"]
-pub struct VideoDecodeH264SessionParametersAddInfoEXT<'a> {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH264SessionParametersAddInfoKHR.html>"]
+pub struct VideoDecodeH264SessionParametersAddInfoKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub std_sps_count: u32,
@@ -36577,7 +36577,7 @@ pub struct VideoDecodeH264SessionParametersAddInfoEXT<'a> {
     pub p_std_pp_ss: *const StdVideoH264PictureParameterSet,
     pub _marker: PhantomData<&'a ()>,
 }
-impl ::std::default::Default for VideoDecodeH264SessionParametersAddInfoEXT<'_> {
+impl ::std::default::Default for VideoDecodeH264SessionParametersAddInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
@@ -36591,15 +36591,15 @@ impl ::std::default::Default for VideoDecodeH264SessionParametersAddInfoEXT<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH264SessionParametersAddInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure for VideoDecodeH264SessionParametersAddInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
-        StructureType::VIDEO_DECODE_H264_SESSION_PARAMETERS_ADD_INFO_EXT;
+        StructureType::VIDEO_DECODE_H264_SESSION_PARAMETERS_ADD_INFO_KHR;
 }
 unsafe impl ExtendsVideoSessionParametersUpdateInfoKHR
-    for VideoDecodeH264SessionParametersAddInfoEXT<'_>
+    for VideoDecodeH264SessionParametersAddInfoKHR<'_>
 {
 }
-impl<'a> VideoDecodeH264SessionParametersAddInfoEXT<'a> {
+impl<'a> VideoDecodeH264SessionParametersAddInfoKHR<'a> {
     #[inline]
     pub fn std_sp_ss(mut self, std_sp_ss: &'a [StdVideoH264SequenceParameterSet]) -> Self {
         self.std_sps_count = std_sp_ss.len() as _;
@@ -36616,16 +36616,16 @@ impl<'a> VideoDecodeH264SessionParametersAddInfoEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH264SessionParametersCreateInfoEXT.html>"]
-pub struct VideoDecodeH264SessionParametersCreateInfoEXT<'a> {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH264SessionParametersCreateInfoKHR.html>"]
+pub struct VideoDecodeH264SessionParametersCreateInfoKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub max_std_sps_count: u32,
     pub max_std_pps_count: u32,
-    pub p_parameters_add_info: *const VideoDecodeH264SessionParametersAddInfoEXT<'a>,
+    pub p_parameters_add_info: *const VideoDecodeH264SessionParametersAddInfoKHR<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
-impl ::std::default::Default for VideoDecodeH264SessionParametersCreateInfoEXT<'_> {
+impl ::std::default::Default for VideoDecodeH264SessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
@@ -36638,15 +36638,15 @@ impl ::std::default::Default for VideoDecodeH264SessionParametersCreateInfoEXT<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH264SessionParametersCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure for VideoDecodeH264SessionParametersCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
-        StructureType::VIDEO_DECODE_H264_SESSION_PARAMETERS_CREATE_INFO_EXT;
+        StructureType::VIDEO_DECODE_H264_SESSION_PARAMETERS_CREATE_INFO_KHR;
 }
 unsafe impl ExtendsVideoSessionParametersCreateInfoKHR
-    for VideoDecodeH264SessionParametersCreateInfoEXT<'_>
+    for VideoDecodeH264SessionParametersCreateInfoKHR<'_>
 {
 }
-impl<'a> VideoDecodeH264SessionParametersCreateInfoEXT<'a> {
+impl<'a> VideoDecodeH264SessionParametersCreateInfoKHR<'a> {
     #[inline]
     pub fn max_std_sps_count(mut self, max_std_sps_count: u32) -> Self {
         self.max_std_sps_count = max_std_sps_count;
@@ -36660,7 +36660,7 @@ impl<'a> VideoDecodeH264SessionParametersCreateInfoEXT<'a> {
     #[inline]
     pub fn parameters_add_info(
         mut self,
-        parameters_add_info: &'a VideoDecodeH264SessionParametersAddInfoEXT<'a>,
+        parameters_add_info: &'a VideoDecodeH264SessionParametersAddInfoKHR<'a>,
     ) -> Self {
         self.p_parameters_add_info = parameters_add_info;
         self
@@ -36669,8 +36669,8 @@ impl<'a> VideoDecodeH264SessionParametersCreateInfoEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH264PictureInfoEXT.html>"]
-pub struct VideoDecodeH264PictureInfoEXT<'a> {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH264PictureInfoKHR.html>"]
+pub struct VideoDecodeH264PictureInfoKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub p_std_picture_info: *const StdVideoDecodeH264PictureInfo,
@@ -36678,7 +36678,7 @@ pub struct VideoDecodeH264PictureInfoEXT<'a> {
     pub p_slice_offsets: *const u32,
     pub _marker: PhantomData<&'a ()>,
 }
-impl ::std::default::Default for VideoDecodeH264PictureInfoEXT<'_> {
+impl ::std::default::Default for VideoDecodeH264PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
@@ -36691,11 +36691,11 @@ impl ::std::default::Default for VideoDecodeH264PictureInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH264PictureInfoEXT<'a> {
-    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H264_PICTURE_INFO_EXT;
+unsafe impl<'a> TaggedStructure for VideoDecodeH264PictureInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H264_PICTURE_INFO_KHR;
 }
-unsafe impl ExtendsVideoDecodeInfoKHR for VideoDecodeH264PictureInfoEXT<'_> {}
-impl<'a> VideoDecodeH264PictureInfoEXT<'a> {
+unsafe impl ExtendsVideoDecodeInfoKHR for VideoDecodeH264PictureInfoKHR<'_> {}
+impl<'a> VideoDecodeH264PictureInfoKHR<'a> {
     #[inline]
     pub fn std_picture_info(mut self, std_picture_info: &'a StdVideoDecodeH264PictureInfo) -> Self {
         self.p_std_picture_info = std_picture_info;
@@ -36711,14 +36711,14 @@ impl<'a> VideoDecodeH264PictureInfoEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH264DpbSlotInfoEXT.html>"]
-pub struct VideoDecodeH264DpbSlotInfoEXT<'a> {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH264DpbSlotInfoKHR.html>"]
+pub struct VideoDecodeH264DpbSlotInfoKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub p_std_reference_info: *const StdVideoDecodeH264ReferenceInfo,
     pub _marker: PhantomData<&'a ()>,
 }
-impl ::std::default::Default for VideoDecodeH264DpbSlotInfoEXT<'_> {
+impl ::std::default::Default for VideoDecodeH264DpbSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
@@ -36729,11 +36729,11 @@ impl ::std::default::Default for VideoDecodeH264DpbSlotInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH264DpbSlotInfoEXT<'a> {
-    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H264_DPB_SLOT_INFO_EXT;
+unsafe impl<'a> TaggedStructure for VideoDecodeH264DpbSlotInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H264_DPB_SLOT_INFO_KHR;
 }
-unsafe impl ExtendsVideoReferenceSlotInfoKHR for VideoDecodeH264DpbSlotInfoEXT<'_> {}
-impl<'a> VideoDecodeH264DpbSlotInfoEXT<'a> {
+unsafe impl ExtendsVideoReferenceSlotInfoKHR for VideoDecodeH264DpbSlotInfoKHR<'_> {}
+impl<'a> VideoDecodeH264DpbSlotInfoKHR<'a> {
     #[inline]
     pub fn std_reference_info(
         mut self,
@@ -36746,14 +36746,14 @@ impl<'a> VideoDecodeH264DpbSlotInfoEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH265ProfileInfoEXT.html>"]
-pub struct VideoDecodeH265ProfileInfoEXT<'a> {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH265ProfileInfoKHR.html>"]
+pub struct VideoDecodeH265ProfileInfoKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub std_profile_idc: StdVideoH265ProfileIdc,
     pub _marker: PhantomData<&'a ()>,
 }
-impl ::std::default::Default for VideoDecodeH265ProfileInfoEXT<'_> {
+impl ::std::default::Default for VideoDecodeH265ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
@@ -36764,12 +36764,12 @@ impl ::std::default::Default for VideoDecodeH265ProfileInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH265ProfileInfoEXT<'a> {
-    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H265_PROFILE_INFO_EXT;
+unsafe impl<'a> TaggedStructure for VideoDecodeH265ProfileInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H265_PROFILE_INFO_KHR;
 }
-unsafe impl ExtendsVideoProfileInfoKHR for VideoDecodeH265ProfileInfoEXT<'_> {}
-unsafe impl ExtendsQueryPoolCreateInfo for VideoDecodeH265ProfileInfoEXT<'_> {}
-impl<'a> VideoDecodeH265ProfileInfoEXT<'a> {
+unsafe impl ExtendsVideoProfileInfoKHR for VideoDecodeH265ProfileInfoKHR<'_> {}
+unsafe impl ExtendsQueryPoolCreateInfo for VideoDecodeH265ProfileInfoKHR<'_> {}
+impl<'a> VideoDecodeH265ProfileInfoKHR<'a> {
     #[inline]
     pub fn std_profile_idc(mut self, std_profile_idc: StdVideoH265ProfileIdc) -> Self {
         self.std_profile_idc = std_profile_idc;
@@ -36779,14 +36779,14 @@ impl<'a> VideoDecodeH265ProfileInfoEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH265CapabilitiesEXT.html>"]
-pub struct VideoDecodeH265CapabilitiesEXT<'a> {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH265CapabilitiesKHR.html>"]
+pub struct VideoDecodeH265CapabilitiesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub max_level_idc: StdVideoH265LevelIdc,
     pub _marker: PhantomData<&'a ()>,
 }
-impl ::std::default::Default for VideoDecodeH265CapabilitiesEXT<'_> {
+impl ::std::default::Default for VideoDecodeH265CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
@@ -36797,11 +36797,11 @@ impl ::std::default::Default for VideoDecodeH265CapabilitiesEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH265CapabilitiesEXT<'a> {
-    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H265_CAPABILITIES_EXT;
+unsafe impl<'a> TaggedStructure for VideoDecodeH265CapabilitiesKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H265_CAPABILITIES_KHR;
 }
-unsafe impl ExtendsVideoCapabilitiesKHR for VideoDecodeH265CapabilitiesEXT<'_> {}
-impl<'a> VideoDecodeH265CapabilitiesEXT<'a> {
+unsafe impl ExtendsVideoCapabilitiesKHR for VideoDecodeH265CapabilitiesKHR<'_> {}
+impl<'a> VideoDecodeH265CapabilitiesKHR<'a> {
     #[inline]
     pub fn max_level_idc(mut self, max_level_idc: StdVideoH265LevelIdc) -> Self {
         self.max_level_idc = max_level_idc;
@@ -36811,8 +36811,8 @@ impl<'a> VideoDecodeH265CapabilitiesEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH265SessionParametersAddInfoEXT.html>"]
-pub struct VideoDecodeH265SessionParametersAddInfoEXT<'a> {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH265SessionParametersAddInfoKHR.html>"]
+pub struct VideoDecodeH265SessionParametersAddInfoKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub std_vps_count: u32,
@@ -36823,7 +36823,7 @@ pub struct VideoDecodeH265SessionParametersAddInfoEXT<'a> {
     pub p_std_pp_ss: *const StdVideoH265PictureParameterSet,
     pub _marker: PhantomData<&'a ()>,
 }
-impl ::std::default::Default for VideoDecodeH265SessionParametersAddInfoEXT<'_> {
+impl ::std::default::Default for VideoDecodeH265SessionParametersAddInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
@@ -36839,15 +36839,15 @@ impl ::std::default::Default for VideoDecodeH265SessionParametersAddInfoEXT<'_> 
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH265SessionParametersAddInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure for VideoDecodeH265SessionParametersAddInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
-        StructureType::VIDEO_DECODE_H265_SESSION_PARAMETERS_ADD_INFO_EXT;
+        StructureType::VIDEO_DECODE_H265_SESSION_PARAMETERS_ADD_INFO_KHR;
 }
 unsafe impl ExtendsVideoSessionParametersUpdateInfoKHR
-    for VideoDecodeH265SessionParametersAddInfoEXT<'_>
+    for VideoDecodeH265SessionParametersAddInfoKHR<'_>
 {
 }
-impl<'a> VideoDecodeH265SessionParametersAddInfoEXT<'a> {
+impl<'a> VideoDecodeH265SessionParametersAddInfoKHR<'a> {
     #[inline]
     pub fn std_vp_ss(mut self, std_vp_ss: &'a [StdVideoH265VideoParameterSet]) -> Self {
         self.std_vps_count = std_vp_ss.len() as _;
@@ -36870,17 +36870,17 @@ impl<'a> VideoDecodeH265SessionParametersAddInfoEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH265SessionParametersCreateInfoEXT.html>"]
-pub struct VideoDecodeH265SessionParametersCreateInfoEXT<'a> {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH265SessionParametersCreateInfoKHR.html>"]
+pub struct VideoDecodeH265SessionParametersCreateInfoKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub max_std_vps_count: u32,
     pub max_std_sps_count: u32,
     pub max_std_pps_count: u32,
-    pub p_parameters_add_info: *const VideoDecodeH265SessionParametersAddInfoEXT<'a>,
+    pub p_parameters_add_info: *const VideoDecodeH265SessionParametersAddInfoKHR<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
-impl ::std::default::Default for VideoDecodeH265SessionParametersCreateInfoEXT<'_> {
+impl ::std::default::Default for VideoDecodeH265SessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
@@ -36894,15 +36894,15 @@ impl ::std::default::Default for VideoDecodeH265SessionParametersCreateInfoEXT<'
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH265SessionParametersCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure for VideoDecodeH265SessionParametersCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
-        StructureType::VIDEO_DECODE_H265_SESSION_PARAMETERS_CREATE_INFO_EXT;
+        StructureType::VIDEO_DECODE_H265_SESSION_PARAMETERS_CREATE_INFO_KHR;
 }
 unsafe impl ExtendsVideoSessionParametersCreateInfoKHR
-    for VideoDecodeH265SessionParametersCreateInfoEXT<'_>
+    for VideoDecodeH265SessionParametersCreateInfoKHR<'_>
 {
 }
-impl<'a> VideoDecodeH265SessionParametersCreateInfoEXT<'a> {
+impl<'a> VideoDecodeH265SessionParametersCreateInfoKHR<'a> {
     #[inline]
     pub fn max_std_vps_count(mut self, max_std_vps_count: u32) -> Self {
         self.max_std_vps_count = max_std_vps_count;
@@ -36921,7 +36921,7 @@ impl<'a> VideoDecodeH265SessionParametersCreateInfoEXT<'a> {
     #[inline]
     pub fn parameters_add_info(
         mut self,
-        parameters_add_info: &'a VideoDecodeH265SessionParametersAddInfoEXT<'a>,
+        parameters_add_info: &'a VideoDecodeH265SessionParametersAddInfoKHR<'a>,
     ) -> Self {
         self.p_parameters_add_info = parameters_add_info;
         self
@@ -36930,8 +36930,8 @@ impl<'a> VideoDecodeH265SessionParametersCreateInfoEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH265PictureInfoEXT.html>"]
-pub struct VideoDecodeH265PictureInfoEXT<'a> {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH265PictureInfoKHR.html>"]
+pub struct VideoDecodeH265PictureInfoKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub p_std_picture_info: *mut StdVideoDecodeH265PictureInfo,
@@ -36939,7 +36939,7 @@ pub struct VideoDecodeH265PictureInfoEXT<'a> {
     pub p_slice_segment_offsets: *const u32,
     pub _marker: PhantomData<&'a ()>,
 }
-impl ::std::default::Default for VideoDecodeH265PictureInfoEXT<'_> {
+impl ::std::default::Default for VideoDecodeH265PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
@@ -36952,11 +36952,11 @@ impl ::std::default::Default for VideoDecodeH265PictureInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH265PictureInfoEXT<'a> {
-    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H265_PICTURE_INFO_EXT;
+unsafe impl<'a> TaggedStructure for VideoDecodeH265PictureInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H265_PICTURE_INFO_KHR;
 }
-unsafe impl ExtendsVideoDecodeInfoKHR for VideoDecodeH265PictureInfoEXT<'_> {}
-impl<'a> VideoDecodeH265PictureInfoEXT<'a> {
+unsafe impl ExtendsVideoDecodeInfoKHR for VideoDecodeH265PictureInfoKHR<'_> {}
+impl<'a> VideoDecodeH265PictureInfoKHR<'a> {
     #[inline]
     pub fn std_picture_info(
         mut self,
@@ -36975,14 +36975,14 @@ impl<'a> VideoDecodeH265PictureInfoEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH265DpbSlotInfoEXT.html>"]
-pub struct VideoDecodeH265DpbSlotInfoEXT<'a> {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH265DpbSlotInfoKHR.html>"]
+pub struct VideoDecodeH265DpbSlotInfoKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub p_std_reference_info: *const StdVideoDecodeH265ReferenceInfo,
     pub _marker: PhantomData<&'a ()>,
 }
-impl ::std::default::Default for VideoDecodeH265DpbSlotInfoEXT<'_> {
+impl ::std::default::Default for VideoDecodeH265DpbSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
@@ -36993,11 +36993,11 @@ impl ::std::default::Default for VideoDecodeH265DpbSlotInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoDecodeH265DpbSlotInfoEXT<'a> {
-    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H265_DPB_SLOT_INFO_EXT;
+unsafe impl<'a> TaggedStructure for VideoDecodeH265DpbSlotInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_H265_DPB_SLOT_INFO_KHR;
 }
-unsafe impl ExtendsVideoReferenceSlotInfoKHR for VideoDecodeH265DpbSlotInfoEXT<'_> {}
-impl<'a> VideoDecodeH265DpbSlotInfoEXT<'a> {
+unsafe impl ExtendsVideoReferenceSlotInfoKHR for VideoDecodeH265DpbSlotInfoKHR<'_> {}
+impl<'a> VideoDecodeH265DpbSlotInfoKHR<'a> {
     #[inline]
     pub fn std_reference_info(
         mut self,

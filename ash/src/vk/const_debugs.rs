@@ -4683,17 +4683,17 @@ impl fmt::Debug for StructureType {
             Self::VIDEO_ENCODE_H265_RATE_CONTROL_LAYER_INFO_EXT => {
                 Some("VIDEO_ENCODE_H265_RATE_CONTROL_LAYER_INFO_EXT")
             }
-            Self::VIDEO_DECODE_H264_CAPABILITIES_EXT => Some("VIDEO_DECODE_H264_CAPABILITIES_EXT"),
-            Self::VIDEO_DECODE_H264_PICTURE_INFO_EXT => Some("VIDEO_DECODE_H264_PICTURE_INFO_EXT"),
-            Self::VIDEO_DECODE_H264_PROFILE_INFO_EXT => Some("VIDEO_DECODE_H264_PROFILE_INFO_EXT"),
-            Self::VIDEO_DECODE_H264_SESSION_PARAMETERS_CREATE_INFO_EXT => {
-                Some("VIDEO_DECODE_H264_SESSION_PARAMETERS_CREATE_INFO_EXT")
+            Self::VIDEO_DECODE_H264_CAPABILITIES_KHR => Some("VIDEO_DECODE_H264_CAPABILITIES_KHR"),
+            Self::VIDEO_DECODE_H264_PICTURE_INFO_KHR => Some("VIDEO_DECODE_H264_PICTURE_INFO_KHR"),
+            Self::VIDEO_DECODE_H264_PROFILE_INFO_KHR => Some("VIDEO_DECODE_H264_PROFILE_INFO_KHR"),
+            Self::VIDEO_DECODE_H264_SESSION_PARAMETERS_CREATE_INFO_KHR => {
+                Some("VIDEO_DECODE_H264_SESSION_PARAMETERS_CREATE_INFO_KHR")
             }
-            Self::VIDEO_DECODE_H264_SESSION_PARAMETERS_ADD_INFO_EXT => {
-                Some("VIDEO_DECODE_H264_SESSION_PARAMETERS_ADD_INFO_EXT")
+            Self::VIDEO_DECODE_H264_SESSION_PARAMETERS_ADD_INFO_KHR => {
+                Some("VIDEO_DECODE_H264_SESSION_PARAMETERS_ADD_INFO_KHR")
             }
-            Self::VIDEO_DECODE_H264_DPB_SLOT_INFO_EXT => {
-                Some("VIDEO_DECODE_H264_DPB_SLOT_INFO_EXT")
+            Self::VIDEO_DECODE_H264_DPB_SLOT_INFO_KHR => {
+                Some("VIDEO_DECODE_H264_DPB_SLOT_INFO_KHR")
             }
             Self::TEXTURE_LOD_GATHER_FORMAT_PROPERTIES_AMD => {
                 Some("TEXTURE_LOD_GATHER_FORMAT_PROPERTIES_AMD")
@@ -5061,17 +5061,17 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_AMD => {
                 Some("PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_AMD")
             }
-            Self::VIDEO_DECODE_H265_CAPABILITIES_EXT => Some("VIDEO_DECODE_H265_CAPABILITIES_EXT"),
-            Self::VIDEO_DECODE_H265_SESSION_PARAMETERS_CREATE_INFO_EXT => {
-                Some("VIDEO_DECODE_H265_SESSION_PARAMETERS_CREATE_INFO_EXT")
+            Self::VIDEO_DECODE_H265_CAPABILITIES_KHR => Some("VIDEO_DECODE_H265_CAPABILITIES_KHR"),
+            Self::VIDEO_DECODE_H265_SESSION_PARAMETERS_CREATE_INFO_KHR => {
+                Some("VIDEO_DECODE_H265_SESSION_PARAMETERS_CREATE_INFO_KHR")
             }
-            Self::VIDEO_DECODE_H265_SESSION_PARAMETERS_ADD_INFO_EXT => {
-                Some("VIDEO_DECODE_H265_SESSION_PARAMETERS_ADD_INFO_EXT")
+            Self::VIDEO_DECODE_H265_SESSION_PARAMETERS_ADD_INFO_KHR => {
+                Some("VIDEO_DECODE_H265_SESSION_PARAMETERS_ADD_INFO_KHR")
             }
-            Self::VIDEO_DECODE_H265_PROFILE_INFO_EXT => Some("VIDEO_DECODE_H265_PROFILE_INFO_EXT"),
-            Self::VIDEO_DECODE_H265_PICTURE_INFO_EXT => Some("VIDEO_DECODE_H265_PICTURE_INFO_EXT"),
-            Self::VIDEO_DECODE_H265_DPB_SLOT_INFO_EXT => {
-                Some("VIDEO_DECODE_H265_DPB_SLOT_INFO_EXT")
+            Self::VIDEO_DECODE_H265_PROFILE_INFO_KHR => Some("VIDEO_DECODE_H265_PROFILE_INFO_KHR"),
+            Self::VIDEO_DECODE_H265_PICTURE_INFO_KHR => Some("VIDEO_DECODE_H265_PICTURE_INFO_KHR"),
+            Self::VIDEO_DECODE_H265_DPB_SLOT_INFO_KHR => {
+                Some("VIDEO_DECODE_H265_DPB_SLOT_INFO_KHR")
             }
             Self::DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO_KHR => {
                 Some("DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO_KHR")
@@ -6518,14 +6518,8 @@ impl fmt::Debug for VideoCodecOperationFlagsKHR {
                 VideoCodecOperationFlagsKHR::ENCODE_H265_EXT.0,
                 "ENCODE_H265_EXT",
             ),
-            (
-                VideoCodecOperationFlagsKHR::DECODE_H264_EXT.0,
-                "DECODE_H264_EXT",
-            ),
-            (
-                VideoCodecOperationFlagsKHR::DECODE_H265_EXT.0,
-                "DECODE_H265_EXT",
-            ),
+            (VideoCodecOperationFlagsKHR::DECODE_H264.0, "DECODE_H264"),
+            (VideoCodecOperationFlagsKHR::DECODE_H265.0, "DECODE_H265"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -6578,19 +6572,19 @@ impl fmt::Debug for VideoDecodeFlagsKHR {
         debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Debug for VideoDecodeH264PictureLayoutFlagsEXT {
+impl fmt::Debug for VideoDecodeH264PictureLayoutFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                VideoDecodeH264PictureLayoutFlagsEXT::PROGRESSIVE.0,
+                VideoDecodeH264PictureLayoutFlagsKHR::PROGRESSIVE.0,
                 "PROGRESSIVE",
             ),
             (
-                VideoDecodeH264PictureLayoutFlagsEXT::INTERLACED_INTERLEAVED_LINES.0,
+                VideoDecodeH264PictureLayoutFlagsKHR::INTERLACED_INTERLEAVED_LINES.0,
                 "INTERLACED_INTERLEAVED_LINES",
             ),
             (
-                VideoDecodeH264PictureLayoutFlagsEXT::INTERLACED_SEPARATE_PLANES.0,
+                VideoDecodeH264PictureLayoutFlagsKHR::INTERLACED_SEPARATE_PLANES.0,
                 "INTERLACED_SEPARATE_PLANES",
             ),
         ];

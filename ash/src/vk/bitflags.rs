@@ -1211,10 +1211,10 @@ impl VideoSessionCreateFlagsKHR {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH264PictureLayoutFlagBitsEXT.html>"]
-pub struct VideoDecodeH264PictureLayoutFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(VideoDecodeH264PictureLayoutFlagsEXT, Flags);
-impl VideoDecodeH264PictureLayoutFlagsEXT {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH264PictureLayoutFlagBitsKHR.html>"]
+pub struct VideoDecodeH264PictureLayoutFlagsKHR(pub(crate) Flags);
+vk_bitflags_wrapped!(VideoDecodeH264PictureLayoutFlagsKHR, Flags);
+impl VideoDecodeH264PictureLayoutFlagsKHR {
     pub const PROGRESSIVE: Self = Self(0);
     pub const INTERLACED_INTERLEAVED_LINES: Self = Self(0b1);
     pub const INTERLACED_SEPARATE_PLANES: Self = Self(0b10);
