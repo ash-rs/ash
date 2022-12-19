@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Replaced builders with lifetimes/setters directly on Vulkan structs (#602)
 - Inlined struct setters (#602)
 
+### Added
+
+- Update Vulkan-Headers to 1.3.238 (#688)
+
 ### Removed
 
 - Removed all code generated for `"disabled"` extensions, typically with a number rather than a descriptive name (#448)

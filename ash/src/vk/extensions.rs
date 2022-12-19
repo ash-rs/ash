@@ -1770,7 +1770,7 @@ impl KhrVideoQueueFn {
     pub const fn name() -> &'static ::std::ffi::CStr {
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_queue\0") }
     }
-    pub const SPEC_VERSION: u32 = 7u32;
+    pub const SPEC_VERSION: u32 = 8u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceVideoCapabilitiesKHR = unsafe extern "system" fn(
@@ -2172,7 +2172,7 @@ impl KhrVideoDecodeQueueFn {
     pub const fn name() -> &'static ::std::ffi::CStr {
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_decode_queue\0") }
     }
-    pub const SPEC_VERSION: u32 = 6u32;
+    pub const SPEC_VERSION: u32 = 7u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDecodeVideoKHR = unsafe extern "system" fn(
@@ -3013,18 +3013,18 @@ impl StructureType {
 impl VideoCodecOperationFlagsKHR {
     pub const ENCODE_H265_EXT: Self = Self(0b10_0000_0000_0000_0000);
 }
-impl ExtVideoDecodeH264Fn {
+impl KhrVideoDecodeH264Fn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_decode_h264\0") }
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_decode_h264\0") }
     }
-    pub const SPEC_VERSION: u32 = 7u32;
+    pub const SPEC_VERSION: u32 = 8u32;
 }
 #[derive(Clone)]
-pub struct ExtVideoDecodeH264Fn {}
-unsafe impl Send for ExtVideoDecodeH264Fn {}
-unsafe impl Sync for ExtVideoDecodeH264Fn {}
-impl ExtVideoDecodeH264Fn {
+pub struct KhrVideoDecodeH264Fn {}
+unsafe impl Send for KhrVideoDecodeH264Fn {}
+unsafe impl Sync for KhrVideoDecodeH264Fn {}
+impl KhrVideoDecodeH264Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -3032,18 +3032,18 @@ impl ExtVideoDecodeH264Fn {
         Self {}
     }
 }
-#[doc = "Generated from 'VK_EXT_video_decode_h264'"]
+#[doc = "Generated from 'VK_KHR_video_decode_h264'"]
 impl StructureType {
-    pub const VIDEO_DECODE_H264_CAPABILITIES_EXT: Self = Self(1_000_040_000);
-    pub const VIDEO_DECODE_H264_PICTURE_INFO_EXT: Self = Self(1_000_040_001);
-    pub const VIDEO_DECODE_H264_PROFILE_INFO_EXT: Self = Self(1_000_040_003);
-    pub const VIDEO_DECODE_H264_SESSION_PARAMETERS_CREATE_INFO_EXT: Self = Self(1_000_040_004);
-    pub const VIDEO_DECODE_H264_SESSION_PARAMETERS_ADD_INFO_EXT: Self = Self(1_000_040_005);
-    pub const VIDEO_DECODE_H264_DPB_SLOT_INFO_EXT: Self = Self(1_000_040_006);
+    pub const VIDEO_DECODE_H264_CAPABILITIES_KHR: Self = Self(1_000_040_000);
+    pub const VIDEO_DECODE_H264_PICTURE_INFO_KHR: Self = Self(1_000_040_001);
+    pub const VIDEO_DECODE_H264_PROFILE_INFO_KHR: Self = Self(1_000_040_003);
+    pub const VIDEO_DECODE_H264_SESSION_PARAMETERS_CREATE_INFO_KHR: Self = Self(1_000_040_004);
+    pub const VIDEO_DECODE_H264_SESSION_PARAMETERS_ADD_INFO_KHR: Self = Self(1_000_040_005);
+    pub const VIDEO_DECODE_H264_DPB_SLOT_INFO_KHR: Self = Self(1_000_040_006);
 }
-#[doc = "Generated from 'VK_EXT_video_decode_h264'"]
+#[doc = "Generated from 'VK_KHR_video_decode_h264'"]
 impl VideoCodecOperationFlagsKHR {
-    pub const DECODE_H264_EXT: Self = Self(0b1);
+    pub const DECODE_H264: Self = Self(0b1);
 }
 impl AmdTextureGatherBiasLodFn {
     #[inline]
@@ -10983,18 +10983,18 @@ impl AmdShaderCorePropertiesFn {
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_AMD: Self = Self(1_000_185_000);
 }
-impl ExtVideoDecodeH265Fn {
+impl KhrVideoDecodeH265Fn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_decode_h265\0") }
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_decode_h265\0") }
     }
-    pub const SPEC_VERSION: u32 = 5u32;
+    pub const SPEC_VERSION: u32 = 7u32;
 }
 #[derive(Clone)]
-pub struct ExtVideoDecodeH265Fn {}
-unsafe impl Send for ExtVideoDecodeH265Fn {}
-unsafe impl Sync for ExtVideoDecodeH265Fn {}
-impl ExtVideoDecodeH265Fn {
+pub struct KhrVideoDecodeH265Fn {}
+unsafe impl Send for KhrVideoDecodeH265Fn {}
+unsafe impl Sync for KhrVideoDecodeH265Fn {}
+impl KhrVideoDecodeH265Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -11002,18 +11002,18 @@ impl ExtVideoDecodeH265Fn {
         Self {}
     }
 }
-#[doc = "Generated from 'VK_EXT_video_decode_h265'"]
+#[doc = "Generated from 'VK_KHR_video_decode_h265'"]
 impl StructureType {
-    pub const VIDEO_DECODE_H265_CAPABILITIES_EXT: Self = Self(1_000_187_000);
-    pub const VIDEO_DECODE_H265_SESSION_PARAMETERS_CREATE_INFO_EXT: Self = Self(1_000_187_001);
-    pub const VIDEO_DECODE_H265_SESSION_PARAMETERS_ADD_INFO_EXT: Self = Self(1_000_187_002);
-    pub const VIDEO_DECODE_H265_PROFILE_INFO_EXT: Self = Self(1_000_187_003);
-    pub const VIDEO_DECODE_H265_PICTURE_INFO_EXT: Self = Self(1_000_187_004);
-    pub const VIDEO_DECODE_H265_DPB_SLOT_INFO_EXT: Self = Self(1_000_187_005);
+    pub const VIDEO_DECODE_H265_CAPABILITIES_KHR: Self = Self(1_000_187_000);
+    pub const VIDEO_DECODE_H265_SESSION_PARAMETERS_CREATE_INFO_KHR: Self = Self(1_000_187_001);
+    pub const VIDEO_DECODE_H265_SESSION_PARAMETERS_ADD_INFO_KHR: Self = Self(1_000_187_002);
+    pub const VIDEO_DECODE_H265_PROFILE_INFO_KHR: Self = Self(1_000_187_003);
+    pub const VIDEO_DECODE_H265_PICTURE_INFO_KHR: Self = Self(1_000_187_004);
+    pub const VIDEO_DECODE_H265_DPB_SLOT_INFO_KHR: Self = Self(1_000_187_005);
 }
-#[doc = "Generated from 'VK_EXT_video_decode_h265'"]
+#[doc = "Generated from 'VK_KHR_video_decode_h265'"]
 impl VideoCodecOperationFlagsKHR {
-    pub const DECODE_H265_EXT: Self = Self(0b10);
+    pub const DECODE_H265: Self = Self(0b10);
 }
 impl KhrGlobalPriorityFn {
     #[inline]
@@ -14410,6 +14410,93 @@ impl ExtShaderAtomicFloat2Fn {
 #[doc = "Generated from 'VK_EXT_shader_atomic_float2'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_2_FEATURES_EXT: Self = Self(1_000_273_000);
+}
+impl ExtSurfaceMaintenance1Fn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_surface_maintenance1\0") }
+    }
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct ExtSurfaceMaintenance1Fn {}
+unsafe impl Send for ExtSurfaceMaintenance1Fn {}
+unsafe impl Sync for ExtSurfaceMaintenance1Fn {}
+impl ExtSurfaceMaintenance1Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+#[doc = "Generated from 'VK_EXT_surface_maintenance1'"]
+impl StructureType {
+    pub const SURFACE_PRESENT_MODE_EXT: Self = Self(1_000_274_000);
+    pub const SURFACE_PRESENT_SCALING_CAPABILITIES_EXT: Self = Self(1_000_274_001);
+    pub const SURFACE_PRESENT_MODE_COMPATIBILITY_EXT: Self = Self(1_000_274_002);
+}
+impl ExtSwapchainMaintenance1Fn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_swapchain_maintenance1\0")
+        }
+    }
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[allow(non_camel_case_types)]
+pub type PFN_vkReleaseSwapchainImagesEXT = unsafe extern "system" fn(
+    device: Device,
+    p_release_info: *const ReleaseSwapchainImagesInfoEXT,
+) -> Result;
+#[derive(Clone)]
+pub struct ExtSwapchainMaintenance1Fn {
+    pub release_swapchain_images_ext: PFN_vkReleaseSwapchainImagesEXT,
+}
+unsafe impl Send for ExtSwapchainMaintenance1Fn {}
+unsafe impl Sync for ExtSwapchainMaintenance1Fn {}
+impl ExtSwapchainMaintenance1Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {
+            release_swapchain_images_ext: unsafe {
+                unsafe extern "system" fn release_swapchain_images_ext(
+                    _device: Device,
+                    _p_release_info: *const ReleaseSwapchainImagesInfoEXT,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(release_swapchain_images_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkReleaseSwapchainImagesEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    release_swapchain_images_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+}
+#[doc = "Generated from 'VK_EXT_swapchain_maintenance1'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SWAPCHAIN_MAINTENANCE_1_FEATURES_EXT: Self = Self(1_000_275_000);
+    pub const SWAPCHAIN_PRESENT_FENCE_INFO_EXT: Self = Self(1_000_275_001);
+    pub const SWAPCHAIN_PRESENT_MODES_CREATE_INFO_EXT: Self = Self(1_000_275_002);
+    pub const SWAPCHAIN_PRESENT_MODE_INFO_EXT: Self = Self(1_000_275_003);
+    pub const SWAPCHAIN_PRESENT_SCALING_CREATE_INFO_EXT: Self = Self(1_000_275_004);
+    pub const RELEASE_SWAPCHAIN_IMAGES_INFO_EXT: Self = Self(1_000_275_005);
+}
+#[doc = "Generated from 'VK_EXT_swapchain_maintenance1'"]
+impl SwapchainCreateFlagsKHR {
+    pub const DEFERRED_MEMORY_ALLOCATION_EXT: Self = Self(0b1000);
 }
 impl ExtShaderDemoteToHelperInvocationFn {
     #[inline]
@@ -20817,6 +20904,32 @@ impl StructureType {
     pub const RENDER_PASS_CREATION_FEEDBACK_CREATE_INFO_EXT: Self = Self(1_000_458_002);
     pub const RENDER_PASS_SUBPASS_FEEDBACK_CREATE_INFO_EXT: Self = Self(1_000_458_003);
 }
+impl LunargDirectDriverLoadingFn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_LUNARG_direct_driver_loading\0")
+        }
+    }
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct LunargDirectDriverLoadingFn {}
+unsafe impl Send for LunargDirectDriverLoadingFn {}
+unsafe impl Sync for LunargDirectDriverLoadingFn {}
+impl LunargDirectDriverLoadingFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+#[doc = "Generated from 'VK_LUNARG_direct_driver_loading'"]
+impl StructureType {
+    pub const DIRECT_DRIVER_LOADING_INFO_LUNARG: Self = Self(1_000_459_000);
+    pub const DIRECT_DRIVER_LOADING_LIST_LUNARG: Self = Self(1_000_459_001);
+}
 impl ExtShaderModuleIdentifierFn {
     #[inline]
     pub const fn name() -> &'static ::std::ffi::CStr {
@@ -21325,6 +21438,34 @@ impl SecAmigoProfilingFn {
 impl StructureType {
     pub const PHYSICAL_DEVICE_AMIGO_PROFILING_FEATURES_SEC: Self = Self(1_000_485_000);
     pub const AMIGO_PROFILING_SUBMIT_INFO_SEC: Self = Self(1_000_485_001);
+}
+impl QcomMultiviewPerViewViewportsFn {
+    #[inline]
+    pub const fn name() -> &'static ::std::ffi::CStr {
+        unsafe {
+            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                b"VK_QCOM_multiview_per_view_viewports\0",
+            )
+        }
+    }
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct QcomMultiviewPerViewViewportsFn {}
+unsafe impl Send for QcomMultiviewPerViewViewportsFn {}
+unsafe impl Sync for QcomMultiviewPerViewViewportsFn {}
+impl QcomMultiviewPerViewViewportsFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+#[doc = "Generated from 'VK_QCOM_multiview_per_view_viewports'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_VIEWPORTS_FEATURES_QCOM: Self =
+        Self(1_000_488_000);
 }
 impl NvRayTracingInvocationReorderFn {
     #[inline]
