@@ -19,6 +19,7 @@ use proc_macro2::{Delimiter, Group, Literal, Span, TokenStream, TokenTree};
 use quote::*;
 use regex::Regex;
 use std::{
+    borrow::Cow,
     collections::{BTreeMap, HashMap, HashSet},
     fmt::Display,
     path::Path,
@@ -196,6 +197,15 @@ pub trait ConstantExt {
     fn constant(&self, enum_name: &str) -> Constant;
     fn variant_ident(&self, enum_name: &str) -> Ident;
     fn notation(&self) -> Option<&str>;
+    fn formatted_notation(&self) -> Option<Cow<'_, str>> {
+        static DOC_LINK: Lazy<Regex> = Lazy::new(|| Regex::new(r#"<<([\w-]+)>>"#).unwrap());
+        self.notation().map(|n| {
+            DOC_LINK.replace(
+                n,
+                "<https://registry.khronos.org/vulkan/specs/1.3-extensions/html/vkspec.html#${1}>",
+            )
+        })
+    }
     fn is_alias(&self) -> bool {
         false
     }
@@ -205,10 +215,8 @@ pub trait ConstantExt {
             Some(BACKWARDS_COMPATIBLE_ALIAS_COMMENT),
             "Backwards-compatible constants should not be emitted"
         );
-        match self.notation() {
-            Some(n) if n.starts_with("Alias") => {
-                quote!(#[deprecated = #n])
-            }
+        match self.formatted_notation() {
+            Some(n) if n.starts_with("Alias") => quote!(#[deprecated = #n]),
             Some(n) => quote!(#[doc = #n]),
             None => quote!(),
         }
@@ -1402,7 +1410,7 @@ pub fn generate_result(ident: Ident, enum_: &vk_parse::Enums) -> TokenStream {
         let (variant_name, notation) = match *elem {
             vk_parse::EnumsChild::Enum(ref constant) => (
                 constant.name.as_str(),
-                constant.comment.as_deref().unwrap_or(""),
+                constant.formatted_notation().unwrap_or(Cow::Borrowed("")),
             ),
             _ => {
                 return None;
