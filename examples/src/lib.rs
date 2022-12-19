@@ -104,7 +104,7 @@ unsafe extern "system" fn vulkan_debug_callback(
     _user_data: *mut std::os::raw::c_void,
 ) -> vk::Bool32 {
     let callback_data = *p_callback_data;
-    let message_id_number: i32 = callback_data.message_id_number as i32;
+    let message_id_number = callback_data.message_id_number;
 
     let message_id_name = if callback_data.p_message_id_name.is_null() {
         Cow::from("")
@@ -120,11 +120,7 @@ unsafe extern "system" fn vulkan_debug_callback(
 
     println!(
         "{:?}:\n{:?} [{} ({})] : {}\n",
-        message_severity,
-        message_type,
-        message_id_name,
-        &message_id_number.to_string(),
-        message,
+        message_severity, message_type, message_id_name, message_id_number, message,
     );
 
     vk::FALSE
@@ -348,7 +344,7 @@ impl ExampleBase {
                 .create_device(pdevice, &device_create_info, None)
                 .unwrap();
 
-            let present_queue = device.get_device_queue(queue_family_index as u32, 0);
+            let present_queue = device.get_device_queue(queue_family_index, 0);
 
             let surface_format = surface_loader
                 .get_physical_device_surface_formats(pdevice, surface)
