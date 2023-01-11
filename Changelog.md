@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - ReleaseDate
 
+## [0.37.2] - 2022-01-11
+
 ### Added
 
 - Update Vulkan-Headers to 1.3.238 (#688)
@@ -43,7 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- `khr::RayTracingPipeline`: Set the buffer length in `get_ray_tracing_capture_replay_shader_group_handles` so it no longer always returns an empty `Vec` (#658)
+- `VK_KHR_ray_tracing_pipeline`: Set the buffer length in `get_ray_tracing_capture_replay_shader_group_handles` so it no longer always returns an empty `Vec` (#658)
 
 ## [0.37.0] - 2022-03-23
 
@@ -63,7 +65,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- extensions/khr: Drop `_khr` suffix from `get_memory_fd_properties_khr` in `ExternalMemoryFd` (#580)
+- `VK_KHR_external_memory_fd`: Drop `_khr` suffix from `get_memory_fd_properties_khr` (#580)
 - entry: Allow querying `enumerate_instance_extension_properties()` by layer name (#574)
 
 ### Added
@@ -360,7 +362,8 @@ flags: vk::CommandPoolCreateFlags::RESET_COMMAND_BUFFER_BIT,
 can write to aligned memory.
 
 
-[Unreleased]: https://github.com/MaikKlein/ash/compare/0.37.1...HEAD
+[Unreleased]: https://github.com/MaikKlein/ash/compare/0.37.2...HEAD
+[0.37.2]: https://github.com/MaikKlein/ash/releases/tag/0.37.2
 [0.37.1]: https://github.com/MaikKlein/ash/releases/tag/0.37.1
 [0.37.0]: https://github.com/MaikKlein/ash/releases/tag/0.37.0
 [0.36.0]: https://github.com/MaikKlein/ash/releases/tag/0.36.0
