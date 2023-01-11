@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Update Vulkan-Headers to 1.3.238 (#688)
 
+### Fixed
+
+- `VK_KHR_draw_indirect_count`: use `cmd_draw_indirect_count_khr` instead of `cmd_draw_indexed_indirect_count_khr` for non-indexed draw call (#695)
+
 ## [0.37.1] - 2022-11-23
 
 ### Changed
