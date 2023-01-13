@@ -280,7 +280,7 @@ fn main() {
             &base.device_memory_properties,
             vk::MemoryPropertyFlags::HOST_VISIBLE | vk::MemoryPropertyFlags::HOST_COHERENT,
         )
-        .expect("Unable to find suitable memorytype for the vertex buffer.");
+        .expect("Unable to find suitable memorytype for the image buffer.");
 
         let image_buffer_allocate_info = vk::MemoryAllocateInfo {
             allocation_size: image_buffer_memory_req.size,
