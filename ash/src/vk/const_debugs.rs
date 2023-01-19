@@ -1500,6 +1500,7 @@ impl fmt::Debug for DriverId {
             Self::MESA_VENUS => Some("MESA_VENUS"),
             Self::MESA_DOZEN => Some("MESA_DOZEN"),
             Self::MESA_NVK => Some("MESA_NVK"),
+            Self::IMAGINATION_OPEN_SOURCE_MESA => Some("IMAGINATION_OPEN_SOURCE_MESA"),
             _ => None,
         };
         if let Some(x) = name {
@@ -3707,6 +3708,10 @@ impl fmt::Debug for PipelineStageFlags2 {
                 PipelineStageFlags2::MICROMAP_BUILD_EXT.0,
                 "MICROMAP_BUILD_EXT",
             ),
+            (
+                PipelineStageFlags2::CLUSTER_CULLING_SHADER_HUAWEI.0,
+                "CLUSTER_CULLING_SHADER_HUAWEI",
+            ),
             (PipelineStageFlags2::OPTICAL_FLOW_NV.0, "OPTICAL_FLOW_NV"),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -3910,6 +3915,10 @@ impl fmt::Debug for QueryPipelineStatisticFlags {
             (
                 QueryPipelineStatisticFlags::MESH_SHADER_INVOCATIONS_EXT.0,
                 "MESH_SHADER_INVOCATIONS_EXT",
+            ),
+            (
+                QueryPipelineStatisticFlags::CLUSTER_CULLING_SHADER_INVOCATIONS_HUAWEI.0,
+                "CLUSTER_CULLING_SHADER_INVOCATIONS_HUAWEI",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -4365,6 +4374,10 @@ impl fmt::Debug for ShaderStageFlags {
             (
                 ShaderStageFlags::SUBPASS_SHADING_HUAWEI.0,
                 "SUBPASS_SHADING_HUAWEI",
+            ),
+            (
+                ShaderStageFlags::CLUSTER_CULLING_HUAWEI.0,
+                "CLUSTER_CULLING_HUAWEI",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -5646,6 +5659,12 @@ impl fmt::Debug for StructureType {
             Self::MICROMAP_BUILD_SIZES_INFO_EXT => Some("MICROMAP_BUILD_SIZES_INFO_EXT"),
             Self::ACCELERATION_STRUCTURE_TRIANGLES_OPACITY_MICROMAP_EXT => {
                 Some("ACCELERATION_STRUCTURE_TRIANGLES_OPACITY_MICROMAP_EXT")
+            }
+            Self::PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_FEATURES_HUAWEI => {
+                Some("PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_FEATURES_HUAWEI")
+            }
+            Self::PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_PROPERTIES_HUAWEI => {
+                Some("PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_PROPERTIES_HUAWEI")
             }
             Self::PHYSICAL_DEVICE_BORDER_COLOR_SWIZZLE_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_BORDER_COLOR_SWIZZLE_FEATURES_EXT")

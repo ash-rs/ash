@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 238;
+pub const HEADER_VERSION: u32 = 239;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -28253,6 +28253,56 @@ impl<'a> PhysicalDeviceSubpassShadingPropertiesHUAWEI<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceClusterCullingShaderPropertiesHUAWEI.html>"]
+pub struct PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub max_work_group_count: [u32; 3],
+    pub max_work_group_size: [u32; 3],
+    pub max_output_cluster_count: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            max_work_group_count: unsafe { ::std::mem::zeroed() },
+            max_work_group_size: unsafe { ::std::mem::zeroed() },
+            max_output_cluster_count: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_PROPERTIES_HUAWEI;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'_>
+{
+}
+impl<'a> PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'a> {
+    #[inline]
+    pub fn max_work_group_count(mut self, max_work_group_count: [u32; 3]) -> Self {
+        self.max_work_group_count = max_work_group_count;
+        self
+    }
+    #[inline]
+    pub fn max_work_group_size(mut self, max_work_group_size: [u32; 3]) -> Self {
+        self.max_work_group_size = max_work_group_size;
+        self
+    }
+    #[inline]
+    pub fn max_output_cluster_count(mut self, max_output_cluster_count: u32) -> Self {
+        self.max_output_cluster_count = max_output_cluster_count;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMemoryOpaqueCaptureAddressAllocateInfo.html>"]
 pub struct MemoryOpaqueCaptureAddressAllocateInfo<'a> {
     pub s_type: StructureType,
@@ -33105,6 +33155,53 @@ impl<'a> PhysicalDeviceSubpassShadingFeaturesHUAWEI<'a> {
     #[inline]
     pub fn subpass_shading(mut self, subpass_shading: bool) -> Self {
         self.subpass_shading = subpass_shading.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceClusterCullingShaderFeaturesHUAWEI.html>"]
+pub struct PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub clusterculling_shader: Bool32,
+    pub multiview_cluster_culling_shader: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            clusterculling_shader: Bool32::default(),
+            multiview_cluster_culling_shader: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_FEATURES_HUAWEI;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'_> {}
+impl<'a> PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a> {
+    #[inline]
+    pub fn clusterculling_shader(mut self, clusterculling_shader: bool) -> Self {
+        self.clusterculling_shader = clusterculling_shader.into();
+        self
+    }
+    #[inline]
+    pub fn multiview_cluster_culling_shader(
+        mut self,
+        multiview_cluster_culling_shader: bool,
+    ) -> Self {
+        self.multiview_cluster_culling_shader = multiview_cluster_culling_shader.into();
         self
     }
 }

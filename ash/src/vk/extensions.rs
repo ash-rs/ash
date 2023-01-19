@@ -18621,6 +18621,98 @@ impl AttachmentLoadOp {
 impl AttachmentStoreOp {
     pub const NONE_EXT: Self = Self::NONE;
 }
+impl HuaweiClusterCullingShaderFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_HUAWEI_cluster_culling_shader\0")
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDrawClusterHUAWEI = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    group_count_x: u32,
+    group_count_y: u32,
+    group_count_z: u32,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDrawClusterIndirectHUAWEI =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, buffer: Buffer, offset: DeviceSize);
+#[derive(Clone)]
+pub struct HuaweiClusterCullingShaderFn {
+    pub cmd_draw_cluster_huawei: PFN_vkCmdDrawClusterHUAWEI,
+    pub cmd_draw_cluster_indirect_huawei: PFN_vkCmdDrawClusterIndirectHUAWEI,
+}
+unsafe impl Send for HuaweiClusterCullingShaderFn {}
+unsafe impl Sync for HuaweiClusterCullingShaderFn {}
+impl HuaweiClusterCullingShaderFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {
+            cmd_draw_cluster_huawei: unsafe {
+                unsafe extern "system" fn cmd_draw_cluster_huawei(
+                    _command_buffer: CommandBuffer,
+                    _group_count_x: u32,
+                    _group_count_y: u32,
+                    _group_count_z: u32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_draw_cluster_huawei)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdDrawClusterHUAWEI\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_draw_cluster_huawei
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_draw_cluster_indirect_huawei: unsafe {
+                unsafe extern "system" fn cmd_draw_cluster_indirect_huawei(
+                    _command_buffer: CommandBuffer,
+                    _buffer: Buffer,
+                    _offset: DeviceSize,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_draw_cluster_indirect_huawei)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdDrawClusterIndirectHUAWEI\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_draw_cluster_indirect_huawei
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+}
+#[doc = "Generated from 'VK_HUAWEI_cluster_culling_shader'"]
+impl PipelineStageFlags2 {
+    pub const CLUSTER_CULLING_SHADER_HUAWEI: Self =
+        Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_HUAWEI_cluster_culling_shader'"]
+impl QueryPipelineStatisticFlags {
+    pub const CLUSTER_CULLING_SHADER_INVOCATIONS_HUAWEI: Self = Self(0b10_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_HUAWEI_cluster_culling_shader'"]
+impl ShaderStageFlags {
+    pub const CLUSTER_CULLING_HUAWEI: Self = Self(0b1000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_HUAWEI_cluster_culling_shader'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_FEATURES_HUAWEI: Self = Self(1_000_404_000);
+    pub const PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_PROPERTIES_HUAWEI: Self = Self(1_000_404_001);
+}
 impl ExtBorderColorSwizzleFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
         ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_border_color_swizzle\0")
