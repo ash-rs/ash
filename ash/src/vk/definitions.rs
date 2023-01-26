@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 239;
+pub const HEADER_VERSION: u32 = 240;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -46395,6 +46395,43 @@ impl DeviceFaultVendorBinaryHeaderVersionOneEXT {
     #[inline]
     pub fn engine_name_offset(mut self, engine_name_offset: u32) -> Self {
         self.engine_name_offset = engine_name_offset;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT.html>"]
+pub struct PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub pipeline_library_group_handles: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            pipeline_library_group_handles: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_PIPELINE_LIBRARY_GROUP_HANDLES_FEATURES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'_> {}
+impl<'a> PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a> {
+    #[inline]
+    pub fn pipeline_library_group_handles(mut self, pipeline_library_group_handles: bool) -> Self {
+        self.pipeline_library_group_handles = pipeline_library_group_handles.into();
         self
     }
 }

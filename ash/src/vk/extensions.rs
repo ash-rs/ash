@@ -20856,3 +20856,26 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_CORE_BUILTINS_FEATURES_ARM: Self = Self(1_000_497_000);
     pub const PHYSICAL_DEVICE_SHADER_CORE_BUILTINS_PROPERTIES_ARM: Self = Self(1_000_497_001);
 }
+impl ExtPipelineLibraryGroupHandlesFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pipeline_library_group_handles\0")
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct ExtPipelineLibraryGroupHandlesFn {}
+unsafe impl Send for ExtPipelineLibraryGroupHandlesFn {}
+unsafe impl Sync for ExtPipelineLibraryGroupHandlesFn {}
+impl ExtPipelineLibraryGroupHandlesFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+#[doc = "Generated from 'VK_EXT_pipeline_library_group_handles'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_PIPELINE_LIBRARY_GROUP_HANDLES_FEATURES_EXT: Self =
+        Self(1_000_498_000);
+}
