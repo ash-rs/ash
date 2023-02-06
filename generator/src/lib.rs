@@ -587,7 +587,7 @@ fn convert_c_literal(lit: Literal) -> Literal {
         // If expression rewriting succeeds this should parse into a single literal
         match (stream.next(), stream.next()) {
             (Some(TokenTree::Literal(l)), None) => l,
-            x => panic!("Stream must contain a single literal, not {:?}", x),
+            x => panic!("Stream must contain a single literal, not {x:?}"),
         }
     } else {
         lit
@@ -627,7 +627,7 @@ fn convert_c_expression(c_expr: &str, identifier_renames: &BTreeMap<String, Iden
     }
     let c_expr = c_expr
         .parse()
-        .unwrap_or_else(|_| panic!("Failed to parse `{}` as Rust", c_expr));
+        .unwrap_or_else(|_| panic!("Failed to parse `{c_expr}` as Rust"));
     rewrite_token_stream(c_expr, identifier_renames)
 }
 
@@ -1260,10 +1260,7 @@ pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
             if enum_name == "VkResult" {
                 variant_name.strip_prefix("VK").unwrap()
             } else {
-                panic!(
-                    "Failed to strip {} prefix from enum variant {}",
-                    struct_name, variant_name
-                )
+                panic!("Failed to strip {struct_name} prefix from enum variant {variant_name}")
             }
         });
 
@@ -1771,7 +1768,7 @@ pub fn derive_setters(
                         #[inline]
                         pub fn #param_ident_short(mut self, #param_ident_short: &'a #mutable #slice_param_ty_tokens) -> Self {
                             #set_size_stmt
-                            self.#param_ident = #param_ident_short#ptr;
+                            self.#param_ident = #param_ident_short #ptr;
                             self
                         }
                     });
@@ -2388,8 +2385,7 @@ pub fn extract_native_types(registry: &vk_parse::Registry) -> (Vec<(String, Stri
                         header_includes
                             .iter()
                             .all(|(other_name, _)| other_name != &name),
-                        "Header `{}` being redefined",
-                        name
+                        "Header `{name}` being redefined",
                     );
 
                     let (rem, path) = parse_c_include::<VerboseError<&str>>(&code.code)
