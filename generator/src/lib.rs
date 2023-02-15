@@ -1667,7 +1667,7 @@ pub fn derive_setters(
             }
 
             // Unique cases
-            if name == "pCode" {
+            if struct_.name == "VkShaderModuleCreateInfo" && name == "pCode" {
                 return Some(quote!{
                     #[inline]
                     pub fn code(mut self, code: &'a [u32]) -> Self {
