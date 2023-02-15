@@ -53,6 +53,20 @@ impl From<vk::Extent2D> for vk::Rect2D {
     }
 }
 
+impl From<vk::ClearColorValue> for vk::ClearValue {
+    fn from(value: vk::ClearColorValue) -> Self {
+        Self { color: value }
+    }
+}
+
+impl From<vk::ClearDepthStencilValue> for vk::ClearValue {
+    fn from(value: vk::ClearDepthStencilValue) -> Self {
+        Self {
+            depth_stencil: value,
+        }
+    }
+}
+
 /// Structures implementing this trait are layout-compatible with [`vk::BaseInStructure`] and
 /// [`vk::BaseOutStructure`]. Such structures have an `s_type` field indicating its type, which
 /// must always match the value of [`TaggedStructure::STRUCTURE_TYPE`].

@@ -357,17 +357,15 @@ fn main() {
                 )
                 .unwrap();
             let clear_values = [
-                vk::ClearValue {
-                    color: vk::ClearColorValue {
-                        float32: [0.0, 0.0, 0.0, 0.0],
-                    },
-                },
-                vk::ClearValue {
-                    depth_stencil: vk::ClearDepthStencilValue {
-                        depth: 1.0,
-                        stencil: 0,
-                    },
-                },
+                vk::ClearColorValue {
+                    float32: [0.0, 0.0, 0.0, 0.0],
+                }
+                .into(),
+                vk::ClearDepthStencilValue {
+                    depth: 1.0,
+                    stencil: 0,
+                }
+                .into(),
             ];
 
             let render_pass_begin_info = vk::RenderPassBeginInfo::default()
