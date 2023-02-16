@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 240;
+pub const HEADER_VERSION: u32 = 241;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -15403,6 +15403,45 @@ impl<'a> ImageViewUsageCreateInfo<'a> {
     #[inline]
     pub fn usage(mut self, usage: ImageUsageFlags) -> Self {
         self.usage = usage;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImageViewSlicedCreateInfoEXT.html>"]
+pub struct ImageViewSlicedCreateInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub slice_offset: u32,
+    pub slice_count: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ImageViewSlicedCreateInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            slice_offset: u32::default(),
+            slice_count: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for ImageViewSlicedCreateInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_SLICED_CREATE_INFO_EXT;
+}
+unsafe impl ExtendsImageViewCreateInfo for ImageViewSlicedCreateInfoEXT<'_> {}
+impl<'a> ImageViewSlicedCreateInfoEXT<'a> {
+    #[inline]
+    pub fn slice_offset(mut self, slice_offset: u32) -> Self {
+        self.slice_offset = slice_offset;
+        self
+    }
+    #[inline]
+    pub fn slice_count(mut self, slice_count: u32) -> Self {
+        self.slice_count = slice_count;
         self
     }
 }
@@ -34565,6 +34604,40 @@ impl<'a> PhysicalDeviceImage2DViewOf3DFeaturesEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceImageSlicedViewOf3DFeaturesEXT.html>"]
+pub struct PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub image_sliced_view_of3_d: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            image_sliced_view_of3_d: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_IMAGE_SLICED_VIEW_OF_3D_FEATURES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'_> {}
+impl<'a> PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'a> {
+    #[inline]
+    pub fn image_sliced_view_of3_d(mut self, image_sliced_view_of3_d: bool) -> Self {
+        self.image_sliced_view_of3_d = image_sliced_view_of3_d.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceMutableDescriptorTypeFeaturesEXT.html>"]
 pub struct PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'a> {
     pub s_type: StructureType,
@@ -47127,6 +47200,129 @@ impl<'a> PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'a> {
     #[inline]
     pub fn multiview_per_view_viewports(mut self, multiview_per_view_viewports: bool) -> Self {
         self.multiview_per_view_viewports = multiview_per_view_viewports.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderCorePropertiesARM.html>"]
+pub struct PhysicalDeviceShaderCorePropertiesARM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub pixel_rate: u32,
+    pub texel_rate: u32,
+    pub fma_rate: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceShaderCorePropertiesARM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            pixel_rate: u32::default(),
+            texel_rate: u32::default(),
+            fma_rate: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderCorePropertiesARM<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_ARM;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderCorePropertiesARM<'_> {}
+impl<'a> PhysicalDeviceShaderCorePropertiesARM<'a> {
+    #[inline]
+    pub fn pixel_rate(mut self, pixel_rate: u32) -> Self {
+        self.pixel_rate = pixel_rate;
+        self
+    }
+    #[inline]
+    pub fn texel_rate(mut self, texel_rate: u32) -> Self {
+        self.texel_rate = texel_rate;
+        self
+    }
+    #[inline]
+    pub fn fma_rate(mut self, fma_rate: u32) -> Self {
+        self.fma_rate = fma_rate;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM.html>"]
+pub struct PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub multiview_per_view_render_areas: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            multiview_per_view_render_areas: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_RENDER_AREAS_FEATURES_QCOM;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'_> {}
+impl<'a> PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'a> {
+    #[inline]
+    pub fn multiview_per_view_render_areas(
+        mut self,
+        multiview_per_view_render_areas: bool,
+    ) -> Self {
+        self.multiview_per_view_render_areas = multiview_per_view_render_areas.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMultiviewPerViewRenderAreasRenderPassBeginInfoQCOM.html>"]
+pub struct MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub per_view_render_area_count: u32,
+    pub p_per_view_render_areas: *const Rect2D,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            per_view_render_area_count: u32::default(),
+            p_per_view_render_areas: ::std::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::MULTIVIEW_PER_VIEW_RENDER_AREAS_RENDER_PASS_BEGIN_INFO_QCOM;
+}
+unsafe impl ExtendsRenderPassBeginInfo for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'_> {}
+unsafe impl ExtendsRenderingInfo for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'_> {}
+impl<'a> MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'a> {
+    #[inline]
+    pub fn per_view_render_areas(mut self, per_view_render_areas: &'a [Rect2D]) -> Self {
+        self.per_view_render_area_count = per_view_render_areas.len() as _;
+        self.p_per_view_render_areas = per_view_render_areas.as_ptr();
         self
     }
 }

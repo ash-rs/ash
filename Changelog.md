@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Update Vulkan-Headers to 1.3.240 (#697)
+- Update Vulkan-Headers to 1.3.241 (#697)
 
 ### Changed
 

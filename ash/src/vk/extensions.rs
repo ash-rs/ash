@@ -1487,8 +1487,6 @@ impl KhrSamplerMirrorClampToEdgeFn {
 impl SamplerAddressMode {
     #[doc = "Note that this defines what was previously a core enum, and so uses the 'value' attribute rather than 'offset', and does not have a suffix. This is a special case, and should not be repeated"]
     pub const MIRROR_CLAMP_TO_EDGE: Self = Self(4);
-    #[deprecated = "Alias introduced for consistency with extension suffixing rules"]
-    pub const MIRROR_CLAMP_TO_EDGE_KHR: Self = Self::MIRROR_CLAMP_TO_EDGE;
 }
 impl ImgFilterCubicFn {
     pub const NAME: &'static ::std::ffi::CStr =
@@ -5726,7 +5724,7 @@ impl StructureType {
 impl ExtDiscardRectanglesFn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_discard_rectangles\0") };
-    pub const SPEC_VERSION: u32 = 1u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetDiscardRectangleEXT = unsafe extern "system" fn(
@@ -5735,9 +5733,19 @@ pub type PFN_vkCmdSetDiscardRectangleEXT = unsafe extern "system" fn(
     discard_rectangle_count: u32,
     p_discard_rectangles: *const Rect2D,
 );
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetDiscardRectangleEnableEXT =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, discard_rectangle_enable: Bool32);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetDiscardRectangleModeEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    discard_rectangle_mode: DiscardRectangleModeEXT,
+);
 #[derive(Clone)]
 pub struct ExtDiscardRectanglesFn {
     pub cmd_set_discard_rectangle_ext: PFN_vkCmdSetDiscardRectangleEXT,
+    pub cmd_set_discard_rectangle_enable_ext: PFN_vkCmdSetDiscardRectangleEnableEXT,
+    pub cmd_set_discard_rectangle_mode_ext: PFN_vkCmdSetDiscardRectangleModeEXT,
 }
 unsafe impl Send for ExtDiscardRectanglesFn {}
 unsafe impl Sync for ExtDiscardRectanglesFn {}
@@ -5769,12 +5777,54 @@ impl ExtDiscardRectanglesFn {
                     ::std::mem::transmute(val)
                 }
             },
+            cmd_set_discard_rectangle_enable_ext: unsafe {
+                unsafe extern "system" fn cmd_set_discard_rectangle_enable_ext(
+                    _command_buffer: CommandBuffer,
+                    _discard_rectangle_enable: Bool32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_discard_rectangle_enable_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetDiscardRectangleEnableEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_discard_rectangle_enable_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_discard_rectangle_mode_ext: unsafe {
+                unsafe extern "system" fn cmd_set_discard_rectangle_mode_ext(
+                    _command_buffer: CommandBuffer,
+                    _discard_rectangle_mode: DiscardRectangleModeEXT,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_discard_rectangle_mode_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetDiscardRectangleModeEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_discard_rectangle_mode_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
         }
     }
 }
 #[doc = "Generated from 'VK_EXT_discard_rectangles'"]
 impl DynamicState {
     pub const DISCARD_RECTANGLE_EXT: Self = Self(1_000_099_000);
+    pub const DISCARD_RECTANGLE_ENABLE_EXT: Self = Self(1_000_099_001);
+    pub const DISCARD_RECTANGLE_MODE_EXT: Self = Self(1_000_099_002);
 }
 #[doc = "Generated from 'VK_EXT_discard_rectangles'"]
 impl StructureType {
@@ -11108,8 +11158,15 @@ impl StructureType {
 impl NvScissorExclusiveFn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_scissor_exclusive\0") };
-    pub const SPEC_VERSION: u32 = 1u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetExclusiveScissorEnableNV = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    first_exclusive_scissor: u32,
+    exclusive_scissor_count: u32,
+    p_exclusive_scissor_enables: *const Bool32,
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetExclusiveScissorNV = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -11119,6 +11176,7 @@ pub type PFN_vkCmdSetExclusiveScissorNV = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct NvScissorExclusiveFn {
+    pub cmd_set_exclusive_scissor_enable_nv: PFN_vkCmdSetExclusiveScissorEnableNV,
     pub cmd_set_exclusive_scissor_nv: PFN_vkCmdSetExclusiveScissorNV,
 }
 unsafe impl Send for NvScissorExclusiveFn {}
@@ -11129,6 +11187,28 @@ impl NvScissorExclusiveFn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         Self {
+            cmd_set_exclusive_scissor_enable_nv: unsafe {
+                unsafe extern "system" fn cmd_set_exclusive_scissor_enable_nv(
+                    _command_buffer: CommandBuffer,
+                    _first_exclusive_scissor: u32,
+                    _exclusive_scissor_count: u32,
+                    _p_exclusive_scissor_enables: *const Bool32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_exclusive_scissor_enable_nv)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetExclusiveScissorEnableNV\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_exclusive_scissor_enable_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
             cmd_set_exclusive_scissor_nv: unsafe {
                 unsafe extern "system" fn cmd_set_exclusive_scissor_nv(
                     _command_buffer: CommandBuffer,
@@ -11156,6 +11236,7 @@ impl NvScissorExclusiveFn {
 }
 #[doc = "Generated from 'VK_NV_scissor_exclusive'"]
 impl DynamicState {
+    pub const EXCLUSIVE_SCISSOR_ENABLE_NV: Self = Self(1_000_205_000);
     pub const EXCLUSIVE_SCISSOR_NV: Self = Self(1_000_205_001);
 }
 #[doc = "Generated from 'VK_NV_scissor_exclusive'"]
@@ -18904,6 +18985,51 @@ impl StructureType {
     pub const DEVICE_BUFFER_MEMORY_REQUIREMENTS_KHR: Self = Self::DEVICE_BUFFER_MEMORY_REQUIREMENTS;
     pub const DEVICE_IMAGE_MEMORY_REQUIREMENTS_KHR: Self = Self::DEVICE_IMAGE_MEMORY_REQUIREMENTS;
 }
+impl ArmShaderCorePropertiesFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_ARM_shader_core_properties\0")
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct ArmShaderCorePropertiesFn {}
+unsafe impl Send for ArmShaderCorePropertiesFn {}
+unsafe impl Sync for ArmShaderCorePropertiesFn {}
+impl ArmShaderCorePropertiesFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+#[doc = "Generated from 'VK_ARM_shader_core_properties'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_ARM: Self = Self(1_000_415_000);
+}
+impl ExtImageSlicedViewOf3dFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_sliced_view_of_3d\0")
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct ExtImageSlicedViewOf3dFn {}
+unsafe impl Send for ExtImageSlicedViewOf3dFn {}
+unsafe impl Sync for ExtImageSlicedViewOf3dFn {}
+impl ExtImageSlicedViewOf3dFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+#[doc = "Generated from 'VK_EXT_image_sliced_view_of_3d'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_IMAGE_SLICED_VIEW_OF_3D_FEATURES_EXT: Self = Self(1_000_418_000);
+    pub const IMAGE_VIEW_SLICED_CREATE_INFO_EXT: Self = Self(1_000_418_001);
+}
 impl ValveDescriptorSetHostMappingFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
         ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_VALVE_descriptor_set_host_mapping\0")
@@ -20878,4 +21004,31 @@ impl ExtPipelineLibraryGroupHandlesFn {
 impl StructureType {
     pub const PHYSICAL_DEVICE_PIPELINE_LIBRARY_GROUP_HANDLES_FEATURES_EXT: Self =
         Self(1_000_498_000);
+}
+impl QcomMultiviewPerViewRenderAreasFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+            b"VK_QCOM_multiview_per_view_render_areas\0",
+        )
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct QcomMultiviewPerViewRenderAreasFn {}
+unsafe impl Send for QcomMultiviewPerViewRenderAreasFn {}
+unsafe impl Sync for QcomMultiviewPerViewRenderAreasFn {}
+impl QcomMultiviewPerViewRenderAreasFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+#[doc = "Generated from 'VK_QCOM_multiview_per_view_render_areas'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_RENDER_AREAS_FEATURES_QCOM: Self =
+        Self(1_000_510_000);
+    pub const MULTIVIEW_PER_VIEW_RENDER_AREAS_RENDER_PASS_BEGIN_INFO_QCOM: Self =
+        Self(1_000_510_001);
 }
