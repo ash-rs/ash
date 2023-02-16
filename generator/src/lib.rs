@@ -41,8 +41,6 @@ macro_rules! get_variant {
     };
 }
 
-const BACKWARDS_COMPATIBLE_ALIAS_COMMENT: &str = "Backwards-compatible alias containing a typo";
-
 pub trait ExtensionExt {}
 #[derive(Copy, Clone, Debug)]
 pub enum CType {
@@ -311,17 +309,9 @@ pub trait ConstantExt {
     fn is_alias(&self) -> bool {
         false
     }
-    fn doc_attribute(&self) -> TokenStream {
-        assert_ne!(
-            self.notation(),
-            Some(BACKWARDS_COMPATIBLE_ALIAS_COMMENT),
-            "Backwards-compatible constants should not be emitted"
-        );
-        match self.formatted_notation() {
-            Some(n) if n.starts_with("Alias") => quote!(#[deprecated = #n]),
-            Some(n) => quote!(#[doc = #n]),
-            None => quote!(),
-        }
+    fn is_deprecated(&self) -> bool;
+    fn doc_attribute(&self) -> Option<TokenStream> {
+        self.formatted_notation().map(|n| quote!(#[doc = #n]))
     }
 }
 
@@ -334,6 +324,9 @@ impl ConstantExt for vkxml::ExtensionEnum {
     }
     fn notation(&self) -> Option<&str> {
         self.notation.as_deref()
+    }
+    fn is_deprecated(&self) -> bool {
+        todo!()
     }
 }
 
@@ -352,6 +345,9 @@ impl ConstantExt for vk_parse::Enum {
     fn is_alias(&self) -> bool {
         matches!(self.spec, vk_parse::EnumSpec::Alias { .. })
     }
+    fn is_deprecated(&self) -> bool {
+        self.deprecated.is_some()
+    }
 }
 
 impl ConstantExt for vkxml::Constant {
@@ -363,6 +359,9 @@ impl ConstantExt for vkxml::Constant {
     }
     fn notation(&self) -> Option<&str> {
         self.notation.as_deref()
+    }
+    fn is_deprecated(&self) -> bool {
+        todo!()
     }
 }
 
@@ -1072,6 +1071,10 @@ impl<'a> ConstantExt for ExtensionConstant<'a> {
     fn notation(&self) -> Option<&str> {
         self.notation
     }
+    fn is_deprecated(&self) -> bool {
+        // We won't create this struct if the extension constant was deprecated
+        false
+    }
 }
 
 pub fn generate_extension_constants<'a>(
@@ -1094,7 +1097,7 @@ pub fn generate_extension_constants<'a>(
                 continue;
             }
 
-            if enum_.comment.as_deref() == Some(BACKWARDS_COMPATIBLE_ALIAS_COMMENT) {
+            if enum_.deprecated.is_some() {
                 continue;
             }
 
@@ -1256,7 +1259,12 @@ pub fn generate_define(
 
         let deprecated = comment
             .and_then(|c| c.trim().strip_prefix("DEPRECATED: "))
-            .map(|comment| (quote!(#[deprecated = #comment])));
+            .map(|comment| quote!(#[deprecated = #comment]))
+            .or_else(|| match define.deprecated.as_ref()?.as_str() {
+                "true" => Some(quote!(#[deprecated])),
+                "aliased" => Some(quote!(#[deprecated = "This type has been aliased"])),
+                x => panic!("Unknown deprecation reason {}", x),
+            });
 
         let (code, ident) = if let Some(parameters) = parameters {
             let params = parameters
@@ -1424,7 +1432,7 @@ pub fn bitflags_impl_block(
 ) -> TokenStream {
     let variants = constants
         .iter()
-        .filter(|constant| constant.notation() != Some(BACKWARDS_COMPATIBLE_ALIAS_COMMENT))
+        .filter(|constant| !constant.is_deprecated())
         .map(|constant| {
             let variant_ident = constant.variant_ident(enum_name);
             let notation = constant.doc_attribute();
@@ -1462,7 +1470,7 @@ pub fn generate_enum<'a>(
         .children
         .iter()
         .filter_map(get_variant!(vk_parse::EnumsChild::Enum))
-        .filter(|constant| constant.notation() != Some(BACKWARDS_COMPATIBLE_ALIAS_COMMENT))
+        .filter(|constant| !constant.is_deprecated())
         .collect_vec();
 
     let mut values = Vec::with_capacity(constants.len());
