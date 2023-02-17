@@ -12,7 +12,7 @@ repository = "https://github.com/MaikKlein/ash"
 readme = "../README.md"
 keywords = ["vulkan", "graphic"]
 documentation = "https://docs.rs/ash"
-edition = "2018"
+edition = "2021"
 rust-version = "1.59.0"
 
 [dependencies]

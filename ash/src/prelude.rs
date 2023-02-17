@@ -116,7 +116,7 @@ pub(crate) fn debug_flags<Value: Into<u64> + Copy>(
         if !first {
             f.write_str(" | ")?;
         }
-        write!(f, "{:b}", accum)?;
+        write!(f, "{accum:b}")?;
     }
     Ok(())
 }
