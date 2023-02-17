@@ -42,7 +42,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             None,
         )?;
         let surface_fn = ash::extensions::khr::Surface::new(&entry, &instance);
-        println!("surface: {:?}", surface);
+        println!("surface: {surface:?}");
 
         event_loop.run(move |event, _, control_flow| match event {
             winit::event::Event::WindowEvent {

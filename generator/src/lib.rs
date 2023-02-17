@@ -80,7 +80,7 @@ fn parse_ctype<'a, E: ParseError<&'a str>>(i: &'a str) -> IResult<&'a str, CType
 
 fn parse_cexpr<'a, E: ParseError<&'a str>>(i: &'a str) -> IResult<&'a str, (CType, String), E> {
     (alt((
-        map(parse_cfloat, |f| (CType::Float, format!("{:.2}", f))),
+        map(parse_cfloat, |f| (CType::Float, format!("{f:.2}"))),
         parse_inverse_number,
         parse_decimal_number,
         parse_hexadecimal_number,
@@ -105,9 +105,9 @@ fn parse_inverse_number<'a, E: ParseError<&'a str>>(
         ),
         |((ctyp, num), minus_num)| {
             let expr = if let Some(minus) = minus_num {
-                format!("!{}-{}", num, minus)
+                format!("!{num}-{minus}")
             } else {
-                format!("!{}", num)
+                format!("!{num}")
             };
             (ctyp, expr)
         },
@@ -158,8 +158,7 @@ fn parse_hexadecimal_number<'a, E: ParseError<&'a str>>(
 
 fn khronos_link<S: Display + ?Sized>(name: &S) -> Literal {
     Literal::string(&format!(
-        "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/{name}.html>",
-        name = name
+        "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/{name}.html>"
     ))
 }
 
@@ -283,7 +282,7 @@ impl quote::ToTokens for Constant {
             }
             Constant::Hex(ref s) => {
                 let number = interleave_number('_', 4, s);
-                syn::LitInt::new(&format!("0x{}", number), Span::call_site()).to_tokens(tokens);
+                syn::LitInt::new(&format!("0x{number}"), Span::call_site()).to_tokens(tokens);
             }
             Constant::Text(ref text) => text.to_tokens(tokens),
             Constant::CExpr(ref expr) => {
@@ -293,9 +292,9 @@ impl quote::ToTokens for Constant {
             }
             Constant::BitPos(pos) => {
                 let value = 1u64 << pos;
-                let bit_string = format!("{:b}", value);
+                let bit_string = format!("{value:b}");
                 let bit_string = interleave_number('_', 4, &bit_string);
-                syn::LitInt::new(&format!("0b{}", bit_string), Span::call_site()).to_tokens(tokens);
+                syn::LitInt::new(&format!("0b{bit_string}"), Span::call_site()).to_tokens(tokens);
             }
             Constant::Alias(ref value) => tokens.extend(quote!(Self::#value)),
         }
@@ -432,7 +431,7 @@ impl FeatureExt for vkxml::Feature {
     fn version_string(&self) -> String {
         let mut version = format!("{}", self.version);
         if version.len() == 1 {
-            version = format!("{}_0", version)
+            version = format!("{version}_0")
         }
 
         version.replace('.', "_")
@@ -588,7 +587,7 @@ fn convert_c_literal(lit: Literal) -> Literal {
         // If expression rewriting succeeds this should parse into a single literal
         match (stream.next(), stream.next()) {
             (Some(TokenTree::Literal(l)), None) => l,
-            x => panic!("Stream must contain a single literal, not {:?}", x),
+            x => panic!("Stream must contain a single literal, not {x:?}"),
         }
     } else {
         lit
@@ -628,7 +627,7 @@ fn convert_c_expression(c_expr: &str, identifier_renames: &BTreeMap<String, Iden
     }
     let c_expr = c_expr
         .parse()
-        .unwrap_or_else(|_| panic!("Failed to parse `{}` as Rust", c_expr));
+        .unwrap_or_else(|_| panic!("Failed to parse `{c_expr}` as Rust"));
     rewrite_token_stream(c_expr, identifier_renames)
 }
 
@@ -986,7 +985,7 @@ pub fn generate_extension_constants<'a>(
 
     let enum_tokens = extended_enums.iter().map(|(extends, constants)| {
         let ident = name_to_tokens(extends);
-        let doc_string = format!("Generated from '{}'", extension_name);
+        let doc_string = format!("Generated from '{extension_name}'");
         let impl_block = bitflags_impl_block(ident, extends, &constants.iter().collect_vec());
         quote! {
             #[doc = #doc_string]
@@ -1045,7 +1044,7 @@ pub fn generate_extension_commands<'a>(
             }
         });
 
-    let byte_name_ident = Literal::byte_string(format!("{}\0", extension_name).as_bytes());
+    let byte_name_ident = Literal::byte_string(format!("{extension_name}\0").as_bytes());
     let extension_cstr = quote! {
         impl #ident {
             #[inline]
@@ -1261,10 +1260,7 @@ pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
             if enum_name == "VkResult" {
                 variant_name.strip_prefix("VK").unwrap()
             } else {
-                panic!(
-                    "Failed to strip {} prefix from enum variant {}",
-                    struct_name, variant_name
-                )
+                panic!("Failed to strip {struct_name} prefix from enum variant {variant_name}")
             }
         });
 
@@ -1764,7 +1760,7 @@ pub fn derive_setters(
                         #[inline]
                         pub fn #param_ident_short(mut self, #param_ident_short: &'a #mutable #slice_param_ty_tokens) -> Self {
                             #set_size_stmt
-                            self.inner.#param_ident = #param_ident_short#ptr;
+                            self.inner.#param_ident = #param_ident_short #ptr;
                             self
                         }
                     });
@@ -2393,8 +2389,7 @@ pub fn extract_native_types(registry: &vk_parse::Registry) -> (Vec<(String, Stri
                         header_includes
                             .iter()
                             .all(|(other_name, _)| other_name != &name),
-                        "Header `{}` being redefined",
-                        name
+                        "Header `{name}` being redefined",
                     );
 
                     let (rem, path) = parse_c_include::<VerboseError<&str>>(&code.code)
@@ -2665,23 +2660,18 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         #(#aliases)*
     };
 
-    write!(&mut vk_features_file, "{}", feature_code).expect("Unable to write vk/features.rs");
-    write!(&mut vk_definitions_file, "{}", definition_code)
+    write!(&mut vk_features_file, "{feature_code}").expect("Unable to write vk/features.rs");
+    write!(&mut vk_definitions_file, "{definition_code}")
         .expect("Unable to write vk/definitions.rs");
-    write!(&mut vk_enums_file, "{}", enum_code).expect("Unable to write vk/enums.rs");
-    write!(&mut vk_bitflags_file, "{}", bitflags_code).expect("Unable to write vk/bitflags.rs");
-    write!(&mut vk_constants_file, "{}", constants_code).expect("Unable to write vk/constants.rs");
-    write!(&mut vk_extensions_file, "{}", extension_code)
-        .expect("Unable to write vk/extensions.rs");
-    write!(
-        &mut vk_feature_extensions_file,
-        "{}",
-        feature_extensions_code
-    )
-    .expect("Unable to write vk/feature_extensions.rs");
-    write!(&mut vk_const_debugs_file, "{}", const_debugs)
+    write!(&mut vk_enums_file, "{enum_code}").expect("Unable to write vk/enums.rs");
+    write!(&mut vk_bitflags_file, "{bitflags_code}").expect("Unable to write vk/bitflags.rs");
+    write!(&mut vk_constants_file, "{constants_code}").expect("Unable to write vk/constants.rs");
+    write!(&mut vk_extensions_file, "{extension_code}").expect("Unable to write vk/extensions.rs");
+    write!(&mut vk_feature_extensions_file, "{feature_extensions_code}")
+        .expect("Unable to write vk/feature_extensions.rs");
+    write!(&mut vk_const_debugs_file, "{const_debugs}")
         .expect("Unable to write vk/const_debugs.rs");
-    write!(&mut vk_aliases_file, "{}", aliases).expect("Unable to write vk/aliases.rs");
+    write!(&mut vk_aliases_file, "{aliases}").expect("Unable to write vk/aliases.rs");
 
     let vk_include = vk_headers_dir.join("include");
 

@@ -119,8 +119,7 @@ unsafe extern "system" fn vulkan_debug_callback(
     };
 
     println!(
-        "{:?}:\n{:?} [{} ({})] : {}\n",
-        message_severity, message_type, message_id_name, message_id_number, message,
+        "{message_severity:?}:\n{message_type:?} [{message_id_name} ({message_id_number})] : {message}\n",
     );
 
     vk::FALSE

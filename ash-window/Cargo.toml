@@ -2,7 +2,6 @@
 name = "ash-window"
 version = "0.12.0"
 authors = ["msiglreith <m.siglreith@gmail.com>"]
-edition = "2018"
 license = "MIT OR Apache-2.0"
 description = "Interop library between ash and raw-window-handle"
 documentation = "https://docs.rs/ash-window"
@@ -12,6 +11,7 @@ keywords = ["window", "ash", "graphics"]
 categories = ["game-engines", "graphics"]
 exclude = [".github/*"]
 workspace = ".."
+edition = "2021"
 rust-version = "1.59.0"
 
 [dependencies]
