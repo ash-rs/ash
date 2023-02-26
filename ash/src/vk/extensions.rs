@@ -14967,6 +14967,27 @@ impl QcomRenderPassStoreOpsFn {
 impl AttachmentStoreOp {
     pub const NONE_QCOM: Self = Self::NONE;
 }
+impl NvLowLatencyFn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_low_latency\0") };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct NvLowLatencyFn {}
+unsafe impl Send for NvLowLatencyFn {}
+unsafe impl Sync for NvLowLatencyFn {}
+impl NvLowLatencyFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+#[doc = "Generated from 'VK_NV_low_latency'"]
+impl StructureType {
+    pub const QUERY_LOW_LATENCY_SUPPORT_NV: Self = Self(1_000_310_000);
+}
 impl ExtMetalObjectsFn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_metal_objects\0") };

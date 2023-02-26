@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 241;
+pub const HEADER_VERSION: u32 = 242;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -47328,6 +47328,38 @@ impl<'a> MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'a> {
     pub fn per_view_render_areas(mut self, per_view_render_areas: &'a [Rect2D]) -> Self {
         self.per_view_render_area_count = per_view_render_areas.len() as _;
         self.p_per_view_render_areas = per_view_render_areas.as_ptr();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkQueryLowLatencySupportNV.html>"]
+pub struct QueryLowLatencySupportNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub p_queried_low_latency_data: *mut c_void,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for QueryLowLatencySupportNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            p_queried_low_latency_data: ::std::ptr::null_mut(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for QueryLowLatencySupportNV<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::QUERY_LOW_LATENCY_SUPPORT_NV;
+}
+unsafe impl ExtendsSemaphoreCreateInfo for QueryLowLatencySupportNV<'_> {}
+impl<'a> QueryLowLatencySupportNV<'a> {
+    #[inline]
+    pub fn queried_low_latency_data(mut self, queried_low_latency_data: *mut c_void) -> Self {
+        self.p_queried_low_latency_data = queried_low_latency_data;
         self
     }
 }
