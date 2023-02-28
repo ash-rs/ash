@@ -59,6 +59,10 @@ impl<T> Align<T> {
         }
     }
 
+    pub fn aligned_size(&self) -> vk::DeviceSize {
+        self.elem_size
+    }
+
     pub fn iter_mut(&mut self) -> AlignIter<T> {
         AlignIter {
             current: 0,
