@@ -1,0 +1,35 @@
+[package]
+name = "ash-rewrite"
+# TODO: placeholder version for the rewrite
+version = "0.999.0+1.3.238"
+description = "Vulkan bindings for Rust"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/ash-rs/ash"
+readme = "../README.md"
+keywords = ["gamedev", "graphics", "vulkan", "bindings"]
+categories = [
+    "api-bindings",
+    "game-development",
+    "graphics",
+    "rendering::graphics-api",
+]
+documentation = "https://docs.rs/ash"
+edition = "2021"
+# TODO: reevaluate, then update in ci.yml
+rust-version = "1.60.0"
+
+[dependencies]
+libloading = { version = "0.7", optional = true }
+
+[features]
+default = ["loaded", "debug"]
+# Link the Vulkan loader at compile time.
+linked = []
+# Support searching for the Vulkan loader manually at runtime.
+loaded = ["libloading"]
+# Whether Vulkan structs should implement Debug.
+debug = []
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]

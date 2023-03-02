@@ -27,7 +27,7 @@ jobs:
       - uses: actions-rs/cargo@v1
         with:
           command: check
-          args: -p ash --all-features
+          args: -p ash -p ash-rewrite --all-features
 
   check_ash_window_msrv:
     name: Check ash-window MSRV (1.64.0)
@@ -40,6 +40,7 @@ jobs:
           command: check
           args: -p ash-window -p examples --all-features
 
+  # TODO: add a similiar job for the rewrite once that generates code
   generated:
     name: Generated
     runs-on: ubuntu-latest
@@ -119,10 +120,10 @@ jobs:
         name: Clippy lint without features
         with:
           command: clippy
-          # Only test the core ash and ash-window crate, where features reside.
+          # Only test the core ash, ash-rewrite and ash-window crate, where features reside.
           # The examples crate would otherwise enable all default features again,
           # making this test moot.
-          args: -p ash -p ash-window --no-default-features -- -D warnings
+          args: -p ash -p ash-rewrite -p ash-window --no-default-features -- -D warnings
       - uses: actions-rs/cargo@v1
         name: Clippy lint with all features
         with:
