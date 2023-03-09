@@ -19,7 +19,7 @@ jobs:
           args: --workspace --all-targets --all-features
 
   check_msrv:
-    name: Check MSRV (1.60.0)
+    name: Check ash MSRV (1.60.0)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -27,7 +27,18 @@ jobs:
       - uses: actions-rs/cargo@v1
         with:
           command: check
-          args: -p ash -p ash-window --all-features
+          args: -p ash --all-features
+
+  check_ash_window_msrv:
+    name: Check ash-window MSRV (1.64.0)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: dtolnay/rust-toolchain@1.64.0
+      - uses: actions-rs/cargo@v1
+        with:
+          command: check
+          args: -p ash-window -p examples --all-features
 
   generated:
     name: Generated
