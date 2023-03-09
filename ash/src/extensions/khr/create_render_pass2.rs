@@ -73,10 +73,7 @@ impl CreateRenderPass2 {
         (self.fp.cmd_end_render_pass2_khr)(command_buffer, subpass_end_info);
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::KhrCreateRenderpass2Fn::name()
-    }
+    pub const NAME: &'static CStr = vk::KhrCreateRenderpass2Fn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrCreateRenderpass2Fn {

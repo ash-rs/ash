@@ -54,10 +54,7 @@ impl DebugMarker {
         (self.fp.cmd_debug_marker_insert_ext)(command_buffer, marker_info);
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::ExtDebugMarkerFn::name()
-    }
+    pub const NAME: &'static CStr = vk::ExtDebugMarkerFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ExtDebugMarkerFn {

@@ -75,10 +75,7 @@ impl GetMemoryRequirements2 {
         assert_eq!(count as usize, out.len());
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::KhrGetMemoryRequirements2Fn::name()
-    }
+    pub const NAME: &'static CStr = vk::KhrGetMemoryRequirements2Fn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrGetMemoryRequirements2Fn {

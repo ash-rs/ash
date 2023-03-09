@@ -67,10 +67,7 @@ impl PipelineExecutableProperties {
         })
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::KhrPipelineExecutablePropertiesFn::name()
-    }
+    pub const NAME: &'static CStr = vk::KhrPipelineExecutablePropertiesFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrPipelineExecutablePropertiesFn {

@@ -88,10 +88,7 @@ impl PrivateData {
         data
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::ExtPrivateDataFn::name()
-    }
+    pub const NAME: &'static CStr = vk::ExtPrivateDataFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ExtPrivateDataFn {

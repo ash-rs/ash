@@ -42,10 +42,7 @@ impl SampleLocations {
         (self.fp.cmd_set_sample_locations_ext)(command_buffer, sample_locations_info)
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::ExtSampleLocationsFn::name()
-    }
+    pub const NAME: &'static CStr = vk::ExtSampleLocationsFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ExtSampleLocationsFn {

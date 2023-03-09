@@ -5,10 +5,8 @@ use crate::vk::enums::*;
 use crate::vk::platform_types::*;
 use std::os::raw::*;
 impl KhrSurfaceFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_surface\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_surface\0") };
     pub const SPEC_VERSION: u32 = 25u32;
 }
 #[allow(non_camel_case_types)]
@@ -178,10 +176,8 @@ impl Result {
     pub const ERROR_NATIVE_WINDOW_IN_USE_KHR: Self = Self(-1_000_000_001);
 }
 impl KhrSwapchainFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_swapchain\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_swapchain\0") };
     pub const SPEC_VERSION: u32 = 70u32;
 }
 #[allow(non_camel_case_types)]
@@ -475,10 +471,8 @@ impl SwapchainCreateFlagsKHR {
     pub const PROTECTED: Self = Self(0b10);
 }
 impl KhrDisplayFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_display\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_display\0") };
     pub const SPEC_VERSION: u32 = 23u32;
 }
 #[allow(non_camel_case_types)]
@@ -714,10 +708,8 @@ impl StructureType {
     pub const DISPLAY_SURFACE_CREATE_INFO_KHR: Self = Self(1_000_002_001);
 }
 impl KhrDisplaySwapchainFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_display_swapchain\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_display_swapchain\0") };
     pub const SPEC_VERSION: u32 = 10u32;
 }
 #[allow(non_camel_case_types)]
@@ -775,10 +767,8 @@ impl StructureType {
     pub const DISPLAY_PRESENT_INFO_KHR: Self = Self(1_000_003_000);
 }
 impl KhrXlibSurfaceFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_xlib_surface\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_xlib_surface\0") };
     pub const SPEC_VERSION: u32 = 6u32;
 }
 #[allow(non_camel_case_types)]
@@ -860,10 +850,8 @@ impl StructureType {
     pub const XLIB_SURFACE_CREATE_INFO_KHR: Self = Self(1_000_004_000);
 }
 impl KhrXcbSurfaceFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_xcb_surface\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_xcb_surface\0") };
     pub const SPEC_VERSION: u32 = 6u32;
 }
 #[allow(non_camel_case_types)]
@@ -945,10 +933,8 @@ impl StructureType {
     pub const XCB_SURFACE_CREATE_INFO_KHR: Self = Self(1_000_005_000);
 }
 impl KhrWaylandSurfaceFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_wayland_surface\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_wayland_surface\0") };
     pub const SPEC_VERSION: u32 = 6u32;
 }
 #[allow(non_camel_case_types)]
@@ -1029,10 +1015,8 @@ impl StructureType {
     pub const WAYLAND_SURFACE_CREATE_INFO_KHR: Self = Self(1_000_006_000);
 }
 impl KhrAndroidSurfaceFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_android_surface\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_android_surface\0") };
     pub const SPEC_VERSION: u32 = 6u32;
 }
 #[allow(non_camel_case_types)]
@@ -1083,10 +1067,8 @@ impl StructureType {
     pub const ANDROID_SURFACE_CREATE_INFO_KHR: Self = Self(1_000_008_000);
 }
 impl KhrWin32SurfaceFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_win32_surface\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_win32_surface\0") };
     pub const SPEC_VERSION: u32 = 6u32;
 }
 #[allow(non_camel_case_types)]
@@ -1162,10 +1144,8 @@ impl StructureType {
     pub const WIN32_SURFACE_CREATE_INFO_KHR: Self = Self(1_000_009_000);
 }
 impl AndroidNativeBufferFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_ANDROID_native_buffer\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_ANDROID_native_buffer\0") };
     pub const SPEC_VERSION: u32 = 8u32;
 }
 #[allow(non_camel_case_types)]
@@ -1316,10 +1296,8 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_PRESENTATION_PROPERTIES_ANDROID: Self = Self(1_000_010_002);
 }
 impl ExtDebugReportFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_debug_report\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_debug_report\0") };
     pub const SPEC_VERSION: u32 = 10u32;
 }
 #[allow(non_camel_case_types)]
@@ -1449,10 +1427,8 @@ impl StructureType {
     pub const DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT: Self = Self(1_000_011_000);
 }
 impl NvGlslShaderFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_glsl_shader\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_glsl_shader\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -1472,12 +1448,9 @@ impl Result {
     pub const ERROR_INVALID_SHADER_NV: Self = Self(-1_000_012_000);
 }
 impl ExtDepthRangeUnrestrictedFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_depth_range_unrestricted\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_depth_range_unrestricted\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -1493,14 +1466,9 @@ impl ExtDepthRangeUnrestrictedFn {
     }
 }
 impl KhrSamplerMirrorClampToEdgeFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_KHR_sampler_mirror_clamp_to_edge\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_sampler_mirror_clamp_to_edge\0")
+    };
     pub const SPEC_VERSION: u32 = 3u32;
 }
 #[derive(Clone)]
@@ -1523,10 +1491,8 @@ impl SamplerAddressMode {
     pub const MIRROR_CLAMP_TO_EDGE_KHR: Self = Self::MIRROR_CLAMP_TO_EDGE;
 }
 impl ImgFilterCubicFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_IMG_filter_cubic\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_IMG_filter_cubic\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -1551,10 +1517,8 @@ impl FormatFeatureFlags {
     pub const SAMPLED_IMAGE_FILTER_CUBIC_IMG: Self = Self::SAMPLED_IMAGE_FILTER_CUBIC_EXT;
 }
 impl AmdRasterizationOrderFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_rasterization_order\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_rasterization_order\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -1574,12 +1538,9 @@ impl StructureType {
     pub const PIPELINE_RASTERIZATION_STATE_RASTERIZATION_ORDER_AMD: Self = Self(1_000_018_000);
 }
 impl AmdShaderTrinaryMinmaxFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_trinary_minmax\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_trinary_minmax\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -1595,14 +1556,11 @@ impl AmdShaderTrinaryMinmaxFn {
     }
 }
 impl AmdShaderExplicitVertexParameterFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_AMD_shader_explicit_vertex_parameter\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+            b"VK_AMD_shader_explicit_vertex_parameter\0",
+        )
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -1618,10 +1576,8 @@ impl AmdShaderExplicitVertexParameterFn {
     }
 }
 impl ExtDebugMarkerFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_debug_marker\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_debug_marker\0") };
     pub const SPEC_VERSION: u32 = 4u32;
 }
 #[allow(non_camel_case_types)]
@@ -1766,10 +1722,8 @@ impl StructureType {
     pub const DEBUG_MARKER_MARKER_INFO_EXT: Self = Self(1_000_022_002);
 }
 impl KhrVideoQueueFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_queue\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_queue\0") };
     pub const SPEC_VERSION: u32 = 8u32;
 }
 #[allow(non_camel_case_types)]
@@ -2168,10 +2122,8 @@ impl StructureType {
     pub const QUEUE_FAMILY_QUERY_RESULT_STATUS_PROPERTIES_KHR: Self = Self(1_000_023_016);
 }
 impl KhrVideoDecodeQueueFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_decode_queue\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_decode_queue\0") };
     pub const SPEC_VERSION: u32 = 7u32;
 }
 #[allow(non_camel_case_types)]
@@ -2257,10 +2209,8 @@ impl StructureType {
     pub const VIDEO_DECODE_USAGE_INFO_KHR: Self = Self(1_000_024_002);
 }
 impl AmdGcnShaderFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_gcn_shader\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_gcn_shader\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -2276,10 +2226,8 @@ impl AmdGcnShaderFn {
     }
 }
 impl NvDedicatedAllocationFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_dedicated_allocation\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_dedicated_allocation\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -2301,10 +2249,8 @@ impl StructureType {
     pub const DEDICATED_ALLOCATION_MEMORY_ALLOCATE_INFO_NV: Self = Self(1_000_026_002);
 }
 impl ExtTransformFeedbackFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_transform_feedback\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_transform_feedback\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -2542,10 +2488,8 @@ impl StructureType {
     pub const PIPELINE_RASTERIZATION_STATE_STREAM_CREATE_INFO_EXT: Self = Self(1_000_028_002);
 }
 impl NvxBinaryImportFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NVX_binary_import\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NVX_binary_import\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -2711,10 +2655,8 @@ impl StructureType {
     pub const CU_LAUNCH_INFO_NVX: Self = Self(1_000_029_002);
 }
 impl NvxImageViewHandleFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NVX_image_view_handle\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NVX_image_view_handle\0") };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
@@ -2787,10 +2729,8 @@ impl StructureType {
     pub const IMAGE_VIEW_ADDRESS_PROPERTIES_NVX: Self = Self(1_000_030_001);
 }
 impl AmdDrawIndirectCountFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_draw_indirect_count\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_draw_indirect_count\0") };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
@@ -2879,12 +2819,9 @@ impl AmdDrawIndirectCountFn {
     }
 }
 impl AmdNegativeViewportHeightFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_negative_viewport_height\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_negative_viewport_height\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -2900,12 +2837,9 @@ impl AmdNegativeViewportHeightFn {
     }
 }
 impl AmdGpuShaderHalfFloatFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_gpu_shader_half_float\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_gpu_shader_half_float\0")
+    };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
@@ -2921,10 +2855,8 @@ impl AmdGpuShaderHalfFloatFn {
     }
 }
 impl AmdShaderBallotFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_ballot\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_ballot\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -2940,10 +2872,8 @@ impl AmdShaderBallotFn {
     }
 }
 impl ExtVideoEncodeH264Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_encode_h264\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_encode_h264\0") };
     pub const SPEC_VERSION: u32 = 9u32;
 }
 #[derive(Clone)]
@@ -2977,10 +2907,8 @@ impl VideoCodecOperationFlagsKHR {
     pub const ENCODE_H264_EXT: Self = Self(0b1_0000_0000_0000_0000);
 }
 impl ExtVideoEncodeH265Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_encode_h265\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_encode_h265\0") };
     pub const SPEC_VERSION: u32 = 9u32;
 }
 #[derive(Clone)]
@@ -3014,10 +2942,8 @@ impl VideoCodecOperationFlagsKHR {
     pub const ENCODE_H265_EXT: Self = Self(0b10_0000_0000_0000_0000);
 }
 impl KhrVideoDecodeH264Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_decode_h264\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_decode_h264\0") };
     pub const SPEC_VERSION: u32 = 8u32;
 }
 #[derive(Clone)]
@@ -3046,12 +2972,9 @@ impl VideoCodecOperationFlagsKHR {
     pub const DECODE_H264: Self = Self(0b1);
 }
 impl AmdTextureGatherBiasLodFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_texture_gather_bias_lod\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_texture_gather_bias_lod\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -3071,10 +2994,8 @@ impl StructureType {
     pub const TEXTURE_LOD_GATHER_FORMAT_PROPERTIES_AMD: Self = Self(1_000_041_000);
 }
 impl AmdShaderInfoFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_info\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_info\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -3122,10 +3043,8 @@ impl AmdShaderInfoFn {
     }
 }
 impl KhrDynamicRenderingFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_dynamic_rendering\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_dynamic_rendering\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -3213,12 +3132,9 @@ impl StructureType {
     pub const MULTIVIEW_PER_VIEW_ATTRIBUTES_INFO_NVX: Self = Self(1_000_044_009);
 }
 impl AmdShaderImageLoadStoreLodFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_image_load_store_lod\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_image_load_store_lod\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -3234,12 +3150,9 @@ impl AmdShaderImageLoadStoreLodFn {
     }
 }
 impl GgpStreamDescriptorSurfaceFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GGP_stream_descriptor_surface\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GGP_stream_descriptor_surface\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -3291,10 +3204,8 @@ impl StructureType {
     pub const STREAM_DESCRIPTOR_SURFACE_CREATE_INFO_GGP: Self = Self(1_000_049_000);
 }
 impl NvCornerSampledImageFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_corner_sampled_image\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_corner_sampled_image\0") };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
@@ -3318,10 +3229,8 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_CORNER_SAMPLED_IMAGE_FEATURES_NV: Self = Self(1_000_050_000);
 }
 impl KhrMultiviewFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_multiview\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_multiview\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -3349,10 +3258,8 @@ impl StructureType {
         Self::PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES;
 }
 impl ImgFormatPvrtcFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_IMG_format_pvrtc\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_IMG_format_pvrtc\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -3379,12 +3286,9 @@ impl Format {
     pub const PVRTC2_4BPP_SRGB_BLOCK_IMG: Self = Self(1_000_054_007);
 }
 impl NvExternalMemoryCapabilitiesFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_external_memory_capabilities\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_external_memory_capabilities\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -3442,10 +3346,8 @@ impl NvExternalMemoryCapabilitiesFn {
     }
 }
 impl NvExternalMemoryFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_external_memory\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_external_memory\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -3466,10 +3368,9 @@ impl StructureType {
     pub const EXPORT_MEMORY_ALLOCATE_INFO_NV: Self = Self(1_000_056_001);
 }
 impl NvExternalMemoryWin32Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_external_memory_win32\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_external_memory_win32\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -3521,10 +3422,8 @@ impl StructureType {
     pub const EXPORT_MEMORY_WIN32_HANDLE_INFO_NV: Self = Self(1_000_057_001);
 }
 impl NvWin32KeyedMutexFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_win32_keyed_mutex\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_win32_keyed_mutex\0") };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
@@ -3544,14 +3443,9 @@ impl StructureType {
     pub const WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_NV: Self = Self(1_000_058_000);
 }
 impl KhrGetPhysicalDeviceProperties2Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_KHR_get_physical_device_properties2\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_get_physical_device_properties2\0")
+    };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
@@ -3779,10 +3673,8 @@ impl StructureType {
         Self::PHYSICAL_DEVICE_SPARSE_IMAGE_FORMAT_INFO_2;
 }
 impl KhrDeviceGroupFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_device_group\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_device_group\0") };
     pub const SPEC_VERSION: u32 = 4u32;
 }
 #[allow(non_camel_case_types)]
@@ -4017,10 +3909,8 @@ impl StructureType {
         Self::BIND_IMAGE_MEMORY_DEVICE_GROUP_INFO;
 }
 impl ExtValidationFlagsFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_validation_flags\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_validation_flags\0") };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
@@ -4040,10 +3930,8 @@ impl StructureType {
     pub const VALIDATION_FLAGS_EXT: Self = Self(1_000_061_000);
 }
 impl NnViSurfaceFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NN_vi_surface\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NN_vi_surface\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -4091,12 +3979,9 @@ impl StructureType {
     pub const VI_SURFACE_CREATE_INFO_NN: Self = Self(1_000_062_000);
 }
 impl KhrShaderDrawParametersFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_draw_parameters\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_draw_parameters\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -4112,12 +3997,9 @@ impl KhrShaderDrawParametersFn {
     }
 }
 impl ExtShaderSubgroupBallotFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_subgroup_ballot\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_subgroup_ballot\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -4133,10 +4015,9 @@ impl ExtShaderSubgroupBallotFn {
     }
 }
 impl ExtShaderSubgroupVoteFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_subgroup_vote\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_subgroup_vote\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -4152,14 +4033,9 @@ impl ExtShaderSubgroupVoteFn {
     }
 }
 impl ExtTextureCompressionAstcHdrFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_EXT_texture_compression_astc_hdr\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_texture_compression_astc_hdr\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -4197,10 +4073,8 @@ impl StructureType {
         Self::PHYSICAL_DEVICE_TEXTURE_COMPRESSION_ASTC_HDR_FEATURES;
 }
 impl ExtAstcDecodeModeFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_astc_decode_mode\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_astc_decode_mode\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -4221,10 +4095,8 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_ASTC_DECODE_FEATURES_EXT: Self = Self(1_000_067_001);
 }
 impl ExtPipelineRobustnessFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pipeline_robustness\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pipeline_robustness\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -4246,10 +4118,8 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_PIPELINE_ROBUSTNESS_PROPERTIES_EXT: Self = Self(1_000_068_002);
 }
 impl KhrMaintenance1Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance1\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance1\0") };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
@@ -4307,12 +4177,9 @@ impl Result {
     pub const ERROR_OUT_OF_POOL_MEMORY_KHR: Self = Self::ERROR_OUT_OF_POOL_MEMORY;
 }
 impl KhrDeviceGroupCreationFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_device_group_creation\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_device_group_creation\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -4367,14 +4234,9 @@ impl StructureType {
     pub const DEVICE_GROUP_DEVICE_CREATE_INFO_KHR: Self = Self::DEVICE_GROUP_DEVICE_CREATE_INFO;
 }
 impl KhrExternalMemoryCapabilitiesFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_KHR_external_memory_capabilities\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_memory_capabilities\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -4447,10 +4309,8 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_ID_PROPERTIES_KHR: Self = Self::PHYSICAL_DEVICE_ID_PROPERTIES;
 }
 impl KhrExternalMemoryFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_memory\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_memory\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -4477,12 +4337,9 @@ impl StructureType {
     pub const EXPORT_MEMORY_ALLOCATE_INFO_KHR: Self = Self::EXPORT_MEMORY_ALLOCATE_INFO;
 }
 impl KhrExternalMemoryWin32Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_memory_win32\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_memory_win32\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -4564,10 +4421,8 @@ impl StructureType {
     pub const MEMORY_GET_WIN32_HANDLE_INFO_KHR: Self = Self(1_000_073_003);
 }
 impl KhrExternalMemoryFdFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_memory_fd\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_memory_fd\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -4644,10 +4499,8 @@ impl StructureType {
     pub const MEMORY_GET_FD_INFO_KHR: Self = Self(1_000_074_002);
 }
 impl KhrWin32KeyedMutexFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_win32_keyed_mutex\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_win32_keyed_mutex\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -4667,14 +4520,9 @@ impl StructureType {
     pub const WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_KHR: Self = Self(1_000_075_000);
 }
 impl KhrExternalSemaphoreCapabilitiesFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_KHR_external_semaphore_capabilities\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_semaphore_capabilities\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -4740,10 +4588,8 @@ impl StructureType {
     pub const EXTERNAL_SEMAPHORE_PROPERTIES_KHR: Self = Self::EXTERNAL_SEMAPHORE_PROPERTIES;
 }
 impl KhrExternalSemaphoreFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_semaphore\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_semaphore\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -4767,12 +4613,9 @@ impl StructureType {
     pub const EXPORT_SEMAPHORE_CREATE_INFO_KHR: Self = Self::EXPORT_SEMAPHORE_CREATE_INFO;
 }
 impl KhrExternalSemaphoreWin32Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_semaphore_win32\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_semaphore_win32\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -4851,12 +4694,9 @@ impl StructureType {
     pub const SEMAPHORE_GET_WIN32_HANDLE_INFO_KHR: Self = Self(1_000_078_003);
 }
 impl KhrExternalSemaphoreFdFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_semaphore_fd\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_semaphore_fd\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -4928,10 +4768,8 @@ impl StructureType {
     pub const SEMAPHORE_GET_FD_INFO_KHR: Self = Self(1_000_079_001);
 }
 impl KhrPushDescriptorFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_push_descriptor\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_push_descriptor\0") };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
@@ -5028,12 +4866,9 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_PUSH_DESCRIPTOR_PROPERTIES_KHR: Self = Self(1_000_080_000);
 }
 impl ExtConditionalRenderingFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_conditional_rendering\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_conditional_rendering\0")
+    };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
@@ -5121,10 +4956,8 @@ impl StructureType {
     pub const CONDITIONAL_RENDERING_BEGIN_INFO_EXT: Self = Self(1_000_081_002);
 }
 impl KhrShaderFloat16Int8Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_float16_int8\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_float16_int8\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -5147,10 +4980,8 @@ impl StructureType {
         Self::PHYSICAL_DEVICE_SHADER_FLOAT16_INT8_FEATURES;
 }
 impl Khr16bitStorageFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_16bit_storage\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_16bit_storage\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -5171,10 +5002,8 @@ impl StructureType {
         Self::PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES;
 }
 impl KhrIncrementalPresentFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_incremental_present\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_incremental_present\0") };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
@@ -5194,12 +5023,9 @@ impl StructureType {
     pub const PRESENT_REGIONS_KHR: Self = Self(1_000_084_000);
 }
 impl KhrDescriptorUpdateTemplateFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_descriptor_update_template\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_descriptor_update_template\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -5347,10 +5173,8 @@ impl StructureType {
         Self::DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO;
 }
 impl NvClipSpaceWScalingFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_clip_space_w_scaling\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_clip_space_w_scaling\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -5406,10 +5230,8 @@ impl StructureType {
     pub const PIPELINE_VIEWPORT_W_SCALING_STATE_CREATE_INFO_NV: Self = Self(1_000_087_000);
 }
 impl ExtDirectModeDisplayFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_direct_mode_display\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_direct_mode_display\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -5447,10 +5269,9 @@ impl ExtDirectModeDisplayFn {
     }
 }
 impl ExtAcquireXlibDisplayFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_acquire_xlib_display\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_acquire_xlib_display\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -5525,12 +5346,9 @@ impl ExtAcquireXlibDisplayFn {
     }
 }
 impl ExtDisplaySurfaceCounterFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_display_surface_counter\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_display_surface_counter\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -5581,10 +5399,8 @@ impl StructureType {
     pub const SURFACE_CAPABILITIES_2_EXT: Self = Self(1_000_090_000);
 }
 impl ExtDisplayControlFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_display_control\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_display_control\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -5725,10 +5541,8 @@ impl StructureType {
     pub const SWAPCHAIN_COUNTER_CREATE_INFO_EXT: Self = Self(1_000_091_003);
 }
 impl GoogleDisplayTimingFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_display_timing\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_display_timing\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -5808,14 +5622,9 @@ impl StructureType {
     pub const PRESENT_TIMES_INFO_GOOGLE: Self = Self(1_000_092_000);
 }
 impl NvSampleMaskOverrideCoverageFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_NV_sample_mask_override_coverage\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_sample_mask_override_coverage\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -5831,12 +5640,9 @@ impl NvSampleMaskOverrideCoverageFn {
     }
 }
 impl NvGeometryShaderPassthroughFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_geometry_shader_passthrough\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_geometry_shader_passthrough\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -5852,10 +5658,8 @@ impl NvGeometryShaderPassthroughFn {
     }
 }
 impl NvViewportArray2Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_viewport_array2\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_viewport_array2\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -5871,14 +5675,9 @@ impl NvViewportArray2Fn {
     }
 }
 impl NvxMultiviewPerViewAttributesFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_NVX_multiview_per_view_attributes\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NVX_multiview_per_view_attributes\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -5904,10 +5703,8 @@ impl SubpassDescriptionFlags {
     pub const PER_VIEW_POSITION_X_ONLY_NVX: Self = Self(0b10);
 }
 impl NvViewportSwizzleFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_viewport_swizzle\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_viewport_swizzle\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -5927,10 +5724,8 @@ impl StructureType {
     pub const PIPELINE_VIEWPORT_SWIZZLE_STATE_CREATE_INFO_NV: Self = Self(1_000_098_000);
 }
 impl ExtDiscardRectanglesFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_discard_rectangles\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_discard_rectangles\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -5987,12 +5782,9 @@ impl StructureType {
     pub const PIPELINE_DISCARD_RECTANGLE_STATE_CREATE_INFO_EXT: Self = Self(1_000_099_001);
 }
 impl ExtConservativeRasterizationFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_conservative_rasterization\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_conservative_rasterization\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -6013,10 +5805,8 @@ impl StructureType {
     pub const PIPELINE_RASTERIZATION_CONSERVATIVE_STATE_CREATE_INFO_EXT: Self = Self(1_000_101_001);
 }
 impl ExtDepthClipEnableFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_depth_clip_enable\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_depth_clip_enable\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -6037,10 +5827,9 @@ impl StructureType {
     pub const PIPELINE_RASTERIZATION_DEPTH_CLIP_STATE_CREATE_INFO_EXT: Self = Self(1_000_102_001);
 }
 impl ExtSwapchainColorspaceFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_swapchain_colorspace\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_swapchain_colorspace\0")
+    };
     pub const SPEC_VERSION: u32 = 4u32;
 }
 #[derive(Clone)]
@@ -6073,10 +5862,8 @@ impl ColorSpaceKHR {
     pub const EXTENDED_SRGB_NONLINEAR_EXT: Self = Self(1_000_104_014);
 }
 impl ExtHdrMetadataFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_hdr_metadata\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_hdr_metadata\0") };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
@@ -6124,12 +5911,9 @@ impl StructureType {
     pub const HDR_METADATA_EXT: Self = Self(1_000_105_000);
 }
 impl KhrImagelessFramebufferFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_imageless_framebuffer\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_imageless_framebuffer\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -6158,10 +5942,8 @@ impl StructureType {
     pub const RENDER_PASS_ATTACHMENT_BEGIN_INFO_KHR: Self = Self::RENDER_PASS_ATTACHMENT_BEGIN_INFO;
 }
 impl KhrCreateRenderpass2Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_create_renderpass2\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_create_renderpass2\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -6297,12 +6079,9 @@ impl StructureType {
     pub const SUBPASS_END_INFO_KHR: Self = Self::SUBPASS_END_INFO;
 }
 impl KhrSharedPresentableImageFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shared_presentable_image\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shared_presentable_image\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -6356,12 +6135,9 @@ impl StructureType {
     pub const SHARED_PRESENT_SURFACE_CAPABILITIES_KHR: Self = Self(1_000_111_000);
 }
 impl KhrExternalFenceCapabilitiesFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_fence_capabilities\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_fence_capabilities\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -6426,10 +6202,8 @@ impl StructureType {
     pub const EXTERNAL_FENCE_PROPERTIES_KHR: Self = Self::EXTERNAL_FENCE_PROPERTIES;
 }
 impl KhrExternalFenceFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_fence\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_fence\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -6453,10 +6227,9 @@ impl StructureType {
     pub const EXPORT_FENCE_CREATE_INFO_KHR: Self = Self::EXPORT_FENCE_CREATE_INFO;
 }
 impl KhrExternalFenceWin32Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_fence_win32\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_fence_win32\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -6533,10 +6306,8 @@ impl StructureType {
     pub const FENCE_GET_WIN32_HANDLE_INFO_KHR: Self = Self(1_000_114_002);
 }
 impl KhrExternalFenceFdFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_fence_fd\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_fence_fd\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -6604,10 +6375,8 @@ impl StructureType {
     pub const FENCE_GET_FD_INFO_KHR: Self = Self(1_000_115_001);
 }
 impl KhrPerformanceQueryFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_performance_query\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_performance_query\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -6747,10 +6516,8 @@ impl StructureType {
     pub const PERFORMANCE_COUNTER_DESCRIPTION_KHR: Self = Self(1_000_116_006);
 }
 impl KhrMaintenance2Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance2\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance2\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -6798,12 +6565,9 @@ impl TessellationDomainOrigin {
     pub const LOWER_LEFT_KHR: Self = Self::LOWER_LEFT;
 }
 impl KhrGetSurfaceCapabilities2Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_get_surface_capabilities2\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_get_surface_capabilities2\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -6886,10 +6650,8 @@ impl StructureType {
     pub const SURFACE_FORMAT_2_KHR: Self = Self(1_000_119_002);
 }
 impl KhrVariablePointersFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_variable_pointers\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_variable_pointers\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -6912,12 +6674,9 @@ impl StructureType {
         Self::PHYSICAL_DEVICE_VARIABLE_POINTERS_FEATURES_KHR;
 }
 impl KhrGetDisplayProperties2Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_get_display_properties2\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_get_display_properties2\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -7058,10 +6817,8 @@ impl StructureType {
     pub const DISPLAY_PLANE_CAPABILITIES_2_KHR: Self = Self(1_000_121_004);
 }
 impl MvkIosSurfaceFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_MVK_ios_surface\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_MVK_ios_surface\0") };
     pub const SPEC_VERSION: u32 = 3u32;
 }
 #[allow(non_camel_case_types)]
@@ -7112,10 +6869,8 @@ impl StructureType {
     pub const IOS_SURFACE_CREATE_INFO_MVK: Self = Self(1_000_122_000);
 }
 impl MvkMacosSurfaceFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_MVK_macos_surface\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_MVK_macos_surface\0") };
     pub const SPEC_VERSION: u32 = 3u32;
 }
 #[allow(non_camel_case_types)]
@@ -7166,12 +6921,9 @@ impl StructureType {
     pub const MACOS_SURFACE_CREATE_INFO_MVK: Self = Self(1_000_123_000);
 }
 impl ExtExternalMemoryDmaBufFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_external_memory_dma_buf\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_external_memory_dma_buf\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -7191,10 +6943,9 @@ impl ExternalMemoryHandleTypeFlags {
     pub const DMA_BUF_EXT: Self = Self(0b10_0000_0000);
 }
 impl ExtQueueFamilyForeignFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_queue_family_foreign\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_queue_family_foreign\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -7210,10 +6961,9 @@ impl ExtQueueFamilyForeignFn {
     }
 }
 impl KhrDedicatedAllocationFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_dedicated_allocation\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_dedicated_allocation\0")
+    };
     pub const SPEC_VERSION: u32 = 3u32;
 }
 #[derive(Clone)]
@@ -7234,10 +6984,8 @@ impl StructureType {
     pub const MEMORY_DEDICATED_ALLOCATE_INFO_KHR: Self = Self::MEMORY_DEDICATED_ALLOCATE_INFO;
 }
 impl ExtDebugUtilsFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_debug_utils\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_debug_utils\0") };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
@@ -7549,14 +7297,11 @@ impl StructureType {
     pub const DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT: Self = Self(1_000_128_004);
 }
 impl AndroidExternalMemoryAndroidHardwareBufferFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_ANDROID_external_memory_android_hardware_buffer\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+            b"VK_ANDROID_external_memory_android_hardware_buffer\0",
+        )
+    };
     pub const SPEC_VERSION: u32 = 5u32;
 }
 #[allow(non_camel_case_types)]
@@ -7645,12 +7390,9 @@ impl StructureType {
     pub const ANDROID_HARDWARE_BUFFER_FORMAT_PROPERTIES_2_ANDROID: Self = Self(1_000_129_006);
 }
 impl ExtSamplerFilterMinmaxFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_sampler_filter_minmax\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_sampler_filter_minmax\0")
+    };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
@@ -7683,14 +7425,9 @@ impl StructureType {
         Self::SAMPLER_REDUCTION_MODE_CREATE_INFO;
 }
 impl KhrStorageBufferStorageClassFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_KHR_storage_buffer_storage_class\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_storage_buffer_storage_class\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -7706,10 +7443,8 @@ impl KhrStorageBufferStorageClassFn {
     }
 }
 impl AmdGpuShaderInt16Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_gpu_shader_int16\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_gpu_shader_int16\0") };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
@@ -7725,12 +7460,9 @@ impl AmdGpuShaderInt16Fn {
     }
 }
 impl AmdMixedAttachmentSamplesFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_mixed_attachment_samples\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_mixed_attachment_samples\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -7746,10 +7478,9 @@ impl AmdMixedAttachmentSamplesFn {
     }
 }
 impl AmdShaderFragmentMaskFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_fragment_mask\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_fragment_mask\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -7765,10 +7496,9 @@ impl AmdShaderFragmentMaskFn {
     }
 }
 impl ExtInlineUniformBlockFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_inline_uniform_block\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_inline_uniform_block\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -7799,12 +7529,9 @@ impl StructureType {
         Self::DESCRIPTOR_POOL_INLINE_UNIFORM_BLOCK_CREATE_INFO;
 }
 impl ExtShaderStencilExportFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_stencil_export\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_stencil_export\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -7820,10 +7547,8 @@ impl ExtShaderStencilExportFn {
     }
 }
 impl ExtSampleLocationsFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_sample_locations\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_sample_locations\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -7912,10 +7637,9 @@ impl StructureType {
     pub const MULTISAMPLE_PROPERTIES_EXT: Self = Self(1_000_143_004);
 }
 impl KhrRelaxedBlockLayoutFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_relaxed_block_layout\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_relaxed_block_layout\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -7931,12 +7655,9 @@ impl KhrRelaxedBlockLayoutFn {
     }
 }
 impl KhrGetMemoryRequirements2Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_get_memory_requirements2\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_get_memory_requirements2\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -8050,10 +7771,8 @@ impl StructureType {
         Self::SPARSE_IMAGE_MEMORY_REQUIREMENTS_2;
 }
 impl KhrImageFormatListFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_image_format_list\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_image_format_list\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -8073,12 +7792,9 @@ impl StructureType {
     pub const IMAGE_FORMAT_LIST_CREATE_INFO_KHR: Self = Self::IMAGE_FORMAT_LIST_CREATE_INFO;
 }
 impl ExtBlendOperationAdvancedFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_blend_operation_advanced\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_blend_operation_advanced\0")
+    };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
@@ -8153,12 +7869,9 @@ impl StructureType {
     pub const PIPELINE_COLOR_BLEND_ADVANCED_STATE_CREATE_INFO_EXT: Self = Self(1_000_148_002);
 }
 impl NvFragmentCoverageToColorFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_fragment_coverage_to_color\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_fragment_coverage_to_color\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -8178,12 +7891,9 @@ impl StructureType {
     pub const PIPELINE_COVERAGE_TO_COLOR_STATE_CREATE_INFO_NV: Self = Self(1_000_149_000);
 }
 impl KhrAccelerationStructureFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_acceleration_structure\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_acceleration_structure\0")
+    };
     pub const SPEC_VERSION: u32 = 13u32;
 }
 #[allow(non_camel_case_types)]
@@ -8745,10 +8455,9 @@ impl StructureType {
     pub const ACCELERATION_STRUCTURE_BUILD_SIZES_INFO_KHR: Self = Self(1_000_150_020);
 }
 impl KhrRayTracingPipelineFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_ray_tracing_pipeline\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_ray_tracing_pipeline\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -9036,10 +8745,8 @@ impl StructureType {
     pub const RAY_TRACING_PIPELINE_INTERFACE_CREATE_INFO_KHR: Self = Self(1_000_150_018);
 }
 impl KhrRayQueryFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_ray_query\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_ray_query\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -9059,12 +8766,9 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_RAY_QUERY_FEATURES_KHR: Self = Self(1_000_348_013);
 }
 impl NvFramebufferMixedSamplesFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_framebuffer_mixed_samples\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_framebuffer_mixed_samples\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -9084,10 +8788,8 @@ impl StructureType {
     pub const PIPELINE_COVERAGE_MODULATION_STATE_CREATE_INFO_NV: Self = Self(1_000_152_000);
 }
 impl NvFillRectangleFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_fill_rectangle\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_fill_rectangle\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -9107,10 +8809,8 @@ impl PolygonMode {
     pub const FILL_RECTANGLE_NV: Self = Self(1_000_153_000);
 }
 impl NvShaderSmBuiltinsFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_shader_sm_builtins\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_shader_sm_builtins\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -9131,10 +8831,8 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_SM_BUILTINS_PROPERTIES_NV: Self = Self(1_000_154_001);
 }
 impl ExtPostDepthCoverageFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_post_depth_coverage\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_post_depth_coverage\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -9150,12 +8848,9 @@ impl ExtPostDepthCoverageFn {
     }
 }
 impl KhrSamplerYcbcrConversionFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_sampler_ycbcr_conversion\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_sampler_ycbcr_conversion\0")
+    };
     pub const SPEC_VERSION: u32 = 14u32;
 }
 #[allow(non_camel_case_types)]
@@ -9347,10 +9042,8 @@ impl StructureType {
         Self::SAMPLER_YCBCR_CONVERSION_IMAGE_FORMAT_PROPERTIES;
 }
 impl KhrBindMemory2Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_bind_memory2\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_bind_memory2\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -9431,12 +9124,9 @@ impl StructureType {
     pub const BIND_IMAGE_MEMORY_INFO_KHR: Self = Self::BIND_IMAGE_MEMORY_INFO;
 }
 impl ExtImageDrmFormatModifierFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_drm_format_modifier\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_drm_format_modifier\0")
+    };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
@@ -9506,10 +9196,8 @@ impl StructureType {
     pub const DRM_FORMAT_MODIFIER_PROPERTIES_LIST_2_EXT: Self = Self(1_000_158_006);
 }
 impl ExtValidationCacheFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_validation_cache\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_validation_cache\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -9654,10 +9342,8 @@ impl StructureType {
     pub const SHADER_MODULE_VALIDATION_CACHE_CREATE_INFO_EXT: Self = Self(1_000_160_001);
 }
 impl ExtDescriptorIndexingFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_descriptor_indexing\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_descriptor_indexing\0") };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
@@ -9705,12 +9391,9 @@ impl StructureType {
         Self::DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT;
 }
 impl ExtShaderViewportIndexLayerFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_viewport_index_layer\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_viewport_index_layer\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -9726,10 +9409,8 @@ impl ExtShaderViewportIndexLayerFn {
     }
 }
 impl KhrPortabilitySubsetFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_portability_subset\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_portability_subset\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -9750,10 +9431,8 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_PORTABILITY_SUBSET_PROPERTIES_KHR: Self = Self(1_000_163_001);
 }
 impl NvShadingRateImageFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_shading_rate_image\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_shading_rate_image\0") };
     pub const SPEC_VERSION: u32 = 3u32;
 }
 #[allow(non_camel_case_types)]
@@ -9888,10 +9567,8 @@ impl StructureType {
         Self(1_000_164_005);
 }
 impl NvRayTracingFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_ray_tracing\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_ray_tracing\0") };
     pub const SPEC_VERSION: u32 = 3u32;
 }
 #[allow(non_camel_case_types)]
@@ -10393,12 +10070,9 @@ impl StructureType {
     pub const ACCELERATION_STRUCTURE_INFO_NV: Self = Self(1_000_165_012);
 }
 impl NvRepresentativeFragmentTestFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_representative_fragment_test\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_representative_fragment_test\0")
+    };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
@@ -10420,10 +10094,8 @@ impl StructureType {
         Self(1_000_166_001);
 }
 impl KhrMaintenance3Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance3\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance3\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -10475,10 +10147,8 @@ impl StructureType {
     pub const DESCRIPTOR_SET_LAYOUT_SUPPORT_KHR: Self = Self::DESCRIPTOR_SET_LAYOUT_SUPPORT;
 }
 impl KhrDrawIndirectCountFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_draw_indirect_count\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_draw_indirect_count\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -10547,10 +10217,8 @@ impl KhrDrawIndirectCountFn {
     }
 }
 impl ExtFilterCubicFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_filter_cubic\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_filter_cubic\0") };
     pub const SPEC_VERSION: u32 = 3u32;
 }
 #[derive(Clone)]
@@ -10579,12 +10247,9 @@ impl StructureType {
     pub const FILTER_CUBIC_IMAGE_VIEW_IMAGE_FORMAT_PROPERTIES_EXT: Self = Self(1_000_170_001);
 }
 impl QcomRenderPassShaderResolveFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_render_pass_shader_resolve\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_render_pass_shader_resolve\0")
+    };
     pub const SPEC_VERSION: u32 = 4u32;
 }
 #[derive(Clone)]
@@ -10605,10 +10270,8 @@ impl SubpassDescriptionFlags {
     pub const SHADER_RESOLVE_QCOM: Self = Self(0b1000);
 }
 impl ExtGlobalPriorityFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_global_priority\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_global_priority\0") };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
@@ -10633,14 +10296,9 @@ impl StructureType {
         Self::DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO_KHR;
 }
 impl KhrShaderSubgroupExtendedTypesFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_KHR_shader_subgroup_extended_types\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_subgroup_extended_types\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -10661,10 +10319,8 @@ impl StructureType {
         Self::PHYSICAL_DEVICE_SHADER_SUBGROUP_EXTENDED_TYPES_FEATURES;
 }
 impl Khr8bitStorageFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_8bit_storage\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_8bit_storage\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -10685,10 +10341,9 @@ impl StructureType {
         Self::PHYSICAL_DEVICE_8BIT_STORAGE_FEATURES;
 }
 impl ExtExternalMemoryHostFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_external_memory_host\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_external_memory_host\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -10747,10 +10402,8 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_EXTERNAL_MEMORY_HOST_PROPERTIES_EXT: Self = Self(1_000_178_002);
 }
 impl AmdBufferMarkerFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_buffer_marker\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_buffer_marker\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -10799,10 +10452,8 @@ impl AmdBufferMarkerFn {
     }
 }
 impl KhrShaderAtomicInt64Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_atomic_int64\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_atomic_int64\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -10823,10 +10474,8 @@ impl StructureType {
         Self::PHYSICAL_DEVICE_SHADER_ATOMIC_INT64_FEATURES;
 }
 impl KhrShaderClockFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_clock\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_clock\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -10846,12 +10495,9 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_CLOCK_FEATURES_KHR: Self = Self(1_000_181_000);
 }
 impl AmdPipelineCompilerControlFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_pipeline_compiler_control\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_pipeline_compiler_control\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -10871,12 +10517,9 @@ impl StructureType {
     pub const PIPELINE_COMPILER_CONTROL_CREATE_INFO_AMD: Self = Self(1_000_183_000);
 }
 impl ExtCalibratedTimestampsFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_calibrated_timestamps\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_calibrated_timestamps\0")
+    };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
@@ -10959,12 +10602,9 @@ impl StructureType {
     pub const CALIBRATED_TIMESTAMP_INFO_EXT: Self = Self(1_000_184_000);
 }
 impl AmdShaderCorePropertiesFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_core_properties\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_core_properties\0")
+    };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
@@ -10984,10 +10624,8 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_AMD: Self = Self(1_000_185_000);
 }
 impl KhrVideoDecodeH265Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_decode_h265\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_decode_h265\0") };
     pub const SPEC_VERSION: u32 = 7u32;
 }
 #[derive(Clone)]
@@ -11016,10 +10654,8 @@ impl VideoCodecOperationFlagsKHR {
     pub const DECODE_H265: Self = Self(0b10);
 }
 impl KhrGlobalPriorityFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_global_priority\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_global_priority\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -11045,14 +10681,9 @@ impl StructureType {
     pub const QUEUE_FAMILY_GLOBAL_PRIORITY_PROPERTIES_KHR: Self = Self(1_000_388_001);
 }
 impl AmdMemoryOverallocationBehaviorFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_AMD_memory_overallocation_behavior\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_memory_overallocation_behavior\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -11072,12 +10703,9 @@ impl StructureType {
     pub const DEVICE_MEMORY_OVERALLOCATION_CREATE_INFO_AMD: Self = Self(1_000_189_000);
 }
 impl ExtVertexAttributeDivisorFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_vertex_attribute_divisor\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_vertex_attribute_divisor\0")
+    };
     pub const SPEC_VERSION: u32 = 3u32;
 }
 #[derive(Clone)]
@@ -11099,10 +10727,8 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES_EXT: Self = Self(1_000_190_002);
 }
 impl GgpFrameTokenFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GGP_frame_token\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GGP_frame_token\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -11122,12 +10748,9 @@ impl StructureType {
     pub const PRESENT_FRAME_TOKEN_GGP: Self = Self(1_000_191_000);
 }
 impl ExtPipelineCreationFeedbackFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pipeline_creation_feedback\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pipeline_creation_feedback\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -11148,10 +10771,8 @@ impl StructureType {
         Self::PIPELINE_CREATION_FEEDBACK_CREATE_INFO;
 }
 impl KhrDriverPropertiesFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_driver_properties\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_driver_properties\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -11186,12 +10807,9 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_DRIVER_PROPERTIES_KHR: Self = Self::PHYSICAL_DEVICE_DRIVER_PROPERTIES;
 }
 impl KhrShaderFloatControlsFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_float_controls\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_float_controls\0")
+    };
     pub const SPEC_VERSION: u32 = 4u32;
 }
 #[derive(Clone)]
@@ -11218,12 +10836,9 @@ impl StructureType {
         Self::PHYSICAL_DEVICE_FLOAT_CONTROLS_PROPERTIES;
 }
 impl NvShaderSubgroupPartitionedFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_shader_subgroup_partitioned\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_shader_subgroup_partitioned\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -11243,12 +10858,9 @@ impl SubgroupFeatureFlags {
     pub const PARTITIONED_NV: Self = Self(0b1_0000_0000);
 }
 impl KhrDepthStencilResolveFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_depth_stencil_resolve\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_depth_stencil_resolve\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -11279,12 +10891,9 @@ impl StructureType {
         Self::SUBPASS_DESCRIPTION_DEPTH_STENCIL_RESOLVE;
 }
 impl KhrSwapchainMutableFormatFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_swapchain_mutable_format\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_swapchain_mutable_format\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -11304,12 +10913,9 @@ impl SwapchainCreateFlagsKHR {
     pub const MUTABLE_FORMAT: Self = Self(0b100);
 }
 impl NvComputeShaderDerivativesFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_compute_shader_derivatives\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_compute_shader_derivatives\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -11329,10 +10935,8 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_COMPUTE_SHADER_DERIVATIVES_FEATURES_NV: Self = Self(1_000_201_000);
 }
 impl NvMeshShaderFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_mesh_shader\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_mesh_shader\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -11457,12 +11061,9 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_MESH_SHADER_PROPERTIES_NV: Self = Self(1_000_202_001);
 }
 impl NvFragmentShaderBarycentricFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_fragment_shader_barycentric\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_fragment_shader_barycentric\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -11483,12 +11084,9 @@ impl StructureType {
         Self::PHYSICAL_DEVICE_FRAGMENT_SHADER_BARYCENTRIC_FEATURES_KHR;
 }
 impl NvShaderImageFootprintFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_shader_image_footprint\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_shader_image_footprint\0")
+    };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
@@ -11508,10 +11106,8 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_IMAGE_FOOTPRINT_FEATURES_NV: Self = Self(1_000_204_000);
 }
 impl NvScissorExclusiveFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_scissor_exclusive\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_scissor_exclusive\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -11568,14 +11164,9 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_EXCLUSIVE_SCISSOR_FEATURES_NV: Self = Self(1_000_205_002);
 }
 impl NvDeviceDiagnosticCheckpointsFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_NV_device_diagnostic_checkpoints\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_device_diagnostic_checkpoints\0")
+    };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
@@ -11649,10 +11240,8 @@ impl StructureType {
     pub const QUEUE_FAMILY_CHECKPOINT_PROPERTIES_NV: Self = Self(1_000_206_001);
 }
 impl KhrTimelineSemaphoreFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_timeline_semaphore\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_timeline_semaphore\0") };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
@@ -11759,12 +11348,9 @@ impl StructureType {
     pub const SEMAPHORE_SIGNAL_INFO_KHR: Self = Self::SEMAPHORE_SIGNAL_INFO;
 }
 impl IntelShaderIntegerFunctions2Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_INTEL_shader_integer_functions2\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_INTEL_shader_integer_functions2\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -11784,10 +11370,8 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_INTEGER_FUNCTIONS_2_FEATURES_INTEL: Self = Self(1_000_209_000);
 }
 impl IntelPerformanceQueryFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_INTEL_performance_query\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_INTEL_performance_query\0") };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
@@ -12052,10 +11636,8 @@ impl StructureType {
     pub const PERFORMANCE_CONFIGURATION_ACQUIRE_INFO_INTEL: Self = Self(1_000_210_005);
 }
 impl KhrVulkanMemoryModelFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_vulkan_memory_model\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_vulkan_memory_model\0") };
     pub const SPEC_VERSION: u32 = 3u32;
 }
 #[derive(Clone)]
@@ -12076,10 +11658,8 @@ impl StructureType {
         Self::PHYSICAL_DEVICE_VULKAN_MEMORY_MODEL_FEATURES;
 }
 impl ExtPciBusInfoFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pci_bus_info\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pci_bus_info\0") };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
@@ -12099,10 +11679,8 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_PCI_BUS_INFO_PROPERTIES_EXT: Self = Self(1_000_212_000);
 }
 impl AmdDisplayNativeHdrFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_display_native_hdr\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_display_native_hdr\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -12156,12 +11734,9 @@ impl StructureType {
     pub const SWAPCHAIN_DISPLAY_NATIVE_HDR_CREATE_INFO_AMD: Self = Self(1_000_213_001);
 }
 impl FuchsiaImagepipeSurfaceFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_FUCHSIA_imagepipe_surface\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_FUCHSIA_imagepipe_surface\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -12213,12 +11788,9 @@ impl StructureType {
     pub const IMAGEPIPE_SURFACE_CREATE_INFO_FUCHSIA: Self = Self(1_000_214_000);
 }
 impl KhrShaderTerminateInvocationFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_terminate_invocation\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_terminate_invocation\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -12239,10 +11811,8 @@ impl StructureType {
         Self::PHYSICAL_DEVICE_SHADER_TERMINATE_INVOCATION_FEATURES;
 }
 impl ExtMetalSurfaceFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_metal_surface\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_metal_surface\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -12293,10 +11863,9 @@ impl StructureType {
     pub const METAL_SURFACE_CREATE_INFO_EXT: Self = Self(1_000_217_000);
 }
 impl ExtFragmentDensityMapFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_fragment_density_map\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_fragment_density_map\0")
+    };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
@@ -12355,10 +11924,8 @@ impl StructureType {
     pub const RENDER_PASS_FRAGMENT_DENSITY_MAP_CREATE_INFO_EXT: Self = Self(1_000_218_002);
 }
 impl ExtScalarBlockLayoutFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_scalar_block_layout\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_scalar_block_layout\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -12379,12 +11946,9 @@ impl StructureType {
         Self::PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES;
 }
 impl GoogleHlslFunctionality1Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_hlsl_functionality1\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_hlsl_functionality1\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -12400,10 +11964,8 @@ impl GoogleHlslFunctionality1Fn {
     }
 }
 impl GoogleDecorateStringFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_decorate_string\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_decorate_string\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -12419,12 +11981,9 @@ impl GoogleDecorateStringFn {
     }
 }
 impl ExtSubgroupSizeControlFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_subgroup_size_control\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_subgroup_size_control\0")
+    };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
@@ -12454,12 +12013,9 @@ impl StructureType {
         Self::PHYSICAL_DEVICE_SUBGROUP_SIZE_CONTROL_FEATURES;
 }
 impl KhrFragmentShadingRateFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_fragment_shading_rate\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_fragment_shading_rate\0")
+    };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
@@ -12573,12 +12129,9 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_KHR: Self = Self(1_000_226_004);
 }
 impl AmdShaderCoreProperties2Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_core_properties2\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_core_properties2\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -12598,12 +12151,9 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_2_AMD: Self = Self(1_000_227_000);
 }
 impl AmdDeviceCoherentMemoryFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_device_coherent_memory\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_device_coherent_memory\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -12628,12 +12178,9 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_COHERENT_MEMORY_FEATURES_AMD: Self = Self(1_000_229_000);
 }
 impl ExtShaderImageAtomicInt64Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_image_atomic_int64\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_image_atomic_int64\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -12653,10 +12200,8 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_IMAGE_ATOMIC_INT64_FEATURES_EXT: Self = Self(1_000_234_000);
 }
 impl KhrSpirv14Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_spirv_1_4\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_spirv_1_4\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -12672,10 +12217,8 @@ impl KhrSpirv14Fn {
     }
 }
 impl ExtMemoryBudgetFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_memory_budget\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_memory_budget\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -12695,10 +12238,8 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_MEMORY_BUDGET_PROPERTIES_EXT: Self = Self(1_000_237_000);
 }
 impl ExtMemoryPriorityFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_memory_priority\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_memory_priority\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -12719,14 +12260,9 @@ impl StructureType {
     pub const MEMORY_PRIORITY_ALLOCATE_INFO_EXT: Self = Self(1_000_238_001);
 }
 impl KhrSurfaceProtectedCapabilitiesFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_KHR_surface_protected_capabilities\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_surface_protected_capabilities\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -12746,14 +12282,11 @@ impl StructureType {
     pub const SURFACE_PROTECTED_CAPABILITIES_KHR: Self = Self(1_000_239_000);
 }
 impl NvDedicatedAllocationImageAliasingFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_NV_dedicated_allocation_image_aliasing\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+            b"VK_NV_dedicated_allocation_image_aliasing\0",
+        )
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -12774,14 +12307,9 @@ impl StructureType {
         Self(1_000_240_000);
 }
 impl KhrSeparateDepthStencilLayoutsFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_KHR_separate_depth_stencil_layouts\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_separate_depth_stencil_layouts\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -12813,12 +12341,9 @@ impl StructureType {
         Self::ATTACHMENT_DESCRIPTION_STENCIL_LAYOUT;
 }
 impl ExtBufferDeviceAddressFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_buffer_device_address\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_buffer_device_address\0")
+    };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
@@ -12882,10 +12407,8 @@ impl StructureType {
     pub const BUFFER_DEVICE_ADDRESS_CREATE_INFO_EXT: Self = Self(1_000_244_002);
 }
 impl ExtToolingInfoFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_tooling_info\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_tooling_info\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -12940,12 +12463,9 @@ impl ToolPurposeFlags {
     pub const DEBUG_MARKERS_EXT: Self = Self(0b100_0000);
 }
 impl ExtSeparateStencilUsageFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_separate_stencil_usage\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_separate_stencil_usage\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -12965,10 +12485,8 @@ impl StructureType {
     pub const IMAGE_STENCIL_USAGE_CREATE_INFO_EXT: Self = Self::IMAGE_STENCIL_USAGE_CREATE_INFO;
 }
 impl ExtValidationFeaturesFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_validation_features\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_validation_features\0") };
     pub const SPEC_VERSION: u32 = 5u32;
 }
 #[derive(Clone)]
@@ -12988,10 +12506,8 @@ impl StructureType {
     pub const VALIDATION_FEATURES_EXT: Self = Self(1_000_247_000);
 }
 impl KhrPresentWaitFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_present_wait\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_present_wait\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -13039,10 +12555,8 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_PRESENT_WAIT_FEATURES_KHR: Self = Self(1_000_248_000);
 }
 impl NvCooperativeMatrixFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_cooperative_matrix\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_cooperative_matrix\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -13096,12 +12610,9 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_COOPERATIVE_MATRIX_PROPERTIES_NV: Self = Self(1_000_249_002);
 }
 impl NvCoverageReductionModeFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_coverage_reduction_mode\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_coverage_reduction_mode\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -13157,12 +12668,9 @@ impl StructureType {
     pub const FRAMEBUFFER_MIXED_SAMPLES_COMBINATION_NV: Self = Self(1_000_250_002);
 }
 impl ExtFragmentShaderInterlockFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_fragment_shader_interlock\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_fragment_shader_interlock\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -13182,10 +12690,8 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_FRAGMENT_SHADER_INTERLOCK_FEATURES_EXT: Self = Self(1_000_251_000);
 }
 impl ExtYcbcrImageArraysFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_ycbcr_image_arrays\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_ycbcr_image_arrays\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -13205,14 +12711,9 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_YCBCR_IMAGE_ARRAYS_FEATURES_EXT: Self = Self(1_000_252_000);
 }
 impl KhrUniformBufferStandardLayoutFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_KHR_uniform_buffer_standard_layout\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_uniform_buffer_standard_layout\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -13233,10 +12734,8 @@ impl StructureType {
         Self::PHYSICAL_DEVICE_UNIFORM_BUFFER_STANDARD_LAYOUT_FEATURES;
 }
 impl ExtProvokingVertexFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_provoking_vertex\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_provoking_vertex\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -13259,12 +12758,9 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_PROVOKING_VERTEX_PROPERTIES_EXT: Self = Self(1_000_254_002);
 }
 impl ExtFullScreenExclusiveFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_full_screen_exclusive\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_full_screen_exclusive\0")
+    };
     pub const SPEC_VERSION: u32 = 4u32;
 }
 #[allow(non_camel_case_types)]
@@ -13399,10 +12895,8 @@ impl StructureType {
     pub const SURFACE_FULL_SCREEN_EXCLUSIVE_WIN32_INFO_EXT: Self = Self(1_000_255_001);
 }
 impl ExtHeadlessSurfaceFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_headless_surface\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_headless_surface\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -13454,12 +12948,9 @@ impl StructureType {
     pub const HEADLESS_SURFACE_CREATE_INFO_EXT: Self = Self(1_000_256_000);
 }
 impl KhrBufferDeviceAddressFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_buffer_device_address\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_buffer_device_address\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -13578,10 +13069,8 @@ impl StructureType {
         Self::DEVICE_MEMORY_OPAQUE_CAPTURE_ADDRESS_INFO;
 }
 impl ExtLineRasterizationFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_line_rasterization\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_line_rasterization\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -13636,10 +13125,8 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_LINE_RASTERIZATION_PROPERTIES_EXT: Self = Self(1_000_259_002);
 }
 impl ExtShaderAtomicFloatFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_atomic_float\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_atomic_float\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -13659,10 +13146,8 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_FEATURES_EXT: Self = Self(1_000_260_000);
 }
 impl ExtHostQueryResetFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_host_query_reset\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_host_query_reset\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -13711,10 +13196,8 @@ impl StructureType {
         Self::PHYSICAL_DEVICE_HOST_QUERY_RESET_FEATURES;
 }
 impl ExtIndexTypeUint8Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_index_type_uint8\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_index_type_uint8\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -13738,12 +13221,9 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_INDEX_TYPE_UINT8_FEATURES_EXT: Self = Self(1_000_265_000);
 }
 impl ExtExtendedDynamicStateFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extended_dynamic_state\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extended_dynamic_state\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -14095,12 +13575,9 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_FEATURES_EXT: Self = Self(1_000_267_000);
 }
 impl KhrDeferredHostOperationsFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_deferred_host_operations\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_deferred_host_operations\0")
+    };
     pub const SPEC_VERSION: u32 = 4u32;
 }
 #[allow(non_camel_case_types)]
@@ -14257,14 +13734,9 @@ impl Result {
     pub const OPERATION_NOT_DEFERRED_KHR: Self = Self(1_000_268_003);
 }
 impl KhrPipelineExecutablePropertiesFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_KHR_pipeline_executable_properties\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_pipeline_executable_properties\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -14389,10 +13861,9 @@ impl StructureType {
     pub const PIPELINE_EXECUTABLE_INTERNAL_REPRESENTATION_KHR: Self = Self(1_000_269_005);
 }
 impl ExtShaderAtomicFloat2Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_atomic_float2\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_atomic_float2\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -14412,10 +13883,9 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_2_FEATURES_EXT: Self = Self(1_000_273_000);
 }
 impl ExtSurfaceMaintenance1Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_surface_maintenance1\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_surface_maintenance1\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -14437,12 +13907,9 @@ impl StructureType {
     pub const SURFACE_PRESENT_MODE_COMPATIBILITY_EXT: Self = Self(1_000_274_002);
 }
 impl ExtSwapchainMaintenance1Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_swapchain_maintenance1\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_swapchain_maintenance1\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -14499,14 +13966,11 @@ impl SwapchainCreateFlagsKHR {
     pub const DEFERRED_MEMORY_ALLOCATION_EXT: Self = Self(0b1000);
 }
 impl ExtShaderDemoteToHelperInvocationFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_EXT_shader_demote_to_helper_invocation\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+            b"VK_EXT_shader_demote_to_helper_invocation\0",
+        )
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -14527,12 +13991,9 @@ impl StructureType {
         Self::PHYSICAL_DEVICE_SHADER_DEMOTE_TO_HELPER_INVOCATION_FEATURES;
 }
 impl NvDeviceGeneratedCommandsFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_device_generated_commands\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_device_generated_commands\0")
+    };
     pub const SPEC_VERSION: u32 = 3u32;
 }
 #[allow(non_camel_case_types)]
@@ -14749,12 +14210,9 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_FEATURES_NV: Self = Self(1_000_277_007);
 }
 impl NvInheritedViewportScissorFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_inherited_viewport_scissor\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_inherited_viewport_scissor\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -14775,12 +14233,9 @@ impl StructureType {
     pub const COMMAND_BUFFER_INHERITANCE_VIEWPORT_SCISSOR_INFO_NV: Self = Self(1_000_278_001);
 }
 impl KhrShaderIntegerDotProductFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_integer_dot_product\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_integer_dot_product\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -14803,12 +14258,9 @@ impl StructureType {
         Self::PHYSICAL_DEVICE_SHADER_INTEGER_DOT_PRODUCT_PROPERTIES;
 }
 impl ExtTexelBufferAlignmentFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_texel_buffer_alignment\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_texel_buffer_alignment\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -14831,12 +14283,9 @@ impl StructureType {
         Self::PHYSICAL_DEVICE_TEXEL_BUFFER_ALIGNMENT_PROPERTIES;
 }
 impl QcomRenderPassTransformFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_render_pass_transform\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_render_pass_transform\0")
+    };
     pub const SPEC_VERSION: u32 = 3u32;
 }
 #[derive(Clone)]
@@ -14862,10 +14311,9 @@ impl StructureType {
     pub const RENDER_PASS_TRANSFORM_BEGIN_INFO_QCOM: Self = Self(1_000_282_001);
 }
 impl ExtDeviceMemoryReportFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_device_memory_report\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_device_memory_report\0")
+    };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
@@ -14887,10 +14335,8 @@ impl StructureType {
     pub const DEVICE_MEMORY_REPORT_CALLBACK_DATA_EXT: Self = Self(1_000_284_002);
 }
 impl ExtAcquireDrmDisplayFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_acquire_drm_display\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_acquire_drm_display\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -14961,10 +14407,8 @@ impl ExtAcquireDrmDisplayFn {
     }
 }
 impl ExtRobustness2Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_robustness2\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_robustness2\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -14985,10 +14429,8 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_ROBUSTNESS_2_PROPERTIES_EXT: Self = Self(1_000_286_001);
 }
 impl ExtCustomBorderColorFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_custom_border_color\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_custom_border_color\0") };
     pub const SPEC_VERSION: u32 = 12u32;
 }
 #[derive(Clone)]
@@ -15015,10 +14457,8 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_CUSTOM_BORDER_COLOR_FEATURES_EXT: Self = Self(1_000_287_002);
 }
 impl GoogleUserTypeFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_user_type\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_user_type\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -15034,10 +14474,8 @@ impl GoogleUserTypeFn {
     }
 }
 impl KhrPipelineLibraryFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_pipeline_library\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_pipeline_library\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -15061,10 +14499,8 @@ impl StructureType {
     pub const PIPELINE_LIBRARY_CREATE_INFO_KHR: Self = Self(1_000_290_000);
 }
 impl NvPresentBarrierFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_present_barrier\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_present_barrier\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -15086,12 +14522,9 @@ impl StructureType {
     pub const SWAPCHAIN_PRESENT_BARRIER_CREATE_INFO_NV: Self = Self(1_000_292_002);
 }
 impl KhrShaderNonSemanticInfoFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_non_semantic_info\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_non_semantic_info\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -15107,10 +14540,8 @@ impl KhrShaderNonSemanticInfoFn {
     }
 }
 impl KhrPresentIdFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_present_id\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_present_id\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -15131,10 +14562,8 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_PRESENT_ID_FEATURES_KHR: Self = Self(1_000_294_001);
 }
 impl ExtPrivateDataFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_private_data\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_private_data\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -15277,14 +14706,9 @@ impl StructureType {
     pub const PRIVATE_DATA_SLOT_CREATE_INFO_EXT: Self = Self::PRIVATE_DATA_SLOT_CREATE_INFO;
 }
 impl ExtPipelineCreationCacheControlFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_EXT_pipeline_creation_cache_control\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pipeline_creation_cache_control\0")
+    };
     pub const SPEC_VERSION: u32 = 3u32;
 }
 #[derive(Clone)]
@@ -15319,10 +14743,8 @@ impl StructureType {
         Self::PHYSICAL_DEVICE_PIPELINE_CREATION_CACHE_CONTROL_FEATURES;
 }
 impl KhrVideoEncodeQueueFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_encode_queue\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_encode_queue\0") };
     pub const SPEC_VERSION: u32 = 7u32;
 }
 #[allow(non_camel_case_types)]
@@ -15420,12 +14842,9 @@ impl VideoCodingControlFlagsKHR {
     pub const ENCODE_RATE_CONTROL_LAYER: Self = Self(0b100);
 }
 impl NvDeviceDiagnosticsConfigFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_device_diagnostics_config\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_device_diagnostics_config\0")
+    };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
@@ -15446,12 +14865,9 @@ impl StructureType {
     pub const DEVICE_DIAGNOSTICS_CONFIG_CREATE_INFO_NV: Self = Self(1_000_300_001);
 }
 impl QcomRenderPassStoreOpsFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_render_pass_store_ops\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_render_pass_store_ops\0")
+    };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
@@ -15471,10 +14887,8 @@ impl AttachmentStoreOp {
     pub const NONE_QCOM: Self = Self::NONE;
 }
 impl ExtMetalObjectsFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_metal_objects\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_metal_objects\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -15530,10 +14944,8 @@ impl StructureType {
     pub const IMPORT_METAL_SHARED_EVENT_INFO_EXT: Self = Self(1_000_311_011);
 }
 impl KhrSynchronization2Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_synchronization2\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_synchronization2\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -15832,10 +15244,8 @@ impl StructureType {
     pub const CHECKPOINT_DATA_2_NV: Self = Self(1_000_314_009);
 }
 impl ExtDescriptorBufferFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_descriptor_buffer\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_descriptor_buffer\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -16236,12 +15646,9 @@ impl StructureType {
     pub const ACCELERATION_STRUCTURE_CAPTURE_DESCRIPTOR_DATA_INFO_EXT: Self = Self(1_000_316_009);
 }
 impl ExtGraphicsPipelineLibraryFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_graphics_pipeline_library\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_graphics_pipeline_library\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -16272,14 +15679,11 @@ impl StructureType {
     pub const GRAPHICS_PIPELINE_LIBRARY_CREATE_INFO_EXT: Self = Self(1_000_320_002);
 }
 impl AmdShaderEarlyAndLateFragmentTestsFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_AMD_shader_early_and_late_fragment_tests\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+            b"VK_AMD_shader_early_and_late_fragment_tests\0",
+        )
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -16300,12 +15704,9 @@ impl StructureType {
         Self(1_000_321_000);
 }
 impl KhrFragmentShaderBarycentricFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_fragment_shader_barycentric\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_fragment_shader_barycentric\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -16327,14 +15728,11 @@ impl StructureType {
         Self(1_000_322_000);
 }
 impl KhrShaderSubgroupUniformControlFlowFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_KHR_shader_subgroup_uniform_control_flow\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+            b"VK_KHR_shader_subgroup_uniform_control_flow\0",
+        )
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -16355,14 +15753,11 @@ impl StructureType {
         Self(1_000_323_000);
 }
 impl KhrZeroInitializeWorkgroupMemoryFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_KHR_zero_initialize_workgroup_memory\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+            b"VK_KHR_zero_initialize_workgroup_memory\0",
+        )
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -16383,12 +15778,9 @@ impl StructureType {
         Self::PHYSICAL_DEVICE_ZERO_INITIALIZE_WORKGROUP_MEMORY_FEATURES;
 }
 impl NvFragmentShadingRateEnumsFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_fragment_shading_rate_enums\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_fragment_shading_rate_enums\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -16440,12 +15832,9 @@ impl StructureType {
     pub const PIPELINE_FRAGMENT_SHADING_RATE_ENUM_STATE_CREATE_INFO_NV: Self = Self(1_000_326_002);
 }
 impl NvRayTracingMotionBlurFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_ray_tracing_motion_blur\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_ray_tracing_motion_blur\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -16479,10 +15868,8 @@ impl StructureType {
     pub const ACCELERATION_STRUCTURE_MOTION_INFO_NV: Self = Self(1_000_327_002);
 }
 impl ExtMeshShaderFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_mesh_shader\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_mesh_shader\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -16625,12 +16012,9 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_MESH_SHADER_PROPERTIES_EXT: Self = Self(1_000_328_001);
 }
 impl ExtYcbcr2plane444FormatsFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_ycbcr_2plane_444_formats\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_ycbcr_2plane_444_formats\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -16659,12 +16043,9 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_YCBCR_2_PLANE_444_FORMATS_FEATURES_EXT: Self = Self(1_000_330_000);
 }
 impl ExtFragmentDensityMap2Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_fragment_density_map2\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_fragment_density_map2\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -16689,12 +16070,9 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_2_PROPERTIES_EXT: Self = Self(1_000_332_001);
 }
 impl QcomRotatedCopyCommandsFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_rotated_copy_commands\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_rotated_copy_commands\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -16714,10 +16092,8 @@ impl StructureType {
     pub const COPY_COMMAND_TRANSFORM_INFO_QCOM: Self = Self(1_000_333_000);
 }
 impl ExtImageRobustnessFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_robustness\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_robustness\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -16738,14 +16114,11 @@ impl StructureType {
         Self::PHYSICAL_DEVICE_IMAGE_ROBUSTNESS_FEATURES;
 }
 impl KhrWorkgroupMemoryExplicitLayoutFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_KHR_workgroup_memory_explicit_layout\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+            b"VK_KHR_workgroup_memory_explicit_layout\0",
+        )
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -16766,10 +16139,8 @@ impl StructureType {
         Self(1_000_336_000);
 }
 impl KhrCopyCommands2Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_copy_commands2\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_copy_commands2\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -16944,12 +16315,9 @@ impl StructureType {
     pub const IMAGE_RESOLVE_2_KHR: Self = Self::IMAGE_RESOLVE_2;
 }
 impl ExtImageCompressionControlFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_compression_control\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_compression_control\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -17009,14 +16377,9 @@ impl StructureType {
     pub const IMAGE_COMPRESSION_PROPERTIES_EXT: Self = Self(1_000_338_004);
 }
 impl ExtAttachmentFeedbackLoopLayoutFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_EXT_attachment_feedback_loop_layout\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_attachment_feedback_loop_layout\0")
+    };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
@@ -17056,10 +16419,8 @@ impl StructureType {
         Self(1_000_339_000);
 }
 impl Ext4444FormatsFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_4444_formats\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_4444_formats\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -17084,10 +16445,8 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT: Self = Self(1_000_340_000);
 }
 impl ExtDeviceFaultFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_device_fault\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_device_fault\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -17138,14 +16497,11 @@ impl StructureType {
     pub const DEVICE_FAULT_INFO_EXT: Self = Self(1_000_341_002);
 }
 impl ArmRasterizationOrderAttachmentAccessFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_ARM_rasterization_order_attachment_access\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+            b"VK_ARM_rasterization_order_attachment_access\0",
+        )
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -17187,10 +16543,8 @@ impl SubpassDescriptionFlags {
         Self::RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_EXT;
 }
 impl ExtRgba10x6FormatsFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_rgba10x6_formats\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_rgba10x6_formats\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -17210,10 +16564,9 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_RGBA10X6_FORMATS_FEATURES_EXT: Self = Self(1_000_344_000);
 }
 impl NvAcquireWinrtDisplayFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_acquire_winrt_display\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_acquire_winrt_display\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -17278,10 +16631,8 @@ impl NvAcquireWinrtDisplayFn {
     }
 }
 impl ExtDirectfbSurfaceFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_directfb_surface\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_directfb_surface\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -17363,12 +16714,9 @@ impl StructureType {
     pub const DIRECTFB_SURFACE_CREATE_INFO_EXT: Self = Self(1_000_346_000);
 }
 impl ValveMutableDescriptorTypeFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_VALVE_mutable_descriptor_type\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_VALVE_mutable_descriptor_type\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -17403,12 +16751,9 @@ impl StructureType {
         Self::MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_EXT;
 }
 impl ExtVertexInputDynamicStateFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_vertex_input_dynamic_state\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_vertex_input_dynamic_state\0")
+    };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
@@ -17467,10 +16812,8 @@ impl StructureType {
     pub const VERTEX_INPUT_ATTRIBUTE_DESCRIPTION_2_EXT: Self = Self(1_000_352_002);
 }
 impl ExtPhysicalDeviceDrmFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_physical_device_drm\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_physical_device_drm\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -17490,14 +16833,9 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_DRM_PROPERTIES_EXT: Self = Self(1_000_353_000);
 }
 impl ExtDeviceAddressBindingReportFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_EXT_device_address_binding_report\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_device_address_binding_report\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -17522,10 +16860,8 @@ impl StructureType {
     pub const DEVICE_ADDRESS_BINDING_CALLBACK_DATA_EXT: Self = Self(1_000_354_001);
 }
 impl ExtDepthClipControlFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_depth_clip_control\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_depth_clip_control\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -17546,14 +16882,9 @@ impl StructureType {
     pub const PIPELINE_VIEWPORT_DEPTH_CLIP_CONTROL_CREATE_INFO_EXT: Self = Self(1_000_355_001);
 }
 impl ExtPrimitiveTopologyListRestartFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_EXT_primitive_topology_list_restart\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_primitive_topology_list_restart\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -17574,12 +16905,9 @@ impl StructureType {
         Self(1_000_356_000);
 }
 impl KhrFormatFeatureFlags2Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_format_feature_flags2\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_format_feature_flags2\0")
+    };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
@@ -17599,10 +16927,8 @@ impl StructureType {
     pub const FORMAT_PROPERTIES_3_KHR: Self = Self::FORMAT_PROPERTIES_3;
 }
 impl FuchsiaExternalMemoryFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_FUCHSIA_external_memory\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_FUCHSIA_external_memory\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -17688,12 +17014,9 @@ impl StructureType {
     pub const MEMORY_GET_ZIRCON_HANDLE_INFO_FUCHSIA: Self = Self(1_000_364_002);
 }
 impl FuchsiaExternalSemaphoreFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_FUCHSIA_external_semaphore\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_FUCHSIA_external_semaphore\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -17774,12 +17097,9 @@ impl StructureType {
     pub const SEMAPHORE_GET_ZIRCON_HANDLE_INFO_FUCHSIA: Self = Self(1_000_365_001);
 }
 impl FuchsiaBufferCollectionFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_FUCHSIA_buffer_collection\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_FUCHSIA_buffer_collection\0")
+    };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
@@ -17963,10 +17283,8 @@ impl StructureType {
     pub const BUFFER_COLLECTION_CONSTRAINTS_INFO_FUCHSIA: Self = Self(1_000_366_009);
 }
 impl HuaweiSubpassShadingFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_HUAWEI_subpass_shading\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_HUAWEI_subpass_shading\0") };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
@@ -18053,10 +17371,8 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_SUBPASS_SHADING_PROPERTIES_HUAWEI: Self = Self(1_000_369_002);
 }
 impl HuaweiInvocationMaskFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_HUAWEI_invocation_mask\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_HUAWEI_invocation_mask\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -18120,10 +17436,8 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_INVOCATION_MASK_FEATURES_HUAWEI: Self = Self(1_000_370_000);
 }
 impl NvExternalMemoryRdmaFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_external_memory_rdma\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_external_memory_rdma\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -18182,10 +17496,8 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_EXTERNAL_MEMORY_RDMA_FEATURES_NV: Self = Self(1_000_371_001);
 }
 impl ExtPipelinePropertiesFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pipeline_properties\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pipeline_properties\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -18237,14 +17549,11 @@ impl StructureType {
     pub const PIPELINE_INFO_EXT: Self = Self::PIPELINE_INFO_KHR;
 }
 impl ExtMultisampledRenderToSingleSampledFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_EXT_multisampled_render_to_single_sampled\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+            b"VK_EXT_multisampled_render_to_single_sampled\0",
+        )
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -18271,12 +17580,9 @@ impl StructureType {
     pub const MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_INFO_EXT: Self = Self(1_000_376_002);
 }
 impl ExtExtendedDynamicState2Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extended_dynamic_state2\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extended_dynamic_state2\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -18425,10 +17731,8 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_2_FEATURES_EXT: Self = Self(1_000_377_000);
 }
 impl QnxScreenSurfaceFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QNX_screen_surface\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QNX_screen_surface\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -18508,10 +17812,8 @@ impl StructureType {
     pub const SCREEN_SURFACE_CREATE_INFO_QNX: Self = Self(1_000_378_000);
 }
 impl ExtColorWriteEnableFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_color_write_enable\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_color_write_enable\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -18566,12 +17868,9 @@ impl StructureType {
     pub const PIPELINE_COLOR_WRITE_CREATE_INFO_EXT: Self = Self(1_000_381_001);
 }
 impl ExtPrimitivesGeneratedQueryFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_primitives_generated_query\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_primitives_generated_query\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -18595,12 +17894,9 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_PRIMITIVES_GENERATED_QUERY_FEATURES_EXT: Self = Self(1_000_382_000);
 }
 impl KhrRayTracingMaintenance1Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_ray_tracing_maintenance1\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_ray_tracing_maintenance1\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -18663,12 +17959,9 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_RAY_TRACING_MAINTENANCE_1_FEATURES_KHR: Self = Self(1_000_386_000);
 }
 impl ExtGlobalPriorityQueryFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_global_priority_query\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_global_priority_query\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -18691,10 +17984,8 @@ impl StructureType {
         Self::QUEUE_FAMILY_GLOBAL_PRIORITY_PROPERTIES_KHR;
 }
 impl ExtImageViewMinLodFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_view_min_lod\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_view_min_lod\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -18715,10 +18006,8 @@ impl StructureType {
     pub const IMAGE_VIEW_MIN_LOD_CREATE_INFO_EXT: Self = Self(1_000_391_001);
 }
 impl ExtMultiDrawFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_multi_draw\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_multi_draw\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -18805,10 +18094,8 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_MULTI_DRAW_PROPERTIES_EXT: Self = Self(1_000_392_001);
 }
 impl ExtImage2dViewOf3dFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_2d_view_of_3d\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_2d_view_of_3d\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -18833,12 +18120,9 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_IMAGE_2D_VIEW_OF_3D_FEATURES_EXT: Self = Self(1_000_393_000);
 }
 impl KhrPortabilityEnumerationFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_portability_enumeration\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_portability_enumeration\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -18858,10 +18142,8 @@ impl InstanceCreateFlags {
     pub const ENUMERATE_PORTABILITY_KHR: Self = Self(0b1);
 }
 impl ExtOpacityMicromapFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_opacity_micromap\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_opacity_micromap\0") };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
@@ -19315,10 +18597,8 @@ impl StructureType {
     pub const ACCELERATION_STRUCTURE_TRIANGLES_OPACITY_MICROMAP_EXT: Self = Self(1_000_396_009);
 }
 impl ExtLoadStoreOpNoneFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_load_store_op_none\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_load_store_op_none\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -19342,10 +18622,9 @@ impl AttachmentStoreOp {
     pub const NONE_EXT: Self = Self::NONE;
 }
 impl ExtBorderColorSwizzleFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_border_color_swizzle\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_border_color_swizzle\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -19366,14 +18645,9 @@ impl StructureType {
     pub const SAMPLER_BORDER_COLOR_COMPONENT_MAPPING_CREATE_INFO_EXT: Self = Self(1_000_411_001);
 }
 impl ExtPageableDeviceLocalMemoryFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_EXT_pageable_device_local_memory\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pageable_device_local_memory\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -19420,10 +18694,8 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_PAGEABLE_DEVICE_LOCAL_MEMORY_FEATURES_EXT: Self = Self(1_000_412_000);
 }
 impl KhrMaintenance4Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance4\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance4\0") };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
@@ -19541,14 +18813,9 @@ impl StructureType {
     pub const DEVICE_IMAGE_MEMORY_REQUIREMENTS_KHR: Self = Self::DEVICE_IMAGE_MEMORY_REQUIREMENTS;
 }
 impl ValveDescriptorSetHostMappingFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_VALVE_descriptor_set_host_mapping\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_VALVE_descriptor_set_host_mapping\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -19630,10 +18897,9 @@ impl StructureType {
     pub const DESCRIPTOR_SET_LAYOUT_HOST_MAPPING_INFO_VALVE: Self = Self(1_000_420_002);
 }
 impl ExtDepthClampZeroOneFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_depth_clamp_zero_one\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_depth_clamp_zero_one\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -19653,12 +18919,9 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_DEPTH_CLAMP_ZERO_ONE_FEATURES_EXT: Self = Self(1_000_421_000);
 }
 impl ExtNonSeamlessCubeMapFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_non_seamless_cube_map\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_non_seamless_cube_map\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -19682,14 +18945,9 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_NON_SEAMLESS_CUBE_MAP_FEATURES_EXT: Self = Self(1_000_422_000);
 }
 impl QcomFragmentDensityMapOffsetFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_QCOM_fragment_density_map_offset\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_fragment_density_map_offset\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -19716,10 +18974,8 @@ impl StructureType {
     pub const SUBPASS_FRAGMENT_DENSITY_MAP_OFFSET_END_INFO_QCOM: Self = Self(1_000_425_002);
 }
 impl NvCopyMemoryIndirectFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_copy_memory_indirect\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_copy_memory_indirect\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -19807,10 +19063,8 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_COPY_MEMORY_INDIRECT_PROPERTIES_NV: Self = Self(1_000_426_001);
 }
 impl NvMemoryDecompressionFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_memory_decompression\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_memory_decompression\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -19890,12 +19144,9 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_PROPERTIES_NV: Self = Self(1_000_427_001);
 }
 impl NvLinearColorAttachmentFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_linear_color_attachment\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_linear_color_attachment\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -19921,10 +19172,9 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_LINEAR_COLOR_ATTACHMENT_FEATURES_NV: Self = Self(1_000_430_000);
 }
 impl GoogleSurfacelessQueryFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_surfaceless_query\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_surfaceless_query\0")
+    };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
@@ -19940,14 +19190,11 @@ impl GoogleSurfacelessQueryFn {
     }
 }
 impl ExtImageCompressionControlSwapchainFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_EXT_image_compression_control_swapchain\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+            b"VK_EXT_image_compression_control_swapchain\0",
+        )
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -19968,10 +19215,8 @@ impl StructureType {
         Self(1_000_437_000);
 }
 impl QcomImageProcessingFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_image_processing\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_image_processing\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -20016,12 +19261,9 @@ impl StructureType {
     pub const IMAGE_VIEW_SAMPLE_WEIGHT_CREATE_INFO_QCOM: Self = Self(1_000_440_002);
 }
 impl ExtExtendedDynamicState3Fn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extended_dynamic_state3\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extended_dynamic_state3\0")
+    };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
@@ -20877,12 +20119,9 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_3_PROPERTIES_EXT: Self = Self(1_000_455_001);
 }
 impl ExtSubpassMergeFeedbackFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_subpass_merge_feedback\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_subpass_merge_feedback\0")
+    };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
@@ -20905,12 +20144,9 @@ impl StructureType {
     pub const RENDER_PASS_SUBPASS_FEEDBACK_CREATE_INFO_EXT: Self = Self(1_000_458_003);
 }
 impl LunargDirectDriverLoadingFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_LUNARG_direct_driver_loading\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_LUNARG_direct_driver_loading\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -20931,12 +20167,9 @@ impl StructureType {
     pub const DIRECT_DRIVER_LOADING_LIST_LUNARG: Self = Self(1_000_459_001);
 }
 impl ExtShaderModuleIdentifierFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_module_identifier\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_module_identifier\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -21017,14 +20250,11 @@ impl StructureType {
     pub const SHADER_MODULE_IDENTIFIER_EXT: Self = Self(1_000_462_003);
 }
 impl ExtRasterizationOrderAttachmentAccessFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_EXT_rasterization_order_attachment_access\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+            b"VK_EXT_rasterization_order_attachment_access\0",
+        )
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -21060,10 +20290,8 @@ impl SubpassDescriptionFlags {
     pub const RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_EXT: Self = Self(0b100_0000);
 }
 impl NvOpticalFlowFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_optical_flow\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_optical_flow\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -21271,10 +20499,8 @@ impl StructureType {
     pub const OPTICAL_FLOW_SESSION_CREATE_PRIVATE_DATA_INFO_NV: Self = Self(1_000_464_010);
 }
 impl ExtLegacyDitheringFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_legacy_dithering\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_legacy_dithering\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -21302,12 +20528,9 @@ impl SubpassDescriptionFlags {
     pub const ENABLE_LEGACY_DITHERING_EXT: Self = Self(0b1000_0000);
 }
 impl ExtPipelineProtectedAccessFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pipeline_protected_access\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pipeline_protected_access\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -21332,10 +20555,8 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES_EXT: Self = Self(1_000_466_000);
 }
 impl QcomTilePropertiesFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_tile_properties\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_tile_properties\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
@@ -21416,10 +20637,8 @@ impl StructureType {
     pub const TILE_PROPERTIES_QCOM: Self = Self(1_000_484_001);
 }
 impl SecAmigoProfilingFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_SEC_amigo_profiling\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_SEC_amigo_profiling\0") };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -21440,14 +20659,9 @@ impl StructureType {
     pub const AMIGO_PROFILING_SUBMIT_INFO_SEC: Self = Self(1_000_485_001);
 }
 impl QcomMultiviewPerViewViewportsFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_QCOM_multiview_per_view_viewports\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_multiview_per_view_viewports\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -21468,14 +20682,9 @@ impl StructureType {
         Self(1_000_488_000);
 }
 impl NvRayTracingInvocationReorderFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                b"VK_NV_ray_tracing_invocation_reorder\0",
-            )
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_ray_tracing_invocation_reorder\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -21498,12 +20707,9 @@ impl StructureType {
         Self(1_000_490_001);
 }
 impl ExtMutableDescriptorTypeFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe {
-            ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_mutable_descriptor_type\0")
-        }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_mutable_descriptor_type\0")
+    };
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
@@ -21536,10 +20742,9 @@ impl StructureType {
     pub const MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_EXT: Self = Self(1_000_351_002);
 }
 impl ArmShaderCoreBuiltinsFn {
-    #[inline]
-    pub const fn name() -> &'static ::std::ffi::CStr {
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_ARM_shader_core_builtins\0") }
-    }
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_ARM_shader_core_builtins\0")
+    };
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]

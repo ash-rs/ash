@@ -37,10 +37,7 @@ impl MetalSurface {
         .result_with_success(surface)
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::ExtMetalSurfaceFn::name()
-    }
+    pub const NAME: &'static CStr = vk::ExtMetalSurfaceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ExtMetalSurfaceFn {

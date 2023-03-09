@@ -30,10 +30,7 @@ impl RayTracingMaintenance1 {
         (self.fp.cmd_trace_rays_indirect2_khr)(command_buffer, indirect_device_address);
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::KhrRayTracingMaintenance1Fn::name()
-    }
+    pub const NAME: &'static CStr = vk::KhrRayTracingMaintenance1Fn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrRayTracingMaintenance1Fn {

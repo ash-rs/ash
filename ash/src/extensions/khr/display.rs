@@ -126,10 +126,7 @@ impl Display {
         .assume_init_on_success(surface)
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::KhrDisplayFn::name()
-    }
+    pub const NAME: &'static CStr = vk::KhrDisplayFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrDisplayFn {

@@ -51,10 +51,7 @@ impl DeviceDiagnosticCheckpoints {
         assert_eq!(count as usize, out.len());
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::NvDeviceDiagnosticCheckpointsFn::name()
-    }
+    pub const NAME: &'static CStr = vk::NvDeviceDiagnosticCheckpointsFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::NvDeviceDiagnosticCheckpointsFn {

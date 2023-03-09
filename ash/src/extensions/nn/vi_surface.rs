@@ -37,10 +37,7 @@ impl ViSurface {
         .result_with_success(surface)
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::NnViSurfaceFn::name()
-    }
+    pub const NAME: &'static CStr = vk::NnViSurfaceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::NnViSurfaceFn {

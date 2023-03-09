@@ -1078,10 +1078,9 @@ pub fn generate_extension_commands<'a>(
     let byte_name_ident = Literal::byte_string(format!("{extension_name}\0").as_bytes());
     let extension_cstr = quote! {
         impl #ident {
-            #[inline]
-            pub const fn name() -> &'static ::std::ffi::CStr {
-                unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(#byte_name_ident) }
-            }
+            pub const NAME: &'static ::std::ffi::CStr = unsafe {
+                ::std::ffi::CStr::from_bytes_with_nul_unchecked(#byte_name_ident)
+            };
             #spec_version
         }
     };

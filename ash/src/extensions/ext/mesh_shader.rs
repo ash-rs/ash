@@ -82,10 +82,7 @@ impl MeshShader {
         );
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::ExtMeshShaderFn::name()
-    }
+    pub const NAME: &'static CStr = vk::ExtMeshShaderFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ExtMeshShaderFn {

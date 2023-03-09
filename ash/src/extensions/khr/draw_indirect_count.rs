@@ -62,10 +62,7 @@ impl DrawIndirectCount {
         );
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::KhrDrawIndirectCountFn::name()
-    }
+    pub const NAME: &'static CStr = vk::KhrDrawIndirectCountFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrDrawIndirectCountFn {

@@ -228,13 +228,13 @@ impl ExampleBase {
                 ash_window::enumerate_required_extensions(window.raw_display_handle())
                     .unwrap()
                     .to_vec();
-            extension_names.push(DebugUtils::name().as_ptr());
+            extension_names.push(DebugUtils::NAME.as_ptr());
 
             #[cfg(any(target_os = "macos", target_os = "ios"))]
             {
-                extension_names.push(KhrPortabilityEnumerationFn::name().as_ptr());
+                extension_names.push(KhrPortabilityEnumerationFn::NAME.as_ptr());
                 // Enabling this extension is a requirement when using `VK_KHR_portability_subset`
-                extension_names.push(KhrGetPhysicalDeviceProperties2Fn::name().as_ptr());
+                extension_names.push(KhrGetPhysicalDeviceProperties2Fn::NAME.as_ptr());
             }
 
             let appinfo = vk::ApplicationInfo::default()
@@ -316,9 +316,9 @@ impl ExampleBase {
                 .expect("Couldn't find suitable device.");
             let queue_family_index = queue_family_index as u32;
             let device_extension_names_raw = [
-                Swapchain::name().as_ptr(),
+                Swapchain::NAME.as_ptr(),
                 #[cfg(any(target_os = "macos", target_os = "ios"))]
-                KhrPortabilitySubsetFn::name().as_ptr(),
+                KhrPortabilitySubsetFn::NAME.as_ptr(),
             ];
             let features = vk::PhysicalDeviceFeatures {
                 shader_clip_distance: 1,

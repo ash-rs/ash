@@ -76,10 +76,7 @@ impl DeferredHostOperations {
         (self.fp.get_deferred_operation_result_khr)(self.handle, operation).result()
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::KhrDeferredHostOperationsFn::name()
-    }
+    pub const NAME: &'static CStr = vk::KhrDeferredHostOperationsFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrDeferredHostOperationsFn {
