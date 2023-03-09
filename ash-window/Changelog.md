@@ -2,6 +2,8 @@
 
 ## [Unreleased] - ReleaseDate
 
+- Bumped MSRV from 1.59 to 1.64 for `raw-window-handle 0.5.1`. (#709, #716)
+
 ## [0.12.0] - 2022-09-23
 
 ### Changed
