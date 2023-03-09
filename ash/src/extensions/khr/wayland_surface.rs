@@ -54,10 +54,7 @@ impl WaylandSurface {
         b > 0
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::KhrWaylandSurfaceFn::name()
-    }
+    pub const NAME: &'static CStr = vk::KhrWaylandSurfaceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrWaylandSurfaceFn {

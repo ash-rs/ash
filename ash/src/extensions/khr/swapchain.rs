@@ -194,10 +194,7 @@ impl Swapchain {
         }
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::KhrSwapchainFn::name()
-    }
+    pub const NAME: &'static CStr = vk::KhrSwapchainFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrSwapchainFn {

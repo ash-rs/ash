@@ -43,10 +43,7 @@ impl AcquireDrmDisplay {
             .assume_init_on_success(display)
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::ExtAcquireDrmDisplayFn::name()
-    }
+    pub const NAME: &'static CStr = vk::ExtAcquireDrmDisplayFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ExtAcquireDrmDisplayFn {

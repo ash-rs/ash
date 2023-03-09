@@ -37,10 +37,7 @@ impl AndroidSurface {
         .result_with_success(surface)
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::KhrAndroidSurfaceFn::name()
-    }
+    pub const NAME: &'static CStr = vk::KhrAndroidSurfaceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrAndroidSurfaceFn {

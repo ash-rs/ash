@@ -152,10 +152,7 @@ impl DeviceGroup {
         }
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::KhrDeviceGroupFn::name()
-    }
+    pub const NAME: &'static CStr = vk::KhrDeviceGroupFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrDeviceGroupFn {

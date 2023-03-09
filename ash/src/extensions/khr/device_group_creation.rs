@@ -49,10 +49,7 @@ impl DeviceGroupCreation {
         Ok(())
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::KhrDeviceGroupCreationFn::name()
-    }
+    pub const NAME: &'static CStr = vk::KhrDeviceGroupCreationFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrDeviceGroupCreationFn {

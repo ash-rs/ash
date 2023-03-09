@@ -56,10 +56,7 @@ impl XcbSurface {
         b > 0
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::KhrXcbSurfaceFn::name()
-    }
+    pub const NAME: &'static CStr = vk::KhrXcbSurfaceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrXcbSurfaceFn {

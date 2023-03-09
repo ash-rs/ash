@@ -41,10 +41,7 @@ impl ExternalFenceWin32 {
             .result_with_success(handle)
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::KhrExternalFenceWin32Fn::name()
-    }
+    pub const NAME: &'static CStr = vk::KhrExternalFenceWin32Fn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrExternalFenceWin32Fn {

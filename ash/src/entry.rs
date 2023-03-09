@@ -32,7 +32,7 @@ pub struct Entry {
 impl Entry {
     /// Load default Vulkan library for the current platform
     ///
-    /// Prefer this over [`linked`](Self::linked) when your application can gracefully handle
+    /// Prefer this over [`linked()`][Self::linked()] when your application can gracefully handle
     /// environments that lack Vulkan support, and when the build environment might not have Vulkan
     /// development packages installed (e.g. the Vulkan SDK, or Ubuntu's `libvulkan-dev`).
     ///
@@ -78,7 +78,7 @@ impl Entry {
 
     /// Load entry points from a Vulkan loader linked at compile time
     ///
-    /// Compared to [`load`](Self::load), this is infallible, but requires that the build
+    /// Compared to [`load()`][Self::load()], this is infallible, but requires that the build
     /// environment have Vulkan development packages installed (e.g. the Vulkan SDK, or Ubuntu's
     /// `libvulkan-dev`), and prevents the resulting binary from starting in environments that do not
     /// support Vulkan.
@@ -197,9 +197,7 @@ impl Entry {
         unsafe {
             let mut api_version = 0;
             let enumerate_instance_version: Option<vk::PFN_vkEnumerateInstanceVersion> = {
-                let name = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkEnumerateInstanceVersion\0",
-                );
+                let name = CStr::from_bytes_with_nul_unchecked(b"vkEnumerateInstanceVersion\0");
                 mem::transmute((self.static_fn.get_instance_proc_addr)(
                     vk::Instance::null(),
                     name.as_ptr(),
@@ -218,7 +216,7 @@ impl Entry {
     ///
     /// # Safety
     /// In order for the created [`Instance`] to be valid for the duration of its
-    /// usage, the [`Entry`](Self) this was called on must be dropped later than the
+    /// usage, the [`Entry`][Self] this was called on must be dropped later than the
     /// resulting [`Instance`].
     #[inline]
     pub unsafe fn create_instance(
@@ -326,14 +324,11 @@ impl Default for Entry {
 impl vk::StaticFn {
     pub fn load_checked<F>(mut _f: F) -> Result<Self, MissingEntryPoint>
     where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        F: FnMut(&CStr) -> *const c_void,
     {
-        // TODO: Make this a &'static CStr once CStr::from_bytes_with_nul_unchecked is const
-        static ENTRY_POINT: &[u8] = b"vkGetInstanceProcAddr\0";
-
         Ok(Self {
             get_instance_proc_addr: unsafe {
-                let cname = CStr::from_bytes_with_nul_unchecked(ENTRY_POINT);
+                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetInstanceProcAddr\0");
                 let val = _f(cname);
                 if val.is_null() {
                     return Err(MissingEntryPoint);

@@ -194,10 +194,7 @@ impl DescriptorBuffer {
         .result()
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::ExtDescriptorBufferFn::name()
-    }
+    pub const NAME: &'static CStr = vk::ExtDescriptorBufferFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ExtDescriptorBufferFn {

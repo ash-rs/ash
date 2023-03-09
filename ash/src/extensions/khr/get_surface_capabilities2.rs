@@ -72,10 +72,7 @@ impl GetSurfaceCapabilities2 {
         err_code.result()
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::KhrGetSurfaceCapabilities2Fn::name()
-    }
+    pub const NAME: &'static CStr = vk::KhrGetSurfaceCapabilities2Fn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrGetSurfaceCapabilities2Fn {

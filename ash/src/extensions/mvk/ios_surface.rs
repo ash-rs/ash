@@ -37,10 +37,7 @@ impl IOSSurface {
         .result_with_success(surface)
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::MvkIosSurfaceFn::name()
-    }
+    pub const NAME: &'static CStr = vk::MvkIosSurfaceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::MvkIosSurfaceFn {

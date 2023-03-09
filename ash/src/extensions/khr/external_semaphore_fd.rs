@@ -35,10 +35,7 @@ impl ExternalSemaphoreFd {
         (self.fp.get_semaphore_fd_khr)(self.handle, get_info, &mut fd).result_with_success(fd)
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::KhrExternalSemaphoreFdFn::name()
-    }
+    pub const NAME: &'static CStr = vk::KhrExternalSemaphoreFdFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrExternalSemaphoreFdFn {

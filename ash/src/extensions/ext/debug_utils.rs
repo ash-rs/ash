@@ -134,10 +134,7 @@ impl DebugUtils {
         );
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::ExtDebugUtilsFn::name()
-    }
+    pub const NAME: &'static CStr = vk::ExtDebugUtilsFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ExtDebugUtilsFn {

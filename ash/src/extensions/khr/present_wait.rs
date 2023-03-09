@@ -30,10 +30,7 @@ impl PresentWait {
         (self.fp.wait_for_present_khr)(self.handle, swapchain, present_id, timeout).result()
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::KhrPresentWaitFn::name()
-    }
+    pub const NAME: &'static CStr = vk::KhrPresentWaitFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrPresentWaitFn {

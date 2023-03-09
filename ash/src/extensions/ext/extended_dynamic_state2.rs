@@ -73,10 +73,7 @@ impl ExtendedDynamicState2 {
         )
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::ExtExtendedDynamicState2Fn::name()
-    }
+    pub const NAME: &'static CStr = vk::ExtExtendedDynamicState2Fn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ExtExtendedDynamicState2Fn {

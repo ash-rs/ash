@@ -206,9 +206,9 @@ use ash::extensions::{Swapchain, XlibSurface, Surface, DebugReport};
 #[cfg(all(unix, not(target_os = "android")))]
 fn extension_names() -> Vec<*const i8> {
     vec![
-        Surface::name().as_ptr(),
-        XlibSurface::name().as_ptr(),
-        DebugReport::name().as_ptr()
+        Surface::NAME.as_ptr(),
+        XlibSurface::NAME.as_ptr(),
+        DebugReport::NAME.as_ptr()
     ]
 }
 ```

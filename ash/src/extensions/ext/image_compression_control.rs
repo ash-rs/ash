@@ -30,10 +30,7 @@ impl ImageCompressionControl {
         (self.fp.get_image_subresource_layout2_ext)(self.handle, image, subresource, layout)
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::ExtImageCompressionControlFn::name()
-    }
+    pub const NAME: &'static CStr = vk::ExtImageCompressionControlFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ExtImageCompressionControlFn {

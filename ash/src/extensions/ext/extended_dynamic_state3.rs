@@ -397,10 +397,7 @@ impl ExtendedDynamicState3 {
         (self.fp.cmd_set_coverage_reduction_mode_nv)(command_buffer, coverage_reduction_mode)
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::ExtExtendedDynamicState3Fn::name()
-    }
+    pub const NAME: &'static CStr = vk::ExtExtendedDynamicState3Fn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ExtExtendedDynamicState3Fn {

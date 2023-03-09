@@ -37,10 +37,7 @@ impl MacOSSurface {
         .result_with_success(surface)
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::MvkMacosSurfaceFn::name()
-    }
+    pub const NAME: &'static CStr = vk::MvkMacosSurfaceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::MvkMacosSurfaceFn {

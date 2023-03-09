@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Replaced builders with lifetimes/setters directly on Vulkan structs (#602)
 - Inlined struct setters (#602)
 - Bumped MSRV from 1.59 to 1.60 (#709)
+- Replaced `const fn name()` with associated `NAME` constants (#715)
 
 ### Removed
 

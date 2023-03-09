@@ -155,10 +155,7 @@ impl GetPhysicalDeviceProperties2 {
         assert_eq!(count as usize, out.len());
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::KhrGetPhysicalDeviceProperties2Fn::name()
-    }
+    pub const NAME: &'static CStr = vk::KhrGetPhysicalDeviceProperties2Fn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrGetPhysicalDeviceProperties2Fn {

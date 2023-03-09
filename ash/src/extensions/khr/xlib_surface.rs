@@ -56,10 +56,7 @@ impl XlibSurface {
         b > 0
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::KhrXlibSurfaceFn::name()
-    }
+    pub const NAME: &'static CStr = vk::KhrXlibSurfaceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrXlibSurfaceFn {

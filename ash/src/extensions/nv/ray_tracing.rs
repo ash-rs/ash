@@ -254,10 +254,7 @@ impl RayTracing {
         (self.fp.compile_deferred_nv)(self.handle, pipeline, shader).result()
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::NvRayTracingFn::name()
-    }
+    pub const NAME: &'static CStr = vk::NvRayTracingFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::NvRayTracingFn {

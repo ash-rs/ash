@@ -40,10 +40,7 @@ impl DisplaySwapchain {
         Ok(swapchains)
     }
 
-    #[inline]
-    pub const fn name() -> &'static CStr {
-        vk::KhrDisplaySwapchainFn::name()
-    }
+    pub const NAME: &'static CStr = vk::KhrDisplaySwapchainFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrDisplaySwapchainFn {
