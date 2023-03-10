@@ -465,34 +465,42 @@ impl Device {
     #[inline]
     pub unsafe fn get_device_buffer_memory_requirements(
         &self,
-        create_info: &vk::DeviceBufferMemoryRequirements,
+        memory_reqirements: &vk::DeviceBufferMemoryRequirements,
         out: &mut vk::MemoryRequirements2,
     ) {
-        (self.device_fn_1_3.get_device_buffer_memory_requirements)(self.handle, create_info, out)
+        (self.device_fn_1_3.get_device_buffer_memory_requirements)(
+            self.handle,
+            memory_reqirements,
+            out,
+        )
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceImageMemoryRequirements.html>
     #[inline]
     pub unsafe fn get_device_image_memory_requirements(
         &self,
-        create_info: &vk::DeviceImageMemoryRequirements,
+        memory_reqirements: &vk::DeviceImageMemoryRequirements,
         out: &mut vk::MemoryRequirements2,
     ) {
-        (self.device_fn_1_3.get_device_image_memory_requirements)(self.handle, create_info, out)
+        (self.device_fn_1_3.get_device_image_memory_requirements)(
+            self.handle,
+            memory_reqirements,
+            out,
+        )
     }
 
     /// Retrieve the number of elements to pass to [`get_device_image_sparse_memory_requirements()`][Self::get_device_image_sparse_memory_requirements()]
     #[inline]
     pub unsafe fn get_device_image_sparse_memory_requirements_len(
         &self,
-        create_info: &vk::DeviceImageMemoryRequirements,
+        memory_reqirements: &vk::DeviceImageMemoryRequirements,
     ) -> usize {
         let mut count = 0;
         (self
             .device_fn_1_3
             .get_device_image_sparse_memory_requirements)(
             self.handle,
-            create_info,
+            memory_reqirements,
             &mut count,
             std::ptr::null_mut(),
         );
@@ -506,7 +514,7 @@ impl Device {
     #[inline]
     pub unsafe fn get_device_image_sparse_memory_requirements(
         &self,
-        create_info: &vk::DeviceImageMemoryRequirements,
+        memory_reqirements: &vk::DeviceImageMemoryRequirements,
         out: &mut [vk::SparseImageMemoryRequirements2],
     ) {
         let mut count = out.len() as u32;
@@ -514,7 +522,7 @@ impl Device {
             .device_fn_1_3
             .get_device_image_sparse_memory_requirements)(
             self.handle,
-            create_info,
+            memory_reqirements,
             &mut count,
             out.as_mut_ptr(),
         );
@@ -1499,17 +1507,17 @@ impl Device {
     #[inline]
     pub unsafe fn allocate_descriptor_sets(
         &self,
-        create_info: &vk::DescriptorSetAllocateInfo,
+        allocate_info: &vk::DescriptorSetAllocateInfo,
     ) -> VkResult<Vec<vk::DescriptorSet>> {
-        let mut desc_set = Vec::with_capacity(create_info.descriptor_set_count as usize);
+        let mut desc_set = Vec::with_capacity(allocate_info.descriptor_set_count as usize);
         (self.device_fn_1_0.allocate_descriptor_sets)(
             self.handle(),
-            create_info,
+            allocate_info,
             desc_set.as_mut_ptr(),
         )
         .result()?;
 
-        desc_set.set_len(create_info.descriptor_set_count as usize);
+        desc_set.set_len(allocate_info.descriptor_set_count as usize);
         Ok(desc_set)
     }
 
@@ -1786,10 +1794,10 @@ impl Device {
     pub unsafe fn cmd_begin_render_pass(
         &self,
         command_buffer: vk::CommandBuffer,
-        create_info: &vk::RenderPassBeginInfo,
+        render_pass_begin: &vk::RenderPassBeginInfo,
         contents: vk::SubpassContents,
     ) {
-        (self.device_fn_1_0.cmd_begin_render_pass)(command_buffer, create_info, contents);
+        (self.device_fn_1_0.cmd_begin_render_pass)(command_buffer, render_pass_begin, contents);
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdNextSubpass.html>
@@ -2488,16 +2496,16 @@ impl Device {
     #[inline]
     pub unsafe fn allocate_command_buffers(
         &self,
-        create_info: &vk::CommandBufferAllocateInfo,
+        allocate_info: &vk::CommandBufferAllocateInfo,
     ) -> VkResult<Vec<vk::CommandBuffer>> {
-        let mut buffers = Vec::with_capacity(create_info.command_buffer_count as usize);
+        let mut buffers = Vec::with_capacity(allocate_info.command_buffer_count as usize);
         (self.device_fn_1_0.allocate_command_buffers)(
             self.handle(),
-            create_info,
+            allocate_info,
             buffers.as_mut_ptr(),
         )
         .result()?;
-        buffers.set_len(create_info.command_buffer_count as usize);
+        buffers.set_len(allocate_info.command_buffer_count as usize);
         Ok(buffers)
     }
 
@@ -2592,13 +2600,13 @@ impl Device {
     #[inline]
     pub unsafe fn allocate_memory(
         &self,
-        create_info: &vk::MemoryAllocateInfo,
+        allocate_info: &vk::MemoryAllocateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::DeviceMemory> {
         let mut memory = mem::zeroed();
         (self.device_fn_1_0.allocate_memory)(
             self.handle(),
-            create_info,
+            allocate_info,
             allocation_callbacks.as_raw_ptr(),
             &mut memory,
         )
