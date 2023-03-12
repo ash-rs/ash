@@ -465,12 +465,12 @@ impl Device {
     #[inline]
     pub unsafe fn get_device_buffer_memory_requirements(
         &self,
-        memory_reqirements: &vk::DeviceBufferMemoryRequirements,
+        memory_requirements: &vk::DeviceBufferMemoryRequirements,
         out: &mut vk::MemoryRequirements2,
     ) {
         (self.device_fn_1_3.get_device_buffer_memory_requirements)(
             self.handle,
-            memory_reqirements,
+            memory_requirements,
             out,
         )
     }
@@ -479,12 +479,12 @@ impl Device {
     #[inline]
     pub unsafe fn get_device_image_memory_requirements(
         &self,
-        memory_reqirements: &vk::DeviceImageMemoryRequirements,
+        memory_requirements: &vk::DeviceImageMemoryRequirements,
         out: &mut vk::MemoryRequirements2,
     ) {
         (self.device_fn_1_3.get_device_image_memory_requirements)(
             self.handle,
-            memory_reqirements,
+            memory_requirements,
             out,
         )
     }
@@ -493,14 +493,14 @@ impl Device {
     #[inline]
     pub unsafe fn get_device_image_sparse_memory_requirements_len(
         &self,
-        memory_reqirements: &vk::DeviceImageMemoryRequirements,
+        memory_requirements: &vk::DeviceImageMemoryRequirements,
     ) -> usize {
         let mut count = 0;
         (self
             .device_fn_1_3
             .get_device_image_sparse_memory_requirements)(
             self.handle,
-            memory_reqirements,
+            memory_requirements,
             &mut count,
             std::ptr::null_mut(),
         );
@@ -514,7 +514,7 @@ impl Device {
     #[inline]
     pub unsafe fn get_device_image_sparse_memory_requirements(
         &self,
-        memory_reqirements: &vk::DeviceImageMemoryRequirements,
+        memory_requirements: &vk::DeviceImageMemoryRequirements,
         out: &mut [vk::SparseImageMemoryRequirements2],
     ) {
         let mut count = out.len() as u32;
@@ -522,7 +522,7 @@ impl Device {
             .device_fn_1_3
             .get_device_image_sparse_memory_requirements)(
             self.handle,
-            memory_reqirements,
+            memory_requirements,
             &mut count,
             out.as_mut_ptr(),
         );
