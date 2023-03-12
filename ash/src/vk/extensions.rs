@@ -2872,7 +2872,7 @@ impl AmdShaderBallotFn {
 impl ExtVideoEncodeH264Fn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_encode_h264\0") };
-    pub const SPEC_VERSION: u32 = 9u32;
+    pub const SPEC_VERSION: u32 = 10u32;
 }
 #[derive(Clone)]
 pub struct ExtVideoEncodeH264Fn {}
@@ -2894,11 +2894,9 @@ impl StructureType {
     pub const VIDEO_ENCODE_H264_VCL_FRAME_INFO_EXT: Self = Self(1_000_038_003);
     pub const VIDEO_ENCODE_H264_DPB_SLOT_INFO_EXT: Self = Self(1_000_038_004);
     pub const VIDEO_ENCODE_H264_NALU_SLICE_INFO_EXT: Self = Self(1_000_038_005);
-    pub const VIDEO_ENCODE_H264_EMIT_PICTURE_PARAMETERS_INFO_EXT: Self = Self(1_000_038_006);
     pub const VIDEO_ENCODE_H264_PROFILE_INFO_EXT: Self = Self(1_000_038_007);
     pub const VIDEO_ENCODE_H264_RATE_CONTROL_INFO_EXT: Self = Self(1_000_038_008);
     pub const VIDEO_ENCODE_H264_RATE_CONTROL_LAYER_INFO_EXT: Self = Self(1_000_038_009);
-    pub const VIDEO_ENCODE_H264_REFERENCE_LISTS_INFO_EXT: Self = Self(1_000_038_010);
 }
 #[doc = "Generated from 'VK_EXT_video_encode_h264'"]
 impl VideoCodecOperationFlagsKHR {
@@ -2907,7 +2905,7 @@ impl VideoCodecOperationFlagsKHR {
 impl ExtVideoEncodeH265Fn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_encode_h265\0") };
-    pub const SPEC_VERSION: u32 = 9u32;
+    pub const SPEC_VERSION: u32 = 10u32;
 }
 #[derive(Clone)]
 pub struct ExtVideoEncodeH265Fn {}
@@ -2929,9 +2927,7 @@ impl StructureType {
     pub const VIDEO_ENCODE_H265_VCL_FRAME_INFO_EXT: Self = Self(1_000_039_003);
     pub const VIDEO_ENCODE_H265_DPB_SLOT_INFO_EXT: Self = Self(1_000_039_004);
     pub const VIDEO_ENCODE_H265_NALU_SLICE_SEGMENT_INFO_EXT: Self = Self(1_000_039_005);
-    pub const VIDEO_ENCODE_H265_EMIT_PICTURE_PARAMETERS_INFO_EXT: Self = Self(1_000_039_006);
     pub const VIDEO_ENCODE_H265_PROFILE_INFO_EXT: Self = Self(1_000_039_007);
-    pub const VIDEO_ENCODE_H265_REFERENCE_LISTS_INFO_EXT: Self = Self(1_000_039_008);
     pub const VIDEO_ENCODE_H265_RATE_CONTROL_INFO_EXT: Self = Self(1_000_039_009);
     pub const VIDEO_ENCODE_H265_RATE_CONTROL_LAYER_INFO_EXT: Self = Self(1_000_039_010);
 }
@@ -14826,7 +14822,7 @@ impl StructureType {
 impl KhrVideoEncodeQueueFn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_encode_queue\0") };
-    pub const SPEC_VERSION: u32 = 7u32;
+    pub const SPEC_VERSION: u32 = 8u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdEncodeVideoKHR = unsafe extern "system" fn(
@@ -14903,11 +14899,15 @@ impl PipelineStageFlags2 {
 }
 #[doc = "Generated from 'VK_KHR_video_encode_queue'"]
 impl QueryType {
-    pub const VIDEO_ENCODESTREAM_BUFFER_RANGE_KHR: Self = Self(1_000_299_000);
+    pub const VIDEO_ENCODE_FEEDBACK_KHR: Self = Self(1_000_299_000);
 }
 #[doc = "Generated from 'VK_KHR_video_encode_queue'"]
 impl QueueFlags {
     pub const VIDEO_ENCODE_KHR: Self = Self(0b100_0000);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl Result {
+    pub const ERROR_INVALID_VIDEO_STD_PARAMETERS_KHR: Self = Self(-1_000_299_000);
 }
 #[doc = "Generated from 'VK_KHR_video_encode_queue'"]
 impl StructureType {
@@ -14916,6 +14916,7 @@ impl StructureType {
     pub const VIDEO_ENCODE_RATE_CONTROL_LAYER_INFO_KHR: Self = Self(1_000_299_002);
     pub const VIDEO_ENCODE_CAPABILITIES_KHR: Self = Self(1_000_299_003);
     pub const VIDEO_ENCODE_USAGE_INFO_KHR: Self = Self(1_000_299_004);
+    pub const QUERY_POOL_VIDEO_ENCODE_FEEDBACK_CREATE_INFO_KHR: Self = Self(1_000_299_005);
 }
 #[doc = "Generated from 'VK_KHR_video_encode_queue'"]
 impl VideoCodingControlFlagsKHR {
