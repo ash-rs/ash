@@ -1112,7 +1112,10 @@ pub fn generate_extension_constants<'a>(
                 continue;
             }
 
-            if enum_.deprecated.is_some() {
+            if enum_.deprecated.is_some()
+                // TODO: Remove deprecated alias on next breaking release
+                && enum_.name != "VK_SAMPLER_ADDRESS_MODE_MIRROR_CLAMP_TO_EDGE_KHR"
+            {
                 continue;
             }
 
@@ -1460,10 +1463,19 @@ pub fn bitflags_impl_block(
 ) -> TokenStream {
     let variants = constants
         .iter()
-        .filter(|constant| !constant.is_deprecated())
+        .filter(|constant| {
+            !constant.is_deprecated()
+                // TODO: Remove deprecated alias on next breaking release
+                || constant.variant_ident(enum_name) == "MIRROR_CLAMP_TO_EDGE_KHR"
+        })
         .map(|constant| {
             let variant_ident = constant.variant_ident(enum_name);
-            let notation = constant.doc_attribute();
+            let notation = if variant_ident == "MIRROR_CLAMP_TO_EDGE_KHR" {
+                let comment = constant.formatted_notation();
+                Some(quote!(#[deprecated = #comment]))
+            } else {
+                constant.doc_attribute()
+            };
             let constant = constant.constant(enum_name);
             let value = if let Constant::Alias(_) = &constant {
                 quote!(#constant)

@@ -1538,6 +1538,8 @@ impl KhrSamplerMirrorClampToEdgeFn {
 impl SamplerAddressMode {
     #[doc = "Note that this defines what was previously a core enum, and so uses the 'value' attribute rather than 'offset', and does not have a suffix. This is a special case, and should not be repeated"]
     pub const MIRROR_CLAMP_TO_EDGE: Self = Self(4);
+    #[deprecated = "Introduced for consistency with extension suffixing rules"]
+    pub const MIRROR_CLAMP_TO_EDGE_KHR: Self = Self::MIRROR_CLAMP_TO_EDGE;
 }
 impl ImgFilterCubicFn {
     #[inline]
