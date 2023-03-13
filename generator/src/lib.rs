@@ -1287,7 +1287,9 @@ pub fn generate_define(
             .map(|comment| quote!(#[deprecated = #comment]))
             .or_else(|| match define.deprecated.as_ref()?.as_str() {
                 "true" => Some(quote!(#[deprecated])),
-                "aliased" => Some(quote!(#[deprecated = "This type has been aliased"])),
+                "aliased" => {
+                    Some(quote!(#[deprecated = "an old name not following Vulkan conventions"]))
+                }
                 x => panic!("Unknown deprecation reason {}", x),
             });
 
@@ -1609,15 +1611,11 @@ pub fn generate_result(ident: Ident, enum_: &vk_parse::Enums) -> TokenStream {
 }
 
 fn is_static_array(field: &vkxml::Field) -> bool {
-    field
-        .array
-        .as_ref()
-        .map(|ty| matches!(ty, vkxml::ArrayType::Static))
-        .unwrap_or(false)
+    matches!(field.array, Some(vkxml::ArrayType::Static))
 }
 pub fn derive_default(
     struct_: &vkxml::Struct,
-    members: &[&vkxml::Field],
+    members: &[(&vkxml::Field, Option<TokenStream>)],
     has_lifetime: bool,
 ) -> Option<TokenStream> {
     let name = name_to_tokens(&struct_.name);
@@ -1641,13 +1639,15 @@ pub fn derive_default(
     let contains_ptr = members
         .iter()
         .cloned()
-        .any(|field| field.reference.is_some());
-    let contains_structure_type = members.iter().cloned().any(is_structure_type);
-    let contains_static_array = members.iter().cloned().any(is_static_array);
+        .any(|(field, _)| field.reference.is_some());
+    let contains_structure_type = members.iter().map(|(f, _)| *f).any(is_structure_type);
+    let contains_static_array = members.iter().map(|(f, _)| *f).any(is_static_array);
+    let contains_deprecated = members.iter().any(|(_, d)| d.is_some());
+    let allow_deprecated = contains_deprecated.then(|| quote!(#[allow(deprecated)]));
     if !(contains_ptr || contains_structure_type || contains_static_array) {
         return None;
     };
-    let default_fields = members.iter().map(|field| {
+    let default_fields = members.iter().map(|(field, _)| {
         let param_ident = field.param_ident();
         if is_structure_type(field) {
             if field.type_enums.is_some() {
@@ -1682,6 +1682,7 @@ pub fn derive_default(
         impl ::std::default::Default for #name #lifetime {
             #[inline]
             fn default() -> Self {
+                #allow_deprecated
                 Self {
                     #(
                         #default_fields,
@@ -1695,12 +1696,12 @@ pub fn derive_default(
 }
 pub fn derive_debug(
     struct_: &vkxml::Struct,
-    members: &[&vkxml::Field],
+    members: &[(&vkxml::Field, Option<TokenStream>)],
     union_types: &HashSet<&str>,
     has_lifetime: bool,
 ) -> Option<TokenStream> {
     let name = name_to_tokens(&struct_.name);
-    let contains_pfn = members.iter().any(|field| {
+    let contains_pfn = members.iter().any(|(field, _)| {
         field
             .name
             .as_ref()
@@ -1709,14 +1710,14 @@ pub fn derive_debug(
     });
     let contains_static_array = members
         .iter()
-        .any(|&x| is_static_array(x) && x.basetype == "char");
+        .any(|(x, _)| is_static_array(x) && x.basetype == "char");
     let contains_union = members
         .iter()
-        .any(|field| union_types.contains(field.basetype.as_str()));
+        .any(|(field, _)| union_types.contains(field.basetype.as_str()));
     if !(contains_union || contains_static_array || contains_pfn) {
         return None;
     }
-    let debug_fields = members.iter().map(|field| {
+    let debug_fields = members.iter().map(|(field, _)| {
         let param_ident = field.param_ident();
         let param_str = param_ident.to_string();
         let debug_value = if is_static_array(field) && field.basetype == "char" {
@@ -1757,7 +1758,7 @@ pub fn derive_debug(
 
 pub fn derive_setters(
     struct_: &vkxml::Struct,
-    members: &[&vkxml::Field],
+    members: &[(&vkxml::Field, Option<TokenStream>)],
     root_structs: &HashSet<Ident>,
     has_lifetimes: &HashSet<Ident>,
 ) -> Option<TokenStream> {
@@ -1771,9 +1772,13 @@ pub fn derive_setters(
 
     let name = name_to_tokens(&struct_.name);
 
-    let next_field = members.iter().find(|field| field.param_ident() == "p_next");
+    let next_field = members
+        .iter()
+        .find(|(field, _)| field.param_ident() == "p_next");
 
-    let structure_type_field = members.iter().find(|field| field.param_ident() == "s_type");
+    let structure_type_field = members
+        .iter()
+        .find(|(field, _)| field.param_ident() == "s_type");
 
     // Must either have both, or none:
     assert_eq!(next_field.is_some(), structure_type_field.is_some());
@@ -1785,7 +1790,7 @@ pub fn derive_setters(
     ];
     let filter_members: Vec<String> = members
         .iter()
-        .filter_map(|field| {
+        .filter_map(|(field, _)| {
             let field_name = field.name.as_ref().unwrap();
 
             // Associated _count members
@@ -1806,7 +1811,8 @@ pub fn derive_setters(
         })
         .collect();
 
-    let setters = members.iter().filter_map(|field| {
+    let setters = members.iter().filter_map(|(field, deprecated)| {
+        let deprecated = deprecated.as_ref().map(|d| quote!(#d #[allow(deprecated)]));
         let param_ident = field.param_ident();
         let param_ty_tokens = field.safe_type_tokens(quote!('a), None);
 
@@ -1866,6 +1872,7 @@ pub fn derive_setters(
                 assert_eq!(field.size, None);
                 return Some(quote!{
                     #[inline]
+                    #deprecated
                     pub fn #param_ident_short(mut self, #param_ident_short: &'a ::std::ffi::CStr) -> Self {
                         self.#param_ident = #param_ident_short.as_ptr();
                         self
@@ -1912,7 +1919,7 @@ pub fn derive_setters(
 
                         let array_size_ident = format_ident!("{}", array_size.to_snake_case());
 
-                        let size_field = members.iter().find(|m| m.name.as_deref() == Some(array_size)).unwrap();
+                        let size_field = members.iter().map(|(m, _)| m).find(|m| m.name.as_deref() == Some(array_size)).unwrap();
 
                         let cast = if size_field.basetype == "size_t" {
                             quote!()
@@ -1927,6 +1934,7 @@ pub fn derive_setters(
 
                     return Some(quote! {
                         #[inline]
+                        #deprecated
                         pub fn #param_ident_short(mut self, #param_ident_short: &'a #mutable #slice_param_ty_tokens) -> Self {
                             #set_size_stmt
                             self.#param_ident = #param_ident_short #ptr;
@@ -1940,6 +1948,7 @@ pub fn derive_setters(
         if field.basetype == "VkBool32" {
             return Some(quote!{
                 #[inline]
+                #deprecated
                 pub fn #param_ident_short(mut self, #param_ident_short: bool) -> Self {
                     self.#param_ident = #param_ident_short.into();
                     self
@@ -1960,6 +1969,7 @@ pub fn derive_setters(
 
         Some(quote!{
             #[inline]
+            #deprecated
             pub fn #param_ident_short(mut self, #param_ident_short: #param_ty_tokens #lifetime) -> Self {
                 self.#param_ident = #param_ident_short;
                 self
@@ -1973,7 +1983,7 @@ pub fn derive_setters(
     let root_struct_next_field = next_field.filter(|_| root_structs.contains(&name));
 
     // We only implement a next methods for root structs with a `pnext` field.
-    let next_function = if let Some(next_field) = root_struct_next_field {
+    let next_function = if let Some((next_field, _)) = root_struct_next_field {
         assert_eq!(next_field.basetype, "void");
         let mutability = if next_field.is_const {
             quote!(const)
@@ -2030,7 +2040,7 @@ pub fn derive_setters(
             quote!(unsafe impl #extends for #name<'_> {})
         });
 
-    let impl_structure_type_trait = structure_type_field.map(|s_type| {
+    let impl_structure_type_trait = structure_type_field.map(|(s_type, _)| {
         let value = s_type
             .type_enums
             .as_deref()
@@ -2163,10 +2173,22 @@ pub fn generate_struct(
         .filter(|(_, vk_parse_field)| {
             matches!(vk_parse_field.api.as_deref(), None | Some(DESIRED_API))
         })
-        .map(|(field, _)| field)
+        .map(|(field, vk_parse_field)| {
+            let deprecation = vk_parse_field
+                .deprecated
+                .as_ref()
+                .map(|deprecated| match deprecated.as_str() {
+                    "true" => quote!(#[deprecated]),
+                    "ignored" => {
+                        quote!(#[deprecated = "functionality described by this member no longer operates"])
+                    }
+                    x => panic!("Unknown deprecation reason {}", x),
+                });
+            (field, deprecation)
+        })
         .collect::<Vec<_>>();
 
-    let params = members.iter().map(|field| {
+    let params = members.iter().map(|(field, deprecation)| {
         let param_ident = field.param_ident();
         let param_ty_tokens = if field.basetype == struct_.name {
             let pointer = field
@@ -2181,7 +2203,8 @@ pub fn generate_struct(
             let ty = field.type_tokens(false);
             quote!(#ty #lifetime)
         };
-        quote! {pub #param_ident: #param_ty_tokens}
+
+        quote!(#deprecation pub #param_ident: #param_ty_tokens)
     });
 
     let has_lifetime = has_lifetimes.contains(&name);

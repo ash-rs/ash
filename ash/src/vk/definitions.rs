@@ -1192,7 +1192,9 @@ pub struct DeviceCreateInfo<'a> {
     pub flags: DeviceCreateFlags,
     pub queue_create_info_count: u32,
     pub p_queue_create_infos: *const DeviceQueueCreateInfo<'a>,
+    #[deprecated = "functionality described by this member no longer operates"]
     pub enabled_layer_count: u32,
+    #[deprecated = "functionality described by this member no longer operates"]
     pub pp_enabled_layer_names: *const *const c_char,
     pub enabled_extension_count: u32,
     pub pp_enabled_extension_names: *const *const c_char,
@@ -1202,6 +1204,7 @@ pub struct DeviceCreateInfo<'a> {
 impl ::std::default::Default for DeviceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
+        #[allow(deprecated)]
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
@@ -1234,6 +1237,8 @@ impl<'a> DeviceCreateInfo<'a> {
         self
     }
     #[inline]
+    #[deprecated = "functionality described by this member no longer operates"]
+    #[allow(deprecated)]
     pub fn enabled_layer_names(mut self, enabled_layer_names: &'a [*const c_char]) -> Self {
         self.enabled_layer_count = enabled_layer_names.len() as _;
         self.pp_enabled_layer_names = enabled_layer_names.as_ptr();
