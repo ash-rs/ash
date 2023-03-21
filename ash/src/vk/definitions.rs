@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 238;
+pub const HEADER_VERSION: u32 = 244;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -328,6 +328,11 @@ vk_bitflags_wrapped!(VideoEncodeFlagsKHR, Flags);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeRateControlFlagsKHR.html>"]
 pub struct VideoEncodeRateControlFlagsKHR(pub(crate) Flags);
 vk_bitflags_wrapped!(VideoEncodeRateControlFlagsKHR, Flags);
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMemoryUnmapFlagsKHR.html>"]
+pub struct MemoryUnmapFlagsKHR(pub(crate) Flags);
+vk_bitflags_wrapped!(MemoryUnmapFlagsKHR, Flags);
 define_handle!(
     Instance,
     INSTANCE,
@@ -1192,7 +1197,9 @@ pub struct DeviceCreateInfo<'a> {
     pub flags: DeviceCreateFlags,
     pub queue_create_info_count: u32,
     pub p_queue_create_infos: *const DeviceQueueCreateInfo<'a>,
+    #[deprecated = "functionality described by this member no longer operates"]
     pub enabled_layer_count: u32,
+    #[deprecated = "functionality described by this member no longer operates"]
     pub pp_enabled_layer_names: *const *const c_char,
     pub enabled_extension_count: u32,
     pub pp_enabled_extension_names: *const *const c_char,
@@ -1202,6 +1209,7 @@ pub struct DeviceCreateInfo<'a> {
 impl ::std::default::Default for DeviceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
+        #[allow(deprecated)]
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
@@ -1234,6 +1242,8 @@ impl<'a> DeviceCreateInfo<'a> {
         self
     }
     #[inline]
+    #[deprecated = "functionality described by this member no longer operates"]
+    #[allow(deprecated)]
     pub fn enabled_layer_names(mut self, enabled_layer_names: &'a [*const c_char]) -> Self {
         self.enabled_layer_count = enabled_layer_names.len() as _;
         self.pp_enabled_layer_names = enabled_layer_names.as_ptr();
@@ -15409,6 +15419,45 @@ impl<'a> ImageViewUsageCreateInfo<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImageViewSlicedCreateInfoEXT.html>"]
+pub struct ImageViewSlicedCreateInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub slice_offset: u32,
+    pub slice_count: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ImageViewSlicedCreateInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            slice_offset: u32::default(),
+            slice_count: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for ImageViewSlicedCreateInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_VIEW_SLICED_CREATE_INFO_EXT;
+}
+unsafe impl ExtendsImageViewCreateInfo for ImageViewSlicedCreateInfoEXT<'_> {}
+impl<'a> ImageViewSlicedCreateInfoEXT<'a> {
+    #[inline]
+    pub fn slice_offset(mut self, slice_offset: u32) -> Self {
+        self.slice_offset = slice_offset;
+        self
+    }
+    #[inline]
+    pub fn slice_count(mut self, slice_count: u32) -> Self {
+        self.slice_count = slice_count;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineTessellationDomainOriginStateCreateInfo.html>"]
 pub struct PipelineTessellationDomainOriginStateCreateInfo<'a> {
     pub s_type: StructureType,
@@ -28253,6 +28302,66 @@ impl<'a> PhysicalDeviceSubpassShadingPropertiesHUAWEI<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceClusterCullingShaderPropertiesHUAWEI.html>"]
+pub struct PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub max_work_group_count: [u32; 3],
+    pub max_work_group_size: [u32; 3],
+    pub max_output_cluster_count: u32,
+    pub indirect_buffer_offset_alignment: DeviceSize,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            max_work_group_count: unsafe { ::std::mem::zeroed() },
+            max_work_group_size: unsafe { ::std::mem::zeroed() },
+            max_output_cluster_count: u32::default(),
+            indirect_buffer_offset_alignment: DeviceSize::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_PROPERTIES_HUAWEI;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'_>
+{
+}
+impl<'a> PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'a> {
+    #[inline]
+    pub fn max_work_group_count(mut self, max_work_group_count: [u32; 3]) -> Self {
+        self.max_work_group_count = max_work_group_count;
+        self
+    }
+    #[inline]
+    pub fn max_work_group_size(mut self, max_work_group_size: [u32; 3]) -> Self {
+        self.max_work_group_size = max_work_group_size;
+        self
+    }
+    #[inline]
+    pub fn max_output_cluster_count(mut self, max_output_cluster_count: u32) -> Self {
+        self.max_output_cluster_count = max_output_cluster_count;
+        self
+    }
+    #[inline]
+    pub fn indirect_buffer_offset_alignment(
+        mut self,
+        indirect_buffer_offset_alignment: DeviceSize,
+    ) -> Self {
+        self.indirect_buffer_offset_alignment = indirect_buffer_offset_alignment;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMemoryOpaqueCaptureAddressAllocateInfo.html>"]
 pub struct MemoryOpaqueCaptureAddressAllocateInfo<'a> {
     pub s_type: StructureType,
@@ -33111,6 +33220,53 @@ impl<'a> PhysicalDeviceSubpassShadingFeaturesHUAWEI<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceClusterCullingShaderFeaturesHUAWEI.html>"]
+pub struct PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub clusterculling_shader: Bool32,
+    pub multiview_cluster_culling_shader: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            clusterculling_shader: Bool32::default(),
+            multiview_cluster_culling_shader: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_FEATURES_HUAWEI;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'_> {}
+impl<'a> PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a> {
+    #[inline]
+    pub fn clusterculling_shader(mut self, clusterculling_shader: bool) -> Self {
+        self.clusterculling_shader = clusterculling_shader.into();
+        self
+    }
+    #[inline]
+    pub fn multiview_cluster_culling_shader(
+        mut self,
+        multiview_cluster_culling_shader: bool,
+    ) -> Self {
+        self.multiview_cluster_culling_shader = multiview_cluster_culling_shader.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkBufferCopy2.html>"]
 pub struct BufferCopy2<'a> {
     pub s_type: StructureType,
@@ -34462,6 +34618,40 @@ impl<'a> PhysicalDeviceImage2DViewOf3DFeaturesEXT<'a> {
     #[inline]
     pub fn sampler2_d_view_of3_d(mut self, sampler2_d_view_of3_d: bool) -> Self {
         self.sampler2_d_view_of3_d = sampler2_d_view_of3_d.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceImageSlicedViewOf3DFeaturesEXT.html>"]
+pub struct PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub image_sliced_view_of3_d: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            image_sliced_view_of3_d: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_IMAGE_SLICED_VIEW_OF_3D_FEATURES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'_> {}
+impl<'a> PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'a> {
+    #[inline]
+    pub fn image_sliced_view_of3_d(mut self, image_sliced_view_of3_d: bool) -> Self {
+        self.image_sliced_view_of3_d = image_sliced_view_of3_d.into();
         self
     }
 }
@@ -37401,9 +37591,9 @@ pub struct VideoEncodeInfoKHR<'a> {
     pub p_next: *const c_void,
     pub flags: VideoEncodeFlagsKHR,
     pub quality_level: u32,
-    pub dst_bitstream_buffer: Buffer,
-    pub dst_bitstream_buffer_offset: DeviceSize,
-    pub dst_bitstream_buffer_max_range: DeviceSize,
+    pub dst_buffer: Buffer,
+    pub dst_buffer_offset: DeviceSize,
+    pub dst_buffer_range: DeviceSize,
     pub src_picture_resource: VideoPictureResourceInfoKHR<'a>,
     pub p_setup_reference_slot: *const VideoReferenceSlotInfoKHR<'a>,
     pub reference_slot_count: u32,
@@ -37419,9 +37609,9 @@ impl ::std::default::Default for VideoEncodeInfoKHR<'_> {
             p_next: ::std::ptr::null(),
             flags: VideoEncodeFlagsKHR::default(),
             quality_level: u32::default(),
-            dst_bitstream_buffer: Buffer::default(),
-            dst_bitstream_buffer_offset: DeviceSize::default(),
-            dst_bitstream_buffer_max_range: DeviceSize::default(),
+            dst_buffer: Buffer::default(),
+            dst_buffer_offset: DeviceSize::default(),
+            dst_buffer_range: DeviceSize::default(),
             src_picture_resource: VideoPictureResourceInfoKHR::default(),
             p_setup_reference_slot: ::std::ptr::null(),
             reference_slot_count: u32::default(),
@@ -37447,21 +37637,18 @@ impl<'a> VideoEncodeInfoKHR<'a> {
         self
     }
     #[inline]
-    pub fn dst_bitstream_buffer(mut self, dst_bitstream_buffer: Buffer) -> Self {
-        self.dst_bitstream_buffer = dst_bitstream_buffer;
+    pub fn dst_buffer(mut self, dst_buffer: Buffer) -> Self {
+        self.dst_buffer = dst_buffer;
         self
     }
     #[inline]
-    pub fn dst_bitstream_buffer_offset(mut self, dst_bitstream_buffer_offset: DeviceSize) -> Self {
-        self.dst_bitstream_buffer_offset = dst_bitstream_buffer_offset;
+    pub fn dst_buffer_offset(mut self, dst_buffer_offset: DeviceSize) -> Self {
+        self.dst_buffer_offset = dst_buffer_offset;
         self
     }
     #[inline]
-    pub fn dst_bitstream_buffer_max_range(
-        mut self,
-        dst_bitstream_buffer_max_range: DeviceSize,
-    ) -> Self {
-        self.dst_bitstream_buffer_max_range = dst_bitstream_buffer_max_range;
+    pub fn dst_buffer_range(mut self, dst_buffer_range: DeviceSize) -> Self {
+        self.dst_buffer_range = dst_buffer_range;
         self
     }
     #[inline]
@@ -37512,14 +37699,50 @@ impl<'a> VideoEncodeInfoKHR<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkQueryPoolVideoEncodeFeedbackCreateInfoKHR.html>"]
+pub struct QueryPoolVideoEncodeFeedbackCreateInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub encode_feedback_flags: VideoEncodeFeedbackFlagsKHR,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for QueryPoolVideoEncodeFeedbackCreateInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            encode_feedback_flags: VideoEncodeFeedbackFlagsKHR::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for QueryPoolVideoEncodeFeedbackCreateInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::QUERY_POOL_VIDEO_ENCODE_FEEDBACK_CREATE_INFO_KHR;
+}
+unsafe impl ExtendsQueryPoolCreateInfo for QueryPoolVideoEncodeFeedbackCreateInfoKHR<'_> {}
+impl<'a> QueryPoolVideoEncodeFeedbackCreateInfoKHR<'a> {
+    #[inline]
+    pub fn encode_feedback_flags(
+        mut self,
+        encode_feedback_flags: VideoEncodeFeedbackFlagsKHR,
+    ) -> Self {
+        self.encode_feedback_flags = encode_feedback_flags;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeRateControlInfoKHR.html>"]
 pub struct VideoEncodeRateControlInfoKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub flags: VideoEncodeRateControlFlagsKHR,
     pub rate_control_mode: VideoEncodeRateControlModeFlagsKHR,
-    pub layer_count: u8,
-    pub p_layer_configs: *const VideoEncodeRateControlLayerInfoKHR<'a>,
+    pub layer_count: u32,
+    pub p_layers: *const VideoEncodeRateControlLayerInfoKHR<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for VideoEncodeRateControlInfoKHR<'_> {
@@ -37530,8 +37753,8 @@ impl ::std::default::Default for VideoEncodeRateControlInfoKHR<'_> {
             p_next: ::std::ptr::null(),
             flags: VideoEncodeRateControlFlagsKHR::default(),
             rate_control_mode: VideoEncodeRateControlModeFlagsKHR::default(),
-            layer_count: u8::default(),
-            p_layer_configs: ::std::ptr::null(),
+            layer_count: u32::default(),
+            p_layers: ::std::ptr::null(),
             _marker: PhantomData,
         }
     }
@@ -37555,12 +37778,9 @@ impl<'a> VideoEncodeRateControlInfoKHR<'a> {
         self
     }
     #[inline]
-    pub fn layer_configs(
-        mut self,
-        layer_configs: &'a [VideoEncodeRateControlLayerInfoKHR],
-    ) -> Self {
-        self.layer_count = layer_configs.len() as _;
-        self.p_layer_configs = layer_configs.as_ptr();
+    pub fn layers(mut self, layers: &'a [VideoEncodeRateControlLayerInfoKHR]) -> Self {
+        self.layer_count = layers.len() as _;
+        self.p_layers = layers.as_ptr();
         self
     }
 }
@@ -37571,8 +37791,8 @@ impl<'a> VideoEncodeRateControlInfoKHR<'a> {
 pub struct VideoEncodeRateControlLayerInfoKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub average_bitrate: u32,
-    pub max_bitrate: u32,
+    pub average_bitrate: u64,
+    pub max_bitrate: u64,
     pub frame_rate_numerator: u32,
     pub frame_rate_denominator: u32,
     pub virtual_buffer_size_in_ms: u32,
@@ -37585,8 +37805,8 @@ impl ::std::default::Default for VideoEncodeRateControlLayerInfoKHR<'_> {
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            average_bitrate: u32::default(),
-            max_bitrate: u32::default(),
+            average_bitrate: u64::default(),
+            max_bitrate: u64::default(),
             frame_rate_numerator: u32::default(),
             frame_rate_denominator: u32::default(),
             virtual_buffer_size_in_ms: u32::default(),
@@ -37602,12 +37822,12 @@ unsafe impl ExtendsVideoCodingControlInfoKHR for VideoEncodeRateControlLayerInfo
 pub unsafe trait ExtendsVideoEncodeRateControlLayerInfoKHR {}
 impl<'a> VideoEncodeRateControlLayerInfoKHR<'a> {
     #[inline]
-    pub fn average_bitrate(mut self, average_bitrate: u32) -> Self {
+    pub fn average_bitrate(mut self, average_bitrate: u64) -> Self {
         self.average_bitrate = average_bitrate;
         self
     }
     #[inline]
-    pub fn max_bitrate(mut self, max_bitrate: u32) -> Self {
+    pub fn max_bitrate(mut self, max_bitrate: u64) -> Self {
         self.max_bitrate = max_bitrate;
         self
     }
@@ -37661,9 +37881,10 @@ pub struct VideoEncodeCapabilitiesKHR<'a> {
     pub p_next: *mut c_void,
     pub flags: VideoEncodeCapabilityFlagsKHR,
     pub rate_control_modes: VideoEncodeRateControlModeFlagsKHR,
-    pub rate_control_layer_count: u8,
-    pub quality_level_count: u8,
+    pub max_rate_control_layers: u32,
+    pub max_quality_levels: u32,
     pub input_image_data_fill_alignment: Extent2D,
+    pub supported_encode_feedback_flags: VideoEncodeFeedbackFlagsKHR,
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for VideoEncodeCapabilitiesKHR<'_> {
@@ -37674,9 +37895,10 @@ impl ::std::default::Default for VideoEncodeCapabilitiesKHR<'_> {
             p_next: ::std::ptr::null_mut(),
             flags: VideoEncodeCapabilityFlagsKHR::default(),
             rate_control_modes: VideoEncodeRateControlModeFlagsKHR::default(),
-            rate_control_layer_count: u8::default(),
-            quality_level_count: u8::default(),
+            max_rate_control_layers: u32::default(),
+            max_quality_levels: u32::default(),
             input_image_data_fill_alignment: Extent2D::default(),
+            supported_encode_feedback_flags: VideoEncodeFeedbackFlagsKHR::default(),
             _marker: PhantomData,
         }
     }
@@ -37700,13 +37922,13 @@ impl<'a> VideoEncodeCapabilitiesKHR<'a> {
         self
     }
     #[inline]
-    pub fn rate_control_layer_count(mut self, rate_control_layer_count: u8) -> Self {
-        self.rate_control_layer_count = rate_control_layer_count;
+    pub fn max_rate_control_layers(mut self, max_rate_control_layers: u32) -> Self {
+        self.max_rate_control_layers = max_rate_control_layers;
         self
     }
     #[inline]
-    pub fn quality_level_count(mut self, quality_level_count: u8) -> Self {
-        self.quality_level_count = quality_level_count;
+    pub fn max_quality_levels(mut self, max_quality_levels: u32) -> Self {
+        self.max_quality_levels = max_quality_levels;
         self
     }
     #[inline]
@@ -37715,6 +37937,14 @@ impl<'a> VideoEncodeCapabilitiesKHR<'a> {
         input_image_data_fill_alignment: Extent2D,
     ) -> Self {
         self.input_image_data_fill_alignment = input_image_data_fill_alignment;
+        self
+    }
+    #[inline]
+    pub fn supported_encode_feedback_flags(
+        mut self,
+        supported_encode_feedback_flags: VideoEncodeFeedbackFlagsKHR,
+    ) -> Self {
+        self.supported_encode_feedback_flags = supported_encode_feedback_flags;
         self
     }
 }
@@ -37726,11 +37956,9 @@ pub struct VideoEncodeH264CapabilitiesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub flags: VideoEncodeH264CapabilityFlagsEXT,
-    pub input_mode_flags: VideoEncodeH264InputModeFlagsEXT,
-    pub output_mode_flags: VideoEncodeH264OutputModeFlagsEXT,
-    pub max_p_picture_l0_reference_count: u8,
-    pub max_b_picture_l0_reference_count: u8,
-    pub max_l1_reference_count: u8,
+    pub max_p_picture_l0_reference_count: u32,
+    pub max_b_picture_l0_reference_count: u32,
+    pub max_l1_reference_count: u32,
     pub motion_vectors_over_pic_boundaries_flag: Bool32,
     pub max_bytes_per_pic_denom: u32,
     pub max_bits_per_mb_denom: u32,
@@ -37745,11 +37973,9 @@ impl ::std::default::Default for VideoEncodeH264CapabilitiesEXT<'_> {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             flags: VideoEncodeH264CapabilityFlagsEXT::default(),
-            input_mode_flags: VideoEncodeH264InputModeFlagsEXT::default(),
-            output_mode_flags: VideoEncodeH264OutputModeFlagsEXT::default(),
-            max_p_picture_l0_reference_count: u8::default(),
-            max_b_picture_l0_reference_count: u8::default(),
-            max_l1_reference_count: u8::default(),
+            max_p_picture_l0_reference_count: u32::default(),
+            max_b_picture_l0_reference_count: u32::default(),
+            max_l1_reference_count: u32::default(),
             motion_vectors_over_pic_boundaries_flag: Bool32::default(),
             max_bytes_per_pic_denom: u32::default(),
             max_bits_per_mb_denom: u32::default(),
@@ -37770,22 +37996,9 @@ impl<'a> VideoEncodeH264CapabilitiesEXT<'a> {
         self
     }
     #[inline]
-    pub fn input_mode_flags(mut self, input_mode_flags: VideoEncodeH264InputModeFlagsEXT) -> Self {
-        self.input_mode_flags = input_mode_flags;
-        self
-    }
-    #[inline]
-    pub fn output_mode_flags(
-        mut self,
-        output_mode_flags: VideoEncodeH264OutputModeFlagsEXT,
-    ) -> Self {
-        self.output_mode_flags = output_mode_flags;
-        self
-    }
-    #[inline]
     pub fn max_p_picture_l0_reference_count(
         mut self,
-        max_p_picture_l0_reference_count: u8,
+        max_p_picture_l0_reference_count: u32,
     ) -> Self {
         self.max_p_picture_l0_reference_count = max_p_picture_l0_reference_count;
         self
@@ -37793,13 +38006,13 @@ impl<'a> VideoEncodeH264CapabilitiesEXT<'a> {
     #[inline]
     pub fn max_b_picture_l0_reference_count(
         mut self,
-        max_b_picture_l0_reference_count: u8,
+        max_b_picture_l0_reference_count: u32,
     ) -> Self {
         self.max_b_picture_l0_reference_count = max_b_picture_l0_reference_count;
         self
     }
     #[inline]
-    pub fn max_l1_reference_count(mut self, max_l1_reference_count: u8) -> Self {
+    pub fn max_l1_reference_count(mut self, max_l1_reference_count: u32) -> Self {
         self.max_l1_reference_count = max_l1_reference_count;
         self
     }
@@ -37942,7 +38155,6 @@ impl<'a> VideoEncodeH264SessionParametersCreateInfoEXT<'a> {
 pub struct VideoEncodeH264DpbSlotInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub slot_index: i8,
     pub p_std_reference_info: *const StdVideoEncodeH264ReferenceInfo,
     pub _marker: PhantomData<&'a ()>,
 }
@@ -37952,7 +38164,6 @@ impl ::std::default::Default for VideoEncodeH264DpbSlotInfoEXT<'_> {
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            slot_index: i8::default(),
             p_std_reference_info: ::std::ptr::null(),
             _marker: PhantomData,
         }
@@ -37961,12 +38172,8 @@ impl ::std::default::Default for VideoEncodeH264DpbSlotInfoEXT<'_> {
 unsafe impl<'a> TaggedStructure for VideoEncodeH264DpbSlotInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H264_DPB_SLOT_INFO_EXT;
 }
+unsafe impl ExtendsVideoReferenceSlotInfoKHR for VideoEncodeH264DpbSlotInfoEXT<'_> {}
 impl<'a> VideoEncodeH264DpbSlotInfoEXT<'a> {
-    #[inline]
-    pub fn slot_index(mut self, slot_index: i8) -> Self {
-        self.slot_index = slot_index;
-        self
-    }
     #[inline]
     pub fn std_reference_info(
         mut self,
@@ -37983,10 +38190,10 @@ impl<'a> VideoEncodeH264DpbSlotInfoEXT<'a> {
 pub struct VideoEncodeH264VclFrameInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub p_reference_final_lists: *const VideoEncodeH264ReferenceListsInfoEXT<'a>,
+    pub p_std_reference_final_lists: *const StdVideoEncodeH264ReferenceListsInfo,
     pub nalu_slice_entry_count: u32,
     pub p_nalu_slice_entries: *const VideoEncodeH264NaluSliceInfoEXT<'a>,
-    pub p_current_picture_info: *const StdVideoEncodeH264PictureInfo,
+    pub p_std_picture_info: *const StdVideoEncodeH264PictureInfo,
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for VideoEncodeH264VclFrameInfoEXT<'_> {
@@ -37995,10 +38202,10 @@ impl ::std::default::Default for VideoEncodeH264VclFrameInfoEXT<'_> {
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            p_reference_final_lists: ::std::ptr::null(),
+            p_std_reference_final_lists: ::std::ptr::null(),
             nalu_slice_entry_count: u32::default(),
             p_nalu_slice_entries: ::std::ptr::null(),
-            p_current_picture_info: ::std::ptr::null(),
+            p_std_picture_info: ::std::ptr::null(),
             _marker: PhantomData,
         }
     }
@@ -38009,11 +38216,11 @@ unsafe impl<'a> TaggedStructure for VideoEncodeH264VclFrameInfoEXT<'a> {
 unsafe impl ExtendsVideoEncodeInfoKHR for VideoEncodeH264VclFrameInfoEXT<'_> {}
 impl<'a> VideoEncodeH264VclFrameInfoEXT<'a> {
     #[inline]
-    pub fn reference_final_lists(
+    pub fn std_reference_final_lists(
         mut self,
-        reference_final_lists: &'a VideoEncodeH264ReferenceListsInfoEXT<'a>,
+        std_reference_final_lists: &'a StdVideoEncodeH264ReferenceListsInfo,
     ) -> Self {
-        self.p_reference_final_lists = reference_final_lists;
+        self.p_std_reference_final_lists = std_reference_final_lists;
         self
     }
     #[inline]
@@ -38026,121 +38233,8 @@ impl<'a> VideoEncodeH264VclFrameInfoEXT<'a> {
         self
     }
     #[inline]
-    pub fn current_picture_info(
-        mut self,
-        current_picture_info: &'a StdVideoEncodeH264PictureInfo,
-    ) -> Self {
-        self.p_current_picture_info = current_picture_info;
-        self
-    }
-}
-#[repr(C)]
-#[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH264ReferenceListsInfoEXT.html>"]
-pub struct VideoEncodeH264ReferenceListsInfoEXT<'a> {
-    pub s_type: StructureType,
-    pub p_next: *const c_void,
-    pub reference_list0_entry_count: u8,
-    pub p_reference_list0_entries: *const VideoEncodeH264DpbSlotInfoEXT<'a>,
-    pub reference_list1_entry_count: u8,
-    pub p_reference_list1_entries: *const VideoEncodeH264DpbSlotInfoEXT<'a>,
-    pub p_mem_mgmt_ctrl_operations: *const StdVideoEncodeH264RefMemMgmtCtrlOperations,
-    pub _marker: PhantomData<&'a ()>,
-}
-impl ::std::default::Default for VideoEncodeH264ReferenceListsInfoEXT<'_> {
-    #[inline]
-    fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::std::ptr::null(),
-            reference_list0_entry_count: u8::default(),
-            p_reference_list0_entries: ::std::ptr::null(),
-            reference_list1_entry_count: u8::default(),
-            p_reference_list1_entries: ::std::ptr::null(),
-            p_mem_mgmt_ctrl_operations: ::std::ptr::null(),
-            _marker: PhantomData,
-        }
-    }
-}
-unsafe impl<'a> TaggedStructure for VideoEncodeH264ReferenceListsInfoEXT<'a> {
-    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H264_REFERENCE_LISTS_INFO_EXT;
-}
-impl<'a> VideoEncodeH264ReferenceListsInfoEXT<'a> {
-    #[inline]
-    pub fn reference_list0_entries(
-        mut self,
-        reference_list0_entries: &'a [VideoEncodeH264DpbSlotInfoEXT],
-    ) -> Self {
-        self.reference_list0_entry_count = reference_list0_entries.len() as _;
-        self.p_reference_list0_entries = reference_list0_entries.as_ptr();
-        self
-    }
-    #[inline]
-    pub fn reference_list1_entries(
-        mut self,
-        reference_list1_entries: &'a [VideoEncodeH264DpbSlotInfoEXT],
-    ) -> Self {
-        self.reference_list1_entry_count = reference_list1_entries.len() as _;
-        self.p_reference_list1_entries = reference_list1_entries.as_ptr();
-        self
-    }
-    #[inline]
-    pub fn mem_mgmt_ctrl_operations(
-        mut self,
-        mem_mgmt_ctrl_operations: &'a StdVideoEncodeH264RefMemMgmtCtrlOperations,
-    ) -> Self {
-        self.p_mem_mgmt_ctrl_operations = mem_mgmt_ctrl_operations;
-        self
-    }
-}
-#[repr(C)]
-#[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH264EmitPictureParametersInfoEXT.html>"]
-pub struct VideoEncodeH264EmitPictureParametersInfoEXT<'a> {
-    pub s_type: StructureType,
-    pub p_next: *const c_void,
-    pub sps_id: u8,
-    pub emit_sps_enable: Bool32,
-    pub pps_id_entry_count: u32,
-    pub pps_id_entries: *const u8,
-    pub _marker: PhantomData<&'a ()>,
-}
-impl ::std::default::Default for VideoEncodeH264EmitPictureParametersInfoEXT<'_> {
-    #[inline]
-    fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::std::ptr::null(),
-            sps_id: u8::default(),
-            emit_sps_enable: Bool32::default(),
-            pps_id_entry_count: u32::default(),
-            pps_id_entries: ::std::ptr::null(),
-            _marker: PhantomData,
-        }
-    }
-}
-unsafe impl<'a> TaggedStructure for VideoEncodeH264EmitPictureParametersInfoEXT<'a> {
-    const STRUCTURE_TYPE: StructureType =
-        StructureType::VIDEO_ENCODE_H264_EMIT_PICTURE_PARAMETERS_INFO_EXT;
-}
-unsafe impl ExtendsVideoEncodeInfoKHR for VideoEncodeH264EmitPictureParametersInfoEXT<'_> {}
-impl<'a> VideoEncodeH264EmitPictureParametersInfoEXT<'a> {
-    #[inline]
-    pub fn sps_id(mut self, sps_id: u8) -> Self {
-        self.sps_id = sps_id;
-        self
-    }
-    #[inline]
-    pub fn emit_sps_enable(mut self, emit_sps_enable: bool) -> Self {
-        self.emit_sps_enable = emit_sps_enable.into();
-        self
-    }
-    #[inline]
-    pub fn pps_id_entries(mut self, pps_id_entries: &'a [u8]) -> Self {
-        self.pps_id_entry_count = pps_id_entries.len() as _;
-        self.pps_id_entries = pps_id_entries.as_ptr();
+    pub fn std_picture_info(mut self, std_picture_info: &'a StdVideoEncodeH264PictureInfo) -> Self {
+        self.p_std_picture_info = std_picture_info;
         self
     }
 }
@@ -38185,8 +38279,8 @@ pub struct VideoEncodeH264NaluSliceInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub mb_count: u32,
-    pub p_reference_final_lists: *const VideoEncodeH264ReferenceListsInfoEXT<'a>,
-    pub p_slice_header_std: *const StdVideoEncodeH264SliceHeader,
+    pub p_std_reference_final_lists: *const StdVideoEncodeH264ReferenceListsInfo,
+    pub p_std_slice_header: *const StdVideoEncodeH264SliceHeader,
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for VideoEncodeH264NaluSliceInfoEXT<'_> {
@@ -38196,8 +38290,8 @@ impl ::std::default::Default for VideoEncodeH264NaluSliceInfoEXT<'_> {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             mb_count: u32::default(),
-            p_reference_final_lists: ::std::ptr::null(),
-            p_slice_header_std: ::std::ptr::null(),
+            p_std_reference_final_lists: ::std::ptr::null(),
+            p_std_slice_header: ::std::ptr::null(),
             _marker: PhantomData,
         }
     }
@@ -38212,16 +38306,16 @@ impl<'a> VideoEncodeH264NaluSliceInfoEXT<'a> {
         self
     }
     #[inline]
-    pub fn reference_final_lists(
+    pub fn std_reference_final_lists(
         mut self,
-        reference_final_lists: &'a VideoEncodeH264ReferenceListsInfoEXT<'a>,
+        std_reference_final_lists: &'a StdVideoEncodeH264ReferenceListsInfo,
     ) -> Self {
-        self.p_reference_final_lists = reference_final_lists;
+        self.p_std_reference_final_lists = std_reference_final_lists;
         self
     }
     #[inline]
-    pub fn slice_header_std(mut self, slice_header_std: &'a StdVideoEncodeH264SliceHeader) -> Self {
-        self.p_slice_header_std = slice_header_std;
+    pub fn std_slice_header(mut self, std_slice_header: &'a StdVideoEncodeH264SliceHeader) -> Self {
+        self.p_std_slice_header = std_slice_header;
         self
     }
 }
@@ -38236,7 +38330,7 @@ pub struct VideoEncodeH264RateControlInfoEXT<'a> {
     pub idr_period: u32,
     pub consecutive_b_frame_count: u32,
     pub rate_control_structure: VideoEncodeH264RateControlStructureEXT,
-    pub temporal_layer_count: u8,
+    pub temporal_layer_count: u32,
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for VideoEncodeH264RateControlInfoEXT<'_> {
@@ -38249,7 +38343,7 @@ impl ::std::default::Default for VideoEncodeH264RateControlInfoEXT<'_> {
             idr_period: u32::default(),
             consecutive_b_frame_count: u32::default(),
             rate_control_structure: VideoEncodeH264RateControlStructureEXT::default(),
-            temporal_layer_count: u8::default(),
+            temporal_layer_count: u32::default(),
             _marker: PhantomData,
         }
     }
@@ -38283,7 +38377,7 @@ impl<'a> VideoEncodeH264RateControlInfoEXT<'a> {
         self
     }
     #[inline]
-    pub fn temporal_layer_count(mut self, temporal_layer_count: u8) -> Self {
+    pub fn temporal_layer_count(mut self, temporal_layer_count: u32) -> Self {
         self.temporal_layer_count = temporal_layer_count;
         self
     }
@@ -38347,7 +38441,7 @@ impl VideoEncodeH264FrameSizeEXT {
 pub struct VideoEncodeH264RateControlLayerInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub temporal_layer_id: u8,
+    pub temporal_layer_id: u32,
     pub use_initial_rc_qp: Bool32,
     pub initial_rc_qp: VideoEncodeH264QpEXT,
     pub use_min_qp: Bool32,
@@ -38364,7 +38458,7 @@ impl ::std::default::Default for VideoEncodeH264RateControlLayerInfoEXT<'_> {
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            temporal_layer_id: u8::default(),
+            temporal_layer_id: u32::default(),
             use_initial_rc_qp: Bool32::default(),
             initial_rc_qp: VideoEncodeH264QpEXT::default(),
             use_min_qp: Bool32::default(),
@@ -38388,7 +38482,7 @@ unsafe impl ExtendsVideoEncodeRateControlLayerInfoKHR
 }
 impl<'a> VideoEncodeH264RateControlLayerInfoEXT<'a> {
     #[inline]
-    pub fn temporal_layer_id(mut self, temporal_layer_id: u8) -> Self {
+    pub fn temporal_layer_id(mut self, temporal_layer_id: u32) -> Self {
         self.temporal_layer_id = temporal_layer_id;
         self
     }
@@ -38441,25 +38535,23 @@ pub struct VideoEncodeH265CapabilitiesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub flags: VideoEncodeH265CapabilityFlagsEXT,
-    pub input_mode_flags: VideoEncodeH265InputModeFlagsEXT,
-    pub output_mode_flags: VideoEncodeH265OutputModeFlagsEXT,
     pub ctb_sizes: VideoEncodeH265CtbSizeFlagsEXT,
     pub transform_block_sizes: VideoEncodeH265TransformBlockSizeFlagsEXT,
-    pub max_p_picture_l0_reference_count: u8,
-    pub max_b_picture_l0_reference_count: u8,
-    pub max_l1_reference_count: u8,
-    pub max_sub_layers_count: u8,
-    pub min_log2_min_luma_coding_block_size_minus3: u8,
-    pub max_log2_min_luma_coding_block_size_minus3: u8,
-    pub min_log2_min_luma_transform_block_size_minus2: u8,
-    pub max_log2_min_luma_transform_block_size_minus2: u8,
-    pub min_max_transform_hierarchy_depth_inter: u8,
-    pub max_max_transform_hierarchy_depth_inter: u8,
-    pub min_max_transform_hierarchy_depth_intra: u8,
-    pub max_max_transform_hierarchy_depth_intra: u8,
-    pub max_diff_cu_qp_delta_depth: u8,
-    pub min_max_num_merge_cand: u8,
-    pub max_max_num_merge_cand: u8,
+    pub max_p_picture_l0_reference_count: u32,
+    pub max_b_picture_l0_reference_count: u32,
+    pub max_l1_reference_count: u32,
+    pub max_sub_layers_count: u32,
+    pub min_log2_min_luma_coding_block_size_minus3: u32,
+    pub max_log2_min_luma_coding_block_size_minus3: u32,
+    pub min_log2_min_luma_transform_block_size_minus2: u32,
+    pub max_log2_min_luma_transform_block_size_minus2: u32,
+    pub min_max_transform_hierarchy_depth_inter: u32,
+    pub max_max_transform_hierarchy_depth_inter: u32,
+    pub min_max_transform_hierarchy_depth_intra: u32,
+    pub max_max_transform_hierarchy_depth_intra: u32,
+    pub max_diff_cu_qp_delta_depth: u32,
+    pub min_max_num_merge_cand: u32,
+    pub max_max_num_merge_cand: u32,
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for VideoEncodeH265CapabilitiesEXT<'_> {
@@ -38469,25 +38561,23 @@ impl ::std::default::Default for VideoEncodeH265CapabilitiesEXT<'_> {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             flags: VideoEncodeH265CapabilityFlagsEXT::default(),
-            input_mode_flags: VideoEncodeH265InputModeFlagsEXT::default(),
-            output_mode_flags: VideoEncodeH265OutputModeFlagsEXT::default(),
             ctb_sizes: VideoEncodeH265CtbSizeFlagsEXT::default(),
             transform_block_sizes: VideoEncodeH265TransformBlockSizeFlagsEXT::default(),
-            max_p_picture_l0_reference_count: u8::default(),
-            max_b_picture_l0_reference_count: u8::default(),
-            max_l1_reference_count: u8::default(),
-            max_sub_layers_count: u8::default(),
-            min_log2_min_luma_coding_block_size_minus3: u8::default(),
-            max_log2_min_luma_coding_block_size_minus3: u8::default(),
-            min_log2_min_luma_transform_block_size_minus2: u8::default(),
-            max_log2_min_luma_transform_block_size_minus2: u8::default(),
-            min_max_transform_hierarchy_depth_inter: u8::default(),
-            max_max_transform_hierarchy_depth_inter: u8::default(),
-            min_max_transform_hierarchy_depth_intra: u8::default(),
-            max_max_transform_hierarchy_depth_intra: u8::default(),
-            max_diff_cu_qp_delta_depth: u8::default(),
-            min_max_num_merge_cand: u8::default(),
-            max_max_num_merge_cand: u8::default(),
+            max_p_picture_l0_reference_count: u32::default(),
+            max_b_picture_l0_reference_count: u32::default(),
+            max_l1_reference_count: u32::default(),
+            max_sub_layers_count: u32::default(),
+            min_log2_min_luma_coding_block_size_minus3: u32::default(),
+            max_log2_min_luma_coding_block_size_minus3: u32::default(),
+            min_log2_min_luma_transform_block_size_minus2: u32::default(),
+            max_log2_min_luma_transform_block_size_minus2: u32::default(),
+            min_max_transform_hierarchy_depth_inter: u32::default(),
+            max_max_transform_hierarchy_depth_inter: u32::default(),
+            min_max_transform_hierarchy_depth_intra: u32::default(),
+            max_max_transform_hierarchy_depth_intra: u32::default(),
+            max_diff_cu_qp_delta_depth: u32::default(),
+            min_max_num_merge_cand: u32::default(),
+            max_max_num_merge_cand: u32::default(),
             _marker: PhantomData,
         }
     }
@@ -38500,19 +38590,6 @@ impl<'a> VideoEncodeH265CapabilitiesEXT<'a> {
     #[inline]
     pub fn flags(mut self, flags: VideoEncodeH265CapabilityFlagsEXT) -> Self {
         self.flags = flags;
-        self
-    }
-    #[inline]
-    pub fn input_mode_flags(mut self, input_mode_flags: VideoEncodeH265InputModeFlagsEXT) -> Self {
-        self.input_mode_flags = input_mode_flags;
-        self
-    }
-    #[inline]
-    pub fn output_mode_flags(
-        mut self,
-        output_mode_flags: VideoEncodeH265OutputModeFlagsEXT,
-    ) -> Self {
-        self.output_mode_flags = output_mode_flags;
         self
     }
     #[inline]
@@ -38531,7 +38608,7 @@ impl<'a> VideoEncodeH265CapabilitiesEXT<'a> {
     #[inline]
     pub fn max_p_picture_l0_reference_count(
         mut self,
-        max_p_picture_l0_reference_count: u8,
+        max_p_picture_l0_reference_count: u32,
     ) -> Self {
         self.max_p_picture_l0_reference_count = max_p_picture_l0_reference_count;
         self
@@ -38539,25 +38616,25 @@ impl<'a> VideoEncodeH265CapabilitiesEXT<'a> {
     #[inline]
     pub fn max_b_picture_l0_reference_count(
         mut self,
-        max_b_picture_l0_reference_count: u8,
+        max_b_picture_l0_reference_count: u32,
     ) -> Self {
         self.max_b_picture_l0_reference_count = max_b_picture_l0_reference_count;
         self
     }
     #[inline]
-    pub fn max_l1_reference_count(mut self, max_l1_reference_count: u8) -> Self {
+    pub fn max_l1_reference_count(mut self, max_l1_reference_count: u32) -> Self {
         self.max_l1_reference_count = max_l1_reference_count;
         self
     }
     #[inline]
-    pub fn max_sub_layers_count(mut self, max_sub_layers_count: u8) -> Self {
+    pub fn max_sub_layers_count(mut self, max_sub_layers_count: u32) -> Self {
         self.max_sub_layers_count = max_sub_layers_count;
         self
     }
     #[inline]
     pub fn min_log2_min_luma_coding_block_size_minus3(
         mut self,
-        min_log2_min_luma_coding_block_size_minus3: u8,
+        min_log2_min_luma_coding_block_size_minus3: u32,
     ) -> Self {
         self.min_log2_min_luma_coding_block_size_minus3 =
             min_log2_min_luma_coding_block_size_minus3;
@@ -38566,7 +38643,7 @@ impl<'a> VideoEncodeH265CapabilitiesEXT<'a> {
     #[inline]
     pub fn max_log2_min_luma_coding_block_size_minus3(
         mut self,
-        max_log2_min_luma_coding_block_size_minus3: u8,
+        max_log2_min_luma_coding_block_size_minus3: u32,
     ) -> Self {
         self.max_log2_min_luma_coding_block_size_minus3 =
             max_log2_min_luma_coding_block_size_minus3;
@@ -38575,7 +38652,7 @@ impl<'a> VideoEncodeH265CapabilitiesEXT<'a> {
     #[inline]
     pub fn min_log2_min_luma_transform_block_size_minus2(
         mut self,
-        min_log2_min_luma_transform_block_size_minus2: u8,
+        min_log2_min_luma_transform_block_size_minus2: u32,
     ) -> Self {
         self.min_log2_min_luma_transform_block_size_minus2 =
             min_log2_min_luma_transform_block_size_minus2;
@@ -38584,7 +38661,7 @@ impl<'a> VideoEncodeH265CapabilitiesEXT<'a> {
     #[inline]
     pub fn max_log2_min_luma_transform_block_size_minus2(
         mut self,
-        max_log2_min_luma_transform_block_size_minus2: u8,
+        max_log2_min_luma_transform_block_size_minus2: u32,
     ) -> Self {
         self.max_log2_min_luma_transform_block_size_minus2 =
             max_log2_min_luma_transform_block_size_minus2;
@@ -38593,7 +38670,7 @@ impl<'a> VideoEncodeH265CapabilitiesEXT<'a> {
     #[inline]
     pub fn min_max_transform_hierarchy_depth_inter(
         mut self,
-        min_max_transform_hierarchy_depth_inter: u8,
+        min_max_transform_hierarchy_depth_inter: u32,
     ) -> Self {
         self.min_max_transform_hierarchy_depth_inter = min_max_transform_hierarchy_depth_inter;
         self
@@ -38601,7 +38678,7 @@ impl<'a> VideoEncodeH265CapabilitiesEXT<'a> {
     #[inline]
     pub fn max_max_transform_hierarchy_depth_inter(
         mut self,
-        max_max_transform_hierarchy_depth_inter: u8,
+        max_max_transform_hierarchy_depth_inter: u32,
     ) -> Self {
         self.max_max_transform_hierarchy_depth_inter = max_max_transform_hierarchy_depth_inter;
         self
@@ -38609,7 +38686,7 @@ impl<'a> VideoEncodeH265CapabilitiesEXT<'a> {
     #[inline]
     pub fn min_max_transform_hierarchy_depth_intra(
         mut self,
-        min_max_transform_hierarchy_depth_intra: u8,
+        min_max_transform_hierarchy_depth_intra: u32,
     ) -> Self {
         self.min_max_transform_hierarchy_depth_intra = min_max_transform_hierarchy_depth_intra;
         self
@@ -38617,23 +38694,23 @@ impl<'a> VideoEncodeH265CapabilitiesEXT<'a> {
     #[inline]
     pub fn max_max_transform_hierarchy_depth_intra(
         mut self,
-        max_max_transform_hierarchy_depth_intra: u8,
+        max_max_transform_hierarchy_depth_intra: u32,
     ) -> Self {
         self.max_max_transform_hierarchy_depth_intra = max_max_transform_hierarchy_depth_intra;
         self
     }
     #[inline]
-    pub fn max_diff_cu_qp_delta_depth(mut self, max_diff_cu_qp_delta_depth: u8) -> Self {
+    pub fn max_diff_cu_qp_delta_depth(mut self, max_diff_cu_qp_delta_depth: u32) -> Self {
         self.max_diff_cu_qp_delta_depth = max_diff_cu_qp_delta_depth;
         self
     }
     #[inline]
-    pub fn min_max_num_merge_cand(mut self, min_max_num_merge_cand: u8) -> Self {
+    pub fn min_max_num_merge_cand(mut self, min_max_num_merge_cand: u32) -> Self {
         self.min_max_num_merge_cand = min_max_num_merge_cand;
         self
     }
     #[inline]
-    pub fn max_max_num_merge_cand(mut self, max_max_num_merge_cand: u8) -> Self {
+    pub fn max_max_num_merge_cand(mut self, max_max_num_merge_cand: u32) -> Self {
         self.max_max_num_merge_cand = max_max_num_merge_cand;
         self
     }
@@ -38764,10 +38841,10 @@ impl<'a> VideoEncodeH265SessionParametersCreateInfoEXT<'a> {
 pub struct VideoEncodeH265VclFrameInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub p_reference_final_lists: *const VideoEncodeH265ReferenceListsInfoEXT<'a>,
+    pub p_std_reference_final_lists: *const StdVideoEncodeH265ReferenceListsInfo,
     pub nalu_slice_segment_entry_count: u32,
     pub p_nalu_slice_segment_entries: *const VideoEncodeH265NaluSliceSegmentInfoEXT<'a>,
-    pub p_current_picture_info: *const StdVideoEncodeH265PictureInfo,
+    pub p_std_picture_info: *const StdVideoEncodeH265PictureInfo,
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for VideoEncodeH265VclFrameInfoEXT<'_> {
@@ -38776,10 +38853,10 @@ impl ::std::default::Default for VideoEncodeH265VclFrameInfoEXT<'_> {
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            p_reference_final_lists: ::std::ptr::null(),
+            p_std_reference_final_lists: ::std::ptr::null(),
             nalu_slice_segment_entry_count: u32::default(),
             p_nalu_slice_segment_entries: ::std::ptr::null(),
-            p_current_picture_info: ::std::ptr::null(),
+            p_std_picture_info: ::std::ptr::null(),
             _marker: PhantomData,
         }
     }
@@ -38790,11 +38867,11 @@ unsafe impl<'a> TaggedStructure for VideoEncodeH265VclFrameInfoEXT<'a> {
 unsafe impl ExtendsVideoEncodeInfoKHR for VideoEncodeH265VclFrameInfoEXT<'_> {}
 impl<'a> VideoEncodeH265VclFrameInfoEXT<'a> {
     #[inline]
-    pub fn reference_final_lists(
+    pub fn std_reference_final_lists(
         mut self,
-        reference_final_lists: &'a VideoEncodeH265ReferenceListsInfoEXT<'a>,
+        std_reference_final_lists: &'a StdVideoEncodeH265ReferenceListsInfo,
     ) -> Self {
-        self.p_reference_final_lists = reference_final_lists;
+        self.p_std_reference_final_lists = std_reference_final_lists;
         self
     }
     #[inline]
@@ -38807,75 +38884,8 @@ impl<'a> VideoEncodeH265VclFrameInfoEXT<'a> {
         self
     }
     #[inline]
-    pub fn current_picture_info(
-        mut self,
-        current_picture_info: &'a StdVideoEncodeH265PictureInfo,
-    ) -> Self {
-        self.p_current_picture_info = current_picture_info;
-        self
-    }
-}
-#[repr(C)]
-#[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265EmitPictureParametersInfoEXT.html>"]
-pub struct VideoEncodeH265EmitPictureParametersInfoEXT<'a> {
-    pub s_type: StructureType,
-    pub p_next: *const c_void,
-    pub vps_id: u8,
-    pub sps_id: u8,
-    pub emit_vps_enable: Bool32,
-    pub emit_sps_enable: Bool32,
-    pub pps_id_entry_count: u32,
-    pub pps_id_entries: *const u8,
-    pub _marker: PhantomData<&'a ()>,
-}
-impl ::std::default::Default for VideoEncodeH265EmitPictureParametersInfoEXT<'_> {
-    #[inline]
-    fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::std::ptr::null(),
-            vps_id: u8::default(),
-            sps_id: u8::default(),
-            emit_vps_enable: Bool32::default(),
-            emit_sps_enable: Bool32::default(),
-            pps_id_entry_count: u32::default(),
-            pps_id_entries: ::std::ptr::null(),
-            _marker: PhantomData,
-        }
-    }
-}
-unsafe impl<'a> TaggedStructure for VideoEncodeH265EmitPictureParametersInfoEXT<'a> {
-    const STRUCTURE_TYPE: StructureType =
-        StructureType::VIDEO_ENCODE_H265_EMIT_PICTURE_PARAMETERS_INFO_EXT;
-}
-unsafe impl ExtendsVideoEncodeInfoKHR for VideoEncodeH265EmitPictureParametersInfoEXT<'_> {}
-impl<'a> VideoEncodeH265EmitPictureParametersInfoEXT<'a> {
-    #[inline]
-    pub fn vps_id(mut self, vps_id: u8) -> Self {
-        self.vps_id = vps_id;
-        self
-    }
-    #[inline]
-    pub fn sps_id(mut self, sps_id: u8) -> Self {
-        self.sps_id = sps_id;
-        self
-    }
-    #[inline]
-    pub fn emit_vps_enable(mut self, emit_vps_enable: bool) -> Self {
-        self.emit_vps_enable = emit_vps_enable.into();
-        self
-    }
-    #[inline]
-    pub fn emit_sps_enable(mut self, emit_sps_enable: bool) -> Self {
-        self.emit_sps_enable = emit_sps_enable.into();
-        self
-    }
-    #[inline]
-    pub fn pps_id_entries(mut self, pps_id_entries: &'a [u8]) -> Self {
-        self.pps_id_entry_count = pps_id_entries.len() as _;
-        self.pps_id_entries = pps_id_entries.as_ptr();
+    pub fn std_picture_info(mut self, std_picture_info: &'a StdVideoEncodeH265PictureInfo) -> Self {
+        self.p_std_picture_info = std_picture_info;
         self
     }
 }
@@ -38887,8 +38897,8 @@ pub struct VideoEncodeH265NaluSliceSegmentInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub ctb_count: u32,
-    pub p_reference_final_lists: *const VideoEncodeH265ReferenceListsInfoEXT<'a>,
-    pub p_slice_segment_header_std: *const StdVideoEncodeH265SliceSegmentHeader,
+    pub p_std_reference_final_lists: *const StdVideoEncodeH265ReferenceListsInfo,
+    pub p_std_slice_segment_header: *const StdVideoEncodeH265SliceSegmentHeader,
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for VideoEncodeH265NaluSliceSegmentInfoEXT<'_> {
@@ -38898,8 +38908,8 @@ impl ::std::default::Default for VideoEncodeH265NaluSliceSegmentInfoEXT<'_> {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             ctb_count: u32::default(),
-            p_reference_final_lists: ::std::ptr::null(),
-            p_slice_segment_header_std: ::std::ptr::null(),
+            p_std_reference_final_lists: ::std::ptr::null(),
+            p_std_slice_segment_header: ::std::ptr::null(),
             _marker: PhantomData,
         }
     }
@@ -38915,19 +38925,19 @@ impl<'a> VideoEncodeH265NaluSliceSegmentInfoEXT<'a> {
         self
     }
     #[inline]
-    pub fn reference_final_lists(
+    pub fn std_reference_final_lists(
         mut self,
-        reference_final_lists: &'a VideoEncodeH265ReferenceListsInfoEXT<'a>,
+        std_reference_final_lists: &'a StdVideoEncodeH265ReferenceListsInfo,
     ) -> Self {
-        self.p_reference_final_lists = reference_final_lists;
+        self.p_std_reference_final_lists = std_reference_final_lists;
         self
     }
     #[inline]
-    pub fn slice_segment_header_std(
+    pub fn std_slice_segment_header(
         mut self,
-        slice_segment_header_std: &'a StdVideoEncodeH265SliceSegmentHeader,
+        std_slice_segment_header: &'a StdVideoEncodeH265SliceSegmentHeader,
     ) -> Self {
-        self.p_slice_segment_header_std = slice_segment_header_std;
+        self.p_std_slice_segment_header = std_slice_segment_header;
         self
     }
 }
@@ -38942,7 +38952,7 @@ pub struct VideoEncodeH265RateControlInfoEXT<'a> {
     pub idr_period: u32,
     pub consecutive_b_frame_count: u32,
     pub rate_control_structure: VideoEncodeH265RateControlStructureEXT,
-    pub sub_layer_count: u8,
+    pub sub_layer_count: u32,
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for VideoEncodeH265RateControlInfoEXT<'_> {
@@ -38955,7 +38965,7 @@ impl ::std::default::Default for VideoEncodeH265RateControlInfoEXT<'_> {
             idr_period: u32::default(),
             consecutive_b_frame_count: u32::default(),
             rate_control_structure: VideoEncodeH265RateControlStructureEXT::default(),
-            sub_layer_count: u8::default(),
+            sub_layer_count: u32::default(),
             _marker: PhantomData,
         }
     }
@@ -38989,7 +38999,7 @@ impl<'a> VideoEncodeH265RateControlInfoEXT<'a> {
         self
     }
     #[inline]
-    pub fn sub_layer_count(mut self, sub_layer_count: u8) -> Self {
+    pub fn sub_layer_count(mut self, sub_layer_count: u32) -> Self {
         self.sub_layer_count = sub_layer_count;
         self
     }
@@ -39053,7 +39063,7 @@ impl VideoEncodeH265FrameSizeEXT {
 pub struct VideoEncodeH265RateControlLayerInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub temporal_id: u8,
+    pub temporal_id: u32,
     pub use_initial_rc_qp: Bool32,
     pub initial_rc_qp: VideoEncodeH265QpEXT,
     pub use_min_qp: Bool32,
@@ -39070,7 +39080,7 @@ impl ::std::default::Default for VideoEncodeH265RateControlLayerInfoEXT<'_> {
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            temporal_id: u8::default(),
+            temporal_id: u32::default(),
             use_initial_rc_qp: Bool32::default(),
             initial_rc_qp: VideoEncodeH265QpEXT::default(),
             use_min_qp: Bool32::default(),
@@ -39094,7 +39104,7 @@ unsafe impl ExtendsVideoEncodeRateControlLayerInfoKHR
 }
 impl<'a> VideoEncodeH265RateControlLayerInfoEXT<'a> {
     #[inline]
-    pub fn temporal_id(mut self, temporal_id: u8) -> Self {
+    pub fn temporal_id(mut self, temporal_id: u32) -> Self {
         self.temporal_id = temporal_id;
         self
     }
@@ -39179,7 +39189,6 @@ impl<'a> VideoEncodeH265ProfileInfoEXT<'a> {
 pub struct VideoEncodeH265DpbSlotInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub slot_index: i8,
     pub p_std_reference_info: *const StdVideoEncodeH265ReferenceInfo,
     pub _marker: PhantomData<&'a ()>,
 }
@@ -39189,7 +39198,6 @@ impl ::std::default::Default for VideoEncodeH265DpbSlotInfoEXT<'_> {
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            slot_index: i8::default(),
             p_std_reference_info: ::std::ptr::null(),
             _marker: PhantomData,
         }
@@ -39198,78 +39206,14 @@ impl ::std::default::Default for VideoEncodeH265DpbSlotInfoEXT<'_> {
 unsafe impl<'a> TaggedStructure for VideoEncodeH265DpbSlotInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H265_DPB_SLOT_INFO_EXT;
 }
+unsafe impl ExtendsVideoReferenceSlotInfoKHR for VideoEncodeH265DpbSlotInfoEXT<'_> {}
 impl<'a> VideoEncodeH265DpbSlotInfoEXT<'a> {
-    #[inline]
-    pub fn slot_index(mut self, slot_index: i8) -> Self {
-        self.slot_index = slot_index;
-        self
-    }
     #[inline]
     pub fn std_reference_info(
         mut self,
         std_reference_info: &'a StdVideoEncodeH265ReferenceInfo,
     ) -> Self {
         self.p_std_reference_info = std_reference_info;
-        self
-    }
-}
-#[repr(C)]
-#[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265ReferenceListsInfoEXT.html>"]
-pub struct VideoEncodeH265ReferenceListsInfoEXT<'a> {
-    pub s_type: StructureType,
-    pub p_next: *const c_void,
-    pub reference_list0_entry_count: u8,
-    pub p_reference_list0_entries: *const VideoEncodeH265DpbSlotInfoEXT<'a>,
-    pub reference_list1_entry_count: u8,
-    pub p_reference_list1_entries: *const VideoEncodeH265DpbSlotInfoEXT<'a>,
-    pub p_reference_modifications: *const StdVideoEncodeH265ReferenceModifications,
-    pub _marker: PhantomData<&'a ()>,
-}
-impl ::std::default::Default for VideoEncodeH265ReferenceListsInfoEXT<'_> {
-    #[inline]
-    fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::std::ptr::null(),
-            reference_list0_entry_count: u8::default(),
-            p_reference_list0_entries: ::std::ptr::null(),
-            reference_list1_entry_count: u8::default(),
-            p_reference_list1_entries: ::std::ptr::null(),
-            p_reference_modifications: ::std::ptr::null(),
-            _marker: PhantomData,
-        }
-    }
-}
-unsafe impl<'a> TaggedStructure for VideoEncodeH265ReferenceListsInfoEXT<'a> {
-    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H265_REFERENCE_LISTS_INFO_EXT;
-}
-impl<'a> VideoEncodeH265ReferenceListsInfoEXT<'a> {
-    #[inline]
-    pub fn reference_list0_entries(
-        mut self,
-        reference_list0_entries: &'a [VideoEncodeH265DpbSlotInfoEXT],
-    ) -> Self {
-        self.reference_list0_entry_count = reference_list0_entries.len() as _;
-        self.p_reference_list0_entries = reference_list0_entries.as_ptr();
-        self
-    }
-    #[inline]
-    pub fn reference_list1_entries(
-        mut self,
-        reference_list1_entries: &'a [VideoEncodeH265DpbSlotInfoEXT],
-    ) -> Self {
-        self.reference_list1_entry_count = reference_list1_entries.len() as _;
-        self.p_reference_list1_entries = reference_list1_entries.as_ptr();
-        self
-    }
-    #[inline]
-    pub fn reference_modifications(
-        mut self,
-        reference_modifications: &'a StdVideoEncodeH265ReferenceModifications,
-    ) -> Self {
-        self.p_reference_modifications = reference_modifications;
         self
     }
 }
@@ -46303,6 +46247,43 @@ impl DeviceFaultVendorBinaryHeaderVersionOneEXT {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT.html>"]
+pub struct PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub pipeline_library_group_handles: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            pipeline_library_group_handles: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_PIPELINE_LIBRARY_GROUP_HANDLES_FEATURES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'_> {}
+impl<'a> PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a> {
+    #[inline]
+    pub fn pipeline_library_group_handles(mut self, pipeline_library_group_handles: bool) -> Self {
+        self.pipeline_library_group_handles = pipeline_library_group_handles.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone, Default)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDecompressMemoryRegionNV.html>"]
 pub struct DecompressMemoryRegionNV {
@@ -46599,7 +46580,7 @@ impl<'a> PhysicalDeviceSwapchainMaintenance1FeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSwapchainPresentFenceInfoEXT.html>"]
 pub struct SwapchainPresentFenceInfoEXT<'a> {
     pub s_type: StructureType,
-    pub p_next: *mut c_void,
+    pub p_next: *const c_void,
     pub swapchain_count: u32,
     pub p_fences: *const Fence,
     pub _marker: PhantomData<&'a ()>,
@@ -46609,7 +46590,7 @@ impl ::std::default::Default for SwapchainPresentFenceInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::std::ptr::null_mut(),
+            p_next: ::std::ptr::null(),
             swapchain_count: u32::default(),
             p_fences: ::std::ptr::null(),
             _marker: PhantomData,
@@ -46634,7 +46615,7 @@ impl<'a> SwapchainPresentFenceInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSwapchainPresentModesCreateInfoEXT.html>"]
 pub struct SwapchainPresentModesCreateInfoEXT<'a> {
     pub s_type: StructureType,
-    pub p_next: *mut c_void,
+    pub p_next: *const c_void,
     pub present_mode_count: u32,
     pub p_present_modes: *const PresentModeKHR,
     pub _marker: PhantomData<&'a ()>,
@@ -46644,7 +46625,7 @@ impl ::std::default::Default for SwapchainPresentModesCreateInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::std::ptr::null_mut(),
+            p_next: ::std::ptr::null(),
             present_mode_count: u32::default(),
             p_present_modes: ::std::ptr::null(),
             _marker: PhantomData,
@@ -46669,7 +46650,7 @@ impl<'a> SwapchainPresentModesCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSwapchainPresentModeInfoEXT.html>"]
 pub struct SwapchainPresentModeInfoEXT<'a> {
     pub s_type: StructureType,
-    pub p_next: *mut c_void,
+    pub p_next: *const c_void,
     pub swapchain_count: u32,
     pub p_present_modes: *const PresentModeKHR,
     pub _marker: PhantomData<&'a ()>,
@@ -46679,7 +46660,7 @@ impl ::std::default::Default for SwapchainPresentModeInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::std::ptr::null_mut(),
+            p_next: ::std::ptr::null(),
             swapchain_count: u32::default(),
             p_present_modes: ::std::ptr::null(),
             _marker: PhantomData,
@@ -46993,6 +46974,251 @@ impl<'a> PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'a> {
     #[inline]
     pub fn multiview_per_view_viewports(mut self, multiview_per_view_viewports: bool) -> Self {
         self.multiview_per_view_viewports = multiview_per_view_viewports.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderCorePropertiesARM.html>"]
+pub struct PhysicalDeviceShaderCorePropertiesARM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub pixel_rate: u32,
+    pub texel_rate: u32,
+    pub fma_rate: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceShaderCorePropertiesARM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            pixel_rate: u32::default(),
+            texel_rate: u32::default(),
+            fma_rate: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderCorePropertiesARM<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_ARM;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderCorePropertiesARM<'_> {}
+impl<'a> PhysicalDeviceShaderCorePropertiesARM<'a> {
+    #[inline]
+    pub fn pixel_rate(mut self, pixel_rate: u32) -> Self {
+        self.pixel_rate = pixel_rate;
+        self
+    }
+    #[inline]
+    pub fn texel_rate(mut self, texel_rate: u32) -> Self {
+        self.texel_rate = texel_rate;
+        self
+    }
+    #[inline]
+    pub fn fma_rate(mut self, fma_rate: u32) -> Self {
+        self.fma_rate = fma_rate;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM.html>"]
+pub struct PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub multiview_per_view_render_areas: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            multiview_per_view_render_areas: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_RENDER_AREAS_FEATURES_QCOM;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'_> {}
+impl<'a> PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'a> {
+    #[inline]
+    pub fn multiview_per_view_render_areas(
+        mut self,
+        multiview_per_view_render_areas: bool,
+    ) -> Self {
+        self.multiview_per_view_render_areas = multiview_per_view_render_areas.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMultiviewPerViewRenderAreasRenderPassBeginInfoQCOM.html>"]
+pub struct MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub per_view_render_area_count: u32,
+    pub p_per_view_render_areas: *const Rect2D,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            per_view_render_area_count: u32::default(),
+            p_per_view_render_areas: ::std::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::MULTIVIEW_PER_VIEW_RENDER_AREAS_RENDER_PASS_BEGIN_INFO_QCOM;
+}
+unsafe impl ExtendsRenderPassBeginInfo for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'_> {}
+unsafe impl ExtendsRenderingInfo for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'_> {}
+impl<'a> MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'a> {
+    #[inline]
+    pub fn per_view_render_areas(mut self, per_view_render_areas: &'a [Rect2D]) -> Self {
+        self.per_view_render_area_count = per_view_render_areas.len() as _;
+        self.p_per_view_render_areas = per_view_render_areas.as_ptr();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkQueryLowLatencySupportNV.html>"]
+pub struct QueryLowLatencySupportNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub p_queried_low_latency_data: *mut c_void,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for QueryLowLatencySupportNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            p_queried_low_latency_data: ::std::ptr::null_mut(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for QueryLowLatencySupportNV<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::QUERY_LOW_LATENCY_SUPPORT_NV;
+}
+unsafe impl ExtendsSemaphoreCreateInfo for QueryLowLatencySupportNV<'_> {}
+impl<'a> QueryLowLatencySupportNV<'a> {
+    #[inline]
+    pub fn queried_low_latency_data(mut self, queried_low_latency_data: *mut c_void) -> Self {
+        self.p_queried_low_latency_data = queried_low_latency_data;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMemoryMapInfoKHR.html>"]
+pub struct MemoryMapInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub flags: MemoryMapFlags,
+    pub memory: DeviceMemory,
+    pub offset: DeviceSize,
+    pub size: DeviceSize,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for MemoryMapInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            flags: MemoryMapFlags::default(),
+            memory: DeviceMemory::default(),
+            offset: DeviceSize::default(),
+            size: DeviceSize::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for MemoryMapInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_MAP_INFO_KHR;
+}
+impl<'a> MemoryMapInfoKHR<'a> {
+    #[inline]
+    pub fn flags(mut self, flags: MemoryMapFlags) -> Self {
+        self.flags = flags;
+        self
+    }
+    #[inline]
+    pub fn memory(mut self, memory: DeviceMemory) -> Self {
+        self.memory = memory;
+        self
+    }
+    #[inline]
+    pub fn offset(mut self, offset: DeviceSize) -> Self {
+        self.offset = offset;
+        self
+    }
+    #[inline]
+    pub fn size(mut self, size: DeviceSize) -> Self {
+        self.size = size;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMemoryUnmapInfoKHR.html>"]
+pub struct MemoryUnmapInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub flags: MemoryUnmapFlagsKHR,
+    pub memory: DeviceMemory,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for MemoryUnmapInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            flags: MemoryUnmapFlagsKHR::default(),
+            memory: DeviceMemory::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for MemoryUnmapInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_UNMAP_INFO_KHR;
+}
+impl<'a> MemoryUnmapInfoKHR<'a> {
+    #[inline]
+    pub fn flags(mut self, flags: MemoryUnmapFlagsKHR) -> Self {
+        self.flags = flags;
+        self
+    }
+    #[inline]
+    pub fn memory(mut self, memory: DeviceMemory) -> Self {
+        self.memory = memory;
         self
     }
 }
