@@ -2901,6 +2901,12 @@ impl fmt::Debug for MemoryPropertyFlags {
         debug_flags(f, KNOWN, self.0)
     }
 }
+impl fmt::Debug for MemoryUnmapFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
 impl fmt::Debug for MetalSurfaceCreateFlagsEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[];
@@ -5272,6 +5278,8 @@ impl fmt::Debug for StructureType {
             Self::PIPELINE_EXECUTABLE_INTERNAL_REPRESENTATION_KHR => {
                 Some("PIPELINE_EXECUTABLE_INTERNAL_REPRESENTATION_KHR")
             }
+            Self::MEMORY_MAP_INFO_KHR => Some("MEMORY_MAP_INFO_KHR"),
+            Self::MEMORY_UNMAP_INFO_KHR => Some("MEMORY_UNMAP_INFO_KHR"),
             Self::PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_2_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_2_FEATURES_EXT")
             }

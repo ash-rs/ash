@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 243;
+pub const HEADER_VERSION: u32 = 244;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -328,6 +328,11 @@ vk_bitflags_wrapped!(VideoEncodeFlagsKHR, Flags);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeRateControlFlagsKHR.html>"]
 pub struct VideoEncodeRateControlFlagsKHR(pub(crate) Flags);
 vk_bitflags_wrapped!(VideoEncodeRateControlFlagsKHR, Flags);
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMemoryUnmapFlagsKHR.html>"]
+pub struct MemoryUnmapFlagsKHR(pub(crate) Flags);
+vk_bitflags_wrapped!(MemoryUnmapFlagsKHR, Flags);
 define_handle!(
     Instance,
     INSTANCE,
@@ -47124,6 +47129,96 @@ impl<'a> QueryLowLatencySupportNV<'a> {
     #[inline]
     pub fn queried_low_latency_data(mut self, queried_low_latency_data: *mut c_void) -> Self {
         self.p_queried_low_latency_data = queried_low_latency_data;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMemoryMapInfoKHR.html>"]
+pub struct MemoryMapInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub flags: MemoryMapFlags,
+    pub memory: DeviceMemory,
+    pub offset: DeviceSize,
+    pub size: DeviceSize,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for MemoryMapInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            flags: MemoryMapFlags::default(),
+            memory: DeviceMemory::default(),
+            offset: DeviceSize::default(),
+            size: DeviceSize::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for MemoryMapInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_MAP_INFO_KHR;
+}
+impl<'a> MemoryMapInfoKHR<'a> {
+    #[inline]
+    pub fn flags(mut self, flags: MemoryMapFlags) -> Self {
+        self.flags = flags;
+        self
+    }
+    #[inline]
+    pub fn memory(mut self, memory: DeviceMemory) -> Self {
+        self.memory = memory;
+        self
+    }
+    #[inline]
+    pub fn offset(mut self, offset: DeviceSize) -> Self {
+        self.offset = offset;
+        self
+    }
+    #[inline]
+    pub fn size(mut self, size: DeviceSize) -> Self {
+        self.size = size;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMemoryUnmapInfoKHR.html>"]
+pub struct MemoryUnmapInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub flags: MemoryUnmapFlagsKHR,
+    pub memory: DeviceMemory,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for MemoryUnmapInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            flags: MemoryUnmapFlagsKHR::default(),
+            memory: DeviceMemory::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for MemoryUnmapInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_UNMAP_INFO_KHR;
+}
+impl<'a> MemoryUnmapInfoKHR<'a> {
+    #[inline]
+    pub fn flags(mut self, flags: MemoryUnmapFlagsKHR) -> Self {
+        self.flags = flags;
+        self
+    }
+    #[inline]
+    pub fn memory(mut self, memory: DeviceMemory) -> Self {
+        self.memory = memory;
         self
     }
 }

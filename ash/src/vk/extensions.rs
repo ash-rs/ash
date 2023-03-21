@@ -13937,6 +13937,74 @@ impl StructureType {
     pub const PIPELINE_EXECUTABLE_STATISTIC_KHR: Self = Self(1_000_269_004);
     pub const PIPELINE_EXECUTABLE_INTERNAL_REPRESENTATION_KHR: Self = Self(1_000_269_005);
 }
+impl KhrMapMemory2Fn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_map_memory2\0") };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[allow(non_camel_case_types)]
+pub type PFN_vkMapMemory2KHR = unsafe extern "system" fn(
+    device: Device,
+    p_memory_map_info: *const MemoryMapInfoKHR,
+    pp_data: *mut *mut c_void,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkUnmapMemory2KHR = unsafe extern "system" fn(
+    device: Device,
+    p_memory_unmap_info: *const MemoryUnmapInfoKHR,
+) -> Result;
+#[derive(Clone)]
+pub struct KhrMapMemory2Fn {
+    pub map_memory2_khr: PFN_vkMapMemory2KHR,
+    pub unmap_memory2_khr: PFN_vkUnmapMemory2KHR,
+}
+unsafe impl Send for KhrMapMemory2Fn {}
+unsafe impl Sync for KhrMapMemory2Fn {}
+impl KhrMapMemory2Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {
+            map_memory2_khr: unsafe {
+                unsafe extern "system" fn map_memory2_khr(
+                    _device: Device,
+                    _p_memory_map_info: *const MemoryMapInfoKHR,
+                    _pp_data: *mut *mut c_void,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(map_memory2_khr)))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkMapMemory2KHR\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    map_memory2_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            unmap_memory2_khr: unsafe {
+                unsafe extern "system" fn unmap_memory2_khr(
+                    _device: Device,
+                    _p_memory_unmap_info: *const MemoryUnmapInfoKHR,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(unmap_memory2_khr)))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkUnmapMemory2KHR\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    unmap_memory2_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+}
+#[doc = "Generated from 'VK_KHR_map_memory2'"]
+impl StructureType {
+    pub const MEMORY_MAP_INFO_KHR: Self = Self(1_000_271_000);
+    pub const MEMORY_UNMAP_INFO_KHR: Self = Self(1_000_271_001);
+}
 impl ExtShaderAtomicFloat2Fn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
         ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_atomic_float2\0")
