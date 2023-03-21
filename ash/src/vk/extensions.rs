@@ -13331,7 +13331,7 @@ pub type PFN_vkGetPhysicalDeviceFragmentShadingRatesKHR = unsafe extern "system"
 pub type PFN_vkCmdSetFragmentShadingRateKHR = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     p_fragment_size: *const Extent2D,
-    combiner_ops: *const [FragmentShadingRateCombinerOpKHR; 2],
+    combiner_ops: *const [FragmentShadingRateCombinerOpKHR; 2usize],
 );
 #[derive(Clone)]
 pub struct KhrFragmentShadingRateFn {
@@ -13372,7 +13372,7 @@ impl KhrFragmentShadingRateFn {
                 unsafe extern "system" fn cmd_set_fragment_shading_rate_khr(
                     _command_buffer: CommandBuffer,
                     _p_fragment_size: *const Extent2D,
-                    _combiner_ops: *const [FragmentShadingRateCombinerOpKHR; 2],
+                    _combiner_ops: *const [FragmentShadingRateCombinerOpKHR; 2usize],
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -18058,7 +18058,7 @@ impl NvFragmentShadingRateEnumsFn {
 pub type PFN_vkCmdSetFragmentShadingRateEnumNV = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     shading_rate: FragmentShadingRateNV,
-    combiner_ops: *const [FragmentShadingRateCombinerOpKHR; 2],
+    combiner_ops: *const [FragmentShadingRateCombinerOpKHR; 2usize],
 );
 #[derive(Clone)]
 pub struct NvFragmentShadingRateEnumsFn {
@@ -18076,7 +18076,7 @@ impl NvFragmentShadingRateEnumsFn {
                 unsafe extern "system" fn cmd_set_fragment_shading_rate_enum_nv(
                     _command_buffer: CommandBuffer,
                     _shading_rate: FragmentShadingRateNV,
-                    _combiner_ops: *const [FragmentShadingRateCombinerOpKHR; 2],
+                    _combiner_ops: *const [FragmentShadingRateCombinerOpKHR; 2usize],
                 ) {
                     panic!(concat!(
                         "Unable to load ",
