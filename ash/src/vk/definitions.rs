@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 244;
+pub const HEADER_VERSION: u32 = 245;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -44277,6 +44277,275 @@ unsafe impl ExtendsAccelerationStructureGeometryTrianglesDataKHR
 {
 }
 impl<'a> AccelerationStructureTrianglesOpacityMicromapEXT<'a> {
+    #[inline]
+    pub fn index_type(mut self, index_type: IndexType) -> Self {
+        self.index_type = index_type;
+        self
+    }
+    #[inline]
+    pub fn index_buffer(mut self, index_buffer: DeviceOrHostAddressConstKHR) -> Self {
+        self.index_buffer = index_buffer;
+        self
+    }
+    #[inline]
+    pub fn index_stride(mut self, index_stride: DeviceSize) -> Self {
+        self.index_stride = index_stride;
+        self
+    }
+    #[inline]
+    pub fn base_triangle(mut self, base_triangle: u32) -> Self {
+        self.base_triangle = base_triangle;
+        self
+    }
+    #[inline]
+    pub fn usage_counts(mut self, usage_counts: &'a [MicromapUsageEXT]) -> Self {
+        self.usage_counts_count = usage_counts.len() as _;
+        self.p_usage_counts = usage_counts.as_ptr();
+        self
+    }
+    #[inline]
+    pub fn usage_counts_ptrs(mut self, usage_counts_ptrs: &'a [&'a MicromapUsageEXT]) -> Self {
+        self.usage_counts_count = usage_counts_ptrs.len() as _;
+        self.pp_usage_counts = usage_counts_ptrs.as_ptr().cast();
+        self
+    }
+    #[inline]
+    pub fn micromap(mut self, micromap: MicromapEXT) -> Self {
+        self.micromap = micromap;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDisplacementMicromapFeaturesNV.html>"]
+pub struct PhysicalDeviceDisplacementMicromapFeaturesNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub displacement_micromap: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceDisplacementMicromapFeaturesNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            displacement_micromap: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceDisplacementMicromapFeaturesNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_DISPLACEMENT_MICROMAP_FEATURES_NV;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDisplacementMicromapFeaturesNV<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDisplacementMicromapFeaturesNV<'_> {}
+impl<'a> PhysicalDeviceDisplacementMicromapFeaturesNV<'a> {
+    #[inline]
+    pub fn displacement_micromap(mut self, displacement_micromap: bool) -> Self {
+        self.displacement_micromap = displacement_micromap.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDisplacementMicromapPropertiesNV.html>"]
+pub struct PhysicalDeviceDisplacementMicromapPropertiesNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub max_displacement_micromap_subdivision_level: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceDisplacementMicromapPropertiesNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            max_displacement_micromap_subdivision_level: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceDisplacementMicromapPropertiesNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_DISPLACEMENT_MICROMAP_PROPERTIES_NV;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceDisplacementMicromapPropertiesNV<'_>
+{
+}
+impl<'a> PhysicalDeviceDisplacementMicromapPropertiesNV<'a> {
+    #[inline]
+    pub fn max_displacement_micromap_subdivision_level(
+        mut self,
+        max_displacement_micromap_subdivision_level: u32,
+    ) -> Self {
+        self.max_displacement_micromap_subdivision_level =
+            max_displacement_micromap_subdivision_level;
+        self
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureTrianglesDisplacementMicromapNV.html>"]
+pub struct AccelerationStructureTrianglesDisplacementMicromapNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub displacement_bias_and_scale_format: Format,
+    pub displacement_vector_format: Format,
+    pub displacement_bias_and_scale_buffer: DeviceOrHostAddressConstKHR,
+    pub displacement_bias_and_scale_stride: DeviceSize,
+    pub displacement_vector_buffer: DeviceOrHostAddressConstKHR,
+    pub displacement_vector_stride: DeviceSize,
+    pub displaced_micromap_primitive_flags: DeviceOrHostAddressConstKHR,
+    pub displaced_micromap_primitive_flags_stride: DeviceSize,
+    pub index_type: IndexType,
+    pub index_buffer: DeviceOrHostAddressConstKHR,
+    pub index_stride: DeviceSize,
+    pub base_triangle: u32,
+    pub usage_counts_count: u32,
+    pub p_usage_counts: *const MicromapUsageEXT,
+    pub pp_usage_counts: *const *const MicromapUsageEXT,
+    pub micromap: MicromapEXT,
+    pub _marker: PhantomData<&'a ()>,
+}
+#[cfg(feature = "debug")]
+impl fmt::Debug for AccelerationStructureTrianglesDisplacementMicromapNV<'_> {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+        fmt.debug_struct("AccelerationStructureTrianglesDisplacementMicromapNV")
+            .field("s_type", &self.s_type)
+            .field("p_next", &self.p_next)
+            .field(
+                "displacement_bias_and_scale_format",
+                &self.displacement_bias_and_scale_format,
+            )
+            .field(
+                "displacement_vector_format",
+                &self.displacement_vector_format,
+            )
+            .field("displacement_bias_and_scale_buffer", &"union")
+            .field(
+                "displacement_bias_and_scale_stride",
+                &self.displacement_bias_and_scale_stride,
+            )
+            .field("displacement_vector_buffer", &"union")
+            .field(
+                "displacement_vector_stride",
+                &self.displacement_vector_stride,
+            )
+            .field("displaced_micromap_primitive_flags", &"union")
+            .field(
+                "displaced_micromap_primitive_flags_stride",
+                &self.displaced_micromap_primitive_flags_stride,
+            )
+            .field("index_type", &self.index_type)
+            .field("index_buffer", &"union")
+            .field("index_stride", &self.index_stride)
+            .field("base_triangle", &self.base_triangle)
+            .field("usage_counts_count", &self.usage_counts_count)
+            .field("p_usage_counts", &self.p_usage_counts)
+            .field("pp_usage_counts", &self.pp_usage_counts)
+            .field("micromap", &self.micromap)
+            .finish()
+    }
+}
+impl ::std::default::Default for AccelerationStructureTrianglesDisplacementMicromapNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            displacement_bias_and_scale_format: Format::default(),
+            displacement_vector_format: Format::default(),
+            displacement_bias_and_scale_buffer: DeviceOrHostAddressConstKHR::default(),
+            displacement_bias_and_scale_stride: DeviceSize::default(),
+            displacement_vector_buffer: DeviceOrHostAddressConstKHR::default(),
+            displacement_vector_stride: DeviceSize::default(),
+            displaced_micromap_primitive_flags: DeviceOrHostAddressConstKHR::default(),
+            displaced_micromap_primitive_flags_stride: DeviceSize::default(),
+            index_type: IndexType::default(),
+            index_buffer: DeviceOrHostAddressConstKHR::default(),
+            index_stride: DeviceSize::default(),
+            base_triangle: u32::default(),
+            usage_counts_count: u32::default(),
+            p_usage_counts: ::std::ptr::null(),
+            pp_usage_counts: ::std::ptr::null(),
+            micromap: MicromapEXT::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for AccelerationStructureTrianglesDisplacementMicromapNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::ACCELERATION_STRUCTURE_TRIANGLES_DISPLACEMENT_MICROMAP_NV;
+}
+unsafe impl ExtendsAccelerationStructureGeometryTrianglesDataKHR
+    for AccelerationStructureTrianglesDisplacementMicromapNV<'_>
+{
+}
+impl<'a> AccelerationStructureTrianglesDisplacementMicromapNV<'a> {
+    #[inline]
+    pub fn displacement_bias_and_scale_format(
+        mut self,
+        displacement_bias_and_scale_format: Format,
+    ) -> Self {
+        self.displacement_bias_and_scale_format = displacement_bias_and_scale_format;
+        self
+    }
+    #[inline]
+    pub fn displacement_vector_format(mut self, displacement_vector_format: Format) -> Self {
+        self.displacement_vector_format = displacement_vector_format;
+        self
+    }
+    #[inline]
+    pub fn displacement_bias_and_scale_buffer(
+        mut self,
+        displacement_bias_and_scale_buffer: DeviceOrHostAddressConstKHR,
+    ) -> Self {
+        self.displacement_bias_and_scale_buffer = displacement_bias_and_scale_buffer;
+        self
+    }
+    #[inline]
+    pub fn displacement_bias_and_scale_stride(
+        mut self,
+        displacement_bias_and_scale_stride: DeviceSize,
+    ) -> Self {
+        self.displacement_bias_and_scale_stride = displacement_bias_and_scale_stride;
+        self
+    }
+    #[inline]
+    pub fn displacement_vector_buffer(
+        mut self,
+        displacement_vector_buffer: DeviceOrHostAddressConstKHR,
+    ) -> Self {
+        self.displacement_vector_buffer = displacement_vector_buffer;
+        self
+    }
+    #[inline]
+    pub fn displacement_vector_stride(mut self, displacement_vector_stride: DeviceSize) -> Self {
+        self.displacement_vector_stride = displacement_vector_stride;
+        self
+    }
+    #[inline]
+    pub fn displaced_micromap_primitive_flags(
+        mut self,
+        displaced_micromap_primitive_flags: DeviceOrHostAddressConstKHR,
+    ) -> Self {
+        self.displaced_micromap_primitive_flags = displaced_micromap_primitive_flags;
+        self
+    }
+    #[inline]
+    pub fn displaced_micromap_primitive_flags_stride(
+        mut self,
+        displaced_micromap_primitive_flags_stride: DeviceSize,
+    ) -> Self {
+        self.displaced_micromap_primitive_flags_stride = displaced_micromap_primitive_flags_stride;
+        self
+    }
     #[inline]
     pub fn index_type(mut self, index_type: IndexType) -> Self {
         self.index_type = index_type;

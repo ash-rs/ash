@@ -651,6 +651,10 @@ impl fmt::Debug for BuildAccelerationStructureFlagsKHR {
                 BuildAccelerationStructureFlagsKHR::ALLOW_OPACITY_MICROMAP_DATA_UPDATE_EXT.0,
                 "ALLOW_OPACITY_MICROMAP_DATA_UPDATE_EXT",
             ),
+            (
+                BuildAccelerationStructureFlagsKHR::ALLOW_DISPLACEMENT_MICROMAP_UPDATE_NV.0,
+                "ALLOW_DISPLACEMENT_MICROMAP_UPDATE_NV",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -1410,6 +1414,21 @@ impl fmt::Debug for DiscardRectangleModeEXT {
         let name = match *self {
             Self::INCLUSIVE => Some("INCLUSIVE"),
             Self::EXCLUSIVE => Some("EXCLUSIVE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
+impl fmt::Debug for DisplacementMicromapFormatNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::TYPE_64_TRIANGLES_64_BYTES => Some("TYPE_64_TRIANGLES_64_BYTES"),
+            Self::TYPE_256_TRIANGLES_128_BYTES => Some("TYPE_256_TRIANGLES_128_BYTES"),
+            Self::TYPE_1024_TRIANGLES_128_BYTES => Some("TYPE_1024_TRIANGLES_128_BYTES"),
             _ => None,
         };
         if let Some(x) = name {
@@ -2926,6 +2945,7 @@ impl fmt::Debug for MicromapTypeEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::OPACITY_MICROMAP => Some("OPACITY_MICROMAP"),
+            Self::DISPLACEMENT_MICROMAP_NV => Some("DISPLACEMENT_MICROMAP_NV"),
             _ => None,
         };
         if let Some(x) = name {
@@ -3382,6 +3402,10 @@ impl fmt::Debug for PipelineCreateFlags {
             (
                 PipelineCreateFlags::RAY_TRACING_OPACITY_MICROMAP_EXT.0,
                 "RAY_TRACING_OPACITY_MICROMAP_EXT",
+            ),
+            (
+                PipelineCreateFlags::RAY_TRACING_DISPLACEMENT_MICROMAP_NV.0,
+                "RAY_TRACING_DISPLACEMENT_MICROMAP_NV",
             ),
             (
                 PipelineCreateFlags::NO_PROTECTED_ACCESS_EXT.0,
@@ -5660,6 +5684,15 @@ impl fmt::Debug for StructureType {
             Self::MICROMAP_BUILD_SIZES_INFO_EXT => Some("MICROMAP_BUILD_SIZES_INFO_EXT"),
             Self::ACCELERATION_STRUCTURE_TRIANGLES_OPACITY_MICROMAP_EXT => {
                 Some("ACCELERATION_STRUCTURE_TRIANGLES_OPACITY_MICROMAP_EXT")
+            }
+            Self::PHYSICAL_DEVICE_DISPLACEMENT_MICROMAP_FEATURES_NV => {
+                Some("PHYSICAL_DEVICE_DISPLACEMENT_MICROMAP_FEATURES_NV")
+            }
+            Self::PHYSICAL_DEVICE_DISPLACEMENT_MICROMAP_PROPERTIES_NV => {
+                Some("PHYSICAL_DEVICE_DISPLACEMENT_MICROMAP_PROPERTIES_NV")
+            }
+            Self::ACCELERATION_STRUCTURE_TRIANGLES_DISPLACEMENT_MICROMAP_NV => {
+                Some("ACCELERATION_STRUCTURE_TRIANGLES_DISPLACEMENT_MICROMAP_NV")
             }
             Self::PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_FEATURES_HUAWEI => {
                 Some("PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_FEATURES_HUAWEI")

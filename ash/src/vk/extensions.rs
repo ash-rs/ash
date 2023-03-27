@@ -18767,6 +18767,43 @@ impl StructureType {
     pub const MICROMAP_BUILD_SIZES_INFO_EXT: Self = Self(1_000_396_008);
     pub const ACCELERATION_STRUCTURE_TRIANGLES_OPACITY_MICROMAP_EXT: Self = Self(1_000_396_009);
 }
+impl NvDisplacementMicromapFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_displacement_micromap\0")
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct NvDisplacementMicromapFn {}
+unsafe impl Send for NvDisplacementMicromapFn {}
+unsafe impl Sync for NvDisplacementMicromapFn {}
+impl NvDisplacementMicromapFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {}
+    }
+}
+#[doc = "Generated from 'VK_NV_displacement_micromap'"]
+impl BuildAccelerationStructureFlagsKHR {
+    pub const ALLOW_DISPLACEMENT_MICROMAP_UPDATE_NV: Self = Self(0b10_0000_0000);
+}
+#[doc = "Generated from 'VK_NV_displacement_micromap'"]
+impl MicromapTypeEXT {
+    pub const DISPLACEMENT_MICROMAP_NV: Self = Self(1_000_397_000);
+}
+#[doc = "Generated from 'VK_NV_displacement_micromap'"]
+impl PipelineCreateFlags {
+    pub const RAY_TRACING_DISPLACEMENT_MICROMAP_NV: Self =
+        Self(0b1_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_NV_displacement_micromap'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_DISPLACEMENT_MICROMAP_FEATURES_NV: Self = Self(1_000_397_000);
+    pub const PHYSICAL_DEVICE_DISPLACEMENT_MICROMAP_PROPERTIES_NV: Self = Self(1_000_397_001);
+    pub const ACCELERATION_STRUCTURE_TRIANGLES_DISPLACEMENT_MICROMAP_NV: Self = Self(1_000_397_002);
+}
 impl ExtLoadStoreOpNoneFn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_load_store_op_none\0") };
