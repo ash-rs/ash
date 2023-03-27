@@ -734,7 +734,7 @@ fn discard_outmost_delimiter(stream: TokenStream) -> TokenStream {
 
 impl FieldExt for vkxml::Field {
     fn param_ident(&self) -> Ident {
-        let name = self.name.as_deref().unwrap_or("field");
+        let name = self.name.as_deref().unwrap();
         let name_corrected = match name {
             "type" => "ty",
             _ => name,
@@ -1590,7 +1590,7 @@ pub fn generate_enum<'a>(
     }
 }
 
-pub fn generate_result(ident: Ident, enum_: &vk_parse::Enums) -> TokenStream {
+fn generate_result(ident: Ident, enum_: &vk_parse::Enums) -> TokenStream {
     let notation = enum_.children.iter().filter_map(|elem| {
         let (variant_name, notation) = match elem {
             vk_parse::EnumsChild::Enum(constant) => (
@@ -1631,9 +1631,10 @@ pub fn generate_result(ident: Ident, enum_: &vk_parse::Enums) -> TokenStream {
 fn is_static_array(field: &vkxml::Field) -> bool {
     matches!(field.array, Some(vkxml::ArrayType::Static))
 }
-pub fn derive_default(
+
+fn derive_default(
     struct_: &vkxml::Struct,
-    members: &[(&vkxml::Field, Option<TokenStream>)],
+    members: &[PreprocessedMember],
     has_lifetime: bool,
 ) -> Option<TokenStream> {
     let name = name_to_tokens(&struct_.name);
@@ -1656,42 +1657,39 @@ pub fn derive_default(
     ];
     let contains_ptr = members
         .iter()
-        .cloned()
-        .any(|(field, _)| field.reference.is_some());
-    let contains_structure_type = members.iter().map(|(f, _)| *f).any(is_structure_type);
-    let contains_static_array = members.iter().map(|(f, _)| *f).any(is_static_array);
-    let contains_deprecated = members.iter().any(|(_, d)| d.is_some());
+        .any(|member| member.vkxml_field.reference.is_some());
+    let contains_structure_type = members
+        .iter()
+        .any(|member| is_structure_type(member.vkxml_field));
+    let contains_static_array = members
+        .iter()
+        .any(|member| is_static_array(member.vkxml_field));
+    let contains_deprecated = members.iter().any(|member| member.deprecated.is_some());
     let allow_deprecated = contains_deprecated.then(|| quote!(#[allow(deprecated)]));
     if !(contains_ptr || contains_structure_type || contains_static_array) {
         return None;
     };
-    let default_fields = members.iter().map(|(field, _)| {
-        let param_ident = field.param_ident();
-        if is_structure_type(field) {
-            if field.type_enums.is_some() {
-                quote! {
-                    #param_ident: Self::STRUCTURE_TYPE
-                }
+    let default_fields = members.iter().map(|member| {
+        let param_ident = member.vkxml_field.param_ident();
+        if is_structure_type(member.vkxml_field) {
+            if member.vkxml_field.type_enums.is_some() {
+                quote!(#param_ident: Self::STRUCTURE_TYPE)
             } else {
-                quote! {
-                    #param_ident: unsafe { ::std::mem::zeroed() }
-                }
+                quote!(#param_ident: unsafe { ::std::mem::zeroed() })
             }
-        } else if field.reference.is_some() {
-            if field.is_const {
+        } else if member.vkxml_field.reference.is_some() {
+            if member.vkxml_field.is_const {
                 quote!(#param_ident: ::std::ptr::null())
             } else {
                 quote!(#param_ident: ::std::ptr::null_mut())
             }
-        } else if is_static_array(field) || handles.contains(&field.basetype.as_str()) {
-            quote! {
-                #param_ident: unsafe { ::std::mem::zeroed() }
-            }
+        } else if is_static_array(member.vkxml_field)
+            || handles.contains(&member.vkxml_field.basetype.as_str())
+        {
+            quote!(#param_ident: unsafe { ::std::mem::zeroed() })
         } else {
-            let ty = field.type_tokens(false);
-            quote! {
-                #param_ident: #ty::default()
-            }
+            let ty = member.vkxml_field.type_tokens(false);
+            quote!(#param_ident: #ty::default())
         }
     });
     let lifetime = has_lifetime.then(|| quote!(<'_>));
@@ -1712,15 +1710,17 @@ pub fn derive_default(
     };
     Some(q)
 }
-pub fn derive_debug(
+
+fn derive_debug(
     struct_: &vkxml::Struct,
-    members: &[(&vkxml::Field, Option<TokenStream>)],
+    members: &[PreprocessedMember],
     union_types: &HashSet<&str>,
     has_lifetime: bool,
 ) -> Option<TokenStream> {
     let name = name_to_tokens(&struct_.name);
-    let contains_pfn = members.iter().any(|(field, _)| {
-        field
+    let contains_pfn = members.iter().any(|member| {
+        member
+            .vkxml_field
             .name
             .as_ref()
             .map(|n| n.contains("pfn"))
@@ -1728,14 +1728,15 @@ pub fn derive_debug(
     });
     let contains_static_array = members
         .iter()
-        .any(|(x, _)| is_static_array(x) && x.basetype == "char");
+        .any(|member| is_static_array(member.vkxml_field) && member.vkxml_field.basetype == "char");
     let contains_union = members
         .iter()
-        .any(|(field, _)| union_types.contains(field.basetype.as_str()));
+        .any(|member| union_types.contains(member.vkxml_field.basetype.as_str()));
     if !(contains_union || contains_static_array || contains_pfn) {
         return None;
     }
-    let debug_fields = members.iter().map(|(field, _)| {
+    let debug_fields = members.iter().map(|member| {
+        let field = &member.vkxml_field;
         let param_ident = field.param_ident();
         let param_str = param_ident.to_string();
         let debug_value = if is_static_array(field) && field.basetype == "char" {
@@ -1774,9 +1775,9 @@ pub fn derive_debug(
     Some(q)
 }
 
-pub fn derive_setters(
+fn derive_setters(
     struct_: &vkxml::Struct,
-    members: &[(&vkxml::Field, Option<TokenStream>)],
+    members: &[PreprocessedMember],
     root_structs: &HashSet<Ident>,
     has_lifetimes: &HashSet<Ident>,
 ) -> Option<TokenStream> {
@@ -1792,11 +1793,11 @@ pub fn derive_setters(
 
     let next_field = members
         .iter()
-        .find(|(field, _)| field.param_ident() == "p_next");
+        .find(|member| member.vkxml_field.param_ident() == "p_next");
 
     let structure_type_field = members
         .iter()
-        .find(|(field, _)| field.param_ident() == "s_type");
+        .find(|member| member.vkxml_field.param_ident() == "s_type");
 
     // Must either have both, or none:
     assert_eq!(next_field.is_some(), structure_type_field.is_some());
@@ -1811,9 +1812,11 @@ pub fn derive_setters(
         // No ImageView attachments when VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT is set
         ("VkFramebufferCreateInfo", "attachmentCount"),
     ];
-    let filter_members = members
+    let skip_members = members
         .iter()
-        .filter_map(|(field, _)| {
+        .filter_map(|member| {
+            let field = &member.vkxml_field;
+
             // Associated _count members
             if field.array.is_some() {
                 if let Some(array_size) = &field.size {
@@ -1823,12 +1826,32 @@ pub fn derive_setters(
                 }
             }
 
+            if let Some(objecttype) = &member.vk_parse_type_member.objecttype {
+                let objecttype_field = members
+                    .iter()
+                    .find(|m| m.vkxml_field.name.as_ref().unwrap() == objecttype)
+                    .unwrap();
+                // Extensions using this type are deprecated exactly because of the existence of VkObjectType, hence
+                // there won't be an additional ash trait to support VkDebugReportObjectTypeEXT.
+                // See also https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_debug_utils.html#_description
+                if objecttype_field.vkxml_field.basetype != "VkDebugReportObjectTypeEXT" {
+                    return Some(objecttype);
+                }
+            }
+
             None
         })
         .collect::<Vec<_>>();
 
-    let setters = members.iter().filter_map(|(field, deprecated)| {
-        let deprecated = deprecated.as_ref().map(|d| quote!(#d #[allow(deprecated)]));
+    let setters = members.iter().filter_map(|member| {
+        let field = &member.vkxml_field;
+
+        let name = field.name.as_ref().unwrap();
+        if skip_members.contains(&name) {
+            return None;
+        }
+
+        let deprecated = member.deprecated.as_ref().map(|d| quote!(#d #[allow(deprecated)]));
         let param_ident = field.param_ident();
         let param_ty_tokens = field.safe_type_tokens(quote!('a), None);
 
@@ -1843,45 +1866,39 @@ pub fn derive_setters(
             .unwrap_or(&param_ident_string);
         let mut param_ident_short = format_ident!("{}", param_ident_short);
 
-        if let Some(name) = field.name.as_ref() {
-            if filter_members.contains(&name) {
-                return None;
-            }
+        // Unique cases
+        if struct_.name == "VkShaderModuleCreateInfo" && name == "codeSize" {
+            return None;
+        }
 
-            // Unique cases
-            if struct_.name == "VkShaderModuleCreateInfo" && name == "codeSize" {
-                return None;
-            }
+        if struct_.name == "VkShaderModuleCreateInfo" && name == "pCode" {
+            return Some(quote! {
+                #[inline]
+                pub fn code(mut self, code: &'a [u32]) -> Self {
+                    self.code_size = code.len() * 4;
+                    self.p_code = code.as_ptr();
+                    self
+                }
+            });
+        }
 
-            if struct_.name == "VkShaderModuleCreateInfo" && name == "pCode" {
-                return Some(quote!{
-                    #[inline]
-                    pub fn code(mut self, code: &'a [u32]) -> Self {
-                        self.code_size = code.len() * 4;
-                        self.p_code = code.as_ptr();
-                        self
-                    }
-                });
-            }
-
-            if name == "pSampleMask" {
-                return Some(quote!{
-                    /// Sets `p_sample_mask` to `null` if the slice is empty. The mask will
-                    /// be treated as if it has all bits set to `1`.
-                    ///
-                    /// See <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineMultisampleStateCreateInfo.html#_description>
-                    /// for more details.
-                    #[inline]
-                    pub fn sample_mask(mut self, sample_mask: &'a [SampleMask]) -> Self {
-                        self.p_sample_mask = if sample_mask.is_empty() {
-                            std::ptr::null()
-                        } else {
-                            sample_mask.as_ptr()
-                        };
-                        self
-                    }
-                });
-            }
+        if name == "pSampleMask" {
+            return Some(quote! {
+                /// Sets `p_sample_mask` to `null` if the slice is empty. The mask will
+                /// be treated as if it has all bits set to `1`.
+                ///
+                /// See <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineMultisampleStateCreateInfo.html#_description>
+                /// for more details.
+                #[inline]
+                pub fn sample_mask(mut self, sample_mask: &'a [SampleMask]) -> Self {
+                    self.p_sample_mask = if sample_mask.is_empty() {
+                        std::ptr::null()
+                    } else {
+                        sample_mask.as_ptr()
+                    };
+                    self
+                }
+            });
         }
 
         // TODO: Improve in future when https://github.com/rust-lang/rust/issues/53667 is merged id:6
@@ -1938,9 +1955,9 @@ pub fn derive_setters(
 
                         let array_size_ident = format_ident!("{}", array_size.to_snake_case());
 
-                        let size_field = members.iter().map(|(m, _)| m).find(|m| m.name.as_deref() == Some(array_size)).unwrap();
+                        let size_field = members.iter().find(|member| member.vkxml_field.name.as_deref() == Some(array_size)).unwrap();
 
-                        let cast = if size_field.basetype == "size_t" {
+                        let cast = if size_field.vkxml_field.basetype == "size_t" {
                             quote!()
                         } else {
                             quote!(as _)
@@ -1975,6 +1992,29 @@ pub fn derive_setters(
             });
         }
 
+        if let Some(objecttype) = &member.vk_parse_type_member.objecttype {
+                let objecttype_field = members
+                    .iter()
+                    .find(|m| m.vkxml_field.name.as_ref().unwrap() == objecttype)
+                    .unwrap();
+
+            // Extensions using this type are deprecated exactly because of the existence of VkObjectType, hence
+            // there won't be an additional ash trait to support VkDebugReportObjectTypeEXT.
+            if objecttype_field.vkxml_field.basetype != "VkDebugReportObjectTypeEXT" {
+                let objecttype_ident = format_ident!("{}", objecttype.to_snake_case());
+
+                return Some(quote!{
+                    #[inline]
+                    #deprecated
+                    pub fn #param_ident_short<T: Handle>(mut self, #param_ident_short: T) -> Self {
+                        self.#param_ident = #param_ident_short.as_raw();
+                        self.#objecttype_ident = T::TYPE;
+                        self
+                    }
+                });
+            }
+        };
+
         let param_ty_tokens = if is_opaque_type(&field.basetype) {
             //  Use raw pointers for void/opaque types
             field.type_tokens(false)
@@ -2001,8 +2041,9 @@ pub fn derive_setters(
     // The `p_next` field should only be considered if this struct is also a root struct
     let root_struct_next_field = next_field.filter(|_| root_structs.contains(&name));
 
-    // We only implement a next methods for root structs with a `pnext` field.
-    let next_function = if let Some((next_field, _)) = root_struct_next_field {
+    // We only implement a next method for root structs with a `pnext` field.
+    let next_function = if let Some(next_member) = root_struct_next_field {
+        let next_field = &next_member.vkxml_field;
         assert_eq!(next_field.basetype, "void");
         let mutability = if next_field.is_const {
             quote!(const)
@@ -2059,8 +2100,9 @@ pub fn derive_setters(
             quote!(unsafe impl #extends for #name<'_> {})
         });
 
-    let impl_structure_type_trait = structure_type_field.map(|(s_type, _)| {
-        let value = s_type
+    let impl_structure_type_trait = structure_type_field.map(|member| {
+        let value = member
+            .vkxml_field
             .type_enums
             .as_deref()
             .expect("s_type field must have a value in `vk.xml`");
@@ -2101,6 +2143,13 @@ pub fn manual_derives(struct_: &vkxml::Struct) -> TokenStream {
         _ => quote! {},
     }
 }
+
+struct PreprocessedMember<'a> {
+    vkxml_field: &'a vkxml::Field,
+    vk_parse_type_member: &'a vk_parse::TypeMemberDefinition,
+    deprecated: Option<TokenStream>,
+}
+
 pub fn generate_struct(
     struct_: &vkxml::Struct,
     vk_parse_types: &HashMap<String, &vk_parse::Type>,
@@ -2193,7 +2242,7 @@ pub fn generate_struct(
             matches!(vk_parse_field.api.as_deref(), None | Some(DESIRED_API))
         })
         .map(|(field, vk_parse_field)| {
-            let deprecation = vk_parse_field
+            let deprecated = vk_parse_field
                 .deprecated
                 .as_ref()
                 .map(|deprecated| match deprecated.as_str() {
@@ -2203,11 +2252,17 @@ pub fn generate_struct(
                     }
                     x => panic!("Unknown deprecation reason {}", x),
                 });
-            (field, deprecation)
+                PreprocessedMember {
+                    vkxml_field: field,
+                    vk_parse_type_member: vk_parse_field,
+                    deprecated,
+                }
         })
         .collect::<Vec<_>>();
 
-    let params = members.iter().map(|(field, deprecation)| {
+    let params = members.iter().map(|member| {
+        let field = &member.vkxml_field;
+        let deprecated = &member.deprecated;
         let param_ident = field.param_ident();
         let param_ty_tokens = if field.basetype == struct_.name {
             let pointer = field
@@ -2223,7 +2278,7 @@ pub fn generate_struct(
             quote!(#ty #lifetime)
         };
 
-        quote!(#deprecation pub #param_ident: #param_ty_tokens)
+        quote!(#deprecated pub #param_ident: #param_ty_tokens)
     });
 
     let has_lifetime = has_lifetimes.contains(&name);

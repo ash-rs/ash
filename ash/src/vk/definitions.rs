@@ -17852,13 +17852,9 @@ unsafe impl<'a> TaggedStructure for DebugUtilsObjectNameInfoEXT<'a> {
 unsafe impl ExtendsPipelineShaderStageCreateInfo for DebugUtilsObjectNameInfoEXT<'_> {}
 impl<'a> DebugUtilsObjectNameInfoEXT<'a> {
     #[inline]
-    pub fn object_type(mut self, object_type: ObjectType) -> Self {
-        self.object_type = object_type;
-        self
-    }
-    #[inline]
-    pub fn object_handle(mut self, object_handle: u64) -> Self {
-        self.object_handle = object_handle;
+    pub fn object_handle<T: Handle>(mut self, object_handle: T) -> Self {
+        self.object_handle = object_handle.as_raw();
+        self.object_type = T::TYPE;
         self
     }
     #[inline]
@@ -17901,13 +17897,9 @@ unsafe impl<'a> TaggedStructure for DebugUtilsObjectTagInfoEXT<'a> {
 }
 impl<'a> DebugUtilsObjectTagInfoEXT<'a> {
     #[inline]
-    pub fn object_type(mut self, object_type: ObjectType) -> Self {
-        self.object_type = object_type;
-        self
-    }
-    #[inline]
-    pub fn object_handle(mut self, object_handle: u64) -> Self {
-        self.object_handle = object_handle;
+    pub fn object_handle<T: Handle>(mut self, object_handle: T) -> Self {
+        self.object_handle = object_handle.as_raw();
+        self.object_type = T::TYPE;
         self
     }
     #[inline]
@@ -18295,13 +18287,9 @@ impl<'a> DeviceMemoryReportCallbackDataEXT<'a> {
         self
     }
     #[inline]
-    pub fn object_type(mut self, object_type: ObjectType) -> Self {
-        self.object_type = object_type;
-        self
-    }
-    #[inline]
-    pub fn object_handle(mut self, object_handle: u64) -> Self {
-        self.object_handle = object_handle;
+    pub fn object_handle<T: Handle>(mut self, object_handle: T) -> Self {
+        self.object_handle = object_handle.as_raw();
+        self.object_type = T::TYPE;
         self
     }
     #[inline]
