@@ -20,19 +20,6 @@ impl RayTracingPipeline {
         Self { handle, fp }
     }
 
-    #[inline]
-    pub unsafe fn get_properties(
-        instance: &Instance,
-        pdevice: vk::PhysicalDevice,
-    ) -> vk::PhysicalDeviceRayTracingPipelinePropertiesKHR {
-        let mut props_rt = vk::PhysicalDeviceRayTracingPipelinePropertiesKHR::default();
-        {
-            let mut props = vk::PhysicalDeviceProperties2::default().push_next(&mut props_rt);
-            instance.get_physical_device_properties2(pdevice, &mut props);
-        }
-        props_rt
-    }
-
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdTraceRaysKHR.html>
     #[inline]
     pub unsafe fn cmd_trace_rays(
