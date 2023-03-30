@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed experimental AMD extensions (#607)
 - Removed `query_count` parameter from `get_query_pool_results()` in favour of `data.len()` (#644)
 - Removed misnamed, deprecated `debug_utils_set_object_name()` and `debug_utils_set_object_tag()` entirely, use `set_debug_utils_object_name()` and `set_debug_utils_object_tag()` instead (#661)
+- Removed `get_properties` helper from extension wrappers (and `ext::PhysicalDeviceDrm`). Directly call `get_physical_device_properties2()` with a possible chain of multiple structs instead (#728)
 
 ## [0.37.2] - 2022-01-11
 
