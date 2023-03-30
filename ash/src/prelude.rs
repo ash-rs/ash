@@ -26,6 +26,9 @@ impl vk::Result {
     }
 }
 
+/// The amount of times we will attempt to call a function that returns [`vk::Result::INCOMPLETE`].
+pub const INCOMPLETE_LOOP_LIMIT: usize = 100;
+
 /// Repeatedly calls `f` until it does not return [`vk::Result::INCOMPLETE`] anymore,
 /// ensuring all available data has been read into the vector.
 ///
@@ -34,6 +37,9 @@ impl vk::Result {
 /// increased (and the vector is not large enough after querying the initial size),
 /// requiring Ash to try again.
 ///
+/// Will give up after [`INCOMPLETE_LOOP_LIMIT`] attempts if [`vk::Result::INCOMPLETE`] is still
+/// returned.
+///
 /// [`vkEnumerateInstanceExtensionProperties`]: https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceExtensionProperties.html
 pub(crate) unsafe fn read_into_uninitialized_vector<N: Copy + Default + TryInto<usize>, T>(
     f: impl Fn(&mut N, *mut T) -> vk::Result,
@@ -41,7 +47,7 @@ pub(crate) unsafe fn read_into_uninitialized_vector<N: Copy + Default + TryInto<
 where
     <N as TryInto<usize>>::Error: std::fmt::Debug,
 {
-    loop {
+    for _ in 0..INCOMPLETE_LOOP_LIMIT {
         let mut count = N::default();
         f(&mut count, std::ptr::null_mut()).result()?;
         let mut data =
@@ -51,9 +57,10 @@ where
         if err_code != vk::Result::INCOMPLETE {
             err_code.result()?;
             data.set_len(count.try_into().expect("`N` failed to convert to `usize`"));
-            break Ok(data);
+            return Ok(data);
         }
     }
+    Err(vk::Result::INCOMPLETE)
 }
 
 /// Repeatedly calls `f` until it does not return [`vk::Result::INCOMPLETE`] anymore,
@@ -69,6 +76,9 @@ where
 /// increased (and the vector is not large enough after querying the initial size),
 /// requiring Ash to try again.
 ///
+/// Will give up after [`INCOMPLETE_LOOP_LIMIT`] attempts if [`vk::Result::INCOMPLETE`] is still
+/// returned.
+///
 /// [`vkEnumerateInstanceExtensionProperties`]: https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceExtensionProperties.html
 pub(crate) unsafe fn read_into_defaulted_vector<
     N: Copy + Default + TryInto<usize>,
@@ -79,7 +89,7 @@ pub(crate) unsafe fn read_into_defaulted_vector<
 where
     <N as TryInto<usize>>::Error: std::fmt::Debug,
 {
-    loop {
+    for _ in 0..INCOMPLETE_LOOP_LIMIT {
         let mut count = N::default();
         f(&mut count, std::ptr::null_mut()).result()?;
         let mut data =
@@ -88,9 +98,10 @@ where
         let err_code = f(&mut count, data.as_mut_ptr());
         if err_code != vk::Result::INCOMPLETE {
             data.set_len(count.try_into().expect("`N` failed to convert to `usize`"));
-            break err_code.result_with_success(data);
+            return err_code.result_with_success(data);
         }
     }
+    Err(vk::Result::INCOMPLETE)
 }
 
 #[cfg(feature = "debug")]
