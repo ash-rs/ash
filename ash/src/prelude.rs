@@ -26,7 +26,7 @@ impl vk::Result {
     }
 }
 
-/// The amount of times we will attempt to call a function that returns [`vk::Result::INCOMPLETE`].
+/// The number of times we will attempt to call a function that returns [`vk::Result::INCOMPLETE`].
 pub const INCOMPLETE_LOOP_LIMIT: usize = 100;
 
 /// Repeatedly calls `f` until it does not return [`vk::Result::INCOMPLETE`] anymore,
