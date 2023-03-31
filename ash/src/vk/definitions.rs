@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 245;
+pub const HEADER_VERSION: u32 = 246;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -433,6 +433,12 @@ handle_nondispatchable ! (CuModuleNVX , CU_MODULE_NVX , doc = "<https://www.khro
 handle_nondispatchable ! (CuFunctionNVX , CU_FUNCTION_NVX , doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCuFunctionNVX.html>") ;
 handle_nondispatchable ! (OpticalFlowSessionNV , OPTICAL_FLOW_SESSION_NV , doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkOpticalFlowSessionNV.html>") ;
 handle_nondispatchable ! (MicromapEXT , MICROMAP_EXT , doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMicromapEXT.html>") ;
+handle_nondispatchable!(
+    ShaderEXT,
+    SHADER_EXT,
+    doc =
+        "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkShaderEXT.html>"
+);
 handle_nondispatchable!(
     DisplayKHR,
     DISPLAY_KHR,
@@ -28215,6 +28221,7 @@ unsafe impl ExtendsPipelineShaderStageCreateInfo
     for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'_>
 {
 }
+unsafe impl ExtendsShaderCreateInfoEXT for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'_> {}
 impl<'a> PipelineShaderStageRequiredSubgroupSizeCreateInfo<'a> {
     #[inline]
     pub fn required_subgroup_size(mut self, required_subgroup_size: u32) -> Self {
@@ -47488,6 +47495,306 @@ impl<'a> MemoryUnmapInfoKHR<'a> {
     #[inline]
     pub fn memory(mut self, memory: DeviceMemory) -> Self {
         self.memory = memory;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderObjectFeaturesEXT.html>"]
+pub struct PhysicalDeviceShaderObjectFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub shader_object: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceShaderObjectFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            shader_object: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderObjectFeaturesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SHADER_OBJECT_FEATURES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderObjectFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderObjectFeaturesEXT<'_> {}
+impl<'a> PhysicalDeviceShaderObjectFeaturesEXT<'a> {
+    #[inline]
+    pub fn shader_object(mut self, shader_object: bool) -> Self {
+        self.shader_object = shader_object.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderObjectPropertiesEXT.html>"]
+pub struct PhysicalDeviceShaderObjectPropertiesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub shader_binary_uuid: [u8; UUID_SIZE],
+    pub shader_binary_version: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceShaderObjectPropertiesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            shader_binary_uuid: unsafe { ::std::mem::zeroed() },
+            shader_binary_version: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderObjectPropertiesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_SHADER_OBJECT_PROPERTIES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderObjectPropertiesEXT<'_> {}
+impl<'a> PhysicalDeviceShaderObjectPropertiesEXT<'a> {
+    #[inline]
+    pub fn shader_binary_uuid(mut self, shader_binary_uuid: [u8; UUID_SIZE]) -> Self {
+        self.shader_binary_uuid = shader_binary_uuid;
+        self
+    }
+    #[inline]
+    pub fn shader_binary_version(mut self, shader_binary_version: u32) -> Self {
+        self.shader_binary_version = shader_binary_version;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkShaderCreateInfoEXT.html>"]
+pub struct ShaderCreateInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub flags: ShaderCreateFlagsEXT,
+    pub stage: ShaderStageFlags,
+    pub next_stage: ShaderStageFlags,
+    pub code_type: ShaderCodeTypeEXT,
+    pub code_size: usize,
+    pub p_code: *const c_void,
+    pub p_name: *const c_char,
+    pub set_layout_count: u32,
+    pub p_set_layouts: *const DescriptorSetLayout,
+    pub push_constant_range_count: u32,
+    pub p_push_constant_ranges: *const PushConstantRange,
+    pub p_specialization_info: *const SpecializationInfo<'a>,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ShaderCreateInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            flags: ShaderCreateFlagsEXT::default(),
+            stage: ShaderStageFlags::default(),
+            next_stage: ShaderStageFlags::default(),
+            code_type: ShaderCodeTypeEXT::default(),
+            code_size: usize::default(),
+            p_code: ::std::ptr::null(),
+            p_name: ::std::ptr::null(),
+            set_layout_count: u32::default(),
+            p_set_layouts: ::std::ptr::null(),
+            push_constant_range_count: u32::default(),
+            p_push_constant_ranges: ::std::ptr::null(),
+            p_specialization_info: ::std::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for ShaderCreateInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::SHADER_CREATE_INFO_EXT;
+}
+pub unsafe trait ExtendsShaderCreateInfoEXT {}
+impl<'a> ShaderCreateInfoEXT<'a> {
+    #[inline]
+    pub fn flags(mut self, flags: ShaderCreateFlagsEXT) -> Self {
+        self.flags = flags;
+        self
+    }
+    #[inline]
+    pub fn stage(mut self, stage: ShaderStageFlags) -> Self {
+        self.stage = stage;
+        self
+    }
+    #[inline]
+    pub fn next_stage(mut self, next_stage: ShaderStageFlags) -> Self {
+        self.next_stage = next_stage;
+        self
+    }
+    #[inline]
+    pub fn code_type(mut self, code_type: ShaderCodeTypeEXT) -> Self {
+        self.code_type = code_type;
+        self
+    }
+    #[inline]
+    pub fn code(mut self, code: &'a [u8]) -> Self {
+        self.code_size = code.len();
+        self.p_code = code.as_ptr().cast();
+        self
+    }
+    #[inline]
+    pub fn name(mut self, name: &'a ::std::ffi::CStr) -> Self {
+        self.p_name = name.as_ptr();
+        self
+    }
+    #[inline]
+    pub fn set_layouts(mut self, set_layouts: &'a [DescriptorSetLayout]) -> Self {
+        self.set_layout_count = set_layouts.len() as _;
+        self.p_set_layouts = set_layouts.as_ptr();
+        self
+    }
+    #[inline]
+    pub fn push_constant_ranges(mut self, push_constant_ranges: &'a [PushConstantRange]) -> Self {
+        self.push_constant_range_count = push_constant_ranges.len() as _;
+        self.p_push_constant_ranges = push_constant_ranges.as_ptr();
+        self
+    }
+    #[inline]
+    pub fn specialization_info(mut self, specialization_info: &'a SpecializationInfo<'a>) -> Self {
+        self.p_specialization_info = specialization_info;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsShaderCreateInfoEXT>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = <*const T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderTileImageFeaturesEXT.html>"]
+pub struct PhysicalDeviceShaderTileImageFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub shader_tile_image_color_read_access: Bool32,
+    pub shader_tile_image_depth_read_access: Bool32,
+    pub shader_tile_image_stencil_read_access: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceShaderTileImageFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            shader_tile_image_color_read_access: Bool32::default(),
+            shader_tile_image_depth_read_access: Bool32::default(),
+            shader_tile_image_stencil_read_access: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderTileImageFeaturesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_SHADER_TILE_IMAGE_FEATURES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderTileImageFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderTileImageFeaturesEXT<'_> {}
+impl<'a> PhysicalDeviceShaderTileImageFeaturesEXT<'a> {
+    #[inline]
+    pub fn shader_tile_image_color_read_access(
+        mut self,
+        shader_tile_image_color_read_access: bool,
+    ) -> Self {
+        self.shader_tile_image_color_read_access = shader_tile_image_color_read_access.into();
+        self
+    }
+    #[inline]
+    pub fn shader_tile_image_depth_read_access(
+        mut self,
+        shader_tile_image_depth_read_access: bool,
+    ) -> Self {
+        self.shader_tile_image_depth_read_access = shader_tile_image_depth_read_access.into();
+        self
+    }
+    #[inline]
+    pub fn shader_tile_image_stencil_read_access(
+        mut self,
+        shader_tile_image_stencil_read_access: bool,
+    ) -> Self {
+        self.shader_tile_image_stencil_read_access = shader_tile_image_stencil_read_access.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderTileImagePropertiesEXT.html>"]
+pub struct PhysicalDeviceShaderTileImagePropertiesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub shader_tile_image_coherent_read_accelerated: Bool32,
+    pub shader_tile_image_read_sample_from_pixel_rate_invocation: Bool32,
+    pub shader_tile_image_read_from_helper_invocation: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceShaderTileImagePropertiesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            shader_tile_image_coherent_read_accelerated: Bool32::default(),
+            shader_tile_image_read_sample_from_pixel_rate_invocation: Bool32::default(),
+            shader_tile_image_read_from_helper_invocation: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderTileImagePropertiesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_SHADER_TILE_IMAGE_PROPERTIES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderTileImagePropertiesEXT<'_> {}
+impl<'a> PhysicalDeviceShaderTileImagePropertiesEXT<'a> {
+    #[inline]
+    pub fn shader_tile_image_coherent_read_accelerated(
+        mut self,
+        shader_tile_image_coherent_read_accelerated: bool,
+    ) -> Self {
+        self.shader_tile_image_coherent_read_accelerated =
+            shader_tile_image_coherent_read_accelerated.into();
+        self
+    }
+    #[inline]
+    pub fn shader_tile_image_read_sample_from_pixel_rate_invocation(
+        mut self,
+        shader_tile_image_read_sample_from_pixel_rate_invocation: bool,
+    ) -> Self {
+        self.shader_tile_image_read_sample_from_pixel_rate_invocation =
+            shader_tile_image_read_sample_from_pixel_rate_invocation.into();
+        self
+    }
+    #[inline]
+    pub fn shader_tile_image_read_from_helper_invocation(
+        mut self,
+        shader_tile_image_read_from_helper_invocation: bool,
+    ) -> Self {
+        self.shader_tile_image_read_from_helper_invocation =
+            shader_tile_image_read_from_helper_invocation.into();
         self
     }
 }

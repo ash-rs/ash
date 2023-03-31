@@ -4319,9 +4319,49 @@ impl fmt::Debug for SemaphoreWaitFlags {
         debug_flags(f, KNOWN, self.0)
     }
 }
+impl fmt::Debug for ShaderCodeTypeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::BINARY => Some("BINARY"),
+            Self::SPIRV => Some("SPIRV"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
 impl fmt::Debug for ShaderCorePropertiesFlagsAMD {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for ShaderCreateFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (ShaderCreateFlagsEXT::LINK_STAGE.0, "LINK_STAGE"),
+            (
+                ShaderCreateFlagsEXT::ALLOW_VARYING_SUBGROUP_SIZE.0,
+                "ALLOW_VARYING_SUBGROUP_SIZE",
+            ),
+            (
+                ShaderCreateFlagsEXT::REQUIRE_FULL_SUBGROUPS.0,
+                "REQUIRE_FULL_SUBGROUPS",
+            ),
+            (ShaderCreateFlagsEXT::NO_TASK_SHADER.0, "NO_TASK_SHADER"),
+            (ShaderCreateFlagsEXT::DISPATCH_BASE.0, "DISPATCH_BASE"),
+            (
+                ShaderCreateFlagsEXT::FRAGMENT_SHADING_RATE_ATTACHMENT.0,
+                "FRAGMENT_SHADING_RATE_ATTACHMENT",
+            ),
+            (
+                ShaderCreateFlagsEXT::FRAGMENT_DENSITY_MAP_ATTACHMENT.0,
+                "FRAGMENT_DENSITY_MAP_ATTACHMENT",
+            ),
+        ];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -5669,6 +5709,12 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_IMAGE_2D_VIEW_OF_3D_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_IMAGE_2D_VIEW_OF_3D_FEATURES_EXT")
             }
+            Self::PHYSICAL_DEVICE_SHADER_TILE_IMAGE_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_SHADER_TILE_IMAGE_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_SHADER_TILE_IMAGE_PROPERTIES_EXT => {
+                Some("PHYSICAL_DEVICE_SHADER_TILE_IMAGE_PROPERTIES_EXT")
+            }
             Self::MICROMAP_BUILD_INFO_EXT => Some("MICROMAP_BUILD_INFO_EXT"),
             Self::MICROMAP_VERSION_INFO_EXT => Some("MICROMAP_VERSION_INFO_EXT"),
             Self::COPY_MICROMAP_INFO_EXT => Some("COPY_MICROMAP_INFO_EXT"),
@@ -5821,6 +5867,13 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES_EXT")
             }
+            Self::PHYSICAL_DEVICE_SHADER_OBJECT_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_SHADER_OBJECT_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_SHADER_OBJECT_PROPERTIES_EXT => {
+                Some("PHYSICAL_DEVICE_SHADER_OBJECT_PROPERTIES_EXT")
+            }
+            Self::SHADER_CREATE_INFO_EXT => Some("SHADER_CREATE_INFO_EXT"),
             Self::PHYSICAL_DEVICE_TILE_PROPERTIES_FEATURES_QCOM => {
                 Some("PHYSICAL_DEVICE_TILE_PROPERTIES_FEATURES_QCOM")
             }
