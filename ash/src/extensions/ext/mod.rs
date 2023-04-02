@@ -18,6 +18,7 @@ pub use self::mesh_shader::MeshShader;
 pub use self::metal_surface::MetalSurface;
 pub use self::private_data::PrivateData;
 pub use self::sample_locations::SampleLocations;
+pub use self::shader_object::ShaderObject;
 pub use self::tooling_info::ToolingInfo;
 
 mod acquire_drm_display;
@@ -40,4 +41,5 @@ mod mesh_shader;
 mod metal_surface;
 mod private_data;
 mod sample_locations;
+mod shader_object;
 mod tooling_info;
