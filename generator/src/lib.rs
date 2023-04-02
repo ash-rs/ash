@@ -3,15 +3,14 @@
 
 use heck::{ToShoutySnakeCase, ToSnakeCase, ToUpperCamelCase};
 use itertools::Itertools;
-use nom::sequence::pair;
 use nom::{
     branch::alt,
-    bytes::streaming::tag,
-    character::complete::{char, digit1, hex_digit1, multispace1, none_of, one_of},
-    combinator::{complete, map, opt, value},
+    bytes::complete::{tag, take_until, take_while1},
+    character::complete::{char, digit1, hex_digit1, multispace1, newline, none_of, one_of},
+    combinator::{map, opt, value},
     error::{ParseError, VerboseError},
-    multi::many1,
-    sequence::{delimited, preceded, terminated},
+    multi::{many1, separated_list1},
+    sequence::{delimited, pair, preceded, terminated},
     IResult, Parser,
 };
 use once_cell::sync::Lazy;
@@ -72,10 +71,7 @@ impl quote::ToTokens for CType {
 }
 
 fn parse_ctype<'a, E: ParseError<&'a str>>(i: &'a str) -> IResult<&'a str, CType, E> {
-    (alt((
-        value(CType::U64, complete(tag("ULL"))),
-        value(CType::U32, complete(tag("U"))),
-    )))(i)
+    (alt((value(CType::U64, tag("ULL")), value(CType::U32, tag("U")))))(i)
 }
 
 fn parse_cexpr<'a, E: ParseError<&'a str>>(i: &'a str) -> IResult<&'a str, (CType, String), E> {
@@ -153,6 +149,41 @@ fn parse_hexadecimal_number<'a, E: ParseError<&'a str>>(
                 format!("0x{}{}", num.to_ascii_lowercase(), typ.to_string()),
             )
         }),
+    ))(i)
+}
+
+fn parse_c_identifier<'a, E: ParseError<&'a str>>(i: &'a str) -> IResult<&'a str, &'a str, E> {
+    take_while1(|c: char| c == '_' || c.is_alphanumeric())(i)
+}
+
+fn parse_comment_suffix<'a, E: ParseError<&'a str>>(
+    i: &'a str,
+) -> IResult<&'a str, Option<&'a str>, E> {
+    opt(delimited(tag("//"), take_until("\n"), newline))(i)
+}
+
+fn parse_parameter_names<'a, E: ParseError<&'a str>>(
+    i: &'a str,
+) -> IResult<&'a str, Vec<&'a str>, E> {
+    delimited(
+        char('('),
+        separated_list1(tag(", "), parse_c_identifier),
+        char(')'),
+    )(i)
+}
+
+/// Parses a C macro define optionally prefixed by a comment and optionally
+/// containing parameter names. The expression is left in the remainder
+#[allow(clippy::type_complexity)]
+fn parse_c_define_header<'a, E: ParseError<&'a str>>(
+    i: &'a str,
+) -> IResult<&'a str, (Option<&'a str>, (&'a str, Option<Vec<&'a str>>)), E> {
+    (pair(
+        parse_comment_suffix,
+        preceded(
+            tag("#define "),
+            pair(parse_c_identifier, opt(parse_parameter_names)),
+        ),
     ))(i)
 }
 
@@ -1094,54 +1125,51 @@ pub fn generate_extension<'a>(
     Some(q)
 }
 pub fn generate_define(
-    define: &vkxml::Define,
+    define: &vk_parse::Type,
     identifier_renames: &mut BTreeMap<String, Ident>,
 ) -> TokenStream {
-    let name = constant_name(&define.name);
+    let vk_parse::TypeSpec::Code(spec) = &define.spec else {
+        return quote!();
+    };
+    let [vk_parse::TypeCodeMarkup::Name(define_name), ..] = &spec.markup[..] else {
+        return quote!();
+    };
+    let name = constant_name(define_name);
     let ident = format_ident!("{}", name);
 
-    if name == "NULL_HANDLE" {
-        quote!()
-    } else if let Some(value) = &define.value {
-        str::parse::<u32>(value).map_or(quote!(), |v| quote!(pub const #ident: u32 = #v;))
-    } else if let Some(c_expr) = &define.c_expression {
-        if define.name.contains(&"VERSION".to_string()) {
-            let link = khronos_link(&define.name);
-            let c_expr = c_expr.trim_start_matches('\\');
-            let c_expr = c_expr.replace("(uint32_t)", "");
-            let c_expr = convert_c_expression(&c_expr, identifier_renames);
-            let c_expr = discard_outmost_delimiter(c_expr);
+    if define_name.contains("VERSION") && !spec.code.contains("//#define") {
+        let link = khronos_link(define_name);
+        let (c_expr, (comment, (_name, parameters))) =
+            parse_c_define_header::<VerboseError<&str>>(&spec.code).unwrap();
+        let c_expr = c_expr.trim().trim_start_matches('\\');
+        let c_expr = c_expr.replace("(uint32_t)", "");
+        let c_expr = convert_c_expression(&c_expr, identifier_renames);
+        let c_expr = discard_outmost_delimiter(c_expr);
 
-            let deprecated = define
-                .comment
-                .as_ref()
-                .and_then(|c| c.strip_prefix("DEPRECATED: "))
-                .map(|comment| quote!(#[deprecated = #comment]));
+        let deprecated = comment
+            .and_then(|c| c.trim().strip_prefix("DEPRECATED: "))
+            .map(|comment| (quote!(#[deprecated = #comment])));
 
-            let (code, ident) = if define.parameters.is_empty() {
-                (quote!(pub const #ident: u32 = #c_expr;), ident)
-            } else {
-                let params = define
-                    .parameters
-                    .iter()
-                    .map(|param| format_ident!("{}", param))
-                    .map(|i| quote!(#i: u32));
-                let ident = format_ident!("{}", name.to_lowercase());
-                (
-                    quote!(pub const fn #ident(#(#params),*) -> u32 { #c_expr }),
-                    ident,
-                )
-            };
-
-            identifier_renames.insert(define.name.clone(), ident);
-
-            quote! {
-                #deprecated
-                #[doc = #link]
-                #code
-            }
+        let (code, ident) = if let Some(parameters) = parameters {
+            let params = parameters
+                .iter()
+                .map(|param| format_ident!("{}", param))
+                .map(|i| quote!(#i: u32));
+            let ident = format_ident!("{}", name.to_lowercase());
+            (
+                quote!(pub const fn #ident(#(#params),*) -> u32 { #c_expr }),
+                ident,
+            )
         } else {
-            quote!()
+            (quote!(pub const #ident: u32 = #c_expr;), ident)
+        };
+
+        identifier_renames.insert(define_name.clone(), ident);
+
+        quote! {
+            #deprecated
+            #[doc = #link]
+            #code
         }
     } else {
         quote!()
@@ -2141,18 +2169,23 @@ pub fn root_structs(definitions: &[&vkxml::DefinitionsElement]) -> HashSet<Ident
     }
     root_structs
 }
+pub fn generate_definition_vk_parse(
+    definition: &vk_parse::Type,
+    identifier_renames: &mut BTreeMap<String, Ident>,
+) -> Option<TokenStream> {
+    match definition.category.as_deref() {
+        Some("define") => Some(generate_define(definition, identifier_renames)),
+        _ => None,
+    }
+}
 pub fn generate_definition(
     definition: &vkxml::DefinitionsElement,
     union_types: &HashSet<&str>,
     root_structs: &HashSet<Ident>,
     bitflags_cache: &mut HashSet<Ident>,
     const_values: &mut BTreeMap<Ident, ConstantTypeInfo>,
-    identifier_renames: &mut BTreeMap<String, Ident>,
 ) -> Option<TokenStream> {
     match *definition {
-        vkxml::DefinitionsElement::Define(ref define) => {
-            Some(generate_define(define, identifier_renames))
-        }
         vkxml::DefinitionsElement::Typedef(ref typedef) => Some(generate_typedef(typedef)),
         vkxml::DefinitionsElement::Struct(ref struct_) => {
             Some(generate_struct(struct_, root_structs, union_types))
@@ -2544,19 +2577,30 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
 
     let mut identifier_renames = BTreeMap::new();
 
+    let vk_parse_definitions: Vec<_> = spec2
+        .0
+        .iter()
+        .filter_map(get_variant!(vk_parse::RegistryChild::Types))
+        .flat_map(|ty| {
+            ty.children
+                .iter()
+                .filter_map(get_variant!(vk_parse::TypesChild::Type))
+        })
+        .filter_map(|def| generate_definition_vk_parse(def, &mut identifier_renames))
+        .collect();
+
     let root_structs = root_structs(&definitions);
-    let definition_code: Vec<_> = definitions
+    let definition_code: Vec<_> = vk_parse_definitions
         .into_iter()
-        .filter_map(|def| {
+        .chain(definitions.into_iter().filter_map(|def| {
             generate_definition(
                 def,
                 &union_types,
                 &root_structs,
                 &mut bitflags_cache,
                 &mut const_values,
-                &mut identifier_renames,
             )
-        })
+        }))
         .collect();
 
     let feature_code: Vec<_> = features
