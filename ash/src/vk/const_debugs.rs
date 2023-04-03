@@ -318,11 +318,15 @@ impl fmt::Debug for AccessFlags2 {
             ),
             (AccessFlags2::MICROMAP_READ_EXT.0, "MICROMAP_READ_EXT"),
             (AccessFlags2::MICROMAP_WRITE_EXT.0, "MICROMAP_WRITE_EXT"),
+            (AccessFlags2::RESERVED_49_ARM.0, "RESERVED_49_ARM"),
+            (AccessFlags2::RESERVED_50_ARM.0, "RESERVED_50_ARM"),
             (AccessFlags2::OPTICAL_FLOW_READ_NV.0, "OPTICAL_FLOW_READ_NV"),
             (
                 AccessFlags2::OPTICAL_FLOW_WRITE_NV.0,
                 "OPTICAL_FLOW_WRITE_NV",
             ),
+            (AccessFlags2::RESERVED_47_EXT.0, "RESERVED_47_EXT"),
+            (AccessFlags2::RESERVED_48_EXT.0, "RESERVED_48_EXT"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -655,12 +659,8 @@ impl fmt::Debug for BuildAccelerationStructureFlagsKHR {
                 "ALLOW_OPACITY_MICROMAP_DATA_UPDATE_EXT",
             ),
             (
-                BuildAccelerationStructureFlagsKHR::RESERVED_9_NV.0,
-                "RESERVED_9_NV",
-            ),
-            (
-                BuildAccelerationStructureFlagsKHR::RESERVED_10_NV.0,
-                "RESERVED_10_NV",
+                BuildAccelerationStructureFlagsKHR::ALLOW_DISPLACEMENT_MICROMAP_UPDATE_NV.0,
+                "ALLOW_DISPLACEMENT_MICROMAP_UPDATE_NV",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -1439,6 +1439,21 @@ impl fmt::Debug for DiscardRectangleModeEXT {
         let name = match *self {
             Self::INCLUSIVE => Some("INCLUSIVE"),
             Self::EXCLUSIVE => Some("EXCLUSIVE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
+impl fmt::Debug for DisplacementMicromapFormatNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::TYPE_64_TRIANGLES_64_BYTES => Some("TYPE_64_TRIANGLES_64_BYTES"),
+            Self::TYPE_256_TRIANGLES_128_BYTES => Some("TYPE_256_TRIANGLES_128_BYTES"),
+            Self::TYPE_1024_TRIANGLES_128_BYTES => Some("TYPE_1024_TRIANGLES_128_BYTES"),
             _ => None,
         };
         if let Some(x) = name {
@@ -2713,6 +2728,7 @@ impl fmt::Debug for ImageUsageFlags {
                 ImageUsageFlags::SAMPLE_BLOCK_MATCH_QCOM.0,
                 "SAMPLE_BLOCK_MATCH_QCOM",
             ),
+            (ImageUsageFlags::RESERVED_23_EXT.0, "RESERVED_23_EXT"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -2989,6 +3005,7 @@ impl fmt::Debug for MicromapTypeEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::OPACITY_MICROMAP => Some("OPACITY_MICROMAP"),
+            Self::DISPLACEMENT_MICROMAP_NV => Some("DISPLACEMENT_MICROMAP_NV"),
             _ => None,
         };
         if let Some(x) = name {
@@ -3446,7 +3463,10 @@ impl fmt::Debug for PipelineCreateFlags {
                 PipelineCreateFlags::RAY_TRACING_OPACITY_MICROMAP_EXT.0,
                 "RAY_TRACING_OPACITY_MICROMAP_EXT",
             ),
-            (PipelineCreateFlags::RESERVED_28_NV.0, "RESERVED_28_NV"),
+            (
+                PipelineCreateFlags::RAY_TRACING_DISPLACEMENT_MICROMAP_NV.0,
+                "RAY_TRACING_DISPLACEMENT_MICROMAP_NV",
+            ),
             (
                 PipelineCreateFlags::NO_PROTECTED_ACCESS_EXT.0,
                 "NO_PROTECTED_ACCESS_EXT",
@@ -3795,7 +3815,9 @@ impl fmt::Debug for PipelineStageFlags2 {
                 PipelineStageFlags2::CLUSTER_CULLING_SHADER_HUAWEI.0,
                 "CLUSTER_CULLING_SHADER_HUAWEI",
             ),
+            (PipelineStageFlags2::RESERVED_43_ARM.0, "RESERVED_43_ARM"),
             (PipelineStageFlags2::OPTICAL_FLOW_NV.0, "OPTICAL_FLOW_NV"),
+            (PipelineStageFlags2::RESERVED_42_EXT.0, "RESERVED_42_EXT"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -4102,7 +4124,9 @@ impl fmt::Debug for QueueFlags {
             (QueueFlags::RESERVED_9_EXT.0, "RESERVED_9_EXT"),
             (QueueFlags::VIDEO_ENCODE_KHR.0, "VIDEO_ENCODE_KHR"),
             (QueueFlags::RESERVED_7_QCOM.0, "RESERVED_7_QCOM"),
+            (QueueFlags::RESERVED_11_ARM.0, "RESERVED_11_ARM"),
             (QueueFlags::OPTICAL_FLOW_NV.0, "OPTICAL_FLOW_NV"),
+            (QueueFlags::RESERVED_10_EXT.0, "RESERVED_10_EXT"),
             (QueueFlags::PROTECTED.0, "PROTECTED"),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -4374,9 +4398,49 @@ impl fmt::Debug for SemaphoreWaitFlags {
         debug_flags(f, KNOWN, self.0)
     }
 }
+impl fmt::Debug for ShaderCodeTypeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::BINARY => Some("BINARY"),
+            Self::SPIRV => Some("SPIRV"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
 impl fmt::Debug for ShaderCorePropertiesFlagsAMD {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for ShaderCreateFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (ShaderCreateFlagsEXT::LINK_STAGE.0, "LINK_STAGE"),
+            (
+                ShaderCreateFlagsEXT::ALLOW_VARYING_SUBGROUP_SIZE.0,
+                "ALLOW_VARYING_SUBGROUP_SIZE",
+            ),
+            (
+                ShaderCreateFlagsEXT::REQUIRE_FULL_SUBGROUPS.0,
+                "REQUIRE_FULL_SUBGROUPS",
+            ),
+            (ShaderCreateFlagsEXT::NO_TASK_SHADER.0, "NO_TASK_SHADER"),
+            (ShaderCreateFlagsEXT::DISPATCH_BASE.0, "DISPATCH_BASE"),
+            (
+                ShaderCreateFlagsEXT::FRAGMENT_SHADING_RATE_ATTACHMENT.0,
+                "FRAGMENT_SHADING_RATE_ATTACHMENT",
+            ),
+            (
+                ShaderCreateFlagsEXT::FRAGMENT_DENSITY_MAP_ATTACHMENT.0,
+                "FRAGMENT_DENSITY_MAP_ATTACHMENT",
+            ),
+        ];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -4465,9 +4529,6 @@ impl fmt::Debug for ShaderStageFlags {
                 ShaderStageFlags::CLUSTER_CULLING_HUAWEI.0,
                 "CLUSTER_CULLING_HUAWEI",
             ),
-            (ShaderStageFlags::EXT_483_RESERVE_15.0, "EXT_483_RESERVE_15"),
-            (ShaderStageFlags::EXT_483_RESERVE_16.0, "EXT_483_RESERVE_16"),
-            (ShaderStageFlags::EXT_483_RESERVE_17.0, "EXT_483_RESERVE_17"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -5728,6 +5789,12 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_IMAGE_2D_VIEW_OF_3D_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_IMAGE_2D_VIEW_OF_3D_FEATURES_EXT")
             }
+            Self::PHYSICAL_DEVICE_SHADER_TILE_IMAGE_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_SHADER_TILE_IMAGE_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_SHADER_TILE_IMAGE_PROPERTIES_EXT => {
+                Some("PHYSICAL_DEVICE_SHADER_TILE_IMAGE_PROPERTIES_EXT")
+            }
             Self::MICROMAP_BUILD_INFO_EXT => Some("MICROMAP_BUILD_INFO_EXT"),
             Self::MICROMAP_VERSION_INFO_EXT => Some("MICROMAP_VERSION_INFO_EXT"),
             Self::COPY_MICROMAP_INFO_EXT => Some("COPY_MICROMAP_INFO_EXT"),
@@ -5743,6 +5810,15 @@ impl fmt::Debug for StructureType {
             Self::MICROMAP_BUILD_SIZES_INFO_EXT => Some("MICROMAP_BUILD_SIZES_INFO_EXT"),
             Self::ACCELERATION_STRUCTURE_TRIANGLES_OPACITY_MICROMAP_EXT => {
                 Some("ACCELERATION_STRUCTURE_TRIANGLES_OPACITY_MICROMAP_EXT")
+            }
+            Self::PHYSICAL_DEVICE_DISPLACEMENT_MICROMAP_FEATURES_NV => {
+                Some("PHYSICAL_DEVICE_DISPLACEMENT_MICROMAP_FEATURES_NV")
+            }
+            Self::PHYSICAL_DEVICE_DISPLACEMENT_MICROMAP_PROPERTIES_NV => {
+                Some("PHYSICAL_DEVICE_DISPLACEMENT_MICROMAP_PROPERTIES_NV")
+            }
+            Self::ACCELERATION_STRUCTURE_TRIANGLES_DISPLACEMENT_MICROMAP_NV => {
+                Some("ACCELERATION_STRUCTURE_TRIANGLES_DISPLACEMENT_MICROMAP_NV")
             }
             Self::PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_FEATURES_HUAWEI => {
                 Some("PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_FEATURES_HUAWEI")
@@ -5871,6 +5947,13 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES_EXT")
             }
+            Self::PHYSICAL_DEVICE_SHADER_OBJECT_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_SHADER_OBJECT_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_SHADER_OBJECT_PROPERTIES_EXT => {
+                Some("PHYSICAL_DEVICE_SHADER_OBJECT_PROPERTIES_EXT")
+            }
+            Self::SHADER_CREATE_INFO_EXT => Some("SHADER_CREATE_INFO_EXT"),
             Self::PHYSICAL_DEVICE_TILE_PROPERTIES_FEATURES_QCOM => {
                 Some("PHYSICAL_DEVICE_TILE_PROPERTIES_FEATURES_QCOM")
             }

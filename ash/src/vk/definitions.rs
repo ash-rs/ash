@@ -57,7 +57,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 244;
+pub const HEADER_VERSION: u32 = 246;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -432,6 +432,12 @@ handle_nondispatchable ! (CuModuleNVX , CU_MODULE_NVX , doc = "<https://www.khro
 handle_nondispatchable ! (CuFunctionNVX , CU_FUNCTION_NVX , doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCuFunctionNVX.html>") ;
 handle_nondispatchable ! (OpticalFlowSessionNV , OPTICAL_FLOW_SESSION_NV , doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkOpticalFlowSessionNV.html>") ;
 handle_nondispatchable ! (MicromapEXT , MICROMAP_EXT , doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMicromapEXT.html>") ;
+handle_nondispatchable!(
+    ShaderEXT,
+    SHADER_EXT,
+    doc =
+        "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkShaderEXT.html>"
+);
 handle_nondispatchable!(
     DisplayKHR,
     DISPLAY_KHR,
@@ -44512,6 +44518,11 @@ unsafe impl ExtendsPipelineShaderStageCreateInfo
     for PipelineShaderStageRequiredSubgroupSizeCreateInfo
 {
 }
+unsafe impl ExtendsShaderCreateInfoEXT
+    for PipelineShaderStageRequiredSubgroupSizeCreateInfoBuilder<'_>
+{
+}
+unsafe impl ExtendsShaderCreateInfoEXT for PipelineShaderStageRequiredSubgroupSizeCreateInfo {}
 impl<'a> ::std::ops::Deref for PipelineShaderStageRequiredSubgroupSizeCreateInfoBuilder<'a> {
     type Target = PipelineShaderStageRequiredSubgroupSizeCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -68725,6 +68736,370 @@ impl<'a> AccelerationStructureTrianglesOpacityMicromapEXTBuilder<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDisplacementMicromapFeaturesNV.html>"]
+pub struct PhysicalDeviceDisplacementMicromapFeaturesNV {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub displacement_micromap: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceDisplacementMicromapFeaturesNV {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            displacement_micromap: Bool32::default(),
+        }
+    }
+}
+unsafe impl TaggedStructure for PhysicalDeviceDisplacementMicromapFeaturesNV {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_DISPLACEMENT_MICROMAP_FEATURES_NV;
+}
+impl PhysicalDeviceDisplacementMicromapFeaturesNV {
+    pub fn builder<'a>() -> PhysicalDeviceDisplacementMicromapFeaturesNVBuilder<'a> {
+        PhysicalDeviceDisplacementMicromapFeaturesNVBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceDisplacementMicromapFeaturesNVBuilder<'a> {
+    inner: PhysicalDeviceDisplacementMicromapFeaturesNV,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceDisplacementMicromapFeaturesNVBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDisplacementMicromapFeaturesNV {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDisplacementMicromapFeaturesNVBuilder<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDisplacementMicromapFeaturesNV {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceDisplacementMicromapFeaturesNVBuilder<'a> {
+    type Target = PhysicalDeviceDisplacementMicromapFeaturesNV;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceDisplacementMicromapFeaturesNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceDisplacementMicromapFeaturesNVBuilder<'a> {
+    #[inline]
+    pub fn displacement_micromap(mut self, displacement_micromap: bool) -> Self {
+        self.inner.displacement_micromap = displacement_micromap.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceDisplacementMicromapFeaturesNV {
+        self.inner
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDisplacementMicromapPropertiesNV.html>"]
+pub struct PhysicalDeviceDisplacementMicromapPropertiesNV {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub max_displacement_micromap_subdivision_level: u32,
+}
+impl ::std::default::Default for PhysicalDeviceDisplacementMicromapPropertiesNV {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            max_displacement_micromap_subdivision_level: u32::default(),
+        }
+    }
+}
+unsafe impl TaggedStructure for PhysicalDeviceDisplacementMicromapPropertiesNV {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_DISPLACEMENT_MICROMAP_PROPERTIES_NV;
+}
+impl PhysicalDeviceDisplacementMicromapPropertiesNV {
+    pub fn builder<'a>() -> PhysicalDeviceDisplacementMicromapPropertiesNVBuilder<'a> {
+        PhysicalDeviceDisplacementMicromapPropertiesNVBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceDisplacementMicromapPropertiesNVBuilder<'a> {
+    inner: PhysicalDeviceDisplacementMicromapPropertiesNV,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceDisplacementMicromapPropertiesNVBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDisplacementMicromapPropertiesNV {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceDisplacementMicromapPropertiesNVBuilder<'a> {
+    type Target = PhysicalDeviceDisplacementMicromapPropertiesNV;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceDisplacementMicromapPropertiesNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceDisplacementMicromapPropertiesNVBuilder<'a> {
+    #[inline]
+    pub fn max_displacement_micromap_subdivision_level(
+        mut self,
+        max_displacement_micromap_subdivision_level: u32,
+    ) -> Self {
+        self.inner.max_displacement_micromap_subdivision_level =
+            max_displacement_micromap_subdivision_level;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceDisplacementMicromapPropertiesNV {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureTrianglesDisplacementMicromapNV.html>"]
+pub struct AccelerationStructureTrianglesDisplacementMicromapNV {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub displacement_bias_and_scale_format: Format,
+    pub displacement_vector_format: Format,
+    pub displacement_bias_and_scale_buffer: DeviceOrHostAddressConstKHR,
+    pub displacement_bias_and_scale_stride: DeviceSize,
+    pub displacement_vector_buffer: DeviceOrHostAddressConstKHR,
+    pub displacement_vector_stride: DeviceSize,
+    pub displaced_micromap_primitive_flags: DeviceOrHostAddressConstKHR,
+    pub displaced_micromap_primitive_flags_stride: DeviceSize,
+    pub index_type: IndexType,
+    pub index_buffer: DeviceOrHostAddressConstKHR,
+    pub index_stride: DeviceSize,
+    pub base_triangle: u32,
+    pub usage_counts_count: u32,
+    pub p_usage_counts: *const MicromapUsageEXT,
+    pub pp_usage_counts: *const *const MicromapUsageEXT,
+    pub micromap: MicromapEXT,
+}
+#[cfg(feature = "debug")]
+impl fmt::Debug for AccelerationStructureTrianglesDisplacementMicromapNV {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+        fmt.debug_struct("AccelerationStructureTrianglesDisplacementMicromapNV")
+            .field("s_type", &self.s_type)
+            .field("p_next", &self.p_next)
+            .field(
+                "displacement_bias_and_scale_format",
+                &self.displacement_bias_and_scale_format,
+            )
+            .field(
+                "displacement_vector_format",
+                &self.displacement_vector_format,
+            )
+            .field("displacement_bias_and_scale_buffer", &"union")
+            .field(
+                "displacement_bias_and_scale_stride",
+                &self.displacement_bias_and_scale_stride,
+            )
+            .field("displacement_vector_buffer", &"union")
+            .field(
+                "displacement_vector_stride",
+                &self.displacement_vector_stride,
+            )
+            .field("displaced_micromap_primitive_flags", &"union")
+            .field(
+                "displaced_micromap_primitive_flags_stride",
+                &self.displaced_micromap_primitive_flags_stride,
+            )
+            .field("index_type", &self.index_type)
+            .field("index_buffer", &"union")
+            .field("index_stride", &self.index_stride)
+            .field("base_triangle", &self.base_triangle)
+            .field("usage_counts_count", &self.usage_counts_count)
+            .field("p_usage_counts", &self.p_usage_counts)
+            .field("pp_usage_counts", &self.pp_usage_counts)
+            .field("micromap", &self.micromap)
+            .finish()
+    }
+}
+impl ::std::default::Default for AccelerationStructureTrianglesDisplacementMicromapNV {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            displacement_bias_and_scale_format: Format::default(),
+            displacement_vector_format: Format::default(),
+            displacement_bias_and_scale_buffer: DeviceOrHostAddressConstKHR::default(),
+            displacement_bias_and_scale_stride: DeviceSize::default(),
+            displacement_vector_buffer: DeviceOrHostAddressConstKHR::default(),
+            displacement_vector_stride: DeviceSize::default(),
+            displaced_micromap_primitive_flags: DeviceOrHostAddressConstKHR::default(),
+            displaced_micromap_primitive_flags_stride: DeviceSize::default(),
+            index_type: IndexType::default(),
+            index_buffer: DeviceOrHostAddressConstKHR::default(),
+            index_stride: DeviceSize::default(),
+            base_triangle: u32::default(),
+            usage_counts_count: u32::default(),
+            p_usage_counts: ::std::ptr::null(),
+            pp_usage_counts: ::std::ptr::null(),
+            micromap: MicromapEXT::default(),
+        }
+    }
+}
+unsafe impl TaggedStructure for AccelerationStructureTrianglesDisplacementMicromapNV {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::ACCELERATION_STRUCTURE_TRIANGLES_DISPLACEMENT_MICROMAP_NV;
+}
+impl AccelerationStructureTrianglesDisplacementMicromapNV {
+    pub fn builder<'a>() -> AccelerationStructureTrianglesDisplacementMicromapNVBuilder<'a> {
+        AccelerationStructureTrianglesDisplacementMicromapNVBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct AccelerationStructureTrianglesDisplacementMicromapNVBuilder<'a> {
+    inner: AccelerationStructureTrianglesDisplacementMicromapNV,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsAccelerationStructureGeometryTrianglesDataKHR
+    for AccelerationStructureTrianglesDisplacementMicromapNVBuilder<'_>
+{
+}
+unsafe impl ExtendsAccelerationStructureGeometryTrianglesDataKHR
+    for AccelerationStructureTrianglesDisplacementMicromapNV
+{
+}
+impl<'a> ::std::ops::Deref for AccelerationStructureTrianglesDisplacementMicromapNVBuilder<'a> {
+    type Target = AccelerationStructureTrianglesDisplacementMicromapNV;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for AccelerationStructureTrianglesDisplacementMicromapNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> AccelerationStructureTrianglesDisplacementMicromapNVBuilder<'a> {
+    #[inline]
+    pub fn displacement_bias_and_scale_format(
+        mut self,
+        displacement_bias_and_scale_format: Format,
+    ) -> Self {
+        self.inner.displacement_bias_and_scale_format = displacement_bias_and_scale_format;
+        self
+    }
+    #[inline]
+    pub fn displacement_vector_format(mut self, displacement_vector_format: Format) -> Self {
+        self.inner.displacement_vector_format = displacement_vector_format;
+        self
+    }
+    #[inline]
+    pub fn displacement_bias_and_scale_buffer(
+        mut self,
+        displacement_bias_and_scale_buffer: DeviceOrHostAddressConstKHR,
+    ) -> Self {
+        self.inner.displacement_bias_and_scale_buffer = displacement_bias_and_scale_buffer;
+        self
+    }
+    #[inline]
+    pub fn displacement_bias_and_scale_stride(
+        mut self,
+        displacement_bias_and_scale_stride: DeviceSize,
+    ) -> Self {
+        self.inner.displacement_bias_and_scale_stride = displacement_bias_and_scale_stride;
+        self
+    }
+    #[inline]
+    pub fn displacement_vector_buffer(
+        mut self,
+        displacement_vector_buffer: DeviceOrHostAddressConstKHR,
+    ) -> Self {
+        self.inner.displacement_vector_buffer = displacement_vector_buffer;
+        self
+    }
+    #[inline]
+    pub fn displacement_vector_stride(mut self, displacement_vector_stride: DeviceSize) -> Self {
+        self.inner.displacement_vector_stride = displacement_vector_stride;
+        self
+    }
+    #[inline]
+    pub fn displaced_micromap_primitive_flags(
+        mut self,
+        displaced_micromap_primitive_flags: DeviceOrHostAddressConstKHR,
+    ) -> Self {
+        self.inner.displaced_micromap_primitive_flags = displaced_micromap_primitive_flags;
+        self
+    }
+    #[inline]
+    pub fn displaced_micromap_primitive_flags_stride(
+        mut self,
+        displaced_micromap_primitive_flags_stride: DeviceSize,
+    ) -> Self {
+        self.inner.displaced_micromap_primitive_flags_stride =
+            displaced_micromap_primitive_flags_stride;
+        self
+    }
+    #[inline]
+    pub fn index_type(mut self, index_type: IndexType) -> Self {
+        self.inner.index_type = index_type;
+        self
+    }
+    #[inline]
+    pub fn index_buffer(mut self, index_buffer: DeviceOrHostAddressConstKHR) -> Self {
+        self.inner.index_buffer = index_buffer;
+        self
+    }
+    #[inline]
+    pub fn index_stride(mut self, index_stride: DeviceSize) -> Self {
+        self.inner.index_stride = index_stride;
+        self
+    }
+    #[inline]
+    pub fn base_triangle(mut self, base_triangle: u32) -> Self {
+        self.inner.base_triangle = base_triangle;
+        self
+    }
+    #[inline]
+    pub fn usage_counts(mut self, usage_counts: &'a [MicromapUsageEXT]) -> Self {
+        self.inner.usage_counts_count = usage_counts.len() as _;
+        self.inner.p_usage_counts = usage_counts.as_ptr();
+        self
+    }
+    #[inline]
+    pub fn usage_counts_ptrs(mut self, usage_counts_ptrs: &'a [&'a MicromapUsageEXT]) -> Self {
+        self.inner.usage_counts_count = usage_counts_ptrs.len() as _;
+        self.inner.pp_usage_counts = usage_counts_ptrs.as_ptr().cast();
+        self
+    }
+    #[inline]
+    pub fn micromap(mut self, micromap: MicromapEXT) -> Self {
+        self.inner.micromap = micromap;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> AccelerationStructureTrianglesDisplacementMicromapNV {
+        self.inner
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelinePropertiesIdentifierEXT.html>"]
 pub struct PipelinePropertiesIdentifierEXT {
     pub s_type: StructureType,
@@ -73663,6 +74038,460 @@ impl<'a> MemoryUnmapInfoKHRBuilder<'a> {
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> MemoryUnmapInfoKHR {
+        self.inner
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderObjectFeaturesEXT.html>"]
+pub struct PhysicalDeviceShaderObjectFeaturesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub shader_object: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceShaderObjectFeaturesEXT {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            shader_object: Bool32::default(),
+        }
+    }
+}
+unsafe impl TaggedStructure for PhysicalDeviceShaderObjectFeaturesEXT {
+    const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SHADER_OBJECT_FEATURES_EXT;
+}
+impl PhysicalDeviceShaderObjectFeaturesEXT {
+    pub fn builder<'a>() -> PhysicalDeviceShaderObjectFeaturesEXTBuilder<'a> {
+        PhysicalDeviceShaderObjectFeaturesEXTBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceShaderObjectFeaturesEXTBuilder<'a> {
+    inner: PhysicalDeviceShaderObjectFeaturesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderObjectFeaturesEXTBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderObjectFeaturesEXT {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderObjectFeaturesEXTBuilder<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderObjectFeaturesEXT {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceShaderObjectFeaturesEXTBuilder<'a> {
+    type Target = PhysicalDeviceShaderObjectFeaturesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderObjectFeaturesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceShaderObjectFeaturesEXTBuilder<'a> {
+    #[inline]
+    pub fn shader_object(mut self, shader_object: bool) -> Self {
+        self.inner.shader_object = shader_object.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceShaderObjectFeaturesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderObjectPropertiesEXT.html>"]
+pub struct PhysicalDeviceShaderObjectPropertiesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub shader_binary_uuid: [u8; UUID_SIZE],
+    pub shader_binary_version: u32,
+}
+impl ::std::default::Default for PhysicalDeviceShaderObjectPropertiesEXT {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            shader_binary_uuid: unsafe { ::std::mem::zeroed() },
+            shader_binary_version: u32::default(),
+        }
+    }
+}
+unsafe impl TaggedStructure for PhysicalDeviceShaderObjectPropertiesEXT {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_SHADER_OBJECT_PROPERTIES_EXT;
+}
+impl PhysicalDeviceShaderObjectPropertiesEXT {
+    pub fn builder<'a>() -> PhysicalDeviceShaderObjectPropertiesEXTBuilder<'a> {
+        PhysicalDeviceShaderObjectPropertiesEXTBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceShaderObjectPropertiesEXTBuilder<'a> {
+    inner: PhysicalDeviceShaderObjectPropertiesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceShaderObjectPropertiesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderObjectPropertiesEXT {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceShaderObjectPropertiesEXTBuilder<'a> {
+    type Target = PhysicalDeviceShaderObjectPropertiesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderObjectPropertiesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceShaderObjectPropertiesEXTBuilder<'a> {
+    #[inline]
+    pub fn shader_binary_uuid(mut self, shader_binary_uuid: [u8; UUID_SIZE]) -> Self {
+        self.inner.shader_binary_uuid = shader_binary_uuid;
+        self
+    }
+    #[inline]
+    pub fn shader_binary_version(mut self, shader_binary_version: u32) -> Self {
+        self.inner.shader_binary_version = shader_binary_version;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceShaderObjectPropertiesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkShaderCreateInfoEXT.html>"]
+pub struct ShaderCreateInfoEXT {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub flags: ShaderCreateFlagsEXT,
+    pub stage: ShaderStageFlags,
+    pub next_stage: ShaderStageFlags,
+    pub code_type: ShaderCodeTypeEXT,
+    pub code_size: usize,
+    pub p_code: *const c_void,
+    pub p_name: *const c_char,
+    pub set_layout_count: u32,
+    pub p_set_layouts: *const DescriptorSetLayout,
+    pub push_constant_range_count: u32,
+    pub p_push_constant_ranges: *const PushConstantRange,
+    pub p_specialization_info: *const SpecializationInfo,
+}
+impl ::std::default::Default for ShaderCreateInfoEXT {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            flags: ShaderCreateFlagsEXT::default(),
+            stage: ShaderStageFlags::default(),
+            next_stage: ShaderStageFlags::default(),
+            code_type: ShaderCodeTypeEXT::default(),
+            code_size: usize::default(),
+            p_code: ::std::ptr::null(),
+            p_name: ::std::ptr::null(),
+            set_layout_count: u32::default(),
+            p_set_layouts: ::std::ptr::null(),
+            push_constant_range_count: u32::default(),
+            p_push_constant_ranges: ::std::ptr::null(),
+            p_specialization_info: ::std::ptr::null(),
+        }
+    }
+}
+unsafe impl TaggedStructure for ShaderCreateInfoEXT {
+    const STRUCTURE_TYPE: StructureType = StructureType::SHADER_CREATE_INFO_EXT;
+}
+impl ShaderCreateInfoEXT {
+    pub fn builder<'a>() -> ShaderCreateInfoEXTBuilder<'a> {
+        ShaderCreateInfoEXTBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct ShaderCreateInfoEXTBuilder<'a> {
+    inner: ShaderCreateInfoEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsShaderCreateInfoEXT {}
+impl<'a> ::std::ops::Deref for ShaderCreateInfoEXTBuilder<'a> {
+    type Target = ShaderCreateInfoEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ShaderCreateInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> ShaderCreateInfoEXTBuilder<'a> {
+    #[inline]
+    pub fn flags(mut self, flags: ShaderCreateFlagsEXT) -> Self {
+        self.inner.flags = flags;
+        self
+    }
+    #[inline]
+    pub fn stage(mut self, stage: ShaderStageFlags) -> Self {
+        self.inner.stage = stage;
+        self
+    }
+    #[inline]
+    pub fn next_stage(mut self, next_stage: ShaderStageFlags) -> Self {
+        self.inner.next_stage = next_stage;
+        self
+    }
+    #[inline]
+    pub fn code_type(mut self, code_type: ShaderCodeTypeEXT) -> Self {
+        self.inner.code_type = code_type;
+        self
+    }
+    #[inline]
+    pub fn code(mut self, code: &'a [u8]) -> Self {
+        self.inner.code_size = code.len();
+        self.inner.p_code = code.as_ptr().cast();
+        self
+    }
+    #[inline]
+    pub fn name(mut self, name: &'a ::std::ffi::CStr) -> Self {
+        self.inner.p_name = name.as_ptr();
+        self
+    }
+    #[inline]
+    pub fn set_layouts(mut self, set_layouts: &'a [DescriptorSetLayout]) -> Self {
+        self.inner.set_layout_count = set_layouts.len() as _;
+        self.inner.p_set_layouts = set_layouts.as_ptr();
+        self
+    }
+    #[inline]
+    pub fn push_constant_ranges(mut self, push_constant_ranges: &'a [PushConstantRange]) -> Self {
+        self.inner.push_constant_range_count = push_constant_ranges.len() as _;
+        self.inner.p_push_constant_ranges = push_constant_ranges.as_ptr();
+        self
+    }
+    #[inline]
+    pub fn specialization_info(mut self, specialization_info: &'a SpecializationInfo) -> Self {
+        self.inner.p_specialization_info = specialization_info;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsShaderCreateInfoEXT>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = <*const T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr;
+        }
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> ShaderCreateInfoEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderTileImageFeaturesEXT.html>"]
+pub struct PhysicalDeviceShaderTileImageFeaturesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub shader_tile_image_color_read_access: Bool32,
+    pub shader_tile_image_depth_read_access: Bool32,
+    pub shader_tile_image_stencil_read_access: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceShaderTileImageFeaturesEXT {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            shader_tile_image_color_read_access: Bool32::default(),
+            shader_tile_image_depth_read_access: Bool32::default(),
+            shader_tile_image_stencil_read_access: Bool32::default(),
+        }
+    }
+}
+unsafe impl TaggedStructure for PhysicalDeviceShaderTileImageFeaturesEXT {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_SHADER_TILE_IMAGE_FEATURES_EXT;
+}
+impl PhysicalDeviceShaderTileImageFeaturesEXT {
+    pub fn builder<'a>() -> PhysicalDeviceShaderTileImageFeaturesEXTBuilder<'a> {
+        PhysicalDeviceShaderTileImageFeaturesEXTBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceShaderTileImageFeaturesEXTBuilder<'a> {
+    inner: PhysicalDeviceShaderTileImageFeaturesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderTileImageFeaturesEXTBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderTileImageFeaturesEXT {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderTileImageFeaturesEXTBuilder<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderTileImageFeaturesEXT {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceShaderTileImageFeaturesEXTBuilder<'a> {
+    type Target = PhysicalDeviceShaderTileImageFeaturesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderTileImageFeaturesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceShaderTileImageFeaturesEXTBuilder<'a> {
+    #[inline]
+    pub fn shader_tile_image_color_read_access(
+        mut self,
+        shader_tile_image_color_read_access: bool,
+    ) -> Self {
+        self.inner.shader_tile_image_color_read_access = shader_tile_image_color_read_access.into();
+        self
+    }
+    #[inline]
+    pub fn shader_tile_image_depth_read_access(
+        mut self,
+        shader_tile_image_depth_read_access: bool,
+    ) -> Self {
+        self.inner.shader_tile_image_depth_read_access = shader_tile_image_depth_read_access.into();
+        self
+    }
+    #[inline]
+    pub fn shader_tile_image_stencil_read_access(
+        mut self,
+        shader_tile_image_stencil_read_access: bool,
+    ) -> Self {
+        self.inner.shader_tile_image_stencil_read_access =
+            shader_tile_image_stencil_read_access.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceShaderTileImageFeaturesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderTileImagePropertiesEXT.html>"]
+pub struct PhysicalDeviceShaderTileImagePropertiesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub shader_tile_image_coherent_read_accelerated: Bool32,
+    pub shader_tile_image_read_sample_from_pixel_rate_invocation: Bool32,
+    pub shader_tile_image_read_from_helper_invocation: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceShaderTileImagePropertiesEXT {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            shader_tile_image_coherent_read_accelerated: Bool32::default(),
+            shader_tile_image_read_sample_from_pixel_rate_invocation: Bool32::default(),
+            shader_tile_image_read_from_helper_invocation: Bool32::default(),
+        }
+    }
+}
+unsafe impl TaggedStructure for PhysicalDeviceShaderTileImagePropertiesEXT {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_SHADER_TILE_IMAGE_PROPERTIES_EXT;
+}
+impl PhysicalDeviceShaderTileImagePropertiesEXT {
+    pub fn builder<'a>() -> PhysicalDeviceShaderTileImagePropertiesEXTBuilder<'a> {
+        PhysicalDeviceShaderTileImagePropertiesEXTBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceShaderTileImagePropertiesEXTBuilder<'a> {
+    inner: PhysicalDeviceShaderTileImagePropertiesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceShaderTileImagePropertiesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderTileImagePropertiesEXT {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceShaderTileImagePropertiesEXTBuilder<'a> {
+    type Target = PhysicalDeviceShaderTileImagePropertiesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderTileImagePropertiesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceShaderTileImagePropertiesEXTBuilder<'a> {
+    #[inline]
+    pub fn shader_tile_image_coherent_read_accelerated(
+        mut self,
+        shader_tile_image_coherent_read_accelerated: bool,
+    ) -> Self {
+        self.inner.shader_tile_image_coherent_read_accelerated =
+            shader_tile_image_coherent_read_accelerated.into();
+        self
+    }
+    #[inline]
+    pub fn shader_tile_image_read_sample_from_pixel_rate_invocation(
+        mut self,
+        shader_tile_image_read_sample_from_pixel_rate_invocation: bool,
+    ) -> Self {
+        self.inner
+            .shader_tile_image_read_sample_from_pixel_rate_invocation =
+            shader_tile_image_read_sample_from_pixel_rate_invocation.into();
+        self
+    }
+    #[inline]
+    pub fn shader_tile_image_read_from_helper_invocation(
+        mut self,
+        shader_tile_image_read_from_helper_invocation: bool,
+    ) -> Self {
+        self.inner.shader_tile_image_read_from_helper_invocation =
+            shader_tile_image_read_from_helper_invocation.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceShaderTileImagePropertiesEXT {
         self.inner
     }
 }
