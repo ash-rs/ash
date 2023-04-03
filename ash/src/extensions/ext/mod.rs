@@ -19,6 +19,7 @@ pub use self::metal_surface::MetalSurface;
 pub use self::physical_device_drm::PhysicalDeviceDrm;
 pub use self::private_data::PrivateData;
 pub use self::sample_locations::SampleLocations;
+pub use self::shader_object::ShaderObject;
 pub use self::tooling_info::ToolingInfo;
 
 mod acquire_drm_display;
@@ -42,4 +43,5 @@ mod metal_surface;
 mod physical_device_drm;
 mod private_data;
 mod sample_locations;
+mod shader_object;
 mod tooling_info;
