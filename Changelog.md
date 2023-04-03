@@ -39,6 +39,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Bumped MSRV from 1.59 to 1.69 (#709, #746)
 - Replaced `const fn name()` with associated `NAME` constants (#715)
 - Generic builders now automatically set `objecttype` to `<T as Handle>::ObjectType` (#724)
+- Separated low-level `*Fn` structs an high-level extension wrappers between instance and device functions, for the following extensions: (#734)
+  - `VK_KHR_swapchain`
+  - `VK_KHR_video_queue`
+  - `VK_KHR_device_group`
+  - `VK_KHR_performance_query`
+  - `VK_EXT_debug_utils`
+  - `VK_EXT_sample_locations`
+  - `VK_EXT_calibrated_timestamps`
+  - `VK_KHR_fragment_shading_rate`
+  - `VK_EXT_full_screen_exclusive`
+  - `VK_NV_optical_flow`
+  This not only allows loading `device`-optimized function pointers, it also prevents accidentally loading `instance` functions via `get_device_proc_addr()` which would always return `NULL`, making these `instance` functions always panic on the following high-level extension wrappers:
+  - `VK_KHR_swapchain`
+  - `VK_KHR_device_group`
+  - `VK_EXT_full_screen_exclusive`
 - `get_calibrated_timestamps()` now returns a single value for `max_deviation` (#738)
 - Bumped `libloading` from `0.7` to `0.8` (#739)
 - extensions/khr: Take the remaining `p_next`-containing structs as `&mut` to allow chains (#744)
