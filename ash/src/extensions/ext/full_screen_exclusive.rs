@@ -1,16 +1,20 @@
 use crate::prelude::*;
 use crate::vk;
-use crate::{Device, Instance};
+use crate::{Device, Entry, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::ext_full_screen_exclusive::NAME;
+
+/// High-level device function wrapper for
+/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_full_screen_exclusive.html>
 #[derive(Clone)]
-pub struct FullScreenExclusive {
+pub struct FullScreenExclusiveDevice {
     handle: vk::Device,
     fp: vk::ext_full_screen_exclusive::DeviceFn,
 }
 
-impl FullScreenExclusive {
+impl FullScreenExclusiveDevice {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
         let fp = vk::ext_full_screen_exclusive::DeviceFn::load(|name| unsafe {
@@ -26,23 +30,6 @@ impl FullScreenExclusive {
         swapchain: vk::SwapchainKHR,
     ) -> VkResult<()> {
         (self.fp.acquire_full_screen_exclusive_mode_ext)(self.handle, swapchain).result()
-    }
-
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfacePresentModes2EXT.html>
-    #[inline]
-    pub unsafe fn get_physical_device_surface_present_modes2(
-        &self,
-        physical_device: vk::PhysicalDevice,
-        surface_info: &vk::PhysicalDeviceSurfaceInfo2KHR<'_>,
-    ) -> VkResult<Vec<vk::PresentModeKHR>> {
-        read_into_uninitialized_vector(|count, data| {
-            (self.fp.get_physical_device_surface_present_modes2_ext)(
-                physical_device,
-                surface_info,
-                count,
-                data,
-            )
-        })
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkReleaseFullScreenExclusiveModeEXT.html>
@@ -69,8 +56,6 @@ impl FullScreenExclusive {
         .assume_init_on_success(present_modes)
     }
 
-    pub const NAME: &'static CStr = vk::ext_full_screen_exclusive::DeviceFn::NAME;
-
     #[inline]
     pub fn fp(&self) -> &vk::ext_full_screen_exclusive::DeviceFn {
         &self.fp
@@ -79,5 +64,44 @@ impl FullScreenExclusive {
     #[inline]
     pub fn device(&self) -> vk::Device {
         self.handle
+    }
+}
+
+/// High-level instance function wrapper for
+/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_full_screen_exclusive.html>
+#[derive(Clone)]
+pub struct FullScreenExclusiveInstance {
+    fp: vk::ext_full_screen_exclusive::InstanceFn,
+}
+
+impl FullScreenExclusiveInstance {
+    pub fn new(entry: &Entry, instance: &Instance) -> Self {
+        let handle = instance.handle();
+        let fp = vk::ext_full_screen_exclusive::InstanceFn::load(|name| unsafe {
+            mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+        });
+        Self { fp }
+    }
+
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfacePresentModes2EXT.html>
+    #[inline]
+    pub unsafe fn get_physical_device_surface_present_modes2(
+        &self,
+        physical_device: vk::PhysicalDevice,
+        surface_info: &vk::PhysicalDeviceSurfaceInfo2KHR<'_>,
+    ) -> VkResult<Vec<vk::PresentModeKHR>> {
+        read_into_uninitialized_vector(|count, data| {
+            (self.fp.get_physical_device_surface_present_modes2_ext)(
+                physical_device,
+                surface_info,
+                count,
+                data,
+            )
+        })
+    }
+
+    #[inline]
+    pub fn fp(&self) -> &vk::ext_full_screen_exclusive::InstanceFn {
+        &self.fp
     }
 }

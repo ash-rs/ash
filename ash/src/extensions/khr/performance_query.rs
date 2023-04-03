@@ -1,24 +1,68 @@
 use crate::prelude::*;
 use crate::vk;
-use crate::{Entry, Instance};
+use crate::{Device, Entry, Instance};
 use std::ffi::CStr;
 use std::mem;
 use std::ptr;
 
+pub const NAME: &'static CStr = vk::khr_performance_query::NAME;
+
+/// High-level device function wrapper for
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_performance_query.html>
 #[derive(Clone)]
-pub struct PerformanceQuery {
-    handle: vk::Instance,
+pub struct PerformanceQueryDevice {
+    handle: vk::Device,
     fp: vk::khr_performance_query::DeviceFn,
 }
 
-impl PerformanceQuery {
-    pub fn new(entry: &Entry, instance: &Instance) -> Self {
-        let handle = instance.handle();
+impl PerformanceQueryDevice {
+    pub fn new(instance: &Instance, device: &Device) -> Self {
+        let handle = device.handle();
         let fp = vk::khr_performance_query::DeviceFn::load(|name| unsafe {
-            mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
+    }
+
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAcquireProfilingLockKHR.html>
+    #[inline]
+    pub unsafe fn acquire_profiling_lock(
+        &self,
+        info: &vk::AcquireProfilingLockInfoKHR,
+    ) -> VkResult<()> {
+        (self.fp.acquire_profiling_lock_khr)(self.handle, info).result()
+    }
+
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkReleaseProfilingLockKHR.html>
+    #[inline]
+    pub unsafe fn release_profiling_lock(&self) {
+        (self.fp.release_profiling_lock_khr)(self.handle)
+    }
+
+    #[inline]
+    pub fn fp(&self) -> &vk::khr_performance_query::DeviceFn {
+        &self.fp
+    }
+
+    #[inline]
+    pub fn device(&self) -> vk::Device {
+        self.handle
+    }
+}
+
+/// High-level instance function wrapper for
+/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_performance_query.html>
+#[derive(Clone)]
+pub struct PerformanceQueryInstance {
+    fp: vk::khr_performance_query::InstanceFn,
+}
+
+impl PerformanceQueryInstance {
+    pub fn new(entry: &Entry, instance: &Instance) -> Self {
+        let fp = vk::khr_performance_query::InstanceFn::load(|name| unsafe {
+            mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
+        });
+        Self { fp }
     }
 
     /// Retrieve the number of elements to pass to [`enumerate_physical_device_queue_family_performance_query_counters()`][Self::enumerate_physical_device_queue_family_performance_query_counters()]
@@ -89,31 +133,8 @@ impl PerformanceQuery {
         num_passes.assume_init()
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAcquireProfilingLockKHR.html>
     #[inline]
-    pub unsafe fn acquire_profiling_lock(
-        &self,
-        device: vk::Device,
-        info: &vk::AcquireProfilingLockInfoKHR<'_>,
-    ) -> VkResult<()> {
-        (self.fp.acquire_profiling_lock_khr)(device, info).result()
-    }
-
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkReleaseProfilingLockKHR.html>
-    #[inline]
-    pub unsafe fn release_profiling_lock(&self, device: vk::Device) {
-        (self.fp.release_profiling_lock_khr)(device)
-    }
-
-    pub const NAME: &'static CStr = vk::khr_performance_query::DeviceFn::NAME;
-
-    #[inline]
-    pub fn fp(&self) -> &vk::khr_performance_query::DeviceFn {
+    pub fn fp(&self) -> &vk::khr_performance_query::InstanceFn {
         &self.fp
-    }
-
-    #[inline]
-    pub fn instance(&self) -> vk::Instance {
-        self.handle
     }
 }

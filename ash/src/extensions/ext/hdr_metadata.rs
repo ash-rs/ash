@@ -3,17 +3,19 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &'static CStr = vk::ext_hdr_metadata::NAME;
+
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_hdr_metadata.html>
 #[derive(Clone)]
 pub struct HdrMetadata {
     handle: vk::Device,
-    fp: vk::ExtHdrMetadataFn,
+    fp: vk::ext_hdr_metadata::DeviceFn,
 }
 
 impl HdrMetadata {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::ExtHdrMetadataFn::load(|name| unsafe {
+        let fp = vk::ext_hdr_metadata::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -35,10 +37,8 @@ impl HdrMetadata {
         )
     }
 
-    pub const NAME: &'static CStr = vk::ExtHdrMetadataFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::ExtHdrMetadataFn {
+    pub fn fp(&self) -> &vk::ext_hdr_metadata::DeviceFn {
         &self.fp
     }
 
