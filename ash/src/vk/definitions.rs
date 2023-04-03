@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 244;
+pub const HEADER_VERSION: u32 = 246;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -433,6 +433,12 @@ handle_nondispatchable ! (CuModuleNVX , CU_MODULE_NVX , doc = "<https://www.khro
 handle_nondispatchable ! (CuFunctionNVX , CU_FUNCTION_NVX , doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCuFunctionNVX.html>") ;
 handle_nondispatchable ! (OpticalFlowSessionNV , OPTICAL_FLOW_SESSION_NV , doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkOpticalFlowSessionNV.html>") ;
 handle_nondispatchable ! (MicromapEXT , MICROMAP_EXT , doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMicromapEXT.html>") ;
+handle_nondispatchable!(
+    ShaderEXT,
+    SHADER_EXT,
+    doc =
+        "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkShaderEXT.html>"
+);
 handle_nondispatchable!(
     DisplayKHR,
     DISPLAY_KHR,
@@ -28215,6 +28221,7 @@ unsafe impl ExtendsPipelineShaderStageCreateInfo
     for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'_>
 {
 }
+unsafe impl ExtendsShaderCreateInfoEXT for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'_> {}
 impl<'a> PipelineShaderStageRequiredSubgroupSizeCreateInfo<'a> {
     #[inline]
     pub fn required_subgroup_size(mut self, required_subgroup_size: u32) -> Self {
@@ -44318,6 +44325,275 @@ impl<'a> AccelerationStructureTrianglesOpacityMicromapEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDisplacementMicromapFeaturesNV.html>"]
+pub struct PhysicalDeviceDisplacementMicromapFeaturesNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub displacement_micromap: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceDisplacementMicromapFeaturesNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            displacement_micromap: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceDisplacementMicromapFeaturesNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_DISPLACEMENT_MICROMAP_FEATURES_NV;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDisplacementMicromapFeaturesNV<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDisplacementMicromapFeaturesNV<'_> {}
+impl<'a> PhysicalDeviceDisplacementMicromapFeaturesNV<'a> {
+    #[inline]
+    pub fn displacement_micromap(mut self, displacement_micromap: bool) -> Self {
+        self.displacement_micromap = displacement_micromap.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDisplacementMicromapPropertiesNV.html>"]
+pub struct PhysicalDeviceDisplacementMicromapPropertiesNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub max_displacement_micromap_subdivision_level: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceDisplacementMicromapPropertiesNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            max_displacement_micromap_subdivision_level: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceDisplacementMicromapPropertiesNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_DISPLACEMENT_MICROMAP_PROPERTIES_NV;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceDisplacementMicromapPropertiesNV<'_>
+{
+}
+impl<'a> PhysicalDeviceDisplacementMicromapPropertiesNV<'a> {
+    #[inline]
+    pub fn max_displacement_micromap_subdivision_level(
+        mut self,
+        max_displacement_micromap_subdivision_level: u32,
+    ) -> Self {
+        self.max_displacement_micromap_subdivision_level =
+            max_displacement_micromap_subdivision_level;
+        self
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureTrianglesDisplacementMicromapNV.html>"]
+pub struct AccelerationStructureTrianglesDisplacementMicromapNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub displacement_bias_and_scale_format: Format,
+    pub displacement_vector_format: Format,
+    pub displacement_bias_and_scale_buffer: DeviceOrHostAddressConstKHR,
+    pub displacement_bias_and_scale_stride: DeviceSize,
+    pub displacement_vector_buffer: DeviceOrHostAddressConstKHR,
+    pub displacement_vector_stride: DeviceSize,
+    pub displaced_micromap_primitive_flags: DeviceOrHostAddressConstKHR,
+    pub displaced_micromap_primitive_flags_stride: DeviceSize,
+    pub index_type: IndexType,
+    pub index_buffer: DeviceOrHostAddressConstKHR,
+    pub index_stride: DeviceSize,
+    pub base_triangle: u32,
+    pub usage_counts_count: u32,
+    pub p_usage_counts: *const MicromapUsageEXT,
+    pub pp_usage_counts: *const *const MicromapUsageEXT,
+    pub micromap: MicromapEXT,
+    pub _marker: PhantomData<&'a ()>,
+}
+#[cfg(feature = "debug")]
+impl fmt::Debug for AccelerationStructureTrianglesDisplacementMicromapNV<'_> {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+        fmt.debug_struct("AccelerationStructureTrianglesDisplacementMicromapNV")
+            .field("s_type", &self.s_type)
+            .field("p_next", &self.p_next)
+            .field(
+                "displacement_bias_and_scale_format",
+                &self.displacement_bias_and_scale_format,
+            )
+            .field(
+                "displacement_vector_format",
+                &self.displacement_vector_format,
+            )
+            .field("displacement_bias_and_scale_buffer", &"union")
+            .field(
+                "displacement_bias_and_scale_stride",
+                &self.displacement_bias_and_scale_stride,
+            )
+            .field("displacement_vector_buffer", &"union")
+            .field(
+                "displacement_vector_stride",
+                &self.displacement_vector_stride,
+            )
+            .field("displaced_micromap_primitive_flags", &"union")
+            .field(
+                "displaced_micromap_primitive_flags_stride",
+                &self.displaced_micromap_primitive_flags_stride,
+            )
+            .field("index_type", &self.index_type)
+            .field("index_buffer", &"union")
+            .field("index_stride", &self.index_stride)
+            .field("base_triangle", &self.base_triangle)
+            .field("usage_counts_count", &self.usage_counts_count)
+            .field("p_usage_counts", &self.p_usage_counts)
+            .field("pp_usage_counts", &self.pp_usage_counts)
+            .field("micromap", &self.micromap)
+            .finish()
+    }
+}
+impl ::std::default::Default for AccelerationStructureTrianglesDisplacementMicromapNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            displacement_bias_and_scale_format: Format::default(),
+            displacement_vector_format: Format::default(),
+            displacement_bias_and_scale_buffer: DeviceOrHostAddressConstKHR::default(),
+            displacement_bias_and_scale_stride: DeviceSize::default(),
+            displacement_vector_buffer: DeviceOrHostAddressConstKHR::default(),
+            displacement_vector_stride: DeviceSize::default(),
+            displaced_micromap_primitive_flags: DeviceOrHostAddressConstKHR::default(),
+            displaced_micromap_primitive_flags_stride: DeviceSize::default(),
+            index_type: IndexType::default(),
+            index_buffer: DeviceOrHostAddressConstKHR::default(),
+            index_stride: DeviceSize::default(),
+            base_triangle: u32::default(),
+            usage_counts_count: u32::default(),
+            p_usage_counts: ::std::ptr::null(),
+            pp_usage_counts: ::std::ptr::null(),
+            micromap: MicromapEXT::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for AccelerationStructureTrianglesDisplacementMicromapNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::ACCELERATION_STRUCTURE_TRIANGLES_DISPLACEMENT_MICROMAP_NV;
+}
+unsafe impl ExtendsAccelerationStructureGeometryTrianglesDataKHR
+    for AccelerationStructureTrianglesDisplacementMicromapNV<'_>
+{
+}
+impl<'a> AccelerationStructureTrianglesDisplacementMicromapNV<'a> {
+    #[inline]
+    pub fn displacement_bias_and_scale_format(
+        mut self,
+        displacement_bias_and_scale_format: Format,
+    ) -> Self {
+        self.displacement_bias_and_scale_format = displacement_bias_and_scale_format;
+        self
+    }
+    #[inline]
+    pub fn displacement_vector_format(mut self, displacement_vector_format: Format) -> Self {
+        self.displacement_vector_format = displacement_vector_format;
+        self
+    }
+    #[inline]
+    pub fn displacement_bias_and_scale_buffer(
+        mut self,
+        displacement_bias_and_scale_buffer: DeviceOrHostAddressConstKHR,
+    ) -> Self {
+        self.displacement_bias_and_scale_buffer = displacement_bias_and_scale_buffer;
+        self
+    }
+    #[inline]
+    pub fn displacement_bias_and_scale_stride(
+        mut self,
+        displacement_bias_and_scale_stride: DeviceSize,
+    ) -> Self {
+        self.displacement_bias_and_scale_stride = displacement_bias_and_scale_stride;
+        self
+    }
+    #[inline]
+    pub fn displacement_vector_buffer(
+        mut self,
+        displacement_vector_buffer: DeviceOrHostAddressConstKHR,
+    ) -> Self {
+        self.displacement_vector_buffer = displacement_vector_buffer;
+        self
+    }
+    #[inline]
+    pub fn displacement_vector_stride(mut self, displacement_vector_stride: DeviceSize) -> Self {
+        self.displacement_vector_stride = displacement_vector_stride;
+        self
+    }
+    #[inline]
+    pub fn displaced_micromap_primitive_flags(
+        mut self,
+        displaced_micromap_primitive_flags: DeviceOrHostAddressConstKHR,
+    ) -> Self {
+        self.displaced_micromap_primitive_flags = displaced_micromap_primitive_flags;
+        self
+    }
+    #[inline]
+    pub fn displaced_micromap_primitive_flags_stride(
+        mut self,
+        displaced_micromap_primitive_flags_stride: DeviceSize,
+    ) -> Self {
+        self.displaced_micromap_primitive_flags_stride = displaced_micromap_primitive_flags_stride;
+        self
+    }
+    #[inline]
+    pub fn index_type(mut self, index_type: IndexType) -> Self {
+        self.index_type = index_type;
+        self
+    }
+    #[inline]
+    pub fn index_buffer(mut self, index_buffer: DeviceOrHostAddressConstKHR) -> Self {
+        self.index_buffer = index_buffer;
+        self
+    }
+    #[inline]
+    pub fn index_stride(mut self, index_stride: DeviceSize) -> Self {
+        self.index_stride = index_stride;
+        self
+    }
+    #[inline]
+    pub fn base_triangle(mut self, base_triangle: u32) -> Self {
+        self.base_triangle = base_triangle;
+        self
+    }
+    #[inline]
+    pub fn usage_counts(mut self, usage_counts: &'a [MicromapUsageEXT]) -> Self {
+        self.usage_counts_count = usage_counts.len() as _;
+        self.p_usage_counts = usage_counts.as_ptr();
+        self
+    }
+    #[inline]
+    pub fn usage_counts_ptrs(mut self, usage_counts_ptrs: &'a [&'a MicromapUsageEXT]) -> Self {
+        self.usage_counts_count = usage_counts_ptrs.len() as _;
+        self.pp_usage_counts = usage_counts_ptrs.as_ptr().cast();
+        self
+    }
+    #[inline]
+    pub fn micromap(mut self, micromap: MicromapEXT) -> Self {
+        self.micromap = micromap;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelinePropertiesIdentifierEXT.html>"]
 pub struct PipelinePropertiesIdentifierEXT<'a> {
     pub s_type: StructureType,
@@ -47219,6 +47495,306 @@ impl<'a> MemoryUnmapInfoKHR<'a> {
     #[inline]
     pub fn memory(mut self, memory: DeviceMemory) -> Self {
         self.memory = memory;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderObjectFeaturesEXT.html>"]
+pub struct PhysicalDeviceShaderObjectFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub shader_object: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceShaderObjectFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            shader_object: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderObjectFeaturesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_SHADER_OBJECT_FEATURES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderObjectFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderObjectFeaturesEXT<'_> {}
+impl<'a> PhysicalDeviceShaderObjectFeaturesEXT<'a> {
+    #[inline]
+    pub fn shader_object(mut self, shader_object: bool) -> Self {
+        self.shader_object = shader_object.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderObjectPropertiesEXT.html>"]
+pub struct PhysicalDeviceShaderObjectPropertiesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub shader_binary_uuid: [u8; UUID_SIZE],
+    pub shader_binary_version: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceShaderObjectPropertiesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            shader_binary_uuid: unsafe { ::std::mem::zeroed() },
+            shader_binary_version: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderObjectPropertiesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_SHADER_OBJECT_PROPERTIES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderObjectPropertiesEXT<'_> {}
+impl<'a> PhysicalDeviceShaderObjectPropertiesEXT<'a> {
+    #[inline]
+    pub fn shader_binary_uuid(mut self, shader_binary_uuid: [u8; UUID_SIZE]) -> Self {
+        self.shader_binary_uuid = shader_binary_uuid;
+        self
+    }
+    #[inline]
+    pub fn shader_binary_version(mut self, shader_binary_version: u32) -> Self {
+        self.shader_binary_version = shader_binary_version;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkShaderCreateInfoEXT.html>"]
+pub struct ShaderCreateInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub flags: ShaderCreateFlagsEXT,
+    pub stage: ShaderStageFlags,
+    pub next_stage: ShaderStageFlags,
+    pub code_type: ShaderCodeTypeEXT,
+    pub code_size: usize,
+    pub p_code: *const c_void,
+    pub p_name: *const c_char,
+    pub set_layout_count: u32,
+    pub p_set_layouts: *const DescriptorSetLayout,
+    pub push_constant_range_count: u32,
+    pub p_push_constant_ranges: *const PushConstantRange,
+    pub p_specialization_info: *const SpecializationInfo<'a>,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ShaderCreateInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            flags: ShaderCreateFlagsEXT::default(),
+            stage: ShaderStageFlags::default(),
+            next_stage: ShaderStageFlags::default(),
+            code_type: ShaderCodeTypeEXT::default(),
+            code_size: usize::default(),
+            p_code: ::std::ptr::null(),
+            p_name: ::std::ptr::null(),
+            set_layout_count: u32::default(),
+            p_set_layouts: ::std::ptr::null(),
+            push_constant_range_count: u32::default(),
+            p_push_constant_ranges: ::std::ptr::null(),
+            p_specialization_info: ::std::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for ShaderCreateInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::SHADER_CREATE_INFO_EXT;
+}
+pub unsafe trait ExtendsShaderCreateInfoEXT {}
+impl<'a> ShaderCreateInfoEXT<'a> {
+    #[inline]
+    pub fn flags(mut self, flags: ShaderCreateFlagsEXT) -> Self {
+        self.flags = flags;
+        self
+    }
+    #[inline]
+    pub fn stage(mut self, stage: ShaderStageFlags) -> Self {
+        self.stage = stage;
+        self
+    }
+    #[inline]
+    pub fn next_stage(mut self, next_stage: ShaderStageFlags) -> Self {
+        self.next_stage = next_stage;
+        self
+    }
+    #[inline]
+    pub fn code_type(mut self, code_type: ShaderCodeTypeEXT) -> Self {
+        self.code_type = code_type;
+        self
+    }
+    #[inline]
+    pub fn code(mut self, code: &'a [u8]) -> Self {
+        self.code_size = code.len();
+        self.p_code = code.as_ptr().cast();
+        self
+    }
+    #[inline]
+    pub fn name(mut self, name: &'a ::std::ffi::CStr) -> Self {
+        self.p_name = name.as_ptr();
+        self
+    }
+    #[inline]
+    pub fn set_layouts(mut self, set_layouts: &'a [DescriptorSetLayout]) -> Self {
+        self.set_layout_count = set_layouts.len() as _;
+        self.p_set_layouts = set_layouts.as_ptr();
+        self
+    }
+    #[inline]
+    pub fn push_constant_ranges(mut self, push_constant_ranges: &'a [PushConstantRange]) -> Self {
+        self.push_constant_range_count = push_constant_ranges.len() as _;
+        self.p_push_constant_ranges = push_constant_ranges.as_ptr();
+        self
+    }
+    #[inline]
+    pub fn specialization_info(mut self, specialization_info: &'a SpecializationInfo<'a>) -> Self {
+        self.p_specialization_info = specialization_info;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsShaderCreateInfoEXT>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = <*const T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderTileImageFeaturesEXT.html>"]
+pub struct PhysicalDeviceShaderTileImageFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub shader_tile_image_color_read_access: Bool32,
+    pub shader_tile_image_depth_read_access: Bool32,
+    pub shader_tile_image_stencil_read_access: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceShaderTileImageFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            shader_tile_image_color_read_access: Bool32::default(),
+            shader_tile_image_depth_read_access: Bool32::default(),
+            shader_tile_image_stencil_read_access: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderTileImageFeaturesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_SHADER_TILE_IMAGE_FEATURES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderTileImageFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderTileImageFeaturesEXT<'_> {}
+impl<'a> PhysicalDeviceShaderTileImageFeaturesEXT<'a> {
+    #[inline]
+    pub fn shader_tile_image_color_read_access(
+        mut self,
+        shader_tile_image_color_read_access: bool,
+    ) -> Self {
+        self.shader_tile_image_color_read_access = shader_tile_image_color_read_access.into();
+        self
+    }
+    #[inline]
+    pub fn shader_tile_image_depth_read_access(
+        mut self,
+        shader_tile_image_depth_read_access: bool,
+    ) -> Self {
+        self.shader_tile_image_depth_read_access = shader_tile_image_depth_read_access.into();
+        self
+    }
+    #[inline]
+    pub fn shader_tile_image_stencil_read_access(
+        mut self,
+        shader_tile_image_stencil_read_access: bool,
+    ) -> Self {
+        self.shader_tile_image_stencil_read_access = shader_tile_image_stencil_read_access.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderTileImagePropertiesEXT.html>"]
+pub struct PhysicalDeviceShaderTileImagePropertiesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub shader_tile_image_coherent_read_accelerated: Bool32,
+    pub shader_tile_image_read_sample_from_pixel_rate_invocation: Bool32,
+    pub shader_tile_image_read_from_helper_invocation: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceShaderTileImagePropertiesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            shader_tile_image_coherent_read_accelerated: Bool32::default(),
+            shader_tile_image_read_sample_from_pixel_rate_invocation: Bool32::default(),
+            shader_tile_image_read_from_helper_invocation: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderTileImagePropertiesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_SHADER_TILE_IMAGE_PROPERTIES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderTileImagePropertiesEXT<'_> {}
+impl<'a> PhysicalDeviceShaderTileImagePropertiesEXT<'a> {
+    #[inline]
+    pub fn shader_tile_image_coherent_read_accelerated(
+        mut self,
+        shader_tile_image_coherent_read_accelerated: bool,
+    ) -> Self {
+        self.shader_tile_image_coherent_read_accelerated =
+            shader_tile_image_coherent_read_accelerated.into();
+        self
+    }
+    #[inline]
+    pub fn shader_tile_image_read_sample_from_pixel_rate_invocation(
+        mut self,
+        shader_tile_image_read_sample_from_pixel_rate_invocation: bool,
+    ) -> Self {
+        self.shader_tile_image_read_sample_from_pixel_rate_invocation =
+            shader_tile_image_read_sample_from_pixel_rate_invocation.into();
+        self
+    }
+    #[inline]
+    pub fn shader_tile_image_read_from_helper_invocation(
+        mut self,
+        shader_tile_image_read_from_helper_invocation: bool,
+    ) -> Self {
+        self.shader_tile_image_read_from_helper_invocation =
+            shader_tile_image_read_from_helper_invocation.into();
         self
     }
 }

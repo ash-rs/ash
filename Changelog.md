@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Update Vulkan-Headers to 1.3.244 (#697)
+- Update Vulkan-Headers to 1.3.246 (#697, #723)
 - Added `VK_KHR_performance_query` device extension (#726)
 
 ### Changed

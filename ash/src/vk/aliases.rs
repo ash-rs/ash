@@ -218,6 +218,8 @@ pub type PhysicalDeviceSubgroupSizeControlPropertiesEXT<'a> =
     PhysicalDeviceSubgroupSizeControlProperties<'a>;
 pub type PipelineShaderStageRequiredSubgroupSizeCreateInfoEXT<'a> =
     PipelineShaderStageRequiredSubgroupSizeCreateInfo<'a>;
+pub type ShaderRequiredSubgroupSizeCreateInfoEXT<'a> =
+    PipelineShaderStageRequiredSubgroupSizeCreateInfo<'a>;
 pub type MemoryOpaqueCaptureAddressAllocateInfoKHR<'a> = MemoryOpaqueCaptureAddressAllocateInfo<'a>;
 pub type DeviceMemoryOpaqueCaptureAddressInfoKHR<'a> = DeviceMemoryOpaqueCaptureAddressInfo<'a>;
 pub type PhysicalDevicePipelineCreationCacheControlFeaturesEXT<'a> =
