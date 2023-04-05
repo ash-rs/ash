@@ -36,8 +36,6 @@ jobs:
           submodules: true
       - name: Run generator
         run: cargo run -p generator
-      - name: Format generated results
-        run: cargo fmt -p ash
       - name: Diff autogen result
         run: git diff --quiet || (echo "::error::Generated files are different, please regenerate with cargo run -p generator!"; git diff; false)
 
