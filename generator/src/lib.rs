@@ -893,7 +893,7 @@ pub type CommandMap<'a> = HashMap<vkxml::Identifier, &'a vk_parse::CommandDefini
 fn generate_function_pointers<'a>(
     ident: Ident,
     commands: &[&'a vk_parse::CommandDefinition],
-    aliases: &HashMap<String, String>,
+    rename_commands: &HashMap<&'a str, &'a str>,
     fn_cache: &mut HashSet<&'a str>,
 ) -> TokenStream {
     // Commands can have duplicates inside them because they are declared per features. But we only
@@ -903,10 +903,10 @@ fn generate_function_pointers<'a>(
         .unique_by(|cmd| cmd.proto.name.as_str())
         .collect::<Vec<_>>();
 
-    struct Command {
+    struct Command<'a> {
         type_needs_defining: bool,
         type_name: Ident,
-        function_name_c: String,
+        function_name_c: &'a str,
         function_name_rust: Ident,
         parameters: TokenStream,
         parameters_unused: TokenStream,
@@ -919,11 +919,10 @@ fn generate_function_pointers<'a>(
             let name = &cmd.proto.name;
             let type_name = format_ident!("PFN_{}", name);
 
-            let function_name_c = if let Some(alias_name) = aliases.get(name) {
-                alias_name.to_string()
-            } else {
-                name.to_string()
-            };
+            // We might need to generate a function pointer for an extension, where we are given the original
+            // `cmd` and a rename back to the extension alias (typically with vendor suffix) in `rename_commands`:
+            let function_name_c = rename_commands.get(name.as_str()).cloned().unwrap_or(name);
+
             let function_name_rust = format_ident!(
                 "{}",
                 function_name_c.strip_prefix("vk").unwrap().to_snake_case()
@@ -976,7 +975,7 @@ fn generate_function_pointers<'a>(
         })
         .collect::<Vec<_>>();
 
-    struct CommandToType<'a>(&'a Command);
+    struct CommandToType<'a>(&'a Command<'a>);
     impl<'a> quote::ToTokens for CommandToType<'a> {
         fn to_tokens(&self, tokens: &mut TokenStream) {
             let type_name = &self.0.type_name;
@@ -990,7 +989,7 @@ fn generate_function_pointers<'a>(
         }
     }
 
-    struct CommandToMember<'a>(&'a Command);
+    struct CommandToMember<'a>(&'a Command<'a>);
     impl<'a> quote::ToTokens for CommandToMember<'a> {
         fn to_tokens(&self, tokens: &mut TokenStream) {
             let type_name = &self.0.type_name;
@@ -1006,7 +1005,7 @@ fn generate_function_pointers<'a>(
         }
     }
 
-    struct CommandToLoader<'a>(&'a Command);
+    struct CommandToLoader<'a>(&'a Command<'a>);
     impl<'a> quote::ToTokens for CommandToLoader<'a> {
         fn to_tokens(&self, tokens: &mut TokenStream) {
             let function_name_rust = &self.0.function_name_rust;
@@ -1166,13 +1165,13 @@ pub fn generate_extension_constants<'a>(
 }
 pub fn generate_extension_commands<'a>(
     extension_name: &str,
-    items: &[vk_parse::ExtensionChild],
+    items: &'a [vk_parse::ExtensionChild],
     cmd_map: &CommandMap<'a>,
-    cmd_aliases: &HashMap<String, String>,
+    cmd_aliases: &HashMap<&'a str, &'a str>,
     fn_cache: &mut HashSet<&'a str>,
 ) -> TokenStream {
     let mut commands = Vec::new();
-    let mut aliases = HashMap::new();
+    let mut rename_commands = HashMap::new();
     let names = items
         .iter()
         .filter_map(get_variant!(vk_parse::ExtensionChild::Require {
@@ -1182,14 +1181,18 @@ pub fn generate_extension_commands<'a>(
         .filter(|(api, _items)| matches!(api.as_deref(), None | Some(DESIRED_API)))
         .flat_map(|(_api, items)| items)
         .filter_map(get_variant!(vk_parse::InterfaceItem::Command { name }));
+
+    // Collect a subset of `CommandDefinition`s to generate
     for name in names {
-        if let Some(cmd) = cmd_map.get(name).copied() {
-            commands.push(cmd);
-        } else if let Some(cmd) = cmd_aliases.get(name) {
-            aliases.insert(cmd.clone(), name.to_string());
-            let cmd = cmd_map.get(cmd).copied().unwrap();
-            commands.push(cmd);
+        let mut name = name.as_str();
+        if let Some(&cmd) = cmd_aliases.get(name) {
+            // This extension is referencing the base command under a different name,
+            // make sure it is generated with a rename to it.
+            rename_commands.insert(cmd, name);
+            name = cmd;
         }
+
+        commands.push(cmd_map[name]);
     }
 
     let ident = format_ident!(
@@ -1199,7 +1202,7 @@ pub fn generate_extension_commands<'a>(
             .strip_prefix("Vk")
             .unwrap()
     );
-    let fp = generate_function_pointers(ident.clone(), &commands, &aliases, fn_cache);
+    let fp = generate_function_pointers(ident.clone(), &commands, &rename_commands, fn_cache);
 
     let spec_version = items
         .iter()
@@ -1236,7 +1239,7 @@ pub fn generate_extension<'a>(
     cmd_map: &CommandMap<'a>,
     const_cache: &mut HashSet<&'a str>,
     const_values: &mut BTreeMap<Ident, ConstantTypeInfo>,
-    cmd_aliases: &HashMap<String, String>,
+    cmd_aliases: &HashMap<&'a str, &'a str>,
     fn_cache: &mut HashSet<&'a str>,
 ) -> Option<TokenStream> {
     let extension_tokens = generate_extension_constants(
@@ -2797,14 +2800,14 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         .map(|cmd| (cmd.proto.name.clone(), cmd))
         .collect();
 
-    let cmd_aliases: HashMap<String, String> = spec2
+    let cmd_aliases: HashMap<_, _> = spec2
         .0
         .iter()
         .filter_map(get_variant!(vk_parse::RegistryChild::Commands))
         .flat_map(|cmds| &cmds.children)
         .filter_map(get_variant!(vk_parse::Command::Alias { name, alias }))
         .filter(|(name, _alias)| required_commands.contains(name.as_str()))
-        .map(|(name, alias)| (name.to_string(), alias.to_string()))
+        .map(|(name, alias)| (name.as_str(), alias.as_str()))
         .collect();
 
     let mut fn_cache = HashSet::new();
