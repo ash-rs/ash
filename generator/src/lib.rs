@@ -2927,19 +2927,18 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     let vk_dir = src_dir.join("vk");
     std::fs::create_dir_all(&vk_dir).expect("failed to create vk dir");
 
-    let mut vk_features_file = File::create(vk_dir.join("features.rs")).expect("vk/features.rs");
-    let mut vk_definitions_file =
+    let vk_features_file = File::create(vk_dir.join("features.rs")).expect("vk/features.rs");
+    let vk_definitions_file =
         File::create(vk_dir.join("definitions.rs")).expect("vk/definitions.rs");
-    let mut vk_enums_file = File::create(vk_dir.join("enums.rs")).expect("vk/enums.rs");
-    let mut vk_bitflags_file = File::create(vk_dir.join("bitflags.rs")).expect("vk/bitflags.rs");
-    let mut vk_constants_file = File::create(vk_dir.join("constants.rs")).expect("vk/constants.rs");
-    let mut vk_extensions_file =
-        File::create(vk_dir.join("extensions.rs")).expect("vk/extensions.rs");
-    let mut vk_feature_extensions_file =
+    let vk_enums_file = File::create(vk_dir.join("enums.rs")).expect("vk/enums.rs");
+    let vk_bitflags_file = File::create(vk_dir.join("bitflags.rs")).expect("vk/bitflags.rs");
+    let vk_constants_file = File::create(vk_dir.join("constants.rs")).expect("vk/constants.rs");
+    let vk_extensions_file = File::create(vk_dir.join("extensions.rs")).expect("vk/extensions.rs");
+    let vk_feature_extensions_file =
         File::create(vk_dir.join("feature_extensions.rs")).expect("vk/feature_extensions.rs");
-    let mut vk_const_debugs_file =
+    let vk_const_debugs_file =
         File::create(vk_dir.join("const_debugs.rs")).expect("vk/const_debugs.rs");
-    let mut vk_aliases_file = File::create(vk_dir.join("aliases.rs")).expect("vk/aliases.rs");
+    let vk_aliases_file = File::create(vk_dir.join("aliases.rs")).expect("vk/aliases.rs");
 
     let feature_code = quote! {
         use std::os::raw::*;
@@ -3011,18 +3010,36 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         #(#aliases)*
     };
 
-    write!(&mut vk_features_file, "{feature_code}").expect("Unable to write vk/features.rs");
-    write!(&mut vk_definitions_file, "{definition_code}")
-        .expect("Unable to write vk/definitions.rs");
-    write!(&mut vk_enums_file, "{enum_code}").expect("Unable to write vk/enums.rs");
-    write!(&mut vk_bitflags_file, "{bitflags_code}").expect("Unable to write vk/bitflags.rs");
-    write!(&mut vk_constants_file, "{constants_code}").expect("Unable to write vk/constants.rs");
-    write!(&mut vk_extensions_file, "{extension_code}").expect("Unable to write vk/extensions.rs");
-    write!(&mut vk_feature_extensions_file, "{feature_extensions_code}")
-        .expect("Unable to write vk/feature_extensions.rs");
-    write!(&mut vk_const_debugs_file, "{const_debugs}")
-        .expect("Unable to write vk/const_debugs.rs");
-    write!(&mut vk_aliases_file, "{aliases}").expect("Unable to write vk/aliases.rs");
+    fn write_formatted(text: &[u8], out: File) -> std::process::Child {
+        let mut child = std::process::Command::new("rustfmt")
+            .stdin(std::process::Stdio::piped())
+            .stdout(out)
+            .spawn()
+            .expect("Failed to spawn `rustfmt`");
+        let mut stdin = child.stdin.take().expect("Failed to open stdin");
+        stdin.write_all(text).unwrap();
+        drop(stdin);
+        child
+    }
+
+    let processes = [
+        write_formatted(feature_code.to_string().as_bytes(), vk_features_file),
+        write_formatted(definition_code.to_string().as_bytes(), vk_definitions_file),
+        write_formatted(enum_code.to_string().as_bytes(), vk_enums_file),
+        write_formatted(bitflags_code.to_string().as_bytes(), vk_bitflags_file),
+        write_formatted(constants_code.to_string().as_bytes(), vk_constants_file),
+        write_formatted(extension_code.to_string().as_bytes(), vk_extensions_file),
+        write_formatted(
+            feature_extensions_code.to_string().as_bytes(),
+            vk_feature_extensions_file,
+        ),
+        write_formatted(const_debugs.to_string().as_bytes(), vk_const_debugs_file),
+        write_formatted(aliases.to_string().as_bytes(), vk_aliases_file),
+    ];
+    for mut p in processes {
+        let status = p.wait().unwrap();
+        assert!(status.success());
+    }
 
     let vk_include = vk_headers_dir.join("include");
 
