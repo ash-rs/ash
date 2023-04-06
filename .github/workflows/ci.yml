@@ -8,15 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-      - uses: actions-rs/cargo@v1
-        with:
-          command: check
-          args: --workspace --all-targets --all-features
+      - run: cargo check --workspace --all-targets --all-features
 
   check_msrv:
     name: Check ash MSRV (1.59.0)
@@ -24,10 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: dtolnay/rust-toolchain@1.59.0
-      - uses: actions-rs/cargo@v1
-        with:
-          command: check
-          args: -p ash --all-features
+      - run: cargo check -p ash --all-features
 
   check_ash_window_msrv:
     name: Check ash-window MSRV (1.64.0)
@@ -35,10 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: dtolnay/rust-toolchain@1.64.0
-      - uses: actions-rs/cargo@v1
-        with:
-          command: check
-          args: -p ash-window -p examples --all-features
+      - run: cargo check -p ash-window -p examples --all-features
 
   generated:
     name: Generated
@@ -47,21 +33,10 @@ jobs:
       - uses: actions/checkout@v1
         with:
           submodules: true
-      - uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
       - name: Run generator
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: -p generator
+        run: cargo run -p generator
       - name: Format generated results
-        uses: actions-rs/cargo@v1
-        with:
-          command: fmt
-          args: -p ash
+        run: cargo fmt -p ash
       - name: Diff autogen result
         run: git diff --quiet || (echo "::error::Generated files are different, please regenerate with cargo run -p generator!"; git diff; false)
 
@@ -72,82 +47,39 @@ jobs:
       - name: Install Vulkan loader
         run: sudo apt-get install libvulkan-dev
       - uses: actions/checkout@v1
-      - uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
       - name: Test all targets
-        uses: actions-rs/cargo@v1
-        with:
-          command: test
-          args: --workspace --all-targets
+        run: cargo test --workspace --all-targets
       - name: Test docs
-        uses: actions-rs/cargo@v1
-        with:
-          command: test
-          args: --workspace --doc
+        run: cargo test --workspace --doc
 
   fmt:
     name: Rustfmt
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-          components: rustfmt
-      - uses: actions-rs/cargo@v1
-        with:
-          command: fmt
-          args: --all -- --check
+      - run: cargo fmt --all -- --check
 
   clippy:
     name: Clippy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-          components: clippy
-      - uses: actions-rs/cargo@v1
-        name: Clippy lint without features
-        with:
-          command: clippy
-          # Only test the core ash and ash-window crate, where features reside.
-          # The examples crate would otherwise enable all default features again,
-          # making this test moot.
-          args: -p ash -p ash-window --no-default-features -- -D warnings
-      - uses: actions-rs/cargo@v1
-        name: Clippy lint with all features
-        with:
-          command: clippy
-          args: --workspace --all-targets --all-features -- -D warnings
-      - uses: actions-rs/cargo@v1
-        name: Clippy lint with default features
-        with:
-          command: clippy
-          args: --workspace --all-targets -- -D warnings
+      - name: Clippy lint without features
+        # Only test the core ash and ash-window crate, where features reside.
+        # The examples crate would otherwise enable all default features again,
+        # making this test moot.
+        run: cargo clippy -p ash -p ash-window --no-default-features -- -D warnings
+      - name: Clippy lint with all features
+        run: cargo clippy --workspace --all-targets --all-features -- -D warnings
+      - name: Clippy lint with default features
+        run: cargo clippy --workspace --all-targets -- -D warnings
 
   docs:
     name: Build-test docs
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-      - uses: actions-rs/cargo@v1
-        name: Document all crates
+      - name: Document all crates
         env:
           RUSTDOCFLAGS: -Dwarnings
-        with:
-          command: doc
-          args: --all --all-features --no-deps --document-private-items
+        run: cargo doc --all --all-features --no-deps --document-private-items
