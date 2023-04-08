@@ -854,6 +854,14 @@ impl Device {
         (self.device_fn_1_1.trim_command_pool)(self.handle(), command_pool, flags);
     }
 
+    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceQueue2.html>
+    #[inline]
+    pub unsafe fn get_device_queue2(&self, queue_info: &vk::DeviceQueueInfo2) -> vk::Queue {
+        let mut queue = mem::zeroed();
+        (self.device_fn_1_1.get_device_queue2)(self.handle(), queue_info, &mut queue);
+        queue
+    }
+
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateSamplerYcbcrConversion.html>
     #[inline]
     pub unsafe fn create_sampler_ycbcr_conversion(
