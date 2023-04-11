@@ -38,6 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Replaced `const fn name()` with associated `NAME` constants (#715)
 - Generic builders now automatically set `objecttype` to `<T as Handle>::ObjectType` (#724)
 - `get_calibrated_timestamps()` now returns a single value for `max_deviation` (#738)
+- Bumped `libloading` from `0.7` to `0.8` (#739)
 - extensions/khr: Take the remaining `p_next`-containing structs as `&mut` to allow chains (#744)
   - `AccelerationStructure::get_acceleration_structure_build_sizes()`
   - `ExternalMemoryFd::get_memory_fd_properties()`
