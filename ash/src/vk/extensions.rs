@@ -15108,7 +15108,7 @@ impl StructureType {
 impl ExtDeviceFaultFn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_device_fault\0") };
-    pub const SPEC_VERSION: u32 = 1u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDeviceFaultInfoEXT = unsafe extern "system" fn(
@@ -17182,7 +17182,7 @@ impl HuaweiClusterCullingShaderFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
         ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_HUAWEI_cluster_culling_shader\0")
     };
-    pub const SPEC_VERSION: u32 = 1u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDrawClusterHUAWEI = unsafe extern "system" fn(
@@ -20277,6 +20277,15 @@ impl ObjectType {
 #[doc = "Generated from 'VK_EXT_shader_object'"]
 impl Result {
     pub const ERROR_INCOMPATIBLE_SHADER_BINARY_EXT: Self = Self(1_000_482_000);
+}
+#[doc = "Generated from 'VK_EXT_shader_object'"]
+impl ShaderCreateFlagsEXT {
+    pub const ALLOW_VARYING_SUBGROUP_SIZE: Self = Self(0b10);
+    pub const REQUIRE_FULL_SUBGROUPS: Self = Self(0b100);
+    pub const NO_TASK_SHADER: Self = Self(0b1000);
+    pub const DISPATCH_BASE: Self = Self(0b1_0000);
+    pub const FRAGMENT_SHADING_RATE_ATTACHMENT: Self = Self(0b10_0000);
+    pub const FRAGMENT_DENSITY_MAP_ATTACHMENT: Self = Self(0b100_0000);
 }
 #[doc = "Generated from 'VK_EXT_shader_object'"]
 impl StructureType {

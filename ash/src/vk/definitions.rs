@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 246;
+pub const HEADER_VERSION: u32 = 247;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -46447,6 +46447,8 @@ pub struct DeviceFaultVendorBinaryHeaderVersionOneEXT {
     pub application_name_offset: u32,
     pub application_version: u32,
     pub engine_name_offset: u32,
+    pub engine_version: u32,
+    pub api_version: u32,
 }
 impl ::std::default::Default for DeviceFaultVendorBinaryHeaderVersionOneEXT {
     #[inline]
@@ -46461,6 +46463,8 @@ impl ::std::default::Default for DeviceFaultVendorBinaryHeaderVersionOneEXT {
             application_name_offset: u32::default(),
             application_version: u32::default(),
             engine_name_offset: u32::default(),
+            engine_version: u32::default(),
+            api_version: u32::default(),
         }
     }
 }
@@ -46511,6 +46515,16 @@ impl DeviceFaultVendorBinaryHeaderVersionOneEXT {
     #[inline]
     pub fn engine_name_offset(mut self, engine_name_offset: u32) -> Self {
         self.engine_name_offset = engine_name_offset;
+        self
+    }
+    #[inline]
+    pub fn engine_version(mut self, engine_version: u32) -> Self {
+        self.engine_version = engine_version;
+        self
+    }
+    #[inline]
+    pub fn api_version(mut self, api_version: u32) -> Self {
+        self.api_version = api_version;
         self
     }
 }
