@@ -70,29 +70,14 @@ Each Vulkan handle type is exposed as a newtyped struct for improved type safety
 `T::null()`, and handles may be freely converted to and from `u64` with `Handle::from_raw` and `Handle::as_raw` for
 interop with non-Ash Vulkan code.
 
-### Default implementation for all types
-
-```rust
-// No need to manually set the structure type
-let desc_alloc_info = vk::DescriptorSetAllocateInfo {
-    descriptor_pool: self.pool,
-    descriptor_set_count: self.layouts.len() as u32,
-    p_set_layouts: self.layouts.as_ptr(),
-    ..Default::default()
-};
-```
-
 ### Builder pattern
 
 ```rust
-// We lose all lifetime information when we call `.build()`. Be careful!
-let queue_info = [vk::DeviceQueueCreateInfo::builder()
+let queue_info = [vk::DeviceQueueCreateInfo::default()
     .queue_family_index(queue_family_index)
-    .queue_priorities(&priorities)
-    .build()];
+    .queue_priorities(&priorities)];
 
-// We don't need to call `.build()` here because builders implement `Deref`.
-let device_create_info = vk::DeviceCreateInfo::builder()
+let device_create_info = vk::DeviceCreateInfo::default()
     .queue_create_infos(&queue_info)
     .enabled_extension_names(&device_extension_names_raw)
     .enabled_features(&features);
@@ -102,55 +87,21 @@ let device: Device = instance
     .unwrap();
 ```
 
-To not lose this lifetime single items can be "cast" to a slice of length _one_ with `std::slice::from_ref` while still taking advantage of `Deref`:
-
-```rust
-let queue_info = vk::DeviceQueueCreateInfo::builder()
-    .queue_family_index(queue_family_index)
-    .queue_priorities(&priorities);
-
-let device_create_info = vk::DeviceCreateInfo::builder()
-    .queue_create_infos(std::slice::from_ref(&queue_info))
-    ...;
-```
-
-Builders have an explicit lifetime, and are marked as `#[repr(transparent)]`.
-
-```rust
-#[repr(transparent)]
-pub struct DeviceCreateInfoBuilder<'a> {
-    inner: DeviceCreateInfo,
-    marker: ::std::marker::PhantomData<&'a ()>,
-}
-impl<'a> DeviceCreateInfoBuilder<'a> {
-    //...
-    pub fn queue_create_infos(
-        mut self,
-        queue_create_infos: &'a [DeviceQueueCreateInfo],
-    ) -> DeviceCreateInfoBuilder<'a> {...}
-    //...
-```
-
-Every reference has to live as long as the builder itself. Builders implement `Deref` targeting their corresponding Vulkan struct, so references to builders can be passed directly
-to Vulkan functions.
-
-Calling `.build()` will **discard** that lifetime because Vulkan structs use raw pointers internally. This should be avoided as much as possible because this can easily lead to dangling pointers. If `.build()` has to be called, it should be called as late as possible. [Lifetimes of temporaries](https://doc.rust-lang.org/reference/expressions.html#temporary-lifetimes) are extended to the enclosing statement, ensuring they are valid for the duration of a Vulkan call occurring in the same statement.
-
 ### Pointer chains
 
+Use `base.push_next(ext)` to insert `ext` at the front of the pointer chain attached to `base`.
+
 ```rust
-let mut variable_pointers = vk::PhysicalDeviceVariablePointerFeatures::builder();
-let mut corner =
-    vk::PhysicalDeviceCornerSampledImageFeaturesNV::builder();
-;
-let mut device_create_info = vk::DeviceCreateInfo::builder()
+let mut variable_pointers = vk::PhysicalDeviceVariablePointerFeatures::default();
+let mut corner = vk::PhysicalDeviceCornerSampledImageFeaturesNV::default();
+
+let mut device_create_info = vk::DeviceCreateInfo::default()
     .push_next(&mut corner)
     .push_next(&mut variable_pointers);
 ```
 
-Pointer chains in builders differ from raw Vulkan. Instead of chaining every struct manually, you instead use `.push_next` on the struct that you are going to pass into the function. Those structs then get _prepended_ into the chain.
-
-`push_next` is also type checked, you can only add valid structs to the chain. Both the structs and the builders can be passed into `push_next`. Only builders for structs that can be passed into functions will implement a `push_next`.
+The generic argument of `.push_next()` only allows valid structs to extend a given struct (known as [`structextends` in the Vulkan registry](https://registry.khronos.org/vulkan/specs/1.3/styleguide.html#extensions-interactions), mapped to `Extends*` traits).
+Only structs that are listed one or more times in any `structextends` will implement a `.push_next()`.
 
 ### Flags and constants as associated constants
 
