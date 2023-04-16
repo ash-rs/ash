@@ -11,6 +11,7 @@ A very lightweight wrapper around Vulkan
 [![MSRV](https://img.shields.io/badge/rustc-1.60.0+-ab6000.svg)](https://blog.rust-lang.org/2022/04/07/Rust-1.60.0.html)
 
 ## Overview
+
 - [x] A true Vulkan API without compromises
 - [x] Convenience features without limiting functionality
 - [x] Additional type safety
@@ -20,12 +21,15 @@ A very lightweight wrapper around Vulkan
 - [x] Support for Vulkan `1.1`, `1.2`, `1.3`
 
 ## ⚠️ Semver compatibility warning
+
 The Vulkan Video bindings are experimental and still seeing breaking changes in their upstream specification, and are only provided by Ash for early adopters. All related functions and types are semver-exempt [^1] (we allow breaking API changes while releasing Ash with non-breaking semver bumps).
 
 [^1]: `generator` complexity makes it so that we cannot easily hide these bindings behind a non-`default` feature flag, and they are widespread across the generated codebase.
 
 ## Features
+
 ### Explicit returns with `Result`
+
 ```rust
 // function signature
 pub fn create_instance(&self,
@@ -36,7 +40,6 @@ let instance = entry.create_instance(&create_info, None)
     .expect("Instance creation error");
 ```
 
-
 ### `Vec<T>` instead of mutable slices
 
 ```rust
@@ -45,9 +48,11 @@ pub fn get_swapchain_images(&self,
                             -> VkResult<Vec<vk::Image>>;
 let present_images = swapchain_loader.get_swapchain_images_khr(swapchain).unwrap();
 ```
-*Note*: Functions don't return `Vec<T>` if this would limit the functionality. See `p_next`.
+
+_Note_: Functions don't return `Vec<T>` if this would limit the functionality. See `p_next`.
 
 ### Slices
+
 ```rust
 pub fn cmd_pipeline_barrier(&self,
                             command_buffer: vk::CommandBuffer,
@@ -65,27 +70,14 @@ Each Vulkan handle type is exposed as a newtyped struct for improved type safety
 `T::null()`, and handles may be freely converted to and from `u64` with `Handle::from_raw` and `Handle::as_raw` for
 interop with non-Ash Vulkan code.
 
-### Default implementation for all types
-```rust
-// No need to manually set the structure type
-let desc_alloc_info = vk::DescriptorSetAllocateInfo {
-    descriptor_pool: self.pool,
-    descriptor_set_count: self.layouts.len() as u32,
-    p_set_layouts: self.layouts.as_ptr(),
-    ..Default::default()
-};
-```
 ### Builder pattern
 
 ```rust
-// We lose all lifetime information when we call `.build()`. Be careful!
-let queue_info = [vk::DeviceQueueCreateInfo::builder()
+let queue_info = [vk::DeviceQueueCreateInfo::default()
     .queue_family_index(queue_family_index)
-    .queue_priorities(&priorities)
-    .build()];
+    .queue_priorities(&priorities)];
 
-// We don't need to call `.build()` here because builders implement `Deref`.
-let device_create_info = vk::DeviceCreateInfo::builder()
+let device_create_info = vk::DeviceCreateInfo::default()
     .queue_create_infos(&queue_info)
     .enabled_extension_names(&device_extension_names_raw)
     .enabled_features(&features);
@@ -95,56 +87,21 @@ let device: Device = instance
     .unwrap();
 ```
 
-To not lose this lifetime single items can be "cast" to a slice of length _one_ with `std::slice::from_ref` while still taking advantage of `Deref`:
-
-```rust
-let queue_info = vk::DeviceQueueCreateInfo::builder()
-    .queue_family_index(queue_family_index)
-    .queue_priorities(&priorities);
-
-let device_create_info = vk::DeviceCreateInfo::builder()
-    .queue_create_infos(std::slice::from_ref(&queue_info))
-    ...;
-```
-
-Builders have an explicit lifetime, and are marked as `#[repr(transparent)]`.
-```rust
-#[repr(transparent)]
-pub struct DeviceCreateInfoBuilder<'a> {
-    inner: DeviceCreateInfo,
-    marker: ::std::marker::PhantomData<&'a ()>,
-}
-impl<'a> DeviceCreateInfoBuilder<'a> {
-    //...
-    pub fn queue_create_infos(
-        mut self,
-        queue_create_infos: &'a [DeviceQueueCreateInfo],
-    ) -> DeviceCreateInfoBuilder<'a> {...}
-    //...
-```
-
-Every reference has to live as long as the builder itself. Builders implement `Deref` targeting their corresponding Vulkan struct, so references to builders can be passed directly
-to Vulkan functions.
-
-Calling `.build()` will **discard** that lifetime because Vulkan structs use raw pointers internally. This should be avoided as much as possible because this can easily lead to dangling pointers. If `.build()` has to be called, it should be called as late as possible. [Lifetimes of temporaries](https://doc.rust-lang.org/reference/expressions.html#temporary-lifetimes) are extended to the enclosing statement, ensuring they are valid for the duration of a Vulkan call occurring in the same statement.
-
-
 ### Pointer chains
 
+Use `base.push_next(ext)` to insert `ext` at the front of the pointer chain attached to `base`.
+
 ```rust
-let mut variable_pointers = vk::PhysicalDeviceVariablePointerFeatures::builder();
-let mut corner =
-    vk::PhysicalDeviceCornerSampledImageFeaturesNV::builder();
-;
-let mut device_create_info = vk::DeviceCreateInfo::builder()
+let mut variable_pointers = vk::PhysicalDeviceVariablePointerFeatures::default();
+let mut corner = vk::PhysicalDeviceCornerSampledImageFeaturesNV::default();
+
+let mut device_create_info = vk::DeviceCreateInfo::default()
     .push_next(&mut corner)
     .push_next(&mut variable_pointers);
 ```
 
-Pointer chains in builders differ from raw Vulkan. Instead of chaining every struct manually, you instead use `.push_next` on the struct that you are going to pass into the function. Those structs then get *prepended* into the chain.
-
-`push_next` is also type checked, you can only add valid structs to the chain. Both the structs and the builders can be passed into `push_next`. Only builders for structs that can be passed into functions will implement a `push_next`.
-
+The generic argument of `.push_next()` only allows valid structs to extend a given struct (known as [`structextends` in the Vulkan registry](https://registry.khronos.org/vulkan/specs/1.3/styleguide.html#extensions-interactions), mapped to `Extends*` traits).
+Only structs that are listed one or more times in any `structextends` will implement a `.push_next()`.
 
 ### Flags and constants as associated constants
 
@@ -157,6 +114,7 @@ vk::AccessFlags::COLOR_ATTACHMENT_READ | vk::AccessFlags::COLOR_ATTACHMENT_WRITE
 // Constant
 vk::PipelineBindPoint::GRAPHICS,
 ```
+
 ### Debug/Display for Flags
 
 ```rust
@@ -170,22 +128,25 @@ println!("Display: {}", flag);
 ```
 
 ### Function pointer loading
+
 Ash also takes care of loading the function pointers. Function pointers are split into 3 categories.
 
-* Entry: Loads the Vulkan library. Needs to outlive `Instance` and `Device`.
-* Instance: Loads instance level functions. Needs to outlive the `Device`s it has created.
-* Device: Loads device **local** functions.
+- Entry: Loads the Vulkan library. Needs to outlive `Instance` and `Device`.
+- Instance: Loads instance level functions. Needs to outlive the `Device`s it has created.
+- Device: Loads device **local** functions.
 
 The loader is just one possible implementation:
 
-* Device level functions are retrieved on a per device basis.
-* Everything is loaded by default, functions that failed to load are initialized to a function that always panics.
-* Do not call Vulkan 1.1 functions if you have created a 1.0 instance. Doing so will result in a panic.
+- Device level functions are retrieved on a per device basis.
+- Everything is loaded by default, functions that failed to load are initialized to a function that always panics.
+- Do not call Vulkan 1.1 functions if you have created a 1.0 instance. Doing so will result in a panic.
 
 Custom loaders can be implemented.
 
 ### Extension loading
+
 Additionally, every Vulkan extension has to be loaded explicitly. You can find all extensions under [ash::extensions](https://github.com/MaikKlein/ash/tree/master/ash/src/extensions).
+
 ```rust
 use ash::extensions::khr::Swapchain;
 let swapchain_loader = Swapchain::new(&instance, &device);
@@ -201,6 +162,7 @@ device.fp_v1_0().destroy_device(...);
 ```
 
 ### Support for extension names
+
 ```rust
 use ash::extensions::{Swapchain, XlibSurface, Surface, DebugReport};
 #[cfg(all(unix, not(target_os = "android")))]
@@ -214,7 +176,9 @@ fn extension_names() -> Vec<*const i8> {
 ```
 
 ### Implicit handles
+
 Handles from Instance or Device are passed implicitly.
+
 ```rust
 pub fn create_command_pool(&self,
                            create_info: &vk::CommandPoolCreateInfo)
@@ -230,14 +194,22 @@ The default `loaded` cargo feature will dynamically load the default Vulkan libr
 If, on the other hand, your application cannot handle Vulkan being missing at runtime, you can instead enable the `linked` feature, which will link your binary with the Vulkan loader directly and expose the infallible `Entry::linked`.
 
 ## Example
+
 You can find the examples [here](https://github.com/MaikKlein/ash/tree/master/examples).
 All examples currently require: the LunarG Validation layers and a Vulkan library that is visible in your `PATH`. An easy way to get started is to use the [LunarG Vulkan SDK](https://lunarg.com/vulkan-sdk/)
+
 #### Windows
+
 Make sure that you have a Vulkan ready driver and install the [LunarG Vulkan SDK](https://lunarg.com/vulkan-sdk/).
+
 #### Linux
+
 Make sure that you have a Vulkan ready driver and install the [LunarG Vulkan SDK](https://lunarg.com/vulkan-sdk/). You also have to add the library and layers to your path. Have a look at my [post](http://askubuntu.com/a/803110/77183) if you are unsure how to do that.
+
 #### macOS
+
 Install the [LunarG Vulkan SDK](https://lunarg.com/vulkan-sdk/). The installer puts the SDK in `$HOME/VulkanSDK/<version>` by default. You will need to set the following environment variables when running cargo:
+
 ```sh
 VULKAN_SDK=$HOME/VulkanSDK/<version>/macOS \
 DYLD_FALLBACK_LIBRARY_PATH=$VULKAN_SDK/lib \
@@ -247,7 +219,9 @@ cargo run ...
 ```
 
 ### [Triangle](https://github.com/MaikKlein/ash/blob/master/examples/src/bin/triangle.rs)
+
 Displays a triangle with vertex colors.
+
 ```
 cd examples
 cargo run --bin triangle
@@ -256,35 +230,40 @@ cargo run --bin triangle
 ![screenshot](http://i.imgur.com/PQZcL6w.jpg)
 
 ### [Texture](https://github.com/MaikKlein/ash/blob/master/examples/src/bin/texture.rs)
+
 Displays a texture on a quad.
+
 ```
 cd examples
 cargo run --bin texture
 ```
+
 ![texture](http://i.imgur.com/trow00H.png)
 
 ## Useful resources
 
 ### Examples
 
-* [vulkan-tutorial-rust](https://github.com/Usami-Renko/vulkan-tutorial-rust) - A port of [vulkan-tutorial.com](https://vulkan-tutorial.com).
-* [ash-sample-progression](https://github.com/bzm3r/ash-sample-progression) - A port of the LunarG examples.
-* [ash-nv-rt](https://github.com/gwihlidal/ash-nv-rt) A raytracing example for ash.
+- [vulkan-tutorial-rust](https://github.com/Usami-Renko/vulkan-tutorial-rust) - A port of [vulkan-tutorial.com](https://vulkan-tutorial.com).
+- [ash-sample-progression](https://github.com/bzm3r/ash-sample-progression) - A port of the LunarG examples.
+- [ash-nv-rt](https://github.com/gwihlidal/ash-nv-rt) A raytracing example for ash.
 
 ### Utility libraries
-* [vk-sync](https://github.com/gwihlidal/vk-sync-rs) - Simplified Vulkan synchronization logic, written in rust.
-* [vk-mem-rs](https://github.com/gwihlidal/vk-mem-rs) - This crate provides an FFI layer and idiomatic rust wrappers for the excellent AMD Vulkan Memory Allocator (VMA) C/C++ library.
-* [gpu-allocator](https://github.com/Traverse-Research/gpu-allocator) - Memory allocator written in pure Rust for GPU memory in Vulkan and in the future DirectX 12
-* [lahar](https://github.com/Ralith/lahar) - Tools for asynchronously uploading data to a Vulkan device.
+
+- [vk-sync](https://github.com/gwihlidal/vk-sync-rs) - Simplified Vulkan synchronization logic, written in rust.
+- [vk-mem-rs](https://github.com/gwihlidal/vk-mem-rs) - This crate provides an FFI layer and idiomatic rust wrappers for the excellent AMD Vulkan Memory Allocator (VMA) C/C++ library.
+- [gpu-allocator](https://github.com/Traverse-Research/gpu-allocator) - Memory allocator written in pure Rust for GPU memory in Vulkan and in the future DirectX 12
+- [lahar](https://github.com/Ralith/lahar) - Tools for asynchronously uploading data to a Vulkan device.
 
 ### Libraries that use ash
-* [gfx-rs](https://github.com/gfx-rs/gfx) - gfx-rs is a low-level, cross-platform graphics abstraction library in Rust.
+
+- [gfx-rs](https://github.com/gfx-rs/gfx) - gfx-rs is a low-level, cross-platform graphics abstraction library in Rust.
 
 ## A thanks to
 
-* [Api with no secrets](https://software.intel.com/en-us/articles/api-without-secrets-introduction-to-vulkan-part-1)
-* [Vulkan tutorial](http://jhenriques.net/development.html)
-* [Vulkan examples](https://github.com/SaschaWillems/Vulkan)
-* [Vulkan tutorial](https://vulkan-tutorial.com/)
-* [Vulkano](https://github.com/vulkano-rs/vulkano)
-* [vk-rs](https://github.com/Osspial/vk-rs)
+- [Api with no secrets](https://software.intel.com/en-us/articles/api-without-secrets-introduction-to-vulkan-part-1)
+- [Vulkan tutorial](http://jhenriques.net/development.html)
+- [Vulkan examples](https://github.com/SaschaWillems/Vulkan)
+- [Vulkan tutorial](https://vulkan-tutorial.com/)
+- [Vulkano](https://github.com/vulkano-rs/vulkano)
+- [vk-rs](https://github.com/Osspial/vk-rs)
