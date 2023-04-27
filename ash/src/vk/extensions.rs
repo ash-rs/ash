@@ -19098,6 +19098,22 @@ impl PipelineCreateFlags {
 impl StructureType {
     pub const PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES_EXT: Self = Self(1_000_466_000);
 }
+impl KhrRayTracingPositionFetchFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_ray_tracing_position_fetch\0")
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct KhrRayTracingPositionFetchFn;
+#[doc = "Generated from 'VK_KHR_ray_tracing_position_fetch'"]
+impl BuildAccelerationStructureFlagsKHR {
+    pub const ALLOW_DATA_ACCESS: Self = Self(0b1000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_ray_tracing_position_fetch'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_RAY_TRACING_POSITION_FETCH_FEATURES_KHR: Self = Self(1_000_481_000);
+}
 impl ExtShaderObjectFn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_object\0") };

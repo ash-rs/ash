@@ -655,6 +655,10 @@ impl fmt::Debug for BuildAccelerationStructureFlagsKHR {
                 BuildAccelerationStructureFlagsKHR::ALLOW_DISPLACEMENT_MICROMAP_UPDATE_NV.0,
                 "ALLOW_DISPLACEMENT_MICROMAP_UPDATE_NV",
             ),
+            (
+                BuildAccelerationStructureFlagsKHR::ALLOW_DATA_ACCESS.0,
+                "ALLOW_DATA_ACCESS",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -5866,6 +5870,9 @@ impl fmt::Debug for StructureType {
             }
             Self::PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_RAY_TRACING_POSITION_FETCH_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_RAY_TRACING_POSITION_FETCH_FEATURES_KHR")
             }
             Self::PHYSICAL_DEVICE_SHADER_OBJECT_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_SHADER_OBJECT_FEATURES_EXT")
