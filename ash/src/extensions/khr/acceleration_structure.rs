@@ -259,7 +259,7 @@ impl AccelerationStructure {
         &self,
         version: &vk::AccelerationStructureVersionInfoKHR,
     ) -> vk::AccelerationStructureCompatibilityKHR {
-        let mut compatibility = vk::AccelerationStructureCompatibilityKHR::default();
+        let mut compatibility = mem::zeroed();
 
         (self.fp.get_device_acceleration_structure_compatibility_khr)(
             self.handle,
