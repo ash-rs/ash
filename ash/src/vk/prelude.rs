@@ -64,8 +64,12 @@ pub unsafe trait TaggedStructure {
 }
 
 #[inline]
-pub(crate) unsafe fn wrap_c_str_slice_until_nul(str: &[c_char]) -> &std::ffi::CStr {
-    std::ffi::CStr::from_ptr(str.as_ptr())
+pub(crate) fn wrap_c_str_slice_until_nul(
+    str: &[core::ffi::c_char],
+) -> Result<&core::ffi::CStr, core::ffi::FromBytesUntilNulError> {
+    // SAFETY: The cast from c_char to u8 is ok because a c_char is always one byte.
+    let bytes = unsafe { core::slice::from_raw_parts(str.as_ptr().cast(), str.len()) };
+    core::ffi::CStr::from_bytes_until_nul(bytes)
 }
 
 #[derive(Debug)]
@@ -87,11 +91,11 @@ impl fmt::Display for CStrTooLargeForStaticArray {
 #[inline]
 pub(crate) fn write_c_str_slice_with_nul(
     target: &mut [c_char],
-    str: &std::ffi::CStr,
+    str: &core::ffi::CStr,
 ) -> Result<(), CStrTooLargeForStaticArray> {
     let bytes = str.to_bytes_with_nul();
     // SAFETY: The cast from c_char to u8 is ok because a c_char is always one byte.
-    let bytes = unsafe { std::slice::from_raw_parts(bytes.as_ptr().cast(), bytes.len()) };
+    let bytes = unsafe { core::slice::from_raw_parts(bytes.as_ptr().cast(), bytes.len()) };
     let static_array_size = target.len();
     target
         .get_mut(..bytes.len())
