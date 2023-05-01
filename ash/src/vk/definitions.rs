@@ -7276,6 +7276,11 @@ impl<'a> FramebufferCreateInfo<'a> {
         self
     }
     #[inline]
+    pub fn attachment_count(mut self, attachment_count: u32) -> Self {
+        self.attachment_count = attachment_count;
+        self
+    }
+    #[inline]
     pub fn attachments(mut self, attachments: &'a [ImageView]) -> Self {
         self.attachment_count = attachments.len() as _;
         self.p_attachments = attachments.as_ptr();

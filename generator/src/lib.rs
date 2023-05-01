@@ -1786,10 +1786,15 @@ pub fn derive_setters(
     // Must either have both, or none:
     assert_eq!(next_field.is_some(), structure_type_field.is_some());
 
-    let nofilter_count_members = [
-        ("VkPipelineViewportStateCreateInfo", "pViewports"),
-        ("VkPipelineViewportStateCreateInfo", "pScissors"),
-        ("VkDescriptorSetLayoutBinding", "pImmutableSamplers"),
+    let allowed_count_members = [
+        // pViewports is allowed to be empty if the viewport state is empty
+        ("VkPipelineViewportStateCreateInfo", "viewportCount"),
+        // Must match viewportCount
+        ("VkPipelineViewportStateCreateInfo", "scissorCount"),
+        // descriptorCount is settable regardless of having pImmutableSamplers
+        ("VkDescriptorSetLayoutBinding", "descriptorCount"),
+        // No ImageView attachments when VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT is set
+        ("VkFramebufferCreateInfo", "attachmentCount"),
     ];
     let filter_members: Vec<String> = members
         .iter()
@@ -1799,7 +1804,7 @@ pub fn derive_setters(
             // Associated _count members
             if field.array.is_some() {
                 if let Some(ref array_size) = field.size {
-                    if !nofilter_count_members.contains(&(&struct_.name, field_name)) {
+                    if !allowed_count_members.contains(&(&struct_.name, array_size)) {
                         return Some((*array_size).clone());
                     }
                 }
