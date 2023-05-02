@@ -1793,33 +1793,31 @@ pub fn derive_setters(
     // Must either have both, or none:
     assert_eq!(next_field.is_some(), structure_type_field.is_some());
 
-    let nofilter_count_members = [
-        ("VkPipelineViewportStateCreateInfo", "pViewports"),
-        ("VkPipelineViewportStateCreateInfo", "pScissors"),
-        ("VkDescriptorSetLayoutBinding", "pImmutableSamplers"),
+    let allowed_count_members = [
+        // pViewports is allowed to be empty if the viewport state is empty
+        ("VkPipelineViewportStateCreateInfo", "viewportCount"),
+        // Must match viewportCount
+        ("VkPipelineViewportStateCreateInfo", "scissorCount"),
+        // descriptorCount is settable regardless of having pImmutableSamplers
+        ("VkDescriptorSetLayoutBinding", "descriptorCount"),
+        // No ImageView attachments when VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT is set
+        ("VkFramebufferCreateInfo", "attachmentCount"),
     ];
-    let filter_members: Vec<String> = members
+    let filter_members = members
         .iter()
         .filter_map(|(field, _)| {
-            let field_name = field.name.as_ref().unwrap();
-
             // Associated _count members
             if field.array.is_some() {
-                if let Some(ref array_size) = field.size {
-                    if !nofilter_count_members.contains(&(&struct_.name, field_name)) {
-                        return Some((*array_size).clone());
+                if let Some(array_size) = &field.size {
+                    if !allowed_count_members.contains(&(&struct_.name, array_size)) {
+                        return Some(array_size);
                     }
                 }
             }
 
-            // VkShaderModuleCreateInfo requires a custom setter
-            if field_name == "codeSize" {
-                return Some(field_name.clone());
-            }
-
             None
         })
-        .collect();
+        .collect::<Vec<_>>();
 
     let setters = members.iter().filter_map(|(field, deprecated)| {
         let deprecated = deprecated.as_ref().map(|d| quote!(#d #[allow(deprecated)]));
@@ -1838,12 +1836,15 @@ pub fn derive_setters(
         let mut param_ident_short = format_ident!("{}", param_ident_short);
 
         if let Some(name) = field.name.as_ref() {
-            // Filter
-            if filter_members.iter().any(|n| *n == *name) {
+            if filter_members.contains(&name) {
                 return None;
             }
 
             // Unique cases
+            if struct_.name == "VkShaderModuleCreateInfo" && name == "codeSize" {
+                return None;
+            }
+
             if struct_.name == "VkShaderModuleCreateInfo" && name == "pCode" {
                 return Some(quote!{
                     #[inline]
