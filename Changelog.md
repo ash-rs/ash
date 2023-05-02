@@ -1,4 +1,5 @@
 # Changelog
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
@@ -12,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `VK_KHR_performance_query` device extension (#726)
 - Added `VK_EXT_shader_object` device extension (#732)
 - Added missing `Device::get_device_queue2()` wrapper (#736)
+- Exposed `FramebufferCreateInfo::attachment_count()` builder for `vk::FramebufferCreateFlags::IMAGELESS` (#747)
 
 ### Changed
 
@@ -303,15 +305,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix XCB types
 - Fix OSX build errors of the examples
 
-
 ## Before 0.30.0
 
 ### 0.29.0
+
 - -Breaking-: Removed Display impl for flags. The Debug impl now reports flags by name.
 - Functions now have a doc comment that links to the Vulkan spec
 - Entry has a new method called `try_enumerate_instance_version` which can be used in a 1.0 context.
 - The generator now uses `BTreeMap` for better diffs.
+
 ### 0.28.0
+
 - Switched to a new [changelog](https://keepachangelog.com/en/1.0.0/) format
 - Fixed a build issue on ARM.
 - -Breaking- Arrays are now passed by reference.
@@ -336,6 +340,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Expose function pointers for easier interop with external libraries.
 
 - Builder now uses bool instead of Bool32.
+
 ### 0.25.0
 
 - Adds support for Vulkan 1.1
@@ -367,8 +372,8 @@ flags: vk::CommandPoolCreateFlags::RESET_COMMAND_BUFFER_BIT,
 
 - Various bug fixes
 
-
 ### 0.18.0
+
 - Fixes arm build => uses libc everywhere. Remove `AlignByteSlice`.
 
 ### 0.17.0
@@ -381,7 +386,6 @@ flags: vk::CommandPoolCreateFlags::RESET_COMMAND_BUFFER_BIT,
 
 - `ash::util::Align` is a helper struct that
 can write to aligned memory.
-
 
 [Unreleased]: https://github.com/MaikKlein/ash/compare/0.37.2...HEAD
 [0.37.2]: https://github.com/MaikKlein/ash/releases/tag/0.37.2
