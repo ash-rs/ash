@@ -22,12 +22,27 @@ impl Instance {
             mem::transmute((static_fn.get_instance_proc_addr)(instance, name.as_ptr()))
         };
 
-        Self {
-            handle: instance,
+        Self::from_parts_1_3(
+            instance,
+            vk::InstanceFnV1_0::load(load_fn),
+            vk::InstanceFnV1_1::load(load_fn),
+            vk::InstanceFnV1_3::load(load_fn),
+        )
+    }
 
-            instance_fn_1_0: vk::InstanceFnV1_0::load(load_fn),
-            instance_fn_1_1: vk::InstanceFnV1_1::load(load_fn),
-            instance_fn_1_3: vk::InstanceFnV1_3::load(load_fn),
+    #[inline]
+    pub fn from_parts_1_3(
+        handle: vk::Instance,
+        instance_fn_1_0: vk::InstanceFnV1_0,
+        instance_fn_1_1: vk::InstanceFnV1_1,
+        instance_fn_1_3: vk::InstanceFnV1_3,
+    ) -> Self {
+        Self {
+            handle,
+
+            instance_fn_1_0,
+            instance_fn_1_1,
+            instance_fn_1_3,
         }
     }
 
