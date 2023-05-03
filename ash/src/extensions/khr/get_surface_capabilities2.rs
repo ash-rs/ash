@@ -4,6 +4,7 @@ use crate::{Entry, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_get_surface_capabilities2.html>
 #[derive(Clone)]
 pub struct GetSurfaceCapabilities2 {
     fp: vk::KhrGetSurfaceCapabilities2Fn,
@@ -23,14 +24,14 @@ impl GetSurfaceCapabilities2 {
         &self,
         physical_device: vk::PhysicalDevice,
         surface_info: &vk::PhysicalDeviceSurfaceInfo2KHR,
-    ) -> VkResult<vk::SurfaceCapabilities2KHR> {
-        let mut surface_capabilities = Default::default();
+        surface_capabilities: &mut vk::SurfaceCapabilities2KHR,
+    ) -> VkResult<()> {
         (self.fp.get_physical_device_surface_capabilities2_khr)(
             physical_device,
             surface_info,
-            &mut surface_capabilities,
+            surface_capabilities,
         )
-        .result_with_success(surface_capabilities)
+        .result()
     }
 
     /// Retrieve the number of elements to pass to [`get_physical_device_surface_formats2()`][Self::get_physical_device_surface_formats2()]

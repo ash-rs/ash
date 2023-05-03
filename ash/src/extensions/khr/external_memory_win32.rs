@@ -38,15 +38,15 @@ impl ExternalMemoryWin32 {
         &self,
         handle_type: vk::ExternalMemoryHandleTypeFlags,
         handle: vk::HANDLE,
-    ) -> VkResult<vk::MemoryWin32HandlePropertiesKHR> {
-        let mut memory_win32_handle_properties = Default::default();
+        memory_win32_handle_properties: &mut vk::MemoryWin32HandlePropertiesKHR,
+    ) -> VkResult<()> {
         (self.fp.get_memory_win32_handle_properties_khr)(
             self.handle,
             handle_type,
             handle,
-            &mut memory_win32_handle_properties,
+            memory_win32_handle_properties,
         )
-        .result_with_success(memory_win32_handle_properties)
+        .result()
     }
 
     pub const NAME: &'static CStr = vk::KhrExternalMemoryWin32Fn::NAME;

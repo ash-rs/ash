@@ -21,6 +21,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Inlined struct setters (#602)
 - Bumped MSRV from 1.59 to 1.60 (#709)
 - Replaced `const fn name()` with associated `NAME` constants (#715)
+- extensions/khr: Take the remaining `p_next`-containing structs as `&mut` to allow chains (#744)
+  - `AccelerationStructure::get_acceleration_structure_build_sizes()`
+  - `ExternalMemoryFd::get_memory_fd_properties()`
+  - `ExternalMemoryWin32::get_memory_win32_handle_properties()`
+  - `GetSurfaceCapabilities2::get_physical_device_surface_capabilities2()`
 
 ### Removed
 
