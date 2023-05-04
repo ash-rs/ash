@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added `VK_EXT_pipeline_properties` device extension (#622)
 - Added `Handle::is_null()` to allow checking if a handle is a `NULL` value (#694)
-- Update Vulkan-Headers to 1.3.249 (#697, #723, #741)
+- Update Vulkan-Headers to 1.3.250 (#697, #723, #741)
 - Added `VK_KHR_performance_query` device extension (#726)
 - Added `VK_EXT_shader_object` device extension (#732)
 - Added missing `Device::get_device_queue2()` wrapper (#736)

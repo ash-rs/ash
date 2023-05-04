@@ -20501,3 +20501,58 @@ impl StructureType {
     pub const MULTIVIEW_PER_VIEW_RENDER_AREAS_RENDER_PASS_BEGIN_INFO_QCOM: Self =
         Self(1_000_510_001);
 }
+impl ExtAttachmentFeedbackLoopDynamicStateFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+            b"VK_EXT_attachment_feedback_loop_dynamic_state\0",
+        )
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetAttachmentFeedbackLoopEnableEXT =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, aspect_mask: ImageAspectFlags);
+#[derive(Clone)]
+pub struct ExtAttachmentFeedbackLoopDynamicStateFn {
+    pub cmd_set_attachment_feedback_loop_enable_ext: PFN_vkCmdSetAttachmentFeedbackLoopEnableEXT,
+}
+unsafe impl Send for ExtAttachmentFeedbackLoopDynamicStateFn {}
+unsafe impl Sync for ExtAttachmentFeedbackLoopDynamicStateFn {}
+impl ExtAttachmentFeedbackLoopDynamicStateFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {
+            cmd_set_attachment_feedback_loop_enable_ext: unsafe {
+                unsafe extern "system" fn cmd_set_attachment_feedback_loop_enable_ext(
+                    _command_buffer: CommandBuffer,
+                    _aspect_mask: ImageAspectFlags,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_attachment_feedback_loop_enable_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetAttachmentFeedbackLoopEnableEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_attachment_feedback_loop_enable_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+}
+#[doc = "Generated from 'VK_EXT_attachment_feedback_loop_dynamic_state'"]
+impl DynamicState {
+    pub const ATTACHMENT_FEEDBACK_LOOP_ENABLE_EXT: Self = Self(1_000_524_000);
+}
+#[doc = "Generated from 'VK_EXT_attachment_feedback_loop_dynamic_state'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_ATTACHMENT_FEEDBACK_LOOP_DYNAMIC_STATE_FEATURES_EXT: Self =
+        Self(1_000_524_000);
+}
