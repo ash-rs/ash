@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `ExternalMemoryFd::get_memory_fd_properties()`
   - `ExternalMemoryWin32::get_memory_win32_handle_properties()`
   - `GetSurfaceCapabilities2::get_physical_device_surface_capabilities2()`
+- `VK_KHR_device_group_creation`: Take borrow of `Entry` in `fn new()` (#753)
 
 ### Removed
 
