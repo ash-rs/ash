@@ -3,7 +3,7 @@
 use std::os::raw::*;
 pub type RROutput = c_ulong;
 pub type VisualID = c_uint;
-pub type Display = *const c_void;
+pub type Display = c_void;
 pub type Window = c_ulong;
 pub type xcb_connection_t = c_void;
 pub type xcb_window_t = u32;

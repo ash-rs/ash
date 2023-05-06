@@ -43,7 +43,7 @@ impl XlibSurface {
         &self,
         physical_device: vk::PhysicalDevice,
         queue_family_index: u32,
-        display: &mut vk::Display,
+        display: *mut vk::Display,
         visual_id: vk::VisualID,
     ) -> bool {
         let b = (self.fp.get_physical_device_xlib_presentation_support_khr)(

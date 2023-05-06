@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `ExternalMemoryFd::get_memory_fd_properties()`
   - `ExternalMemoryWin32::get_memory_win32_handle_properties()`
   - `GetSurfaceCapabilities2::get_physical_device_surface_capabilities2()`
+- Define `Display` as `c_void` instead of `*mut c_void` to match Xlib (#751)
 - `VK_KHR_device_group_creation`: Take borrow of `Entry` in `fn new()` (#753)
 
 ### Removed
@@ -315,7 +316,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 0.29.0
 
-- -Breaking-: Removed Display impl for flags. The Debug impl now reports flags by name.
+- *Breaking*: Removed Display impl for flags. The Debug impl now reports flags by name.
 - Functions now have a doc comment that links to the Vulkan spec
 - Entry has a new method called `try_enumerate_instance_version` which can be used in a 1.0 context.
 - The generator now uses `BTreeMap` for better diffs.
@@ -324,9 +325,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Switched to a new [changelog](https://keepachangelog.com/en/1.0.0/) format
 - Fixed a build issue on ARM.
-- -Breaking- Arrays are now passed by reference.
+- *Breaking*: Arrays are now passed by reference.
 - Builders are now marked as `#[transparent]`.
-- -Breaking-  Renamed `.next(..)` to `push_next`. `push_next` is only available on structs that are passed directly. Additionally `push_next` only accepts structs that can be inserted into the pointer chain. Read the readme for more information.
+- *Breaking*: Renamed `.next(..)` to `push_next`. `push_next` is only available on structs that are passed directly. Additionally `push_next` only accepts structs that can be inserted into the pointer chain. Read the readme for more information.
 - New -experimental- extensions. Those do not follow the semver rules and can be removed at any time.
 - Added `AmdGpaInterface` extension.
 
@@ -391,7 +392,7 @@ flags: vk::CommandPoolCreateFlags::RESET_COMMAND_BUFFER_BIT,
 - `map_memory` now returns a void ptr
 
 - `ash::util::Align` is a helper struct that
-can write to aligned memory.
+  can write to aligned memory.
 
 [Unreleased]: https://github.com/MaikKlein/ash/compare/0.37.2...HEAD
 [0.37.2]: https://github.com/MaikKlein/ash/releases/tag/0.37.2
