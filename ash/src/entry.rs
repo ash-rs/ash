@@ -21,14 +21,11 @@ pub struct Entry {
     static_fn: vk::StaticFn,
     entry_fn_1_0: vk::EntryFnV1_0,
     entry_fn_1_1: vk::EntryFnV1_1,
-    entry_fn_1_2: vk::EntryFnV1_2,
-    entry_fn_1_3: vk::EntryFnV1_3,
     #[cfg(feature = "loaded")]
     _lib_guard: Option<Arc<Library>>,
 }
 
 /// Vulkan core 1.0
-#[allow(non_camel_case_types)]
 impl Entry {
     /// Load default Vulkan library for the current platform
     ///
@@ -151,15 +148,11 @@ impl Entry {
         };
         let entry_fn_1_0 = vk::EntryFnV1_0::load(load_fn);
         let entry_fn_1_1 = vk::EntryFnV1_1::load(load_fn);
-        let entry_fn_1_2 = vk::EntryFnV1_2::load(load_fn);
-        let entry_fn_1_3 = vk::EntryFnV1_3::load(load_fn);
 
         Self {
             static_fn,
             entry_fn_1_0,
             entry_fn_1_1,
-            entry_fn_1_2,
-            entry_fn_1_3,
             #[cfg(feature = "loaded")]
             _lib_guard: None,
         }
@@ -273,7 +266,6 @@ impl Entry {
 }
 
 /// Vulkan core 1.1
-#[allow(non_camel_case_types)]
 impl Entry {
     #[inline]
     pub fn fp_v1_1(&self) -> &vk::EntryFnV1_1 {
@@ -291,24 +283,6 @@ impl Entry {
             (self.entry_fn_1_1.enumerate_instance_version)(&mut api_version)
                 .result_with_success(api_version)
         }
-    }
-}
-
-/// Vulkan core 1.2
-#[allow(non_camel_case_types)]
-impl Entry {
-    #[inline]
-    pub fn fp_v1_2(&self) -> &vk::EntryFnV1_2 {
-        &self.entry_fn_1_2
-    }
-}
-
-/// Vulkan core 1.3
-#[allow(non_camel_case_types)]
-impl Entry {
-    #[inline]
-    pub fn fp_v1_3(&self) -> &vk::EntryFnV1_3 {
-        &self.entry_fn_1_3
     }
 }
 

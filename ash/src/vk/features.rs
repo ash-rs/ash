@@ -4296,29 +4296,9 @@ impl DeviceFnV1_1 {
     }
 }
 #[derive(Clone)]
-pub struct EntryFnV1_2 {}
-unsafe impl Send for EntryFnV1_2 {}
-unsafe impl Sync for EntryFnV1_2 {}
-impl EntryFnV1_2 {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
+pub struct EntryFnV1_2;
 #[derive(Clone)]
-pub struct InstanceFnV1_2 {}
-unsafe impl Send for InstanceFnV1_2 {}
-unsafe impl Sync for InstanceFnV1_2 {}
-impl InstanceFnV1_2 {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
+pub struct InstanceFnV1_2;
 #[derive(Clone)]
 pub struct DeviceFnV1_2 {
     pub cmd_draw_indirect_count: crate::vk::PFN_vkCmdDrawIndirectCount,
@@ -4595,17 +4575,7 @@ impl DeviceFnV1_2 {
     }
 }
 #[derive(Clone)]
-pub struct EntryFnV1_3 {}
-unsafe impl Send for EntryFnV1_3 {}
-unsafe impl Sync for EntryFnV1_3 {}
-impl EntryFnV1_3 {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        Self {}
-    }
-}
+pub struct EntryFnV1_3;
 #[derive(Clone)]
 pub struct InstanceFnV1_3 {
     pub get_physical_device_tool_properties: crate::vk::PFN_vkGetPhysicalDeviceToolProperties,
