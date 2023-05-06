@@ -40,7 +40,6 @@ impl Device {
 }
 
 /// Vulkan core 1.3
-#[allow(non_camel_case_types)]
 impl Device {
     #[inline]
     pub fn fp_v1_3(&self) -> &vk::DeviceFnV1_3 {
@@ -531,7 +530,6 @@ impl Device {
 }
 
 /// Vulkan core 1.2
-#[allow(non_camel_case_types)]
 impl Device {
     #[inline]
     pub fn fp_v1_2(&self) -> &vk::DeviceFnV1_2 {
@@ -705,7 +703,6 @@ impl Device {
 }
 
 /// Vulkan core 1.1
-#[allow(non_camel_case_types)]
 impl Device {
     #[inline]
     pub fn fp_v1_1(&self) -> &vk::DeviceFnV1_1 {
@@ -952,7 +949,6 @@ impl Device {
 }
 
 /// Vulkan core 1.0
-#[allow(non_camel_case_types)]
 impl Device {
     #[inline]
     pub fn fp_v1_0(&self) -> &vk::DeviceFnV1_0 {

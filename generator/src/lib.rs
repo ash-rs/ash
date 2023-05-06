@@ -22,6 +22,7 @@ use std::{
     borrow::Cow,
     collections::{BTreeMap, HashMap, HashSet},
     fmt::Display,
+    ops::Not,
     path::Path,
 };
 use syn::Ident;
@@ -1032,34 +1033,48 @@ fn generate_function_pointers<'a>(
             .to_tokens(tokens)
         }
     }
+    let loaders = commands.iter().map(CommandToLoader);
+
+    let loader = commands.is_empty().not().then(|| {
+        quote! {
+            impl #ident {
+                pub fn load<F>(mut _f: F) -> Self
+                    where F: FnMut(&::std::ffi::CStr) -> *const c_void
+                {
+                    Self {
+                        #(#loaders,)*
+                    }
+                }
+            }
+        }
+    });
 
     let pfn_typedefs = commands
         .iter()
         .filter(|pfn| pfn.type_needs_defining)
         .map(CommandToType);
     let members = commands.iter().map(CommandToMember);
-    let loaders = commands.iter().map(CommandToLoader);
+
+    let struct_contents = if commands.is_empty() {
+        quote! { pub struct #ident; }
+    } else {
+        quote! {
+            pub struct #ident {
+                #(#members,)*
+            }
+
+            unsafe impl Send for #ident {}
+            unsafe impl Sync for #ident {}
+        }
+    };
 
     quote! {
         #(#pfn_typedefs)*
 
         #[derive(Clone)]
-        pub struct #ident {
-            #(#members,)*
-        }
+        #struct_contents
 
-        unsafe impl Send for #ident {}
-        unsafe impl Sync for #ident {}
-
-        impl #ident {
-            pub fn load<F>(mut _f: F) -> Self
-                where F: FnMut(&::std::ffi::CStr) -> *const c_void
-            {
-                Self {
-                    #(#loaders,)*
-                }
-            }
-        }
+        #loader
     }
 }
 pub struct ExtensionConstant<'a> {
