@@ -45,8 +45,21 @@ pub(crate) unsafe fn ptr_chain_iter<T>(ptr: &mut T) -> impl Iterator<Item = *mut
         Some(old)
     })
 }
-pub trait Handle {
+pub trait Handle: Sized {
     const TYPE: ObjectType;
     fn as_raw(self) -> u64;
     fn from_raw(_: u64) -> Self;
+
+    /// Returns whether the handle is a `NULL` value.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// # use ash::vk::{Handle, Instance};
+    /// let instance = Instance::null();
+    /// assert!(instance.is_null());
+    /// ```
+    fn is_null(self) -> bool {
+        self.as_raw() == 0
+    }
 }
