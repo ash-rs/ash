@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - ReleaseDate
 
+### Changed
+
+- `VK_KHR_device_group_creation`: Replaced `device()` with `instance()` (via deprecation) because it is returning `vk::Instance` (#744)
+
 ### Added
 
 - Added `VK_EXT_pipeline_properties` device extension (#622)
@@ -14,6 +18,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `VK_KHR_performance_query` device extension (#726)
 - Added `VK_EXT_shader_object` device extension (#732)
 - Added missing `Device::get_device_queue2()` wrapper (#736)
+- Added with `new_with_instance()` on the following extensions to allow loading the listed `Instance` functions: (#744)
+  - `VK_KHR_swapchain`: `get_physical_device_present_rectangles()`
+  - `VK_KHR_device_group`: `get_physical_device_present_rectangles()`
+  - `VK_EXT_full_screen_exclusive`: `get_physical_device_surface_present_modes2()`
 - Exposed `FramebufferCreateInfoBuilder::attachment_count()` builder for `vk::FramebufferCreateFlags::IMAGELESS` (#747)
 
 ## [0.37.2] - 2022-01-11
@@ -51,7 +59,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `VK_EXT_acquire_drm_display` instance extension (#668)
 - Added `VK_EXT_extended_dynamic_state3` device extension (#671)
 - Added `VK_EXT_descriptor_buffer` instance extension (#679)
-
 
 ### Fixed
 
@@ -296,7 +303,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 0.29.0
 
-- -Breaking-: Removed Display impl for flags. The Debug impl now reports flags by name.
+- _Breaking_: Removed Display impl for flags. The Debug impl now reports flags by name.
 - Functions now have a doc comment that links to the Vulkan spec
 - Entry has a new method called `try_enumerate_instance_version` which can be used in a 1.0 context.
 - The generator now uses `BTreeMap` for better diffs.
@@ -305,9 +312,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Switched to a new [changelog](https://keepachangelog.com/en/1.0.0/) format
 - Fixed a build issue on ARM.
-- -Breaking- Arrays are now passed by reference.
+- _Breaking_: Arrays are now passed by reference.
 - Builders are now marked as `#[transparent]`.
-- -Breaking-  Renamed `.next(..)` to `push_next`. `push_next` is only available on structs that are passed directly. Additionally `push_next` only accepts structs that can be inserted into the pointer chain. Read the readme for more information.
+- _Breaking_: Renamed `.next(..)` to `push_next`. `push_next` is only available on structs that are passed directly. Additionally `push_next` only accepts structs that can be inserted into the pointer chain. Read the readme for more information.
 - New -experimental- extensions. Those do not follow the semver rules and can be removed at any time.
 - Added `AmdGpaInterface` extension.
 
@@ -372,7 +379,7 @@ flags: vk::CommandPoolCreateFlags::RESET_COMMAND_BUFFER_BIT,
 - `map_memory` now returns a void ptr
 
 - `ash::util::Align` is a helper struct that
-can write to aligned memory.
+  can write to aligned memory.
 
 [Unreleased]: https://github.com/MaikKlein/ash/compare/0.37.2...HEAD
 [0.37.2]: https://github.com/MaikKlein/ash/releases/tag/0.37.2
