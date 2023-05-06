@@ -906,32 +906,36 @@ fn generate_function_pointers<'a>(
     struct Command<'a> {
         type_needs_defining: bool,
         type_name: Ident,
+        pfn_type_name: Ident,
         function_name_c: &'a str,
         function_name_rust: Ident,
         parameters: TokenStream,
         parameters_unused: TokenStream,
         returns: TokenStream,
+        parameter_validstructs: Vec<(Ident, Vec<String>)>,
     }
 
     let commands = commands
         .iter()
         .map(|cmd| {
             let name = &cmd.proto.name;
-            let type_name = format_ident!("PFN_{}", name);
+            let pfn_type_name = format_ident!("PFN_{}", name);
 
             // We might need to generate a function pointer for an extension, where we are given the original
             // `cmd` and a rename back to the extension alias (typically with vendor suffix) in `rename_commands`:
             let function_name_c = rename_commands.get(name.as_str()).cloned().unwrap_or(name);
 
-            let function_name_rust = format_ident!(
-                "{}",
-                function_name_c.strip_prefix("vk").unwrap().to_snake_case()
-            );
+            let type_name = function_name_c.strip_prefix("vk").unwrap();
+            let function_name_rust = format_ident!("{}", type_name.to_snake_case());
+            let type_name = format_ident!("{}", type_name);
 
-            let params: Vec<_> = cmd
+            let params = cmd
                 .params
                 .iter()
-                .filter(|param| matches!(param.api.as_deref(), None | Some(DESIRED_API)))
+                .filter(|param| matches!(param.api.as_deref(), None | Some(DESIRED_API)));
+
+            let params_tokens: Vec<_> = params
+                .clone()
                 .map(|param| {
                     let name = param.param_ident();
                     let ty = param.type_tokens(true);
@@ -939,16 +943,21 @@ fn generate_function_pointers<'a>(
                 })
                 .collect();
 
-            let params_iter = params
+            let params_iter = params_tokens
                 .iter()
                 .map(|(param_name, param_ty)| quote!(#param_name: #param_ty));
             let parameters = quote!(#(#params_iter,)*);
 
-            let params_iter = params.iter().map(|(param_name, param_ty)| {
+            let params_iter = params_tokens.iter().map(|(param_name, param_ty)| {
                 let unused_name = format_ident!("_{}", param_name);
                 quote!(#unused_name: #param_ty)
             });
             let parameters_unused = quote!(#(#params_iter,)*);
+
+            let parameter_validstructs: Vec<_> = params
+                .filter(|param| !param.validstructs.is_empty())
+                .map(|param| (param.param_ident(), param.validstructs.clone()))
+                .collect();
 
             let ret = cmd
                 .proto
@@ -961,6 +970,7 @@ fn generate_function_pointers<'a>(
                 // This can happen because there are aliases to commands
                 type_needs_defining: fn_cache.insert(name),
                 type_name,
+                pfn_type_name,
                 function_name_c,
                 function_name_rust,
                 parameters,
@@ -971,14 +981,49 @@ fn generate_function_pointers<'a>(
                     let ret_ty_tokens = name_to_tokens(ret);
                     quote!(-> #ret_ty_tokens)
                 },
+                parameter_validstructs,
             }
         })
         .collect::<Vec<_>>();
 
+    struct CommandToParamTraits<'a>(&'a Command<'a>);
+    impl<'a> quote::ToTokens for CommandToParamTraits<'a> {
+        fn to_tokens(&self, tokens: &mut TokenStream) {
+            for (param_ident, validstructs) in &self.0.parameter_validstructs {
+                let param_ident = param_ident.to_string();
+                let param_ident = param_ident
+                    .strip_prefix("pp_")
+                    .or_else(|| param_ident.strip_prefix("p_"))
+                    .unwrap_or(&param_ident);
+
+                let doc_string = format!(
+                    "Implemented for all types that can be passed as argument to `{}` in [`{}`]",
+                    param_ident, self.0.pfn_type_name
+                );
+                let param_trait_name = format_ident!(
+                    "{}Param{}",
+                    self.0.type_name,
+                    param_ident.to_upper_camel_case()
+                );
+                quote! {
+                    #[allow(non_camel_case_types)]
+                    #[doc = #doc_string]
+                    pub unsafe trait #param_trait_name {}
+                }
+                .to_tokens(tokens);
+
+                for validstruct in validstructs {
+                    let structname = name_to_tokens(validstruct);
+                    quote!(unsafe impl #param_trait_name for #structname {}).to_tokens(tokens);
+                }
+            }
+        }
+    }
+
     struct CommandToType<'a>(&'a Command<'a>);
     impl<'a> quote::ToTokens for CommandToType<'a> {
         fn to_tokens(&self, tokens: &mut TokenStream) {
-            let type_name = &self.0.type_name;
+            let type_name = &self.0.pfn_type_name;
             let parameters = &self.0.parameters;
             let returns = &self.0.returns;
             quote!(
@@ -992,7 +1037,7 @@ fn generate_function_pointers<'a>(
     struct CommandToMember<'a>(&'a Command<'a>);
     impl<'a> quote::ToTokens for CommandToMember<'a> {
         fn to_tokens(&self, tokens: &mut TokenStream) {
-            let type_name = &self.0.type_name;
+            let type_name = &self.0.pfn_type_name;
             let type_name = if self.0.type_needs_defining {
                 // Type is defined in local scope
                 quote!(#type_name)
@@ -1033,6 +1078,7 @@ fn generate_function_pointers<'a>(
         }
     }
 
+    let param_traits = commands.iter().map(CommandToParamTraits);
     let pfn_typedefs = commands
         .iter()
         .filter(|pfn| pfn.type_needs_defining)
@@ -1041,6 +1087,7 @@ fn generate_function_pointers<'a>(
     let loaders = commands.iter().map(CommandToLoader);
 
     quote! {
+        #(#param_traits)*
         #(#pfn_typedefs)*
 
         #[derive(Clone)]

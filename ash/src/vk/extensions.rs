@@ -20233,6 +20233,10 @@ impl ExtPipelinePropertiesFn {
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
+#[doc = "Implemented for all types that can be passed as argument to `pipeline_properties` in [`PFN_vkGetPipelinePropertiesEXT`]"]
+pub unsafe trait GetPipelinePropertiesEXTParamPipelineProperties {}
+unsafe impl GetPipelinePropertiesEXTParamPipelineProperties for PipelinePropertiesIdentifierEXT {}
+#[allow(non_camel_case_types)]
 pub type PFN_vkGetPipelinePropertiesEXT = unsafe extern "system" fn(
     device: Device,
     p_pipeline_info: *const PipelineInfoEXT,
