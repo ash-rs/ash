@@ -140,15 +140,26 @@ impl Entry {
     /// `static_fn` must contain valid function pointers that comply with the semantics specified by
     /// Vulkan 1.0, which must remain valid for at least the lifetime of the returned [`Entry`].
     pub unsafe fn from_static_fn(static_fn: vk::StaticFn) -> Self {
-        let load_fn = |name: &std::ffi::CStr| {
+        let load_fn = move |name: &std::ffi::CStr| {
             mem::transmute((static_fn.get_instance_proc_addr)(
                 vk::Instance::null(),
                 name.as_ptr(),
             ))
         };
-        let entry_fn_1_0 = vk::EntryFnV1_0::load(load_fn);
-        let entry_fn_1_1 = vk::EntryFnV1_1::load(load_fn);
 
+        Self::from_parts_1_1(
+            static_fn,
+            vk::EntryFnV1_0::load(load_fn),
+            vk::EntryFnV1_1::load(load_fn),
+        )
+    }
+
+    #[inline]
+    pub fn from_parts_1_1(
+        static_fn: vk::StaticFn,
+        entry_fn_1_0: vk::EntryFnV1_0,
+        entry_fn_1_1: vk::EntryFnV1_1,
+    ) -> Self {
         Self {
             static_fn,
             entry_fn_1_0,
