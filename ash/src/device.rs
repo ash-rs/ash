@@ -23,13 +23,30 @@ impl Device {
             mem::transmute((instance_fn.get_device_proc_addr)(device, name.as_ptr()))
         };
 
-        Self {
-            handle: device,
+        Self::from_parts_1_3(
+            device,
+            vk::DeviceFnV1_0::load(load_fn),
+            vk::DeviceFnV1_1::load(load_fn),
+            vk::DeviceFnV1_2::load(load_fn),
+            vk::DeviceFnV1_3::load(load_fn),
+        )
+    }
 
-            device_fn_1_0: vk::DeviceFnV1_0::load(load_fn),
-            device_fn_1_1: vk::DeviceFnV1_1::load(load_fn),
-            device_fn_1_2: vk::DeviceFnV1_2::load(load_fn),
-            device_fn_1_3: vk::DeviceFnV1_3::load(load_fn),
+    #[inline]
+    pub fn from_parts_1_3(
+        handle: vk::Device,
+        device_fn_1_0: vk::DeviceFnV1_0,
+        device_fn_1_1: vk::DeviceFnV1_1,
+        device_fn_1_2: vk::DeviceFnV1_2,
+        device_fn_1_3: vk::DeviceFnV1_3,
+    ) -> Self {
+        Self {
+            handle,
+
+            device_fn_1_0,
+            device_fn_1_1,
+            device_fn_1_2,
+            device_fn_1_3,
         }
     }
 
