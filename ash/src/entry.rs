@@ -184,7 +184,7 @@ impl Entry {
     /// # use ash::{Entry, vk};
     /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
     /// let entry = Entry::linked();
-    /// match entry.try_enumerate_instance_version()? {
+    /// match unsafe { entry.try_enumerate_instance_version() }? {
     ///     // Vulkan 1.1+
     ///     Some(version) => {
     ///         let major = vk::version_major(version);
@@ -197,22 +197,19 @@ impl Entry {
     /// # Ok(()) }
     /// ```
     #[inline]
-    pub fn try_enumerate_instance_version(&self) -> VkResult<Option<u32>> {
-        unsafe {
-            let mut api_version = 0;
-            let enumerate_instance_version: Option<vk::PFN_vkEnumerateInstanceVersion> = {
-                let name = CStr::from_bytes_with_nul_unchecked(b"vkEnumerateInstanceVersion\0");
-                mem::transmute((self.static_fn.get_instance_proc_addr)(
-                    vk::Instance::null(),
-                    name.as_ptr(),
-                ))
-            };
-            if let Some(enumerate_instance_version) = enumerate_instance_version {
-                (enumerate_instance_version)(&mut api_version)
-                    .result_with_success(Some(api_version))
-            } else {
-                Ok(None)
-            }
+    pub unsafe fn try_enumerate_instance_version(&self) -> VkResult<Option<u32>> {
+        let mut api_version = 0;
+        let enumerate_instance_version: Option<vk::PFN_vkEnumerateInstanceVersion> = {
+            let name = CStr::from_bytes_with_nul_unchecked(b"vkEnumerateInstanceVersion\0");
+            mem::transmute((self.static_fn.get_instance_proc_addr)(
+                vk::Instance::null(),
+                name.as_ptr(),
+            ))
+        };
+        if let Some(enumerate_instance_version) = enumerate_instance_version {
+            (enumerate_instance_version)(&mut api_version).result_with_success(Some(api_version))
+        } else {
+            Ok(None)
         }
     }
 
@@ -240,29 +237,25 @@ impl Entry {
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceLayerProperties.html>
     #[inline]
-    pub fn enumerate_instance_layer_properties(&self) -> VkResult<Vec<vk::LayerProperties>> {
-        unsafe {
-            read_into_uninitialized_vector(|count, data| {
-                (self.entry_fn_1_0.enumerate_instance_layer_properties)(count, data)
-            })
-        }
+    pub unsafe fn enumerate_instance_layer_properties(&self) -> VkResult<Vec<vk::LayerProperties>> {
+        read_into_uninitialized_vector(|count, data| {
+            (self.entry_fn_1_0.enumerate_instance_layer_properties)(count, data)
+        })
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceExtensionProperties.html>
     #[inline]
-    pub fn enumerate_instance_extension_properties(
+    pub unsafe fn enumerate_instance_extension_properties(
         &self,
         layer_name: Option<&CStr>,
     ) -> VkResult<Vec<vk::ExtensionProperties>> {
-        unsafe {
-            read_into_uninitialized_vector(|count, data| {
-                (self.entry_fn_1_0.enumerate_instance_extension_properties)(
-                    layer_name.map_or(ptr::null(), |str| str.as_ptr()),
-                    count,
-                    data,
-                )
-            })
-        }
+        read_into_uninitialized_vector(|count, data| {
+            (self.entry_fn_1_0.enumerate_instance_extension_properties)(
+                layer_name.map_or(ptr::null(), |str| str.as_ptr()),
+                count,
+                data,
+            )
+        })
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetInstanceProcAddr.html>
@@ -288,12 +281,10 @@ impl Entry {
     ///
     /// Please use [`try_enumerate_instance_version()`][Self::try_enumerate_instance_version()] instead.
     #[inline]
-    pub fn enumerate_instance_version(&self) -> VkResult<u32> {
-        unsafe {
-            let mut api_version = 0;
-            (self.entry_fn_1_1.enumerate_instance_version)(&mut api_version)
-                .result_with_success(api_version)
-        }
+    pub unsafe fn enumerate_instance_version(&self) -> VkResult<u32> {
+        let mut api_version = 0;
+        (self.entry_fn_1_1.enumerate_instance_version)(&mut api_version)
+            .result_with_success(api_version)
     }
 }
 

@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `VK_EXT_shader_object` device extension (#732)
 - Added missing `Device::get_device_queue2()` wrapper (#736)
 - Exposed `FramebufferCreateInfo::attachment_count()` builder for `vk::FramebufferCreateFlags::IMAGELESS` (#747)
-- Allow building `Entry`/`Instance`/`Device` from handle+fns (#748)
+- Allow building `Entry`/`Instance`/`Device` from handle+fns (see their `from_parts_1_x()` associated functions) (#748)
 
 ### Changed
 
