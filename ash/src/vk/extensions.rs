@@ -20484,6 +20484,21 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_PIPELINE_LIBRARY_GROUP_HANDLES_FEATURES_EXT: Self =
         Self(1_000_498_000);
 }
+impl ExtDynamicRenderingUnusedAttachmentsFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+            b"VK_EXT_dynamic_rendering_unused_attachments\0",
+        )
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct ExtDynamicRenderingUnusedAttachmentsFn;
+#[doc = "Generated from 'VK_EXT_dynamic_rendering_unused_attachments'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_FEATURES_EXT: Self =
+        Self(1_000_499_000);
+}
 impl QcomMultiviewPerViewRenderAreasFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
         ::std::ffi::CStr::from_bytes_with_nul_unchecked(

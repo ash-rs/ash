@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 250;
+pub const HEADER_VERSION: u32 = 251;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -46726,6 +46726,49 @@ impl<'a> PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a> {
     #[inline]
     pub fn shader_core_builtins(mut self, shader_core_builtins: bool) -> Self {
         self.shader_core_builtins = shader_core_builtins.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT.html>"]
+pub struct PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub dynamic_rendering_unused_attachments: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            dynamic_rendering_unused_attachments: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_FEATURES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo
+    for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'_>
+{
+}
+impl<'a> PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'a> {
+    #[inline]
+    pub fn dynamic_rendering_unused_attachments(
+        mut self,
+        dynamic_rendering_unused_attachments: bool,
+    ) -> Self {
+        self.dynamic_rendering_unused_attachments = dynamic_rendering_unused_attachments.into();
         self
     }
 }
