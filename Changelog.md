@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- `VK_KHR_device_group_creation`: Replaced `device()` with `instance()` (via deprecation) because it is returning `vk::Instance` (#744)
+- `VK_KHR_device_group_creation`: Replaced `device()` with `instance()` (via deprecation) because it is returning `vk::Instance` (#754)
 
 ### Added
 
@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `VK_KHR_performance_query` device extension (#726)
 - Added `VK_EXT_shader_object` device extension (#732)
 - Added missing `Device::get_device_queue2()` wrapper (#736)
-- Added with `new_with_instance()` on the following extensions to allow loading the listed `Instance` functions: (#744)
+- Added with `new_with_instance()` on the following extensions to allow loading the listed `Instance` functions: (#754)
   - `VK_KHR_swapchain`: `get_physical_device_present_rectangles()`
   - `VK_KHR_device_group`: `get_physical_device_present_rectangles()`
   - `VK_EXT_full_screen_exclusive`: `get_physical_device_surface_present_modes2()`
