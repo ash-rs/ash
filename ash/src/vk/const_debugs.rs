@@ -519,6 +519,7 @@ impl fmt::Debug for BufferCreateFlags {
                 BufferCreateFlags::DESCRIPTOR_BUFFER_CAPTURE_REPLAY_EXT.0,
                 "DESCRIPTOR_BUFFER_CAPTURE_REPLAY_EXT",
             ),
+            (BufferCreateFlags::RESERVED_6_KHR.0, "RESERVED_6_KHR"),
             (BufferCreateFlags::PROTECTED.0, "PROTECTED"),
             (
                 BufferCreateFlags::DEVICE_ADDRESS_CAPTURE_REPLAY.0,
@@ -661,6 +662,10 @@ impl fmt::Debug for BuildAccelerationStructureFlagsKHR {
             (
                 BuildAccelerationStructureFlagsKHR::ALLOW_DISPLACEMENT_MICROMAP_UPDATE_NV.0,
                 "ALLOW_DISPLACEMENT_MICROMAP_UPDATE_NV",
+            ),
+            (
+                BuildAccelerationStructureFlagsKHR::ALLOW_DATA_ACCESS.0,
+                "ALLOW_DATA_ACCESS",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -1623,6 +1628,9 @@ impl fmt::Debug for DynamicState {
                 Some("REPRESENTATIVE_FRAGMENT_TEST_ENABLE_NV")
             }
             Self::COVERAGE_REDUCTION_MODE_NV => Some("COVERAGE_REDUCTION_MODE_NV"),
+            Self::ATTACHMENT_FEEDBACK_LOOP_ENABLE_EXT => {
+                Some("ATTACHMENT_FEEDBACK_LOOP_ENABLE_EXT")
+            }
             Self::CULL_MODE => Some("CULL_MODE"),
             Self::FRONT_FACE => Some("FRONT_FACE"),
             Self::PRIMITIVE_TOPOLOGY => Some("PRIMITIVE_TOPOLOGY"),
@@ -1778,6 +1786,10 @@ impl fmt::Debug for ExternalMemoryHandleTypeFlags {
             (
                 ExternalMemoryHandleTypeFlags::RDMA_ADDRESS_NV.0,
                 "RDMA_ADDRESS_NV",
+            ),
+            (
+                ExternalMemoryHandleTypeFlags::TYPE_530_QNX.0,
+                "TYPE_530_QNX",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -2197,7 +2209,7 @@ impl fmt::Debug for FormatFeatureFlags {
 }
 impl fmt::Debug for FormatFeatureFlags2 {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN : & [(Flags64 , & str)] = & [(FormatFeatureFlags2 :: SAMPLED_IMAGE . 0 , "SAMPLED_IMAGE") , (FormatFeatureFlags2 :: STORAGE_IMAGE . 0 , "STORAGE_IMAGE") , (FormatFeatureFlags2 :: STORAGE_IMAGE_ATOMIC . 0 , "STORAGE_IMAGE_ATOMIC") , (FormatFeatureFlags2 :: UNIFORM_TEXEL_BUFFER . 0 , "UNIFORM_TEXEL_BUFFER") , (FormatFeatureFlags2 :: STORAGE_TEXEL_BUFFER . 0 , "STORAGE_TEXEL_BUFFER") , (FormatFeatureFlags2 :: STORAGE_TEXEL_BUFFER_ATOMIC . 0 , "STORAGE_TEXEL_BUFFER_ATOMIC") , (FormatFeatureFlags2 :: VERTEX_BUFFER . 0 , "VERTEX_BUFFER") , (FormatFeatureFlags2 :: COLOR_ATTACHMENT . 0 , "COLOR_ATTACHMENT") , (FormatFeatureFlags2 :: COLOR_ATTACHMENT_BLEND . 0 , "COLOR_ATTACHMENT_BLEND") , (FormatFeatureFlags2 :: DEPTH_STENCIL_ATTACHMENT . 0 , "DEPTH_STENCIL_ATTACHMENT") , (FormatFeatureFlags2 :: BLIT_SRC . 0 , "BLIT_SRC") , (FormatFeatureFlags2 :: BLIT_DST . 0 , "BLIT_DST") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_FILTER_LINEAR . 0 , "SAMPLED_IMAGE_FILTER_LINEAR") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_FILTER_CUBIC . 0 , "SAMPLED_IMAGE_FILTER_CUBIC") , (FormatFeatureFlags2 :: TRANSFER_SRC . 0 , "TRANSFER_SRC") , (FormatFeatureFlags2 :: TRANSFER_DST . 0 , "TRANSFER_DST") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_FILTER_MINMAX . 0 , "SAMPLED_IMAGE_FILTER_MINMAX") , (FormatFeatureFlags2 :: MIDPOINT_CHROMA_SAMPLES . 0 , "MIDPOINT_CHROMA_SAMPLES") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE") , (FormatFeatureFlags2 :: DISJOINT . 0 , "DISJOINT") , (FormatFeatureFlags2 :: COSITED_CHROMA_SAMPLES . 0 , "COSITED_CHROMA_SAMPLES") , (FormatFeatureFlags2 :: STORAGE_READ_WITHOUT_FORMAT . 0 , "STORAGE_READ_WITHOUT_FORMAT") , (FormatFeatureFlags2 :: STORAGE_WRITE_WITHOUT_FORMAT . 0 , "STORAGE_WRITE_WITHOUT_FORMAT") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_DEPTH_COMPARISON . 0 , "SAMPLED_IMAGE_DEPTH_COMPARISON") , (FormatFeatureFlags2 :: VIDEO_DECODE_OUTPUT_KHR . 0 , "VIDEO_DECODE_OUTPUT_KHR") , (FormatFeatureFlags2 :: VIDEO_DECODE_DPB_KHR . 0 , "VIDEO_DECODE_DPB_KHR") , (FormatFeatureFlags2 :: ACCELERATION_STRUCTURE_VERTEX_BUFFER_KHR . 0 , "ACCELERATION_STRUCTURE_VERTEX_BUFFER_KHR") , (FormatFeatureFlags2 :: FRAGMENT_DENSITY_MAP_EXT . 0 , "FRAGMENT_DENSITY_MAP_EXT") , (FormatFeatureFlags2 :: FRAGMENT_SHADING_RATE_ATTACHMENT_KHR . 0 , "FRAGMENT_SHADING_RATE_ATTACHMENT_KHR") , (FormatFeatureFlags2 :: RESERVED_44_EXT . 0 , "RESERVED_44_EXT") , (FormatFeatureFlags2 :: RESERVED_45_EXT . 0 , "RESERVED_45_EXT") , (FormatFeatureFlags2 :: VIDEO_ENCODE_INPUT_KHR . 0 , "VIDEO_ENCODE_INPUT_KHR") , (FormatFeatureFlags2 :: VIDEO_ENCODE_DPB_KHR . 0 , "VIDEO_ENCODE_DPB_KHR") , (FormatFeatureFlags2 :: LINEAR_COLOR_ATTACHMENT_NV . 0 , "LINEAR_COLOR_ATTACHMENT_NV") , (FormatFeatureFlags2 :: WEIGHT_IMAGE_QCOM . 0 , "WEIGHT_IMAGE_QCOM") , (FormatFeatureFlags2 :: WEIGHT_SAMPLED_IMAGE_QCOM . 0 , "WEIGHT_SAMPLED_IMAGE_QCOM") , (FormatFeatureFlags2 :: BLOCK_MATCHING_QCOM . 0 , "BLOCK_MATCHING_QCOM") , (FormatFeatureFlags2 :: BOX_FILTER_SAMPLED_QCOM . 0 , "BOX_FILTER_SAMPLED_QCOM") , (FormatFeatureFlags2 :: RESERVED_39_EXT . 0 , "RESERVED_39_EXT") , (FormatFeatureFlags2 :: OPTICAL_FLOW_IMAGE_NV . 0 , "OPTICAL_FLOW_IMAGE_NV") , (FormatFeatureFlags2 :: OPTICAL_FLOW_VECTOR_NV . 0 , "OPTICAL_FLOW_VECTOR_NV") , (FormatFeatureFlags2 :: OPTICAL_FLOW_COST_NV . 0 , "OPTICAL_FLOW_COST_NV")] ;
+        const KNOWN : & [(Flags64 , & str)] = & [(FormatFeatureFlags2 :: SAMPLED_IMAGE . 0 , "SAMPLED_IMAGE") , (FormatFeatureFlags2 :: STORAGE_IMAGE . 0 , "STORAGE_IMAGE") , (FormatFeatureFlags2 :: STORAGE_IMAGE_ATOMIC . 0 , "STORAGE_IMAGE_ATOMIC") , (FormatFeatureFlags2 :: UNIFORM_TEXEL_BUFFER . 0 , "UNIFORM_TEXEL_BUFFER") , (FormatFeatureFlags2 :: STORAGE_TEXEL_BUFFER . 0 , "STORAGE_TEXEL_BUFFER") , (FormatFeatureFlags2 :: STORAGE_TEXEL_BUFFER_ATOMIC . 0 , "STORAGE_TEXEL_BUFFER_ATOMIC") , (FormatFeatureFlags2 :: VERTEX_BUFFER . 0 , "VERTEX_BUFFER") , (FormatFeatureFlags2 :: COLOR_ATTACHMENT . 0 , "COLOR_ATTACHMENT") , (FormatFeatureFlags2 :: COLOR_ATTACHMENT_BLEND . 0 , "COLOR_ATTACHMENT_BLEND") , (FormatFeatureFlags2 :: DEPTH_STENCIL_ATTACHMENT . 0 , "DEPTH_STENCIL_ATTACHMENT") , (FormatFeatureFlags2 :: BLIT_SRC . 0 , "BLIT_SRC") , (FormatFeatureFlags2 :: BLIT_DST . 0 , "BLIT_DST") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_FILTER_LINEAR . 0 , "SAMPLED_IMAGE_FILTER_LINEAR") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_FILTER_CUBIC . 0 , "SAMPLED_IMAGE_FILTER_CUBIC") , (FormatFeatureFlags2 :: TRANSFER_SRC . 0 , "TRANSFER_SRC") , (FormatFeatureFlags2 :: TRANSFER_DST . 0 , "TRANSFER_DST") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_FILTER_MINMAX . 0 , "SAMPLED_IMAGE_FILTER_MINMAX") , (FormatFeatureFlags2 :: MIDPOINT_CHROMA_SAMPLES . 0 , "MIDPOINT_CHROMA_SAMPLES") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE") , (FormatFeatureFlags2 :: DISJOINT . 0 , "DISJOINT") , (FormatFeatureFlags2 :: COSITED_CHROMA_SAMPLES . 0 , "COSITED_CHROMA_SAMPLES") , (FormatFeatureFlags2 :: STORAGE_READ_WITHOUT_FORMAT . 0 , "STORAGE_READ_WITHOUT_FORMAT") , (FormatFeatureFlags2 :: STORAGE_WRITE_WITHOUT_FORMAT . 0 , "STORAGE_WRITE_WITHOUT_FORMAT") , (FormatFeatureFlags2 :: SAMPLED_IMAGE_DEPTH_COMPARISON . 0 , "SAMPLED_IMAGE_DEPTH_COMPARISON") , (FormatFeatureFlags2 :: VIDEO_DECODE_OUTPUT_KHR . 0 , "VIDEO_DECODE_OUTPUT_KHR") , (FormatFeatureFlags2 :: VIDEO_DECODE_DPB_KHR . 0 , "VIDEO_DECODE_DPB_KHR") , (FormatFeatureFlags2 :: ACCELERATION_STRUCTURE_VERTEX_BUFFER_KHR . 0 , "ACCELERATION_STRUCTURE_VERTEX_BUFFER_KHR") , (FormatFeatureFlags2 :: FRAGMENT_DENSITY_MAP_EXT . 0 , "FRAGMENT_DENSITY_MAP_EXT") , (FormatFeatureFlags2 :: FRAGMENT_SHADING_RATE_ATTACHMENT_KHR . 0 , "FRAGMENT_SHADING_RATE_ATTACHMENT_KHR") , (FormatFeatureFlags2 :: RESERVED_44_EXT . 0 , "RESERVED_44_EXT") , (FormatFeatureFlags2 :: RESERVED_45_EXT . 0 , "RESERVED_45_EXT") , (FormatFeatureFlags2 :: RESERVED_46_EXT . 0 , "RESERVED_46_EXT") , (FormatFeatureFlags2 :: VIDEO_ENCODE_INPUT_KHR . 0 , "VIDEO_ENCODE_INPUT_KHR") , (FormatFeatureFlags2 :: VIDEO_ENCODE_DPB_KHR . 0 , "VIDEO_ENCODE_DPB_KHR") , (FormatFeatureFlags2 :: LINEAR_COLOR_ATTACHMENT_NV . 0 , "LINEAR_COLOR_ATTACHMENT_NV") , (FormatFeatureFlags2 :: WEIGHT_IMAGE_QCOM . 0 , "WEIGHT_IMAGE_QCOM") , (FormatFeatureFlags2 :: WEIGHT_SAMPLED_IMAGE_QCOM . 0 , "WEIGHT_SAMPLED_IMAGE_QCOM") , (FormatFeatureFlags2 :: BLOCK_MATCHING_QCOM . 0 , "BLOCK_MATCHING_QCOM") , (FormatFeatureFlags2 :: BOX_FILTER_SAMPLED_QCOM . 0 , "BOX_FILTER_SAMPLED_QCOM") , (FormatFeatureFlags2 :: RESERVED_39_EXT . 0 , "RESERVED_39_EXT") , (FormatFeatureFlags2 :: OPTICAL_FLOW_IMAGE_NV . 0 , "OPTICAL_FLOW_IMAGE_NV") , (FormatFeatureFlags2 :: OPTICAL_FLOW_VECTOR_NV . 0 , "OPTICAL_FLOW_VECTOR_NV") , (FormatFeatureFlags2 :: OPTICAL_FLOW_COST_NV . 0 , "OPTICAL_FLOW_COST_NV")] ;
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -2553,6 +2565,7 @@ impl fmt::Debug for ImageCreateFlags {
                 ImageCreateFlags::FRAGMENT_DENSITY_MAP_OFFSET_QCOM.0,
                 "FRAGMENT_DENSITY_MAP_OFFSET_QCOM",
             ),
+            (ImageCreateFlags::RESERVED_20_KHR.0, "RESERVED_20_KHR"),
             (ImageCreateFlags::ALIAS.0, "ALIAS"),
             (
                 ImageCreateFlags::SPLIT_INSTANCE_BIND_REGIONS.0,
@@ -4225,6 +4238,10 @@ impl fmt::Debug for ResolveModeFlags {
             (ResolveModeFlags::AVERAGE.0, "AVERAGE"),
             (ResolveModeFlags::MIN.0, "MIN"),
             (ResolveModeFlags::MAX.0, "MAX"),
+            (
+                ResolveModeFlags::EXTENSION_469_FLAG_0.0,
+                "EXTENSION_469_FLAG_0",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -5947,6 +5964,9 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES_EXT")
             }
+            Self::PHYSICAL_DEVICE_RAY_TRACING_POSITION_FETCH_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_RAY_TRACING_POSITION_FETCH_FEATURES_KHR")
+            }
             Self::PHYSICAL_DEVICE_SHADER_OBJECT_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_SHADER_OBJECT_FEATURES_EXT")
             }
@@ -5986,11 +6006,17 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_PIPELINE_LIBRARY_GROUP_HANDLES_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_PIPELINE_LIBRARY_GROUP_HANDLES_FEATURES_EXT")
             }
+            Self::PHYSICAL_DEVICE_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_FEATURES_EXT")
+            }
             Self::PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_RENDER_AREAS_FEATURES_QCOM => {
                 Some("PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_RENDER_AREAS_FEATURES_QCOM")
             }
             Self::MULTIVIEW_PER_VIEW_RENDER_AREAS_RENDER_PASS_BEGIN_INFO_QCOM => {
                 Some("MULTIVIEW_PER_VIEW_RENDER_AREAS_RENDER_PASS_BEGIN_INFO_QCOM")
+            }
+            Self::PHYSICAL_DEVICE_ATTACHMENT_FEEDBACK_LOOP_DYNAMIC_STATE_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_ATTACHMENT_FEEDBACK_LOOP_DYNAMIC_STATE_FEATURES_EXT")
             }
             Self::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES => {
                 Some("PHYSICAL_DEVICE_SUBGROUP_PROPERTIES")

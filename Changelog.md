@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added `VK_EXT_pipeline_properties` device extension (#622)
-- Update Vulkan-Headers to 1.3.246 (#697, #723)
+- Update Vulkan-Headers to 1.3.251 (#697, #723, #741)
 - Added `VK_KHR_performance_query` device extension (#726)
 - Added `VK_EXT_shader_object` device extension (#732)
 - Added missing `Device::get_device_queue2()` wrapper (#736)

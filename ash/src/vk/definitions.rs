@@ -57,7 +57,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 246;
+pub const HEADER_VERSION: u32 = 251;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -53610,6 +53610,90 @@ impl<'a> PhysicalDeviceImageSlicedViewOf3DFeaturesEXTBuilder<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT.html>"]
+pub struct PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub attachment_feedback_loop_dynamic_state: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            attachment_feedback_loop_dynamic_state: Bool32::default(),
+        }
+    }
+}
+unsafe impl TaggedStructure for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_ATTACHMENT_FEEDBACK_LOOP_DYNAMIC_STATE_FEATURES_EXT;
+}
+impl PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT {
+    pub fn builder<'a>() -> PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXTBuilder<'a> {
+        PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXTBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXTBuilder<'a> {
+    inner: PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT
+{
+}
+unsafe impl ExtendsDeviceCreateInfo
+    for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo
+    for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT
+{
+}
+impl<'a> ::std::ops::Deref
+    for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXTBuilder<'a>
+{
+    type Target = PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut
+    for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXTBuilder<'a>
+{
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXTBuilder<'a> {
+    #[inline]
+    pub fn attachment_feedback_loop_dynamic_state(
+        mut self,
+        attachment_feedback_loop_dynamic_state: bool,
+    ) -> Self {
+        self.inner.attachment_feedback_loop_dynamic_state =
+            attachment_feedback_loop_dynamic_state.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceMutableDescriptorTypeFeaturesEXT.html>"]
 pub struct PhysicalDeviceMutableDescriptorTypeFeaturesEXT {
     pub s_type: StructureType,
@@ -57601,7 +57685,7 @@ impl<'a> VideoDecodeH265SessionParametersCreateInfoKHRBuilder<'a> {
 pub struct VideoDecodeH265PictureInfoKHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub p_std_picture_info: *mut StdVideoDecodeH265PictureInfo,
+    pub p_std_picture_info: *const StdVideoDecodeH265PictureInfo,
     pub slice_segment_count: u32,
     pub p_slice_segment_offsets: *const u32,
 }
@@ -57611,7 +57695,7 @@ impl ::std::default::Default for VideoDecodeH265PictureInfoKHR {
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            p_std_picture_info: ::std::ptr::null_mut(),
+            p_std_picture_info: ::std::ptr::null(),
             slice_segment_count: u32::default(),
             p_slice_segment_offsets: ::std::ptr::null(),
         }
@@ -57648,10 +57732,7 @@ impl<'a> ::std::ops::DerefMut for VideoDecodeH265PictureInfoKHRBuilder<'a> {
 }
 impl<'a> VideoDecodeH265PictureInfoKHRBuilder<'a> {
     #[inline]
-    pub fn std_picture_info(
-        mut self,
-        std_picture_info: &'a mut StdVideoDecodeH265PictureInfo,
-    ) -> Self {
+    pub fn std_picture_info(mut self, std_picture_info: &'a StdVideoDecodeH265PictureInfo) -> Self {
         self.inner.p_std_picture_info = std_picture_info;
         self
     }
@@ -72239,6 +72320,8 @@ pub struct DeviceFaultVendorBinaryHeaderVersionOneEXT {
     pub application_name_offset: u32,
     pub application_version: u32,
     pub engine_name_offset: u32,
+    pub engine_version: u32,
+    pub api_version: u32,
 }
 impl ::std::default::Default for DeviceFaultVendorBinaryHeaderVersionOneEXT {
     #[inline]
@@ -72253,6 +72336,8 @@ impl ::std::default::Default for DeviceFaultVendorBinaryHeaderVersionOneEXT {
             application_name_offset: u32::default(),
             application_version: u32::default(),
             engine_name_offset: u32::default(),
+            engine_version: u32::default(),
+            api_version: u32::default(),
         }
     }
 }
@@ -72327,6 +72412,16 @@ impl<'a> DeviceFaultVendorBinaryHeaderVersionOneEXTBuilder<'a> {
     #[inline]
     pub fn engine_name_offset(mut self, engine_name_offset: u32) -> Self {
         self.inner.engine_name_offset = engine_name_offset;
+        self
+    }
+    #[inline]
+    pub fn engine_version(mut self, engine_version: u32) -> Self {
+        self.inner.engine_version = engine_version;
+        self
+    }
+    #[inline]
+    pub fn api_version(mut self, api_version: u32) -> Self {
+        self.inner.api_version = api_version;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -72623,6 +72718,87 @@ impl<'a> PhysicalDeviceShaderCoreBuiltinsFeaturesARMBuilder<'a> {
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceShaderCoreBuiltinsFeaturesARM {
+        self.inner
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT.html>"]
+pub struct PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub dynamic_rendering_unused_attachments: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            dynamic_rendering_unused_attachments: Bool32::default(),
+        }
+    }
+}
+unsafe impl TaggedStructure for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_FEATURES_EXT;
+}
+impl PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT {
+    pub fn builder<'a>() -> PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXTBuilder<'a> {
+        PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXTBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXTBuilder<'a> {
+    inner: PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT
+{
+}
+unsafe impl ExtendsDeviceCreateInfo
+    for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT {}
+impl<'a> ::std::ops::Deref
+    for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXTBuilder<'a>
+{
+    type Target = PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut
+    for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXTBuilder<'a>
+{
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXTBuilder<'a> {
+    #[inline]
+    pub fn dynamic_rendering_unused_attachments(
+        mut self,
+        dynamic_rendering_unused_attachments: bool,
+    ) -> Self {
+        self.inner.dynamic_rendering_unused_attachments =
+            dynamic_rendering_unused_attachments.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT {
         self.inner
     }
 }
@@ -73615,6 +73791,76 @@ impl<'a> PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOMBuilder<'a> {
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM {
+        self.inner
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceRayTracingPositionFetchFeaturesKHR.html>"]
+pub struct PhysicalDeviceRayTracingPositionFetchFeaturesKHR {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub ray_tracing_position_fetch: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceRayTracingPositionFetchFeaturesKHR {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            ray_tracing_position_fetch: Bool32::default(),
+        }
+    }
+}
+unsafe impl TaggedStructure for PhysicalDeviceRayTracingPositionFetchFeaturesKHR {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_RAY_TRACING_POSITION_FETCH_FEATURES_KHR;
+}
+impl PhysicalDeviceRayTracingPositionFetchFeaturesKHR {
+    pub fn builder<'a>() -> PhysicalDeviceRayTracingPositionFetchFeaturesKHRBuilder<'a> {
+        PhysicalDeviceRayTracingPositionFetchFeaturesKHRBuilder {
+            inner: Self::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceRayTracingPositionFetchFeaturesKHRBuilder<'a> {
+    inner: PhysicalDeviceRayTracingPositionFetchFeaturesKHR,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceRayTracingPositionFetchFeaturesKHRBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRayTracingPositionFetchFeaturesKHR {}
+unsafe impl ExtendsDeviceCreateInfo
+    for PhysicalDeviceRayTracingPositionFetchFeaturesKHRBuilder<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRayTracingPositionFetchFeaturesKHR {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceRayTracingPositionFetchFeaturesKHRBuilder<'a> {
+    type Target = PhysicalDeviceRayTracingPositionFetchFeaturesKHR;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceRayTracingPositionFetchFeaturesKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceRayTracingPositionFetchFeaturesKHRBuilder<'a> {
+    #[inline]
+    pub fn ray_tracing_position_fetch(mut self, ray_tracing_position_fetch: bool) -> Self {
+        self.inner.ray_tracing_position_fetch = ray_tracing_position_fetch.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceRayTracingPositionFetchFeaturesKHR {
         self.inner
     }
 }
