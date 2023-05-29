@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `GetSurfaceCapabilities2::get_physical_device_surface_capabilities2()`
 - Define `Display` as `c_void` instead of `*mut c_void` to match Xlib (#751)
 - `VK_KHR_device_group_creation`: Take borrow of `Entry` in `fn new()` (#753)
+- `VK_KHR_device_group_creation`: Rename `vk::Instance`-returning function from `device()` to `instance()` (#759)
 
 ### Removed
 

@@ -57,7 +57,7 @@ impl DeviceGroupCreation {
     }
 
     #[inline]
-    pub fn device(&self) -> vk::Instance {
+    pub fn instance(&self) -> vk::Instance {
         self.handle
     }
 }
