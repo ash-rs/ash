@@ -1620,10 +1620,4 @@ pub struct ShaderCreateFlagsEXT(pub(crate) Flags);
 vk_bitflags_wrapped!(ShaderCreateFlagsEXT, Flags);
 impl ShaderCreateFlagsEXT {
     pub const LINK_STAGE: Self = Self(0b1);
-    pub const ALLOW_VARYING_SUBGROUP_SIZE: Self = Self(0b10);
-    pub const REQUIRE_FULL_SUBGROUPS: Self = Self(0b100);
-    pub const NO_TASK_SHADER: Self = Self(0b1000);
-    pub const DISPATCH_BASE: Self = Self(0b1_0000);
-    pub const FRAGMENT_SHADING_RATE_ATTACHMENT: Self = Self(0b10_0000);
-    pub const FRAGMENT_DENSITY_MAP_ATTACHMENT: Self = Self(0b100_0000);
 }

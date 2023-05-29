@@ -655,6 +655,10 @@ impl fmt::Debug for BuildAccelerationStructureFlagsKHR {
                 BuildAccelerationStructureFlagsKHR::ALLOW_DISPLACEMENT_MICROMAP_UPDATE_NV.0,
                 "ALLOW_DISPLACEMENT_MICROMAP_UPDATE_NV",
             ),
+            (
+                BuildAccelerationStructureFlagsKHR::ALLOW_DATA_ACCESS.0,
+                "ALLOW_DATA_ACCESS",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -1598,6 +1602,9 @@ impl fmt::Debug for DynamicState {
                 Some("REPRESENTATIVE_FRAGMENT_TEST_ENABLE_NV")
             }
             Self::COVERAGE_REDUCTION_MODE_NV => Some("COVERAGE_REDUCTION_MODE_NV"),
+            Self::ATTACHMENT_FEEDBACK_LOOP_ENABLE_EXT => {
+                Some("ATTACHMENT_FEEDBACK_LOOP_ENABLE_EXT")
+            }
             Self::CULL_MODE => Some("CULL_MODE"),
             Self::FRONT_FACE => Some("FRONT_FACE"),
             Self::PRIMITIVE_TOPOLOGY => Some("PRIMITIVE_TOPOLOGY"),
@@ -5867,6 +5874,9 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES_EXT")
             }
+            Self::PHYSICAL_DEVICE_RAY_TRACING_POSITION_FETCH_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_RAY_TRACING_POSITION_FETCH_FEATURES_KHR")
+            }
             Self::PHYSICAL_DEVICE_SHADER_OBJECT_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_SHADER_OBJECT_FEATURES_EXT")
             }
@@ -5906,11 +5916,17 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_PIPELINE_LIBRARY_GROUP_HANDLES_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_PIPELINE_LIBRARY_GROUP_HANDLES_FEATURES_EXT")
             }
+            Self::PHYSICAL_DEVICE_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_FEATURES_EXT")
+            }
             Self::PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_RENDER_AREAS_FEATURES_QCOM => {
                 Some("PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_RENDER_AREAS_FEATURES_QCOM")
             }
             Self::MULTIVIEW_PER_VIEW_RENDER_AREAS_RENDER_PASS_BEGIN_INFO_QCOM => {
                 Some("MULTIVIEW_PER_VIEW_RENDER_AREAS_RENDER_PASS_BEGIN_INFO_QCOM")
+            }
+            Self::PHYSICAL_DEVICE_ATTACHMENT_FEEDBACK_LOOP_DYNAMIC_STATE_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_ATTACHMENT_FEEDBACK_LOOP_DYNAMIC_STATE_FEATURES_EXT")
             }
             Self::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES => {
                 Some("PHYSICAL_DEVICE_SUBGROUP_PROPERTIES")

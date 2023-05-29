@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 246;
+pub const HEADER_VERSION: u32 = 251;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -34658,6 +34658,51 @@ impl<'a> PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT.html>"]
+pub struct PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub attachment_feedback_loop_dynamic_state: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            attachment_feedback_loop_dynamic_state: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure
+    for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'a>
+{
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_ATTACHMENT_FEEDBACK_LOOP_DYNAMIC_STATE_FEATURES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo
+    for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'_>
+{
+}
+impl<'a> PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'a> {
+    #[inline]
+    pub fn attachment_feedback_loop_dynamic_state(
+        mut self,
+        attachment_feedback_loop_dynamic_state: bool,
+    ) -> Self {
+        self.attachment_feedback_loop_dynamic_state = attachment_feedback_loop_dynamic_state.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceMutableDescriptorTypeFeaturesEXT.html>"]
 pub struct PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'a> {
     pub s_type: StructureType,
@@ -37125,7 +37170,7 @@ impl<'a> VideoDecodeH265SessionParametersCreateInfoKHR<'a> {
 pub struct VideoDecodeH265PictureInfoKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub p_std_picture_info: *mut StdVideoDecodeH265PictureInfo,
+    pub p_std_picture_info: *const StdVideoDecodeH265PictureInfo,
     pub slice_segment_count: u32,
     pub p_slice_segment_offsets: *const u32,
     pub _marker: PhantomData<&'a ()>,
@@ -37136,7 +37181,7 @@ impl ::std::default::Default for VideoDecodeH265PictureInfoKHR<'_> {
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            p_std_picture_info: ::std::ptr::null_mut(),
+            p_std_picture_info: ::std::ptr::null(),
             slice_segment_count: u32::default(),
             p_slice_segment_offsets: ::std::ptr::null(),
             _marker: PhantomData,
@@ -37149,10 +37194,7 @@ unsafe impl<'a> TaggedStructure for VideoDecodeH265PictureInfoKHR<'a> {
 unsafe impl ExtendsVideoDecodeInfoKHR for VideoDecodeH265PictureInfoKHR<'_> {}
 impl<'a> VideoDecodeH265PictureInfoKHR<'a> {
     #[inline]
-    pub fn std_picture_info(
-        mut self,
-        std_picture_info: &'a mut StdVideoDecodeH265PictureInfo,
-    ) -> Self {
+    pub fn std_picture_info(mut self, std_picture_info: &'a StdVideoDecodeH265PictureInfo) -> Self {
         self.p_std_picture_info = std_picture_info;
         self
     }
@@ -46447,6 +46489,8 @@ pub struct DeviceFaultVendorBinaryHeaderVersionOneEXT {
     pub application_name_offset: u32,
     pub application_version: u32,
     pub engine_name_offset: u32,
+    pub engine_version: u32,
+    pub api_version: u32,
 }
 impl ::std::default::Default for DeviceFaultVendorBinaryHeaderVersionOneEXT {
     #[inline]
@@ -46461,6 +46505,8 @@ impl ::std::default::Default for DeviceFaultVendorBinaryHeaderVersionOneEXT {
             application_name_offset: u32::default(),
             application_version: u32::default(),
             engine_name_offset: u32::default(),
+            engine_version: u32::default(),
+            api_version: u32::default(),
         }
     }
 }
@@ -46511,6 +46557,16 @@ impl DeviceFaultVendorBinaryHeaderVersionOneEXT {
     #[inline]
     pub fn engine_name_offset(mut self, engine_name_offset: u32) -> Self {
         self.engine_name_offset = engine_name_offset;
+        self
+    }
+    #[inline]
+    pub fn engine_version(mut self, engine_version: u32) -> Self {
+        self.engine_version = engine_version;
+        self
+    }
+    #[inline]
+    pub fn api_version(mut self, api_version: u32) -> Self {
+        self.api_version = api_version;
         self
     }
 }
@@ -46670,6 +46726,49 @@ impl<'a> PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a> {
     #[inline]
     pub fn shader_core_builtins(mut self, shader_core_builtins: bool) -> Self {
         self.shader_core_builtins = shader_core_builtins.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT.html>"]
+pub struct PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub dynamic_rendering_unused_attachments: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            dynamic_rendering_unused_attachments: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_FEATURES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo
+    for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'_>
+{
+}
+impl<'a> PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'a> {
+    #[inline]
+    pub fn dynamic_rendering_unused_attachments(
+        mut self,
+        dynamic_rendering_unused_attachments: bool,
+    ) -> Self {
+        self.dynamic_rendering_unused_attachments = dynamic_rendering_unused_attachments.into();
         self
     }
 }
@@ -47243,6 +47342,43 @@ impl<'a> PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'a> {
     #[inline]
     pub fn multiview_per_view_viewports(mut self, multiview_per_view_viewports: bool) -> Self {
         self.multiview_per_view_viewports = multiview_per_view_viewports.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceRayTracingPositionFetchFeaturesKHR.html>"]
+pub struct PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub ray_tracing_position_fetch: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            ray_tracing_position_fetch: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_RAY_TRACING_POSITION_FETCH_FEATURES_KHR;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'_> {}
+impl<'a> PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'a> {
+    #[inline]
+    pub fn ray_tracing_position_fetch(mut self, ray_tracing_position_fetch: bool) -> Self {
+        self.ray_tracing_position_fetch = ray_tracing_position_fetch.into();
         self
     }
 }

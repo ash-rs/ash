@@ -15108,7 +15108,7 @@ impl StructureType {
 impl ExtDeviceFaultFn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_device_fault\0") };
-    pub const SPEC_VERSION: u32 = 1u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDeviceFaultInfoEXT = unsafe extern "system" fn(
@@ -17182,7 +17182,7 @@ impl HuaweiClusterCullingShaderFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
         ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_HUAWEI_cluster_culling_shader\0")
     };
-    pub const SPEC_VERSION: u32 = 1u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDrawClusterHUAWEI = unsafe extern "system" fn(
@@ -19098,6 +19098,22 @@ impl PipelineCreateFlags {
 impl StructureType {
     pub const PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES_EXT: Self = Self(1_000_466_000);
 }
+impl KhrRayTracingPositionFetchFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_ray_tracing_position_fetch\0")
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct KhrRayTracingPositionFetchFn;
+#[doc = "Generated from 'VK_KHR_ray_tracing_position_fetch'"]
+impl BuildAccelerationStructureFlagsKHR {
+    pub const ALLOW_DATA_ACCESS: Self = Self(0b1000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_ray_tracing_position_fetch'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_RAY_TRACING_POSITION_FETCH_FEATURES_KHR: Self = Self(1_000_481_000);
+}
 impl ExtShaderObjectFn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_object\0") };
@@ -20279,6 +20295,15 @@ impl Result {
     pub const ERROR_INCOMPATIBLE_SHADER_BINARY_EXT: Self = Self(1_000_482_000);
 }
 #[doc = "Generated from 'VK_EXT_shader_object'"]
+impl ShaderCreateFlagsEXT {
+    pub const ALLOW_VARYING_SUBGROUP_SIZE: Self = Self(0b10);
+    pub const REQUIRE_FULL_SUBGROUPS: Self = Self(0b100);
+    pub const NO_TASK_SHADER: Self = Self(0b1000);
+    pub const DISPATCH_BASE: Self = Self(0b1_0000);
+    pub const FRAGMENT_SHADING_RATE_ATTACHMENT: Self = Self(0b10_0000);
+    pub const FRAGMENT_DENSITY_MAP_ATTACHMENT: Self = Self(0b100_0000);
+}
+#[doc = "Generated from 'VK_EXT_shader_object'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_OBJECT_FEATURES_EXT: Self = Self(1_000_482_000);
     pub const PHYSICAL_DEVICE_SHADER_OBJECT_PROPERTIES_EXT: Self = Self(1_000_482_001);
@@ -20459,6 +20484,21 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_PIPELINE_LIBRARY_GROUP_HANDLES_FEATURES_EXT: Self =
         Self(1_000_498_000);
 }
+impl ExtDynamicRenderingUnusedAttachmentsFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+            b"VK_EXT_dynamic_rendering_unused_attachments\0",
+        )
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct ExtDynamicRenderingUnusedAttachmentsFn;
+#[doc = "Generated from 'VK_EXT_dynamic_rendering_unused_attachments'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_FEATURES_EXT: Self =
+        Self(1_000_499_000);
+}
 impl QcomMultiviewPerViewRenderAreasFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
         ::std::ffi::CStr::from_bytes_with_nul_unchecked(
@@ -20475,4 +20515,59 @@ impl StructureType {
         Self(1_000_510_000);
     pub const MULTIVIEW_PER_VIEW_RENDER_AREAS_RENDER_PASS_BEGIN_INFO_QCOM: Self =
         Self(1_000_510_001);
+}
+impl ExtAttachmentFeedbackLoopDynamicStateFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+            b"VK_EXT_attachment_feedback_loop_dynamic_state\0",
+        )
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetAttachmentFeedbackLoopEnableEXT =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, aspect_mask: ImageAspectFlags);
+#[derive(Clone)]
+pub struct ExtAttachmentFeedbackLoopDynamicStateFn {
+    pub cmd_set_attachment_feedback_loop_enable_ext: PFN_vkCmdSetAttachmentFeedbackLoopEnableEXT,
+}
+unsafe impl Send for ExtAttachmentFeedbackLoopDynamicStateFn {}
+unsafe impl Sync for ExtAttachmentFeedbackLoopDynamicStateFn {}
+impl ExtAttachmentFeedbackLoopDynamicStateFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {
+            cmd_set_attachment_feedback_loop_enable_ext: unsafe {
+                unsafe extern "system" fn cmd_set_attachment_feedback_loop_enable_ext(
+                    _command_buffer: CommandBuffer,
+                    _aspect_mask: ImageAspectFlags,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_attachment_feedback_loop_enable_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetAttachmentFeedbackLoopEnableEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_attachment_feedback_loop_enable_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+}
+#[doc = "Generated from 'VK_EXT_attachment_feedback_loop_dynamic_state'"]
+impl DynamicState {
+    pub const ATTACHMENT_FEEDBACK_LOOP_ENABLE_EXT: Self = Self(1_000_524_000);
+}
+#[doc = "Generated from 'VK_EXT_attachment_feedback_loop_dynamic_state'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_ATTACHMENT_FEEDBACK_LOOP_DYNAMIC_STATE_FEATURES_EXT: Self =
+        Self(1_000_524_000);
 }
