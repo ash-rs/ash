@@ -9,13 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added `VK_EXT_pipeline_properties` device extension (#622)
 - Added `Handle::is_null()` to allow checking if a handle is a `NULL` value (#694)
-- Update Vulkan-Headers to 1.3.251 (#697, #723, #741)
-- Added `VK_KHR_performance_query` device extension (#726)
-- Added `VK_EXT_shader_object` device extension (#732)
-- Added missing `Device::get_device_queue2()` wrapper (#736)
-- Exposed `FramebufferCreateInfo::attachment_count()` builder for `vk::FramebufferCreateFlags::IMAGELESS` (#747)
 - Allow building `Entry`/`Instance`/`Device` from handle+fns (see their `from_parts_1_x()` associated functions) (#748)
 
 ### Changed
@@ -44,6 +38,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed `fn load()` from empty features and extensions (#752)
   - Removed empty `entry_fn_1_2`/`entry_fn_1_3` and getters from `Entry`
   - Removed empty `instance_fn_1_2:` and getters from `Instance`
+
+## [0.37.3] - 2023-05-29
+
+### Changed
+
+- `VK_KHR_device_group_creation`: Replaced `device()` with `instance()` (via deprecation) because it is returning `vk::Instance` (#754)
+
+### Added
+
+- Added `VK_EXT_pipeline_properties` device extension (#622)
+- Update Vulkan-Headers to 1.3.251 (#697, #723, #741)
+- Added `VK_KHR_performance_query` device extension (#726)
+- Added `VK_EXT_shader_object` device extension (#732)
+- Added missing `Device::get_device_queue2()` wrapper (#736)
+- Added with `new_with_instance()` on the following extensions to allow loading the listed `Instance` functions: (#754)
+  - `VK_KHR_swapchain`: `get_physical_device_present_rectangles()`
+  - `VK_KHR_device_group`: `get_physical_device_present_rectangles()`
+  - `VK_EXT_full_screen_exclusive`: `get_physical_device_surface_present_modes2()`
+- Exposed `FramebufferCreateInfoBuilder::attachment_count()` builder for `vk::FramebufferCreateFlags::IMAGELESS` (#747)
 
 ## [0.37.2] - 2022-01-11
 
