@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - ReleaseDate
 
+## [0.37.3] - 2023-05-29
+
 ### Changed
 
 - `VK_KHR_device_group_creation`: Replaced `device()` with `instance()` (via deprecation) because it is returning `vk::Instance` (#744)
@@ -381,7 +383,8 @@ flags: vk::CommandPoolCreateFlags::RESET_COMMAND_BUFFER_BIT,
 - `ash::util::Align` is a helper struct that
   can write to aligned memory.
 
-[Unreleased]: https://github.com/MaikKlein/ash/compare/0.37.2...HEAD
+[Unreleased]: https://github.com/MaikKlein/ash/compare/0.37.3...HEAD
+[0.37.3]: https://github.com/MaikKlein/ash/releases/tag/0.37.3
 [0.37.2]: https://github.com/MaikKlein/ash/releases/tag/0.37.2
 [0.37.1]: https://github.com/MaikKlein/ash/releases/tag/0.37.1
 [0.37.0]: https://github.com/MaikKlein/ash/releases/tag/0.37.0
