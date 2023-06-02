@@ -5820,6 +5820,9 @@ impl fmt::Debug for StructureType {
             Self::IMAGE_VIEW_SAMPLE_WEIGHT_CREATE_INFO_QCOM => {
                 Some("IMAGE_VIEW_SAMPLE_WEIGHT_CREATE_INFO_QCOM")
             }
+            Self::EXTERNAL_MEMORY_ACQUIRE_UNMODIFIED_EXT => {
+                Some("EXTERNAL_MEMORY_ACQUIRE_UNMODIFIED_EXT")
+            }
             Self::PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_3_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_3_FEATURES_EXT")
             }

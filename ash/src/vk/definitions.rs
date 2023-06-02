@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 251;
+pub const HEADER_VERSION: u32 = 252;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -2263,6 +2263,7 @@ impl ::std::default::Default for BufferMemoryBarrier<'_> {
 unsafe impl<'a> TaggedStructure for BufferMemoryBarrier<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_MEMORY_BARRIER;
 }
+pub unsafe trait ExtendsBufferMemoryBarrier {}
 impl<'a> BufferMemoryBarrier<'a> {
     #[inline]
     pub fn src_access_mask(mut self, src_access_mask: AccessFlags) -> Self {
@@ -2297,6 +2298,20 @@ impl<'a> BufferMemoryBarrier<'a> {
     #[inline]
     pub fn size(mut self, size: DeviceSize) -> Self {
         self.size = size;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsBufferMemoryBarrier>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = <*const T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
         self
     }
 }
@@ -35316,6 +35331,7 @@ impl ::std::default::Default for BufferMemoryBarrier2<'_> {
 unsafe impl<'a> TaggedStructure for BufferMemoryBarrier2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_MEMORY_BARRIER_2;
 }
+pub unsafe trait ExtendsBufferMemoryBarrier2 {}
 impl<'a> BufferMemoryBarrier2<'a> {
     #[inline]
     pub fn src_stage_mask(mut self, src_stage_mask: PipelineStageFlags2) -> Self {
@@ -35360,6 +35376,20 @@ impl<'a> BufferMemoryBarrier2<'a> {
     #[inline]
     pub fn size(mut self, size: DeviceSize) -> Self {
         self.size = size;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsBufferMemoryBarrier2>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = <*const T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
         self
     }
 }
@@ -44731,6 +44761,41 @@ impl<'a> PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'a> {
         shader_early_and_late_fragment_tests: bool,
     ) -> Self {
         self.shader_early_and_late_fragment_tests = shader_early_and_late_fragment_tests.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkExternalMemoryAcquireUnmodifiedEXT.html>"]
+pub struct ExternalMemoryAcquireUnmodifiedEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub acquire_unmodified_memory: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ExternalMemoryAcquireUnmodifiedEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            acquire_unmodified_memory: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for ExternalMemoryAcquireUnmodifiedEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_MEMORY_ACQUIRE_UNMODIFIED_EXT;
+}
+unsafe impl ExtendsBufferMemoryBarrier for ExternalMemoryAcquireUnmodifiedEXT<'_> {}
+unsafe impl ExtendsBufferMemoryBarrier2 for ExternalMemoryAcquireUnmodifiedEXT<'_> {}
+unsafe impl ExtendsImageMemoryBarrier for ExternalMemoryAcquireUnmodifiedEXT<'_> {}
+unsafe impl ExtendsImageMemoryBarrier2 for ExternalMemoryAcquireUnmodifiedEXT<'_> {}
+impl<'a> ExternalMemoryAcquireUnmodifiedEXT<'a> {
+    #[inline]
+    pub fn acquire_unmodified_memory(mut self, acquire_unmodified_memory: bool) -> Self {
+        self.acquire_unmodified_memory = acquire_unmodified_memory.into();
         self
     }
 }

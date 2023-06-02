@@ -17854,6 +17854,20 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_IMAGE_PROCESSING_PROPERTIES_QCOM: Self = Self(1_000_440_001);
     pub const IMAGE_VIEW_SAMPLE_WEIGHT_CREATE_INFO_QCOM: Self = Self(1_000_440_002);
 }
+impl ExtExternalMemoryAcquireUnmodifiedFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+            b"VK_EXT_external_memory_acquire_unmodified\0",
+        )
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct ExtExternalMemoryAcquireUnmodifiedFn;
+#[doc = "Generated from 'VK_EXT_external_memory_acquire_unmodified'"]
+impl StructureType {
+    pub const EXTERNAL_MEMORY_ACQUIRE_UNMODIFIED_EXT: Self = Self(1_000_453_000);
+}
 impl ExtExtendedDynamicState3Fn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
         ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extended_dynamic_state3\0")

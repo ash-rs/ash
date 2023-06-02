@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added `Handle::is_null()` to allow checking if a handle is a `NULL` value (#694)
 - Allow building `Entry`/`Instance`/`Device` from handle+fns (see their `from_parts_1_x()` associated functions) (#748)
+- Update Vulkan-Headers to 1.3.252 (#760)
 
 ### Changed
 
