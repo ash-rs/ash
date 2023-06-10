@@ -1286,6 +1286,7 @@ vk_bitflags_wrapped!(VideoEncodeFeedbackFlagsKHR, Flags);
 impl VideoEncodeFeedbackFlagsKHR {
     pub const BITSTREAM_BUFFER_OFFSET: Self = Self(0b1);
     pub const BITSTREAM_BYTES_WRITTEN: Self = Self(0b10);
+    pub const BITSTREAM_HAS_OVERRIDES: Self = Self(0b100);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -1304,32 +1305,52 @@ impl VideoEncodeRateControlModeFlagsKHR {
 pub struct VideoEncodeH264CapabilityFlagsEXT(pub(crate) Flags);
 vk_bitflags_wrapped!(VideoEncodeH264CapabilityFlagsEXT, Flags);
 impl VideoEncodeH264CapabilityFlagsEXT {
-    pub const DIRECT_8X8_INFERENCE_ENABLED: Self = Self(0b1);
-    pub const DIRECT_8X8_INFERENCE_DISABLED: Self = Self(0b10);
-    pub const SEPARATE_COLOUR_PLANE: Self = Self(0b100);
-    pub const QPPRIME_Y_ZERO_TRANSFORM_BYPASS: Self = Self(0b1000);
-    pub const SCALING_LISTS: Self = Self(0b1_0000);
-    pub const HRD_COMPLIANCE: Self = Self(0b10_0000);
-    pub const CHROMA_QP_OFFSET: Self = Self(0b100_0000);
-    pub const SECOND_CHROMA_QP_OFFSET: Self = Self(0b1000_0000);
-    pub const PIC_INIT_QP_MINUS26: Self = Self(0b1_0000_0000);
-    pub const WEIGHTED_PRED: Self = Self(0b10_0000_0000);
-    pub const WEIGHTED_BIPRED_EXPLICIT: Self = Self(0b100_0000_0000);
-    pub const WEIGHTED_BIPRED_IMPLICIT: Self = Self(0b1000_0000_0000);
-    pub const WEIGHTED_PRED_NO_TABLE: Self = Self(0b1_0000_0000_0000);
-    pub const TRANSFORM_8X8: Self = Self(0b10_0000_0000_0000);
-    pub const CABAC: Self = Self(0b100_0000_0000_0000);
-    pub const CAVLC: Self = Self(0b1000_0000_0000_0000);
-    pub const DEBLOCKING_FILTER_DISABLED: Self = Self(0b1_0000_0000_0000_0000);
-    pub const DEBLOCKING_FILTER_ENABLED: Self = Self(0b10_0000_0000_0000_0000);
-    pub const DEBLOCKING_FILTER_PARTIAL: Self = Self(0b100_0000_0000_0000_0000);
-    pub const DISABLE_DIRECT_SPATIAL_MV_PRED: Self = Self(0b1000_0000_0000_0000_0000);
-    pub const MULTIPLE_SLICE_PER_FRAME: Self = Self(0b1_0000_0000_0000_0000_0000);
-    pub const SLICE_MB_COUNT: Self = Self(0b10_0000_0000_0000_0000_0000);
-    pub const ROW_UNALIGNED_SLICE: Self = Self(0b100_0000_0000_0000_0000_0000);
-    pub const DIFFERENT_SLICE_TYPE: Self = Self(0b1000_0000_0000_0000_0000_0000);
-    pub const B_FRAME_IN_L1_LIST: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
-    pub const DIFFERENT_REFERENCE_FINAL_LISTS: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
+    pub const HRD_COMPLIANCE: Self = Self(0b1);
+    pub const PREDICTION_WEIGHT_TABLE_GENERATED: Self = Self(0b10);
+    pub const ROW_UNALIGNED_SLICE: Self = Self(0b100);
+    pub const DIFFERENT_SLICE_TYPE: Self = Self(0b1000);
+    pub const B_FRAME_IN_L0_LIST: Self = Self(0b1_0000);
+    pub const B_FRAME_IN_L1_LIST: Self = Self(0b10_0000);
+    pub const PER_PICTURE_TYPE_MIN_MAX_QP: Self = Self(0b100_0000);
+    pub const PER_SLICE_CONSTANT_QP: Self = Self(0b1000_0000);
+    pub const GENERATE_PREFIX_NALU: Self = Self(0b1_0000_0000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH264StdFlagBitsEXT.html>"]
+pub struct VideoEncodeH264StdFlagsEXT(pub(crate) Flags);
+vk_bitflags_wrapped!(VideoEncodeH264StdFlagsEXT, Flags);
+impl VideoEncodeH264StdFlagsEXT {
+    pub const SEPARATE_COLOR_PLANE_FLAG_SET: Self = Self(0b1);
+    pub const QPPRIME_Y_ZERO_TRANSFORM_BYPASS_FLAG_SET: Self = Self(0b10);
+    pub const SCALING_MATRIX_PRESENT_FLAG_SET: Self = Self(0b100);
+    pub const CHROMA_QP_INDEX_OFFSET: Self = Self(0b1000);
+    pub const SECOND_CHROMA_QP_INDEX_OFFSET: Self = Self(0b1_0000);
+    pub const PIC_INIT_QP_MINUS26: Self = Self(0b10_0000);
+    pub const WEIGHTED_PRED_FLAG_SET: Self = Self(0b100_0000);
+    pub const WEIGHTED_BIPRED_IDC_EXPLICIT: Self = Self(0b1000_0000);
+    pub const WEIGHTED_BIPRED_IDC_IMPLICIT: Self = Self(0b1_0000_0000);
+    pub const TRANSFORM_8X8_MODE_FLAG_SET: Self = Self(0b10_0000_0000);
+    pub const DIRECT_SPATIAL_MV_PRED_FLAG_UNSET: Self = Self(0b100_0000_0000);
+    pub const ENTROPY_CODING_MODE_FLAG_UNSET: Self = Self(0b1000_0000_0000);
+    pub const ENTROPY_CODING_MODE_FLAG_SET: Self = Self(0b1_0000_0000_0000);
+    pub const DIRECT_8X8_INFERENCE_FLAG_UNSET: Self = Self(0b10_0000_0000_0000);
+    pub const CONSTRAINED_INTRA_PRED_FLAG_SET: Self = Self(0b100_0000_0000_0000);
+    pub const DEBLOCKING_FILTER_DISABLED: Self = Self(0b1000_0000_0000_0000);
+    pub const DEBLOCKING_FILTER_ENABLED: Self = Self(0b1_0000_0000_0000_0000);
+    pub const DEBLOCKING_FILTER_PARTIAL: Self = Self(0b10_0000_0000_0000_0000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH264RateControlFlagBitsEXT.html>"]
+pub struct VideoEncodeH264RateControlFlagsEXT(pub(crate) Flags);
+vk_bitflags_wrapped!(VideoEncodeH264RateControlFlagsEXT, Flags);
+impl VideoEncodeH264RateControlFlagsEXT {
+    pub const ATTEMPT_HRD_COMPLIANCE: Self = Self(0b1);
+    pub const REGULAR_GOP: Self = Self(0b10);
+    pub const REFERENCE_PATTERN_FLAT: Self = Self(0b100);
+    pub const REFERENCE_PATTERN_DYADIC: Self = Self(0b1000);
+    pub const TEMPORAL_LAYER_PATTERN_DYADIC: Self = Self(0b1_0000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -1439,33 +1460,54 @@ impl RenderingFlags {
 pub struct VideoEncodeH265CapabilityFlagsEXT(pub(crate) Flags);
 vk_bitflags_wrapped!(VideoEncodeH265CapabilityFlagsEXT, Flags);
 impl VideoEncodeH265CapabilityFlagsEXT {
-    pub const SEPARATE_COLOUR_PLANE: Self = Self(0b1);
-    pub const SCALING_LISTS: Self = Self(0b10);
-    pub const SAMPLE_ADAPTIVE_OFFSET_ENABLED: Self = Self(0b100);
-    pub const PCM_ENABLE: Self = Self(0b1000);
-    pub const SPS_TEMPORAL_MVP_ENABLED: Self = Self(0b1_0000);
-    pub const HRD_COMPLIANCE: Self = Self(0b10_0000);
-    pub const INIT_QP_MINUS26: Self = Self(0b100_0000);
-    pub const LOG2_PARALLEL_MERGE_LEVEL_MINUS2: Self = Self(0b1000_0000);
-    pub const SIGN_DATA_HIDING_ENABLED: Self = Self(0b1_0000_0000);
-    pub const TRANSFORM_SKIP_ENABLED: Self = Self(0b10_0000_0000);
-    pub const TRANSFORM_SKIP_DISABLED: Self = Self(0b100_0000_0000);
-    pub const PPS_SLICE_CHROMA_QP_OFFSETS_PRESENT: Self = Self(0b1000_0000_0000);
-    pub const WEIGHTED_PRED: Self = Self(0b1_0000_0000_0000);
-    pub const WEIGHTED_BIPRED: Self = Self(0b10_0000_0000_0000);
-    pub const WEIGHTED_PRED_NO_TABLE: Self = Self(0b100_0000_0000_0000);
-    pub const TRANSQUANT_BYPASS_ENABLED: Self = Self(0b1000_0000_0000_0000);
-    pub const ENTROPY_CODING_SYNC_ENABLED: Self = Self(0b1_0000_0000_0000_0000);
-    pub const DEBLOCKING_FILTER_OVERRIDE_ENABLED: Self = Self(0b10_0000_0000_0000_0000);
-    pub const MULTIPLE_TILE_PER_FRAME: Self = Self(0b100_0000_0000_0000_0000);
-    pub const MULTIPLE_SLICE_PER_TILE: Self = Self(0b1000_0000_0000_0000_0000);
-    pub const MULTIPLE_TILE_PER_SLICE: Self = Self(0b1_0000_0000_0000_0000_0000);
-    pub const SLICE_SEGMENT_CTB_COUNT: Self = Self(0b10_0000_0000_0000_0000_0000);
-    pub const ROW_UNALIGNED_SLICE_SEGMENT: Self = Self(0b100_0000_0000_0000_0000_0000);
-    pub const DEPENDENT_SLICE_SEGMENT: Self = Self(0b1000_0000_0000_0000_0000_0000);
-    pub const DIFFERENT_SLICE_TYPE: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
-    pub const B_FRAME_IN_L1_LIST: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
-    pub const DIFFERENT_REFERENCE_FINAL_LISTS: Self = Self(0b100_0000_0000_0000_0000_0000_0000);
+    pub const HRD_COMPLIANCE: Self = Self(0b1);
+    pub const PREDICTION_WEIGHT_TABLE_GENERATED: Self = Self(0b10);
+    pub const ROW_UNALIGNED_SLICE_SEGMENT: Self = Self(0b100);
+    pub const DIFFERENT_SLICE_SEGMENT_TYPE: Self = Self(0b1000);
+    pub const B_FRAME_IN_L0_LIST: Self = Self(0b1_0000);
+    pub const B_FRAME_IN_L1_LIST: Self = Self(0b10_0000);
+    pub const PER_PICTURE_TYPE_MIN_MAX_QP: Self = Self(0b100_0000);
+    pub const PER_SLICE_SEGMENT_CONSTANT_QP: Self = Self(0b1000_0000);
+    pub const MULTIPLE_TILES_PER_SLICE_SEGMENT: Self = Self(0b1_0000_0000);
+    pub const MULTIPLE_SLICE_SEGMENTS_PER_TILE: Self = Self(0b10_0000_0000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265StdFlagBitsEXT.html>"]
+pub struct VideoEncodeH265StdFlagsEXT(pub(crate) Flags);
+vk_bitflags_wrapped!(VideoEncodeH265StdFlagsEXT, Flags);
+impl VideoEncodeH265StdFlagsEXT {
+    pub const SEPARATE_COLOR_PLANE_FLAG_SET: Self = Self(0b1);
+    pub const SAMPLE_ADAPTIVE_OFFSET_ENABLED_FLAG_SET: Self = Self(0b10);
+    pub const SCALING_LIST_DATA_PRESENT_FLAG_SET: Self = Self(0b100);
+    pub const PCM_ENABLED_FLAG_SET: Self = Self(0b1000);
+    pub const SPS_TEMPORAL_MVP_ENABLED_FLAG_SET: Self = Self(0b1_0000);
+    pub const INIT_QP_MINUS26: Self = Self(0b10_0000);
+    pub const WEIGHTED_PRED_FLAG_SET: Self = Self(0b100_0000);
+    pub const WEIGHTED_BIPRED_FLAG_SET: Self = Self(0b1000_0000);
+    pub const LOG2_PARALLEL_MERGE_LEVEL_MINUS2: Self = Self(0b1_0000_0000);
+    pub const SIGN_DATA_HIDING_ENABLED_FLAG_SET: Self = Self(0b10_0000_0000);
+    pub const TRANSFORM_SKIP_ENABLED_FLAG_SET: Self = Self(0b100_0000_0000);
+    pub const TRANSFORM_SKIP_ENABLED_FLAG_UNSET: Self = Self(0b1000_0000_0000);
+    pub const PPS_SLICE_CHROMA_QP_OFFSETS_PRESENT_FLAG_SET: Self = Self(0b1_0000_0000_0000);
+    pub const TRANSQUANT_BYPASS_ENABLED_FLAG_SET: Self = Self(0b10_0000_0000_0000);
+    pub const CONSTRAINED_INTRA_PRED_FLAG_SET: Self = Self(0b100_0000_0000_0000);
+    pub const ENTROPY_CODING_SYNC_ENABLED_FLAG_SET: Self = Self(0b1000_0000_0000_0000);
+    pub const DEBLOCKING_FILTER_OVERRIDE_ENABLED_FLAG_SET: Self = Self(0b1_0000_0000_0000_0000);
+    pub const DEPENDENT_SLICE_SEGMENTS_ENABLED_FLAG_SET: Self = Self(0b10_0000_0000_0000_0000);
+    pub const DEPENDENT_SLICE_SEGMENT_FLAG_SET: Self = Self(0b100_0000_0000_0000_0000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265RateControlFlagBitsEXT.html>"]
+pub struct VideoEncodeH265RateControlFlagsEXT(pub(crate) Flags);
+vk_bitflags_wrapped!(VideoEncodeH265RateControlFlagsEXT, Flags);
+impl VideoEncodeH265RateControlFlagsEXT {
+    pub const ATTEMPT_HRD_COMPLIANCE: Self = Self(0b1);
+    pub const REGULAR_GOP: Self = Self(0b10);
+    pub const REFERENCE_PATTERN_FLAT: Self = Self(0b100);
+    pub const REFERENCE_PATTERN_DYADIC: Self = Self(0b1000);
+    pub const TEMPORAL_SUB_LAYER_PATTERN_DYADIC: Self = Self(0b1_0000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]

@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 252;
+pub const HEADER_VERSION: u32 = 253;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -128,6 +128,11 @@ vk_bitflags_wrapped!(DeviceCreateFlags, Flags);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMemoryMapFlags.html>"]
 pub struct MemoryMapFlags(pub(crate) Flags);
 vk_bitflags_wrapped!(MemoryMapFlags, Flags);
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMemoryUnmapFlagsKHR.html>"]
+pub struct MemoryUnmapFlagsKHR(pub(crate) Flags);
+vk_bitflags_wrapped!(MemoryUnmapFlagsKHR, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDescriptorPoolResetFlags.html>"]
@@ -328,11 +333,6 @@ vk_bitflags_wrapped!(VideoEncodeFlagsKHR, Flags);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeRateControlFlagsKHR.html>"]
 pub struct VideoEncodeRateControlFlagsKHR(pub(crate) Flags);
 vk_bitflags_wrapped!(VideoEncodeRateControlFlagsKHR, Flags);
-#[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMemoryUnmapFlagsKHR.html>"]
-pub struct MemoryUnmapFlagsKHR(pub(crate) Flags);
-vk_bitflags_wrapped!(MemoryUnmapFlagsKHR, Flags);
 define_handle!(
     Instance,
     INSTANCE,
@@ -37310,6 +37310,7 @@ impl ::std::default::Default for VideoSessionCreateInfoKHR<'_> {
 unsafe impl<'a> TaggedStructure for VideoSessionCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_SESSION_CREATE_INFO_KHR;
 }
+pub unsafe trait ExtendsVideoSessionCreateInfoKHR {}
 impl<'a> VideoSessionCreateInfoKHR<'a> {
     #[inline]
     pub fn queue_family_index(mut self, queue_family_index: u32) -> Self {
@@ -37354,6 +37355,20 @@ impl<'a> VideoSessionCreateInfoKHR<'a> {
     #[inline]
     pub fn std_header_version(mut self, std_header_version: &'a ExtensionProperties) -> Self {
         self.p_std_header_version = std_header_version;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsVideoSessionCreateInfoKHR>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = <*const T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
         self
     }
 }
@@ -37475,6 +37490,109 @@ impl<'a> VideoSessionParametersUpdateInfoKHR<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeSessionParametersGetInfoKHR.html>"]
+pub struct VideoEncodeSessionParametersGetInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub video_session_parameters: VideoSessionParametersKHR,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for VideoEncodeSessionParametersGetInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            video_session_parameters: VideoSessionParametersKHR::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for VideoEncodeSessionParametersGetInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::VIDEO_ENCODE_SESSION_PARAMETERS_GET_INFO_KHR;
+}
+pub unsafe trait ExtendsVideoEncodeSessionParametersGetInfoKHR {}
+impl<'a> VideoEncodeSessionParametersGetInfoKHR<'a> {
+    #[inline]
+    pub fn video_session_parameters(
+        mut self,
+        video_session_parameters: VideoSessionParametersKHR,
+    ) -> Self {
+        self.video_session_parameters = video_session_parameters;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsVideoEncodeSessionParametersGetInfoKHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        unsafe {
+            let next_ptr = <*const T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeSessionParametersFeedbackInfoKHR.html>"]
+pub struct VideoEncodeSessionParametersFeedbackInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub has_overrides: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for VideoEncodeSessionParametersFeedbackInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            has_overrides: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for VideoEncodeSessionParametersFeedbackInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::VIDEO_ENCODE_SESSION_PARAMETERS_FEEDBACK_INFO_KHR;
+}
+pub unsafe trait ExtendsVideoEncodeSessionParametersFeedbackInfoKHR {}
+impl<'a> VideoEncodeSessionParametersFeedbackInfoKHR<'a> {
+    #[inline]
+    pub fn has_overrides(mut self, has_overrides: bool) -> Self {
+        self.has_overrides = has_overrides.into();
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsVideoEncodeSessionParametersFeedbackInfoKHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        unsafe {
+            let next_ptr = <*mut T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoBeginCodingInfoKHR.html>"]
 pub struct VideoBeginCodingInfoKHR<'a> {
     pub s_type: StructureType,
@@ -37504,6 +37622,7 @@ impl ::std::default::Default for VideoBeginCodingInfoKHR<'_> {
 unsafe impl<'a> TaggedStructure for VideoBeginCodingInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_BEGIN_CODING_INFO_KHR;
 }
+pub unsafe trait ExtendsVideoBeginCodingInfoKHR {}
 impl<'a> VideoBeginCodingInfoKHR<'a> {
     #[inline]
     pub fn flags(mut self, flags: VideoBeginCodingFlagsKHR) -> Self {
@@ -37527,6 +37646,20 @@ impl<'a> VideoBeginCodingInfoKHR<'a> {
     pub fn reference_slots(mut self, reference_slots: &'a [VideoReferenceSlotInfoKHR]) -> Self {
         self.reference_slot_count = reference_slots.len() as _;
         self.p_reference_slots = reference_slots.as_ptr();
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsVideoBeginCodingInfoKHR>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = <*const T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
         self
     }
 }
@@ -37662,7 +37795,6 @@ pub struct VideoEncodeInfoKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub flags: VideoEncodeFlagsKHR,
-    pub quality_level: u32,
     pub dst_buffer: Buffer,
     pub dst_buffer_offset: DeviceSize,
     pub dst_buffer_range: DeviceSize,
@@ -37680,7 +37812,6 @@ impl ::std::default::Default for VideoEncodeInfoKHR<'_> {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
             flags: VideoEncodeFlagsKHR::default(),
-            quality_level: u32::default(),
             dst_buffer: Buffer::default(),
             dst_buffer_offset: DeviceSize::default(),
             dst_buffer_range: DeviceSize::default(),
@@ -37701,11 +37832,6 @@ impl<'a> VideoEncodeInfoKHR<'a> {
     #[inline]
     pub fn flags(mut self, flags: VideoEncodeFlagsKHR) -> Self {
         self.flags = flags;
-        self
-    }
-    #[inline]
-    pub fn quality_level(mut self, quality_level: u32) -> Self {
-        self.quality_level = quality_level;
         self
     }
     #[inline]
@@ -37807,6 +37933,140 @@ impl<'a> QueryPoolVideoEncodeFeedbackCreateInfoKHR<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeQualityLevelInfoKHR.html>"]
+pub struct VideoEncodeQualityLevelInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub quality_level: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for VideoEncodeQualityLevelInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            quality_level: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for VideoEncodeQualityLevelInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_QUALITY_LEVEL_INFO_KHR;
+}
+unsafe impl ExtendsVideoCodingControlInfoKHR for VideoEncodeQualityLevelInfoKHR<'_> {}
+unsafe impl ExtendsVideoSessionParametersCreateInfoKHR for VideoEncodeQualityLevelInfoKHR<'_> {}
+impl<'a> VideoEncodeQualityLevelInfoKHR<'a> {
+    #[inline]
+    pub fn quality_level(mut self, quality_level: u32) -> Self {
+        self.quality_level = quality_level;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceVideoEncodeQualityLevelInfoKHR.html>"]
+pub struct PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub p_video_profile: *const VideoProfileInfoKHR<'a>,
+    pub quality_level: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            p_video_profile: ::std::ptr::null(),
+            quality_level: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_VIDEO_ENCODE_QUALITY_LEVEL_INFO_KHR;
+}
+impl<'a> PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'a> {
+    #[inline]
+    pub fn video_profile(mut self, video_profile: &'a VideoProfileInfoKHR<'a>) -> Self {
+        self.p_video_profile = video_profile;
+        self
+    }
+    #[inline]
+    pub fn quality_level(mut self, quality_level: u32) -> Self {
+        self.quality_level = quality_level;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeQualityLevelPropertiesKHR.html>"]
+pub struct VideoEncodeQualityLevelPropertiesKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub preferred_rate_control_mode: VideoEncodeRateControlModeFlagsKHR,
+    pub preferred_rate_control_layer_count: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for VideoEncodeQualityLevelPropertiesKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            preferred_rate_control_mode: VideoEncodeRateControlModeFlagsKHR::default(),
+            preferred_rate_control_layer_count: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for VideoEncodeQualityLevelPropertiesKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_QUALITY_LEVEL_PROPERTIES_KHR;
+}
+pub unsafe trait ExtendsVideoEncodeQualityLevelPropertiesKHR {}
+impl<'a> VideoEncodeQualityLevelPropertiesKHR<'a> {
+    #[inline]
+    pub fn preferred_rate_control_mode(
+        mut self,
+        preferred_rate_control_mode: VideoEncodeRateControlModeFlagsKHR,
+    ) -> Self {
+        self.preferred_rate_control_mode = preferred_rate_control_mode;
+        self
+    }
+    #[inline]
+    pub fn preferred_rate_control_layer_count(
+        mut self,
+        preferred_rate_control_layer_count: u32,
+    ) -> Self {
+        self.preferred_rate_control_layer_count = preferred_rate_control_layer_count;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsVideoEncodeQualityLevelPropertiesKHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        unsafe {
+            let next_ptr = <*mut T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeRateControlInfoKHR.html>"]
 pub struct VideoEncodeRateControlInfoKHR<'a> {
     pub s_type: StructureType,
@@ -37815,6 +38075,8 @@ pub struct VideoEncodeRateControlInfoKHR<'a> {
     pub rate_control_mode: VideoEncodeRateControlModeFlagsKHR,
     pub layer_count: u32,
     pub p_layers: *const VideoEncodeRateControlLayerInfoKHR<'a>,
+    pub virtual_buffer_size_in_ms: u32,
+    pub initial_virtual_buffer_size_in_ms: u32,
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for VideoEncodeRateControlInfoKHR<'_> {
@@ -37827,6 +38089,8 @@ impl ::std::default::Default for VideoEncodeRateControlInfoKHR<'_> {
             rate_control_mode: VideoEncodeRateControlModeFlagsKHR::default(),
             layer_count: u32::default(),
             p_layers: ::std::ptr::null(),
+            virtual_buffer_size_in_ms: u32::default(),
+            initial_virtual_buffer_size_in_ms: u32::default(),
             _marker: PhantomData,
         }
     }
@@ -37835,6 +38099,7 @@ unsafe impl<'a> TaggedStructure for VideoEncodeRateControlInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_RATE_CONTROL_INFO_KHR;
 }
 unsafe impl ExtendsVideoCodingControlInfoKHR for VideoEncodeRateControlInfoKHR<'_> {}
+unsafe impl ExtendsVideoBeginCodingInfoKHR for VideoEncodeRateControlInfoKHR<'_> {}
 impl<'a> VideoEncodeRateControlInfoKHR<'a> {
     #[inline]
     pub fn flags(mut self, flags: VideoEncodeRateControlFlagsKHR) -> Self {
@@ -37855,6 +38120,19 @@ impl<'a> VideoEncodeRateControlInfoKHR<'a> {
         self.p_layers = layers.as_ptr();
         self
     }
+    #[inline]
+    pub fn virtual_buffer_size_in_ms(mut self, virtual_buffer_size_in_ms: u32) -> Self {
+        self.virtual_buffer_size_in_ms = virtual_buffer_size_in_ms;
+        self
+    }
+    #[inline]
+    pub fn initial_virtual_buffer_size_in_ms(
+        mut self,
+        initial_virtual_buffer_size_in_ms: u32,
+    ) -> Self {
+        self.initial_virtual_buffer_size_in_ms = initial_virtual_buffer_size_in_ms;
+        self
+    }
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
@@ -37867,8 +38145,6 @@ pub struct VideoEncodeRateControlLayerInfoKHR<'a> {
     pub max_bitrate: u64,
     pub frame_rate_numerator: u32,
     pub frame_rate_denominator: u32,
-    pub virtual_buffer_size_in_ms: u32,
-    pub initial_virtual_buffer_size_in_ms: u32,
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for VideoEncodeRateControlLayerInfoKHR<'_> {
@@ -37881,8 +38157,6 @@ impl ::std::default::Default for VideoEncodeRateControlLayerInfoKHR<'_> {
             max_bitrate: u64::default(),
             frame_rate_numerator: u32::default(),
             frame_rate_denominator: u32::default(),
-            virtual_buffer_size_in_ms: u32::default(),
-            initial_virtual_buffer_size_in_ms: u32::default(),
             _marker: PhantomData,
         }
     }
@@ -37890,7 +38164,6 @@ impl ::std::default::Default for VideoEncodeRateControlLayerInfoKHR<'_> {
 unsafe impl<'a> TaggedStructure for VideoEncodeRateControlLayerInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_RATE_CONTROL_LAYER_INFO_KHR;
 }
-unsafe impl ExtendsVideoCodingControlInfoKHR for VideoEncodeRateControlLayerInfoKHR<'_> {}
 pub unsafe trait ExtendsVideoEncodeRateControlLayerInfoKHR {}
 impl<'a> VideoEncodeRateControlLayerInfoKHR<'a> {
     #[inline]
@@ -37911,19 +38184,6 @@ impl<'a> VideoEncodeRateControlLayerInfoKHR<'a> {
     #[inline]
     pub fn frame_rate_denominator(mut self, frame_rate_denominator: u32) -> Self {
         self.frame_rate_denominator = frame_rate_denominator;
-        self
-    }
-    #[inline]
-    pub fn virtual_buffer_size_in_ms(mut self, virtual_buffer_size_in_ms: u32) -> Self {
-        self.virtual_buffer_size_in_ms = virtual_buffer_size_in_ms;
-        self
-    }
-    #[inline]
-    pub fn initial_virtual_buffer_size_in_ms(
-        mut self,
-        initial_virtual_buffer_size_in_ms: u32,
-    ) -> Self {
-        self.initial_virtual_buffer_size_in_ms = initial_virtual_buffer_size_in_ms;
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -37954,8 +38214,9 @@ pub struct VideoEncodeCapabilitiesKHR<'a> {
     pub flags: VideoEncodeCapabilityFlagsKHR,
     pub rate_control_modes: VideoEncodeRateControlModeFlagsKHR,
     pub max_rate_control_layers: u32,
+    pub max_bitrate: u64,
     pub max_quality_levels: u32,
-    pub input_image_data_fill_alignment: Extent2D,
+    pub encode_input_picture_granularity: Extent2D,
     pub supported_encode_feedback_flags: VideoEncodeFeedbackFlagsKHR,
     pub _marker: PhantomData<&'a ()>,
 }
@@ -37968,8 +38229,9 @@ impl ::std::default::Default for VideoEncodeCapabilitiesKHR<'_> {
             flags: VideoEncodeCapabilityFlagsKHR::default(),
             rate_control_modes: VideoEncodeRateControlModeFlagsKHR::default(),
             max_rate_control_layers: u32::default(),
+            max_bitrate: u64::default(),
             max_quality_levels: u32::default(),
-            input_image_data_fill_alignment: Extent2D::default(),
+            encode_input_picture_granularity: Extent2D::default(),
             supported_encode_feedback_flags: VideoEncodeFeedbackFlagsKHR::default(),
             _marker: PhantomData,
         }
@@ -37999,16 +38261,21 @@ impl<'a> VideoEncodeCapabilitiesKHR<'a> {
         self
     }
     #[inline]
+    pub fn max_bitrate(mut self, max_bitrate: u64) -> Self {
+        self.max_bitrate = max_bitrate;
+        self
+    }
+    #[inline]
     pub fn max_quality_levels(mut self, max_quality_levels: u32) -> Self {
         self.max_quality_levels = max_quality_levels;
         self
     }
     #[inline]
-    pub fn input_image_data_fill_alignment(
+    pub fn encode_input_picture_granularity(
         mut self,
-        input_image_data_fill_alignment: Extent2D,
+        encode_input_picture_granularity: Extent2D,
     ) -> Self {
-        self.input_image_data_fill_alignment = input_image_data_fill_alignment;
+        self.encode_input_picture_granularity = encode_input_picture_granularity;
         self
     }
     #[inline]
@@ -38028,14 +38295,18 @@ pub struct VideoEncodeH264CapabilitiesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub flags: VideoEncodeH264CapabilityFlagsEXT,
+    pub max_level_idc: StdVideoH264LevelIdc,
+    pub max_slice_count: u32,
     pub max_p_picture_l0_reference_count: u32,
     pub max_b_picture_l0_reference_count: u32,
     pub max_l1_reference_count: u32,
-    pub motion_vectors_over_pic_boundaries_flag: Bool32,
-    pub max_bytes_per_pic_denom: u32,
-    pub max_bits_per_mb_denom: u32,
-    pub log2_max_mv_length_horizontal: u32,
-    pub log2_max_mv_length_vertical: u32,
+    pub max_temporal_layer_count: u32,
+    pub expect_dyadic_temporal_layer_pattern: Bool32,
+    pub min_qp: i32,
+    pub max_qp: i32,
+    pub prefers_gop_remaining_frames: Bool32,
+    pub requires_gop_remaining_frames: Bool32,
+    pub std_syntax_flags: VideoEncodeH264StdFlagsEXT,
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for VideoEncodeH264CapabilitiesEXT<'_> {
@@ -38045,14 +38316,18 @@ impl ::std::default::Default for VideoEncodeH264CapabilitiesEXT<'_> {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             flags: VideoEncodeH264CapabilityFlagsEXT::default(),
+            max_level_idc: StdVideoH264LevelIdc::default(),
+            max_slice_count: u32::default(),
             max_p_picture_l0_reference_count: u32::default(),
             max_b_picture_l0_reference_count: u32::default(),
             max_l1_reference_count: u32::default(),
-            motion_vectors_over_pic_boundaries_flag: Bool32::default(),
-            max_bytes_per_pic_denom: u32::default(),
-            max_bits_per_mb_denom: u32::default(),
-            log2_max_mv_length_horizontal: u32::default(),
-            log2_max_mv_length_vertical: u32::default(),
+            max_temporal_layer_count: u32::default(),
+            expect_dyadic_temporal_layer_pattern: Bool32::default(),
+            min_qp: i32::default(),
+            max_qp: i32::default(),
+            prefers_gop_remaining_frames: Bool32::default(),
+            requires_gop_remaining_frames: Bool32::default(),
+            std_syntax_flags: VideoEncodeH264StdFlagsEXT::default(),
             _marker: PhantomData,
         }
     }
@@ -38065,6 +38340,16 @@ impl<'a> VideoEncodeH264CapabilitiesEXT<'a> {
     #[inline]
     pub fn flags(mut self, flags: VideoEncodeH264CapabilityFlagsEXT) -> Self {
         self.flags = flags;
+        self
+    }
+    #[inline]
+    pub fn max_level_idc(mut self, max_level_idc: StdVideoH264LevelIdc) -> Self {
+        self.max_level_idc = max_level_idc;
+        self
+    }
+    #[inline]
+    pub fn max_slice_count(mut self, max_slice_count: u32) -> Self {
+        self.max_slice_count = max_slice_count;
         self
     }
     #[inline]
@@ -38089,32 +38374,187 @@ impl<'a> VideoEncodeH264CapabilitiesEXT<'a> {
         self
     }
     #[inline]
-    pub fn motion_vectors_over_pic_boundaries_flag(
+    pub fn max_temporal_layer_count(mut self, max_temporal_layer_count: u32) -> Self {
+        self.max_temporal_layer_count = max_temporal_layer_count;
+        self
+    }
+    #[inline]
+    pub fn expect_dyadic_temporal_layer_pattern(
         mut self,
-        motion_vectors_over_pic_boundaries_flag: bool,
+        expect_dyadic_temporal_layer_pattern: bool,
     ) -> Self {
-        self.motion_vectors_over_pic_boundaries_flag =
-            motion_vectors_over_pic_boundaries_flag.into();
+        self.expect_dyadic_temporal_layer_pattern = expect_dyadic_temporal_layer_pattern.into();
         self
     }
     #[inline]
-    pub fn max_bytes_per_pic_denom(mut self, max_bytes_per_pic_denom: u32) -> Self {
-        self.max_bytes_per_pic_denom = max_bytes_per_pic_denom;
+    pub fn min_qp(mut self, min_qp: i32) -> Self {
+        self.min_qp = min_qp;
         self
     }
     #[inline]
-    pub fn max_bits_per_mb_denom(mut self, max_bits_per_mb_denom: u32) -> Self {
-        self.max_bits_per_mb_denom = max_bits_per_mb_denom;
+    pub fn max_qp(mut self, max_qp: i32) -> Self {
+        self.max_qp = max_qp;
         self
     }
     #[inline]
-    pub fn log2_max_mv_length_horizontal(mut self, log2_max_mv_length_horizontal: u32) -> Self {
-        self.log2_max_mv_length_horizontal = log2_max_mv_length_horizontal;
+    pub fn prefers_gop_remaining_frames(mut self, prefers_gop_remaining_frames: bool) -> Self {
+        self.prefers_gop_remaining_frames = prefers_gop_remaining_frames.into();
         self
     }
     #[inline]
-    pub fn log2_max_mv_length_vertical(mut self, log2_max_mv_length_vertical: u32) -> Self {
-        self.log2_max_mv_length_vertical = log2_max_mv_length_vertical;
+    pub fn requires_gop_remaining_frames(mut self, requires_gop_remaining_frames: bool) -> Self {
+        self.requires_gop_remaining_frames = requires_gop_remaining_frames.into();
+        self
+    }
+    #[inline]
+    pub fn std_syntax_flags(mut self, std_syntax_flags: VideoEncodeH264StdFlagsEXT) -> Self {
+        self.std_syntax_flags = std_syntax_flags;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH264QualityLevelPropertiesEXT.html>"]
+pub struct VideoEncodeH264QualityLevelPropertiesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub preferred_rate_control_flags: VideoEncodeH264RateControlFlagsEXT,
+    pub preferred_gop_frame_count: u32,
+    pub preferred_idr_period: u32,
+    pub preferred_consecutive_b_frame_count: u32,
+    pub preferred_temporal_layer_count: u32,
+    pub preferred_constant_qp: VideoEncodeH264QpEXT,
+    pub preferred_max_l0_reference_count: u32,
+    pub preferred_max_l1_reference_count: u32,
+    pub preferred_std_entropy_coding_mode_flag: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for VideoEncodeH264QualityLevelPropertiesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            preferred_rate_control_flags: VideoEncodeH264RateControlFlagsEXT::default(),
+            preferred_gop_frame_count: u32::default(),
+            preferred_idr_period: u32::default(),
+            preferred_consecutive_b_frame_count: u32::default(),
+            preferred_temporal_layer_count: u32::default(),
+            preferred_constant_qp: VideoEncodeH264QpEXT::default(),
+            preferred_max_l0_reference_count: u32::default(),
+            preferred_max_l1_reference_count: u32::default(),
+            preferred_std_entropy_coding_mode_flag: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for VideoEncodeH264QualityLevelPropertiesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::VIDEO_ENCODE_H264_QUALITY_LEVEL_PROPERTIES_EXT;
+}
+unsafe impl ExtendsVideoEncodeQualityLevelPropertiesKHR
+    for VideoEncodeH264QualityLevelPropertiesEXT<'_>
+{
+}
+impl<'a> VideoEncodeH264QualityLevelPropertiesEXT<'a> {
+    #[inline]
+    pub fn preferred_rate_control_flags(
+        mut self,
+        preferred_rate_control_flags: VideoEncodeH264RateControlFlagsEXT,
+    ) -> Self {
+        self.preferred_rate_control_flags = preferred_rate_control_flags;
+        self
+    }
+    #[inline]
+    pub fn preferred_gop_frame_count(mut self, preferred_gop_frame_count: u32) -> Self {
+        self.preferred_gop_frame_count = preferred_gop_frame_count;
+        self
+    }
+    #[inline]
+    pub fn preferred_idr_period(mut self, preferred_idr_period: u32) -> Self {
+        self.preferred_idr_period = preferred_idr_period;
+        self
+    }
+    #[inline]
+    pub fn preferred_consecutive_b_frame_count(
+        mut self,
+        preferred_consecutive_b_frame_count: u32,
+    ) -> Self {
+        self.preferred_consecutive_b_frame_count = preferred_consecutive_b_frame_count;
+        self
+    }
+    #[inline]
+    pub fn preferred_temporal_layer_count(mut self, preferred_temporal_layer_count: u32) -> Self {
+        self.preferred_temporal_layer_count = preferred_temporal_layer_count;
+        self
+    }
+    #[inline]
+    pub fn preferred_constant_qp(mut self, preferred_constant_qp: VideoEncodeH264QpEXT) -> Self {
+        self.preferred_constant_qp = preferred_constant_qp;
+        self
+    }
+    #[inline]
+    pub fn preferred_max_l0_reference_count(
+        mut self,
+        preferred_max_l0_reference_count: u32,
+    ) -> Self {
+        self.preferred_max_l0_reference_count = preferred_max_l0_reference_count;
+        self
+    }
+    #[inline]
+    pub fn preferred_max_l1_reference_count(
+        mut self,
+        preferred_max_l1_reference_count: u32,
+    ) -> Self {
+        self.preferred_max_l1_reference_count = preferred_max_l1_reference_count;
+        self
+    }
+    #[inline]
+    pub fn preferred_std_entropy_coding_mode_flag(
+        mut self,
+        preferred_std_entropy_coding_mode_flag: bool,
+    ) -> Self {
+        self.preferred_std_entropy_coding_mode_flag = preferred_std_entropy_coding_mode_flag.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH264SessionCreateInfoEXT.html>"]
+pub struct VideoEncodeH264SessionCreateInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub use_max_level_idc: Bool32,
+    pub max_level_idc: StdVideoH264LevelIdc,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for VideoEncodeH264SessionCreateInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            use_max_level_idc: Bool32::default(),
+            max_level_idc: StdVideoH264LevelIdc::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for VideoEncodeH264SessionCreateInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H264_SESSION_CREATE_INFO_EXT;
+}
+unsafe impl ExtendsVideoSessionCreateInfoKHR for VideoEncodeH264SessionCreateInfoEXT<'_> {}
+impl<'a> VideoEncodeH264SessionCreateInfoEXT<'a> {
+    #[inline]
+    pub fn use_max_level_idc(mut self, use_max_level_idc: bool) -> Self {
+        self.use_max_level_idc = use_max_level_idc.into();
+        self
+    }
+    #[inline]
+    pub fn max_level_idc(mut self, max_level_idc: StdVideoH264LevelIdc) -> Self {
+        self.max_level_idc = max_level_idc;
         self
     }
 }
@@ -38223,6 +38663,106 @@ impl<'a> VideoEncodeH264SessionParametersCreateInfoEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH264SessionParametersGetInfoEXT.html>"]
+pub struct VideoEncodeH264SessionParametersGetInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub write_std_sps: Bool32,
+    pub write_std_pps: Bool32,
+    pub std_sps_id: u32,
+    pub std_pps_id: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for VideoEncodeH264SessionParametersGetInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            write_std_sps: Bool32::default(),
+            write_std_pps: Bool32::default(),
+            std_sps_id: u32::default(),
+            std_pps_id: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for VideoEncodeH264SessionParametersGetInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::VIDEO_ENCODE_H264_SESSION_PARAMETERS_GET_INFO_EXT;
+}
+unsafe impl ExtendsVideoEncodeSessionParametersGetInfoKHR
+    for VideoEncodeH264SessionParametersGetInfoEXT<'_>
+{
+}
+impl<'a> VideoEncodeH264SessionParametersGetInfoEXT<'a> {
+    #[inline]
+    pub fn write_std_sps(mut self, write_std_sps: bool) -> Self {
+        self.write_std_sps = write_std_sps.into();
+        self
+    }
+    #[inline]
+    pub fn write_std_pps(mut self, write_std_pps: bool) -> Self {
+        self.write_std_pps = write_std_pps.into();
+        self
+    }
+    #[inline]
+    pub fn std_sps_id(mut self, std_sps_id: u32) -> Self {
+        self.std_sps_id = std_sps_id;
+        self
+    }
+    #[inline]
+    pub fn std_pps_id(mut self, std_pps_id: u32) -> Self {
+        self.std_pps_id = std_pps_id;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH264SessionParametersFeedbackInfoEXT.html>"]
+pub struct VideoEncodeH264SessionParametersFeedbackInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub has_std_sps_overrides: Bool32,
+    pub has_std_pps_overrides: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for VideoEncodeH264SessionParametersFeedbackInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            has_std_sps_overrides: Bool32::default(),
+            has_std_pps_overrides: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for VideoEncodeH264SessionParametersFeedbackInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::VIDEO_ENCODE_H264_SESSION_PARAMETERS_FEEDBACK_INFO_EXT;
+}
+unsafe impl ExtendsVideoEncodeSessionParametersFeedbackInfoKHR
+    for VideoEncodeH264SessionParametersFeedbackInfoEXT<'_>
+{
+}
+impl<'a> VideoEncodeH264SessionParametersFeedbackInfoEXT<'a> {
+    #[inline]
+    pub fn has_std_sps_overrides(mut self, has_std_sps_overrides: bool) -> Self {
+        self.has_std_sps_overrides = has_std_sps_overrides.into();
+        self
+    }
+    #[inline]
+    pub fn has_std_pps_overrides(mut self, has_std_pps_overrides: bool) -> Self {
+        self.has_std_pps_overrides = has_std_pps_overrides.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH264DpbSlotInfoEXT.html>"]
 pub struct VideoEncodeH264DpbSlotInfoEXT<'a> {
     pub s_type: StructureType,
@@ -38258,43 +38798,35 @@ impl<'a> VideoEncodeH264DpbSlotInfoEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH264VclFrameInfoEXT.html>"]
-pub struct VideoEncodeH264VclFrameInfoEXT<'a> {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH264PictureInfoEXT.html>"]
+pub struct VideoEncodeH264PictureInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub p_std_reference_final_lists: *const StdVideoEncodeH264ReferenceListsInfo,
     pub nalu_slice_entry_count: u32,
     pub p_nalu_slice_entries: *const VideoEncodeH264NaluSliceInfoEXT<'a>,
     pub p_std_picture_info: *const StdVideoEncodeH264PictureInfo,
+    pub generate_prefix_nalu: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
-impl ::std::default::Default for VideoEncodeH264VclFrameInfoEXT<'_> {
+impl ::std::default::Default for VideoEncodeH264PictureInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            p_std_reference_final_lists: ::std::ptr::null(),
             nalu_slice_entry_count: u32::default(),
             p_nalu_slice_entries: ::std::ptr::null(),
             p_std_picture_info: ::std::ptr::null(),
+            generate_prefix_nalu: Bool32::default(),
             _marker: PhantomData,
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH264VclFrameInfoEXT<'a> {
-    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H264_VCL_FRAME_INFO_EXT;
+unsafe impl<'a> TaggedStructure for VideoEncodeH264PictureInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H264_PICTURE_INFO_EXT;
 }
-unsafe impl ExtendsVideoEncodeInfoKHR for VideoEncodeH264VclFrameInfoEXT<'_> {}
-impl<'a> VideoEncodeH264VclFrameInfoEXT<'a> {
-    #[inline]
-    pub fn std_reference_final_lists(
-        mut self,
-        std_reference_final_lists: &'a StdVideoEncodeH264ReferenceListsInfo,
-    ) -> Self {
-        self.p_std_reference_final_lists = std_reference_final_lists;
-        self
-    }
+unsafe impl ExtendsVideoEncodeInfoKHR for VideoEncodeH264PictureInfoEXT<'_> {}
+impl<'a> VideoEncodeH264PictureInfoEXT<'a> {
     #[inline]
     pub fn nalu_slice_entries(
         mut self,
@@ -38307,6 +38839,11 @@ impl<'a> VideoEncodeH264VclFrameInfoEXT<'a> {
     #[inline]
     pub fn std_picture_info(mut self, std_picture_info: &'a StdVideoEncodeH264PictureInfo) -> Self {
         self.p_std_picture_info = std_picture_info;
+        self
+    }
+    #[inline]
+    pub fn generate_prefix_nalu(mut self, generate_prefix_nalu: bool) -> Self {
+        self.generate_prefix_nalu = generate_prefix_nalu.into();
         self
     }
 }
@@ -38350,8 +38887,7 @@ impl<'a> VideoEncodeH264ProfileInfoEXT<'a> {
 pub struct VideoEncodeH264NaluSliceInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub mb_count: u32,
-    pub p_std_reference_final_lists: *const StdVideoEncodeH264ReferenceListsInfo,
+    pub constant_qp: i32,
     pub p_std_slice_header: *const StdVideoEncodeH264SliceHeader,
     pub _marker: PhantomData<&'a ()>,
 }
@@ -38361,8 +38897,7 @@ impl ::std::default::Default for VideoEncodeH264NaluSliceInfoEXT<'_> {
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            mb_count: u32::default(),
-            p_std_reference_final_lists: ::std::ptr::null(),
+            constant_qp: i32::default(),
             p_std_slice_header: ::std::ptr::null(),
             _marker: PhantomData,
         }
@@ -38373,16 +38908,8 @@ unsafe impl<'a> TaggedStructure for VideoEncodeH264NaluSliceInfoEXT<'a> {
 }
 impl<'a> VideoEncodeH264NaluSliceInfoEXT<'a> {
     #[inline]
-    pub fn mb_count(mut self, mb_count: u32) -> Self {
-        self.mb_count = mb_count;
-        self
-    }
-    #[inline]
-    pub fn std_reference_final_lists(
-        mut self,
-        std_reference_final_lists: &'a StdVideoEncodeH264ReferenceListsInfo,
-    ) -> Self {
-        self.p_std_reference_final_lists = std_reference_final_lists;
+    pub fn constant_qp(mut self, constant_qp: i32) -> Self {
+        self.constant_qp = constant_qp;
         self
     }
     #[inline]
@@ -38398,10 +38925,10 @@ impl<'a> VideoEncodeH264NaluSliceInfoEXT<'a> {
 pub struct VideoEncodeH264RateControlInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
+    pub flags: VideoEncodeH264RateControlFlagsEXT,
     pub gop_frame_count: u32,
     pub idr_period: u32,
     pub consecutive_b_frame_count: u32,
-    pub rate_control_structure: VideoEncodeH264RateControlStructureEXT,
     pub temporal_layer_count: u32,
     pub _marker: PhantomData<&'a ()>,
 }
@@ -38411,10 +38938,10 @@ impl ::std::default::Default for VideoEncodeH264RateControlInfoEXT<'_> {
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
+            flags: VideoEncodeH264RateControlFlagsEXT::default(),
             gop_frame_count: u32::default(),
             idr_period: u32::default(),
             consecutive_b_frame_count: u32::default(),
-            rate_control_structure: VideoEncodeH264RateControlStructureEXT::default(),
             temporal_layer_count: u32::default(),
             _marker: PhantomData,
         }
@@ -38424,7 +38951,13 @@ unsafe impl<'a> TaggedStructure for VideoEncodeH264RateControlInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H264_RATE_CONTROL_INFO_EXT;
 }
 unsafe impl ExtendsVideoCodingControlInfoKHR for VideoEncodeH264RateControlInfoEXT<'_> {}
+unsafe impl ExtendsVideoBeginCodingInfoKHR for VideoEncodeH264RateControlInfoEXT<'_> {}
 impl<'a> VideoEncodeH264RateControlInfoEXT<'a> {
+    #[inline]
+    pub fn flags(mut self, flags: VideoEncodeH264RateControlFlagsEXT) -> Self {
+        self.flags = flags;
+        self
+    }
     #[inline]
     pub fn gop_frame_count(mut self, gop_frame_count: u32) -> Self {
         self.gop_frame_count = gop_frame_count;
@@ -38438,14 +38971,6 @@ impl<'a> VideoEncodeH264RateControlInfoEXT<'a> {
     #[inline]
     pub fn consecutive_b_frame_count(mut self, consecutive_b_frame_count: u32) -> Self {
         self.consecutive_b_frame_count = consecutive_b_frame_count;
-        self
-    }
-    #[inline]
-    pub fn rate_control_structure(
-        mut self,
-        rate_control_structure: VideoEncodeH264RateControlStructureEXT,
-    ) -> Self {
-        self.rate_control_structure = rate_control_structure;
         self
     }
     #[inline]
@@ -38509,13 +39034,64 @@ impl VideoEncodeH264FrameSizeEXT {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH264GopRemainingFrameInfoEXT.html>"]
+pub struct VideoEncodeH264GopRemainingFrameInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub use_gop_remaining_frames: Bool32,
+    pub gop_remaining_i: u32,
+    pub gop_remaining_p: u32,
+    pub gop_remaining_b: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for VideoEncodeH264GopRemainingFrameInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            use_gop_remaining_frames: Bool32::default(),
+            gop_remaining_i: u32::default(),
+            gop_remaining_p: u32::default(),
+            gop_remaining_b: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for VideoEncodeH264GopRemainingFrameInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::VIDEO_ENCODE_H264_GOP_REMAINING_FRAME_INFO_EXT;
+}
+unsafe impl ExtendsVideoBeginCodingInfoKHR for VideoEncodeH264GopRemainingFrameInfoEXT<'_> {}
+impl<'a> VideoEncodeH264GopRemainingFrameInfoEXT<'a> {
+    #[inline]
+    pub fn use_gop_remaining_frames(mut self, use_gop_remaining_frames: bool) -> Self {
+        self.use_gop_remaining_frames = use_gop_remaining_frames.into();
+        self
+    }
+    #[inline]
+    pub fn gop_remaining_i(mut self, gop_remaining_i: u32) -> Self {
+        self.gop_remaining_i = gop_remaining_i;
+        self
+    }
+    #[inline]
+    pub fn gop_remaining_p(mut self, gop_remaining_p: u32) -> Self {
+        self.gop_remaining_p = gop_remaining_p;
+        self
+    }
+    #[inline]
+    pub fn gop_remaining_b(mut self, gop_remaining_b: u32) -> Self {
+        self.gop_remaining_b = gop_remaining_b;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH264RateControlLayerInfoEXT.html>"]
 pub struct VideoEncodeH264RateControlLayerInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub temporal_layer_id: u32,
-    pub use_initial_rc_qp: Bool32,
-    pub initial_rc_qp: VideoEncodeH264QpEXT,
     pub use_min_qp: Bool32,
     pub min_qp: VideoEncodeH264QpEXT,
     pub use_max_qp: Bool32,
@@ -38530,9 +39106,6 @@ impl ::std::default::Default for VideoEncodeH264RateControlLayerInfoEXT<'_> {
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            temporal_layer_id: u32::default(),
-            use_initial_rc_qp: Bool32::default(),
-            initial_rc_qp: VideoEncodeH264QpEXT::default(),
             use_min_qp: Bool32::default(),
             min_qp: VideoEncodeH264QpEXT::default(),
             use_max_qp: Bool32::default(),
@@ -38547,27 +39120,11 @@ unsafe impl<'a> TaggedStructure for VideoEncodeH264RateControlLayerInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H264_RATE_CONTROL_LAYER_INFO_EXT;
 }
-unsafe impl ExtendsVideoCodingControlInfoKHR for VideoEncodeH264RateControlLayerInfoEXT<'_> {}
 unsafe impl ExtendsVideoEncodeRateControlLayerInfoKHR
     for VideoEncodeH264RateControlLayerInfoEXT<'_>
 {
 }
 impl<'a> VideoEncodeH264RateControlLayerInfoEXT<'a> {
-    #[inline]
-    pub fn temporal_layer_id(mut self, temporal_layer_id: u32) -> Self {
-        self.temporal_layer_id = temporal_layer_id;
-        self
-    }
-    #[inline]
-    pub fn use_initial_rc_qp(mut self, use_initial_rc_qp: bool) -> Self {
-        self.use_initial_rc_qp = use_initial_rc_qp.into();
-        self
-    }
-    #[inline]
-    pub fn initial_rc_qp(mut self, initial_rc_qp: VideoEncodeH264QpEXT) -> Self {
-        self.initial_rc_qp = initial_rc_qp;
-        self
-    }
     #[inline]
     pub fn use_min_qp(mut self, use_min_qp: bool) -> Self {
         self.use_min_qp = use_min_qp.into();
@@ -38607,23 +39164,21 @@ pub struct VideoEncodeH265CapabilitiesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub flags: VideoEncodeH265CapabilityFlagsEXT,
+    pub max_level_idc: StdVideoH265LevelIdc,
+    pub max_slice_segment_count: u32,
+    pub max_tiles: Extent2D,
     pub ctb_sizes: VideoEncodeH265CtbSizeFlagsEXT,
     pub transform_block_sizes: VideoEncodeH265TransformBlockSizeFlagsEXT,
     pub max_p_picture_l0_reference_count: u32,
     pub max_b_picture_l0_reference_count: u32,
     pub max_l1_reference_count: u32,
-    pub max_sub_layers_count: u32,
-    pub min_log2_min_luma_coding_block_size_minus3: u32,
-    pub max_log2_min_luma_coding_block_size_minus3: u32,
-    pub min_log2_min_luma_transform_block_size_minus2: u32,
-    pub max_log2_min_luma_transform_block_size_minus2: u32,
-    pub min_max_transform_hierarchy_depth_inter: u32,
-    pub max_max_transform_hierarchy_depth_inter: u32,
-    pub min_max_transform_hierarchy_depth_intra: u32,
-    pub max_max_transform_hierarchy_depth_intra: u32,
-    pub max_diff_cu_qp_delta_depth: u32,
-    pub min_max_num_merge_cand: u32,
-    pub max_max_num_merge_cand: u32,
+    pub max_sub_layer_count: u32,
+    pub expect_dyadic_temporal_sub_layer_pattern: Bool32,
+    pub min_qp: i32,
+    pub max_qp: i32,
+    pub prefers_gop_remaining_frames: Bool32,
+    pub requires_gop_remaining_frames: Bool32,
+    pub std_syntax_flags: VideoEncodeH265StdFlagsEXT,
     pub _marker: PhantomData<&'a ()>,
 }
 impl ::std::default::Default for VideoEncodeH265CapabilitiesEXT<'_> {
@@ -38633,23 +39188,21 @@ impl ::std::default::Default for VideoEncodeH265CapabilitiesEXT<'_> {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null_mut(),
             flags: VideoEncodeH265CapabilityFlagsEXT::default(),
+            max_level_idc: StdVideoH265LevelIdc::default(),
+            max_slice_segment_count: u32::default(),
+            max_tiles: Extent2D::default(),
             ctb_sizes: VideoEncodeH265CtbSizeFlagsEXT::default(),
             transform_block_sizes: VideoEncodeH265TransformBlockSizeFlagsEXT::default(),
             max_p_picture_l0_reference_count: u32::default(),
             max_b_picture_l0_reference_count: u32::default(),
             max_l1_reference_count: u32::default(),
-            max_sub_layers_count: u32::default(),
-            min_log2_min_luma_coding_block_size_minus3: u32::default(),
-            max_log2_min_luma_coding_block_size_minus3: u32::default(),
-            min_log2_min_luma_transform_block_size_minus2: u32::default(),
-            max_log2_min_luma_transform_block_size_minus2: u32::default(),
-            min_max_transform_hierarchy_depth_inter: u32::default(),
-            max_max_transform_hierarchy_depth_inter: u32::default(),
-            min_max_transform_hierarchy_depth_intra: u32::default(),
-            max_max_transform_hierarchy_depth_intra: u32::default(),
-            max_diff_cu_qp_delta_depth: u32::default(),
-            min_max_num_merge_cand: u32::default(),
-            max_max_num_merge_cand: u32::default(),
+            max_sub_layer_count: u32::default(),
+            expect_dyadic_temporal_sub_layer_pattern: Bool32::default(),
+            min_qp: i32::default(),
+            max_qp: i32::default(),
+            prefers_gop_remaining_frames: Bool32::default(),
+            requires_gop_remaining_frames: Bool32::default(),
+            std_syntax_flags: VideoEncodeH265StdFlagsEXT::default(),
             _marker: PhantomData,
         }
     }
@@ -38662,6 +39215,21 @@ impl<'a> VideoEncodeH265CapabilitiesEXT<'a> {
     #[inline]
     pub fn flags(mut self, flags: VideoEncodeH265CapabilityFlagsEXT) -> Self {
         self.flags = flags;
+        self
+    }
+    #[inline]
+    pub fn max_level_idc(mut self, max_level_idc: StdVideoH265LevelIdc) -> Self {
+        self.max_level_idc = max_level_idc;
+        self
+    }
+    #[inline]
+    pub fn max_slice_segment_count(mut self, max_slice_segment_count: u32) -> Self {
+        self.max_slice_segment_count = max_slice_segment_count;
+        self
+    }
+    #[inline]
+    pub fn max_tiles(mut self, max_tiles: Extent2D) -> Self {
+        self.max_tiles = max_tiles;
         self
     }
     #[inline]
@@ -38699,91 +39267,178 @@ impl<'a> VideoEncodeH265CapabilitiesEXT<'a> {
         self
     }
     #[inline]
-    pub fn max_sub_layers_count(mut self, max_sub_layers_count: u32) -> Self {
-        self.max_sub_layers_count = max_sub_layers_count;
+    pub fn max_sub_layer_count(mut self, max_sub_layer_count: u32) -> Self {
+        self.max_sub_layer_count = max_sub_layer_count;
         self
     }
     #[inline]
-    pub fn min_log2_min_luma_coding_block_size_minus3(
+    pub fn expect_dyadic_temporal_sub_layer_pattern(
         mut self,
-        min_log2_min_luma_coding_block_size_minus3: u32,
+        expect_dyadic_temporal_sub_layer_pattern: bool,
     ) -> Self {
-        self.min_log2_min_luma_coding_block_size_minus3 =
-            min_log2_min_luma_coding_block_size_minus3;
+        self.expect_dyadic_temporal_sub_layer_pattern =
+            expect_dyadic_temporal_sub_layer_pattern.into();
         self
     }
     #[inline]
-    pub fn max_log2_min_luma_coding_block_size_minus3(
+    pub fn min_qp(mut self, min_qp: i32) -> Self {
+        self.min_qp = min_qp;
+        self
+    }
+    #[inline]
+    pub fn max_qp(mut self, max_qp: i32) -> Self {
+        self.max_qp = max_qp;
+        self
+    }
+    #[inline]
+    pub fn prefers_gop_remaining_frames(mut self, prefers_gop_remaining_frames: bool) -> Self {
+        self.prefers_gop_remaining_frames = prefers_gop_remaining_frames.into();
+        self
+    }
+    #[inline]
+    pub fn requires_gop_remaining_frames(mut self, requires_gop_remaining_frames: bool) -> Self {
+        self.requires_gop_remaining_frames = requires_gop_remaining_frames.into();
+        self
+    }
+    #[inline]
+    pub fn std_syntax_flags(mut self, std_syntax_flags: VideoEncodeH265StdFlagsEXT) -> Self {
+        self.std_syntax_flags = std_syntax_flags;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265QualityLevelPropertiesEXT.html>"]
+pub struct VideoEncodeH265QualityLevelPropertiesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub preferred_rate_control_flags: VideoEncodeH265RateControlFlagsEXT,
+    pub preferred_gop_frame_count: u32,
+    pub preferred_idr_period: u32,
+    pub preferred_consecutive_b_frame_count: u32,
+    pub preferred_sub_layer_count: u32,
+    pub preferred_constant_qp: VideoEncodeH265QpEXT,
+    pub preferred_max_l0_reference_count: u32,
+    pub preferred_max_l1_reference_count: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for VideoEncodeH265QualityLevelPropertiesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            preferred_rate_control_flags: VideoEncodeH265RateControlFlagsEXT::default(),
+            preferred_gop_frame_count: u32::default(),
+            preferred_idr_period: u32::default(),
+            preferred_consecutive_b_frame_count: u32::default(),
+            preferred_sub_layer_count: u32::default(),
+            preferred_constant_qp: VideoEncodeH265QpEXT::default(),
+            preferred_max_l0_reference_count: u32::default(),
+            preferred_max_l1_reference_count: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for VideoEncodeH265QualityLevelPropertiesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::VIDEO_ENCODE_H265_QUALITY_LEVEL_PROPERTIES_EXT;
+}
+unsafe impl ExtendsVideoEncodeQualityLevelPropertiesKHR
+    for VideoEncodeH265QualityLevelPropertiesEXT<'_>
+{
+}
+impl<'a> VideoEncodeH265QualityLevelPropertiesEXT<'a> {
+    #[inline]
+    pub fn preferred_rate_control_flags(
         mut self,
-        max_log2_min_luma_coding_block_size_minus3: u32,
+        preferred_rate_control_flags: VideoEncodeH265RateControlFlagsEXT,
     ) -> Self {
-        self.max_log2_min_luma_coding_block_size_minus3 =
-            max_log2_min_luma_coding_block_size_minus3;
+        self.preferred_rate_control_flags = preferred_rate_control_flags;
         self
     }
     #[inline]
-    pub fn min_log2_min_luma_transform_block_size_minus2(
+    pub fn preferred_gop_frame_count(mut self, preferred_gop_frame_count: u32) -> Self {
+        self.preferred_gop_frame_count = preferred_gop_frame_count;
+        self
+    }
+    #[inline]
+    pub fn preferred_idr_period(mut self, preferred_idr_period: u32) -> Self {
+        self.preferred_idr_period = preferred_idr_period;
+        self
+    }
+    #[inline]
+    pub fn preferred_consecutive_b_frame_count(
         mut self,
-        min_log2_min_luma_transform_block_size_minus2: u32,
+        preferred_consecutive_b_frame_count: u32,
     ) -> Self {
-        self.min_log2_min_luma_transform_block_size_minus2 =
-            min_log2_min_luma_transform_block_size_minus2;
+        self.preferred_consecutive_b_frame_count = preferred_consecutive_b_frame_count;
         self
     }
     #[inline]
-    pub fn max_log2_min_luma_transform_block_size_minus2(
+    pub fn preferred_sub_layer_count(mut self, preferred_sub_layer_count: u32) -> Self {
+        self.preferred_sub_layer_count = preferred_sub_layer_count;
+        self
+    }
+    #[inline]
+    pub fn preferred_constant_qp(mut self, preferred_constant_qp: VideoEncodeH265QpEXT) -> Self {
+        self.preferred_constant_qp = preferred_constant_qp;
+        self
+    }
+    #[inline]
+    pub fn preferred_max_l0_reference_count(
         mut self,
-        max_log2_min_luma_transform_block_size_minus2: u32,
+        preferred_max_l0_reference_count: u32,
     ) -> Self {
-        self.max_log2_min_luma_transform_block_size_minus2 =
-            max_log2_min_luma_transform_block_size_minus2;
+        self.preferred_max_l0_reference_count = preferred_max_l0_reference_count;
         self
     }
     #[inline]
-    pub fn min_max_transform_hierarchy_depth_inter(
+    pub fn preferred_max_l1_reference_count(
         mut self,
-        min_max_transform_hierarchy_depth_inter: u32,
+        preferred_max_l1_reference_count: u32,
     ) -> Self {
-        self.min_max_transform_hierarchy_depth_inter = min_max_transform_hierarchy_depth_inter;
+        self.preferred_max_l1_reference_count = preferred_max_l1_reference_count;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265SessionCreateInfoEXT.html>"]
+pub struct VideoEncodeH265SessionCreateInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub use_max_level_idc: Bool32,
+    pub max_level_idc: StdVideoH265LevelIdc,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for VideoEncodeH265SessionCreateInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            use_max_level_idc: Bool32::default(),
+            max_level_idc: StdVideoH265LevelIdc::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for VideoEncodeH265SessionCreateInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H265_SESSION_CREATE_INFO_EXT;
+}
+unsafe impl ExtendsVideoSessionCreateInfoKHR for VideoEncodeH265SessionCreateInfoEXT<'_> {}
+impl<'a> VideoEncodeH265SessionCreateInfoEXT<'a> {
+    #[inline]
+    pub fn use_max_level_idc(mut self, use_max_level_idc: bool) -> Self {
+        self.use_max_level_idc = use_max_level_idc.into();
         self
     }
     #[inline]
-    pub fn max_max_transform_hierarchy_depth_inter(
-        mut self,
-        max_max_transform_hierarchy_depth_inter: u32,
-    ) -> Self {
-        self.max_max_transform_hierarchy_depth_inter = max_max_transform_hierarchy_depth_inter;
-        self
-    }
-    #[inline]
-    pub fn min_max_transform_hierarchy_depth_intra(
-        mut self,
-        min_max_transform_hierarchy_depth_intra: u32,
-    ) -> Self {
-        self.min_max_transform_hierarchy_depth_intra = min_max_transform_hierarchy_depth_intra;
-        self
-    }
-    #[inline]
-    pub fn max_max_transform_hierarchy_depth_intra(
-        mut self,
-        max_max_transform_hierarchy_depth_intra: u32,
-    ) -> Self {
-        self.max_max_transform_hierarchy_depth_intra = max_max_transform_hierarchy_depth_intra;
-        self
-    }
-    #[inline]
-    pub fn max_diff_cu_qp_delta_depth(mut self, max_diff_cu_qp_delta_depth: u32) -> Self {
-        self.max_diff_cu_qp_delta_depth = max_diff_cu_qp_delta_depth;
-        self
-    }
-    #[inline]
-    pub fn min_max_num_merge_cand(mut self, min_max_num_merge_cand: u32) -> Self {
-        self.min_max_num_merge_cand = min_max_num_merge_cand;
-        self
-    }
-    #[inline]
-    pub fn max_max_num_merge_cand(mut self, max_max_num_merge_cand: u32) -> Self {
-        self.max_max_num_merge_cand = max_max_num_merge_cand;
+    pub fn max_level_idc(mut self, max_level_idc: StdVideoH265LevelIdc) -> Self {
+        self.max_level_idc = max_level_idc;
         self
     }
 }
@@ -38909,23 +39564,142 @@ impl<'a> VideoEncodeH265SessionParametersCreateInfoEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265VclFrameInfoEXT.html>"]
-pub struct VideoEncodeH265VclFrameInfoEXT<'a> {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265SessionParametersGetInfoEXT.html>"]
+pub struct VideoEncodeH265SessionParametersGetInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub p_std_reference_final_lists: *const StdVideoEncodeH265ReferenceListsInfo,
-    pub nalu_slice_segment_entry_count: u32,
-    pub p_nalu_slice_segment_entries: *const VideoEncodeH265NaluSliceSegmentInfoEXT<'a>,
-    pub p_std_picture_info: *const StdVideoEncodeH265PictureInfo,
+    pub write_std_vps: Bool32,
+    pub write_std_sps: Bool32,
+    pub write_std_pps: Bool32,
+    pub std_vps_id: u32,
+    pub std_sps_id: u32,
+    pub std_pps_id: u32,
     pub _marker: PhantomData<&'a ()>,
 }
-impl ::std::default::Default for VideoEncodeH265VclFrameInfoEXT<'_> {
+impl ::std::default::Default for VideoEncodeH265SessionParametersGetInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            p_std_reference_final_lists: ::std::ptr::null(),
+            write_std_vps: Bool32::default(),
+            write_std_sps: Bool32::default(),
+            write_std_pps: Bool32::default(),
+            std_vps_id: u32::default(),
+            std_sps_id: u32::default(),
+            std_pps_id: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for VideoEncodeH265SessionParametersGetInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::VIDEO_ENCODE_H265_SESSION_PARAMETERS_GET_INFO_EXT;
+}
+unsafe impl ExtendsVideoEncodeSessionParametersGetInfoKHR
+    for VideoEncodeH265SessionParametersGetInfoEXT<'_>
+{
+}
+impl<'a> VideoEncodeH265SessionParametersGetInfoEXT<'a> {
+    #[inline]
+    pub fn write_std_vps(mut self, write_std_vps: bool) -> Self {
+        self.write_std_vps = write_std_vps.into();
+        self
+    }
+    #[inline]
+    pub fn write_std_sps(mut self, write_std_sps: bool) -> Self {
+        self.write_std_sps = write_std_sps.into();
+        self
+    }
+    #[inline]
+    pub fn write_std_pps(mut self, write_std_pps: bool) -> Self {
+        self.write_std_pps = write_std_pps.into();
+        self
+    }
+    #[inline]
+    pub fn std_vps_id(mut self, std_vps_id: u32) -> Self {
+        self.std_vps_id = std_vps_id;
+        self
+    }
+    #[inline]
+    pub fn std_sps_id(mut self, std_sps_id: u32) -> Self {
+        self.std_sps_id = std_sps_id;
+        self
+    }
+    #[inline]
+    pub fn std_pps_id(mut self, std_pps_id: u32) -> Self {
+        self.std_pps_id = std_pps_id;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265SessionParametersFeedbackInfoEXT.html>"]
+pub struct VideoEncodeH265SessionParametersFeedbackInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub has_std_vps_overrides: Bool32,
+    pub has_std_sps_overrides: Bool32,
+    pub has_std_pps_overrides: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for VideoEncodeH265SessionParametersFeedbackInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            has_std_vps_overrides: Bool32::default(),
+            has_std_sps_overrides: Bool32::default(),
+            has_std_pps_overrides: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for VideoEncodeH265SessionParametersFeedbackInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::VIDEO_ENCODE_H265_SESSION_PARAMETERS_FEEDBACK_INFO_EXT;
+}
+unsafe impl ExtendsVideoEncodeSessionParametersFeedbackInfoKHR
+    for VideoEncodeH265SessionParametersFeedbackInfoEXT<'_>
+{
+}
+impl<'a> VideoEncodeH265SessionParametersFeedbackInfoEXT<'a> {
+    #[inline]
+    pub fn has_std_vps_overrides(mut self, has_std_vps_overrides: bool) -> Self {
+        self.has_std_vps_overrides = has_std_vps_overrides.into();
+        self
+    }
+    #[inline]
+    pub fn has_std_sps_overrides(mut self, has_std_sps_overrides: bool) -> Self {
+        self.has_std_sps_overrides = has_std_sps_overrides.into();
+        self
+    }
+    #[inline]
+    pub fn has_std_pps_overrides(mut self, has_std_pps_overrides: bool) -> Self {
+        self.has_std_pps_overrides = has_std_pps_overrides.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265PictureInfoEXT.html>"]
+pub struct VideoEncodeH265PictureInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub nalu_slice_segment_entry_count: u32,
+    pub p_nalu_slice_segment_entries: *const VideoEncodeH265NaluSliceSegmentInfoEXT<'a>,
+    pub p_std_picture_info: *const StdVideoEncodeH265PictureInfo,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for VideoEncodeH265PictureInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
             nalu_slice_segment_entry_count: u32::default(),
             p_nalu_slice_segment_entries: ::std::ptr::null(),
             p_std_picture_info: ::std::ptr::null(),
@@ -38933,19 +39707,11 @@ impl ::std::default::Default for VideoEncodeH265VclFrameInfoEXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for VideoEncodeH265VclFrameInfoEXT<'a> {
-    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H265_VCL_FRAME_INFO_EXT;
+unsafe impl<'a> TaggedStructure for VideoEncodeH265PictureInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H265_PICTURE_INFO_EXT;
 }
-unsafe impl ExtendsVideoEncodeInfoKHR for VideoEncodeH265VclFrameInfoEXT<'_> {}
-impl<'a> VideoEncodeH265VclFrameInfoEXT<'a> {
-    #[inline]
-    pub fn std_reference_final_lists(
-        mut self,
-        std_reference_final_lists: &'a StdVideoEncodeH265ReferenceListsInfo,
-    ) -> Self {
-        self.p_std_reference_final_lists = std_reference_final_lists;
-        self
-    }
+unsafe impl ExtendsVideoEncodeInfoKHR for VideoEncodeH265PictureInfoEXT<'_> {}
+impl<'a> VideoEncodeH265PictureInfoEXT<'a> {
     #[inline]
     pub fn nalu_slice_segment_entries(
         mut self,
@@ -38968,8 +39734,7 @@ impl<'a> VideoEncodeH265VclFrameInfoEXT<'a> {
 pub struct VideoEncodeH265NaluSliceSegmentInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub ctb_count: u32,
-    pub p_std_reference_final_lists: *const StdVideoEncodeH265ReferenceListsInfo,
+    pub constant_qp: i32,
     pub p_std_slice_segment_header: *const StdVideoEncodeH265SliceSegmentHeader,
     pub _marker: PhantomData<&'a ()>,
 }
@@ -38979,8 +39744,7 @@ impl ::std::default::Default for VideoEncodeH265NaluSliceSegmentInfoEXT<'_> {
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            ctb_count: u32::default(),
-            p_std_reference_final_lists: ::std::ptr::null(),
+            constant_qp: i32::default(),
             p_std_slice_segment_header: ::std::ptr::null(),
             _marker: PhantomData,
         }
@@ -38992,16 +39756,8 @@ unsafe impl<'a> TaggedStructure for VideoEncodeH265NaluSliceSegmentInfoEXT<'a> {
 }
 impl<'a> VideoEncodeH265NaluSliceSegmentInfoEXT<'a> {
     #[inline]
-    pub fn ctb_count(mut self, ctb_count: u32) -> Self {
-        self.ctb_count = ctb_count;
-        self
-    }
-    #[inline]
-    pub fn std_reference_final_lists(
-        mut self,
-        std_reference_final_lists: &'a StdVideoEncodeH265ReferenceListsInfo,
-    ) -> Self {
-        self.p_std_reference_final_lists = std_reference_final_lists;
+    pub fn constant_qp(mut self, constant_qp: i32) -> Self {
+        self.constant_qp = constant_qp;
         self
     }
     #[inline]
@@ -39020,10 +39776,10 @@ impl<'a> VideoEncodeH265NaluSliceSegmentInfoEXT<'a> {
 pub struct VideoEncodeH265RateControlInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
+    pub flags: VideoEncodeH265RateControlFlagsEXT,
     pub gop_frame_count: u32,
     pub idr_period: u32,
     pub consecutive_b_frame_count: u32,
-    pub rate_control_structure: VideoEncodeH265RateControlStructureEXT,
     pub sub_layer_count: u32,
     pub _marker: PhantomData<&'a ()>,
 }
@@ -39033,10 +39789,10 @@ impl ::std::default::Default for VideoEncodeH265RateControlInfoEXT<'_> {
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
+            flags: VideoEncodeH265RateControlFlagsEXT::default(),
             gop_frame_count: u32::default(),
             idr_period: u32::default(),
             consecutive_b_frame_count: u32::default(),
-            rate_control_structure: VideoEncodeH265RateControlStructureEXT::default(),
             sub_layer_count: u32::default(),
             _marker: PhantomData,
         }
@@ -39046,7 +39802,13 @@ unsafe impl<'a> TaggedStructure for VideoEncodeH265RateControlInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_ENCODE_H265_RATE_CONTROL_INFO_EXT;
 }
 unsafe impl ExtendsVideoCodingControlInfoKHR for VideoEncodeH265RateControlInfoEXT<'_> {}
+unsafe impl ExtendsVideoBeginCodingInfoKHR for VideoEncodeH265RateControlInfoEXT<'_> {}
 impl<'a> VideoEncodeH265RateControlInfoEXT<'a> {
+    #[inline]
+    pub fn flags(mut self, flags: VideoEncodeH265RateControlFlagsEXT) -> Self {
+        self.flags = flags;
+        self
+    }
     #[inline]
     pub fn gop_frame_count(mut self, gop_frame_count: u32) -> Self {
         self.gop_frame_count = gop_frame_count;
@@ -39060,14 +39822,6 @@ impl<'a> VideoEncodeH265RateControlInfoEXT<'a> {
     #[inline]
     pub fn consecutive_b_frame_count(mut self, consecutive_b_frame_count: u32) -> Self {
         self.consecutive_b_frame_count = consecutive_b_frame_count;
-        self
-    }
-    #[inline]
-    pub fn rate_control_structure(
-        mut self,
-        rate_control_structure: VideoEncodeH265RateControlStructureEXT,
-    ) -> Self {
-        self.rate_control_structure = rate_control_structure;
         self
     }
     #[inline]
@@ -39131,13 +39885,64 @@ impl VideoEncodeH265FrameSizeEXT {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265GopRemainingFrameInfoEXT.html>"]
+pub struct VideoEncodeH265GopRemainingFrameInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub use_gop_remaining_frames: Bool32,
+    pub gop_remaining_i: u32,
+    pub gop_remaining_p: u32,
+    pub gop_remaining_b: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for VideoEncodeH265GopRemainingFrameInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            use_gop_remaining_frames: Bool32::default(),
+            gop_remaining_i: u32::default(),
+            gop_remaining_p: u32::default(),
+            gop_remaining_b: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for VideoEncodeH265GopRemainingFrameInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::VIDEO_ENCODE_H265_GOP_REMAINING_FRAME_INFO_EXT;
+}
+unsafe impl ExtendsVideoBeginCodingInfoKHR for VideoEncodeH265GopRemainingFrameInfoEXT<'_> {}
+impl<'a> VideoEncodeH265GopRemainingFrameInfoEXT<'a> {
+    #[inline]
+    pub fn use_gop_remaining_frames(mut self, use_gop_remaining_frames: bool) -> Self {
+        self.use_gop_remaining_frames = use_gop_remaining_frames.into();
+        self
+    }
+    #[inline]
+    pub fn gop_remaining_i(mut self, gop_remaining_i: u32) -> Self {
+        self.gop_remaining_i = gop_remaining_i;
+        self
+    }
+    #[inline]
+    pub fn gop_remaining_p(mut self, gop_remaining_p: u32) -> Self {
+        self.gop_remaining_p = gop_remaining_p;
+        self
+    }
+    #[inline]
+    pub fn gop_remaining_b(mut self, gop_remaining_b: u32) -> Self {
+        self.gop_remaining_b = gop_remaining_b;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265RateControlLayerInfoEXT.html>"]
 pub struct VideoEncodeH265RateControlLayerInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub temporal_id: u32,
-    pub use_initial_rc_qp: Bool32,
-    pub initial_rc_qp: VideoEncodeH265QpEXT,
     pub use_min_qp: Bool32,
     pub min_qp: VideoEncodeH265QpEXT,
     pub use_max_qp: Bool32,
@@ -39152,9 +39957,6 @@ impl ::std::default::Default for VideoEncodeH265RateControlLayerInfoEXT<'_> {
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            temporal_id: u32::default(),
-            use_initial_rc_qp: Bool32::default(),
-            initial_rc_qp: VideoEncodeH265QpEXT::default(),
             use_min_qp: Bool32::default(),
             min_qp: VideoEncodeH265QpEXT::default(),
             use_max_qp: Bool32::default(),
@@ -39169,27 +39971,11 @@ unsafe impl<'a> TaggedStructure for VideoEncodeH265RateControlLayerInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::VIDEO_ENCODE_H265_RATE_CONTROL_LAYER_INFO_EXT;
 }
-unsafe impl ExtendsVideoCodingControlInfoKHR for VideoEncodeH265RateControlLayerInfoEXT<'_> {}
 unsafe impl ExtendsVideoEncodeRateControlLayerInfoKHR
     for VideoEncodeH265RateControlLayerInfoEXT<'_>
 {
 }
 impl<'a> VideoEncodeH265RateControlLayerInfoEXT<'a> {
-    #[inline]
-    pub fn temporal_id(mut self, temporal_id: u32) -> Self {
-        self.temporal_id = temporal_id;
-        self
-    }
-    #[inline]
-    pub fn use_initial_rc_qp(mut self, use_initial_rc_qp: bool) -> Self {
-        self.use_initial_rc_qp = use_initial_rc_qp.into();
-        self
-    }
-    #[inline]
-    pub fn initial_rc_qp(mut self, initial_rc_qp: VideoEncodeH265QpEXT) -> Self {
-        self.initial_rc_qp = initial_rc_qp;
-        self
-    }
     #[inline]
     pub fn use_min_qp(mut self, use_min_qp: bool) -> Self {
         self.use_min_qp = use_min_qp.into();

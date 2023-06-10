@@ -2752,7 +2752,7 @@ pub struct AmdShaderBallotFn;
 impl ExtVideoEncodeH264Fn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_encode_h264\0") };
-    pub const SPEC_VERSION: u32 = 10u32;
+    pub const SPEC_VERSION: u32 = 11u32;
 }
 #[derive(Clone)]
 pub struct ExtVideoEncodeH264Fn;
@@ -2761,12 +2761,17 @@ impl StructureType {
     pub const VIDEO_ENCODE_H264_CAPABILITIES_EXT: Self = Self(1_000_038_000);
     pub const VIDEO_ENCODE_H264_SESSION_PARAMETERS_CREATE_INFO_EXT: Self = Self(1_000_038_001);
     pub const VIDEO_ENCODE_H264_SESSION_PARAMETERS_ADD_INFO_EXT: Self = Self(1_000_038_002);
-    pub const VIDEO_ENCODE_H264_VCL_FRAME_INFO_EXT: Self = Self(1_000_038_003);
+    pub const VIDEO_ENCODE_H264_PICTURE_INFO_EXT: Self = Self(1_000_038_003);
     pub const VIDEO_ENCODE_H264_DPB_SLOT_INFO_EXT: Self = Self(1_000_038_004);
     pub const VIDEO_ENCODE_H264_NALU_SLICE_INFO_EXT: Self = Self(1_000_038_005);
+    pub const VIDEO_ENCODE_H264_GOP_REMAINING_FRAME_INFO_EXT: Self = Self(1_000_038_006);
     pub const VIDEO_ENCODE_H264_PROFILE_INFO_EXT: Self = Self(1_000_038_007);
     pub const VIDEO_ENCODE_H264_RATE_CONTROL_INFO_EXT: Self = Self(1_000_038_008);
     pub const VIDEO_ENCODE_H264_RATE_CONTROL_LAYER_INFO_EXT: Self = Self(1_000_038_009);
+    pub const VIDEO_ENCODE_H264_SESSION_CREATE_INFO_EXT: Self = Self(1_000_038_010);
+    pub const VIDEO_ENCODE_H264_QUALITY_LEVEL_PROPERTIES_EXT: Self = Self(1_000_038_011);
+    pub const VIDEO_ENCODE_H264_SESSION_PARAMETERS_GET_INFO_EXT: Self = Self(1_000_038_012);
+    pub const VIDEO_ENCODE_H264_SESSION_PARAMETERS_FEEDBACK_INFO_EXT: Self = Self(1_000_038_013);
 }
 #[doc = "Generated from 'VK_EXT_video_encode_h264'"]
 impl VideoCodecOperationFlagsKHR {
@@ -2775,7 +2780,7 @@ impl VideoCodecOperationFlagsKHR {
 impl ExtVideoEncodeH265Fn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_encode_h265\0") };
-    pub const SPEC_VERSION: u32 = 10u32;
+    pub const SPEC_VERSION: u32 = 11u32;
 }
 #[derive(Clone)]
 pub struct ExtVideoEncodeH265Fn;
@@ -2784,12 +2789,17 @@ impl StructureType {
     pub const VIDEO_ENCODE_H265_CAPABILITIES_EXT: Self = Self(1_000_039_000);
     pub const VIDEO_ENCODE_H265_SESSION_PARAMETERS_CREATE_INFO_EXT: Self = Self(1_000_039_001);
     pub const VIDEO_ENCODE_H265_SESSION_PARAMETERS_ADD_INFO_EXT: Self = Self(1_000_039_002);
-    pub const VIDEO_ENCODE_H265_VCL_FRAME_INFO_EXT: Self = Self(1_000_039_003);
+    pub const VIDEO_ENCODE_H265_PICTURE_INFO_EXT: Self = Self(1_000_039_003);
     pub const VIDEO_ENCODE_H265_DPB_SLOT_INFO_EXT: Self = Self(1_000_039_004);
     pub const VIDEO_ENCODE_H265_NALU_SLICE_SEGMENT_INFO_EXT: Self = Self(1_000_039_005);
+    pub const VIDEO_ENCODE_H265_GOP_REMAINING_FRAME_INFO_EXT: Self = Self(1_000_039_006);
     pub const VIDEO_ENCODE_H265_PROFILE_INFO_EXT: Self = Self(1_000_039_007);
     pub const VIDEO_ENCODE_H265_RATE_CONTROL_INFO_EXT: Self = Self(1_000_039_009);
     pub const VIDEO_ENCODE_H265_RATE_CONTROL_LAYER_INFO_EXT: Self = Self(1_000_039_010);
+    pub const VIDEO_ENCODE_H265_SESSION_CREATE_INFO_EXT: Self = Self(1_000_039_011);
+    pub const VIDEO_ENCODE_H265_QUALITY_LEVEL_PROPERTIES_EXT: Self = Self(1_000_039_012);
+    pub const VIDEO_ENCODE_H265_SESSION_PARAMETERS_GET_INFO_EXT: Self = Self(1_000_039_013);
+    pub const VIDEO_ENCODE_H265_SESSION_PARAMETERS_FEEDBACK_INFO_EXT: Self = Self(1_000_039_014);
 }
 #[doc = "Generated from 'VK_EXT_video_encode_h265'"]
 impl VideoCodecOperationFlagsKHR {
@@ -13540,8 +13550,23 @@ impl StructureType {
 impl KhrVideoEncodeQueueFn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_encode_queue\0") };
-    pub const SPEC_VERSION: u32 = 8u32;
+    pub const SPEC_VERSION: u32 = 9u32;
 }
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR =
+    unsafe extern "system" fn(
+        physical_device: PhysicalDevice,
+        p_quality_level_info: *const PhysicalDeviceVideoEncodeQualityLevelInfoKHR,
+        p_quality_level_properties: *mut VideoEncodeQualityLevelPropertiesKHR,
+    ) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetEncodedVideoSessionParametersKHR = unsafe extern "system" fn(
+    device: Device,
+    p_video_session_parameters_info: *const VideoEncodeSessionParametersGetInfoKHR,
+    p_feedback_info: *mut VideoEncodeSessionParametersFeedbackInfoKHR,
+    p_data_size: *mut usize,
+    p_data: *mut c_void,
+) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdEncodeVideoKHR = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
@@ -13549,6 +13574,9 @@ pub type PFN_vkCmdEncodeVideoKHR = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct KhrVideoEncodeQueueFn {
+    pub get_physical_device_video_encode_quality_level_properties_khr:
+        PFN_vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR,
+    pub get_encoded_video_session_parameters_khr: PFN_vkGetEncodedVideoSessionParametersKHR,
     pub cmd_encode_video_khr: PFN_vkCmdEncodeVideoKHR,
 }
 unsafe impl Send for KhrVideoEncodeQueueFn {}
@@ -13559,6 +13587,50 @@ impl KhrVideoEncodeQueueFn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         Self {
+            get_physical_device_video_encode_quality_level_properties_khr: unsafe {
+                unsafe extern "system" fn get_physical_device_video_encode_quality_level_properties_khr(
+                    _physical_device: PhysicalDevice,
+                    _p_quality_level_info: *const PhysicalDeviceVideoEncodeQualityLevelInfoKHR,
+                    _p_quality_level_properties: *mut VideoEncodeQualityLevelPropertiesKHR,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_physical_device_video_encode_quality_level_properties_khr)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_physical_device_video_encode_quality_level_properties_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_encoded_video_session_parameters_khr: unsafe {
+                unsafe extern "system" fn get_encoded_video_session_parameters_khr(
+                    _device: Device,
+                    _p_video_session_parameters_info: *const VideoEncodeSessionParametersGetInfoKHR,
+                    _p_feedback_info: *mut VideoEncodeSessionParametersFeedbackInfoKHR,
+                    _p_data_size: *mut usize,
+                    _p_data: *mut c_void,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_encoded_video_session_parameters_khr)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetEncodedVideoSessionParametersKHR\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_encoded_video_session_parameters_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
             cmd_encode_video_khr: unsafe {
                 unsafe extern "system" fn cmd_encode_video_khr(
                     _command_buffer: CommandBuffer,
@@ -13635,11 +13707,20 @@ impl StructureType {
     pub const VIDEO_ENCODE_CAPABILITIES_KHR: Self = Self(1_000_299_003);
     pub const VIDEO_ENCODE_USAGE_INFO_KHR: Self = Self(1_000_299_004);
     pub const QUERY_POOL_VIDEO_ENCODE_FEEDBACK_CREATE_INFO_KHR: Self = Self(1_000_299_005);
+    pub const PHYSICAL_DEVICE_VIDEO_ENCODE_QUALITY_LEVEL_INFO_KHR: Self = Self(1_000_299_006);
+    pub const VIDEO_ENCODE_QUALITY_LEVEL_PROPERTIES_KHR: Self = Self(1_000_299_007);
+    pub const VIDEO_ENCODE_QUALITY_LEVEL_INFO_KHR: Self = Self(1_000_299_008);
+    pub const VIDEO_ENCODE_SESSION_PARAMETERS_GET_INFO_KHR: Self = Self(1_000_299_009);
+    pub const VIDEO_ENCODE_SESSION_PARAMETERS_FEEDBACK_INFO_KHR: Self = Self(1_000_299_010);
 }
 #[doc = "Generated from 'VK_KHR_video_encode_queue'"]
 impl VideoCodingControlFlagsKHR {
     pub const ENCODE_RATE_CONTROL: Self = Self(0b10);
-    pub const ENCODE_RATE_CONTROL_LAYER: Self = Self(0b100);
+    pub const ENCODE_QUALITY_LEVEL: Self = Self(0b100);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl VideoSessionCreateFlagsKHR {
+    pub const ALLOW_ENCODE_PARAMETER_OPTIMIZATIONS: Self = Self(0b10);
 }
 impl NvDeviceDiagnosticsConfigFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
