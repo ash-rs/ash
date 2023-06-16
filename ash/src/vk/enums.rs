@@ -2530,44 +2530,6 @@ impl VideoEncodeTuningModeKHR {
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH264RateControlStructureEXT.html>"]
-pub struct VideoEncodeH264RateControlStructureEXT(pub(crate) i32);
-impl VideoEncodeH264RateControlStructureEXT {
-    #[inline]
-    pub const fn from_raw(x: i32) -> Self {
-        Self(x)
-    }
-    #[inline]
-    pub const fn as_raw(self) -> i32 {
-        self.0
-    }
-}
-impl VideoEncodeH264RateControlStructureEXT {
-    pub const UNKNOWN: Self = Self(0);
-    pub const FLAT: Self = Self(1);
-    pub const DYADIC: Self = Self(2);
-}
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(transparent)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265RateControlStructureEXT.html>"]
-pub struct VideoEncodeH265RateControlStructureEXT(pub(crate) i32);
-impl VideoEncodeH265RateControlStructureEXT {
-    #[inline]
-    pub const fn from_raw(x: i32) -> Self {
-        Self(x)
-    }
-    #[inline]
-    pub const fn as_raw(self) -> i32 {
-        self.0
-    }
-}
-impl VideoEncodeH265RateControlStructureEXT {
-    pub const UNKNOWN: Self = Self(0);
-    pub const FLAT: Self = Self(1);
-    pub const DYADIC: Self = Self(2);
-}
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineRobustnessBufferBehaviorEXT.html>"]
 pub struct PipelineRobustnessBufferBehaviorEXT(pub(crate) i32);
 impl PipelineRobustnessBufferBehaviorEXT {
@@ -2742,6 +2704,25 @@ impl OpacityMicromapSpecialIndexEXT {
     pub const FULLY_OPAQUE: Self = Self(-2);
     pub const FULLY_UNKNOWN_TRANSPARENT: Self = Self(-3);
     pub const FULLY_UNKNOWN_OPAQUE: Self = Self(-4);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDepthBiasRepresentationEXT.html>"]
+pub struct DepthBiasRepresentationEXT(pub(crate) i32);
+impl DepthBiasRepresentationEXT {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl DepthBiasRepresentationEXT {
+    pub const LEAST_REPRESENTABLE_VALUE_FORMAT: Self = Self(0);
+    pub const LEAST_REPRESENTABLE_VALUE_FORCE_UNORM: Self = Self(1);
+    pub const FLOAT: Self = Self(2);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
