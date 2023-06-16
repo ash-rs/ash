@@ -1129,6 +1129,23 @@ impl fmt::Debug for DependencyFlags {
         debug_flags(f, KNOWN, self.0)
     }
 }
+impl fmt::Debug for DepthBiasRepresentationEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::LEAST_REPRESENTABLE_VALUE_FORMAT => Some("LEAST_REPRESENTABLE_VALUE_FORMAT"),
+            Self::LEAST_REPRESENTABLE_VALUE_FORCE_UNORM => {
+                Some("LEAST_REPRESENTABLE_VALUE_FORCE_UNORM")
+            }
+            Self::FLOAT => Some("FLOAT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
 impl fmt::Debug for DescriptorBindingFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
@@ -1760,6 +1777,10 @@ impl fmt::Debug for ExternalMemoryHandleTypeFlags {
             (
                 ExternalMemoryHandleTypeFlags::RDMA_ADDRESS_NV.0,
                 "RDMA_ADDRESS_NV",
+            ),
+            (
+                ExternalMemoryHandleTypeFlags::SCREEN_BUFFER_QNX.0,
+                "SCREEN_BUFFER_QNX",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -5434,6 +5455,11 @@ impl fmt::Debug for StructureType {
             Self::RENDER_PASS_TRANSFORM_BEGIN_INFO_QCOM => {
                 Some("RENDER_PASS_TRANSFORM_BEGIN_INFO_QCOM")
             }
+            Self::PHYSICAL_DEVICE_DEPTH_BIAS_CONTROL_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_DEPTH_BIAS_CONTROL_FEATURES_EXT")
+            }
+            Self::DEPTH_BIAS_INFO_EXT => Some("DEPTH_BIAS_INFO_EXT"),
+            Self::DEPTH_BIAS_REPRESENTATION_INFO_EXT => Some("DEPTH_BIAS_REPRESENTATION_INFO_EXT"),
             Self::PHYSICAL_DEVICE_DEVICE_MEMORY_REPORT_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_DEVICE_MEMORY_REPORT_FEATURES_EXT")
             }
@@ -5971,6 +5997,15 @@ impl fmt::Debug for StructureType {
             }
             Self::PHYSICAL_DEVICE_ATTACHMENT_FEEDBACK_LOOP_DYNAMIC_STATE_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_ATTACHMENT_FEEDBACK_LOOP_DYNAMIC_STATE_FEATURES_EXT")
+            }
+            Self::SCREEN_BUFFER_PROPERTIES_QNX => Some("SCREEN_BUFFER_PROPERTIES_QNX"),
+            Self::SCREEN_BUFFER_FORMAT_PROPERTIES_QNX => {
+                Some("SCREEN_BUFFER_FORMAT_PROPERTIES_QNX")
+            }
+            Self::IMPORT_SCREEN_BUFFER_INFO_QNX => Some("IMPORT_SCREEN_BUFFER_INFO_QNX"),
+            Self::EXTERNAL_FORMAT_QNX => Some("EXTERNAL_FORMAT_QNX"),
+            Self::PHYSICAL_DEVICE_EXTERNAL_MEMORY_SCREEN_BUFFER_FEATURES_QNX => {
+                Some("PHYSICAL_DEVICE_EXTERNAL_MEMORY_SCREEN_BUFFER_FEATURES_QNX")
             }
             Self::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES => {
                 Some("PHYSICAL_DEVICE_SUBGROUP_PROPERTIES")

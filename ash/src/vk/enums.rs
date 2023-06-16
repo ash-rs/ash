@@ -2707,6 +2707,25 @@ impl OpacityMicromapSpecialIndexEXT {
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDepthBiasRepresentationEXT.html>"]
+pub struct DepthBiasRepresentationEXT(pub(crate) i32);
+impl DepthBiasRepresentationEXT {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl DepthBiasRepresentationEXT {
+    pub const LEAST_REPRESENTABLE_VALUE_FORMAT: Self = Self(0);
+    pub const LEAST_REPRESENTABLE_VALUE_FORCE_UNORM: Self = Self(1);
+    pub const FLOAT: Self = Self(2);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDeviceFaultAddressTypeEXT.html>"]
 pub struct DeviceFaultAddressTypeEXT(pub(crate) i32);
 impl DeviceFaultAddressTypeEXT {

@@ -13205,6 +13205,56 @@ impl StructureType {
         Self(1_000_282_000);
     pub const RENDER_PASS_TRANSFORM_BEGIN_INFO_QCOM: Self = Self(1_000_282_001);
 }
+impl ExtDepthBiasControlFn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_depth_bias_control\0") };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetDepthBias2EXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_depth_bias_info: *const DepthBiasInfoEXT,
+);
+#[derive(Clone)]
+pub struct ExtDepthBiasControlFn {
+    pub cmd_set_depth_bias2_ext: PFN_vkCmdSetDepthBias2EXT,
+}
+unsafe impl Send for ExtDepthBiasControlFn {}
+unsafe impl Sync for ExtDepthBiasControlFn {}
+impl ExtDepthBiasControlFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {
+            cmd_set_depth_bias2_ext: unsafe {
+                unsafe extern "system" fn cmd_set_depth_bias2_ext(
+                    _command_buffer: CommandBuffer,
+                    _p_depth_bias_info: *const DepthBiasInfoEXT,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_depth_bias2_ext)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetDepthBias2EXT\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_depth_bias2_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+}
+#[doc = "Generated from 'VK_EXT_depth_bias_control'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_DEPTH_BIAS_CONTROL_FEATURES_EXT: Self = Self(1_000_283_000);
+    pub const DEPTH_BIAS_INFO_EXT: Self = Self(1_000_283_001);
+    pub const DEPTH_BIAS_REPRESENTATION_INFO_EXT: Self = Self(1_000_283_002);
+}
 impl ExtDeviceMemoryReportFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
         ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_device_memory_report\0")
@@ -20665,4 +20715,65 @@ impl DynamicState {
 impl StructureType {
     pub const PHYSICAL_DEVICE_ATTACHMENT_FEEDBACK_LOOP_DYNAMIC_STATE_FEATURES_EXT: Self =
         Self(1_000_524_000);
+}
+impl QnxExternalMemoryScreenBufferFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QNX_external_memory_screen_buffer\0")
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetScreenBufferPropertiesQNX = unsafe extern "system" fn(
+    device: Device,
+    buffer: *const _screen_buffer,
+    p_properties: *mut ScreenBufferPropertiesQNX,
+) -> Result;
+#[derive(Clone)]
+pub struct QnxExternalMemoryScreenBufferFn {
+    pub get_screen_buffer_properties_qnx: PFN_vkGetScreenBufferPropertiesQNX,
+}
+unsafe impl Send for QnxExternalMemoryScreenBufferFn {}
+unsafe impl Sync for QnxExternalMemoryScreenBufferFn {}
+impl QnxExternalMemoryScreenBufferFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {
+            get_screen_buffer_properties_qnx: unsafe {
+                unsafe extern "system" fn get_screen_buffer_properties_qnx(
+                    _device: Device,
+                    _buffer: *const _screen_buffer,
+                    _p_properties: *mut ScreenBufferPropertiesQNX,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_screen_buffer_properties_qnx)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetScreenBufferPropertiesQNX\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_screen_buffer_properties_qnx
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+}
+#[doc = "Generated from 'VK_QNX_external_memory_screen_buffer'"]
+impl ExternalMemoryHandleTypeFlags {
+    pub const SCREEN_BUFFER_QNX: Self = Self(0b100_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_QNX_external_memory_screen_buffer'"]
+impl StructureType {
+    pub const SCREEN_BUFFER_PROPERTIES_QNX: Self = Self(1_000_529_000);
+    pub const SCREEN_BUFFER_FORMAT_PROPERTIES_QNX: Self = Self(1_000_529_001);
+    pub const IMPORT_SCREEN_BUFFER_INFO_QNX: Self = Self(1_000_529_002);
+    pub const EXTERNAL_FORMAT_QNX: Self = Self(1_000_529_003);
+    pub const PHYSICAL_DEVICE_EXTERNAL_MEMORY_SCREEN_BUFFER_FEATURES_QNX: Self =
+        Self(1_000_529_004);
 }

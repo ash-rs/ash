@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 253;
+pub const HEADER_VERSION: u32 = 254;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -47460,6 +47460,109 @@ impl<'a> PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDepthBiasInfoEXT.html>"]
+pub struct DepthBiasInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub depth_bias_constant_factor: f32,
+    pub depth_bias_clamp: f32,
+    pub depth_bias_slope_factor: f32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for DepthBiasInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            depth_bias_constant_factor: f32::default(),
+            depth_bias_clamp: f32::default(),
+            depth_bias_slope_factor: f32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for DepthBiasInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::DEPTH_BIAS_INFO_EXT;
+}
+pub unsafe trait ExtendsDepthBiasInfoEXT {}
+impl<'a> DepthBiasInfoEXT<'a> {
+    #[inline]
+    pub fn depth_bias_constant_factor(mut self, depth_bias_constant_factor: f32) -> Self {
+        self.depth_bias_constant_factor = depth_bias_constant_factor;
+        self
+    }
+    #[inline]
+    pub fn depth_bias_clamp(mut self, depth_bias_clamp: f32) -> Self {
+        self.depth_bias_clamp = depth_bias_clamp;
+        self
+    }
+    #[inline]
+    pub fn depth_bias_slope_factor(mut self, depth_bias_slope_factor: f32) -> Self {
+        self.depth_bias_slope_factor = depth_bias_slope_factor;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDepthBiasInfoEXT>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = <*const T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDepthBiasRepresentationInfoEXT.html>"]
+pub struct DepthBiasRepresentationInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub depth_bias_representation: DepthBiasRepresentationEXT,
+    pub depth_bias_exact: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for DepthBiasRepresentationInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            depth_bias_representation: DepthBiasRepresentationEXT::default(),
+            depth_bias_exact: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for DepthBiasRepresentationInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::DEPTH_BIAS_REPRESENTATION_INFO_EXT;
+}
+unsafe impl ExtendsDepthBiasInfoEXT for DepthBiasRepresentationInfoEXT<'_> {}
+unsafe impl ExtendsPipelineRasterizationStateCreateInfo for DepthBiasRepresentationInfoEXT<'_> {}
+impl<'a> DepthBiasRepresentationInfoEXT<'a> {
+    #[inline]
+    pub fn depth_bias_representation(
+        mut self,
+        depth_bias_representation: DepthBiasRepresentationEXT,
+    ) -> Self {
+        self.depth_bias_representation = depth_bias_representation;
+        self
+    }
+    #[inline]
+    pub fn depth_bias_exact(mut self, depth_bias_exact: bool) -> Self {
+        self.depth_bias_exact = depth_bias_exact.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone, Default)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDecompressMemoryRegionNV.html>"]
 pub struct DecompressMemoryRegionNV {
@@ -47982,6 +48085,65 @@ impl<'a> ReleaseSwapchainImagesInfoEXT<'a> {
     pub fn image_indices(mut self, image_indices: &'a [u32]) -> Self {
         self.image_index_count = image_indices.len() as _;
         self.p_image_indices = image_indices.as_ptr();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDepthBiasControlFeaturesEXT.html>"]
+pub struct PhysicalDeviceDepthBiasControlFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub depth_bias_control: Bool32,
+    pub least_representable_value_force_unorm_representation: Bool32,
+    pub float_representation: Bool32,
+    pub depth_bias_exact: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceDepthBiasControlFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            depth_bias_control: Bool32::default(),
+            least_representable_value_force_unorm_representation: Bool32::default(),
+            float_representation: Bool32::default(),
+            depth_bias_exact: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceDepthBiasControlFeaturesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_DEPTH_BIAS_CONTROL_FEATURES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDepthBiasControlFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDepthBiasControlFeaturesEXT<'_> {}
+impl<'a> PhysicalDeviceDepthBiasControlFeaturesEXT<'a> {
+    #[inline]
+    pub fn depth_bias_control(mut self, depth_bias_control: bool) -> Self {
+        self.depth_bias_control = depth_bias_control.into();
+        self
+    }
+    #[inline]
+    pub fn least_representable_value_force_unorm_representation(
+        mut self,
+        least_representable_value_force_unorm_representation: bool,
+    ) -> Self {
+        self.least_representable_value_force_unorm_representation =
+            least_representable_value_force_unorm_representation.into();
+        self
+    }
+    #[inline]
+    pub fn float_representation(mut self, float_representation: bool) -> Self {
+        self.float_representation = float_representation.into();
+        self
+    }
+    #[inline]
+    pub fn depth_bias_exact(mut self, depth_bias_exact: bool) -> Self {
+        self.depth_bias_exact = depth_bias_exact.into();
         self
     }
 }
@@ -48775,6 +48937,255 @@ impl<'a> PhysicalDeviceShaderTileImagePropertiesEXT<'a> {
     ) -> Self {
         self.shader_tile_image_read_from_helper_invocation =
             shader_tile_image_read_from_helper_invocation.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImportScreenBufferInfoQNX.html>"]
+pub struct ImportScreenBufferInfoQNX<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub buffer: *mut _screen_buffer,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ImportScreenBufferInfoQNX<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            buffer: ::std::ptr::null_mut(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for ImportScreenBufferInfoQNX<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_SCREEN_BUFFER_INFO_QNX;
+}
+unsafe impl ExtendsMemoryAllocateInfo for ImportScreenBufferInfoQNX<'_> {}
+impl<'a> ImportScreenBufferInfoQNX<'a> {
+    #[inline]
+    pub fn buffer(mut self, buffer: &'a mut _screen_buffer) -> Self {
+        self.buffer = buffer;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkScreenBufferPropertiesQNX.html>"]
+pub struct ScreenBufferPropertiesQNX<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub allocation_size: DeviceSize,
+    pub memory_type_bits: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ScreenBufferPropertiesQNX<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            allocation_size: DeviceSize::default(),
+            memory_type_bits: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for ScreenBufferPropertiesQNX<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::SCREEN_BUFFER_PROPERTIES_QNX;
+}
+pub unsafe trait ExtendsScreenBufferPropertiesQNX {}
+impl<'a> ScreenBufferPropertiesQNX<'a> {
+    #[inline]
+    pub fn allocation_size(mut self, allocation_size: DeviceSize) -> Self {
+        self.allocation_size = allocation_size;
+        self
+    }
+    #[inline]
+    pub fn memory_type_bits(mut self, memory_type_bits: u32) -> Self {
+        self.memory_type_bits = memory_type_bits;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsScreenBufferPropertiesQNX>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = <*mut T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkScreenBufferFormatPropertiesQNX.html>"]
+pub struct ScreenBufferFormatPropertiesQNX<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub format: Format,
+    pub external_format: u64,
+    pub screen_usage: u64,
+    pub format_features: FormatFeatureFlags,
+    pub sampler_ycbcr_conversion_components: ComponentMapping,
+    pub suggested_ycbcr_model: SamplerYcbcrModelConversion,
+    pub suggested_ycbcr_range: SamplerYcbcrRange,
+    pub suggested_x_chroma_offset: ChromaLocation,
+    pub suggested_y_chroma_offset: ChromaLocation,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ScreenBufferFormatPropertiesQNX<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            format: Format::default(),
+            external_format: u64::default(),
+            screen_usage: u64::default(),
+            format_features: FormatFeatureFlags::default(),
+            sampler_ycbcr_conversion_components: ComponentMapping::default(),
+            suggested_ycbcr_model: SamplerYcbcrModelConversion::default(),
+            suggested_ycbcr_range: SamplerYcbcrRange::default(),
+            suggested_x_chroma_offset: ChromaLocation::default(),
+            suggested_y_chroma_offset: ChromaLocation::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for ScreenBufferFormatPropertiesQNX<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::SCREEN_BUFFER_FORMAT_PROPERTIES_QNX;
+}
+unsafe impl ExtendsScreenBufferPropertiesQNX for ScreenBufferFormatPropertiesQNX<'_> {}
+impl<'a> ScreenBufferFormatPropertiesQNX<'a> {
+    #[inline]
+    pub fn format(mut self, format: Format) -> Self {
+        self.format = format;
+        self
+    }
+    #[inline]
+    pub fn external_format(mut self, external_format: u64) -> Self {
+        self.external_format = external_format;
+        self
+    }
+    #[inline]
+    pub fn screen_usage(mut self, screen_usage: u64) -> Self {
+        self.screen_usage = screen_usage;
+        self
+    }
+    #[inline]
+    pub fn format_features(mut self, format_features: FormatFeatureFlags) -> Self {
+        self.format_features = format_features;
+        self
+    }
+    #[inline]
+    pub fn sampler_ycbcr_conversion_components(
+        mut self,
+        sampler_ycbcr_conversion_components: ComponentMapping,
+    ) -> Self {
+        self.sampler_ycbcr_conversion_components = sampler_ycbcr_conversion_components;
+        self
+    }
+    #[inline]
+    pub fn suggested_ycbcr_model(
+        mut self,
+        suggested_ycbcr_model: SamplerYcbcrModelConversion,
+    ) -> Self {
+        self.suggested_ycbcr_model = suggested_ycbcr_model;
+        self
+    }
+    #[inline]
+    pub fn suggested_ycbcr_range(mut self, suggested_ycbcr_range: SamplerYcbcrRange) -> Self {
+        self.suggested_ycbcr_range = suggested_ycbcr_range;
+        self
+    }
+    #[inline]
+    pub fn suggested_x_chroma_offset(mut self, suggested_x_chroma_offset: ChromaLocation) -> Self {
+        self.suggested_x_chroma_offset = suggested_x_chroma_offset;
+        self
+    }
+    #[inline]
+    pub fn suggested_y_chroma_offset(mut self, suggested_y_chroma_offset: ChromaLocation) -> Self {
+        self.suggested_y_chroma_offset = suggested_y_chroma_offset;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkExternalFormatQNX.html>"]
+pub struct ExternalFormatQNX<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub external_format: u64,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ExternalFormatQNX<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            external_format: u64::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for ExternalFormatQNX<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::EXTERNAL_FORMAT_QNX;
+}
+unsafe impl ExtendsImageCreateInfo for ExternalFormatQNX<'_> {}
+unsafe impl ExtendsSamplerYcbcrConversionCreateInfo for ExternalFormatQNX<'_> {}
+impl<'a> ExternalFormatQNX<'a> {
+    #[inline]
+    pub fn external_format(mut self, external_format: u64) -> Self {
+        self.external_format = external_format;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceExternalMemoryScreenBufferFeaturesQNX.html>"]
+pub struct PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub screen_buffer_import: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            screen_buffer_import: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_EXTERNAL_MEMORY_SCREEN_BUFFER_FEATURES_QNX;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'_> {}
+impl<'a> PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'a> {
+    #[inline]
+    pub fn screen_buffer_import(mut self, screen_buffer_import: bool) -> Self {
+        self.screen_buffer_import = screen_buffer_import.into();
         self
     }
 }
