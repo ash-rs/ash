@@ -19,6 +19,7 @@ pub type HMONITOR = HANDLE;
 pub type DWORD = c_ulong;
 pub type LPCWSTR = *const u16;
 pub type zx_handle_t = u32;
+pub type _screen_buffer = c_void;
 pub type _screen_context = c_void;
 pub type _screen_window = c_void;
 pub type SECURITY_ATTRIBUTES = c_void;
