@@ -1,4 +1,5 @@
 use crate::{vk, Device, Instance};
+use std::ffi::CStr;
 use std::mem;
 
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_memory_decompression.html>
@@ -42,5 +43,12 @@ impl MemoryDecompression {
             indirect_commands_count_address,
             stride,
         )
+    }
+
+    pub const NAME: &'static CStr = vk::NvMemoryDecompressionFn::NAME;
+
+    #[inline]
+    pub fn fp(&self) -> &vk::NvMemoryDecompressionFn {
+        &self.fp
     }
 }
