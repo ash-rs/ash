@@ -1463,6 +1463,7 @@ pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
         "_KHX",
         "_LUNARG",
         "_MESA",
+        "_MSFT",
         "_MVK",
         "_NN",
         "_NV",
