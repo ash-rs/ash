@@ -20644,6 +20644,61 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_FEATURES_EXT: Self =
         Self(1_000_499_000);
 }
+impl KhrCooperativeMatrixFn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_cooperative_matrix\0") };
+    pub const SPEC_VERSION: u32 = 2u32;
+}
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR =
+    unsafe extern "system" fn(
+        physical_device: PhysicalDevice,
+        p_property_count: *mut u32,
+        p_properties: *mut CooperativeMatrixPropertiesKHR,
+    ) -> Result;
+#[derive(Clone)]
+pub struct KhrCooperativeMatrixFn {
+    pub get_physical_device_cooperative_matrix_properties_khr:
+        PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR,
+}
+unsafe impl Send for KhrCooperativeMatrixFn {}
+unsafe impl Sync for KhrCooperativeMatrixFn {}
+impl KhrCooperativeMatrixFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {
+            get_physical_device_cooperative_matrix_properties_khr: unsafe {
+                unsafe extern "system" fn get_physical_device_cooperative_matrix_properties_khr(
+                    _physical_device: PhysicalDevice,
+                    _p_property_count: *mut u32,
+                    _p_properties: *mut CooperativeMatrixPropertiesKHR,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_physical_device_cooperative_matrix_properties_khr)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_physical_device_cooperative_matrix_properties_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+}
+#[doc = "Generated from 'VK_KHR_cooperative_matrix'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_COOPERATIVE_MATRIX_FEATURES_KHR: Self = Self(1_000_506_000);
+    pub const COOPERATIVE_MATRIX_PROPERTIES_KHR: Self = Self(1_000_506_001);
+    pub const PHYSICAL_DEVICE_COOPERATIVE_MATRIX_PROPERTIES_KHR: Self = Self(1_000_506_002);
+}
 impl QcomMultiviewPerViewRenderAreasFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
         ::std::ffi::CStr::from_bytes_with_nul_unchecked(

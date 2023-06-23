@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 254;
+pub const HEADER_VERSION: u32 = 255;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -49186,6 +49186,174 @@ impl<'a> PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'a> {
     #[inline]
     pub fn screen_buffer_import(mut self, screen_buffer_import: bool) -> Self {
         self.screen_buffer_import = screen_buffer_import.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceCooperativeMatrixFeaturesKHR.html>"]
+pub struct PhysicalDeviceCooperativeMatrixFeaturesKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub cooperative_matrix: Bool32,
+    pub cooperative_matrix_robust_buffer_access: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceCooperativeMatrixFeaturesKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            cooperative_matrix: Bool32::default(),
+            cooperative_matrix_robust_buffer_access: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceCooperativeMatrixFeaturesKHR<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_FEATURES_KHR;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCooperativeMatrixFeaturesKHR<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCooperativeMatrixFeaturesKHR<'_> {}
+impl<'a> PhysicalDeviceCooperativeMatrixFeaturesKHR<'a> {
+    #[inline]
+    pub fn cooperative_matrix(mut self, cooperative_matrix: bool) -> Self {
+        self.cooperative_matrix = cooperative_matrix.into();
+        self
+    }
+    #[inline]
+    pub fn cooperative_matrix_robust_buffer_access(
+        mut self,
+        cooperative_matrix_robust_buffer_access: bool,
+    ) -> Self {
+        self.cooperative_matrix_robust_buffer_access =
+            cooperative_matrix_robust_buffer_access.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCooperativeMatrixPropertiesKHR.html>"]
+pub struct CooperativeMatrixPropertiesKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub m_size: u32,
+    pub n_size: u32,
+    pub k_size: u32,
+    pub a_type: ComponentTypeKHR,
+    pub b_type: ComponentTypeKHR,
+    pub c_type: ComponentTypeKHR,
+    pub result_type: ComponentTypeKHR,
+    pub saturating_accumulation: Bool32,
+    pub scope: ScopeKHR,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for CooperativeMatrixPropertiesKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            m_size: u32::default(),
+            n_size: u32::default(),
+            k_size: u32::default(),
+            a_type: ComponentTypeKHR::default(),
+            b_type: ComponentTypeKHR::default(),
+            c_type: ComponentTypeKHR::default(),
+            result_type: ComponentTypeKHR::default(),
+            saturating_accumulation: Bool32::default(),
+            scope: ScopeKHR::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for CooperativeMatrixPropertiesKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::COOPERATIVE_MATRIX_PROPERTIES_KHR;
+}
+impl<'a> CooperativeMatrixPropertiesKHR<'a> {
+    #[inline]
+    pub fn m_size(mut self, m_size: u32) -> Self {
+        self.m_size = m_size;
+        self
+    }
+    #[inline]
+    pub fn n_size(mut self, n_size: u32) -> Self {
+        self.n_size = n_size;
+        self
+    }
+    #[inline]
+    pub fn k_size(mut self, k_size: u32) -> Self {
+        self.k_size = k_size;
+        self
+    }
+    #[inline]
+    pub fn a_type(mut self, a_type: ComponentTypeKHR) -> Self {
+        self.a_type = a_type;
+        self
+    }
+    #[inline]
+    pub fn b_type(mut self, b_type: ComponentTypeKHR) -> Self {
+        self.b_type = b_type;
+        self
+    }
+    #[inline]
+    pub fn c_type(mut self, c_type: ComponentTypeKHR) -> Self {
+        self.c_type = c_type;
+        self
+    }
+    #[inline]
+    pub fn result_type(mut self, result_type: ComponentTypeKHR) -> Self {
+        self.result_type = result_type;
+        self
+    }
+    #[inline]
+    pub fn saturating_accumulation(mut self, saturating_accumulation: bool) -> Self {
+        self.saturating_accumulation = saturating_accumulation.into();
+        self
+    }
+    #[inline]
+    pub fn scope(mut self, scope: ScopeKHR) -> Self {
+        self.scope = scope;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceCooperativeMatrixPropertiesKHR.html>"]
+pub struct PhysicalDeviceCooperativeMatrixPropertiesKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub cooperative_matrix_supported_stages: ShaderStageFlags,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceCooperativeMatrixPropertiesKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            cooperative_matrix_supported_stages: ShaderStageFlags::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceCooperativeMatrixPropertiesKHR<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_PROPERTIES_KHR;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceCooperativeMatrixPropertiesKHR<'_> {}
+impl<'a> PhysicalDeviceCooperativeMatrixPropertiesKHR<'a> {
+    #[inline]
+    pub fn cooperative_matrix_supported_stages(
+        mut self,
+        cooperative_matrix_supported_stages: ShaderStageFlags,
+    ) -> Self {
+        self.cooperative_matrix_supported_stages = cooperative_matrix_supported_stages;
         self
     }
 }

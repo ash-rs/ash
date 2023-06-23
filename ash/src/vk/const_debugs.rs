@@ -887,6 +887,29 @@ impl fmt::Debug for ComponentSwizzle {
         }
     }
 }
+impl fmt::Debug for ComponentTypeKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::FLOAT16 => Some("FLOAT16"),
+            Self::FLOAT32 => Some("FLOAT32"),
+            Self::FLOAT64 => Some("FLOAT64"),
+            Self::SINT8 => Some("SINT8"),
+            Self::SINT16 => Some("SINT16"),
+            Self::SINT32 => Some("SINT32"),
+            Self::SINT64 => Some("SINT64"),
+            Self::UINT8 => Some("UINT8"),
+            Self::UINT16 => Some("UINT16"),
+            Self::UINT32 => Some("UINT32"),
+            Self::UINT64 => Some("UINT64"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
 impl fmt::Debug for ComponentTypeNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
@@ -4293,6 +4316,22 @@ impl fmt::Debug for SamplerYcbcrRange {
         }
     }
 }
+impl fmt::Debug for ScopeKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::DEVICE => Some("DEVICE"),
+            Self::WORKGROUP => Some("WORKGROUP"),
+            Self::SUBGROUP => Some("SUBGROUP"),
+            Self::QUEUE_FAMILY => Some("QUEUE_FAMILY"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
 impl fmt::Debug for ScopeNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
@@ -5988,6 +6027,13 @@ impl fmt::Debug for StructureType {
             }
             Self::PHYSICAL_DEVICE_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_COOPERATIVE_MATRIX_FEATURES_KHR")
+            }
+            Self::COOPERATIVE_MATRIX_PROPERTIES_KHR => Some("COOPERATIVE_MATRIX_PROPERTIES_KHR"),
+            Self::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_PROPERTIES_KHR => {
+                Some("PHYSICAL_DEVICE_COOPERATIVE_MATRIX_PROPERTIES_KHR")
             }
             Self::PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_RENDER_AREAS_FEATURES_QCOM => {
                 Some("PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_RENDER_AREAS_FEATURES_QCOM")
