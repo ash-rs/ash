@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Allow building `Entry`/`Instance`/`Device` from handle+fns (see their `from_parts_1_x()` associated functions) (#748)
 - Update Vulkan-Headers to 1.3.254 (#760)
 - Added `VK_NV_memory_decompression` device extension (#761)
+- Added `VK_GOOGLE_display_timing` device extension (#765)
 
 ### Changed
 
