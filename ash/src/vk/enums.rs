@@ -2053,53 +2053,6 @@ impl MemoryOverallocationBehaviorAMD {
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkScopeNV.html>"]
-pub struct ScopeNV(pub(crate) i32);
-impl ScopeNV {
-    #[inline]
-    pub const fn from_raw(x: i32) -> Self {
-        Self(x)
-    }
-    #[inline]
-    pub const fn as_raw(self) -> i32 {
-        self.0
-    }
-}
-impl ScopeNV {
-    pub const DEVICE: Self = Self(1);
-    pub const WORKGROUP: Self = Self(2);
-    pub const SUBGROUP: Self = Self(3);
-    pub const QUEUE_FAMILY: Self = Self(5);
-}
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(transparent)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkComponentTypeNV.html>"]
-pub struct ComponentTypeNV(pub(crate) i32);
-impl ComponentTypeNV {
-    #[inline]
-    pub const fn from_raw(x: i32) -> Self {
-        Self(x)
-    }
-    #[inline]
-    pub const fn as_raw(self) -> i32 {
-        self.0
-    }
-}
-impl ComponentTypeNV {
-    pub const FLOAT16: Self = Self(0);
-    pub const FLOAT32: Self = Self(1);
-    pub const FLOAT64: Self = Self(2);
-    pub const SINT8: Self = Self(3);
-    pub const SINT16: Self = Self(4);
-    pub const SINT32: Self = Self(5);
-    pub const SINT64: Self = Self(6);
-    pub const UINT8: Self = Self(7);
-    pub const UINT16: Self = Self(8);
-    pub const UINT32: Self = Self(9);
-    pub const UINT64: Self = Self(10);
-}
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkFullScreenExclusiveEXT.html>"]
 pub struct FullScreenExclusiveEXT(pub(crate) i32);
 impl FullScreenExclusiveEXT {

@@ -11561,6 +11561,27 @@ impl NvCooperativeMatrixFn {
     }
 }
 #[doc = "Generated from 'VK_NV_cooperative_matrix'"]
+impl ComponentTypeKHR {
+    pub const FLOAT16_NV: Self = Self::FLOAT16;
+    pub const FLOAT32_NV: Self = Self::FLOAT32;
+    pub const FLOAT64_NV: Self = Self::FLOAT64;
+    pub const SINT8_NV: Self = Self::SINT8;
+    pub const SINT16_NV: Self = Self::SINT16;
+    pub const SINT32_NV: Self = Self::SINT32;
+    pub const SINT64_NV: Self = Self::SINT64;
+    pub const UINT8_NV: Self = Self::UINT8;
+    pub const UINT16_NV: Self = Self::UINT16;
+    pub const UINT32_NV: Self = Self::UINT32;
+    pub const UINT64_NV: Self = Self::UINT64;
+}
+#[doc = "Generated from 'VK_NV_cooperative_matrix'"]
+impl ScopeKHR {
+    pub const DEVICE_NV: Self = Self::DEVICE;
+    pub const WORKGROUP_NV: Self = Self::WORKGROUP;
+    pub const SUBGROUP_NV: Self = Self::SUBGROUP;
+    pub const QUEUE_FAMILY_NV: Self = Self::QUEUE_FAMILY;
+}
+#[doc = "Generated from 'VK_NV_cooperative_matrix'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_COOPERATIVE_MATRIX_FEATURES_NV: Self = Self(1_000_249_000);
     pub const COOPERATIVE_MATRIX_PROPERTIES_NV: Self = Self(1_000_249_001);
@@ -15997,7 +16018,7 @@ impl StructureType {
 impl HuaweiSubpassShadingFn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_HUAWEI_subpass_shading\0") };
-    pub const SPEC_VERSION: u32 = 2u32;
+    pub const SPEC_VERSION: u32 = 3u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI = unsafe extern "system" fn(
@@ -16069,7 +16090,7 @@ impl PipelineBindPoint {
 }
 #[doc = "Generated from 'VK_HUAWEI_subpass_shading'"]
 impl PipelineStageFlags2 {
-    pub const SUBPASS_SHADING_HUAWEI: Self =
+    pub const SUBPASS_SHADER_HUAWEI: Self =
         Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_HUAWEI_subpass_shading'"]

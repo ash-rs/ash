@@ -910,29 +910,6 @@ impl fmt::Debug for ComponentTypeKHR {
         }
     }
 }
-impl fmt::Debug for ComponentTypeNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::FLOAT16 => Some("FLOAT16"),
-            Self::FLOAT32 => Some("FLOAT32"),
-            Self::FLOAT64 => Some("FLOAT64"),
-            Self::SINT8 => Some("SINT8"),
-            Self::SINT16 => Some("SINT16"),
-            Self::SINT32 => Some("SINT32"),
-            Self::SINT64 => Some("SINT64"),
-            Self::UINT8 => Some("UINT8"),
-            Self::UINT16 => Some("UINT16"),
-            Self::UINT32 => Some("UINT32"),
-            Self::UINT64 => Some("UINT64"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            self.0.fmt(f)
-        }
-    }
-}
 impl fmt::Debug for CompositeAlphaFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
@@ -3777,8 +3754,8 @@ impl fmt::Debug for PipelineStageFlags2 {
             (PipelineStageFlags2::TASK_SHADER_EXT.0, "TASK_SHADER_EXT"),
             (PipelineStageFlags2::MESH_SHADER_EXT.0, "MESH_SHADER_EXT"),
             (
-                PipelineStageFlags2::SUBPASS_SHADING_HUAWEI.0,
-                "SUBPASS_SHADING_HUAWEI",
+                PipelineStageFlags2::SUBPASS_SHADER_HUAWEI.0,
+                "SUBPASS_SHADER_HUAWEI",
             ),
             (
                 PipelineStageFlags2::INVOCATION_MASK_HUAWEI.0,
@@ -4317,22 +4294,6 @@ impl fmt::Debug for SamplerYcbcrRange {
     }
 }
 impl fmt::Debug for ScopeKHR {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::DEVICE => Some("DEVICE"),
-            Self::WORKGROUP => Some("WORKGROUP"),
-            Self::SUBGROUP => Some("SUBGROUP"),
-            Self::QUEUE_FAMILY => Some("QUEUE_FAMILY"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            self.0.fmt(f)
-        }
-    }
-}
-impl fmt::Debug for ScopeNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::DEVICE => Some("DEVICE"),
