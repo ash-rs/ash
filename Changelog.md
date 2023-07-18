@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `VK_GOOGLE_display_timing` device extension (#765)
 - Added `VK_ANDROID_external_memory_android_hardware_buffer` device extension (#769)
 - Added `VK_AMD_buffer_marker` device extension (#772)
+- Added `VK_AMD_shader_info` device extension (#773)
 
 ### Changed
 
