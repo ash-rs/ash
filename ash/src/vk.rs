@@ -33,8 +33,10 @@ mod platform_types;
 pub use platform_types::*;
 /// Iterates through the pointer chain. Includes the item that is passed into the function.
 /// Stops at the last [`BaseOutStructure`] that has a null [`BaseOutStructure::p_next`] field.
-pub(crate) unsafe fn ptr_chain_iter<T>(ptr: &mut T) -> impl Iterator<Item = *mut BaseOutStructure> {
-    let ptr = <*mut T>::cast::<BaseOutStructure>(ptr);
+pub(crate) unsafe fn ptr_chain_iter<T>(
+    ptr: &mut T,
+) -> impl Iterator<Item = *mut BaseOutStructure<'_>> {
+    let ptr = <*mut T>::cast::<BaseOutStructure<'_>>(ptr);
     (0..).scan(ptr, |p_ptr, _| {
         if p_ptr.is_null() {
             return None;

@@ -1,5 +1,11 @@
-#![deny(clippy::use_self)]
-#![warn(trivial_casts, trivial_numeric_casts)]
+#![warn(
+    clippy::use_self,
+    deprecated_in_future,
+    rust_2018_idioms,
+    trivial_casts,
+    trivial_numeric_casts,
+    unused_qualifications
+)]
 #![allow(
     clippy::too_many_arguments,
     clippy::missing_safety_doc,
@@ -187,7 +193,7 @@ mod tests {
         let mut device_create_info = vk::DeviceCreateInfo::default()
             .push_next(&mut corner)
             .push_next(&mut variable_pointers);
-        let chain2: Vec<*mut vk::BaseOutStructure> = unsafe {
+        let chain2: Vec<*mut vk::BaseOutStructure<'_>> = unsafe {
             vk::ptr_chain_iter(&mut device_create_info)
                 .skip(1)
                 .collect()

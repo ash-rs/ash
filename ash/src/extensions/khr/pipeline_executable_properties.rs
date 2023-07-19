@@ -24,7 +24,7 @@ impl PipelineExecutableProperties {
     pub unsafe fn get_pipeline_executable_internal_representations(
         &self,
         executable_info: &vk::PipelineExecutableInfoKHR<'_>,
-    ) -> VkResult<Vec<vk::PipelineExecutableInternalRepresentationKHR>> {
+    ) -> VkResult<Vec<vk::PipelineExecutableInternalRepresentationKHR<'_>>> {
         read_into_defaulted_vector(|count, data| {
             (self.fp.get_pipeline_executable_internal_representations_khr)(
                 self.handle,
@@ -40,7 +40,7 @@ impl PipelineExecutableProperties {
     pub unsafe fn get_pipeline_executable_properties(
         &self,
         pipeline_info: &vk::PipelineInfoKHR<'_>,
-    ) -> VkResult<Vec<vk::PipelineExecutablePropertiesKHR>> {
+    ) -> VkResult<Vec<vk::PipelineExecutablePropertiesKHR<'_>>> {
         read_into_defaulted_vector(|count, data| {
             (self.fp.get_pipeline_executable_properties_khr)(
                 self.handle,
@@ -56,7 +56,7 @@ impl PipelineExecutableProperties {
     pub unsafe fn get_pipeline_executable_statistics(
         &self,
         executable_info: &vk::PipelineExecutableInfoKHR<'_>,
-    ) -> VkResult<Vec<vk::PipelineExecutableStatisticKHR>> {
+    ) -> VkResult<Vec<vk::PipelineExecutableStatisticKHR<'_>>> {
         read_into_defaulted_vector(|count, data| {
             (self.fp.get_pipeline_executable_statistics_khr)(
                 self.handle,

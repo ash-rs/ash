@@ -56,7 +56,7 @@ impl RayTracing {
     pub unsafe fn get_acceleration_structure_memory_requirements(
         &self,
         info: &vk::AccelerationStructureMemoryRequirementsInfoNV<'_>,
-    ) -> vk::MemoryRequirements2KHR {
+    ) -> vk::MemoryRequirements2KHR<'_> {
         let mut requirements = Default::default();
         (self.fp.get_acceleration_structure_memory_requirements_nv)(
             self.handle,

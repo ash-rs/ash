@@ -2,9 +2,11 @@ use crate::instance::Instance;
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
+use std::error::Error;
 use std::ffi::CStr;
 #[cfg(feature = "loaded")]
 use std::ffi::OsStr;
+use std::fmt;
 use std::mem;
 use std::os::raw::c_char;
 use std::os::raw::c_void;
@@ -156,7 +158,7 @@ impl Entry {
     /// `static_fn` must contain valid function pointers that comply with the semantics specified
     /// by Vulkan 1.0, which must remain valid for at least the lifetime of the returned [`Entry`].
     pub unsafe fn from_static_fn(static_fn: vk::StaticFn) -> Self {
-        let load_fn = move |name: &std::ffi::CStr| {
+        let load_fn = move |name: &CStr| {
             mem::transmute((static_fn.get_instance_proc_addr)(
                 vk::Instance::null(),
                 name.as_ptr(),
@@ -342,12 +344,12 @@ impl vk::StaticFn {
 
 #[derive(Clone, Debug)]
 pub struct MissingEntryPoint;
-impl std::fmt::Display for MissingEntryPoint {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::result::Result<(), std::fmt::Error> {
+impl fmt::Display for MissingEntryPoint {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "Cannot load `vkGetInstanceProcAddr` symbol from library")
     }
 }
-impl std::error::Error for MissingEntryPoint {}
+impl Error for MissingEntryPoint {}
 
 #[cfg(feature = "linked")]
 extern "system" {
@@ -357,8 +359,6 @@ extern "system" {
 
 #[cfg(feature = "loaded")]
 mod loaded {
-    use std::error::Error;
-    use std::fmt;
 
     use super::*;
 
@@ -370,7 +370,7 @@ mod loaded {
     }
 
     impl fmt::Display for LoadingError {
-        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
             match self {
                 Self::LibraryLoadFailure(err) => fmt::Display::fmt(err, f),
                 Self::MissingEntryPoint(err) => fmt::Display::fmt(err, f),

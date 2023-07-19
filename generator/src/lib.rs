@@ -1,5 +1,12 @@
 #![recursion_limit = "256"]
-#![warn(trivial_casts, trivial_numeric_casts)]
+#![warn(
+    clippy::use_self,
+    deprecated_in_future,
+    rust_2018_idioms,
+    trivial_casts,
+    trivial_numeric_casts,
+    unused_qualifications
+)]
 
 use heck::{ToShoutySnakeCase, ToSnakeCase, ToUpperCamelCase};
 use itertools::Itertools;
@@ -198,7 +205,7 @@ struct CParameterType<'a> {
     reference_type: CReferenceType,
 }
 
-fn parse_c_type(i: &str) -> IResult<&str, CParameterType> {
+fn parse_c_type(i: &str) -> IResult<&str, CParameterType<'_>> {
     (map(
         separated_pair(
             tuple((
@@ -246,7 +253,7 @@ struct CParameter<'a> {
 /// ```c
 /// VkSparseImageMemoryRequirements2* pSparseMemoryRequirements
 /// ```
-fn parse_c_parameter(i: &str) -> IResult<&str, CParameter> {
+fn parse_c_parameter(i: &str) -> IResult<&str, CParameter<'_>> {
     (map(
         separated_pair(
             parse_c_type,
@@ -295,7 +302,7 @@ pub enum ConstVal {
 impl ConstVal {
     pub fn bits(&self) -> u64 {
         match self {
-            ConstVal::U64(n) => *n,
+            Self::U64(n) => *n,
             _ => panic!("Constval not supported"),
         }
     }
@@ -385,27 +392,27 @@ pub enum Constant {
 impl quote::ToTokens for Constant {
     fn to_tokens(&self, tokens: &mut TokenStream) {
         match *self {
-            Constant::Number(n) => {
+            Self::Number(n) => {
                 let number = interleave_number('_', 3, &n.to_string());
                 syn::LitInt::new(&number, Span::call_site()).to_tokens(tokens);
             }
-            Constant::Hex(ref s) => {
+            Self::Hex(ref s) => {
                 let number = interleave_number('_', 4, s);
                 syn::LitInt::new(&format!("0x{number}"), Span::call_site()).to_tokens(tokens);
             }
-            Constant::Text(ref text) => text.to_tokens(tokens),
-            Constant::CExpr(ref expr) => {
+            Self::Text(ref text) => text.to_tokens(tokens),
+            Self::CExpr(ref expr) => {
                 let (rem, (_, rexpr)) = parse_cexpr(expr).expect("Unable to parse cexpr");
                 assert!(rem.is_empty());
                 tokens.extend(rexpr.parse::<TokenStream>());
             }
-            Constant::BitPos(pos) => {
+            Self::BitPos(pos) => {
                 let value = 1u64 << pos;
                 let bit_string = format!("{value:b}");
                 let bit_string = interleave_number('_', 4, &bit_string);
                 syn::LitInt::new(&format!("0b{bit_string}"), Span::call_site()).to_tokens(tokens);
             }
-            Constant::Alias(ref value) => tokens.extend(quote!(Self::#value)),
+            Self::Alias(ref value) => tokens.extend(quote!(Self::#value)),
         }
     }
 }
@@ -413,9 +420,9 @@ impl quote::ToTokens for Constant {
 impl quote::ToTokens for ConstVal {
     fn to_tokens(&self, tokens: &mut TokenStream) {
         match self {
-            ConstVal::U32(n) => n.to_tokens(tokens),
-            ConstVal::U64(n) => n.to_tokens(tokens),
-            ConstVal::Float(f) => f.to_tokens(tokens),
+            Self::U32(n) => n.to_tokens(tokens),
+            Self::U64(n) => n.to_tokens(tokens),
+            Self::Float(f) => f.to_tokens(tokens),
         }
     }
 }
@@ -438,17 +445,17 @@ fn interleave_number(symbol: char, count: usize, n: &str) -> String {
 impl Constant {
     pub fn value(&self) -> Option<ConstVal> {
         match *self {
-            Constant::Number(n) => Some(ConstVal::U64(n as u64)),
-            Constant::Hex(ref hex) => u64::from_str_radix(hex, 16).ok().map(ConstVal::U64),
-            Constant::BitPos(pos) => Some(ConstVal::U64(1u64 << pos)),
+            Self::Number(n) => Some(ConstVal::U64(n as u64)),
+            Self::Hex(ref hex) => u64::from_str_radix(hex, 16).ok().map(ConstVal::U64),
+            Self::BitPos(pos) => Some(ConstVal::U64(1u64 << pos)),
             _ => None,
         }
     }
 
     pub fn ty(&self) -> CType {
         match self {
-            Constant::Number(_) | Constant::Hex(_) => CType::USize,
-            Constant::CExpr(expr) => {
+            Self::Number(_) | Self::Hex(_) => CType::USize,
+            Self::CExpr(expr) => {
                 let (rem, (ty, _)) = parse_cexpr(expr).expect("Unable to parse cexpr");
                 assert!(rem.is_empty());
                 ty
@@ -459,23 +466,23 @@ impl Constant {
 
     pub fn from_extension_enum(constant: &vkxml::ExtensionEnum) -> Option<Self> {
         let number = constant.number.map(Constant::Number);
-        let hex = constant.hex.as_ref().map(|hex| Constant::Hex(hex.clone()));
+        let hex = constant.hex.as_ref().map(|hex| Self::Hex(hex.clone()));
         let bitpos = constant.bitpos.map(Constant::BitPos);
         let expr = constant
             .c_expression
             .as_ref()
-            .map(|e| Constant::CExpr(e.clone()));
+            .map(|e| Self::CExpr(e.clone()));
         number.or(hex).or(bitpos).or(expr)
     }
 
     pub fn from_constant(constant: &vkxml::Constant) -> Self {
         let number = constant.number.map(Constant::Number);
-        let hex = constant.hex.as_ref().map(|hex| Constant::Hex(hex.clone()));
+        let hex = constant.hex.as_ref().map(|hex| Self::Hex(hex.clone()));
         let bitpos = constant.bitpos.map(Constant::BitPos);
         let expr = constant
             .c_expression
             .as_ref()
-            .map(|e| Constant::CExpr(e.clone()));
+            .map(|e| Self::CExpr(e.clone()));
         number.or(hex).or(bitpos).or(expr).expect("")
     }
 
@@ -626,9 +633,9 @@ impl ToTokens for vkxml::ReferenceType {
             quote!(*mut)
         };
         match self {
-            vkxml::ReferenceType::Pointer => quote!(#r),
-            vkxml::ReferenceType::PointerToPointer => quote!(#r *mut),
-            vkxml::ReferenceType::PointerToConstPointer => quote!(#r *const),
+            Self::Pointer => quote!(#r),
+            Self::PointerToPointer => quote!(#r *mut),
+            Self::PointerToConstPointer => quote!(#r *const),
         }
     }
 
@@ -639,9 +646,9 @@ impl ToTokens for vkxml::ReferenceType {
             quote!(&#lifetime mut)
         };
         match self {
-            vkxml::ReferenceType::Pointer => quote!(#r),
-            vkxml::ReferenceType::PointerToPointer => quote!(#r *mut),
-            vkxml::ReferenceType::PointerToConstPointer => quote!(#r *const),
+            Self::Pointer => quote!(#r),
+            Self::PointerToPointer => quote!(#r *mut),
+            Self::PointerToConstPointer => quote!(#r *const),
         }
     }
 }
@@ -1179,7 +1186,7 @@ pub fn generate_extension_constants<'a>(
         .filter(|(api, _items)| matches!(api.as_deref(), None | Some(DESIRED_API)))
         .flat_map(|(_api, items)| items);
 
-    let mut extended_enums = BTreeMap::<String, Vec<ExtensionConstant>>::new();
+    let mut extended_enums = BTreeMap::<String, Vec<ExtensionConstant<'_>>>::new();
 
     for item in items {
         if let vk_parse::InterfaceItem::Enum(enum_) = item {
@@ -1709,7 +1716,7 @@ fn is_static_array(field: &vkxml::Field) -> bool {
 
 fn derive_default(
     struct_: &vkxml::Struct,
-    members: &[PreprocessedMember],
+    members: &[PreprocessedMember<'_>],
     has_lifetime: bool,
 ) -> Option<TokenStream> {
     let name = name_to_tokens(&struct_.name);
@@ -1788,7 +1795,7 @@ fn derive_default(
 
 fn derive_debug(
     struct_: &vkxml::Struct,
-    members: &[PreprocessedMember],
+    members: &[PreprocessedMember<'_>],
     union_types: &HashSet<&str>,
     has_lifetime: bool,
 ) -> Option<TokenStream> {
@@ -1852,7 +1859,7 @@ fn derive_debug(
 
 fn derive_setters(
     struct_: &vkxml::Struct,
-    members: &[PreprocessedMember],
+    members: &[PreprocessedMember<'_>],
     root_structs: &HashSet<Ident>,
     has_lifetimes: &HashSet<Ident>,
 ) -> Option<TokenStream> {
@@ -3157,6 +3164,8 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     };
 
     let extension_code = quote! {
+        #![allow(unused_qualifications)] // Because we do not know in what file the PFNs are defined
+
         use std::os::raw::*;
         use crate::vk::platform_types::*;
         use crate::vk::aliases::*;

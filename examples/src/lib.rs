@@ -1,5 +1,11 @@
-extern crate ash;
-extern crate winit;
+#![warn(
+    clippy::use_self,
+    deprecated_in_future,
+    rust_2018_idioms,
+    trivial_casts,
+    trivial_numeric_casts,
+    unused_qualifications
+)]
 
 use ash::extensions::{
     ext::DebugUtils,
@@ -54,7 +60,7 @@ pub fn record_submit_commandbuffer<F: FnOnce(&Device, vk::CommandBuffer)>(
 ) {
     unsafe {
         device
-            .wait_for_fences(&[command_buffer_reuse_fence], true, std::u64::MAX)
+            .wait_for_fences(&[command_buffer_reuse_fence], true, u64::MAX)
             .expect("Wait for fence failed.");
 
         device
@@ -96,7 +102,7 @@ pub fn record_submit_commandbuffer<F: FnOnce(&Device, vk::CommandBuffer)>(
 unsafe extern "system" fn vulkan_debug_callback(
     message_severity: vk::DebugUtilsMessageSeverityFlagsEXT,
     message_type: vk::DebugUtilsMessageTypeFlagsEXT,
-    p_callback_data: *const vk::DebugUtilsMessengerCallbackDataEXT,
+    p_callback_data: *const vk::DebugUtilsMessengerCallbackDataEXT<'_>,
     _user_data: *mut std::os::raw::c_void,
 ) -> vk::Bool32 {
     let callback_data = *p_callback_data;
@@ -355,7 +361,7 @@ impl ExampleBase {
                 desired_image_count = surface_capabilities.max_image_count;
             }
             let surface_resolution = match surface_capabilities.current_extent.width {
-                std::u32::MAX => vk::Extent2D {
+                u32::MAX => vk::Extent2D {
                     width: window_width,
                     height: window_height,
                 },
@@ -541,7 +547,7 @@ impl ExampleBase {
                 .create_semaphore(&semaphore_create_info, None)
                 .unwrap();
 
-            ExampleBase {
+            Self {
                 event_loop: RefCell::new(event_loop),
                 entry,
                 instance,

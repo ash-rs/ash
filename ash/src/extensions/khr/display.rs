@@ -25,7 +25,7 @@ impl Display {
     pub unsafe fn get_physical_device_display_properties(
         &self,
         physical_device: vk::PhysicalDevice,
-    ) -> VkResult<Vec<vk::DisplayPropertiesKHR>> {
+    ) -> VkResult<Vec<vk::DisplayPropertiesKHR<'_>>> {
         read_into_uninitialized_vector(|count, data| {
             (self.fp.get_physical_device_display_properties_khr)(physical_device, count, data)
         })
