@@ -175,3 +175,69 @@ pub fn enumerate_required_extensions(
 
     Ok(extensions)
 }
+
+/// Query whether a `queue_family` of the given `physical_device` supports presenting to any surface that might be created.
+/// This function can be used to find a suitable [`vk::PhysicalDevice`] and queue family
+/// for rendering before a single surface is created.
+///
+/// This function can be a more useful alternative for
+/// [`VkGetPhysicalDeviceSurfaceSupportKHR`](https://registry.khronos.org/vulkan/specs/1.3-extensions/html/chap34.html#vkGetPhysicalDeviceSurfaceSupportKHR),
+/// which requires having an actual surface available before choosing a physical device.
+///
+/// For more information see [the vulkan spec on WSI integration](https://registry.khronos.org/vulkan/specs/1.3-extensions/html/chap34.html#_querying_for_wsi_support).
+pub fn get_present_support(
+    entry: &Entry,
+    instance: &Instance,
+    physical_device: vk::PhysicalDevice,
+    queue_family_index: u32,
+    display_handle: RawDisplayHandle,
+) -> VkResult<bool> {
+    match display_handle {
+        RawDisplayHandle::Android(_) | RawDisplayHandle::UiKit(_) | RawDisplayHandle::AppKit(_) => {
+            // https://registry.khronos.org/vulkan/specs/1.3-extensions/html/chap34.html#platformQuerySupport_android
+            // https://registry.khronos.org/vulkan/specs/1.3-extensions/html/chap34.html#platformQuerySupport_ios
+            // https://registry.khronos.org/vulkan/specs/1.3-extensions/html/chap34.html#platformQuerySupport_macos
+            // On Android, iOS and macOS, every queue family supports presenting to any surface
+            Ok(true)
+        }
+        RawDisplayHandle::Wayland(h) => unsafe {
+            // https://registry.khronos.org/vulkan/specs/1.3-extensions/html/chap34.html#platformQuerySupport_walyand
+            let ext = khr::WaylandSurface::new(entry, instance);
+            Ok(ext.get_physical_device_wayland_presentation_support(
+                physical_device,
+                queue_family_index,
+                &mut *h.display.cast(),
+            ))
+        },
+        RawDisplayHandle::Windows(_) => unsafe {
+            // https://registry.khronos.org/vulkan/specs/1.3-extensions/html/chap34.html#platformQuerySupport_win32
+            let ext = khr::Win32Surface::new(entry, instance);
+            Ok(ext.get_physical_device_win32_presentation_support(
+                physical_device,
+                queue_family_index,
+            ))
+        },
+        RawDisplayHandle::Xcb(h) => unsafe {
+            // https://registry.khronos.org/vulkan/specs/1.3-extensions/html/chap34.html#platformQuerySupport_xcb
+            let ext = khr::XcbSurface::new(entry, instance);
+            Ok(ext.get_physical_device_xcb_presentation_support(
+                physical_device,
+                queue_family_index,
+                &mut *h.connection,
+                h.screen as _,
+            ))
+        },
+        RawDisplayHandle::Xlib(h) => unsafe {
+            // https://registry.khronos.org/vulkan/specs/1.3-extensions/html/chap34.html#platformQuerySupport_xlib
+            let ext = khr::XlibSurface::new(entry, instance);
+            Ok(ext.get_physical_device_xlib_presentation_support(
+                physical_device,
+                queue_family_index,
+                h.display,
+                h.screen as _,
+            ))
+        },
+        // All other platforms mentioned in the vulkan spec are not supported by ash.
+        _ => Err(vk::Result::ERROR_EXTENSION_NOT_PRESENT),
+    }
+}
