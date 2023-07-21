@@ -12778,6 +12778,182 @@ impl StructureType {
     pub const PIPELINE_EXECUTABLE_STATISTIC_KHR: Self = Self(1_000_269_004);
     pub const PIPELINE_EXECUTABLE_INTERNAL_REPRESENTATION_KHR: Self = Self(1_000_269_005);
 }
+impl ExtHostImageCopyFn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_host_image_copy\0") };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[allow(non_camel_case_types)]
+pub type PFN_vkCopyMemoryToImageEXT = unsafe extern "system" fn(
+    device: Device,
+    p_copy_memory_to_image_info: *const CopyMemoryToImageInfoEXT,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCopyImageToMemoryEXT = unsafe extern "system" fn(
+    device: Device,
+    p_copy_image_to_memory_info: *const CopyImageToMemoryInfoEXT,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCopyImageToImageEXT = unsafe extern "system" fn(
+    device: Device,
+    p_copy_image_to_image_info: *const CopyImageToImageInfoEXT,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkTransitionImageLayoutEXT = unsafe extern "system" fn(
+    device: Device,
+    transition_count: u32,
+    p_transitions: *const HostImageLayoutTransitionInfoEXT,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetImageSubresourceLayout2EXT = unsafe extern "system" fn(
+    device: Device,
+    image: Image,
+    p_subresource: *const ImageSubresource2EXT,
+    p_layout: *mut SubresourceLayout2EXT,
+);
+#[derive(Clone)]
+pub struct ExtHostImageCopyFn {
+    pub copy_memory_to_image_ext: PFN_vkCopyMemoryToImageEXT,
+    pub copy_image_to_memory_ext: PFN_vkCopyImageToMemoryEXT,
+    pub copy_image_to_image_ext: PFN_vkCopyImageToImageEXT,
+    pub transition_image_layout_ext: PFN_vkTransitionImageLayoutEXT,
+    pub get_image_subresource_layout2_ext: PFN_vkGetImageSubresourceLayout2EXT,
+}
+unsafe impl Send for ExtHostImageCopyFn {}
+unsafe impl Sync for ExtHostImageCopyFn {}
+impl ExtHostImageCopyFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {
+            copy_memory_to_image_ext: unsafe {
+                unsafe extern "system" fn copy_memory_to_image_ext(
+                    _device: Device,
+                    _p_copy_memory_to_image_info: *const CopyMemoryToImageInfoEXT,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(copy_memory_to_image_ext)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCopyMemoryToImageEXT\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    copy_memory_to_image_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            copy_image_to_memory_ext: unsafe {
+                unsafe extern "system" fn copy_image_to_memory_ext(
+                    _device: Device,
+                    _p_copy_image_to_memory_info: *const CopyImageToMemoryInfoEXT,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(copy_image_to_memory_ext)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCopyImageToMemoryEXT\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    copy_image_to_memory_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            copy_image_to_image_ext: unsafe {
+                unsafe extern "system" fn copy_image_to_image_ext(
+                    _device: Device,
+                    _p_copy_image_to_image_info: *const CopyImageToImageInfoEXT,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(copy_image_to_image_ext)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCopyImageToImageEXT\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    copy_image_to_image_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            transition_image_layout_ext: unsafe {
+                unsafe extern "system" fn transition_image_layout_ext(
+                    _device: Device,
+                    _transition_count: u32,
+                    _p_transitions: *const HostImageLayoutTransitionInfoEXT,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(transition_image_layout_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkTransitionImageLayoutEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    transition_image_layout_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_image_subresource_layout2_ext: unsafe {
+                unsafe extern "system" fn get_image_subresource_layout2_ext(
+                    _device: Device,
+                    _image: Image,
+                    _p_subresource: *const ImageSubresource2EXT,
+                    _p_layout: *mut SubresourceLayout2EXT,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_image_subresource_layout2_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetImageSubresourceLayout2EXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_image_subresource_layout2_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+}
+#[doc = "Generated from 'VK_EXT_host_image_copy'"]
+impl FormatFeatureFlags2 {
+    #[doc = "Host image copies are supported"]
+    pub const HOST_IMAGE_TRANSFER_EXT: Self =
+        Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_host_image_copy'"]
+impl ImageUsageFlags {
+    #[doc = "Can be used with host image copies"]
+    pub const HOST_TRANSFER_EXT: Self = Self(0b100_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_host_image_copy'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_HOST_IMAGE_COPY_FEATURES_EXT: Self = Self(1_000_270_000);
+    pub const PHYSICAL_DEVICE_HOST_IMAGE_COPY_PROPERTIES_EXT: Self = Self(1_000_270_001);
+    pub const MEMORY_TO_IMAGE_COPY_EXT: Self = Self(1_000_270_002);
+    pub const IMAGE_TO_MEMORY_COPY_EXT: Self = Self(1_000_270_003);
+    pub const COPY_IMAGE_TO_MEMORY_INFO_EXT: Self = Self(1_000_270_004);
+    pub const COPY_MEMORY_TO_IMAGE_INFO_EXT: Self = Self(1_000_270_005);
+    pub const HOST_IMAGE_LAYOUT_TRANSITION_INFO_EXT: Self = Self(1_000_270_006);
+    pub const COPY_IMAGE_TO_IMAGE_INFO_EXT: Self = Self(1_000_270_007);
+    pub const SUBRESOURCE_HOST_MEMCPY_SIZE_EXT: Self = Self(1_000_270_008);
+    pub const HOST_IMAGE_COPY_DEVICE_PERFORMANCE_QUERY_EXT: Self = Self(1_000_270_009);
+}
 impl KhrMapMemory2Fn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_map_memory2\0") };
@@ -15153,16 +15329,9 @@ impl ExtImageCompressionControlFn {
     };
     pub const SPEC_VERSION: u32 = 1u32;
 }
-#[allow(non_camel_case_types)]
-pub type PFN_vkGetImageSubresourceLayout2EXT = unsafe extern "system" fn(
-    device: Device,
-    image: Image,
-    p_subresource: *const ImageSubresource2EXT,
-    p_layout: *mut SubresourceLayout2EXT,
-);
 #[derive(Clone)]
 pub struct ExtImageCompressionControlFn {
-    pub get_image_subresource_layout2_ext: PFN_vkGetImageSubresourceLayout2EXT,
+    pub get_image_subresource_layout2_ext: crate::vk::PFN_vkGetImageSubresourceLayout2EXT,
 }
 unsafe impl Send for ExtImageCompressionControlFn {}
 unsafe impl Sync for ExtImageCompressionControlFn {}
@@ -17292,7 +17461,7 @@ impl NvDisplacementMicromapFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
         ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_displacement_micromap\0")
     };
-    pub const SPEC_VERSION: u32 = 1u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
 pub struct NvDisplacementMicromapFn;
@@ -17928,6 +18097,126 @@ impl NvMemoryDecompressionFn {
 impl StructureType {
     pub const PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_FEATURES_NV: Self = Self(1_000_427_000);
     pub const PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_PROPERTIES_NV: Self = Self(1_000_427_001);
+}
+impl NvDeviceGeneratedCommandsComputeFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+            b"VK_NV_device_generated_commands_compute\0",
+        )
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPipelineIndirectMemoryRequirementsNV = unsafe extern "system" fn(
+    device: Device,
+    p_create_info: *const ComputePipelineCreateInfo,
+    p_memory_requirements: *mut MemoryRequirements2,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdUpdatePipelineIndirectBuffer = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    pipeline_bind_point: PipelineBindPoint,
+    pipeline: Pipeline,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPipelineIndirectDeviceAddressNV = unsafe extern "system" fn(
+    device: Device,
+    p_info: *const PipelineIndirectDeviceAddressInfoNV,
+) -> DeviceAddress;
+#[derive(Clone)]
+pub struct NvDeviceGeneratedCommandsComputeFn {
+    pub get_pipeline_indirect_memory_requirements_nv: PFN_vkGetPipelineIndirectMemoryRequirementsNV,
+    pub cmd_update_pipeline_indirect_buffer: PFN_vkCmdUpdatePipelineIndirectBuffer,
+    pub get_pipeline_indirect_device_address_nv: PFN_vkGetPipelineIndirectDeviceAddressNV,
+}
+unsafe impl Send for NvDeviceGeneratedCommandsComputeFn {}
+unsafe impl Sync for NvDeviceGeneratedCommandsComputeFn {}
+impl NvDeviceGeneratedCommandsComputeFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {
+            get_pipeline_indirect_memory_requirements_nv: unsafe {
+                unsafe extern "system" fn get_pipeline_indirect_memory_requirements_nv(
+                    _device: Device,
+                    _p_create_info: *const ComputePipelineCreateInfo,
+                    _p_memory_requirements: *mut MemoryRequirements2,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_pipeline_indirect_memory_requirements_nv)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetPipelineIndirectMemoryRequirementsNV\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_pipeline_indirect_memory_requirements_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_update_pipeline_indirect_buffer: unsafe {
+                unsafe extern "system" fn cmd_update_pipeline_indirect_buffer(
+                    _command_buffer: CommandBuffer,
+                    _pipeline_bind_point: PipelineBindPoint,
+                    _pipeline: Pipeline,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_update_pipeline_indirect_buffer)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdUpdatePipelineIndirectBuffer\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_update_pipeline_indirect_buffer
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_pipeline_indirect_device_address_nv: unsafe {
+                unsafe extern "system" fn get_pipeline_indirect_device_address_nv(
+                    _device: Device,
+                    _p_info: *const PipelineIndirectDeviceAddressInfoNV,
+                ) -> DeviceAddress {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_pipeline_indirect_device_address_nv)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetPipelineIndirectDeviceAddressNV\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_pipeline_indirect_device_address_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+}
+#[doc = "Generated from 'VK_NV_device_generated_commands_compute'"]
+impl DescriptorSetLayoutCreateFlags {
+    pub const INDIRECT_BINDABLE_NV: Self = Self(0b1000_0000);
+}
+#[doc = "Generated from 'VK_NV_device_generated_commands_compute'"]
+impl IndirectCommandsTokenTypeNV {
+    pub const PIPELINE: Self = Self(1_000_428_003);
+    pub const DISPATCH: Self = Self(1_000_428_004);
+}
+#[doc = "Generated from 'VK_NV_device_generated_commands_compute'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_COMPUTE_FEATURES_NV: Self =
+        Self(1_000_428_000);
+    pub const COMPUTE_PIPELINE_INDIRECT_BUFFER_INFO_NV: Self = Self(1_000_428_001);
+    pub const PIPELINE_INDIRECT_DEVICE_ADDRESS_INFO_NV: Self = Self(1_000_428_002);
 }
 impl NvLinearColorAttachmentFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {

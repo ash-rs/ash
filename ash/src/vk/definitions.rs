@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 257;
+pub const HEADER_VERSION: u32 = 258;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -3703,6 +3703,54 @@ impl<'a> ComputePipelineCreateInfo<'a> {
             (*last_next).p_next = self.p_next as _;
             self.p_next = next_ptr;
         }
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkComputePipelineIndirectBufferInfoNV.html>"]
+pub struct ComputePipelineIndirectBufferInfoNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub device_address: DeviceAddress,
+    pub size: DeviceSize,
+    pub pipeline_device_address_capture_replay: DeviceAddress,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ComputePipelineIndirectBufferInfoNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            device_address: DeviceAddress::default(),
+            size: DeviceSize::default(),
+            pipeline_device_address_capture_replay: DeviceAddress::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for ComputePipelineIndirectBufferInfoNV<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::COMPUTE_PIPELINE_INDIRECT_BUFFER_INFO_NV;
+}
+impl<'a> ComputePipelineIndirectBufferInfoNV<'a> {
+    #[inline]
+    pub fn device_address(mut self, device_address: DeviceAddress) -> Self {
+        self.device_address = device_address;
+        self
+    }
+    #[inline]
+    pub fn size(mut self, size: DeviceSize) -> Self {
+        self.size = size;
+        self
+    }
+    #[inline]
+    pub fn pipeline_device_address_capture_replay(
+        mut self,
+        pipeline_device_address_capture_replay: DeviceAddress,
+    ) -> Self {
+        self.pipeline_device_address_capture_replay = pipeline_device_address_capture_replay;
         self
     }
 }
@@ -9354,6 +9402,64 @@ impl<'a> PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV.html>"]
+pub struct PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub device_generated_compute: Bool32,
+    pub device_generated_compute_pipelines: Bool32,
+    pub device_generated_compute_capture_replay: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            device_generated_compute: Bool32::default(),
+            device_generated_compute_pipelines: Bool32::default(),
+            device_generated_compute_capture_replay: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_COMPUTE_FEATURES_NV;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'_> {}
+impl<'a> PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'a> {
+    #[inline]
+    pub fn device_generated_compute(mut self, device_generated_compute: bool) -> Self {
+        self.device_generated_compute = device_generated_compute.into();
+        self
+    }
+    #[inline]
+    pub fn device_generated_compute_pipelines(
+        mut self,
+        device_generated_compute_pipelines: bool,
+    ) -> Self {
+        self.device_generated_compute_pipelines = device_generated_compute_pipelines.into();
+        self
+    }
+    #[inline]
+    pub fn device_generated_compute_capture_replay(
+        mut self,
+        device_generated_compute_capture_replay: bool,
+    ) -> Self {
+        self.device_generated_compute_capture_replay =
+            device_generated_compute_capture_replay.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDevicePrivateDataCreateInfo.html>"]
 pub struct DevicePrivateDataCreateInfo<'a> {
     pub s_type: StructureType,
@@ -10138,6 +10244,58 @@ impl<'a> GeneratedCommandsMemoryRequirementsInfoNV<'a> {
     #[inline]
     pub fn max_sequences_count(mut self, max_sequences_count: u32) -> Self {
         self.max_sequences_count = max_sequences_count;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineIndirectDeviceAddressInfoNV.html>"]
+pub struct PipelineIndirectDeviceAddressInfoNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub pipeline_bind_point: PipelineBindPoint,
+    pub pipeline: Pipeline,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PipelineIndirectDeviceAddressInfoNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            pipeline_bind_point: PipelineBindPoint::default(),
+            pipeline: Pipeline::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PipelineIndirectDeviceAddressInfoNV<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_INDIRECT_DEVICE_ADDRESS_INFO_NV;
+}
+impl<'a> PipelineIndirectDeviceAddressInfoNV<'a> {
+    #[inline]
+    pub fn pipeline_bind_point(mut self, pipeline_bind_point: PipelineBindPoint) -> Self {
+        self.pipeline_bind_point = pipeline_bind_point;
+        self
+    }
+    #[inline]
+    pub fn pipeline(mut self, pipeline: Pipeline) -> Self {
+        self.pipeline = pipeline;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone, Default)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkBindPipelineIndirectCommandNV.html>"]
+pub struct BindPipelineIndirectCommandNV {
+    pub pipeline_address: DeviceAddress,
+}
+impl BindPipelineIndirectCommandNV {
+    #[inline]
+    pub fn pipeline_address(mut self, pipeline_address: DeviceAddress) -> Self {
+        self.pipeline_address = pipeline_address;
         self
     }
 }
@@ -35735,6 +35893,541 @@ impl<'a> PhysicalDeviceSynchronization2Features<'a> {
     #[inline]
     pub fn synchronization2(mut self, synchronization2: bool) -> Self {
         self.synchronization2 = synchronization2.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceHostImageCopyFeaturesEXT.html>"]
+pub struct PhysicalDeviceHostImageCopyFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub host_image_copy: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceHostImageCopyFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            host_image_copy: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceHostImageCopyFeaturesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_HOST_IMAGE_COPY_FEATURES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceHostImageCopyFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceHostImageCopyFeaturesEXT<'_> {}
+impl<'a> PhysicalDeviceHostImageCopyFeaturesEXT<'a> {
+    #[inline]
+    pub fn host_image_copy(mut self, host_image_copy: bool) -> Self {
+        self.host_image_copy = host_image_copy.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceHostImageCopyPropertiesEXT.html>"]
+pub struct PhysicalDeviceHostImageCopyPropertiesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub copy_src_layout_count: u32,
+    pub p_copy_src_layouts: *mut ImageLayout,
+    pub copy_dst_layout_count: u32,
+    pub p_copy_dst_layouts: *mut ImageLayout,
+    pub optimal_tiling_layout_uuid: [u8; UUID_SIZE],
+    pub identical_memory_type_requirements: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceHostImageCopyPropertiesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            copy_src_layout_count: u32::default(),
+            p_copy_src_layouts: ::std::ptr::null_mut(),
+            copy_dst_layout_count: u32::default(),
+            p_copy_dst_layouts: ::std::ptr::null_mut(),
+            optimal_tiling_layout_uuid: unsafe { ::std::mem::zeroed() },
+            identical_memory_type_requirements: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceHostImageCopyPropertiesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_HOST_IMAGE_COPY_PROPERTIES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceHostImageCopyPropertiesEXT<'_> {}
+impl<'a> PhysicalDeviceHostImageCopyPropertiesEXT<'a> {
+    #[inline]
+    pub fn copy_src_layouts(mut self, copy_src_layouts: &'a mut [ImageLayout]) -> Self {
+        self.copy_src_layout_count = copy_src_layouts.len() as _;
+        self.p_copy_src_layouts = copy_src_layouts.as_mut_ptr();
+        self
+    }
+    #[inline]
+    pub fn copy_dst_layouts(mut self, copy_dst_layouts: &'a mut [ImageLayout]) -> Self {
+        self.copy_dst_layout_count = copy_dst_layouts.len() as _;
+        self.p_copy_dst_layouts = copy_dst_layouts.as_mut_ptr();
+        self
+    }
+    #[inline]
+    pub fn optimal_tiling_layout_uuid(
+        mut self,
+        optimal_tiling_layout_uuid: [u8; UUID_SIZE],
+    ) -> Self {
+        self.optimal_tiling_layout_uuid = optimal_tiling_layout_uuid;
+        self
+    }
+    #[inline]
+    pub fn identical_memory_type_requirements(
+        mut self,
+        identical_memory_type_requirements: bool,
+    ) -> Self {
+        self.identical_memory_type_requirements = identical_memory_type_requirements.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMemoryToImageCopyEXT.html>"]
+pub struct MemoryToImageCopyEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub p_host_pointer: *const c_void,
+    pub memory_row_length: u32,
+    pub memory_image_height: u32,
+    pub image_subresource: ImageSubresourceLayers,
+    pub image_offset: Offset3D,
+    pub image_extent: Extent3D,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for MemoryToImageCopyEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            p_host_pointer: ::std::ptr::null(),
+            memory_row_length: u32::default(),
+            memory_image_height: u32::default(),
+            image_subresource: ImageSubresourceLayers::default(),
+            image_offset: Offset3D::default(),
+            image_extent: Extent3D::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for MemoryToImageCopyEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_TO_IMAGE_COPY_EXT;
+}
+impl<'a> MemoryToImageCopyEXT<'a> {
+    #[inline]
+    pub fn host_pointer(mut self, host_pointer: *const c_void) -> Self {
+        self.p_host_pointer = host_pointer;
+        self
+    }
+    #[inline]
+    pub fn memory_row_length(mut self, memory_row_length: u32) -> Self {
+        self.memory_row_length = memory_row_length;
+        self
+    }
+    #[inline]
+    pub fn memory_image_height(mut self, memory_image_height: u32) -> Self {
+        self.memory_image_height = memory_image_height;
+        self
+    }
+    #[inline]
+    pub fn image_subresource(mut self, image_subresource: ImageSubresourceLayers) -> Self {
+        self.image_subresource = image_subresource;
+        self
+    }
+    #[inline]
+    pub fn image_offset(mut self, image_offset: Offset3D) -> Self {
+        self.image_offset = image_offset;
+        self
+    }
+    #[inline]
+    pub fn image_extent(mut self, image_extent: Extent3D) -> Self {
+        self.image_extent = image_extent;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImageToMemoryCopyEXT.html>"]
+pub struct ImageToMemoryCopyEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub p_host_pointer: *mut c_void,
+    pub memory_row_length: u32,
+    pub memory_image_height: u32,
+    pub image_subresource: ImageSubresourceLayers,
+    pub image_offset: Offset3D,
+    pub image_extent: Extent3D,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ImageToMemoryCopyEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            p_host_pointer: ::std::ptr::null_mut(),
+            memory_row_length: u32::default(),
+            memory_image_height: u32::default(),
+            image_subresource: ImageSubresourceLayers::default(),
+            image_offset: Offset3D::default(),
+            image_extent: Extent3D::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for ImageToMemoryCopyEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_TO_MEMORY_COPY_EXT;
+}
+impl<'a> ImageToMemoryCopyEXT<'a> {
+    #[inline]
+    pub fn host_pointer(mut self, host_pointer: *mut c_void) -> Self {
+        self.p_host_pointer = host_pointer;
+        self
+    }
+    #[inline]
+    pub fn memory_row_length(mut self, memory_row_length: u32) -> Self {
+        self.memory_row_length = memory_row_length;
+        self
+    }
+    #[inline]
+    pub fn memory_image_height(mut self, memory_image_height: u32) -> Self {
+        self.memory_image_height = memory_image_height;
+        self
+    }
+    #[inline]
+    pub fn image_subresource(mut self, image_subresource: ImageSubresourceLayers) -> Self {
+        self.image_subresource = image_subresource;
+        self
+    }
+    #[inline]
+    pub fn image_offset(mut self, image_offset: Offset3D) -> Self {
+        self.image_offset = image_offset;
+        self
+    }
+    #[inline]
+    pub fn image_extent(mut self, image_extent: Extent3D) -> Self {
+        self.image_extent = image_extent;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCopyMemoryToImageInfoEXT.html>"]
+pub struct CopyMemoryToImageInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub flags: HostImageCopyFlagsEXT,
+    pub dst_image: Image,
+    pub dst_image_layout: ImageLayout,
+    pub region_count: u32,
+    pub p_regions: *const MemoryToImageCopyEXT<'a>,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for CopyMemoryToImageInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            flags: HostImageCopyFlagsEXT::default(),
+            dst_image: Image::default(),
+            dst_image_layout: ImageLayout::default(),
+            region_count: u32::default(),
+            p_regions: ::std::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for CopyMemoryToImageInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::COPY_MEMORY_TO_IMAGE_INFO_EXT;
+}
+impl<'a> CopyMemoryToImageInfoEXT<'a> {
+    #[inline]
+    pub fn flags(mut self, flags: HostImageCopyFlagsEXT) -> Self {
+        self.flags = flags;
+        self
+    }
+    #[inline]
+    pub fn dst_image(mut self, dst_image: Image) -> Self {
+        self.dst_image = dst_image;
+        self
+    }
+    #[inline]
+    pub fn dst_image_layout(mut self, dst_image_layout: ImageLayout) -> Self {
+        self.dst_image_layout = dst_image_layout;
+        self
+    }
+    #[inline]
+    pub fn regions(mut self, regions: &'a [MemoryToImageCopyEXT]) -> Self {
+        self.region_count = regions.len() as _;
+        self.p_regions = regions.as_ptr();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCopyImageToMemoryInfoEXT.html>"]
+pub struct CopyImageToMemoryInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub flags: HostImageCopyFlagsEXT,
+    pub src_image: Image,
+    pub src_image_layout: ImageLayout,
+    pub region_count: u32,
+    pub p_regions: *const ImageToMemoryCopyEXT<'a>,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for CopyImageToMemoryInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            flags: HostImageCopyFlagsEXT::default(),
+            src_image: Image::default(),
+            src_image_layout: ImageLayout::default(),
+            region_count: u32::default(),
+            p_regions: ::std::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for CopyImageToMemoryInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::COPY_IMAGE_TO_MEMORY_INFO_EXT;
+}
+impl<'a> CopyImageToMemoryInfoEXT<'a> {
+    #[inline]
+    pub fn flags(mut self, flags: HostImageCopyFlagsEXT) -> Self {
+        self.flags = flags;
+        self
+    }
+    #[inline]
+    pub fn src_image(mut self, src_image: Image) -> Self {
+        self.src_image = src_image;
+        self
+    }
+    #[inline]
+    pub fn src_image_layout(mut self, src_image_layout: ImageLayout) -> Self {
+        self.src_image_layout = src_image_layout;
+        self
+    }
+    #[inline]
+    pub fn regions(mut self, regions: &'a [ImageToMemoryCopyEXT]) -> Self {
+        self.region_count = regions.len() as _;
+        self.p_regions = regions.as_ptr();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCopyImageToImageInfoEXT.html>"]
+pub struct CopyImageToImageInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub flags: HostImageCopyFlagsEXT,
+    pub src_image: Image,
+    pub src_image_layout: ImageLayout,
+    pub dst_image: Image,
+    pub dst_image_layout: ImageLayout,
+    pub region_count: u32,
+    pub p_regions: *const ImageCopy2<'a>,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for CopyImageToImageInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            flags: HostImageCopyFlagsEXT::default(),
+            src_image: Image::default(),
+            src_image_layout: ImageLayout::default(),
+            dst_image: Image::default(),
+            dst_image_layout: ImageLayout::default(),
+            region_count: u32::default(),
+            p_regions: ::std::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for CopyImageToImageInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::COPY_IMAGE_TO_IMAGE_INFO_EXT;
+}
+impl<'a> CopyImageToImageInfoEXT<'a> {
+    #[inline]
+    pub fn flags(mut self, flags: HostImageCopyFlagsEXT) -> Self {
+        self.flags = flags;
+        self
+    }
+    #[inline]
+    pub fn src_image(mut self, src_image: Image) -> Self {
+        self.src_image = src_image;
+        self
+    }
+    #[inline]
+    pub fn src_image_layout(mut self, src_image_layout: ImageLayout) -> Self {
+        self.src_image_layout = src_image_layout;
+        self
+    }
+    #[inline]
+    pub fn dst_image(mut self, dst_image: Image) -> Self {
+        self.dst_image = dst_image;
+        self
+    }
+    #[inline]
+    pub fn dst_image_layout(mut self, dst_image_layout: ImageLayout) -> Self {
+        self.dst_image_layout = dst_image_layout;
+        self
+    }
+    #[inline]
+    pub fn regions(mut self, regions: &'a [ImageCopy2]) -> Self {
+        self.region_count = regions.len() as _;
+        self.p_regions = regions.as_ptr();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkHostImageLayoutTransitionInfoEXT.html>"]
+pub struct HostImageLayoutTransitionInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub image: Image,
+    pub old_layout: ImageLayout,
+    pub new_layout: ImageLayout,
+    pub subresource_range: ImageSubresourceRange,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for HostImageLayoutTransitionInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            image: Image::default(),
+            old_layout: ImageLayout::default(),
+            new_layout: ImageLayout::default(),
+            subresource_range: ImageSubresourceRange::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for HostImageLayoutTransitionInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::HOST_IMAGE_LAYOUT_TRANSITION_INFO_EXT;
+}
+impl<'a> HostImageLayoutTransitionInfoEXT<'a> {
+    #[inline]
+    pub fn image(mut self, image: Image) -> Self {
+        self.image = image;
+        self
+    }
+    #[inline]
+    pub fn old_layout(mut self, old_layout: ImageLayout) -> Self {
+        self.old_layout = old_layout;
+        self
+    }
+    #[inline]
+    pub fn new_layout(mut self, new_layout: ImageLayout) -> Self {
+        self.new_layout = new_layout;
+        self
+    }
+    #[inline]
+    pub fn subresource_range(mut self, subresource_range: ImageSubresourceRange) -> Self {
+        self.subresource_range = subresource_range;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSubresourceHostMemcpySizeEXT.html>"]
+pub struct SubresourceHostMemcpySizeEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub size: DeviceSize,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for SubresourceHostMemcpySizeEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            size: DeviceSize::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for SubresourceHostMemcpySizeEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::SUBRESOURCE_HOST_MEMCPY_SIZE_EXT;
+}
+unsafe impl ExtendsSubresourceLayout2EXT for SubresourceHostMemcpySizeEXT<'_> {}
+impl<'a> SubresourceHostMemcpySizeEXT<'a> {
+    #[inline]
+    pub fn size(mut self, size: DeviceSize) -> Self {
+        self.size = size;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkHostImageCopyDevicePerformanceQueryEXT.html>"]
+pub struct HostImageCopyDevicePerformanceQueryEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub optimal_device_access: Bool32,
+    pub identical_memory_layout: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for HostImageCopyDevicePerformanceQueryEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            optimal_device_access: Bool32::default(),
+            identical_memory_layout: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for HostImageCopyDevicePerformanceQueryEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::HOST_IMAGE_COPY_DEVICE_PERFORMANCE_QUERY_EXT;
+}
+unsafe impl ExtendsImageFormatProperties2 for HostImageCopyDevicePerformanceQueryEXT<'_> {}
+impl<'a> HostImageCopyDevicePerformanceQueryEXT<'a> {
+    #[inline]
+    pub fn optimal_device_access(mut self, optimal_device_access: bool) -> Self {
+        self.optimal_device_access = optimal_device_access.into();
+        self
+    }
+    #[inline]
+    pub fn identical_memory_layout(mut self, identical_memory_layout: bool) -> Self {
+        self.identical_memory_layout = identical_memory_layout.into();
         self
     }
 }

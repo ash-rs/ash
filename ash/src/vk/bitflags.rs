@@ -1354,6 +1354,14 @@ impl VideoEncodeH264RateControlFlagsEXT {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkHostImageCopyFlagBitsEXT.html>"]
+pub struct HostImageCopyFlagsEXT(pub(crate) Flags);
+vk_bitflags_wrapped!(HostImageCopyFlagsEXT, Flags);
+impl HostImageCopyFlagsEXT {
+    pub const MEMCPY: Self = Self(0b1);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImageFormatConstraintsFlagBitsFUCHSIA.html>"]
 pub struct ImageFormatConstraintsFlagsFUCHSIA(pub(crate) Flags);
 vk_bitflags_wrapped!(ImageFormatConstraintsFlagsFUCHSIA, Flags);
