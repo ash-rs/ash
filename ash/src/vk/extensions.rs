@@ -18104,7 +18104,7 @@ impl NvDeviceGeneratedCommandsComputeFn {
             b"VK_NV_device_generated_commands_compute\0",
         )
     };
-    pub const SPEC_VERSION: u32 = 1u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPipelineIndirectMemoryRequirementsNV = unsafe extern "system" fn(
@@ -18113,7 +18113,7 @@ pub type PFN_vkGetPipelineIndirectMemoryRequirementsNV = unsafe extern "system" 
     p_memory_requirements: *mut MemoryRequirements2,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdUpdatePipelineIndirectBuffer = unsafe extern "system" fn(
+pub type PFN_vkCmdUpdatePipelineIndirectBufferNV = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     pipeline_bind_point: PipelineBindPoint,
     pipeline: Pipeline,
@@ -18126,7 +18126,7 @@ pub type PFN_vkGetPipelineIndirectDeviceAddressNV = unsafe extern "system" fn(
 #[derive(Clone)]
 pub struct NvDeviceGeneratedCommandsComputeFn {
     pub get_pipeline_indirect_memory_requirements_nv: PFN_vkGetPipelineIndirectMemoryRequirementsNV,
-    pub cmd_update_pipeline_indirect_buffer: PFN_vkCmdUpdatePipelineIndirectBuffer,
+    pub cmd_update_pipeline_indirect_buffer_nv: PFN_vkCmdUpdatePipelineIndirectBufferNV,
     pub get_pipeline_indirect_device_address_nv: PFN_vkGetPipelineIndirectDeviceAddressNV,
 }
 unsafe impl Send for NvDeviceGeneratedCommandsComputeFn {}
@@ -18158,23 +18158,23 @@ impl NvDeviceGeneratedCommandsComputeFn {
                     ::std::mem::transmute(val)
                 }
             },
-            cmd_update_pipeline_indirect_buffer: unsafe {
-                unsafe extern "system" fn cmd_update_pipeline_indirect_buffer(
+            cmd_update_pipeline_indirect_buffer_nv: unsafe {
+                unsafe extern "system" fn cmd_update_pipeline_indirect_buffer_nv(
                     _command_buffer: CommandBuffer,
                     _pipeline_bind_point: PipelineBindPoint,
                     _pipeline: Pipeline,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
-                        stringify!(cmd_update_pipeline_indirect_buffer)
+                        stringify!(cmd_update_pipeline_indirect_buffer_nv)
                     ))
                 }
                 let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkCmdUpdatePipelineIndirectBuffer\0",
+                    b"vkCmdUpdatePipelineIndirectBufferNV\0",
                 );
                 let val = _f(cname);
                 if val.is_null() {
-                    cmd_update_pipeline_indirect_buffer
+                    cmd_update_pipeline_indirect_buffer_nv
                 } else {
                     ::std::mem::transmute(val)
                 }
