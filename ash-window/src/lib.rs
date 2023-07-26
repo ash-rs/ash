@@ -233,7 +233,7 @@ pub fn get_present_support(
             Ok(ext.get_physical_device_xlib_presentation_support(
                 physical_device,
                 queue_family_index,
-                h.display,
+                &mut *h.display.cast(),
                 h.screen as _,
             ))
         },
