@@ -562,6 +562,10 @@ impl fmt::Debug for BufferUsageFlags {
                 "CONDITIONAL_RENDERING_EXT",
             ),
             (
+                BufferUsageFlags::EXECUTION_GRAPH_SCRATCH_AMDX.0,
+                "EXECUTION_GRAPH_SCRATCH_AMDX",
+            ),
+            (
                 BufferUsageFlags::ACCELERATION_STRUCTURE_BUILD_INPUT_READ_ONLY_KHR.0,
                 "ACCELERATION_STRUCTURE_BUILD_INPUT_READ_ONLY_KHR",
             ),
@@ -605,6 +609,81 @@ impl fmt::Debug for BufferUsageFlags {
                 BufferUsageFlags::SHADER_DEVICE_ADDRESS.0,
                 "SHADER_DEVICE_ADDRESS",
             ),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for BufferUsageFlags2KHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags64, &str)] = &[
+            (BufferUsageFlags2KHR::TRANSFER_SRC.0, "TRANSFER_SRC"),
+            (BufferUsageFlags2KHR::TRANSFER_DST.0, "TRANSFER_DST"),
+            (
+                BufferUsageFlags2KHR::UNIFORM_TEXEL_BUFFER.0,
+                "UNIFORM_TEXEL_BUFFER",
+            ),
+            (
+                BufferUsageFlags2KHR::STORAGE_TEXEL_BUFFER.0,
+                "STORAGE_TEXEL_BUFFER",
+            ),
+            (BufferUsageFlags2KHR::UNIFORM_BUFFER.0, "UNIFORM_BUFFER"),
+            (BufferUsageFlags2KHR::STORAGE_BUFFER.0, "STORAGE_BUFFER"),
+            (BufferUsageFlags2KHR::INDEX_BUFFER.0, "INDEX_BUFFER"),
+            (BufferUsageFlags2KHR::VERTEX_BUFFER.0, "VERTEX_BUFFER"),
+            (BufferUsageFlags2KHR::INDIRECT_BUFFER.0, "INDIRECT_BUFFER"),
+            (
+                BufferUsageFlags2KHR::EXECUTION_GRAPH_SCRATCH_AMDX.0,
+                "EXECUTION_GRAPH_SCRATCH_AMDX",
+            ),
+            (
+                BufferUsageFlags2KHR::CONDITIONAL_RENDERING.0,
+                "CONDITIONAL_RENDERING",
+            ),
+            (
+                BufferUsageFlags2KHR::SHADER_BINDING_TABLE.0,
+                "SHADER_BINDING_TABLE",
+            ),
+            (
+                BufferUsageFlags2KHR::TRANSFORM_FEEDBACK_BUFFER.0,
+                "TRANSFORM_FEEDBACK_BUFFER",
+            ),
+            (
+                BufferUsageFlags2KHR::TRANSFORM_FEEDBACK_COUNTER_BUFFER.0,
+                "TRANSFORM_FEEDBACK_COUNTER_BUFFER",
+            ),
+            (BufferUsageFlags2KHR::VIDEO_DECODE_SRC.0, "VIDEO_DECODE_SRC"),
+            (BufferUsageFlags2KHR::VIDEO_DECODE_DST.0, "VIDEO_DECODE_DST"),
+            (BufferUsageFlags2KHR::VIDEO_ENCODE_DST.0, "VIDEO_ENCODE_DST"),
+            (BufferUsageFlags2KHR::VIDEO_ENCODE_SRC.0, "VIDEO_ENCODE_SRC"),
+            (
+                BufferUsageFlags2KHR::SHADER_DEVICE_ADDRESS.0,
+                "SHADER_DEVICE_ADDRESS",
+            ),
+            (
+                BufferUsageFlags2KHR::ACCELERATION_STRUCTURE_BUILD_INPUT_READ_ONLY.0,
+                "ACCELERATION_STRUCTURE_BUILD_INPUT_READ_ONLY",
+            ),
+            (
+                BufferUsageFlags2KHR::ACCELERATION_STRUCTURE_STORAGE.0,
+                "ACCELERATION_STRUCTURE_STORAGE",
+            ),
+            (
+                BufferUsageFlags2KHR::SAMPLER_DESCRIPTOR_BUFFER.0,
+                "SAMPLER_DESCRIPTOR_BUFFER",
+            ),
+            (
+                BufferUsageFlags2KHR::RESOURCE_DESCRIPTOR_BUFFER.0,
+                "RESOURCE_DESCRIPTOR_BUFFER",
+            ),
+            (
+                BufferUsageFlags2KHR::PUSH_DESCRIPTORS_DESCRIPTOR_BUFFER.0,
+                "PUSH_DESCRIPTORS_DESCRIPTOR_BUFFER",
+            ),
+            (
+                BufferUsageFlags2KHR::MICROMAP_BUILD_INPUT_READ_ONLY.0,
+                "MICROMAP_BUILD_INPUT_READ_ONLY",
+            ),
+            (BufferUsageFlags2KHR::MICROMAP_STORAGE.0, "MICROMAP_STORAGE"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -2071,6 +2150,8 @@ impl fmt::Debug for Format {
             Self::PVRTC2_2BPP_SRGB_BLOCK_IMG => Some("PVRTC2_2BPP_SRGB_BLOCK_IMG"),
             Self::PVRTC2_4BPP_SRGB_BLOCK_IMG => Some("PVRTC2_4BPP_SRGB_BLOCK_IMG"),
             Self::R16G16_S10_5_NV => Some("R16G16_S10_5_NV"),
+            Self::A1B5G5R5_UNORM_PACK16_KHR => Some("A1B5G5R5_UNORM_PACK16_KHR"),
+            Self::A8_UNORM_KHR => Some("A8_UNORM_KHR"),
             Self::G8B8G8R8_422_UNORM => Some("G8B8G8R8_422_UNORM"),
             Self::B8G8R8G8_422_UNORM => Some("B8G8R8G8_422_UNORM"),
             Self::G8_B8_R8_3PLANE_420_UNORM => Some("G8_B8_R8_3PLANE_420_UNORM"),
@@ -3288,6 +3369,7 @@ impl fmt::Debug for PipelineBindPoint {
         let name = match *self {
             Self::GRAPHICS => Some("GRAPHICS"),
             Self::COMPUTE => Some("COMPUTE"),
+            Self::EXECUTION_GRAPH_AMDX => Some("EXECUTION_GRAPH_AMDX"),
             Self::RAY_TRACING_KHR => Some("RAY_TRACING_KHR"),
             Self::SUBPASS_SHADING_HUAWEI => Some("SUBPASS_SHADING_HUAWEI"),
             _ => None,
@@ -3468,6 +3550,122 @@ impl fmt::Debug for PipelineCreateFlags {
             (
                 PipelineCreateFlags::EARLY_RETURN_ON_FAILURE.0,
                 "EARLY_RETURN_ON_FAILURE",
+            ),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for PipelineCreateFlags2KHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags64, &str)] = &[
+            (
+                PipelineCreateFlags2KHR::DISABLE_OPTIMIZATION.0,
+                "DISABLE_OPTIMIZATION",
+            ),
+            (
+                PipelineCreateFlags2KHR::ALLOW_DERIVATIVES.0,
+                "ALLOW_DERIVATIVES",
+            ),
+            (PipelineCreateFlags2KHR::DERIVATIVE.0, "DERIVATIVE"),
+            (PipelineCreateFlags2KHR::RESERVED_28_NV.0, "RESERVED_28_NV"),
+            (
+                PipelineCreateFlags2KHR::VIEW_INDEX_FROM_DEVICE_INDEX.0,
+                "VIEW_INDEX_FROM_DEVICE_INDEX",
+            ),
+            (PipelineCreateFlags2KHR::DISPATCH_BASE.0, "DISPATCH_BASE"),
+            (PipelineCreateFlags2KHR::DEFER_COMPILE.0, "DEFER_COMPILE"),
+            (
+                PipelineCreateFlags2KHR::CAPTURE_STATISTICS.0,
+                "CAPTURE_STATISTICS",
+            ),
+            (
+                PipelineCreateFlags2KHR::CAPTURE_INTERNAL_REPRESENTATIONS.0,
+                "CAPTURE_INTERNAL_REPRESENTATIONS",
+            ),
+            (
+                PipelineCreateFlags2KHR::FAIL_ON_PIPELINE_COMPILE_REQUIRED.0,
+                "FAIL_ON_PIPELINE_COMPILE_REQUIRED",
+            ),
+            (
+                PipelineCreateFlags2KHR::EARLY_RETURN_ON_FAILURE.0,
+                "EARLY_RETURN_ON_FAILURE",
+            ),
+            (
+                PipelineCreateFlags2KHR::LINK_TIME_OPTIMIZATION.0,
+                "LINK_TIME_OPTIMIZATION",
+            ),
+            (
+                PipelineCreateFlags2KHR::RETAIN_LINK_TIME_OPTIMIZATION_INFO.0,
+                "RETAIN_LINK_TIME_OPTIMIZATION_INFO",
+            ),
+            (PipelineCreateFlags2KHR::LIBRARY.0, "LIBRARY"),
+            (
+                PipelineCreateFlags2KHR::RAY_TRACING_SKIP_TRIANGLES.0,
+                "RAY_TRACING_SKIP_TRIANGLES",
+            ),
+            (
+                PipelineCreateFlags2KHR::RAY_TRACING_SKIP_AABBS.0,
+                "RAY_TRACING_SKIP_AABBS",
+            ),
+            (
+                PipelineCreateFlags2KHR::RAY_TRACING_NO_NULL_ANY_HIT_SHADERS.0,
+                "RAY_TRACING_NO_NULL_ANY_HIT_SHADERS",
+            ),
+            (
+                PipelineCreateFlags2KHR::RAY_TRACING_NO_NULL_CLOSEST_HIT_SHADERS.0,
+                "RAY_TRACING_NO_NULL_CLOSEST_HIT_SHADERS",
+            ),
+            (
+                PipelineCreateFlags2KHR::RAY_TRACING_NO_NULL_MISS_SHADERS.0,
+                "RAY_TRACING_NO_NULL_MISS_SHADERS",
+            ),
+            (
+                PipelineCreateFlags2KHR::RAY_TRACING_NO_NULL_INTERSECTION_SHADERS.0,
+                "RAY_TRACING_NO_NULL_INTERSECTION_SHADERS",
+            ),
+            (
+                PipelineCreateFlags2KHR::RAY_TRACING_SHADER_GROUP_HANDLE_CAPTURE_REPLAY.0,
+                "RAY_TRACING_SHADER_GROUP_HANDLE_CAPTURE_REPLAY",
+            ),
+            (
+                PipelineCreateFlags2KHR::INDIRECT_BINDABLE.0,
+                "INDIRECT_BINDABLE",
+            ),
+            (
+                PipelineCreateFlags2KHR::RAY_TRACING_ALLOW_MOTION.0,
+                "RAY_TRACING_ALLOW_MOTION",
+            ),
+            (
+                PipelineCreateFlags2KHR::RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT.0,
+                "RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT",
+            ),
+            (
+                PipelineCreateFlags2KHR::RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT.0,
+                "RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT",
+            ),
+            (
+                PipelineCreateFlags2KHR::RAY_TRACING_OPACITY_MICROMAP.0,
+                "RAY_TRACING_OPACITY_MICROMAP",
+            ),
+            (
+                PipelineCreateFlags2KHR::COLOR_ATTACHMENT_FEEDBACK_LOOP.0,
+                "COLOR_ATTACHMENT_FEEDBACK_LOOP",
+            ),
+            (
+                PipelineCreateFlags2KHR::DEPTH_STENCIL_ATTACHMENT_FEEDBACK_LOOP.0,
+                "DEPTH_STENCIL_ATTACHMENT_FEEDBACK_LOOP",
+            ),
+            (
+                PipelineCreateFlags2KHR::NO_PROTECTED_ACCESS.0,
+                "NO_PROTECTED_ACCESS",
+            ),
+            (
+                PipelineCreateFlags2KHR::PROTECTED_ACCESS_ONLY.0,
+                "PROTECTED_ACCESS_ONLY",
+            ),
+            (
+                PipelineCreateFlags2KHR::DESCRIPTOR_BUFFER.0,
+                "DESCRIPTOR_BUFFER",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -5011,6 +5209,21 @@ impl fmt::Debug for StructureType {
             Self::ANDROID_HARDWARE_BUFFER_FORMAT_PROPERTIES_2_ANDROID => {
                 Some("ANDROID_HARDWARE_BUFFER_FORMAT_PROPERTIES_2_ANDROID")
             }
+            Self::PHYSICAL_DEVICE_SHADER_ENQUEUE_FEATURES_AMDX => {
+                Some("PHYSICAL_DEVICE_SHADER_ENQUEUE_FEATURES_AMDX")
+            }
+            Self::PHYSICAL_DEVICE_SHADER_ENQUEUE_PROPERTIES_AMDX => {
+                Some("PHYSICAL_DEVICE_SHADER_ENQUEUE_PROPERTIES_AMDX")
+            }
+            Self::EXECUTION_GRAPH_PIPELINE_SCRATCH_SIZE_AMDX => {
+                Some("EXECUTION_GRAPH_PIPELINE_SCRATCH_SIZE_AMDX")
+            }
+            Self::EXECUTION_GRAPH_PIPELINE_CREATE_INFO_AMDX => {
+                Some("EXECUTION_GRAPH_PIPELINE_CREATE_INFO_AMDX")
+            }
+            Self::PIPELINE_SHADER_STAGE_NODE_CREATE_INFO_AMDX => {
+                Some("PIPELINE_SHADER_STAGE_NODE_CREATE_INFO_AMDX")
+            }
             Self::SAMPLE_LOCATIONS_INFO_EXT => Some("SAMPLE_LOCATIONS_INFO_EXT"),
             Self::RENDER_PASS_SAMPLE_LOCATIONS_BEGIN_INFO_EXT => {
                 Some("RENDER_PASS_SAMPLE_LOCATIONS_BEGIN_INFO_EXT")
@@ -5676,8 +5889,6 @@ impl fmt::Debug for StructureType {
                 Some("PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_FEATURES_EXT")
             }
             Self::IMAGE_COMPRESSION_CONTROL_EXT => Some("IMAGE_COMPRESSION_CONTROL_EXT"),
-            Self::SUBRESOURCE_LAYOUT_2_EXT => Some("SUBRESOURCE_LAYOUT_2_EXT"),
-            Self::IMAGE_SUBRESOURCE_2_EXT => Some("IMAGE_SUBRESOURCE_2_EXT"),
             Self::IMAGE_COMPRESSION_PROPERTIES_EXT => Some("IMAGE_COMPRESSION_PROPERTIES_EXT"),
             Self::PHYSICAL_DEVICE_ATTACHMENT_FEEDBACK_LOOP_LAYOUT_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_ATTACHMENT_FEEDBACK_LOOP_LAYOUT_FEATURES_EXT")
@@ -5983,6 +6194,22 @@ impl fmt::Debug for StructureType {
             }
             Self::PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_MAINTENANCE_5_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_MAINTENANCE_5_FEATURES_KHR")
+            }
+            Self::PHYSICAL_DEVICE_MAINTENANCE_5_PROPERTIES_KHR => {
+                Some("PHYSICAL_DEVICE_MAINTENANCE_5_PROPERTIES_KHR")
+            }
+            Self::RENDERING_AREA_INFO_KHR => Some("RENDERING_AREA_INFO_KHR"),
+            Self::DEVICE_IMAGE_SUBRESOURCE_INFO_KHR => Some("DEVICE_IMAGE_SUBRESOURCE_INFO_KHR"),
+            Self::SUBRESOURCE_LAYOUT_2_KHR => Some("SUBRESOURCE_LAYOUT_2_KHR"),
+            Self::IMAGE_SUBRESOURCE_2_KHR => Some("IMAGE_SUBRESOURCE_2_KHR"),
+            Self::PIPELINE_CREATE_FLAGS_2_CREATE_INFO_KHR => {
+                Some("PIPELINE_CREATE_FLAGS_2_CREATE_INFO_KHR")
+            }
+            Self::BUFFER_USAGE_FLAGS_2_CREATE_INFO_KHR => {
+                Some("BUFFER_USAGE_FLAGS_2_CREATE_INFO_KHR")
             }
             Self::PHYSICAL_DEVICE_RAY_TRACING_POSITION_FETCH_FEATURES_KHR => {
                 Some("PHYSICAL_DEVICE_RAY_TRACING_POSITION_FETCH_FEATURES_KHR")

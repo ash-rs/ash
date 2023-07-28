@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 259;
+pub const HEADER_VERSION: u32 = 260;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -1945,6 +1945,41 @@ impl<'a> CopyDescriptorSet<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkBufferUsageFlags2CreateInfoKHR.html>"]
+pub struct BufferUsageFlags2CreateInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub usage: BufferUsageFlags2KHR,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for BufferUsageFlags2CreateInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            usage: BufferUsageFlags2KHR::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for BufferUsageFlags2CreateInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::BUFFER_USAGE_FLAGS_2_CREATE_INFO_KHR;
+}
+unsafe impl ExtendsBufferViewCreateInfo for BufferUsageFlags2CreateInfoKHR<'_> {}
+unsafe impl ExtendsBufferCreateInfo for BufferUsageFlags2CreateInfoKHR<'_> {}
+unsafe impl ExtendsPhysicalDeviceExternalBufferInfo for BufferUsageFlags2CreateInfoKHR<'_> {}
+unsafe impl ExtendsDescriptorBufferBindingInfoEXT for BufferUsageFlags2CreateInfoKHR<'_> {}
+impl<'a> BufferUsageFlags2CreateInfoKHR<'a> {
+    #[inline]
+    pub fn usage(mut self, usage: BufferUsageFlags2KHR) -> Self {
+        self.usage = usage;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkBufferCreateInfo.html>"]
 pub struct BufferCreateInfo<'a> {
     pub s_type: StructureType,
@@ -3751,6 +3786,41 @@ impl<'a> ComputePipelineIndirectBufferInfoNV<'a> {
         pipeline_device_address_capture_replay: DeviceAddress,
     ) -> Self {
         self.pipeline_device_address_capture_replay = pipeline_device_address_capture_replay;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineCreateFlags2CreateInfoKHR.html>"]
+pub struct PipelineCreateFlags2CreateInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub flags: PipelineCreateFlags2KHR,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PipelineCreateFlags2CreateInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            flags: PipelineCreateFlags2KHR::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PipelineCreateFlags2CreateInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PIPELINE_CREATE_FLAGS_2_CREATE_INFO_KHR;
+}
+unsafe impl ExtendsComputePipelineCreateInfo for PipelineCreateFlags2CreateInfoKHR<'_> {}
+unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineCreateFlags2CreateInfoKHR<'_> {}
+unsafe impl ExtendsRayTracingPipelineCreateInfoNV for PipelineCreateFlags2CreateInfoKHR<'_> {}
+unsafe impl ExtendsRayTracingPipelineCreateInfoKHR for PipelineCreateFlags2CreateInfoKHR<'_> {}
+impl<'a> PipelineCreateFlags2CreateInfoKHR<'a> {
+    #[inline]
+    pub fn flags(mut self, flags: PipelineCreateFlags2KHR) -> Self {
+        self.flags = flags;
         self
     }
 }
@@ -11141,6 +11211,7 @@ impl ::std::default::Default for PhysicalDeviceExternalBufferInfo<'_> {
 unsafe impl<'a> TaggedStructure for PhysicalDeviceExternalBufferInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_EXTERNAL_BUFFER_INFO;
 }
+pub unsafe trait ExtendsPhysicalDeviceExternalBufferInfo {}
 impl<'a> PhysicalDeviceExternalBufferInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: BufferCreateFlags) -> Self {
@@ -11155,6 +11226,23 @@ impl<'a> PhysicalDeviceExternalBufferInfo<'a> {
     #[inline]
     pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
         self.handle_type = handle_type;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsPhysicalDeviceExternalBufferInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        unsafe {
+            let next_ptr = <*const T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
         self
     }
 }
@@ -17294,6 +17382,181 @@ impl<'a> PhysicalDeviceMaintenance4Properties<'a> {
     #[inline]
     pub fn max_buffer_size(mut self, max_buffer_size: DeviceSize) -> Self {
         self.max_buffer_size = max_buffer_size;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceMaintenance5FeaturesKHR.html>"]
+pub struct PhysicalDeviceMaintenance5FeaturesKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub maintenance5: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceMaintenance5FeaturesKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            maintenance5: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceMaintenance5FeaturesKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MAINTENANCE_5_FEATURES_KHR;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMaintenance5FeaturesKHR<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMaintenance5FeaturesKHR<'_> {}
+impl<'a> PhysicalDeviceMaintenance5FeaturesKHR<'a> {
+    #[inline]
+    pub fn maintenance5(mut self, maintenance5: bool) -> Self {
+        self.maintenance5 = maintenance5.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceMaintenance5PropertiesKHR.html>"]
+pub struct PhysicalDeviceMaintenance5PropertiesKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub early_fragment_multisample_coverage_after_sample_counting: Bool32,
+    pub early_fragment_sample_mask_test_before_sample_counting: Bool32,
+    pub depth_stencil_swizzle_one_support: Bool32,
+    pub polygon_mode_point_size: Bool32,
+    pub non_strict_single_pixel_wide_lines_use_parallelogram: Bool32,
+    pub non_strict_wide_lines_use_parallelogram: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceMaintenance5PropertiesKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            early_fragment_multisample_coverage_after_sample_counting: Bool32::default(),
+            early_fragment_sample_mask_test_before_sample_counting: Bool32::default(),
+            depth_stencil_swizzle_one_support: Bool32::default(),
+            polygon_mode_point_size: Bool32::default(),
+            non_strict_single_pixel_wide_lines_use_parallelogram: Bool32::default(),
+            non_strict_wide_lines_use_parallelogram: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceMaintenance5PropertiesKHR<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_MAINTENANCE_5_PROPERTIES_KHR;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMaintenance5PropertiesKHR<'_> {}
+impl<'a> PhysicalDeviceMaintenance5PropertiesKHR<'a> {
+    #[inline]
+    pub fn early_fragment_multisample_coverage_after_sample_counting(
+        mut self,
+        early_fragment_multisample_coverage_after_sample_counting: bool,
+    ) -> Self {
+        self.early_fragment_multisample_coverage_after_sample_counting =
+            early_fragment_multisample_coverage_after_sample_counting.into();
+        self
+    }
+    #[inline]
+    pub fn early_fragment_sample_mask_test_before_sample_counting(
+        mut self,
+        early_fragment_sample_mask_test_before_sample_counting: bool,
+    ) -> Self {
+        self.early_fragment_sample_mask_test_before_sample_counting =
+            early_fragment_sample_mask_test_before_sample_counting.into();
+        self
+    }
+    #[inline]
+    pub fn depth_stencil_swizzle_one_support(
+        mut self,
+        depth_stencil_swizzle_one_support: bool,
+    ) -> Self {
+        self.depth_stencil_swizzle_one_support = depth_stencil_swizzle_one_support.into();
+        self
+    }
+    #[inline]
+    pub fn polygon_mode_point_size(mut self, polygon_mode_point_size: bool) -> Self {
+        self.polygon_mode_point_size = polygon_mode_point_size.into();
+        self
+    }
+    #[inline]
+    pub fn non_strict_single_pixel_wide_lines_use_parallelogram(
+        mut self,
+        non_strict_single_pixel_wide_lines_use_parallelogram: bool,
+    ) -> Self {
+        self.non_strict_single_pixel_wide_lines_use_parallelogram =
+            non_strict_single_pixel_wide_lines_use_parallelogram.into();
+        self
+    }
+    #[inline]
+    pub fn non_strict_wide_lines_use_parallelogram(
+        mut self,
+        non_strict_wide_lines_use_parallelogram: bool,
+    ) -> Self {
+        self.non_strict_wide_lines_use_parallelogram =
+            non_strict_wide_lines_use_parallelogram.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkRenderingAreaInfoKHR.html>"]
+pub struct RenderingAreaInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub view_mask: u32,
+    pub color_attachment_count: u32,
+    pub p_color_attachment_formats: *const Format,
+    pub depth_attachment_format: Format,
+    pub stencil_attachment_format: Format,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for RenderingAreaInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            view_mask: u32::default(),
+            color_attachment_count: u32::default(),
+            p_color_attachment_formats: ::std::ptr::null(),
+            depth_attachment_format: Format::default(),
+            stencil_attachment_format: Format::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for RenderingAreaInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::RENDERING_AREA_INFO_KHR;
+}
+impl<'a> RenderingAreaInfoKHR<'a> {
+    #[inline]
+    pub fn view_mask(mut self, view_mask: u32) -> Self {
+        self.view_mask = view_mask;
+        self
+    }
+    #[inline]
+    pub fn color_attachment_formats(mut self, color_attachment_formats: &'a [Format]) -> Self {
+        self.color_attachment_count = color_attachment_formats.len() as _;
+        self.p_color_attachment_formats = color_attachment_formats.as_ptr();
+        self
+    }
+    #[inline]
+    pub fn depth_attachment_format(mut self, depth_attachment_format: Format) -> Self {
+        self.depth_attachment_format = depth_attachment_format;
+        self
+    }
+    #[inline]
+    pub fn stencil_attachment_format(mut self, stencil_attachment_format: Format) -> Self {
+        self.stencil_attachment_format = stencil_attachment_format;
         self
     }
 }
@@ -26411,6 +26674,7 @@ unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineCreationFeedbackCreate
 unsafe impl ExtendsComputePipelineCreateInfo for PipelineCreationFeedbackCreateInfo<'_> {}
 unsafe impl ExtendsRayTracingPipelineCreateInfoNV for PipelineCreationFeedbackCreateInfo<'_> {}
 unsafe impl ExtendsRayTracingPipelineCreateInfoKHR for PipelineCreationFeedbackCreateInfo<'_> {}
+unsafe impl ExtendsExecutionGraphPipelineCreateInfoAMDX for PipelineCreationFeedbackCreateInfo<'_> {}
 impl<'a> PipelineCreationFeedbackCreateInfo<'a> {
     #[inline]
     pub fn pipeline_creation_feedback(
@@ -30859,6 +31123,10 @@ unsafe impl<'a> TaggedStructure for PipelineCompilerControlCreateInfoAMD<'a> {
 }
 unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineCompilerControlCreateInfoAMD<'_> {}
 unsafe impl ExtendsComputePipelineCreateInfo for PipelineCompilerControlCreateInfoAMD<'_> {}
+unsafe impl ExtendsExecutionGraphPipelineCreateInfoAMDX
+    for PipelineCompilerControlCreateInfoAMD<'_>
+{
+}
 impl<'a> PipelineCompilerControlCreateInfoAMD<'a> {
     #[inline]
     pub fn compiler_control_flags(
@@ -31218,6 +31486,19 @@ pub union DeviceOrHostAddressConstKHR {
     pub host_address: *const c_void,
 }
 impl ::std::default::Default for DeviceOrHostAddressConstKHR {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDeviceOrHostAddressConstAMDX.html>"]
+pub union DeviceOrHostAddressConstAMDX {
+    pub device_address: DeviceAddress,
+    pub host_address: *const c_void,
+}
+impl ::std::default::Default for DeviceOrHostAddressConstAMDX {
     #[inline]
     fn default() -> Self {
         unsafe { ::std::mem::zeroed() }
@@ -36383,7 +36664,7 @@ impl ::std::default::Default for SubresourceHostMemcpySizeEXT<'_> {
 unsafe impl<'a> TaggedStructure for SubresourceHostMemcpySizeEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SUBRESOURCE_HOST_MEMCPY_SIZE_EXT;
 }
-unsafe impl ExtendsSubresourceLayout2EXT for SubresourceHostMemcpySizeEXT<'_> {}
+unsafe impl ExtendsSubresourceLayout2KHR for SubresourceHostMemcpySizeEXT<'_> {}
 impl<'a> SubresourceHostMemcpySizeEXT<'a> {
     #[inline]
     pub fn size(mut self, size: DeviceSize) -> Self {
@@ -44465,7 +44746,7 @@ impl<'a> PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkGraphicsPipelineLibraryCreateInfoEXT.html>"]
 pub struct GraphicsPipelineLibraryCreateInfoEXT<'a> {
     pub s_type: StructureType,
-    pub p_next: *mut c_void,
+    pub p_next: *const c_void,
     pub flags: GraphicsPipelineLibraryFlagsEXT,
     pub _marker: PhantomData<&'a ()>,
 }
@@ -44474,7 +44755,7 @@ impl ::std::default::Default for GraphicsPipelineLibraryCreateInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::std::ptr::null_mut(),
+            p_next: ::std::ptr::null(),
             flags: GraphicsPipelineLibraryFlagsEXT::default(),
             _marker: PhantomData,
         }
@@ -44867,7 +45148,7 @@ unsafe impl<'a> TaggedStructure for ImageCompressionPropertiesEXT<'a> {
 }
 unsafe impl ExtendsImageFormatProperties2 for ImageCompressionPropertiesEXT<'_> {}
 unsafe impl ExtendsSurfaceFormat2KHR for ImageCompressionPropertiesEXT<'_> {}
-unsafe impl ExtendsSubresourceLayout2EXT for ImageCompressionPropertiesEXT<'_> {}
+unsafe impl ExtendsSubresourceLayout2KHR for ImageCompressionPropertiesEXT<'_> {}
 impl<'a> ImageCompressionPropertiesEXT<'a> {
     #[inline]
     pub fn image_compression_flags(
@@ -44932,14 +45213,14 @@ impl<'a> PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImageSubresource2EXT.html>"]
-pub struct ImageSubresource2EXT<'a> {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImageSubresource2KHR.html>"]
+pub struct ImageSubresource2KHR<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub image_subresource: ImageSubresource,
     pub _marker: PhantomData<&'a ()>,
 }
-impl ::std::default::Default for ImageSubresource2EXT<'_> {
+impl ::std::default::Default for ImageSubresource2KHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
@@ -44950,10 +45231,10 @@ impl ::std::default::Default for ImageSubresource2EXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for ImageSubresource2EXT<'a> {
-    const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_SUBRESOURCE_2_EXT;
+unsafe impl<'a> TaggedStructure for ImageSubresource2KHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::IMAGE_SUBRESOURCE_2_KHR;
 }
-impl<'a> ImageSubresource2EXT<'a> {
+impl<'a> ImageSubresource2KHR<'a> {
     #[inline]
     pub fn image_subresource(mut self, image_subresource: ImageSubresource) -> Self {
         self.image_subresource = image_subresource;
@@ -44963,14 +45244,14 @@ impl<'a> ImageSubresource2EXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSubresourceLayout2EXT.html>"]
-pub struct SubresourceLayout2EXT<'a> {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSubresourceLayout2KHR.html>"]
+pub struct SubresourceLayout2KHR<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub subresource_layout: SubresourceLayout,
     pub _marker: PhantomData<&'a ()>,
 }
-impl ::std::default::Default for SubresourceLayout2EXT<'_> {
+impl ::std::default::Default for SubresourceLayout2KHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
@@ -44981,11 +45262,11 @@ impl ::std::default::Default for SubresourceLayout2EXT<'_> {
         }
     }
 }
-unsafe impl<'a> TaggedStructure for SubresourceLayout2EXT<'a> {
-    const STRUCTURE_TYPE: StructureType = StructureType::SUBRESOURCE_LAYOUT_2_EXT;
+unsafe impl<'a> TaggedStructure for SubresourceLayout2KHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::SUBRESOURCE_LAYOUT_2_KHR;
 }
-pub unsafe trait ExtendsSubresourceLayout2EXT {}
-impl<'a> SubresourceLayout2EXT<'a> {
+pub unsafe trait ExtendsSubresourceLayout2KHR {}
+impl<'a> SubresourceLayout2KHR<'a> {
     #[inline]
     pub fn subresource_layout(mut self, subresource_layout: SubresourceLayout) -> Self {
         self.subresource_layout = subresource_layout;
@@ -44996,7 +45277,7 @@ impl<'a> SubresourceLayout2EXT<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSubresourceLayout2EXT>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsSubresourceLayout2KHR>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -49091,6 +49372,44 @@ impl<'a> PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDeviceImageSubresourceInfoKHR.html>"]
+pub struct DeviceImageSubresourceInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub p_create_info: *const ImageCreateInfo<'a>,
+    pub p_subresource: *const ImageSubresource2KHR<'a>,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for DeviceImageSubresourceInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            p_create_info: ::std::ptr::null(),
+            p_subresource: ::std::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for DeviceImageSubresourceInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::DEVICE_IMAGE_SUBRESOURCE_INFO_KHR;
+}
+impl<'a> DeviceImageSubresourceInfoKHR<'a> {
+    #[inline]
+    pub fn create_info(mut self, create_info: &'a ImageCreateInfo<'a>) -> Self {
+        self.p_create_info = create_info;
+        self
+    }
+    #[inline]
+    pub fn subresource(mut self, subresource: &'a ImageSubresource2KHR<'a>) -> Self {
+        self.p_subresource = subresource;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderCorePropertiesARM.html>"]
 pub struct PhysicalDeviceShaderCorePropertiesARM<'a> {
     pub s_type: StructureType,
@@ -50047,6 +50366,349 @@ impl<'a> PhysicalDeviceCooperativeMatrixPropertiesKHR<'a> {
         cooperative_matrix_supported_stages: ShaderStageFlags,
     ) -> Self {
         self.cooperative_matrix_supported_stages = cooperative_matrix_supported_stages;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderEnqueuePropertiesAMDX.html>"]
+pub struct PhysicalDeviceShaderEnqueuePropertiesAMDX<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub max_execution_graph_depth: u32,
+    pub max_execution_graph_shader_output_nodes: u32,
+    pub max_execution_graph_shader_payload_size: u32,
+    pub max_execution_graph_shader_payload_count: u32,
+    pub execution_graph_dispatch_address_alignment: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceShaderEnqueuePropertiesAMDX<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            max_execution_graph_depth: u32::default(),
+            max_execution_graph_shader_output_nodes: u32::default(),
+            max_execution_graph_shader_payload_size: u32::default(),
+            max_execution_graph_shader_payload_count: u32::default(),
+            execution_graph_dispatch_address_alignment: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderEnqueuePropertiesAMDX<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_SHADER_ENQUEUE_PROPERTIES_AMDX;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderEnqueuePropertiesAMDX<'_> {}
+impl<'a> PhysicalDeviceShaderEnqueuePropertiesAMDX<'a> {
+    #[inline]
+    pub fn max_execution_graph_depth(mut self, max_execution_graph_depth: u32) -> Self {
+        self.max_execution_graph_depth = max_execution_graph_depth;
+        self
+    }
+    #[inline]
+    pub fn max_execution_graph_shader_output_nodes(
+        mut self,
+        max_execution_graph_shader_output_nodes: u32,
+    ) -> Self {
+        self.max_execution_graph_shader_output_nodes = max_execution_graph_shader_output_nodes;
+        self
+    }
+    #[inline]
+    pub fn max_execution_graph_shader_payload_size(
+        mut self,
+        max_execution_graph_shader_payload_size: u32,
+    ) -> Self {
+        self.max_execution_graph_shader_payload_size = max_execution_graph_shader_payload_size;
+        self
+    }
+    #[inline]
+    pub fn max_execution_graph_shader_payload_count(
+        mut self,
+        max_execution_graph_shader_payload_count: u32,
+    ) -> Self {
+        self.max_execution_graph_shader_payload_count = max_execution_graph_shader_payload_count;
+        self
+    }
+    #[inline]
+    pub fn execution_graph_dispatch_address_alignment(
+        mut self,
+        execution_graph_dispatch_address_alignment: u32,
+    ) -> Self {
+        self.execution_graph_dispatch_address_alignment =
+            execution_graph_dispatch_address_alignment;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderEnqueueFeaturesAMDX.html>"]
+pub struct PhysicalDeviceShaderEnqueueFeaturesAMDX<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub shader_enqueue: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceShaderEnqueueFeaturesAMDX<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            shader_enqueue: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceShaderEnqueueFeaturesAMDX<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_SHADER_ENQUEUE_FEATURES_AMDX;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderEnqueueFeaturesAMDX<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderEnqueueFeaturesAMDX<'_> {}
+impl<'a> PhysicalDeviceShaderEnqueueFeaturesAMDX<'a> {
+    #[inline]
+    pub fn shader_enqueue(mut self, shader_enqueue: bool) -> Self {
+        self.shader_enqueue = shader_enqueue.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkExecutionGraphPipelineCreateInfoAMDX.html>"]
+pub struct ExecutionGraphPipelineCreateInfoAMDX<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub flags: PipelineCreateFlags,
+    pub stage_count: u32,
+    pub p_stages: *const PipelineShaderStageCreateInfo<'a>,
+    pub p_library_info: *const PipelineLibraryCreateInfoKHR<'a>,
+    pub layout: PipelineLayout,
+    pub base_pipeline_handle: Pipeline,
+    pub base_pipeline_index: i32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ExecutionGraphPipelineCreateInfoAMDX<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            flags: PipelineCreateFlags::default(),
+            stage_count: u32::default(),
+            p_stages: ::std::ptr::null(),
+            p_library_info: ::std::ptr::null(),
+            layout: PipelineLayout::default(),
+            base_pipeline_handle: Pipeline::default(),
+            base_pipeline_index: i32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for ExecutionGraphPipelineCreateInfoAMDX<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::EXECUTION_GRAPH_PIPELINE_CREATE_INFO_AMDX;
+}
+pub unsafe trait ExtendsExecutionGraphPipelineCreateInfoAMDX {}
+impl<'a> ExecutionGraphPipelineCreateInfoAMDX<'a> {
+    #[inline]
+    pub fn flags(mut self, flags: PipelineCreateFlags) -> Self {
+        self.flags = flags;
+        self
+    }
+    #[inline]
+    pub fn stages(mut self, stages: &'a [PipelineShaderStageCreateInfo]) -> Self {
+        self.stage_count = stages.len() as _;
+        self.p_stages = stages.as_ptr();
+        self
+    }
+    #[inline]
+    pub fn library_info(mut self, library_info: &'a PipelineLibraryCreateInfoKHR<'a>) -> Self {
+        self.p_library_info = library_info;
+        self
+    }
+    #[inline]
+    pub fn layout(mut self, layout: PipelineLayout) -> Self {
+        self.layout = layout;
+        self
+    }
+    #[inline]
+    pub fn base_pipeline_handle(mut self, base_pipeline_handle: Pipeline) -> Self {
+        self.base_pipeline_handle = base_pipeline_handle;
+        self
+    }
+    #[inline]
+    pub fn base_pipeline_index(mut self, base_pipeline_index: i32) -> Self {
+        self.base_pipeline_index = base_pipeline_index;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsExecutionGraphPipelineCreateInfoAMDX>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        unsafe {
+            let next_ptr = <*const T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineShaderStageNodeCreateInfoAMDX.html>"]
+pub struct PipelineShaderStageNodeCreateInfoAMDX<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub p_name: *const c_char,
+    pub index: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PipelineShaderStageNodeCreateInfoAMDX<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            p_name: ::std::ptr::null(),
+            index: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PipelineShaderStageNodeCreateInfoAMDX<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PIPELINE_SHADER_STAGE_NODE_CREATE_INFO_AMDX;
+}
+unsafe impl ExtendsPipelineShaderStageCreateInfo for PipelineShaderStageNodeCreateInfoAMDX<'_> {}
+impl<'a> PipelineShaderStageNodeCreateInfoAMDX<'a> {
+    #[inline]
+    pub fn name(mut self, name: &'a ::std::ffi::CStr) -> Self {
+        self.p_name = name.as_ptr();
+        self
+    }
+    #[inline]
+    pub fn index(mut self, index: u32) -> Self {
+        self.index = index;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkExecutionGraphPipelineScratchSizeAMDX.html>"]
+pub struct ExecutionGraphPipelineScratchSizeAMDX<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub size: DeviceSize,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for ExecutionGraphPipelineScratchSizeAMDX<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            size: DeviceSize::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for ExecutionGraphPipelineScratchSizeAMDX<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::EXECUTION_GRAPH_PIPELINE_SCRATCH_SIZE_AMDX;
+}
+impl<'a> ExecutionGraphPipelineScratchSizeAMDX<'a> {
+    #[inline]
+    pub fn size(mut self, size: DeviceSize) -> Self {
+        self.size = size;
+        self
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Default)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDispatchGraphInfoAMDX.html>"]
+pub struct DispatchGraphInfoAMDX {
+    pub node_index: u32,
+    pub payload_count: u32,
+    pub payloads: DeviceOrHostAddressConstAMDX,
+    pub payload_stride: u64,
+}
+#[cfg(feature = "debug")]
+impl fmt::Debug for DispatchGraphInfoAMDX {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+        fmt.debug_struct("DispatchGraphInfoAMDX")
+            .field("node_index", &self.node_index)
+            .field("payload_count", &self.payload_count)
+            .field("payloads", &"union")
+            .field("payload_stride", &self.payload_stride)
+            .finish()
+    }
+}
+impl DispatchGraphInfoAMDX {
+    #[inline]
+    pub fn node_index(mut self, node_index: u32) -> Self {
+        self.node_index = node_index;
+        self
+    }
+    #[inline]
+    pub fn payload_count(mut self, payload_count: u32) -> Self {
+        self.payload_count = payload_count;
+        self
+    }
+    #[inline]
+    pub fn payloads(mut self, payloads: DeviceOrHostAddressConstAMDX) -> Self {
+        self.payloads = payloads;
+        self
+    }
+    #[inline]
+    pub fn payload_stride(mut self, payload_stride: u64) -> Self {
+        self.payload_stride = payload_stride;
+        self
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Default)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDispatchGraphCountInfoAMDX.html>"]
+pub struct DispatchGraphCountInfoAMDX {
+    pub count: u32,
+    pub infos: DeviceOrHostAddressConstAMDX,
+    pub stride: u64,
+}
+#[cfg(feature = "debug")]
+impl fmt::Debug for DispatchGraphCountInfoAMDX {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+        fmt.debug_struct("DispatchGraphCountInfoAMDX")
+            .field("count", &self.count)
+            .field("infos", &"union")
+            .field("stride", &self.stride)
+            .finish()
+    }
+}
+impl DispatchGraphCountInfoAMDX {
+    #[inline]
+    pub fn count(mut self, count: u32) -> Self {
+        self.count = count;
+        self
+    }
+    #[inline]
+    pub fn infos(mut self, infos: DeviceOrHostAddressConstAMDX) -> Self {
+        self.infos = infos;
+        self
+    }
+    #[inline]
+    pub fn stride(mut self, stride: u64) -> Self {
+        self.stride = stride;
         self
     }
 }

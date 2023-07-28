@@ -137,6 +137,22 @@ impl BufferUsageFlags {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkBufferUsageFlagBits2KHR.html>"]
+pub struct BufferUsageFlags2KHR(pub(crate) Flags64);
+vk_bitflags_wrapped!(BufferUsageFlags2KHR, Flags64);
+impl BufferUsageFlags2KHR {
+    pub const TRANSFER_SRC: Self = Self(0b1);
+    pub const TRANSFER_DST: Self = Self(0b10);
+    pub const UNIFORM_TEXEL_BUFFER: Self = Self(0b100);
+    pub const STORAGE_TEXEL_BUFFER: Self = Self(0b1000);
+    pub const UNIFORM_BUFFER: Self = Self(0b1_0000);
+    pub const STORAGE_BUFFER: Self = Self(0b10_0000);
+    pub const INDEX_BUFFER: Self = Self(0b100_0000);
+    pub const VERTEX_BUFFER: Self = Self(0b1000_0000);
+    pub const INDIRECT_BUFFER: Self = Self(0b1_0000_0000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkBufferCreateFlagBits.html>"]
 pub struct BufferCreateFlags(pub(crate) Flags);
 vk_bitflags_wrapped!(BufferCreateFlags, Flags);
@@ -221,6 +237,16 @@ impl SamplerCreateFlags {}
 pub struct PipelineCreateFlags(pub(crate) Flags);
 vk_bitflags_wrapped!(PipelineCreateFlags, Flags);
 impl PipelineCreateFlags {
+    pub const DISABLE_OPTIMIZATION: Self = Self(0b1);
+    pub const ALLOW_DERIVATIVES: Self = Self(0b10);
+    pub const DERIVATIVE: Self = Self(0b100);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineCreateFlagBits2KHR.html>"]
+pub struct PipelineCreateFlags2KHR(pub(crate) Flags64);
+vk_bitflags_wrapped!(PipelineCreateFlags2KHR, Flags64);
+impl PipelineCreateFlags2KHR {
     pub const DISABLE_OPTIMIZATION: Self = Self(0b1);
     pub const ALLOW_DERIVATIVES: Self = Self(0b10);
     pub const DERIVATIVE: Self = Self(0b100);

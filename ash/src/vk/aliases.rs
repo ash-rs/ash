@@ -271,3 +271,5 @@ pub type CommandBufferInheritanceRenderingInfoKHR<'a> = CommandBufferInheritance
 pub type AttachmentSampleCountInfoNV<'a> = AttachmentSampleCountInfoAMD<'a>;
 pub type PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARM<'a> =
     PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT<'a>;
+pub type ImageSubresource2EXT<'a> = ImageSubresource2KHR<'a>;
+pub type SubresourceLayout2EXT<'a> = SubresourceLayout2KHR<'a>;
