@@ -1,3 +1,4 @@
+pub mod amd;
 pub mod android;
 pub mod ext;
 pub mod google;
