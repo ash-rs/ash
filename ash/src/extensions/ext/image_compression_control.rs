@@ -1,3 +1,5 @@
+#[cfg(doc)]
+use super::HostImageCopy;
 use crate::vk;
 use crate::{Device, Instance};
 use std::ffi::CStr;
@@ -20,6 +22,11 @@ impl ImageCompressionControl {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetImageSubresourceLayout2EXT.html>
+    ///
+    /// Also available as [`HostImageCopy::get_image_subresource_layout2()`]
+    /// when [`VK_EXT_host_image_copy`] is enabled.
+    ///
+    /// [`VK_EXT_host_image_copy`]: https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_host_image_copy.html
     #[inline]
     pub unsafe fn get_image_subresource_layout2(
         &self,
