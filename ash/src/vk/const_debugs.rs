@@ -636,20 +636,20 @@ impl fmt::Debug for BufferUsageFlags2KHR {
                 "EXECUTION_GRAPH_SCRATCH_AMDX",
             ),
             (
-                BufferUsageFlags2KHR::CONDITIONAL_RENDERING.0,
-                "CONDITIONAL_RENDERING",
+                BufferUsageFlags2KHR::CONDITIONAL_RENDERING_EXT.0,
+                "CONDITIONAL_RENDERING_EXT",
             ),
             (
                 BufferUsageFlags2KHR::SHADER_BINDING_TABLE.0,
                 "SHADER_BINDING_TABLE",
             ),
             (
-                BufferUsageFlags2KHR::TRANSFORM_FEEDBACK_BUFFER.0,
-                "TRANSFORM_FEEDBACK_BUFFER",
+                BufferUsageFlags2KHR::TRANSFORM_FEEDBACK_BUFFER_EXT.0,
+                "TRANSFORM_FEEDBACK_BUFFER_EXT",
             ),
             (
-                BufferUsageFlags2KHR::TRANSFORM_FEEDBACK_COUNTER_BUFFER.0,
-                "TRANSFORM_FEEDBACK_COUNTER_BUFFER",
+                BufferUsageFlags2KHR::TRANSFORM_FEEDBACK_COUNTER_BUFFER_EXT.0,
+                "TRANSFORM_FEEDBACK_COUNTER_BUFFER_EXT",
             ),
             (BufferUsageFlags2KHR::VIDEO_DECODE_SRC.0, "VIDEO_DECODE_SRC"),
             (BufferUsageFlags2KHR::VIDEO_DECODE_DST.0, "VIDEO_DECODE_DST"),
@@ -668,22 +668,25 @@ impl fmt::Debug for BufferUsageFlags2KHR {
                 "ACCELERATION_STRUCTURE_STORAGE",
             ),
             (
-                BufferUsageFlags2KHR::SAMPLER_DESCRIPTOR_BUFFER.0,
-                "SAMPLER_DESCRIPTOR_BUFFER",
+                BufferUsageFlags2KHR::SAMPLER_DESCRIPTOR_BUFFER_EXT.0,
+                "SAMPLER_DESCRIPTOR_BUFFER_EXT",
             ),
             (
-                BufferUsageFlags2KHR::RESOURCE_DESCRIPTOR_BUFFER.0,
-                "RESOURCE_DESCRIPTOR_BUFFER",
+                BufferUsageFlags2KHR::RESOURCE_DESCRIPTOR_BUFFER_EXT.0,
+                "RESOURCE_DESCRIPTOR_BUFFER_EXT",
             ),
             (
-                BufferUsageFlags2KHR::PUSH_DESCRIPTORS_DESCRIPTOR_BUFFER.0,
-                "PUSH_DESCRIPTORS_DESCRIPTOR_BUFFER",
+                BufferUsageFlags2KHR::PUSH_DESCRIPTORS_DESCRIPTOR_BUFFER_EXT.0,
+                "PUSH_DESCRIPTORS_DESCRIPTOR_BUFFER_EXT",
             ),
             (
-                BufferUsageFlags2KHR::MICROMAP_BUILD_INPUT_READ_ONLY.0,
-                "MICROMAP_BUILD_INPUT_READ_ONLY",
+                BufferUsageFlags2KHR::MICROMAP_BUILD_INPUT_READ_ONLY_EXT.0,
+                "MICROMAP_BUILD_INPUT_READ_ONLY_EXT",
             ),
-            (BufferUsageFlags2KHR::MICROMAP_STORAGE.0, "MICROMAP_STORAGE"),
+            (
+                BufferUsageFlags2KHR::MICROMAP_STORAGE_EXT.0,
+                "MICROMAP_STORAGE_EXT",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -3567,13 +3570,15 @@ impl fmt::Debug for PipelineCreateFlags2KHR {
                 "ALLOW_DERIVATIVES",
             ),
             (PipelineCreateFlags2KHR::DERIVATIVE.0, "DERIVATIVE"),
-            (PipelineCreateFlags2KHR::RESERVED_28_NV.0, "RESERVED_28_NV"),
             (
                 PipelineCreateFlags2KHR::VIEW_INDEX_FROM_DEVICE_INDEX.0,
                 "VIEW_INDEX_FROM_DEVICE_INDEX",
             ),
             (PipelineCreateFlags2KHR::DISPATCH_BASE.0, "DISPATCH_BASE"),
-            (PipelineCreateFlags2KHR::DEFER_COMPILE.0, "DEFER_COMPILE"),
+            (
+                PipelineCreateFlags2KHR::DEFER_COMPILE_NV.0,
+                "DEFER_COMPILE_NV",
+            ),
             (
                 PipelineCreateFlags2KHR::CAPTURE_STATISTICS.0,
                 "CAPTURE_STATISTICS",
@@ -3591,12 +3596,12 @@ impl fmt::Debug for PipelineCreateFlags2KHR {
                 "EARLY_RETURN_ON_FAILURE",
             ),
             (
-                PipelineCreateFlags2KHR::LINK_TIME_OPTIMIZATION.0,
-                "LINK_TIME_OPTIMIZATION",
+                PipelineCreateFlags2KHR::LINK_TIME_OPTIMIZATION_EXT.0,
+                "LINK_TIME_OPTIMIZATION_EXT",
             ),
             (
-                PipelineCreateFlags2KHR::RETAIN_LINK_TIME_OPTIMIZATION_INFO.0,
-                "RETAIN_LINK_TIME_OPTIMIZATION_INFO",
+                PipelineCreateFlags2KHR::RETAIN_LINK_TIME_OPTIMIZATION_INFO_EXT.0,
+                "RETAIN_LINK_TIME_OPTIMIZATION_INFO_EXT",
             ),
             (PipelineCreateFlags2KHR::LIBRARY.0, "LIBRARY"),
             (
@@ -3628,44 +3633,48 @@ impl fmt::Debug for PipelineCreateFlags2KHR {
                 "RAY_TRACING_SHADER_GROUP_HANDLE_CAPTURE_REPLAY",
             ),
             (
-                PipelineCreateFlags2KHR::INDIRECT_BINDABLE.0,
-                "INDIRECT_BINDABLE",
+                PipelineCreateFlags2KHR::INDIRECT_BINDABLE_NV.0,
+                "INDIRECT_BINDABLE_NV",
             ),
             (
-                PipelineCreateFlags2KHR::RAY_TRACING_ALLOW_MOTION.0,
-                "RAY_TRACING_ALLOW_MOTION",
+                PipelineCreateFlags2KHR::RAY_TRACING_ALLOW_MOTION_NV.0,
+                "RAY_TRACING_ALLOW_MOTION_NV",
             ),
             (
                 PipelineCreateFlags2KHR::RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT.0,
                 "RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT",
             ),
             (
-                PipelineCreateFlags2KHR::RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT.0,
-                "RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT",
+                PipelineCreateFlags2KHR::RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_EXT.0,
+                "RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_EXT",
             ),
             (
-                PipelineCreateFlags2KHR::RAY_TRACING_OPACITY_MICROMAP.0,
-                "RAY_TRACING_OPACITY_MICROMAP",
+                PipelineCreateFlags2KHR::RAY_TRACING_OPACITY_MICROMAP_EXT.0,
+                "RAY_TRACING_OPACITY_MICROMAP_EXT",
             ),
             (
-                PipelineCreateFlags2KHR::COLOR_ATTACHMENT_FEEDBACK_LOOP.0,
-                "COLOR_ATTACHMENT_FEEDBACK_LOOP",
+                PipelineCreateFlags2KHR::COLOR_ATTACHMENT_FEEDBACK_LOOP_EXT.0,
+                "COLOR_ATTACHMENT_FEEDBACK_LOOP_EXT",
             ),
             (
-                PipelineCreateFlags2KHR::DEPTH_STENCIL_ATTACHMENT_FEEDBACK_LOOP.0,
-                "DEPTH_STENCIL_ATTACHMENT_FEEDBACK_LOOP",
+                PipelineCreateFlags2KHR::DEPTH_STENCIL_ATTACHMENT_FEEDBACK_LOOP_EXT.0,
+                "DEPTH_STENCIL_ATTACHMENT_FEEDBACK_LOOP_EXT",
             ),
             (
-                PipelineCreateFlags2KHR::NO_PROTECTED_ACCESS.0,
-                "NO_PROTECTED_ACCESS",
+                PipelineCreateFlags2KHR::NO_PROTECTED_ACCESS_EXT.0,
+                "NO_PROTECTED_ACCESS_EXT",
             ),
             (
-                PipelineCreateFlags2KHR::PROTECTED_ACCESS_ONLY.0,
-                "PROTECTED_ACCESS_ONLY",
+                PipelineCreateFlags2KHR::PROTECTED_ACCESS_ONLY_EXT.0,
+                "PROTECTED_ACCESS_ONLY_EXT",
             ),
             (
-                PipelineCreateFlags2KHR::DESCRIPTOR_BUFFER.0,
-                "DESCRIPTOR_BUFFER",
+                PipelineCreateFlags2KHR::RAY_TRACING_DISPLACEMENT_MICROMAP_NV.0,
+                "RAY_TRACING_DISPLACEMENT_MICROMAP_NV",
+            ),
+            (
+                PipelineCreateFlags2KHR::DESCRIPTOR_BUFFER_EXT.0,
+                "DESCRIPTOR_BUFFER_EXT",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
