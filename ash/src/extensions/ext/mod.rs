@@ -21,6 +21,7 @@ pub use self::private_data::PrivateData;
 pub use self::sample_locations::SampleLocations;
 pub use self::shader_object::ShaderObject;
 pub use self::tooling_info::ToolingInfo;
+pub use self::vertex_input_dynamic_state::VertexInputDynamicState;
 
 mod acquire_drm_display;
 mod buffer_device_address;
@@ -45,3 +46,4 @@ mod private_data;
 mod sample_locations;
 mod shader_object;
 mod tooling_info;
+mod vertex_input_dynamic_state;
