@@ -1,5 +1,5 @@
 #[cfg(doc)]
-use super::ImageCompressionControl;
+use super::{super::khr::Maintenance5, ImageCompressionControl};
 use crate::prelude::*;
 use crate::vk;
 use crate::{Device, Instance};
@@ -65,9 +65,13 @@ impl HostImageCopy {
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageSubresourceLayout2EXT.html>
     ///
+    /// Also available as [`Maintenance5::get_image_subresource_layout2()`]
+    /// when [`VK_KHR_maintenance5`] is enabled.
+    ///
     /// Also available as [`ImageCompressionControl::get_image_subresource_layout2()`]
     /// when [`VK_EXT_image_compression_control`] is enabled.
     ///
+    /// [`VK_KHR_maintenance5`]: https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_maintenance5.html
     /// [`VK_EXT_image_compression_control`]: https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_image_compression_control.html
     #[inline]
     pub unsafe fn get_image_subresource_layout2(

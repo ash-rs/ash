@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `VK_AMD_shader_info` device extension (#773)
 - Added `VK_AMDX_shader_enqueue` device extension (#776)
 - Added `VK_EXT_host_image_copy` device extension (#779)
+- Added `VK_KHR_maintenance5` device extension (#780)
 
 ### Changed
 
