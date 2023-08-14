@@ -1,4 +1,5 @@
 pub mod amd;
+pub mod amdx;
 pub mod android;
 pub mod ext;
 pub mod google;
