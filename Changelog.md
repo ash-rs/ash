@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `VK_NV_device_generated_commands_compute` device extension (#781)
 - Added `VK_KHR_cooperative_matrix` instance extension (#782)
 - Added `VK_EXT_vertex_input_dynamic_state` device extension (#784)
+- Added `VK_KHR_sampler_ycbcr_conversion` device extension (#785)
 
 ### Changed
 
