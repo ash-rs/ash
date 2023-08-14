@@ -3,6 +3,7 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_maintenance1.html>
 #[derive(Clone)]
 pub struct Maintenance1 {
     handle: vk::Device,
