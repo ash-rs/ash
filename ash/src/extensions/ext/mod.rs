@@ -21,6 +21,7 @@ pub use self::pipeline_properties::PipelineProperties;
 pub use self::private_data::PrivateData;
 pub use self::sample_locations::SampleLocations;
 pub use self::shader_object::ShaderObject;
+pub use self::swapchain_maintenance1::SwapchainMaintenance1;
 pub use self::tooling_info::ToolingInfo;
 pub use self::vertex_input_dynamic_state::VertexInputDynamicState;
 
@@ -47,5 +48,6 @@ mod pipeline_properties;
 mod private_data;
 mod sample_locations;
 mod shader_object;
+mod swapchain_maintenance1;
 mod tooling_info;
 mod vertex_input_dynamic_state;
