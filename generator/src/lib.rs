@@ -2093,10 +2093,10 @@ fn derive_setters(
     let next_function = if let Some(next_member) = root_struct_next_field {
         let next_field = &next_member.vkxml_field;
         assert_eq!(next_field.basetype, "void");
-        let mutability = if next_field.is_const {
-            quote!(const)
+        let (mutability, cast) = if next_field.is_const {
+            (quote!(const), quote!(.cast_mut().cast()))
         } else {
-            quote!(mut)
+            (quote!(mut), quote!(.cast()))
         };
         quote! {
             /// Prepends the given extension struct between the root and the first pointer. This
@@ -2117,7 +2117,7 @@ fn derive_setters(
                     //                 ^^^^^^
                     //                 next chain
                     let last_next = ptr_chain_iter(next).last().unwrap();
-                    (*last_next).p_next = self.p_next as _;
+                    (*last_next).p_next = self.p_next#cast;
                     self.p_next = next_ptr;
                 }
                 self
