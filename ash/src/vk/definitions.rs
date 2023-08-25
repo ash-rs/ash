@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 261;
+pub const HEADER_VERSION: u32 = 262;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -34175,6 +34175,7 @@ impl ::std::default::Default for BlitImageInfo2<'_> {
 unsafe impl<'a> TaggedStructure for BlitImageInfo2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BLIT_IMAGE_INFO_2;
 }
+pub unsafe trait ExtendsBlitImageInfo2 {}
 impl<'a> BlitImageInfo2<'a> {
     #[inline]
     pub fn src_image(mut self, src_image: Image) -> Self {
@@ -34205,6 +34206,20 @@ impl<'a> BlitImageInfo2<'a> {
     #[inline]
     pub fn filter(mut self, filter: Filter) -> Self {
         self.filter = filter;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsBlitImageInfo2>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = <*const T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
         self
     }
 }
@@ -50709,6 +50724,324 @@ impl DispatchGraphCountInfoAMDX {
     #[inline]
     pub fn stride(mut self, stride: u64) -> Self {
         self.stride = stride;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceCubicClampFeaturesQCOM.html>"]
+pub struct PhysicalDeviceCubicClampFeaturesQCOM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub cubic_range_clamp: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceCubicClampFeaturesQCOM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            cubic_range_clamp: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceCubicClampFeaturesQCOM<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_CUBIC_CLAMP_FEATURES_QCOM;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCubicClampFeaturesQCOM<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCubicClampFeaturesQCOM<'_> {}
+impl<'a> PhysicalDeviceCubicClampFeaturesQCOM<'a> {
+    #[inline]
+    pub fn cubic_range_clamp(mut self, cubic_range_clamp: bool) -> Self {
+        self.cubic_range_clamp = cubic_range_clamp.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceYcbcrDegammaFeaturesQCOM.html>"]
+pub struct PhysicalDeviceYcbcrDegammaFeaturesQCOM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub ycbcr_degamma: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            ycbcr_degamma: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_YCBCR_DEGAMMA_FEATURES_QCOM;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'_> {}
+impl<'a> PhysicalDeviceYcbcrDegammaFeaturesQCOM<'a> {
+    #[inline]
+    pub fn ycbcr_degamma(mut self, ycbcr_degamma: bool) -> Self {
+        self.ycbcr_degamma = ycbcr_degamma.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM.html>"]
+pub struct SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub enable_y_degamma: Bool32,
+    pub enable_cb_cr_degamma: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            enable_y_degamma: Bool32::default(),
+            enable_cb_cr_degamma: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::SAMPLER_YCBCR_CONVERSION_YCBCR_DEGAMMA_CREATE_INFO_QCOM;
+}
+unsafe impl ExtendsSamplerYcbcrConversionCreateInfo
+    for SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'_>
+{
+}
+impl<'a> SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'a> {
+    #[inline]
+    pub fn enable_y_degamma(mut self, enable_y_degamma: bool) -> Self {
+        self.enable_y_degamma = enable_y_degamma.into();
+        self
+    }
+    #[inline]
+    pub fn enable_cb_cr_degamma(mut self, enable_cb_cr_degamma: bool) -> Self {
+        self.enable_cb_cr_degamma = enable_cb_cr_degamma.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceCubicWeightsFeaturesQCOM.html>"]
+pub struct PhysicalDeviceCubicWeightsFeaturesQCOM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub selectable_cubic_weights: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceCubicWeightsFeaturesQCOM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            selectable_cubic_weights: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceCubicWeightsFeaturesQCOM<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_CUBIC_WEIGHTS_FEATURES_QCOM;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCubicWeightsFeaturesQCOM<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCubicWeightsFeaturesQCOM<'_> {}
+impl<'a> PhysicalDeviceCubicWeightsFeaturesQCOM<'a> {
+    #[inline]
+    pub fn selectable_cubic_weights(mut self, selectable_cubic_weights: bool) -> Self {
+        self.selectable_cubic_weights = selectable_cubic_weights.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSamplerCubicWeightsCreateInfoQCOM.html>"]
+pub struct SamplerCubicWeightsCreateInfoQCOM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub cubic_weights: CubicFilterWeightsQCOM,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for SamplerCubicWeightsCreateInfoQCOM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            cubic_weights: CubicFilterWeightsQCOM::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for SamplerCubicWeightsCreateInfoQCOM<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::SAMPLER_CUBIC_WEIGHTS_CREATE_INFO_QCOM;
+}
+unsafe impl ExtendsSamplerCreateInfo for SamplerCubicWeightsCreateInfoQCOM<'_> {}
+impl<'a> SamplerCubicWeightsCreateInfoQCOM<'a> {
+    #[inline]
+    pub fn cubic_weights(mut self, cubic_weights: CubicFilterWeightsQCOM) -> Self {
+        self.cubic_weights = cubic_weights;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkBlitImageCubicWeightsInfoQCOM.html>"]
+pub struct BlitImageCubicWeightsInfoQCOM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub cubic_weights: CubicFilterWeightsQCOM,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for BlitImageCubicWeightsInfoQCOM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            cubic_weights: CubicFilterWeightsQCOM::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for BlitImageCubicWeightsInfoQCOM<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::BLIT_IMAGE_CUBIC_WEIGHTS_INFO_QCOM;
+}
+unsafe impl ExtendsBlitImageInfo2 for BlitImageCubicWeightsInfoQCOM<'_> {}
+impl<'a> BlitImageCubicWeightsInfoQCOM<'a> {
+    #[inline]
+    pub fn cubic_weights(mut self, cubic_weights: CubicFilterWeightsQCOM) -> Self {
+        self.cubic_weights = cubic_weights;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceImageProcessing2FeaturesQCOM.html>"]
+pub struct PhysicalDeviceImageProcessing2FeaturesQCOM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub texture_block_match2: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceImageProcessing2FeaturesQCOM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            texture_block_match2: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceImageProcessing2FeaturesQCOM<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_IMAGE_PROCESSING_2_FEATURES_QCOM;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceImageProcessing2FeaturesQCOM<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceImageProcessing2FeaturesQCOM<'_> {}
+impl<'a> PhysicalDeviceImageProcessing2FeaturesQCOM<'a> {
+    #[inline]
+    pub fn texture_block_match2(mut self, texture_block_match2: bool) -> Self {
+        self.texture_block_match2 = texture_block_match2.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceImageProcessing2PropertiesQCOM.html>"]
+pub struct PhysicalDeviceImageProcessing2PropertiesQCOM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub max_block_match_window: Extent2D,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceImageProcessing2PropertiesQCOM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            max_block_match_window: Extent2D::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceImageProcessing2PropertiesQCOM<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_IMAGE_PROCESSING_2_PROPERTIES_QCOM;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceImageProcessing2PropertiesQCOM<'_> {}
+impl<'a> PhysicalDeviceImageProcessing2PropertiesQCOM<'a> {
+    #[inline]
+    pub fn max_block_match_window(mut self, max_block_match_window: Extent2D) -> Self {
+        self.max_block_match_window = max_block_match_window;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSamplerBlockMatchWindowCreateInfoQCOM.html>"]
+pub struct SamplerBlockMatchWindowCreateInfoQCOM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub window_extent: Extent2D,
+    pub window_compare_mode: BlockMatchWindowCompareModeQCOM,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for SamplerBlockMatchWindowCreateInfoQCOM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            window_extent: Extent2D::default(),
+            window_compare_mode: BlockMatchWindowCompareModeQCOM::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for SamplerBlockMatchWindowCreateInfoQCOM<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::SAMPLER_BLOCK_MATCH_WINDOW_CREATE_INFO_QCOM;
+}
+unsafe impl ExtendsSamplerCreateInfo for SamplerBlockMatchWindowCreateInfoQCOM<'_> {}
+impl<'a> SamplerBlockMatchWindowCreateInfoQCOM<'a> {
+    #[inline]
+    pub fn window_extent(mut self, window_extent: Extent2D) -> Self {
+        self.window_extent = window_extent;
+        self
+    }
+    #[inline]
+    pub fn window_compare_mode(
+        mut self,
+        window_compare_mode: BlockMatchWindowCompareModeQCOM,
+    ) -> Self {
+        self.window_compare_mode = window_compare_mode;
         self
     }
 }

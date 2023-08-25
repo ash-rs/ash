@@ -2802,6 +2802,44 @@ impl ComponentTypeKHR {
     pub const UINT32: Self = Self(9);
     pub const UINT64: Self = Self(10);
 }
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCubicFilterWeightsQCOM.html>"]
+pub struct CubicFilterWeightsQCOM(pub(crate) i32);
+impl CubicFilterWeightsQCOM {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl CubicFilterWeightsQCOM {
+    pub const CATMULL_ROM: Self = Self(0);
+    pub const ZERO_TANGENT_CARDINAL: Self = Self(1);
+    pub const B_SPLINE: Self = Self(2);
+    pub const MITCHELL_NETRAVALI: Self = Self(3);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkBlockMatchWindowCompareModeQCOM.html>"]
+pub struct BlockMatchWindowCompareModeQCOM(pub(crate) i32);
+impl BlockMatchWindowCompareModeQCOM {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl BlockMatchWindowCompareModeQCOM {
+    pub const MIN: Self = Self(0);
+    pub const MAX: Self = Self(1);
+}
 impl fmt::Debug for ObjectType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {

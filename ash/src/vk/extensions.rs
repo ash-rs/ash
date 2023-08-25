@@ -21467,6 +21467,60 @@ impl StructureType {
     pub const MULTIVIEW_PER_VIEW_RENDER_AREAS_RENDER_PASS_BEGIN_INFO_QCOM: Self =
         Self(1_000_510_001);
 }
+impl QcomImageProcessing2Fn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_image_processing2\0") };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct QcomImageProcessing2Fn;
+#[doc = "Generated from 'VK_QCOM_image_processing2'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_IMAGE_PROCESSING_2_FEATURES_QCOM: Self = Self(1_000_518_000);
+    pub const PHYSICAL_DEVICE_IMAGE_PROCESSING_2_PROPERTIES_QCOM: Self = Self(1_000_518_001);
+    pub const SAMPLER_BLOCK_MATCH_WINDOW_CREATE_INFO_QCOM: Self = Self(1_000_518_002);
+}
+impl QcomFilterCubicWeightsFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_filter_cubic_weights\0")
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct QcomFilterCubicWeightsFn;
+#[doc = "Generated from 'VK_QCOM_filter_cubic_weights'"]
+impl StructureType {
+    pub const SAMPLER_CUBIC_WEIGHTS_CREATE_INFO_QCOM: Self = Self(1_000_519_000);
+    pub const PHYSICAL_DEVICE_CUBIC_WEIGHTS_FEATURES_QCOM: Self = Self(1_000_519_001);
+    pub const BLIT_IMAGE_CUBIC_WEIGHTS_INFO_QCOM: Self = Self(1_000_519_002);
+}
+impl QcomYcbcrDegammaFn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_ycbcr_degamma\0") };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct QcomYcbcrDegammaFn;
+#[doc = "Generated from 'VK_QCOM_ycbcr_degamma'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_YCBCR_DEGAMMA_FEATURES_QCOM: Self = Self(1_000_520_000);
+    pub const SAMPLER_YCBCR_CONVERSION_YCBCR_DEGAMMA_CREATE_INFO_QCOM: Self = Self(1_000_520_001);
+}
+impl QcomFilterCubicClampFn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_filter_cubic_clamp\0") };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct QcomFilterCubicClampFn;
+#[doc = "Generated from 'VK_QCOM_filter_cubic_clamp'"]
+impl SamplerReductionMode {
+    pub const WEIGHTED_AVERAGE_RANGECLAMP_QCOM: Self = Self(1_000_521_000);
+}
+#[doc = "Generated from 'VK_QCOM_filter_cubic_clamp'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_CUBIC_CLAMP_FEATURES_QCOM: Self = Self(1_000_521_000);
+}
 impl ExtAttachmentFeedbackLoopDynamicStateFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
         ::std::ffi::CStr::from_bytes_with_nul_unchecked(

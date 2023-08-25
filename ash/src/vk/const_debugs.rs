@@ -484,6 +484,20 @@ impl fmt::Debug for BlendOverlapEXT {
         }
     }
 }
+impl fmt::Debug for BlockMatchWindowCompareModeQCOM {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::MIN => Some("MIN"),
+            Self::MAX => Some("MAX"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
 impl fmt::Debug for BorderColor {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
@@ -1077,6 +1091,22 @@ impl fmt::Debug for CoverageReductionModeNV {
         let name = match *self {
             Self::MERGE => Some("MERGE"),
             Self::TRUNCATE => Some("TRUNCATE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
+impl fmt::Debug for CubicFilterWeightsQCOM {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::CATMULL_ROM => Some("CATMULL_ROM"),
+            Self::ZERO_TANGENT_CARDINAL => Some("ZERO_TANGENT_CARDINAL"),
+            Self::B_SPLINE => Some("B_SPLINE"),
+            Self::MITCHELL_NETRAVALI => Some("MITCHELL_NETRAVALI"),
             _ => None,
         };
         if let Some(x) = name {
@@ -4473,6 +4503,7 @@ impl fmt::Debug for SamplerReductionMode {
             Self::WEIGHTED_AVERAGE => Some("WEIGHTED_AVERAGE"),
             Self::MIN => Some("MIN"),
             Self::MAX => Some("MAX"),
+            Self::WEIGHTED_AVERAGE_RANGECLAMP_QCOM => Some("WEIGHTED_AVERAGE_RANGECLAMP_QCOM"),
             _ => None,
         };
         if let Some(x) = name {
@@ -6277,6 +6308,31 @@ impl fmt::Debug for StructureType {
             }
             Self::MULTIVIEW_PER_VIEW_RENDER_AREAS_RENDER_PASS_BEGIN_INFO_QCOM => {
                 Some("MULTIVIEW_PER_VIEW_RENDER_AREAS_RENDER_PASS_BEGIN_INFO_QCOM")
+            }
+            Self::PHYSICAL_DEVICE_IMAGE_PROCESSING_2_FEATURES_QCOM => {
+                Some("PHYSICAL_DEVICE_IMAGE_PROCESSING_2_FEATURES_QCOM")
+            }
+            Self::PHYSICAL_DEVICE_IMAGE_PROCESSING_2_PROPERTIES_QCOM => {
+                Some("PHYSICAL_DEVICE_IMAGE_PROCESSING_2_PROPERTIES_QCOM")
+            }
+            Self::SAMPLER_BLOCK_MATCH_WINDOW_CREATE_INFO_QCOM => {
+                Some("SAMPLER_BLOCK_MATCH_WINDOW_CREATE_INFO_QCOM")
+            }
+            Self::SAMPLER_CUBIC_WEIGHTS_CREATE_INFO_QCOM => {
+                Some("SAMPLER_CUBIC_WEIGHTS_CREATE_INFO_QCOM")
+            }
+            Self::PHYSICAL_DEVICE_CUBIC_WEIGHTS_FEATURES_QCOM => {
+                Some("PHYSICAL_DEVICE_CUBIC_WEIGHTS_FEATURES_QCOM")
+            }
+            Self::BLIT_IMAGE_CUBIC_WEIGHTS_INFO_QCOM => Some("BLIT_IMAGE_CUBIC_WEIGHTS_INFO_QCOM"),
+            Self::PHYSICAL_DEVICE_YCBCR_DEGAMMA_FEATURES_QCOM => {
+                Some("PHYSICAL_DEVICE_YCBCR_DEGAMMA_FEATURES_QCOM")
+            }
+            Self::SAMPLER_YCBCR_CONVERSION_YCBCR_DEGAMMA_CREATE_INFO_QCOM => {
+                Some("SAMPLER_YCBCR_CONVERSION_YCBCR_DEGAMMA_CREATE_INFO_QCOM")
+            }
+            Self::PHYSICAL_DEVICE_CUBIC_CLAMP_FEATURES_QCOM => {
+                Some("PHYSICAL_DEVICE_CUBIC_CLAMP_FEATURES_QCOM")
             }
             Self::PHYSICAL_DEVICE_ATTACHMENT_FEEDBACK_LOOP_DYNAMIC_STATE_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_ATTACHMENT_FEEDBACK_LOOP_DYNAMIC_STATE_FEATURES_EXT")
