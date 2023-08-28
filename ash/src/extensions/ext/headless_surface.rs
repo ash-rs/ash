@@ -9,13 +9,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct HeadlessSurface {
     handle: vk::Instance,
-    fp: vk::ExtHeadlessSurfaceFn,
+    fp: vk::ext_headless_surface::DeviceFn,
 }
 
 impl HeadlessSurface {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::ExtHeadlessSurfaceFn::load(|name| unsafe {
+        let fp = vk::ext_headless_surface::DeviceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -38,10 +38,10 @@ impl HeadlessSurface {
         .assume_init_on_success(surface)
     }
 
-    pub const NAME: &'static CStr = vk::ExtHeadlessSurfaceFn::NAME;
+    pub const NAME: &'static CStr = vk::ext_headless_surface::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::ExtHeadlessSurfaceFn {
+    pub fn fp(&self) -> &vk::ext_headless_surface::DeviceFn {
         &self.fp
     }
 

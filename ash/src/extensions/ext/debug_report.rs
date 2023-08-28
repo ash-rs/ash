@@ -8,13 +8,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct DebugReport {
     handle: vk::Instance,
-    fp: vk::ExtDebugReportFn,
+    fp: vk::ext_debug_report::DeviceFn,
 }
 
 impl DebugReport {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::ExtDebugReportFn::load(|name| unsafe {
+        let fp = vk::ext_debug_report::DeviceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -51,10 +51,10 @@ impl DebugReport {
         .assume_init_on_success(debug_cb)
     }
 
-    pub const NAME: &'static CStr = vk::ExtDebugReportFn::NAME;
+    pub const NAME: &'static CStr = vk::ext_debug_report::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::ExtDebugReportFn {
+    pub fn fp(&self) -> &vk::ext_debug_report::DeviceFn {
         &self.fp
     }
 

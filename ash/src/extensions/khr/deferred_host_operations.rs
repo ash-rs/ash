@@ -8,13 +8,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct DeferredHostOperations {
     handle: vk::Device,
-    fp: vk::KhrDeferredHostOperationsFn,
+    fp: vk::khr_deferred_host_operations::DeviceFn,
 }
 
 impl DeferredHostOperations {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrDeferredHostOperationsFn::load(|name| unsafe {
+        let fp = vk::khr_deferred_host_operations::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -76,10 +76,10 @@ impl DeferredHostOperations {
         (self.fp.get_deferred_operation_result_khr)(self.handle, operation).result()
     }
 
-    pub const NAME: &'static CStr = vk::KhrDeferredHostOperationsFn::NAME;
+    pub const NAME: &'static CStr = vk::khr_deferred_host_operations::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrDeferredHostOperationsFn {
+    pub fn fp(&self) -> &vk::khr_deferred_host_operations::DeviceFn {
         &self.fp
     }
 

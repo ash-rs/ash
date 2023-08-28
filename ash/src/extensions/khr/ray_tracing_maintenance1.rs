@@ -6,13 +6,13 @@ use std::mem;
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_ray_tracing_maintenance1.html>
 #[derive(Clone)]
 pub struct RayTracingMaintenance1 {
-    fp: vk::KhrRayTracingMaintenance1Fn,
+    fp: vk::khr_ray_tracing_maintenance1::DeviceFn,
 }
 
 impl RayTracingMaintenance1 {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrRayTracingMaintenance1Fn::load(|name| unsafe {
+        let fp = vk::khr_ray_tracing_maintenance1::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { fp }
@@ -30,10 +30,10 @@ impl RayTracingMaintenance1 {
         (self.fp.cmd_trace_rays_indirect2_khr)(command_buffer, indirect_device_address);
     }
 
-    pub const NAME: &'static CStr = vk::KhrRayTracingMaintenance1Fn::NAME;
+    pub const NAME: &'static CStr = vk::khr_ray_tracing_maintenance1::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrRayTracingMaintenance1Fn {
+    pub fn fp(&self) -> &vk::khr_ray_tracing_maintenance1::DeviceFn {
         &self.fp
     }
 }

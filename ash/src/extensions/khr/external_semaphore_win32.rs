@@ -8,13 +8,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct ExternalSemaphoreWin32 {
     handle: vk::Device,
-    fp: vk::KhrExternalSemaphoreWin32Fn,
+    fp: vk::khr_external_semaphore_win32::DeviceFn,
 }
 
 impl ExternalSemaphoreWin32 {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrExternalSemaphoreWin32Fn::load(|name| unsafe {
+        let fp = vk::khr_external_semaphore_win32::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -40,10 +40,10 @@ impl ExternalSemaphoreWin32 {
             .assume_init_on_success(handle)
     }
 
-    pub const NAME: &'static CStr = vk::KhrExternalSemaphoreWin32Fn::NAME;
+    pub const NAME: &'static CStr = vk::khr_external_semaphore_win32::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrExternalSemaphoreWin32Fn {
+    pub fn fp(&self) -> &vk::khr_external_semaphore_win32::DeviceFn {
         &self.fp
     }
 

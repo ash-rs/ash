@@ -7,13 +7,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct Maintenance1 {
     handle: vk::Device,
-    fp: vk::KhrMaintenance1Fn,
+    fp: vk::khr_maintenance1::DeviceFn,
 }
 
 impl Maintenance1 {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrMaintenance1Fn::load(|name| unsafe {
+        let fp = vk::khr_maintenance1::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -29,10 +29,10 @@ impl Maintenance1 {
         (self.fp.trim_command_pool_khr)(self.handle, command_pool, flags);
     }
 
-    pub const NAME: &'static CStr = vk::KhrMaintenance1Fn::NAME;
+    pub const NAME: &'static CStr = vk::khr_maintenance1::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrMaintenance1Fn {
+    pub fn fp(&self) -> &vk::khr_maintenance1::DeviceFn {
         &self.fp
     }
 

@@ -8,13 +8,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct WaylandSurface {
     handle: vk::Instance,
-    fp: vk::KhrWaylandSurfaceFn,
+    fp: vk::khr_wayland_surface::DeviceFn,
 }
 
 impl WaylandSurface {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::KhrWaylandSurfaceFn::load(|name| unsafe {
+        let fp = vk::khr_wayland_surface::DeviceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -54,10 +54,10 @@ impl WaylandSurface {
         b > 0
     }
 
-    pub const NAME: &'static CStr = vk::KhrWaylandSurfaceFn::NAME;
+    pub const NAME: &'static CStr = vk::khr_wayland_surface::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrWaylandSurfaceFn {
+    pub fn fp(&self) -> &vk::khr_wayland_surface::DeviceFn {
         &self.fp
     }
 

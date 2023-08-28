@@ -9,13 +9,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct Maintenance5 {
     handle: vk::Device,
-    fp: vk::KhrMaintenance5Fn,
+    fp: vk::khr_maintenance5::DeviceFn,
 }
 
 impl Maintenance5 {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrMaintenance5Fn::load(|name| unsafe {
+        let fp = vk::khr_maintenance5::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -79,10 +79,10 @@ impl Maintenance5 {
         (self.fp.get_image_subresource_layout2_khr)(self.handle, image, subresource, layout)
     }
 
-    pub const NAME: &'static CStr = vk::KhrMaintenance5Fn::NAME;
+    pub const NAME: &'static CStr = vk::khr_maintenance5::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrMaintenance5Fn {
+    pub fn fp(&self) -> &vk::khr_maintenance5::DeviceFn {
         &self.fp
     }
 

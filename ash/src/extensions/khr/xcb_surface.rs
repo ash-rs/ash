@@ -8,13 +8,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct XcbSurface {
     handle: vk::Instance,
-    fp: vk::KhrXcbSurfaceFn,
+    fp: vk::khr_xcb_surface::DeviceFn,
 }
 
 impl XcbSurface {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::KhrXcbSurfaceFn::load(|name| unsafe {
+        let fp = vk::khr_xcb_surface::DeviceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -56,10 +56,10 @@ impl XcbSurface {
         b > 0
     }
 
-    pub const NAME: &'static CStr = vk::KhrXcbSurfaceFn::NAME;
+    pub const NAME: &'static CStr = vk::khr_xcb_surface::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrXcbSurfaceFn {
+    pub fn fp(&self) -> &vk::khr_xcb_surface::DeviceFn {
         &self.fp
     }
 

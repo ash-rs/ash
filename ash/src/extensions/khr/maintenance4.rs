@@ -8,13 +8,13 @@ use std::ptr;
 #[derive(Clone)]
 pub struct Maintenance4 {
     handle: vk::Device,
-    fp: vk::KhrMaintenance4Fn,
+    fp: vk::khr_maintenance4::DeviceFn,
 }
 
 impl Maintenance4 {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrMaintenance4Fn::load(|name| unsafe {
+        let fp = vk::khr_maintenance4::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -76,10 +76,10 @@ impl Maintenance4 {
         assert_eq!(count as usize, out.len());
     }
 
-    pub const NAME: &'static CStr = vk::KhrMaintenance4Fn::NAME;
+    pub const NAME: &'static CStr = vk::khr_maintenance4::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrMaintenance4Fn {
+    pub fn fp(&self) -> &vk::khr_maintenance4::DeviceFn {
         &self.fp
     }
 

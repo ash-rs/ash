@@ -5,12 +5,12 @@ use std::mem;
 
 #[derive(Clone)]
 pub struct DynamicRendering {
-    fp: vk::KhrDynamicRenderingFn,
+    fp: vk::khr_dynamic_rendering::DeviceFn,
 }
 
 impl DynamicRendering {
     pub fn new(instance: &Instance, device: &Device) -> Self {
-        let fp = vk::KhrDynamicRenderingFn::load(|name| unsafe {
+        let fp = vk::khr_dynamic_rendering::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -32,10 +32,10 @@ impl DynamicRendering {
         (self.fp.cmd_end_rendering_khr)(command_buffer)
     }
 
-    pub const NAME: &'static CStr = vk::KhrDynamicRenderingFn::NAME;
+    pub const NAME: &'static CStr = vk::khr_dynamic_rendering::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrDynamicRenderingFn {
+    pub fn fp(&self) -> &vk::khr_dynamic_rendering::DeviceFn {
         &self.fp
     }
 }

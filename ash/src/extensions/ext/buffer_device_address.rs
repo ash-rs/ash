@@ -6,13 +6,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct BufferDeviceAddress {
     handle: vk::Device,
-    fp: vk::ExtBufferDeviceAddressFn,
+    fp: vk::ext_buffer_device_address::DeviceFn,
 }
 
 impl BufferDeviceAddress {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::ExtBufferDeviceAddressFn::load(|name| unsafe {
+        let fp = vk::ext_buffer_device_address::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -27,10 +27,10 @@ impl BufferDeviceAddress {
         (self.fp.get_buffer_device_address_ext)(self.handle, info)
     }
 
-    pub const NAME: &'static CStr = vk::ExtBufferDeviceAddressFn::NAME;
+    pub const NAME: &'static CStr = vk::ext_buffer_device_address::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::ExtBufferDeviceAddressFn {
+    pub fn fp(&self) -> &vk::ext_buffer_device_address::DeviceFn {
         &self.fp
     }
 

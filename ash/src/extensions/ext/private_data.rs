@@ -9,13 +9,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct PrivateData {
     handle: vk::Device,
-    fp: vk::ExtPrivateDataFn,
+    fp: vk::ext_private_data::DeviceFn,
 }
 
 impl PrivateData {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::ExtPrivateDataFn::load(|name| unsafe {
+        let fp = vk::ext_private_data::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -88,10 +88,10 @@ impl PrivateData {
         data.assume_init()
     }
 
-    pub const NAME: &'static CStr = vk::ExtPrivateDataFn::NAME;
+    pub const NAME: &'static CStr = vk::ext_private_data::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::ExtPrivateDataFn {
+    pub fn fp(&self) -> &vk::ext_private_data::DeviceFn {
         &self.fp
     }
 

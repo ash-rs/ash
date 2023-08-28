@@ -8,13 +8,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct RayTracing {
     handle: vk::Device,
-    fp: vk::NvRayTracingFn,
+    fp: vk::nv_ray_tracing::DeviceFn,
 }
 
 impl RayTracing {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::NvRayTracingFn::load(|name| unsafe {
+        let fp = vk::nv_ray_tracing::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -240,10 +240,10 @@ impl RayTracing {
         (self.fp.compile_deferred_nv)(self.handle, pipeline, shader).result()
     }
 
-    pub const NAME: &'static CStr = vk::NvRayTracingFn::NAME;
+    pub const NAME: &'static CStr = vk::nv_ray_tracing::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::NvRayTracingFn {
+    pub fn fp(&self) -> &vk::nv_ray_tracing::DeviceFn {
         &self.fp
     }
 

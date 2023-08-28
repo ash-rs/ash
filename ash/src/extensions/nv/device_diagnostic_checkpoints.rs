@@ -8,12 +8,12 @@ use std::ptr;
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_NV_device_diagnostic_checkpoints.html>
 #[derive(Clone)]
 pub struct DeviceDiagnosticCheckpoints {
-    fp: vk::NvDeviceDiagnosticCheckpointsFn,
+    fp: vk::nv_device_diagnostic_checkpoints::DeviceFn,
 }
 
 impl DeviceDiagnosticCheckpoints {
     pub fn new(instance: &Instance, device: &Device) -> Self {
-        let fp = vk::NvDeviceDiagnosticCheckpointsFn::load(|name| unsafe {
+        let fp = vk::nv_device_diagnostic_checkpoints::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -52,10 +52,10 @@ impl DeviceDiagnosticCheckpoints {
         assert_eq!(count as usize, out.len());
     }
 
-    pub const NAME: &'static CStr = vk::NvDeviceDiagnosticCheckpointsFn::NAME;
+    pub const NAME: &'static CStr = vk::nv_device_diagnostic_checkpoints::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::NvDeviceDiagnosticCheckpointsFn {
+    pub fn fp(&self) -> &vk::nv_device_diagnostic_checkpoints::DeviceFn {
         &self.fp
     }
 }

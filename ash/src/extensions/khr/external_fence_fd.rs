@@ -7,13 +7,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct ExternalFenceFd {
     handle: vk::Device,
-    fp: vk::KhrExternalFenceFdFn,
+    fp: vk::khr_external_fence_fd::DeviceFn,
 }
 
 impl ExternalFenceFd {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrExternalFenceFdFn::load(|name| unsafe {
+        let fp = vk::khr_external_fence_fd::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -36,10 +36,10 @@ impl ExternalFenceFd {
             .assume_init_on_success(fd)
     }
 
-    pub const NAME: &'static CStr = vk::KhrExternalFenceFdFn::NAME;
+    pub const NAME: &'static CStr = vk::khr_external_fence_fd::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrExternalFenceFdFn {
+    pub fn fp(&self) -> &vk::khr_external_fence_fd::DeviceFn {
         &self.fp
     }
 

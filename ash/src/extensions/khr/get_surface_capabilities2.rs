@@ -8,12 +8,12 @@ use std::ptr;
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_get_surface_capabilities2.html>
 #[derive(Clone)]
 pub struct GetSurfaceCapabilities2 {
-    fp: vk::KhrGetSurfaceCapabilities2Fn,
+    fp: vk::khr_get_surface_capabilities2::DeviceFn,
 }
 
 impl GetSurfaceCapabilities2 {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
-        let fp = vk::KhrGetSurfaceCapabilities2Fn::load(|name| unsafe {
+        let fp = vk::khr_get_surface_capabilities2::DeviceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -74,10 +74,10 @@ impl GetSurfaceCapabilities2 {
         err_code.result()
     }
 
-    pub const NAME: &'static CStr = vk::KhrGetSurfaceCapabilities2Fn::NAME;
+    pub const NAME: &'static CStr = vk::khr_get_surface_capabilities2::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrGetSurfaceCapabilities2Fn {
+    pub fn fp(&self) -> &vk::khr_get_surface_capabilities2::DeviceFn {
         &self.fp
     }
 }

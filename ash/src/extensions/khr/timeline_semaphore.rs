@@ -7,13 +7,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct TimelineSemaphore {
     handle: vk::Device,
-    fp: vk::KhrTimelineSemaphoreFn,
+    fp: vk::khr_timeline_semaphore::DeviceFn,
 }
 
 impl TimelineSemaphore {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrTimelineSemaphoreFn::load(|name| unsafe {
+        let fp = vk::khr_timeline_semaphore::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -46,10 +46,10 @@ impl TimelineSemaphore {
         (self.fp.signal_semaphore_khr)(self.handle, signal_info).result()
     }
 
-    pub const NAME: &'static CStr = vk::KhrTimelineSemaphoreFn::NAME;
+    pub const NAME: &'static CStr = vk::khr_timeline_semaphore::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrTimelineSemaphoreFn {
+    pub fn fp(&self) -> &vk::khr_timeline_semaphore::DeviceFn {
         &self.fp
     }
 

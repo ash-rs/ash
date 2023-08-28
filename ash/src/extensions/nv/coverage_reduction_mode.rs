@@ -8,12 +8,12 @@ use std::ptr;
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_NV_coverage_reduction_mode.html>
 #[derive(Clone)]
 pub struct CoverageReductionMode {
-    fp: vk::NvCoverageReductionModeFn,
+    fp: vk::nv_coverage_reduction_mode::DeviceFn,
 }
 
 impl CoverageReductionMode {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
-        let fp = vk::NvCoverageReductionModeFn::load(|name| unsafe {
+        let fp = vk::nv_coverage_reduction_mode::DeviceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -60,10 +60,10 @@ impl CoverageReductionMode {
         Ok(())
     }
 
-    pub const NAME: &'static CStr = vk::NvCoverageReductionModeFn::NAME;
+    pub const NAME: &'static CStr = vk::nv_coverage_reduction_mode::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::NvCoverageReductionModeFn {
+    pub fn fp(&self) -> &vk::nv_coverage_reduction_mode::DeviceFn {
         &self.fp
     }
 }

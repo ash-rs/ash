@@ -7,13 +7,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct CalibratedTimestamps {
     handle: vk::Instance,
-    fp: vk::ExtCalibratedTimestampsFn,
+    fp: vk::ext_calibrated_timestamps::DeviceFn,
 }
 
 impl CalibratedTimestamps {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::ExtCalibratedTimestampsFn::load(|name| unsafe {
+        let fp = vk::ext_calibrated_timestamps::DeviceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -57,10 +57,10 @@ impl CalibratedTimestamps {
         Ok((timestamps, max_deviation))
     }
 
-    pub const NAME: &'static CStr = vk::ExtCalibratedTimestampsFn::NAME;
+    pub const NAME: &'static CStr = vk::ext_calibrated_timestamps::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::ExtCalibratedTimestampsFn {
+    pub fn fp(&self) -> &vk::ext_calibrated_timestamps::DeviceFn {
         &self.fp
     }
 

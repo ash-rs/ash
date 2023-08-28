@@ -8,13 +8,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct MetalSurface {
     handle: vk::Instance,
-    fp: vk::ExtMetalSurfaceFn,
+    fp: vk::ext_metal_surface::DeviceFn,
 }
 
 impl MetalSurface {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::ExtMetalSurfaceFn::load(|name| unsafe {
+        let fp = vk::ext_metal_surface::DeviceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -37,10 +37,10 @@ impl MetalSurface {
         .assume_init_on_success(surface)
     }
 
-    pub const NAME: &'static CStr = vk::ExtMetalSurfaceFn::NAME;
+    pub const NAME: &'static CStr = vk::ext_metal_surface::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::ExtMetalSurfaceFn {
+    pub fn fp(&self) -> &vk::ext_metal_surface::DeviceFn {
         &self.fp
     }
 

@@ -8,13 +8,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct DisplayTiming {
     handle: vk::Device,
-    fp: vk::GoogleDisplayTimingFn,
+    fp: vk::google_display_timing::DeviceFn,
 }
 
 impl DisplayTiming {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::GoogleDisplayTimingFn::load(|name| unsafe {
+        let fp = vk::google_display_timing::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -42,10 +42,10 @@ impl DisplayTiming {
             .assume_init_on_success(properties)
     }
 
-    pub const NAME: &'static CStr = vk::GoogleDisplayTimingFn::NAME;
+    pub const NAME: &'static CStr = vk::google_display_timing::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::GoogleDisplayTimingFn {
+    pub fn fp(&self) -> &vk::google_display_timing::DeviceFn {
         &self.fp
     }
 

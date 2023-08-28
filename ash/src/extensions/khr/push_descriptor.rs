@@ -6,12 +6,12 @@ use std::mem;
 
 #[derive(Clone)]
 pub struct PushDescriptor {
-    fp: vk::KhrPushDescriptorFn,
+    fp: vk::khr_push_descriptor::DeviceFn,
 }
 
 impl PushDescriptor {
     pub fn new(instance: &Instance, device: &Device) -> Self {
-        let fp = vk::KhrPushDescriptorFn::load(|name| unsafe {
+        let fp = vk::khr_push_descriptor::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -56,10 +56,10 @@ impl PushDescriptor {
         );
     }
 
-    pub const NAME: &'static CStr = vk::KhrPushDescriptorFn::NAME;
+    pub const NAME: &'static CStr = vk::khr_push_descriptor::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrPushDescriptorFn {
+    pub fn fp(&self) -> &vk::khr_push_descriptor::DeviceFn {
         &self.fp
     }
 }

@@ -10,13 +10,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct DeviceGroup {
     handle: vk::Device,
-    fp: vk::KhrDeviceGroupFn,
+    fp: vk::khr_device_group::DeviceFn,
 }
 
 impl DeviceGroup {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrDeviceGroupFn::load(|name| unsafe {
+        let fp = vk::khr_device_group::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -157,10 +157,10 @@ impl DeviceGroup {
         }
     }
 
-    pub const NAME: &'static CStr = vk::KhrDeviceGroupFn::NAME;
+    pub const NAME: &'static CStr = vk::khr_device_group::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrDeviceGroupFn {
+    pub fn fp(&self) -> &vk::khr_device_group::DeviceFn {
         &self.fp
     }
 

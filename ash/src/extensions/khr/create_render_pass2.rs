@@ -8,13 +8,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct CreateRenderPass2 {
     handle: vk::Device,
-    fp: vk::KhrCreateRenderpass2Fn,
+    fp: vk::khr_create_renderpass2::DeviceFn,
 }
 
 impl CreateRenderPass2 {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrCreateRenderpass2Fn::load(|name| unsafe {
+        let fp = vk::khr_create_renderpass2::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -73,10 +73,10 @@ impl CreateRenderPass2 {
         (self.fp.cmd_end_render_pass2_khr)(command_buffer, subpass_end_info);
     }
 
-    pub const NAME: &'static CStr = vk::KhrCreateRenderpass2Fn::NAME;
+    pub const NAME: &'static CStr = vk::khr_create_renderpass2::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrCreateRenderpass2Fn {
+    pub fn fp(&self) -> &vk::khr_create_renderpass2::DeviceFn {
         &self.fp
     }
 

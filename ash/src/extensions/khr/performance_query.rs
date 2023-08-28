@@ -9,13 +9,13 @@ use std::ptr;
 #[derive(Clone)]
 pub struct PerformanceQuery {
     handle: vk::Instance,
-    fp: vk::KhrPerformanceQueryFn,
+    fp: vk::khr_performance_query::DeviceFn,
 }
 
 impl PerformanceQuery {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::KhrPerformanceQueryFn::load(|name| unsafe {
+        let fp = vk::khr_performance_query::DeviceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -105,10 +105,10 @@ impl PerformanceQuery {
         (self.fp.release_profiling_lock_khr)(device)
     }
 
-    pub const NAME: &'static CStr = vk::KhrPerformanceQueryFn::NAME;
+    pub const NAME: &'static CStr = vk::khr_performance_query::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrPerformanceQueryFn {
+    pub fn fp(&self) -> &vk::khr_performance_query::DeviceFn {
         &self.fp
     }
 

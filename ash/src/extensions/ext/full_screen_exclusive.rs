@@ -7,13 +7,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct FullScreenExclusive {
     handle: vk::Device,
-    fp: vk::ExtFullScreenExclusiveFn,
+    fp: vk::ext_full_screen_exclusive::DeviceFn,
 }
 
 impl FullScreenExclusive {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::ExtFullScreenExclusiveFn::load(|name| unsafe {
+        let fp = vk::ext_full_screen_exclusive::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -69,10 +69,10 @@ impl FullScreenExclusive {
         .assume_init_on_success(present_modes)
     }
 
-    pub const NAME: &'static CStr = vk::ExtFullScreenExclusiveFn::NAME;
+    pub const NAME: &'static CStr = vk::ext_full_screen_exclusive::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::ExtFullScreenExclusiveFn {
+    pub fn fp(&self) -> &vk::ext_full_screen_exclusive::DeviceFn {
         &self.fp
     }
 

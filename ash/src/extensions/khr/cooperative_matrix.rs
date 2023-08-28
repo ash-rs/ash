@@ -7,13 +7,13 @@ use std::mem;
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_cooperative_matrix.html>
 #[derive(Clone)]
 pub struct CooperativeMatrix {
-    fp: vk::KhrCooperativeMatrixFn,
+    fp: vk::khr_cooperative_matrix::DeviceFn,
 }
 
 impl CooperativeMatrix {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::KhrCooperativeMatrixFn::load(|name| unsafe {
+        let fp = vk::khr_cooperative_matrix::DeviceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { fp }
@@ -36,10 +36,10 @@ impl CooperativeMatrix {
         })
     }
 
-    pub const NAME: &'static CStr = vk::KhrCooperativeMatrixFn::NAME;
+    pub const NAME: &'static CStr = vk::khr_cooperative_matrix::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrCooperativeMatrixFn {
+    pub fn fp(&self) -> &vk::khr_cooperative_matrix::DeviceFn {
         &self.fp
     }
 }

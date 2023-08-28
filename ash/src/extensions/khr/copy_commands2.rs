@@ -6,12 +6,12 @@ use std::mem;
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_copy_commands2.html>
 #[derive(Clone)]
 pub struct CopyCommands2 {
-    fp: vk::KhrCopyCommands2Fn,
+    fp: vk::khr_copy_commands2::DeviceFn,
 }
 
 impl CopyCommands2 {
     pub fn new(instance: &Instance, device: &Device) -> Self {
-        let fp = vk::KhrCopyCommands2Fn::load(|name| unsafe {
+        let fp = vk::khr_copy_commands2::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -72,10 +72,10 @@ impl CopyCommands2 {
         (self.fp.cmd_resolve_image2_khr)(command_buffer, resolve_image_info)
     }
 
-    pub const NAME: &'static CStr = vk::KhrCopyCommands2Fn::NAME;
+    pub const NAME: &'static CStr = vk::khr_copy_commands2::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrCopyCommands2Fn {
+    pub fn fp(&self) -> &vk::khr_copy_commands2::DeviceFn {
         &self.fp
     }
 }

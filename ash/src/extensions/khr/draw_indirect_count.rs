@@ -5,12 +5,12 @@ use std::mem;
 
 #[derive(Clone)]
 pub struct DrawIndirectCount {
-    fp: vk::KhrDrawIndirectCountFn,
+    fp: vk::khr_draw_indirect_count::DeviceFn,
 }
 
 impl DrawIndirectCount {
     pub fn new(instance: &Instance, device: &Device) -> Self {
-        let fp = vk::KhrDrawIndirectCountFn::load(|name| unsafe {
+        let fp = vk::khr_draw_indirect_count::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -62,10 +62,10 @@ impl DrawIndirectCount {
         );
     }
 
-    pub const NAME: &'static CStr = vk::KhrDrawIndirectCountFn::NAME;
+    pub const NAME: &'static CStr = vk::khr_draw_indirect_count::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrDrawIndirectCountFn {
+    pub fn fp(&self) -> &vk::khr_draw_indirect_count::DeviceFn {
         &self.fp
     }
 }

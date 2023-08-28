@@ -9,13 +9,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct SamplerYcbcrConversion {
     handle: vk::Device,
-    fp: vk::KhrSamplerYcbcrConversionFn,
+    fp: vk::khr_sampler_ycbcr_conversion::DeviceFn,
 }
 
 impl SamplerYcbcrConversion {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrSamplerYcbcrConversionFn::load(|name| unsafe {
+        let fp = vk::khr_sampler_ycbcr_conversion::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -52,10 +52,10 @@ impl SamplerYcbcrConversion {
         )
     }
 
-    pub const NAME: &'static CStr = vk::KhrSamplerYcbcrConversionFn::NAME;
+    pub const NAME: &'static CStr = vk::khr_sampler_ycbcr_conversion::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrSamplerYcbcrConversionFn {
+    pub fn fp(&self) -> &vk::khr_sampler_ycbcr_conversion::DeviceFn {
         &self.fp
     }
 

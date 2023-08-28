@@ -8,13 +8,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct ImageDrmFormatModifier {
     handle: vk::Device,
-    fp: vk::ExtImageDrmFormatModifierFn,
+    fp: vk::ext_image_drm_format_modifier::DeviceFn,
 }
 
 impl ImageDrmFormatModifier {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::ExtImageDrmFormatModifierFn::load(|name| unsafe {
+        let fp = vk::ext_image_drm_format_modifier::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -31,10 +31,10 @@ impl ImageDrmFormatModifier {
             .result()
     }
 
-    pub const NAME: &'static CStr = vk::ExtImageDrmFormatModifierFn::NAME;
+    pub const NAME: &'static CStr = vk::ext_image_drm_format_modifier::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::ExtImageDrmFormatModifierFn {
+    pub fn fp(&self) -> &vk::ext_image_drm_format_modifier::DeviceFn {
         &self.fp
     }
 

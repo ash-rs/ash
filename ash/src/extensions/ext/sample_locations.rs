@@ -6,12 +6,12 @@ use std::mem;
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_sample_locations.html>
 #[derive(Clone)]
 pub struct SampleLocations {
-    fp: vk::ExtSampleLocationsFn,
+    fp: vk::ext_sample_locations::DeviceFn,
 }
 
 impl SampleLocations {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
-        let fp = vk::ExtSampleLocationsFn::load(|name| unsafe {
+        let fp = vk::ext_sample_locations::DeviceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -42,10 +42,10 @@ impl SampleLocations {
         (self.fp.cmd_set_sample_locations_ext)(command_buffer, sample_locations_info)
     }
 
-    pub const NAME: &'static CStr = vk::ExtSampleLocationsFn::NAME;
+    pub const NAME: &'static CStr = vk::ext_sample_locations::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::ExtSampleLocationsFn {
+    pub fn fp(&self) -> &vk::ext_sample_locations::DeviceFn {
         &self.fp
     }
 }

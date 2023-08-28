@@ -7,13 +7,13 @@ use std::mem;
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_acquire_drm_display.html>
 #[derive(Clone)]
 pub struct AcquireDrmDisplay {
-    fp: vk::ExtAcquireDrmDisplayFn,
+    fp: vk::ext_acquire_drm_display::DeviceFn,
 }
 
 impl AcquireDrmDisplay {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::ExtAcquireDrmDisplayFn::load(|name| unsafe {
+        let fp = vk::ext_acquire_drm_display::DeviceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { fp }
@@ -43,10 +43,10 @@ impl AcquireDrmDisplay {
             .assume_init_on_success(display)
     }
 
-    pub const NAME: &'static CStr = vk::ExtAcquireDrmDisplayFn::NAME;
+    pub const NAME: &'static CStr = vk::ext_acquire_drm_display::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::ExtAcquireDrmDisplayFn {
+    pub fn fp(&self) -> &vk::ext_acquire_drm_display::DeviceFn {
         &self.fp
     }
 }

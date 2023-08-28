@@ -5,12 +5,12 @@ use std::mem;
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_memory_decompression.html>
 #[derive(Clone)]
 pub struct MemoryDecompression {
-    fp: vk::NvMemoryDecompressionFn,
+    fp: vk::nv_memory_decompression::DeviceFn,
 }
 
 impl MemoryDecompression {
     pub fn new(instance: &Instance, device: &Device) -> Self {
-        let fp = vk::NvMemoryDecompressionFn::load(|name| unsafe {
+        let fp = vk::nv_memory_decompression::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -45,10 +45,10 @@ impl MemoryDecompression {
         )
     }
 
-    pub const NAME: &'static CStr = vk::NvMemoryDecompressionFn::NAME;
+    pub const NAME: &'static CStr = vk::nv_memory_decompression::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::NvMemoryDecompressionFn {
+    pub fn fp(&self) -> &vk::nv_memory_decompression::DeviceFn {
         &self.fp
     }
 }

@@ -7,13 +7,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct Maintenance3 {
     handle: vk::Device,
-    fp: vk::KhrMaintenance3Fn,
+    fp: vk::khr_maintenance3::DeviceFn,
 }
 
 impl Maintenance3 {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrMaintenance3Fn::load(|name| unsafe {
+        let fp = vk::khr_maintenance3::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -29,10 +29,10 @@ impl Maintenance3 {
         (self.fp.get_descriptor_set_layout_support_khr)(self.handle, create_info, out);
     }
 
-    pub const NAME: &'static CStr = vk::KhrMaintenance3Fn::NAME;
+    pub const NAME: &'static CStr = vk::khr_maintenance3::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrMaintenance3Fn {
+    pub fn fp(&self) -> &vk::khr_maintenance3::DeviceFn {
         &self.fp
     }
 

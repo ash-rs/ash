@@ -7,13 +7,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct DebugMarker {
     handle: vk::Device,
-    fp: vk::ExtDebugMarkerFn,
+    fp: vk::ext_debug_marker::DeviceFn,
 }
 
 impl DebugMarker {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::ExtDebugMarkerFn::load(|name| unsafe {
+        let fp = vk::ext_debug_marker::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -54,10 +54,10 @@ impl DebugMarker {
         (self.fp.cmd_debug_marker_insert_ext)(command_buffer, marker_info);
     }
 
-    pub const NAME: &'static CStr = vk::ExtDebugMarkerFn::NAME;
+    pub const NAME: &'static CStr = vk::ext_debug_marker::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::ExtDebugMarkerFn {
+    pub fn fp(&self) -> &vk::ext_debug_marker::DeviceFn {
         &self.fp
     }
 

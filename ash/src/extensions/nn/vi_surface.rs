@@ -8,13 +8,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct ViSurface {
     handle: vk::Instance,
-    fp: vk::NnViSurfaceFn,
+    fp: vk::nn_vi_surface::DeviceFn,
 }
 
 impl ViSurface {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::NnViSurfaceFn::load(|name| unsafe {
+        let fp = vk::nn_vi_surface::DeviceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -37,10 +37,10 @@ impl ViSurface {
         .assume_init_on_success(surface)
     }
 
-    pub const NAME: &'static CStr = vk::NnViSurfaceFn::NAME;
+    pub const NAME: &'static CStr = vk::nn_vi_surface::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::NnViSurfaceFn {
+    pub fn fp(&self) -> &vk::nn_vi_surface::DeviceFn {
         &self.fp
     }
 

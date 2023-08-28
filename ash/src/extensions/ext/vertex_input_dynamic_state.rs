@@ -6,12 +6,12 @@ use std::mem;
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_vertex_input_dynamic_state.html>
 #[derive(Clone)]
 pub struct VertexInputDynamicState {
-    fp: vk::ExtVertexInputDynamicStateFn,
+    fp: vk::ext_vertex_input_dynamic_state::DeviceFn,
 }
 
 impl VertexInputDynamicState {
     pub fn new(instance: &Instance, device: &Device) -> Self {
-        let fp = vk::ExtVertexInputDynamicStateFn::load(|name| unsafe {
+        let fp = vk::ext_vertex_input_dynamic_state::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -34,10 +34,10 @@ impl VertexInputDynamicState {
         )
     }
 
-    pub const NAME: &'static CStr = vk::ExtVertexInputDynamicStateFn::NAME;
+    pub const NAME: &'static CStr = vk::ext_vertex_input_dynamic_state::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::ExtVertexInputDynamicStateFn {
+    pub fn fp(&self) -> &vk::ext_vertex_input_dynamic_state::DeviceFn {
         &self.fp
     }
 }

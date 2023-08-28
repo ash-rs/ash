@@ -9,13 +9,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct AccelerationStructure {
     handle: vk::Device,
-    fp: vk::KhrAccelerationStructureFn,
+    fp: vk::khr_acceleration_structure::DeviceFn,
 }
 
 impl AccelerationStructure {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrAccelerationStructureFn::load(|name| unsafe {
+        let fp = vk::khr_acceleration_structure::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -288,10 +288,10 @@ impl AccelerationStructure {
         )
     }
 
-    pub const NAME: &'static CStr = vk::KhrAccelerationStructureFn::NAME;
+    pub const NAME: &'static CStr = vk::khr_acceleration_structure::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrAccelerationStructureFn {
+    pub fn fp(&self) -> &vk::khr_acceleration_structure::DeviceFn {
         &self.fp
     }
 

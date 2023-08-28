@@ -6,12 +6,12 @@ use std::mem;
 
 #[derive(Clone)]
 pub struct Synchronization2 {
-    fp: vk::KhrSynchronization2Fn,
+    fp: vk::khr_synchronization2::DeviceFn,
 }
 
 impl Synchronization2 {
     pub fn new(instance: &Instance, device: &Device) -> Self {
-        let fp = vk::KhrSynchronization2Fn::load(|name| unsafe {
+        let fp = vk::khr_synchronization2::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -89,10 +89,10 @@ impl Synchronization2 {
         (self.fp.queue_submit2_khr)(queue, submits.len() as u32, submits.as_ptr(), fence).result()
     }
 
-    pub const NAME: &'static CStr = vk::KhrSynchronization2Fn::NAME;
+    pub const NAME: &'static CStr = vk::khr_synchronization2::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrSynchronization2Fn {
+    pub fn fp(&self) -> &vk::khr_synchronization2::DeviceFn {
         &self.fp
     }
 }

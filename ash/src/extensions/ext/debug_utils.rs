@@ -7,13 +7,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct DebugUtils {
     handle: vk::Instance,
-    fp: vk::ExtDebugUtilsFn,
+    fp: vk::ext_debug_utils::DeviceFn,
 }
 
 impl DebugUtils {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::ExtDebugUtilsFn::load(|name| unsafe {
+        let fp = vk::ext_debug_utils::DeviceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -134,10 +134,10 @@ impl DebugUtils {
         );
     }
 
-    pub const NAME: &'static CStr = vk::ExtDebugUtilsFn::NAME;
+    pub const NAME: &'static CStr = vk::ext_debug_utils::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::ExtDebugUtilsFn {
+    pub fn fp(&self) -> &vk::ext_debug_utils::DeviceFn {
         &self.fp
     }
 

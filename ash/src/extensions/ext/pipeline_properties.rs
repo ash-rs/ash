@@ -8,13 +8,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct PipelineProperties {
     handle: vk::Device,
-    fp: vk::ExtPipelinePropertiesFn,
+    fp: vk::ext_pipeline_properties::DeviceFn,
 }
 
 impl PipelineProperties {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::ExtPipelinePropertiesFn::load(|name| unsafe {
+        let fp = vk::ext_pipeline_properties::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -35,10 +35,10 @@ impl PipelineProperties {
         .result()
     }
 
-    pub const NAME: &'static CStr = vk::ExtPipelinePropertiesFn::NAME;
+    pub const NAME: &'static CStr = vk::ext_pipeline_properties::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::ExtPipelinePropertiesFn {
+    pub fn fp(&self) -> &vk::ext_pipeline_properties::DeviceFn {
         &self.fp
     }
 

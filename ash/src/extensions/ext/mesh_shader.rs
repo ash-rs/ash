@@ -6,12 +6,12 @@ use std::mem;
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_mesh_shader.html>
 #[derive(Clone)]
 pub struct MeshShader {
-    fp: vk::ExtMeshShaderFn,
+    fp: vk::ext_mesh_shader::DeviceFn,
 }
 
 impl MeshShader {
     pub fn new(instance: &Instance, device: &Device) -> Self {
-        let fp = vk::ExtMeshShaderFn::load(|name| unsafe {
+        let fp = vk::ext_mesh_shader::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -82,10 +82,10 @@ impl MeshShader {
         )
     }
 
-    pub const NAME: &'static CStr = vk::ExtMeshShaderFn::NAME;
+    pub const NAME: &'static CStr = vk::ext_mesh_shader::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::ExtMeshShaderFn {
+    pub fn fp(&self) -> &vk::ext_mesh_shader::DeviceFn {
         &self.fp
     }
 }

@@ -7,13 +7,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct PresentWait {
     handle: vk::Device,
-    fp: vk::KhrPresentWaitFn,
+    fp: vk::khr_present_wait::DeviceFn,
 }
 
 impl PresentWait {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrPresentWaitFn::load(|name| unsafe {
+        let fp = vk::khr_present_wait::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -30,10 +30,10 @@ impl PresentWait {
         (self.fp.wait_for_present_khr)(self.handle, swapchain, present_id, timeout).result()
     }
 
-    pub const NAME: &'static CStr = vk::KhrPresentWaitFn::NAME;
+    pub const NAME: &'static CStr = vk::khr_present_wait::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrPresentWaitFn {
+    pub fn fp(&self) -> &vk::khr_present_wait::DeviceFn {
         &self.fp
     }
 

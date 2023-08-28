@@ -8,13 +8,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct IOSSurface {
     handle: vk::Instance,
-    fp: vk::MvkIosSurfaceFn,
+    fp: vk::mvk_ios_surface::DeviceFn,
 }
 
 impl IOSSurface {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::MvkIosSurfaceFn::load(|name| unsafe {
+        let fp = vk::mvk_ios_surface::DeviceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -37,10 +37,10 @@ impl IOSSurface {
         .assume_init_on_success(surface)
     }
 
-    pub const NAME: &'static CStr = vk::MvkIosSurfaceFn::NAME;
+    pub const NAME: &'static CStr = vk::mvk_ios_surface::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::MvkIosSurfaceFn {
+    pub fn fp(&self) -> &vk::mvk_ios_surface::DeviceFn {
         &self.fp
     }
 

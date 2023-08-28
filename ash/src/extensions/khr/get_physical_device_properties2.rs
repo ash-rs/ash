@@ -7,12 +7,12 @@ use std::ptr;
 
 #[derive(Clone)]
 pub struct GetPhysicalDeviceProperties2 {
-    fp: vk::KhrGetPhysicalDeviceProperties2Fn,
+    fp: vk::khr_get_physical_device_properties2::DeviceFn,
 }
 
 impl GetPhysicalDeviceProperties2 {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
-        let fp = vk::KhrGetPhysicalDeviceProperties2Fn::load(|name| unsafe {
+        let fp = vk::khr_get_physical_device_properties2::DeviceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -155,10 +155,10 @@ impl GetPhysicalDeviceProperties2 {
         assert_eq!(count as usize, out.len());
     }
 
-    pub const NAME: &'static CStr = vk::KhrGetPhysicalDeviceProperties2Fn::NAME;
+    pub const NAME: &'static CStr = vk::khr_get_physical_device_properties2::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrGetPhysicalDeviceProperties2Fn {
+    pub fn fp(&self) -> &vk::khr_get_physical_device_properties2::DeviceFn {
         &self.fp
     }
 }

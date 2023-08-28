@@ -8,13 +8,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct AndroidSurface {
     handle: vk::Instance,
-    fp: vk::KhrAndroidSurfaceFn,
+    fp: vk::khr_android_surface::DeviceFn,
 }
 
 impl AndroidSurface {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::KhrAndroidSurfaceFn::load(|name| unsafe {
+        let fp = vk::khr_android_surface::DeviceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -37,10 +37,10 @@ impl AndroidSurface {
         .assume_init_on_success(surface)
     }
 
-    pub const NAME: &'static CStr = vk::KhrAndroidSurfaceFn::NAME;
+    pub const NAME: &'static CStr = vk::khr_android_surface::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrAndroidSurfaceFn {
+    pub fn fp(&self) -> &vk::khr_android_surface::DeviceFn {
         &self.fp
     }
 

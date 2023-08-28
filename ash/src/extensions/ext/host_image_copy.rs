@@ -10,13 +10,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct HostImageCopy {
     handle: vk::Device,
-    fp: vk::ExtHostImageCopyFn,
+    fp: vk::ext_host_image_copy::DeviceFn,
 }
 
 impl HostImageCopy {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::ExtHostImageCopyFn::load(|name| unsafe {
+        let fp = vk::ext_host_image_copy::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -83,10 +83,10 @@ impl HostImageCopy {
         (self.fp.get_image_subresource_layout2_ext)(self.handle, image, subresource, layout)
     }
 
-    pub const NAME: &'static CStr = vk::ExtHostImageCopyFn::NAME;
+    pub const NAME: &'static CStr = vk::ext_host_image_copy::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::ExtHostImageCopyFn {
+    pub fn fp(&self) -> &vk::ext_host_image_copy::DeviceFn {
         &self.fp
     }
 

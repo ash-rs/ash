@@ -8,13 +8,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct RayTracingPipeline {
     handle: vk::Device,
-    fp: vk::KhrRayTracingPipelineFn,
+    fp: vk::khr_ray_tracing_pipeline::DeviceFn,
 }
 
 impl RayTracingPipeline {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrRayTracingPipelineFn::load(|name| unsafe {
+        let fp = vk::khr_ray_tracing_pipeline::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -160,10 +160,10 @@ impl RayTracingPipeline {
         (self.fp.cmd_set_ray_tracing_pipeline_stack_size_khr)(command_buffer, pipeline_stack_size);
     }
 
-    pub const NAME: &'static CStr = vk::KhrRayTracingPipelineFn::NAME;
+    pub const NAME: &'static CStr = vk::khr_ray_tracing_pipeline::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrRayTracingPipelineFn {
+    pub fn fp(&self) -> &vk::khr_ray_tracing_pipeline::DeviceFn {
         &self.fp
     }
 

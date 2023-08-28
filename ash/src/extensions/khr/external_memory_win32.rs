@@ -8,13 +8,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct ExternalMemoryWin32 {
     handle: vk::Device,
-    fp: vk::KhrExternalMemoryWin32Fn,
+    fp: vk::khr_external_memory_win32::DeviceFn,
 }
 
 impl ExternalMemoryWin32 {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrExternalMemoryWin32Fn::load(|name| unsafe {
+        let fp = vk::khr_external_memory_win32::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -48,10 +48,10 @@ impl ExternalMemoryWin32 {
         .result()
     }
 
-    pub const NAME: &'static CStr = vk::KhrExternalMemoryWin32Fn::NAME;
+    pub const NAME: &'static CStr = vk::khr_external_memory_win32::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrExternalMemoryWin32Fn {
+    pub fn fp(&self) -> &vk::khr_external_memory_win32::DeviceFn {
         &self.fp
     }
 

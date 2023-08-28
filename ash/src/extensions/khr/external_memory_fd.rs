@@ -8,13 +8,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct ExternalMemoryFd {
     handle: vk::Device,
-    fp: vk::KhrExternalMemoryFdFn,
+    fp: vk::khr_external_memory_fd::DeviceFn,
 }
 
 impl ExternalMemoryFd {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrExternalMemoryFdFn::load(|name| unsafe {
+        let fp = vk::khr_external_memory_fd::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -40,10 +40,10 @@ impl ExternalMemoryFd {
             .result()
     }
 
-    pub const NAME: &'static CStr = vk::KhrExternalMemoryFdFn::NAME;
+    pub const NAME: &'static CStr = vk::khr_external_memory_fd::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrExternalMemoryFdFn {
+    pub fn fp(&self) -> &vk::khr_external_memory_fd::DeviceFn {
         &self.fp
     }
 

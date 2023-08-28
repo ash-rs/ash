@@ -8,13 +8,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct ShaderInfo {
     handle: vk::Device,
-    fp: vk::AmdShaderInfoFn,
+    fp: vk::amd_shader_info::DeviceFn,
 }
 
 impl ShaderInfo {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::AmdShaderInfoFn::load(|name| unsafe {
+        let fp = vk::amd_shader_info::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -64,10 +64,10 @@ impl ShaderInfo {
         }
     }
 
-    pub const NAME: &'static CStr = vk::AmdShaderInfoFn::NAME;
+    pub const NAME: &'static CStr = vk::amd_shader_info::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::AmdShaderInfoFn {
+    pub fn fp(&self) -> &vk::amd_shader_info::DeviceFn {
         &self.fp
     }
 

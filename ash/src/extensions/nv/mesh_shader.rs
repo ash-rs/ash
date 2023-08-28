@@ -5,12 +5,12 @@ use std::mem;
 
 #[derive(Clone)]
 pub struct MeshShader {
-    fp: vk::NvMeshShaderFn,
+    fp: vk::nv_mesh_shader::DeviceFn,
 }
 
 impl MeshShader {
     pub fn new(instance: &Instance, device: &Device) -> Self {
-        let fp = vk::NvMeshShaderFn::load(|name| unsafe {
+        let fp = vk::nv_mesh_shader::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -69,10 +69,10 @@ impl MeshShader {
         );
     }
 
-    pub const NAME: &'static CStr = vk::NvMeshShaderFn::NAME;
+    pub const NAME: &'static CStr = vk::nv_mesh_shader::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::NvMeshShaderFn {
+    pub fn fp(&self) -> &vk::nv_mesh_shader::DeviceFn {
         &self.fp
     }
 }

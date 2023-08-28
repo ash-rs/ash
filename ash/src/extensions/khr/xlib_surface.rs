@@ -8,13 +8,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct XlibSurface {
     handle: vk::Instance,
-    fp: vk::KhrXlibSurfaceFn,
+    fp: vk::khr_xlib_surface::DeviceFn,
 }
 
 impl XlibSurface {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::KhrXlibSurfaceFn::load(|name| unsafe {
+        let fp = vk::khr_xlib_surface::DeviceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -56,10 +56,10 @@ impl XlibSurface {
         b > 0
     }
 
-    pub const NAME: &'static CStr = vk::KhrXlibSurfaceFn::NAME;
+    pub const NAME: &'static CStr = vk::khr_xlib_surface::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrXlibSurfaceFn {
+    pub fn fp(&self) -> &vk::khr_xlib_surface::DeviceFn {
         &self.fp
     }
 

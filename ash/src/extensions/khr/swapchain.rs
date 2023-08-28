@@ -10,13 +10,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct Swapchain {
     handle: vk::Device,
-    fp: vk::KhrSwapchainFn,
+    fp: vk::khr_swapchain::DeviceFn,
 }
 
 impl Swapchain {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrSwapchainFn::load(|name| unsafe {
+        let fp = vk::khr_swapchain::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -199,10 +199,10 @@ impl Swapchain {
         }
     }
 
-    pub const NAME: &'static CStr = vk::KhrSwapchainFn::NAME;
+    pub const NAME: &'static CStr = vk::khr_swapchain::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrSwapchainFn {
+    pub fn fp(&self) -> &vk::khr_swapchain::DeviceFn {
         &self.fp
     }
 

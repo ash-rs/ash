@@ -9,13 +9,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct ShaderEnqueue {
     handle: vk::Device,
-    fp: vk::AmdxShaderEnqueueFn,
+    fp: vk::amdx_shader_enqueue::DeviceFn,
 }
 
 impl ShaderEnqueue {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::AmdxShaderEnqueueFn::load(|name| unsafe {
+        let fp = vk::amdx_shader_enqueue::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -116,10 +116,10 @@ impl ShaderEnqueue {
         (self.fp.cmd_dispatch_graph_indirect_count_amdx)(command_buffer, scratch, count_info)
     }
 
-    pub const NAME: &'static CStr = vk::AmdxShaderEnqueueFn::NAME;
+    pub const NAME: &'static CStr = vk::amdx_shader_enqueue::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::AmdxShaderEnqueueFn {
+    pub fn fp(&self) -> &vk::amdx_shader_enqueue::DeviceFn {
         &self.fp
     }
 

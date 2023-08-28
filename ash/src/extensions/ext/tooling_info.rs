@@ -6,12 +6,12 @@ use std::mem;
 
 #[derive(Clone)]
 pub struct ToolingInfo {
-    fp: vk::ExtToolingInfoFn,
+    fp: vk::ext_tooling_info::DeviceFn,
 }
 
 impl ToolingInfo {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
-        let fp = vk::ExtToolingInfoFn::load(|name| unsafe {
+        let fp = vk::ext_tooling_info::DeviceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -28,10 +28,10 @@ impl ToolingInfo {
         })
     }
 
-    pub const NAME: &'static CStr = vk::ExtToolingInfoFn::NAME;
+    pub const NAME: &'static CStr = vk::ext_tooling_info::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::ExtToolingInfoFn {
+    pub fn fp(&self) -> &vk::ext_tooling_info::DeviceFn {
         &self.fp
     }
 }

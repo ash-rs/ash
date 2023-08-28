@@ -6,12 +6,12 @@ use std::ptr;
 
 #[derive(Clone)]
 pub struct ExtendedDynamicState {
-    fp: vk::ExtExtendedDynamicStateFn,
+    fp: vk::ext_extended_dynamic_state::DeviceFn,
 }
 
 impl ExtendedDynamicState {
     pub fn new(instance: &Instance, device: &Device) -> Self {
-        let fp = vk::ExtExtendedDynamicStateFn::load(|name| unsafe {
+        let fp = vk::ext_extended_dynamic_state::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -184,10 +184,10 @@ impl ExtendedDynamicState {
         )
     }
 
-    pub const NAME: &'static CStr = vk::ExtExtendedDynamicStateFn::NAME;
+    pub const NAME: &'static CStr = vk::ext_extended_dynamic_state::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::ExtExtendedDynamicStateFn {
+    pub fn fp(&self) -> &vk::ext_extended_dynamic_state::DeviceFn {
         &self.fp
     }
 }

@@ -7,13 +7,13 @@ use std::ptr;
 #[derive(Clone)]
 pub struct GetMemoryRequirements2 {
     handle: vk::Device,
-    fp: vk::KhrGetMemoryRequirements2Fn,
+    fp: vk::khr_get_memory_requirements2::DeviceFn,
 }
 
 impl GetMemoryRequirements2 {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrGetMemoryRequirements2Fn::load(|name| unsafe {
+        let fp = vk::khr_get_memory_requirements2::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -75,10 +75,10 @@ impl GetMemoryRequirements2 {
         assert_eq!(count as usize, out.len());
     }
 
-    pub const NAME: &'static CStr = vk::KhrGetMemoryRequirements2Fn::NAME;
+    pub const NAME: &'static CStr = vk::khr_get_memory_requirements2::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrGetMemoryRequirements2Fn {
+    pub fn fp(&self) -> &vk::khr_get_memory_requirements2::DeviceFn {
         &self.fp
     }
 

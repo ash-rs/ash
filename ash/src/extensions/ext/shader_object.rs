@@ -10,13 +10,13 @@ use std::ptr;
 #[derive(Clone)]
 pub struct ShaderObject {
     handle: vk::Device,
-    fp: vk::ExtShaderObjectFn,
+    fp: vk::ext_shader_object::DeviceFn,
 }
 
 impl ShaderObject {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::ExtShaderObjectFn::load(|name| unsafe {
+        let fp = vk::ext_shader_object::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -701,10 +701,10 @@ impl ShaderObject {
         (self.fp.cmd_set_coverage_reduction_mode_nv)(command_buffer, coverage_reduction_mode)
     }
 
-    pub const NAME: &'static CStr = vk::ExtShaderObjectFn::NAME;
+    pub const NAME: &'static CStr = vk::ext_shader_object::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::ExtShaderObjectFn {
+    pub fn fp(&self) -> &vk::ext_shader_object::DeviceFn {
         &self.fp
     }
 

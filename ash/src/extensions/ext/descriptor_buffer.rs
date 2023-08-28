@@ -8,13 +8,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct DescriptorBuffer {
     handle: vk::Device,
-    fp: vk::ExtDescriptorBufferFn,
+    fp: vk::ext_descriptor_buffer::DeviceFn,
 }
 
 impl DescriptorBuffer {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::ExtDescriptorBufferFn::load(|name| unsafe {
+        let fp = vk::ext_descriptor_buffer::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -194,10 +194,10 @@ impl DescriptorBuffer {
         .result()
     }
 
-    pub const NAME: &'static CStr = vk::ExtDescriptorBufferFn::NAME;
+    pub const NAME: &'static CStr = vk::ext_descriptor_buffer::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::ExtDescriptorBufferFn {
+    pub fn fp(&self) -> &vk::ext_descriptor_buffer::DeviceFn {
         &self.fp
     }
 

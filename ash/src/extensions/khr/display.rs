@@ -8,13 +8,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct Display {
     handle: vk::Instance,
-    fp: vk::KhrDisplayFn,
+    fp: vk::khr_display::DeviceFn,
 }
 
 impl Display {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::KhrDisplayFn::load(|name| unsafe {
+        let fp = vk::khr_display::DeviceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -126,10 +126,10 @@ impl Display {
         .assume_init_on_success(surface)
     }
 
-    pub const NAME: &'static CStr = vk::KhrDisplayFn::NAME;
+    pub const NAME: &'static CStr = vk::khr_display::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrDisplayFn {
+    pub fn fp(&self) -> &vk::khr_display::DeviceFn {
         &self.fp
     }
 

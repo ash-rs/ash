@@ -8,13 +8,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct Surface {
     handle: vk::Instance,
-    fp: vk::KhrSurfaceFn,
+    fp: vk::khr_surface::DeviceFn,
 }
 
 impl Surface {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::KhrSurfaceFn::load(|name| unsafe {
+        let fp = vk::khr_surface::DeviceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -94,10 +94,10 @@ impl Surface {
         (self.fp.destroy_surface_khr)(self.handle, surface, allocation_callbacks.as_raw_ptr());
     }
 
-    pub const NAME: &'static CStr = vk::KhrSurfaceFn::NAME;
+    pub const NAME: &'static CStr = vk::khr_surface::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrSurfaceFn {
+    pub fn fp(&self) -> &vk::khr_surface::DeviceFn {
         &self.fp
     }
 

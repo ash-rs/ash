@@ -8,13 +8,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct Win32Surface {
     handle: vk::Instance,
-    fp: vk::KhrWin32SurfaceFn,
+    fp: vk::khr_win32Surface::DeviceFn,
 }
 
 impl Win32Surface {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::KhrWin32SurfaceFn::load(|name| unsafe {
+        let fp = vk::khr_win32Surface::DeviceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -52,10 +52,10 @@ impl Win32Surface {
         b > 0
     }
 
-    pub const NAME: &'static CStr = vk::KhrWin32SurfaceFn::NAME;
+    pub const NAME: &'static CStr = vk::khr_win32Surface::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrWin32SurfaceFn {
+    pub fn fp(&self) -> &vk::khr_win32Surface::DeviceFn {
         &self.fp
     }
 

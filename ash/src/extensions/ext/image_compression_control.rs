@@ -9,13 +9,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct ImageCompressionControl {
     handle: vk::Device,
-    fp: vk::ExtImageCompressionControlFn,
+    fp: vk::ext_image_compression_control::DeviceFn,
 }
 
 impl ImageCompressionControl {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::ExtImageCompressionControlFn::load(|name| unsafe {
+        let fp = vk::ext_image_compression_control::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -41,10 +41,10 @@ impl ImageCompressionControl {
         (self.fp.get_image_subresource_layout2_ext)(self.handle, image, subresource, layout)
     }
 
-    pub const NAME: &'static CStr = vk::ExtImageCompressionControlFn::NAME;
+    pub const NAME: &'static CStr = vk::ext_image_compression_control::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::ExtImageCompressionControlFn {
+    pub fn fp(&self) -> &vk::ext_image_compression_control::DeviceFn {
         &self.fp
     }
 

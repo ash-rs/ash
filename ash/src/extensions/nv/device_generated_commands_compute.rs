@@ -7,13 +7,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct DeviceGeneratedCommandsCompute {
     handle: vk::Device,
-    fp: vk::NvDeviceGeneratedCommandsComputeFn,
+    fp: vk::nv_device_generated_commands_compute::DeviceFn,
 }
 
 impl DeviceGeneratedCommandsCompute {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::NvDeviceGeneratedCommandsComputeFn::load(|name| unsafe {
+        let fp = vk::nv_device_generated_commands_compute::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -57,10 +57,10 @@ impl DeviceGeneratedCommandsCompute {
         (self.fp.get_pipeline_indirect_device_address_nv)(self.handle, info)
     }
 
-    pub const NAME: &'static CStr = vk::NvDeviceGeneratedCommandsComputeFn::NAME;
+    pub const NAME: &'static CStr = vk::nv_device_generated_commands_compute::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::NvDeviceGeneratedCommandsComputeFn {
+    pub fn fp(&self) -> &vk::nv_device_generated_commands_compute::DeviceFn {
         &self.fp
     }
 

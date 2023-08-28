@@ -6,12 +6,12 @@ use std::mem;
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_extended_dynamic_state2.html>
 #[derive(Clone)]
 pub struct ExtendedDynamicState2 {
-    fp: vk::ExtExtendedDynamicState2Fn,
+    fp: vk::ext_extended_dynamic_state2::DeviceFn,
 }
 
 impl ExtendedDynamicState2 {
     pub fn new(instance: &Instance, device: &Device) -> Self {
-        let fp = vk::ExtExtendedDynamicState2Fn::load(|name| unsafe {
+        let fp = vk::ext_extended_dynamic_state2::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -73,10 +73,10 @@ impl ExtendedDynamicState2 {
         )
     }
 
-    pub const NAME: &'static CStr = vk::ExtExtendedDynamicState2Fn::NAME;
+    pub const NAME: &'static CStr = vk::ext_extended_dynamic_state2::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::ExtExtendedDynamicState2Fn {
+    pub fn fp(&self) -> &vk::ext_extended_dynamic_state2::DeviceFn {
         &self.fp
     }
 }

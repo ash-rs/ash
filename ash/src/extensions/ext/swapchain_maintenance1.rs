@@ -8,13 +8,13 @@ use std::mem;
 #[derive(Clone)]
 pub struct SwapchainMaintenance1 {
     handle: vk::Device,
-    fp: vk::ExtSwapchainMaintenance1Fn,
+    fp: vk::ext_swapchain_maintenance1::DeviceFn,
 }
 
 impl SwapchainMaintenance1 {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::ExtSwapchainMaintenance1Fn::load(|name| unsafe {
+        let fp = vk::ext_swapchain_maintenance1::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -29,10 +29,10 @@ impl SwapchainMaintenance1 {
         (self.fp.release_swapchain_images_ext)(self.handle, release_info).result()
     }
 
-    pub const NAME: &'static CStr = vk::ExtSwapchainMaintenance1Fn::NAME;
+    pub const NAME: &'static CStr = vk::ext_swapchain_maintenance1::DeviceFn::NAME;
 
     #[inline]
-    pub fn fp(&self) -> &vk::ExtSwapchainMaintenance1Fn {
+    pub fn fp(&self) -> &vk::ext_swapchain_maintenance1::DeviceFn {
         &self.fp
     }
 
