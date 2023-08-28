@@ -5,16 +5,18 @@ use crate::{Entry, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::khr_wayland_surface::NAME;
+
 #[derive(Clone)]
 pub struct WaylandSurface {
     handle: vk::Instance,
-    fp: vk::khr_wayland_surface::DeviceFn,
+    fp: vk::khr_wayland_surface::InstanceFn,
 }
 
 impl WaylandSurface {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::khr_wayland_surface::DeviceFn::load(|name| unsafe {
+        let fp = vk::khr_wayland_surface::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -54,10 +56,8 @@ impl WaylandSurface {
         b > 0
     }
 
-    pub const NAME: &'static CStr = vk::khr_wayland_surface::DeviceFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::khr_wayland_surface::DeviceFn {
+    pub fn fp(&self) -> &vk::khr_wayland_surface::InstanceFn {
         &self.fp
     }
 

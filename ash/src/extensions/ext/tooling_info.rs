@@ -4,14 +4,17 @@ use crate::{Entry, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::ext_tooling_info::NAME;
+
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_tooling_info.html>
 #[derive(Clone)]
 pub struct ToolingInfo {
-    fp: vk::ext_tooling_info::DeviceFn,
+    fp: vk::ext_tooling_info::InstanceFn,
 }
 
 impl ToolingInfo {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
-        let fp = vk::ext_tooling_info::DeviceFn::load(|name| unsafe {
+        let fp = vk::ext_tooling_info::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -28,10 +31,8 @@ impl ToolingInfo {
         })
     }
 
-    pub const NAME: &'static CStr = vk::ext_tooling_info::DeviceFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::ext_tooling_info::DeviceFn {
+    pub fn fp(&self) -> &vk::ext_tooling_info::InstanceFn {
         &self.fp
     }
 }

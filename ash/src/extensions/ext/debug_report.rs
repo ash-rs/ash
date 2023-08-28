@@ -5,16 +5,19 @@ use crate::{Entry, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::ext_debug_report::NAME;
+
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_debug_report.html>
 #[derive(Clone)]
 pub struct DebugReport {
     handle: vk::Instance,
-    fp: vk::ext_debug_report::DeviceFn,
+    fp: vk::ext_debug_report::InstanceFn,
 }
 
 impl DebugReport {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::ext_debug_report::DeviceFn::load(|name| unsafe {
+        let fp = vk::ext_debug_report::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -51,10 +54,8 @@ impl DebugReport {
         .assume_init_on_success(debug_cb)
     }
 
-    pub const NAME: &'static CStr = vk::ext_debug_report::DeviceFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::ext_debug_report::DeviceFn {
+    pub fn fp(&self) -> &vk::ext_debug_report::InstanceFn {
         &self.fp
     }
 

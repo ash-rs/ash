@@ -3,6 +3,9 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::ext_buffer_device_address::NAME;
+
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_buffer_device_address.html>
 #[derive(Clone)]
 pub struct BufferDeviceAddress {
     handle: vk::Device,
@@ -26,8 +29,6 @@ impl BufferDeviceAddress {
     ) -> vk::DeviceAddress {
         (self.fp.get_buffer_device_address_ext)(self.handle, info)
     }
-
-    pub const NAME: &'static CStr = vk::ext_buffer_device_address::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ext_buffer_device_address::DeviceFn {

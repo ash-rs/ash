@@ -3,6 +3,8 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::khr_buffer_device_address::NAME;
+
 #[derive(Clone)]
 pub struct BufferDeviceAddress {
     handle: vk::Device,
@@ -44,8 +46,6 @@ impl BufferDeviceAddress {
     ) -> u64 {
         (self.fp.get_device_memory_opaque_capture_address_khr)(self.handle, info)
     }
-
-    pub const NAME: &'static CStr = vk::khr_buffer_device_address::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::khr_buffer_device_address::DeviceFn {

@@ -5,6 +5,8 @@ use std::mem;
 use std::os::raw::c_void;
 use std::ptr;
 
+pub const NAME: &CStr = vk::nv_device_diagnostic_checkpoints::NAME;
+
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_NV_device_diagnostic_checkpoints.html>
 #[derive(Clone)]
 pub struct DeviceDiagnosticCheckpoints {
@@ -51,8 +53,6 @@ impl DeviceDiagnosticCheckpoints {
         (self.fp.get_queue_checkpoint_data_nv)(queue, &mut count, out.as_mut_ptr());
         assert_eq!(count as usize, out.len());
     }
-
-    pub const NAME: &'static CStr = vk::nv_device_diagnostic_checkpoints::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::nv_device_diagnostic_checkpoints::DeviceFn {

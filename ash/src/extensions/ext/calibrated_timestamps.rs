@@ -4,7 +4,7 @@ use crate::{Device, Entry, Instance};
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::ext_calibrated_timestamps::InstanceFn::NAME;
+pub const NAME: &CStr = vk::ext_calibrated_timestamps::NAME;
 
 /// High-level device function wrapper for
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_calibrated_timestamps.html>

@@ -5,6 +5,9 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::khr_display_swapchain::NAME;
+
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_display_swapchain.html>
 #[derive(Clone)]
 pub struct DisplaySwapchain {
     handle: vk::Device,
@@ -37,8 +40,6 @@ impl DisplaySwapchain {
         )
         .set_vec_len_on_success(swapchains, create_infos.len())
     }
-
-    pub const NAME: &'static CStr = vk::khr_display_swapchain::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::khr_display_swapchain::DeviceFn {

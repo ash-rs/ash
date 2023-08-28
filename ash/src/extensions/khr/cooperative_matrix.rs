@@ -4,16 +4,18 @@ use crate::{Entry, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::khr_cooperative_matrix::NAME;
+
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_cooperative_matrix.html>
 #[derive(Clone)]
 pub struct CooperativeMatrix {
-    fp: vk::khr_cooperative_matrix::DeviceFn,
+    fp: vk::khr_cooperative_matrix::InstanceFn,
 }
 
 impl CooperativeMatrix {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::khr_cooperative_matrix::DeviceFn::load(|name| unsafe {
+        let fp = vk::khr_cooperative_matrix::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { fp }
@@ -36,10 +38,8 @@ impl CooperativeMatrix {
         })
     }
 
-    pub const NAME: &'static CStr = vk::khr_cooperative_matrix::DeviceFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::khr_cooperative_matrix::DeviceFn {
+    pub fn fp(&self) -> &vk::khr_cooperative_matrix::InstanceFn {
         &self.fp
     }
 }

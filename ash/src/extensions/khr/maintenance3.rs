@@ -3,6 +3,8 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::khr_maintenance3::NAME;
+
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_maintenance3.html>
 #[derive(Clone)]
 pub struct Maintenance3 {
@@ -28,8 +30,6 @@ impl Maintenance3 {
     ) {
         (self.fp.get_descriptor_set_layout_support_khr)(self.handle, create_info, out);
     }
-
-    pub const NAME: &'static CStr = vk::khr_maintenance3::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::khr_maintenance3::DeviceFn {

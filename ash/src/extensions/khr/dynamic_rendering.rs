@@ -3,6 +3,9 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::khr_dynamic_rendering::NAME;
+
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_dynamic_rendering.html>
 #[derive(Clone)]
 pub struct DynamicRendering {
     fp: vk::khr_dynamic_rendering::DeviceFn,
@@ -31,8 +34,6 @@ impl DynamicRendering {
     pub unsafe fn cmd_end_rendering(&self, command_buffer: vk::CommandBuffer) {
         (self.fp.cmd_end_rendering_khr)(command_buffer)
     }
-
-    pub const NAME: &'static CStr = vk::khr_dynamic_rendering::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::khr_dynamic_rendering::DeviceFn {

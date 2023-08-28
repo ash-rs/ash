@@ -6,6 +6,8 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::ext_host_image_copy::NAME;
+
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_host_image_copy.html>
 #[derive(Clone)]
 pub struct HostImageCopy {
@@ -82,8 +84,6 @@ impl HostImageCopy {
     ) {
         (self.fp.get_image_subresource_layout2_ext)(self.handle, image, subresource, layout)
     }
-
-    pub const NAME: &'static CStr = vk::ext_host_image_copy::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ext_host_image_copy::DeviceFn {

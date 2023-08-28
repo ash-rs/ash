@@ -4,6 +4,8 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::khr_synchronization2::NAME;
+
 #[derive(Clone)]
 pub struct Synchronization2 {
     fp: vk::khr_synchronization2::DeviceFn,
@@ -88,8 +90,6 @@ impl Synchronization2 {
     ) -> VkResult<()> {
         (self.fp.queue_submit2_khr)(queue, submits.len() as u32, submits.as_ptr(), fence).result()
     }
-
-    pub const NAME: &'static CStr = vk::khr_synchronization2::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::khr_synchronization2::DeviceFn {

@@ -4,6 +4,8 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::ext_debug_marker::NAME;
+
 #[derive(Clone)]
 pub struct DebugMarker {
     handle: vk::Device,
@@ -53,8 +55,6 @@ impl DebugMarker {
     ) {
         (self.fp.cmd_debug_marker_insert_ext)(command_buffer, marker_info);
     }
-
-    pub const NAME: &'static CStr = vk::ext_debug_marker::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ext_debug_marker::DeviceFn {

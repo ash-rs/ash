@@ -5,6 +5,8 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::khr_ray_tracing_pipeline::NAME;
+
 #[derive(Clone)]
 pub struct RayTracingPipeline {
     handle: vk::Device,
@@ -159,8 +161,6 @@ impl RayTracingPipeline {
     ) {
         (self.fp.cmd_set_ray_tracing_pipeline_stack_size_khr)(command_buffer, pipeline_stack_size);
     }
-
-    pub const NAME: &'static CStr = vk::khr_ray_tracing_pipeline::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::khr_ray_tracing_pipeline::DeviceFn {

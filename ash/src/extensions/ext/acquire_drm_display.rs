@@ -4,16 +4,18 @@ use crate::{Entry, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::ext_acquire_drm_display::NAME;
+
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_acquire_drm_display.html>
 #[derive(Clone)]
 pub struct AcquireDrmDisplay {
-    fp: vk::ext_acquire_drm_display::DeviceFn,
+    fp: vk::ext_acquire_drm_display::InstanceFn,
 }
 
 impl AcquireDrmDisplay {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::ext_acquire_drm_display::DeviceFn::load(|name| unsafe {
+        let fp = vk::ext_acquire_drm_display::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { fp }
@@ -43,10 +45,8 @@ impl AcquireDrmDisplay {
             .assume_init_on_success(display)
     }
 
-    pub const NAME: &'static CStr = vk::ext_acquire_drm_display::DeviceFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::ext_acquire_drm_display::DeviceFn {
+    pub fn fp(&self) -> &vk::ext_acquire_drm_display::InstanceFn {
         &self.fp
     }
 }

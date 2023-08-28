@@ -165,7 +165,7 @@ impl DebugUtilsInstance {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::ext_debug_utils::DeviceFn {
+    pub fn fp(&self) -> &vk::ext_debug_utils::InstanceFn {
         &self.fp
     }
 

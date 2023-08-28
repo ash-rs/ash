@@ -5,6 +5,8 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::khr_deferred_host_operations::NAME;
+
 #[derive(Clone)]
 pub struct DeferredHostOperations {
     handle: vk::Device,
@@ -75,8 +77,6 @@ impl DeferredHostOperations {
     ) -> VkResult<()> {
         (self.fp.get_deferred_operation_result_khr)(self.handle, operation).result()
     }
-
-    pub const NAME: &'static CStr = vk::khr_deferred_host_operations::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::khr_deferred_host_operations::DeviceFn {

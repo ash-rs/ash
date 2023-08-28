@@ -4,6 +4,8 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::khr_external_fence_fd::NAME;
+
 #[derive(Clone)]
 pub struct ExternalFenceFd {
     handle: vk::Device,
@@ -35,8 +37,6 @@ impl ExternalFenceFd {
         (self.fp.get_fence_fd_khr)(self.handle, get_info, fd.as_mut_ptr())
             .assume_init_on_success(fd)
     }
-
-    pub const NAME: &'static CStr = vk::khr_external_fence_fd::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::khr_external_fence_fd::DeviceFn {

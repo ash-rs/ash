@@ -5,6 +5,8 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::khr_maintenance5::NAME;
+
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_maintenance5.html>
 #[derive(Clone)]
 pub struct Maintenance5 {
@@ -78,8 +80,6 @@ impl Maintenance5 {
     ) {
         (self.fp.get_image_subresource_layout2_khr)(self.handle, image, subresource, layout)
     }
-
-    pub const NAME: &'static CStr = vk::khr_maintenance5::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::khr_maintenance5::DeviceFn {

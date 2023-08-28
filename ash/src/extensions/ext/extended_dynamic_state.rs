@@ -4,6 +4,8 @@ use std::ffi::CStr;
 use std::mem;
 use std::ptr;
 
+pub const NAME: &CStr = vk::ext_extended_dynamic_state::NAME;
+
 #[derive(Clone)]
 pub struct ExtendedDynamicState {
     fp: vk::ext_extended_dynamic_state::DeviceFn,
@@ -183,8 +185,6 @@ impl ExtendedDynamicState {
             compare_op,
         )
     }
-
-    pub const NAME: &'static CStr = vk::ext_extended_dynamic_state::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ext_extended_dynamic_state::DeviceFn {

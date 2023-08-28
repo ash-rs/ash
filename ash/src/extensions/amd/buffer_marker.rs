@@ -3,6 +3,8 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::amd_buffer_marker::NAME;
+
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_AMD_buffer_marker.html>
 #[derive(Clone)]
 pub struct BufferMarker {
@@ -35,8 +37,6 @@ impl BufferMarker {
             marker,
         )
     }
-
-    pub const NAME: &'static CStr = vk::amd_buffer_marker::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::amd_buffer_marker::DeviceFn {

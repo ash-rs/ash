@@ -5,14 +5,17 @@ use std::ffi::CStr;
 use std::mem;
 use std::ptr;
 
+pub const NAME: &CStr = vk::khr_get_physical_device_properties2::NAME;
+
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_get_physical_device_properties2.html>
 #[derive(Clone)]
 pub struct GetPhysicalDeviceProperties2 {
-    fp: vk::khr_get_physical_device_properties2::DeviceFn,
+    fp: vk::khr_get_physical_device_properties2::InstanceFn,
 }
 
 impl GetPhysicalDeviceProperties2 {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
-        let fp = vk::khr_get_physical_device_properties2::DeviceFn::load(|name| unsafe {
+        let fp = vk::khr_get_physical_device_properties2::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -155,10 +158,8 @@ impl GetPhysicalDeviceProperties2 {
         assert_eq!(count as usize, out.len());
     }
 
-    pub const NAME: &'static CStr = vk::khr_get_physical_device_properties2::DeviceFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::khr_get_physical_device_properties2::DeviceFn {
+    pub fn fp(&self) -> &vk::khr_get_physical_device_properties2::InstanceFn {
         &self.fp
     }
 }

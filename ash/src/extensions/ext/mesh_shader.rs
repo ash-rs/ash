@@ -3,6 +3,8 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::ext_mesh_shader::NAME;
+
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_mesh_shader.html>
 #[derive(Clone)]
 pub struct MeshShader {
@@ -81,8 +83,6 @@ impl MeshShader {
             stride,
         )
     }
-
-    pub const NAME: &'static CStr = vk::ext_mesh_shader::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ext_mesh_shader::DeviceFn {

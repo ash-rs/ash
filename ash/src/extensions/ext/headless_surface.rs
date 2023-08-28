@@ -5,17 +5,19 @@ use crate::{Entry, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::ext_headless_surface::NAME;
+
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_headless_surface.html>
 #[derive(Clone)]
 pub struct HeadlessSurface {
     handle: vk::Instance,
-    fp: vk::ext_headless_surface::DeviceFn,
+    fp: vk::ext_headless_surface::InstanceFn,
 }
 
 impl HeadlessSurface {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::ext_headless_surface::DeviceFn::load(|name| unsafe {
+        let fp = vk::ext_headless_surface::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -38,10 +40,8 @@ impl HeadlessSurface {
         .assume_init_on_success(surface)
     }
 
-    pub const NAME: &'static CStr = vk::ext_headless_surface::DeviceFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::ext_headless_surface::DeviceFn {
+    pub fn fp(&self) -> &vk::ext_headless_surface::InstanceFn {
         &self.fp
     }
 

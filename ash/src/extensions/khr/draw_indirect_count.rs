@@ -3,6 +3,8 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::khr_draw_indirect_count::NAME;
+
 #[derive(Clone)]
 pub struct DrawIndirectCount {
     fp: vk::khr_draw_indirect_count::DeviceFn,
@@ -61,8 +63,6 @@ impl DrawIndirectCount {
             stride,
         );
     }
-
-    pub const NAME: &'static CStr = vk::khr_draw_indirect_count::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::khr_draw_indirect_count::DeviceFn {

@@ -5,6 +5,8 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::khr_acceleration_structure::NAME;
+
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_acceleration_structure.html>
 #[derive(Clone)]
 pub struct AccelerationStructure {
@@ -287,8 +289,6 @@ impl AccelerationStructure {
             size_info,
         )
     }
-
-    pub const NAME: &'static CStr = vk::khr_acceleration_structure::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::khr_acceleration_structure::DeviceFn {

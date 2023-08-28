@@ -4,6 +4,8 @@ use std::ffi::CStr;
 use std::mem;
 use std::ptr;
 
+pub const NAME: &CStr = vk::khr_get_memory_requirements2::NAME;
+
 #[derive(Clone)]
 pub struct GetMemoryRequirements2 {
     handle: vk::Device,
@@ -74,8 +76,6 @@ impl GetMemoryRequirements2 {
         );
         assert_eq!(count as usize, out.len());
     }
-
-    pub const NAME: &'static CStr = vk::khr_get_memory_requirements2::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::khr_get_memory_requirements2::DeviceFn {

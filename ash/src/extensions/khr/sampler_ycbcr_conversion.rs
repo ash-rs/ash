@@ -5,6 +5,8 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::khr_sampler_ycbcr_conversion::NAME;
+
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_sampler_ycbcr_conversion.html>
 #[derive(Clone)]
 pub struct SamplerYcbcrConversion {
@@ -51,8 +53,6 @@ impl SamplerYcbcrConversion {
             allocation_callbacks.as_raw_ptr(),
         )
     }
-
-    pub const NAME: &'static CStr = vk::khr_sampler_ycbcr_conversion::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::khr_sampler_ycbcr_conversion::DeviceFn {

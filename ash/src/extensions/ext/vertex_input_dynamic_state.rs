@@ -3,6 +3,8 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::ext_vertex_input_dynamic_state::NAME;
+
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_vertex_input_dynamic_state.html>
 #[derive(Clone)]
 pub struct VertexInputDynamicState {
@@ -33,8 +35,6 @@ impl VertexInputDynamicState {
             vertex_attribute_descriptions.as_ptr(),
         )
     }
-
-    pub const NAME: &'static CStr = vk::ext_vertex_input_dynamic_state::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ext_vertex_input_dynamic_state::DeviceFn {

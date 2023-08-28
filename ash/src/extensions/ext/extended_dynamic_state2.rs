@@ -3,6 +3,8 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::ext_extended_dynamic_state2::NAME;
+
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_extended_dynamic_state2.html>
 #[derive(Clone)]
 pub struct ExtendedDynamicState2 {
@@ -72,8 +74,6 @@ impl ExtendedDynamicState2 {
             primitive_restart_enable.into(),
         )
     }
-
-    pub const NAME: &'static CStr = vk::ext_extended_dynamic_state2::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ext_extended_dynamic_state2::DeviceFn {

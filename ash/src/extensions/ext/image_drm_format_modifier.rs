@@ -4,6 +4,8 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::ext_image_drm_format_modifier::NAME;
+
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_image_drm_format_modifier.html>
 #[derive(Clone)]
 pub struct ImageDrmFormatModifier {
@@ -30,8 +32,6 @@ impl ImageDrmFormatModifier {
         (self.fp.get_image_drm_format_modifier_properties_ext)(self.handle, image, properties)
             .result()
     }
-
-    pub const NAME: &'static CStr = vk::ext_image_drm_format_modifier::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ext_image_drm_format_modifier::DeviceFn {

@@ -3,6 +3,8 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::nv_device_generated_commands_compute::NAME;
+
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_NV_device_generated_commands_compute.html>
 #[derive(Clone)]
 pub struct DeviceGeneratedCommandsCompute {
@@ -56,8 +58,6 @@ impl DeviceGeneratedCommandsCompute {
     ) -> vk::DeviceAddress {
         (self.fp.get_pipeline_indirect_device_address_nv)(self.handle, info)
     }
-
-    pub const NAME: &'static CStr = vk::nv_device_generated_commands_compute::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::nv_device_generated_commands_compute::DeviceFn {

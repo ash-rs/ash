@@ -166,19 +166,20 @@ impl SwapchainDevice {
     #[inline]
     pub unsafe fn acquire_next_image2(
         &self,
-        acquire_info: &vk::AcquireNextImageInfoKHR,
+        acquire_info: &vk::AcquireNextImageInfoKHR<'_>,
     ) -> VkResult<(u32, bool)> {
-        let mut index = 0;
-        let err_code = (self.fp.acquire_next_image2_khr)(self.handle, acquire_info, &mut index);
+        let mut index = mem::MaybeUninit::uninit();
+        let err_code =
+            (self.fp.acquire_next_image2_khr)(self.handle, acquire_info, index.as_mut_ptr());
         match err_code {
-            vk::Result::SUCCESS => Ok((index, false)),
-            vk::Result::SUBOPTIMAL_KHR => Ok((index, true)),
+            vk::Result::SUCCESS => Ok((index.assume_init(), false)),
+            vk::Result::SUBOPTIMAL_KHR => Ok((index.assume_init(), true)),
             _ => Err(err_code),
         }
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::KhrSwapchainDeviceFn {
+    pub fn fp(&self) -> &vk::khr_swapchain::DeviceFn {
         &self.fp
     }
 
@@ -192,12 +193,12 @@ impl SwapchainDevice {
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_swapchain.html>
 #[derive(Clone)]
 pub struct SwapchainInstance {
-    fp: vk::KhrSwapchainInstanceFn,
+    fp: vk::khr_swapchain::InstanceFn,
 }
 
 impl SwapchainInstance {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
-        let fp = vk::KhrSwapchainInstanceFn::load(|name| unsafe {
+        let fp = vk::khr_swapchain::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -228,34 +229,8 @@ impl SwapchainInstance {
         })
     }
 
-    /// On success, returns the next image's index and whether the swapchain is suboptimal for the surface.
-    ///
-    /// Only available since [Vulkan 1.1].
-    ///
-    /// Also available as [`DeviceGroup::acquire_next_image2()`]
-    /// when [`VK_KHR_swapchain`] is enabled.
-    ///
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkAcquireNextImage2KHR.html>
-    ///
-    /// [Vulkan 1.1]: https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_VERSION_1_1.html
-    /// [`VK_KHR_swapchain`]: https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_swapchain.html
     #[inline]
-    pub unsafe fn acquire_next_image2(
-        &self,
-        acquire_info: &vk::AcquireNextImageInfoKHR<'_>,
-    ) -> VkResult<(u32, bool)> {
-        let mut index = mem::MaybeUninit::uninit();
-        let err_code =
-            (self.fp.acquire_next_image2_khr)(self.handle, acquire_info, index.as_mut_ptr());
-        match err_code {
-            vk::Result::SUCCESS => Ok((index.assume_init(), false)),
-            vk::Result::SUBOPTIMAL_KHR => Ok((index.assume_init(), true)),
-            _ => Err(err_code),
-        }
-    }
-
-    #[inline]
-    pub fn fp(&self) -> &vk::khr_swapchain::DeviceFn {
+    pub fn fp(&self) -> &vk::khr_swapchain::InstanceFn {
         &self.fp
     }
 }

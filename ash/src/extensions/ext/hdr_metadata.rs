@@ -3,7 +3,7 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &'static CStr = vk::ext_hdr_metadata::NAME;
+pub const NAME: &CStr = vk::ext_hdr_metadata::NAME;
 
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_hdr_metadata.html>
 #[derive(Clone)]

@@ -5,15 +5,17 @@ use std::ffi::CStr;
 use std::mem;
 use std::ptr;
 
+pub const NAME: &CStr = vk::khr_get_surface_capabilities2::NAME;
+
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_get_surface_capabilities2.html>
 #[derive(Clone)]
 pub struct GetSurfaceCapabilities2 {
-    fp: vk::khr_get_surface_capabilities2::DeviceFn,
+    fp: vk::khr_get_surface_capabilities2::InstanceFn,
 }
 
 impl GetSurfaceCapabilities2 {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
-        let fp = vk::khr_get_surface_capabilities2::DeviceFn::load(|name| unsafe {
+        let fp = vk::khr_get_surface_capabilities2::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -74,10 +76,8 @@ impl GetSurfaceCapabilities2 {
         err_code.result()
     }
 
-    pub const NAME: &'static CStr = vk::khr_get_surface_capabilities2::DeviceFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::khr_get_surface_capabilities2::DeviceFn {
+    pub fn fp(&self) -> &vk::khr_get_surface_capabilities2::InstanceFn {
         &self.fp
     }
 }

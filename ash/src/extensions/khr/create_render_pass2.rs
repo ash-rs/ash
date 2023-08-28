@@ -5,6 +5,8 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::khr_create_renderpass2::NAME;
+
 #[derive(Clone)]
 pub struct CreateRenderPass2 {
     handle: vk::Device,
@@ -72,8 +74,6 @@ impl CreateRenderPass2 {
     ) {
         (self.fp.cmd_end_render_pass2_khr)(command_buffer, subpass_end_info);
     }
-
-    pub const NAME: &'static CStr = vk::khr_create_renderpass2::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::khr_create_renderpass2::DeviceFn {

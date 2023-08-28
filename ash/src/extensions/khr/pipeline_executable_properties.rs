@@ -4,6 +4,8 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::khr_pipeline_executable_properties::NAME;
+
 #[derive(Clone)]
 pub struct PipelineExecutableProperties {
     handle: vk::Device,
@@ -66,8 +68,6 @@ impl PipelineExecutableProperties {
             )
         })
     }
-
-    pub const NAME: &'static CStr = vk::khr_pipeline_executable_properties::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::khr_pipeline_executable_properties::DeviceFn {

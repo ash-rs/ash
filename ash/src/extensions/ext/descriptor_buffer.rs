@@ -4,6 +4,8 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::ext_descriptor_buffer::NAME;
+
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_descriptor_buffer.html>
 #[derive(Clone)]
 pub struct DescriptorBuffer {
@@ -193,8 +195,6 @@ impl DescriptorBuffer {
         )
         .result()
     }
-
-    pub const NAME: &'static CStr = vk::ext_descriptor_buffer::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ext_descriptor_buffer::DeviceFn {

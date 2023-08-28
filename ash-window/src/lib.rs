@@ -124,44 +124,46 @@ pub fn enumerate_required_extensions(
     let extensions = match display_handle {
         RawDisplayHandle::Windows(_) => {
             const WINDOWS_EXTS: [*const c_char; 2] = [
-                khr::Surface::NAME.as_ptr(),
-                khr::Win32Surface::NAME.as_ptr(),
+                khr::surface::NAME.as_ptr(),
+                khr::win32_surface::NAME.as_ptr(),
             ];
             &WINDOWS_EXTS
         }
 
         RawDisplayHandle::Wayland(_) => {
             const WAYLAND_EXTS: [*const c_char; 2] = [
-                khr::Surface::NAME.as_ptr(),
-                khr::WaylandSurface::NAME.as_ptr(),
+                khr::surface::NAME.as_ptr(),
+                khr::wayland_surface::NAME.as_ptr(),
             ];
             &WAYLAND_EXTS
         }
 
         RawDisplayHandle::Xlib(_) => {
-            const XLIB_EXTS: [*const c_char; 2] =
-                [khr::Surface::NAME.as_ptr(), khr::XlibSurface::NAME.as_ptr()];
+            const XLIB_EXTS: [*const c_char; 2] = [
+                khr::surface::NAME.as_ptr(),
+                khr::xlib_surface::NAME.as_ptr(),
+            ];
             &XLIB_EXTS
         }
 
         RawDisplayHandle::Xcb(_) => {
             const XCB_EXTS: [*const c_char; 2] =
-                [khr::Surface::NAME.as_ptr(), khr::XcbSurface::NAME.as_ptr()];
+                [khr::surface::NAME.as_ptr(), khr::xcb_surface::NAME.as_ptr()];
             &XCB_EXTS
         }
 
         RawDisplayHandle::Android(_) => {
             const ANDROID_EXTS: [*const c_char; 2] = [
-                khr::Surface::NAME.as_ptr(),
-                khr::AndroidSurface::NAME.as_ptr(),
+                khr::surface::NAME.as_ptr(),
+                khr::android_surface::NAME.as_ptr(),
             ];
             &ANDROID_EXTS
         }
 
         RawDisplayHandle::AppKit(_) | RawDisplayHandle::UiKit(_) => {
             const METAL_EXTS: [*const c_char; 2] = [
-                khr::Surface::NAME.as_ptr(),
-                ext::MetalSurface::NAME.as_ptr(),
+                khr::surface::NAME.as_ptr(),
+                ext::metal_surfcae::NAME.as_ptr(),
             ];
             &METAL_EXTS
         }

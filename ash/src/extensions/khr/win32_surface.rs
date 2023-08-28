@@ -5,16 +5,19 @@ use crate::{Entry, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::khr_win32_surface::NAME;
+
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_win32_surface.html>
 #[derive(Clone)]
 pub struct Win32Surface {
     handle: vk::Instance,
-    fp: vk::khr_win32Surface::DeviceFn,
+    fp: vk::khr_win32_surface::InstanceFn,
 }
 
 impl Win32Surface {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::khr_win32Surface::DeviceFn::load(|name| unsafe {
+        let fp = vk::khr_win32_surface::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -52,10 +55,8 @@ impl Win32Surface {
         b > 0
     }
 
-    pub const NAME: &'static CStr = vk::khr_win32Surface::DeviceFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::khr_win32Surface::DeviceFn {
+    pub fn fp(&self) -> &vk::khr_win32_surface::InstanceFn {
         &self.fp
     }
 

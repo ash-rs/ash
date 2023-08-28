@@ -4,6 +4,8 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::ext_pipeline_properties::NAME;
+
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_pipeline_properties.html>
 #[derive(Clone)]
 pub struct PipelineProperties {
@@ -25,7 +27,7 @@ impl PipelineProperties {
     pub unsafe fn get_pipeline_properties(
         &self,
         pipeline_info: &vk::PipelineInfoEXT<'_>,
-        pipeline_properties: &mut impl vk::GetPipelinePropertiesEXTParamPipelineProperties,
+        pipeline_properties: &mut impl vk::ext_pipeline_properties::GetPipelinePropertiesEXTParamPipelineProperties,
     ) -> VkResult<()> {
         (self.fp.get_pipeline_properties_ext)(
             self.handle,
@@ -34,8 +36,6 @@ impl PipelineProperties {
         )
         .result()
     }
-
-    pub const NAME: &'static CStr = vk::ext_pipeline_properties::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ext_pipeline_properties::DeviceFn {

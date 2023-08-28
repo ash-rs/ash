@@ -4,6 +4,8 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::android_external_memory_android_hardware_buffer::NAME;
+
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_ANDROID_external_memory_android_hardware_buffer.html>
 #[derive(Clone)]
 pub struct ExternalMemoryAndroidHardwareBuffer {
@@ -42,9 +44,6 @@ impl ExternalMemoryAndroidHardwareBuffer {
         (self.fp.get_memory_android_hardware_buffer_android)(self.handle, info, buffer.as_mut_ptr())
             .assume_init_on_success(buffer)
     }
-
-    pub const NAME: &'static CStr =
-        vk::android_external_memory_android_hardware_buffer::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::android_external_memory_android_hardware_buffer::DeviceFn {

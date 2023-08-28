@@ -5,7 +5,7 @@ use std::ffi::CStr;
 use std::mem;
 use std::ptr;
 
-pub const NAME: &'static CStr = vk::khr_performance_query::NAME;
+pub const NAME: &CStr = vk::khr_performance_query::NAME;
 
 /// High-level device function wrapper for
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_performance_query.html>

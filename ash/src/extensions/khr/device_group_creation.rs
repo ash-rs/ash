@@ -5,17 +5,19 @@ use std::ffi::CStr;
 use std::mem;
 use std::ptr;
 
+pub const NAME: &CStr = vk::khr_device_group_creation::NAME;
+
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_device_group_creation.html>
 #[derive(Clone)]
 pub struct DeviceGroupCreation {
     handle: vk::Instance,
-    fp: vk::khr_device_group_creation::DeviceFn,
+    fp: vk::khr_device_group_creation::InstanceFn,
 }
 
 impl DeviceGroupCreation {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::khr_device_group_creation::DeviceFn::load(|name| unsafe {
+        let fp = vk::khr_device_group_creation::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -50,10 +52,8 @@ impl DeviceGroupCreation {
         Ok(())
     }
 
-    pub const NAME: &'static CStr = vk::khr_device_group_creation::DeviceFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::khr_device_group_creation::DeviceFn {
+    pub fn fp(&self) -> &vk::khr_device_group_creation::InstanceFn {
         &self.fp
     }
 

@@ -3,6 +3,8 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::khr_copy_commands2::NAME;
+
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_copy_commands2.html>
 #[derive(Clone)]
 pub struct CopyCommands2 {
@@ -71,8 +73,6 @@ impl CopyCommands2 {
     ) {
         (self.fp.cmd_resolve_image2_khr)(command_buffer, resolve_image_info)
     }
-
-    pub const NAME: &'static CStr = vk::khr_copy_commands2::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::khr_copy_commands2::DeviceFn {

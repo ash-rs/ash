@@ -4,6 +4,8 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::google_display_timing::NAME;
+
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_GOOGLE_display_timing.html>
 #[derive(Clone)]
 pub struct DisplayTiming {
@@ -41,8 +43,6 @@ impl DisplayTiming {
         (self.fp.get_refresh_cycle_duration_google)(self.handle, swapchain, properties.as_mut_ptr())
             .assume_init_on_success(properties)
     }
-
-    pub const NAME: &'static CStr = vk::google_display_timing::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::google_display_timing::DeviceFn {

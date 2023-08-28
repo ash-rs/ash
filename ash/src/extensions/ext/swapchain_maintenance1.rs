@@ -4,6 +4,8 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::ext_swapchain_maintenance1::NAME;
+
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_swapchain_maintenance1.html>
 #[derive(Clone)]
 pub struct SwapchainMaintenance1 {
@@ -28,8 +30,6 @@ impl SwapchainMaintenance1 {
     ) -> VkResult<()> {
         (self.fp.release_swapchain_images_ext)(self.handle, release_info).result()
     }
-
-    pub const NAME: &'static CStr = vk::ext_swapchain_maintenance1::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ext_swapchain_maintenance1::DeviceFn {

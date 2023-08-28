@@ -6,6 +6,8 @@ use std::ffi::CStr;
 use std::mem;
 use std::ptr;
 
+pub const NAME: &CStr = vk::ext_shader_object::NAME;
+
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_shader_object.html>
 #[derive(Clone)]
 pub struct ShaderObject {
@@ -700,8 +702,6 @@ impl ShaderObject {
     ) {
         (self.fp.cmd_set_coverage_reduction_mode_nv)(command_buffer, coverage_reduction_mode)
     }
-
-    pub const NAME: &'static CStr = vk::ext_shader_object::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ext_shader_object::DeviceFn {

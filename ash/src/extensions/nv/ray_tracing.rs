@@ -5,6 +5,8 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::nv_ray_tracing::NAME;
+
 #[derive(Clone)]
 pub struct RayTracing {
     handle: vk::Device,
@@ -239,8 +241,6 @@ impl RayTracing {
     pub unsafe fn compile_deferred(&self, pipeline: vk::Pipeline, shader: u32) -> VkResult<()> {
         (self.fp.compile_deferred_nv)(self.handle, pipeline, shader).result()
     }
-
-    pub const NAME: &'static CStr = vk::nv_ray_tracing::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::nv_ray_tracing::DeviceFn {

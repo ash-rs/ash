@@ -4,6 +4,8 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::khr_present_wait::NAME;
+
 #[derive(Clone)]
 pub struct PresentWait {
     handle: vk::Device,
@@ -29,8 +31,6 @@ impl PresentWait {
     ) -> VkResult<()> {
         (self.fp.wait_for_present_khr)(self.handle, swapchain, present_id, timeout).result()
     }
-
-    pub const NAME: &'static CStr = vk::khr_present_wait::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::khr_present_wait::DeviceFn {

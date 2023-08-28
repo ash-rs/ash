@@ -4,6 +4,8 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::amd_shader_info::NAME;
+
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_AMD_shader_info.html>
 #[derive(Clone)]
 pub struct ShaderInfo {
@@ -63,8 +65,6 @@ impl ShaderInfo {
             x => unimplemented!("ShaderInfoTypeAMD {}", x.0),
         }
     }
-
-    pub const NAME: &'static CStr = vk::amd_shader_info::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::amd_shader_info::DeviceFn {

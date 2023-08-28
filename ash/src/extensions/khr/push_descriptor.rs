@@ -4,6 +4,8 @@ use std::ffi::c_void;
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::khr_push_descriptor::NAME;
+
 #[derive(Clone)]
 pub struct PushDescriptor {
     fp: vk::khr_push_descriptor::DeviceFn,
@@ -55,8 +57,6 @@ impl PushDescriptor {
             p_data,
         );
     }
-
-    pub const NAME: &'static CStr = vk::khr_push_descriptor::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::khr_push_descriptor::DeviceFn {

@@ -30,8 +30,6 @@ impl SampleLocationsDevice {
         (self.fp.cmd_set_sample_locations_ext)(command_buffer, sample_locations_info)
     }
 
-    pub const NAME: &'static CStr = vk::ext_sample_locations::DeviceFn::NAME;
-
     #[inline]
     pub fn fp(&self) -> &vk::ext_sample_locations::DeviceFn {
         &self.fp

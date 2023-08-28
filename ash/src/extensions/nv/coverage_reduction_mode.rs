@@ -5,15 +5,17 @@ use std::ffi::CStr;
 use std::mem;
 use std::ptr;
 
+pub const NAME: &CStr = vk::nv_coverage_reduction_mode::NAME;
+
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_NV_coverage_reduction_mode.html>
 #[derive(Clone)]
 pub struct CoverageReductionMode {
-    fp: vk::nv_coverage_reduction_mode::DeviceFn,
+    fp: vk::nv_coverage_reduction_mode::InstanceFn,
 }
 
 impl CoverageReductionMode {
     pub fn new(entry: &Entry, instance: &Instance) -> Self {
-        let fp = vk::nv_coverage_reduction_mode::DeviceFn::load(|name| unsafe {
+        let fp = vk::nv_coverage_reduction_mode::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -60,10 +62,8 @@ impl CoverageReductionMode {
         Ok(())
     }
 
-    pub const NAME: &'static CStr = vk::nv_coverage_reduction_mode::DeviceFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::nv_coverage_reduction_mode::DeviceFn {
+    pub fn fp(&self) -> &vk::nv_coverage_reduction_mode::InstanceFn {
         &self.fp
     }
 }

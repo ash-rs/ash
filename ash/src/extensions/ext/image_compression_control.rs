@@ -5,6 +5,8 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::ext_image_compression_control::NAME;
+
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_image_compression_control.html>
 #[derive(Clone)]
 pub struct ImageCompressionControl {
@@ -40,8 +42,6 @@ impl ImageCompressionControl {
     ) {
         (self.fp.get_image_subresource_layout2_ext)(self.handle, image, subresource, layout)
     }
-
-    pub const NAME: &'static CStr = vk::ext_image_compression_control::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ext_image_compression_control::DeviceFn {

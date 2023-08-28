@@ -5,6 +5,8 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::amdx_shader_enqueue::NAME;
+
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_AMDX_shader_enqueue.html>
 #[derive(Clone)]
 pub struct ShaderEnqueue {
@@ -115,8 +117,6 @@ impl ShaderEnqueue {
     ) {
         (self.fp.cmd_dispatch_graph_indirect_count_amdx)(command_buffer, scratch, count_info)
     }
-
-    pub const NAME: &'static CStr = vk::amdx_shader_enqueue::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::amdx_shader_enqueue::DeviceFn {

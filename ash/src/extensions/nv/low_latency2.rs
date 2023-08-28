@@ -5,17 +5,19 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::nv_low_latency2::NAME;
+
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_NV_low_latency2.html>
 #[derive(Clone)]
 pub struct LowLatency2 {
     handle: vk::Device,
-    fp: vk::NvLowLatency2Fn,
+    fp: vk::nv_low_latency2::DeviceFn,
 }
 
 impl LowLatency2 {
     pub fn new(instance: &Instance, device: &Device) -> Self {
         let handle = device.handle();
-        let fp = vk::NvLowLatency2Fn::load(|name| unsafe {
+        let fp = vk::nv_low_latency2::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -72,10 +74,8 @@ impl LowLatency2 {
         (self.fp.queue_notify_out_of_band_nv)(queue, queue_type_info)
     }
 
-    pub const NAME: &'static CStr = vk::NvLowLatency2Fn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::NvLowLatency2Fn {
+    pub fn fp(&self) -> &vk::nv_low_latency2::DeviceFn {
         &self.fp
     }
 

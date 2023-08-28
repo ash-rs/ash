@@ -5,6 +5,8 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::ext_private_data::NAME;
+
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_private_data.html>
 #[derive(Clone)]
 pub struct PrivateData {
@@ -87,8 +89,6 @@ impl PrivateData {
         );
         data.assume_init()
     }
-
-    pub const NAME: &'static CStr = vk::ext_private_data::DeviceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ext_private_data::DeviceFn {
