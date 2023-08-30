@@ -6985,6 +6985,245 @@ impl AmdGpuShaderInt16Fn {
 }
 #[derive(Clone)]
 pub struct AmdGpuShaderInt16Fn;
+impl AmdxShaderEnqueueFn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMDX_shader_enqueue\0") };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[allow(non_camel_case_types)]
+pub type PFN_vkCreateExecutionGraphPipelinesAMDX = unsafe extern "system" fn(
+    device: Device,
+    pipeline_cache: PipelineCache,
+    create_info_count: u32,
+    p_create_infos: *const ExecutionGraphPipelineCreateInfoAMDX,
+    p_allocator: *const AllocationCallbacks,
+    p_pipelines: *mut Pipeline,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetExecutionGraphPipelineScratchSizeAMDX = unsafe extern "system" fn(
+    device: Device,
+    execution_graph: Pipeline,
+    p_size_info: *mut ExecutionGraphPipelineScratchSizeAMDX,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetExecutionGraphPipelineNodeIndexAMDX = unsafe extern "system" fn(
+    device: Device,
+    execution_graph: Pipeline,
+    p_node_info: *const PipelineShaderStageNodeCreateInfoAMDX,
+    p_node_index: *mut u32,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdInitializeGraphScratchMemoryAMDX =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, scratch: DeviceAddress);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDispatchGraphAMDX = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    scratch: DeviceAddress,
+    p_count_info: *const DispatchGraphCountInfoAMDX,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDispatchGraphIndirectAMDX = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    scratch: DeviceAddress,
+    p_count_info: *const DispatchGraphCountInfoAMDX,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDispatchGraphIndirectCountAMDX = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    scratch: DeviceAddress,
+    count_info: DeviceAddress,
+);
+#[derive(Clone)]
+pub struct AmdxShaderEnqueueFn {
+    pub create_execution_graph_pipelines_amdx: PFN_vkCreateExecutionGraphPipelinesAMDX,
+    pub get_execution_graph_pipeline_scratch_size_amdx:
+        PFN_vkGetExecutionGraphPipelineScratchSizeAMDX,
+    pub get_execution_graph_pipeline_node_index_amdx: PFN_vkGetExecutionGraphPipelineNodeIndexAMDX,
+    pub cmd_initialize_graph_scratch_memory_amdx: PFN_vkCmdInitializeGraphScratchMemoryAMDX,
+    pub cmd_dispatch_graph_amdx: PFN_vkCmdDispatchGraphAMDX,
+    pub cmd_dispatch_graph_indirect_amdx: PFN_vkCmdDispatchGraphIndirectAMDX,
+    pub cmd_dispatch_graph_indirect_count_amdx: PFN_vkCmdDispatchGraphIndirectCountAMDX,
+}
+unsafe impl Send for AmdxShaderEnqueueFn {}
+unsafe impl Sync for AmdxShaderEnqueueFn {}
+impl AmdxShaderEnqueueFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {
+            create_execution_graph_pipelines_amdx: unsafe {
+                unsafe extern "system" fn create_execution_graph_pipelines_amdx(
+                    _device: Device,
+                    _pipeline_cache: PipelineCache,
+                    _create_info_count: u32,
+                    _p_create_infos: *const ExecutionGraphPipelineCreateInfoAMDX,
+                    _p_allocator: *const AllocationCallbacks,
+                    _p_pipelines: *mut Pipeline,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(create_execution_graph_pipelines_amdx)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCreateExecutionGraphPipelinesAMDX\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    create_execution_graph_pipelines_amdx
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_execution_graph_pipeline_scratch_size_amdx: unsafe {
+                unsafe extern "system" fn get_execution_graph_pipeline_scratch_size_amdx(
+                    _device: Device,
+                    _execution_graph: Pipeline,
+                    _p_size_info: *mut ExecutionGraphPipelineScratchSizeAMDX,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_execution_graph_pipeline_scratch_size_amdx)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetExecutionGraphPipelineScratchSizeAMDX\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_execution_graph_pipeline_scratch_size_amdx
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_execution_graph_pipeline_node_index_amdx: unsafe {
+                unsafe extern "system" fn get_execution_graph_pipeline_node_index_amdx(
+                    _device: Device,
+                    _execution_graph: Pipeline,
+                    _p_node_info: *const PipelineShaderStageNodeCreateInfoAMDX,
+                    _p_node_index: *mut u32,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_execution_graph_pipeline_node_index_amdx)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetExecutionGraphPipelineNodeIndexAMDX\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_execution_graph_pipeline_node_index_amdx
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_initialize_graph_scratch_memory_amdx: unsafe {
+                unsafe extern "system" fn cmd_initialize_graph_scratch_memory_amdx(
+                    _command_buffer: CommandBuffer,
+                    _scratch: DeviceAddress,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_initialize_graph_scratch_memory_amdx)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdInitializeGraphScratchMemoryAMDX\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_initialize_graph_scratch_memory_amdx
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_dispatch_graph_amdx: unsafe {
+                unsafe extern "system" fn cmd_dispatch_graph_amdx(
+                    _command_buffer: CommandBuffer,
+                    _scratch: DeviceAddress,
+                    _p_count_info: *const DispatchGraphCountInfoAMDX,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_dispatch_graph_amdx)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdDispatchGraphAMDX\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_dispatch_graph_amdx
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_dispatch_graph_indirect_amdx: unsafe {
+                unsafe extern "system" fn cmd_dispatch_graph_indirect_amdx(
+                    _command_buffer: CommandBuffer,
+                    _scratch: DeviceAddress,
+                    _p_count_info: *const DispatchGraphCountInfoAMDX,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_dispatch_graph_indirect_amdx)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdDispatchGraphIndirectAMDX\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_dispatch_graph_indirect_amdx
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_dispatch_graph_indirect_count_amdx: unsafe {
+                unsafe extern "system" fn cmd_dispatch_graph_indirect_count_amdx(
+                    _command_buffer: CommandBuffer,
+                    _scratch: DeviceAddress,
+                    _count_info: DeviceAddress,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_dispatch_graph_indirect_count_amdx)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdDispatchGraphIndirectCountAMDX\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_dispatch_graph_indirect_count_amdx
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+}
+#[doc = "Generated from 'VK_AMDX_shader_enqueue'"]
+impl BufferUsageFlags {
+    pub const EXECUTION_GRAPH_SCRATCH_AMDX: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_AMDX_shader_enqueue'"]
+impl BufferUsageFlags2KHR {
+    pub const EXECUTION_GRAPH_SCRATCH_AMDX: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_AMDX_shader_enqueue'"]
+impl PipelineBindPoint {
+    pub const EXECUTION_GRAPH_AMDX: Self = Self(1_000_134_000);
+}
+#[doc = "Generated from 'VK_AMDX_shader_enqueue'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_ENQUEUE_FEATURES_AMDX: Self = Self(1_000_134_000);
+    pub const PHYSICAL_DEVICE_SHADER_ENQUEUE_PROPERTIES_AMDX: Self = Self(1_000_134_001);
+    pub const EXECUTION_GRAPH_PIPELINE_SCRATCH_SIZE_AMDX: Self = Self(1_000_134_002);
+    pub const EXECUTION_GRAPH_PIPELINE_CREATE_INFO_AMDX: Self = Self(1_000_134_003);
+    pub const PIPELINE_SHADER_STAGE_NODE_CREATE_INFO_AMDX: Self = Self(1_000_134_004);
+}
 impl AmdMixedAttachmentSamplesFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
         ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_mixed_attachment_samples\0")
@@ -11561,6 +11800,27 @@ impl NvCooperativeMatrixFn {
     }
 }
 #[doc = "Generated from 'VK_NV_cooperative_matrix'"]
+impl ComponentTypeKHR {
+    pub const FLOAT16_NV: Self = Self::FLOAT16;
+    pub const FLOAT32_NV: Self = Self::FLOAT32;
+    pub const FLOAT64_NV: Self = Self::FLOAT64;
+    pub const SINT8_NV: Self = Self::SINT8;
+    pub const SINT16_NV: Self = Self::SINT16;
+    pub const SINT32_NV: Self = Self::SINT32;
+    pub const SINT64_NV: Self = Self::SINT64;
+    pub const UINT8_NV: Self = Self::UINT8;
+    pub const UINT16_NV: Self = Self::UINT16;
+    pub const UINT32_NV: Self = Self::UINT32;
+    pub const UINT64_NV: Self = Self::UINT64;
+}
+#[doc = "Generated from 'VK_NV_cooperative_matrix'"]
+impl ScopeKHR {
+    pub const DEVICE_NV: Self = Self::DEVICE;
+    pub const WORKGROUP_NV: Self = Self::WORKGROUP;
+    pub const SUBGROUP_NV: Self = Self::SUBGROUP;
+    pub const QUEUE_FAMILY_NV: Self = Self::QUEUE_FAMILY;
+}
+#[doc = "Generated from 'VK_NV_cooperative_matrix'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_COOPERATIVE_MATRIX_FEATURES_NV: Self = Self(1_000_249_000);
     pub const COOPERATIVE_MATRIX_PROPERTIES_NV: Self = Self(1_000_249_001);
@@ -12756,6 +13016,182 @@ impl StructureType {
     pub const PIPELINE_EXECUTABLE_INFO_KHR: Self = Self(1_000_269_003);
     pub const PIPELINE_EXECUTABLE_STATISTIC_KHR: Self = Self(1_000_269_004);
     pub const PIPELINE_EXECUTABLE_INTERNAL_REPRESENTATION_KHR: Self = Self(1_000_269_005);
+}
+impl ExtHostImageCopyFn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_host_image_copy\0") };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[allow(non_camel_case_types)]
+pub type PFN_vkCopyMemoryToImageEXT = unsafe extern "system" fn(
+    device: Device,
+    p_copy_memory_to_image_info: *const CopyMemoryToImageInfoEXT,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCopyImageToMemoryEXT = unsafe extern "system" fn(
+    device: Device,
+    p_copy_image_to_memory_info: *const CopyImageToMemoryInfoEXT,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCopyImageToImageEXT = unsafe extern "system" fn(
+    device: Device,
+    p_copy_image_to_image_info: *const CopyImageToImageInfoEXT,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkTransitionImageLayoutEXT = unsafe extern "system" fn(
+    device: Device,
+    transition_count: u32,
+    p_transitions: *const HostImageLayoutTransitionInfoEXT,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetImageSubresourceLayout2KHR = unsafe extern "system" fn(
+    device: Device,
+    image: Image,
+    p_subresource: *const ImageSubresource2KHR,
+    p_layout: *mut SubresourceLayout2KHR,
+);
+#[derive(Clone)]
+pub struct ExtHostImageCopyFn {
+    pub copy_memory_to_image_ext: PFN_vkCopyMemoryToImageEXT,
+    pub copy_image_to_memory_ext: PFN_vkCopyImageToMemoryEXT,
+    pub copy_image_to_image_ext: PFN_vkCopyImageToImageEXT,
+    pub transition_image_layout_ext: PFN_vkTransitionImageLayoutEXT,
+    pub get_image_subresource_layout2_ext: PFN_vkGetImageSubresourceLayout2KHR,
+}
+unsafe impl Send for ExtHostImageCopyFn {}
+unsafe impl Sync for ExtHostImageCopyFn {}
+impl ExtHostImageCopyFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {
+            copy_memory_to_image_ext: unsafe {
+                unsafe extern "system" fn copy_memory_to_image_ext(
+                    _device: Device,
+                    _p_copy_memory_to_image_info: *const CopyMemoryToImageInfoEXT,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(copy_memory_to_image_ext)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCopyMemoryToImageEXT\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    copy_memory_to_image_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            copy_image_to_memory_ext: unsafe {
+                unsafe extern "system" fn copy_image_to_memory_ext(
+                    _device: Device,
+                    _p_copy_image_to_memory_info: *const CopyImageToMemoryInfoEXT,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(copy_image_to_memory_ext)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCopyImageToMemoryEXT\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    copy_image_to_memory_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            copy_image_to_image_ext: unsafe {
+                unsafe extern "system" fn copy_image_to_image_ext(
+                    _device: Device,
+                    _p_copy_image_to_image_info: *const CopyImageToImageInfoEXT,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(copy_image_to_image_ext)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCopyImageToImageEXT\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    copy_image_to_image_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            transition_image_layout_ext: unsafe {
+                unsafe extern "system" fn transition_image_layout_ext(
+                    _device: Device,
+                    _transition_count: u32,
+                    _p_transitions: *const HostImageLayoutTransitionInfoEXT,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(transition_image_layout_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkTransitionImageLayoutEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    transition_image_layout_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_image_subresource_layout2_ext: unsafe {
+                unsafe extern "system" fn get_image_subresource_layout2_ext(
+                    _device: Device,
+                    _image: Image,
+                    _p_subresource: *const ImageSubresource2KHR,
+                    _p_layout: *mut SubresourceLayout2KHR,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_image_subresource_layout2_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetImageSubresourceLayout2EXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_image_subresource_layout2_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+}
+#[doc = "Generated from 'VK_EXT_host_image_copy'"]
+impl FormatFeatureFlags2 {
+    #[doc = "Host image copies are supported"]
+    pub const HOST_IMAGE_TRANSFER_EXT: Self =
+        Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_host_image_copy'"]
+impl ImageUsageFlags {
+    #[doc = "Can be used with host image copies"]
+    pub const HOST_TRANSFER_EXT: Self = Self(0b100_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_host_image_copy'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_HOST_IMAGE_COPY_FEATURES_EXT: Self = Self(1_000_270_000);
+    pub const PHYSICAL_DEVICE_HOST_IMAGE_COPY_PROPERTIES_EXT: Self = Self(1_000_270_001);
+    pub const MEMORY_TO_IMAGE_COPY_EXT: Self = Self(1_000_270_002);
+    pub const IMAGE_TO_MEMORY_COPY_EXT: Self = Self(1_000_270_003);
+    pub const COPY_IMAGE_TO_MEMORY_INFO_EXT: Self = Self(1_000_270_004);
+    pub const COPY_MEMORY_TO_IMAGE_INFO_EXT: Self = Self(1_000_270_005);
+    pub const HOST_IMAGE_LAYOUT_TRANSITION_INFO_EXT: Self = Self(1_000_270_006);
+    pub const COPY_IMAGE_TO_IMAGE_INFO_EXT: Self = Self(1_000_270_007);
+    pub const SUBRESOURCE_HOST_MEMCPY_SIZE_EXT: Self = Self(1_000_270_008);
+    pub const HOST_IMAGE_COPY_DEVICE_PERFORMANCE_QUERY_EXT: Self = Self(1_000_270_009);
 }
 impl KhrMapMemory2Fn {
     pub const NAME: &'static ::std::ffi::CStr =
@@ -15132,16 +15568,9 @@ impl ExtImageCompressionControlFn {
     };
     pub const SPEC_VERSION: u32 = 1u32;
 }
-#[allow(non_camel_case_types)]
-pub type PFN_vkGetImageSubresourceLayout2EXT = unsafe extern "system" fn(
-    device: Device,
-    image: Image,
-    p_subresource: *const ImageSubresource2EXT,
-    p_layout: *mut SubresourceLayout2EXT,
-);
 #[derive(Clone)]
 pub struct ExtImageCompressionControlFn {
-    pub get_image_subresource_layout2_ext: PFN_vkGetImageSubresourceLayout2EXT,
+    pub get_image_subresource_layout2_ext: crate::vk::PFN_vkGetImageSubresourceLayout2KHR,
 }
 unsafe impl Send for ExtImageCompressionControlFn {}
 unsafe impl Sync for ExtImageCompressionControlFn {}
@@ -15155,8 +15584,8 @@ impl ExtImageCompressionControlFn {
                 unsafe extern "system" fn get_image_subresource_layout2_ext(
                     _device: Device,
                     _image: Image,
-                    _p_subresource: *const ImageSubresource2EXT,
-                    _p_layout: *mut SubresourceLayout2EXT,
+                    _p_subresource: *const ImageSubresource2KHR,
+                    _p_layout: *mut SubresourceLayout2KHR,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -15184,8 +15613,8 @@ impl Result {
 impl StructureType {
     pub const PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_FEATURES_EXT: Self = Self(1_000_338_000);
     pub const IMAGE_COMPRESSION_CONTROL_EXT: Self = Self(1_000_338_001);
-    pub const SUBRESOURCE_LAYOUT_2_EXT: Self = Self(1_000_338_002);
-    pub const IMAGE_SUBRESOURCE_2_EXT: Self = Self(1_000_338_003);
+    pub const SUBRESOURCE_LAYOUT_2_EXT: Self = Self::SUBRESOURCE_LAYOUT_2_KHR;
+    pub const IMAGE_SUBRESOURCE_2_EXT: Self = Self::IMAGE_SUBRESOURCE_2_KHR;
     pub const IMAGE_COMPRESSION_PROPERTIES_EXT: Self = Self(1_000_338_004);
 }
 impl ExtAttachmentFeedbackLoopLayoutFn {
@@ -15997,7 +16426,7 @@ impl StructureType {
 impl HuaweiSubpassShadingFn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_HUAWEI_subpass_shading\0") };
-    pub const SPEC_VERSION: u32 = 2u32;
+    pub const SPEC_VERSION: u32 = 3u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI = unsafe extern "system" fn(
@@ -16069,7 +16498,7 @@ impl PipelineBindPoint {
 }
 #[doc = "Generated from 'VK_HUAWEI_subpass_shading'"]
 impl PipelineStageFlags2 {
-    pub const SUBPASS_SHADING_HUAWEI: Self =
+    pub const SUBPASS_SHADER_HUAWEI: Self =
         Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_HUAWEI_subpass_shading'"]
@@ -17271,7 +17700,7 @@ impl NvDisplacementMicromapFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
         ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_displacement_micromap\0")
     };
-    pub const SPEC_VERSION: u32 = 1u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
 pub struct NvDisplacementMicromapFn;
@@ -17287,6 +17716,10 @@ impl MicromapTypeEXT {
 impl PipelineCreateFlags {
     pub const RAY_TRACING_DISPLACEMENT_MICROMAP_NV: Self =
         Self(0b1_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_NV_displacement_micromap'"]
+impl PipelineCreateFlags2KHR {
+    pub const RESERVED_28_NV: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_NV_displacement_micromap'"]
 impl StructureType {
@@ -17907,6 +18340,126 @@ impl NvMemoryDecompressionFn {
 impl StructureType {
     pub const PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_FEATURES_NV: Self = Self(1_000_427_000);
     pub const PHYSICAL_DEVICE_MEMORY_DECOMPRESSION_PROPERTIES_NV: Self = Self(1_000_427_001);
+}
+impl NvDeviceGeneratedCommandsComputeFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+            b"VK_NV_device_generated_commands_compute\0",
+        )
+    };
+    pub const SPEC_VERSION: u32 = 2u32;
+}
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPipelineIndirectMemoryRequirementsNV = unsafe extern "system" fn(
+    device: Device,
+    p_create_info: *const ComputePipelineCreateInfo,
+    p_memory_requirements: *mut MemoryRequirements2,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdUpdatePipelineIndirectBufferNV = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    pipeline_bind_point: PipelineBindPoint,
+    pipeline: Pipeline,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPipelineIndirectDeviceAddressNV = unsafe extern "system" fn(
+    device: Device,
+    p_info: *const PipelineIndirectDeviceAddressInfoNV,
+) -> DeviceAddress;
+#[derive(Clone)]
+pub struct NvDeviceGeneratedCommandsComputeFn {
+    pub get_pipeline_indirect_memory_requirements_nv: PFN_vkGetPipelineIndirectMemoryRequirementsNV,
+    pub cmd_update_pipeline_indirect_buffer_nv: PFN_vkCmdUpdatePipelineIndirectBufferNV,
+    pub get_pipeline_indirect_device_address_nv: PFN_vkGetPipelineIndirectDeviceAddressNV,
+}
+unsafe impl Send for NvDeviceGeneratedCommandsComputeFn {}
+unsafe impl Sync for NvDeviceGeneratedCommandsComputeFn {}
+impl NvDeviceGeneratedCommandsComputeFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {
+            get_pipeline_indirect_memory_requirements_nv: unsafe {
+                unsafe extern "system" fn get_pipeline_indirect_memory_requirements_nv(
+                    _device: Device,
+                    _p_create_info: *const ComputePipelineCreateInfo,
+                    _p_memory_requirements: *mut MemoryRequirements2,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_pipeline_indirect_memory_requirements_nv)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetPipelineIndirectMemoryRequirementsNV\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_pipeline_indirect_memory_requirements_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_update_pipeline_indirect_buffer_nv: unsafe {
+                unsafe extern "system" fn cmd_update_pipeline_indirect_buffer_nv(
+                    _command_buffer: CommandBuffer,
+                    _pipeline_bind_point: PipelineBindPoint,
+                    _pipeline: Pipeline,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_update_pipeline_indirect_buffer_nv)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdUpdatePipelineIndirectBufferNV\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_update_pipeline_indirect_buffer_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_pipeline_indirect_device_address_nv: unsafe {
+                unsafe extern "system" fn get_pipeline_indirect_device_address_nv(
+                    _device: Device,
+                    _p_info: *const PipelineIndirectDeviceAddressInfoNV,
+                ) -> DeviceAddress {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_pipeline_indirect_device_address_nv)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetPipelineIndirectDeviceAddressNV\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_pipeline_indirect_device_address_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+}
+#[doc = "Generated from 'VK_NV_device_generated_commands_compute'"]
+impl DescriptorSetLayoutCreateFlags {
+    pub const INDIRECT_BINDABLE_NV: Self = Self(0b1000_0000);
+}
+#[doc = "Generated from 'VK_NV_device_generated_commands_compute'"]
+impl IndirectCommandsTokenTypeNV {
+    pub const PIPELINE: Self = Self(1_000_428_003);
+    pub const DISPATCH: Self = Self(1_000_428_004);
+}
+#[doc = "Generated from 'VK_NV_device_generated_commands_compute'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_COMPUTE_FEATURES_NV: Self =
+        Self(1_000_428_000);
+    pub const COMPUTE_PIPELINE_INDIRECT_BUFFER_INFO_NV: Self = Self(1_000_428_001);
+    pub const PIPELINE_INDIRECT_DEVICE_ADDRESS_INFO_NV: Self = Self(1_000_428_002);
 }
 impl NvLinearColorAttachmentFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
@@ -19242,6 +19795,205 @@ impl PipelineCreateFlags {
 #[doc = "Generated from 'VK_EXT_pipeline_protected_access'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES_EXT: Self = Self(1_000_466_000);
+}
+impl KhrMaintenance5Fn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance5\0") };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBindIndexBuffer2KHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    buffer: Buffer,
+    offset: DeviceSize,
+    size: DeviceSize,
+    index_type: IndexType,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetRenderingAreaGranularityKHR = unsafe extern "system" fn(
+    device: Device,
+    p_rendering_area_info: *const RenderingAreaInfoKHR,
+    p_granularity: *mut Extent2D,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetDeviceImageSubresourceLayoutKHR = unsafe extern "system" fn(
+    device: Device,
+    p_info: *const DeviceImageSubresourceInfoKHR,
+    p_layout: *mut SubresourceLayout2KHR,
+);
+#[derive(Clone)]
+pub struct KhrMaintenance5Fn {
+    pub cmd_bind_index_buffer2_khr: PFN_vkCmdBindIndexBuffer2KHR,
+    pub get_rendering_area_granularity_khr: PFN_vkGetRenderingAreaGranularityKHR,
+    pub get_device_image_subresource_layout_khr: PFN_vkGetDeviceImageSubresourceLayoutKHR,
+    pub get_image_subresource_layout2_khr: crate::vk::PFN_vkGetImageSubresourceLayout2KHR,
+}
+unsafe impl Send for KhrMaintenance5Fn {}
+unsafe impl Sync for KhrMaintenance5Fn {}
+impl KhrMaintenance5Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {
+            cmd_bind_index_buffer2_khr: unsafe {
+                unsafe extern "system" fn cmd_bind_index_buffer2_khr(
+                    _command_buffer: CommandBuffer,
+                    _buffer: Buffer,
+                    _offset: DeviceSize,
+                    _size: DeviceSize,
+                    _index_type: IndexType,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_bind_index_buffer2_khr)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdBindIndexBuffer2KHR\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_bind_index_buffer2_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_rendering_area_granularity_khr: unsafe {
+                unsafe extern "system" fn get_rendering_area_granularity_khr(
+                    _device: Device,
+                    _p_rendering_area_info: *const RenderingAreaInfoKHR,
+                    _p_granularity: *mut Extent2D,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_rendering_area_granularity_khr)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetRenderingAreaGranularityKHR\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_rendering_area_granularity_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_device_image_subresource_layout_khr: unsafe {
+                unsafe extern "system" fn get_device_image_subresource_layout_khr(
+                    _device: Device,
+                    _p_info: *const DeviceImageSubresourceInfoKHR,
+                    _p_layout: *mut SubresourceLayout2KHR,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_device_image_subresource_layout_khr)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetDeviceImageSubresourceLayoutKHR\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_device_image_subresource_layout_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_image_subresource_layout2_khr: unsafe {
+                unsafe extern "system" fn get_image_subresource_layout2_khr(
+                    _device: Device,
+                    _image: Image,
+                    _p_subresource: *const ImageSubresource2KHR,
+                    _p_layout: *mut SubresourceLayout2KHR,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_image_subresource_layout2_khr)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetImageSubresourceLayout2KHR\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_image_subresource_layout2_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+}
+#[doc = "Generated from 'VK_KHR_maintenance5'"]
+impl BufferUsageFlags2KHR {
+    pub const CONDITIONAL_RENDERING: Self = Self(0b10_0000_0000);
+    pub const SHADER_BINDING_TABLE: Self = Self(0b100_0000_0000);
+    pub const RAY_TRACING: Self = Self::SHADER_BINDING_TABLE;
+    pub const TRANSFORM_FEEDBACK_BUFFER: Self = Self(0b1000_0000_0000);
+    pub const TRANSFORM_FEEDBACK_COUNTER_BUFFER: Self = Self(0b1_0000_0000_0000);
+    pub const VIDEO_DECODE_SRC: Self = Self(0b10_0000_0000_0000);
+    pub const VIDEO_DECODE_DST: Self = Self(0b100_0000_0000_0000);
+    pub const VIDEO_ENCODE_DST: Self = Self(0b1000_0000_0000_0000);
+    pub const VIDEO_ENCODE_SRC: Self = Self(0b1_0000_0000_0000_0000);
+    pub const SHADER_DEVICE_ADDRESS: Self = Self(0b10_0000_0000_0000_0000);
+    pub const ACCELERATION_STRUCTURE_BUILD_INPUT_READ_ONLY: Self = Self(0b1000_0000_0000_0000_0000);
+    pub const ACCELERATION_STRUCTURE_STORAGE: Self = Self(0b1_0000_0000_0000_0000_0000);
+    pub const SAMPLER_DESCRIPTOR_BUFFER: Self = Self(0b10_0000_0000_0000_0000_0000);
+    pub const RESOURCE_DESCRIPTOR_BUFFER: Self = Self(0b100_0000_0000_0000_0000_0000);
+    pub const PUSH_DESCRIPTORS_DESCRIPTOR_BUFFER: Self = Self(0b100_0000_0000_0000_0000_0000_0000);
+    pub const MICROMAP_BUILD_INPUT_READ_ONLY: Self = Self(0b1000_0000_0000_0000_0000_0000);
+    pub const MICROMAP_STORAGE: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_maintenance5'"]
+impl Format {
+    pub const A1B5G5R5_UNORM_PACK16_KHR: Self = Self(1_000_470_000);
+    pub const A8_UNORM_KHR: Self = Self(1_000_470_001);
+}
+#[doc = "Generated from 'VK_KHR_maintenance5'"]
+impl PipelineCreateFlags2KHR {
+    pub const VIEW_INDEX_FROM_DEVICE_INDEX: Self = Self(0b1000);
+    pub const DISPATCH_BASE: Self = Self(0b1_0000);
+    pub const DEFER_COMPILE: Self = Self(0b10_0000);
+    pub const CAPTURE_STATISTICS: Self = Self(0b100_0000);
+    pub const CAPTURE_INTERNAL_REPRESENTATIONS: Self = Self(0b1000_0000);
+    pub const FAIL_ON_PIPELINE_COMPILE_REQUIRED: Self = Self(0b1_0000_0000);
+    pub const EARLY_RETURN_ON_FAILURE: Self = Self(0b10_0000_0000);
+    pub const LINK_TIME_OPTIMIZATION: Self = Self(0b100_0000_0000);
+    pub const RETAIN_LINK_TIME_OPTIMIZATION_INFO: Self = Self(0b1000_0000_0000_0000_0000_0000);
+    pub const LIBRARY: Self = Self(0b1000_0000_0000);
+    pub const RAY_TRACING_SKIP_TRIANGLES: Self = Self(0b1_0000_0000_0000);
+    pub const RAY_TRACING_SKIP_AABBS: Self = Self(0b10_0000_0000_0000);
+    pub const RAY_TRACING_NO_NULL_ANY_HIT_SHADERS: Self = Self(0b100_0000_0000_0000);
+    pub const RAY_TRACING_NO_NULL_CLOSEST_HIT_SHADERS: Self = Self(0b1000_0000_0000_0000);
+    pub const RAY_TRACING_NO_NULL_MISS_SHADERS: Self = Self(0b1_0000_0000_0000_0000);
+    pub const RAY_TRACING_NO_NULL_INTERSECTION_SHADERS: Self = Self(0b10_0000_0000_0000_0000);
+    pub const RAY_TRACING_SHADER_GROUP_HANDLE_CAPTURE_REPLAY: Self =
+        Self(0b1000_0000_0000_0000_0000);
+    pub const INDIRECT_BINDABLE: Self = Self(0b100_0000_0000_0000_0000);
+    pub const RAY_TRACING_ALLOW_MOTION: Self = Self(0b1_0000_0000_0000_0000_0000);
+    pub const RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT: Self =
+        Self(0b10_0000_0000_0000_0000_0000);
+    pub const RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT: Self =
+        Self(0b100_0000_0000_0000_0000_0000);
+    pub const RAY_TRACING_OPACITY_MICROMAP: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
+    pub const COLOR_ATTACHMENT_FEEDBACK_LOOP: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
+    pub const DEPTH_STENCIL_ATTACHMENT_FEEDBACK_LOOP: Self =
+        Self(0b100_0000_0000_0000_0000_0000_0000);
+    pub const NO_PROTECTED_ACCESS: Self = Self(0b1000_0000_0000_0000_0000_0000_0000);
+    pub const PROTECTED_ACCESS_ONLY: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000);
+    pub const DESCRIPTOR_BUFFER: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_maintenance5'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_MAINTENANCE_5_FEATURES_KHR: Self = Self(1_000_470_000);
+    pub const PHYSICAL_DEVICE_MAINTENANCE_5_PROPERTIES_KHR: Self = Self(1_000_470_001);
+    pub const RENDERING_AREA_INFO_KHR: Self = Self(1_000_470_003);
+    pub const DEVICE_IMAGE_SUBRESOURCE_INFO_KHR: Self = Self(1_000_470_004);
+    pub const SUBRESOURCE_LAYOUT_2_KHR: Self = Self(1_000_338_002);
+    pub const IMAGE_SUBRESOURCE_2_KHR: Self = Self(1_000_338_003);
+    pub const PIPELINE_CREATE_FLAGS_2_CREATE_INFO_KHR: Self = Self(1_000_470_005);
+    pub const BUFFER_USAGE_FLAGS_2_CREATE_INFO_KHR: Self = Self(1_000_470_006);
 }
 impl KhrRayTracingPositionFetchFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
@@ -20643,6 +21395,61 @@ pub struct ExtDynamicRenderingUnusedAttachmentsFn;
 impl StructureType {
     pub const PHYSICAL_DEVICE_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_FEATURES_EXT: Self =
         Self(1_000_499_000);
+}
+impl KhrCooperativeMatrixFn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_cooperative_matrix\0") };
+    pub const SPEC_VERSION: u32 = 2u32;
+}
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR =
+    unsafe extern "system" fn(
+        physical_device: PhysicalDevice,
+        p_property_count: *mut u32,
+        p_properties: *mut CooperativeMatrixPropertiesKHR,
+    ) -> Result;
+#[derive(Clone)]
+pub struct KhrCooperativeMatrixFn {
+    pub get_physical_device_cooperative_matrix_properties_khr:
+        PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR,
+}
+unsafe impl Send for KhrCooperativeMatrixFn {}
+unsafe impl Sync for KhrCooperativeMatrixFn {}
+impl KhrCooperativeMatrixFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {
+            get_physical_device_cooperative_matrix_properties_khr: unsafe {
+                unsafe extern "system" fn get_physical_device_cooperative_matrix_properties_khr(
+                    _physical_device: PhysicalDevice,
+                    _p_property_count: *mut u32,
+                    _p_properties: *mut CooperativeMatrixPropertiesKHR,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_physical_device_cooperative_matrix_properties_khr)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_physical_device_cooperative_matrix_properties_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+}
+#[doc = "Generated from 'VK_KHR_cooperative_matrix'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_COOPERATIVE_MATRIX_FEATURES_KHR: Self = Self(1_000_506_000);
+    pub const COOPERATIVE_MATRIX_PROPERTIES_KHR: Self = Self(1_000_506_001);
+    pub const PHYSICAL_DEVICE_COOPERATIVE_MATRIX_PROPERTIES_KHR: Self = Self(1_000_506_002);
 }
 impl QcomMultiviewPerViewRenderAreasFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {

@@ -11,8 +11,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added `Handle::is_null()` to allow checking if a handle is a `NULL` value (#694)
 - Allow building `Entry`/`Instance`/`Device` from handle+fns (see their `from_parts_1_x()` associated functions) (#748)
-- Update Vulkan-Headers to 1.3.254 (#760)
+- Update Vulkan-Headers to 1.3.260 (#760, #763)
 - Added `VK_NV_memory_decompression` device extension (#761)
+- Added `VK_GOOGLE_display_timing` device extension (#765)
+- Added `VK_ANDROID_external_memory_android_hardware_buffer` device extension (#769)
+- Added `VK_AMD_buffer_marker` device extension (#772)
+- Added `VK_AMD_shader_info` device extension (#773)
+- Added `VK_AMDX_shader_enqueue` device extension (#776)
+- Added `VK_EXT_host_image_copy` device extension (#779)
+- Added `VK_KHR_maintenance5` device extension (#780)
+- Added `VK_NV_device_generated_commands_compute` device extension (#781)
+- Added `VK_KHR_cooperative_matrix` instance extension (#782)
+- Added `VK_EXT_vertex_input_dynamic_state` device extension (#784)
+- Added `VK_KHR_sampler_ycbcr_conversion` device extension (#785)
+- Added `VK_EXT_swapchain_maintenance1` device extension (#786)
 
 ### Changed
 

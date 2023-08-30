@@ -38,6 +38,8 @@ pub type CopyAccelerationStructureModeNV = CopyAccelerationStructureModeKHR;
 pub type AccelerationStructureTypeNV = AccelerationStructureTypeKHR;
 pub type GeometryTypeNV = GeometryTypeKHR;
 pub type RayTracingShaderGroupTypeNV = RayTracingShaderGroupTypeKHR;
+pub type ScopeNV = ScopeKHR;
+pub type ComponentTypeNV = ComponentTypeKHR;
 pub type TessellationDomainOriginKHR = TessellationDomainOrigin;
 pub type SamplerYcbcrModelConversionKHR = SamplerYcbcrModelConversion;
 pub type SamplerYcbcrRangeKHR = SamplerYcbcrRange;
@@ -269,3 +271,5 @@ pub type CommandBufferInheritanceRenderingInfoKHR<'a> = CommandBufferInheritance
 pub type AttachmentSampleCountInfoNV<'a> = AttachmentSampleCountInfoAMD<'a>;
 pub type PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARM<'a> =
     PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT<'a>;
+pub type ImageSubresource2EXT<'a> = ImageSubresource2KHR<'a>;
+pub type SubresourceLayout2EXT<'a> = SubresourceLayout2KHR<'a>;
