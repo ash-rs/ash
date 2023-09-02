@@ -1,8 +1,11 @@
+#![cfg(unix)]
+
 use crate::prelude::*;
 use crate::vk;
 use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
+use std::os::unix::io::{FromRawFd, OwnedFd};
 
 #[derive(Clone)]
 pub struct ExternalSemaphoreFd {
@@ -30,9 +33,13 @@ impl ExternalSemaphoreFd {
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetSemaphoreFdKHR.html>
     #[inline]
-    pub unsafe fn get_semaphore_fd(&self, get_info: &vk::SemaphoreGetFdInfoKHR) -> VkResult<i32> {
+    pub unsafe fn get_semaphore_fd(
+        &self,
+        get_info: &vk::SemaphoreGetFdInfoKHR,
+    ) -> VkResult<OwnedFd> {
         let mut fd = -1;
-        (self.fp.get_semaphore_fd_khr)(self.handle, get_info, &mut fd).result_with_success(fd)
+        (self.fp.get_semaphore_fd_khr)(self.handle, get_info, &mut fd).result()?;
+        Ok(OwnedFd::from_raw_fd(fd))
     }
 
     pub const NAME: &'static CStr = vk::KhrExternalSemaphoreFdFn::NAME;
