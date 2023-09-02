@@ -1,8 +1,11 @@
+#![cfg(unix)]
+
 use crate::prelude::*;
 use crate::vk;
 use crate::{Entry, Instance};
 use std::ffi::CStr;
 use std::mem;
+use std::os::unix::io::{AsRawFd, BorrowedFd};
 
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_acquire_drm_display.html>
 #[derive(Clone)]
@@ -24,10 +27,10 @@ impl AcquireDrmDisplay {
     pub unsafe fn acquire_drm_display(
         &self,
         physical_device: vk::PhysicalDevice,
-        drm_fd: i32,
+        drm_fd: BorrowedFd<'_>,
         display: vk::DisplayKHR,
     ) -> VkResult<()> {
-        (self.fp.acquire_drm_display_ext)(physical_device, drm_fd, display).result()
+        (self.fp.acquire_drm_display_ext)(physical_device, drm_fd.as_raw_fd(), display).result()
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDrmDisplayEXT.html>
@@ -35,12 +38,17 @@ impl AcquireDrmDisplay {
     pub unsafe fn get_drm_display(
         &self,
         physical_device: vk::PhysicalDevice,
-        drm_fd: i32,
+        drm_fd: BorrowedFd<'_>,
         connector_id: u32,
     ) -> VkResult<vk::DisplayKHR> {
         let mut display = mem::MaybeUninit::uninit();
-        (self.fp.get_drm_display_ext)(physical_device, drm_fd, connector_id, display.as_mut_ptr())
-            .assume_init_on_success(display)
+        (self.fp.get_drm_display_ext)(
+            physical_device,
+            drm_fd.as_raw_fd(),
+            connector_id,
+            display.as_mut_ptr(),
+        )
+        .assume_init_on_success(display)
     }
 
     pub const NAME: &'static CStr = vk::ExtAcquireDrmDisplayFn::NAME;
