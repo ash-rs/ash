@@ -146,9 +146,9 @@ pub struct ExampleBase {
     pub entry: Entry,
     pub instance: Instance,
     pub device: Device,
-    pub surface_loader: surface::Surface,
-    pub swapchain_loader: swapchain::SwapchainDevice,
-    pub debug_utils_loader: debug_utils::DebugUtilsInstance,
+    pub surface_loader: surface::Instance,
+    pub swapchain_loader: swapchain::Device,
+    pub debug_utils_loader: debug_utils::Instance,
     pub window: winit::window::Window,
     pub event_loop: RefCell<EventLoop<()>>,
     pub debug_call_back: vk::DebugUtilsMessengerEXT,
@@ -279,7 +279,7 @@ impl ExampleBase {
                 )
                 .pfn_user_callback(Some(vulkan_debug_callback));
 
-            let debug_utils_loader = debug_utils::DebugUtilsInstance::new(&entry, &instance);
+            let debug_utils_loader = debug_utils::Instance::new(&entry, &instance);
             let debug_call_back = debug_utils_loader
                 .create_debug_utils_messenger(&debug_info, None)
                 .unwrap();
@@ -294,7 +294,7 @@ impl ExampleBase {
             let pdevices = instance
                 .enumerate_physical_devices()
                 .expect("Physical device error");
-            let surface_loader = surface::Surface::new(&entry, &instance);
+            let surface_loader = surface::Instance::new(&entry, &instance);
             let (pdevice, queue_family_index) = pdevices
                 .iter()
                 .find_map(|pdevice| {
@@ -383,7 +383,7 @@ impl ExampleBase {
                 .cloned()
                 .find(|&mode| mode == vk::PresentModeKHR::MAILBOX)
                 .unwrap_or(vk::PresentModeKHR::FIFO);
-            let swapchain_loader = swapchain::SwapchainDevice::new(&instance, &device);
+            let swapchain_loader = swapchain::Device::new(&instance, &device);
 
             let swapchain_create_info = vk::SwapchainCreateInfoKHR::default()
                 .surface(surface)

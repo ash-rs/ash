@@ -1,6 +1,5 @@
 use crate::prelude::*;
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
@@ -12,7 +11,7 @@ pub struct Synchronization2 {
 }
 
 impl Synchronization2 {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let fp = vk::khr_synchronization2::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });

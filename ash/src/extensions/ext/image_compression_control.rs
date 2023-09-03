@@ -1,7 +1,6 @@
 #[cfg(doc)]
 use super::{super::khr::Maintenance5, HostImageCopy};
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
@@ -9,13 +8,13 @@ pub const NAME: &CStr = vk::ext_image_compression_control::NAME;
 
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_image_compression_control.html>
 #[derive(Clone)]
-pub struct ImageCompressionControl {
+pub struct Device {
     handle: vk::Device,
     fp: vk::ext_image_compression_control::DeviceFn,
 }
 
-impl ImageCompressionControl {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::ext_image_compression_control::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))

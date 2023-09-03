@@ -1,5 +1,4 @@
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 use std::ptr;
@@ -7,12 +6,12 @@ use std::ptr;
 pub const NAME: &CStr = vk::ext_extended_dynamic_state::NAME;
 
 #[derive(Clone)]
-pub struct ExtendedDynamicState {
+pub struct Device {
     fp: vk::ext_extended_dynamic_state::DeviceFn,
 }
 
-impl ExtendedDynamicState {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let fp = vk::ext_extended_dynamic_state::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });

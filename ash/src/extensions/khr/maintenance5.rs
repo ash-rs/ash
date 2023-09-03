@@ -1,7 +1,6 @@
 #[cfg(doc)]
 use super::super::ext::{HostImageCopy, ImageCompressionControl};
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
@@ -15,7 +14,7 @@ pub struct Maintenance5 {
 }
 
 impl Maintenance5 {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::khr_maintenance5::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))

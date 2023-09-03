@@ -1,6 +1,5 @@
 use crate::prelude::*;
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
@@ -8,13 +7,13 @@ pub const NAME: &CStr = vk::ext_pipeline_properties::NAME;
 
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_pipeline_properties.html>
 #[derive(Clone)]
-pub struct PipelineProperties {
+pub struct Device {
     handle: vk::Device,
     fp: vk::ext_pipeline_properties::DeviceFn,
 }
 
-impl PipelineProperties {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::ext_pipeline_properties::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))

@@ -11,7 +11,7 @@ pub struct MemoryDecompression {
 }
 
 impl MemoryDecompression {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let fp = vk::nv_memory_decompression::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });

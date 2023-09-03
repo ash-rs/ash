@@ -1,5 +1,4 @@
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
@@ -7,12 +6,12 @@ pub const NAME: &CStr = vk::ext_vertex_input_dynamic_state::NAME;
 
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_vertex_input_dynamic_state.html>
 #[derive(Clone)]
-pub struct VertexInputDynamicState {
+pub struct Device {
     fp: vk::ext_vertex_input_dynamic_state::DeviceFn,
 }
 
-impl VertexInputDynamicState {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let fp = vk::ext_vertex_input_dynamic_state::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });

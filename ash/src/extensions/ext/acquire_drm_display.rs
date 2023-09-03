@@ -1,6 +1,5 @@
 use crate::prelude::*;
 use crate::vk;
-use crate::{Entry, Instance};
 use std::ffi::CStr;
 use std::mem;
 
@@ -8,12 +7,12 @@ pub const NAME: &CStr = vk::ext_acquire_drm_display::NAME;
 
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_acquire_drm_display.html>
 #[derive(Clone)]
-pub struct AcquireDrmDisplay {
+pub struct Instance {
     fp: vk::ext_acquire_drm_display::InstanceFn,
 }
 
-impl AcquireDrmDisplay {
-    pub fn new(entry: &Entry, instance: &Instance) -> Self {
+impl Instance {
+    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let handle = instance.handle();
         let fp = vk::ext_acquire_drm_display::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))

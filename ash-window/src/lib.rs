@@ -94,7 +94,7 @@ pub unsafe fn create_surface(
             };
 
             let surface_desc = vk::MetalSurfaceCreateInfoEXT::default().layer(&*layer);
-            let surface_fn = metal_surface::MetalSurface::new(entry, instance);
+            let surface_fn = metal_surface::Instance::new(entry, instance);
             surface_fn.create_metal_surface(&surface_desc, allocation_callbacks)
         }
 
@@ -108,7 +108,7 @@ pub unsafe fn create_surface(
             };
 
             let surface_desc = vk::MetalSurfaceCreateInfoEXT::default().layer(&*layer);
-            let surface_fn = metal_surface::MetalSurface::new(entry, instance);
+            let surface_fn = metal_surface::Instance::new(entry, instance);
             surface_fn.create_metal_surface(&surface_desc, allocation_callbacks)
         }
 

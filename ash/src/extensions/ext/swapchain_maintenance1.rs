@@ -1,6 +1,5 @@
 use crate::prelude::*;
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
@@ -8,13 +7,13 @@ pub const NAME: &CStr = vk::ext_swapchain_maintenance1::NAME;
 
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_swapchain_maintenance1.html>
 #[derive(Clone)]
-pub struct SwapchainMaintenance1 {
+pub struct Device {
     handle: vk::Device,
     fp: vk::ext_swapchain_maintenance1::DeviceFn,
 }
 
-impl SwapchainMaintenance1 {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::ext_swapchain_maintenance1::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))

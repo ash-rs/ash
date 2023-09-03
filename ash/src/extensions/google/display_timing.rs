@@ -1,6 +1,5 @@
 use crate::prelude::*;
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
@@ -8,13 +7,13 @@ pub const NAME: &CStr = vk::google_display_timing::NAME;
 
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_GOOGLE_display_timing.html>
 #[derive(Clone)]
-pub struct DisplayTiming {
+pub struct Device {
     handle: vk::Device,
     fp: vk::google_display_timing::DeviceFn,
 }
 
-impl DisplayTiming {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::google_display_timing::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))

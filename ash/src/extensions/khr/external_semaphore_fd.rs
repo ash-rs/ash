@@ -1,6 +1,5 @@
 use crate::prelude::*;
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
@@ -13,7 +12,7 @@ pub struct ExternalSemaphoreFd {
 }
 
 impl ExternalSemaphoreFd {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::khr_external_semaphore_fd::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))

@@ -1,6 +1,5 @@
 use crate::prelude::*;
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
@@ -8,13 +7,13 @@ pub const NAME: &CStr = vk::android_external_memory_android_hardware_buffer::NAM
 
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_ANDROID_external_memory_android_hardware_buffer.html>
 #[derive(Clone)]
-pub struct ExternalMemoryAndroidHardwareBuffer {
+pub struct Device {
     handle: vk::Device,
     fp: vk::android_external_memory_android_hardware_buffer::DeviceFn,
 }
 
-impl ExternalMemoryAndroidHardwareBuffer {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp =
             vk::android_external_memory_android_hardware_buffer::DeviceFn::load(|name| unsafe {

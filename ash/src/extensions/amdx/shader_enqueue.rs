@@ -1,7 +1,6 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
@@ -9,13 +8,13 @@ pub const NAME: &CStr = vk::amdx_shader_enqueue::NAME;
 
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_AMDX_shader_enqueue.html>
 #[derive(Clone)]
-pub struct ShaderEnqueue {
+pub struct Device {
     handle: vk::Device,
     fp: vk::amdx_shader_enqueue::DeviceFn,
 }
 
-impl ShaderEnqueue {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::amdx_shader_enqueue::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))

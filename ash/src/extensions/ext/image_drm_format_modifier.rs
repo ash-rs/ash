@@ -1,6 +1,5 @@
 use crate::prelude::*;
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
@@ -8,13 +7,13 @@ pub const NAME: &CStr = vk::ext_image_drm_format_modifier::NAME;
 
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_image_drm_format_modifier.html>
 #[derive(Clone)]
-pub struct ImageDrmFormatModifier {
+pub struct Device {
     handle: vk::Device,
     fp: vk::ext_image_drm_format_modifier::DeviceFn,
 }
 
-impl ImageDrmFormatModifier {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::ext_image_drm_format_modifier::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))

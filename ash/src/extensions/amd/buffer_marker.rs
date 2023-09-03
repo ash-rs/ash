@@ -1,5 +1,4 @@
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
@@ -7,12 +6,12 @@ pub const NAME: &CStr = vk::amd_buffer_marker::NAME;
 
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_AMD_buffer_marker.html>
 #[derive(Clone)]
-pub struct BufferMarker {
+pub struct Device {
     fp: vk::amd_buffer_marker::DeviceFn,
 }
 
-impl BufferMarker {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let fp = vk::amd_buffer_marker::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });

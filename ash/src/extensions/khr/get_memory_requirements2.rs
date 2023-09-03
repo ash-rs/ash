@@ -1,5 +1,4 @@
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 use std::ptr;
@@ -13,7 +12,7 @@ pub struct GetMemoryRequirements2 {
 }
 
 impl GetMemoryRequirements2 {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::khr_get_memory_requirements2::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))

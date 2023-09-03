@@ -1,6 +1,5 @@
 use crate::prelude::*;
 use crate::{vk, RawPtr};
-use crate::{Device, Entry, Instance};
 use std::ffi::CStr;
 use std::mem;
 
@@ -9,13 +8,13 @@ pub const NAME: &CStr = vk::ext_debug_utils::NAME;
 /// High-level device function wrapper for
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_debug_utils.html>
 #[derive(Clone)]
-pub struct DebugUtilsDevice {
+pub struct Device {
     handle: vk::Device,
     fp: vk::ext_debug_utils::DeviceFn,
 }
 
-impl DebugUtilsDevice {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::ext_debug_utils::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -107,13 +106,13 @@ impl DebugUtilsDevice {
 /// High-level instance function wrapper for
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_debug_utils.html>
 #[derive(Clone)]
-pub struct DebugUtilsInstance {
+pub struct Instance {
     handle: vk::Instance,
     fp: vk::ext_debug_utils::InstanceFn,
 }
 
-impl DebugUtilsInstance {
-    pub fn new(entry: &Entry, instance: &Instance) -> Self {
+impl Instance {
+    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let handle = instance.handle();
         let fp = vk::ext_debug_utils::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))

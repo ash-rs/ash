@@ -1,7 +1,6 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 use std::ptr;
@@ -10,13 +9,13 @@ pub const NAME: &CStr = vk::ext_shader_object::NAME;
 
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_shader_object.html>
 #[derive(Clone)]
-pub struct ShaderObject {
+pub struct Device {
     handle: vk::Device,
     fp: vk::ext_shader_object::DeviceFn,
 }
 
-impl ShaderObject {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::ext_shader_object::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))

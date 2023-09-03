@@ -3,7 +3,6 @@ use super::{DeviceGroupDevice, DeviceGroupInstance};
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use crate::{Device, Entry, Instance};
 use std::ffi::CStr;
 use std::mem;
 
@@ -12,13 +11,13 @@ pub const NAME: &CStr = vk::khr_swapchain::NAME;
 /// High-level device function wrapper for
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_swapchain.html>
 #[derive(Clone)]
-pub struct SwapchainDevice {
+pub struct Device {
     handle: vk::Device,
     fp: vk::khr_swapchain::DeviceFn,
 }
 
-impl SwapchainDevice {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::khr_swapchain::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -192,12 +191,12 @@ impl SwapchainDevice {
 /// High-level instance function wrapper for
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_swapchain.html>
 #[derive(Clone)]
-pub struct SwapchainInstance {
+pub struct Instance {
     fp: vk::khr_swapchain::InstanceFn,
 }
 
-impl SwapchainInstance {
-    pub fn new(entry: &Entry, instance: &Instance) -> Self {
+impl Instance {
+    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let fp = vk::khr_swapchain::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });

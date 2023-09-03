@@ -1,5 +1,4 @@
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::c_void;
 use std::ffi::CStr;
 use std::mem;
@@ -12,7 +11,7 @@ pub struct PushDescriptor {
 }
 
 impl PushDescriptor {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let fp = vk::khr_push_descriptor::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });

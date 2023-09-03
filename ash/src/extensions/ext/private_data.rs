@@ -1,7 +1,6 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
@@ -9,13 +8,13 @@ pub const NAME: &CStr = vk::ext_private_data::NAME;
 
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_private_data.html>
 #[derive(Clone)]
-pub struct PrivateData {
+pub struct Device {
     handle: vk::Device,
     fp: vk::ext_private_data::DeviceFn,
 }
 
-impl PrivateData {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::ext_private_data::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))

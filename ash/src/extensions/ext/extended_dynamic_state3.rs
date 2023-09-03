@@ -1,5 +1,4 @@
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
@@ -7,12 +6,12 @@ pub const NAME: &CStr = vk::ext_extended_dynamic_state3::NAME;
 
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_extended_dynamic_state3.html>
 #[derive(Clone)]
-pub struct ExtendedDynamicState3 {
+pub struct Device {
     fp: vk::ext_extended_dynamic_state3::DeviceFn,
 }
 
-impl ExtendedDynamicState3 {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let fp = vk::ext_extended_dynamic_state3::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });

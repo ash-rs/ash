@@ -1,6 +1,5 @@
 use crate::prelude::*;
 use crate::vk;
-use crate::{Device, Entry, Instance};
 use std::ffi::CStr;
 use std::mem;
 use std::ptr;
@@ -16,7 +15,7 @@ pub struct PerformanceQueryDevice {
 }
 
 impl PerformanceQueryDevice {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::khr_performance_query::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
@@ -58,7 +57,7 @@ pub struct PerformanceQueryInstance {
 }
 
 impl PerformanceQueryInstance {
-    pub fn new(entry: &Entry, instance: &Instance) -> Self {
+    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let fp = vk::khr_performance_query::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });

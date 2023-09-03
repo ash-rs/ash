@@ -1,7 +1,6 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use crate::{Entry, Instance};
 use std::ffi::CStr;
 use std::mem;
 
@@ -15,7 +14,7 @@ pub struct AndroidSurface {
 }
 
 impl AndroidSurface {
-    pub fn new(entry: &Entry, instance: &Instance) -> Self {
+    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let handle = instance.handle();
         let fp = vk::khr_android_surface::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))

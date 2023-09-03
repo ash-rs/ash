@@ -2,7 +2,6 @@
 use super::{super::khr::Maintenance5, ImageCompressionControl};
 use crate::prelude::*;
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
@@ -10,13 +9,13 @@ pub const NAME: &CStr = vk::ext_host_image_copy::NAME;
 
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_host_image_copy.html>
 #[derive(Clone)]
-pub struct HostImageCopy {
+pub struct Device {
     handle: vk::Device,
     fp: vk::ext_host_image_copy::DeviceFn,
 }
 
-impl HostImageCopy {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::ext_host_image_copy::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
