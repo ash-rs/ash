@@ -39,7 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Bumped MSRV from 1.59 to 1.69 (#709, #746)
 - Replaced `const fn name()` with associated `NAME` constants (#715)
 - Generic builders now automatically set `objecttype` to `<T as Handle>::ObjectType` (#724)
-- Separated low-level `*Fn` structs an high-level extension wrappers between instance and device functions, for the following extensions: (#734)
+- Separated low-level `*Fn` structs and high-level extension wrappers between instance and device functions, for the following extensions: (#734)
   - `VK_KHR_swapchain`
   - `VK_KHR_video_queue`
   - `VK_KHR_device_group`

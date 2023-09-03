@@ -41,7 +41,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             window.raw_window_handle(),
             None,
         )?;
-        let surface_fn = ash::extensions::khr::Surface::new(&entry, &instance);
+        let surface_fn = ash::extensions::khr::surface::Surface::new(&entry, &instance);
         println!("surface: {surface:?}");
 
         event_loop.run(move |event, _, control_flow| match event {
