@@ -2752,7 +2752,7 @@ pub struct AmdShaderBallotFn;
 impl ExtVideoEncodeH264Fn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_encode_h264\0") };
-    pub const SPEC_VERSION: u32 = 11u32;
+    pub const SPEC_VERSION: u32 = 12u32;
 }
 #[derive(Clone)]
 pub struct ExtVideoEncodeH264Fn;
@@ -2780,7 +2780,7 @@ impl VideoCodecOperationFlagsKHR {
 impl ExtVideoEncodeH265Fn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_encode_h265\0") };
-    pub const SPEC_VERSION: u32 = 11u32;
+    pub const SPEC_VERSION: u32 = 12u32;
 }
 #[derive(Clone)]
 pub struct ExtVideoEncodeH265Fn;
@@ -14036,7 +14036,7 @@ impl StructureType {
 impl KhrVideoEncodeQueueFn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_encode_queue\0") };
-    pub const SPEC_VERSION: u32 = 9u32;
+    pub const SPEC_VERSION: u32 = 10u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR =
@@ -14172,6 +14172,10 @@ impl ImageUsageFlags {
 #[doc = "Generated from 'VK_KHR_video_encode_queue'"]
 impl PipelineStageFlags2 {
     pub const VIDEO_ENCODE_KHR: Self = Self(0b1000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl QueryResultStatusKHR {
+    pub const INSUFFICIENTSTREAM_BUFFER_RANGE: Self = Self(-1_000_299_000);
 }
 #[doc = "Generated from 'VK_KHR_video_encode_queue'"]
 impl QueryType {
@@ -21636,4 +21640,22 @@ impl StructureType {
     pub const EXTERNAL_FORMAT_QNX: Self = Self(1_000_529_003);
     pub const PHYSICAL_DEVICE_EXTERNAL_MEMORY_SCREEN_BUFFER_FEATURES_QNX: Self =
         Self(1_000_529_004);
+}
+impl NvDescriptorPoolOverallocationFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_descriptor_pool_overallocation\0")
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct NvDescriptorPoolOverallocationFn;
+#[doc = "Generated from 'VK_NV_descriptor_pool_overallocation'"]
+impl DescriptorPoolCreateFlags {
+    pub const ALLOW_OVERALLOCATION_SETS_NV: Self = Self(0b1000);
+    pub const ALLOW_OVERALLOCATION_POOLS_NV: Self = Self(0b1_0000);
+}
+#[doc = "Generated from 'VK_NV_descriptor_pool_overallocation'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_DESCRIPTOR_POOL_OVERALLOCATION_FEATURES_NV: Self =
+        Self(1_000_546_000);
 }

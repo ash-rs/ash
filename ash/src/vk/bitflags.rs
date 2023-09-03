@@ -1303,6 +1303,7 @@ pub struct VideoEncodeCapabilityFlagsKHR(pub(crate) Flags);
 vk_bitflags_wrapped!(VideoEncodeCapabilityFlagsKHR, Flags);
 impl VideoEncodeCapabilityFlagsKHR {
     pub const PRECEDING_EXTERNALLY_ENCODED_BYTES: Self = Self(0b1);
+    pub const INSUFFICIENTSTREAM_BUFFER_RANGE_DETECTION: Self = Self(0b10);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -1365,6 +1366,8 @@ impl VideoEncodeH264StdFlagsEXT {
     pub const DEBLOCKING_FILTER_DISABLED: Self = Self(0b1000_0000_0000_0000);
     pub const DEBLOCKING_FILTER_ENABLED: Self = Self(0b1_0000_0000_0000_0000);
     pub const DEBLOCKING_FILTER_PARTIAL: Self = Self(0b10_0000_0000_0000_0000);
+    pub const SLICE_QP_DELTA: Self = Self(0b1000_0000_0000_0000_0000);
+    pub const DIFFERENT_SLICE_QP_DELTA: Self = Self(0b1_0000_0000_0000_0000_0000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -1530,6 +1533,8 @@ impl VideoEncodeH265StdFlagsEXT {
     pub const DEBLOCKING_FILTER_OVERRIDE_ENABLED_FLAG_SET: Self = Self(0b1_0000_0000_0000_0000);
     pub const DEPENDENT_SLICE_SEGMENTS_ENABLED_FLAG_SET: Self = Self(0b10_0000_0000_0000_0000);
     pub const DEPENDENT_SLICE_SEGMENT_FLAG_SET: Self = Self(0b100_0000_0000_0000_0000);
+    pub const SLICE_QP_DELTA: Self = Self(0b1000_0000_0000_0000_0000);
+    pub const DIFFERENT_SLICE_QP_DELTA: Self = Self(0b1_0000_0000_0000_0000_0000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]

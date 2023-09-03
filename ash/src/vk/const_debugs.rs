@@ -1287,6 +1287,14 @@ impl fmt::Debug for DescriptorPoolCreateFlags {
             ),
             (DescriptorPoolCreateFlags::HOST_ONLY_EXT.0, "HOST_ONLY_EXT"),
             (
+                DescriptorPoolCreateFlags::ALLOW_OVERALLOCATION_SETS_NV.0,
+                "ALLOW_OVERALLOCATION_SETS_NV",
+            ),
+            (
+                DescriptorPoolCreateFlags::ALLOW_OVERALLOCATION_POOLS_NV.0,
+                "ALLOW_OVERALLOCATION_POOLS_NV",
+            ),
+            (
                 DescriptorPoolCreateFlags::UPDATE_AFTER_BIND.0,
                 "UPDATE_AFTER_BIND",
             ),
@@ -4272,6 +4280,7 @@ impl fmt::Debug for QueryResultStatusKHR {
             Self::ERROR => Some("ERROR"),
             Self::NOT_READY => Some("NOT_READY"),
             Self::COMPLETE => Some("COMPLETE"),
+            Self::INSUFFICIENTSTREAM_BUFFER_RANGE => Some("INSUFFICIENTSTREAM_BUFFER_RANGE"),
             _ => None,
         };
         if let Some(x) = name {
@@ -6346,6 +6355,9 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_EXTERNAL_MEMORY_SCREEN_BUFFER_FEATURES_QNX => {
                 Some("PHYSICAL_DEVICE_EXTERNAL_MEMORY_SCREEN_BUFFER_FEATURES_QNX")
             }
+            Self::PHYSICAL_DEVICE_DESCRIPTOR_POOL_OVERALLOCATION_FEATURES_NV => {
+                Some("PHYSICAL_DEVICE_DESCRIPTOR_POOL_OVERALLOCATION_FEATURES_NV")
+            }
             Self::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES => {
                 Some("PHYSICAL_DEVICE_SUBGROUP_PROPERTIES")
             }
@@ -7161,10 +7173,16 @@ impl fmt::Debug for VideoDecodeUsageFlagsKHR {
 }
 impl fmt::Debug for VideoEncodeCapabilityFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(
-            VideoEncodeCapabilityFlagsKHR::PRECEDING_EXTERNALLY_ENCODED_BYTES.0,
-            "PRECEDING_EXTERNALLY_ENCODED_BYTES",
-        )];
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                VideoEncodeCapabilityFlagsKHR::PRECEDING_EXTERNALLY_ENCODED_BYTES.0,
+                "PRECEDING_EXTERNALLY_ENCODED_BYTES",
+            ),
+            (
+                VideoEncodeCapabilityFlagsKHR::INSUFFICIENTSTREAM_BUFFER_RANGE_DETECTION.0,
+                "INSUFFICIENTSTREAM_BUFFER_RANGE_DETECTION",
+            ),
+        ];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -7349,6 +7367,14 @@ impl fmt::Debug for VideoEncodeH264StdFlagsEXT {
                 VideoEncodeH264StdFlagsEXT::DEBLOCKING_FILTER_PARTIAL.0,
                 "DEBLOCKING_FILTER_PARTIAL",
             ),
+            (
+                VideoEncodeH264StdFlagsEXT::SLICE_QP_DELTA.0,
+                "SLICE_QP_DELTA",
+            ),
+            (
+                VideoEncodeH264StdFlagsEXT::DIFFERENT_SLICE_QP_DELTA.0,
+                "DIFFERENT_SLICE_QP_DELTA",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -7515,6 +7541,14 @@ impl fmt::Debug for VideoEncodeH265StdFlagsEXT {
             (
                 VideoEncodeH265StdFlagsEXT::DEPENDENT_SLICE_SEGMENT_FLAG_SET.0,
                 "DEPENDENT_SLICE_SEGMENT_FLAG_SET",
+            ),
+            (
+                VideoEncodeH265StdFlagsEXT::SLICE_QP_DELTA.0,
+                "SLICE_QP_DELTA",
+            ),
+            (
+                VideoEncodeH265StdFlagsEXT::DIFFERENT_SLICE_QP_DELTA.0,
+                "DIFFERENT_SLICE_QP_DELTA",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
