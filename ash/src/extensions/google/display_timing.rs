@@ -37,9 +37,9 @@ impl DisplayTiming {
         &self,
         swapchain: vk::SwapchainKHR,
     ) -> VkResult<vk::RefreshCycleDurationGOOGLE> {
-        let mut properties = mem::zeroed();
-        (self.fp.get_refresh_cycle_duration_google)(self.handle, swapchain, &mut properties)
-            .result_with_success(properties)
+        let mut properties = mem::MaybeUninit::uninit();
+        (self.fp.get_refresh_cycle_duration_google)(self.handle, swapchain, properties.as_mut_ptr())
+            .assume_init_on_success(properties)
     }
 
     pub const NAME: &'static CStr = vk::GoogleDisplayTimingFn::NAME;

@@ -27,14 +27,14 @@ impl MacOSSurface {
         create_info: &vk::MacOSSurfaceCreateInfoMVK<'_>,
         allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::SurfaceKHR> {
-        let mut surface = mem::zeroed();
+        let mut surface = mem::MaybeUninit::uninit();
         (self.fp.create_mac_os_surface_mvk)(
             self.handle,
             create_info,
             allocation_callbacks.as_raw_ptr(),
-            &mut surface,
+            surface.as_mut_ptr(),
         )
-        .result_with_success(surface)
+        .assume_init_on_success(surface)
     }
 
     pub const NAME: &'static CStr = vk::MvkMacosSurfaceFn::NAME;

@@ -27,14 +27,14 @@ impl RayTracing {
         create_info: &vk::AccelerationStructureCreateInfoNV<'_>,
         allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::AccelerationStructureNV> {
-        let mut accel_struct = mem::zeroed();
+        let mut accel_struct = mem::MaybeUninit::uninit();
         (self.fp.create_acceleration_structure_nv)(
             self.handle,
             create_info,
             allocation_callbacks.as_raw_ptr(),
-            &mut accel_struct,
+            accel_struct.as_mut_ptr(),
         )
-        .result_with_success(accel_struct)
+        .assume_init_on_success(accel_struct)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroyAccelerationStructureNV.html>
@@ -204,15 +204,14 @@ impl RayTracing {
         &self,
         accel_struct: vk::AccelerationStructureNV,
     ) -> VkResult<u64> {
-        let mut handle: u64 = 0;
-        let handle_ptr: *mut u64 = &mut handle;
+        let mut handle = mem::MaybeUninit::<u64>::uninit();
         (self.fp.get_acceleration_structure_handle_nv)(
             self.handle,
             accel_struct,
-            std::mem::size_of::<u64>(),
-            handle_ptr.cast(),
+            std::mem::size_of_val(&handle),
+            handle.as_mut_ptr().cast(),
         )
-        .result_with_success(handle)
+        .assume_init_on_success(handle)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdWriteAccelerationStructuresPropertiesNV.html>

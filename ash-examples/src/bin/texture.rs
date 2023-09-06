@@ -768,7 +768,6 @@ fn main() {
                     device.cmd_end_render_pass(draw_command_buffer);
                 },
             );
-            //let mut present_info_err = mem::zeroed();
             let present_info = vk::PresentInfoKHR {
                 wait_semaphore_count: 1,
                 p_wait_semaphores: &base.rendering_complete_semaphore,

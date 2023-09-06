@@ -63,14 +63,14 @@ impl ShaderEnqueue {
         execution_graph: vk::Pipeline,
         node_info: &vk::PipelineShaderStageNodeCreateInfoAMDX<'_>,
     ) -> VkResult<u32> {
-        let mut node_index = 0;
+        let mut node_index = mem::MaybeUninit::uninit();
         (self.fp.get_execution_graph_pipeline_node_index_amdx)(
             self.handle,
             execution_graph,
             node_info,
-            &mut node_index,
+            node_index.as_mut_ptr(),
         )
-        .result_with_success(node_index)
+        .assume_init_on_success(node_index)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdInitializeGraphScratchMemoryAMDX.html>

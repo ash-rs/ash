@@ -27,14 +27,14 @@ impl CreateRenderPass2 {
         create_info: &vk::RenderPassCreateInfo2<'_>,
         allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::RenderPass> {
-        let mut renderpass = mem::zeroed();
+        let mut renderpass = mem::MaybeUninit::uninit();
         (self.fp.create_render_pass2_khr)(
             self.handle,
             create_info,
             allocation_callbacks.as_raw_ptr(),
-            &mut renderpass,
+            renderpass.as_mut_ptr(),
         )
-        .result_with_success(renderpass)
+        .assume_init_on_success(renderpass)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBeginRenderPass2.html>

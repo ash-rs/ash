@@ -45,14 +45,14 @@ impl GetMemoryRequirements2 {
         &self,
         info: &vk::ImageSparseMemoryRequirementsInfo2KHR<'_>,
     ) -> usize {
-        let mut count = 0;
+        let mut count = mem::MaybeUninit::uninit();
         (self.fp.get_image_sparse_memory_requirements2_khr)(
             self.handle,
             info,
-            &mut count,
+            count.as_mut_ptr(),
             ptr::null_mut(),
         );
-        count as usize
+        count.assume_init() as usize
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetImageSparseMemoryRequirements2KHR.html>

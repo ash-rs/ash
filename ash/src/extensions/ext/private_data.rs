@@ -28,14 +28,14 @@ impl PrivateData {
         create_info: &vk::PrivateDataSlotCreateInfoEXT<'_>,
         allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::PrivateDataSlotEXT> {
-        let mut private_data_slot = mem::zeroed();
+        let mut private_data_slot = mem::MaybeUninit::uninit();
         (self.fp.create_private_data_slot_ext)(
             self.handle,
             create_info,
             allocation_callbacks.as_raw_ptr(),
-            &mut private_data_slot,
+            private_data_slot.as_mut_ptr(),
         )
-        .result_with_success(private_data_slot)
+        .assume_init_on_success(private_data_slot)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroyPrivateDataSlotEXT.html>
@@ -77,15 +77,15 @@ impl PrivateData {
         object: T,
         private_data_slot: vk::PrivateDataSlotEXT,
     ) -> u64 {
-        let mut data = mem::zeroed();
+        let mut data = mem::MaybeUninit::uninit();
         (self.fp.get_private_data_ext)(
             self.handle,
             T::TYPE,
             object.as_raw(),
             private_data_slot,
-            &mut data,
+            data.as_mut_ptr(),
         );
-        data
+        data.assume_init()
     }
 
     pub const NAME: &'static CStr = vk::ExtPrivateDataFn::NAME;

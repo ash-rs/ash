@@ -41,14 +41,14 @@ impl GetSurfaceCapabilities2 {
         physical_device: vk::PhysicalDevice,
         surface_info: &vk::PhysicalDeviceSurfaceInfo2KHR<'_>,
     ) -> VkResult<usize> {
-        let mut count = 0;
+        let mut count = mem::MaybeUninit::uninit();
         let err_code = (self.fp.get_physical_device_surface_formats2_khr)(
             physical_device,
             surface_info,
-            &mut count,
+            count.as_mut_ptr(),
             std::ptr::null_mut(),
         );
-        err_code.result_with_success(count as usize)
+        err_code.assume_init_on_success(count).map(|c| c as usize)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceFormats2KHR.html>

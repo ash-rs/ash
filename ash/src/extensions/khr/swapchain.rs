@@ -29,14 +29,14 @@ impl Swapchain {
         create_info: &vk::SwapchainCreateInfoKHR<'_>,
         allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::SwapchainKHR> {
-        let mut swapchain = mem::zeroed();
+        let mut swapchain = mem::MaybeUninit::uninit();
         (self.fp.create_swapchain_khr)(
             self.handle,
             create_info,
             allocation_callbacks.as_raw_ptr(),
-            &mut swapchain,
+            swapchain.as_mut_ptr(),
         )
-        .result_with_success(swapchain)
+        .assume_init_on_success(swapchain)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroySwapchainKHR.html>
@@ -71,18 +71,18 @@ impl Swapchain {
         semaphore: vk::Semaphore,
         fence: vk::Fence,
     ) -> VkResult<(u32, bool)> {
-        let mut index = 0;
+        let mut index = mem::MaybeUninit::uninit();
         let err_code = (self.fp.acquire_next_image_khr)(
             self.handle,
             swapchain,
             timeout,
             semaphore,
             fence,
-            &mut index,
+            index.as_mut_ptr(),
         );
         match err_code {
-            vk::Result::SUCCESS => Ok((index, false)),
-            vk::Result::SUBOPTIMAL_KHR => Ok((index, true)),
+            vk::Result::SUCCESS => Ok((index.assume_init(), false)),
+            vk::Result::SUBOPTIMAL_KHR => Ok((index.assume_init(), true)),
             _ => Err(err_code),
         }
     }
@@ -139,9 +139,13 @@ impl Swapchain {
         &self,
         surface: vk::SurfaceKHR,
     ) -> VkResult<vk::DeviceGroupPresentModeFlagsKHR> {
-        let mut modes = mem::zeroed();
-        (self.fp.get_device_group_surface_present_modes_khr)(self.handle, surface, &mut modes)
-            .result_with_success(modes)
+        let mut modes = mem::MaybeUninit::uninit();
+        (self.fp.get_device_group_surface_present_modes_khr)(
+            self.handle,
+            surface,
+            modes.as_mut_ptr(),
+        )
+        .assume_init_on_success(modes)
     }
 
     /// Only available since [Vulkan 1.1].
@@ -185,11 +189,12 @@ impl Swapchain {
         &self,
         acquire_info: &vk::AcquireNextImageInfoKHR<'_>,
     ) -> VkResult<(u32, bool)> {
-        let mut index = 0;
-        let err_code = (self.fp.acquire_next_image2_khr)(self.handle, acquire_info, &mut index);
+        let mut index = mem::MaybeUninit::uninit();
+        let err_code =
+            (self.fp.acquire_next_image2_khr)(self.handle, acquire_info, index.as_mut_ptr());
         match err_code {
-            vk::Result::SUCCESS => Ok((index, false)),
-            vk::Result::SUBOPTIMAL_KHR => Ok((index, true)),
+            vk::Result::SUCCESS => Ok((index.assume_init(), false)),
+            vk::Result::SUBOPTIMAL_KHR => Ok((index.assume_init(), true)),
             _ => Err(err_code),
         }
     }

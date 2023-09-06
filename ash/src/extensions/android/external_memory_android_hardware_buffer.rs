@@ -37,9 +37,9 @@ impl ExternalMemoryAndroidHardwareBuffer {
         &self,
         info: &vk::MemoryGetAndroidHardwareBufferInfoANDROID<'_>,
     ) -> VkResult<*mut vk::AHardwareBuffer> {
-        let mut buffer = std::ptr::null_mut();
-        (self.fp.get_memory_android_hardware_buffer_android)(self.handle, info, &mut buffer)
-            .result_with_success(buffer)
+        let mut buffer = mem::MaybeUninit::uninit();
+        (self.fp.get_memory_android_hardware_buffer_android)(self.handle, info, buffer.as_mut_ptr())
+            .assume_init_on_success(buffer)
     }
 
     pub const NAME: &'static CStr = vk::AndroidExternalMemoryAndroidHardwareBufferFn::NAME;

@@ -85,13 +85,13 @@ impl GetPhysicalDeviceProperties2 {
         &self,
         physical_device: vk::PhysicalDevice,
     ) -> usize {
-        let mut count = 0;
+        let mut count = mem::MaybeUninit::uninit();
         (self.fp.get_physical_device_queue_family_properties2_khr)(
             physical_device,
-            &mut count,
+            count.as_mut_ptr(),
             ptr::null_mut(),
         );
-        count as usize
+        count.assume_init() as usize
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceQueueFamilyProperties2KHR.html>
@@ -120,16 +120,16 @@ impl GetPhysicalDeviceProperties2 {
         physical_device: vk::PhysicalDevice,
         format_info: &vk::PhysicalDeviceSparseImageFormatInfo2KHR<'_>,
     ) -> usize {
-        let mut count = 0;
+        let mut count = mem::MaybeUninit::uninit();
         (self
             .fp
             .get_physical_device_sparse_image_format_properties2_khr)(
             physical_device,
             format_info,
-            &mut count,
+            count.as_mut_ptr(),
             ptr::null_mut(),
         );
-        count as usize
+        count.assume_init() as usize
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSparseImageFormatProperties2KHR.html>

@@ -60,13 +60,13 @@ impl FullScreenExclusive {
         &self,
         surface_info: &vk::PhysicalDeviceSurfaceInfo2KHR<'_>,
     ) -> VkResult<vk::DeviceGroupPresentModeFlagsKHR> {
-        let mut present_modes = mem::zeroed();
+        let mut present_modes = mem::MaybeUninit::uninit();
         (self.fp.get_device_group_surface_present_modes2_ext)(
             self.handle,
             surface_info,
-            &mut present_modes,
+            present_modes.as_mut_ptr(),
         )
-        .result_with_success(present_modes)
+        .assume_init_on_success(present_modes)
     }
 
     pub const NAME: &'static CStr = vk::ExtFullScreenExclusiveFn::NAME;

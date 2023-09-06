@@ -24,15 +24,16 @@ impl CoverageReductionMode {
         &self,
         physical_device: vk::PhysicalDevice,
     ) -> VkResult<usize> {
-        let mut count = 0;
+        let mut count = mem::MaybeUninit::uninit();
         (self
             .fp
             .get_physical_device_supported_framebuffer_mixed_samples_combinations_nv)(
             physical_device,
-            &mut count,
+            count.as_mut_ptr(),
             std::ptr::null_mut(),
         )
-        .result_with_success(count as usize)
+        .assume_init_on_success(count)
+        .map(|c| c as usize)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV.html>

@@ -26,9 +26,9 @@ impl DescriptorBuffer {
         &self,
         layout: vk::DescriptorSetLayout,
     ) -> vk::DeviceSize {
-        let mut count = 0;
-        (self.fp.get_descriptor_set_layout_size_ext)(self.handle, layout, &mut count);
-        count
+        let mut count = mem::MaybeUninit::uninit();
+        (self.fp.get_descriptor_set_layout_size_ext)(self.handle, layout, count.as_mut_ptr());
+        count.assume_init()
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDescriptorSetLayoutBindingOffsetEXT.html>
@@ -38,14 +38,14 @@ impl DescriptorBuffer {
         layout: vk::DescriptorSetLayout,
         binding: u32,
     ) -> vk::DeviceSize {
-        let mut offset = 0;
+        let mut offset = mem::MaybeUninit::uninit();
         (self.fp.get_descriptor_set_layout_binding_offset_ext)(
             self.handle,
             layout,
             binding,
-            &mut offset,
+            offset.as_mut_ptr(),
         );
-        offset
+        offset.assume_init()
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDescriptorEXT.html>
