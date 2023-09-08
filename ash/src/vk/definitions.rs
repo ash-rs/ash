@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 263;
+pub const HEADER_VERSION: u32 = 264;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -48675,6 +48675,123 @@ impl<'a> PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkFrameBoundaryEXT.html>"]
+pub struct FrameBoundaryEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub flags: FrameBoundaryFlagsEXT,
+    pub frame_id: u64,
+    pub image_count: u32,
+    pub p_images: *const Image,
+    pub buffer_count: u32,
+    pub p_buffers: *const Buffer,
+    pub tag_name: u64,
+    pub tag_size: usize,
+    pub p_tag: *const c_void,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for FrameBoundaryEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            flags: FrameBoundaryFlagsEXT::default(),
+            frame_id: u64::default(),
+            image_count: u32::default(),
+            p_images: ::std::ptr::null(),
+            buffer_count: u32::default(),
+            p_buffers: ::std::ptr::null(),
+            tag_name: u64::default(),
+            tag_size: usize::default(),
+            p_tag: ::std::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for FrameBoundaryEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::FRAME_BOUNDARY_EXT;
+}
+unsafe impl ExtendsSubmitInfo for FrameBoundaryEXT<'_> {}
+unsafe impl ExtendsSubmitInfo2 for FrameBoundaryEXT<'_> {}
+unsafe impl ExtendsPresentInfoKHR for FrameBoundaryEXT<'_> {}
+unsafe impl ExtendsBindSparseInfo for FrameBoundaryEXT<'_> {}
+impl<'a> FrameBoundaryEXT<'a> {
+    #[inline]
+    pub fn flags(mut self, flags: FrameBoundaryFlagsEXT) -> Self {
+        self.flags = flags;
+        self
+    }
+    #[inline]
+    pub fn frame_id(mut self, frame_id: u64) -> Self {
+        self.frame_id = frame_id;
+        self
+    }
+    #[inline]
+    pub fn images(mut self, images: &'a [Image]) -> Self {
+        self.image_count = images.len() as _;
+        self.p_images = images.as_ptr();
+        self
+    }
+    #[inline]
+    pub fn buffers(mut self, buffers: &'a [Buffer]) -> Self {
+        self.buffer_count = buffers.len() as _;
+        self.p_buffers = buffers.as_ptr();
+        self
+    }
+    #[inline]
+    pub fn tag_name(mut self, tag_name: u64) -> Self {
+        self.tag_name = tag_name;
+        self
+    }
+    #[inline]
+    pub fn tag_size(mut self, tag_size: usize) -> Self {
+        self.tag_size = tag_size;
+        self
+    }
+    #[inline]
+    pub fn tag(mut self, tag: *const c_void) -> Self {
+        self.p_tag = tag;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceFrameBoundaryFeaturesEXT.html>"]
+pub struct PhysicalDeviceFrameBoundaryFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub frame_boundary: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceFrameBoundaryFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            frame_boundary: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceFrameBoundaryFeaturesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_FRAME_BOUNDARY_FEATURES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceFrameBoundaryFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFrameBoundaryFeaturesEXT<'_> {}
+impl<'a> PhysicalDeviceFrameBoundaryFeaturesEXT<'a> {
+    #[inline]
+    pub fn frame_boundary(mut self, frame_boundary: bool) -> Self {
+        self.frame_boundary = frame_boundary.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT.html>"]
 pub struct PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'a> {
     pub s_type: StructureType,
@@ -51079,6 +51196,39 @@ impl<'a> PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'a> {
     #[inline]
     pub fn descriptor_pool_overallocation(mut self, descriptor_pool_overallocation: bool) -> Self {
         self.descriptor_pool_overallocation = descriptor_pool_overallocation.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceLayeredDriverPropertiesMSFT.html>"]
+pub struct PhysicalDeviceLayeredDriverPropertiesMSFT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub underlying_api: LayeredDriverUnderlyingApiMSFT,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceLayeredDriverPropertiesMSFT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            underlying_api: LayeredDriverUnderlyingApiMSFT::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceLayeredDriverPropertiesMSFT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_LAYERED_DRIVER_PROPERTIES_MSFT;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceLayeredDriverPropertiesMSFT<'_> {}
+impl<'a> PhysicalDeviceLayeredDriverPropertiesMSFT<'a> {
+    #[inline]
+    pub fn underlying_api(mut self, underlying_api: LayeredDriverUnderlyingApiMSFT) -> Self {
+        self.underlying_api = underlying_api;
         self
     }
 }

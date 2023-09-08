@@ -16700,6 +16700,18 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_PIPELINE_PROPERTIES_FEATURES_EXT: Self = Self(1_000_372_001);
     pub const PIPELINE_INFO_EXT: Self = Self::PIPELINE_INFO_KHR;
 }
+impl ExtFrameBoundaryFn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_frame_boundary\0") };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct ExtFrameBoundaryFn;
+#[doc = "Generated from 'VK_EXT_frame_boundary'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_FRAME_BOUNDARY_FEATURES_EXT: Self = Self(1_000_375_000);
+    pub const FRAME_BOUNDARY_EXT: Self = Self(1_000_375_001);
+}
 impl ExtMultisampledRenderToSingleSampledFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
         ::std::ffi::CStr::from_bytes_with_nul_unchecked(
@@ -21640,6 +21652,17 @@ impl StructureType {
     pub const EXTERNAL_FORMAT_QNX: Self = Self(1_000_529_003);
     pub const PHYSICAL_DEVICE_EXTERNAL_MEMORY_SCREEN_BUFFER_FEATURES_QNX: Self =
         Self(1_000_529_004);
+}
+impl MsftLayeredDriverFn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_MSFT_layered_driver\0") };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct MsftLayeredDriverFn;
+#[doc = "Generated from 'VK_MSFT_layered_driver'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_LAYERED_DRIVER_PROPERTIES_MSFT: Self = Self(1_000_530_000);
 }
 impl NvDescriptorPoolOverallocationFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {

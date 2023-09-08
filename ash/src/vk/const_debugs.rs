@@ -2355,6 +2355,12 @@ impl fmt::Debug for FragmentShadingRateTypeNV {
         }
     }
 }
+impl fmt::Debug for FrameBoundaryFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(FrameBoundaryFlagsEXT::FRAME_END.0, "FRAME_END")];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
 impl fmt::Debug for FramebufferCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[(FramebufferCreateFlags::IMAGELESS.0, "IMAGELESS")];
@@ -2950,6 +2956,20 @@ impl fmt::Debug for InternalAllocationType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::EXECUTABLE => Some("EXECUTABLE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
+impl fmt::Debug for LayeredDriverUnderlyingApiMSFT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::NONE => Some("NONE"),
+            Self::D3D12 => Some("D3D12"),
             _ => None,
         };
         if let Some(x) = name {
@@ -6036,6 +6056,10 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_PIPELINE_PROPERTIES_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_PIPELINE_PROPERTIES_FEATURES_EXT")
             }
+            Self::PHYSICAL_DEVICE_FRAME_BOUNDARY_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_FRAME_BOUNDARY_FEATURES_EXT")
+            }
+            Self::FRAME_BOUNDARY_EXT => Some("FRAME_BOUNDARY_EXT"),
             Self::PHYSICAL_DEVICE_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_FEATURES_EXT")
             }
@@ -6354,6 +6378,9 @@ impl fmt::Debug for StructureType {
             Self::EXTERNAL_FORMAT_QNX => Some("EXTERNAL_FORMAT_QNX"),
             Self::PHYSICAL_DEVICE_EXTERNAL_MEMORY_SCREEN_BUFFER_FEATURES_QNX => {
                 Some("PHYSICAL_DEVICE_EXTERNAL_MEMORY_SCREEN_BUFFER_FEATURES_QNX")
+            }
+            Self::PHYSICAL_DEVICE_LAYERED_DRIVER_PROPERTIES_MSFT => {
+                Some("PHYSICAL_DEVICE_LAYERED_DRIVER_PROPERTIES_MSFT")
             }
             Self::PHYSICAL_DEVICE_DESCRIPTOR_POOL_OVERALLOCATION_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_DESCRIPTOR_POOL_OVERALLOCATION_FEATURES_NV")

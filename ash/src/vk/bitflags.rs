@@ -1169,6 +1169,14 @@ impl DeviceAddressBindingFlagsEXT {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkFrameBoundaryFlagBitsEXT.html>"]
+pub struct FrameBoundaryFlagsEXT(pub(crate) Flags);
+vk_bitflags_wrapped!(FrameBoundaryFlagsEXT, Flags);
+impl FrameBoundaryFlagsEXT {
+    pub const FRAME_END: Self = Self(0b1);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPresentScalingFlagBitsEXT.html>"]
 pub struct PresentScalingFlagsEXT(pub(crate) Flags);
 vk_bitflags_wrapped!(PresentScalingFlagsEXT, Flags);
