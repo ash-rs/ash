@@ -1812,6 +1812,8 @@ impl DriverId {
     pub const MESA_NVK: Self = Self(24);
     #[doc = "Imagination Technologies"]
     pub const IMAGINATION_OPEN_SOURCE_MESA: Self = Self(25);
+    #[doc = "Mesa open source project"]
+    pub const MESA_AGXV: Self = Self(26);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
@@ -2857,6 +2859,52 @@ impl LayeredDriverUnderlyingApiMSFT {
 impl LayeredDriverUnderlyingApiMSFT {
     pub const NONE: Self = Self(0);
     pub const D3D12: Self = Self(1);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkLatencyMarkerNV.html>"]
+pub struct LatencyMarkerNV(pub(crate) i32);
+impl LatencyMarkerNV {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl LatencyMarkerNV {
+    pub const SIMULATION_START: Self = Self(0);
+    pub const SIMULATION_END: Self = Self(1);
+    pub const RENDERSUBMIT_START: Self = Self(2);
+    pub const RENDERSUBMIT_END: Self = Self(3);
+    pub const PRESENT_START: Self = Self(4);
+    pub const PRESENT_END: Self = Self(5);
+    pub const INPUT_SAMPLE: Self = Self(6);
+    pub const TRIGGER_FLASH: Self = Self(7);
+    pub const OUT_OF_BAND_RENDERSUBMIT_START: Self = Self(8);
+    pub const OUT_OF_BAND_RENDERSUBMIT_END: Self = Self(9);
+    pub const OUT_OF_BAND_PRESENT_START: Self = Self(10);
+    pub const OUT_OF_BAND_PRESENT_END: Self = Self(11);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkOutOfBandQueueTypeNV.html>"]
+pub struct OutOfBandQueueTypeNV(pub(crate) i32);
+impl OutOfBandQueueTypeNV {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl OutOfBandQueueTypeNV {
+    pub const RENDER: Self = Self(0);
+    pub const PRESENT: Self = Self(1);
 }
 impl fmt::Debug for ObjectType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {

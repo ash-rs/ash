@@ -1665,6 +1665,7 @@ impl fmt::Debug for DriverId {
             Self::MESA_DOZEN => Some("MESA_DOZEN"),
             Self::MESA_NVK => Some("MESA_NVK"),
             Self::IMAGINATION_OPEN_SOURCE_MESA => Some("IMAGINATION_OPEN_SOURCE_MESA"),
+            Self::MESA_AGXV => Some("MESA_AGXV"),
             _ => None,
         };
         if let Some(x) = name {
@@ -2965,6 +2966,30 @@ impl fmt::Debug for InternalAllocationType {
         }
     }
 }
+impl fmt::Debug for LatencyMarkerNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::SIMULATION_START => Some("SIMULATION_START"),
+            Self::SIMULATION_END => Some("SIMULATION_END"),
+            Self::RENDERSUBMIT_START => Some("RENDERSUBMIT_START"),
+            Self::RENDERSUBMIT_END => Some("RENDERSUBMIT_END"),
+            Self::PRESENT_START => Some("PRESENT_START"),
+            Self::PRESENT_END => Some("PRESENT_END"),
+            Self::INPUT_SAMPLE => Some("INPUT_SAMPLE"),
+            Self::TRIGGER_FLASH => Some("TRIGGER_FLASH"),
+            Self::OUT_OF_BAND_RENDERSUBMIT_START => Some("OUT_OF_BAND_RENDERSUBMIT_START"),
+            Self::OUT_OF_BAND_RENDERSUBMIT_END => Some("OUT_OF_BAND_RENDERSUBMIT_END"),
+            Self::OUT_OF_BAND_PRESENT_START => Some("OUT_OF_BAND_PRESENT_START"),
+            Self::OUT_OF_BAND_PRESENT_END => Some("OUT_OF_BAND_PRESENT_END"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
 impl fmt::Debug for LayeredDriverUnderlyingApiMSFT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
@@ -3264,6 +3289,20 @@ impl fmt::Debug for OpticalFlowUsageFlagsNV {
             (OpticalFlowUsageFlagsNV::GLOBAL_FLOW.0, "GLOBAL_FLOW"),
         ];
         debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for OutOfBandQueueTypeNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::RENDER => Some("RENDER"),
+            Self::PRESENT => Some("PRESENT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
     }
 }
 impl fmt::Debug for PeerMemoryFeatureFlags {
@@ -4453,6 +4492,10 @@ impl fmt::Debug for ResolveModeFlags {
             (ResolveModeFlags::AVERAGE.0, "AVERAGE"),
             (ResolveModeFlags::MIN.0, "MIN"),
             (ResolveModeFlags::MAX.0, "MAX"),
+            (
+                ResolveModeFlags::EXTERNAL_FORMAT_DOWNSAMPLE_ANDROID.0,
+                "EXTERNAL_FORMAT_DOWNSAMPLE_ANDROID",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -6268,6 +6311,15 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES_EXT")
             }
+            Self::PHYSICAL_DEVICE_EXTERNAL_FORMAT_RESOLVE_FEATURES_ANDROID => {
+                Some("PHYSICAL_DEVICE_EXTERNAL_FORMAT_RESOLVE_FEATURES_ANDROID")
+            }
+            Self::PHYSICAL_DEVICE_EXTERNAL_FORMAT_RESOLVE_PROPERTIES_ANDROID => {
+                Some("PHYSICAL_DEVICE_EXTERNAL_FORMAT_RESOLVE_PROPERTIES_ANDROID")
+            }
+            Self::ANDROID_HARDWARE_BUFFER_FORMAT_RESOLVE_PROPERTIES_ANDROID => {
+                Some("ANDROID_HARDWARE_BUFFER_FORMAT_RESOLVE_PROPERTIES_ANDROID")
+            }
             Self::PHYSICAL_DEVICE_MAINTENANCE_5_FEATURES_KHR => {
                 Some("PHYSICAL_DEVICE_MAINTENANCE_5_FEATURES_KHR")
             }
@@ -6329,6 +6381,15 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_FEATURES_EXT")
             }
+            Self::LATENCY_SLEEP_MODE_INFO_NV => Some("LATENCY_SLEEP_MODE_INFO_NV"),
+            Self::LATENCY_SLEEP_INFO_NV => Some("LATENCY_SLEEP_INFO_NV"),
+            Self::SET_LATENCY_MARKER_INFO_NV => Some("SET_LATENCY_MARKER_INFO_NV"),
+            Self::GET_LATENCY_MARKER_INFO_NV => Some("GET_LATENCY_MARKER_INFO_NV"),
+            Self::LATENCY_TIMINGS_FRAME_REPORT_NV => Some("LATENCY_TIMINGS_FRAME_REPORT_NV"),
+            Self::LATENCY_SUBMISSION_PRESENT_ID_NV => Some("LATENCY_SUBMISSION_PRESENT_ID_NV"),
+            Self::OUT_OF_BAND_QUEUE_TYPE_INFO_NV => Some("OUT_OF_BAND_QUEUE_TYPE_INFO_NV"),
+            Self::SWAPCHAIN_LATENCY_CREATE_INFO_NV => Some("SWAPCHAIN_LATENCY_CREATE_INFO_NV"),
+            Self::LATENCY_SURFACE_CAPABILITIES_NV => Some("LATENCY_SURFACE_CAPABILITIES_NV"),
             Self::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_FEATURES_KHR => {
                 Some("PHYSICAL_DEVICE_COOPERATIVE_MATRIX_FEATURES_KHR")
             }

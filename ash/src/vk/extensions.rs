@@ -19808,6 +19808,25 @@ impl PipelineCreateFlags {
 impl StructureType {
     pub const PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES_EXT: Self = Self(1_000_466_000);
 }
+impl AndroidExternalFormatResolveFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_ANDROID_external_format_resolve\0")
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct AndroidExternalFormatResolveFn;
+#[doc = "Generated from 'VK_ANDROID_external_format_resolve'"]
+impl ResolveModeFlags {
+    pub const EXTERNAL_FORMAT_DOWNSAMPLE_ANDROID: Self = Self(0b1_0000);
+}
+#[doc = "Generated from 'VK_ANDROID_external_format_resolve'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_EXTERNAL_FORMAT_RESOLVE_FEATURES_ANDROID: Self = Self(1_000_468_000);
+    pub const PHYSICAL_DEVICE_EXTERNAL_FORMAT_RESOLVE_PROPERTIES_ANDROID: Self =
+        Self(1_000_468_001);
+    pub const ANDROID_HARDWARE_BUFFER_FORMAT_RESOLVE_PROPERTIES_ANDROID: Self = Self(1_000_468_002);
+}
 impl KhrMaintenance5Fn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance5\0") };
@@ -21410,6 +21429,166 @@ pub struct ExtDynamicRenderingUnusedAttachmentsFn;
 impl StructureType {
     pub const PHYSICAL_DEVICE_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_FEATURES_EXT: Self =
         Self(1_000_499_000);
+}
+impl NvLowLatency2Fn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_low_latency2\0") };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[allow(non_camel_case_types)]
+pub type PFN_vkSetLatencySleepModeNV = unsafe extern "system" fn(
+    device: Device,
+    swapchain: SwapchainKHR,
+    p_sleep_mode_info: *mut LatencySleepModeInfoNV,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkLatencySleepNV = unsafe extern "system" fn(
+    device: Device,
+    swapchain: SwapchainKHR,
+    p_sleep_info: *mut LatencySleepInfoNV,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkSetLatencyMarkerNV = unsafe extern "system" fn(
+    device: Device,
+    swapchain: SwapchainKHR,
+    p_latency_marker_info: *mut SetLatencyMarkerInfoNV,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetLatencyTimingsNV = unsafe extern "system" fn(
+    device: Device,
+    swapchain: SwapchainKHR,
+    p_timing_count: *mut u32,
+    p_latency_marker_info: *mut GetLatencyMarkerInfoNV,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkQueueNotifyOutOfBandNV =
+    unsafe extern "system" fn(queue: Queue, p_queue_type_info: OutOfBandQueueTypeInfoNV);
+#[derive(Clone)]
+pub struct NvLowLatency2Fn {
+    pub set_latency_sleep_mode_nv: PFN_vkSetLatencySleepModeNV,
+    pub latency_sleep_nv: PFN_vkLatencySleepNV,
+    pub set_latency_marker_nv: PFN_vkSetLatencyMarkerNV,
+    pub get_latency_timings_nv: PFN_vkGetLatencyTimingsNV,
+    pub queue_notify_out_of_band_nv: PFN_vkQueueNotifyOutOfBandNV,
+}
+unsafe impl Send for NvLowLatency2Fn {}
+unsafe impl Sync for NvLowLatency2Fn {}
+impl NvLowLatency2Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {
+            set_latency_sleep_mode_nv: unsafe {
+                unsafe extern "system" fn set_latency_sleep_mode_nv(
+                    _device: Device,
+                    _swapchain: SwapchainKHR,
+                    _p_sleep_mode_info: *mut LatencySleepModeInfoNV,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(set_latency_sleep_mode_nv)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkSetLatencySleepModeNV\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    set_latency_sleep_mode_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            latency_sleep_nv: unsafe {
+                unsafe extern "system" fn latency_sleep_nv(
+                    _device: Device,
+                    _swapchain: SwapchainKHR,
+                    _p_sleep_info: *mut LatencySleepInfoNV,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(latency_sleep_nv)))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkLatencySleepNV\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    latency_sleep_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            set_latency_marker_nv: unsafe {
+                unsafe extern "system" fn set_latency_marker_nv(
+                    _device: Device,
+                    _swapchain: SwapchainKHR,
+                    _p_latency_marker_info: *mut SetLatencyMarkerInfoNV,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(set_latency_marker_nv)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkSetLatencyMarkerNV\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    set_latency_marker_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_latency_timings_nv: unsafe {
+                unsafe extern "system" fn get_latency_timings_nv(
+                    _device: Device,
+                    _swapchain: SwapchainKHR,
+                    _p_timing_count: *mut u32,
+                    _p_latency_marker_info: *mut GetLatencyMarkerInfoNV,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_latency_timings_nv)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkGetLatencyTimingsNV\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    get_latency_timings_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            queue_notify_out_of_band_nv: unsafe {
+                unsafe extern "system" fn queue_notify_out_of_band_nv(
+                    _queue: Queue,
+                    _p_queue_type_info: OutOfBandQueueTypeInfoNV,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(queue_notify_out_of_band_nv)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkQueueNotifyOutOfBandNV\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    queue_notify_out_of_band_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+}
+#[doc = "Generated from 'VK_NV_low_latency2'"]
+impl StructureType {
+    pub const LATENCY_SLEEP_MODE_INFO_NV: Self = Self(1_000_505_000);
+    pub const LATENCY_SLEEP_INFO_NV: Self = Self(1_000_505_001);
+    pub const SET_LATENCY_MARKER_INFO_NV: Self = Self(1_000_505_002);
+    pub const GET_LATENCY_MARKER_INFO_NV: Self = Self(1_000_505_003);
+    pub const LATENCY_TIMINGS_FRAME_REPORT_NV: Self = Self(1_000_505_004);
+    pub const LATENCY_SUBMISSION_PRESENT_ID_NV: Self = Self(1_000_505_005);
+    pub const OUT_OF_BAND_QUEUE_TYPE_INFO_NV: Self = Self(1_000_505_006);
+    pub const SWAPCHAIN_LATENCY_CREATE_INFO_NV: Self = Self(1_000_505_007);
+    pub const LATENCY_SURFACE_CAPABILITIES_NV: Self = Self(1_000_505_008);
 }
 impl KhrCooperativeMatrixFn {
     pub const NAME: &'static ::std::ffi::CStr =
