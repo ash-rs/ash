@@ -2968,7 +2968,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     let mut has_lifetimes = definitions
         .iter()
         .filter_map(get_variant!(vkxml::DefinitionsElement::Struct))
-        .filter(|&s| {
+        .filter(|s| {
             s.elements
                 .iter()
                 .filter_map(get_variant!(vkxml::StructElement::Member))
