@@ -4476,6 +4476,7 @@ impl fmt::Debug for RenderingFlags {
             ),
             (RenderingFlags::SUSPENDING.0, "SUSPENDING"),
             (RenderingFlags::RESUMING.0, "RESUMING"),
+            (RenderingFlags::CONTENTS_INLINE_EXT.0, "CONTENTS_INLINE_EXT"),
             (
                 RenderingFlags::ENABLE_LEGACY_DITHERING_EXT.0,
                 "ENABLE_LEGACY_DITHERING_EXT",
@@ -6254,6 +6255,12 @@ impl fmt::Debug for StructureType {
             Self::IMAGE_VIEW_SAMPLE_WEIGHT_CREATE_INFO_QCOM => {
                 Some("IMAGE_VIEW_SAMPLE_WEIGHT_CREATE_INFO_QCOM")
             }
+            Self::PHYSICAL_DEVICE_NESTED_COMMAND_BUFFER_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_NESTED_COMMAND_BUFFER_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_NESTED_COMMAND_BUFFER_PROPERTIES_EXT => {
+                Some("PHYSICAL_DEVICE_NESTED_COMMAND_BUFFER_PROPERTIES_EXT")
+            }
             Self::EXTERNAL_MEMORY_ACQUIRE_UNMODIFIED_EXT => {
                 Some("EXTERNAL_MEMORY_ACQUIRE_UNMODIFIED_EXT")
             }
@@ -6362,6 +6369,12 @@ impl fmt::Debug for StructureType {
             }
             Self::PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_PROPERTIES_NV => {
                 Some("PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_PROPERTIES_NV")
+            }
+            Self::PHYSICAL_DEVICE_EXTENDED_SPARSE_ADDRESS_SPACE_FEATURES_NV => {
+                Some("PHYSICAL_DEVICE_EXTENDED_SPARSE_ADDRESS_SPACE_FEATURES_NV")
+            }
+            Self::PHYSICAL_DEVICE_EXTENDED_SPARSE_ADDRESS_SPACE_PROPERTIES_NV => {
+                Some("PHYSICAL_DEVICE_EXTENDED_SPARSE_ADDRESS_SPACE_PROPERTIES_NV")
             }
             Self::PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_EXT")
@@ -6819,6 +6832,9 @@ impl fmt::Debug for SubpassContents {
         let name = match *self {
             Self::INLINE => Some("INLINE"),
             Self::SECONDARY_COMMAND_BUFFERS => Some("SECONDARY_COMMAND_BUFFERS"),
+            Self::INLINE_AND_SECONDARY_COMMAND_BUFFERS_EXT => {
+                Some("INLINE_AND_SECONDARY_COMMAND_BUFFERS_EXT")
+            }
             _ => None,
         };
         if let Some(x) = name {

@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 266;
+pub const HEADER_VERSION: u32 = 267;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -44907,6 +44907,99 @@ impl<'a> DescriptorSetLayoutHostMappingInfoVALVE<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceNestedCommandBufferFeaturesEXT.html>"]
+pub struct PhysicalDeviceNestedCommandBufferFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub nested_command_buffer: Bool32,
+    pub nested_command_buffer_rendering: Bool32,
+    pub nested_command_buffer_simultaneous_use: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceNestedCommandBufferFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            nested_command_buffer: Bool32::default(),
+            nested_command_buffer_rendering: Bool32::default(),
+            nested_command_buffer_simultaneous_use: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceNestedCommandBufferFeaturesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_NESTED_COMMAND_BUFFER_FEATURES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceNestedCommandBufferFeaturesEXT<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceNestedCommandBufferFeaturesEXT<'_> {}
+impl<'a> PhysicalDeviceNestedCommandBufferFeaturesEXT<'a> {
+    #[inline]
+    pub fn nested_command_buffer(mut self, nested_command_buffer: bool) -> Self {
+        self.nested_command_buffer = nested_command_buffer.into();
+        self
+    }
+    #[inline]
+    pub fn nested_command_buffer_rendering(
+        mut self,
+        nested_command_buffer_rendering: bool,
+    ) -> Self {
+        self.nested_command_buffer_rendering = nested_command_buffer_rendering.into();
+        self
+    }
+    #[inline]
+    pub fn nested_command_buffer_simultaneous_use(
+        mut self,
+        nested_command_buffer_simultaneous_use: bool,
+    ) -> Self {
+        self.nested_command_buffer_simultaneous_use = nested_command_buffer_simultaneous_use.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceNestedCommandBufferPropertiesEXT.html>"]
+pub struct PhysicalDeviceNestedCommandBufferPropertiesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub max_command_buffer_nesting_level: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceNestedCommandBufferPropertiesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            max_command_buffer_nesting_level: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceNestedCommandBufferPropertiesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_NESTED_COMMAND_BUFFER_PROPERTIES_EXT;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceNestedCommandBufferPropertiesEXT<'_>
+{
+}
+impl<'a> PhysicalDeviceNestedCommandBufferPropertiesEXT<'a> {
+    #[inline]
+    pub fn max_command_buffer_nesting_level(
+        mut self,
+        max_command_buffer_nesting_level: u32,
+    ) -> Self {
+        self.max_command_buffer_nesting_level = max_command_buffer_nesting_level;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderModuleIdentifierFeaturesEXT.html>"]
 pub struct PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'a> {
     pub s_type: StructureType,
@@ -48748,13 +48841,9 @@ impl<'a> FrameBoundaryEXT<'a> {
         self
     }
     #[inline]
-    pub fn tag_size(mut self, tag_size: usize) -> Self {
-        self.tag_size = tag_size;
-        self
-    }
-    #[inline]
-    pub fn tag(mut self, tag: *const c_void) -> Self {
-        self.p_tag = tag;
+    pub fn tag(mut self, tag: &'a [u8]) -> Self {
+        self.tag_size = tag.len();
+        self.p_tag = tag.as_ptr().cast();
         self
     }
 }
@@ -49331,6 +49420,102 @@ impl<'a> PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'a> {
     ) -> Self {
         self.ray_tracing_invocation_reorder_reordering_hint =
             ray_tracing_invocation_reorder_reordering_hint;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceExtendedSparseAddressSpaceFeaturesNV.html>"]
+pub struct PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub extended_sparse_address_space: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            extended_sparse_address_space: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_EXTENDED_SPARSE_ADDRESS_SPACE_FEATURES_NV;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'_> {}
+impl<'a> PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'a> {
+    #[inline]
+    pub fn extended_sparse_address_space(mut self, extended_sparse_address_space: bool) -> Self {
+        self.extended_sparse_address_space = extended_sparse_address_space.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceExtendedSparseAddressSpacePropertiesNV.html>"]
+pub struct PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub extended_sparse_address_space_size: DeviceSize,
+    pub extended_sparse_image_usage_flags: ImageUsageFlags,
+    pub extended_sparse_buffer_usage_flags: BufferUsageFlags,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            extended_sparse_address_space_size: DeviceSize::default(),
+            extended_sparse_image_usage_flags: ImageUsageFlags::default(),
+            extended_sparse_buffer_usage_flags: BufferUsageFlags::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_EXTENDED_SPARSE_ADDRESS_SPACE_PROPERTIES_NV;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'_>
+{
+}
+impl<'a> PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'a> {
+    #[inline]
+    pub fn extended_sparse_address_space_size(
+        mut self,
+        extended_sparse_address_space_size: DeviceSize,
+    ) -> Self {
+        self.extended_sparse_address_space_size = extended_sparse_address_space_size;
+        self
+    }
+    #[inline]
+    pub fn extended_sparse_image_usage_flags(
+        mut self,
+        extended_sparse_image_usage_flags: ImageUsageFlags,
+    ) -> Self {
+        self.extended_sparse_image_usage_flags = extended_sparse_image_usage_flags;
+        self
+    }
+    #[inline]
+    pub fn extended_sparse_buffer_usage_flags(
+        mut self,
+        extended_sparse_buffer_usage_flags: BufferUsageFlags,
+    ) -> Self {
+        self.extended_sparse_buffer_usage_flags = extended_sparse_buffer_usage_flags;
         self
     }
 }

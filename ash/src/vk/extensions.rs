@@ -18550,6 +18550,27 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_IMAGE_PROCESSING_PROPERTIES_QCOM: Self = Self(1_000_440_001);
     pub const IMAGE_VIEW_SAMPLE_WEIGHT_CREATE_INFO_QCOM: Self = Self(1_000_440_002);
 }
+impl ExtNestedCommandBufferFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_nested_command_buffer\0")
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct ExtNestedCommandBufferFn;
+#[doc = "Generated from 'VK_EXT_nested_command_buffer'"]
+impl RenderingFlags {
+    pub const CONTENTS_INLINE_EXT: Self = Self(0b1_0000);
+}
+#[doc = "Generated from 'VK_EXT_nested_command_buffer'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_NESTED_COMMAND_BUFFER_FEATURES_EXT: Self = Self(1_000_451_000);
+    pub const PHYSICAL_DEVICE_NESTED_COMMAND_BUFFER_PROPERTIES_EXT: Self = Self(1_000_451_001);
+}
+#[doc = "Generated from 'VK_EXT_nested_command_buffer'"]
+impl SubpassContents {
+    pub const INLINE_AND_SECONDARY_COMMAND_BUFFERS_EXT: Self = Self(1_000_451_000);
+}
 impl ExtExternalMemoryAcquireUnmodifiedFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
         ::std::ffi::CStr::from_bytes_with_nul_unchecked(
@@ -21364,6 +21385,20 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_PROPERTIES_NV: Self =
         Self(1_000_490_001);
 }
+impl NvExtendedSparseAddressSpaceFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extended_sparse_address_space\0")
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct NvExtendedSparseAddressSpaceFn;
+#[doc = "Generated from 'VK_NV_extended_sparse_address_space'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_EXTENDED_SPARSE_ADDRESS_SPACE_FEATURES_NV: Self = Self(1_000_492_000);
+    pub const PHYSICAL_DEVICE_EXTENDED_SPARSE_ADDRESS_SPACE_PROPERTIES_NV: Self =
+        Self(1_000_492_001);
+}
 impl ExtMutableDescriptorTypeFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
         ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_mutable_descriptor_type\0")
@@ -21439,19 +21474,19 @@ impl NvLowLatency2Fn {
 pub type PFN_vkSetLatencySleepModeNV = unsafe extern "system" fn(
     device: Device,
     swapchain: SwapchainKHR,
-    p_sleep_mode_info: *mut LatencySleepModeInfoNV,
+    p_sleep_mode_info: *const LatencySleepModeInfoNV,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkLatencySleepNV = unsafe extern "system" fn(
     device: Device,
     swapchain: SwapchainKHR,
-    p_sleep_info: *mut LatencySleepInfoNV,
+    p_sleep_info: *const LatencySleepInfoNV,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkSetLatencyMarkerNV = unsafe extern "system" fn(
     device: Device,
     swapchain: SwapchainKHR,
-    p_latency_marker_info: *mut SetLatencyMarkerInfoNV,
+    p_latency_marker_info: *const SetLatencyMarkerInfoNV,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetLatencyTimingsNV = unsafe extern "system" fn(
@@ -21462,7 +21497,7 @@ pub type PFN_vkGetLatencyTimingsNV = unsafe extern "system" fn(
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkQueueNotifyOutOfBandNV =
-    unsafe extern "system" fn(queue: Queue, p_queue_type_info: OutOfBandQueueTypeInfoNV);
+    unsafe extern "system" fn(queue: Queue, p_queue_type_info: *const OutOfBandQueueTypeInfoNV);
 #[derive(Clone)]
 pub struct NvLowLatency2Fn {
     pub set_latency_sleep_mode_nv: PFN_vkSetLatencySleepModeNV,
@@ -21483,7 +21518,7 @@ impl NvLowLatency2Fn {
                 unsafe extern "system" fn set_latency_sleep_mode_nv(
                     _device: Device,
                     _swapchain: SwapchainKHR,
-                    _p_sleep_mode_info: *mut LatencySleepModeInfoNV,
+                    _p_sleep_mode_info: *const LatencySleepModeInfoNV,
                 ) -> Result {
                     panic!(concat!(
                         "Unable to load ",
@@ -21503,7 +21538,7 @@ impl NvLowLatency2Fn {
                 unsafe extern "system" fn latency_sleep_nv(
                     _device: Device,
                     _swapchain: SwapchainKHR,
-                    _p_sleep_info: *mut LatencySleepInfoNV,
+                    _p_sleep_info: *const LatencySleepInfoNV,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(latency_sleep_nv)))
                 }
@@ -21519,7 +21554,7 @@ impl NvLowLatency2Fn {
                 unsafe extern "system" fn set_latency_marker_nv(
                     _device: Device,
                     _swapchain: SwapchainKHR,
-                    _p_latency_marker_info: *mut SetLatencyMarkerInfoNV,
+                    _p_latency_marker_info: *const SetLatencyMarkerInfoNV,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -21559,7 +21594,7 @@ impl NvLowLatency2Fn {
             queue_notify_out_of_band_nv: unsafe {
                 unsafe extern "system" fn queue_notify_out_of_band_nv(
                     _queue: Queue,
-                    _p_queue_type_info: OutOfBandQueueTypeInfoNV,
+                    _p_queue_type_info: *const OutOfBandQueueTypeInfoNV,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
