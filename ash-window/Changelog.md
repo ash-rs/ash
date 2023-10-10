@@ -2,7 +2,8 @@
 
 ## [Unreleased] - ReleaseDate
 
-- Bumped MSRV from 1.59 to 1.64 for `winit 0.28` and `raw-window-handle 0.5.1`. (#709, #716)
+- Bumped 'raw-window-handle' to '0.6.0'. 
+- Bumped MSRV from 1.59 to 1.64 for `winit 0.28` and `raw-window-handle 0.6.0`. (#709, #716)
 
 ## [0.12.0] - 2022-09-23
 
