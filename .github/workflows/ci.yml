@@ -61,17 +61,30 @@ jobs:
   clippy:
     name: Clippy
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target:
+          - x86_64-pc-windows-msvc
+          - x86_64-unknown-linux-gnu
+          - x86_64-apple-darwin
+          - aarch64-apple-ios
     steps:
       - uses: actions/checkout@v1
+      - name: Add Rust target ${{ matrix.target }}
+        run: rustup target add ${{ matrix.target }}
       - name: Clippy lint without features
         # Only test the core ash, ash-rewrite and ash-window crate, where features reside.
         # The examples crate would otherwise enable all default features again,
         # making this test moot.
-        run: cargo clippy -p ash -p ash-rewrite -p ash-window --no-default-features -- -D warnings
+        run: cargo clippy --target ${{ matrix.target }} -p ash -p ash-rewrite -p ash-window --no-default-features -- -D warnings
       - name: Clippy lint with all features
-        run: cargo clippy --workspace --all-targets --all-features -- -D warnings
+        # Examples don't compile for iOS currently due to lacking run_return()
+        if: ${{ matrix.target != 'aarch64-apple-ios' }}
+        run: cargo clippy --target ${{ matrix.target }} --workspace --all-targets --all-features -- -D warnings
       - name: Clippy lint with default features
-        run: cargo clippy --workspace --all-targets -- -D warnings
+        # Examples don't compile for iOS currently due to lacking run_return()
+        if: ${{ matrix.target != 'aarch64-apple-ios' }}
+        run: cargo clippy --target ${{ matrix.target }} --workspace --all-targets -- -D warnings
 
   docs:
     name: Build-test docs
