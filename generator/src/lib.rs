@@ -305,7 +305,7 @@ pub trait ConstantExt {
     fn variant_ident(&self, enum_name: &str) -> Ident;
     fn notation(&self) -> Option<&str>;
     fn formatted_notation(&self) -> Option<Cow<'_, str>> {
-        static DOC_LINK: Lazy<Regex> = Lazy::new(|| Regex::new(r#"<<([\w-]+)>>"#).unwrap());
+        static DOC_LINK: Lazy<Regex> = Lazy::new(|| Regex::new(r"<<([\w-]+)>>").unwrap());
         self.notation().map(|n| {
             DOC_LINK.replace(
                 n,
@@ -2968,13 +2968,13 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     let mut has_lifetimes = definitions
         .iter()
         .filter_map(get_variant!(vkxml::DefinitionsElement::Struct))
-        .filter_map(|s| {
+        .filter(|&s| {
             s.elements
                 .iter()
                 .filter_map(get_variant!(vkxml::StructElement::Member))
                 .any(|x| x.reference.is_some())
-                .then(|| name_to_tokens(&s.name))
         })
+        .map(|s| name_to_tokens(&s.name))
         .collect::<HashSet<Ident>>();
     for def in &definitions {
         match def {
