@@ -1,8 +1,11 @@
+#![cfg(windows)]
+
 use crate::prelude::*;
 use crate::vk;
 use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
+use std::os::windows::io::{FromRawHandle, OwnedHandle};
 use std::ptr;
 
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_external_fence_win32.html>
@@ -35,10 +38,10 @@ impl ExternalFenceWin32 {
     pub unsafe fn get_fence_win32_handle(
         &self,
         get_info: &vk::FenceGetWin32HandleInfoKHR,
-    ) -> VkResult<vk::HANDLE> {
+    ) -> VkResult<OwnedHandle> {
         let mut handle = ptr::null_mut();
-        (self.fp.get_fence_win32_handle_khr)(self.handle, get_info, &mut handle)
-            .result_with_success(handle)
+        (self.fp.get_fence_win32_handle_khr)(self.handle, get_info, &mut handle).result()?;
+        Ok(OwnedHandle::from_raw_handle(handle))
     }
 
     pub const NAME: &'static CStr = vk::KhrExternalFenceWin32Fn::NAME;

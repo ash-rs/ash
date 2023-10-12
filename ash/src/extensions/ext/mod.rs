@@ -1,3 +1,4 @@
+#[cfg(unix)]
 pub use self::acquire_drm_display::AcquireDrmDisplay;
 pub use self::buffer_device_address::BufferDeviceAddress;
 pub use self::calibrated_timestamps::CalibratedTimestamps;

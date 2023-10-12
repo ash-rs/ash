@@ -11,11 +11,17 @@ pub use self::display::Display;
 pub use self::display_swapchain::DisplaySwapchain;
 pub use self::draw_indirect_count::DrawIndirectCount;
 pub use self::dynamic_rendering::DynamicRendering;
+#[cfg(unix)]
 pub use self::external_fence_fd::ExternalFenceFd;
+#[cfg(windows)]
 pub use self::external_fence_win32::ExternalFenceWin32;
+#[cfg(unix)]
 pub use self::external_memory_fd::ExternalMemoryFd;
+#[cfg(windows)]
 pub use self::external_memory_win32::ExternalMemoryWin32;
+#[cfg(unix)]
 pub use self::external_semaphore_fd::ExternalSemaphoreFd;
+#[cfg(windows)]
 pub use self::external_semaphore_win32::ExternalSemaphoreWin32;
 pub use self::get_memory_requirements2::GetMemoryRequirements2;
 pub use self::get_physical_device_properties2::GetPhysicalDeviceProperties2;

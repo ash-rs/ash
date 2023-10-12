@@ -5,22 +5,31 @@ name: CI
 jobs:
   check:
     name: Check
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v1
       - run: cargo check --workspace --all-targets --all-features
 
   check_msrv:
-    name: Check ash MSRV (1.60.0)
-    runs-on: ubuntu-latest
+    name: Check ash MSRV (1.63.0)
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v1
-      - uses: dtolnay/rust-toolchain@1.60.0
+      - uses: dtolnay/rust-toolchain@1.63.0
       - run: cargo check -p ash -p ash-rewrite --all-features
 
   check_ash_window_msrv:
     name: Check ash-window MSRV (1.64.0)
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v1
       - uses: dtolnay/rust-toolchain@1.64.0
