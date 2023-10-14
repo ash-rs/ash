@@ -3,7 +3,7 @@ use crate::vk;
 use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
-use std::ptr;
+use std::mem::MaybeUninit;
 
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_external_memory_win32.html>
 #[derive(Clone)]
@@ -27,9 +27,9 @@ impl ExternalMemoryWin32 {
         &self,
         create_info: &vk::MemoryGetWin32HandleInfoKHR,
     ) -> VkResult<vk::HANDLE> {
-        let mut handle = ptr::null_mut();
-        (self.fp.get_memory_win32_handle_khr)(self.handle, create_info, &mut handle)
-            .result_with_success(handle)
+        let mut handle = MaybeUninit::uninit();
+        (self.fp.get_memory_win32_handle_khr)(self.handle, create_info, handle.as_mut_ptr())
+            .assume_init_on_success(handle)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetMemoryWin32HandlePropertiesKHR.html>
