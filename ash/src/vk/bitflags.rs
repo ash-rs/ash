@@ -1197,6 +1197,14 @@ impl PresentGravityFlagsEXT {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceSchedulingControlsFlagBitsARM.html>"]
+pub struct PhysicalDeviceSchedulingControlsFlagsARM(pub(crate) Flags);
+vk_bitflags_wrapped!(PhysicalDeviceSchedulingControlsFlagsARM, Flags);
+impl PhysicalDeviceSchedulingControlsFlagsARM {
+    pub const SHADER_CORE_COUNT: Self = Self(0b1);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoCodecOperationFlagBitsKHR.html>"]
 pub struct VideoCodecOperationFlagsKHR(pub(crate) Flags);
 vk_bitflags_wrapped!(VideoCodecOperationFlagsKHR, Flags);

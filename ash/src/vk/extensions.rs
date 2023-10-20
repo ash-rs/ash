@@ -14237,6 +14237,209 @@ pub struct QcomRenderPassStoreOpsFn;
 impl AttachmentStoreOp {
     pub const NONE_QCOM: Self = Self::NONE;
 }
+impl NvCudaKernelLaunchFn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_cuda_kernel_launch\0") };
+    pub const SPEC_VERSION: u32 = 2u32;
+}
+#[allow(non_camel_case_types)]
+pub type PFN_vkCreateCudaModuleNV = unsafe extern "system" fn(
+    device: Device,
+    p_create_info: *const CudaModuleCreateInfoNV,
+    p_allocator: *const AllocationCallbacks,
+    p_module: *mut CudaModuleNV,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetCudaModuleCacheNV = unsafe extern "system" fn(
+    device: Device,
+    module: CudaModuleNV,
+    p_cache_size: *mut usize,
+    p_cache_data: *mut c_void,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCreateCudaFunctionNV = unsafe extern "system" fn(
+    device: Device,
+    p_create_info: *const CudaFunctionCreateInfoNV,
+    p_allocator: *const AllocationCallbacks,
+    p_function: *mut CudaFunctionNV,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkDestroyCudaModuleNV = unsafe extern "system" fn(
+    device: Device,
+    module: CudaModuleNV,
+    p_allocator: *const AllocationCallbacks,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkDestroyCudaFunctionNV = unsafe extern "system" fn(
+    device: Device,
+    function: CudaFunctionNV,
+    p_allocator: *const AllocationCallbacks,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdCudaLaunchKernelNV = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_launch_info: *const CudaLaunchInfoNV,
+);
+#[derive(Clone)]
+pub struct NvCudaKernelLaunchFn {
+    pub create_cuda_module_nv: PFN_vkCreateCudaModuleNV,
+    pub get_cuda_module_cache_nv: PFN_vkGetCudaModuleCacheNV,
+    pub create_cuda_function_nv: PFN_vkCreateCudaFunctionNV,
+    pub destroy_cuda_module_nv: PFN_vkDestroyCudaModuleNV,
+    pub destroy_cuda_function_nv: PFN_vkDestroyCudaFunctionNV,
+    pub cmd_cuda_launch_kernel_nv: PFN_vkCmdCudaLaunchKernelNV,
+}
+unsafe impl Send for NvCudaKernelLaunchFn {}
+unsafe impl Sync for NvCudaKernelLaunchFn {}
+impl NvCudaKernelLaunchFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {
+            create_cuda_module_nv: unsafe {
+                unsafe extern "system" fn create_cuda_module_nv(
+                    _device: Device,
+                    _p_create_info: *const CudaModuleCreateInfoNV,
+                    _p_allocator: *const AllocationCallbacks,
+                    _p_module: *mut CudaModuleNV,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(create_cuda_module_nv)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCreateCudaModuleNV\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    create_cuda_module_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_cuda_module_cache_nv: unsafe {
+                unsafe extern "system" fn get_cuda_module_cache_nv(
+                    _device: Device,
+                    _module: CudaModuleNV,
+                    _p_cache_size: *mut usize,
+                    _p_cache_data: *mut c_void,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_cuda_module_cache_nv)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkGetCudaModuleCacheNV\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    get_cuda_module_cache_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            create_cuda_function_nv: unsafe {
+                unsafe extern "system" fn create_cuda_function_nv(
+                    _device: Device,
+                    _p_create_info: *const CudaFunctionCreateInfoNV,
+                    _p_allocator: *const AllocationCallbacks,
+                    _p_function: *mut CudaFunctionNV,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(create_cuda_function_nv)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCreateCudaFunctionNV\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    create_cuda_function_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            destroy_cuda_module_nv: unsafe {
+                unsafe extern "system" fn destroy_cuda_module_nv(
+                    _device: Device,
+                    _module: CudaModuleNV,
+                    _p_allocator: *const AllocationCallbacks,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(destroy_cuda_module_nv)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkDestroyCudaModuleNV\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    destroy_cuda_module_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            destroy_cuda_function_nv: unsafe {
+                unsafe extern "system" fn destroy_cuda_function_nv(
+                    _device: Device,
+                    _function: CudaFunctionNV,
+                    _p_allocator: *const AllocationCallbacks,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(destroy_cuda_function_nv)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkDestroyCudaFunctionNV\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    destroy_cuda_function_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_cuda_launch_kernel_nv: unsafe {
+                unsafe extern "system" fn cmd_cuda_launch_kernel_nv(
+                    _command_buffer: CommandBuffer,
+                    _p_launch_info: *const CudaLaunchInfoNV,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_cuda_launch_kernel_nv)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdCudaLaunchKernelNV\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_cuda_launch_kernel_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+}
+#[doc = "Generated from 'VK_NV_cuda_kernel_launch'"]
+impl DebugReportObjectTypeEXT {
+    pub const CUDA_MODULE_NV: Self = Self(1_000_307_000);
+    pub const CUDA_FUNCTION_NV: Self = Self(1_000_307_001);
+}
+#[doc = "Generated from 'VK_NV_cuda_kernel_launch'"]
+impl ObjectType {
+    pub const CUDA_MODULE_NV: Self = Self(1_000_307_000);
+    pub const CUDA_FUNCTION_NV: Self = Self(1_000_307_001);
+}
+#[doc = "Generated from 'VK_NV_cuda_kernel_launch'"]
+impl StructureType {
+    pub const CUDA_MODULE_CREATE_INFO_NV: Self = Self(1_000_307_000);
+    pub const CUDA_FUNCTION_CREATE_INFO_NV: Self = Self(1_000_307_001);
+    pub const CUDA_LAUNCH_INFO_NV: Self = Self(1_000_307_002);
+    pub const PHYSICAL_DEVICE_CUDA_KERNEL_LAUNCH_FEATURES_NV: Self = Self(1_000_307_003);
+    pub const PHYSICAL_DEVICE_CUDA_KERNEL_LAUNCH_PROPERTIES_NV: Self = Self(1_000_307_004);
+}
 impl NvLowLatencyFn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_low_latency\0") };
@@ -18038,6 +18241,19 @@ pub struct ArmShaderCorePropertiesFn;
 #[doc = "Generated from 'VK_ARM_shader_core_properties'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_ARM: Self = Self(1_000_415_000);
+}
+impl ArmSchedulingControlsFn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_ARM_scheduling_controls\0") };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct ArmSchedulingControlsFn;
+#[doc = "Generated from 'VK_ARM_scheduling_controls'"]
+impl StructureType {
+    pub const DEVICE_QUEUE_SHADER_CORE_CONTROL_CREATE_INFO_ARM: Self = Self(1_000_417_000);
+    pub const PHYSICAL_DEVICE_SCHEDULING_CONTROLS_FEATURES_ARM: Self = Self(1_000_417_001);
+    pub const PHYSICAL_DEVICE_SCHEDULING_CONTROLS_PROPERTIES_ARM: Self = Self(1_000_417_002);
 }
 impl ExtImageSlicedViewOf3dFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
