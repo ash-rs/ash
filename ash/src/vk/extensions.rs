@@ -2752,7 +2752,7 @@ pub struct AmdShaderBallotFn;
 impl ExtVideoEncodeH264Fn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_encode_h264\0") };
-    pub const SPEC_VERSION: u32 = 11u32;
+    pub const SPEC_VERSION: u32 = 12u32;
 }
 #[derive(Clone)]
 pub struct ExtVideoEncodeH264Fn;
@@ -2780,7 +2780,7 @@ impl VideoCodecOperationFlagsKHR {
 impl ExtVideoEncodeH265Fn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_encode_h265\0") };
-    pub const SPEC_VERSION: u32 = 11u32;
+    pub const SPEC_VERSION: u32 = 12u32;
 }
 #[derive(Clone)]
 pub struct ExtVideoEncodeH265Fn;
@@ -14036,7 +14036,7 @@ impl StructureType {
 impl KhrVideoEncodeQueueFn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_encode_queue\0") };
-    pub const SPEC_VERSION: u32 = 9u32;
+    pub const SPEC_VERSION: u32 = 10u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR =
@@ -14174,6 +14174,10 @@ impl PipelineStageFlags2 {
     pub const VIDEO_ENCODE_KHR: Self = Self(0b1000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_video_encode_queue'"]
+impl QueryResultStatusKHR {
+    pub const INSUFFICIENTSTREAM_BUFFER_RANGE: Self = Self(-1_000_299_000);
+}
+#[doc = "Generated from 'VK_KHR_video_encode_queue'"]
 impl QueryType {
     pub const VIDEO_ENCODE_FEEDBACK_KHR: Self = Self(1_000_299_000);
 }
@@ -14232,6 +14236,209 @@ pub struct QcomRenderPassStoreOpsFn;
 #[doc = "Generated from 'VK_QCOM_render_pass_store_ops'"]
 impl AttachmentStoreOp {
     pub const NONE_QCOM: Self = Self::NONE;
+}
+impl NvCudaKernelLaunchFn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_cuda_kernel_launch\0") };
+    pub const SPEC_VERSION: u32 = 2u32;
+}
+#[allow(non_camel_case_types)]
+pub type PFN_vkCreateCudaModuleNV = unsafe extern "system" fn(
+    device: Device,
+    p_create_info: *const CudaModuleCreateInfoNV,
+    p_allocator: *const AllocationCallbacks,
+    p_module: *mut CudaModuleNV,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetCudaModuleCacheNV = unsafe extern "system" fn(
+    device: Device,
+    module: CudaModuleNV,
+    p_cache_size: *mut usize,
+    p_cache_data: *mut c_void,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCreateCudaFunctionNV = unsafe extern "system" fn(
+    device: Device,
+    p_create_info: *const CudaFunctionCreateInfoNV,
+    p_allocator: *const AllocationCallbacks,
+    p_function: *mut CudaFunctionNV,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkDestroyCudaModuleNV = unsafe extern "system" fn(
+    device: Device,
+    module: CudaModuleNV,
+    p_allocator: *const AllocationCallbacks,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkDestroyCudaFunctionNV = unsafe extern "system" fn(
+    device: Device,
+    function: CudaFunctionNV,
+    p_allocator: *const AllocationCallbacks,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdCudaLaunchKernelNV = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_launch_info: *const CudaLaunchInfoNV,
+);
+#[derive(Clone)]
+pub struct NvCudaKernelLaunchFn {
+    pub create_cuda_module_nv: PFN_vkCreateCudaModuleNV,
+    pub get_cuda_module_cache_nv: PFN_vkGetCudaModuleCacheNV,
+    pub create_cuda_function_nv: PFN_vkCreateCudaFunctionNV,
+    pub destroy_cuda_module_nv: PFN_vkDestroyCudaModuleNV,
+    pub destroy_cuda_function_nv: PFN_vkDestroyCudaFunctionNV,
+    pub cmd_cuda_launch_kernel_nv: PFN_vkCmdCudaLaunchKernelNV,
+}
+unsafe impl Send for NvCudaKernelLaunchFn {}
+unsafe impl Sync for NvCudaKernelLaunchFn {}
+impl NvCudaKernelLaunchFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {
+            create_cuda_module_nv: unsafe {
+                unsafe extern "system" fn create_cuda_module_nv(
+                    _device: Device,
+                    _p_create_info: *const CudaModuleCreateInfoNV,
+                    _p_allocator: *const AllocationCallbacks,
+                    _p_module: *mut CudaModuleNV,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(create_cuda_module_nv)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCreateCudaModuleNV\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    create_cuda_module_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_cuda_module_cache_nv: unsafe {
+                unsafe extern "system" fn get_cuda_module_cache_nv(
+                    _device: Device,
+                    _module: CudaModuleNV,
+                    _p_cache_size: *mut usize,
+                    _p_cache_data: *mut c_void,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_cuda_module_cache_nv)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkGetCudaModuleCacheNV\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    get_cuda_module_cache_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            create_cuda_function_nv: unsafe {
+                unsafe extern "system" fn create_cuda_function_nv(
+                    _device: Device,
+                    _p_create_info: *const CudaFunctionCreateInfoNV,
+                    _p_allocator: *const AllocationCallbacks,
+                    _p_function: *mut CudaFunctionNV,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(create_cuda_function_nv)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCreateCudaFunctionNV\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    create_cuda_function_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            destroy_cuda_module_nv: unsafe {
+                unsafe extern "system" fn destroy_cuda_module_nv(
+                    _device: Device,
+                    _module: CudaModuleNV,
+                    _p_allocator: *const AllocationCallbacks,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(destroy_cuda_module_nv)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkDestroyCudaModuleNV\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    destroy_cuda_module_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            destroy_cuda_function_nv: unsafe {
+                unsafe extern "system" fn destroy_cuda_function_nv(
+                    _device: Device,
+                    _function: CudaFunctionNV,
+                    _p_allocator: *const AllocationCallbacks,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(destroy_cuda_function_nv)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkDestroyCudaFunctionNV\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    destroy_cuda_function_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_cuda_launch_kernel_nv: unsafe {
+                unsafe extern "system" fn cmd_cuda_launch_kernel_nv(
+                    _command_buffer: CommandBuffer,
+                    _p_launch_info: *const CudaLaunchInfoNV,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_cuda_launch_kernel_nv)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdCudaLaunchKernelNV\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_cuda_launch_kernel_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+}
+#[doc = "Generated from 'VK_NV_cuda_kernel_launch'"]
+impl DebugReportObjectTypeEXT {
+    pub const CUDA_MODULE_NV: Self = Self(1_000_307_000);
+    pub const CUDA_FUNCTION_NV: Self = Self(1_000_307_001);
+}
+#[doc = "Generated from 'VK_NV_cuda_kernel_launch'"]
+impl ObjectType {
+    pub const CUDA_MODULE_NV: Self = Self(1_000_307_000);
+    pub const CUDA_FUNCTION_NV: Self = Self(1_000_307_001);
+}
+#[doc = "Generated from 'VK_NV_cuda_kernel_launch'"]
+impl StructureType {
+    pub const CUDA_MODULE_CREATE_INFO_NV: Self = Self(1_000_307_000);
+    pub const CUDA_FUNCTION_CREATE_INFO_NV: Self = Self(1_000_307_001);
+    pub const CUDA_LAUNCH_INFO_NV: Self = Self(1_000_307_002);
+    pub const PHYSICAL_DEVICE_CUDA_KERNEL_LAUNCH_FEATURES_NV: Self = Self(1_000_307_003);
+    pub const PHYSICAL_DEVICE_CUDA_KERNEL_LAUNCH_PROPERTIES_NV: Self = Self(1_000_307_004);
 }
 impl NvLowLatencyFn {
     pub const NAME: &'static ::std::ffi::CStr =
@@ -16696,6 +16903,18 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_PIPELINE_PROPERTIES_FEATURES_EXT: Self = Self(1_000_372_001);
     pub const PIPELINE_INFO_EXT: Self = Self::PIPELINE_INFO_KHR;
 }
+impl ExtFrameBoundaryFn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_frame_boundary\0") };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct ExtFrameBoundaryFn;
+#[doc = "Generated from 'VK_EXT_frame_boundary'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_FRAME_BOUNDARY_FEATURES_EXT: Self = Self(1_000_375_000);
+    pub const FRAME_BOUNDARY_EXT: Self = Self(1_000_375_001);
+}
 impl ExtMultisampledRenderToSingleSampledFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
         ::std::ffi::CStr::from_bytes_with_nul_unchecked(
@@ -17718,10 +17937,6 @@ impl PipelineCreateFlags {
         Self(0b1_0000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_NV_displacement_micromap'"]
-impl PipelineCreateFlags2KHR {
-    pub const RESERVED_28_NV: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000);
-}
-#[doc = "Generated from 'VK_NV_displacement_micromap'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_DISPLACEMENT_MICROMAP_FEATURES_NV: Self = Self(1_000_397_000);
     pub const PHYSICAL_DEVICE_DISPLACEMENT_MICROMAP_PROPERTIES_NV: Self = Self(1_000_397_001);
@@ -18026,6 +18241,19 @@ pub struct ArmShaderCorePropertiesFn;
 #[doc = "Generated from 'VK_ARM_shader_core_properties'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_ARM: Self = Self(1_000_415_000);
+}
+impl ArmSchedulingControlsFn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_ARM_scheduling_controls\0") };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct ArmSchedulingControlsFn;
+#[doc = "Generated from 'VK_ARM_scheduling_controls'"]
+impl StructureType {
+    pub const DEVICE_QUEUE_SHADER_CORE_CONTROL_CREATE_INFO_ARM: Self = Self(1_000_417_000);
+    pub const PHYSICAL_DEVICE_SCHEDULING_CONTROLS_FEATURES_ARM: Self = Self(1_000_417_001);
+    pub const PHYSICAL_DEVICE_SCHEDULING_CONTROLS_PROPERTIES_ARM: Self = Self(1_000_417_002);
 }
 impl ExtImageSlicedViewOf3dFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
@@ -18537,6 +18765,27 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_IMAGE_PROCESSING_FEATURES_QCOM: Self = Self(1_000_440_000);
     pub const PHYSICAL_DEVICE_IMAGE_PROCESSING_PROPERTIES_QCOM: Self = Self(1_000_440_001);
     pub const IMAGE_VIEW_SAMPLE_WEIGHT_CREATE_INFO_QCOM: Self = Self(1_000_440_002);
+}
+impl ExtNestedCommandBufferFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_nested_command_buffer\0")
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct ExtNestedCommandBufferFn;
+#[doc = "Generated from 'VK_EXT_nested_command_buffer'"]
+impl RenderingFlags {
+    pub const CONTENTS_INLINE_EXT: Self = Self(0b1_0000);
+}
+#[doc = "Generated from 'VK_EXT_nested_command_buffer'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_NESTED_COMMAND_BUFFER_FEATURES_EXT: Self = Self(1_000_451_000);
+    pub const PHYSICAL_DEVICE_NESTED_COMMAND_BUFFER_PROPERTIES_EXT: Self = Self(1_000_451_001);
+}
+#[doc = "Generated from 'VK_EXT_nested_command_buffer'"]
+impl SubpassContents {
+    pub const INLINE_AND_SECONDARY_COMMAND_BUFFERS_EXT: Self = Self(1_000_451_000);
 }
 impl ExtExternalMemoryAcquireUnmodifiedFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
@@ -19796,6 +20045,25 @@ impl PipelineCreateFlags {
 impl StructureType {
     pub const PHYSICAL_DEVICE_PIPELINE_PROTECTED_ACCESS_FEATURES_EXT: Self = Self(1_000_466_000);
 }
+impl AndroidExternalFormatResolveFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_ANDROID_external_format_resolve\0")
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct AndroidExternalFormatResolveFn;
+#[doc = "Generated from 'VK_ANDROID_external_format_resolve'"]
+impl ResolveModeFlags {
+    pub const EXTERNAL_FORMAT_DOWNSAMPLE_ANDROID: Self = Self(0b1_0000);
+}
+#[doc = "Generated from 'VK_ANDROID_external_format_resolve'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_EXTERNAL_FORMAT_RESOLVE_FEATURES_ANDROID: Self = Self(1_000_468_000);
+    pub const PHYSICAL_DEVICE_EXTERNAL_FORMAT_RESOLVE_PROPERTIES_ANDROID: Self =
+        Self(1_000_468_001);
+    pub const ANDROID_HARDWARE_BUFFER_FORMAT_RESOLVE_PROPERTIES_ANDROID: Self = Self(1_000_468_002);
+}
 impl KhrMaintenance5Fn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance5\0") };
@@ -19927,11 +20195,11 @@ impl KhrMaintenance5Fn {
 }
 #[doc = "Generated from 'VK_KHR_maintenance5'"]
 impl BufferUsageFlags2KHR {
-    pub const CONDITIONAL_RENDERING: Self = Self(0b10_0000_0000);
+    pub const CONDITIONAL_RENDERING_EXT: Self = Self(0b10_0000_0000);
     pub const SHADER_BINDING_TABLE: Self = Self(0b100_0000_0000);
-    pub const RAY_TRACING: Self = Self::SHADER_BINDING_TABLE;
-    pub const TRANSFORM_FEEDBACK_BUFFER: Self = Self(0b1000_0000_0000);
-    pub const TRANSFORM_FEEDBACK_COUNTER_BUFFER: Self = Self(0b1_0000_0000_0000);
+    pub const RAY_TRACING_NV: Self = Self::SHADER_BINDING_TABLE;
+    pub const TRANSFORM_FEEDBACK_BUFFER_EXT: Self = Self(0b1000_0000_0000);
+    pub const TRANSFORM_FEEDBACK_COUNTER_BUFFER_EXT: Self = Self(0b1_0000_0000_0000);
     pub const VIDEO_DECODE_SRC: Self = Self(0b10_0000_0000_0000);
     pub const VIDEO_DECODE_DST: Self = Self(0b100_0000_0000_0000);
     pub const VIDEO_ENCODE_DST: Self = Self(0b1000_0000_0000_0000);
@@ -19939,11 +20207,12 @@ impl BufferUsageFlags2KHR {
     pub const SHADER_DEVICE_ADDRESS: Self = Self(0b10_0000_0000_0000_0000);
     pub const ACCELERATION_STRUCTURE_BUILD_INPUT_READ_ONLY: Self = Self(0b1000_0000_0000_0000_0000);
     pub const ACCELERATION_STRUCTURE_STORAGE: Self = Self(0b1_0000_0000_0000_0000_0000);
-    pub const SAMPLER_DESCRIPTOR_BUFFER: Self = Self(0b10_0000_0000_0000_0000_0000);
-    pub const RESOURCE_DESCRIPTOR_BUFFER: Self = Self(0b100_0000_0000_0000_0000_0000);
-    pub const PUSH_DESCRIPTORS_DESCRIPTOR_BUFFER: Self = Self(0b100_0000_0000_0000_0000_0000_0000);
-    pub const MICROMAP_BUILD_INPUT_READ_ONLY: Self = Self(0b1000_0000_0000_0000_0000_0000);
-    pub const MICROMAP_STORAGE: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
+    pub const SAMPLER_DESCRIPTOR_BUFFER_EXT: Self = Self(0b10_0000_0000_0000_0000_0000);
+    pub const RESOURCE_DESCRIPTOR_BUFFER_EXT: Self = Self(0b100_0000_0000_0000_0000_0000);
+    pub const PUSH_DESCRIPTORS_DESCRIPTOR_BUFFER_EXT: Self =
+        Self(0b100_0000_0000_0000_0000_0000_0000);
+    pub const MICROMAP_BUILD_INPUT_READ_ONLY_EXT: Self = Self(0b1000_0000_0000_0000_0000_0000);
+    pub const MICROMAP_STORAGE_EXT: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_maintenance5'"]
 impl Format {
@@ -19954,13 +20223,13 @@ impl Format {
 impl PipelineCreateFlags2KHR {
     pub const VIEW_INDEX_FROM_DEVICE_INDEX: Self = Self(0b1000);
     pub const DISPATCH_BASE: Self = Self(0b1_0000);
-    pub const DEFER_COMPILE: Self = Self(0b10_0000);
+    pub const DEFER_COMPILE_NV: Self = Self(0b10_0000);
     pub const CAPTURE_STATISTICS: Self = Self(0b100_0000);
     pub const CAPTURE_INTERNAL_REPRESENTATIONS: Self = Self(0b1000_0000);
     pub const FAIL_ON_PIPELINE_COMPILE_REQUIRED: Self = Self(0b1_0000_0000);
     pub const EARLY_RETURN_ON_FAILURE: Self = Self(0b10_0000_0000);
-    pub const LINK_TIME_OPTIMIZATION: Self = Self(0b100_0000_0000);
-    pub const RETAIN_LINK_TIME_OPTIMIZATION_INFO: Self = Self(0b1000_0000_0000_0000_0000_0000);
+    pub const LINK_TIME_OPTIMIZATION_EXT: Self = Self(0b100_0000_0000);
+    pub const RETAIN_LINK_TIME_OPTIMIZATION_INFO_EXT: Self = Self(0b1000_0000_0000_0000_0000_0000);
     pub const LIBRARY: Self = Self(0b1000_0000_0000);
     pub const RAY_TRACING_SKIP_TRIANGLES: Self = Self(0b1_0000_0000_0000);
     pub const RAY_TRACING_SKIP_AABBS: Self = Self(0b10_0000_0000_0000);
@@ -19970,19 +20239,21 @@ impl PipelineCreateFlags2KHR {
     pub const RAY_TRACING_NO_NULL_INTERSECTION_SHADERS: Self = Self(0b10_0000_0000_0000_0000);
     pub const RAY_TRACING_SHADER_GROUP_HANDLE_CAPTURE_REPLAY: Self =
         Self(0b1000_0000_0000_0000_0000);
-    pub const INDIRECT_BINDABLE: Self = Self(0b100_0000_0000_0000_0000);
-    pub const RAY_TRACING_ALLOW_MOTION: Self = Self(0b1_0000_0000_0000_0000_0000);
+    pub const INDIRECT_BINDABLE_NV: Self = Self(0b100_0000_0000_0000_0000);
+    pub const RAY_TRACING_ALLOW_MOTION_NV: Self = Self(0b1_0000_0000_0000_0000_0000);
     pub const RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT: Self =
         Self(0b10_0000_0000_0000_0000_0000);
-    pub const RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT: Self =
+    pub const RENDERING_FRAGMENT_DENSITY_MAP_ATTACHMENT_EXT: Self =
         Self(0b100_0000_0000_0000_0000_0000);
-    pub const RAY_TRACING_OPACITY_MICROMAP: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
-    pub const COLOR_ATTACHMENT_FEEDBACK_LOOP: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
-    pub const DEPTH_STENCIL_ATTACHMENT_FEEDBACK_LOOP: Self =
+    pub const RAY_TRACING_OPACITY_MICROMAP_EXT: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
+    pub const COLOR_ATTACHMENT_FEEDBACK_LOOP_EXT: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
+    pub const DEPTH_STENCIL_ATTACHMENT_FEEDBACK_LOOP_EXT: Self =
         Self(0b100_0000_0000_0000_0000_0000_0000);
-    pub const NO_PROTECTED_ACCESS: Self = Self(0b1000_0000_0000_0000_0000_0000_0000);
-    pub const PROTECTED_ACCESS_ONLY: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000);
-    pub const DESCRIPTOR_BUFFER: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000);
+    pub const NO_PROTECTED_ACCESS_EXT: Self = Self(0b1000_0000_0000_0000_0000_0000_0000);
+    pub const PROTECTED_ACCESS_ONLY_EXT: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000);
+    pub const RAY_TRACING_DISPLACEMENT_MICROMAP_NV: Self =
+        Self(0b1_0000_0000_0000_0000_0000_0000_0000);
+    pub const DESCRIPTOR_BUFFER_EXT: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_maintenance5'"]
 impl StructureType {
@@ -21330,6 +21601,20 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_PROPERTIES_NV: Self =
         Self(1_000_490_001);
 }
+impl NvExtendedSparseAddressSpaceFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_extended_sparse_address_space\0")
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct NvExtendedSparseAddressSpaceFn;
+#[doc = "Generated from 'VK_NV_extended_sparse_address_space'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_EXTENDED_SPARSE_ADDRESS_SPACE_FEATURES_NV: Self = Self(1_000_492_000);
+    pub const PHYSICAL_DEVICE_EXTENDED_SPARSE_ADDRESS_SPACE_PROPERTIES_NV: Self =
+        Self(1_000_492_001);
+}
 impl ExtMutableDescriptorTypeFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
         ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_mutable_descriptor_type\0")
@@ -21395,6 +21680,166 @@ pub struct ExtDynamicRenderingUnusedAttachmentsFn;
 impl StructureType {
     pub const PHYSICAL_DEVICE_DYNAMIC_RENDERING_UNUSED_ATTACHMENTS_FEATURES_EXT: Self =
         Self(1_000_499_000);
+}
+impl NvLowLatency2Fn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_low_latency2\0") };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[allow(non_camel_case_types)]
+pub type PFN_vkSetLatencySleepModeNV = unsafe extern "system" fn(
+    device: Device,
+    swapchain: SwapchainKHR,
+    p_sleep_mode_info: *const LatencySleepModeInfoNV,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkLatencySleepNV = unsafe extern "system" fn(
+    device: Device,
+    swapchain: SwapchainKHR,
+    p_sleep_info: *const LatencySleepInfoNV,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkSetLatencyMarkerNV = unsafe extern "system" fn(
+    device: Device,
+    swapchain: SwapchainKHR,
+    p_latency_marker_info: *const SetLatencyMarkerInfoNV,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetLatencyTimingsNV = unsafe extern "system" fn(
+    device: Device,
+    swapchain: SwapchainKHR,
+    p_timing_count: *mut u32,
+    p_latency_marker_info: *mut GetLatencyMarkerInfoNV,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkQueueNotifyOutOfBandNV =
+    unsafe extern "system" fn(queue: Queue, p_queue_type_info: *const OutOfBandQueueTypeInfoNV);
+#[derive(Clone)]
+pub struct NvLowLatency2Fn {
+    pub set_latency_sleep_mode_nv: PFN_vkSetLatencySleepModeNV,
+    pub latency_sleep_nv: PFN_vkLatencySleepNV,
+    pub set_latency_marker_nv: PFN_vkSetLatencyMarkerNV,
+    pub get_latency_timings_nv: PFN_vkGetLatencyTimingsNV,
+    pub queue_notify_out_of_band_nv: PFN_vkQueueNotifyOutOfBandNV,
+}
+unsafe impl Send for NvLowLatency2Fn {}
+unsafe impl Sync for NvLowLatency2Fn {}
+impl NvLowLatency2Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {
+            set_latency_sleep_mode_nv: unsafe {
+                unsafe extern "system" fn set_latency_sleep_mode_nv(
+                    _device: Device,
+                    _swapchain: SwapchainKHR,
+                    _p_sleep_mode_info: *const LatencySleepModeInfoNV,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(set_latency_sleep_mode_nv)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkSetLatencySleepModeNV\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    set_latency_sleep_mode_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            latency_sleep_nv: unsafe {
+                unsafe extern "system" fn latency_sleep_nv(
+                    _device: Device,
+                    _swapchain: SwapchainKHR,
+                    _p_sleep_info: *const LatencySleepInfoNV,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(latency_sleep_nv)))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkLatencySleepNV\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    latency_sleep_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            set_latency_marker_nv: unsafe {
+                unsafe extern "system" fn set_latency_marker_nv(
+                    _device: Device,
+                    _swapchain: SwapchainKHR,
+                    _p_latency_marker_info: *const SetLatencyMarkerInfoNV,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(set_latency_marker_nv)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkSetLatencyMarkerNV\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    set_latency_marker_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_latency_timings_nv: unsafe {
+                unsafe extern "system" fn get_latency_timings_nv(
+                    _device: Device,
+                    _swapchain: SwapchainKHR,
+                    _p_timing_count: *mut u32,
+                    _p_latency_marker_info: *mut GetLatencyMarkerInfoNV,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_latency_timings_nv)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkGetLatencyTimingsNV\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    get_latency_timings_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            queue_notify_out_of_band_nv: unsafe {
+                unsafe extern "system" fn queue_notify_out_of_band_nv(
+                    _queue: Queue,
+                    _p_queue_type_info: *const OutOfBandQueueTypeInfoNV,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(queue_notify_out_of_band_nv)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkQueueNotifyOutOfBandNV\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    queue_notify_out_of_band_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+}
+#[doc = "Generated from 'VK_NV_low_latency2'"]
+impl StructureType {
+    pub const LATENCY_SLEEP_MODE_INFO_NV: Self = Self(1_000_505_000);
+    pub const LATENCY_SLEEP_INFO_NV: Self = Self(1_000_505_001);
+    pub const SET_LATENCY_MARKER_INFO_NV: Self = Self(1_000_505_002);
+    pub const GET_LATENCY_MARKER_INFO_NV: Self = Self(1_000_505_003);
+    pub const LATENCY_TIMINGS_FRAME_REPORT_NV: Self = Self(1_000_505_004);
+    pub const LATENCY_SUBMISSION_PRESENT_ID_NV: Self = Self(1_000_505_005);
+    pub const OUT_OF_BAND_QUEUE_TYPE_INFO_NV: Self = Self(1_000_505_006);
+    pub const SWAPCHAIN_LATENCY_CREATE_INFO_NV: Self = Self(1_000_505_007);
+    pub const LATENCY_SURFACE_CAPABILITIES_NV: Self = Self(1_000_505_008);
 }
 impl KhrCooperativeMatrixFn {
     pub const NAME: &'static ::std::ffi::CStr =
@@ -21467,6 +21912,60 @@ impl StructureType {
         Self(1_000_510_000);
     pub const MULTIVIEW_PER_VIEW_RENDER_AREAS_RENDER_PASS_BEGIN_INFO_QCOM: Self =
         Self(1_000_510_001);
+}
+impl QcomImageProcessing2Fn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_image_processing2\0") };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct QcomImageProcessing2Fn;
+#[doc = "Generated from 'VK_QCOM_image_processing2'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_IMAGE_PROCESSING_2_FEATURES_QCOM: Self = Self(1_000_518_000);
+    pub const PHYSICAL_DEVICE_IMAGE_PROCESSING_2_PROPERTIES_QCOM: Self = Self(1_000_518_001);
+    pub const SAMPLER_BLOCK_MATCH_WINDOW_CREATE_INFO_QCOM: Self = Self(1_000_518_002);
+}
+impl QcomFilterCubicWeightsFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_filter_cubic_weights\0")
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct QcomFilterCubicWeightsFn;
+#[doc = "Generated from 'VK_QCOM_filter_cubic_weights'"]
+impl StructureType {
+    pub const SAMPLER_CUBIC_WEIGHTS_CREATE_INFO_QCOM: Self = Self(1_000_519_000);
+    pub const PHYSICAL_DEVICE_CUBIC_WEIGHTS_FEATURES_QCOM: Self = Self(1_000_519_001);
+    pub const BLIT_IMAGE_CUBIC_WEIGHTS_INFO_QCOM: Self = Self(1_000_519_002);
+}
+impl QcomYcbcrDegammaFn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_ycbcr_degamma\0") };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct QcomYcbcrDegammaFn;
+#[doc = "Generated from 'VK_QCOM_ycbcr_degamma'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_YCBCR_DEGAMMA_FEATURES_QCOM: Self = Self(1_000_520_000);
+    pub const SAMPLER_YCBCR_CONVERSION_YCBCR_DEGAMMA_CREATE_INFO_QCOM: Self = Self(1_000_520_001);
+}
+impl QcomFilterCubicClampFn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_filter_cubic_clamp\0") };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct QcomFilterCubicClampFn;
+#[doc = "Generated from 'VK_QCOM_filter_cubic_clamp'"]
+impl SamplerReductionMode {
+    pub const WEIGHTED_AVERAGE_RANGECLAMP_QCOM: Self = Self(1_000_521_000);
+}
+#[doc = "Generated from 'VK_QCOM_filter_cubic_clamp'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_CUBIC_CLAMP_FEATURES_QCOM: Self = Self(1_000_521_000);
 }
 impl ExtAttachmentFeedbackLoopDynamicStateFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
@@ -21583,4 +22082,33 @@ impl StructureType {
     pub const EXTERNAL_FORMAT_QNX: Self = Self(1_000_529_003);
     pub const PHYSICAL_DEVICE_EXTERNAL_MEMORY_SCREEN_BUFFER_FEATURES_QNX: Self =
         Self(1_000_529_004);
+}
+impl MsftLayeredDriverFn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_MSFT_layered_driver\0") };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct MsftLayeredDriverFn;
+#[doc = "Generated from 'VK_MSFT_layered_driver'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_LAYERED_DRIVER_PROPERTIES_MSFT: Self = Self(1_000_530_000);
+}
+impl NvDescriptorPoolOverallocationFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_descriptor_pool_overallocation\0")
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct NvDescriptorPoolOverallocationFn;
+#[doc = "Generated from 'VK_NV_descriptor_pool_overallocation'"]
+impl DescriptorPoolCreateFlags {
+    pub const ALLOW_OVERALLOCATION_SETS_NV: Self = Self(0b1000);
+    pub const ALLOW_OVERALLOCATION_POOLS_NV: Self = Self(0b1_0000);
+}
+#[doc = "Generated from 'VK_NV_descriptor_pool_overallocation'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_DESCRIPTOR_POOL_OVERALLOCATION_FEATURES_NV: Self =
+        Self(1_000_546_000);
 }

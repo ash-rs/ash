@@ -1812,6 +1812,8 @@ impl DriverId {
     pub const MESA_NVK: Self = Self(24);
     #[doc = "Imagination Technologies"]
     pub const IMAGINATION_OPEN_SOURCE_MESA: Self = Self(25);
+    #[doc = "Mesa open source project"]
+    pub const MESA_AGXV: Self = Self(26);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
@@ -2802,6 +2804,108 @@ impl ComponentTypeKHR {
     pub const UINT32: Self = Self(9);
     pub const UINT64: Self = Self(10);
 }
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCubicFilterWeightsQCOM.html>"]
+pub struct CubicFilterWeightsQCOM(pub(crate) i32);
+impl CubicFilterWeightsQCOM {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl CubicFilterWeightsQCOM {
+    pub const CATMULL_ROM: Self = Self(0);
+    pub const ZERO_TANGENT_CARDINAL: Self = Self(1);
+    pub const B_SPLINE: Self = Self(2);
+    pub const MITCHELL_NETRAVALI: Self = Self(3);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkBlockMatchWindowCompareModeQCOM.html>"]
+pub struct BlockMatchWindowCompareModeQCOM(pub(crate) i32);
+impl BlockMatchWindowCompareModeQCOM {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl BlockMatchWindowCompareModeQCOM {
+    pub const MIN: Self = Self(0);
+    pub const MAX: Self = Self(1);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkLayeredDriverUnderlyingApiMSFT.html>"]
+pub struct LayeredDriverUnderlyingApiMSFT(pub(crate) i32);
+impl LayeredDriverUnderlyingApiMSFT {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl LayeredDriverUnderlyingApiMSFT {
+    pub const NONE: Self = Self(0);
+    pub const D3D12: Self = Self(1);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkLatencyMarkerNV.html>"]
+pub struct LatencyMarkerNV(pub(crate) i32);
+impl LatencyMarkerNV {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl LatencyMarkerNV {
+    pub const SIMULATION_START: Self = Self(0);
+    pub const SIMULATION_END: Self = Self(1);
+    pub const RENDERSUBMIT_START: Self = Self(2);
+    pub const RENDERSUBMIT_END: Self = Self(3);
+    pub const PRESENT_START: Self = Self(4);
+    pub const PRESENT_END: Self = Self(5);
+    pub const INPUT_SAMPLE: Self = Self(6);
+    pub const TRIGGER_FLASH: Self = Self(7);
+    pub const OUT_OF_BAND_RENDERSUBMIT_START: Self = Self(8);
+    pub const OUT_OF_BAND_RENDERSUBMIT_END: Self = Self(9);
+    pub const OUT_OF_BAND_PRESENT_START: Self = Self(10);
+    pub const OUT_OF_BAND_PRESENT_END: Self = Self(11);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkOutOfBandQueueTypeNV.html>"]
+pub struct OutOfBandQueueTypeNV(pub(crate) i32);
+impl OutOfBandQueueTypeNV {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl OutOfBandQueueTypeNV {
+    pub const RENDER: Self = Self(0);
+    pub const PRESENT: Self = Self(1);
+}
 impl fmt::Debug for ObjectType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
@@ -2847,6 +2951,8 @@ impl fmt::Debug for ObjectType {
             Self::PERFORMANCE_CONFIGURATION_INTEL => Some("PERFORMANCE_CONFIGURATION_INTEL"),
             Self::DEFERRED_OPERATION_KHR => Some("DEFERRED_OPERATION_KHR"),
             Self::INDIRECT_COMMANDS_LAYOUT_NV => Some("INDIRECT_COMMANDS_LAYOUT_NV"),
+            Self::CUDA_MODULE_NV => Some("CUDA_MODULE_NV"),
+            Self::CUDA_FUNCTION_NV => Some("CUDA_FUNCTION_NV"),
             Self::BUFFER_COLLECTION_FUCHSIA => Some("BUFFER_COLLECTION_FUCHSIA"),
             Self::MICROMAP_EXT => Some("MICROMAP_EXT"),
             Self::OPTICAL_FLOW_SESSION_NV => Some("OPTICAL_FLOW_SESSION_NV"),
