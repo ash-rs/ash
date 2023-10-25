@@ -518,7 +518,7 @@ impl Device {
             self.handle,
             memory_requirements,
             &mut count,
-            std::ptr::null_mut(),
+            ptr::null_mut(),
         );
         count as usize
     }
