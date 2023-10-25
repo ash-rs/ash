@@ -3011,6 +3011,19 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
             _ => continue,
         };
     }
+    for type_ in spec2
+        .0
+        .iter()
+        .filter_map(get_variant!(vk_parse::RegistryChild::Types))
+        .flat_map(|types| &types.children)
+        .filter_map(get_variant!(vk_parse::TypesChild::Type))
+    {
+        if let (Some(name), Some(alias)) = (&type_.name, &type_.alias) {
+            if has_lifetimes.contains(&name_to_tokens(alias)) {
+                has_lifetimes.insert(name_to_tokens(name));
+            }
+        }
+    }
 
     let extension_code = extensions
         .iter()

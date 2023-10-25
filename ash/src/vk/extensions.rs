@@ -9203,7 +9203,7 @@ pub type PFN_vkDestroyAccelerationStructureNV = unsafe extern "system" fn(
 pub type PFN_vkGetAccelerationStructureMemoryRequirementsNV = unsafe extern "system" fn(
     device: Device,
     p_info: *const AccelerationStructureMemoryRequirementsInfoNV<'_>,
-    p_memory_requirements: *mut MemoryRequirements2KHR,
+    p_memory_requirements: *mut MemoryRequirements2KHR<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkBindAccelerationStructureMemoryNV = unsafe extern "system" fn(
@@ -9349,7 +9349,7 @@ impl NvRayTracingFn {
                 unsafe extern "system" fn get_acceleration_structure_memory_requirements_nv(
                     _device: Device,
                     _p_info: *const AccelerationStructureMemoryRequirementsInfoNV<'_>,
-                    _p_memory_requirements: *mut MemoryRequirements2KHR,
+                    _p_memory_requirements: *mut MemoryRequirements2KHR<'_>,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -16880,7 +16880,7 @@ unsafe impl GetPipelinePropertiesEXTParamPipelineProperties
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPipelinePropertiesEXT = unsafe extern "system" fn(
     device: Device,
-    p_pipeline_info: *const PipelineInfoEXT,
+    p_pipeline_info: *const PipelineInfoEXT<'_>,
     p_pipeline_properties: *mut BaseOutStructure<'_>,
 ) -> Result;
 #[derive(Clone)]
@@ -16898,7 +16898,7 @@ impl ExtPipelinePropertiesFn {
             get_pipeline_properties_ext: unsafe {
                 unsafe extern "system" fn get_pipeline_properties_ext(
                     _device: Device,
-                    _p_pipeline_info: *const PipelineInfoEXT,
+                    _p_pipeline_info: *const PipelineInfoEXT<'_>,
                     _p_pipeline_properties: *mut BaseOutStructure<'_>,
                 ) -> Result {
                     panic!(concat!(
