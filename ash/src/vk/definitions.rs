@@ -525,7 +525,7 @@ pub type PFN_vkDebugUtilsMessengerCallbackEXT = Option<
     unsafe extern "system" fn(
         message_severity: DebugUtilsMessageSeverityFlagsEXT,
         message_types: DebugUtilsMessageTypeFlagsEXT,
-        p_callback_data: *const DebugUtilsMessengerCallbackDataEXT,
+        p_callback_data: *const DebugUtilsMessengerCallbackDataEXT<'_>,
         p_user_data: *mut c_void,
     ) -> Bool32,
 >;
@@ -533,7 +533,7 @@ pub type PFN_vkDebugUtilsMessengerCallbackEXT = Option<
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/PFN_vkDeviceMemoryReportCallbackEXT.html>"]
 pub type PFN_vkDeviceMemoryReportCallbackEXT = Option<
     unsafe extern "system" fn(
-        p_callback_data: *const DeviceMemoryReportCallbackDataEXT,
+        p_callback_data: *const DeviceMemoryReportCallbackDataEXT<'_>,
         p_user_data: *mut c_void,
     ),
 >;
@@ -810,7 +810,7 @@ pub struct PhysicalDeviceProperties {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for PhysicalDeviceProperties {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("PhysicalDeviceProperties")
             .field("api_version", &self.api_version)
             .field("driver_version", &self.driver_version)
@@ -898,7 +898,7 @@ pub struct ExtensionProperties {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for ExtensionProperties {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("ExtensionProperties")
             .field("extension_name", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.extension_name.as_ptr())
@@ -939,7 +939,7 @@ pub struct LayerProperties {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for LayerProperties {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("LayerProperties")
             .field("layer_name", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.layer_name.as_ptr())
@@ -1058,7 +1058,7 @@ pub struct AllocationCallbacks<'a> {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for AllocationCallbacks<'_> {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("AllocationCallbacks")
             .field("p_user_data", &self.p_user_data)
             .field(
@@ -1242,7 +1242,10 @@ impl<'a> DeviceCreateInfo<'a> {
         self
     }
     #[inline]
-    pub fn queue_create_infos(mut self, queue_create_infos: &'a [DeviceQueueCreateInfo]) -> Self {
+    pub fn queue_create_infos(
+        mut self,
+        queue_create_infos: &'a [DeviceQueueCreateInfo<'a>],
+    ) -> Self {
         self.queue_create_info_count = queue_create_infos.len() as _;
         self.p_queue_create_infos = queue_create_infos.as_ptr();
         self
@@ -2951,7 +2954,7 @@ impl<'a> BindSparseInfo<'a> {
         self
     }
     #[inline]
-    pub fn buffer_binds(mut self, buffer_binds: &'a [SparseBufferMemoryBindInfo]) -> Self {
+    pub fn buffer_binds(mut self, buffer_binds: &'a [SparseBufferMemoryBindInfo<'a>]) -> Self {
         self.buffer_bind_count = buffer_binds.len() as _;
         self.p_buffer_binds = buffer_binds.as_ptr();
         self
@@ -2959,14 +2962,14 @@ impl<'a> BindSparseInfo<'a> {
     #[inline]
     pub fn image_opaque_binds(
         mut self,
-        image_opaque_binds: &'a [SparseImageOpaqueMemoryBindInfo],
+        image_opaque_binds: &'a [SparseImageOpaqueMemoryBindInfo<'a>],
     ) -> Self {
         self.image_opaque_bind_count = image_opaque_binds.len() as _;
         self.p_image_opaque_binds = image_opaque_binds.as_ptr();
         self
     }
     #[inline]
-    pub fn image_binds(mut self, image_binds: &'a [SparseImageMemoryBindInfo]) -> Self {
+    pub fn image_binds(mut self, image_binds: &'a [SparseImageMemoryBindInfo<'a>]) -> Self {
         self.image_bind_count = image_binds.len() as _;
         self.p_image_binds = image_binds.as_ptr();
         self
@@ -3371,7 +3374,7 @@ impl<'a> DescriptorSetLayoutCreateInfo<'a> {
         self
     }
     #[inline]
-    pub fn bindings(mut self, bindings: &'a [DescriptorSetLayoutBinding]) -> Self {
+    pub fn bindings(mut self, bindings: &'a [DescriptorSetLayoutBinding<'a>]) -> Self {
         self.binding_count = bindings.len() as _;
         self.p_bindings = bindings.as_ptr();
         self
@@ -4738,7 +4741,7 @@ impl<'a> GraphicsPipelineCreateInfo<'a> {
         self
     }
     #[inline]
-    pub fn stages(mut self, stages: &'a [PipelineShaderStageCreateInfo]) -> Self {
+    pub fn stages(mut self, stages: &'a [PipelineShaderStageCreateInfo<'a>]) -> Self {
         self.stage_count = stages.len() as _;
         self.p_stages = stages.as_ptr();
         self
@@ -5406,7 +5409,7 @@ pub struct RenderPassBeginInfo<'a> {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for RenderPassBeginInfo<'_> {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("RenderPassBeginInfo")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -5531,7 +5534,7 @@ pub struct ClearAttachment {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for ClearAttachment {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("ClearAttachment")
             .field("aspect_mask", &self.aspect_mask)
             .field("color_attachment", &self.color_attachment)
@@ -5817,7 +5820,7 @@ impl<'a> RenderPassCreateInfo<'a> {
         self
     }
     #[inline]
-    pub fn subpasses(mut self, subpasses: &'a [SubpassDescription]) -> Self {
+    pub fn subpasses(mut self, subpasses: &'a [SubpassDescription<'a>]) -> Self {
         self.subpass_count = subpasses.len() as _;
         self.p_subpasses = subpasses.as_ptr();
         self
@@ -8768,7 +8771,7 @@ pub struct DebugReportCallbackCreateInfoEXT<'a> {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for DebugReportCallbackCreateInfoEXT<'_> {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("DebugReportCallbackCreateInfoEXT")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -9803,7 +9806,7 @@ unsafe impl<'a> TaggedStructure for GraphicsShaderGroupCreateInfoNV<'a> {
 }
 impl<'a> GraphicsShaderGroupCreateInfoNV<'a> {
     #[inline]
-    pub fn stages(mut self, stages: &'a [PipelineShaderStageCreateInfo]) -> Self {
+    pub fn stages(mut self, stages: &'a [PipelineShaderStageCreateInfo<'a>]) -> Self {
         self.stage_count = stages.len() as _;
         self.p_stages = stages.as_ptr();
         self
@@ -9859,7 +9862,7 @@ unsafe impl<'a> TaggedStructure for GraphicsPipelineShaderGroupsCreateInfoNV<'a>
 unsafe impl ExtendsGraphicsPipelineCreateInfo for GraphicsPipelineShaderGroupsCreateInfoNV<'_> {}
 impl<'a> GraphicsPipelineShaderGroupsCreateInfoNV<'a> {
     #[inline]
-    pub fn groups(mut self, groups: &'a [GraphicsShaderGroupCreateInfoNV]) -> Self {
+    pub fn groups(mut self, groups: &'a [GraphicsShaderGroupCreateInfoNV<'a>]) -> Self {
         self.group_count = groups.len() as _;
         self.p_groups = groups.as_ptr();
         self
@@ -10135,7 +10138,7 @@ impl<'a> IndirectCommandsLayoutCreateInfoNV<'a> {
         self
     }
     #[inline]
-    pub fn tokens(mut self, tokens: &'a [IndirectCommandsLayoutTokenNV]) -> Self {
+    pub fn tokens(mut self, tokens: &'a [IndirectCommandsLayoutTokenNV<'a>]) -> Self {
         self.token_count = tokens.len() as _;
         self.p_tokens = tokens.as_ptr();
         self
@@ -10895,7 +10898,7 @@ pub struct PhysicalDeviceDriverProperties<'a> {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for PhysicalDeviceDriverProperties<'_> {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("PhysicalDeviceDriverProperties")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -10979,7 +10982,7 @@ unsafe impl<'a> TaggedStructure for PresentRegionsKHR<'a> {
 unsafe impl ExtendsPresentInfoKHR for PresentRegionsKHR<'_> {}
 impl<'a> PresentRegionsKHR<'a> {
     #[inline]
-    pub fn regions(mut self, regions: &'a [PresentRegionKHR]) -> Self {
+    pub fn regions(mut self, regions: &'a [PresentRegionKHR<'a>]) -> Self {
         self.swapchain_count = regions.len() as _;
         self.p_regions = regions.as_ptr();
         self
@@ -16504,7 +16507,7 @@ impl<'a> RenderPassSampleLocationsBeginInfoEXT<'a> {
     #[inline]
     pub fn attachment_initial_sample_locations(
         mut self,
-        attachment_initial_sample_locations: &'a [AttachmentSampleLocationsEXT],
+        attachment_initial_sample_locations: &'a [AttachmentSampleLocationsEXT<'a>],
     ) -> Self {
         self.attachment_initial_sample_locations_count =
             attachment_initial_sample_locations.len() as _;
@@ -16514,7 +16517,7 @@ impl<'a> RenderPassSampleLocationsBeginInfoEXT<'a> {
     #[inline]
     pub fn post_subpass_sample_locations(
         mut self,
-        post_subpass_sample_locations: &'a [SubpassSampleLocationsEXT],
+        post_subpass_sample_locations: &'a [SubpassSampleLocationsEXT<'a>],
     ) -> Self {
         self.post_subpass_sample_locations_count = post_subpass_sample_locations.len() as _;
         self.p_post_subpass_sample_locations = post_subpass_sample_locations.as_ptr();
@@ -18403,7 +18406,7 @@ pub struct DebugUtilsMessengerCreateInfoEXT<'a> {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for DebugUtilsMessengerCreateInfoEXT<'_> {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("DebugUtilsMessengerCreateInfoEXT")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -18532,19 +18535,19 @@ impl<'a> DebugUtilsMessengerCallbackDataEXT<'a> {
         self
     }
     #[inline]
-    pub fn queue_labels(mut self, queue_labels: &'a [DebugUtilsLabelEXT]) -> Self {
+    pub fn queue_labels(mut self, queue_labels: &'a [DebugUtilsLabelEXT<'a>]) -> Self {
         self.queue_label_count = queue_labels.len() as _;
         self.p_queue_labels = queue_labels.as_ptr();
         self
     }
     #[inline]
-    pub fn cmd_buf_labels(mut self, cmd_buf_labels: &'a [DebugUtilsLabelEXT]) -> Self {
+    pub fn cmd_buf_labels(mut self, cmd_buf_labels: &'a [DebugUtilsLabelEXT<'a>]) -> Self {
         self.cmd_buf_label_count = cmd_buf_labels.len() as _;
         self.p_cmd_buf_labels = cmd_buf_labels.as_ptr();
         self
     }
     #[inline]
-    pub fn objects(mut self, objects: &'a [DebugUtilsObjectNameInfoEXT]) -> Self {
+    pub fn objects(mut self, objects: &'a [DebugUtilsObjectNameInfoEXT<'a>]) -> Self {
         self.object_count = objects.len() as _;
         self.p_objects = objects.as_ptr();
         self
@@ -18614,7 +18617,7 @@ pub struct DeviceDeviceMemoryReportCreateInfoEXT<'a> {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for DeviceDeviceMemoryReportCreateInfoEXT<'_> {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("DeviceDeviceMemoryReportCreateInfoEXT")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -20057,19 +20060,22 @@ impl<'a> SubpassDescription2<'a> {
         self
     }
     #[inline]
-    pub fn input_attachments(mut self, input_attachments: &'a [AttachmentReference2]) -> Self {
+    pub fn input_attachments(mut self, input_attachments: &'a [AttachmentReference2<'a>]) -> Self {
         self.input_attachment_count = input_attachments.len() as _;
         self.p_input_attachments = input_attachments.as_ptr();
         self
     }
     #[inline]
-    pub fn color_attachments(mut self, color_attachments: &'a [AttachmentReference2]) -> Self {
+    pub fn color_attachments(mut self, color_attachments: &'a [AttachmentReference2<'a>]) -> Self {
         self.color_attachment_count = color_attachments.len() as _;
         self.p_color_attachments = color_attachments.as_ptr();
         self
     }
     #[inline]
-    pub fn resolve_attachments(mut self, resolve_attachments: &'a [AttachmentReference2]) -> Self {
+    pub fn resolve_attachments(
+        mut self,
+        resolve_attachments: &'a [AttachmentReference2<'a>],
+    ) -> Self {
         self.color_attachment_count = resolve_attachments.len() as _;
         self.p_resolve_attachments = resolve_attachments.as_ptr();
         self
@@ -20246,19 +20252,19 @@ impl<'a> RenderPassCreateInfo2<'a> {
         self
     }
     #[inline]
-    pub fn attachments(mut self, attachments: &'a [AttachmentDescription2]) -> Self {
+    pub fn attachments(mut self, attachments: &'a [AttachmentDescription2<'a>]) -> Self {
         self.attachment_count = attachments.len() as _;
         self.p_attachments = attachments.as_ptr();
         self
     }
     #[inline]
-    pub fn subpasses(mut self, subpasses: &'a [SubpassDescription2]) -> Self {
+    pub fn subpasses(mut self, subpasses: &'a [SubpassDescription2<'a>]) -> Self {
         self.subpass_count = subpasses.len() as _;
         self.p_subpasses = subpasses.as_ptr();
         self
     }
     #[inline]
-    pub fn dependencies(mut self, dependencies: &'a [SubpassDependency2]) -> Self {
+    pub fn dependencies(mut self, dependencies: &'a [SubpassDependency2<'a>]) -> Self {
         self.dependency_count = dependencies.len() as _;
         self.p_dependencies = dependencies.as_ptr();
         self
@@ -22546,7 +22552,7 @@ impl<'a> PipelineViewportShadingRateImageStateCreateInfoNV<'a> {
     #[inline]
     pub fn shading_rate_palettes(
         mut self,
-        shading_rate_palettes: &'a [ShadingRatePaletteNV],
+        shading_rate_palettes: &'a [ShadingRatePaletteNV<'a>],
     ) -> Self {
         self.viewport_count = shading_rate_palettes.len() as _;
         self.p_shading_rate_palettes = shading_rate_palettes.as_ptr();
@@ -22787,7 +22793,7 @@ impl<'a> PipelineViewportCoarseSampleOrderStateCreateInfoNV<'a> {
     #[inline]
     pub fn custom_sample_orders(
         mut self,
-        custom_sample_orders: &'a [CoarseSampleOrderCustomNV],
+        custom_sample_orders: &'a [CoarseSampleOrderCustomNV<'a>],
     ) -> Self {
         self.custom_sample_order_count = custom_sample_orders.len() as _;
         self.p_custom_sample_orders = custom_sample_orders.as_ptr();
@@ -23495,13 +23501,13 @@ impl<'a> RayTracingPipelineCreateInfoNV<'a> {
         self
     }
     #[inline]
-    pub fn stages(mut self, stages: &'a [PipelineShaderStageCreateInfo]) -> Self {
+    pub fn stages(mut self, stages: &'a [PipelineShaderStageCreateInfo<'a>]) -> Self {
         self.stage_count = stages.len() as _;
         self.p_stages = stages.as_ptr();
         self
     }
     #[inline]
-    pub fn groups(mut self, groups: &'a [RayTracingShaderGroupCreateInfoNV]) -> Self {
+    pub fn groups(mut self, groups: &'a [RayTracingShaderGroupCreateInfoNV<'a>]) -> Self {
         self.group_count = groups.len() as _;
         self.p_groups = groups.as_ptr();
         self
@@ -23595,13 +23601,13 @@ impl<'a> RayTracingPipelineCreateInfoKHR<'a> {
         self
     }
     #[inline]
-    pub fn stages(mut self, stages: &'a [PipelineShaderStageCreateInfo]) -> Self {
+    pub fn stages(mut self, stages: &'a [PipelineShaderStageCreateInfo<'a>]) -> Self {
         self.stage_count = stages.len() as _;
         self.p_stages = stages.as_ptr();
         self
     }
     #[inline]
-    pub fn groups(mut self, groups: &'a [RayTracingShaderGroupCreateInfoKHR]) -> Self {
+    pub fn groups(mut self, groups: &'a [RayTracingShaderGroupCreateInfoKHR<'a>]) -> Self {
         self.group_count = groups.len() as _;
         self.p_groups = groups.as_ptr();
         self
@@ -23930,7 +23936,7 @@ impl<'a> AccelerationStructureInfoNV<'a> {
         self
     }
     #[inline]
-    pub fn geometries(mut self, geometries: &'a [GeometryNV]) -> Self {
+    pub fn geometries(mut self, geometries: &'a [GeometryNV<'a>]) -> Self {
         self.geometry_count = geometries.len() as _;
         self.p_geometries = geometries.as_ptr();
         self
@@ -26170,7 +26176,7 @@ impl<'a> FramebufferAttachmentsCreateInfo<'a> {
     #[inline]
     pub fn attachment_image_infos(
         mut self,
-        attachment_image_infos: &'a [FramebufferAttachmentImageInfo],
+        attachment_image_infos: &'a [FramebufferAttachmentImageInfo<'a>],
     ) -> Self {
         self.attachment_image_info_count = attachment_image_infos.len() as _;
         self.p_attachment_image_infos = attachment_image_infos.as_ptr();
@@ -27048,7 +27054,7 @@ pub struct PerformanceCounterDescriptionKHR<'a> {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for PerformanceCounterDescriptionKHR<'_> {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("PerformanceCounterDescriptionKHR")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -27462,7 +27468,7 @@ pub struct PerformanceValueINTEL {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for PerformanceValueINTEL {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("PerformanceValueINTEL")
             .field("ty", &self.ty)
             .field("data", &"union")
@@ -28135,7 +28141,7 @@ pub struct PipelineExecutablePropertiesKHR<'a> {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for PipelineExecutablePropertiesKHR<'_> {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("PipelineExecutablePropertiesKHR")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -28256,7 +28262,7 @@ pub struct PipelineExecutableStatisticKHR<'a> {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for PipelineExecutableStatisticKHR<'_> {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("PipelineExecutableStatisticKHR")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -28325,7 +28331,7 @@ pub struct PipelineExecutableInternalRepresentationKHR<'a> {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for PipelineExecutableInternalRepresentationKHR<'_> {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("PipelineExecutableInternalRepresentationKHR")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -29832,7 +29838,7 @@ pub struct PhysicalDeviceVulkan12Properties<'a> {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for PhysicalDeviceVulkan12Properties<'_> {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("PhysicalDeviceVulkan12Properties")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -31189,7 +31195,7 @@ pub struct PhysicalDeviceToolProperties<'a> {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for PhysicalDeviceToolProperties<'_> {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("PhysicalDeviceToolProperties")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -31266,7 +31272,7 @@ pub struct SamplerCustomBorderColorCreateInfoEXT<'a> {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for SamplerCustomBorderColorCreateInfoEXT<'_> {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("SamplerCustomBorderColorCreateInfoEXT")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -31524,7 +31530,7 @@ pub struct AccelerationStructureGeometryTrianglesDataKHR<'a> {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for AccelerationStructureGeometryTrianglesDataKHR<'_> {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("AccelerationStructureGeometryTrianglesDataKHR")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -31626,7 +31632,7 @@ pub struct AccelerationStructureGeometryAabbsDataKHR<'a> {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for AccelerationStructureGeometryAabbsDataKHR<'_> {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("AccelerationStructureGeometryAabbsDataKHR")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -31675,7 +31681,7 @@ pub struct AccelerationStructureGeometryInstancesDataKHR<'a> {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for AccelerationStructureGeometryInstancesDataKHR<'_> {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("AccelerationStructureGeometryInstancesDataKHR")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -31739,7 +31745,7 @@ pub struct AccelerationStructureGeometryKHR<'a> {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for AccelerationStructureGeometryKHR<'_> {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("AccelerationStructureGeometryKHR")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -31801,7 +31807,7 @@ pub struct AccelerationStructureBuildGeometryInfoKHR<'a> {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for AccelerationStructureBuildGeometryInfoKHR<'_> {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("AccelerationStructureBuildGeometryInfoKHR")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -31879,7 +31885,7 @@ impl<'a> AccelerationStructureBuildGeometryInfoKHR<'a> {
         self
     }
     #[inline]
-    pub fn geometries(mut self, geometries: &'a [AccelerationStructureGeometryKHR]) -> Self {
+    pub fn geometries(mut self, geometries: &'a [AccelerationStructureGeometryKHR<'a>]) -> Self {
         self.geometry_count = geometries.len() as _;
         self.p_geometries = geometries.as_ptr();
         self
@@ -31887,7 +31893,7 @@ impl<'a> AccelerationStructureBuildGeometryInfoKHR<'a> {
     #[inline]
     pub fn geometries_ptrs(
         mut self,
-        geometries_ptrs: &'a [&'a AccelerationStructureGeometryKHR],
+        geometries_ptrs: &'a [&'a AccelerationStructureGeometryKHR<'a>],
     ) -> Self {
         self.geometry_count = geometries_ptrs.len() as _;
         self.pp_geometries = geometries_ptrs.as_ptr().cast();
@@ -32205,7 +32211,7 @@ pub struct CopyAccelerationStructureToMemoryInfoKHR<'a> {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for CopyAccelerationStructureToMemoryInfoKHR<'_> {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("CopyAccelerationStructureToMemoryInfoKHR")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -32262,7 +32268,7 @@ pub struct CopyMemoryToAccelerationStructureInfoKHR<'a> {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for CopyMemoryToAccelerationStructureInfoKHR<'_> {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("CopyMemoryToAccelerationStructureInfoKHR")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -34074,7 +34080,7 @@ impl<'a> CopyBufferInfo2<'a> {
         self
     }
     #[inline]
-    pub fn regions(mut self, regions: &'a [BufferCopy2]) -> Self {
+    pub fn regions(mut self, regions: &'a [BufferCopy2<'a>]) -> Self {
         self.region_count = regions.len() as _;
         self.p_regions = regions.as_ptr();
         self
@@ -34136,7 +34142,7 @@ impl<'a> CopyImageInfo2<'a> {
         self
     }
     #[inline]
-    pub fn regions(mut self, regions: &'a [ImageCopy2]) -> Self {
+    pub fn regions(mut self, regions: &'a [ImageCopy2<'a>]) -> Self {
         self.region_count = regions.len() as _;
         self.p_regions = regions.as_ptr();
         self
@@ -34201,7 +34207,7 @@ impl<'a> BlitImageInfo2<'a> {
         self
     }
     #[inline]
-    pub fn regions(mut self, regions: &'a [ImageBlit2]) -> Self {
+    pub fn regions(mut self, regions: &'a [ImageBlit2<'a>]) -> Self {
         self.region_count = regions.len() as _;
         self.p_regions = regions.as_ptr();
         self
@@ -34275,7 +34281,7 @@ impl<'a> CopyBufferToImageInfo2<'a> {
         self
     }
     #[inline]
-    pub fn regions(mut self, regions: &'a [BufferImageCopy2]) -> Self {
+    pub fn regions(mut self, regions: &'a [BufferImageCopy2<'a>]) -> Self {
         self.region_count = regions.len() as _;
         self.p_regions = regions.as_ptr();
         self
@@ -34330,7 +34336,7 @@ impl<'a> CopyImageToBufferInfo2<'a> {
         self
     }
     #[inline]
-    pub fn regions(mut self, regions: &'a [BufferImageCopy2]) -> Self {
+    pub fn regions(mut self, regions: &'a [BufferImageCopy2<'a>]) -> Self {
         self.region_count = regions.len() as _;
         self.p_regions = regions.as_ptr();
         self
@@ -34392,7 +34398,7 @@ impl<'a> ResolveImageInfo2<'a> {
         self
     }
     #[inline]
-    pub fn regions(mut self, regions: &'a [ImageResolve2]) -> Self {
+    pub fn regions(mut self, regions: &'a [ImageResolve2<'a>]) -> Self {
         self.region_count = regions.len() as _;
         self.p_regions = regions.as_ptr();
         self
@@ -35265,7 +35271,7 @@ impl<'a> MutableDescriptorTypeCreateInfoEXT<'a> {
     #[inline]
     pub fn mutable_descriptor_type_lists(
         mut self,
-        mutable_descriptor_type_lists: &'a [MutableDescriptorTypeListEXT],
+        mutable_descriptor_type_lists: &'a [MutableDescriptorTypeListEXT<'a>],
     ) -> Self {
         self.mutable_descriptor_type_list_count = mutable_descriptor_type_lists.len() as _;
         self.p_mutable_descriptor_type_lists = mutable_descriptor_type_lists.as_ptr();
@@ -35893,7 +35899,7 @@ impl<'a> DependencyInfo<'a> {
         self
     }
     #[inline]
-    pub fn memory_barriers(mut self, memory_barriers: &'a [MemoryBarrier2]) -> Self {
+    pub fn memory_barriers(mut self, memory_barriers: &'a [MemoryBarrier2<'a>]) -> Self {
         self.memory_barrier_count = memory_barriers.len() as _;
         self.p_memory_barriers = memory_barriers.as_ptr();
         self
@@ -35901,7 +35907,7 @@ impl<'a> DependencyInfo<'a> {
     #[inline]
     pub fn buffer_memory_barriers(
         mut self,
-        buffer_memory_barriers: &'a [BufferMemoryBarrier2],
+        buffer_memory_barriers: &'a [BufferMemoryBarrier2<'a>],
     ) -> Self {
         self.buffer_memory_barrier_count = buffer_memory_barriers.len() as _;
         self.p_buffer_memory_barriers = buffer_memory_barriers.as_ptr();
@@ -35910,7 +35916,7 @@ impl<'a> DependencyInfo<'a> {
     #[inline]
     pub fn image_memory_barriers(
         mut self,
-        image_memory_barriers: &'a [ImageMemoryBarrier2],
+        image_memory_barriers: &'a [ImageMemoryBarrier2<'a>],
     ) -> Self {
         self.image_memory_barrier_count = image_memory_barriers.len() as _;
         self.p_image_memory_barriers = image_memory_barriers.as_ptr();
@@ -36051,7 +36057,10 @@ impl<'a> SubmitInfo2<'a> {
         self
     }
     #[inline]
-    pub fn wait_semaphore_infos(mut self, wait_semaphore_infos: &'a [SemaphoreSubmitInfo]) -> Self {
+    pub fn wait_semaphore_infos(
+        mut self,
+        wait_semaphore_infos: &'a [SemaphoreSubmitInfo<'a>],
+    ) -> Self {
         self.wait_semaphore_info_count = wait_semaphore_infos.len() as _;
         self.p_wait_semaphore_infos = wait_semaphore_infos.as_ptr();
         self
@@ -36059,7 +36068,7 @@ impl<'a> SubmitInfo2<'a> {
     #[inline]
     pub fn command_buffer_infos(
         mut self,
-        command_buffer_infos: &'a [CommandBufferSubmitInfo],
+        command_buffer_infos: &'a [CommandBufferSubmitInfo<'a>],
     ) -> Self {
         self.command_buffer_info_count = command_buffer_infos.len() as _;
         self.p_command_buffer_infos = command_buffer_infos.as_ptr();
@@ -36068,7 +36077,7 @@ impl<'a> SubmitInfo2<'a> {
     #[inline]
     pub fn signal_semaphore_infos(
         mut self,
-        signal_semaphore_infos: &'a [SemaphoreSubmitInfo],
+        signal_semaphore_infos: &'a [SemaphoreSubmitInfo<'a>],
     ) -> Self {
         self.signal_semaphore_info_count = signal_semaphore_infos.len() as _;
         self.p_signal_semaphore_infos = signal_semaphore_infos.as_ptr();
@@ -36476,7 +36485,7 @@ impl<'a> CopyMemoryToImageInfoEXT<'a> {
         self
     }
     #[inline]
-    pub fn regions(mut self, regions: &'a [MemoryToImageCopyEXT]) -> Self {
+    pub fn regions(mut self, regions: &'a [MemoryToImageCopyEXT<'a>]) -> Self {
         self.region_count = regions.len() as _;
         self.p_regions = regions.as_ptr();
         self
@@ -36531,7 +36540,7 @@ impl<'a> CopyImageToMemoryInfoEXT<'a> {
         self
     }
     #[inline]
-    pub fn regions(mut self, regions: &'a [ImageToMemoryCopyEXT]) -> Self {
+    pub fn regions(mut self, regions: &'a [ImageToMemoryCopyEXT<'a>]) -> Self {
         self.region_count = regions.len() as _;
         self.p_regions = regions.as_ptr();
         self
@@ -36600,7 +36609,7 @@ impl<'a> CopyImageToImageInfoEXT<'a> {
         self
     }
     #[inline]
-    pub fn regions(mut self, regions: &'a [ImageCopy2]) -> Self {
+    pub fn regions(mut self, regions: &'a [ImageCopy2<'a>]) -> Self {
         self.region_count = regions.len() as _;
         self.p_regions = regions.as_ptr();
         self
@@ -37080,7 +37089,7 @@ unsafe impl ExtendsImageCreateInfo for VideoProfileListInfoKHR<'_> {}
 unsafe impl ExtendsBufferCreateInfo for VideoProfileListInfoKHR<'_> {}
 impl<'a> VideoProfileListInfoKHR<'a> {
     #[inline]
-    pub fn profiles(mut self, profiles: &'a [VideoProfileInfoKHR]) -> Self {
+    pub fn profiles(mut self, profiles: &'a [VideoProfileInfoKHR<'a>]) -> Self {
         self.profile_count = profiles.len() as _;
         self.p_profiles = profiles.as_ptr();
         self
@@ -37723,7 +37732,7 @@ impl<'a> VideoDecodeInfoKHR<'a> {
         self
     }
     #[inline]
-    pub fn reference_slots(mut self, reference_slots: &'a [VideoReferenceSlotInfoKHR]) -> Self {
+    pub fn reference_slots(mut self, reference_slots: &'a [VideoReferenceSlotInfoKHR<'a>]) -> Self {
         self.reference_slot_count = reference_slots.len() as _;
         self.p_reference_slots = reference_slots.as_ptr();
         self
@@ -38635,7 +38644,7 @@ impl<'a> VideoBeginCodingInfoKHR<'a> {
         self
     }
     #[inline]
-    pub fn reference_slots(mut self, reference_slots: &'a [VideoReferenceSlotInfoKHR]) -> Self {
+    pub fn reference_slots(mut self, reference_slots: &'a [VideoReferenceSlotInfoKHR<'a>]) -> Self {
         self.reference_slot_count = reference_slots.len() as _;
         self.p_reference_slots = reference_slots.as_ptr();
         self
@@ -38858,7 +38867,7 @@ impl<'a> VideoEncodeInfoKHR<'a> {
         self
     }
     #[inline]
-    pub fn reference_slots(mut self, reference_slots: &'a [VideoReferenceSlotInfoKHR]) -> Self {
+    pub fn reference_slots(mut self, reference_slots: &'a [VideoReferenceSlotInfoKHR<'a>]) -> Self {
         self.reference_slot_count = reference_slots.len() as _;
         self.p_reference_slots = reference_slots.as_ptr();
         self
@@ -39107,7 +39116,7 @@ impl<'a> VideoEncodeRateControlInfoKHR<'a> {
         self
     }
     #[inline]
-    pub fn layers(mut self, layers: &'a [VideoEncodeRateControlLayerInfoKHR]) -> Self {
+    pub fn layers(mut self, layers: &'a [VideoEncodeRateControlLayerInfoKHR<'a>]) -> Self {
         self.layer_count = layers.len() as _;
         self.p_layers = layers.as_ptr();
         self
@@ -39822,7 +39831,7 @@ impl<'a> VideoEncodeH264PictureInfoEXT<'a> {
     #[inline]
     pub fn nalu_slice_entries(
         mut self,
-        nalu_slice_entries: &'a [VideoEncodeH264NaluSliceInfoEXT],
+        nalu_slice_entries: &'a [VideoEncodeH264NaluSliceInfoEXT<'a>],
     ) -> Self {
         self.nalu_slice_entry_count = nalu_slice_entries.len() as _;
         self.p_nalu_slice_entries = nalu_slice_entries.as_ptr();
@@ -40707,7 +40716,7 @@ impl<'a> VideoEncodeH265PictureInfoEXT<'a> {
     #[inline]
     pub fn nalu_slice_segment_entries(
         mut self,
-        nalu_slice_segment_entries: &'a [VideoEncodeH265NaluSliceSegmentInfoEXT],
+        nalu_slice_segment_entries: &'a [VideoEncodeH265NaluSliceSegmentInfoEXT<'a>],
     ) -> Self {
         self.nalu_slice_segment_entry_count = nalu_slice_segment_entries.len() as _;
         self.p_nalu_slice_segment_entries = nalu_slice_segment_entries.as_ptr();
@@ -42101,7 +42110,7 @@ pub struct DescriptorGetInfoEXT<'a> {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for DescriptorGetInfoEXT<'_> {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("DescriptorGetInfoEXT")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -42913,7 +42922,7 @@ pub struct AccelerationStructureGeometryMotionTrianglesDataNV<'a> {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for AccelerationStructureGeometryMotionTrianglesDataNV<'_> {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("AccelerationStructureGeometryMotionTrianglesDataNV")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -43138,7 +43147,7 @@ pub struct AccelerationStructureMotionInstanceNV {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for AccelerationStructureMotionInstanceNV {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("AccelerationStructureMotionInstanceNV")
             .field("ty", &self.ty)
             .field("flags", &self.flags)
@@ -43604,7 +43613,7 @@ impl<'a> ImageFormatConstraintsInfoFUCHSIA<'a> {
         self
     }
     #[inline]
-    pub fn color_spaces(mut self, color_spaces: &'a [SysmemColorSpaceFUCHSIA]) -> Self {
+    pub fn color_spaces(mut self, color_spaces: &'a [SysmemColorSpaceFUCHSIA<'a>]) -> Self {
         self.color_space_count = color_spaces.len() as _;
         self.p_color_spaces = color_spaces.as_ptr();
         self
@@ -43644,7 +43653,7 @@ impl<'a> ImageConstraintsInfoFUCHSIA<'a> {
     #[inline]
     pub fn format_constraints(
         mut self,
-        format_constraints: &'a [ImageFormatConstraintsInfoFUCHSIA],
+        format_constraints: &'a [ImageFormatConstraintsInfoFUCHSIA<'a>],
     ) -> Self {
         self.format_constraints_count = format_constraints.len() as _;
         self.p_format_constraints = format_constraints.as_ptr();
@@ -44262,7 +44271,10 @@ impl<'a> RenderingInfo<'a> {
         self
     }
     #[inline]
-    pub fn color_attachments(mut self, color_attachments: &'a [RenderingAttachmentInfo]) -> Self {
+    pub fn color_attachments(
+        mut self,
+        color_attachments: &'a [RenderingAttachmentInfo<'a>],
+    ) -> Self {
         self.color_attachment_count = color_attachments.len() as _;
         self.p_color_attachments = color_attachments.as_ptr();
         self
@@ -44313,7 +44325,7 @@ pub struct RenderingAttachmentInfo<'a> {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for RenderingAttachmentInfo<'_> {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("RenderingAttachmentInfo")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -45665,7 +45677,7 @@ pub struct RenderPassSubpassFeedbackInfoEXT {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for RenderPassSubpassFeedbackInfoEXT {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("RenderPassSubpassFeedbackInfoEXT")
             .field("subpass_merge_status", &self.subpass_merge_status)
             .field("description", &unsafe {
@@ -45793,7 +45805,7 @@ pub struct MicromapBuildInfoEXT<'a> {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for MicromapBuildInfoEXT<'_> {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("MicromapBuildInfoEXT")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -46044,7 +46056,7 @@ pub struct CopyMicromapToMemoryInfoEXT<'a> {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for CopyMicromapToMemoryInfoEXT<'_> {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("CopyMicromapToMemoryInfoEXT")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -46100,7 +46112,7 @@ pub struct CopyMemoryToMicromapInfoEXT<'a> {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for CopyMemoryToMicromapInfoEXT<'_> {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("CopyMemoryToMicromapInfoEXT")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -46352,7 +46364,7 @@ pub struct AccelerationStructureTrianglesOpacityMicromapEXT<'a> {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for AccelerationStructureTrianglesOpacityMicromapEXT<'_> {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("AccelerationStructureTrianglesOpacityMicromapEXT")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -46532,7 +46544,7 @@ pub struct AccelerationStructureTrianglesDisplacementMicromapNV<'a> {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for AccelerationStructureTrianglesDisplacementMicromapNV<'_> {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("AccelerationStructureTrianglesDisplacementMicromapNV")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -48437,7 +48449,7 @@ pub struct DeviceFaultVendorInfoEXT {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for DeviceFaultVendorInfoEXT {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("DeviceFaultVendorInfoEXT")
             .field("description", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.description.as_ptr())
@@ -48533,7 +48545,7 @@ pub struct DeviceFaultInfoEXT<'a> {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for DeviceFaultInfoEXT<'_> {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("DeviceFaultInfoEXT")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -49705,7 +49717,7 @@ pub struct DirectDriverLoadingInfoLUNARG<'a> {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for DirectDriverLoadingInfoLUNARG<'_> {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("DirectDriverLoadingInfoLUNARG")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -49783,7 +49795,7 @@ impl<'a> DirectDriverLoadingListLUNARG<'a> {
         self
     }
     #[inline]
-    pub fn drivers(mut self, drivers: &'a [DirectDriverLoadingInfoLUNARG]) -> Self {
+    pub fn drivers(mut self, drivers: &'a [DirectDriverLoadingInfoLUNARG<'a>]) -> Self {
         self.driver_count = drivers.len() as _;
         self.p_drivers = drivers.as_ptr();
         self
@@ -51015,7 +51027,7 @@ impl<'a> ExecutionGraphPipelineCreateInfoAMDX<'a> {
         self
     }
     #[inline]
-    pub fn stages(mut self, stages: &'a [PipelineShaderStageCreateInfo]) -> Self {
+    pub fn stages(mut self, stages: &'a [PipelineShaderStageCreateInfo<'a>]) -> Self {
         self.stage_count = stages.len() as _;
         self.p_stages = stages.as_ptr();
         self
@@ -51140,7 +51152,7 @@ pub struct DispatchGraphInfoAMDX {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for DispatchGraphInfoAMDX {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("DispatchGraphInfoAMDX")
             .field("node_index", &self.node_index)
             .field("payload_count", &self.payload_count)
@@ -51181,7 +51193,7 @@ pub struct DispatchGraphCountInfoAMDX {
 }
 #[cfg(feature = "debug")]
 impl fmt::Debug for DispatchGraphCountInfoAMDX {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("DispatchGraphCountInfoAMDX")
             .field("count", &self.count)
             .field("infos", &"union")
