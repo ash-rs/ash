@@ -86,7 +86,7 @@ impl DescriptorBuffer {
         layout: vk::PipelineLayout,
         first_set: u32,
         buffer_indices: &[u32],
-        offsets: &[vk::DeviceSize<'_>],
+        offsets: &[vk::DeviceSize],
     ) {
         assert_eq!(buffer_indices.len(), offsets.len());
         (self.fp.cmd_set_descriptor_buffer_offsets_ext)(

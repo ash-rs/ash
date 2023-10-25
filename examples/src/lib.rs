@@ -47,9 +47,9 @@ pub fn record_submit_commandbuffer<F: FnOnce(&Device, vk::CommandBuffer)>(
     command_buffer: vk::CommandBuffer,
     command_buffer_reuse_fence: vk::Fence,
     submit_queue: vk::Queue,
-    wait_mask: &[vk::PipelineStageFlags<'_>],
-    wait_semaphores: &[vk::Semaphore<'_>],
-    signal_semaphores: &[vk::Semaphore<'_>],
+    wait_mask: &[vk::PipelineStageFlags],
+    wait_semaphores: &[vk::Semaphore],
+    signal_semaphores: &[vk::Semaphore],
     f: F,
 ) {
     unsafe {
@@ -122,8 +122,8 @@ unsafe extern "system" fn vulkan_debug_callback(
 }
 
 pub fn find_memorytype_index(
-    memory_req: &vk::MemoryRequirements<'_>,
-    memory_prop: &vk::PhysicalDeviceMemoryProperties<'_>,
+    memory_req: &vk::MemoryRequirements,
+    memory_prop: &vk::PhysicalDeviceMemoryProperties,
     flags: vk::MemoryPropertyFlags,
 ) -> Option<u32> {
     memory_prop.memory_types[..memory_prop.memory_type_count as _]

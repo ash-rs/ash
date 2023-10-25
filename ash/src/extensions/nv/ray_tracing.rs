@@ -220,7 +220,7 @@ impl RayTracing {
     pub unsafe fn cmd_write_acceleration_structures_properties(
         &self,
         command_buffer: vk::CommandBuffer,
-        structures: &[vk::AccelerationStructureNV<'_>],
+        structures: &[vk::AccelerationStructureNV],
         query_type: vk::QueryType,
         query_pool: vk::QueryPool,
         first_query: u32,

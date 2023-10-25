@@ -65,8 +65,8 @@ impl ShaderObject {
     pub unsafe fn cmd_bind_shaders(
         &self,
         command_buffer: vk::CommandBuffer,
-        stages: &[vk::ShaderStageFlags<'_>],
-        shaders: &[vk::ShaderEXT<'_>],
+        stages: &[vk::ShaderStageFlags],
+        shaders: &[vk::ShaderEXT],
     ) {
         assert_eq!(stages.len(), shaders.len());
         (self.fp.cmd_bind_shaders_ext)(
@@ -131,7 +131,7 @@ impl ShaderObject {
     pub unsafe fn cmd_set_viewport_with_count(
         &self,
         command_buffer: vk::CommandBuffer,
-        viewports: &[vk::Viewport<'_>],
+        viewports: &[vk::Viewport],
     ) {
         (self.fp.cmd_set_viewport_with_count_ext)(
             command_buffer,
@@ -145,7 +145,7 @@ impl ShaderObject {
     pub unsafe fn cmd_set_scissor_with_count(
         &self,
         command_buffer: vk::CommandBuffer,
-        scissors: &[vk::Rect2D<'_>],
+        scissors: &[vk::Rect2D],
     ) {
         (self.fp.cmd_set_scissor_with_count_ext)(
             command_buffer,
@@ -160,10 +160,10 @@ impl ShaderObject {
         &self,
         command_buffer: vk::CommandBuffer,
         first_binding: u32,
-        buffers: &[vk::Buffer<'_>],
-        offsets: &[vk::DeviceSize<'_>],
-        sizes: Option<&[vk::DeviceSize<'_>]>,
-        strides: Option<&[vk::DeviceSize<'_>]>,
+        buffers: &[vk::Buffer],
+        offsets: &[vk::DeviceSize],
+        sizes: Option<&[vk::DeviceSize]>,
+        strides: Option<&[vk::DeviceSize]>,
     ) {
         assert_eq!(offsets.len(), buffers.len());
         let p_sizes = if let Some(sizes) = sizes {
@@ -369,7 +369,7 @@ impl ShaderObject {
         &self,
         command_buffer: vk::CommandBuffer,
         samples: vk::SampleCountFlags,
-        sample_mask: &[vk::SampleMask<'_>],
+        sample_mask: &[vk::SampleMask],
     ) {
         assert!(
             samples.as_raw().is_power_of_two(),
@@ -418,7 +418,7 @@ impl ShaderObject {
         &self,
         command_buffer: vk::CommandBuffer,
         first_attachment: u32,
-        color_blend_enables: &[vk::Bool32<'_>],
+        color_blend_enables: &[vk::Bool32],
     ) {
         (self.fp.cmd_set_color_blend_enable_ext)(
             command_buffer,
@@ -434,7 +434,7 @@ impl ShaderObject {
         &self,
         command_buffer: vk::CommandBuffer,
         first_attachment: u32,
-        color_blend_equations: &[vk::ColorBlendEquationEXT<'_>],
+        color_blend_equations: &[vk::ColorBlendEquationEXT],
     ) {
         (self.fp.cmd_set_color_blend_equation_ext)(
             command_buffer,
@@ -450,7 +450,7 @@ impl ShaderObject {
         &self,
         command_buffer: vk::CommandBuffer,
         first_attachment: u32,
-        color_write_masks: &[vk::ColorComponentFlags<'_>],
+        color_write_masks: &[vk::ColorComponentFlags],
     ) {
         (self.fp.cmd_set_color_write_mask_ext)(
             command_buffer,
@@ -525,7 +525,7 @@ impl ShaderObject {
         &self,
         command_buffer: vk::CommandBuffer,
         first_attachment: u32,
-        color_blend_advanced: &[vk::ColorBlendAdvancedEXT<'_>],
+        color_blend_advanced: &[vk::ColorBlendAdvancedEXT],
     ) {
         (self.fp.cmd_set_color_blend_advanced_ext)(
             command_buffer,
@@ -597,7 +597,7 @@ impl ShaderObject {
         &self,
         command_buffer: vk::CommandBuffer,
         first_attachment: u32,
-        viewport_swizzles: &[vk::ViewportSwizzleNV<'_>],
+        viewport_swizzles: &[vk::ViewportSwizzleNV],
     ) {
         (self.fp.cmd_set_viewport_swizzle_nv)(
             command_buffer,

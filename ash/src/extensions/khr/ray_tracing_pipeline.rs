@@ -25,10 +25,10 @@ impl RayTracingPipeline {
     pub unsafe fn cmd_trace_rays(
         &self,
         command_buffer: vk::CommandBuffer,
-        raygen_shader_binding_tables: &vk::StridedDeviceAddressRegionKHR<'_>,
-        miss_shader_binding_tables: &vk::StridedDeviceAddressRegionKHR<'_>,
-        hit_shader_binding_tables: &vk::StridedDeviceAddressRegionKHR<'_>,
-        callable_shader_binding_tables: &vk::StridedDeviceAddressRegionKHR<'_>,
+        raygen_shader_binding_tables: &vk::StridedDeviceAddressRegionKHR,
+        miss_shader_binding_tables: &vk::StridedDeviceAddressRegionKHR,
+        hit_shader_binding_tables: &vk::StridedDeviceAddressRegionKHR,
+        callable_shader_binding_tables: &vk::StridedDeviceAddressRegionKHR,
         width: u32,
         height: u32,
         depth: u32,
@@ -122,10 +122,10 @@ impl RayTracingPipeline {
     pub unsafe fn cmd_trace_rays_indirect(
         &self,
         command_buffer: vk::CommandBuffer,
-        raygen_shader_binding_table: &[vk::StridedDeviceAddressRegionKHR<'_>],
-        miss_shader_binding_table: &[vk::StridedDeviceAddressRegionKHR<'_>],
-        hit_shader_binding_table: &[vk::StridedDeviceAddressRegionKHR<'_>],
-        callable_shader_binding_table: &[vk::StridedDeviceAddressRegionKHR<'_>],
+        raygen_shader_binding_table: &[vk::StridedDeviceAddressRegionKHR],
+        miss_shader_binding_table: &[vk::StridedDeviceAddressRegionKHR],
+        hit_shader_binding_table: &[vk::StridedDeviceAddressRegionKHR],
+        callable_shader_binding_table: &[vk::StridedDeviceAddressRegionKHR],
         indirect_device_address: vk::DeviceAddress,
     ) {
         (self.fp.cmd_trace_rays_indirect_khr)(

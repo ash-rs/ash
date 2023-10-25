@@ -54,7 +54,7 @@ impl Synchronization2 {
     pub unsafe fn cmd_wait_events2(
         &self,
         command_buffer: vk::CommandBuffer,
-        events: &[vk::Event<'_>],
+        events: &[vk::Event],
         dependency_infos: &[vk::DependencyInfoKHR<'_>],
     ) {
         assert_eq!(events.len(), dependency_infos.len());

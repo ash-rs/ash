@@ -167,7 +167,7 @@ impl Device {
     pub unsafe fn cmd_wait_events2(
         &self,
         command_buffer: vk::CommandBuffer,
-        events: &[vk::Event<'_>],
+        events: &[vk::Event],
         dependency_infos: &[vk::DependencyInfo<'_>],
     ) {
         assert_eq!(events.len(), dependency_infos.len());
@@ -309,7 +309,7 @@ impl Device {
     pub unsafe fn cmd_set_viewport_with_count(
         &self,
         command_buffer: vk::CommandBuffer,
-        viewports: &[vk::Viewport<'_>],
+        viewports: &[vk::Viewport],
     ) {
         (self.device_fn_1_3.cmd_set_viewport_with_count)(
             command_buffer,
@@ -323,7 +323,7 @@ impl Device {
     pub unsafe fn cmd_set_scissor_with_count(
         &self,
         command_buffer: vk::CommandBuffer,
-        scissors: &[vk::Rect2D<'_>],
+        scissors: &[vk::Rect2D],
     ) {
         (self.device_fn_1_3.cmd_set_scissor_with_count)(
             command_buffer,
@@ -338,10 +338,10 @@ impl Device {
         &self,
         command_buffer: vk::CommandBuffer,
         first_binding: u32,
-        buffers: &[vk::Buffer<'_>],
-        offsets: &[vk::DeviceSize<'_>],
-        sizes: Option<&[vk::DeviceSize<'_>]>,
-        strides: Option<&[vk::DeviceSize<'_>]>,
+        buffers: &[vk::Buffer],
+        offsets: &[vk::DeviceSize],
+        sizes: Option<&[vk::DeviceSize]>,
+        strides: Option<&[vk::DeviceSize]>,
     ) {
         assert_eq!(offsets.len(), buffers.len());
         let p_sizes = if let Some(sizes) = sizes {
@@ -1013,7 +1013,7 @@ impl Device {
     pub unsafe fn free_command_buffers(
         &self,
         command_pool: vk::CommandPool,
-        command_buffers: &[vk::CommandBuffer<'_>],
+        command_buffers: &[vk::CommandBuffer],
     ) {
         (self.device_fn_1_0.free_command_buffers)(
             self.handle(),
@@ -1090,7 +1090,7 @@ impl Device {
     pub unsafe fn cmd_wait_events(
         &self,
         command_buffer: vk::CommandBuffer,
-        events: &[vk::Event<'_>],
+        events: &[vk::Event],
         src_stage_mask: vk::PipelineStageFlags,
         dst_stage_mask: vk::PipelineStageFlags,
         memory_barriers: &[vk::MemoryBarrier<'_>],
@@ -1329,7 +1329,7 @@ impl Device {
     pub unsafe fn free_descriptor_sets(
         &self,
         pool: vk::DescriptorPool,
-        descriptor_sets: &[vk::DescriptorSet<'_>],
+        descriptor_sets: &[vk::DescriptorSet],
     ) -> VkResult<()> {
         (self.device_fn_1_0.free_descriptor_sets)(
             self.handle(),
@@ -1382,7 +1382,7 @@ impl Device {
         src_image_layout: vk::ImageLayout,
         dst_image: vk::Image,
         dst_image_layout: vk::ImageLayout,
-        regions: &[vk::ImageBlit<'_>],
+        regions: &[vk::ImageBlit],
         filter: vk::Filter,
     ) {
         (self.device_fn_1_0.cmd_blit_image)(
@@ -1406,7 +1406,7 @@ impl Device {
         src_image_layout: vk::ImageLayout,
         dst_image: vk::Image,
         dst_image_layout: vk::ImageLayout,
-        regions: &[vk::ImageResolve<'_>],
+        regions: &[vk::ImageResolve],
     ) {
         (self.device_fn_1_0.cmd_resolve_image)(
             command_buffer,
@@ -1457,7 +1457,7 @@ impl Device {
         command_buffer: vk::CommandBuffer,
         src_buffer: vk::Buffer,
         dst_buffer: vk::Buffer,
-        regions: &[vk::BufferCopy<'_>],
+        regions: &[vk::BufferCopy],
     ) {
         (self.device_fn_1_0.cmd_copy_buffer)(
             command_buffer,
@@ -1476,7 +1476,7 @@ impl Device {
         src_image: vk::Image,
         src_image_layout: vk::ImageLayout,
         dst_buffer: vk::Buffer,
-        regions: &[vk::BufferImageCopy<'_>],
+        regions: &[vk::BufferImageCopy],
     ) {
         (self.device_fn_1_0.cmd_copy_image_to_buffer)(
             command_buffer,
@@ -1496,7 +1496,7 @@ impl Device {
         src_buffer: vk::Buffer,
         dst_image: vk::Image,
         dst_image_layout: vk::ImageLayout,
-        regions: &[vk::BufferImageCopy<'_>],
+        regions: &[vk::BufferImageCopy],
     ) {
         (self.device_fn_1_0.cmd_copy_buffer_to_image)(
             command_buffer,
@@ -1517,7 +1517,7 @@ impl Device {
         src_image_layout: vk::ImageLayout,
         dst_image: vk::Image,
         dst_image_layout: vk::ImageLayout,
-        regions: &[vk::ImageCopy<'_>],
+        regions: &[vk::ImageCopy],
     ) {
         (self.device_fn_1_0.cmd_copy_image)(
             command_buffer,
@@ -1620,7 +1620,7 @@ impl Device {
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkResetFences.html>
     #[inline]
-    pub unsafe fn reset_fences(&self, fences: &[vk::Fence<'_>]) -> VkResult<()> {
+    pub unsafe fn reset_fences(&self, fences: &[vk::Fence]) -> VkResult<()> {
         (self.device_fn_1_0.reset_fences)(self.handle(), fences.len() as u32, fences.as_ptr())
             .result()
     }
@@ -1644,8 +1644,8 @@ impl Device {
         command_buffer: vk::CommandBuffer,
         image: vk::Image,
         image_layout: vk::ImageLayout,
-        clear_color_value: &vk::ClearColorValue<'_>,
-        ranges: &[vk::ImageSubresourceRange<'_>],
+        clear_color_value: &vk::ClearColorValue,
+        ranges: &[vk::ImageSubresourceRange],
     ) {
         (self.device_fn_1_0.cmd_clear_color_image)(
             command_buffer,
@@ -1664,8 +1664,8 @@ impl Device {
         command_buffer: vk::CommandBuffer,
         image: vk::Image,
         image_layout: vk::ImageLayout,
-        clear_depth_stencil_value: &vk::ClearDepthStencilValue<'_>,
-        ranges: &[vk::ImageSubresourceRange<'_>],
+        clear_depth_stencil_value: &vk::ClearDepthStencilValue,
+        ranges: &[vk::ImageSubresourceRange],
     ) {
         (self.device_fn_1_0.cmd_clear_depth_stencil_image)(
             command_buffer,
@@ -1682,8 +1682,8 @@ impl Device {
     pub unsafe fn cmd_clear_attachments(
         &self,
         command_buffer: vk::CommandBuffer,
-        attachments: &[vk::ClearAttachment<'_>],
-        rects: &[vk::ClearRect<'_>],
+        attachments: &[vk::ClearAttachment],
+        rects: &[vk::ClearRect],
     ) {
         (self.device_fn_1_0.cmd_clear_attachments)(
             command_buffer,
@@ -1739,7 +1739,7 @@ impl Device {
     pub unsafe fn cmd_execute_commands(
         &self,
         primary_command_buffer: vk::CommandBuffer,
-        secondary_command_buffers: &[vk::CommandBuffer<'_>],
+        secondary_command_buffers: &[vk::CommandBuffer],
     ) {
         (self.device_fn_1_0.cmd_execute_commands)(
             primary_command_buffer,
@@ -1756,7 +1756,7 @@ impl Device {
         pipeline_bind_point: vk::PipelineBindPoint,
         layout: vk::PipelineLayout,
         first_set: u32,
-        descriptor_sets: &[vk::DescriptorSet<'_>],
+        descriptor_sets: &[vk::DescriptorSet],
         dynamic_offsets: &[u32],
     ) {
         (self.device_fn_1_0.cmd_bind_descriptor_sets)(
@@ -1854,7 +1854,7 @@ impl Device {
         &self,
         command_buffer: vk::CommandBuffer,
         first_scissor: u32,
-        scissors: &[vk::Rect2D<'_>],
+        scissors: &[vk::Rect2D],
     ) {
         (self.device_fn_1_0.cmd_set_scissor)(
             command_buffer,
@@ -1876,8 +1876,8 @@ impl Device {
         &self,
         command_buffer: vk::CommandBuffer,
         first_binding: u32,
-        buffers: &[vk::Buffer<'_>],
-        offsets: &[vk::DeviceSize<'_>],
+        buffers: &[vk::Buffer],
+        offsets: &[vk::DeviceSize],
     ) {
         debug_assert_eq!(buffers.len(), offsets.len());
         (self.device_fn_1_0.cmd_bind_vertex_buffers)(
@@ -1961,7 +1961,7 @@ impl Device {
         &self,
         command_buffer: vk::CommandBuffer,
         first_viewport: u32,
-        viewports: &[vk::Viewport<'_>],
+        viewports: &[vk::Viewport],
     ) {
         (self.device_fn_1_0.cmd_set_viewport)(
             command_buffer,
@@ -2253,7 +2253,7 @@ impl Device {
     pub unsafe fn merge_pipeline_caches(
         &self,
         dst_cache: vk::PipelineCache,
-        src_caches: &[vk::PipelineCache<'_>],
+        src_caches: &[vk::PipelineCache],
     ) -> VkResult<()> {
         (self.device_fn_1_0.merge_pipeline_caches)(
             self.handle(),
@@ -2405,7 +2405,7 @@ impl Device {
     #[inline]
     pub unsafe fn wait_for_fences(
         &self,
-        fences: &[vk::Fence<'_>],
+        fences: &[vk::Fence],
         wait_all: bool,
         timeout: u64,
     ) -> VkResult<()> {

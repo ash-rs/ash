@@ -89,7 +89,7 @@ impl ShaderEnqueue {
         &self,
         command_buffer: vk::CommandBuffer,
         scratch: vk::DeviceAddress,
-        count_info: &vk::DispatchGraphCountInfoAMDX<'_>,
+        count_info: &vk::DispatchGraphCountInfoAMDX,
     ) {
         (self.fp.cmd_dispatch_graph_amdx)(command_buffer, scratch, count_info)
     }
@@ -100,7 +100,7 @@ impl ShaderEnqueue {
         &self,
         command_buffer: vk::CommandBuffer,
         scratch: vk::DeviceAddress,
-        count_info: &vk::DispatchGraphCountInfoAMDX<'_>,
+        count_info: &vk::DispatchGraphCountInfoAMDX,
     ) {
         (self.fp.cmd_dispatch_graph_indirect_amdx)(command_buffer, scratch, count_info)
     }

@@ -58,7 +58,7 @@ impl AccelerationStructure {
         &self,
         command_buffer: vk::CommandBuffer,
         infos: &[vk::AccelerationStructureBuildGeometryInfoKHR<'_>],
-        build_range_infos: &[&[vk::AccelerationStructureBuildRangeInfoKHR<'_>]],
+        build_range_infos: &[&[vk::AccelerationStructureBuildRangeInfoKHR]],
     ) {
         assert_eq!(infos.len(), build_range_infos.len());
 
@@ -85,7 +85,7 @@ impl AccelerationStructure {
         &self,
         command_buffer: vk::CommandBuffer,
         infos: &[vk::AccelerationStructureBuildGeometryInfoKHR<'_>],
-        indirect_device_addresses: &[vk::DeviceAddress<'_>],
+        indirect_device_addresses: &[vk::DeviceAddress],
         indirect_strides: &[u32],
         max_primitive_counts: &[&[u32]],
     ) {
@@ -118,7 +118,7 @@ impl AccelerationStructure {
         &self,
         deferred_operation: vk::DeferredOperationKHR,
         infos: &[vk::AccelerationStructureBuildGeometryInfoKHR<'_>],
-        build_range_infos: &[&[vk::AccelerationStructureBuildRangeInfoKHR<'_>]],
+        build_range_infos: &[&[vk::AccelerationStructureBuildRangeInfoKHR]],
     ) -> VkResult<()> {
         assert_eq!(infos.len(), build_range_infos.len());
 
@@ -177,7 +177,7 @@ impl AccelerationStructure {
     #[inline]
     pub unsafe fn write_acceleration_structures_properties(
         &self,
-        acceleration_structures: &[vk::AccelerationStructureKHR<'_>],
+        acceleration_structures: &[vk::AccelerationStructureKHR],
         query_type: vk::QueryType,
         data: &mut [u8],
         stride: usize,
@@ -238,7 +238,7 @@ impl AccelerationStructure {
     pub unsafe fn cmd_write_acceleration_structures_properties(
         &self,
         command_buffer: vk::CommandBuffer,
-        structures: &[vk::AccelerationStructureKHR<'_>],
+        structures: &[vk::AccelerationStructureKHR],
         query_type: vk::QueryType,
         query_pool: vk::QueryPool,
         first_query: u32,

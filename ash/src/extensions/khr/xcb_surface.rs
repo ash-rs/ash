@@ -43,7 +43,7 @@ impl XcbSurface {
         &self,
         physical_device: vk::PhysicalDevice,
         queue_family_index: u32,
-        connection: &mut vk::xcb_connection_t<'_>,
+        connection: &mut vk::xcb_connection_t,
         visual_id: vk::xcb_visualid_t,
     ) -> bool {
         let b = (self.fp.get_physical_device_xcb_presentation_support_khr)(
