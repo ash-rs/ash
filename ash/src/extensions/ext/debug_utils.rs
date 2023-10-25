@@ -24,7 +24,7 @@ impl DebugUtils {
     pub unsafe fn set_debug_utils_object_name(
         &self,
         device: vk::Device,
-        name_info: &vk::DebugUtilsObjectNameInfoEXT,
+        name_info: &vk::DebugUtilsObjectNameInfoEXT<'_>,
     ) -> VkResult<()> {
         (self.fp.set_debug_utils_object_name_ext)(device, name_info).result()
     }
@@ -34,7 +34,7 @@ impl DebugUtils {
     pub unsafe fn set_debug_utils_object_tag(
         &self,
         device: vk::Device,
-        tag_info: &vk::DebugUtilsObjectTagInfoEXT,
+        tag_info: &vk::DebugUtilsObjectTagInfoEXT<'_>,
     ) -> VkResult<()> {
         (self.fp.set_debug_utils_object_tag_ext)(device, tag_info).result()
     }
@@ -44,7 +44,7 @@ impl DebugUtils {
     pub unsafe fn cmd_begin_debug_utils_label(
         &self,
         command_buffer: vk::CommandBuffer,
-        label: &vk::DebugUtilsLabelEXT,
+        label: &vk::DebugUtilsLabelEXT<'_>,
     ) {
         (self.fp.cmd_begin_debug_utils_label_ext)(command_buffer, label);
     }
@@ -60,7 +60,7 @@ impl DebugUtils {
     pub unsafe fn cmd_insert_debug_utils_label(
         &self,
         command_buffer: vk::CommandBuffer,
-        label: &vk::DebugUtilsLabelEXT,
+        label: &vk::DebugUtilsLabelEXT<'_>,
     ) {
         (self.fp.cmd_insert_debug_utils_label_ext)(command_buffer, label);
     }
@@ -70,7 +70,7 @@ impl DebugUtils {
     pub unsafe fn queue_begin_debug_utils_label(
         &self,
         queue: vk::Queue,
-        label: &vk::DebugUtilsLabelEXT,
+        label: &vk::DebugUtilsLabelEXT<'_>,
     ) {
         (self.fp.queue_begin_debug_utils_label_ext)(queue, label);
     }
@@ -86,7 +86,7 @@ impl DebugUtils {
     pub unsafe fn queue_insert_debug_utils_label(
         &self,
         queue: vk::Queue,
-        label: &vk::DebugUtilsLabelEXT,
+        label: &vk::DebugUtilsLabelEXT<'_>,
     ) {
         (self.fp.queue_insert_debug_utils_label_ext)(queue, label);
     }
@@ -95,8 +95,8 @@ impl DebugUtils {
     #[inline]
     pub unsafe fn create_debug_utils_messenger(
         &self,
-        create_info: &vk::DebugUtilsMessengerCreateInfoEXT,
-        allocator: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::DebugUtilsMessengerCreateInfoEXT<'_>,
+        allocator: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::DebugUtilsMessengerEXT> {
         let mut messenger = mem::zeroed();
         (self.fp.create_debug_utils_messenger_ext)(
@@ -113,7 +113,7 @@ impl DebugUtils {
     pub unsafe fn destroy_debug_utils_messenger(
         &self,
         messenger: vk::DebugUtilsMessengerEXT,
-        allocator: Option<&vk::AllocationCallbacks>,
+        allocator: Option<&vk::AllocationCallbacks<'_>>,
     ) {
         (self.fp.destroy_debug_utils_messenger_ext)(self.handle, messenger, allocator.as_raw_ptr());
     }
@@ -124,7 +124,7 @@ impl DebugUtils {
         &self,
         message_severity: vk::DebugUtilsMessageSeverityFlagsEXT,
         message_types: vk::DebugUtilsMessageTypeFlagsEXT,
-        callback_data: &vk::DebugUtilsMessengerCallbackDataEXT,
+        callback_data: &vk::DebugUtilsMessengerCallbackDataEXT<'_>,
     ) {
         (self.fp.submit_debug_utils_message_ext)(
             self.handle,

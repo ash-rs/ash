@@ -88,7 +88,7 @@ impl Surface {
     pub unsafe fn destroy_surface(
         &self,
         surface: vk::SurfaceKHR,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) {
         (self.fp.destroy_surface_khr)(self.handle, surface, allocation_callbacks.as_raw_ptr());
     }

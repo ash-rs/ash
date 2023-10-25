@@ -26,8 +26,8 @@ impl ShaderEnqueue {
     pub unsafe fn create_execution_graph_pipelines(
         &self,
         pipeline_cache: vk::PipelineCache,
-        create_infos: &[vk::ExecutionGraphPipelineCreateInfoAMDX],
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_infos: &[vk::ExecutionGraphPipelineCreateInfoAMDX<'_>],
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<Vec<vk::Pipeline>> {
         let mut pipelines = vec![mem::zeroed(); create_infos.len()];
         (self.fp.create_execution_graph_pipelines_amdx)(
@@ -46,7 +46,7 @@ impl ShaderEnqueue {
     pub unsafe fn get_execution_graph_pipeline_scratch_size(
         &self,
         execution_graph: vk::Pipeline,
-        size_info: &mut vk::ExecutionGraphPipelineScratchSizeAMDX,
+        size_info: &mut vk::ExecutionGraphPipelineScratchSizeAMDX<'_>,
     ) -> VkResult<()> {
         (self.fp.get_execution_graph_pipeline_scratch_size_amdx)(
             self.handle,
@@ -61,7 +61,7 @@ impl ShaderEnqueue {
     pub unsafe fn get_execution_graph_pipeline_node_index(
         &self,
         execution_graph: vk::Pipeline,
-        node_info: &vk::PipelineShaderStageNodeCreateInfoAMDX,
+        node_info: &vk::PipelineShaderStageNodeCreateInfoAMDX<'_>,
     ) -> VkResult<u32> {
         let mut node_index = 0;
         (self.fp.get_execution_graph_pipeline_node_index_amdx)(
@@ -89,7 +89,7 @@ impl ShaderEnqueue {
         &self,
         command_buffer: vk::CommandBuffer,
         scratch: vk::DeviceAddress,
-        count_info: &vk::DispatchGraphCountInfoAMDX,
+        count_info: &vk::DispatchGraphCountInfoAMDX<'_>,
     ) {
         (self.fp.cmd_dispatch_graph_amdx)(command_buffer, scratch, count_info)
     }
@@ -100,7 +100,7 @@ impl ShaderEnqueue {
         &self,
         command_buffer: vk::CommandBuffer,
         scratch: vk::DeviceAddress,
-        count_info: &vk::DispatchGraphCountInfoAMDX,
+        count_info: &vk::DispatchGraphCountInfoAMDX<'_>,
     ) {
         (self.fp.cmd_dispatch_graph_indirect_amdx)(command_buffer, scratch, count_info)
     }

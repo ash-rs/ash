@@ -25,8 +25,8 @@ impl AccelerationStructure {
     #[inline]
     pub unsafe fn create_acceleration_structure(
         &self,
-        create_info: &vk::AccelerationStructureCreateInfoKHR,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::AccelerationStructureCreateInfoKHR<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::AccelerationStructureKHR> {
         let mut accel_struct = mem::zeroed();
         (self.fp.create_acceleration_structure_khr)(
@@ -43,7 +43,7 @@ impl AccelerationStructure {
     pub unsafe fn destroy_acceleration_structure(
         &self,
         accel_struct: vk::AccelerationStructureKHR,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) {
         (self.fp.destroy_acceleration_structure_khr)(
             self.handle,
@@ -57,8 +57,8 @@ impl AccelerationStructure {
     pub unsafe fn cmd_build_acceleration_structures(
         &self,
         command_buffer: vk::CommandBuffer,
-        infos: &[vk::AccelerationStructureBuildGeometryInfoKHR],
-        build_range_infos: &[&[vk::AccelerationStructureBuildRangeInfoKHR]],
+        infos: &[vk::AccelerationStructureBuildGeometryInfoKHR<'_>],
+        build_range_infos: &[&[vk::AccelerationStructureBuildRangeInfoKHR<'_>]],
     ) {
         assert_eq!(infos.len(), build_range_infos.len());
 
@@ -84,8 +84,8 @@ impl AccelerationStructure {
     pub unsafe fn cmd_build_acceleration_structures_indirect(
         &self,
         command_buffer: vk::CommandBuffer,
-        infos: &[vk::AccelerationStructureBuildGeometryInfoKHR],
-        indirect_device_addresses: &[vk::DeviceAddress],
+        infos: &[vk::AccelerationStructureBuildGeometryInfoKHR<'_>],
+        indirect_device_addresses: &[vk::DeviceAddress<'_>],
         indirect_strides: &[u32],
         max_primitive_counts: &[&[u32]],
     ) {
@@ -117,8 +117,8 @@ impl AccelerationStructure {
     pub unsafe fn build_acceleration_structures(
         &self,
         deferred_operation: vk::DeferredOperationKHR,
-        infos: &[vk::AccelerationStructureBuildGeometryInfoKHR],
-        build_range_infos: &[&[vk::AccelerationStructureBuildRangeInfoKHR]],
+        infos: &[vk::AccelerationStructureBuildGeometryInfoKHR<'_>],
+        build_range_infos: &[&[vk::AccelerationStructureBuildRangeInfoKHR<'_>]],
     ) -> VkResult<()> {
         assert_eq!(infos.len(), build_range_infos.len());
 
@@ -146,7 +146,7 @@ impl AccelerationStructure {
     pub unsafe fn copy_acceleration_structure(
         &self,
         deferred_operation: vk::DeferredOperationKHR,
-        info: &vk::CopyAccelerationStructureInfoKHR,
+        info: &vk::CopyAccelerationStructureInfoKHR<'_>,
     ) -> VkResult<()> {
         (self.fp.copy_acceleration_structure_khr)(self.handle, deferred_operation, info).result()
     }
@@ -156,7 +156,7 @@ impl AccelerationStructure {
     pub unsafe fn copy_acceleration_structure_to_memory(
         &self,
         deferred_operation: vk::DeferredOperationKHR,
-        info: &vk::CopyAccelerationStructureToMemoryInfoKHR,
+        info: &vk::CopyAccelerationStructureToMemoryInfoKHR<'_>,
     ) -> VkResult<()> {
         (self.fp.copy_acceleration_structure_to_memory_khr)(self.handle, deferred_operation, info)
             .result()
@@ -167,7 +167,7 @@ impl AccelerationStructure {
     pub unsafe fn copy_memory_to_acceleration_structure(
         &self,
         deferred_operation: vk::DeferredOperationKHR,
-        info: &vk::CopyMemoryToAccelerationStructureInfoKHR,
+        info: &vk::CopyMemoryToAccelerationStructureInfoKHR<'_>,
     ) -> VkResult<()> {
         (self.fp.copy_memory_to_acceleration_structure_khr)(self.handle, deferred_operation, info)
             .result()
@@ -177,7 +177,7 @@ impl AccelerationStructure {
     #[inline]
     pub unsafe fn write_acceleration_structures_properties(
         &self,
-        acceleration_structures: &[vk::AccelerationStructureKHR],
+        acceleration_structures: &[vk::AccelerationStructureKHR<'_>],
         query_type: vk::QueryType,
         data: &mut [u8],
         stride: usize,
@@ -199,7 +199,7 @@ impl AccelerationStructure {
     pub unsafe fn cmd_copy_acceleration_structure(
         &self,
         command_buffer: vk::CommandBuffer,
-        info: &vk::CopyAccelerationStructureInfoKHR,
+        info: &vk::CopyAccelerationStructureInfoKHR<'_>,
     ) {
         (self.fp.cmd_copy_acceleration_structure_khr)(command_buffer, info);
     }
@@ -209,7 +209,7 @@ impl AccelerationStructure {
     pub unsafe fn cmd_copy_acceleration_structure_to_memory(
         &self,
         command_buffer: vk::CommandBuffer,
-        info: &vk::CopyAccelerationStructureToMemoryInfoKHR,
+        info: &vk::CopyAccelerationStructureToMemoryInfoKHR<'_>,
     ) {
         (self.fp.cmd_copy_acceleration_structure_to_memory_khr)(command_buffer, info);
     }
@@ -219,7 +219,7 @@ impl AccelerationStructure {
     pub unsafe fn cmd_copy_memory_to_acceleration_structure(
         &self,
         command_buffer: vk::CommandBuffer,
-        info: &vk::CopyMemoryToAccelerationStructureInfoKHR,
+        info: &vk::CopyMemoryToAccelerationStructureInfoKHR<'_>,
     ) {
         (self.fp.cmd_copy_memory_to_acceleration_structure_khr)(command_buffer, info);
     }
@@ -228,7 +228,7 @@ impl AccelerationStructure {
     #[inline]
     pub unsafe fn get_acceleration_structure_device_address(
         &self,
-        info: &vk::AccelerationStructureDeviceAddressInfoKHR,
+        info: &vk::AccelerationStructureDeviceAddressInfoKHR<'_>,
     ) -> vk::DeviceAddress {
         (self.fp.get_acceleration_structure_device_address_khr)(self.handle, info)
     }
@@ -238,7 +238,7 @@ impl AccelerationStructure {
     pub unsafe fn cmd_write_acceleration_structures_properties(
         &self,
         command_buffer: vk::CommandBuffer,
-        structures: &[vk::AccelerationStructureKHR],
+        structures: &[vk::AccelerationStructureKHR<'_>],
         query_type: vk::QueryType,
         query_pool: vk::QueryPool,
         first_query: u32,
@@ -257,7 +257,7 @@ impl AccelerationStructure {
     #[inline]
     pub unsafe fn get_device_acceleration_structure_compatibility(
         &self,
-        version: &vk::AccelerationStructureVersionInfoKHR,
+        version: &vk::AccelerationStructureVersionInfoKHR<'_>,
     ) -> vk::AccelerationStructureCompatibilityKHR {
         let mut compatibility = mem::zeroed();
 
@@ -275,9 +275,9 @@ impl AccelerationStructure {
     pub unsafe fn get_acceleration_structure_build_sizes(
         &self,
         build_type: vk::AccelerationStructureBuildTypeKHR,
-        build_info: &vk::AccelerationStructureBuildGeometryInfoKHR,
+        build_info: &vk::AccelerationStructureBuildGeometryInfoKHR<'_>,
         max_primitive_counts: &[u32],
-        size_info: &mut vk::AccelerationStructureBuildSizesInfoKHR,
+        size_info: &mut vk::AccelerationStructureBuildSizesInfoKHR<'_>,
     ) {
         assert_eq!(max_primitive_counts.len(), build_info.geometry_count as _);
 

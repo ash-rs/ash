@@ -25,7 +25,7 @@ impl ExternalMemoryWin32 {
     #[inline]
     pub unsafe fn get_memory_win32_handle(
         &self,
-        create_info: &vk::MemoryGetWin32HandleInfoKHR,
+        create_info: &vk::MemoryGetWin32HandleInfoKHR<'_>,
     ) -> VkResult<vk::HANDLE> {
         let mut handle = MaybeUninit::uninit();
         (self.fp.get_memory_win32_handle_khr)(self.handle, create_info, handle.as_mut_ptr())
@@ -38,7 +38,7 @@ impl ExternalMemoryWin32 {
         &self,
         handle_type: vk::ExternalMemoryHandleTypeFlags,
         handle: vk::HANDLE,
-        memory_win32_handle_properties: &mut vk::MemoryWin32HandlePropertiesKHR,
+        memory_win32_handle_properties: &mut vk::MemoryWin32HandlePropertiesKHR<'_>,
     ) -> VkResult<()> {
         (self.fp.get_memory_win32_handle_properties_khr)(
             self.handle,

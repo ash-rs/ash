@@ -31,7 +31,7 @@ impl TimelineSemaphore {
     #[inline]
     pub unsafe fn wait_semaphores(
         &self,
-        wait_info: &vk::SemaphoreWaitInfo,
+        wait_info: &vk::SemaphoreWaitInfo<'_>,
         timeout: u64,
     ) -> VkResult<()> {
         (self.fp.wait_semaphores_khr)(self.handle, wait_info, timeout).result()
@@ -39,7 +39,10 @@ impl TimelineSemaphore {
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkSignalSemaphore.html>
     #[inline]
-    pub unsafe fn signal_semaphore(&self, signal_info: &vk::SemaphoreSignalInfo) -> VkResult<()> {
+    pub unsafe fn signal_semaphore(
+        &self,
+        signal_info: &vk::SemaphoreSignalInfo<'_>,
+    ) -> VkResult<()> {
         (self.fp.signal_semaphore_khr)(self.handle, signal_info).result()
     }
 

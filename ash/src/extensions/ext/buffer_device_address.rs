@@ -22,7 +22,7 @@ impl BufferDeviceAddress {
     #[inline]
     pub unsafe fn get_buffer_device_address(
         &self,
-        info: &vk::BufferDeviceAddressInfoEXT,
+        info: &vk::BufferDeviceAddressInfoEXT<'_>,
     ) -> vk::DeviceAddress {
         (self.fp.get_buffer_device_address_ext)(self.handle, info)
     }

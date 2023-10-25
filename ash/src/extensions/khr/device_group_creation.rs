@@ -40,7 +40,7 @@ impl DeviceGroupCreation {
     #[inline]
     pub unsafe fn enumerate_physical_device_groups(
         &self,
-        out: &mut [vk::PhysicalDeviceGroupProperties],
+        out: &mut [vk::PhysicalDeviceGroupProperties<'_>],
     ) -> VkResult<()> {
         let mut count = out.len() as u32;
         (self.fp.enumerate_physical_device_groups_khr)(self.handle, &mut count, out.as_mut_ptr())

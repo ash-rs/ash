@@ -24,8 +24,8 @@ impl MetalSurface {
     #[inline]
     pub unsafe fn create_metal_surface(
         &self,
-        create_info: &vk::MetalSurfaceCreateInfoEXT,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::MetalSurfaceCreateInfoEXT<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::zeroed();
         (self.fp.create_metal_surface_ext)(

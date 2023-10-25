@@ -24,8 +24,8 @@ impl WaylandSurface {
     #[inline]
     pub unsafe fn create_wayland_surface(
         &self,
-        create_info: &vk::WaylandSurfaceCreateInfoKHR,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::WaylandSurfaceCreateInfoKHR<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::zeroed();
         (self.fp.create_wayland_surface_khr)(
@@ -43,7 +43,7 @@ impl WaylandSurface {
         &self,
         physical_device: vk::PhysicalDevice,
         queue_family_index: u32,
-        wl_display: &mut vk::wl_display,
+        wl_display: &mut vk::wl_display<'_>,
     ) -> bool {
         let b = (self.fp.get_physical_device_wayland_presentation_support_khr)(
             physical_device,

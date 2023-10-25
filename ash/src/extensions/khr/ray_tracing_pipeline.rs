@@ -25,10 +25,10 @@ impl RayTracingPipeline {
     pub unsafe fn cmd_trace_rays(
         &self,
         command_buffer: vk::CommandBuffer,
-        raygen_shader_binding_tables: &vk::StridedDeviceAddressRegionKHR,
-        miss_shader_binding_tables: &vk::StridedDeviceAddressRegionKHR,
-        hit_shader_binding_tables: &vk::StridedDeviceAddressRegionKHR,
-        callable_shader_binding_tables: &vk::StridedDeviceAddressRegionKHR,
+        raygen_shader_binding_tables: &vk::StridedDeviceAddressRegionKHR<'_>,
+        miss_shader_binding_tables: &vk::StridedDeviceAddressRegionKHR<'_>,
+        hit_shader_binding_tables: &vk::StridedDeviceAddressRegionKHR<'_>,
+        callable_shader_binding_tables: &vk::StridedDeviceAddressRegionKHR<'_>,
         width: u32,
         height: u32,
         depth: u32,
@@ -51,8 +51,8 @@ impl RayTracingPipeline {
         &self,
         deferred_operation: vk::DeferredOperationKHR,
         pipeline_cache: vk::PipelineCache,
-        create_info: &[vk::RayTracingPipelineCreateInfoKHR],
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &[vk::RayTracingPipelineCreateInfoKHR<'_>],
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<Vec<vk::Pipeline>> {
         let mut pipelines = vec![mem::zeroed(); create_info.len()];
         (self.fp.create_ray_tracing_pipelines_khr)(
@@ -122,10 +122,10 @@ impl RayTracingPipeline {
     pub unsafe fn cmd_trace_rays_indirect(
         &self,
         command_buffer: vk::CommandBuffer,
-        raygen_shader_binding_table: &[vk::StridedDeviceAddressRegionKHR],
-        miss_shader_binding_table: &[vk::StridedDeviceAddressRegionKHR],
-        hit_shader_binding_table: &[vk::StridedDeviceAddressRegionKHR],
-        callable_shader_binding_table: &[vk::StridedDeviceAddressRegionKHR],
+        raygen_shader_binding_table: &[vk::StridedDeviceAddressRegionKHR<'_>],
+        miss_shader_binding_table: &[vk::StridedDeviceAddressRegionKHR<'_>],
+        hit_shader_binding_table: &[vk::StridedDeviceAddressRegionKHR<'_>],
+        callable_shader_binding_table: &[vk::StridedDeviceAddressRegionKHR<'_>],
         indirect_device_address: vk::DeviceAddress,
     ) {
         (self.fp.cmd_trace_rays_indirect_khr)(

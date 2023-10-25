@@ -24,8 +24,8 @@ impl MacOSSurface {
     #[inline]
     pub unsafe fn create_mac_os_surface(
         &self,
-        create_info: &vk::MacOSSurfaceCreateInfoMVK,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::MacOSSurfaceCreateInfoMVK<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::zeroed();
         (self.fp.create_mac_os_surface_mvk)(

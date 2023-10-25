@@ -25,7 +25,7 @@ impl ExternalFenceWin32 {
     #[inline]
     pub unsafe fn import_fence_win32_handle(
         &self,
-        import_info: &vk::ImportFenceWin32HandleInfoKHR,
+        import_info: &vk::ImportFenceWin32HandleInfoKHR<'_>,
     ) -> VkResult<()> {
         (self.fp.import_fence_win32_handle_khr)(self.handle, import_info).result()
     }
@@ -34,7 +34,7 @@ impl ExternalFenceWin32 {
     #[inline]
     pub unsafe fn get_fence_win32_handle(
         &self,
-        get_info: &vk::FenceGetWin32HandleInfoKHR,
+        get_info: &vk::FenceGetWin32HandleInfoKHR<'_>,
     ) -> VkResult<vk::HANDLE> {
         let mut handle = MaybeUninit::uninit();
         (self.fp.get_fence_win32_handle_khr)(self.handle, get_info, handle.as_mut_ptr())

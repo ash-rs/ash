@@ -26,8 +26,8 @@ impl Swapchain {
     #[inline]
     pub unsafe fn create_swapchain(
         &self,
-        create_info: &vk::SwapchainCreateInfoKHR,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::SwapchainCreateInfoKHR<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::SwapchainKHR> {
         let mut swapchain = mem::zeroed();
         (self.fp.create_swapchain_khr)(
@@ -44,7 +44,7 @@ impl Swapchain {
     pub unsafe fn destroy_swapchain(
         &self,
         swapchain: vk::SwapchainKHR,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) {
         (self.fp.destroy_swapchain_khr)(self.handle, swapchain, allocation_callbacks.as_raw_ptr());
     }
@@ -94,7 +94,7 @@ impl Swapchain {
     pub unsafe fn queue_present(
         &self,
         queue: vk::Queue,
-        present_info: &vk::PresentInfoKHR,
+        present_info: &vk::PresentInfoKHR<'_>,
     ) -> VkResult<bool> {
         let err_code = (self.fp.queue_present_khr)(queue, present_info);
         match err_code {
@@ -116,7 +116,7 @@ impl Swapchain {
     #[inline]
     pub unsafe fn get_device_group_present_capabilities(
         &self,
-        device_group_present_capabilities: &mut vk::DeviceGroupPresentCapabilitiesKHR,
+        device_group_present_capabilities: &mut vk::DeviceGroupPresentCapabilitiesKHR<'_>,
     ) -> VkResult<()> {
         (self.fp.get_device_group_present_capabilities_khr)(
             self.handle,
@@ -183,7 +183,7 @@ impl Swapchain {
     #[inline]
     pub unsafe fn acquire_next_image2(
         &self,
-        acquire_info: &vk::AcquireNextImageInfoKHR,
+        acquire_info: &vk::AcquireNextImageInfoKHR<'_>,
     ) -> VkResult<(u32, bool)> {
         let mut index = 0;
         let err_code = (self.fp.acquire_next_image2_khr)(self.handle, acquire_info, &mut index);

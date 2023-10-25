@@ -24,8 +24,8 @@ impl DisplaySwapchain {
     #[inline]
     pub unsafe fn create_shared_swapchains(
         &self,
-        create_infos: &[vk::SwapchainCreateInfoKHR],
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_infos: &[vk::SwapchainCreateInfoKHR<'_>],
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<Vec<vk::SwapchainKHR>> {
         let mut swapchains = Vec::with_capacity(create_infos.len());
         (self.fp.create_shared_swapchains_khr)(

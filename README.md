@@ -33,8 +33,8 @@ The Vulkan Video bindings are experimental and still seeing breaking changes in 
 ```rust
 // function signature
 pub fn create_instance(&self,
-                       create_info: &vk::InstanceCreateInfo,
-                       allocation_callbacks: Option<&vk::AllocationCallbacks>)
+                       create_info: &vk::InstanceCreateInfo<'_>,
+                       allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>)
                        -> Result<Instance, InstanceError> { .. }
 let instance = entry.create_instance(&create_info, None)
     .expect("Instance creation error");
@@ -59,9 +59,9 @@ pub fn cmd_pipeline_barrier(&self,
                             src_stage_mask: vk::PipelineStageFlags,
                             dst_stage_mask: vk::PipelineStageFlags,
                             dependency_flags: vk::DependencyFlags,
-                            memory_barriers: &[vk::MemoryBarrier],
-                            buffer_memory_barriers: &[vk::BufferMemoryBarrier],
-                            image_memory_barriers: &[vk::ImageMemoryBarrier]);
+                            memory_barriers: &[vk::MemoryBarrier<'_>],
+                            buffer_memory_barriers: &[vk::BufferMemoryBarrier<'_>],
+                            image_memory_barriers: &[vk::ImageMemoryBarrier<'_>]);
 ```
 
 ### Strongly typed handles
@@ -181,7 +181,7 @@ Handles from Instance or Device are passed implicitly.
 
 ```rust
 pub fn create_command_pool(&self,
-                           create_info: &vk::CommandPoolCreateInfo)
+                           create_info: &vk::CommandPoolCreateInfo<'_>)
                            -> VkResult<vk::CommandPool>;
 
 let pool = device.create_command_pool(&pool_create_info).unwrap();

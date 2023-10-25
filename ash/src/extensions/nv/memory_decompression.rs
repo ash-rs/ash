@@ -20,7 +20,7 @@ impl MemoryDecompression {
     pub unsafe fn cmd_decompress_memory(
         &self,
         command_buffer: vk::CommandBuffer,
-        decompress_memory_regions: &[vk::DecompressMemoryRegionNV],
+        decompress_memory_regions: &[vk::DecompressMemoryRegionNV<'_>],
     ) {
         (self.fp.cmd_decompress_memory_nv)(
             command_buffer,

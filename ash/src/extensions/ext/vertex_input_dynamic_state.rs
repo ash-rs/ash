@@ -22,8 +22,8 @@ impl VertexInputDynamicState {
     pub unsafe fn cmd_set_vertex_input(
         &self,
         command_buffer: vk::CommandBuffer,
-        vertex_binding_descriptions: &[vk::VertexInputBindingDescription2EXT],
-        vertex_attribute_descriptions: &[vk::VertexInputAttributeDescription2EXT],
+        vertex_binding_descriptions: &[vk::VertexInputBindingDescription2EXT<'_>],
+        vertex_attribute_descriptions: &[vk::VertexInputAttributeDescription2EXT<'_>],
     ) {
         (self.fp.cmd_set_vertex_input_ext)(
             command_buffer,

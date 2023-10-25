@@ -25,7 +25,7 @@ impl ImageDrmFormatModifier {
     pub unsafe fn get_image_drm_format_modifier_properties(
         &self,
         image: vk::Image,
-        properties: &mut vk::ImageDrmFormatModifierPropertiesEXT,
+        properties: &mut vk::ImageDrmFormatModifierPropertiesEXT<'_>,
     ) -> VkResult<()> {
         (self.fp.get_image_drm_format_modifier_properties_ext)(self.handle, image, properties)
             .result()

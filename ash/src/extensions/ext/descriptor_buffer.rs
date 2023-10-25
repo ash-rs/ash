@@ -52,7 +52,7 @@ impl DescriptorBuffer {
     #[inline]
     pub unsafe fn get_descriptor(
         &self,
-        descriptor_info: &vk::DescriptorGetInfoEXT,
+        descriptor_info: &vk::DescriptorGetInfoEXT<'_>,
         descriptor: &mut [u8],
     ) {
         (self.fp.get_descriptor_ext)(
@@ -68,7 +68,7 @@ impl DescriptorBuffer {
     pub unsafe fn cmd_bind_descriptor_buffers(
         &self,
         command_buffer: vk::CommandBuffer,
-        binding_info: &[vk::DescriptorBufferBindingInfoEXT],
+        binding_info: &[vk::DescriptorBufferBindingInfoEXT<'_>],
     ) {
         (self.fp.cmd_bind_descriptor_buffers_ext)(
             command_buffer,
@@ -86,7 +86,7 @@ impl DescriptorBuffer {
         layout: vk::PipelineLayout,
         first_set: u32,
         buffer_indices: &[u32],
-        offsets: &[vk::DeviceSize],
+        offsets: &[vk::DeviceSize<'_>],
     ) {
         assert_eq!(buffer_indices.len(), offsets.len());
         (self.fp.cmd_set_descriptor_buffer_offsets_ext)(
@@ -121,7 +121,7 @@ impl DescriptorBuffer {
     #[inline]
     pub unsafe fn get_buffer_opaque_capture_descriptor_data(
         &self,
-        info: &vk::BufferCaptureDescriptorDataInfoEXT,
+        info: &vk::BufferCaptureDescriptorDataInfoEXT<'_>,
         data: &mut [u8],
     ) -> VkResult<()> {
         (self.fp.get_buffer_opaque_capture_descriptor_data_ext)(
@@ -136,7 +136,7 @@ impl DescriptorBuffer {
     #[inline]
     pub unsafe fn get_image_opaque_capture_descriptor_data(
         &self,
-        info: &vk::ImageCaptureDescriptorDataInfoEXT,
+        info: &vk::ImageCaptureDescriptorDataInfoEXT<'_>,
         data: &mut [u8],
     ) -> VkResult<()> {
         (self.fp.get_image_opaque_capture_descriptor_data_ext)(
@@ -151,7 +151,7 @@ impl DescriptorBuffer {
     #[inline]
     pub unsafe fn get_image_view_opaque_capture_descriptor_data(
         &self,
-        info: &vk::ImageViewCaptureDescriptorDataInfoEXT,
+        info: &vk::ImageViewCaptureDescriptorDataInfoEXT<'_>,
         data: &mut [u8],
     ) -> VkResult<()> {
         (self.fp.get_image_view_opaque_capture_descriptor_data_ext)(
@@ -166,7 +166,7 @@ impl DescriptorBuffer {
     #[inline]
     pub unsafe fn get_sampler_opaque_capture_descriptor_data(
         &self,
-        info: &vk::SamplerCaptureDescriptorDataInfoEXT,
+        info: &vk::SamplerCaptureDescriptorDataInfoEXT<'_>,
         data: &mut [u8],
     ) -> VkResult<()> {
         (self.fp.get_sampler_opaque_capture_descriptor_data_ext)(
@@ -181,7 +181,7 @@ impl DescriptorBuffer {
     #[inline]
     pub unsafe fn get_acceleration_structure_opaque_capture_descriptor_data(
         &self,
-        info: &vk::AccelerationStructureCaptureDescriptorDataInfoEXT,
+        info: &vk::AccelerationStructureCaptureDescriptorDataInfoEXT<'_>,
         data: &mut [u8],
     ) -> VkResult<()> {
         (self

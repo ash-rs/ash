@@ -52,7 +52,7 @@ impl ExtendedDynamicState {
     pub unsafe fn cmd_set_viewport_with_count(
         &self,
         command_buffer: vk::CommandBuffer,
-        viewports: &[vk::Viewport],
+        viewports: &[vk::Viewport<'_>],
     ) {
         (self.fp.cmd_set_viewport_with_count_ext)(
             command_buffer,
@@ -66,7 +66,7 @@ impl ExtendedDynamicState {
     pub unsafe fn cmd_set_scissor_with_count(
         &self,
         command_buffer: vk::CommandBuffer,
-        scissors: &[vk::Rect2D],
+        scissors: &[vk::Rect2D<'_>],
     ) {
         (self.fp.cmd_set_scissor_with_count_ext)(
             command_buffer,
@@ -81,10 +81,10 @@ impl ExtendedDynamicState {
         &self,
         command_buffer: vk::CommandBuffer,
         first_binding: u32,
-        buffers: &[vk::Buffer],
-        offsets: &[vk::DeviceSize],
-        sizes: Option<&[vk::DeviceSize]>,
-        strides: Option<&[vk::DeviceSize]>,
+        buffers: &[vk::Buffer<'_>],
+        offsets: &[vk::DeviceSize<'_>],
+        sizes: Option<&[vk::DeviceSize<'_>]>,
+        strides: Option<&[vk::DeviceSize<'_>]>,
     ) {
         assert_eq!(offsets.len(), buffers.len());
         let p_sizes = if let Some(sizes) = sizes {

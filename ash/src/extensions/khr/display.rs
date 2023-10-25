@@ -77,8 +77,8 @@ impl Display {
         &self,
         physical_device: vk::PhysicalDevice,
         display: vk::DisplayKHR,
-        create_info: &vk::DisplayModeCreateInfoKHR,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::DisplayModeCreateInfoKHR<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::DisplayModeKHR> {
         let mut display_mode = mem::MaybeUninit::zeroed();
         (self.fp.create_display_mode_khr)(
@@ -113,8 +113,8 @@ impl Display {
     #[inline]
     pub unsafe fn create_display_plane_surface(
         &self,
-        create_info: &vk::DisplaySurfaceCreateInfoKHR,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::DisplaySurfaceCreateInfoKHR<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::MaybeUninit::zeroed();
         (self.fp.create_display_plane_surface_khr)(

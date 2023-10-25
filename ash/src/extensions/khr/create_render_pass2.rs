@@ -24,8 +24,8 @@ impl CreateRenderPass2 {
     #[inline]
     pub unsafe fn create_render_pass2(
         &self,
-        create_info: &vk::RenderPassCreateInfo2,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::RenderPassCreateInfo2<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::RenderPass> {
         let mut renderpass = mem::zeroed();
         (self.fp.create_render_pass2_khr)(
@@ -42,8 +42,8 @@ impl CreateRenderPass2 {
     pub unsafe fn cmd_begin_render_pass2(
         &self,
         command_buffer: vk::CommandBuffer,
-        render_pass_begin_info: &vk::RenderPassBeginInfo,
-        subpass_begin_info: &vk::SubpassBeginInfo,
+        render_pass_begin_info: &vk::RenderPassBeginInfo<'_>,
+        subpass_begin_info: &vk::SubpassBeginInfo<'_>,
     ) {
         (self.fp.cmd_begin_render_pass2_khr)(
             command_buffer,
@@ -57,8 +57,8 @@ impl CreateRenderPass2 {
     pub unsafe fn cmd_next_subpass2(
         &self,
         command_buffer: vk::CommandBuffer,
-        subpass_begin_info: &vk::SubpassBeginInfo,
-        subpass_end_info: &vk::SubpassEndInfo,
+        subpass_begin_info: &vk::SubpassBeginInfo<'_>,
+        subpass_end_info: &vk::SubpassEndInfo<'_>,
     ) {
         (self.fp.cmd_next_subpass2_khr)(command_buffer, subpass_begin_info, subpass_end_info);
     }
@@ -68,7 +68,7 @@ impl CreateRenderPass2 {
     pub unsafe fn cmd_end_render_pass2(
         &self,
         command_buffer: vk::CommandBuffer,
-        subpass_end_info: &vk::SubpassEndInfo,
+        subpass_end_info: &vk::SubpassEndInfo<'_>,
     ) {
         (self.fp.cmd_end_render_pass2_khr)(command_buffer, subpass_end_info);
     }

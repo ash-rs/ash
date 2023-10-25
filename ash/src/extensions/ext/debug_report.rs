@@ -25,7 +25,7 @@ impl DebugReport {
     pub unsafe fn destroy_debug_report_callback(
         &self,
         debug: vk::DebugReportCallbackEXT,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) {
         (self.fp.destroy_debug_report_callback_ext)(
             self.handle,
@@ -38,8 +38,8 @@ impl DebugReport {
     #[inline]
     pub unsafe fn create_debug_report_callback(
         &self,
-        create_info: &vk::DebugReportCallbackCreateInfoEXT,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::DebugReportCallbackCreateInfoEXT<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::DebugReportCallbackEXT> {
         let mut debug_cb = mem::zeroed();
         (self.fp.create_debug_report_callback_ext)(

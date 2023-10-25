@@ -25,7 +25,7 @@ impl PushDescriptor {
         pipeline_bind_point: vk::PipelineBindPoint,
         layout: vk::PipelineLayout,
         set: u32,
-        descriptor_writes: &[vk::WriteDescriptorSet],
+        descriptor_writes: &[vk::WriteDescriptorSet<'_>],
     ) {
         (self.fp.cmd_push_descriptor_set_khr)(
             command_buffer,

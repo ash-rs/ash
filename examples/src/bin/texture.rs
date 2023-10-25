@@ -720,7 +720,7 @@ fn main() {
                 base.draw_command_buffer,
                 base.draw_commands_reuse_fence,
                 base.present_queue,
-                &[vk::PipelineStageFlags::BOTTOM_OF_PIPE],
+                &[vk::PipelineStageFlags<'_>::BOTTOM_OF_PIPE],
                 &[base.present_complete_semaphore],
                 &[base.rendering_complete_semaphore],
                 |device, draw_command_buffer| {

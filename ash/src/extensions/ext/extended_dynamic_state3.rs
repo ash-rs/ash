@@ -63,7 +63,7 @@ impl ExtendedDynamicState3 {
         &self,
         command_buffer: vk::CommandBuffer,
         samples: vk::SampleCountFlags,
-        sample_mask: &[vk::SampleMask],
+        sample_mask: &[vk::SampleMask<'_>],
     ) {
         assert!(
             samples.as_raw().is_power_of_two(),
@@ -112,7 +112,7 @@ impl ExtendedDynamicState3 {
         &self,
         command_buffer: vk::CommandBuffer,
         first_attachment: u32,
-        color_blend_enables: &[vk::Bool32],
+        color_blend_enables: &[vk::Bool32<'_>],
     ) {
         (self.fp.cmd_set_color_blend_enable_ext)(
             command_buffer,
@@ -128,7 +128,7 @@ impl ExtendedDynamicState3 {
         &self,
         command_buffer: vk::CommandBuffer,
         first_attachment: u32,
-        color_blend_equations: &[vk::ColorBlendEquationEXT],
+        color_blend_equations: &[vk::ColorBlendEquationEXT<'_>],
     ) {
         (self.fp.cmd_set_color_blend_equation_ext)(
             command_buffer,
@@ -144,7 +144,7 @@ impl ExtendedDynamicState3 {
         &self,
         command_buffer: vk::CommandBuffer,
         first_attachment: u32,
-        color_write_masks: &[vk::ColorComponentFlags],
+        color_write_masks: &[vk::ColorComponentFlags<'_>],
     ) {
         (self.fp.cmd_set_color_write_mask_ext)(
             command_buffer,
@@ -219,7 +219,7 @@ impl ExtendedDynamicState3 {
         &self,
         command_buffer: vk::CommandBuffer,
         first_attachment: u32,
-        color_blend_advanced: &[vk::ColorBlendAdvancedEXT],
+        color_blend_advanced: &[vk::ColorBlendAdvancedEXT<'_>],
     ) {
         (self.fp.cmd_set_color_blend_advanced_ext)(
             command_buffer,
@@ -291,7 +291,7 @@ impl ExtendedDynamicState3 {
         &self,
         command_buffer: vk::CommandBuffer,
         first_attachment: u32,
-        viewport_swizzles: &[vk::ViewportSwizzleNV],
+        viewport_swizzles: &[vk::ViewportSwizzleNV<'_>],
     ) {
         (self.fp.cmd_set_viewport_swizzle_nv)(
             command_buffer,

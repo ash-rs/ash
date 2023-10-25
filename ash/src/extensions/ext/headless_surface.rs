@@ -25,8 +25,8 @@ impl HeadlessSurface {
     #[inline]
     pub unsafe fn create_headless_surface(
         &self,
-        create_info: &vk::HeadlessSurfaceCreateInfoEXT,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::HeadlessSurfaceCreateInfoEXT<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::zeroed();
         (self.fp.create_headless_surface_ext)(

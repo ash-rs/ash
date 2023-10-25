@@ -25,8 +25,8 @@ impl PrivateData {
     #[inline]
     pub unsafe fn create_private_data_slot(
         &self,
-        create_info: &vk::PrivateDataSlotCreateInfoEXT,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::PrivateDataSlotCreateInfoEXT<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::PrivateDataSlotEXT> {
         let mut private_data_slot = mem::zeroed();
         (self.fp.create_private_data_slot_ext)(
@@ -43,7 +43,7 @@ impl PrivateData {
     pub unsafe fn destroy_private_data_slot(
         &self,
         private_data_slot: vk::PrivateDataSlotEXT,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) {
         (self.fp.destroy_private_data_slot_ext)(
             self.handle,
