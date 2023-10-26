@@ -389,6 +389,13 @@ impl ImageAspectFlags {
     pub const DEPTH: Self = Self(0b10);
     pub const STENCIL: Self = Self(0b100);
     pub const METADATA: Self = Self(0b1000);
+    pub const PLANE_0: Self = Self(0b10000);
+    pub const PLANE_1: Self = Self(0b100000);
+    pub const PLANE_2: Self = Self(0b1000000);
+    pub const MEMORY_PLANE_0: Self = Self(0b10000000);
+    pub const MEMORY_PLANE_1: Self = Self(0b100000000);
+    pub const MEMORY_PLANE_2: Self = Self(0b1000000000);
+    pub const MEMORY_PLANE_3: Self = Self(0b10000000000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
