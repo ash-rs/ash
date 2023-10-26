@@ -31,7 +31,7 @@ impl MeshShader {
             group_count_x,
             group_count_y,
             group_count_z,
-        );
+        )
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksIndirectEXT.html>
@@ -52,7 +52,7 @@ impl MeshShader {
             offset,
             draw_count,
             stride,
-        );
+        )
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksIndirectCountEXT.html>
@@ -79,7 +79,7 @@ impl MeshShader {
             count_buffer_offset,
             max_draw_count,
             stride,
-        );
+        )
     }
 
     pub const NAME: &'static CStr = vk::ExtMeshShaderFn::NAME;
