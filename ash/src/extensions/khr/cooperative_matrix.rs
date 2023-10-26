@@ -24,7 +24,7 @@ impl CooperativeMatrix {
     pub unsafe fn get_physical_device_cooperative_matrix_properties(
         &self,
         physical_device: vk::PhysicalDevice,
-    ) -> VkResult<Vec<vk::CooperativeMatrixPropertiesKHR>> {
+    ) -> VkResult<Vec<vk::CooperativeMatrixPropertiesKHR<'_>>> {
         read_into_defaulted_vector(|count, data| {
             (self
                 .fp

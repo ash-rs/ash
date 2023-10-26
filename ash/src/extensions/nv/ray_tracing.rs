@@ -24,8 +24,8 @@ impl RayTracing {
     #[inline]
     pub unsafe fn create_acceleration_structure(
         &self,
-        create_info: &vk::AccelerationStructureCreateInfoNV,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::AccelerationStructureCreateInfoNV<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::AccelerationStructureNV> {
         let mut accel_struct = mem::zeroed();
         (self.fp.create_acceleration_structure_nv)(
@@ -42,7 +42,7 @@ impl RayTracing {
     pub unsafe fn destroy_acceleration_structure(
         &self,
         accel_struct: vk::AccelerationStructureNV,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) {
         (self.fp.destroy_acceleration_structure_nv)(
             self.handle,
@@ -55,8 +55,8 @@ impl RayTracing {
     #[inline]
     pub unsafe fn get_acceleration_structure_memory_requirements(
         &self,
-        info: &vk::AccelerationStructureMemoryRequirementsInfoNV,
-    ) -> vk::MemoryRequirements2KHR {
+        info: &vk::AccelerationStructureMemoryRequirementsInfoNV<'_>,
+    ) -> vk::MemoryRequirements2KHR<'_> {
         let mut requirements = Default::default();
         (self.fp.get_acceleration_structure_memory_requirements_nv)(
             self.handle,
@@ -70,7 +70,7 @@ impl RayTracing {
     #[inline]
     pub unsafe fn bind_acceleration_structure_memory(
         &self,
-        bind_info: &[vk::BindAccelerationStructureMemoryInfoNV],
+        bind_info: &[vk::BindAccelerationStructureMemoryInfoNV<'_>],
     ) -> VkResult<()> {
         (self.fp.bind_acceleration_structure_memory_nv)(
             self.handle,
@@ -85,7 +85,7 @@ impl RayTracing {
     pub unsafe fn cmd_build_acceleration_structure(
         &self,
         command_buffer: vk::CommandBuffer,
-        info: &vk::AccelerationStructureInfoNV,
+        info: &vk::AccelerationStructureInfoNV<'_>,
         instance_data: vk::Buffer,
         instance_offset: vk::DeviceSize,
         update: bool,
@@ -163,8 +163,8 @@ impl RayTracing {
     pub unsafe fn create_ray_tracing_pipelines(
         &self,
         pipeline_cache: vk::PipelineCache,
-        create_info: &[vk::RayTracingPipelineCreateInfoNV],
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &[vk::RayTracingPipelineCreateInfoNV<'_>],
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<Vec<vk::Pipeline>> {
         let mut pipelines = vec![mem::zeroed(); create_info.len()];
         (self.fp.create_ray_tracing_pipelines_nv)(

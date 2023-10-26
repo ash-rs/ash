@@ -26,7 +26,7 @@ impl HostImageCopy {
     #[inline]
     pub unsafe fn copy_memory_to_image(
         &self,
-        copy_memory_to_image_info: &vk::CopyMemoryToImageInfoEXT,
+        copy_memory_to_image_info: &vk::CopyMemoryToImageInfoEXT<'_>,
     ) -> VkResult<()> {
         (self.fp.copy_memory_to_image_ext)(self.handle, copy_memory_to_image_info).result()
     }
@@ -35,7 +35,7 @@ impl HostImageCopy {
     #[inline]
     pub unsafe fn copy_image_to_memory(
         &self,
-        copy_image_to_memory_info: &vk::CopyImageToMemoryInfoEXT,
+        copy_image_to_memory_info: &vk::CopyImageToMemoryInfoEXT<'_>,
     ) -> VkResult<()> {
         (self.fp.copy_image_to_memory_ext)(self.handle, copy_image_to_memory_info).result()
     }
@@ -44,7 +44,7 @@ impl HostImageCopy {
     #[inline]
     pub unsafe fn copy_image_to_image(
         &self,
-        copy_image_to_image_info: &vk::CopyImageToImageInfoEXT,
+        copy_image_to_image_info: &vk::CopyImageToImageInfoEXT<'_>,
     ) -> VkResult<()> {
         (self.fp.copy_image_to_image_ext)(self.handle, copy_image_to_image_info).result()
     }
@@ -53,7 +53,7 @@ impl HostImageCopy {
     #[inline]
     pub unsafe fn transition_image_layout(
         &self,
-        transitions: &[vk::HostImageLayoutTransitionInfoEXT],
+        transitions: &[vk::HostImageLayoutTransitionInfoEXT<'_>],
     ) -> VkResult<()> {
         (self.fp.transition_image_layout_ext)(
             self.handle,
@@ -77,8 +77,8 @@ impl HostImageCopy {
     pub unsafe fn get_image_subresource_layout2(
         &self,
         image: vk::Image,
-        subresource: &vk::ImageSubresource2EXT,
-        layout: &mut vk::SubresourceLayout2EXT,
+        subresource: &vk::ImageSubresource2EXT<'_>,
+        layout: &mut vk::SubresourceLayout2EXT<'_>,
     ) {
         (self.fp.get_image_subresource_layout2_ext)(self.handle, image, subresource, layout)
     }

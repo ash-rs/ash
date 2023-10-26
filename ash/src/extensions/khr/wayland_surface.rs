@@ -24,8 +24,8 @@ impl WaylandSurface {
     #[inline]
     pub unsafe fn create_wayland_surface(
         &self,
-        create_info: &vk::WaylandSurfaceCreateInfoKHR,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::WaylandSurfaceCreateInfoKHR<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::zeroed();
         (self.fp.create_wayland_surface_khr)(

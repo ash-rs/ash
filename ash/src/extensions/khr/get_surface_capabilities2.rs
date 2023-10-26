@@ -23,8 +23,8 @@ impl GetSurfaceCapabilities2 {
     pub unsafe fn get_physical_device_surface_capabilities2(
         &self,
         physical_device: vk::PhysicalDevice,
-        surface_info: &vk::PhysicalDeviceSurfaceInfo2KHR,
-        surface_capabilities: &mut vk::SurfaceCapabilities2KHR,
+        surface_info: &vk::PhysicalDeviceSurfaceInfo2KHR<'_>,
+        surface_capabilities: &mut vk::SurfaceCapabilities2KHR<'_>,
     ) -> VkResult<()> {
         (self.fp.get_physical_device_surface_capabilities2_khr)(
             physical_device,
@@ -39,7 +39,7 @@ impl GetSurfaceCapabilities2 {
     pub unsafe fn get_physical_device_surface_formats2_len(
         &self,
         physical_device: vk::PhysicalDevice,
-        surface_info: &vk::PhysicalDeviceSurfaceInfo2KHR,
+        surface_info: &vk::PhysicalDeviceSurfaceInfo2KHR<'_>,
     ) -> VkResult<usize> {
         let mut count = 0;
         let err_code = (self.fp.get_physical_device_surface_formats2_khr)(
@@ -59,8 +59,8 @@ impl GetSurfaceCapabilities2 {
     pub unsafe fn get_physical_device_surface_formats2(
         &self,
         physical_device: vk::PhysicalDevice,
-        surface_info: &vk::PhysicalDeviceSurfaceInfo2KHR,
-        out: &mut [vk::SurfaceFormat2KHR],
+        surface_info: &vk::PhysicalDeviceSurfaceInfo2KHR<'_>,
+        out: &mut [vk::SurfaceFormat2KHR<'_>],
     ) -> VkResult<()> {
         let mut count = out.len() as u32;
         let err_code = (self.fp.get_physical_device_surface_formats2_khr)(

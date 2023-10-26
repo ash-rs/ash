@@ -43,7 +43,7 @@ impl CoverageReductionMode {
     pub unsafe fn get_physical_device_supported_framebuffer_mixed_samples_combinations(
         &self,
         physical_device: vk::PhysicalDevice,
-        out: &mut [vk::FramebufferMixedSamplesCombinationNV],
+        out: &mut [vk::FramebufferMixedSamplesCombinationNV<'_>],
     ) -> VkResult<()> {
         let mut count = out.len() as u32;
         (self

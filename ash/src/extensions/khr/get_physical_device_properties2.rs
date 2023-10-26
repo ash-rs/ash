@@ -23,7 +23,7 @@ impl GetPhysicalDeviceProperties2 {
     pub unsafe fn get_physical_device_features2(
         &self,
         physical_device: vk::PhysicalDevice,
-        features: &mut vk::PhysicalDeviceFeatures2KHR,
+        features: &mut vk::PhysicalDeviceFeatures2KHR<'_>,
     ) {
         (self.fp.get_physical_device_features2_khr)(physical_device, features);
     }
@@ -34,7 +34,7 @@ impl GetPhysicalDeviceProperties2 {
         &self,
         physical_device: vk::PhysicalDevice,
         format: vk::Format,
-        format_properties: &mut vk::FormatProperties2KHR,
+        format_properties: &mut vk::FormatProperties2KHR<'_>,
     ) {
         (self.fp.get_physical_device_format_properties2_khr)(
             physical_device,
@@ -48,8 +48,8 @@ impl GetPhysicalDeviceProperties2 {
     pub unsafe fn get_physical_device_image_format_properties2(
         &self,
         physical_device: vk::PhysicalDevice,
-        image_format_info: &vk::PhysicalDeviceImageFormatInfo2KHR,
-        image_format_properties: &mut vk::ImageFormatProperties2KHR,
+        image_format_info: &vk::PhysicalDeviceImageFormatInfo2KHR<'_>,
+        image_format_properties: &mut vk::ImageFormatProperties2KHR<'_>,
     ) -> VkResult<()> {
         (self.fp.get_physical_device_image_format_properties2_khr)(
             physical_device,
@@ -64,7 +64,7 @@ impl GetPhysicalDeviceProperties2 {
     pub unsafe fn get_physical_device_memory_properties2(
         &self,
         physical_device: vk::PhysicalDevice,
-        memory_properties: &mut vk::PhysicalDeviceMemoryProperties2KHR,
+        memory_properties: &mut vk::PhysicalDeviceMemoryProperties2KHR<'_>,
     ) {
         (self.fp.get_physical_device_memory_properties2_khr)(physical_device, memory_properties);
     }
@@ -74,7 +74,7 @@ impl GetPhysicalDeviceProperties2 {
     pub unsafe fn get_physical_device_properties2(
         &self,
         physical_device: vk::PhysicalDevice,
-        properties: &mut vk::PhysicalDeviceProperties2KHR,
+        properties: &mut vk::PhysicalDeviceProperties2KHR<'_>,
     ) {
         (self.fp.get_physical_device_properties2_khr)(physical_device, properties);
     }
@@ -102,7 +102,7 @@ impl GetPhysicalDeviceProperties2 {
     pub unsafe fn get_physical_device_queue_family_properties2(
         &self,
         physical_device: vk::PhysicalDevice,
-        out: &mut [vk::QueueFamilyProperties2KHR],
+        out: &mut [vk::QueueFamilyProperties2KHR<'_>],
     ) {
         let mut count = out.len() as u32;
         (self.fp.get_physical_device_queue_family_properties2_khr)(
@@ -118,7 +118,7 @@ impl GetPhysicalDeviceProperties2 {
     pub unsafe fn get_physical_device_sparse_image_format_properties2_len(
         &self,
         physical_device: vk::PhysicalDevice,
-        format_info: &vk::PhysicalDeviceSparseImageFormatInfo2KHR,
+        format_info: &vk::PhysicalDeviceSparseImageFormatInfo2KHR<'_>,
     ) -> usize {
         let mut count = 0;
         (self
@@ -140,8 +140,8 @@ impl GetPhysicalDeviceProperties2 {
     pub unsafe fn get_physical_device_sparse_image_format_properties2(
         &self,
         physical_device: vk::PhysicalDevice,
-        format_info: &vk::PhysicalDeviceSparseImageFormatInfo2KHR,
-        out: &mut [vk::SparseImageFormatProperties2KHR],
+        format_info: &vk::PhysicalDeviceSparseImageFormatInfo2KHR<'_>,
+        out: &mut [vk::SparseImageFormatProperties2KHR<'_>],
     ) {
         let mut count = out.len() as u32;
         (self

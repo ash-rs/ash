@@ -41,8 +41,8 @@ impl StaticFn {
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateInstance = unsafe extern "system" fn(
-    p_create_info: *const InstanceCreateInfo,
-    p_allocator: *const AllocationCallbacks,
+    p_create_info: *const InstanceCreateInfo<'_>,
+    p_allocator: *const AllocationCallbacks<'_>,
     p_instance: *mut Instance,
 ) -> Result;
 #[allow(non_camel_case_types)]
@@ -72,8 +72,8 @@ impl EntryFnV1_0 {
         Self {
             create_instance: unsafe {
                 unsafe extern "system" fn create_instance(
-                    _p_create_info: *const InstanceCreateInfo,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_create_info: *const InstanceCreateInfo<'_>,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                     _p_instance: *mut Instance,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_instance)))
@@ -132,7 +132,7 @@ impl EntryFnV1_0 {
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyInstance =
-    unsafe extern "system" fn(instance: Instance, p_allocator: *const AllocationCallbacks);
+    unsafe extern "system" fn(instance: Instance, p_allocator: *const AllocationCallbacks<'_>);
 #[allow(non_camel_case_types)]
 pub type PFN_vkEnumeratePhysicalDevices = unsafe extern "system" fn(
     instance: Instance,
@@ -182,8 +182,8 @@ pub type PFN_vkGetDeviceProcAddr =
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateDevice = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
-    p_create_info: *const DeviceCreateInfo,
-    p_allocator: *const AllocationCallbacks,
+    p_create_info: *const DeviceCreateInfo<'_>,
+    p_allocator: *const AllocationCallbacks<'_>,
     p_device: *mut Device,
 ) -> Result;
 #[allow(non_camel_case_types)]
@@ -238,7 +238,7 @@ impl InstanceFnV1_0 {
             destroy_instance: unsafe {
                 unsafe extern "system" fn destroy_instance(
                     _instance: Instance,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_instance)))
                 }
@@ -417,8 +417,8 @@ impl InstanceFnV1_0 {
             create_device: unsafe {
                 unsafe extern "system" fn create_device(
                     _physical_device: PhysicalDevice,
-                    _p_create_info: *const DeviceCreateInfo,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_create_info: *const DeviceCreateInfo<'_>,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                     _p_device: *mut Device,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_device)))
@@ -505,7 +505,7 @@ impl InstanceFnV1_0 {
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyDevice =
-    unsafe extern "system" fn(device: Device, p_allocator: *const AllocationCallbacks);
+    unsafe extern "system" fn(device: Device, p_allocator: *const AllocationCallbacks<'_>);
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDeviceQueue = unsafe extern "system" fn(
     device: Device,
@@ -517,7 +517,7 @@ pub type PFN_vkGetDeviceQueue = unsafe extern "system" fn(
 pub type PFN_vkQueueSubmit = unsafe extern "system" fn(
     queue: Queue,
     submit_count: u32,
-    p_submits: *const SubmitInfo,
+    p_submits: *const SubmitInfo<'_>,
     fence: Fence,
 ) -> Result;
 #[allow(non_camel_case_types)]
@@ -527,15 +527,15 @@ pub type PFN_vkDeviceWaitIdle = unsafe extern "system" fn(device: Device) -> Res
 #[allow(non_camel_case_types)]
 pub type PFN_vkAllocateMemory = unsafe extern "system" fn(
     device: Device,
-    p_allocate_info: *const MemoryAllocateInfo,
-    p_allocator: *const AllocationCallbacks,
+    p_allocate_info: *const MemoryAllocateInfo<'_>,
+    p_allocator: *const AllocationCallbacks<'_>,
     p_memory: *mut DeviceMemory,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkFreeMemory = unsafe extern "system" fn(
     device: Device,
     memory: DeviceMemory,
-    p_allocator: *const AllocationCallbacks,
+    p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkMapMemory = unsafe extern "system" fn(
@@ -552,13 +552,13 @@ pub type PFN_vkUnmapMemory = unsafe extern "system" fn(device: Device, memory: D
 pub type PFN_vkFlushMappedMemoryRanges = unsafe extern "system" fn(
     device: Device,
     memory_range_count: u32,
-    p_memory_ranges: *const MappedMemoryRange,
+    p_memory_ranges: *const MappedMemoryRange<'_>,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkInvalidateMappedMemoryRanges = unsafe extern "system" fn(
     device: Device,
     memory_range_count: u32,
-    p_memory_ranges: *const MappedMemoryRange,
+    p_memory_ranges: *const MappedMemoryRange<'_>,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDeviceMemoryCommitment = unsafe extern "system" fn(
@@ -603,21 +603,21 @@ pub type PFN_vkGetImageSparseMemoryRequirements = unsafe extern "system" fn(
 pub type PFN_vkQueueBindSparse = unsafe extern "system" fn(
     queue: Queue,
     bind_info_count: u32,
-    p_bind_info: *const BindSparseInfo,
+    p_bind_info: *const BindSparseInfo<'_>,
     fence: Fence,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateFence = unsafe extern "system" fn(
     device: Device,
-    p_create_info: *const FenceCreateInfo,
-    p_allocator: *const AllocationCallbacks,
+    p_create_info: *const FenceCreateInfo<'_>,
+    p_allocator: *const AllocationCallbacks<'_>,
     p_fence: *mut Fence,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyFence = unsafe extern "system" fn(
     device: Device,
     fence: Fence,
-    p_allocator: *const AllocationCallbacks,
+    p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkResetFences =
@@ -635,28 +635,28 @@ pub type PFN_vkWaitForFences = unsafe extern "system" fn(
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateSemaphore = unsafe extern "system" fn(
     device: Device,
-    p_create_info: *const SemaphoreCreateInfo,
-    p_allocator: *const AllocationCallbacks,
+    p_create_info: *const SemaphoreCreateInfo<'_>,
+    p_allocator: *const AllocationCallbacks<'_>,
     p_semaphore: *mut Semaphore,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroySemaphore = unsafe extern "system" fn(
     device: Device,
     semaphore: Semaphore,
-    p_allocator: *const AllocationCallbacks,
+    p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateEvent = unsafe extern "system" fn(
     device: Device,
-    p_create_info: *const EventCreateInfo,
-    p_allocator: *const AllocationCallbacks,
+    p_create_info: *const EventCreateInfo<'_>,
+    p_allocator: *const AllocationCallbacks<'_>,
     p_event: *mut Event,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyEvent = unsafe extern "system" fn(
     device: Device,
     event: Event,
-    p_allocator: *const AllocationCallbacks,
+    p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetEventStatus = unsafe extern "system" fn(device: Device, event: Event) -> Result;
@@ -667,15 +667,15 @@ pub type PFN_vkResetEvent = unsafe extern "system" fn(device: Device, event: Eve
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateQueryPool = unsafe extern "system" fn(
     device: Device,
-    p_create_info: *const QueryPoolCreateInfo,
-    p_allocator: *const AllocationCallbacks,
+    p_create_info: *const QueryPoolCreateInfo<'_>,
+    p_allocator: *const AllocationCallbacks<'_>,
     p_query_pool: *mut QueryPool,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyQueryPool = unsafe extern "system" fn(
     device: Device,
     query_pool: QueryPool,
-    p_allocator: *const AllocationCallbacks,
+    p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetQueryPoolResults = unsafe extern "system" fn(
@@ -691,41 +691,41 @@ pub type PFN_vkGetQueryPoolResults = unsafe extern "system" fn(
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateBuffer = unsafe extern "system" fn(
     device: Device,
-    p_create_info: *const BufferCreateInfo,
-    p_allocator: *const AllocationCallbacks,
+    p_create_info: *const BufferCreateInfo<'_>,
+    p_allocator: *const AllocationCallbacks<'_>,
     p_buffer: *mut Buffer,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyBuffer = unsafe extern "system" fn(
     device: Device,
     buffer: Buffer,
-    p_allocator: *const AllocationCallbacks,
+    p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateBufferView = unsafe extern "system" fn(
     device: Device,
-    p_create_info: *const BufferViewCreateInfo,
-    p_allocator: *const AllocationCallbacks,
+    p_create_info: *const BufferViewCreateInfo<'_>,
+    p_allocator: *const AllocationCallbacks<'_>,
     p_view: *mut BufferView,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyBufferView = unsafe extern "system" fn(
     device: Device,
     buffer_view: BufferView,
-    p_allocator: *const AllocationCallbacks,
+    p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateImage = unsafe extern "system" fn(
     device: Device,
-    p_create_info: *const ImageCreateInfo,
-    p_allocator: *const AllocationCallbacks,
+    p_create_info: *const ImageCreateInfo<'_>,
+    p_allocator: *const AllocationCallbacks<'_>,
     p_image: *mut Image,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyImage = unsafe extern "system" fn(
     device: Device,
     image: Image,
-    p_allocator: *const AllocationCallbacks,
+    p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetImageSubresourceLayout = unsafe extern "system" fn(
@@ -737,41 +737,41 @@ pub type PFN_vkGetImageSubresourceLayout = unsafe extern "system" fn(
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateImageView = unsafe extern "system" fn(
     device: Device,
-    p_create_info: *const ImageViewCreateInfo,
-    p_allocator: *const AllocationCallbacks,
+    p_create_info: *const ImageViewCreateInfo<'_>,
+    p_allocator: *const AllocationCallbacks<'_>,
     p_view: *mut ImageView,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyImageView = unsafe extern "system" fn(
     device: Device,
     image_view: ImageView,
-    p_allocator: *const AllocationCallbacks,
+    p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateShaderModule = unsafe extern "system" fn(
     device: Device,
-    p_create_info: *const ShaderModuleCreateInfo,
-    p_allocator: *const AllocationCallbacks,
+    p_create_info: *const ShaderModuleCreateInfo<'_>,
+    p_allocator: *const AllocationCallbacks<'_>,
     p_shader_module: *mut ShaderModule,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyShaderModule = unsafe extern "system" fn(
     device: Device,
     shader_module: ShaderModule,
-    p_allocator: *const AllocationCallbacks,
+    p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreatePipelineCache = unsafe extern "system" fn(
     device: Device,
-    p_create_info: *const PipelineCacheCreateInfo,
-    p_allocator: *const AllocationCallbacks,
+    p_create_info: *const PipelineCacheCreateInfo<'_>,
+    p_allocator: *const AllocationCallbacks<'_>,
     p_pipeline_cache: *mut PipelineCache,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyPipelineCache = unsafe extern "system" fn(
     device: Device,
     pipeline_cache: PipelineCache,
-    p_allocator: *const AllocationCallbacks,
+    p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPipelineCacheData = unsafe extern "system" fn(
@@ -792,8 +792,8 @@ pub type PFN_vkCreateGraphicsPipelines = unsafe extern "system" fn(
     device: Device,
     pipeline_cache: PipelineCache,
     create_info_count: u32,
-    p_create_infos: *const GraphicsPipelineCreateInfo,
-    p_allocator: *const AllocationCallbacks,
+    p_create_infos: *const GraphicsPipelineCreateInfo<'_>,
+    p_allocator: *const AllocationCallbacks<'_>,
     p_pipelines: *mut Pipeline,
 ) -> Result;
 #[allow(non_camel_case_types)]
@@ -801,67 +801,67 @@ pub type PFN_vkCreateComputePipelines = unsafe extern "system" fn(
     device: Device,
     pipeline_cache: PipelineCache,
     create_info_count: u32,
-    p_create_infos: *const ComputePipelineCreateInfo,
-    p_allocator: *const AllocationCallbacks,
+    p_create_infos: *const ComputePipelineCreateInfo<'_>,
+    p_allocator: *const AllocationCallbacks<'_>,
     p_pipelines: *mut Pipeline,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyPipeline = unsafe extern "system" fn(
     device: Device,
     pipeline: Pipeline,
-    p_allocator: *const AllocationCallbacks,
+    p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreatePipelineLayout = unsafe extern "system" fn(
     device: Device,
-    p_create_info: *const PipelineLayoutCreateInfo,
-    p_allocator: *const AllocationCallbacks,
+    p_create_info: *const PipelineLayoutCreateInfo<'_>,
+    p_allocator: *const AllocationCallbacks<'_>,
     p_pipeline_layout: *mut PipelineLayout,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyPipelineLayout = unsafe extern "system" fn(
     device: Device,
     pipeline_layout: PipelineLayout,
-    p_allocator: *const AllocationCallbacks,
+    p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateSampler = unsafe extern "system" fn(
     device: Device,
-    p_create_info: *const SamplerCreateInfo,
-    p_allocator: *const AllocationCallbacks,
+    p_create_info: *const SamplerCreateInfo<'_>,
+    p_allocator: *const AllocationCallbacks<'_>,
     p_sampler: *mut Sampler,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroySampler = unsafe extern "system" fn(
     device: Device,
     sampler: Sampler,
-    p_allocator: *const AllocationCallbacks,
+    p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateDescriptorSetLayout = unsafe extern "system" fn(
     device: Device,
-    p_create_info: *const DescriptorSetLayoutCreateInfo,
-    p_allocator: *const AllocationCallbacks,
+    p_create_info: *const DescriptorSetLayoutCreateInfo<'_>,
+    p_allocator: *const AllocationCallbacks<'_>,
     p_set_layout: *mut DescriptorSetLayout,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyDescriptorSetLayout = unsafe extern "system" fn(
     device: Device,
     descriptor_set_layout: DescriptorSetLayout,
-    p_allocator: *const AllocationCallbacks,
+    p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateDescriptorPool = unsafe extern "system" fn(
     device: Device,
-    p_create_info: *const DescriptorPoolCreateInfo,
-    p_allocator: *const AllocationCallbacks,
+    p_create_info: *const DescriptorPoolCreateInfo<'_>,
+    p_allocator: *const AllocationCallbacks<'_>,
     p_descriptor_pool: *mut DescriptorPool,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyDescriptorPool = unsafe extern "system" fn(
     device: Device,
     descriptor_pool: DescriptorPool,
-    p_allocator: *const AllocationCallbacks,
+    p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkResetDescriptorPool = unsafe extern "system" fn(
@@ -872,7 +872,7 @@ pub type PFN_vkResetDescriptorPool = unsafe extern "system" fn(
 #[allow(non_camel_case_types)]
 pub type PFN_vkAllocateDescriptorSets = unsafe extern "system" fn(
     device: Device,
-    p_allocate_info: *const DescriptorSetAllocateInfo,
+    p_allocate_info: *const DescriptorSetAllocateInfo<'_>,
     p_descriptor_sets: *mut DescriptorSet,
 ) -> Result;
 #[allow(non_camel_case_types)]
@@ -886,35 +886,35 @@ pub type PFN_vkFreeDescriptorSets = unsafe extern "system" fn(
 pub type PFN_vkUpdateDescriptorSets = unsafe extern "system" fn(
     device: Device,
     descriptor_write_count: u32,
-    p_descriptor_writes: *const WriteDescriptorSet,
+    p_descriptor_writes: *const WriteDescriptorSet<'_>,
     descriptor_copy_count: u32,
-    p_descriptor_copies: *const CopyDescriptorSet,
+    p_descriptor_copies: *const CopyDescriptorSet<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateFramebuffer = unsafe extern "system" fn(
     device: Device,
-    p_create_info: *const FramebufferCreateInfo,
-    p_allocator: *const AllocationCallbacks,
+    p_create_info: *const FramebufferCreateInfo<'_>,
+    p_allocator: *const AllocationCallbacks<'_>,
     p_framebuffer: *mut Framebuffer,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyFramebuffer = unsafe extern "system" fn(
     device: Device,
     framebuffer: Framebuffer,
-    p_allocator: *const AllocationCallbacks,
+    p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateRenderPass = unsafe extern "system" fn(
     device: Device,
-    p_create_info: *const RenderPassCreateInfo,
-    p_allocator: *const AllocationCallbacks,
+    p_create_info: *const RenderPassCreateInfo<'_>,
+    p_allocator: *const AllocationCallbacks<'_>,
     p_render_pass: *mut RenderPass,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyRenderPass = unsafe extern "system" fn(
     device: Device,
     render_pass: RenderPass,
-    p_allocator: *const AllocationCallbacks,
+    p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetRenderAreaGranularity = unsafe extern "system" fn(
@@ -925,15 +925,15 @@ pub type PFN_vkGetRenderAreaGranularity = unsafe extern "system" fn(
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateCommandPool = unsafe extern "system" fn(
     device: Device,
-    p_create_info: *const CommandPoolCreateInfo,
-    p_allocator: *const AllocationCallbacks,
+    p_create_info: *const CommandPoolCreateInfo<'_>,
+    p_allocator: *const AllocationCallbacks<'_>,
     p_command_pool: *mut CommandPool,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyCommandPool = unsafe extern "system" fn(
     device: Device,
     command_pool: CommandPool,
-    p_allocator: *const AllocationCallbacks,
+    p_allocator: *const AllocationCallbacks<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkResetCommandPool = unsafe extern "system" fn(
@@ -944,7 +944,7 @@ pub type PFN_vkResetCommandPool = unsafe extern "system" fn(
 #[allow(non_camel_case_types)]
 pub type PFN_vkAllocateCommandBuffers = unsafe extern "system" fn(
     device: Device,
-    p_allocate_info: *const CommandBufferAllocateInfo,
+    p_allocate_info: *const CommandBufferAllocateInfo<'_>,
     p_command_buffers: *mut CommandBuffer,
 ) -> Result;
 #[allow(non_camel_case_types)]
@@ -957,7 +957,7 @@ pub type PFN_vkFreeCommandBuffers = unsafe extern "system" fn(
 #[allow(non_camel_case_types)]
 pub type PFN_vkBeginCommandBuffer = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
-    p_begin_info: *const CommandBufferBeginInfo,
+    p_begin_info: *const CommandBufferBeginInfo<'_>,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkEndCommandBuffer =
@@ -1212,11 +1212,11 @@ pub type PFN_vkCmdWaitEvents = unsafe extern "system" fn(
     src_stage_mask: PipelineStageFlags,
     dst_stage_mask: PipelineStageFlags,
     memory_barrier_count: u32,
-    p_memory_barriers: *const MemoryBarrier,
+    p_memory_barriers: *const MemoryBarrier<'_>,
     buffer_memory_barrier_count: u32,
-    p_buffer_memory_barriers: *const BufferMemoryBarrier,
+    p_buffer_memory_barriers: *const BufferMemoryBarrier<'_>,
     image_memory_barrier_count: u32,
-    p_image_memory_barriers: *const ImageMemoryBarrier,
+    p_image_memory_barriers: *const ImageMemoryBarrier<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdPipelineBarrier = unsafe extern "system" fn(
@@ -1225,11 +1225,11 @@ pub type PFN_vkCmdPipelineBarrier = unsafe extern "system" fn(
     dst_stage_mask: PipelineStageFlags,
     dependency_flags: DependencyFlags,
     memory_barrier_count: u32,
-    p_memory_barriers: *const MemoryBarrier,
+    p_memory_barriers: *const MemoryBarrier<'_>,
     buffer_memory_barrier_count: u32,
-    p_buffer_memory_barriers: *const BufferMemoryBarrier,
+    p_buffer_memory_barriers: *const BufferMemoryBarrier<'_>,
     image_memory_barrier_count: u32,
-    p_image_memory_barriers: *const ImageMemoryBarrier,
+    p_image_memory_barriers: *const ImageMemoryBarrier<'_>,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBeginQuery = unsafe extern "system" fn(
@@ -1278,7 +1278,7 @@ pub type PFN_vkCmdPushConstants = unsafe extern "system" fn(
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBeginRenderPass = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
-    p_render_pass_begin: *const RenderPassBeginInfo,
+    p_render_pass_begin: *const RenderPassBeginInfo<'_>,
     contents: SubpassContents,
 );
 #[allow(non_camel_case_types)]
@@ -1426,7 +1426,7 @@ impl DeviceFnV1_0 {
             destroy_device: unsafe {
                 unsafe extern "system" fn destroy_device(
                     _device: Device,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_device)))
                 }
@@ -1459,7 +1459,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn queue_submit(
                     _queue: Queue,
                     _submit_count: u32,
-                    _p_submits: *const SubmitInfo,
+                    _p_submits: *const SubmitInfo<'_>,
                     _fence: Fence,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(queue_submit)))
@@ -1499,8 +1499,8 @@ impl DeviceFnV1_0 {
             allocate_memory: unsafe {
                 unsafe extern "system" fn allocate_memory(
                     _device: Device,
-                    _p_allocate_info: *const MemoryAllocateInfo,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_allocate_info: *const MemoryAllocateInfo<'_>,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                     _p_memory: *mut DeviceMemory,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(allocate_memory)))
@@ -1517,7 +1517,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn free_memory(
                     _device: Device,
                     _memory: DeviceMemory,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(free_memory)))
                 }
@@ -1564,7 +1564,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn flush_mapped_memory_ranges(
                     _device: Device,
                     _memory_range_count: u32,
-                    _p_memory_ranges: *const MappedMemoryRange,
+                    _p_memory_ranges: *const MappedMemoryRange<'_>,
                 ) -> Result {
                     panic!(concat!(
                         "Unable to load ",
@@ -1584,7 +1584,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn invalidate_mapped_memory_ranges(
                     _device: Device,
                     _memory_range_count: u32,
-                    _p_memory_ranges: *const MappedMemoryRange,
+                    _p_memory_ranges: *const MappedMemoryRange<'_>,
                 ) -> Result {
                     panic!(concat!(
                         "Unable to load ",
@@ -1725,7 +1725,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn queue_bind_sparse(
                     _queue: Queue,
                     _bind_info_count: u32,
-                    _p_bind_info: *const BindSparseInfo,
+                    _p_bind_info: *const BindSparseInfo<'_>,
                     _fence: Fence,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(queue_bind_sparse)))
@@ -1741,8 +1741,8 @@ impl DeviceFnV1_0 {
             create_fence: unsafe {
                 unsafe extern "system" fn create_fence(
                     _device: Device,
-                    _p_create_info: *const FenceCreateInfo,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_create_info: *const FenceCreateInfo<'_>,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                     _p_fence: *mut Fence,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_fence)))
@@ -1759,7 +1759,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_fence(
                     _device: Device,
                     _fence: Fence,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_fence)))
                 }
@@ -1823,8 +1823,8 @@ impl DeviceFnV1_0 {
             create_semaphore: unsafe {
                 unsafe extern "system" fn create_semaphore(
                     _device: Device,
-                    _p_create_info: *const SemaphoreCreateInfo,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_create_info: *const SemaphoreCreateInfo<'_>,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                     _p_semaphore: *mut Semaphore,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_semaphore)))
@@ -1841,7 +1841,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_semaphore(
                     _device: Device,
                     _semaphore: Semaphore,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_semaphore)))
                 }
@@ -1857,8 +1857,8 @@ impl DeviceFnV1_0 {
             create_event: unsafe {
                 unsafe extern "system" fn create_event(
                     _device: Device,
-                    _p_create_info: *const EventCreateInfo,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_create_info: *const EventCreateInfo<'_>,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                     _p_event: *mut Event,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_event)))
@@ -1875,7 +1875,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_event(
                     _device: Device,
                     _event: Event,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_event)))
                 }
@@ -1929,8 +1929,8 @@ impl DeviceFnV1_0 {
             create_query_pool: unsafe {
                 unsafe extern "system" fn create_query_pool(
                     _device: Device,
-                    _p_create_info: *const QueryPoolCreateInfo,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_create_info: *const QueryPoolCreateInfo<'_>,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                     _p_query_pool: *mut QueryPool,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_query_pool)))
@@ -1947,7 +1947,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_query_pool(
                     _device: Device,
                     _query_pool: QueryPool,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_query_pool)))
                 }
@@ -1988,8 +1988,8 @@ impl DeviceFnV1_0 {
             create_buffer: unsafe {
                 unsafe extern "system" fn create_buffer(
                     _device: Device,
-                    _p_create_info: *const BufferCreateInfo,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_create_info: *const BufferCreateInfo<'_>,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                     _p_buffer: *mut Buffer,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_buffer)))
@@ -2006,7 +2006,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_buffer(
                     _device: Device,
                     _buffer: Buffer,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_buffer)))
                 }
@@ -2021,8 +2021,8 @@ impl DeviceFnV1_0 {
             create_buffer_view: unsafe {
                 unsafe extern "system" fn create_buffer_view(
                     _device: Device,
-                    _p_create_info: *const BufferViewCreateInfo,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_create_info: *const BufferViewCreateInfo<'_>,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                     _p_view: *mut BufferView,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_buffer_view)))
@@ -2040,7 +2040,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_buffer_view(
                     _device: Device,
                     _buffer_view: BufferView,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_buffer_view)))
                 }
@@ -2056,8 +2056,8 @@ impl DeviceFnV1_0 {
             create_image: unsafe {
                 unsafe extern "system" fn create_image(
                     _device: Device,
-                    _p_create_info: *const ImageCreateInfo,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_create_info: *const ImageCreateInfo<'_>,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                     _p_image: *mut Image,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_image)))
@@ -2074,7 +2074,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_image(
                     _device: Device,
                     _image: Image,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_image)))
                 }
@@ -2111,8 +2111,8 @@ impl DeviceFnV1_0 {
             create_image_view: unsafe {
                 unsafe extern "system" fn create_image_view(
                     _device: Device,
-                    _p_create_info: *const ImageViewCreateInfo,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_create_info: *const ImageViewCreateInfo<'_>,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                     _p_view: *mut ImageView,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_image_view)))
@@ -2129,7 +2129,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_image_view(
                     _device: Device,
                     _image_view: ImageView,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_image_view)))
                 }
@@ -2145,8 +2145,8 @@ impl DeviceFnV1_0 {
             create_shader_module: unsafe {
                 unsafe extern "system" fn create_shader_module(
                     _device: Device,
-                    _p_create_info: *const ShaderModuleCreateInfo,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_create_info: *const ShaderModuleCreateInfo<'_>,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                     _p_shader_module: *mut ShaderModule,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_shader_module)))
@@ -2164,7 +2164,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_shader_module(
                     _device: Device,
                     _shader_module: ShaderModule,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -2183,8 +2183,8 @@ impl DeviceFnV1_0 {
             create_pipeline_cache: unsafe {
                 unsafe extern "system" fn create_pipeline_cache(
                     _device: Device,
-                    _p_create_info: *const PipelineCacheCreateInfo,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_create_info: *const PipelineCacheCreateInfo<'_>,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                     _p_pipeline_cache: *mut PipelineCache,
                 ) -> Result {
                     panic!(concat!(
@@ -2205,7 +2205,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_pipeline_cache(
                     _device: Device,
                     _pipeline_cache: PipelineCache,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -2268,8 +2268,8 @@ impl DeviceFnV1_0 {
                     _device: Device,
                     _pipeline_cache: PipelineCache,
                     _create_info_count: u32,
-                    _p_create_infos: *const GraphicsPipelineCreateInfo,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_create_infos: *const GraphicsPipelineCreateInfo<'_>,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                     _p_pipelines: *mut Pipeline,
                 ) -> Result {
                     panic!(concat!(
@@ -2291,8 +2291,8 @@ impl DeviceFnV1_0 {
                     _device: Device,
                     _pipeline_cache: PipelineCache,
                     _create_info_count: u32,
-                    _p_create_infos: *const ComputePipelineCreateInfo,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_create_infos: *const ComputePipelineCreateInfo<'_>,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                     _p_pipelines: *mut Pipeline,
                 ) -> Result {
                     panic!(concat!(
@@ -2313,7 +2313,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_pipeline(
                     _device: Device,
                     _pipeline: Pipeline,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_pipeline)))
                 }
@@ -2328,8 +2328,8 @@ impl DeviceFnV1_0 {
             create_pipeline_layout: unsafe {
                 unsafe extern "system" fn create_pipeline_layout(
                     _device: Device,
-                    _p_create_info: *const PipelineLayoutCreateInfo,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_create_info: *const PipelineLayoutCreateInfo<'_>,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                     _p_pipeline_layout: *mut PipelineLayout,
                 ) -> Result {
                     panic!(concat!(
@@ -2350,7 +2350,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_pipeline_layout(
                     _device: Device,
                     _pipeline_layout: PipelineLayout,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -2369,8 +2369,8 @@ impl DeviceFnV1_0 {
             create_sampler: unsafe {
                 unsafe extern "system" fn create_sampler(
                     _device: Device,
-                    _p_create_info: *const SamplerCreateInfo,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_create_info: *const SamplerCreateInfo<'_>,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                     _p_sampler: *mut Sampler,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_sampler)))
@@ -2387,7 +2387,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_sampler(
                     _device: Device,
                     _sampler: Sampler,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_sampler)))
                 }
@@ -2402,8 +2402,8 @@ impl DeviceFnV1_0 {
             create_descriptor_set_layout: unsafe {
                 unsafe extern "system" fn create_descriptor_set_layout(
                     _device: Device,
-                    _p_create_info: *const DescriptorSetLayoutCreateInfo,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_create_info: *const DescriptorSetLayoutCreateInfo<'_>,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                     _p_set_layout: *mut DescriptorSetLayout,
                 ) -> Result {
                     panic!(concat!(
@@ -2425,7 +2425,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_descriptor_set_layout(
                     _device: Device,
                     _descriptor_set_layout: DescriptorSetLayout,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -2445,8 +2445,8 @@ impl DeviceFnV1_0 {
             create_descriptor_pool: unsafe {
                 unsafe extern "system" fn create_descriptor_pool(
                     _device: Device,
-                    _p_create_info: *const DescriptorPoolCreateInfo,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_create_info: *const DescriptorPoolCreateInfo<'_>,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                     _p_descriptor_pool: *mut DescriptorPool,
                 ) -> Result {
                     panic!(concat!(
@@ -2467,7 +2467,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_descriptor_pool(
                     _device: Device,
                     _descriptor_pool: DescriptorPool,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -2506,7 +2506,7 @@ impl DeviceFnV1_0 {
             allocate_descriptor_sets: unsafe {
                 unsafe extern "system" fn allocate_descriptor_sets(
                     _device: Device,
-                    _p_allocate_info: *const DescriptorSetAllocateInfo,
+                    _p_allocate_info: *const DescriptorSetAllocateInfo<'_>,
                     _p_descriptor_sets: *mut DescriptorSet,
                 ) -> Result {
                     panic!(concat!(
@@ -2545,9 +2545,9 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn update_descriptor_sets(
                     _device: Device,
                     _descriptor_write_count: u32,
-                    _p_descriptor_writes: *const WriteDescriptorSet,
+                    _p_descriptor_writes: *const WriteDescriptorSet<'_>,
                     _descriptor_copy_count: u32,
-                    _p_descriptor_copies: *const CopyDescriptorSet,
+                    _p_descriptor_copies: *const CopyDescriptorSet<'_>,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -2566,8 +2566,8 @@ impl DeviceFnV1_0 {
             create_framebuffer: unsafe {
                 unsafe extern "system" fn create_framebuffer(
                     _device: Device,
-                    _p_create_info: *const FramebufferCreateInfo,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_create_info: *const FramebufferCreateInfo<'_>,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                     _p_framebuffer: *mut Framebuffer,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_framebuffer)))
@@ -2585,7 +2585,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_framebuffer(
                     _device: Device,
                     _framebuffer: Framebuffer,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_framebuffer)))
                 }
@@ -2601,8 +2601,8 @@ impl DeviceFnV1_0 {
             create_render_pass: unsafe {
                 unsafe extern "system" fn create_render_pass(
                     _device: Device,
-                    _p_create_info: *const RenderPassCreateInfo,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_create_info: *const RenderPassCreateInfo<'_>,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                     _p_render_pass: *mut RenderPass,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_render_pass)))
@@ -2620,7 +2620,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_render_pass(
                     _device: Device,
                     _render_pass: RenderPass,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_render_pass)))
                 }
@@ -2657,8 +2657,8 @@ impl DeviceFnV1_0 {
             create_command_pool: unsafe {
                 unsafe extern "system" fn create_command_pool(
                     _device: Device,
-                    _p_create_info: *const CommandPoolCreateInfo,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_create_info: *const CommandPoolCreateInfo<'_>,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                     _p_command_pool: *mut CommandPool,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_command_pool)))
@@ -2676,7 +2676,7 @@ impl DeviceFnV1_0 {
                 unsafe extern "system" fn destroy_command_pool(
                     _device: Device,
                     _command_pool: CommandPool,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_command_pool)))
                 }
@@ -2709,7 +2709,7 @@ impl DeviceFnV1_0 {
             allocate_command_buffers: unsafe {
                 unsafe extern "system" fn allocate_command_buffers(
                     _device: Device,
-                    _p_allocate_info: *const CommandBufferAllocateInfo,
+                    _p_allocate_info: *const CommandBufferAllocateInfo<'_>,
                     _p_command_buffers: *mut CommandBuffer,
                 ) -> Result {
                     panic!(concat!(
@@ -2747,7 +2747,7 @@ impl DeviceFnV1_0 {
             begin_command_buffer: unsafe {
                 unsafe extern "system" fn begin_command_buffer(
                     _command_buffer: CommandBuffer,
-                    _p_begin_info: *const CommandBufferBeginInfo,
+                    _p_begin_info: *const CommandBufferBeginInfo<'_>,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(begin_command_buffer)))
                 }
@@ -3422,11 +3422,11 @@ impl DeviceFnV1_0 {
                     _src_stage_mask: PipelineStageFlags,
                     _dst_stage_mask: PipelineStageFlags,
                     _memory_barrier_count: u32,
-                    _p_memory_barriers: *const MemoryBarrier,
+                    _p_memory_barriers: *const MemoryBarrier<'_>,
                     _buffer_memory_barrier_count: u32,
-                    _p_buffer_memory_barriers: *const BufferMemoryBarrier,
+                    _p_buffer_memory_barriers: *const BufferMemoryBarrier<'_>,
                     _image_memory_barrier_count: u32,
-                    _p_image_memory_barriers: *const ImageMemoryBarrier,
+                    _p_image_memory_barriers: *const ImageMemoryBarrier<'_>,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_wait_events)))
                 }
@@ -3445,11 +3445,11 @@ impl DeviceFnV1_0 {
                     _dst_stage_mask: PipelineStageFlags,
                     _dependency_flags: DependencyFlags,
                     _memory_barrier_count: u32,
-                    _p_memory_barriers: *const MemoryBarrier,
+                    _p_memory_barriers: *const MemoryBarrier<'_>,
                     _buffer_memory_barrier_count: u32,
-                    _p_buffer_memory_barriers: *const BufferMemoryBarrier,
+                    _p_buffer_memory_barriers: *const BufferMemoryBarrier<'_>,
                     _image_memory_barrier_count: u32,
-                    _p_image_memory_barriers: *const ImageMemoryBarrier,
+                    _p_image_memory_barriers: *const ImageMemoryBarrier<'_>,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_pipeline_barrier)))
                 }
@@ -3579,7 +3579,7 @@ impl DeviceFnV1_0 {
             cmd_begin_render_pass: unsafe {
                 unsafe extern "system" fn cmd_begin_render_pass(
                     _command_buffer: CommandBuffer,
-                    _p_render_pass_begin: *const RenderPassBeginInfo,
+                    _p_render_pass_begin: *const RenderPassBeginInfo<'_>,
                     _contents: SubpassContents,
                 ) {
                     panic!(concat!(
@@ -3713,7 +3713,7 @@ impl InstanceFnV1_1 {
                 unsafe extern "system" fn enumerate_physical_device_groups(
                     _instance: Instance,
                     _p_physical_device_group_count: *mut u32,
-                    _p_physical_device_group_properties: *mut PhysicalDeviceGroupProperties,
+                    _p_physical_device_group_properties: *mut PhysicalDeviceGroupProperties<'_>,
                 ) -> Result {
                     panic!(concat!(
                         "Unable to load ",
@@ -3733,7 +3733,7 @@ impl InstanceFnV1_1 {
             get_physical_device_features2: unsafe {
                 unsafe extern "system" fn get_physical_device_features2(
                     _physical_device: PhysicalDevice,
-                    _p_features: *mut PhysicalDeviceFeatures2,
+                    _p_features: *mut PhysicalDeviceFeatures2<'_>,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -3753,7 +3753,7 @@ impl InstanceFnV1_1 {
             get_physical_device_properties2: unsafe {
                 unsafe extern "system" fn get_physical_device_properties2(
                     _physical_device: PhysicalDevice,
-                    _p_properties: *mut PhysicalDeviceProperties2,
+                    _p_properties: *mut PhysicalDeviceProperties2<'_>,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -3774,7 +3774,7 @@ impl InstanceFnV1_1 {
                 unsafe extern "system" fn get_physical_device_format_properties2(
                     _physical_device: PhysicalDevice,
                     _format: Format,
-                    _p_format_properties: *mut FormatProperties2,
+                    _p_format_properties: *mut FormatProperties2<'_>,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -3794,8 +3794,8 @@ impl InstanceFnV1_1 {
             get_physical_device_image_format_properties2: unsafe {
                 unsafe extern "system" fn get_physical_device_image_format_properties2(
                     _physical_device: PhysicalDevice,
-                    _p_image_format_info: *const PhysicalDeviceImageFormatInfo2,
-                    _p_image_format_properties: *mut ImageFormatProperties2,
+                    _p_image_format_info: *const PhysicalDeviceImageFormatInfo2<'_>,
+                    _p_image_format_properties: *mut ImageFormatProperties2<'_>,
                 ) -> Result {
                     panic!(concat!(
                         "Unable to load ",
@@ -3816,7 +3816,7 @@ impl InstanceFnV1_1 {
                 unsafe extern "system" fn get_physical_device_queue_family_properties2(
                     _physical_device: PhysicalDevice,
                     _p_queue_family_property_count: *mut u32,
-                    _p_queue_family_properties: *mut QueueFamilyProperties2,
+                    _p_queue_family_properties: *mut QueueFamilyProperties2<'_>,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -3836,7 +3836,7 @@ impl InstanceFnV1_1 {
             get_physical_device_memory_properties2: unsafe {
                 unsafe extern "system" fn get_physical_device_memory_properties2(
                     _physical_device: PhysicalDevice,
-                    _p_memory_properties: *mut PhysicalDeviceMemoryProperties2,
+                    _p_memory_properties: *mut PhysicalDeviceMemoryProperties2<'_>,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -3856,9 +3856,9 @@ impl InstanceFnV1_1 {
             get_physical_device_sparse_image_format_properties2: unsafe {
                 unsafe extern "system" fn get_physical_device_sparse_image_format_properties2(
                     _physical_device: PhysicalDevice,
-                    _p_format_info: *const PhysicalDeviceSparseImageFormatInfo2,
+                    _p_format_info: *const PhysicalDeviceSparseImageFormatInfo2<'_>,
                     _p_property_count: *mut u32,
-                    _p_properties: *mut SparseImageFormatProperties2,
+                    _p_properties: *mut SparseImageFormatProperties2<'_>,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -3878,8 +3878,8 @@ impl InstanceFnV1_1 {
             get_physical_device_external_buffer_properties: unsafe {
                 unsafe extern "system" fn get_physical_device_external_buffer_properties(
                     _physical_device: PhysicalDevice,
-                    _p_external_buffer_info: *const PhysicalDeviceExternalBufferInfo,
-                    _p_external_buffer_properties: *mut ExternalBufferProperties,
+                    _p_external_buffer_info: *const PhysicalDeviceExternalBufferInfo<'_>,
+                    _p_external_buffer_properties: *mut ExternalBufferProperties<'_>,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -3899,8 +3899,8 @@ impl InstanceFnV1_1 {
             get_physical_device_external_fence_properties: unsafe {
                 unsafe extern "system" fn get_physical_device_external_fence_properties(
                     _physical_device: PhysicalDevice,
-                    _p_external_fence_info: *const PhysicalDeviceExternalFenceInfo,
-                    _p_external_fence_properties: *mut ExternalFenceProperties,
+                    _p_external_fence_info: *const PhysicalDeviceExternalFenceInfo<'_>,
+                    _p_external_fence_properties: *mut ExternalFenceProperties<'_>,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -3920,8 +3920,8 @@ impl InstanceFnV1_1 {
             get_physical_device_external_semaphore_properties: unsafe {
                 unsafe extern "system" fn get_physical_device_external_semaphore_properties(
                     _physical_device: PhysicalDevice,
-                    _p_external_semaphore_info: *const PhysicalDeviceExternalSemaphoreInfo,
-                    _p_external_semaphore_properties: *mut ExternalSemaphoreProperties,
+                    _p_external_semaphore_info: *const PhysicalDeviceExternalSemaphoreInfo<'_>,
+                    _p_external_semaphore_properties: *mut ExternalSemaphoreProperties<'_>,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -3944,7 +3944,7 @@ impl InstanceFnV1_1 {
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDeviceQueue2 = unsafe extern "system" fn(
     device: Device,
-    p_queue_info: *const DeviceQueueInfo2,
+    p_queue_info: *const DeviceQueueInfo2<'_>,
     p_queue: *mut Queue,
 );
 #[derive(Clone)]
@@ -3978,7 +3978,7 @@ impl DeviceFnV1_1 {
                 unsafe extern "system" fn bind_buffer_memory2(
                     _device: Device,
                     _bind_info_count: u32,
-                    _p_bind_infos: *const BindBufferMemoryInfo,
+                    _p_bind_infos: *const BindBufferMemoryInfo<'_>,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(bind_buffer_memory2)))
                 }
@@ -3995,7 +3995,7 @@ impl DeviceFnV1_1 {
                 unsafe extern "system" fn bind_image_memory2(
                     _device: Device,
                     _bind_info_count: u32,
-                    _p_bind_infos: *const BindImageMemoryInfo,
+                    _p_bind_infos: *const BindImageMemoryInfo<'_>,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(bind_image_memory2)))
                 }
@@ -4070,8 +4070,8 @@ impl DeviceFnV1_1 {
             get_image_memory_requirements2: unsafe {
                 unsafe extern "system" fn get_image_memory_requirements2(
                     _device: Device,
-                    _p_info: *const ImageMemoryRequirementsInfo2,
-                    _p_memory_requirements: *mut MemoryRequirements2,
+                    _p_info: *const ImageMemoryRequirementsInfo2<'_>,
+                    _p_memory_requirements: *mut MemoryRequirements2<'_>,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -4091,8 +4091,8 @@ impl DeviceFnV1_1 {
             get_buffer_memory_requirements2: unsafe {
                 unsafe extern "system" fn get_buffer_memory_requirements2(
                     _device: Device,
-                    _p_info: *const BufferMemoryRequirementsInfo2,
-                    _p_memory_requirements: *mut MemoryRequirements2,
+                    _p_info: *const BufferMemoryRequirementsInfo2<'_>,
+                    _p_memory_requirements: *mut MemoryRequirements2<'_>,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -4112,9 +4112,9 @@ impl DeviceFnV1_1 {
             get_image_sparse_memory_requirements2: unsafe {
                 unsafe extern "system" fn get_image_sparse_memory_requirements2(
                     _device: Device,
-                    _p_info: *const ImageSparseMemoryRequirementsInfo2,
+                    _p_info: *const ImageSparseMemoryRequirementsInfo2<'_>,
                     _p_sparse_memory_requirement_count: *mut u32,
-                    _p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2,
+                    _p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2<'_>,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -4150,7 +4150,7 @@ impl DeviceFnV1_1 {
             get_device_queue2: unsafe {
                 unsafe extern "system" fn get_device_queue2(
                     _device: Device,
-                    _p_queue_info: *const DeviceQueueInfo2,
+                    _p_queue_info: *const DeviceQueueInfo2<'_>,
                     _p_queue: *mut Queue,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(get_device_queue2)))
@@ -4166,8 +4166,8 @@ impl DeviceFnV1_1 {
             create_sampler_ycbcr_conversion: unsafe {
                 unsafe extern "system" fn create_sampler_ycbcr_conversion(
                     _device: Device,
-                    _p_create_info: *const SamplerYcbcrConversionCreateInfo,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_create_info: *const SamplerYcbcrConversionCreateInfo<'_>,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                     _p_ycbcr_conversion: *mut SamplerYcbcrConversion,
                 ) -> Result {
                     panic!(concat!(
@@ -4189,7 +4189,7 @@ impl DeviceFnV1_1 {
                 unsafe extern "system" fn destroy_sampler_ycbcr_conversion(
                     _device: Device,
                     _ycbcr_conversion: SamplerYcbcrConversion,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -4209,8 +4209,8 @@ impl DeviceFnV1_1 {
             create_descriptor_update_template: unsafe {
                 unsafe extern "system" fn create_descriptor_update_template(
                     _device: Device,
-                    _p_create_info: *const DescriptorUpdateTemplateCreateInfo,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_create_info: *const DescriptorUpdateTemplateCreateInfo<'_>,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                     _p_descriptor_update_template: *mut DescriptorUpdateTemplate,
                 ) -> Result {
                     panic!(concat!(
@@ -4232,7 +4232,7 @@ impl DeviceFnV1_1 {
                 unsafe extern "system" fn destroy_descriptor_update_template(
                     _device: Device,
                     _descriptor_update_template: DescriptorUpdateTemplate,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -4274,8 +4274,8 @@ impl DeviceFnV1_1 {
             get_descriptor_set_layout_support: unsafe {
                 unsafe extern "system" fn get_descriptor_set_layout_support(
                     _device: Device,
-                    _p_create_info: *const DescriptorSetLayoutCreateInfo,
-                    _p_support: *mut DescriptorSetLayoutSupport,
+                    _p_create_info: *const DescriptorSetLayoutCreateInfo<'_>,
+                    _p_support: *mut DescriptorSetLayoutSupport<'_>,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -4376,8 +4376,8 @@ impl DeviceFnV1_2 {
             create_render_pass2: unsafe {
                 unsafe extern "system" fn create_render_pass2(
                     _device: Device,
-                    _p_create_info: *const RenderPassCreateInfo2,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_create_info: *const RenderPassCreateInfo2<'_>,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                     _p_render_pass: *mut RenderPass,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(create_render_pass2)))
@@ -4394,8 +4394,8 @@ impl DeviceFnV1_2 {
             cmd_begin_render_pass2: unsafe {
                 unsafe extern "system" fn cmd_begin_render_pass2(
                     _command_buffer: CommandBuffer,
-                    _p_render_pass_begin: *const RenderPassBeginInfo,
-                    _p_subpass_begin_info: *const SubpassBeginInfo,
+                    _p_render_pass_begin: *const RenderPassBeginInfo<'_>,
+                    _p_subpass_begin_info: *const SubpassBeginInfo<'_>,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -4414,8 +4414,8 @@ impl DeviceFnV1_2 {
             cmd_next_subpass2: unsafe {
                 unsafe extern "system" fn cmd_next_subpass2(
                     _command_buffer: CommandBuffer,
-                    _p_subpass_begin_info: *const SubpassBeginInfo,
-                    _p_subpass_end_info: *const SubpassEndInfo,
+                    _p_subpass_begin_info: *const SubpassBeginInfo<'_>,
+                    _p_subpass_end_info: *const SubpassEndInfo<'_>,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_next_subpass2)))
                 }
@@ -4430,7 +4430,7 @@ impl DeviceFnV1_2 {
             cmd_end_render_pass2: unsafe {
                 unsafe extern "system" fn cmd_end_render_pass2(
                     _command_buffer: CommandBuffer,
-                    _p_subpass_end_info: *const SubpassEndInfo,
+                    _p_subpass_end_info: *const SubpassEndInfo<'_>,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_end_render_pass2)))
                 }
@@ -4484,7 +4484,7 @@ impl DeviceFnV1_2 {
             wait_semaphores: unsafe {
                 unsafe extern "system" fn wait_semaphores(
                     _device: Device,
-                    _p_wait_info: *const SemaphoreWaitInfo,
+                    _p_wait_info: *const SemaphoreWaitInfo<'_>,
                     _timeout: u64,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(wait_semaphores)))
@@ -4500,7 +4500,7 @@ impl DeviceFnV1_2 {
             signal_semaphore: unsafe {
                 unsafe extern "system" fn signal_semaphore(
                     _device: Device,
-                    _p_signal_info: *const SemaphoreSignalInfo,
+                    _p_signal_info: *const SemaphoreSignalInfo<'_>,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(signal_semaphore)))
                 }
@@ -4515,7 +4515,7 @@ impl DeviceFnV1_2 {
             get_buffer_device_address: unsafe {
                 unsafe extern "system" fn get_buffer_device_address(
                     _device: Device,
-                    _p_info: *const BufferDeviceAddressInfo,
+                    _p_info: *const BufferDeviceAddressInfo<'_>,
                 ) -> DeviceAddress {
                     panic!(concat!(
                         "Unable to load ",
@@ -4534,7 +4534,7 @@ impl DeviceFnV1_2 {
             get_buffer_opaque_capture_address: unsafe {
                 unsafe extern "system" fn get_buffer_opaque_capture_address(
                     _device: Device,
-                    _p_info: *const BufferDeviceAddressInfo,
+                    _p_info: *const BufferDeviceAddressInfo<'_>,
                 ) -> u64 {
                     panic!(concat!(
                         "Unable to load ",
@@ -4554,7 +4554,7 @@ impl DeviceFnV1_2 {
             get_device_memory_opaque_capture_address: unsafe {
                 unsafe extern "system" fn get_device_memory_opaque_capture_address(
                     _device: Device,
-                    _p_info: *const DeviceMemoryOpaqueCaptureAddressInfo,
+                    _p_info: *const DeviceMemoryOpaqueCaptureAddressInfo<'_>,
                 ) -> u64 {
                     panic!(concat!(
                         "Unable to load ",
@@ -4592,7 +4592,7 @@ impl InstanceFnV1_3 {
                 unsafe extern "system" fn get_physical_device_tool_properties(
                     _physical_device: PhysicalDevice,
                     _p_tool_count: *mut u32,
-                    _p_tool_properties: *mut PhysicalDeviceToolProperties,
+                    _p_tool_properties: *mut PhysicalDeviceToolProperties<'_>,
                 ) -> Result {
                     panic!(concat!(
                         "Unable to load ",
@@ -4663,8 +4663,8 @@ impl DeviceFnV1_3 {
             create_private_data_slot: unsafe {
                 unsafe extern "system" fn create_private_data_slot(
                     _device: Device,
-                    _p_create_info: *const PrivateDataSlotCreateInfo,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_create_info: *const PrivateDataSlotCreateInfo<'_>,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                     _p_private_data_slot: *mut PrivateDataSlot,
                 ) -> Result {
                     panic!(concat!(
@@ -4685,7 +4685,7 @@ impl DeviceFnV1_3 {
                 unsafe extern "system" fn destroy_private_data_slot(
                     _device: Device,
                     _private_data_slot: PrivateDataSlot,
-                    _p_allocator: *const AllocationCallbacks,
+                    _p_allocator: *const AllocationCallbacks<'_>,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -4741,7 +4741,7 @@ impl DeviceFnV1_3 {
                 unsafe extern "system" fn cmd_set_event2(
                     _command_buffer: CommandBuffer,
                     _event: Event,
-                    _p_dependency_info: *const DependencyInfo,
+                    _p_dependency_info: *const DependencyInfo<'_>,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_set_event2)))
                 }
@@ -4774,7 +4774,7 @@ impl DeviceFnV1_3 {
                     _command_buffer: CommandBuffer,
                     _event_count: u32,
                     _p_events: *const Event,
-                    _p_dependency_infos: *const DependencyInfo,
+                    _p_dependency_infos: *const DependencyInfo<'_>,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_wait_events2)))
                 }
@@ -4789,7 +4789,7 @@ impl DeviceFnV1_3 {
             cmd_pipeline_barrier2: unsafe {
                 unsafe extern "system" fn cmd_pipeline_barrier2(
                     _command_buffer: CommandBuffer,
-                    _p_dependency_info: *const DependencyInfo,
+                    _p_dependency_info: *const DependencyInfo<'_>,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -4827,7 +4827,7 @@ impl DeviceFnV1_3 {
                 unsafe extern "system" fn queue_submit2(
                     _queue: Queue,
                     _submit_count: u32,
-                    _p_submits: *const SubmitInfo2,
+                    _p_submits: *const SubmitInfo2<'_>,
                     _fence: Fence,
                 ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(queue_submit2)))
@@ -4843,7 +4843,7 @@ impl DeviceFnV1_3 {
             cmd_copy_buffer2: unsafe {
                 unsafe extern "system" fn cmd_copy_buffer2(
                     _command_buffer: CommandBuffer,
-                    _p_copy_buffer_info: *const CopyBufferInfo2,
+                    _p_copy_buffer_info: *const CopyBufferInfo2<'_>,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_copy_buffer2)))
                 }
@@ -4858,7 +4858,7 @@ impl DeviceFnV1_3 {
             cmd_copy_image2: unsafe {
                 unsafe extern "system" fn cmd_copy_image2(
                     _command_buffer: CommandBuffer,
-                    _p_copy_image_info: *const CopyImageInfo2,
+                    _p_copy_image_info: *const CopyImageInfo2<'_>,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_copy_image2)))
                 }
@@ -4873,7 +4873,7 @@ impl DeviceFnV1_3 {
             cmd_copy_buffer_to_image2: unsafe {
                 unsafe extern "system" fn cmd_copy_buffer_to_image2(
                     _command_buffer: CommandBuffer,
-                    _p_copy_buffer_to_image_info: *const CopyBufferToImageInfo2,
+                    _p_copy_buffer_to_image_info: *const CopyBufferToImageInfo2<'_>,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -4892,7 +4892,7 @@ impl DeviceFnV1_3 {
             cmd_copy_image_to_buffer2: unsafe {
                 unsafe extern "system" fn cmd_copy_image_to_buffer2(
                     _command_buffer: CommandBuffer,
-                    _p_copy_image_to_buffer_info: *const CopyImageToBufferInfo2,
+                    _p_copy_image_to_buffer_info: *const CopyImageToBufferInfo2<'_>,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -4911,7 +4911,7 @@ impl DeviceFnV1_3 {
             cmd_blit_image2: unsafe {
                 unsafe extern "system" fn cmd_blit_image2(
                     _command_buffer: CommandBuffer,
-                    _p_blit_image_info: *const BlitImageInfo2,
+                    _p_blit_image_info: *const BlitImageInfo2<'_>,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_blit_image2)))
                 }
@@ -4926,7 +4926,7 @@ impl DeviceFnV1_3 {
             cmd_resolve_image2: unsafe {
                 unsafe extern "system" fn cmd_resolve_image2(
                     _command_buffer: CommandBuffer,
-                    _p_resolve_image_info: *const ResolveImageInfo2,
+                    _p_resolve_image_info: *const ResolveImageInfo2<'_>,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_resolve_image2)))
                 }
@@ -4942,7 +4942,7 @@ impl DeviceFnV1_3 {
             cmd_begin_rendering: unsafe {
                 unsafe extern "system" fn cmd_begin_rendering(
                     _command_buffer: CommandBuffer,
-                    _p_rendering_info: *const RenderingInfo,
+                    _p_rendering_info: *const RenderingInfo<'_>,
                 ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_begin_rendering)))
                 }
@@ -5257,8 +5257,8 @@ impl DeviceFnV1_3 {
             get_device_buffer_memory_requirements: unsafe {
                 unsafe extern "system" fn get_device_buffer_memory_requirements(
                     _device: Device,
-                    _p_info: *const DeviceBufferMemoryRequirements,
-                    _p_memory_requirements: *mut MemoryRequirements2,
+                    _p_info: *const DeviceBufferMemoryRequirements<'_>,
+                    _p_memory_requirements: *mut MemoryRequirements2<'_>,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -5278,8 +5278,8 @@ impl DeviceFnV1_3 {
             get_device_image_memory_requirements: unsafe {
                 unsafe extern "system" fn get_device_image_memory_requirements(
                     _device: Device,
-                    _p_info: *const DeviceImageMemoryRequirements,
-                    _p_memory_requirements: *mut MemoryRequirements2,
+                    _p_info: *const DeviceImageMemoryRequirements<'_>,
+                    _p_memory_requirements: *mut MemoryRequirements2<'_>,
                 ) {
                     panic!(concat!(
                         "Unable to load ",
@@ -5299,9 +5299,9 @@ impl DeviceFnV1_3 {
             get_device_image_sparse_memory_requirements: unsafe {
                 unsafe extern "system" fn get_device_image_sparse_memory_requirements(
                     _device: Device,
-                    _p_info: *const DeviceImageMemoryRequirements,
+                    _p_info: *const DeviceImageMemoryRequirements<'_>,
                     _p_sparse_memory_requirement_count: *mut u32,
-                    _p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2,
+                    _p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2<'_>,
                 ) {
                     panic!(concat!(
                         "Unable to load ",

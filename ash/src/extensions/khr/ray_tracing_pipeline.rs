@@ -51,8 +51,8 @@ impl RayTracingPipeline {
         &self,
         deferred_operation: vk::DeferredOperationKHR,
         pipeline_cache: vk::PipelineCache,
-        create_info: &[vk::RayTracingPipelineCreateInfoKHR],
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &[vk::RayTracingPipelineCreateInfoKHR<'_>],
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<Vec<vk::Pipeline>> {
         let mut pipelines = vec![mem::zeroed(); create_info.len()];
         (self.fp.create_ray_tracing_pipelines_khr)(

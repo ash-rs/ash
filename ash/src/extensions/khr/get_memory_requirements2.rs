@@ -23,8 +23,8 @@ impl GetMemoryRequirements2 {
     #[inline]
     pub unsafe fn get_buffer_memory_requirements2(
         &self,
-        info: &vk::BufferMemoryRequirementsInfo2KHR,
-        memory_requirements: &mut vk::MemoryRequirements2KHR,
+        info: &vk::BufferMemoryRequirementsInfo2KHR<'_>,
+        memory_requirements: &mut vk::MemoryRequirements2KHR<'_>,
     ) {
         (self.fp.get_buffer_memory_requirements2_khr)(self.handle, info, memory_requirements);
     }
@@ -33,8 +33,8 @@ impl GetMemoryRequirements2 {
     #[inline]
     pub unsafe fn get_image_memory_requirements2(
         &self,
-        info: &vk::ImageMemoryRequirementsInfo2KHR,
-        memory_requirements: &mut vk::MemoryRequirements2KHR,
+        info: &vk::ImageMemoryRequirementsInfo2KHR<'_>,
+        memory_requirements: &mut vk::MemoryRequirements2KHR<'_>,
     ) {
         (self.fp.get_image_memory_requirements2_khr)(self.handle, info, memory_requirements);
     }
@@ -43,7 +43,7 @@ impl GetMemoryRequirements2 {
     #[inline]
     pub unsafe fn get_image_sparse_memory_requirements2_len(
         &self,
-        info: &vk::ImageSparseMemoryRequirementsInfo2KHR,
+        info: &vk::ImageSparseMemoryRequirementsInfo2KHR<'_>,
     ) -> usize {
         let mut count = 0;
         (self.fp.get_image_sparse_memory_requirements2_khr)(
@@ -62,8 +62,8 @@ impl GetMemoryRequirements2 {
     #[inline]
     pub unsafe fn get_image_sparse_memory_requirements2(
         &self,
-        info: &vk::ImageSparseMemoryRequirementsInfo2KHR,
-        out: &mut [vk::SparseImageMemoryRequirements2KHR],
+        info: &vk::ImageSparseMemoryRequirementsInfo2KHR<'_>,
+        out: &mut [vk::SparseImageMemoryRequirements2KHR<'_>],
     ) {
         let mut count = out.len() as u32;
         (self.fp.get_image_sparse_memory_requirements2_khr)(

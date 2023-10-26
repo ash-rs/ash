@@ -23,8 +23,8 @@ impl DeviceGeneratedCommandsCompute {
     #[inline]
     pub unsafe fn get_pipeline_indirect_memory_requirements(
         &self,
-        create_info: &vk::ComputePipelineCreateInfo,
-        memory_requirements: &mut vk::MemoryRequirements2,
+        create_info: &vk::ComputePipelineCreateInfo<'_>,
+        memory_requirements: &mut vk::MemoryRequirements2<'_>,
     ) {
         (self.fp.get_pipeline_indirect_memory_requirements_nv)(
             self.handle,
@@ -52,7 +52,7 @@ impl DeviceGeneratedCommandsCompute {
     #[inline]
     pub unsafe fn get_pipeline_indirect_device_address(
         &self,
-        info: &vk::PipelineIndirectDeviceAddressInfoNV,
+        info: &vk::PipelineIndirectDeviceAddressInfoNV<'_>,
     ) -> vk::DeviceAddress {
         (self.fp.get_pipeline_indirect_device_address_nv)(self.handle, info)
     }

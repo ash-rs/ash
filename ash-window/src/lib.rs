@@ -37,7 +37,7 @@ pub unsafe fn create_surface(
     instance: &Instance,
     display_handle: RawDisplayHandle,
     window_handle: RawWindowHandle,
-    allocation_callbacks: Option<&vk::AllocationCallbacks>,
+    allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
 ) -> VkResult<vk::SurfaceKHR> {
     match (display_handle, window_handle) {
         (RawDisplayHandle::Windows(_), RawWindowHandle::Win32(window)) => {

@@ -23,8 +23,8 @@ impl Maintenance3 {
     #[inline]
     pub unsafe fn get_descriptor_set_layout_support(
         &self,
-        create_info: &vk::DescriptorSetLayoutCreateInfo,
-        out: &mut vk::DescriptorSetLayoutSupportKHR,
+        create_info: &vk::DescriptorSetLayoutCreateInfo<'_>,
+        out: &mut vk::DescriptorSetLayoutSupportKHR<'_>,
     ) {
         (self.fp.get_descriptor_set_layout_support_khr)(self.handle, create_info, out);
     }

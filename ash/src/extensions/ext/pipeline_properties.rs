@@ -24,7 +24,7 @@ impl PipelineProperties {
     #[inline]
     pub unsafe fn get_pipeline_properties(
         &self,
-        pipeline_info: &vk::PipelineInfoEXT,
+        pipeline_info: &vk::PipelineInfoEXT<'_>,
         pipeline_properties: &mut impl vk::GetPipelinePropertiesEXTParamPipelineProperties,
     ) -> VkResult<()> {
         (self.fp.get_pipeline_properties_ext)(

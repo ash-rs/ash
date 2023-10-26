@@ -35,8 +35,8 @@ impl ImageCompressionControl {
     pub unsafe fn get_image_subresource_layout2(
         &self,
         image: vk::Image,
-        subresource: &vk::ImageSubresource2EXT,
-        layout: &mut vk::SubresourceLayout2EXT,
+        subresource: &vk::ImageSubresource2EXT<'_>,
+        layout: &mut vk::SubresourceLayout2EXT<'_>,
     ) {
         (self.fp.get_image_subresource_layout2_ext)(self.handle, image, subresource, layout)
     }

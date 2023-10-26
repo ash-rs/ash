@@ -44,7 +44,7 @@ impl DeviceDiagnosticCheckpoints {
     pub unsafe fn get_queue_checkpoint_data(
         &self,
         queue: vk::Queue,
-        out: &mut [vk::CheckpointDataNV],
+        out: &mut [vk::CheckpointDataNV<'_>],
     ) {
         let mut count = out.len() as u32;
         (self.fp.get_queue_checkpoint_data_nv)(queue, &mut count, out.as_mut_ptr());

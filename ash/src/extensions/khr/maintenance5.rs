@@ -38,7 +38,7 @@ impl Maintenance5 {
     #[inline]
     pub unsafe fn get_rendering_area_granularity(
         &self,
-        rendering_area_info: &vk::RenderingAreaInfoKHR,
+        rendering_area_info: &vk::RenderingAreaInfoKHR<'_>,
     ) -> vk::Extent2D {
         let mut granularity = mem::zeroed();
         (self.fp.get_rendering_area_granularity_khr)(
@@ -53,8 +53,8 @@ impl Maintenance5 {
     #[inline]
     pub unsafe fn get_device_image_subresource_layout(
         &self,
-        info: &vk::DeviceImageSubresourceInfoKHR,
-        layout: &mut vk::SubresourceLayout2KHR,
+        info: &vk::DeviceImageSubresourceInfoKHR<'_>,
+        layout: &mut vk::SubresourceLayout2KHR<'_>,
     ) {
         (self.fp.get_device_image_subresource_layout_khr)(self.handle, info, layout)
     }
@@ -73,8 +73,8 @@ impl Maintenance5 {
     pub unsafe fn get_image_subresource_layout2(
         &self,
         image: vk::Image,
-        subresource: &vk::ImageSubresource2KHR,
-        layout: &mut vk::SubresourceLayout2KHR,
+        subresource: &vk::ImageSubresource2KHR<'_>,
+        layout: &mut vk::SubresourceLayout2KHR<'_>,
     ) {
         (self.fp.get_image_subresource_layout2_khr)(self.handle, image, subresource, layout)
     }

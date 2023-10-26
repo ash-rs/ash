@@ -21,7 +21,7 @@ pub struct Align<T> {
 }
 
 #[derive(Debug)]
-pub struct AlignIter<'a, T: 'a> {
+pub struct AlignIter<'a, T> {
     align: &'a mut Align<T>,
     current: vk::DeviceSize,
 }
@@ -59,7 +59,7 @@ impl<T> Align<T> {
         }
     }
 
-    pub fn iter_mut(&mut self) -> AlignIter<T> {
+    pub fn iter_mut(&mut self) -> AlignIter<'_, T> {
         AlignIter {
             current: 0,
             align: self,
@@ -113,7 +113,7 @@ pub fn read_spv<R: io::Read + io::Seek>(x: &mut R) -> io::Result<Vec<u32>> {
             "input length not divisible by 4",
         ));
     }
-    if size > usize::max_value() as u64 {
+    if size > usize::MAX as u64 {
         return Err(io::Error::new(io::ErrorKind::InvalidData, "input too long"));
     }
     let words = (size / 4) as usize;

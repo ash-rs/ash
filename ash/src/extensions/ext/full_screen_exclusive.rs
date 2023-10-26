@@ -33,7 +33,7 @@ impl FullScreenExclusive {
     pub unsafe fn get_physical_device_surface_present_modes2(
         &self,
         physical_device: vk::PhysicalDevice,
-        surface_info: &vk::PhysicalDeviceSurfaceInfo2KHR,
+        surface_info: &vk::PhysicalDeviceSurfaceInfo2KHR<'_>,
     ) -> VkResult<Vec<vk::PresentModeKHR>> {
         read_into_uninitialized_vector(|count, data| {
             (self.fp.get_physical_device_surface_present_modes2_ext)(
@@ -58,7 +58,7 @@ impl FullScreenExclusive {
     #[inline]
     pub unsafe fn get_device_group_surface_present_modes2(
         &self,
-        surface_info: &vk::PhysicalDeviceSurfaceInfo2KHR,
+        surface_info: &vk::PhysicalDeviceSurfaceInfo2KHR<'_>,
     ) -> VkResult<vk::DeviceGroupPresentModeFlagsKHR> {
         let mut present_modes = mem::zeroed();
         (self.fp.get_device_group_surface_present_modes2_ext)(

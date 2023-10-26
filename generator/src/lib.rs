@@ -1,5 +1,12 @@
 #![recursion_limit = "256"]
-#![warn(trivial_casts, trivial_numeric_casts)]
+#![warn(
+    clippy::use_self,
+    deprecated_in_future,
+    rust_2018_idioms,
+    trivial_casts,
+    trivial_numeric_casts,
+    unused_qualifications
+)]
 
 use heck::{ToShoutySnakeCase, ToSnakeCase, ToUpperCamelCase};
 use itertools::Itertools;
@@ -198,7 +205,7 @@ struct CParameterType<'a> {
     reference_type: CReferenceType,
 }
 
-fn parse_c_type(i: &str) -> IResult<&str, CParameterType> {
+fn parse_c_type(i: &str) -> IResult<&str, CParameterType<'_>> {
     (map(
         separated_pair(
             tuple((
@@ -246,7 +253,7 @@ struct CParameter<'a> {
 /// ```c
 /// VkSparseImageMemoryRequirements2* pSparseMemoryRequirements
 /// ```
-fn parse_c_parameter(i: &str) -> IResult<&str, CParameter> {
+fn parse_c_parameter(i: &str) -> IResult<&str, CParameter<'_>> {
     (map(
         separated_pair(
             parse_c_type,
@@ -295,7 +302,7 @@ pub enum ConstVal {
 impl ConstVal {
     pub fn bits(&self) -> u64 {
         match self {
-            ConstVal::U64(n) => *n,
+            Self::U64(n) => *n,
             _ => panic!("Constval not supported"),
         }
     }
@@ -385,27 +392,27 @@ pub enum Constant {
 impl quote::ToTokens for Constant {
     fn to_tokens(&self, tokens: &mut TokenStream) {
         match *self {
-            Constant::Number(n) => {
+            Self::Number(n) => {
                 let number = interleave_number('_', 3, &n.to_string());
                 syn::LitInt::new(&number, Span::call_site()).to_tokens(tokens);
             }
-            Constant::Hex(ref s) => {
+            Self::Hex(ref s) => {
                 let number = interleave_number('_', 4, s);
                 syn::LitInt::new(&format!("0x{number}"), Span::call_site()).to_tokens(tokens);
             }
-            Constant::Text(ref text) => text.to_tokens(tokens),
-            Constant::CExpr(ref expr) => {
+            Self::Text(ref text) => text.to_tokens(tokens),
+            Self::CExpr(ref expr) => {
                 let (rem, (_, rexpr)) = parse_cexpr(expr).expect("Unable to parse cexpr");
                 assert!(rem.is_empty());
                 tokens.extend(rexpr.parse::<TokenStream>());
             }
-            Constant::BitPos(pos) => {
+            Self::BitPos(pos) => {
                 let value = 1u64 << pos;
                 let bit_string = format!("{value:b}");
                 let bit_string = interleave_number('_', 4, &bit_string);
                 syn::LitInt::new(&format!("0b{bit_string}"), Span::call_site()).to_tokens(tokens);
             }
-            Constant::Alias(ref value) => tokens.extend(quote!(Self::#value)),
+            Self::Alias(ref value) => tokens.extend(quote!(Self::#value)),
         }
     }
 }
@@ -413,9 +420,9 @@ impl quote::ToTokens for Constant {
 impl quote::ToTokens for ConstVal {
     fn to_tokens(&self, tokens: &mut TokenStream) {
         match self {
-            ConstVal::U32(n) => n.to_tokens(tokens),
-            ConstVal::U64(n) => n.to_tokens(tokens),
-            ConstVal::Float(f) => f.to_tokens(tokens),
+            Self::U32(n) => n.to_tokens(tokens),
+            Self::U64(n) => n.to_tokens(tokens),
+            Self::Float(f) => f.to_tokens(tokens),
         }
     }
 }
@@ -438,17 +445,17 @@ fn interleave_number(symbol: char, count: usize, n: &str) -> String {
 impl Constant {
     pub fn value(&self) -> Option<ConstVal> {
         match *self {
-            Constant::Number(n) => Some(ConstVal::U64(n as u64)),
-            Constant::Hex(ref hex) => u64::from_str_radix(hex, 16).ok().map(ConstVal::U64),
-            Constant::BitPos(pos) => Some(ConstVal::U64(1u64 << pos)),
+            Self::Number(n) => Some(ConstVal::U64(n as u64)),
+            Self::Hex(ref hex) => u64::from_str_radix(hex, 16).ok().map(ConstVal::U64),
+            Self::BitPos(pos) => Some(ConstVal::U64(1u64 << pos)),
             _ => None,
         }
     }
 
     pub fn ty(&self) -> CType {
         match self {
-            Constant::Number(_) | Constant::Hex(_) => CType::USize,
-            Constant::CExpr(expr) => {
+            Self::Number(_) | Self::Hex(_) => CType::USize,
+            Self::CExpr(expr) => {
                 let (rem, (ty, _)) = parse_cexpr(expr).expect("Unable to parse cexpr");
                 assert!(rem.is_empty());
                 ty
@@ -459,23 +466,23 @@ impl Constant {
 
     pub fn from_extension_enum(constant: &vkxml::ExtensionEnum) -> Option<Self> {
         let number = constant.number.map(Constant::Number);
-        let hex = constant.hex.as_ref().map(|hex| Constant::Hex(hex.clone()));
+        let hex = constant.hex.as_ref().map(|hex| Self::Hex(hex.clone()));
         let bitpos = constant.bitpos.map(Constant::BitPos);
         let expr = constant
             .c_expression
             .as_ref()
-            .map(|e| Constant::CExpr(e.clone()));
+            .map(|e| Self::CExpr(e.clone()));
         number.or(hex).or(bitpos).or(expr)
     }
 
     pub fn from_constant(constant: &vkxml::Constant) -> Self {
         let number = constant.number.map(Constant::Number);
-        let hex = constant.hex.as_ref().map(|hex| Constant::Hex(hex.clone()));
+        let hex = constant.hex.as_ref().map(|hex| Self::Hex(hex.clone()));
         let bitpos = constant.bitpos.map(Constant::BitPos);
         let expr = constant
             .c_expression
             .as_ref()
-            .map(|e| Constant::CExpr(e.clone()));
+            .map(|e| Self::CExpr(e.clone()));
         number.or(hex).or(bitpos).or(expr).expect("")
     }
 
@@ -593,12 +600,17 @@ pub trait FieldExt {
 
     /// Returns reference-types wrapped in their safe variant. (Dynamic) arrays become
     /// slices, pointers become Rust references.
-    fn safe_type_tokens(&self, lifetime: TokenStream, inner_length: Option<usize>) -> TokenStream;
+    fn safe_type_tokens(
+        &self,
+        lifetime: TokenStream,
+        type_lifetime: Option<TokenStream>,
+        inner_length: Option<usize>,
+    ) -> TokenStream;
 
     /// Returns the basetype ident and removes the 'Vk' prefix. When `is_ffi_param` is `true`
     /// array types (e.g. `[f32; 3]`) will be converted to pointer types (e.g. `&[f32; 3]`),
     /// which is needed for `C` function parameters. Set to `false` for struct definitions.
-    fn type_tokens(&self, is_ffi_param: bool) -> TokenStream;
+    fn type_tokens(&self, is_ffi_param: bool, type_lifetime: Option<TokenStream>) -> TokenStream;
 
     /// Whether this is C's `void` type (not to be mistaken with a void _pointer_!)
     fn is_void(&self) -> bool;
@@ -621,9 +633,9 @@ impl ToTokens for vkxml::ReferenceType {
             quote!(*mut)
         };
         match self {
-            vkxml::ReferenceType::Pointer => quote!(#r),
-            vkxml::ReferenceType::PointerToPointer => quote!(#r *mut),
-            vkxml::ReferenceType::PointerToConstPointer => quote!(#r *const),
+            Self::Pointer => quote!(#r),
+            Self::PointerToPointer => quote!(#r *mut),
+            Self::PointerToConstPointer => quote!(#r *const),
         }
     }
 
@@ -634,9 +646,9 @@ impl ToTokens for vkxml::ReferenceType {
             quote!(&#lifetime mut)
         };
         match self {
-            vkxml::ReferenceType::Pointer => quote!(#r),
-            vkxml::ReferenceType::PointerToPointer => quote!(#r *mut),
-            vkxml::ReferenceType::PointerToConstPointer => quote!(#r *const),
+            Self::Pointer => quote!(#r),
+            Self::PointerToPointer => quote!(#r *mut),
+            Self::PointerToConstPointer => quote!(#r *const),
         }
     }
 }
@@ -763,14 +775,19 @@ impl FieldExt for vkxml::Field {
         }
     }
 
-    fn safe_type_tokens(&self, lifetime: TokenStream, inner_length: Option<usize>) -> TokenStream {
+    fn safe_type_tokens(
+        &self,
+        lifetime: TokenStream,
+        type_lifetime: Option<TokenStream>,
+        inner_length: Option<usize>,
+    ) -> TokenStream {
         assert!(!self.is_void());
         match self.array {
             // The outer type fn type_tokens() returns is [], which fits our "safe" prescription
-            Some(vkxml::ArrayType::Static) => self.type_tokens(false),
+            Some(vkxml::ArrayType::Static) => self.type_tokens(false, type_lifetime),
             Some(vkxml::ArrayType::Dynamic) => {
                 let ty = self.inner_type_tokens(Some(lifetime), inner_length);
-                quote!([#ty])
+                quote!([#ty #type_lifetime])
             }
             None => {
                 let ty = name_to_tokens(&self.basetype);
@@ -778,12 +795,12 @@ impl FieldExt for vkxml::Field {
                     .reference
                     .as_ref()
                     .map(|r| r.to_safe_tokens(self.is_const, lifetime));
-                quote!(#pointer #ty)
+                quote!(#pointer #ty #type_lifetime)
             }
         }
     }
 
-    fn type_tokens(&self, is_ffi_param: bool) -> TokenStream {
+    fn type_tokens(&self, is_ffi_param: bool, type_lifetime: Option<TokenStream>) -> TokenStream {
         assert!(!self.is_void());
         let ty = name_to_tokens(&self.basetype);
 
@@ -802,7 +819,7 @@ impl FieldExt for vkxml::Field {
                 if is_ffi_param {
                     quote!(*const [#ty; #size])
                 } else {
-                    quote!([#ty; #size])
+                    quote!([#ty #type_lifetime; #size])
                 }
             }
             _ => {
@@ -810,9 +827,9 @@ impl FieldExt for vkxml::Field {
                 if self.is_pointer_to_static_sized_array() {
                     let size = self.c_size.as_ref().expect("Should have c_size");
                     let size = convert_c_expression(size, &BTreeMap::new());
-                    quote!(#pointer [#ty; #size])
+                    quote!(#pointer [#ty #type_lifetime; #size])
                 } else {
-                    quote!(#pointer #ty)
+                    quote!(#pointer #ty #type_lifetime)
                 }
             }
         }
@@ -849,16 +866,18 @@ impl FieldExt for vk_parse::CommandParam {
     fn safe_type_tokens(
         &self,
         _lifetime: TokenStream,
+        _type_lifetime: Option<TokenStream>,
         _inner_length: Option<usize>,
     ) -> TokenStream {
         unimplemented!()
     }
 
-    fn type_tokens(&self, is_ffi_param: bool) -> TokenStream {
+    fn type_tokens(&self, is_ffi_param: bool, type_lifetime: Option<TokenStream>) -> TokenStream {
         assert!(!self.is_void(), "{:?}", self);
         let (rem, ty) = parse_c_parameter(&self.definition.code).unwrap();
         assert!(rem.is_empty());
         let type_name = name_to_tokens(ty.type_.name);
+        let type_name = quote!(#type_name #type_lifetime);
         let inner_ty = match ty.type_.reference_type {
             CReferenceType::Value => quote!(#type_name),
             CReferenceType::Pointer => {
@@ -896,6 +915,7 @@ fn generate_function_pointers<'a>(
     commands: &[&'a vk_parse::CommandDefinition],
     rename_commands: &HashMap<&'a str, &'a str>,
     fn_cache: &mut HashSet<&'a str>,
+    has_lifetimes: &HashSet<Ident>,
 ) -> TokenStream {
     // Commands can have duplicates inside them because they are declared per features. But we only
     // really want to generate one function pointer.
@@ -939,7 +959,12 @@ fn generate_function_pointers<'a>(
                 .clone()
                 .map(|param| {
                     let name = param.param_ident();
-                    let ty = param.type_tokens(true);
+                    let type_lifetime = has_lifetimes
+                        .contains(&name_to_tokens(
+                            param.definition.type_name.as_ref().unwrap(),
+                        ))
+                        .then(|| quote!(<'_>));
+                    let ty = param.type_tokens(true, type_lifetime);
                     (name, ty)
                 })
                 .collect();
@@ -1161,7 +1186,7 @@ pub fn generate_extension_constants<'a>(
         .filter(|(api, _items)| matches!(api.as_deref(), None | Some(DESIRED_API)))
         .flat_map(|(_api, items)| items);
 
-    let mut extended_enums = BTreeMap::<String, Vec<ExtensionConstant>>::new();
+    let mut extended_enums = BTreeMap::<String, Vec<ExtensionConstant<'_>>>::new();
 
     for item in items {
         if let vk_parse::InterfaceItem::Enum(enum_) = item {
@@ -1228,6 +1253,7 @@ pub fn generate_extension_commands<'a>(
     cmd_map: &CommandMap<'a>,
     cmd_aliases: &HashMap<&'a str, &'a str>,
     fn_cache: &mut HashSet<&'a str>,
+    has_lifetimes: &HashSet<Ident>,
 ) -> TokenStream {
     let mut commands = Vec::new();
     let mut rename_commands = HashMap::new();
@@ -1261,7 +1287,13 @@ pub fn generate_extension_commands<'a>(
             .strip_prefix("Vk")
             .unwrap()
     );
-    let fp = generate_function_pointers(ident.clone(), &commands, &rename_commands, fn_cache);
+    let fp = generate_function_pointers(
+        ident.clone(),
+        &commands,
+        &rename_commands,
+        fn_cache,
+        has_lifetimes,
+    );
 
     let spec_version = items
         .iter()
@@ -1299,6 +1331,7 @@ pub fn generate_extension<'a>(
     const_values: &mut BTreeMap<Ident, ConstantTypeInfo>,
     cmd_aliases: &HashMap<&'a str, &'a str>,
     fn_cache: &mut HashSet<&'a str>,
+    has_lifetimes: &HashSet<Ident>,
 ) -> Option<TokenStream> {
     let extension_tokens = generate_extension_constants(
         &extension.name,
@@ -1313,6 +1346,7 @@ pub fn generate_extension<'a>(
         cmd_map,
         cmd_aliases,
         fn_cache,
+        has_lifetimes,
     );
     let q = quote! {
         #fp
@@ -1659,7 +1693,7 @@ fn generate_result(ident: Ident, enum_: &vk_parse::Enums) -> TokenStream {
     quote! {
         impl ::std::error::Error for #ident {}
         impl fmt::Display for #ident {
-            fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+            fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
                 let name = match *self {
                     #(#notation),*,
                     _ => None,
@@ -1682,7 +1716,7 @@ fn is_static_array(field: &vkxml::Field) -> bool {
 
 fn derive_default(
     struct_: &vkxml::Struct,
-    members: &[PreprocessedMember],
+    members: &[PreprocessedMember<'_>],
     has_lifetime: bool,
 ) -> Option<TokenStream> {
     let name = name_to_tokens(&struct_.name);
@@ -1736,7 +1770,7 @@ fn derive_default(
         {
             quote!(#param_ident: unsafe { ::std::mem::zeroed() })
         } else {
-            let ty = member.vkxml_field.type_tokens(false);
+            let ty = member.vkxml_field.type_tokens(false, None);
             quote!(#param_ident: #ty::default())
         }
     });
@@ -1761,7 +1795,7 @@ fn derive_default(
 
 fn derive_debug(
     struct_: &vkxml::Struct,
-    members: &[PreprocessedMember],
+    members: &[PreprocessedMember<'_>],
     union_types: &HashSet<&str>,
     has_lifetime: bool,
 ) -> Option<TokenStream> {
@@ -1813,7 +1847,7 @@ fn derive_debug(
     let q = quote! {
         #[cfg(feature = "debug")]
         impl fmt::Debug for #name #lifetime {
-            fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+            fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
                 fmt.debug_struct(#name_str)
                 #(#debug_fields)*
                 .finish()
@@ -1825,7 +1859,7 @@ fn derive_debug(
 
 fn derive_setters(
     struct_: &vkxml::Struct,
-    members: &[PreprocessedMember],
+    members: &[PreprocessedMember<'_>],
     root_structs: &HashSet<Ident>,
     has_lifetimes: &HashSet<Ident>,
 ) -> Option<TokenStream> {
@@ -1901,7 +1935,10 @@ fn derive_setters(
 
         let deprecated = member.deprecated.as_ref().map(|d| quote!(#d #[allow(deprecated)]));
         let param_ident = field.param_ident();
-        let param_ty_tokens = field.safe_type_tokens(quote!('a), None);
+        let type_lifetime = has_lifetimes
+            .contains(&name_to_tokens(&field.basetype))
+            .then(|| quote!(<'a>));
+        let param_ty_tokens = field.safe_type_tokens(quote!('a), type_lifetime.clone(), None);
 
         let param_ident_string = param_ident.to_string();
         if param_ident_string == "s_type" || param_ident_string == "p_next" {
@@ -1966,7 +2003,7 @@ fn derive_setters(
 
             if matches!(field.array, Some(vkxml::ArrayType::Dynamic)) {
                 if let Some(ref array_size) = field.size {
-                    let mut slice_param_ty_tokens = field.safe_type_tokens(quote!('a), None);
+                    let mut slice_param_ty_tokens = field.safe_type_tokens(quote!('a), type_lifetime.clone(), None);
 
                     let mut ptr = if field.is_const {
                         quote!(.as_ptr())
@@ -1994,7 +2031,7 @@ fn derive_setters(
                         // Deal with a "special" 2D dynamic array with an inner size of 1 (effectively an array containing pointers to single objects)
                         let array_size = if let Some(array_size) = array_size.strip_suffix(",1") {
                             param_ident_short = format_ident!("{}_ptrs", param_ident_short);
-                            slice_param_ty_tokens = field.safe_type_tokens(quote!('a), Some(1));
+                            slice_param_ty_tokens = field.safe_type_tokens(quote!('a), type_lifetime.clone(), Some(1));
                             ptr = quote!(#ptr.cast());
                             array_size
                         } else {
@@ -2065,19 +2102,15 @@ fn derive_setters(
 
         let param_ty_tokens = if is_opaque_type(&field.basetype) {
             //  Use raw pointers for void/opaque types
-            field.type_tokens(false)
+            field.type_tokens(false, type_lifetime)
         } else {
             param_ty_tokens
         };
 
-        let lifetime = has_lifetimes
-            .contains(&name_to_tokens(&field.basetype))
-            .then(|| quote!(<'a>));
-
         Some(quote!{
             #[inline]
             #deprecated
-            pub fn #param_ident_short(mut self, #param_ident_short: #param_ty_tokens #lifetime) -> Self {
+            pub fn #param_ident_short(mut self, #param_ident_short: #param_ty_tokens) -> Self {
                 self.#param_ident = #param_ident_short;
                 self
             }
@@ -2319,11 +2352,10 @@ pub fn generate_struct(
                 .map(|r| r.to_tokens(field.is_const));
             quote!(#pointer Self)
         } else {
-            let lifetime = has_lifetimes
+            let type_lifetime = has_lifetimes
                 .contains(&name_to_tokens(&field.basetype))
                 .then(|| quote!(<'a>));
-            let ty = field.type_tokens(false);
-            quote!(#ty #lifetime)
+            field.type_tokens(false, type_lifetime)
         };
 
         quote!(#deprecated pub #param_ident: #param_ty_tokens)
@@ -2390,17 +2422,20 @@ pub fn generate_handle(handle: &vkxml::Handle) -> Option<TokenStream> {
     };
     Some(tokens)
 }
-fn generate_funcptr(fnptr: &vkxml::FunctionPointer) -> TokenStream {
+fn generate_funcptr(fnptr: &vkxml::FunctionPointer, has_lifetimes: &HashSet<Ident>) -> TokenStream {
     let name = format_ident!("{}", fnptr.name);
     let ret_ty_tokens = if fnptr.return_type.is_void() {
         quote!()
     } else {
-        let ret_ty_tokens = fnptr.return_type.type_tokens(true);
+        let ret_ty_tokens = fnptr.return_type.type_tokens(true, None);
         quote!(-> #ret_ty_tokens)
     };
     let params = fnptr.param.iter().map(|field| {
         let ident = field.param_ident();
-        let type_tokens = field.type_tokens(true);
+        let type_lifetime = has_lifetimes
+            .contains(&name_to_tokens(&field.basetype))
+            .then(|| quote!(<'_>));
+        let type_tokens = field.type_tokens(true, type_lifetime);
         quote! {
             #ident: #type_tokens
         }
@@ -2417,12 +2452,12 @@ fn generate_union(union: &vkxml::Union, has_lifetimes: &HashSet<Ident>) -> Token
     let name = name_to_tokens(&union.name);
     let fields = union.elements.iter().map(|field| {
         let name = field.param_ident();
-        let ty = field.type_tokens(false);
-        let lifetime = has_lifetimes
+        let type_lifetime = has_lifetimes
             .contains(&name_to_tokens(&field.basetype))
             .then(|| quote!(<'a>));
+        let ty = field.type_tokens(false, type_lifetime);
         quote! {
-            pub #name: #ty #lifetime
+            pub #name: #ty
         }
     });
     let khronos_link = khronos_link(&union.name);
@@ -2520,7 +2555,7 @@ pub fn generate_definition(
             generate_handle(handle)
         }
         vkxml::DefinitionsElement::FuncPtr(ref fp) if allowed_types.contains(fp.name.as_str()) => {
-            Some(generate_funcptr(fp))
+            Some(generate_funcptr(fp, has_lifetimes))
         }
         vkxml::DefinitionsElement::Union(ref union)
             if allowed_types.contains(union.name.as_str()) =>
@@ -2534,6 +2569,7 @@ pub fn generate_feature<'a>(
     feature: &vkxml::Feature,
     commands: &CommandMap<'a>,
     fn_cache: &mut HashSet<&'a str>,
+    has_lifetimes: &HashSet<Ident>,
 ) -> TokenStream {
     if !contains_desired_api(&feature.api) {
         return quote!();
@@ -2566,6 +2602,7 @@ pub fn generate_feature<'a>(
             &static_commands,
             &HashMap::new(),
             fn_cache,
+            has_lifetimes,
         )
     } else {
         quote! {}
@@ -2575,18 +2612,21 @@ pub fn generate_feature<'a>(
         &entry_commands,
         &HashMap::new(),
         fn_cache,
+        has_lifetimes,
     );
     let instance = generate_function_pointers(
         format_ident!("InstanceFnV{}", version),
         &instance_commands,
         &HashMap::new(),
         fn_cache,
+        has_lifetimes,
     );
     let device = generate_function_pointers(
         format_ident!("DeviceFnV{}", version),
         &device_commands,
         &HashMap::new(),
         fn_cache,
+        has_lifetimes,
     );
     quote! {
         #static_fn
@@ -2685,7 +2725,7 @@ pub fn generate_const_debugs(const_values: &BTreeMap<Ident, ConstantTypeInfo>) -
 
             quote! {
                 impl fmt::Debug for #ty {
-                    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+                    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
                         const KNOWN: &[(#type_, &str)] = &[#(#cases),*];
                         debug_flags(f, KNOWN, self.0)
                     }
@@ -2703,7 +2743,7 @@ pub fn generate_const_debugs(const_values: &BTreeMap<Ident, ConstantTypeInfo>) -
             });
             quote! {
                 impl fmt::Debug for #ty {
-                    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+                    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
                         let name = match *self {
                             #(#cases)*
                             _ => None,
@@ -2940,20 +2980,6 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
 
     constants_code.push(quote! { pub const SHADER_UNUSED_NV : u32 = SHADER_UNUSED_KHR;});
 
-    let extension_code = extensions
-        .iter()
-        .filter_map(|ext| {
-            generate_extension(
-                ext,
-                &commands,
-                &mut const_cache,
-                &mut const_values,
-                &cmd_aliases,
-                &mut fn_cache,
-            )
-        })
-        .collect_vec();
-
     let union_types = definitions
         .iter()
         .filter_map(get_variant!(vkxml::DefinitionsElement::Union))
@@ -2992,6 +3018,35 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
             _ => continue,
         };
     }
+    for type_ in spec2
+        .0
+        .iter()
+        .filter_map(get_variant!(vk_parse::RegistryChild::Types))
+        .flat_map(|types| &types.children)
+        .filter_map(get_variant!(vk_parse::TypesChild::Type))
+    {
+        if let (Some(name), Some(alias)) = (&type_.name, &type_.alias) {
+            if has_lifetimes.contains(&name_to_tokens(alias)) {
+                has_lifetimes.insert(name_to_tokens(name));
+            }
+        }
+    }
+
+    let extension_code = extensions
+        .iter()
+        .filter_map(|ext| {
+            generate_extension(
+                ext,
+                &commands,
+                &mut const_cache,
+                &mut const_values,
+                &cmd_aliases,
+                &mut fn_cache,
+                &has_lifetimes,
+            )
+        })
+        .collect_vec();
+
     let vk_parse_types = spec2
         .0
         .iter()
@@ -3041,7 +3096,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
 
     let feature_code: Vec<_> = features
         .iter()
-        .map(|feature| generate_feature(feature, &commands, &mut fn_cache))
+        .map(|feature| generate_feature(feature, &commands, &mut fn_cache, &has_lifetimes))
         .collect();
     let feature_extensions_code =
         generate_feature_extension(&spec2, &mut const_cache, &mut const_values);
@@ -3109,6 +3164,8 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     };
 
     let extension_code = quote! {
+        #![allow(unused_qualifications)] // Because we do not know in what file the PFNs are defined
+
         use std::os::raw::*;
         use crate::vk::platform_types::*;
         use crate::vk::aliases::*;

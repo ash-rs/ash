@@ -24,8 +24,8 @@ impl IOSSurface {
     #[inline]
     pub unsafe fn create_ios_surface(
         &self,
-        create_info: &vk::IOSSurfaceCreateInfoMVK,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::IOSSurfaceCreateInfoMVK<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::zeroed();
         (self.fp.create_ios_surface_mvk)(

@@ -84,7 +84,7 @@ impl Instance {
     pub unsafe fn get_physical_device_tool_properties(
         &self,
         physical_device: vk::PhysicalDevice,
-        out: &mut [vk::PhysicalDeviceToolProperties],
+        out: &mut [vk::PhysicalDeviceToolProperties<'_>],
     ) -> VkResult<()> {
         let mut count = out.len() as u32;
         (self.instance_fn_1_3.get_physical_device_tool_properties)(
@@ -124,7 +124,7 @@ impl Instance {
     #[inline]
     pub unsafe fn enumerate_physical_device_groups(
         &self,
-        out: &mut [vk::PhysicalDeviceGroupProperties],
+        out: &mut [vk::PhysicalDeviceGroupProperties<'_>],
     ) -> VkResult<()> {
         let mut count = out.len() as u32;
         (self.instance_fn_1_1.enumerate_physical_device_groups)(
@@ -142,7 +142,7 @@ impl Instance {
     pub unsafe fn get_physical_device_features2(
         &self,
         physical_device: vk::PhysicalDevice,
-        features: &mut vk::PhysicalDeviceFeatures2,
+        features: &mut vk::PhysicalDeviceFeatures2<'_>,
     ) {
         (self.instance_fn_1_1.get_physical_device_features2)(physical_device, features);
     }
@@ -152,7 +152,7 @@ impl Instance {
     pub unsafe fn get_physical_device_properties2(
         &self,
         physical_device: vk::PhysicalDevice,
-        prop: &mut vk::PhysicalDeviceProperties2,
+        prop: &mut vk::PhysicalDeviceProperties2<'_>,
     ) {
         (self.instance_fn_1_1.get_physical_device_properties2)(physical_device, prop);
     }
@@ -163,7 +163,7 @@ impl Instance {
         &self,
         physical_device: vk::PhysicalDevice,
         format: vk::Format,
-        out: &mut vk::FormatProperties2,
+        out: &mut vk::FormatProperties2<'_>,
     ) {
         (self.instance_fn_1_1.get_physical_device_format_properties2)(physical_device, format, out);
     }
@@ -173,8 +173,8 @@ impl Instance {
     pub unsafe fn get_physical_device_image_format_properties2(
         &self,
         physical_device: vk::PhysicalDevice,
-        format_info: &vk::PhysicalDeviceImageFormatInfo2,
-        image_format_prop: &mut vk::ImageFormatProperties2,
+        format_info: &vk::PhysicalDeviceImageFormatInfo2<'_>,
+        image_format_prop: &mut vk::ImageFormatProperties2<'_>,
     ) -> VkResult<()> {
         (self
             .instance_fn_1_1
@@ -211,7 +211,7 @@ impl Instance {
     pub unsafe fn get_physical_device_queue_family_properties2(
         &self,
         physical_device: vk::PhysicalDevice,
-        out: &mut [vk::QueueFamilyProperties2],
+        out: &mut [vk::QueueFamilyProperties2<'_>],
     ) {
         let mut count = out.len() as u32;
         (self
@@ -229,7 +229,7 @@ impl Instance {
     pub unsafe fn get_physical_device_memory_properties2(
         &self,
         physical_device: vk::PhysicalDevice,
-        out: &mut vk::PhysicalDeviceMemoryProperties2,
+        out: &mut vk::PhysicalDeviceMemoryProperties2<'_>,
     ) {
         (self.instance_fn_1_1.get_physical_device_memory_properties2)(physical_device, out);
     }
@@ -239,7 +239,7 @@ impl Instance {
     pub unsafe fn get_physical_device_sparse_image_format_properties2_len(
         &self,
         physical_device: vk::PhysicalDevice,
-        format_info: &vk::PhysicalDeviceSparseImageFormatInfo2,
+        format_info: &vk::PhysicalDeviceSparseImageFormatInfo2<'_>,
     ) -> usize {
         let mut format_count = 0;
         (self
@@ -261,8 +261,8 @@ impl Instance {
     pub unsafe fn get_physical_device_sparse_image_format_properties2(
         &self,
         physical_device: vk::PhysicalDevice,
-        format_info: &vk::PhysicalDeviceSparseImageFormatInfo2,
-        out: &mut [vk::SparseImageFormatProperties2],
+        format_info: &vk::PhysicalDeviceSparseImageFormatInfo2<'_>,
+        out: &mut [vk::SparseImageFormatProperties2<'_>],
     ) {
         let mut count = out.len() as u32;
         (self
@@ -281,8 +281,8 @@ impl Instance {
     pub unsafe fn get_physical_device_external_buffer_properties(
         &self,
         physical_device: vk::PhysicalDevice,
-        external_buffer_info: &vk::PhysicalDeviceExternalBufferInfo,
-        out: &mut vk::ExternalBufferProperties,
+        external_buffer_info: &vk::PhysicalDeviceExternalBufferInfo<'_>,
+        out: &mut vk::ExternalBufferProperties<'_>,
     ) {
         (self
             .instance_fn_1_1
@@ -298,8 +298,8 @@ impl Instance {
     pub unsafe fn get_physical_device_external_fence_properties(
         &self,
         physical_device: vk::PhysicalDevice,
-        external_fence_info: &vk::PhysicalDeviceExternalFenceInfo,
-        out: &mut vk::ExternalFenceProperties,
+        external_fence_info: &vk::PhysicalDeviceExternalFenceInfo<'_>,
+        out: &mut vk::ExternalFenceProperties<'_>,
     ) {
         (self
             .instance_fn_1_1
@@ -315,8 +315,8 @@ impl Instance {
     pub unsafe fn get_physical_device_external_semaphore_properties(
         &self,
         physical_device: vk::PhysicalDevice,
-        external_semaphore_info: &vk::PhysicalDeviceExternalSemaphoreInfo,
-        out: &mut vk::ExternalSemaphoreProperties,
+        external_semaphore_info: &vk::PhysicalDeviceExternalSemaphoreInfo<'_>,
+        out: &mut vk::ExternalSemaphoreProperties<'_>,
     ) {
         (self
             .instance_fn_1_1
@@ -353,8 +353,8 @@ impl Instance {
     pub unsafe fn create_device(
         &self,
         physical_device: vk::PhysicalDevice,
-        create_info: &vk::DeviceCreateInfo,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::DeviceCreateInfo<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<Device> {
         let mut device = mem::zeroed();
         (self.instance_fn_1_0.create_device)(
@@ -379,7 +379,10 @@ impl Instance {
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroyInstance.html>
     #[inline]
-    pub unsafe fn destroy_instance(&self, allocation_callbacks: Option<&vk::AllocationCallbacks>) {
+    pub unsafe fn destroy_instance(
+        &self,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+    ) {
         (self.instance_fn_1_0.destroy_instance)(self.handle(), allocation_callbacks.as_raw_ptr());
     }
 

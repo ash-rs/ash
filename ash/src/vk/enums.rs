@@ -989,7 +989,7 @@ impl Result {
 }
 impl ::std::error::Error for Result {}
 impl fmt::Display for Result {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match * self { Self :: SUCCESS => Some ("Command completed successfully") , Self :: NOT_READY => Some ("A fence or query has not yet completed") , Self :: TIMEOUT => Some ("A wait operation has not completed in the specified time") , Self :: EVENT_SET => Some ("An event is signaled") , Self :: EVENT_RESET => Some ("An event is unsignaled") , Self :: INCOMPLETE => Some ("A return array was too small for the result") , Self :: ERROR_OUT_OF_HOST_MEMORY => Some ("A host memory allocation has failed") , Self :: ERROR_OUT_OF_DEVICE_MEMORY => Some ("A device memory allocation has failed") , Self :: ERROR_INITIALIZATION_FAILED => Some ("Initialization of an object has failed") , Self :: ERROR_DEVICE_LOST => Some ("The logical device has been lost. See <https://registry.khronos.org/vulkan/specs/1.3-extensions/html/vkspec.html#devsandqueues-lost-device>") , Self :: ERROR_MEMORY_MAP_FAILED => Some ("Mapping of a memory object has failed") , Self :: ERROR_LAYER_NOT_PRESENT => Some ("Layer specified does not exist") , Self :: ERROR_EXTENSION_NOT_PRESENT => Some ("Extension specified does not exist") , Self :: ERROR_FEATURE_NOT_PRESENT => Some ("Requested feature is not available on this device") , Self :: ERROR_INCOMPATIBLE_DRIVER => Some ("Unable to find a Vulkan driver") , Self :: ERROR_TOO_MANY_OBJECTS => Some ("Too many objects of the type have already been created") , Self :: ERROR_FORMAT_NOT_SUPPORTED => Some ("Requested format is not supported on this device") , Self :: ERROR_FRAGMENTED_POOL => Some ("A requested pool allocation has failed due to fragmentation of the pool's memory") , Self :: ERROR_UNKNOWN => Some ("An unknown error has occurred, due to an implementation or application bug") , _ => None , } ;
         if let Some(x) = name {
             fmt.write_str(x)
@@ -2907,7 +2907,7 @@ impl OutOfBandQueueTypeNV {
     pub const PRESENT: Self = Self(1);
 }
 impl fmt::Debug for ObjectType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match *self {
             Self::UNKNOWN => Some("UNKNOWN"),
             Self::INSTANCE => Some("INSTANCE"),
@@ -2970,7 +2970,7 @@ impl fmt::Debug for ObjectType {
     }
 }
 impl fmt::Debug for Result {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match *self {
             Self::SUCCESS => Some("SUCCESS"),
             Self::NOT_READY => Some("NOT_READY"),

@@ -24,8 +24,8 @@ impl AndroidSurface {
     #[inline]
     pub unsafe fn create_android_surface(
         &self,
-        create_info: &vk::AndroidSurfaceCreateInfoKHR,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::AndroidSurfaceCreateInfoKHR<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::zeroed();
         (self.fp.create_android_surface_khr)(

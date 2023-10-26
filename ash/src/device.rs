@@ -67,8 +67,8 @@ impl Device {
     #[inline]
     pub unsafe fn create_private_data_slot(
         &self,
-        create_info: &vk::PrivateDataSlotCreateInfo,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::PrivateDataSlotCreateInfo<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::PrivateDataSlot> {
         let mut private_data_slot = mem::zeroed();
         (self.device_fn_1_3.create_private_data_slot)(
@@ -85,7 +85,7 @@ impl Device {
     pub unsafe fn destroy_private_data_slot(
         &self,
         private_data_slot: vk::PrivateDataSlot,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) {
         (self.device_fn_1_3.destroy_private_data_slot)(
             self.handle,
@@ -135,7 +135,7 @@ impl Device {
     pub unsafe fn cmd_pipeline_barrier2(
         &self,
         command_buffer: vk::CommandBuffer,
-        dependency_info: &vk::DependencyInfo,
+        dependency_info: &vk::DependencyInfo<'_>,
     ) {
         (self.device_fn_1_3.cmd_pipeline_barrier2)(command_buffer, dependency_info)
     }
@@ -157,7 +157,7 @@ impl Device {
         &self,
         command_buffer: vk::CommandBuffer,
         event: vk::Event,
-        dependency_info: &vk::DependencyInfo,
+        dependency_info: &vk::DependencyInfo<'_>,
     ) {
         (self.device_fn_1_3.cmd_set_event2)(command_buffer, event, dependency_info)
     }
@@ -168,7 +168,7 @@ impl Device {
         &self,
         command_buffer: vk::CommandBuffer,
         events: &[vk::Event],
-        dependency_infos: &[vk::DependencyInfo],
+        dependency_infos: &[vk::DependencyInfo<'_>],
     ) {
         assert_eq!(events.len(), dependency_infos.len());
         (self.device_fn_1_3.cmd_wait_events2)(
@@ -196,7 +196,7 @@ impl Device {
     pub unsafe fn queue_submit2(
         &self,
         queue: vk::Queue,
-        submits: &[vk::SubmitInfo2],
+        submits: &[vk::SubmitInfo2<'_>],
         fence: vk::Fence,
     ) -> VkResult<()> {
         (self.device_fn_1_3.queue_submit2)(queue, submits.len() as u32, submits.as_ptr(), fence)
@@ -208,7 +208,7 @@ impl Device {
     pub unsafe fn cmd_copy_buffer2(
         &self,
         command_buffer: vk::CommandBuffer,
-        copy_buffer_info: &vk::CopyBufferInfo2,
+        copy_buffer_info: &vk::CopyBufferInfo2<'_>,
     ) {
         (self.device_fn_1_3.cmd_copy_buffer2)(command_buffer, copy_buffer_info)
     }
@@ -217,7 +217,7 @@ impl Device {
     pub unsafe fn cmd_copy_image2(
         &self,
         command_buffer: vk::CommandBuffer,
-        copy_image_info: &vk::CopyImageInfo2,
+        copy_image_info: &vk::CopyImageInfo2<'_>,
     ) {
         (self.device_fn_1_3.cmd_copy_image2)(command_buffer, copy_image_info)
     }
@@ -226,7 +226,7 @@ impl Device {
     pub unsafe fn cmd_copy_buffer_to_image2(
         &self,
         command_buffer: vk::CommandBuffer,
-        copy_buffer_to_image_info: &vk::CopyBufferToImageInfo2,
+        copy_buffer_to_image_info: &vk::CopyBufferToImageInfo2<'_>,
     ) {
         (self.device_fn_1_3.cmd_copy_buffer_to_image2)(command_buffer, copy_buffer_to_image_info)
     }
@@ -235,7 +235,7 @@ impl Device {
     pub unsafe fn cmd_copy_image_to_buffer2(
         &self,
         command_buffer: vk::CommandBuffer,
-        copy_image_to_buffer_info: &vk::CopyImageToBufferInfo2,
+        copy_image_to_buffer_info: &vk::CopyImageToBufferInfo2<'_>,
     ) {
         (self.device_fn_1_3.cmd_copy_image_to_buffer2)(command_buffer, copy_image_to_buffer_info)
     }
@@ -244,7 +244,7 @@ impl Device {
     pub unsafe fn cmd_blit_image2(
         &self,
         command_buffer: vk::CommandBuffer,
-        blit_image_info: &vk::BlitImageInfo2,
+        blit_image_info: &vk::BlitImageInfo2<'_>,
     ) {
         (self.device_fn_1_3.cmd_blit_image2)(command_buffer, blit_image_info)
     }
@@ -253,7 +253,7 @@ impl Device {
     pub unsafe fn cmd_resolve_image2(
         &self,
         command_buffer: vk::CommandBuffer,
-        resolve_image_info: &vk::ResolveImageInfo2,
+        resolve_image_info: &vk::ResolveImageInfo2<'_>,
     ) {
         (self.device_fn_1_3.cmd_resolve_image2)(command_buffer, resolve_image_info)
     }
@@ -263,7 +263,7 @@ impl Device {
     pub unsafe fn cmd_begin_rendering(
         &self,
         command_buffer: vk::CommandBuffer,
-        rendering_info: &vk::RenderingInfo,
+        rendering_info: &vk::RenderingInfo<'_>,
     ) {
         (self.device_fn_1_3.cmd_begin_rendering)(command_buffer, rendering_info)
     }
@@ -481,8 +481,8 @@ impl Device {
     #[inline]
     pub unsafe fn get_device_buffer_memory_requirements(
         &self,
-        memory_requirements: &vk::DeviceBufferMemoryRequirements,
-        out: &mut vk::MemoryRequirements2,
+        memory_requirements: &vk::DeviceBufferMemoryRequirements<'_>,
+        out: &mut vk::MemoryRequirements2<'_>,
     ) {
         (self.device_fn_1_3.get_device_buffer_memory_requirements)(
             self.handle,
@@ -495,8 +495,8 @@ impl Device {
     #[inline]
     pub unsafe fn get_device_image_memory_requirements(
         &self,
-        memory_requirements: &vk::DeviceImageMemoryRequirements,
-        out: &mut vk::MemoryRequirements2,
+        memory_requirements: &vk::DeviceImageMemoryRequirements<'_>,
+        out: &mut vk::MemoryRequirements2<'_>,
     ) {
         (self.device_fn_1_3.get_device_image_memory_requirements)(
             self.handle,
@@ -509,7 +509,7 @@ impl Device {
     #[inline]
     pub unsafe fn get_device_image_sparse_memory_requirements_len(
         &self,
-        memory_requirements: &vk::DeviceImageMemoryRequirements,
+        memory_requirements: &vk::DeviceImageMemoryRequirements<'_>,
     ) -> usize {
         let mut count = 0;
         (self
@@ -530,8 +530,8 @@ impl Device {
     #[inline]
     pub unsafe fn get_device_image_sparse_memory_requirements(
         &self,
-        memory_requirements: &vk::DeviceImageMemoryRequirements,
-        out: &mut [vk::SparseImageMemoryRequirements2],
+        memory_requirements: &vk::DeviceImageMemoryRequirements<'_>,
+        out: &mut [vk::SparseImageMemoryRequirements2<'_>],
     ) {
         let mut count = out.len() as u32;
         (self
@@ -603,8 +603,8 @@ impl Device {
     #[inline]
     pub unsafe fn create_render_pass2(
         &self,
-        create_info: &vk::RenderPassCreateInfo2,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::RenderPassCreateInfo2<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::RenderPass> {
         let mut renderpass = mem::zeroed();
         (self.device_fn_1_2.create_render_pass2)(
@@ -621,8 +621,8 @@ impl Device {
     pub unsafe fn cmd_begin_render_pass2(
         &self,
         command_buffer: vk::CommandBuffer,
-        render_pass_begin_info: &vk::RenderPassBeginInfo,
-        subpass_begin_info: &vk::SubpassBeginInfo,
+        render_pass_begin_info: &vk::RenderPassBeginInfo<'_>,
+        subpass_begin_info: &vk::SubpassBeginInfo<'_>,
     ) {
         (self.device_fn_1_2.cmd_begin_render_pass2)(
             command_buffer,
@@ -636,8 +636,8 @@ impl Device {
     pub unsafe fn cmd_next_subpass2(
         &self,
         command_buffer: vk::CommandBuffer,
-        subpass_begin_info: &vk::SubpassBeginInfo,
-        subpass_end_info: &vk::SubpassEndInfo,
+        subpass_begin_info: &vk::SubpassBeginInfo<'_>,
+        subpass_end_info: &vk::SubpassEndInfo<'_>,
     ) {
         (self.device_fn_1_2.cmd_next_subpass2)(
             command_buffer,
@@ -651,7 +651,7 @@ impl Device {
     pub unsafe fn cmd_end_render_pass2(
         &self,
         command_buffer: vk::CommandBuffer,
-        subpass_end_info: &vk::SubpassEndInfo,
+        subpass_end_info: &vk::SubpassEndInfo<'_>,
     ) {
         (self.device_fn_1_2.cmd_end_render_pass2)(command_buffer, subpass_end_info);
     }
@@ -679,7 +679,7 @@ impl Device {
     #[inline]
     pub unsafe fn wait_semaphores(
         &self,
-        wait_info: &vk::SemaphoreWaitInfo,
+        wait_info: &vk::SemaphoreWaitInfo<'_>,
         timeout: u64,
     ) -> VkResult<()> {
         (self.device_fn_1_2.wait_semaphores)(self.handle(), wait_info, timeout).result()
@@ -687,7 +687,10 @@ impl Device {
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkSignalSemaphore.html>
     #[inline]
-    pub unsafe fn signal_semaphore(&self, signal_info: &vk::SemaphoreSignalInfo) -> VkResult<()> {
+    pub unsafe fn signal_semaphore(
+        &self,
+        signal_info: &vk::SemaphoreSignalInfo<'_>,
+    ) -> VkResult<()> {
         (self.device_fn_1_2.signal_semaphore)(self.handle(), signal_info).result()
     }
 
@@ -695,7 +698,7 @@ impl Device {
     #[inline]
     pub unsafe fn get_buffer_device_address(
         &self,
-        info: &vk::BufferDeviceAddressInfo,
+        info: &vk::BufferDeviceAddressInfo<'_>,
     ) -> vk::DeviceAddress {
         (self.device_fn_1_2.get_buffer_device_address)(self.handle(), info)
     }
@@ -704,7 +707,7 @@ impl Device {
     #[inline]
     pub unsafe fn get_buffer_opaque_capture_address(
         &self,
-        info: &vk::BufferDeviceAddressInfo,
+        info: &vk::BufferDeviceAddressInfo<'_>,
     ) -> u64 {
         (self.device_fn_1_2.get_buffer_opaque_capture_address)(self.handle(), info)
     }
@@ -713,7 +716,7 @@ impl Device {
     #[inline]
     pub unsafe fn get_device_memory_opaque_capture_address(
         &self,
-        info: &vk::DeviceMemoryOpaqueCaptureAddressInfo,
+        info: &vk::DeviceMemoryOpaqueCaptureAddressInfo<'_>,
     ) -> u64 {
         (self.device_fn_1_2.get_device_memory_opaque_capture_address)(self.handle(), info)
     }
@@ -730,7 +733,7 @@ impl Device {
     #[inline]
     pub unsafe fn bind_buffer_memory2(
         &self,
-        bind_infos: &[vk::BindBufferMemoryInfo],
+        bind_infos: &[vk::BindBufferMemoryInfo<'_>],
     ) -> VkResult<()> {
         (self.device_fn_1_1.bind_buffer_memory2)(
             self.handle(),
@@ -744,7 +747,7 @@ impl Device {
     #[inline]
     pub unsafe fn bind_image_memory2(
         &self,
-        bind_infos: &[vk::BindImageMemoryInfo],
+        bind_infos: &[vk::BindImageMemoryInfo<'_>],
     ) -> VkResult<()> {
         (self.device_fn_1_1.bind_image_memory2)(
             self.handle(),
@@ -806,8 +809,8 @@ impl Device {
     #[inline]
     pub unsafe fn get_image_memory_requirements2(
         &self,
-        info: &vk::ImageMemoryRequirementsInfo2,
-        out: &mut vk::MemoryRequirements2,
+        info: &vk::ImageMemoryRequirementsInfo2<'_>,
+        out: &mut vk::MemoryRequirements2<'_>,
     ) {
         (self.device_fn_1_1.get_image_memory_requirements2)(self.handle(), info, out);
     }
@@ -816,8 +819,8 @@ impl Device {
     #[inline]
     pub unsafe fn get_buffer_memory_requirements2(
         &self,
-        info: &vk::BufferMemoryRequirementsInfo2,
-        out: &mut vk::MemoryRequirements2,
+        info: &vk::BufferMemoryRequirementsInfo2<'_>,
+        out: &mut vk::MemoryRequirements2<'_>,
     ) {
         (self.device_fn_1_1.get_buffer_memory_requirements2)(self.handle(), info, out);
     }
@@ -826,7 +829,7 @@ impl Device {
     #[inline]
     pub unsafe fn get_image_sparse_memory_requirements2_len(
         &self,
-        info: &vk::ImageSparseMemoryRequirementsInfo2,
+        info: &vk::ImageSparseMemoryRequirementsInfo2<'_>,
     ) -> usize {
         let mut count = 0;
         (self.device_fn_1_1.get_image_sparse_memory_requirements2)(
@@ -845,8 +848,8 @@ impl Device {
     #[inline]
     pub unsafe fn get_image_sparse_memory_requirements2(
         &self,
-        info: &vk::ImageSparseMemoryRequirementsInfo2,
-        out: &mut [vk::SparseImageMemoryRequirements2],
+        info: &vk::ImageSparseMemoryRequirementsInfo2<'_>,
+        out: &mut [vk::SparseImageMemoryRequirements2<'_>],
     ) {
         let mut count = out.len() as u32;
         (self.device_fn_1_1.get_image_sparse_memory_requirements2)(
@@ -870,7 +873,7 @@ impl Device {
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceQueue2.html>
     #[inline]
-    pub unsafe fn get_device_queue2(&self, queue_info: &vk::DeviceQueueInfo2) -> vk::Queue {
+    pub unsafe fn get_device_queue2(&self, queue_info: &vk::DeviceQueueInfo2<'_>) -> vk::Queue {
         let mut queue = mem::zeroed();
         (self.device_fn_1_1.get_device_queue2)(self.handle(), queue_info, &mut queue);
         queue
@@ -880,8 +883,8 @@ impl Device {
     #[inline]
     pub unsafe fn create_sampler_ycbcr_conversion(
         &self,
-        create_info: &vk::SamplerYcbcrConversionCreateInfo,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::SamplerYcbcrConversionCreateInfo<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::SamplerYcbcrConversion> {
         let mut ycbcr_conversion = mem::zeroed();
         (self.device_fn_1_1.create_sampler_ycbcr_conversion)(
@@ -898,7 +901,7 @@ impl Device {
     pub unsafe fn destroy_sampler_ycbcr_conversion(
         &self,
         ycbcr_conversion: vk::SamplerYcbcrConversion,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) {
         (self.device_fn_1_1.destroy_sampler_ycbcr_conversion)(
             self.handle(),
@@ -911,8 +914,8 @@ impl Device {
     #[inline]
     pub unsafe fn create_descriptor_update_template(
         &self,
-        create_info: &vk::DescriptorUpdateTemplateCreateInfo,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::DescriptorUpdateTemplateCreateInfo<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::DescriptorUpdateTemplate> {
         let mut descriptor_update_template = mem::zeroed();
         (self.device_fn_1_1.create_descriptor_update_template)(
@@ -929,7 +932,7 @@ impl Device {
     pub unsafe fn destroy_descriptor_update_template(
         &self,
         descriptor_update_template: vk::DescriptorUpdateTemplate,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) {
         (self.device_fn_1_1.destroy_descriptor_update_template)(
             self.handle(),
@@ -958,8 +961,8 @@ impl Device {
     #[inline]
     pub unsafe fn get_descriptor_set_layout_support(
         &self,
-        create_info: &vk::DescriptorSetLayoutCreateInfo,
-        out: &mut vk::DescriptorSetLayoutSupport,
+        create_info: &vk::DescriptorSetLayoutCreateInfo<'_>,
+        out: &mut vk::DescriptorSetLayoutSupport<'_>,
     ) {
         (self.device_fn_1_1.get_descriptor_set_layout_support)(self.handle(), create_info, out);
     }
@@ -974,7 +977,10 @@ impl Device {
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroyDevice.html>
     #[inline]
-    pub unsafe fn destroy_device(&self, allocation_callbacks: Option<&vk::AllocationCallbacks>) {
+    pub unsafe fn destroy_device(
+        &self,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
+    ) {
         (self.device_fn_1_0.destroy_device)(self.handle(), allocation_callbacks.as_raw_ptr());
     }
 
@@ -983,7 +989,7 @@ impl Device {
     pub unsafe fn destroy_sampler(
         &self,
         sampler: vk::Sampler,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) {
         (self.device_fn_1_0.destroy_sampler)(
             self.handle(),
@@ -997,7 +1003,7 @@ impl Device {
     pub unsafe fn free_memory(
         &self,
         memory: vk::DeviceMemory,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) {
         (self.device_fn_1_0.free_memory)(self.handle(), memory, allocation_callbacks.as_raw_ptr());
     }
@@ -1021,8 +1027,8 @@ impl Device {
     #[inline]
     pub unsafe fn create_event(
         &self,
-        create_info: &vk::EventCreateInfo,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::EventCreateInfo<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::Event> {
         let mut event = mem::zeroed();
         (self.device_fn_1_0.create_event)(
@@ -1087,9 +1093,9 @@ impl Device {
         events: &[vk::Event],
         src_stage_mask: vk::PipelineStageFlags,
         dst_stage_mask: vk::PipelineStageFlags,
-        memory_barriers: &[vk::MemoryBarrier],
-        buffer_memory_barriers: &[vk::BufferMemoryBarrier],
-        image_memory_barriers: &[vk::ImageMemoryBarrier],
+        memory_barriers: &[vk::MemoryBarrier<'_>],
+        buffer_memory_barriers: &[vk::BufferMemoryBarrier<'_>],
+        image_memory_barriers: &[vk::ImageMemoryBarrier<'_>],
     ) {
         (self.device_fn_1_0.cmd_wait_events)(
             command_buffer,
@@ -1111,7 +1117,7 @@ impl Device {
     pub unsafe fn destroy_fence(
         &self,
         fence: vk::Fence,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) {
         (self.device_fn_1_0.destroy_fence)(self.handle(), fence, allocation_callbacks.as_raw_ptr());
     }
@@ -1121,7 +1127,7 @@ impl Device {
     pub unsafe fn destroy_event(
         &self,
         event: vk::Event,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) {
         (self.device_fn_1_0.destroy_event)(self.handle(), event, allocation_callbacks.as_raw_ptr());
     }
@@ -1131,7 +1137,7 @@ impl Device {
     pub unsafe fn destroy_image(
         &self,
         image: vk::Image,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) {
         (self.device_fn_1_0.destroy_image)(self.handle(), image, allocation_callbacks.as_raw_ptr());
     }
@@ -1141,7 +1147,7 @@ impl Device {
     pub unsafe fn destroy_command_pool(
         &self,
         pool: vk::CommandPool,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) {
         (self.device_fn_1_0.destroy_command_pool)(
             self.handle(),
@@ -1155,7 +1161,7 @@ impl Device {
     pub unsafe fn destroy_image_view(
         &self,
         image_view: vk::ImageView,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) {
         (self.device_fn_1_0.destroy_image_view)(
             self.handle(),
@@ -1169,7 +1175,7 @@ impl Device {
     pub unsafe fn destroy_render_pass(
         &self,
         renderpass: vk::RenderPass,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) {
         (self.device_fn_1_0.destroy_render_pass)(
             self.handle(),
@@ -1183,7 +1189,7 @@ impl Device {
     pub unsafe fn destroy_framebuffer(
         &self,
         framebuffer: vk::Framebuffer,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) {
         (self.device_fn_1_0.destroy_framebuffer)(
             self.handle(),
@@ -1197,7 +1203,7 @@ impl Device {
     pub unsafe fn destroy_pipeline_layout(
         &self,
         pipeline_layout: vk::PipelineLayout,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) {
         (self.device_fn_1_0.destroy_pipeline_layout)(
             self.handle(),
@@ -1211,7 +1217,7 @@ impl Device {
     pub unsafe fn destroy_pipeline_cache(
         &self,
         pipeline_cache: vk::PipelineCache,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) {
         (self.device_fn_1_0.destroy_pipeline_cache)(
             self.handle(),
@@ -1225,7 +1231,7 @@ impl Device {
     pub unsafe fn destroy_buffer(
         &self,
         buffer: vk::Buffer,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) {
         (self.device_fn_1_0.destroy_buffer)(
             self.handle(),
@@ -1239,7 +1245,7 @@ impl Device {
     pub unsafe fn destroy_shader_module(
         &self,
         shader: vk::ShaderModule,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) {
         (self.device_fn_1_0.destroy_shader_module)(
             self.handle(),
@@ -1253,7 +1259,7 @@ impl Device {
     pub unsafe fn destroy_pipeline(
         &self,
         pipeline: vk::Pipeline,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) {
         (self.device_fn_1_0.destroy_pipeline)(
             self.handle(),
@@ -1267,7 +1273,7 @@ impl Device {
     pub unsafe fn destroy_semaphore(
         &self,
         semaphore: vk::Semaphore,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) {
         (self.device_fn_1_0.destroy_semaphore)(
             self.handle(),
@@ -1281,7 +1287,7 @@ impl Device {
     pub unsafe fn destroy_descriptor_pool(
         &self,
         pool: vk::DescriptorPool,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) {
         (self.device_fn_1_0.destroy_descriptor_pool)(
             self.handle(),
@@ -1295,7 +1301,7 @@ impl Device {
     pub unsafe fn destroy_query_pool(
         &self,
         pool: vk::QueryPool,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) {
         (self.device_fn_1_0.destroy_query_pool)(
             self.handle(),
@@ -1309,7 +1315,7 @@ impl Device {
     pub unsafe fn destroy_descriptor_set_layout(
         &self,
         layout: vk::DescriptorSetLayout,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) {
         (self.device_fn_1_0.destroy_descriptor_set_layout)(
             self.handle(),
@@ -1338,8 +1344,8 @@ impl Device {
     #[inline]
     pub unsafe fn update_descriptor_sets(
         &self,
-        descriptor_writes: &[vk::WriteDescriptorSet],
-        descriptor_copies: &[vk::CopyDescriptorSet],
+        descriptor_writes: &[vk::WriteDescriptorSet<'_>],
+        descriptor_copies: &[vk::CopyDescriptorSet<'_>],
     ) {
         (self.device_fn_1_0.update_descriptor_sets)(
             self.handle(),
@@ -1354,8 +1360,8 @@ impl Device {
     #[inline]
     pub unsafe fn create_sampler(
         &self,
-        create_info: &vk::SamplerCreateInfo,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::SamplerCreateInfo<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::Sampler> {
         let mut sampler = mem::zeroed();
         (self.device_fn_1_0.create_sampler)(
@@ -1528,7 +1534,7 @@ impl Device {
     #[inline]
     pub unsafe fn allocate_descriptor_sets(
         &self,
-        allocate_info: &vk::DescriptorSetAllocateInfo,
+        allocate_info: &vk::DescriptorSetAllocateInfo<'_>,
     ) -> VkResult<Vec<vk::DescriptorSet>> {
         let mut desc_set = Vec::with_capacity(allocate_info.descriptor_set_count as usize);
         (self.device_fn_1_0.allocate_descriptor_sets)(
@@ -1546,8 +1552,8 @@ impl Device {
     #[inline]
     pub unsafe fn create_descriptor_set_layout(
         &self,
-        create_info: &vk::DescriptorSetLayoutCreateInfo,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::DescriptorSetLayoutCreateInfo<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::DescriptorSetLayout> {
         let mut layout = mem::zeroed();
         (self.device_fn_1_0.create_descriptor_set_layout)(
@@ -1569,8 +1575,8 @@ impl Device {
     #[inline]
     pub unsafe fn create_descriptor_pool(
         &self,
-        create_info: &vk::DescriptorPoolCreateInfo,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::DescriptorPoolCreateInfo<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::DescriptorPool> {
         let mut pool = mem::zeroed();
         (self.device_fn_1_0.create_descriptor_pool)(
@@ -1815,7 +1821,7 @@ impl Device {
     pub unsafe fn cmd_begin_render_pass(
         &self,
         command_buffer: vk::CommandBuffer,
-        render_pass_begin: &vk::RenderPassBeginInfo,
+        render_pass_begin: &vk::RenderPassBeginInfo<'_>,
         contents: vk::SubpassContents,
     ) {
         (self.device_fn_1_0.cmd_begin_render_pass)(command_buffer, render_pass_begin, contents);
@@ -2114,8 +2120,8 @@ impl Device {
     #[inline]
     pub unsafe fn create_semaphore(
         &self,
-        create_info: &vk::SemaphoreCreateInfo,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::SemaphoreCreateInfo<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::Semaphore> {
         let mut semaphore = mem::zeroed();
         (self.device_fn_1_0.create_semaphore)(
@@ -2132,8 +2138,8 @@ impl Device {
     pub unsafe fn create_graphics_pipelines(
         &self,
         pipeline_cache: vk::PipelineCache,
-        create_infos: &[vk::GraphicsPipelineCreateInfo],
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_infos: &[vk::GraphicsPipelineCreateInfo<'_>],
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> Result<Vec<vk::Pipeline>, (Vec<vk::Pipeline>, vk::Result)> {
         let mut pipelines = Vec::with_capacity(create_infos.len());
         let err_code = (self.device_fn_1_0.create_graphics_pipelines)(
@@ -2156,8 +2162,8 @@ impl Device {
     pub unsafe fn create_compute_pipelines(
         &self,
         pipeline_cache: vk::PipelineCache,
-        create_infos: &[vk::ComputePipelineCreateInfo],
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_infos: &[vk::ComputePipelineCreateInfo<'_>],
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> Result<Vec<vk::Pipeline>, (Vec<vk::Pipeline>, vk::Result)> {
         let mut pipelines = Vec::with_capacity(create_infos.len());
         let err_code = (self.device_fn_1_0.create_compute_pipelines)(
@@ -2179,8 +2185,8 @@ impl Device {
     #[inline]
     pub unsafe fn create_buffer(
         &self,
-        create_info: &vk::BufferCreateInfo,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::BufferCreateInfo<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::Buffer> {
         let mut buffer = mem::zeroed();
         (self.device_fn_1_0.create_buffer)(
@@ -2196,8 +2202,8 @@ impl Device {
     #[inline]
     pub unsafe fn create_pipeline_layout(
         &self,
-        create_info: &vk::PipelineLayoutCreateInfo,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::PipelineLayoutCreateInfo<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::PipelineLayout> {
         let mut pipeline_layout = mem::zeroed();
         (self.device_fn_1_0.create_pipeline_layout)(
@@ -2213,8 +2219,8 @@ impl Device {
     #[inline]
     pub unsafe fn create_pipeline_cache(
         &self,
-        create_info: &vk::PipelineCacheCreateInfo,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::PipelineCacheCreateInfo<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::PipelineCache> {
         let mut pipeline_cache = mem::zeroed();
         (self.device_fn_1_0.create_pipeline_cache)(
@@ -2282,7 +2288,7 @@ impl Device {
     #[inline]
     pub unsafe fn invalidate_mapped_memory_ranges(
         &self,
-        ranges: &[vk::MappedMemoryRange],
+        ranges: &[vk::MappedMemoryRange<'_>],
     ) -> VkResult<()> {
         (self.device_fn_1_0.invalidate_mapped_memory_ranges)(
             self.handle(),
@@ -2296,7 +2302,7 @@ impl Device {
     #[inline]
     pub unsafe fn flush_mapped_memory_ranges(
         &self,
-        ranges: &[vk::MappedMemoryRange],
+        ranges: &[vk::MappedMemoryRange<'_>],
     ) -> VkResult<()> {
         (self.device_fn_1_0.flush_mapped_memory_ranges)(
             self.handle(),
@@ -2310,8 +2316,8 @@ impl Device {
     #[inline]
     pub unsafe fn create_framebuffer(
         &self,
-        create_info: &vk::FramebufferCreateInfo,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::FramebufferCreateInfo<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::Framebuffer> {
         let mut framebuffer = mem::zeroed();
         (self.device_fn_1_0.create_framebuffer)(
@@ -2344,9 +2350,9 @@ impl Device {
         src_stage_mask: vk::PipelineStageFlags,
         dst_stage_mask: vk::PipelineStageFlags,
         dependency_flags: vk::DependencyFlags,
-        memory_barriers: &[vk::MemoryBarrier],
-        buffer_memory_barriers: &[vk::BufferMemoryBarrier],
-        image_memory_barriers: &[vk::ImageMemoryBarrier],
+        memory_barriers: &[vk::MemoryBarrier<'_>],
+        buffer_memory_barriers: &[vk::BufferMemoryBarrier<'_>],
+        image_memory_barriers: &[vk::ImageMemoryBarrier<'_>],
     ) {
         (self.device_fn_1_0.cmd_pipeline_barrier)(
             command_buffer,
@@ -2366,8 +2372,8 @@ impl Device {
     #[inline]
     pub unsafe fn create_render_pass(
         &self,
-        create_info: &vk::RenderPassCreateInfo,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::RenderPassCreateInfo<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::RenderPass> {
         let mut renderpass = mem::zeroed();
         (self.device_fn_1_0.create_render_pass)(
@@ -2384,7 +2390,7 @@ impl Device {
     pub unsafe fn begin_command_buffer(
         &self,
         command_buffer: vk::CommandBuffer,
-        begin_info: &vk::CommandBufferBeginInfo,
+        begin_info: &vk::CommandBufferBeginInfo<'_>,
     ) -> VkResult<()> {
         (self.device_fn_1_0.begin_command_buffer)(command_buffer, begin_info).result()
     }
@@ -2435,7 +2441,7 @@ impl Device {
     pub unsafe fn queue_submit(
         &self,
         queue: vk::Queue,
-        submits: &[vk::SubmitInfo],
+        submits: &[vk::SubmitInfo<'_>],
         fence: vk::Fence,
     ) -> VkResult<()> {
         (self.device_fn_1_0.queue_submit)(queue, submits.len() as u32, submits.as_ptr(), fence)
@@ -2447,7 +2453,7 @@ impl Device {
     pub unsafe fn queue_bind_sparse(
         &self,
         queue: vk::Queue,
-        bind_info: &[vk::BindSparseInfo],
+        bind_info: &[vk::BindSparseInfo<'_>],
         fence: vk::Fence,
     ) -> VkResult<()> {
         (self.device_fn_1_0.queue_bind_sparse)(
@@ -2463,8 +2469,8 @@ impl Device {
     #[inline]
     pub unsafe fn create_buffer_view(
         &self,
-        create_info: &vk::BufferViewCreateInfo,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::BufferViewCreateInfo<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::BufferView> {
         let mut buffer_view = mem::zeroed();
         (self.device_fn_1_0.create_buffer_view)(
@@ -2481,7 +2487,7 @@ impl Device {
     pub unsafe fn destroy_buffer_view(
         &self,
         buffer_view: vk::BufferView,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) {
         (self.device_fn_1_0.destroy_buffer_view)(
             self.handle(),
@@ -2494,8 +2500,8 @@ impl Device {
     #[inline]
     pub unsafe fn create_image_view(
         &self,
-        create_info: &vk::ImageViewCreateInfo,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::ImageViewCreateInfo<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::ImageView> {
         let mut image_view = mem::zeroed();
         (self.device_fn_1_0.create_image_view)(
@@ -2511,7 +2517,7 @@ impl Device {
     #[inline]
     pub unsafe fn allocate_command_buffers(
         &self,
-        allocate_info: &vk::CommandBufferAllocateInfo,
+        allocate_info: &vk::CommandBufferAllocateInfo<'_>,
     ) -> VkResult<Vec<vk::CommandBuffer>> {
         let mut buffers = Vec::with_capacity(allocate_info.command_buffer_count as usize);
         (self.device_fn_1_0.allocate_command_buffers)(
@@ -2528,8 +2534,8 @@ impl Device {
     #[inline]
     pub unsafe fn create_command_pool(
         &self,
-        create_info: &vk::CommandPoolCreateInfo,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::CommandPoolCreateInfo<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::CommandPool> {
         let mut pool = mem::zeroed();
         (self.device_fn_1_0.create_command_pool)(
@@ -2545,8 +2551,8 @@ impl Device {
     #[inline]
     pub unsafe fn create_query_pool(
         &self,
-        create_info: &vk::QueryPoolCreateInfo,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::QueryPoolCreateInfo<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::QueryPool> {
         let mut pool = mem::zeroed();
         (self.device_fn_1_0.create_query_pool)(
@@ -2562,8 +2568,8 @@ impl Device {
     #[inline]
     pub unsafe fn create_image(
         &self,
-        create_info: &vk::ImageCreateInfo,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::ImageCreateInfo<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::Image> {
         let mut image = mem::zeroed();
         (self.device_fn_1_0.create_image)(
@@ -2615,8 +2621,8 @@ impl Device {
     #[inline]
     pub unsafe fn allocate_memory(
         &self,
-        allocate_info: &vk::MemoryAllocateInfo,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        allocate_info: &vk::MemoryAllocateInfo<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::DeviceMemory> {
         let mut memory = mem::zeroed();
         (self.device_fn_1_0.allocate_memory)(
@@ -2632,8 +2638,8 @@ impl Device {
     #[inline]
     pub unsafe fn create_shader_module(
         &self,
-        create_info: &vk::ShaderModuleCreateInfo,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::ShaderModuleCreateInfo<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::ShaderModule> {
         let mut shader = mem::zeroed();
         (self.device_fn_1_0.create_shader_module)(
@@ -2649,8 +2655,8 @@ impl Device {
     #[inline]
     pub unsafe fn create_fence(
         &self,
-        create_info: &vk::FenceCreateInfo,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::FenceCreateInfo<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::Fence> {
         let mut fence = mem::zeroed();
         (self.device_fn_1_0.create_fence)(

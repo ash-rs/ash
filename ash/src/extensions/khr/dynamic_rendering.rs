@@ -21,7 +21,7 @@ impl DynamicRendering {
     pub unsafe fn cmd_begin_rendering(
         &self,
         command_buffer: vk::CommandBuffer,
-        rendering_info: &vk::RenderingInfoKHR,
+        rendering_info: &vk::RenderingInfoKHR<'_>,
     ) {
         (self.fp.cmd_begin_rendering_khr)(command_buffer, rendering_info)
     }

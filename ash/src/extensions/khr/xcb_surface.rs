@@ -24,8 +24,8 @@ impl XcbSurface {
     #[inline]
     pub unsafe fn create_xcb_surface(
         &self,
-        create_info: &vk::XcbSurfaceCreateInfoKHR,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::XcbSurfaceCreateInfoKHR<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::zeroed();
         (self.fp.create_xcb_surface_khr)(

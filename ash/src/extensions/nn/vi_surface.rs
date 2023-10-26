@@ -24,8 +24,8 @@ impl ViSurface {
     #[inline]
     pub unsafe fn create_vi_surface(
         &self,
-        create_info: &vk::ViSurfaceCreateInfoNN,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::ViSurfaceCreateInfoNN<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::zeroed();
         (self.fp.create_vi_surface_nn)(

@@ -93,7 +93,7 @@ where
 
 #[cfg(feature = "debug")]
 pub(crate) fn debug_flags<Value: Into<u64> + Copy>(
-    f: &mut fmt::Formatter,
+    f: &mut fmt::Formatter<'_>,
     known: &[(Value, &'static str)],
     value: Value,
 ) -> fmt::Result {

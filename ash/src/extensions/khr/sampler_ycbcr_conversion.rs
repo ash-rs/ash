@@ -25,8 +25,8 @@ impl SamplerYcbcrConversion {
     #[inline]
     pub unsafe fn create_sampler_ycbcr_conversion(
         &self,
-        create_info: &vk::SamplerYcbcrConversionCreateInfo,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::SamplerYcbcrConversionCreateInfo<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::SamplerYcbcrConversion> {
         let mut ycbcr_conversion = mem::zeroed();
         (self.fp.create_sampler_ycbcr_conversion_khr)(
@@ -43,7 +43,7 @@ impl SamplerYcbcrConversion {
     pub unsafe fn destroy_sampler_ycbcr_conversion(
         &self,
         ycbcr_conversion: vk::SamplerYcbcrConversion,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) {
         (self.fp.destroy_sampler_ycbcr_conversion_khr)(
             self.handle,

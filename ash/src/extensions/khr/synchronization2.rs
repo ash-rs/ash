@@ -22,7 +22,7 @@ impl Synchronization2 {
     pub unsafe fn cmd_pipeline_barrier2(
         &self,
         command_buffer: vk::CommandBuffer,
-        dependency_info: &vk::DependencyInfoKHR,
+        dependency_info: &vk::DependencyInfoKHR<'_>,
     ) {
         (self.fp.cmd_pipeline_barrier2_khr)(command_buffer, dependency_info)
     }
@@ -44,7 +44,7 @@ impl Synchronization2 {
         &self,
         command_buffer: vk::CommandBuffer,
         event: vk::Event,
-        dependency_info: &vk::DependencyInfoKHR,
+        dependency_info: &vk::DependencyInfoKHR<'_>,
     ) {
         (self.fp.cmd_set_event2_khr)(command_buffer, event, dependency_info)
     }
@@ -55,7 +55,7 @@ impl Synchronization2 {
         &self,
         command_buffer: vk::CommandBuffer,
         events: &[vk::Event],
-        dependency_infos: &[vk::DependencyInfoKHR],
+        dependency_infos: &[vk::DependencyInfoKHR<'_>],
     ) {
         assert_eq!(events.len(), dependency_infos.len());
         (self.fp.cmd_wait_events2_khr)(
@@ -83,7 +83,7 @@ impl Synchronization2 {
     pub unsafe fn queue_submit2(
         &self,
         queue: vk::Queue,
-        submits: &[vk::SubmitInfo2KHR],
+        submits: &[vk::SubmitInfo2KHR<'_>],
         fence: vk::Fence,
     ) -> VkResult<()> {
         (self.fp.queue_submit2_khr)(queue, submits.len() as u32, submits.as_ptr(), fence).result()

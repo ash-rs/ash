@@ -25,7 +25,7 @@ impl ExternalMemoryAndroidHardwareBuffer {
     pub unsafe fn get_android_hardware_buffer_properties(
         &self,
         buffer: *const vk::AHardwareBuffer,
-        properties: &mut vk::AndroidHardwareBufferPropertiesANDROID,
+        properties: &mut vk::AndroidHardwareBufferPropertiesANDROID<'_>,
     ) -> VkResult<()> {
         (self.fp.get_android_hardware_buffer_properties_android)(self.handle, buffer, properties)
             .result()
@@ -35,7 +35,7 @@ impl ExternalMemoryAndroidHardwareBuffer {
     #[inline]
     pub unsafe fn get_memory_android_hardware_buffer(
         &self,
-        info: &vk::MemoryGetAndroidHardwareBufferInfoANDROID,
+        info: &vk::MemoryGetAndroidHardwareBufferInfoANDROID<'_>,
     ) -> VkResult<*mut vk::AHardwareBuffer> {
         let mut buffer = std::ptr::null_mut();
         (self.fp.get_memory_android_hardware_buffer_android)(self.handle, info, &mut buffer)

@@ -50,8 +50,8 @@ impl PerformanceQuery {
         &self,
         physical_device: vk::PhysicalDevice,
         queue_family_index: u32,
-        out_counters: &mut [vk::PerformanceCounterKHR],
-        out_counter_descriptions: &mut [vk::PerformanceCounterDescriptionKHR],
+        out_counters: &mut [vk::PerformanceCounterKHR<'_>],
+        out_counter_descriptions: &mut [vk::PerformanceCounterDescriptionKHR<'_>],
     ) -> VkResult<()> {
         assert_eq!(out_counters.len(), out_counter_descriptions.len());
         let mut count = out_counters.len() as u32;
@@ -75,7 +75,7 @@ impl PerformanceQuery {
     pub unsafe fn get_physical_device_queue_family_performance_query_passes(
         &self,
         physical_device: vk::PhysicalDevice,
-        performance_query_create_info: &vk::QueryPoolPerformanceCreateInfoKHR,
+        performance_query_create_info: &vk::QueryPoolPerformanceCreateInfoKHR<'_>,
     ) -> u32 {
         let mut num_passes = 0;
         (self
@@ -93,7 +93,7 @@ impl PerformanceQuery {
     pub unsafe fn acquire_profiling_lock(
         &self,
         device: vk::Device,
-        info: &vk::AcquireProfilingLockInfoKHR,
+        info: &vk::AcquireProfilingLockInfoKHR<'_>,
     ) -> VkResult<()> {
         (self.fp.acquire_profiling_lock_khr)(device, info).result()
     }

@@ -24,8 +24,8 @@ impl XlibSurface {
     #[inline]
     pub unsafe fn create_xlib_surface(
         &self,
-        create_info: &vk::XlibSurfaceCreateInfoKHR,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::XlibSurfaceCreateInfoKHR<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::zeroed();
         (self.fp.create_xlib_surface_khr)(

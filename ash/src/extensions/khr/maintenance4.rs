@@ -23,8 +23,8 @@ impl Maintenance4 {
     #[inline]
     pub unsafe fn get_device_buffer_memory_requirements(
         &self,
-        memory_requirements: &vk::DeviceBufferMemoryRequirementsKHR,
-        out: &mut vk::MemoryRequirements2,
+        memory_requirements: &vk::DeviceBufferMemoryRequirementsKHR<'_>,
+        out: &mut vk::MemoryRequirements2<'_>,
     ) {
         (self.fp.get_device_buffer_memory_requirements_khr)(self.handle, memory_requirements, out)
     }
@@ -33,8 +33,8 @@ impl Maintenance4 {
     #[inline]
     pub unsafe fn get_device_image_memory_requirements(
         &self,
-        memory_requirements: &vk::DeviceImageMemoryRequirementsKHR,
-        out: &mut vk::MemoryRequirements2,
+        memory_requirements: &vk::DeviceImageMemoryRequirementsKHR<'_>,
+        out: &mut vk::MemoryRequirements2<'_>,
     ) {
         (self.fp.get_device_image_memory_requirements_khr)(self.handle, memory_requirements, out)
     }
@@ -43,7 +43,7 @@ impl Maintenance4 {
     #[inline]
     pub unsafe fn get_device_image_sparse_memory_requirements_len(
         &self,
-        memory_requirements: &vk::DeviceImageMemoryRequirementsKHR,
+        memory_requirements: &vk::DeviceImageMemoryRequirementsKHR<'_>,
     ) -> usize {
         let mut count = 0;
         (self.fp.get_device_image_sparse_memory_requirements_khr)(
@@ -62,8 +62,8 @@ impl Maintenance4 {
     #[inline]
     pub unsafe fn get_device_image_sparse_memory_requirements(
         &self,
-        memory_requirements: &vk::DeviceImageMemoryRequirementsKHR,
-        out: &mut [vk::SparseImageMemoryRequirements2],
+        memory_requirements: &vk::DeviceImageMemoryRequirementsKHR<'_>,
+        out: &mut [vk::SparseImageMemoryRequirements2<'_>],
     ) {
         let mut count = out.len() as u32;
         (self.fp.get_device_image_sparse_memory_requirements_khr)(

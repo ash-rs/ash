@@ -41,7 +41,7 @@ impl CalibratedTimestamps {
     pub unsafe fn get_calibrated_timestamps(
         &self,
         device: vk::Device,
-        info: &[vk::CalibratedTimestampInfoEXT],
+        info: &[vk::CalibratedTimestampInfoEXT<'_>],
     ) -> VkResult<(Vec<u64>, u64)> {
         let mut timestamps = vec![0u64; info.len()];
         let mut max_deviation = 0u64;

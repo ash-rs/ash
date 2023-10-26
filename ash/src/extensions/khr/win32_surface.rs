@@ -24,8 +24,8 @@ impl Win32Surface {
     #[inline]
     pub unsafe fn create_win32_surface(
         &self,
-        create_info: &vk::Win32SurfaceCreateInfoKHR,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        create_info: &vk::Win32SurfaceCreateInfoKHR<'_>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::zeroed();
         (self.fp.create_win32_surface_khr)(

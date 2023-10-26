@@ -24,7 +24,7 @@ impl DeferredHostOperations {
     #[inline]
     pub unsafe fn create_deferred_operation(
         &self,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::DeferredOperationKHR> {
         let mut operation = mem::zeroed();
         (self.fp.create_deferred_operation_khr)(
@@ -49,7 +49,7 @@ impl DeferredHostOperations {
     pub unsafe fn destroy_deferred_operation(
         &self,
         operation: vk::DeferredOperationKHR,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+        allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) {
         (self.fp.destroy_deferred_operation_khr)(
             self.handle,

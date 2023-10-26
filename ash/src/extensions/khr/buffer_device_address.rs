@@ -22,7 +22,7 @@ impl BufferDeviceAddress {
     #[inline]
     pub unsafe fn get_buffer_device_address(
         &self,
-        info: &vk::BufferDeviceAddressInfoKHR,
+        info: &vk::BufferDeviceAddressInfoKHR<'_>,
     ) -> vk::DeviceAddress {
         (self.fp.get_buffer_device_address_khr)(self.handle, info)
     }
@@ -31,7 +31,7 @@ impl BufferDeviceAddress {
     #[inline]
     pub unsafe fn get_buffer_opaque_capture_address(
         &self,
-        info: &vk::BufferDeviceAddressInfoKHR,
+        info: &vk::BufferDeviceAddressInfoKHR<'_>,
     ) -> u64 {
         (self.fp.get_buffer_opaque_capture_address_khr)(self.handle, info)
     }
@@ -40,7 +40,7 @@ impl BufferDeviceAddress {
     #[inline]
     pub unsafe fn get_device_memory_opaque_capture_address(
         &self,
-        info: &vk::DeviceMemoryOpaqueCaptureAddressInfoKHR,
+        info: &vk::DeviceMemoryOpaqueCaptureAddressInfoKHR<'_>,
     ) -> u64 {
         (self.fp.get_device_memory_opaque_capture_address_khr)(self.handle, info)
     }

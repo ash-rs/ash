@@ -106,12 +106,12 @@ macro_rules! handle_nondispatchable {
             }
         }
         impl fmt::Pointer for $name {
-            fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+            fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
                 write!(f, "0x{:x}", self.0)
             }
         }
         impl fmt::Debug for $name {
-            fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+            fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
                 write!(f, "0x{:x}", self.0)
             }
         }
@@ -149,12 +149,12 @@ macro_rules! define_handle {
             }
         }
         impl fmt::Pointer for $name {
-            fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+            fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
                 fmt::Pointer::fmt(&self.0, f)
             }
         }
         impl fmt::Debug for $name {
-            fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+            fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
                 fmt::Debug::fmt(&self.0, f)
             }
         }

@@ -26,8 +26,8 @@ impl ShaderObject {
     #[inline]
     pub unsafe fn create_shaders(
         &self,
-        create_infos: &[vk::ShaderCreateInfoEXT],
-        allocator: Option<&vk::AllocationCallbacks>,
+        create_infos: &[vk::ShaderCreateInfoEXT<'_>],
+        allocator: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<Vec<vk::ShaderEXT>> {
         let mut shaders = Vec::with_capacity(create_infos.len());
         (self.fp.create_shaders_ext)(
@@ -47,7 +47,7 @@ impl ShaderObject {
     pub unsafe fn destroy_shader(
         &self,
         shader: vk::ShaderEXT,
-        allocator: Option<&vk::AllocationCallbacks>,
+        allocator: Option<&vk::AllocationCallbacks<'_>>,
     ) {
         (self.fp.destroy_shader_ext)(self.handle, shader, allocator.as_raw_ptr())
     }
@@ -82,8 +82,8 @@ impl ShaderObject {
     pub unsafe fn cmd_set_vertex_input(
         &self,
         command_buffer: vk::CommandBuffer,
-        vertex_binding_descriptions: &[vk::VertexInputBindingDescription2EXT],
-        vertex_attribute_descriptions: &[vk::VertexInputAttributeDescription2EXT],
+        vertex_binding_descriptions: &[vk::VertexInputBindingDescription2EXT<'_>],
+        vertex_attribute_descriptions: &[vk::VertexInputAttributeDescription2EXT<'_>],
     ) {
         (self.fp.cmd_set_vertex_input_ext)(
             command_buffer,

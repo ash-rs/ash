@@ -22,7 +22,7 @@ impl ExternalMemoryFd {
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetMemoryFdKHR.html>
     #[inline]
-    pub unsafe fn get_memory_fd(&self, get_fd_info: &vk::MemoryGetFdInfoKHR) -> VkResult<i32> {
+    pub unsafe fn get_memory_fd(&self, get_fd_info: &vk::MemoryGetFdInfoKHR<'_>) -> VkResult<i32> {
         let mut fd = -1;
         (self.fp.get_memory_fd_khr)(self.handle, get_fd_info, &mut fd).result_with_success(fd)
     }
@@ -33,7 +33,7 @@ impl ExternalMemoryFd {
         &self,
         handle_type: vk::ExternalMemoryHandleTypeFlags,
         fd: i32,
-        memory_fd_properties: &mut vk::MemoryFdPropertiesKHR,
+        memory_fd_properties: &mut vk::MemoryFdPropertiesKHR<'_>,
     ) -> VkResult<()> {
         (self.fp.get_memory_fd_properties_khr)(self.handle, handle_type, fd, memory_fd_properties)
             .result()
