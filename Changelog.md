@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `VK_NV_low_latency2` device extension (#802)
 - Added `VK_EXT_hdr_metadata` device extension (#804)
 - Added `VK_NV_cuda_kernel_launch` device extension (#805)
+- Added `descriptor_count()` setter on `ash::vk::WriteDescriptorSet` (#809)
 
 ### Changed
 

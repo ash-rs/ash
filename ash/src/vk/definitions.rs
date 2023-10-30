@@ -1835,6 +1835,11 @@ impl<'a> WriteDescriptorSet<'a> {
         self
     }
     #[inline]
+    pub fn descriptor_count(mut self, descriptor_count: u32) -> Self {
+        self.descriptor_count = descriptor_count;
+        self
+    }
+    #[inline]
     pub fn descriptor_type(mut self, descriptor_type: DescriptorType) -> Self {
         self.descriptor_type = descriptor_type;
         self
