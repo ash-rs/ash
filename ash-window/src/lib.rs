@@ -172,15 +172,17 @@ pub fn enumerate_required_extensions(
     Ok(extensions)
 }
 
-/// Query whether a `queue_family` of the given `physical_device` supports presenting to any surface that might be created.
-/// This function can be used to find a suitable [`vk::PhysicalDevice`] and queue family
-/// for rendering before a single surface is created.
+/// Query whether a `queue_family` of the given `physical_device` supports presenting to any
+/// surface that might be created. This function can be used to find a suitable
+/// [`vk::PhysicalDevice`] and queue family for rendering before a single surface is created.
 ///
-/// This function can be a more useful alternative for
-/// [`VkGetPhysicalDeviceSurfaceSupportKHR`](https://registry.khronos.org/vulkan/specs/1.3-extensions/html/chap34.html#vkGetPhysicalDeviceSurfaceSupportKHR),
+/// This function can be a more useful alternative for [`vkGetPhysicalDeviceSurfaceSupportKHR`],
 /// which requires having an actual surface available before choosing a physical device.
 ///
-/// For more information see [the vulkan spec on WSI integration](https://registry.khronos.org/vulkan/specs/1.3-extensions/html/chap34.html#_querying_for_wsi_support).
+/// For more information see [the vulkan spec on WSI integration][_querying_for_wsi_support].
+///
+/// [`vkGetPhysicalDeviceSurfaceSupportKHR`]: khr::Surface::get_physical_device_surface_support()
+/// [_querying_for_wsi_support]: https://registry.khronos.org/vulkan/specs/1.3-extensions/html/chap34.html#_querying_for_wsi_support
 pub fn get_present_support(
     entry: &Entry,
     instance: &Instance,
@@ -202,7 +204,7 @@ pub fn get_present_support(
             Ok(ext.get_physical_device_wayland_presentation_support(
                 physical_device,
                 queue_family_index,
-                &mut *h.display.cast(),
+                h.display,
             ))
         },
         RawDisplayHandle::Windows(_) => unsafe {
@@ -213,27 +215,58 @@ pub fn get_present_support(
                 queue_family_index,
             ))
         },
+        #[cfg(unix)]
         RawDisplayHandle::Xcb(h) => unsafe {
             // https://registry.khronos.org/vulkan/specs/1.3-extensions/html/chap34.html#platformQuerySupport_xcb
             let ext = khr::XcbSurface::new(entry, instance);
-            Ok(ext.get_physical_device_xcb_presentation_support(
+
+            let xcb = xcb::Connection::from_raw_conn(h.connection.cast());
+            let setup = xcb.get_setup();
+            let screen = setup.roots().nth(h.screen as usize).unwrap();
+            let visual = screen.root_visual();
+            xcb.into_raw_conn();
+
+            let res = ext.get_physical_device_xcb_presentation_support(
                 physical_device,
                 queue_family_index,
-                &mut *h.connection,
-                h.screen as _,
-            ))
+                h.connection,
+                visual,
+            );
+
+            Ok(res)
         },
+        #[cfg(unix)]
         RawDisplayHandle::Xlib(h) => unsafe {
             // https://registry.khronos.org/vulkan/specs/1.3-extensions/html/chap34.html#platformQuerySupport_xlib
             let ext = khr::XlibSurface::new(entry, instance);
+
+            #[cfg(not(any(feature = "x11-dl", feature = "x11")))]
+            compile_error!("Exactly one of x11-dl or x11 must be enabled on unix");
+            #[cfg(all(feature = "x11-dl", feature = "x11"))]
+            compile_error!("Exactly one of x11-dl or x11 must be enabled on unix");
+
+            let visual_id;
+            #[cfg(feature = "x11-dl")]
+            {
+                let xlib = x11_dl::xlib::Xlib::open().unwrap();
+                let default_visual = (xlib.XDefaultVisual)(h.display.cast(), h.screen);
+                visual_id = (xlib.XVisualIDFromVisual)(default_visual);
+            }
+            #[cfg(feature = "x11")]
+            {
+                let default_visual = x11::xlib::XDefaultVisual(h.display.cast(), h.screen);
+                visual_id = x11::xlib::XVisualIDFromVisual(default_visual);
+            }
+
             Ok(ext.get_physical_device_xlib_presentation_support(
                 physical_device,
                 queue_family_index,
                 h.display,
-                h.screen as _,
+                visual_id as _,
             ))
         },
-        // All other platforms mentioned in the vulkan spec are not supported by ash.
+        // All other platforms mentioned in the vulkan spec don't
+        // currently have an implementation in ash-window.
         _ => Err(vk::Result::ERROR_EXTENSION_NOT_PRESENT),
     }
 }
