@@ -1893,6 +1893,9 @@ fn derive_setters(
         ("VkDescriptorSetLayoutBinding", "descriptorCount"),
         // No ImageView attachments when VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT is set
         ("VkFramebufferCreateInfo", "attachmentCount"),
+        // descriptorCount also describes descriptor length in pNext extension structures
+        // https://github.com/ash-rs/ash/issues/806
+        ("VkWriteDescriptorSet", "descriptorCount"),
     ];
     let skip_members = members
         .iter()
