@@ -29,10 +29,15 @@ raw-window-metal = "0.3"
 [dev-dependencies]
 winit = "0.28.0"
 ash = { path = "../ash", version = "0.37", default-features = false, features = ["linked"] }
+xcb = { version = "1.2.2" }
 
 [features]
 default = ["x11-dl", "xcb"]
 
 [[example]]
 name = "winit"
+required-features = ["ash/linked"]
+
+[[example]]
+name = "xcb"
 required-features = ["ash/linked"]
