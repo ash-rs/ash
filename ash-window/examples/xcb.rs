@@ -40,7 +40,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                     display_handle,
                 )?;
                 println!(
-                    "{dev_name}, queue {i} {} presenting to the surface",
+                    "{dev_name}, queue {i} {} presenting to surfaces",
                     if present_support {
                         "supports"
                     } else {
