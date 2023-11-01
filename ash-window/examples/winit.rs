@@ -34,16 +34,9 @@ fn main() -> Result<(), Box<dyn Error>> {
             .with_inner_size(PhysicalSize::<u32>::from((800, 600)))
             .build(&event_loop)?;
 
-        // Create a surface from winit window.
-        let surface = ash_window::create_surface(
-            &entry,
-            &instance,
-            window.display_handle()?.as_raw(),
-            window.window_handle()?.as_raw(),
-            None,
-        )?;
+        // Load the surface extensions
         let surface_fn = ash::extensions::khr::surface::Instance::new(&entry, &instance);
-        println!("surface: {surface:?}");
+        let mut surface = None;
 
         let _ = event_loop.run(move |event, elwp| match event {
             winit::event::Event::WindowEvent {
@@ -62,6 +55,33 @@ fn main() -> Result<(), Box<dyn Error>> {
                 elwp.exit();
             }
             Event::LoopExiting => {
+                // This will be the last event before the loop terminates.
+                // TODO: How does this play with Suspended?
+                // https://github.com/rust-windowing/winit/issues/3206
+                if let Some(surface) = surface.take() {
+                    surface_fn.destroy_surface(surface, None);
+                }
+            }
+            Event::Resumed => {
+                // Create a surface from winit window.
+                let s = ash_window::create_surface(
+                    &entry,
+                    &instance,
+                    window.display_handle().unwrap().as_raw(),
+                    window.window_handle().unwrap().as_raw(),
+                    None,
+                )
+                .unwrap();
+                println!("surface: {s:?}");
+                assert!(
+                    surface.replace(s).is_none(),
+                    "Surface must not yet exist when Resumed is called"
+                );
+            }
+            Event::Suspended => {
+                let surface = surface
+                    .take()
+                    .expect("Surface must have been created in Resumed");
                 surface_fn.destroy_surface(surface, None);
             }
             _ => {}
