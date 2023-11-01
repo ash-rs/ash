@@ -43,7 +43,7 @@ impl WaylandSurface {
         &self,
         physical_device: vk::PhysicalDevice,
         queue_family_index: u32,
-        wl_display: &mut vk::wl_display,
+        wl_display: *mut vk::wl_display,
     ) -> bool {
         let b = (self.fp.get_physical_device_wayland_presentation_support_khr)(
             physical_device,

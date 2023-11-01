@@ -7,7 +7,7 @@
 
 use ash::vk;
 use raw_window_handle::{HasRawDisplayHandle, HasRawWindowHandle};
-use std::error::Error;
+use std::{error::Error, ffi::CStr};
 use winit::{
     dpi::PhysicalSize,
     event::{Event, VirtualKeyCode, WindowEvent},
@@ -28,6 +28,31 @@ fn main() -> Result<(), Box<dyn Error>> {
             .enabled_extension_names(surface_extensions);
 
         let instance = entry.create_instance(&instance_desc, None)?;
+
+        let devices = instance.enumerate_physical_devices()?;
+        for dev in devices {
+            let props = instance.get_physical_device_properties(dev);
+            let queue_families = instance.get_physical_device_queue_family_properties(dev);
+            let dev_name = CStr::from_ptr(props.device_name.as_ptr()).to_str().unwrap();
+
+            for i in 0..queue_families.len() {
+                let present_support = ash_window::get_present_support(
+                    &entry,
+                    &instance,
+                    dev,
+                    i as _,
+                    event_loop.raw_display_handle(),
+                )?;
+                println!(
+                    "{dev_name}, queue {i} {} presenting to surfaces",
+                    if present_support {
+                        "supports"
+                    } else {
+                        "does not support"
+                    }
+                );
+            }
+        }
 
         let window = WindowBuilder::new()
             .with_inner_size(PhysicalSize::<u32>::from((800, 600)))
