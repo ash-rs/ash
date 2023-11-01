@@ -19,9 +19,9 @@ ash = { path = "../ash", version = "0.37", default-features = false }
 raw-window-handle = "0.5"
 
 [target.'cfg(unix)'.dependencies]
-x11-dl = { version="2.21.0", optional=true }
-x11 = { version="2.21.0", features=["xlib"], optional=true }
-xcb = "1.2.2"
+x11-dl = { version = "2.21.0", optional = true }
+x11 = { version = "2.21.0", features = ["xlib"], optional = true }
+xcb = { version = "1.2.2", optional = true }
 
 [target.'cfg(any(target_os = "macos", target_os = "ios"))'.dependencies]
 raw-window-metal = "0.3"
@@ -31,7 +31,7 @@ winit = "0.28.0"
 ash = { path = "../ash", version = "0.37", default-features = false, features = ["linked"] }
 
 [features]
-default = [ "x11-dl" ]
+default = ["x11-dl", "xcb"]
 
 [[example]]
 name = "winit"
