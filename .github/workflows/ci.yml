@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: dtolnay/rust-toolchain@1.60.0
+      - uses: dtolnay/rust-toolchain@1.80.0
       - run: cargo check -p ash -p ash-rewrite --all-features
 
   check_ash_window_msrv:
@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: dtolnay/rust-toolchain@1.64.0
+      - uses: dtolnay/rust-toolchain@1.80.0
       - run: cargo check -p ash-window -p examples --all-features
 
   # TODO: add a similar job for the rewrite once that generates code
