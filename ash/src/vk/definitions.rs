@@ -4319,8 +4319,8 @@ impl<'a> PipelineMultisampleStateCreateInfo<'a> {
         self.min_sample_shading = min_sample_shading;
         self
     }
-    #[doc = r" Sets `p_sample_mask` to `null` if the slice is empty. The mask will"]
-    #[doc = r" be treated as if it has all bits set to `1`."]
+    #[doc = r" Sets [`Self::p_sample_mask`] to [`std::ptr::null()`] if the slice is empty. The"]
+    #[doc = r" mask will be treated as if it has all bits set to `1`."]
     #[doc = r""]
     #[doc = r" See <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineMultisampleStateCreateInfo.html#_description>"]
     #[doc = r" for more details."]
@@ -51890,9 +51890,22 @@ unsafe impl<'a> TaggedStructure for GetLatencyMarkerInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GET_LATENCY_MARKER_INFO_NV;
 }
 impl<'a> GetLatencyMarkerInfoNV<'a> {
+    #[doc = r" This only sets the slice pointer. Users must manually pass the length of"]
+    #[doc = r" `timings` to [`crate::extensions::nv::LowLatency2::get_latency_timings()`]."]
+    #[doc = r""]
+    #[doc = r" [`Self::p_timings`] will be set to to [`std::ptr::null_mut()`] if the"]
+    #[doc = r" slice is empty, which is necessary to query the length of the array via"]
+    #[doc = r" [`crate::extensions::nv::LowLatency2::get_latency_timings_len()`]."]
+    #[doc = r""]
+    #[doc = r" See <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetLatencyTimingsNV.html#_description>"]
+    #[doc = r" for more details."]
     #[inline]
-    pub fn timings(mut self, timings: &'a mut LatencyTimingsFrameReportNV<'a>) -> Self {
-        self.p_timings = timings;
+    pub fn timings(mut self, timings: &'a mut [LatencyTimingsFrameReportNV<'a>]) -> Self {
+        self.p_timings = if timings.is_empty() {
+            std::ptr::null_mut()
+        } else {
+            timings.as_mut_ptr()
+        };
         self
     }
 }

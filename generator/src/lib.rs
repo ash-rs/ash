@@ -1972,8 +1972,8 @@ fn derive_setters(
 
         if name == "pSampleMask" {
             return Some(quote! {
-                /// Sets `p_sample_mask` to `null` if the slice is empty. The mask will
-                /// be treated as if it has all bits set to `1`.
+                /// Sets [`Self::p_sample_mask`] to [`std::ptr::null()`] if the slice is empty. The
+                /// mask will be treated as if it has all bits set to `1`.
                 ///
                 /// See <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineMultisampleStateCreateInfo.html#_description>
                 /// for more details.
@@ -1999,6 +1999,32 @@ fn derive_setters(
                     #deprecated
                     pub fn #param_ident_short(mut self, #param_ident_short: &'a ::std::ffi::CStr) -> Self {
                         self.#param_ident = #param_ident_short.as_ptr();
+                        self
+                    }
+                });
+            }
+
+            // pTimings is a dynamic array, but its length is only available as a mutable-pointer parameter in a calling function:
+            // https://github.com/KhronosGroup/Vulkan-Docs/issues/2269
+            if struct_.name == "VkGetLatencyMarkerInfoNV" && field.name.as_deref() == Some("pTimings") {
+                return Some(quote! {
+                    /// This only sets the slice pointer. Users must manually pass the length of
+                    /// `timings` to [`crate::extensions::nv::LowLatency2::get_latency_timings()`].
+                    ///
+                    /// [`Self::p_timings`] will be set to to [`std::ptr::null_mut()`] if the
+                    /// slice is empty, which is necessary to query the length of the array via
+                    /// [`crate::extensions::nv::LowLatency2::get_latency_timings_len()`].
+                    ///
+                    /// See <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetLatencyTimingsNV.html#_description>
+                    /// for more details.
+                    #[inline]
+                    #deprecated
+                    pub fn timings(mut self, timings: &'a mut [LatencyTimingsFrameReportNV<'a>]) -> Self {
+                        self.p_timings = if timings.is_empty() {
+                            std::ptr::null_mut()
+                        } else {
+                            timings.as_mut_ptr()
+                        };
                         self
                     }
                 });
