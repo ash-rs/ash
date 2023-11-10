@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 269;
+pub const HEADER_VERSION: u32 = 270;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -49770,7 +49770,7 @@ impl<'a> DirectDriverLoadingInfoLUNARG<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDirectDriverLoadingListLUNARG.html>"]
 pub struct DirectDriverLoadingListLUNARG<'a> {
     pub s_type: StructureType,
-    pub p_next: *mut c_void,
+    pub p_next: *const c_void,
     pub mode: DirectDriverLoadingModeLUNARG,
     pub driver_count: u32,
     pub p_drivers: *const DirectDriverLoadingInfoLUNARG<'a>,
@@ -49781,7 +49781,7 @@ impl ::std::default::Default for DirectDriverLoadingListLUNARG<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::std::ptr::null_mut(),
+            p_next: ::std::ptr::null(),
             mode: DirectDriverLoadingModeLUNARG::default(),
             driver_count: u32::default(),
             p_drivers: ::std::ptr::null(),
@@ -52324,6 +52324,43 @@ impl<'a> PhysicalDeviceSchedulingControlsPropertiesARM<'a> {
         scheduling_controls_flags: PhysicalDeviceSchedulingControlsFlagsARM,
     ) -> Self {
         self.scheduling_controls_flags = scheduling_controls_flags;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceRelaxedLineRasterizationFeaturesIMG.html>"]
+pub struct PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub relaxed_line_rasterization: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            relaxed_line_rasterization: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_RELAXED_LINE_RASTERIZATION_FEATURES_IMG;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'_> {}
+impl<'a> PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'a> {
+    #[inline]
+    pub fn relaxed_line_rasterization(mut self, relaxed_line_rasterization: bool) -> Self {
+        self.relaxed_line_rasterization = relaxed_line_rasterization.into();
         self
     }
 }
