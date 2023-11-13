@@ -34,8 +34,9 @@ impl ExternalSemaphoreFd {
         &self,
         get_info: &vk::SemaphoreGetFdInfoKHR<'_>,
     ) -> VkResult<i32> {
-        let mut fd = -1;
-        (self.fp.get_semaphore_fd_khr)(self.handle, get_info, &mut fd).result_with_success(fd)
+        let mut fd = mem::MaybeUninit::uninit();
+        (self.fp.get_semaphore_fd_khr)(self.handle, get_info, fd.as_mut_ptr())
+            .assume_init_on_success(fd)
     }
 
     pub const NAME: &'static CStr = vk::KhrExternalSemaphoreFdFn::NAME;

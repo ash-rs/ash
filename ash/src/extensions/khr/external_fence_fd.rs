@@ -31,8 +31,9 @@ impl ExternalFenceFd {
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetFenceFdKHR.html>
     #[inline]
     pub unsafe fn get_fence_fd(&self, get_info: &vk::FenceGetFdInfoKHR<'_>) -> VkResult<i32> {
-        let mut fd = -1;
-        (self.fp.get_fence_fd_khr)(self.handle, get_info, &mut fd).result_with_success(fd)
+        let mut fd = mem::MaybeUninit::uninit();
+        (self.fp.get_fence_fd_khr)(self.handle, get_info, fd.as_mut_ptr())
+            .assume_init_on_success(fd)
     }
 
     pub const NAME: &'static CStr = vk::KhrExternalFenceFdFn::NAME;
