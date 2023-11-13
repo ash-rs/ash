@@ -54,7 +54,7 @@ impl RayTracingPipeline {
         create_info: &[vk::RayTracingPipelineCreateInfoKHR<'_>],
         allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<Vec<vk::Pipeline>> {
-        let mut pipelines = vec![mem::zeroed(); create_info.len()];
+        let mut pipelines = Vec::with_capacity(create_info.len());
         (self.fp.create_ray_tracing_pipelines_khr)(
             self.handle,
             deferred_operation,
@@ -64,7 +64,9 @@ impl RayTracingPipeline {
             allocation_callbacks.as_raw_ptr(),
             pipelines.as_mut_ptr(),
         )
-        .result_with_success(pipelines)
+        .result()?;
+        pipelines.set_len(create_info.len());
+        Ok(pipelines)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetRayTracingShaderGroupHandlesKHR.html>

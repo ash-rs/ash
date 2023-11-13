@@ -29,7 +29,7 @@ impl ShaderEnqueue {
         create_infos: &[vk::ExecutionGraphPipelineCreateInfoAMDX<'_>],
         allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<Vec<vk::Pipeline>> {
-        let mut pipelines = vec![mem::zeroed(); create_infos.len()];
+        let mut pipelines = Vec::with_capacity(create_infos.len());
         (self.fp.create_execution_graph_pipelines_amdx)(
             self.handle,
             pipeline_cache,
@@ -38,7 +38,9 @@ impl ShaderEnqueue {
             allocation_callbacks.as_raw_ptr(),
             pipelines.as_mut_ptr(),
         )
-        .result_with_success(pipelines)
+        .result()?;
+        pipelines.set_len(create_infos.len());
+        Ok(pipelines)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetExecutionGraphPipelineScratchSizeAMDX.html>
