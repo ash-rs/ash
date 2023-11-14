@@ -19,7 +19,7 @@ edition = "2021"
 rust-version = "1.60.0"
 
 [dependencies]
-libloading = { version = "0.7", optional = true }
+libloading = { version = "0.8", optional = true }
 
 [features]
 default = ["loaded", "debug"]
