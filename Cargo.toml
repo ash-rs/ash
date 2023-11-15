@@ -1,10 +1,10 @@
 [workspace]
 members = [
-    "examples",
+    "analysis",
     "ash",
+    "ash-examples",
     "ash-rewrite",
     "ash-window",
-    "analysis",
     "generator",
     "generator-rewrite",
 ]

@@ -24,7 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@1.64.0
-      - run: cargo check -p ash-window -p examples --all-features
+      - run: cargo check -p ash-window -p ash-examples --all-features
 
   # TODO: add a similar job for the rewrite once that generates code
   generated:

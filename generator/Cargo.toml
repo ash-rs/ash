@@ -3,6 +3,7 @@ name = "generator"
 version = "0.1.0"
 authors = ["Maik Klein <maikklein@googlemail.com>"]
 edition = "2021"
+publish = false
 
 [dependencies]
 bindgen = "0.64"
