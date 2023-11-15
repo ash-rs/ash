@@ -9,10 +9,12 @@ readme = "../README.md"
 keywords = ["gamedev", "graphics", "vulkan", "bindings"]
 categories = [
     "api-bindings",
+    "external-ffi-bindings",
     "game-development",
     "graphics",
     "rendering::graphics-api",
 ]
+# TODO: Remove when crate is renamed, this is the default
 documentation = "https://docs.rs/ash"
 edition = "2021"
 # TODO: reevaluate, then update in ci.yml

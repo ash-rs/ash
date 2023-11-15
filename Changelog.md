@@ -435,20 +435,20 @@ flags: vk::CommandPoolCreateFlags::RESET_COMMAND_BUFFER_BIT,
 - `ash::util::Align` is a helper struct that
   can write to aligned memory.
 
-[Unreleased]: https://github.com/MaikKlein/ash/compare/0.37.2...HEAD
-[0.37.2]: https://github.com/MaikKlein/ash/releases/tag/0.37.2
-[0.37.1]: https://github.com/MaikKlein/ash/releases/tag/0.37.1
-[0.37.0]: https://github.com/MaikKlein/ash/releases/tag/0.37.0
-[0.36.0]: https://github.com/MaikKlein/ash/releases/tag/0.36.0
-[0.35.2]: https://github.com/MaikKlein/ash/releases/tag/0.35.2
-[0.35.1]: https://github.com/MaikKlein/ash/releases/tag/0.35.1
-[0.35.0]: https://github.com/MaikKlein/ash/releases/tag/0.35.0
-[0.34.0]: https://github.com/MaikKlein/ash/releases/tag/0.34.0
-[0.33.3]: https://github.com/MaikKlein/ash/releases/tag/0.33.3
-[0.33.2]: https://github.com/MaikKlein/ash/releases/tag/0.33.2
-[0.33.1]: https://github.com/MaikKlein/ash/releases/tag/0.33.1
-[0.33.0]: https://github.com/MaikKlein/ash/releases/tag/0.33.0
-[0.32.1]: https://github.com/MaikKlein/ash/releases/tag/0.32.1
-[0.32.0]: https://github.com/MaikKlein/ash/releases/tag/0.32.0
-[0.31.0]: https://github.com/MaikKlein/ash/releases/tag/0.31.0
-[0.30.0]: https://github.com/MaikKlein/ash/releases/tag/0.30.0
+[Unreleased]: https://github.com/ash-rs/ash/compare/0.37.2...HEAD
+[0.37.2]: https://github.com/ash-rs/ash/releases/tag/0.37.2
+[0.37.1]: https://github.com/ash-rs/ash/releases/tag/0.37.1
+[0.37.0]: https://github.com/ash-rs/ash/releases/tag/0.37.0
+[0.36.0]: https://github.com/ash-rs/ash/releases/tag/0.36.0
+[0.35.2]: https://github.com/ash-rs/ash/releases/tag/0.35.2
+[0.35.1]: https://github.com/ash-rs/ash/releases/tag/0.35.1
+[0.35.0]: https://github.com/ash-rs/ash/releases/tag/0.35.0
+[0.34.0]: https://github.com/ash-rs/ash/releases/tag/0.34.0
+[0.33.3]: https://github.com/ash-rs/ash/releases/tag/0.33.3
+[0.33.2]: https://github.com/ash-rs/ash/releases/tag/0.33.2
+[0.33.1]: https://github.com/ash-rs/ash/releases/tag/0.33.1
+[0.33.0]: https://github.com/ash-rs/ash/releases/tag/0.33.0
+[0.32.1]: https://github.com/ash-rs/ash/releases/tag/0.32.1
+[0.32.0]: https://github.com/ash-rs/ash/releases/tag/0.32.0
+[0.31.0]: https://github.com/ash-rs/ash/releases/tag/0.31.0
+[0.30.0]: https://github.com/ash-rs/ash/releases/tag/0.30.0

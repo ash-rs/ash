@@ -117,7 +117,7 @@ pub fn read_spv<R: io::Read + io::Seek>(x: &mut R) -> io::Result<Vec<u32>> {
         return Err(io::Error::new(io::ErrorKind::InvalidData, "input too long"));
     }
     let words = (size / 4) as usize;
-    // https://github.com/MaikKlein/ash/issues/354:
+    // https://github.com/ash-rs/ash/issues/354:
     // Zero-initialize the result to prevent read_exact from possibly
     // reading uninitialized memory.
     let mut result = vec![0u32; words];

@@ -4,7 +4,7 @@ A very lightweight wrapper around Vulkan
 
 [![Crates.io Version](https://img.shields.io/crates/v/ash.svg)](https://crates.io/crates/ash)
 [![Documentation](https://docs.rs/ash/badge.svg)](https://docs.rs/ash)
-[![Build Status](https://github.com/MaikKlein/ash/workflows/CI/badge.svg)](https://github.com/MaikKlein/ash/actions?workflow=CI)
+[![Build Status](https://github.com/ash-rs/ash/workflows/CI/badge.svg)](https://github.com/ash-rs/ash/actions?workflow=CI)
 [![LICENSE](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE-MIT)
 [![LICENSE](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE-APACHE)
 [![Join the chat at https://gitter.im/MaikKlein/ash](https://badges.gitter.im/MaikKlein/ash.svg)](https://gitter.im/MaikKlein/ash?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -145,7 +145,7 @@ Custom loaders can be implemented.
 
 ### Extension loading
 
-Additionally, every Vulkan extension has to be loaded explicitly. You can find all extensions under [ash::extensions](https://github.com/MaikKlein/ash/tree/master/ash/src/extensions).
+Additionally, every Vulkan extension has to be loaded explicitly. You can find all extensions under [`ash::extensions`](https://github.com/ash-rs/ash/tree/master/ash/src/extensions).
 
 ```rust
 use ash::extensions::khr::Swapchain;
@@ -195,7 +195,7 @@ If, on the other hand, your application cannot handle Vulkan being missing at ru
 
 ## Example
 
-You can find the examples [here](https://github.com/MaikKlein/ash/tree/master/examples).
+You can find the examples [here](https://github.com/ash-rs/ash/tree/master/examples).
 All examples currently require: the LunarG Validation layers and a Vulkan library that is visible in your `PATH`. An easy way to get started is to use the [LunarG Vulkan SDK](https://lunarg.com/vulkan-sdk/)
 
 #### Windows
@@ -218,7 +218,7 @@ VK_LAYER_PATH=$VULKAN_SDK/share/vulkan/explicit_layer.d \
 cargo run ...
 ```
 
-### [Triangle](https://github.com/MaikKlein/ash/blob/master/examples/src/bin/triangle.rs)
+### [Triangle](https://github.com/ash-rs/ash/blob/master/examples/src/bin/triangle.rs)
 
 Displays a triangle with vertex colors.
 
@@ -229,7 +229,7 @@ cargo run --bin triangle
 
 ![screenshot](http://i.imgur.com/PQZcL6w.jpg)
 
-### [Texture](https://github.com/MaikKlein/ash/blob/master/examples/src/bin/texture.rs)
+### [Texture](https://github.com/ash-rs/ash/blob/master/examples/src/bin/texture.rs)
 
 Displays a texture on a quad.
 
@@ -252,7 +252,7 @@ cargo run --bin texture
 
 - [vk-sync](https://github.com/gwihlidal/vk-sync-rs) - Simplified Vulkan synchronization logic, written in rust.
 - [vk-mem-rs](https://github.com/gwihlidal/vk-mem-rs) - This crate provides an FFI layer and idiomatic rust wrappers for the excellent AMD Vulkan Memory Allocator (VMA) C/C++ library.
-- [gpu-allocator](https://github.com/Traverse-Research/gpu-allocator) - Memory allocator written in pure Rust for GPU memory in Vulkan and in the future DirectX 12
+- [gpu-allocator](https://github.com/Traverse-Research/gpu-allocator) - GPU Memory allocator written in pure Rust for Vulkan and DirectX 12.
 - [lahar](https://github.com/Ralith/lahar) - Tools for asynchronously uploading data to a Vulkan device.
 
 ### Libraries that use ash

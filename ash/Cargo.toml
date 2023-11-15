@@ -8,10 +8,16 @@ authors = [
 ]
 description = "Vulkan bindings for Rust"
 license = "MIT OR Apache-2.0"
-repository = "https://github.com/MaikKlein/ash"
+repository = "https://github.com/ash-rs/ash"
 readme = "../README.md"
-keywords = ["vulkan", "graphic"]
-documentation = "https://docs.rs/ash"
+keywords = ["gamedev", "graphics", "vulkan", "bindings"]
+categories = [
+    "api-bindings",
+    "external-ffi-bindings",
+    "game-development",
+    "graphics",
+    "rendering::graphics-api"
+]
 edition = "2021"
 rust-version = "1.60.0"
 

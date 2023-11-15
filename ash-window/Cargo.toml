@@ -1,16 +1,20 @@
 [package]
 name = "ash-window"
 version = "0.12.0"
-authors = ["msiglreith <m.siglreith@gmail.com>"]
+authors = [
+    "msiglreith <m.siglreith@gmail.com>",
+    "Marijn Suijten <marijn@traverseresearch.nl>",
+]
 license = "MIT OR Apache-2.0"
 description = "Interop library between ash and raw-window-handle"
-documentation = "https://docs.rs/ash-window"
-repository = "https://github.com/MaikKlein/ash"
-readme = "README.md"
-keywords = ["window", "ash", "graphics"]
-categories = ["game-engines", "graphics"]
-exclude = [".github/*"]
-workspace = ".."
+repository = "https://github.com/ash-rs/ash"
+keywords = ["windowing", "ash", "graphics", "vulkan", "raw-window-handle"]
+categories = [
+    "api-bindings",
+    "game-development",
+    "graphics",
+    "rendering::graphics-api"
+]
 edition = "2021"
 rust-version = "1.64.0"
 
