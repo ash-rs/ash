@@ -6,8 +6,7 @@ use std::os::raw::c_void;
 
 use ash::util::*;
 use ash::vk;
-
-use examples::*;
+use ash_examples::*;
 
 #[derive(Clone, Debug, Copy)]
 struct Vertex {

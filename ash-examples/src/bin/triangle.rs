@@ -1,11 +1,12 @@
-use ash::util::*;
-use ash::vk;
-use examples::*;
 use std::default::Default;
 use std::ffi::CStr;
 use std::io::Cursor;
 use std::mem;
 use std::mem::align_of;
+
+use ash::util::*;
+use ash::vk;
+use ash_examples::*;
 
 #[derive(Clone, Debug, Copy)]
 struct Vertex {

@@ -195,7 +195,7 @@ If, on the other hand, your application cannot handle Vulkan being missing at ru
 
 ## Example
 
-You can find the examples [here](https://github.com/ash-rs/ash/tree/master/examples).
+You can find the examples [here](https://github.com/ash-rs/ash/tree/master/ash-examples).
 All examples currently require: the LunarG Validation layers and a Vulkan library that is visible in your `PATH`. An easy way to get started is to use the [LunarG Vulkan SDK](https://lunarg.com/vulkan-sdk/)
 
 #### Windows
@@ -218,24 +218,22 @@ VK_LAYER_PATH=$VULKAN_SDK/share/vulkan/explicit_layer.d \
 cargo run ...
 ```
 
-### [Triangle](https://github.com/ash-rs/ash/blob/master/examples/src/bin/triangle.rs)
+### [Triangle](https://github.com/ash-rs/ash/blob/master/ash-examples/src/bin/triangle.rs)
 
 Displays a triangle with vertex colors.
 
-```
-cd examples
-cargo run --bin triangle
+```sh
+cargo run -p ash-examples --bin triangle
 ```
 
 ![screenshot](http://i.imgur.com/PQZcL6w.jpg)
 
-### [Texture](https://github.com/ash-rs/ash/blob/master/examples/src/bin/texture.rs)
+### [Texture](https://github.com/ash-rs/ash/blob/master/ash-examples/src/bin/texture.rs)
 
 Displays a texture on a quad.
 
-```
-cd examples
-cargo run --bin texture
+```sh
+cargo run -p ash-examples --bin texture
 ```
 
 ![texture](http://i.imgur.com/trow00H.png)
