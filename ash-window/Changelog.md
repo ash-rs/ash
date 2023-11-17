@@ -21,38 +21,38 @@
 
 ### Changed
 
-- Bumped `ash` version to [`0.37`](https://github.com/MaikKlein/ash/releases/tag/0.37.0) (#600)
+- Bumped `ash` version to [`0.37`](https://github.com/ash-rs/ash/releases/tag/0.37.0) (#600)
 - Make `enumerate_required_extensions()` return `&[*const c_char]` instead of `Vec<&CStr>` to match `ash::vk::InstanceCreateInfo` (#590)
 
 ## [0.9.1] - 2022-02-21
 
 ### Changed
 
-- Convert `ash` version to a range, allowing [`0.34`](https://github.com/MaikKlein/ash/releases/tag/0.34.0)-[`0.36`](https://github.com/MaikKlein/ash/releases/tag/0.36.0) (#585)
+- Convert `ash` version to a range, allowing [`0.34`](https://github.com/ash-rs/ash/releases/tag/0.34.0)-[`0.36`](https://github.com/ash-rs/ash/releases/tag/0.36.0) (#585)
 
 ## [0.9.0] - 2021-12-27
 
 ### Changed
 
-- Bumped `ash` version to [`0.35`](https://github.com/MaikKlein/ash/releases/tag/0.35.0)
+- Bumped `ash` version to [`0.35`](https://github.com/ash-rs/ash/releases/tag/0.35.0)
 
 ## [0.8.0] - 2021-12-22
 
 ### Changed
 
-- Bumped `ash` version to [`0.34`](https://github.com/MaikKlein/ash/releases/tag/0.34.0)
+- Bumped `ash` version to [`0.34`](https://github.com/ash-rs/ash/releases/tag/0.34.0)
 
 ## [0.7.0] - 2021-07-30
 
 ### Changed
 
-- Bumped `ash` version to [`0.33`](https://github.com/MaikKlein/ash/releases/tag/0.33.0)
+- Bumped `ash` version to [`0.33`](https://github.com/ash-rs/ash/releases/tag/0.33.0)
 
 ## [0.6.0]
 
 ### Changed
 
-- Bumped `ash` version to [`0.32`](https://github.com/MaikKlein/ash/releases/tag/0.32.0)
+- Bumped `ash` version to [`0.32`](https://github.com/ash-rs/ash/releases/tag/0.32.0)
 
 ## [0.5.0]
 
@@ -85,13 +85,13 @@
 ## Version 0.1.0
 Initial release for `raw-window-handle = "0.3"` with Windows, Linux, Android, MacOS/iOS support.
 
-[Unreleased]: https://github.com/MaikKlein/ash/compare/ash-window-0.12.0...HEAD
-[0.12.0]: https://github.com/MaikKlein/ash/releases/tag/ash-window-0.12.0
-[0.11.0]: https://github.com/MaikKlein/ash/releases/tag/ash-window-0.11.0
-[0.10.0]: https://github.com/MaikKlein/ash/releases/tag/ash-window-0.10.0
-[0.9.1]: https://github.com/MaikKlein/ash/releases/tag/ash-window-0.9.1
-[0.9.0]: https://github.com/MaikKlein/ash/releases/tag/ash-window-0.9.0
-[0.8.0]: https://github.com/MaikKlein/ash/releases/tag/ash-window-0.8.0
-[0.7.0]: https://github.com/MaikKlein/ash/releases/tag/ash-window-0.7.0
-[0.6.0]: https://github.com/MaikKlein/ash/releases/tag/ash-window-0.6.0
-[0.5.0]: https://github.com/MaikKlein/ash/releases/tag/ash-window-0.5.0
+[Unreleased]: https://github.com/ash-rs/ash/compare/ash-window-0.12.0...HEAD
+[0.12.0]: https://github.com/ash-rs/ash/releases/tag/ash-window-0.12.0
+[0.11.0]: https://github.com/ash-rs/ash/releases/tag/ash-window-0.11.0
+[0.10.0]: https://github.com/ash-rs/ash/releases/tag/ash-window-0.10.0
+[0.9.1]: https://github.com/ash-rs/ash/releases/tag/ash-window-0.9.1
+[0.9.0]: https://github.com/ash-rs/ash/releases/tag/ash-window-0.9.0
+[0.8.0]: https://github.com/ash-rs/ash/releases/tag/ash-window-0.8.0
+[0.7.0]: https://github.com/ash-rs/ash/releases/tag/ash-window-0.7.0
+[0.6.0]: https://github.com/ash-rs/ash/releases/tag/ash-window-0.6.0
+[0.5.0]: https://github.com/ash-rs/ash/releases/tag/ash-window-0.5.0

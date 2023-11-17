@@ -1,10 +1,10 @@
 ## Ash-window
 
-Interoperability between [`ash`](https://github.com/MaikKlein/ash) and [`raw-window-handle`](https://github.com/rust-windowing/raw-window-handle) for surface creation.
+Interoperability between [`ash`](https://github.com/ash-rs/ash) and [`raw-window-handle`](https://github.com/rust-windowing/raw-window-handle) for surface creation.
 
 [![Crates.io Version](https://img.shields.io/crates/v/ash-window.svg)](https://crates.io/crates/ash-window)
 [![Documentation](https://docs.rs/ash-window/badge.svg)](https://docs.rs/ash-window)
-[![Build Status](https://github.com/MaikKlein/ash/workflows/CI/badge.svg)](https://github.com/MaikKlein/ash/actions?workflow=CI)
+[![Build Status](https://github.com/ash-rs/ash/workflows/CI/badge.svg)](https://github.com/ash-rs/ash/actions?workflow=CI)
 [![LICENSE](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE-MIT)
 [![LICENSE](https://img.shields.io/badge/license-apache-blue.svg)](LICENSE-APACHE)
 [![Join the chat at https://gitter.im/MaikKlein/ash](https://badges.gitter.im/MaikKlein/ash.svg)](https://gitter.im/MaikKlein/ash?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
