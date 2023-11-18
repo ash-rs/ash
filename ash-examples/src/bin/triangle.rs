@@ -352,7 +352,7 @@ fn main() {
                 .swapchain_loader
                 .acquire_next_image(
                     base.swapchain,
-                    std::u64::MAX,
+                    u64::MAX,
                     base.present_complete_semaphore,
                     vk::Fence::null(),
                 )
