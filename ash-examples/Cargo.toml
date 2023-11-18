@@ -14,3 +14,6 @@ winit = "0.28.0"
 # directly and benefit from the infallible `Entry` constructor.
 ash = { path = "../ash", default-features = false, features = ["linked", "debug"] }
 ash-window = { path = "../ash-window" }
+
+[lints]
+workspace = true

@@ -32,3 +32,6 @@ ash = { path = "../ash", version = "0.37", default-features = false, features = 
 [[example]]
 name = "winit"
 required-features = ["ash/linked"]
+
+[lints]
+workspace = true

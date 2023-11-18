@@ -9,3 +9,13 @@ members = [
     "generator",
     "generator-rewrite",
 ]
+
+[workspace.lints.rust]
+deprecated_in_future = "warn"
+rust_2018_idioms = "warn"
+trivial_casts = "warn"
+trivial_numeric_casts = "warn"
+unused_qualifications = "warn"
+
+[workspace.lints.clippy]
+use_self = "warn"
