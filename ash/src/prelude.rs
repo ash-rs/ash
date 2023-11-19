@@ -24,6 +24,14 @@ impl vk::Result {
     pub unsafe fn assume_init_on_success<T>(self, v: mem::MaybeUninit<T>) -> VkResult<T> {
         self.result().map(move |()| v.assume_init())
     }
+
+    #[inline]
+    pub unsafe fn set_vec_len_on_success<T>(self, mut v: Vec<T>, len: usize) -> VkResult<Vec<T>> {
+        self.result().map(move |()| {
+            v.set_len(len);
+            v
+        })
+    }
 }
 
 /// Repeatedly calls `f` until it does not return [`vk::Result::INCOMPLETE`] anymore, ensuring all
@@ -48,9 +56,10 @@ where
 
         let err_code = f(&mut count, data.as_mut_ptr());
         if err_code != vk::Result::INCOMPLETE {
-            err_code.result()?;
-            data.set_len(count.try_into().expect("`N` failed to convert to `usize`"));
-            break Ok(data);
+            break err_code.set_vec_len_on_success(
+                data,
+                count.try_into().expect("`N` failed to convert to `usize`"),
+            );
         }
     }
 }
@@ -85,8 +94,10 @@ where
 
         let err_code = f(&mut count, data.as_mut_ptr());
         if err_code != vk::Result::INCOMPLETE {
-            data.set_len(count.try_into().expect("`N` failed to convert to `usize`"));
-            break err_code.result_with_success(data);
+            break err_code.set_vec_len_on_success(
+                data,
+                count.try_into().expect("`N` failed to convert to `usize`"),
+            );
         }
     }
 }

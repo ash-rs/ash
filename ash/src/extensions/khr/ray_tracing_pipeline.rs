@@ -64,9 +64,7 @@ impl RayTracingPipeline {
             allocation_callbacks.as_raw_ptr(),
             pipelines.as_mut_ptr(),
         )
-        .result()?;
-        pipelines.set_len(create_info.len());
-        Ok(pipelines)
+        .set_vec_len_on_success(pipelines, create_info.len())
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetRayTracingShaderGroupHandlesKHR.html>
@@ -87,9 +85,7 @@ impl RayTracingPipeline {
             data_size,
             data.as_mut_ptr().cast(),
         )
-        .result()?;
-        data.set_len(data_size);
-        Ok(data)
+        .set_vec_len_on_success(data, data_size)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetRayTracingCaptureReplayShaderGroupHandlesKHR.html>
@@ -112,9 +108,7 @@ impl RayTracingPipeline {
             data_size,
             data.as_mut_ptr().cast(),
         )
-        .result()?;
-        data.set_len(data_size);
-        Ok(data)
+        .set_vec_len_on_success(data, data_size)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdTraceRaysIndirectKHR.html>

@@ -175,9 +175,7 @@ impl RayTracing {
             allocation_callbacks.as_raw_ptr(),
             pipelines.as_mut_ptr(),
         )
-        .result()?;
-        pipelines.set_len(create_info.len());
-        Ok(pipelines)
+        .set_vec_len_on_success(pipelines, create_info.len())
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetRayTracingShaderGroupHandlesNV.html>

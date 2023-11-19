@@ -38,9 +38,7 @@ impl ShaderEnqueue {
             allocation_callbacks.as_raw_ptr(),
             pipelines.as_mut_ptr(),
         )
-        .result()?;
-        pipelines.set_len(create_infos.len());
-        Ok(pipelines)
+        .set_vec_len_on_success(pipelines, create_infos.len())
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetExecutionGraphPipelineScratchSizeAMDX.html>

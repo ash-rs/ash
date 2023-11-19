@@ -1546,10 +1546,7 @@ impl Device {
             allocate_info,
             desc_set.as_mut_ptr(),
         )
-        .result()?;
-
-        desc_set.set_len(allocate_info.descriptor_set_count as usize);
-        Ok(desc_set)
+        .set_vec_len_on_success(desc_set, allocate_info.descriptor_set_count as usize)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateDescriptorSetLayout.html>
@@ -2536,9 +2533,7 @@ impl Device {
             allocate_info,
             buffers.as_mut_ptr(),
         )
-        .result()?;
-        buffers.set_len(allocate_info.command_buffer_count as usize);
-        Ok(buffers)
+        .set_vec_len_on_success(buffers, allocate_info.command_buffer_count as usize)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateCommandPool.html>
