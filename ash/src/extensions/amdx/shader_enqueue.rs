@@ -8,23 +8,31 @@ use core::mem;
 
 impl crate::amdx::shader_enqueue::Device {
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateExecutionGraphPipelinesAMDX.html>
+    ///
+    /// Pipelines are created and returned as described for [Multiple Pipeline Creation].
+    ///
+    /// [Multiple Pipeline Creation]: https://registry.khronos.org/vulkan/specs/1.3-extensions/html/vkspec.html#pipelines-multiple
     #[inline]
     pub unsafe fn create_execution_graph_pipelines(
         &self,
         pipeline_cache: vk::PipelineCache,
         create_infos: &[vk::ExecutionGraphPipelineCreateInfoAMDX<'_>],
         allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
-    ) -> VkResult<Vec<vk::Pipeline>> {
+    ) -> Result<Vec<vk::Pipeline>, (Vec<vk::Pipeline>, vk::Result)> {
         let mut pipelines = Vec::with_capacity(create_infos.len());
-        (self.fp.create_execution_graph_pipelines_amdx)(
+        let err_code = (self.fp.create_execution_graph_pipelines_amdx)(
             self.handle,
             pipeline_cache,
             create_infos.len() as u32,
             create_infos.as_ptr(),
             allocation_callbacks.as_raw_ptr(),
             pipelines.as_mut_ptr(),
-        )
-        .set_vec_len_on_success(pipelines, create_infos.len())
+        );
+        pipelines.set_len(create_infos.len());
+        match err_code {
+            vk::Result::SUCCESS => Ok(pipelines),
+            _ => Err((pipelines, err_code)),
+        }
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetExecutionGraphPipelineScratchSizeAMDX.html>
