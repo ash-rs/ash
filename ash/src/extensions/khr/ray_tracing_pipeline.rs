@@ -122,18 +122,18 @@ impl RayTracingPipeline {
     pub unsafe fn cmd_trace_rays_indirect(
         &self,
         command_buffer: vk::CommandBuffer,
-        raygen_shader_binding_table: &[vk::StridedDeviceAddressRegionKHR],
-        miss_shader_binding_table: &[vk::StridedDeviceAddressRegionKHR],
-        hit_shader_binding_table: &[vk::StridedDeviceAddressRegionKHR],
-        callable_shader_binding_table: &[vk::StridedDeviceAddressRegionKHR],
+        raygen_shader_binding_table: &vk::StridedDeviceAddressRegionKHR,
+        miss_shader_binding_table: &vk::StridedDeviceAddressRegionKHR,
+        hit_shader_binding_table: &vk::StridedDeviceAddressRegionKHR,
+        callable_shader_binding_table: &vk::StridedDeviceAddressRegionKHR,
         indirect_device_address: vk::DeviceAddress,
     ) {
         (self.fp.cmd_trace_rays_indirect_khr)(
             command_buffer,
-            raygen_shader_binding_table.as_ptr(),
-            miss_shader_binding_table.as_ptr(),
-            hit_shader_binding_table.as_ptr(),
-            callable_shader_binding_table.as_ptr(),
+            raygen_shader_binding_table,
+            miss_shader_binding_table,
+            hit_shader_binding_table,
+            callable_shader_binding_table,
             indirect_device_address,
         );
     }
