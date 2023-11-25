@@ -817,9 +817,7 @@ impl fmt::Debug for PhysicalDeviceProperties {
             .field("vendor_id", &self.vendor_id)
             .field("device_id", &self.device_id)
             .field("device_type", &self.device_type)
-            .field("device_name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.device_name.as_ptr())
-            })
+            .field("device_name", &unsafe { self.device_name_as_c_str() })
             .field("pipeline_cache_uuid", &self.pipeline_cache_uuid)
             .field("limits", &self.limits)
             .field("sparse_properties", &self.sparse_properties)
@@ -869,9 +867,15 @@ impl PhysicalDeviceProperties {
         self
     }
     #[inline]
-    pub fn device_name(mut self, device_name: [c_char; MAX_PHYSICAL_DEVICE_NAME_SIZE]) -> Self {
-        self.device_name = device_name;
-        self
+    pub fn device_name(
+        mut self,
+        device_name: &std::ffi::CStr,
+    ) -> std::result::Result<Self, CStrTooLargeForStaticArray> {
+        write_c_str_slice_with_nul(&mut self.device_name, device_name).map(|()| self)
+    }
+    #[inline]
+    pub unsafe fn device_name_as_c_str(&self) -> &std::ffi::CStr {
+        wrap_c_str_slice_until_nul(&self.device_name)
     }
     #[inline]
     pub fn pipeline_cache_uuid(mut self, pipeline_cache_uuid: [u8; UUID_SIZE]) -> Self {
@@ -900,9 +904,7 @@ pub struct ExtensionProperties {
 impl fmt::Debug for ExtensionProperties {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("ExtensionProperties")
-            .field("extension_name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.extension_name.as_ptr())
-            })
+            .field("extension_name", &unsafe { self.extension_name_as_c_str() })
             .field("spec_version", &self.spec_version)
             .finish()
     }
@@ -918,9 +920,15 @@ impl ::std::default::Default for ExtensionProperties {
 }
 impl ExtensionProperties {
     #[inline]
-    pub fn extension_name(mut self, extension_name: [c_char; MAX_EXTENSION_NAME_SIZE]) -> Self {
-        self.extension_name = extension_name;
-        self
+    pub fn extension_name(
+        mut self,
+        extension_name: &std::ffi::CStr,
+    ) -> std::result::Result<Self, CStrTooLargeForStaticArray> {
+        write_c_str_slice_with_nul(&mut self.extension_name, extension_name).map(|()| self)
+    }
+    #[inline]
+    pub unsafe fn extension_name_as_c_str(&self) -> &std::ffi::CStr {
+        wrap_c_str_slice_until_nul(&self.extension_name)
     }
     #[inline]
     pub fn spec_version(mut self, spec_version: u32) -> Self {
@@ -941,14 +949,10 @@ pub struct LayerProperties {
 impl fmt::Debug for LayerProperties {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("LayerProperties")
-            .field("layer_name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.layer_name.as_ptr())
-            })
+            .field("layer_name", &unsafe { self.layer_name_as_c_str() })
             .field("spec_version", &self.spec_version)
             .field("implementation_version", &self.implementation_version)
-            .field("description", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.description.as_ptr())
-            })
+            .field("description", &unsafe { self.description_as_c_str() })
             .finish()
     }
 }
@@ -965,9 +969,15 @@ impl ::std::default::Default for LayerProperties {
 }
 impl LayerProperties {
     #[inline]
-    pub fn layer_name(mut self, layer_name: [c_char; MAX_EXTENSION_NAME_SIZE]) -> Self {
-        self.layer_name = layer_name;
-        self
+    pub fn layer_name(
+        mut self,
+        layer_name: &std::ffi::CStr,
+    ) -> std::result::Result<Self, CStrTooLargeForStaticArray> {
+        write_c_str_slice_with_nul(&mut self.layer_name, layer_name).map(|()| self)
+    }
+    #[inline]
+    pub unsafe fn layer_name_as_c_str(&self) -> &std::ffi::CStr {
+        wrap_c_str_slice_until_nul(&self.layer_name)
     }
     #[inline]
     pub fn spec_version(mut self, spec_version: u32) -> Self {
@@ -980,9 +990,15 @@ impl LayerProperties {
         self
     }
     #[inline]
-    pub fn description(mut self, description: [c_char; MAX_DESCRIPTION_SIZE]) -> Self {
-        self.description = description;
-        self
+    pub fn description(
+        mut self,
+        description: &std::ffi::CStr,
+    ) -> std::result::Result<Self, CStrTooLargeForStaticArray> {
+        write_c_str_slice_with_nul(&mut self.description, description).map(|()| self)
+    }
+    #[inline]
+    pub unsafe fn description_as_c_str(&self) -> &std::ffi::CStr {
+        wrap_c_str_slice_until_nul(&self.description)
     }
 }
 #[repr(C)]
@@ -1019,9 +1035,13 @@ unsafe impl<'a> TaggedStructure for ApplicationInfo<'a> {
 }
 impl<'a> ApplicationInfo<'a> {
     #[inline]
-    pub fn application_name(mut self, application_name: &'a ::std::ffi::CStr) -> Self {
+    pub fn application_name(mut self, application_name: &'a std::ffi::CStr) -> Self {
         self.p_application_name = application_name.as_ptr();
         self
+    }
+    #[inline]
+    pub unsafe fn application_name_as_c_str(&self) -> &std::ffi::CStr {
+        std::ffi::CStr::from_ptr(self.p_application_name)
     }
     #[inline]
     pub fn application_version(mut self, application_version: u32) -> Self {
@@ -1029,9 +1049,13 @@ impl<'a> ApplicationInfo<'a> {
         self
     }
     #[inline]
-    pub fn engine_name(mut self, engine_name: &'a ::std::ffi::CStr) -> Self {
+    pub fn engine_name(mut self, engine_name: &'a std::ffi::CStr) -> Self {
         self.p_engine_name = engine_name.as_ptr();
         self
+    }
+    #[inline]
+    pub unsafe fn engine_name_as_c_str(&self) -> &std::ffi::CStr {
+        std::ffi::CStr::from_ptr(self.p_engine_name)
     }
     #[inline]
     pub fn engine_version(mut self, engine_version: u32) -> Self {
@@ -3651,9 +3675,13 @@ impl<'a> PipelineShaderStageCreateInfo<'a> {
         self
     }
     #[inline]
-    pub fn name(mut self, name: &'a ::std::ffi::CStr) -> Self {
+    pub fn name(mut self, name: &'a std::ffi::CStr) -> Self {
         self.p_name = name.as_ptr();
         self
+    }
+    #[inline]
+    pub unsafe fn name_as_c_str(&self) -> &std::ffi::CStr {
+        std::ffi::CStr::from_ptr(self.p_name)
     }
     #[inline]
     pub fn specialization_info(mut self, specialization_info: &'a SpecializationInfo<'a>) -> Self {
@@ -7712,9 +7740,13 @@ impl<'a> DisplayPropertiesKHR<'a> {
         self
     }
     #[inline]
-    pub fn display_name(mut self, display_name: &'a ::std::ffi::CStr) -> Self {
+    pub fn display_name(mut self, display_name: &'a std::ffi::CStr) -> Self {
         self.display_name = display_name.as_ptr();
         self
+    }
+    #[inline]
+    pub unsafe fn display_name_as_c_str(&self) -> &std::ffi::CStr {
+        std::ffi::CStr::from_ptr(self.display_name)
     }
     #[inline]
     pub fn physical_dimensions(mut self, physical_dimensions: Extent2D) -> Self {
@@ -8985,9 +9017,13 @@ impl<'a> DebugMarkerObjectNameInfoEXT<'a> {
         self
     }
     #[inline]
-    pub fn object_name(mut self, object_name: &'a ::std::ffi::CStr) -> Self {
+    pub fn object_name(mut self, object_name: &'a std::ffi::CStr) -> Self {
         self.p_object_name = object_name.as_ptr();
         self
+    }
+    #[inline]
+    pub unsafe fn object_name_as_c_str(&self) -> &std::ffi::CStr {
+        std::ffi::CStr::from_ptr(self.p_object_name)
     }
 }
 #[repr(C)]
@@ -9073,9 +9109,13 @@ unsafe impl<'a> TaggedStructure for DebugMarkerMarkerInfoEXT<'a> {
 }
 impl<'a> DebugMarkerMarkerInfoEXT<'a> {
     #[inline]
-    pub fn marker_name(mut self, marker_name: &'a ::std::ffi::CStr) -> Self {
+    pub fn marker_name(mut self, marker_name: &'a std::ffi::CStr) -> Self {
         self.p_marker_name = marker_name.as_ptr();
         self
+    }
+    #[inline]
+    pub unsafe fn marker_name_as_c_str(&self) -> &std::ffi::CStr {
+        std::ffi::CStr::from_ptr(self.p_marker_name)
     }
     #[inline]
     pub fn color(mut self, color: [f32; 4]) -> Self {
@@ -10908,12 +10948,8 @@ impl fmt::Debug for PhysicalDeviceDriverProperties<'_> {
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
             .field("driver_id", &self.driver_id)
-            .field("driver_name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.driver_name.as_ptr())
-            })
-            .field("driver_info", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.driver_info.as_ptr())
-            })
+            .field("driver_name", &unsafe { self.driver_name_as_c_str() })
+            .field("driver_info", &unsafe { self.driver_info_as_c_str() })
             .field("conformance_version", &self.conformance_version)
             .finish()
     }
@@ -10943,14 +10979,26 @@ impl<'a> PhysicalDeviceDriverProperties<'a> {
         self
     }
     #[inline]
-    pub fn driver_name(mut self, driver_name: [c_char; MAX_DRIVER_NAME_SIZE]) -> Self {
-        self.driver_name = driver_name;
-        self
+    pub fn driver_name(
+        mut self,
+        driver_name: &std::ffi::CStr,
+    ) -> std::result::Result<Self, CStrTooLargeForStaticArray> {
+        write_c_str_slice_with_nul(&mut self.driver_name, driver_name).map(|()| self)
     }
     #[inline]
-    pub fn driver_info(mut self, driver_info: [c_char; MAX_DRIVER_INFO_SIZE]) -> Self {
-        self.driver_info = driver_info;
-        self
+    pub unsafe fn driver_name_as_c_str(&self) -> &std::ffi::CStr {
+        wrap_c_str_slice_until_nul(&self.driver_name)
+    }
+    #[inline]
+    pub fn driver_info(
+        mut self,
+        driver_info: &std::ffi::CStr,
+    ) -> std::result::Result<Self, CStrTooLargeForStaticArray> {
+        write_c_str_slice_with_nul(&mut self.driver_info, driver_info).map(|()| self)
+    }
+    #[inline]
+    pub unsafe fn driver_info_as_c_str(&self) -> &std::ffi::CStr {
+        wrap_c_str_slice_until_nul(&self.driver_info)
     }
     #[inline]
     pub fn conformance_version(mut self, conformance_version: ConformanceVersion) -> Self {
@@ -18302,9 +18350,13 @@ impl<'a> DebugUtilsObjectNameInfoEXT<'a> {
         self
     }
     #[inline]
-    pub fn object_name(mut self, object_name: &'a ::std::ffi::CStr) -> Self {
+    pub fn object_name(mut self, object_name: &'a std::ffi::CStr) -> Self {
         self.p_object_name = object_name.as_ptr();
         self
+    }
+    #[inline]
+    pub unsafe fn object_name_as_c_str(&self) -> &std::ffi::CStr {
+        std::ffi::CStr::from_ptr(self.p_object_name)
     }
 }
 #[repr(C)]
@@ -18386,9 +18438,13 @@ unsafe impl<'a> TaggedStructure for DebugUtilsLabelEXT<'a> {
 }
 impl<'a> DebugUtilsLabelEXT<'a> {
     #[inline]
-    pub fn label_name(mut self, label_name: &'a ::std::ffi::CStr) -> Self {
+    pub fn label_name(mut self, label_name: &'a std::ffi::CStr) -> Self {
         self.p_label_name = label_name.as_ptr();
         self
+    }
+    #[inline]
+    pub unsafe fn label_name_as_c_str(&self) -> &std::ffi::CStr {
+        std::ffi::CStr::from_ptr(self.p_label_name)
     }
     #[inline]
     pub fn color(mut self, color: [f32; 4]) -> Self {
@@ -18525,9 +18581,13 @@ impl<'a> DebugUtilsMessengerCallbackDataEXT<'a> {
         self
     }
     #[inline]
-    pub fn message_id_name(mut self, message_id_name: &'a ::std::ffi::CStr) -> Self {
+    pub fn message_id_name(mut self, message_id_name: &'a std::ffi::CStr) -> Self {
         self.p_message_id_name = message_id_name.as_ptr();
         self
+    }
+    #[inline]
+    pub unsafe fn message_id_name_as_c_str(&self) -> &std::ffi::CStr {
+        std::ffi::CStr::from_ptr(self.p_message_id_name)
     }
     #[inline]
     pub fn message_id_number(mut self, message_id_number: i32) -> Self {
@@ -18535,9 +18595,13 @@ impl<'a> DebugUtilsMessengerCallbackDataEXT<'a> {
         self
     }
     #[inline]
-    pub fn message(mut self, message: &'a ::std::ffi::CStr) -> Self {
+    pub fn message(mut self, message: &'a std::ffi::CStr) -> Self {
         self.p_message = message.as_ptr();
         self
+    }
+    #[inline]
+    pub unsafe fn message_as_c_str(&self) -> &std::ffi::CStr {
+        std::ffi::CStr::from_ptr(self.p_message)
     }
     #[inline]
     pub fn queue_labels(mut self, queue_labels: &'a [DebugUtilsLabelEXT<'a>]) -> Self {
@@ -27064,15 +27128,9 @@ impl fmt::Debug for PerformanceCounterDescriptionKHR<'_> {
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
             .field("flags", &self.flags)
-            .field("name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.name.as_ptr())
-            })
-            .field("category", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.category.as_ptr())
-            })
-            .field("description", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.description.as_ptr())
-            })
+            .field("name", &unsafe { self.name_as_c_str() })
+            .field("category", &unsafe { self.category_as_c_str() })
+            .field("description", &unsafe { self.description_as_c_str() })
             .finish()
     }
 }
@@ -27100,19 +27158,37 @@ impl<'a> PerformanceCounterDescriptionKHR<'a> {
         self
     }
     #[inline]
-    pub fn name(mut self, name: [c_char; MAX_DESCRIPTION_SIZE]) -> Self {
-        self.name = name;
-        self
+    pub fn name(
+        mut self,
+        name: &std::ffi::CStr,
+    ) -> std::result::Result<Self, CStrTooLargeForStaticArray> {
+        write_c_str_slice_with_nul(&mut self.name, name).map(|()| self)
     }
     #[inline]
-    pub fn category(mut self, category: [c_char; MAX_DESCRIPTION_SIZE]) -> Self {
-        self.category = category;
-        self
+    pub unsafe fn name_as_c_str(&self) -> &std::ffi::CStr {
+        wrap_c_str_slice_until_nul(&self.name)
     }
     #[inline]
-    pub fn description(mut self, description: [c_char; MAX_DESCRIPTION_SIZE]) -> Self {
-        self.description = description;
-        self
+    pub fn category(
+        mut self,
+        category: &std::ffi::CStr,
+    ) -> std::result::Result<Self, CStrTooLargeForStaticArray> {
+        write_c_str_slice_with_nul(&mut self.category, category).map(|()| self)
+    }
+    #[inline]
+    pub unsafe fn category_as_c_str(&self) -> &std::ffi::CStr {
+        wrap_c_str_slice_until_nul(&self.category)
+    }
+    #[inline]
+    pub fn description(
+        mut self,
+        description: &std::ffi::CStr,
+    ) -> std::result::Result<Self, CStrTooLargeForStaticArray> {
+        write_c_str_slice_with_nul(&mut self.description, description).map(|()| self)
+    }
+    #[inline]
+    pub unsafe fn description_as_c_str(&self) -> &std::ffi::CStr {
+        wrap_c_str_slice_until_nul(&self.description)
     }
 }
 #[repr(C)]
@@ -28151,12 +28227,8 @@ impl fmt::Debug for PipelineExecutablePropertiesKHR<'_> {
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
             .field("stages", &self.stages)
-            .field("name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.name.as_ptr())
-            })
-            .field("description", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.description.as_ptr())
-            })
+            .field("name", &unsafe { self.name_as_c_str() })
+            .field("description", &unsafe { self.description_as_c_str() })
             .field("subgroup_size", &self.subgroup_size)
             .finish()
     }
@@ -28185,14 +28257,26 @@ impl<'a> PipelineExecutablePropertiesKHR<'a> {
         self
     }
     #[inline]
-    pub fn name(mut self, name: [c_char; MAX_DESCRIPTION_SIZE]) -> Self {
-        self.name = name;
-        self
+    pub fn name(
+        mut self,
+        name: &std::ffi::CStr,
+    ) -> std::result::Result<Self, CStrTooLargeForStaticArray> {
+        write_c_str_slice_with_nul(&mut self.name, name).map(|()| self)
     }
     #[inline]
-    pub fn description(mut self, description: [c_char; MAX_DESCRIPTION_SIZE]) -> Self {
-        self.description = description;
-        self
+    pub unsafe fn name_as_c_str(&self) -> &std::ffi::CStr {
+        wrap_c_str_slice_until_nul(&self.name)
+    }
+    #[inline]
+    pub fn description(
+        mut self,
+        description: &std::ffi::CStr,
+    ) -> std::result::Result<Self, CStrTooLargeForStaticArray> {
+        write_c_str_slice_with_nul(&mut self.description, description).map(|()| self)
+    }
+    #[inline]
+    pub unsafe fn description_as_c_str(&self) -> &std::ffi::CStr {
+        wrap_c_str_slice_until_nul(&self.description)
     }
     #[inline]
     pub fn subgroup_size(mut self, subgroup_size: u32) -> Self {
@@ -28271,12 +28355,8 @@ impl fmt::Debug for PipelineExecutableStatisticKHR<'_> {
         fmt.debug_struct("PipelineExecutableStatisticKHR")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
-            .field("name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.name.as_ptr())
-            })
-            .field("description", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.description.as_ptr())
-            })
+            .field("name", &unsafe { self.name_as_c_str() })
+            .field("description", &unsafe { self.description_as_c_str() })
             .field("format", &self.format)
             .field("value", &"union")
             .finish()
@@ -28301,14 +28381,26 @@ unsafe impl<'a> TaggedStructure for PipelineExecutableStatisticKHR<'a> {
 }
 impl<'a> PipelineExecutableStatisticKHR<'a> {
     #[inline]
-    pub fn name(mut self, name: [c_char; MAX_DESCRIPTION_SIZE]) -> Self {
-        self.name = name;
-        self
+    pub fn name(
+        mut self,
+        name: &std::ffi::CStr,
+    ) -> std::result::Result<Self, CStrTooLargeForStaticArray> {
+        write_c_str_slice_with_nul(&mut self.name, name).map(|()| self)
     }
     #[inline]
-    pub fn description(mut self, description: [c_char; MAX_DESCRIPTION_SIZE]) -> Self {
-        self.description = description;
-        self
+    pub unsafe fn name_as_c_str(&self) -> &std::ffi::CStr {
+        wrap_c_str_slice_until_nul(&self.name)
+    }
+    #[inline]
+    pub fn description(
+        mut self,
+        description: &std::ffi::CStr,
+    ) -> std::result::Result<Self, CStrTooLargeForStaticArray> {
+        write_c_str_slice_with_nul(&mut self.description, description).map(|()| self)
+    }
+    #[inline]
+    pub unsafe fn description_as_c_str(&self) -> &std::ffi::CStr {
+        wrap_c_str_slice_until_nul(&self.description)
     }
     #[inline]
     pub fn format(mut self, format: PipelineExecutableStatisticFormatKHR) -> Self {
@@ -28340,12 +28432,8 @@ impl fmt::Debug for PipelineExecutableInternalRepresentationKHR<'_> {
         fmt.debug_struct("PipelineExecutableInternalRepresentationKHR")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
-            .field("name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.name.as_ptr())
-            })
-            .field("description", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.description.as_ptr())
-            })
+            .field("name", &unsafe { self.name_as_c_str() })
+            .field("description", &unsafe { self.description_as_c_str() })
             .field("is_text", &self.is_text)
             .field("data_size", &self.data_size)
             .field("p_data", &self.p_data)
@@ -28373,14 +28461,26 @@ unsafe impl<'a> TaggedStructure for PipelineExecutableInternalRepresentationKHR<
 }
 impl<'a> PipelineExecutableInternalRepresentationKHR<'a> {
     #[inline]
-    pub fn name(mut self, name: [c_char; MAX_DESCRIPTION_SIZE]) -> Self {
-        self.name = name;
-        self
+    pub fn name(
+        mut self,
+        name: &std::ffi::CStr,
+    ) -> std::result::Result<Self, CStrTooLargeForStaticArray> {
+        write_c_str_slice_with_nul(&mut self.name, name).map(|()| self)
     }
     #[inline]
-    pub fn description(mut self, description: [c_char; MAX_DESCRIPTION_SIZE]) -> Self {
-        self.description = description;
-        self
+    pub unsafe fn name_as_c_str(&self) -> &std::ffi::CStr {
+        wrap_c_str_slice_until_nul(&self.name)
+    }
+    #[inline]
+    pub fn description(
+        mut self,
+        description: &std::ffi::CStr,
+    ) -> std::result::Result<Self, CStrTooLargeForStaticArray> {
+        write_c_str_slice_with_nul(&mut self.description, description).map(|()| self)
+    }
+    #[inline]
+    pub unsafe fn description_as_c_str(&self) -> &std::ffi::CStr {
+        wrap_c_str_slice_until_nul(&self.description)
     }
     #[inline]
     pub fn is_text(mut self, is_text: bool) -> Self {
@@ -29848,12 +29948,8 @@ impl fmt::Debug for PhysicalDeviceVulkan12Properties<'_> {
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
             .field("driver_id", &self.driver_id)
-            .field("driver_name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.driver_name.as_ptr())
-            })
-            .field("driver_info", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.driver_info.as_ptr())
-            })
+            .field("driver_name", &unsafe { self.driver_name_as_c_str() })
+            .field("driver_info", &unsafe { self.driver_info_as_c_str() })
             .field("conformance_version", &self.conformance_version)
             .field(
                 "denorm_behavior_independence",
@@ -30117,14 +30213,26 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
         self
     }
     #[inline]
-    pub fn driver_name(mut self, driver_name: [c_char; MAX_DRIVER_NAME_SIZE]) -> Self {
-        self.driver_name = driver_name;
-        self
+    pub fn driver_name(
+        mut self,
+        driver_name: &std::ffi::CStr,
+    ) -> std::result::Result<Self, CStrTooLargeForStaticArray> {
+        write_c_str_slice_with_nul(&mut self.driver_name, driver_name).map(|()| self)
     }
     #[inline]
-    pub fn driver_info(mut self, driver_info: [c_char; MAX_DRIVER_INFO_SIZE]) -> Self {
-        self.driver_info = driver_info;
-        self
+    pub unsafe fn driver_name_as_c_str(&self) -> &std::ffi::CStr {
+        wrap_c_str_slice_until_nul(&self.driver_name)
+    }
+    #[inline]
+    pub fn driver_info(
+        mut self,
+        driver_info: &std::ffi::CStr,
+    ) -> std::result::Result<Self, CStrTooLargeForStaticArray> {
+        write_c_str_slice_with_nul(&mut self.driver_info, driver_info).map(|()| self)
+    }
+    #[inline]
+    pub unsafe fn driver_info_as_c_str(&self) -> &std::ffi::CStr {
+        wrap_c_str_slice_until_nul(&self.driver_info)
     }
     #[inline]
     pub fn conformance_version(mut self, conformance_version: ConformanceVersion) -> Self {
@@ -31204,19 +31312,11 @@ impl fmt::Debug for PhysicalDeviceToolProperties<'_> {
         fmt.debug_struct("PhysicalDeviceToolProperties")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
-            .field("name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.name.as_ptr())
-            })
-            .field("version", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.version.as_ptr())
-            })
+            .field("name", &unsafe { self.name_as_c_str() })
+            .field("version", &unsafe { self.version_as_c_str() })
             .field("purposes", &self.purposes)
-            .field("description", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.description.as_ptr())
-            })
-            .field("layer", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.layer.as_ptr())
-            })
+            .field("description", &unsafe { self.description_as_c_str() })
+            .field("layer", &unsafe { self.layer_as_c_str() })
             .finish()
     }
 }
@@ -31240,14 +31340,26 @@ unsafe impl<'a> TaggedStructure for PhysicalDeviceToolProperties<'a> {
 }
 impl<'a> PhysicalDeviceToolProperties<'a> {
     #[inline]
-    pub fn name(mut self, name: [c_char; MAX_EXTENSION_NAME_SIZE]) -> Self {
-        self.name = name;
-        self
+    pub fn name(
+        mut self,
+        name: &std::ffi::CStr,
+    ) -> std::result::Result<Self, CStrTooLargeForStaticArray> {
+        write_c_str_slice_with_nul(&mut self.name, name).map(|()| self)
     }
     #[inline]
-    pub fn version(mut self, version: [c_char; MAX_EXTENSION_NAME_SIZE]) -> Self {
-        self.version = version;
-        self
+    pub unsafe fn name_as_c_str(&self) -> &std::ffi::CStr {
+        wrap_c_str_slice_until_nul(&self.name)
+    }
+    #[inline]
+    pub fn version(
+        mut self,
+        version: &std::ffi::CStr,
+    ) -> std::result::Result<Self, CStrTooLargeForStaticArray> {
+        write_c_str_slice_with_nul(&mut self.version, version).map(|()| self)
+    }
+    #[inline]
+    pub unsafe fn version_as_c_str(&self) -> &std::ffi::CStr {
+        wrap_c_str_slice_until_nul(&self.version)
     }
     #[inline]
     pub fn purposes(mut self, purposes: ToolPurposeFlags) -> Self {
@@ -31255,14 +31367,26 @@ impl<'a> PhysicalDeviceToolProperties<'a> {
         self
     }
     #[inline]
-    pub fn description(mut self, description: [c_char; MAX_DESCRIPTION_SIZE]) -> Self {
-        self.description = description;
-        self
+    pub fn description(
+        mut self,
+        description: &std::ffi::CStr,
+    ) -> std::result::Result<Self, CStrTooLargeForStaticArray> {
+        write_c_str_slice_with_nul(&mut self.description, description).map(|()| self)
     }
     #[inline]
-    pub fn layer(mut self, layer: [c_char; MAX_EXTENSION_NAME_SIZE]) -> Self {
-        self.layer = layer;
-        self
+    pub unsafe fn description_as_c_str(&self) -> &std::ffi::CStr {
+        wrap_c_str_slice_until_nul(&self.description)
+    }
+    #[inline]
+    pub fn layer(
+        mut self,
+        layer: &std::ffi::CStr,
+    ) -> std::result::Result<Self, CStrTooLargeForStaticArray> {
+        write_c_str_slice_with_nul(&mut self.layer, layer).map(|()| self)
+    }
+    #[inline]
+    pub unsafe fn layer_as_c_str(&self) -> &std::ffi::CStr {
+        wrap_c_str_slice_until_nul(&self.layer)
     }
 }
 #[repr(C)]
@@ -41397,9 +41521,13 @@ impl<'a> CuFunctionCreateInfoNVX<'a> {
         self
     }
     #[inline]
-    pub fn name(mut self, name: &'a ::std::ffi::CStr) -> Self {
+    pub fn name(mut self, name: &'a std::ffi::CStr) -> Self {
         self.p_name = name.as_ptr();
         self
+    }
+    #[inline]
+    pub unsafe fn name_as_c_str(&self) -> &std::ffi::CStr {
+        std::ffi::CStr::from_ptr(self.p_name)
     }
 }
 #[repr(C)]
@@ -43812,9 +43940,13 @@ impl<'a> CudaFunctionCreateInfoNV<'a> {
         self
     }
     #[inline]
-    pub fn name(mut self, name: &'a ::std::ffi::CStr) -> Self {
+    pub fn name(mut self, name: &'a std::ffi::CStr) -> Self {
         self.p_name = name.as_ptr();
         self
+    }
+    #[inline]
+    pub unsafe fn name_as_c_str(&self) -> &std::ffi::CStr {
+        std::ffi::CStr::from_ptr(self.p_name)
     }
 }
 #[repr(C)]
@@ -45685,9 +45817,7 @@ impl fmt::Debug for RenderPassSubpassFeedbackInfoEXT {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("RenderPassSubpassFeedbackInfoEXT")
             .field("subpass_merge_status", &self.subpass_merge_status)
-            .field("description", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.description.as_ptr())
-            })
+            .field("description", &unsafe { self.description_as_c_str() })
             .field("post_merge_index", &self.post_merge_index)
             .finish()
     }
@@ -45709,9 +45839,15 @@ impl RenderPassSubpassFeedbackInfoEXT {
         self
     }
     #[inline]
-    pub fn description(mut self, description: [c_char; MAX_DESCRIPTION_SIZE]) -> Self {
-        self.description = description;
-        self
+    pub fn description(
+        mut self,
+        description: &std::ffi::CStr,
+    ) -> std::result::Result<Self, CStrTooLargeForStaticArray> {
+        write_c_str_slice_with_nul(&mut self.description, description).map(|()| self)
+    }
+    #[inline]
+    pub unsafe fn description_as_c_str(&self) -> &std::ffi::CStr {
+        wrap_c_str_slice_until_nul(&self.description)
     }
     #[inline]
     pub fn post_merge_index(mut self, post_merge_index: u32) -> Self {
@@ -48456,9 +48592,7 @@ pub struct DeviceFaultVendorInfoEXT {
 impl fmt::Debug for DeviceFaultVendorInfoEXT {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_struct("DeviceFaultVendorInfoEXT")
-            .field("description", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.description.as_ptr())
-            })
+            .field("description", &unsafe { self.description_as_c_str() })
             .field("vendor_fault_code", &self.vendor_fault_code)
             .field("vendor_fault_data", &self.vendor_fault_data)
             .finish()
@@ -48476,9 +48610,15 @@ impl ::std::default::Default for DeviceFaultVendorInfoEXT {
 }
 impl DeviceFaultVendorInfoEXT {
     #[inline]
-    pub fn description(mut self, description: [c_char; MAX_DESCRIPTION_SIZE]) -> Self {
-        self.description = description;
-        self
+    pub fn description(
+        mut self,
+        description: &std::ffi::CStr,
+    ) -> std::result::Result<Self, CStrTooLargeForStaticArray> {
+        write_c_str_slice_with_nul(&mut self.description, description).map(|()| self)
+    }
+    #[inline]
+    pub unsafe fn description_as_c_str(&self) -> &std::ffi::CStr {
+        wrap_c_str_slice_until_nul(&self.description)
     }
     #[inline]
     pub fn vendor_fault_code(mut self, vendor_fault_code: u64) -> Self {
@@ -48554,9 +48694,7 @@ impl fmt::Debug for DeviceFaultInfoEXT<'_> {
         fmt.debug_struct("DeviceFaultInfoEXT")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
-            .field("description", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.description.as_ptr())
-            })
+            .field("description", &unsafe { self.description_as_c_str() })
             .field("p_address_infos", &self.p_address_infos)
             .field("p_vendor_infos", &self.p_vendor_infos)
             .field("p_vendor_binary_data", &self.p_vendor_binary_data)
@@ -48582,9 +48720,15 @@ unsafe impl<'a> TaggedStructure for DeviceFaultInfoEXT<'a> {
 }
 impl<'a> DeviceFaultInfoEXT<'a> {
     #[inline]
-    pub fn description(mut self, description: [c_char; MAX_DESCRIPTION_SIZE]) -> Self {
-        self.description = description;
-        self
+    pub fn description(
+        mut self,
+        description: &std::ffi::CStr,
+    ) -> std::result::Result<Self, CStrTooLargeForStaticArray> {
+        write_c_str_slice_with_nul(&mut self.description, description).map(|()| self)
+    }
+    #[inline]
+    pub unsafe fn description_as_c_str(&self) -> &std::ffi::CStr {
+        wrap_c_str_slice_until_nul(&self.description)
     }
     #[inline]
     pub fn address_infos(mut self, address_infos: &'a mut DeviceFaultAddressInfoEXT) -> Self {
@@ -50311,9 +50455,13 @@ impl<'a> ShaderCreateInfoEXT<'a> {
         self
     }
     #[inline]
-    pub fn name(mut self, name: &'a ::std::ffi::CStr) -> Self {
+    pub fn name(mut self, name: &'a std::ffi::CStr) -> Self {
         self.p_name = name.as_ptr();
         self
+    }
+    #[inline]
+    pub unsafe fn name_as_c_str(&self) -> &std::ffi::CStr {
+        std::ffi::CStr::from_ptr(self.p_name)
     }
     #[inline]
     pub fn set_layouts(mut self, set_layouts: &'a [DescriptorSetLayout]) -> Self {
@@ -51105,9 +51253,13 @@ unsafe impl<'a> TaggedStructure for PipelineShaderStageNodeCreateInfoAMDX<'a> {
 unsafe impl ExtendsPipelineShaderStageCreateInfo for PipelineShaderStageNodeCreateInfoAMDX<'_> {}
 impl<'a> PipelineShaderStageNodeCreateInfoAMDX<'a> {
     #[inline]
-    pub fn name(mut self, name: &'a ::std::ffi::CStr) -> Self {
+    pub fn name(mut self, name: &'a std::ffi::CStr) -> Self {
         self.p_name = name.as_ptr();
         self
+    }
+    #[inline]
+    pub unsafe fn name_as_c_str(&self) -> &std::ffi::CStr {
+        std::ffi::CStr::from_ptr(self.p_name)
     }
     #[inline]
     pub fn index(mut self, index: u32) -> Self {

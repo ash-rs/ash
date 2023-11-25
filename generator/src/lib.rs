@@ -1822,25 +1822,16 @@ fn derive_debug(
         let param_ident = field.param_ident();
         let param_str = param_ident.to_string();
         let debug_value = if is_static_array(field) && field.basetype == "char" {
-            quote! {
-                &unsafe {
-                    ::std::ffi::CStr::from_ptr(self.#param_ident.as_ptr())
-                }
-            }
+            let param_ident = format_ident!("{}_as_c_str", param_ident);
+            quote!(&unsafe { self.#param_ident() })
         } else if param_str.contains("pfn") {
-            quote! {
-                &(self.#param_ident.map(|x| x as *const ()))
-            }
+            quote!(&(self.#param_ident.map(|x| x as *const ())))
         } else if union_types.contains(field.basetype.as_str()) {
             quote!(&"union")
         } else {
-            quote! {
-                &self.#param_ident
-            }
+            quote!(&self.#param_ident)
         };
-        quote! {
-            .field(#param_str, #debug_value)
-        }
+        quote!(.field(#param_str, #debug_value))
     });
     let name_str = name.to_string();
     let lifetime = has_lifetime.then(|| quote!(<'_>));
@@ -1989,83 +1980,103 @@ fn derive_setters(
             });
         }
 
-        // TODO: Improve in future when https://github.com/rust-lang/rust/issues/53667 is merged id:6
-        if field.reference.is_some() {
-            if field.basetype == "char" && matches!(field.reference, Some(vkxml::ReferenceType::Pointer)) {
+        if field.basetype == "char" {
+            let param_ident_as_c_str = format_ident!("{}_as_c_str", param_ident_short);
+            if matches!(field.reference, Some(vkxml::ReferenceType::Pointer)) {
                 assert!(field.null_terminate);
                 assert_eq!(field.size, None);
-                return Some(quote!{
+                return Some(quote! {
                     #[inline]
                     #deprecated
-                    pub fn #param_ident_short(mut self, #param_ident_short: &'a ::std::ffi::CStr) -> Self {
+                    pub fn #param_ident_short(mut self, #param_ident_short: &'a std::ffi::CStr) -> Self {
                         self.#param_ident = #param_ident_short.as_ptr();
                         self
                     }
+                    #[inline]
+                    #deprecated
+                    pub unsafe fn #param_ident_as_c_str(&self) -> &std::ffi::CStr {
+                        std::ffi::CStr::from_ptr(self.#param_ident)
+                    }
+                });
+            } else if is_static_array(field) {
+                assert_eq!(field.size, None);
+                return Some(quote! {
+                    #[inline]
+                    #deprecated
+                    pub fn #param_ident_short(mut self, #param_ident_short: &std::ffi::CStr) -> std::result::Result<Self, CStrTooLargeForStaticArray> {
+                        write_c_str_slice_with_nul(&mut self.#param_ident, #param_ident_short).map(|()| self)
+                    }
+                    #[inline]
+                    #deprecated
+                    pub unsafe fn #param_ident_as_c_str(&self) -> &std::ffi::CStr {
+                        wrap_c_str_slice_until_nul(&self.#param_ident)
+                    }
                 });
             }
+        }
 
-            if matches!(field.array, Some(vkxml::ArrayType::Dynamic)) {
-                if let Some(ref array_size) = field.size {
-                    let mut slice_param_ty_tokens = field.safe_type_tokens(quote!('a), type_lifetime.clone(), None);
+        // TODO: Improve in future when https://github.com/rust-lang/rust/issues/53667 is merged id:6
+        if field.reference.is_some() && matches!(field.array, Some(vkxml::ArrayType::Dynamic)) {
+            if let Some(ref array_size) = field.size {
+                let mut slice_param_ty_tokens = field.safe_type_tokens(quote!('a), type_lifetime.clone(), None);
 
-                    let mut ptr = if field.is_const {
-                        quote!(.as_ptr())
-                    } else {
-                        quote!(.as_mut_ptr())
-                    };
+                let mut ptr = if field.is_const {
+                    quote!(.as_ptr())
+                } else {
+                    quote!(.as_mut_ptr())
+                };
 
-                    // Interpret void array as byte array
-                    if field.basetype == "void" && matches!(field.reference, Some(vkxml::ReferenceType::Pointer)) {
-                        slice_param_ty_tokens = quote!([u8]);
+                // Interpret void array as byte array
+                if field.basetype == "void" && matches!(field.reference, Some(vkxml::ReferenceType::Pointer)) {
+                    slice_param_ty_tokens = quote!([u8]);
+                    ptr = quote!(#ptr.cast());
+                };
+
+                let set_size_stmt = if field.is_pointer_to_static_sized_array() {
+                    // this is a pointer to a piece of memory with statically known size.
+                    let array_size = field.c_size.as_ref().unwrap();
+                    let c_size = convert_c_expression(array_size, &BTreeMap::new());
+                    let inner_type = field.inner_type_tokens(None, None);
+
+                    slice_param_ty_tokens = quote!([#inner_type; #c_size]);
+                    ptr = quote!();
+
+                    quote!()
+                } else {
+                    // Deal with a "special" 2D dynamic array with an inner size of 1 (effectively an array containing pointers to single objects)
+                    let array_size = if let Some(array_size) = array_size.strip_suffix(",1") {
+                        param_ident_short = format_ident!("{}_ptrs", param_ident_short);
+                        slice_param_ty_tokens = field.safe_type_tokens(quote!('a), type_lifetime.clone(), Some(1));
                         ptr = quote!(#ptr.cast());
+                        array_size
+                    } else {
+                        array_size
                     };
 
-                    let set_size_stmt = if field.is_pointer_to_static_sized_array() {
-                        // this is a pointer to a piece of memory with statically known size.
-                        let array_size = field.c_size.as_ref().unwrap();
-                        let c_size = convert_c_expression(array_size, &BTreeMap::new());
-                        let inner_type = field.inner_type_tokens(None, None);
+                    let array_size_ident = format_ident!("{}", array_size.to_snake_case());
 
-                        slice_param_ty_tokens = quote!([#inner_type; #c_size]);
-                        ptr = quote!();
+                    let size_field = members.iter().find(|member| member.vkxml_field.name.as_deref() == Some(array_size)).unwrap();
 
+                    let cast = if size_field.vkxml_field.basetype == "size_t" {
                         quote!()
                     } else {
-                        // Deal with a "special" 2D dynamic array with an inner size of 1 (effectively an array containing pointers to single objects)
-                        let array_size = if let Some(array_size) = array_size.strip_suffix(",1") {
-                            param_ident_short = format_ident!("{}_ptrs", param_ident_short);
-                            slice_param_ty_tokens = field.safe_type_tokens(quote!('a), type_lifetime.clone(), Some(1));
-                            ptr = quote!(#ptr.cast());
-                            array_size
-                        } else {
-                            array_size
-                        };
-
-                        let array_size_ident = format_ident!("{}", array_size.to_snake_case());
-
-                        let size_field = members.iter().find(|member| member.vkxml_field.name.as_deref() == Some(array_size)).unwrap();
-
-                        let cast = if size_field.vkxml_field.basetype == "size_t" {
-                            quote!()
-                        } else {
-                            quote!(as _)
-                        };
-
-                        quote!(self.#array_size_ident = #param_ident_short.len()#cast;)
+                        quote!(as _)
                     };
 
-                    let mutable = if field.is_const { quote!() } else { quote!(mut) };
+                    quote!(self.#array_size_ident = #param_ident_short.len()#cast;)
+                };
 
-                    return Some(quote! {
-                        #[inline]
-                        #deprecated
-                        pub fn #param_ident_short(mut self, #param_ident_short: &'a #mutable #slice_param_ty_tokens) -> Self {
-                            #set_size_stmt
-                            self.#param_ident = #param_ident_short #ptr;
-                            self
-                        }
-                    });
-                }
+                let mutable = if field.is_const { quote!() } else { quote!(mut) };
+
+                return Some(quote! {
+                    #[inline]
+                    #deprecated
+                    pub fn #param_ident_short(mut self, #param_ident_short: &'a #mutable #slice_param_ty_tokens) -> Self {
+                        #set_size_stmt
+                        self.#param_ident = #param_ident_short #ptr;
+                        self
+                    }
+                });
             }
         }
 
