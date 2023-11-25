@@ -48,6 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `VK_KHR_device_group_creation`: Take borrow of `Entry` in `fn new()` (#753)
 - `VK_KHR_device_group_creation`: Rename `vk::Instance`-returning function from `device()` to `instance()` (#759)
 - Windows `HANDLE` types (`HWND`, `HINSTANCE`, `HMONITOR`) are now defined as `isize` instead of `*const c_void` (#797)
+- extensions/ext/ray_tracing_pipeline: Pass indirect SBT regions as single item reference. (#829)
 
 ### Removed
 
