@@ -18,5 +18,5 @@ vk-parse = { version = "0.12", features = ["vkxml-convert"] }
 vkxml = "0.3"
 
 [dependencies.syn]
-version = "1.0"
+version = "2.0"
 features = ["full", "extra-traits"]
