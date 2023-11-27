@@ -21723,7 +21723,7 @@ impl StructureType {
 impl NvLowLatency2Fn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_low_latency2\0") };
-    pub const SPEC_VERSION: u32 = 1u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkSetLatencySleepModeNV = unsafe extern "system" fn(
@@ -21747,7 +21747,6 @@ pub type PFN_vkSetLatencyMarkerNV = unsafe extern "system" fn(
 pub type PFN_vkGetLatencyTimingsNV = unsafe extern "system" fn(
     device: Device,
     swapchain: SwapchainKHR,
-    p_timing_count: *mut u32,
     p_latency_marker_info: *mut GetLatencyMarkerInfoNV<'_>,
 );
 #[allow(non_camel_case_types)]
@@ -21829,7 +21828,6 @@ impl NvLowLatency2Fn {
                 unsafe extern "system" fn get_latency_timings_nv(
                     _device: Device,
                     _swapchain: SwapchainKHR,
-                    _p_timing_count: *mut u32,
                     _p_latency_marker_info: *mut GetLatencyMarkerInfoNV<'_>,
                 ) {
                     panic!(concat!(
