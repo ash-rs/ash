@@ -4,7 +4,6 @@ use crate::RawPtr;
 use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
-use std::ptr;
 
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_NV_low_latency2.html>
 #[derive(Clone)]
@@ -53,32 +52,14 @@ impl LowLatency2 {
         (self.fp.set_latency_marker_nv)(self.handle, swapchain, latency_marker_info)
     }
 
-    /// Retrieve the number of elements to pass to [`get_latency_timings()`][Self::get_latency_timings()]
-    #[inline]
-    pub unsafe fn get_latency_timings_len(&self, swapchain: vk::SwapchainKHR) -> usize {
-        let mut count = 0;
-        (self.fp.get_latency_timings_nv)(self.handle, swapchain, &mut count, ptr::null_mut());
-        count as usize
-    }
-
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetLatencyTimingsNV.html>
-    ///
-    /// Call [`get_latency_timings_len()`][Self::get_latency_timings_len()] to query the number of elements to pass to `latency_marker_info`.
-    /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.
     #[inline]
     pub unsafe fn get_latency_timings(
         &self,
         swapchain: vk::SwapchainKHR,
-        latency_marker_info: &mut [vk::GetLatencyMarkerInfoNV<'_>],
+        latency_marker_info: &mut vk::GetLatencyMarkerInfoNV<'_>,
     ) {
-        let mut count = latency_marker_info.len() as u32;
-        (self.fp.get_latency_timings_nv)(
-            self.handle,
-            swapchain,
-            &mut count,
-            latency_marker_info.as_mut_ptr(),
-        );
-        assert_eq!(count as usize, latency_marker_info.len());
+        (self.fp.get_latency_timings_nv)(self.handle, swapchain, latency_marker_info)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkQueueNotifyOutOfBandNV.html>
