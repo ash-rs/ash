@@ -5272,6 +5272,9 @@ impl fmt::Debug for StructureType {
                 Some("PIPELINE_RASTERIZATION_DEPTH_CLIP_STATE_CREATE_INFO_EXT")
             }
             Self::HDR_METADATA_EXT => Some("HDR_METADATA_EXT"),
+            Self::PHYSICAL_DEVICE_RELAXED_LINE_RASTERIZATION_FEATURES_IMG => {
+                Some("PHYSICAL_DEVICE_RELAXED_LINE_RASTERIZATION_FEATURES_IMG")
+            }
             Self::SHARED_PRESENT_SURFACE_CAPABILITIES_KHR => {
                 Some("SHARED_PRESENT_SURFACE_CAPABILITIES_KHR")
             }
