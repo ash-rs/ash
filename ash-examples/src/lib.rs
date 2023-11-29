@@ -13,13 +13,12 @@ use ash::extensions::{
 };
 use ash::{vk, Entry};
 pub use ash::{Device, Instance};
-use raw_window_handle::{HasRawDisplayHandle, HasRawWindowHandle};
-use std::borrow::Cow;
-use std::cell::RefCell;
+use raw_window_handle::{HasDisplayHandle, HasWindowHandle};
 use std::default::Default;
 use std::ffi::CStr;
 use std::ops::Drop;
 use std::os::raw::c_char;
+use std::borrow::Cow;
 
 #[cfg(any(target_os = "macos", target_os = "ios"))]
 use ash::vk::{
@@ -27,9 +26,7 @@ use ash::vk::{
 };
 
 use winit::{
-    event::{ElementState, Event, KeyboardInput, VirtualKeyCode, WindowEvent},
     event_loop::{ControlFlow, EventLoop},
-    platform::run_return::EventLoopExtRunReturn,
     window::WindowBuilder,
 };
 
@@ -150,7 +147,7 @@ pub struct ExampleBase {
     pub swapchain_loader: Swapchain,
     pub debug_utils_loader: DebugUtils,
     pub window: winit::window::Window,
-    pub event_loop: RefCell<EventLoop<()>>,
+    // pub event_loop: RefCell<EventLoop<()>>,
     pub debug_call_back: vk::DebugUtilsMessengerEXT,
 
     pub pdevice: vk::PhysicalDevice,
@@ -182,35 +179,29 @@ pub struct ExampleBase {
 }
 
 impl ExampleBase {
-    pub fn render_loop<F: Fn()>(&self, f: F) {
-        self.event_loop
-            .borrow_mut()
-            .run_return(|event, _, control_flow| {
-                *control_flow = ControlFlow::Poll;
+    pub fn render_loop<DrawFn: Fn(),CleanupFn: Fn()>(&self, event_loop: EventLoop<()>, draw: DrawFn, cleanup: CleanupFn) {
+        event_loop
+            .run(|event, control_flow| {
+                control_flow.set_control_flow(ControlFlow::Poll);
                 match event {
-                    Event::WindowEvent {
-                        event:
-                            WindowEvent::CloseRequested
-                            | WindowEvent::KeyboardInput {
-                                input:
-                                    KeyboardInput {
-                                        state: ElementState::Pressed,
-                                        virtual_keycode: Some(VirtualKeyCode::Escape),
-                                        ..
-                                    },
-                                ..
-                            },
-                        ..
-                    } => *control_flow = ControlFlow::Exit,
-                    Event::MainEventsCleared => f(),
-                    _ => (),
+                    winit::event::Event::WindowEvent { event, .. } => match event {
+                        winit::event::WindowEvent::CloseRequested => control_flow.exit(),
+                        _ => {}
+                    },
+                    winit::event::Event::AboutToWait => {
+                        draw()
+                    }
+                    winit::event::Event::LoopExiting =>{
+                        cleanup()
+                    }
+                    _ => {}
                 }
-            });
+            })
+            .unwrap();
     }
 
-    pub fn new(window_width: u32, window_height: u32) -> Self {
+    pub fn new(window_width: u32, window_height: u32, event_loop: &EventLoop<()>) -> Self {
         unsafe {
-            let event_loop = EventLoop::new();
             let window = WindowBuilder::new()
                 .with_title("Ash - Example")
                 .with_inner_size(winit::dpi::LogicalSize::new(
@@ -230,10 +221,11 @@ impl ExampleBase {
                 .map(|raw_name| raw_name.as_ptr())
                 .collect();
 
-            let mut extension_names =
-                ash_window::enumerate_required_extensions(window.raw_display_handle())
-                    .unwrap()
-                    .to_vec();
+            let mut extension_names = ash_window::enumerate_required_extensions(
+                window.display_handle().unwrap().as_raw(),
+            )
+            .unwrap()
+            .to_vec();
             extension_names.push(DebugUtils::NAME.as_ptr());
 
             #[cfg(any(target_os = "macos", target_os = "ios"))]
@@ -286,8 +278,8 @@ impl ExampleBase {
             let surface = ash_window::create_surface(
                 &entry,
                 &instance,
-                window.raw_display_handle(),
-                window.raw_window_handle(),
+                window.display_handle().unwrap(),
+                window.window_handle().unwrap(),
                 None,
             )
             .unwrap();
@@ -548,7 +540,7 @@ impl ExampleBase {
                 .unwrap();
 
             Self {
-                event_loop: RefCell::new(event_loop),
+                // event_loop: event_loop.into(),
                 entry,
                 instance,
                 device,

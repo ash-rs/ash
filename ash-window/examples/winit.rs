@@ -6,22 +6,20 @@
 //! On instance extensions platform specific extensions need to be enabled.
 
 use ash::vk;
-use raw_window_handle::{HasRawDisplayHandle, HasRawWindowHandle};
-use std::error::Error;
-use winit::{
-    dpi::PhysicalSize,
-    event::{Event, VirtualKeyCode, WindowEvent},
-    event_loop::{ControlFlow, EventLoop},
-    window::WindowBuilder,
+use raw_window_handle::{
+    HasDisplayHandle, HasWindowHandle,
 };
+use std::error::Error;
+use winit::{dpi::PhysicalSize, event_loop::{EventLoop, ControlFlow}, window::WindowBuilder};
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let event_loop = EventLoop::new();
+    let event_loop = EventLoop::new().unwrap();
 
     unsafe {
         let entry = ash::Entry::linked();
-        let surface_extensions =
-            ash_window::enumerate_required_extensions(event_loop.raw_display_handle())?;
+        let surface_extensions = ash_window::enumerate_required_extensions(
+            event_loop.display_handle().unwrap().as_raw(),
+        )?;
         let app_desc = vk::ApplicationInfo::default().api_version(vk::make_api_version(0, 1, 0, 0));
         let instance_desc = vk::InstanceCreateInfo::default()
             .application_info(&app_desc)
@@ -37,33 +35,27 @@ fn main() -> Result<(), Box<dyn Error>> {
         let surface = ash_window::create_surface(
             &entry,
             &instance,
-            window.raw_display_handle(),
-            window.raw_window_handle(),
+            window.display_handle().unwrap(),
+            window.window_handle().unwrap(),
             None,
         )?;
-        let surface_fn = ash::extensions::khr::Surface::new(&entry, &instance);
-        println!("surface: {surface:?}");
 
-        event_loop.run(move |event, _, control_flow| match event {
-            winit::event::Event::WindowEvent {
-                event:
-                    WindowEvent::CloseRequested
-                    | WindowEvent::KeyboardInput {
-                        input:
-                            winit::event::KeyboardInput {
-                                virtual_keycode: Some(VirtualKeyCode::Escape),
-                                ..
-                            },
-                        ..
-                    },
-                window_id: _,
-            } => {
-                *control_flow = ControlFlow::Exit;
+        let surface_fn = ash::extensions::khr::Surface::new(&entry, &instance);
+
+        event_loop.run(move |event, control_flow| {
+            control_flow.set_control_flow(ControlFlow::Poll);
+            match event {
+                winit::event::Event::WindowEvent { event ,..} => match event {
+                    winit::event::WindowEvent::CloseRequested => control_flow.exit(),
+                    _ => {}
+                },
+                winit::event::Event::LoopExiting => {
+                    surface_fn.destroy_surface(surface,None);
+                }
+                _ => {}
             }
-            Event::LoopDestroyed => {
-                surface_fn.destroy_surface(surface, None);
-            }
-            _ => {}
-        })
+        })?;
+
+        Ok(())
     }
 }

@@ -7,6 +7,7 @@ use std::os::raw::c_void;
 use ash::util::*;
 use ash::vk;
 use ash_examples::*;
+use winit::event_loop::EventLoop;
 
 #[derive(Clone, Debug, Copy)]
 struct Vertex {
@@ -23,8 +24,9 @@ pub struct Vector3 {
 }
 
 fn main() {
+    let event_loop = EventLoop::new().unwrap();
     unsafe {
-        let base = ExampleBase::new(1920, 1080);
+        let base = ExampleBase::new(1920, 1080, &event_loop);
 
         let renderpass_attachments = [
             vk::AttachmentDescription {
@@ -684,7 +686,7 @@ fn main() {
 
         let graphic_pipeline = graphics_pipelines[0];
 
-        base.render_loop(|| {
+        base.render_loop(event_loop,|| {
             let (present_index, _) = base
                 .swapchain_loader
                 .acquire_next_image(
@@ -780,11 +782,11 @@ fn main() {
             base.swapchain_loader
                 .queue_present(base.present_queue, &present_info)
                 .unwrap();
-        });
-        base.device.device_wait_idle().unwrap();
+        }, ||{
+            base.device.device_wait_idle().unwrap();
 
-        for pipeline in graphics_pipelines {
-            base.device.destroy_pipeline(pipeline, None);
+        for pipeline in &graphics_pipelines {
+            base.device.destroy_pipeline(*pipeline, None);
         }
         base.device.destroy_pipeline_layout(pipeline_layout, None);
         base.device
@@ -808,9 +810,11 @@ fn main() {
         }
         base.device.destroy_descriptor_pool(descriptor_pool, None);
         base.device.destroy_sampler(sampler, None);
-        for framebuffer in framebuffers {
-            base.device.destroy_framebuffer(framebuffer, None);
+        for framebuffer in &framebuffers {
+            base.device.destroy_framebuffer(*framebuffer, None);
         }
         base.device.destroy_render_pass(renderpass, None);
+        });
+        
     }
 }

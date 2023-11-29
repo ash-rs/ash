@@ -7,6 +7,7 @@ use std::mem::align_of;
 use ash::util::*;
 use ash::vk;
 use ash_examples::*;
+use winit::event_loop::EventLoop;
 
 #[derive(Clone, Debug, Copy)]
 struct Vertex {
@@ -15,8 +16,9 @@ struct Vertex {
 }
 
 fn main() {
+    let event_loop = EventLoop::new().unwrap();
     unsafe {
-        let base = ExampleBase::new(1920, 1080);
+        let base = ExampleBase::new(1920, 1080, &event_loop);
         let renderpass_attachments = [
             vk::AttachmentDescription {
                 format: base.surface_format.format,
@@ -347,7 +349,7 @@ fn main() {
 
         let graphic_pipeline = graphics_pipelines[0];
 
-        base.render_loop(|| {
+        base.render_loop(event_loop,|| {
             let (present_index, _) = base
                 .swapchain_loader
                 .acquire_next_image(
@@ -435,24 +437,26 @@ fn main() {
             base.swapchain_loader
                 .queue_present(base.present_queue, &present_info)
                 .unwrap();
+        },||{
+            base.device.device_wait_idle().unwrap();
+            for pipeline in &graphics_pipelines {
+                base.device.destroy_pipeline(*pipeline, None);
+            }
+            base.device.destroy_pipeline_layout(pipeline_layout, None);
+            base.device
+                .destroy_shader_module(vertex_shader_module, None);
+            base.device
+                .destroy_shader_module(fragment_shader_module, None);
+            base.device.free_memory(index_buffer_memory, None);
+            base.device.destroy_buffer(index_buffer, None);
+            base.device.free_memory(vertex_input_buffer_memory, None);
+            base.device.destroy_buffer(vertex_input_buffer, None);
+            for framebuffer in &framebuffers {
+                base.device.destroy_framebuffer(*framebuffer, None);
+            }
+            base.device.destroy_render_pass(renderpass, None);
         });
 
-        base.device.device_wait_idle().unwrap();
-        for pipeline in graphics_pipelines {
-            base.device.destroy_pipeline(pipeline, None);
-        }
-        base.device.destroy_pipeline_layout(pipeline_layout, None);
-        base.device
-            .destroy_shader_module(vertex_shader_module, None);
-        base.device
-            .destroy_shader_module(fragment_shader_module, None);
-        base.device.free_memory(index_buffer_memory, None);
-        base.device.destroy_buffer(index_buffer, None);
-        base.device.free_memory(vertex_input_buffer_memory, None);
-        base.device.destroy_buffer(vertex_input_buffer, None);
-        for framebuffer in framebuffers {
-            base.device.destroy_framebuffer(framebuffer, None);
-        }
-        base.device.destroy_render_pass(renderpass, None);
+
     }
 }

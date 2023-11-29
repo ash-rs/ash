@@ -7,7 +7,7 @@ use ash::{
     prelude::*,
     vk, Entry, Instance,
 };
-use raw_window_handle::{RawDisplayHandle, RawWindowHandle};
+use raw_window_handle::{RawDisplayHandle, RawWindowHandle, WindowHandle, DisplayHandle};
 
 /// Create a surface from a raw surface handle.
 ///
@@ -35,46 +35,47 @@ use raw_window_handle::{RawDisplayHandle, RawWindowHandle};
 pub unsafe fn create_surface(
     entry: &Entry,
     instance: &Instance,
-    display_handle: RawDisplayHandle,
-    window_handle: RawWindowHandle,
+    display_handle: DisplayHandle,
+    window_handle: WindowHandle,
     allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
 ) -> VkResult<vk::SurfaceKHR> {
-    match (display_handle, window_handle) {
+
+    match (display_handle.as_raw(), window_handle.as_raw()) {
         (RawDisplayHandle::Windows(_), RawWindowHandle::Win32(window)) => {
             let surface_desc = vk::Win32SurfaceCreateInfoKHR::default()
-                .hinstance(window.hinstance as isize)
-                .hwnd(window.hwnd as isize);
+                .hinstance(isize::from(window.hinstance.unwrap()))
+                .hwnd(isize::from(window.hwnd));
             let surface_fn = khr::Win32Surface::new(entry, instance);
             surface_fn.create_win32_surface(&surface_desc, allocation_callbacks)
         }
 
         (RawDisplayHandle::Wayland(display), RawWindowHandle::Wayland(window)) => {
             let surface_desc = vk::WaylandSurfaceCreateInfoKHR::default()
-                .display(display.display)
-                .surface(window.surface);
+                .display(display.display.as_ptr())
+                .surface(window.surface.as_ptr());
             let surface_fn = khr::WaylandSurface::new(entry, instance);
             surface_fn.create_wayland_surface(&surface_desc, allocation_callbacks)
         }
 
         (RawDisplayHandle::Xlib(display), RawWindowHandle::Xlib(window)) => {
             let surface_desc = vk::XlibSurfaceCreateInfoKHR::default()
-                .dpy(display.display.cast())
-                .window(window.window);
+                .dpy(display.display.unwrap().cast().as_ptr())
+                .window(window.window.into());
             let surface_fn = khr::XlibSurface::new(entry, instance);
             surface_fn.create_xlib_surface(&surface_desc, allocation_callbacks)
         }
 
         (RawDisplayHandle::Xcb(display), RawWindowHandle::Xcb(window)) => {
             let surface_desc = vk::XcbSurfaceCreateInfoKHR::default()
-                .connection(display.connection)
-                .window(window.window);
+                .connection(display.connection.unwrap().as_ptr())
+                .window(window.window.into());
             let surface_fn = khr::XcbSurface::new(entry, instance);
             surface_fn.create_xcb_surface(&surface_desc, allocation_callbacks)
         }
 
         (RawDisplayHandle::Android(_), RawWindowHandle::AndroidNdk(window)) => {
             let surface_desc =
-                vk::AndroidSurfaceCreateInfoKHR::default().window(window.a_native_window);
+                vk::AndroidSurfaceCreateInfoKHR::default().window(window.a_native_window.as_ptr());
             let surface_fn = khr::AndroidSurface::new(entry, instance);
             surface_fn.create_android_surface(&surface_desc, allocation_callbacks)
         }
