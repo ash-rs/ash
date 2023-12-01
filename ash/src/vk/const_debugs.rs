@@ -2992,6 +2992,26 @@ impl fmt::Debug for LatencyMarkerNV {
         }
     }
 }
+impl fmt::Debug for LayerSettingTypeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let name = match *self {
+            Self::BOOL32 => Some("BOOL32"),
+            Self::INT32 => Some("INT32"),
+            Self::INT64 => Some("INT64"),
+            Self::UINT32 => Some("UINT32"),
+            Self::UINT64 => Some("UINT64"),
+            Self::FLOAT32 => Some("FLOAT32"),
+            Self::FLOAT64 => Some("FLOAT64"),
+            Self::STRING => Some("STRING"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
 impl fmt::Debug for LayeredDriverUnderlyingApiMSFT {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match *self {
@@ -6202,6 +6222,9 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_PROPERTIES_HUAWEI => {
                 Some("PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_PROPERTIES_HUAWEI")
             }
+            Self::PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_VRS_FEATURES_HUAWEI => {
+                Some("PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_VRS_FEATURES_HUAWEI")
+            }
             Self::PHYSICAL_DEVICE_BORDER_COLOR_SWIZZLE_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_BORDER_COLOR_SWIZZLE_FEATURES_EXT")
             }
@@ -6242,6 +6265,15 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_NON_SEAMLESS_CUBE_MAP_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_NON_SEAMLESS_CUBE_MAP_FEATURES_EXT")
             }
+            Self::PHYSICAL_DEVICE_RENDER_PASS_STRIPED_FEATURES_ARM => {
+                Some("PHYSICAL_DEVICE_RENDER_PASS_STRIPED_FEATURES_ARM")
+            }
+            Self::PHYSICAL_DEVICE_RENDER_PASS_STRIPED_PROPERTIES_ARM => {
+                Some("PHYSICAL_DEVICE_RENDER_PASS_STRIPED_PROPERTIES_ARM")
+            }
+            Self::RENDER_PASS_STRIPE_BEGIN_INFO_ARM => Some("RENDER_PASS_STRIPE_BEGIN_INFO_ARM"),
+            Self::RENDER_PASS_STRIPE_INFO_ARM => Some("RENDER_PASS_STRIPE_INFO_ARM"),
+            Self::RENDER_PASS_STRIPE_SUBMIT_INFO_ARM => Some("RENDER_PASS_STRIPE_SUBMIT_INFO_ARM"),
             Self::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_OFFSET_FEATURES_QCOM => {
                 Some("PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_OFFSET_FEATURES_QCOM")
             }
@@ -6414,6 +6446,7 @@ impl fmt::Debug for StructureType {
             Self::MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_EXT => {
                 Some("MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_EXT")
             }
+            Self::LAYER_SETTINGS_CREATE_INFO_EXT => Some("LAYER_SETTINGS_CREATE_INFO_EXT"),
             Self::PHYSICAL_DEVICE_SHADER_CORE_BUILTINS_FEATURES_ARM => {
                 Some("PHYSICAL_DEVICE_SHADER_CORE_BUILTINS_FEATURES_ARM")
             }

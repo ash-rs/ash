@@ -3702,7 +3702,7 @@ impl StructureType {
 impl ExtValidationFlagsFn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_validation_flags\0") };
-    pub const SPEC_VERSION: u32 = 2u32;
+    pub const SPEC_VERSION: u32 = 3u32;
 }
 #[derive(Clone)]
 pub struct ExtValidationFlagsFn;
@@ -11718,7 +11718,7 @@ impl StructureType {
 impl ExtValidationFeaturesFn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_validation_features\0") };
-    pub const SPEC_VERSION: u32 = 5u32;
+    pub const SPEC_VERSION: u32 = 6u32;
 }
 #[derive(Clone)]
 pub struct ExtValidationFeaturesFn;
@@ -17998,7 +17998,7 @@ impl HuaweiClusterCullingShaderFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
         ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_HUAWEI_cluster_culling_shader\0")
     };
-    pub const SPEC_VERSION: u32 = 2u32;
+    pub const SPEC_VERSION: u32 = 3u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDrawClusterHUAWEI = unsafe extern "system" fn(
@@ -18085,6 +18085,8 @@ impl ShaderStageFlags {
 impl StructureType {
     pub const PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_FEATURES_HUAWEI: Self = Self(1_000_404_000);
     pub const PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_PROPERTIES_HUAWEI: Self = Self(1_000_404_001);
+    pub const PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_VRS_FEATURES_HUAWEI: Self =
+        Self(1_000_404_002);
 }
 impl ExtBorderColorSwizzleFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
@@ -18416,6 +18418,21 @@ impl SamplerCreateFlags {
 #[doc = "Generated from 'VK_EXT_non_seamless_cube_map'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_NON_SEAMLESS_CUBE_MAP_FEATURES_EXT: Self = Self(1_000_422_000);
+}
+impl ArmRenderPassStripedFn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_ARM_render_pass_striped\0") };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct ArmRenderPassStripedFn;
+#[doc = "Generated from 'VK_ARM_render_pass_striped'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_RENDER_PASS_STRIPED_FEATURES_ARM: Self = Self(1_000_424_000);
+    pub const PHYSICAL_DEVICE_RENDER_PASS_STRIPED_PROPERTIES_ARM: Self = Self(1_000_424_001);
+    pub const RENDER_PASS_STRIPE_BEGIN_INFO_ARM: Self = Self(1_000_424_002);
+    pub const RENDER_PASS_STRIPE_INFO_ARM: Self = Self(1_000_424_003);
+    pub const RENDER_PASS_STRIPE_SUBMIT_INFO_ARM: Self = Self(1_000_424_004);
 }
 impl QcomFragmentDensityMapOffsetFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
@@ -21678,6 +21695,17 @@ impl DescriptorType {
 impl StructureType {
     pub const PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_EXT: Self = Self(1_000_351_000);
     pub const MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_EXT: Self = Self(1_000_351_002);
+}
+impl ExtLayerSettingsFn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_layer_settings\0") };
+    pub const SPEC_VERSION: u32 = 2u32;
+}
+#[derive(Clone)]
+pub struct ExtLayerSettingsFn;
+#[doc = "Generated from 'VK_EXT_layer_settings'"]
+impl StructureType {
+    pub const LAYER_SETTINGS_CREATE_INFO_EXT: Self = Self(1_000_496_000);
 }
 impl ArmShaderCoreBuiltinsFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {

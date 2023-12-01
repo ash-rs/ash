@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 271;
+pub const HEADER_VERSION: u32 = 272;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -9102,6 +9102,107 @@ impl<'a> ValidationFeaturesEXT<'a> {
     ) -> Self {
         self.disabled_validation_feature_count = disabled_validation_features.len() as _;
         self.p_disabled_validation_features = disabled_validation_features.as_ptr();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkLayerSettingsCreateInfoEXT.html>"]
+#[must_use]
+pub struct LayerSettingsCreateInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub setting_count: u32,
+    pub p_settings: *const LayerSettingEXT<'a>,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for LayerSettingsCreateInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            setting_count: u32::default(),
+            p_settings: ::std::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for LayerSettingsCreateInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::LAYER_SETTINGS_CREATE_INFO_EXT;
+}
+unsafe impl ExtendsInstanceCreateInfo for LayerSettingsCreateInfoEXT<'_> {}
+impl<'a> LayerSettingsCreateInfoEXT<'a> {
+    #[inline]
+    pub fn settings(mut self, settings: &'a [LayerSettingEXT<'a>]) -> Self {
+        self.setting_count = settings.len() as _;
+        self.p_settings = settings.as_ptr();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkLayerSettingEXT.html>"]
+#[must_use]
+pub struct LayerSettingEXT<'a> {
+    pub p_layer_name: *const c_char,
+    pub p_setting_name: *const c_char,
+    pub ty: LayerSettingTypeEXT,
+    pub value_count: u32,
+    pub p_values: *const c_void,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for LayerSettingEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            p_layer_name: ::std::ptr::null(),
+            p_setting_name: ::std::ptr::null(),
+            ty: LayerSettingTypeEXT::default(),
+            value_count: u32::default(),
+            p_values: ::std::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+impl<'a> LayerSettingEXT<'a> {
+    #[inline]
+    pub fn layer_name(mut self, layer_name: &'a core::ffi::CStr) -> Self {
+        self.p_layer_name = layer_name.as_ptr();
+        self
+    }
+    #[inline]
+    pub unsafe fn layer_name_as_c_str(&self) -> Option<&core::ffi::CStr> {
+        if self.p_layer_name.is_null() {
+            None
+        } else {
+            Some(core::ffi::CStr::from_ptr(self.p_layer_name))
+        }
+    }
+    #[inline]
+    pub fn setting_name(mut self, setting_name: &'a core::ffi::CStr) -> Self {
+        self.p_setting_name = setting_name.as_ptr();
+        self
+    }
+    #[inline]
+    pub unsafe fn setting_name_as_c_str(&self) -> Option<&core::ffi::CStr> {
+        if self.p_setting_name.is_null() {
+            None
+        } else {
+            Some(core::ffi::CStr::from_ptr(self.p_setting_name))
+        }
+    }
+    #[inline]
+    pub fn ty(mut self, ty: LayerSettingTypeEXT) -> Self {
+        self.ty = ty;
+        self
+    }
+    #[inline]
+    pub fn values(mut self, values: &'a [u8]) -> Self {
+        self.value_count = values.len() as _;
+        self.p_values = values.as_ptr().cast();
         self
     }
 }
@@ -34544,6 +34645,7 @@ unsafe impl ExtendsPhysicalDeviceFeatures2
 {
 }
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'_> {}
+pub unsafe trait ExtendsPhysicalDeviceClusterCullingShaderFeaturesHUAWEI {}
 impl<'a> PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a> {
     #[inline]
     pub fn clusterculling_shader(mut self, clusterculling_shader: bool) -> Self {
@@ -34556,6 +34658,60 @@ impl<'a> PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a> {
         multiview_cluster_culling_shader: bool,
     ) -> Self {
         self.multiview_cluster_culling_shader = multiview_cluster_culling_shader.into();
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsPhysicalDeviceClusterCullingShaderFeaturesHUAWEI>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        unsafe {
+            let next_ptr = <*mut T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI.html>"]
+#[must_use]
+pub struct PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub cluster_shading_rate: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            cluster_shading_rate: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_VRS_FEATURES_HUAWEI;
+}
+unsafe impl ExtendsPhysicalDeviceClusterCullingShaderFeaturesHUAWEI
+    for PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'_>
+{
+}
+impl<'a> PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'a> {
+    #[inline]
+    pub fn cluster_shading_rate(mut self, cluster_shading_rate: bool) -> Self {
+        self.cluster_shading_rate = cluster_shading_rate.into();
         self
     }
 }
@@ -36875,6 +37031,7 @@ impl ::std::default::Default for CommandBufferSubmitInfo<'_> {
 unsafe impl<'a> TaggedStructure for CommandBufferSubmitInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMMAND_BUFFER_SUBMIT_INFO;
 }
+pub unsafe trait ExtendsCommandBufferSubmitInfo {}
 impl<'a> CommandBufferSubmitInfo<'a> {
     #[inline]
     pub fn command_buffer(mut self, command_buffer: CommandBuffer) -> Self {
@@ -36884,6 +37041,20 @@ impl<'a> CommandBufferSubmitInfo<'a> {
     #[inline]
     pub fn device_mask(mut self, device_mask: u32) -> Self {
         self.device_mask = device_mask;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsCommandBufferSubmitInfo>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = <*const T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
         self
     }
 }
@@ -53608,6 +53779,193 @@ impl<'a> PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'a> {
     #[inline]
     pub fn relaxed_line_rasterization(mut self, relaxed_line_rasterization: bool) -> Self {
         self.relaxed_line_rasterization = relaxed_line_rasterization.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceRenderPassStripedFeaturesARM.html>"]
+#[must_use]
+pub struct PhysicalDeviceRenderPassStripedFeaturesARM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub render_pass_striped: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceRenderPassStripedFeaturesARM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            render_pass_striped: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceRenderPassStripedFeaturesARM<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_RENDER_PASS_STRIPED_FEATURES_ARM;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRenderPassStripedFeaturesARM<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRenderPassStripedFeaturesARM<'_> {}
+impl<'a> PhysicalDeviceRenderPassStripedFeaturesARM<'a> {
+    #[inline]
+    pub fn render_pass_striped(mut self, render_pass_striped: bool) -> Self {
+        self.render_pass_striped = render_pass_striped.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceRenderPassStripedPropertiesARM.html>"]
+#[must_use]
+pub struct PhysicalDeviceRenderPassStripedPropertiesARM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub render_pass_stripe_granularity: Extent2D,
+    pub max_render_pass_stripes: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceRenderPassStripedPropertiesARM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            render_pass_stripe_granularity: Extent2D::default(),
+            max_render_pass_stripes: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceRenderPassStripedPropertiesARM<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_RENDER_PASS_STRIPED_PROPERTIES_ARM;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceRenderPassStripedPropertiesARM<'_> {}
+impl<'a> PhysicalDeviceRenderPassStripedPropertiesARM<'a> {
+    #[inline]
+    pub fn render_pass_stripe_granularity(
+        mut self,
+        render_pass_stripe_granularity: Extent2D,
+    ) -> Self {
+        self.render_pass_stripe_granularity = render_pass_stripe_granularity;
+        self
+    }
+    #[inline]
+    pub fn max_render_pass_stripes(mut self, max_render_pass_stripes: u32) -> Self {
+        self.max_render_pass_stripes = max_render_pass_stripes;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkRenderPassStripeInfoARM.html>"]
+#[must_use]
+pub struct RenderPassStripeInfoARM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub stripe_area: Rect2D,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for RenderPassStripeInfoARM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            stripe_area: Rect2D::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for RenderPassStripeInfoARM<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_STRIPE_INFO_ARM;
+}
+impl<'a> RenderPassStripeInfoARM<'a> {
+    #[inline]
+    pub fn stripe_area(mut self, stripe_area: Rect2D) -> Self {
+        self.stripe_area = stripe_area;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkRenderPassStripeBeginInfoARM.html>"]
+#[must_use]
+pub struct RenderPassStripeBeginInfoARM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub stripe_info_count: u32,
+    pub p_stripe_infos: *mut RenderPassStripeInfoARM<'a>,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for RenderPassStripeBeginInfoARM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            stripe_info_count: u32::default(),
+            p_stripe_infos: ::std::ptr::null_mut(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for RenderPassStripeBeginInfoARM<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_STRIPE_BEGIN_INFO_ARM;
+}
+unsafe impl ExtendsRenderingInfo for RenderPassStripeBeginInfoARM<'_> {}
+unsafe impl ExtendsRenderPassBeginInfo for RenderPassStripeBeginInfoARM<'_> {}
+impl<'a> RenderPassStripeBeginInfoARM<'a> {
+    #[inline]
+    pub fn stripe_infos(mut self, stripe_infos: &'a mut [RenderPassStripeInfoARM<'_>]) -> Self {
+        self.stripe_info_count = stripe_infos.len() as _;
+        self.p_stripe_infos = stripe_infos.as_mut_ptr().cast();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkRenderPassStripeSubmitInfoARM.html>"]
+#[must_use]
+pub struct RenderPassStripeSubmitInfoARM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub stripe_semaphore_info_count: u32,
+    pub p_stripe_semaphore_infos: *const SemaphoreSubmitInfo<'a>,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for RenderPassStripeSubmitInfoARM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            stripe_semaphore_info_count: u32::default(),
+            p_stripe_semaphore_infos: ::std::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for RenderPassStripeSubmitInfoARM<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::RENDER_PASS_STRIPE_SUBMIT_INFO_ARM;
+}
+unsafe impl ExtendsCommandBufferSubmitInfo for RenderPassStripeSubmitInfoARM<'_> {}
+impl<'a> RenderPassStripeSubmitInfoARM<'a> {
+    #[inline]
+    pub fn stripe_semaphore_infos(
+        mut self,
+        stripe_semaphore_infos: &'a [SemaphoreSubmitInfo<'a>],
+    ) -> Self {
+        self.stripe_semaphore_info_count = stripe_semaphore_infos.len() as _;
+        self.p_stripe_semaphore_infos = stripe_semaphore_infos.as_ptr();
         self
     }
 }

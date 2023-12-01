@@ -1346,6 +1346,30 @@ impl ValidationFeatureDisableEXT {
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkLayerSettingTypeEXT.html>"]
+pub struct LayerSettingTypeEXT(pub(crate) i32);
+impl LayerSettingTypeEXT {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl LayerSettingTypeEXT {
+    pub const BOOL32: Self = Self(0);
+    pub const INT32: Self = Self(1);
+    pub const INT64: Self = Self(2);
+    pub const UINT32: Self = Self(3);
+    pub const UINT64: Self = Self(4);
+    pub const FLOAT32: Self = Self(5);
+    pub const FLOAT64: Self = Self(6);
+    pub const STRING: Self = Self(7);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkIndirectCommandsTokenTypeNV.html>"]
 pub struct IndirectCommandsTokenTypeNV(pub(crate) i32);
 impl IndirectCommandsTokenTypeNV {
