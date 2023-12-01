@@ -41,14 +41,14 @@ impl DebugReport {
         create_info: &vk::DebugReportCallbackCreateInfoEXT<'_>,
         allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::DebugReportCallbackEXT> {
-        let mut debug_cb = mem::zeroed();
+        let mut debug_cb = mem::MaybeUninit::uninit();
         (self.fp.create_debug_report_callback_ext)(
             self.handle,
             create_info,
             allocation_callbacks.as_raw_ptr(),
-            &mut debug_cb,
+            debug_cb.as_mut_ptr(),
         )
-        .result_with_success(debug_cb)
+        .assume_init_on_success(debug_cb)
     }
 
     pub const NAME: &'static CStr = vk::ExtDebugReportFn::NAME;

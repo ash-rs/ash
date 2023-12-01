@@ -27,14 +27,14 @@ impl XlibSurface {
         create_info: &vk::XlibSurfaceCreateInfoKHR<'_>,
         allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::SurfaceKHR> {
-        let mut surface = mem::zeroed();
+        let mut surface = mem::MaybeUninit::uninit();
         (self.fp.create_xlib_surface_khr)(
             self.handle,
             create_info,
             allocation_callbacks.as_raw_ptr(),
-            &mut surface,
+            surface.as_mut_ptr(),
         )
-        .result_with_success(surface)
+        .assume_init_on_success(surface)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceXlibPresentationSupportKHR.html>

@@ -3,7 +3,6 @@ use crate::vk;
 use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
-use std::mem::MaybeUninit;
 
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_external_semaphore_win32.html>
 #[derive(Clone)]
@@ -36,7 +35,7 @@ impl ExternalSemaphoreWin32 {
         &self,
         get_info: &vk::SemaphoreGetWin32HandleInfoKHR<'_>,
     ) -> VkResult<vk::HANDLE> {
-        let mut handle = MaybeUninit::uninit();
+        let mut handle = mem::MaybeUninit::uninit();
         (self.fp.get_semaphore_win32_handle_khr)(self.handle, get_info, handle.as_mut_ptr())
             .assume_init_on_success(handle)
     }

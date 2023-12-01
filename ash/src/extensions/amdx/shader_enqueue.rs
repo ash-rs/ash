@@ -29,7 +29,7 @@ impl ShaderEnqueue {
         create_infos: &[vk::ExecutionGraphPipelineCreateInfoAMDX<'_>],
         allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<Vec<vk::Pipeline>> {
-        let mut pipelines = vec![mem::zeroed(); create_infos.len()];
+        let mut pipelines = Vec::with_capacity(create_infos.len());
         (self.fp.create_execution_graph_pipelines_amdx)(
             self.handle,
             pipeline_cache,
@@ -38,7 +38,7 @@ impl ShaderEnqueue {
             allocation_callbacks.as_raw_ptr(),
             pipelines.as_mut_ptr(),
         )
-        .result_with_success(pipelines)
+        .set_vec_len_on_success(pipelines, create_infos.len())
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetExecutionGraphPipelineScratchSizeAMDX.html>
@@ -63,14 +63,14 @@ impl ShaderEnqueue {
         execution_graph: vk::Pipeline,
         node_info: &vk::PipelineShaderStageNodeCreateInfoAMDX<'_>,
     ) -> VkResult<u32> {
-        let mut node_index = 0;
+        let mut node_index = mem::MaybeUninit::uninit();
         (self.fp.get_execution_graph_pipeline_node_index_amdx)(
             self.handle,
             execution_graph,
             node_info,
-            &mut node_index,
+            node_index.as_mut_ptr(),
         )
-        .result_with_success(node_index)
+        .assume_init_on_success(node_index)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdInitializeGraphScratchMemoryAMDX.html>

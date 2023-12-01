@@ -67,13 +67,14 @@ impl Instance {
         &self,
         physical_device: vk::PhysicalDevice,
     ) -> VkResult<usize> {
-        let mut count = 0;
+        let mut count = mem::MaybeUninit::uninit();
         (self.instance_fn_1_3.get_physical_device_tool_properties)(
             physical_device,
-            &mut count,
+            count.as_mut_ptr(),
             ptr::null_mut(),
         )
-        .result_with_success(count as usize)
+        .assume_init_on_success(count)
+        .map(|c| c as usize)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceToolProperties.html>
@@ -108,13 +109,14 @@ impl Instance {
     /// Retrieve the number of elements to pass to [`enumerate_physical_device_groups()`][Self::enumerate_physical_device_groups()]
     #[inline]
     pub unsafe fn enumerate_physical_device_groups_len(&self) -> VkResult<usize> {
-        let mut group_count = 0;
+        let mut group_count = mem::MaybeUninit::uninit();
         (self.instance_fn_1_1.enumerate_physical_device_groups)(
             self.handle(),
-            &mut group_count,
+            group_count.as_mut_ptr(),
             ptr::null_mut(),
         )
-        .result_with_success(group_count as usize)
+        .assume_init_on_success(group_count)
+        .map(|c| c as usize)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumeratePhysicalDeviceGroups.html>
@@ -192,15 +194,15 @@ impl Instance {
         &self,
         physical_device: vk::PhysicalDevice,
     ) -> usize {
-        let mut queue_count = 0;
+        let mut queue_count = mem::MaybeUninit::uninit();
         (self
             .instance_fn_1_1
             .get_physical_device_queue_family_properties2)(
             physical_device,
-            &mut queue_count,
+            queue_count.as_mut_ptr(),
             ptr::null_mut(),
         );
-        queue_count as usize
+        queue_count.assume_init() as usize
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceQueueFamilyProperties2.html>
@@ -241,16 +243,16 @@ impl Instance {
         physical_device: vk::PhysicalDevice,
         format_info: &vk::PhysicalDeviceSparseImageFormatInfo2<'_>,
     ) -> usize {
-        let mut format_count = 0;
+        let mut format_count = mem::MaybeUninit::uninit();
         (self
             .instance_fn_1_1
             .get_physical_device_sparse_image_format_properties2)(
             physical_device,
             format_info,
-            &mut format_count,
+            format_count.as_mut_ptr(),
             ptr::null_mut(),
         );
-        format_count as usize
+        format_count.assume_init() as usize
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSparseImageFormatProperties2.html>
@@ -356,14 +358,14 @@ impl Instance {
         create_info: &vk::DeviceCreateInfo<'_>,
         allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<Device> {
-        let mut device = mem::zeroed();
-        (self.instance_fn_1_0.create_device)(
+        let mut device = mem::MaybeUninit::uninit();
+        let device = (self.instance_fn_1_0.create_device)(
             physical_device,
             create_info,
             allocation_callbacks.as_raw_ptr(),
-            &mut device,
+            device.as_mut_ptr(),
         )
-        .result()?;
+        .assume_init_on_success(device)?;
         Ok(Device::load(&self.instance_fn_1_0, device))
     }
 
@@ -393,13 +395,13 @@ impl Instance {
         physical_device: vk::PhysicalDevice,
         format: vk::Format,
     ) -> vk::FormatProperties {
-        let mut format_prop = mem::zeroed();
+        let mut format_prop = mem::MaybeUninit::uninit();
         (self.instance_fn_1_0.get_physical_device_format_properties)(
             physical_device,
             format,
-            &mut format_prop,
+            format_prop.as_mut_ptr(),
         );
-        format_prop
+        format_prop.assume_init()
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceImageFormatProperties.html>
@@ -413,7 +415,7 @@ impl Instance {
         usage: vk::ImageUsageFlags,
         flags: vk::ImageCreateFlags,
     ) -> VkResult<vk::ImageFormatProperties> {
-        let mut image_format_prop = mem::zeroed();
+        let mut image_format_prop = mem::MaybeUninit::uninit();
         (self
             .instance_fn_1_0
             .get_physical_device_image_format_properties)(
@@ -423,9 +425,9 @@ impl Instance {
             tiling,
             usage,
             flags,
-            &mut image_format_prop,
+            image_format_prop.as_mut_ptr(),
         )
-        .result_with_success(image_format_prop)
+        .assume_init_on_success(image_format_prop)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceMemoryProperties.html>
@@ -434,12 +436,12 @@ impl Instance {
         &self,
         physical_device: vk::PhysicalDevice,
     ) -> vk::PhysicalDeviceMemoryProperties {
-        let mut memory_prop = mem::zeroed();
+        let mut memory_prop = mem::MaybeUninit::uninit();
         (self.instance_fn_1_0.get_physical_device_memory_properties)(
             physical_device,
-            &mut memory_prop,
+            memory_prop.as_mut_ptr(),
         );
-        memory_prop
+        memory_prop.assume_init()
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceProperties.html>
@@ -448,9 +450,9 @@ impl Instance {
         &self,
         physical_device: vk::PhysicalDevice,
     ) -> vk::PhysicalDeviceProperties {
-        let mut prop = mem::zeroed();
-        (self.instance_fn_1_0.get_physical_device_properties)(physical_device, &mut prop);
-        prop
+        let mut prop = mem::MaybeUninit::uninit();
+        (self.instance_fn_1_0.get_physical_device_properties)(physical_device, prop.as_mut_ptr());
+        prop.assume_init()
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceQueueFamilyProperties.html>
@@ -477,9 +479,9 @@ impl Instance {
         &self,
         physical_device: vk::PhysicalDevice,
     ) -> vk::PhysicalDeviceFeatures {
-        let mut prop = mem::zeroed();
-        (self.instance_fn_1_0.get_physical_device_features)(physical_device, &mut prop);
-        prop
+        let mut prop = mem::MaybeUninit::uninit();
+        (self.instance_fn_1_0.get_physical_device_features)(physical_device, prop.as_mut_ptr());
+        prop.assume_init()
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumeratePhysicalDevices.html>

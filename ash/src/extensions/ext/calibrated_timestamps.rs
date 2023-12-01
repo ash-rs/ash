@@ -43,16 +43,18 @@ impl CalibratedTimestamps {
         device: vk::Device,
         info: &[vk::CalibratedTimestampInfoEXT<'_>],
     ) -> VkResult<(Vec<u64>, u64)> {
-        let mut timestamps = vec![0u64; info.len()];
-        let mut max_deviation = 0u64;
-        (self.fp.get_calibrated_timestamps_ext)(
+        let mut timestamps = Vec::with_capacity(info.len());
+        let mut max_deviation = mem::MaybeUninit::uninit();
+        let max_deviation = (self.fp.get_calibrated_timestamps_ext)(
             device,
             info.len() as u32,
             info.as_ptr(),
             timestamps.as_mut_ptr(),
-            &mut max_deviation,
+            max_deviation.as_mut_ptr(),
         )
-        .result_with_success((timestamps, max_deviation))
+        .assume_init_on_success(max_deviation)?;
+        timestamps.set_len(info.len());
+        Ok((timestamps, max_deviation))
     }
 
     pub const NAME: &'static CStr = vk::ExtCalibratedTimestampsFn::NAME;

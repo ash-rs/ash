@@ -219,7 +219,6 @@ impl Entry {
     /// ```
     #[inline]
     pub unsafe fn try_enumerate_instance_version(&self) -> VkResult<Option<u32>> {
-        let mut api_version = 0;
         let enumerate_instance_version: Option<vk::PFN_vkEnumerateInstanceVersion> = {
             let name = CStr::from_bytes_with_nul_unchecked(b"vkEnumerateInstanceVersion\0");
             mem::transmute((self.static_fn.get_instance_proc_addr)(
@@ -228,7 +227,10 @@ impl Entry {
             ))
         };
         if let Some(enumerate_instance_version) = enumerate_instance_version {
-            (enumerate_instance_version)(&mut api_version).result_with_success(Some(api_version))
+            let mut api_version = mem::MaybeUninit::uninit();
+            (enumerate_instance_version)(api_version.as_mut_ptr())
+                .assume_init_on_success(api_version)
+                .map(Some)
         } else {
             Ok(None)
         }
@@ -251,13 +253,13 @@ impl Entry {
         create_info: &vk::InstanceCreateInfo<'_>,
         allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<Instance> {
-        let mut instance = mem::zeroed();
-        (self.entry_fn_1_0.create_instance)(
+        let mut instance = mem::MaybeUninit::uninit();
+        let instance = (self.entry_fn_1_0.create_instance)(
             create_info,
             allocation_callbacks.as_raw_ptr(),
-            &mut instance,
+            instance.as_mut_ptr(),
         )
-        .result()?;
+        .assume_init_on_success(instance)?;
         Ok(Instance::load(&self.static_fn, instance))
     }
 
@@ -308,9 +310,9 @@ impl Entry {
     /// Please use [`try_enumerate_instance_version()`][Self::try_enumerate_instance_version()] instead.
     #[inline]
     pub unsafe fn enumerate_instance_version(&self) -> VkResult<u32> {
-        let mut api_version = 0;
-        (self.entry_fn_1_1.enumerate_instance_version)(&mut api_version)
-            .result_with_success(api_version)
+        let mut api_version = mem::MaybeUninit::uninit();
+        (self.entry_fn_1_1.enumerate_instance_version)(api_version.as_mut_ptr())
+            .assume_init_on_success(api_version)
     }
 }
 

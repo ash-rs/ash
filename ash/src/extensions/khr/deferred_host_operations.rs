@@ -26,13 +26,13 @@ impl DeferredHostOperations {
         &self,
         allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::DeferredOperationKHR> {
-        let mut operation = mem::zeroed();
+        let mut operation = mem::MaybeUninit::uninit();
         (self.fp.create_deferred_operation_khr)(
             self.handle,
             allocation_callbacks.as_raw_ptr(),
-            &mut operation,
+            operation.as_mut_ptr(),
         )
-        .result_with_success(operation)
+        .assume_init_on_success(operation)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDeferredOperationJoinKHR.html>

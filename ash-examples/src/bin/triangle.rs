@@ -423,7 +423,6 @@ fn main() {
                     device.cmd_end_render_pass(draw_command_buffer);
                 },
             );
-            //let mut present_info_err = mem::zeroed();
             let wait_semaphors = [base.rendering_complete_semaphore];
             let swapchains = [base.swapchain];
             let image_indices = [present_index];

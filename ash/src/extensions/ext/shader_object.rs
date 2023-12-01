@@ -37,9 +37,7 @@ impl ShaderObject {
             allocator.as_raw_ptr(),
             shaders.as_mut_ptr(),
         )
-        .result()?;
-        shaders.set_len(create_infos.len());
-        Ok(shaders)
+        .set_vec_len_on_success(shaders, create_infos.len())
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroyShaderEXT.html>

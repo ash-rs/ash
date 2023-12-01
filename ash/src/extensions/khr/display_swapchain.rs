@@ -35,9 +35,7 @@ impl DisplaySwapchain {
             allocation_callbacks.as_raw_ptr(),
             swapchains.as_mut_ptr(),
         )
-        .result()?;
-        swapchains.set_len(create_infos.len());
-        Ok(swapchains)
+        .set_vec_len_on_success(swapchains, create_infos.len())
     }
 
     pub const NAME: &'static CStr = vk::KhrDisplaySwapchainFn::NAME;

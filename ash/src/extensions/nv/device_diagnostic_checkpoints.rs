@@ -31,9 +31,9 @@ impl DeviceDiagnosticCheckpoints {
     /// Retrieve the number of elements to pass to [`get_queue_checkpoint_data()`][Self::get_queue_checkpoint_data()]
     #[inline]
     pub unsafe fn get_queue_checkpoint_data_len(&self, queue: vk::Queue) -> usize {
-        let mut count = 0;
-        (self.fp.get_queue_checkpoint_data_nv)(queue, &mut count, std::ptr::null_mut());
-        count as usize
+        let mut count = mem::MaybeUninit::uninit();
+        (self.fp.get_queue_checkpoint_data_nv)(queue, count.as_mut_ptr(), std::ptr::null_mut());
+        count.assume_init() as usize
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetQueueCheckpointDataNV.html>

@@ -28,17 +28,18 @@ impl PerformanceQuery {
         physical_device: vk::PhysicalDevice,
         queue_family_index: u32,
     ) -> VkResult<usize> {
-        let mut count = 0;
+        let mut count = mem::MaybeUninit::uninit();
         (self
             .fp
             .enumerate_physical_device_queue_family_performance_query_counters_khr)(
             physical_device,
             queue_family_index,
-            &mut count,
+            count.as_mut_ptr(),
             ptr::null_mut(),
             ptr::null_mut(),
         )
-        .result_with_success(count as usize)
+        .assume_init_on_success(count)
+        .map(|c| c as usize)
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR.html>
@@ -77,15 +78,15 @@ impl PerformanceQuery {
         physical_device: vk::PhysicalDevice,
         performance_query_create_info: &vk::QueryPoolPerformanceCreateInfoKHR<'_>,
     ) -> u32 {
-        let mut num_passes = 0;
+        let mut num_passes = mem::MaybeUninit::uninit();
         (self
             .fp
             .get_physical_device_queue_family_performance_query_passes_khr)(
             physical_device,
             performance_query_create_info,
-            &mut num_passes,
+            num_passes.as_mut_ptr(),
         );
-        num_passes
+        num_passes.assume_init()
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAcquireProfilingLockKHR.html>

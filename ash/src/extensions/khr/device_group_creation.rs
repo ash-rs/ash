@@ -24,13 +24,14 @@ impl DeviceGroupCreation {
     /// Retrieve the number of elements to pass to [`enumerate_physical_device_groups()`][Self::enumerate_physical_device_groups()]
     #[inline]
     pub unsafe fn enumerate_physical_device_groups_len(&self) -> VkResult<usize> {
-        let mut group_count = 0;
+        let mut group_count = mem::MaybeUninit::uninit();
         (self.fp.enumerate_physical_device_groups_khr)(
             self.handle,
-            &mut group_count,
+            group_count.as_mut_ptr(),
             ptr::null_mut(),
         )
-        .result_with_success(group_count as usize)
+        .assume_init_on_success(group_count)
+        .map(|c| c as usize)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumeratePhysicalDeviceGroupsKHR.html>

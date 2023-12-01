@@ -30,15 +30,15 @@ impl DeviceGroup {
         local_device_index: u32,
         remote_device_index: u32,
     ) -> vk::PeerMemoryFeatureFlags {
-        let mut peer_memory_features = mem::zeroed();
+        let mut peer_memory_features = mem::MaybeUninit::uninit();
         (self.fp.get_device_group_peer_memory_features_khr)(
             self.handle,
             heap_index,
             local_device_index,
             remote_device_index,
-            &mut peer_memory_features,
+            peer_memory_features.as_mut_ptr(),
         );
-        peer_memory_features
+        peer_memory_features.assume_init()
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDeviceMaskKHR.html>
@@ -99,9 +99,13 @@ impl DeviceGroup {
         &self,
         surface: vk::SurfaceKHR,
     ) -> VkResult<vk::DeviceGroupPresentModeFlagsKHR> {
-        let mut modes = mem::zeroed();
-        (self.fp.get_device_group_surface_present_modes_khr)(self.handle, surface, &mut modes)
-            .result_with_success(modes)
+        let mut modes = mem::MaybeUninit::uninit();
+        (self.fp.get_device_group_surface_present_modes_khr)(
+            self.handle,
+            surface,
+            modes.as_mut_ptr(),
+        )
+        .assume_init_on_success(modes)
     }
 
     /// Requires [`VK_KHR_surface`] to be enabled.
@@ -143,11 +147,12 @@ impl DeviceGroup {
         &self,
         acquire_info: &vk::AcquireNextImageInfoKHR<'_>,
     ) -> VkResult<(u32, bool)> {
-        let mut index = 0;
-        let err_code = (self.fp.acquire_next_image2_khr)(self.handle, acquire_info, &mut index);
+        let mut index = mem::MaybeUninit::uninit();
+        let err_code =
+            (self.fp.acquire_next_image2_khr)(self.handle, acquire_info, index.as_mut_ptr());
         match err_code {
-            vk::Result::SUCCESS => Ok((index, false)),
-            vk::Result::SUBOPTIMAL_KHR => Ok((index, true)),
+            vk::Result::SUCCESS => Ok((index.assume_init(), false)),
+            vk::Result::SUBOPTIMAL_KHR => Ok((index.assume_init(), true)),
             _ => Err(err_code),
         }
     }

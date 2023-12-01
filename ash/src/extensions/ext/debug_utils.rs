@@ -98,14 +98,14 @@ impl DebugUtils {
         create_info: &vk::DebugUtilsMessengerCreateInfoEXT<'_>,
         allocator: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::DebugUtilsMessengerEXT> {
-        let mut messenger = mem::zeroed();
+        let mut messenger = mem::MaybeUninit::uninit();
         (self.fp.create_debug_utils_messenger_ext)(
             self.handle,
             create_info,
             allocator.as_raw_ptr(),
-            &mut messenger,
+            messenger.as_mut_ptr(),
         )
-        .result_with_success(messenger)
+        .assume_init_on_success(messenger)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroyDebugUtilsMessengerEXT.html>

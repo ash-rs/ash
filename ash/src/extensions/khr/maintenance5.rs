@@ -40,13 +40,13 @@ impl Maintenance5 {
         &self,
         rendering_area_info: &vk::RenderingAreaInfoKHR<'_>,
     ) -> vk::Extent2D {
-        let mut granularity = mem::zeroed();
+        let mut granularity = mem::MaybeUninit::uninit();
         (self.fp.get_rendering_area_granularity_khr)(
             self.handle,
             rendering_area_info,
-            &mut granularity,
+            granularity.as_mut_ptr(),
         );
-        granularity
+        granularity.assume_init()
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceImageSubresourceLayoutKHR.html>

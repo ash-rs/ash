@@ -28,14 +28,14 @@ impl AccelerationStructure {
         create_info: &vk::AccelerationStructureCreateInfoKHR<'_>,
         allocation_callbacks: Option<&vk::AllocationCallbacks<'_>>,
     ) -> VkResult<vk::AccelerationStructureKHR> {
-        let mut accel_struct = mem::zeroed();
+        let mut accel_struct = mem::MaybeUninit::uninit();
         (self.fp.create_acceleration_structure_khr)(
             self.handle,
             create_info,
             allocation_callbacks.as_raw_ptr(),
-            &mut accel_struct,
+            accel_struct.as_mut_ptr(),
         )
-        .result_with_success(accel_struct)
+        .assume_init_on_success(accel_struct)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroyAccelerationStructureKHR.html>
@@ -259,15 +259,13 @@ impl AccelerationStructure {
         &self,
         version: &vk::AccelerationStructureVersionInfoKHR<'_>,
     ) -> vk::AccelerationStructureCompatibilityKHR {
-        let mut compatibility = mem::zeroed();
-
+        let mut compatibility = mem::MaybeUninit::uninit();
         (self.fp.get_device_acceleration_structure_compatibility_khr)(
             self.handle,
             version,
-            &mut compatibility,
+            compatibility.as_mut_ptr(),
         );
-
-        compatibility
+        compatibility.assume_init()
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetAccelerationStructureBuildSizesKHR.html>

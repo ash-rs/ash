@@ -22,9 +22,9 @@ impl TimelineSemaphore {
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetSemaphoreCounterValue.html>
     #[inline]
     pub unsafe fn get_semaphore_counter_value(&self, semaphore: vk::Semaphore) -> VkResult<u64> {
-        let mut value = 0;
-        (self.fp.get_semaphore_counter_value_khr)(self.handle, semaphore, &mut value)
-            .result_with_success(value)
+        let mut value = mem::MaybeUninit::uninit();
+        (self.fp.get_semaphore_counter_value_khr)(self.handle, semaphore, value.as_mut_ptr())
+            .assume_init_on_success(value)
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkWaitSemaphores.html>
