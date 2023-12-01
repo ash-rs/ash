@@ -6,22 +6,23 @@
 //! On instance extensions platform specific extensions need to be enabled.
 
 use ash::vk;
-use raw_window_handle::{HasRawDisplayHandle, HasRawWindowHandle};
 use std::error::Error;
+use raw_window_handle::{HasDisplayHandle, HasWindowHandle};
 use winit::{
     dpi::PhysicalSize,
-    event::{Event, VirtualKeyCode, WindowEvent},
-    event_loop::{ControlFlow, EventLoop},
+    event::{Event, KeyEvent, WindowEvent},
+    event_loop::{EventLoop},
     window::WindowBuilder,
+    keyboard::{Key, NamedKey},
 };
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let event_loop = EventLoop::new();
+    let event_loop = EventLoop::new()?;
 
     unsafe {
         let entry = ash::Entry::linked();
         let surface_extensions =
-            ash_window::enumerate_required_extensions(event_loop.raw_display_handle())?;
+            ash_window::enumerate_required_extensions(event_loop.display_handle()?.as_raw())?;
         let app_desc = vk::ApplicationInfo::default().api_version(vk::make_api_version(0, 1, 0, 0));
         let instance_desc = vk::InstanceCreateInfo::default()
             .application_info(&app_desc)
@@ -37,33 +38,33 @@ fn main() -> Result<(), Box<dyn Error>> {
         let surface = ash_window::create_surface(
             &entry,
             &instance,
-            window.raw_display_handle(),
-            window.raw_window_handle(),
+            window.display_handle()?.as_raw(),
+            window.window_handle()?.as_raw(),
             None,
         )?;
         let surface_fn = ash::extensions::khr::Surface::new(&entry, &instance);
         println!("surface: {surface:?}");
 
-        event_loop.run(move |event, _, control_flow| match event {
-            winit::event::Event::WindowEvent {
+        Ok(event_loop.run(move |event, elwt| match event {
+            Event::WindowEvent {
                 event:
-                    WindowEvent::CloseRequested
-                    | WindowEvent::KeyboardInput {
-                        input:
-                            winit::event::KeyboardInput {
-                                virtual_keycode: Some(VirtualKeyCode::Escape),
-                                ..
-                            },
-                        ..
+                WindowEvent::CloseRequested
+                | WindowEvent::KeyboardInput {
+                    event:
+                    KeyEvent {
+                        logical_key: Key::Named(NamedKey::Escape)
+                        , ..
                     },
+                    ..
+                },
                 window_id: _,
             } => {
-                *control_flow = ControlFlow::Exit;
+                elwt.exit();
             }
-            Event::LoopDestroyed => {
+            Event::LoopExiting => {
                 surface_fn.destroy_surface(surface, None);
             }
             _ => {}
-        })
+        })?)
     }
 }

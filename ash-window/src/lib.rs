@@ -42,23 +42,23 @@ pub unsafe fn create_surface(
     match (display_handle, window_handle) {
         (RawDisplayHandle::Windows(_), RawWindowHandle::Win32(window)) => {
             let surface_desc = vk::Win32SurfaceCreateInfoKHR::default()
-                .hinstance(window.hinstance as isize)
-                .hwnd(window.hwnd as isize);
+                .hinstance(window.hinstance.unwrap().get())
+                .hwnd(window.hwnd.get());
             let surface_fn = khr::Win32Surface::new(entry, instance);
             surface_fn.create_win32_surface(&surface_desc, allocation_callbacks)
         }
 
         (RawDisplayHandle::Wayland(display), RawWindowHandle::Wayland(window)) => {
             let surface_desc = vk::WaylandSurfaceCreateInfoKHR::default()
-                .display(display.display)
-                .surface(window.surface);
+                .display(display.display.as_ptr())
+                .surface(window.surface.as_ptr());
             let surface_fn = khr::WaylandSurface::new(entry, instance);
             surface_fn.create_wayland_surface(&surface_desc, allocation_callbacks)
         }
 
         (RawDisplayHandle::Xlib(display), RawWindowHandle::Xlib(window)) => {
             let surface_desc = vk::XlibSurfaceCreateInfoKHR::default()
-                .dpy(display.display.cast())
+                .dpy(display.display.unwrap().as_mut())
                 .window(window.window);
             let surface_fn = khr::XlibSurface::new(entry, instance);
             surface_fn.create_xlib_surface(&surface_desc, allocation_callbacks)
@@ -66,15 +66,15 @@ pub unsafe fn create_surface(
 
         (RawDisplayHandle::Xcb(display), RawWindowHandle::Xcb(window)) => {
             let surface_desc = vk::XcbSurfaceCreateInfoKHR::default()
-                .connection(display.connection)
-                .window(window.window);
+                .connection(display.connection.unwrap().as_mut())
+                .window(window.window.get());
             let surface_fn = khr::XcbSurface::new(entry, instance);
             surface_fn.create_xcb_surface(&surface_desc, allocation_callbacks)
         }
 
         (RawDisplayHandle::Android(_), RawWindowHandle::AndroidNdk(window)) => {
             let surface_desc =
-                vk::AndroidSurfaceCreateInfoKHR::default().window(window.a_native_window);
+                vk::AndroidSurfaceCreateInfoKHR::default().window(window.a_native_window.as_ptr());
             let surface_fn = khr::AndroidSurface::new(entry, instance);
             surface_fn.create_android_surface(&surface_desc, allocation_callbacks)
         }
@@ -85,7 +85,7 @@ pub unsafe fn create_surface(
 
             let layer = match appkit::metal_layer_from_handle(window) {
                 Layer::Existing(layer) | Layer::Allocated(layer) => layer.cast(),
-                Layer::None => return Err(vk::Result::ERROR_INITIALIZATION_FAILED),
+                _ => return Err(vk::Result::ERROR_INITIALIZATION_FAILED),
             };
 
             let surface_desc = vk::MetalSurfaceCreateInfoEXT::default().layer(&*layer);
@@ -99,7 +99,7 @@ pub unsafe fn create_surface(
 
             let layer = match uikit::metal_layer_from_handle(window) {
                 Layer::Existing(layer) | Layer::Allocated(layer) => layer.cast(),
-                Layer::None => return Err(vk::Result::ERROR_INITIALIZATION_FAILED),
+                _ => return Err(vk::Result::ERROR_INITIALIZATION_FAILED),
             };
 
             let surface_desc = vk::MetalSurfaceCreateInfoEXT::default().layer(&*layer);
