@@ -2,7 +2,7 @@
 
 ## [Unreleased] - ReleaseDate
 
-- Bumped MSRV from 1.59 to 1.64 for `winit 0.28` and `raw-window-handle 0.5.1`. (#709, #716)
+- Bumped MSRV from 1.59 to 1.69 for `winit 0.28` and `raw-window-handle 0.5.1`, and `CStr::from_bytes_until_nul`. (#709, #716, #746)
 
 ## [0.12.0] - 2022-09-23
 

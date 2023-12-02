@@ -18,7 +18,7 @@ categories = [
 documentation = "https://docs.rs/ash"
 edition = "2021"
 # TODO: reevaluate, then update in ci.yml
-rust-version = "1.60.0"
+rust-version = "1.69.0"
 
 [dependencies]
 libloading = { version = "0.8", optional = true }

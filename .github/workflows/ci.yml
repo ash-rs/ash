@@ -11,20 +11,12 @@ jobs:
       - run: cargo check --workspace --all-targets --all-features
 
   check_msrv:
-    name: Check ash MSRV (1.60.0)
+    name: Check ash and ash-window MSRV (1.69.0)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@1.60.0
-      - run: cargo check -p ash -p ash-rewrite --all-features
-
-  check_ash_window_msrv:
-    name: Check ash-window MSRV (1.64.0)
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@1.64.0
-      - run: cargo check -p ash-window -p ash-examples --all-features
+      - uses: dtolnay/rust-toolchain@1.69.0
+      - run: cargo check -p ash -p ash-rewrite -p ash-window -p ash-examples --all-features
 
   # TODO: add a similar job for the rewrite once that generates code
   generated:

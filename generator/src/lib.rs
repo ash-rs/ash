@@ -1823,7 +1823,7 @@ fn derive_debug(
         let param_str = param_ident.to_string();
         let debug_value = if is_static_array(field) && field.basetype == "char" {
             let param_ident = format_ident!("{}_as_c_str", param_ident);
-            quote!(&unsafe { self.#param_ident() })
+            quote!(&self.#param_ident())
         } else if param_str.contains("pfn") {
             quote!(&(self.#param_ident.map(|x| x as *const ())))
         } else if union_types.contains(field.basetype.as_str()) {
@@ -1988,14 +1988,14 @@ fn derive_setters(
                 return Some(quote! {
                     #[inline]
                     #deprecated
-                    pub fn #param_ident_short(mut self, #param_ident_short: &'a std::ffi::CStr) -> Self {
+                    pub fn #param_ident_short(mut self, #param_ident_short: &'a core::ffi::CStr) -> Self {
                         self.#param_ident = #param_ident_short.as_ptr();
                         self
                     }
                     #[inline]
                     #deprecated
-                    pub unsafe fn #param_ident_as_c_str(&self) -> &std::ffi::CStr {
-                        std::ffi::CStr::from_ptr(self.#param_ident)
+                    pub unsafe fn #param_ident_as_c_str(&self) -> &core::ffi::CStr {
+                        core::ffi::CStr::from_ptr(self.#param_ident)
                     }
                 });
             } else if is_static_array(field) {
@@ -2003,12 +2003,12 @@ fn derive_setters(
                 return Some(quote! {
                     #[inline]
                     #deprecated
-                    pub fn #param_ident_short(mut self, #param_ident_short: &std::ffi::CStr) -> std::result::Result<Self, CStrTooLargeForStaticArray> {
+                    pub fn #param_ident_short(mut self, #param_ident_short: &core::ffi::CStr) -> core::result::Result<Self, CStrTooLargeForStaticArray> {
                         write_c_str_slice_with_nul(&mut self.#param_ident, #param_ident_short).map(|()| self)
                     }
                     #[inline]
                     #deprecated
-                    pub unsafe fn #param_ident_as_c_str(&self) -> &std::ffi::CStr {
+                    pub fn #param_ident_as_c_str(&self) -> core::result::Result<&core::ffi::CStr, core::ffi::FromBytesUntilNulError> {
                         wrap_c_str_slice_until_nul(&self.#param_ident)
                     }
                 });
