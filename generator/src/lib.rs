@@ -1929,7 +1929,7 @@ fn derive_setters(
 
         let deprecated = member.deprecated.as_ref().map(|d| quote!(#d #[allow(deprecated)]));
         let param_ident = field.param_ident();
-        let type_lifetime = has_lifetimes
+        let mut type_lifetime = has_lifetimes
             .contains(&name_to_tokens(&field.basetype))
             .then(|| quote!(<'a>));
         let param_ty_tokens = field.safe_type_tokens(quote!('a), type_lifetime.clone(), None);
@@ -2018,13 +2018,19 @@ fn derive_setters(
         // TODO: Improve in future when https://github.com/rust-lang/rust/issues/53667 is merged id:6
         if field.reference.is_some() && matches!(field.array, Some(vkxml::ArrayType::Dynamic)) {
             if let Some(ref array_size) = field.size {
-                let mut slice_param_ty_tokens = field.safe_type_tokens(quote!('a), type_lifetime.clone(), None);
-
                 let mut ptr = if field.is_const {
                     quote!(.as_ptr())
+                } else if let Some(tl) = &mut type_lifetime {
+                    // Work around invariance with mutable pointers:
+                    // https://github.com/ash-rs/ash/issues/837
+                    // https://doc.rust-lang.org/nomicon/subtyping.html#variance
+                    *tl = quote!(<'_>);
+                    quote!(.as_mut_ptr().cast())
                 } else {
                     quote!(.as_mut_ptr())
                 };
+
+                let mut slice_param_ty_tokens = field.safe_type_tokens(quote!('a), type_lifetime.clone(), None);
 
                 // Interpret void array as byte array
                 if field.basetype == "void" && matches!(field.reference, Some(vkxml::ReferenceType::Pointer)) {

@@ -52045,9 +52045,9 @@ unsafe impl<'a> TaggedStructure for GetLatencyMarkerInfoNV<'a> {
 }
 impl<'a> GetLatencyMarkerInfoNV<'a> {
     #[inline]
-    pub fn timings(mut self, timings: &'a mut [LatencyTimingsFrameReportNV<'a>]) -> Self {
+    pub fn timings(mut self, timings: &'a mut [LatencyTimingsFrameReportNV<'_>]) -> Self {
         self.timing_count = timings.len() as _;
-        self.p_timings = timings.as_mut_ptr();
+        self.p_timings = timings.as_mut_ptr().cast();
         self
     }
 }
