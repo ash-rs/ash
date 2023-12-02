@@ -204,7 +204,12 @@ Make sure that you have a Vulkan ready driver and install the [LunarG Vulkan SDK
 
 #### Linux
 
-Make sure that you have a Vulkan ready driver and install the [LunarG Vulkan SDK](https://lunarg.com/vulkan-sdk/). You also have to add the library and layers to your path. Have a look at my [post](http://askubuntu.com/a/803110/77183) if you are unsure how to do that.
+Install a Vulkan driver for your graphics hardware of choice, and (optionally) the [Validation Layers](https://github.com/KhronosGroup/Vulkan-ValidationLayers) via your package manager:
+
+- Arch Linux: https://wiki.archlinux.org/title/Vulkan.
+- Gentoo: https://wiki.gentoo.org/wiki/Vulkan.
+- Ubuntu/Debian: Besides installing a compatible graphics driver, install [`vulkan-validationlayers`](https://packages.ubuntu.com/vulkan-validationlayers) ([Debian](https://packages.debian.org/search?keywords=vulkan-validationlayers)) for the Validation Layers.
+- Other distros: consult your distro documentation and/or package repository for the preferred method to install and use Vulkan.
 
 #### macOS
 
