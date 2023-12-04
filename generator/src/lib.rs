@@ -1986,14 +1986,14 @@ fn derive_setters(
                 assert!(field.null_terminate);
                 assert_eq!(field.size, None);
                 return Some(quote! {
-                    #[inline]
                     #deprecated
+                    #[inline]
                     pub fn #param_ident_short(mut self, #param_ident_short: &'a core::ffi::CStr) -> Self {
                         self.#param_ident = #param_ident_short.as_ptr();
                         self
                     }
-                    #[inline]
                     #deprecated
+                    #[inline]
                     pub unsafe fn #param_ident_as_c_str(&self) -> &core::ffi::CStr {
                         core::ffi::CStr::from_ptr(self.#param_ident)
                     }
@@ -2001,13 +2001,13 @@ fn derive_setters(
             } else if is_static_array(field) {
                 assert_eq!(field.size, None);
                 return Some(quote! {
-                    #[inline]
                     #deprecated
+                    #[inline]
                     pub fn #param_ident_short(mut self, #param_ident_short: &core::ffi::CStr) -> core::result::Result<Self, CStrTooLargeForStaticArray> {
                         write_c_str_slice_with_nul(&mut self.#param_ident, #param_ident_short).map(|()| self)
                     }
-                    #[inline]
                     #deprecated
+                    #[inline]
                     pub fn #param_ident_as_c_str(&self) -> core::result::Result<&core::ffi::CStr, core::ffi::FromBytesUntilNulError> {
                         wrap_c_str_slice_until_nul(&self.#param_ident)
                     }
@@ -2075,8 +2075,8 @@ fn derive_setters(
                 let mutable = if field.is_const { quote!() } else { quote!(mut) };
 
                 return Some(quote! {
-                    #[inline]
                     #deprecated
+                    #[inline]
                     pub fn #param_ident_short(mut self, #param_ident_short: &'a #mutable #slice_param_ty_tokens) -> Self {
                         #set_size_stmt
                         self.#param_ident = #param_ident_short #ptr;
@@ -2088,8 +2088,8 @@ fn derive_setters(
 
         if field.basetype == "VkBool32" {
             return Some(quote!{
-                #[inline]
                 #deprecated
+                #[inline]
                 pub fn #param_ident_short(mut self, #param_ident_short: bool) -> Self {
                     self.#param_ident = #param_ident_short.into();
                     self
@@ -2109,8 +2109,8 @@ fn derive_setters(
                 let objecttype_ident = format_ident!("{}", objecttype.to_snake_case());
 
                 return Some(quote!{
-                    #[inline]
                     #deprecated
+                    #[inline]
                     pub fn #param_ident_short<T: Handle>(mut self, #param_ident_short: T) -> Self {
                         self.#param_ident = #param_ident_short.as_raw();
                         self.#objecttype_ident = T::TYPE;
@@ -2128,8 +2128,8 @@ fn derive_setters(
         };
 
         Some(quote!{
-            #[inline]
             #deprecated
+            #[inline]
             pub fn #param_ident_short(mut self, #param_ident_short: #param_ty_tokens) -> Self {
                 self.#param_ident = #param_ident_short;
                 self
@@ -2407,6 +2407,7 @@ pub fn generate_struct(
         #dbg_str
         #[derive(Copy, Clone, #default_str #manual_derive_tokens)]
         #[doc = #khronos_link]
+        #[must_use]
         pub struct #name #lifetimes {
             #(#params,)*
             #marker
