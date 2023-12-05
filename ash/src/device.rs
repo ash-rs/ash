@@ -2,8 +2,8 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
+use core::ffi;
 use std::mem;
-use std::os::raw::c_void;
 use std::ptr;
 
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDevice.html>
@@ -19,16 +19,24 @@ pub struct Device {
 
 impl Device {
     pub unsafe fn load(instance_fn: &vk::InstanceFnV1_0, device: vk::Device) -> Self {
-        let load_fn = |name: &std::ffi::CStr| {
-            mem::transmute((instance_fn.get_device_proc_addr)(device, name.as_ptr()))
-        };
+        Self::load_with(
+            |name: &std::ffi::CStr| {
+                mem::transmute((instance_fn.get_device_proc_addr)(device, name.as_ptr()))
+            },
+            device,
+        )
+    }
 
+    pub unsafe fn load_with(
+        mut load_fn: impl FnMut(&ffi::CStr) -> *const ffi::c_void,
+        device: vk::Device,
+    ) -> Self {
         Self::from_parts_1_3(
             device,
-            vk::DeviceFnV1_0::load(load_fn),
-            vk::DeviceFnV1_1::load(load_fn),
-            vk::DeviceFnV1_2::load(load_fn),
-            vk::DeviceFnV1_3::load(load_fn),
+            vk::DeviceFnV1_0::load(&mut load_fn),
+            vk::DeviceFnV1_1::load(&mut load_fn),
+            vk::DeviceFnV1_2::load(&mut load_fn),
+            vk::DeviceFnV1_3::load(&mut load_fn),
         )
     }
 
@@ -951,7 +959,7 @@ impl Device {
         &self,
         descriptor_set: vk::DescriptorSet,
         descriptor_update_template: vk::DescriptorUpdateTemplate,
-        data: *const c_void,
+        data: *const ffi::c_void,
     ) {
         (self.device_fn_1_1.update_descriptor_set_with_template)(
             self.handle(),
@@ -2273,7 +2281,7 @@ impl Device {
         offset: vk::DeviceSize,
         size: vk::DeviceSize,
         flags: vk::MemoryMapFlags,
-    ) -> VkResult<*mut c_void> {
+    ) -> VkResult<*mut ffi::c_void> {
         let mut data = mem::MaybeUninit::uninit();
         (self.device_fn_1_0.map_memory)(
             self.handle(),

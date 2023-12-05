@@ -31,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `descriptor_count()` setter on `ash::vk::WriteDescriptorSet` (#809)
 - Added `*_as_c_str()` getters for `c_char` pointers and `c_char` arrays (#831)
 - Added `#[must_use]` to Vulkan structs to make it more clear that they are moved by the builder pattern (#845)
+- Added `load_with()` function on `Device` and `Instance` for providing custom `get_xxx_proc_addr()` implementations (#846)
 - Added `Send`/`Sync` to all Vulkan structs (#869)
 
 ### Changed

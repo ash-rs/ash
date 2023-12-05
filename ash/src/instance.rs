@@ -4,8 +4,8 @@ use crate::device::Device;
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
+use core::ffi;
 use std::mem;
-use std::os::raw::c_char;
 use std::ptr;
 
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkInstance.html>
@@ -20,15 +20,21 @@ pub struct Instance {
 
 impl Instance {
     pub unsafe fn load(static_fn: &vk::StaticFn, instance: vk::Instance) -> Self {
-        let load_fn = |name: &std::ffi::CStr| {
-            mem::transmute((static_fn.get_instance_proc_addr)(instance, name.as_ptr()))
-        };
+        Self::load_with(
+            |name| mem::transmute((static_fn.get_instance_proc_addr)(instance, name.as_ptr())),
+            instance,
+        )
+    }
 
+    pub unsafe fn load_with(
+        mut load_fn: impl FnMut(&ffi::CStr) -> *const ffi::c_void,
+        instance: vk::Instance,
+    ) -> Self {
         Self::from_parts_1_3(
             instance,
-            vk::InstanceFnV1_0::load(load_fn),
-            vk::InstanceFnV1_1::load(load_fn),
-            vk::InstanceFnV1_3::load(load_fn),
+            vk::InstanceFnV1_0::load(&mut load_fn),
+            vk::InstanceFnV1_1::load(&mut load_fn),
+            vk::InstanceFnV1_3::load(&mut load_fn),
         )
     }
 
@@ -374,7 +380,7 @@ impl Instance {
     pub unsafe fn get_device_proc_addr(
         &self,
         device: vk::Device,
-        p_name: *const c_char,
+        p_name: *const ffi::c_char,
     ) -> vk::PFN_vkVoidFunction {
         (self.instance_fn_1_0.get_device_proc_addr)(device, p_name)
     }
