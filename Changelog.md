@@ -30,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `VK_NV_cuda_kernel_launch` device extension (#805)
 - Added `descriptor_count()` setter on `ash::vk::WriteDescriptorSet` (#809)
 - Added `*_as_c_str()` getters for `c_char` pointers and `c_char` arrays (#831)
+- Added `#[must_use]` to Vulkan structs to make it more clear that they are moved by the builder pattern (#845)
 
 ### Changed
 
