@@ -1,5 +1,3 @@
-#![warn(trivial_casts, trivial_numeric_casts)]
-
 use std::os::raw::c_char;
 
 use ash::{

@@ -20,3 +20,6 @@ vkxml = "0.3"
 [dependencies.syn]
 version = "2.0"
 features = ["full", "extra-traits"]
+
+[lints]
+workspace = true

@@ -301,7 +301,7 @@ fn main() {
             .unwrap();
         let mut image_slice = Align::new(
             image_ptr,
-            std::mem::align_of::<u8>() as u64,
+            align_of::<u8>() as u64,
             image_buffer_memory_req.size,
         );
         image_slice.copy_from_slice(&image_data);
@@ -689,7 +689,7 @@ fn main() {
                 .swapchain_loader
                 .acquire_next_image(
                     base.swapchain,
-                    std::u64::MAX,
+                    u64::MAX,
                     base.present_complete_semaphore,
                     vk::Fence::null(),
                 )
