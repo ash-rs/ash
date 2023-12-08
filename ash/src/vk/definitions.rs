@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 272;
+pub const HEADER_VERSION: u32 = 273;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -19552,31 +19552,31 @@ impl<'a> PhysicalDeviceConservativeRasterizationPropertiesEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCalibratedTimestampInfoEXT.html>"]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCalibratedTimestampInfoKHR.html>"]
 #[must_use]
-pub struct CalibratedTimestampInfoEXT<'a> {
+pub struct CalibratedTimestampInfoKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub time_domain: TimeDomainEXT,
+    pub time_domain: TimeDomainKHR,
     pub _marker: PhantomData<&'a ()>,
 }
-impl ::std::default::Default for CalibratedTimestampInfoEXT<'_> {
+impl ::std::default::Default for CalibratedTimestampInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::std::ptr::null(),
-            time_domain: TimeDomainEXT::default(),
+            time_domain: TimeDomainKHR::default(),
             _marker: PhantomData,
         }
     }
 }
-unsafe impl<'a> TaggedStructure for CalibratedTimestampInfoEXT<'a> {
-    const STRUCTURE_TYPE: StructureType = StructureType::CALIBRATED_TIMESTAMP_INFO_EXT;
+unsafe impl<'a> TaggedStructure for CalibratedTimestampInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::CALIBRATED_TIMESTAMP_INFO_KHR;
 }
-impl<'a> CalibratedTimestampInfoEXT<'a> {
+impl<'a> CalibratedTimestampInfoKHR<'a> {
     #[inline]
-    pub fn time_domain(mut self, time_domain: TimeDomainEXT) -> Self {
+    pub fn time_domain(mut self, time_domain: TimeDomainKHR) -> Self {
         self.time_domain = time_domain;
         self
     }
@@ -21220,13 +21220,13 @@ impl<'a> SemaphoreSignalInfo<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone, Default)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVertexInputBindingDivisorDescriptionEXT.html>"]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVertexInputBindingDivisorDescriptionKHR.html>"]
 #[must_use]
-pub struct VertexInputBindingDivisorDescriptionEXT {
+pub struct VertexInputBindingDivisorDescriptionKHR {
     pub binding: u32,
     pub divisor: u32,
 }
-impl VertexInputBindingDivisorDescriptionEXT {
+impl VertexInputBindingDivisorDescriptionKHR {
     #[inline]
     pub fn binding(mut self, binding: u32) -> Self {
         self.binding = binding;
@@ -21241,16 +21241,16 @@ impl VertexInputBindingDivisorDescriptionEXT {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineVertexInputDivisorStateCreateInfoEXT.html>"]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineVertexInputDivisorStateCreateInfoKHR.html>"]
 #[must_use]
-pub struct PipelineVertexInputDivisorStateCreateInfoEXT<'a> {
+pub struct PipelineVertexInputDivisorStateCreateInfoKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub vertex_binding_divisor_count: u32,
-    pub p_vertex_binding_divisors: *const VertexInputBindingDivisorDescriptionEXT,
+    pub p_vertex_binding_divisors: *const VertexInputBindingDivisorDescriptionKHR,
     pub _marker: PhantomData<&'a ()>,
 }
-impl ::std::default::Default for PipelineVertexInputDivisorStateCreateInfoEXT<'_> {
+impl ::std::default::Default for PipelineVertexInputDivisorStateCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
@@ -21262,19 +21262,19 @@ impl ::std::default::Default for PipelineVertexInputDivisorStateCreateInfoEXT<'_
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PipelineVertexInputDivisorStateCreateInfoEXT<'a> {
+unsafe impl<'a> TaggedStructure for PipelineVertexInputDivisorStateCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
-        StructureType::PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_EXT;
+        StructureType::PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_KHR;
 }
 unsafe impl ExtendsPipelineVertexInputStateCreateInfo
-    for PipelineVertexInputDivisorStateCreateInfoEXT<'_>
+    for PipelineVertexInputDivisorStateCreateInfoKHR<'_>
 {
 }
-impl<'a> PipelineVertexInputDivisorStateCreateInfoEXT<'a> {
+impl<'a> PipelineVertexInputDivisorStateCreateInfoKHR<'a> {
     #[inline]
     pub fn vertex_binding_divisors(
         mut self,
-        vertex_binding_divisors: &'a [VertexInputBindingDivisorDescriptionEXT],
+        vertex_binding_divisors: &'a [VertexInputBindingDivisorDescriptionKHR],
     ) -> Self {
         self.vertex_binding_divisor_count = vertex_binding_divisors.len() as _;
         self.p_vertex_binding_divisors = vertex_binding_divisors.as_ptr();
@@ -21315,6 +21315,53 @@ impl<'a> PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'a> {
     #[inline]
     pub fn max_vertex_attrib_divisor(mut self, max_vertex_attrib_divisor: u32) -> Self {
         self.max_vertex_attrib_divisor = max_vertex_attrib_divisor;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceVertexAttributeDivisorPropertiesKHR.html>"]
+#[must_use]
+pub struct PhysicalDeviceVertexAttributeDivisorPropertiesKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub max_vertex_attrib_divisor: u32,
+    pub supports_non_zero_first_instance: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceVertexAttributeDivisorPropertiesKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            max_vertex_attrib_divisor: u32::default(),
+            supports_non_zero_first_instance: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceVertexAttributeDivisorPropertiesKHR<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_KHR;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceVertexAttributeDivisorPropertiesKHR<'_>
+{
+}
+impl<'a> PhysicalDeviceVertexAttributeDivisorPropertiesKHR<'a> {
+    #[inline]
+    pub fn max_vertex_attrib_divisor(mut self, max_vertex_attrib_divisor: u32) -> Self {
+        self.max_vertex_attrib_divisor = max_vertex_attrib_divisor;
+        self
+    }
+    #[inline]
+    pub fn supports_non_zero_first_instance(
+        mut self,
+        supports_non_zero_first_instance: bool,
+    ) -> Self {
+        self.supports_non_zero_first_instance = supports_non_zero_first_instance.into();
         self
     }
 }
@@ -22165,16 +22212,16 @@ impl<'a> PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceVertexAttributeDivisorFeaturesEXT.html>"]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceVertexAttributeDivisorFeaturesKHR.html>"]
 #[must_use]
-pub struct PhysicalDeviceVertexAttributeDivisorFeaturesEXT<'a> {
+pub struct PhysicalDeviceVertexAttributeDivisorFeaturesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub vertex_attribute_instance_rate_divisor: Bool32,
     pub vertex_attribute_instance_rate_zero_divisor: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
-impl ::std::default::Default for PhysicalDeviceVertexAttributeDivisorFeaturesEXT<'_> {
+impl ::std::default::Default for PhysicalDeviceVertexAttributeDivisorFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
@@ -22186,13 +22233,13 @@ impl ::std::default::Default for PhysicalDeviceVertexAttributeDivisorFeaturesEXT
         }
     }
 }
-unsafe impl<'a> TaggedStructure for PhysicalDeviceVertexAttributeDivisorFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure for PhysicalDeviceVertexAttributeDivisorFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
-        StructureType::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES_EXT;
+        StructureType::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES_KHR;
 }
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVertexAttributeDivisorFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVertexAttributeDivisorFeaturesEXT<'_> {}
-impl<'a> PhysicalDeviceVertexAttributeDivisorFeaturesEXT<'a> {
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVertexAttributeDivisorFeaturesKHR<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVertexAttributeDivisorFeaturesKHR<'_> {}
+impl<'a> PhysicalDeviceVertexAttributeDivisorFeaturesKHR<'a> {
     #[inline]
     pub fn vertex_attribute_instance_rate_divisor(
         mut self,

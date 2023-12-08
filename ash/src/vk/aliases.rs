@@ -33,6 +33,7 @@ pub type PrivateDataSlotEXT = PrivateDataSlot;
 pub type DescriptorUpdateTemplateTypeKHR = DescriptorUpdateTemplateType;
 pub type PointClippingBehaviorKHR = PointClippingBehavior;
 pub type QueueGlobalPriorityEXT = QueueGlobalPriorityKHR;
+pub type TimeDomainEXT = TimeDomainKHR;
 pub type SemaphoreTypeKHR = SemaphoreType;
 pub type CopyAccelerationStructureModeNV = CopyAccelerationStructureModeKHR;
 pub type AccelerationStructureTypeNV = AccelerationStructureTypeKHR;
@@ -148,6 +149,7 @@ pub type DeviceQueueGlobalPriorityCreateInfoEXT<'a> = DeviceQueueGlobalPriorityC
 pub type PhysicalDeviceGlobalPriorityQueryFeaturesEXT<'a> =
     PhysicalDeviceGlobalPriorityQueryFeaturesKHR<'a>;
 pub type QueueFamilyGlobalPriorityPropertiesEXT<'a> = QueueFamilyGlobalPriorityPropertiesKHR<'a>;
+pub type CalibratedTimestampInfoEXT<'a> = CalibratedTimestampInfoKHR<'a>;
 pub type PhysicalDeviceDescriptorIndexingFeaturesEXT<'a> =
     PhysicalDeviceDescriptorIndexingFeatures<'a>;
 pub type PhysicalDeviceDescriptorIndexingPropertiesEXT<'a> =
@@ -173,11 +175,16 @@ pub type SemaphoreTypeCreateInfoKHR<'a> = SemaphoreTypeCreateInfo<'a>;
 pub type TimelineSemaphoreSubmitInfoKHR<'a> = TimelineSemaphoreSubmitInfo<'a>;
 pub type SemaphoreWaitInfoKHR<'a> = SemaphoreWaitInfo<'a>;
 pub type SemaphoreSignalInfoKHR<'a> = SemaphoreSignalInfo<'a>;
+pub type VertexInputBindingDivisorDescriptionEXT = VertexInputBindingDivisorDescriptionKHR;
+pub type PipelineVertexInputDivisorStateCreateInfoEXT<'a> =
+    PipelineVertexInputDivisorStateCreateInfoKHR<'a>;
 pub type PhysicalDevice8BitStorageFeaturesKHR<'a> = PhysicalDevice8BitStorageFeatures<'a>;
 pub type PhysicalDeviceVulkanMemoryModelFeaturesKHR<'a> =
     PhysicalDeviceVulkanMemoryModelFeatures<'a>;
 pub type PhysicalDeviceShaderAtomicInt64FeaturesKHR<'a> =
     PhysicalDeviceShaderAtomicInt64Features<'a>;
+pub type PhysicalDeviceVertexAttributeDivisorFeaturesEXT<'a> =
+    PhysicalDeviceVertexAttributeDivisorFeaturesKHR<'a>;
 pub type PhysicalDeviceDepthStencilResolvePropertiesKHR<'a> =
     PhysicalDeviceDepthStencilResolveProperties<'a>;
 pub type SubpassDescriptionDepthStencilResolveKHR<'a> = SubpassDescriptionDepthStencilResolve<'a>;

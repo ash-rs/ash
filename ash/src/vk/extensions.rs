@@ -10061,24 +10061,24 @@ impl ExtCalibratedTimestampsFn {
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetPhysicalDeviceCalibrateableTimeDomainsEXT = unsafe extern "system" fn(
+pub type PFN_vkGetPhysicalDeviceCalibrateableTimeDomainsKHR = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
     p_time_domain_count: *mut u32,
-    p_time_domains: *mut TimeDomainEXT,
+    p_time_domains: *mut TimeDomainKHR,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetCalibratedTimestampsEXT = unsafe extern "system" fn(
+pub type PFN_vkGetCalibratedTimestampsKHR = unsafe extern "system" fn(
     device: Device,
     timestamp_count: u32,
-    p_timestamp_infos: *const CalibratedTimestampInfoEXT<'_>,
+    p_timestamp_infos: *const CalibratedTimestampInfoKHR<'_>,
     p_timestamps: *mut u64,
     p_max_deviation: *mut u64,
 ) -> Result;
 #[derive(Clone)]
 pub struct ExtCalibratedTimestampsFn {
     pub get_physical_device_calibrateable_time_domains_ext:
-        PFN_vkGetPhysicalDeviceCalibrateableTimeDomainsEXT,
-    pub get_calibrated_timestamps_ext: PFN_vkGetCalibratedTimestampsEXT,
+        PFN_vkGetPhysicalDeviceCalibrateableTimeDomainsKHR,
+    pub get_calibrated_timestamps_ext: PFN_vkGetCalibratedTimestampsKHR,
 }
 unsafe impl Send for ExtCalibratedTimestampsFn {}
 unsafe impl Sync for ExtCalibratedTimestampsFn {}
@@ -10092,7 +10092,7 @@ impl ExtCalibratedTimestampsFn {
                 unsafe extern "system" fn get_physical_device_calibrateable_time_domains_ext(
                     _physical_device: PhysicalDevice,
                     _p_time_domain_count: *mut u32,
-                    _p_time_domains: *mut TimeDomainEXT,
+                    _p_time_domains: *mut TimeDomainKHR,
                 ) -> Result {
                     panic!(concat!(
                         "Unable to load ",
@@ -10113,7 +10113,7 @@ impl ExtCalibratedTimestampsFn {
                 unsafe extern "system" fn get_calibrated_timestamps_ext(
                     _device: Device,
                     _timestamp_count: u32,
-                    _p_timestamp_infos: *const CalibratedTimestampInfoEXT<'_>,
+                    _p_timestamp_infos: *const CalibratedTimestampInfoKHR<'_>,
                     _p_timestamps: *mut u64,
                     _p_max_deviation: *mut u64,
                 ) -> Result {
@@ -10137,7 +10137,14 @@ impl ExtCalibratedTimestampsFn {
 }
 #[doc = "Generated from 'VK_EXT_calibrated_timestamps'"]
 impl StructureType {
-    pub const CALIBRATED_TIMESTAMP_INFO_EXT: Self = Self(1_000_184_000);
+    pub const CALIBRATED_TIMESTAMP_INFO_EXT: Self = Self::CALIBRATED_TIMESTAMP_INFO_KHR;
+}
+#[doc = "Generated from 'VK_EXT_calibrated_timestamps'"]
+impl TimeDomainKHR {
+    pub const DEVICE_EXT: Self = Self::DEVICE;
+    pub const CLOCK_MONOTONIC_EXT: Self = Self::CLOCK_MONOTONIC;
+    pub const CLOCK_MONOTONIC_RAW_EXT: Self = Self::CLOCK_MONOTONIC_RAW;
+    pub const QUERY_PERFORMANCE_COUNTER_EXT: Self = Self::QUERY_PERFORMANCE_COUNTER;
 }
 impl AmdShaderCorePropertiesFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
@@ -10211,8 +10218,10 @@ pub struct ExtVertexAttributeDivisorFn;
 #[doc = "Generated from 'VK_EXT_vertex_attribute_divisor'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_EXT: Self = Self(1_000_190_000);
-    pub const PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_EXT: Self = Self(1_000_190_001);
-    pub const PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES_EXT: Self = Self(1_000_190_002);
+    pub const PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_EXT: Self =
+        Self::PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_KHR;
+    pub const PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES_EXT: Self =
+        Self::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES_KHR;
 }
 impl GgpFrameTokenFn {
     pub const NAME: &'static ::std::ffi::CStr =
@@ -22087,6 +22096,20 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_ATTACHMENT_FEEDBACK_LOOP_DYNAMIC_STATE_FEATURES_EXT: Self =
         Self(1_000_524_000);
 }
+impl KhrVertexAttributeDivisorFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_vertex_attribute_divisor\0")
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct KhrVertexAttributeDivisorFn;
+#[doc = "Generated from 'VK_KHR_vertex_attribute_divisor'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_KHR: Self = Self(1_000_525_000);
+    pub const PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_KHR: Self = Self(1_000_190_001);
+    pub const PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES_KHR: Self = Self(1_000_190_002);
+}
 impl QnxExternalMemoryScreenBufferFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
         ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QNX_external_memory_screen_buffer\0")
@@ -22158,6 +22181,77 @@ pub struct MsftLayeredDriverFn;
 #[doc = "Generated from 'VK_MSFT_layered_driver'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_LAYERED_DRIVER_PROPERTIES_MSFT: Self = Self(1_000_530_000);
+}
+impl KhrCalibratedTimestampsFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_calibrated_timestamps\0")
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct KhrCalibratedTimestampsFn {
+    pub get_physical_device_calibrateable_time_domains_khr:
+        crate::vk::PFN_vkGetPhysicalDeviceCalibrateableTimeDomainsKHR,
+    pub get_calibrated_timestamps_khr: crate::vk::PFN_vkGetCalibratedTimestampsKHR,
+}
+unsafe impl Send for KhrCalibratedTimestampsFn {}
+unsafe impl Sync for KhrCalibratedTimestampsFn {}
+impl KhrCalibratedTimestampsFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {
+            get_physical_device_calibrateable_time_domains_khr: unsafe {
+                unsafe extern "system" fn get_physical_device_calibrateable_time_domains_khr(
+                    _physical_device: PhysicalDevice,
+                    _p_time_domain_count: *mut u32,
+                    _p_time_domains: *mut TimeDomainKHR,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_physical_device_calibrateable_time_domains_khr)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetPhysicalDeviceCalibrateableTimeDomainsKHR\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_physical_device_calibrateable_time_domains_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_calibrated_timestamps_khr: unsafe {
+                unsafe extern "system" fn get_calibrated_timestamps_khr(
+                    _device: Device,
+                    _timestamp_count: u32,
+                    _p_timestamp_infos: *const CalibratedTimestampInfoKHR<'_>,
+                    _p_timestamps: *mut u64,
+                    _p_max_deviation: *mut u64,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_calibrated_timestamps_khr)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetCalibratedTimestampsKHR\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_calibrated_timestamps_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+}
+#[doc = "Generated from 'VK_KHR_calibrated_timestamps'"]
+impl StructureType {
+    pub const CALIBRATED_TIMESTAMP_INFO_KHR: Self = Self(1_000_184_000);
 }
 impl NvDescriptorPoolOverallocationFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
