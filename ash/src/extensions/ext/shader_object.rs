@@ -2,9 +2,10 @@ use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
 use crate::{Device, Instance};
-use std::ffi::CStr;
-use std::mem;
-use std::ptr;
+use alloc::vec::Vec;
+use core::ffi::CStr;
+use core::mem;
+use core::ptr;
 
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_shader_object.html>
 #[derive(Clone)]

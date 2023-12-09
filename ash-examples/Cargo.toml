@@ -12,5 +12,5 @@ winit = "0.28.0"
 # The examples require the validation layers, which means the SDK or
 # equivalent development packages should be present, so we can link
 # directly and benefit from the infallible `Entry` constructor.
-ash = { path = "../ash", default-features = false, features = ["linked", "debug"] }
+ash = { path = "../ash", default-features = false, features = ["linked", "debug", "std"] }
 ash-window = { path = "../ash-window" }

@@ -1,4 +1,4 @@
-use std::fmt;
+use core::fmt;
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImageLayout.html>"]
@@ -987,6 +987,7 @@ impl Result {
     #[doc = "An unknown error has occurred, due to an implementation or application bug"]
     pub const ERROR_UNKNOWN: Self = Self(-13);
 }
+#[cfg(feature = "std")]
 impl ::std::error::Error for Result {}
 impl fmt::Display for Result {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {

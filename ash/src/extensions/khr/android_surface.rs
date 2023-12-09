@@ -2,8 +2,8 @@ use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
 use crate::{Entry, Instance};
-use std::ffi::CStr;
-use std::mem;
+use core::ffi::CStr;
+use core::mem;
 
 #[derive(Clone)]
 pub struct AndroidSurface {

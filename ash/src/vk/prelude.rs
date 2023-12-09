@@ -1,5 +1,5 @@
-use std::fmt;
-use std::os::raw::c_char;
+use core::ffi::c_char;
+use core::fmt;
 
 use crate::vk;
 
@@ -65,7 +65,7 @@ pub unsafe trait TaggedStructure {
 
 #[inline]
 pub(crate) fn wrap_c_str_slice_until_nul(
-    str: &[core::ffi::c_char],
+    str: &[c_char],
 ) -> Result<&core::ffi::CStr, core::ffi::FromBytesUntilNulError> {
     // SAFETY: The cast from c_char to u8 is ok because a c_char is always one byte.
     let bytes = unsafe { core::slice::from_raw_parts(str.as_ptr().cast(), str.len()) };
@@ -77,6 +77,7 @@ pub struct CStrTooLargeForStaticArray {
     pub static_array_size: usize,
     pub c_str_size: usize,
 }
+#[cfg(feature = "std")]
 impl std::error::Error for CStrTooLargeForStaticArray {}
 impl fmt::Display for CStrTooLargeForStaticArray {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {

@@ -1,8 +1,8 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::{Entry, Instance};
-use std::ffi::CStr;
-use std::mem;
+use core::ffi::CStr;
+use core::mem;
 
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_NV_coverage_reduction_mode.html>
 #[derive(Clone)]
@@ -30,7 +30,7 @@ impl CoverageReductionMode {
             .get_physical_device_supported_framebuffer_mixed_samples_combinations_nv)(
             physical_device,
             count.as_mut_ptr(),
-            std::ptr::null_mut(),
+            core::ptr::null_mut(),
         )
         .assume_init_on_success(count)
         .map(|c| c as usize)

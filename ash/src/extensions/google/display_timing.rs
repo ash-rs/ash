@@ -1,8 +1,9 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::{Device, Instance};
-use std::ffi::CStr;
-use std::mem;
+use alloc::vec::Vec;
+use core::ffi::CStr;
+use core::mem;
 
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_GOOGLE_display_timing.html>
 #[derive(Clone)]

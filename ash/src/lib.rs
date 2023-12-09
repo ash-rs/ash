@@ -1,5 +1,8 @@
 #![warn(
+    clippy::alloc_instead_of_core,
     clippy::use_self,
+    clippy::std_instead_of_alloc,
+    clippy::std_instead_of_core,
     deprecated_in_future,
     rust_2018_idioms,
     trivial_casts,
@@ -12,6 +15,8 @@
     clippy::upper_case_acronyms
 )]
 #![cfg_attr(docsrs, feature(doc_cfg))]
+#![cfg_attr(not(feature = "std"), no_std)]
+
 //! # Vulkan API
 //!
 //! <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/html/index.html>
@@ -45,6 +50,11 @@
 //! * **debug** (default): Whether Vulkan structs should implement `Debug`.
 //! * **loaded** (default): Support searching for the Vulkan loader manually at runtime.
 //! * **linked**: Link the Vulkan loader at compile time.
+//! * **std** (default): Whether ash depends on the standard library (otherwise alloc is required)
+
+#[cfg_attr(feature = "std", allow(unused_extern_crates))]
+#[macro_use]
+extern crate alloc;
 
 pub use crate::device::Device;
 pub use crate::entry::Entry;
@@ -73,7 +83,7 @@ impl<'r, T> RawPtr<T> for Option<&'r T> {
     fn as_raw_ptr(&self) -> *const T {
         match *self {
             Some(inner) => inner,
-            _ => ::std::ptr::null(),
+            _ => ::core::ptr::null(),
         }
     }
 }
@@ -127,7 +137,7 @@ impl<'r, T> RawPtr<T> for Option<&'r T> {
 #[macro_export]
 macro_rules! match_out_struct {
     (match $p:ident { $($bind:ident @ $ty:path => $body:block $(,)?)+ $(_ => $any:block $(,)?)? }) => {
-        match std::ptr::addr_of!((*$p).s_type).read() {
+        match core::ptr::addr_of!((*$p).s_type).read() {
             $(<$ty as $crate::vk::TaggedStructure>::STRUCTURE_TYPE => {
                 let $bind = $p
                     .cast::<$ty>()
@@ -166,7 +176,7 @@ macro_rules! match_out_struct {
 #[macro_export]
 macro_rules! match_in_struct {
     (match $p:ident { $($bind:ident @ $ty:path => $body:block $(,)?)+ $(_ => $any:block $(,)?)? }) => {
-        match std::ptr::addr_of!((*$p).s_type).read() {
+        match core::ptr::addr_of!((*$p).s_type).read() {
             $(<$ty as $crate::vk::TaggedStructure>::STRUCTURE_TYPE => {
                 let $bind = $p
                     .cast::<$ty>()
@@ -182,6 +192,7 @@ macro_rules! match_in_struct {
 #[cfg(test)]
 mod tests {
     use super::vk;
+    use alloc::vec::Vec;
     #[test]
     fn test_ptr_chains() {
         let mut variable_pointers = vk::PhysicalDeviceVariablePointerFeatures::default();

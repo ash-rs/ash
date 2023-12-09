@@ -1,9 +1,9 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::{Entry, Instance};
-use std::ffi::CStr;
-use std::mem;
-use std::ptr;
+use core::ffi::CStr;
+use core::mem;
+use core::ptr;
 
 #[derive(Clone)]
 pub struct GetPhysicalDeviceProperties2 {

@@ -1,8 +1,8 @@
 use crate::vk;
 use crate::{Device, Instance};
-use std::ffi::CStr;
-use std::mem;
-use std::ptr;
+use core::ffi::CStr;
+use core::mem;
+use core::ptr;
 
 #[derive(Clone)]
 pub struct GetMemoryRequirements2 {

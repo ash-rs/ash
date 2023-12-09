@@ -1,6 +1,6 @@
 #![allow(non_camel_case_types)]
 
-use std::os::raw::*;
+use core::ffi::*;
 pub type RROutput = c_ulong;
 pub type VisualID = c_uint;
 pub type Display = c_void;

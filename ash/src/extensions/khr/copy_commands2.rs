@@ -1,7 +1,7 @@
 use crate::vk;
 use crate::{Device, Instance};
-use std::ffi::CStr;
-use std::mem;
+use core::ffi::CStr;
+use core::mem;
 
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_copy_commands2.html>
 #[derive(Clone)]

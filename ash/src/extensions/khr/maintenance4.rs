@@ -1,7 +1,7 @@
 use crate::vk;
 use crate::{Device, Instance};
-use std::ffi::CStr;
-use std::mem;
+use core::ffi::CStr;
+use core::mem;
 
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_maintenance4.html>
 #[derive(Clone)]
@@ -50,7 +50,7 @@ impl Maintenance4 {
             self.handle,
             memory_requirements,
             count.as_mut_ptr(),
-            std::ptr::null_mut(),
+            core::ptr::null_mut(),
         );
         count.assume_init() as usize
     }

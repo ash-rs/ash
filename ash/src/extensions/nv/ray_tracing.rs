@@ -2,8 +2,9 @@ use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
 use crate::{Device, Instance};
-use std::ffi::CStr;
-use std::mem;
+use alloc::vec::Vec;
+use core::ffi::CStr;
+use core::mem;
 
 #[derive(Clone)]
 pub struct RayTracing {
@@ -208,7 +209,7 @@ impl RayTracing {
         (self.fp.get_acceleration_structure_handle_nv)(
             self.handle,
             accel_struct,
-            std::mem::size_of_val(&handle),
+            core::mem::size_of_val(&handle),
             handle.as_mut_ptr().cast(),
         )
         .assume_init_on_success(handle)

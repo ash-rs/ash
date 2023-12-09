@@ -2,17 +2,18 @@ use crate::instance::Instance;
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use std::error::Error;
-use std::ffi::CStr;
+use alloc::vec::Vec;
+use core::ffi::c_char;
+use core::ffi::c_void;
+use core::ffi::CStr;
+use core::fmt;
+use core::mem;
+use core::ptr;
+
+#[cfg(feature = "loaded")]
+use alloc::sync::Arc;
 #[cfg(feature = "loaded")]
 use std::ffi::OsStr;
-use std::fmt;
-use std::mem;
-use std::os::raw::c_char;
-use std::os::raw::c_void;
-use std::ptr;
-#[cfg(feature = "loaded")]
-use std::sync::Arc;
 
 #[cfg(feature = "loaded")]
 use libloading::Library;
@@ -337,7 +338,7 @@ impl vk::StaticFn {
                 if val.is_null() {
                     return Err(MissingEntryPoint);
                 } else {
-                    ::std::mem::transmute(val)
+                    ::core::mem::transmute(val)
                 }
             },
         })
@@ -351,7 +352,8 @@ impl fmt::Display for MissingEntryPoint {
         write!(f, "Cannot load `vkGetInstanceProcAddr` symbol from library")
     }
 }
-impl Error for MissingEntryPoint {}
+#[cfg(feature = "std")]
+impl std::error::Error for MissingEntryPoint {}
 
 #[cfg(feature = "linked")]
 extern "system" {
@@ -380,8 +382,9 @@ mod loaded {
         }
     }
 
-    impl Error for LoadingError {
-        fn source(&self) -> Option<&(dyn Error + 'static)> {
+    #[cfg(feature = "std")]
+    impl ::std::error::Error for LoadingError {
+        fn source(&self) -> Option<&(dyn ::std::error::Error + 'static)> {
             Some(match self {
                 Self::LibraryLoadFailure(err) => err,
                 Self::MissingEntryPoint(err) => err,

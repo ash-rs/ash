@@ -1,8 +1,8 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::{Device, Instance};
-use std::ffi::CStr;
-use std::mem;
+use core::ffi::CStr;
+use core::mem;
 
 #[derive(Clone)]
 pub struct DebugMarker {

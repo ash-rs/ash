@@ -3,8 +3,8 @@ use super::{super::khr::Maintenance5, ImageCompressionControl};
 use crate::prelude::*;
 use crate::vk;
 use crate::{Device, Instance};
-use std::ffi::CStr;
-use std::mem;
+use core::ffi::CStr;
+use core::mem;
 
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_host_image_copy.html>
 #[derive(Clone)]

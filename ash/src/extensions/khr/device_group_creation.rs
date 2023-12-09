@@ -1,9 +1,9 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::{Entry, Instance};
-use std::ffi::CStr;
-use std::mem;
-use std::ptr;
+use core::ffi::CStr;
+use core::mem;
+use core::ptr;
 
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_device_group_creation.html>
 #[derive(Clone)]
