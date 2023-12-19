@@ -2055,7 +2055,7 @@ impl StructureType {
 impl KhrVideoDecodeQueueFn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_decode_queue\0") };
-    pub const SPEC_VERSION: u32 = 7u32;
+    pub const SPEC_VERSION: u32 = 8u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDecodeVideoKHR = unsafe extern "system" fn(
@@ -2754,66 +2754,66 @@ impl AmdShaderBallotFn {
 }
 #[derive(Clone)]
 pub struct AmdShaderBallotFn;
-impl ExtVideoEncodeH264Fn {
+impl KhrVideoEncodeH264Fn {
     pub const NAME: &'static ::std::ffi::CStr =
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_encode_h264\0") };
-    pub const SPEC_VERSION: u32 = 12u32;
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_encode_h264\0") };
+    pub const SPEC_VERSION: u32 = 14u32;
 }
 #[derive(Clone)]
-pub struct ExtVideoEncodeH264Fn;
-#[doc = "Generated from 'VK_EXT_video_encode_h264'"]
+pub struct KhrVideoEncodeH264Fn;
+#[doc = "Generated from 'VK_KHR_video_encode_h264'"]
 impl StructureType {
-    pub const VIDEO_ENCODE_H264_CAPABILITIES_EXT: Self = Self(1_000_038_000);
-    pub const VIDEO_ENCODE_H264_SESSION_PARAMETERS_CREATE_INFO_EXT: Self = Self(1_000_038_001);
-    pub const VIDEO_ENCODE_H264_SESSION_PARAMETERS_ADD_INFO_EXT: Self = Self(1_000_038_002);
-    pub const VIDEO_ENCODE_H264_PICTURE_INFO_EXT: Self = Self(1_000_038_003);
-    pub const VIDEO_ENCODE_H264_DPB_SLOT_INFO_EXT: Self = Self(1_000_038_004);
-    pub const VIDEO_ENCODE_H264_NALU_SLICE_INFO_EXT: Self = Self(1_000_038_005);
-    pub const VIDEO_ENCODE_H264_GOP_REMAINING_FRAME_INFO_EXT: Self = Self(1_000_038_006);
-    pub const VIDEO_ENCODE_H264_PROFILE_INFO_EXT: Self = Self(1_000_038_007);
-    pub const VIDEO_ENCODE_H264_RATE_CONTROL_INFO_EXT: Self = Self(1_000_038_008);
-    pub const VIDEO_ENCODE_H264_RATE_CONTROL_LAYER_INFO_EXT: Self = Self(1_000_038_009);
-    pub const VIDEO_ENCODE_H264_SESSION_CREATE_INFO_EXT: Self = Self(1_000_038_010);
-    pub const VIDEO_ENCODE_H264_QUALITY_LEVEL_PROPERTIES_EXT: Self = Self(1_000_038_011);
-    pub const VIDEO_ENCODE_H264_SESSION_PARAMETERS_GET_INFO_EXT: Self = Self(1_000_038_012);
-    pub const VIDEO_ENCODE_H264_SESSION_PARAMETERS_FEEDBACK_INFO_EXT: Self = Self(1_000_038_013);
+    pub const VIDEO_ENCODE_H264_CAPABILITIES_KHR: Self = Self(1_000_038_000);
+    pub const VIDEO_ENCODE_H264_SESSION_PARAMETERS_CREATE_INFO_KHR: Self = Self(1_000_038_001);
+    pub const VIDEO_ENCODE_H264_SESSION_PARAMETERS_ADD_INFO_KHR: Self = Self(1_000_038_002);
+    pub const VIDEO_ENCODE_H264_PICTURE_INFO_KHR: Self = Self(1_000_038_003);
+    pub const VIDEO_ENCODE_H264_DPB_SLOT_INFO_KHR: Self = Self(1_000_038_004);
+    pub const VIDEO_ENCODE_H264_NALU_SLICE_INFO_KHR: Self = Self(1_000_038_005);
+    pub const VIDEO_ENCODE_H264_GOP_REMAINING_FRAME_INFO_KHR: Self = Self(1_000_038_006);
+    pub const VIDEO_ENCODE_H264_PROFILE_INFO_KHR: Self = Self(1_000_038_007);
+    pub const VIDEO_ENCODE_H264_RATE_CONTROL_INFO_KHR: Self = Self(1_000_038_008);
+    pub const VIDEO_ENCODE_H264_RATE_CONTROL_LAYER_INFO_KHR: Self = Self(1_000_038_009);
+    pub const VIDEO_ENCODE_H264_SESSION_CREATE_INFO_KHR: Self = Self(1_000_038_010);
+    pub const VIDEO_ENCODE_H264_QUALITY_LEVEL_PROPERTIES_KHR: Self = Self(1_000_038_011);
+    pub const VIDEO_ENCODE_H264_SESSION_PARAMETERS_GET_INFO_KHR: Self = Self(1_000_038_012);
+    pub const VIDEO_ENCODE_H264_SESSION_PARAMETERS_FEEDBACK_INFO_KHR: Self = Self(1_000_038_013);
 }
-#[doc = "Generated from 'VK_EXT_video_encode_h264'"]
+#[doc = "Generated from 'VK_KHR_video_encode_h264'"]
 impl VideoCodecOperationFlagsKHR {
-    pub const ENCODE_H264_EXT: Self = Self(0b1_0000_0000_0000_0000);
+    pub const ENCODE_H264: Self = Self(0b1_0000_0000_0000_0000);
 }
-impl ExtVideoEncodeH265Fn {
+impl KhrVideoEncodeH265Fn {
     pub const NAME: &'static ::std::ffi::CStr =
-        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_encode_h265\0") };
-    pub const SPEC_VERSION: u32 = 12u32;
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_encode_h265\0") };
+    pub const SPEC_VERSION: u32 = 14u32;
 }
 #[derive(Clone)]
-pub struct ExtVideoEncodeH265Fn;
-#[doc = "Generated from 'VK_EXT_video_encode_h265'"]
+pub struct KhrVideoEncodeH265Fn;
+#[doc = "Generated from 'VK_KHR_video_encode_h265'"]
 impl StructureType {
-    pub const VIDEO_ENCODE_H265_CAPABILITIES_EXT: Self = Self(1_000_039_000);
-    pub const VIDEO_ENCODE_H265_SESSION_PARAMETERS_CREATE_INFO_EXT: Self = Self(1_000_039_001);
-    pub const VIDEO_ENCODE_H265_SESSION_PARAMETERS_ADD_INFO_EXT: Self = Self(1_000_039_002);
-    pub const VIDEO_ENCODE_H265_PICTURE_INFO_EXT: Self = Self(1_000_039_003);
-    pub const VIDEO_ENCODE_H265_DPB_SLOT_INFO_EXT: Self = Self(1_000_039_004);
-    pub const VIDEO_ENCODE_H265_NALU_SLICE_SEGMENT_INFO_EXT: Self = Self(1_000_039_005);
-    pub const VIDEO_ENCODE_H265_GOP_REMAINING_FRAME_INFO_EXT: Self = Self(1_000_039_006);
-    pub const VIDEO_ENCODE_H265_PROFILE_INFO_EXT: Self = Self(1_000_039_007);
-    pub const VIDEO_ENCODE_H265_RATE_CONTROL_INFO_EXT: Self = Self(1_000_039_009);
-    pub const VIDEO_ENCODE_H265_RATE_CONTROL_LAYER_INFO_EXT: Self = Self(1_000_039_010);
-    pub const VIDEO_ENCODE_H265_SESSION_CREATE_INFO_EXT: Self = Self(1_000_039_011);
-    pub const VIDEO_ENCODE_H265_QUALITY_LEVEL_PROPERTIES_EXT: Self = Self(1_000_039_012);
-    pub const VIDEO_ENCODE_H265_SESSION_PARAMETERS_GET_INFO_EXT: Self = Self(1_000_039_013);
-    pub const VIDEO_ENCODE_H265_SESSION_PARAMETERS_FEEDBACK_INFO_EXT: Self = Self(1_000_039_014);
+    pub const VIDEO_ENCODE_H265_CAPABILITIES_KHR: Self = Self(1_000_039_000);
+    pub const VIDEO_ENCODE_H265_SESSION_PARAMETERS_CREATE_INFO_KHR: Self = Self(1_000_039_001);
+    pub const VIDEO_ENCODE_H265_SESSION_PARAMETERS_ADD_INFO_KHR: Self = Self(1_000_039_002);
+    pub const VIDEO_ENCODE_H265_PICTURE_INFO_KHR: Self = Self(1_000_039_003);
+    pub const VIDEO_ENCODE_H265_DPB_SLOT_INFO_KHR: Self = Self(1_000_039_004);
+    pub const VIDEO_ENCODE_H265_NALU_SLICE_SEGMENT_INFO_KHR: Self = Self(1_000_039_005);
+    pub const VIDEO_ENCODE_H265_GOP_REMAINING_FRAME_INFO_KHR: Self = Self(1_000_039_006);
+    pub const VIDEO_ENCODE_H265_PROFILE_INFO_KHR: Self = Self(1_000_039_007);
+    pub const VIDEO_ENCODE_H265_RATE_CONTROL_INFO_KHR: Self = Self(1_000_039_009);
+    pub const VIDEO_ENCODE_H265_RATE_CONTROL_LAYER_INFO_KHR: Self = Self(1_000_039_010);
+    pub const VIDEO_ENCODE_H265_SESSION_CREATE_INFO_KHR: Self = Self(1_000_039_011);
+    pub const VIDEO_ENCODE_H265_QUALITY_LEVEL_PROPERTIES_KHR: Self = Self(1_000_039_012);
+    pub const VIDEO_ENCODE_H265_SESSION_PARAMETERS_GET_INFO_KHR: Self = Self(1_000_039_013);
+    pub const VIDEO_ENCODE_H265_SESSION_PARAMETERS_FEEDBACK_INFO_KHR: Self = Self(1_000_039_014);
 }
-#[doc = "Generated from 'VK_EXT_video_encode_h265'"]
+#[doc = "Generated from 'VK_KHR_video_encode_h265'"]
 impl VideoCodecOperationFlagsKHR {
-    pub const ENCODE_H265_EXT: Self = Self(0b10_0000_0000_0000_0000);
+    pub const ENCODE_H265: Self = Self(0b10_0000_0000_0000_0000);
 }
 impl KhrVideoDecodeH264Fn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_decode_h264\0") };
-    pub const SPEC_VERSION: u32 = 8u32;
+    pub const SPEC_VERSION: u32 = 9u32;
 }
 #[derive(Clone)]
 pub struct KhrVideoDecodeH264Fn;
@@ -10161,7 +10161,7 @@ impl StructureType {
 impl KhrVideoDecodeH265Fn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_decode_h265\0") };
-    pub const SPEC_VERSION: u32 = 7u32;
+    pub const SPEC_VERSION: u32 = 8u32;
 }
 #[derive(Clone)]
 pub struct KhrVideoDecodeH265Fn;
@@ -14072,7 +14072,7 @@ impl StructureType {
 impl KhrVideoEncodeQueueFn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_encode_queue\0") };
-    pub const SPEC_VERSION: u32 = 10u32;
+    pub const SPEC_VERSION: u32 = 12u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR =
@@ -21987,6 +21987,46 @@ impl StructureType {
     pub const MULTIVIEW_PER_VIEW_RENDER_AREAS_RENDER_PASS_BEGIN_INFO_QCOM: Self =
         Self(1_000_510_001);
 }
+impl KhrVideoMaintenance1Fn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_maintenance1\0") };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct KhrVideoMaintenance1Fn;
+#[doc = "Generated from 'VK_KHR_video_maintenance1'"]
+impl BufferCreateFlags {
+    pub const VIDEO_PROFILE_INDEPENDENT_KHR: Self = Self(0b100_0000);
+}
+#[doc = "Generated from 'VK_KHR_video_maintenance1'"]
+impl ImageCreateFlags {
+    pub const VIDEO_PROFILE_INDEPENDENT_KHR: Self = Self(0b1_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_video_maintenance1'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_VIDEO_MAINTENANCE_1_FEATURES_KHR: Self = Self(1_000_515_000);
+    pub const VIDEO_INLINE_QUERY_INFO_KHR: Self = Self(1_000_515_001);
+}
+#[doc = "Generated from 'VK_KHR_video_maintenance1'"]
+impl VideoSessionCreateFlagsKHR {
+    pub const INLINE_QUERIES: Self = Self(0b100);
+}
+impl NvPerStageDescriptorSetFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_per_stage_descriptor_set\0")
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct NvPerStageDescriptorSetFn;
+#[doc = "Generated from 'VK_NV_per_stage_descriptor_set'"]
+impl DescriptorSetLayoutCreateFlags {
+    pub const PER_STAGE_NV: Self = Self(0b100_0000);
+}
+#[doc = "Generated from 'VK_NV_per_stage_descriptor_set'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_PER_STAGE_DESCRIPTOR_SET_FEATURES_NV: Self = Self(1_000_516_000);
+}
 impl QcomImageProcessing2Fn {
     pub const NAME: &'static ::std::ffi::CStr =
         unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_image_processing2\0") };
@@ -22252,6 +22292,192 @@ impl KhrCalibratedTimestampsFn {
 #[doc = "Generated from 'VK_KHR_calibrated_timestamps'"]
 impl StructureType {
     pub const CALIBRATED_TIMESTAMP_INFO_KHR: Self = Self(1_000_184_000);
+}
+impl KhrMaintenance6Fn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance6\0") };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBindDescriptorSets2KHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_bind_descriptor_sets_info: *const BindDescriptorSetsInfoKHR<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdPushConstants2KHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_push_constants_info: *const PushConstantsInfoKHR<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdPushDescriptorSet2KHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_push_descriptor_set_info: *const PushDescriptorSetInfoKHR<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdPushDescriptorSetWithTemplate2KHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_push_descriptor_set_with_template_info: *const PushDescriptorSetWithTemplateInfoKHR<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetDescriptorBufferOffsets2EXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_set_descriptor_buffer_offsets_info: *const SetDescriptorBufferOffsetsInfoEXT<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBindDescriptorBufferEmbeddedSamplers2EXT = unsafe extern "system" fn (command_buffer : CommandBuffer , p_bind_descriptor_buffer_embedded_samplers_info : * const BindDescriptorBufferEmbeddedSamplersInfoEXT < '_ > ,) ;
+#[derive(Clone)]
+pub struct KhrMaintenance6Fn {
+    pub cmd_bind_descriptor_sets2_khr: PFN_vkCmdBindDescriptorSets2KHR,
+    pub cmd_push_constants2_khr: PFN_vkCmdPushConstants2KHR,
+    pub cmd_push_descriptor_set2_khr: PFN_vkCmdPushDescriptorSet2KHR,
+    pub cmd_push_descriptor_set_with_template2_khr: PFN_vkCmdPushDescriptorSetWithTemplate2KHR,
+    pub cmd_set_descriptor_buffer_offsets2_ext: PFN_vkCmdSetDescriptorBufferOffsets2EXT,
+    pub cmd_bind_descriptor_buffer_embedded_samplers2_ext:
+        PFN_vkCmdBindDescriptorBufferEmbeddedSamplers2EXT,
+}
+unsafe impl Send for KhrMaintenance6Fn {}
+unsafe impl Sync for KhrMaintenance6Fn {}
+impl KhrMaintenance6Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {
+            cmd_bind_descriptor_sets2_khr: unsafe {
+                unsafe extern "system" fn cmd_bind_descriptor_sets2_khr(
+                    _command_buffer: CommandBuffer,
+                    _p_bind_descriptor_sets_info: *const BindDescriptorSetsInfoKHR<'_>,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_bind_descriptor_sets2_khr)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdBindDescriptorSets2KHR\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_bind_descriptor_sets2_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_push_constants2_khr: unsafe {
+                unsafe extern "system" fn cmd_push_constants2_khr(
+                    _command_buffer: CommandBuffer,
+                    _p_push_constants_info: *const PushConstantsInfoKHR<'_>,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_push_constants2_khr)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdPushConstants2KHR\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_push_constants2_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_push_descriptor_set2_khr: unsafe {
+                unsafe extern "system" fn cmd_push_descriptor_set2_khr(
+                    _command_buffer: CommandBuffer,
+                    _p_push_descriptor_set_info: *const PushDescriptorSetInfoKHR<'_>,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_push_descriptor_set2_khr)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdPushDescriptorSet2KHR\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_push_descriptor_set2_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_push_descriptor_set_with_template2_khr: unsafe {
+                unsafe extern "system" fn cmd_push_descriptor_set_with_template2_khr(
+                    _command_buffer: CommandBuffer,
+                    _p_push_descriptor_set_with_template_info : * const PushDescriptorSetWithTemplateInfoKHR < '_ >,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_push_descriptor_set_with_template2_khr)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdPushDescriptorSetWithTemplate2KHR\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_push_descriptor_set_with_template2_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_descriptor_buffer_offsets2_ext: unsafe {
+                unsafe extern "system" fn cmd_set_descriptor_buffer_offsets2_ext(
+                    _command_buffer: CommandBuffer,
+                    _p_set_descriptor_buffer_offsets_info: *const SetDescriptorBufferOffsetsInfoEXT<
+                        '_,
+                    >,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_descriptor_buffer_offsets2_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetDescriptorBufferOffsets2EXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_descriptor_buffer_offsets2_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_bind_descriptor_buffer_embedded_samplers2_ext: unsafe {
+                unsafe extern "system" fn cmd_bind_descriptor_buffer_embedded_samplers2_ext(
+                    _command_buffer: CommandBuffer,
+                    _p_bind_descriptor_buffer_embedded_samplers_info : * const BindDescriptorBufferEmbeddedSamplersInfoEXT < '_ >,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_bind_descriptor_buffer_embedded_samplers2_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdBindDescriptorBufferEmbeddedSamplers2EXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_bind_descriptor_buffer_embedded_samplers2_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+}
+#[doc = "Generated from 'VK_KHR_maintenance6'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_MAINTENANCE_6_FEATURES_KHR: Self = Self(1_000_545_000);
+    pub const PHYSICAL_DEVICE_MAINTENANCE_6_PROPERTIES_KHR: Self = Self(1_000_545_001);
+    pub const BIND_MEMORY_STATUS_KHR: Self = Self(1_000_545_002);
+    pub const BIND_DESCRIPTOR_SETS_INFO_KHR: Self = Self(1_000_545_003);
+    pub const PUSH_CONSTANTS_INFO_KHR: Self = Self(1_000_545_004);
+    pub const PUSH_DESCRIPTOR_SET_INFO_KHR: Self = Self(1_000_545_005);
+    pub const PUSH_DESCRIPTOR_SET_WITH_TEMPLATE_INFO_KHR: Self = Self(1_000_545_006);
+    pub const SET_DESCRIPTOR_BUFFER_OFFSETS_INFO_EXT: Self = Self(1_000_545_007);
+    pub const BIND_DESCRIPTOR_BUFFER_EMBEDDED_SAMPLERS_INFO_EXT: Self = Self(1_000_545_008);
 }
 impl NvDescriptorPoolOverallocationFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
