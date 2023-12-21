@@ -3,6 +3,7 @@ use crate::vk;
 use crate::{Entry, Instance};
 use std::ffi::CStr;
 use std::mem;
+use std::ptr;
 
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_get_surface_capabilities2.html>
 #[derive(Clone)]
@@ -46,7 +47,7 @@ impl GetSurfaceCapabilities2 {
             physical_device,
             surface_info,
             count.as_mut_ptr(),
-            std::ptr::null_mut(),
+            ptr::null_mut(),
         );
         err_code.assume_init_on_success(count).map(|c| c as usize)
     }

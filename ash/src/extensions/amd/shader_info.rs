@@ -43,7 +43,7 @@ impl ShaderInfo {
             vk::ShaderInfoTypeAMD::STATISTICS => {
                 let mut statistics_info = mem::MaybeUninit::<vk::ShaderStatisticsInfoAMD>::uninit();
                 load_data(
-                    &mut std::mem::size_of_val(&statistics_info),
+                    &mut mem::size_of_val(&statistics_info),
                     statistics_info.as_mut_ptr().cast(),
                 )
                 .result()?;
