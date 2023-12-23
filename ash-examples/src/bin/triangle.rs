@@ -1,8 +1,9 @@
+#![warn(unused_qualifications)]
+
 use std::default::Default;
 use std::ffi::CStr;
 use std::io::Cursor;
 use std::mem;
-use std::mem::align_of;
 
 use ash::util::*;
 use ash::vk;
@@ -87,7 +88,7 @@ fn main() {
 
         let index_buffer_data = [0u32, 1, 2];
         let index_buffer_info = vk::BufferCreateInfo::default()
-            .size(std::mem::size_of_val(&index_buffer_data) as u64)
+            .size(mem::size_of_val(&index_buffer_data) as u64)
             .usage(vk::BufferUsageFlags::INDEX_BUFFER)
             .sharing_mode(vk::SharingMode::EXCLUSIVE);
 
@@ -120,7 +121,7 @@ fn main() {
             .unwrap();
         let mut index_slice = Align::new(
             index_ptr,
-            align_of::<u32>() as u64,
+            mem::align_of::<u32>() as u64,
             index_buffer_memory_req.size,
         );
         index_slice.copy_from_slice(&index_buffer_data);
@@ -130,7 +131,7 @@ fn main() {
             .unwrap();
 
         let vertex_input_buffer_info = vk::BufferCreateInfo {
-            size: 3 * std::mem::size_of::<Vertex>() as u64,
+            size: 3 * mem::size_of::<Vertex>() as u64,
             usage: vk::BufferUsageFlags::VERTEX_BUFFER,
             sharing_mode: vk::SharingMode::EXCLUSIVE,
             ..Default::default()
@@ -190,7 +191,7 @@ fn main() {
 
         let mut vert_align = Align::new(
             vert_ptr,
-            align_of::<Vertex>() as u64,
+            mem::align_of::<Vertex>() as u64,
             vertex_input_buffer_memory_req.size,
         );
         vert_align.copy_from_slice(&vertices);

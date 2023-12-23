@@ -3,6 +3,7 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 use std::os::raw::c_void;
+use std::ptr;
 
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_NV_device_diagnostic_checkpoints.html>
 #[derive(Clone)]
@@ -32,7 +33,7 @@ impl DeviceDiagnosticCheckpoints {
     #[inline]
     pub unsafe fn get_queue_checkpoint_data_len(&self, queue: vk::Queue) -> usize {
         let mut count = mem::MaybeUninit::uninit();
-        (self.fp.get_queue_checkpoint_data_nv)(queue, count.as_mut_ptr(), std::ptr::null_mut());
+        (self.fp.get_queue_checkpoint_data_nv)(queue, count.as_mut_ptr(), ptr::null_mut());
         count.assume_init() as usize
     }
 
