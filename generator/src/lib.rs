@@ -804,33 +804,30 @@ impl FieldExt for vkxml::Field {
         assert!(!self.is_void());
         let ty = name_to_tokens(&self.basetype);
 
-        match self.array {
-            Some(vkxml::ArrayType::Static) => {
-                assert!(self.reference.is_none());
-                let size = self
-                    .size
-                    .as_ref()
-                    .or(self.size_enumref.as_ref())
-                    .expect("Should have size");
-                // Make sure we also rename the constant, that is
-                // used inside the static array
-                let size = convert_c_expression(size, &BTreeMap::new());
-                // arrays in c are always passed as a pointer
-                if is_ffi_param {
-                    quote!(*const [#ty; #size])
-                } else {
-                    quote!([#ty #type_lifetime; #size])
-                }
+        if is_static_array(self) {
+            assert!(self.reference.is_none());
+            let size = self
+                .size_enumref
+                .as_ref()
+                .or(self.size.as_ref())
+                .expect("Should have size");
+            // Make sure we also rename the constant, that is
+            // used inside the static array
+            let size = convert_c_expression(size, &BTreeMap::new());
+            // arrays in c are always passed as a pointer
+            if is_ffi_param {
+                quote!(*const [#ty; #size])
+            } else {
+                quote!([#ty #type_lifetime; #size])
             }
-            _ => {
-                let pointer = self.reference.as_ref().map(|r| r.to_tokens(self.is_const));
-                if self.is_pointer_to_static_sized_array() {
-                    let size = self.c_size.as_ref().expect("Should have c_size");
-                    let size = convert_c_expression(size, &BTreeMap::new());
-                    quote!(#pointer [#ty #type_lifetime; #size])
-                } else {
-                    quote!(#pointer #ty #type_lifetime)
-                }
+        } else {
+            let pointer = self.reference.as_ref().map(|r| r.to_tokens(self.is_const));
+            if self.is_pointer_to_static_sized_array() {
+                let size = self.c_size.as_ref().expect("Should have c_size");
+                let size = convert_c_expression(size, &BTreeMap::new());
+                quote!(#pointer [#ty #type_lifetime; #size])
+            } else {
+                quote!(#pointer #ty #type_lifetime)
             }
         }
     }
@@ -1711,7 +1708,13 @@ fn generate_result(ident: Ident, enum_: &vk_parse::Enums) -> TokenStream {
 }
 
 fn is_static_array(field: &vkxml::Field) -> bool {
-    matches!(field.array, Some(vkxml::ArrayType::Static))
+    match field.array {
+        Some(vkxml::ArrayType::Static) => true,
+        // Ancient vkxml turns static-sized arrays with a len= attribute (new concept) into Static arrays.
+        // The len= attribute will be used to bound the static-sized array at runtime.
+        Some(vkxml::ArrayType::Dynamic) => field.size_enumref.is_some(),
+        _ => false,
+    }
 }
 
 fn derive_default(
@@ -1808,9 +1811,18 @@ fn derive_debug(
             .map(|n| n.contains("pfn"))
             .unwrap_or(false)
     });
-    let contains_static_array = members
-        .iter()
-        .any(|member| is_static_array(member.vkxml_field) && member.vkxml_field.basetype == "char");
+    fn is_static_char_array(field: &vkxml::Field) -> bool {
+        // Exclude string pointers from formatting as they will always be unsafe to read, even if
+        // https://github.com/ash-rs/ash/pull/831#discussion_r1447805951 is resolved.
+        is_static_array(field) && field.basetype == "char"
+    }
+    fn is_static_bounded_array(field: &vkxml::Field) -> bool {
+        // Excerpt from is_static_array() for runtime-bounded static arrays that are considered "dynamic" by vkxml
+        matches!(field.array, Some(vkxml::ArrayType::Dynamic)) && field.size_enumref.is_some()
+    }
+    let contains_static_array = members.iter().any(|member| {
+        is_static_char_array(member.vkxml_field) || is_static_bounded_array(member.vkxml_field)
+    });
     let contains_union = members
         .iter()
         .any(|member| union_types.contains(member.vkxml_field.basetype.as_str()));
@@ -1821,8 +1833,11 @@ fn derive_debug(
         let field = &member.vkxml_field;
         let param_ident = field.param_ident();
         let param_str = param_ident.to_string();
-        let debug_value = if is_static_array(field) && field.basetype == "char" {
+        let debug_value = if is_static_char_array(field) {
             let param_ident = format_ident!("{}_as_c_str", param_ident);
+            quote!(&self.#param_ident())
+        } else if is_static_bounded_array(field) {
+            let param_ident = format_ident!("{}_as_slice", param_ident);
             quote!(&self.#param_ident())
         } else if param_str.contains("pfn") {
             quote!(&(self.#param_ident.map(|x| x as *const ())))
@@ -1848,7 +1863,7 @@ fn derive_debug(
     Some(q)
 }
 
-fn derive_setters(
+fn derive_getters_and_setters(
     struct_: &vkxml::Struct,
     members: &[PreprocessedMember<'_>],
     root_structs: &HashSet<Ident>,
@@ -2016,7 +2031,7 @@ fn derive_setters(
         }
 
         // TODO: Improve in future when https://github.com/rust-lang/rust/issues/53667 is merged id:6
-        if field.reference.is_some() && matches!(field.array, Some(vkxml::ArrayType::Dynamic)) {
+        if matches!(field.array, Some(vkxml::ArrayType::Dynamic)) {
             if let Some(ref array_size) = field.size {
                 let mut ptr = if field.is_const {
                     quote!(.as_ptr())
@@ -2031,6 +2046,33 @@ fn derive_setters(
                 };
 
                 let mut slice_param_ty_tokens = field.safe_type_tokens(quote!('a), type_lifetime.clone(), None);
+
+                // vkxml wrongly annotates static arrays with a len= field is dynamic. These fields have a static length,
+                // and a runtime field to describe the actual number of valid items in this static array.
+                if is_static_array(field) {
+                    let array_size_ident = format_ident!("{}", array_size.to_snake_case());
+                    let param_ident_short_as_slice = format_ident!("{}_as_slice", param_ident_short);
+                    let size_field = members.iter().find(|member| member.vkxml_field.name.as_deref() == Some(array_size)).unwrap();
+                    let cast = if size_field.vkxml_field.basetype == "size_t" {
+                        quote!()
+                    } else {
+                        quote!(as _)
+                    };
+                    return Some(quote! {
+                        #deprecated
+                        #[inline]
+                        pub fn #param_ident_short(mut self, #param_ident_short: &'_ #slice_param_ty_tokens) -> Self {
+                            self.#array_size_ident = #param_ident_short.len()#cast;
+                            self.#param_ident[..#param_ident_short.len()].copy_from_slice(#param_ident_short);
+                            self
+                        }
+                        #deprecated
+                        #[inline]
+                        pub fn #param_ident_short_as_slice(&self) -> &#slice_param_ty_tokens {
+                            &self.#param_ident[..self.#array_size_ident #cast]
+                        }
+                    });
+                }
 
                 // Interpret void array as byte array
                 if field.basetype == "void" && matches!(field.reference, Some(vkxml::ReferenceType::Pointer)) {
@@ -2389,7 +2431,7 @@ pub fn generate_struct(
 
     let debug_tokens = derive_debug(struct_, &members, union_types, has_lifetime);
     let default_tokens = derive_default(struct_, &members, has_lifetime);
-    let setter_tokens = derive_setters(struct_, &members, root_structs, has_lifetimes);
+    let setter_tokens = derive_getters_and_setters(struct_, &members, root_structs, has_lifetimes);
     let manual_derive_tokens = manual_derives(struct_);
     let dbg_str = if debug_tokens.is_none() {
         quote!(#[cfg_attr(feature = "debug", derive(Debug))])
