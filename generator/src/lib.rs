@@ -566,7 +566,7 @@ pub trait CommandExt {
 
 impl CommandExt for vk_parse::CommandDefinition {
     fn function_type(&self) -> FunctionType {
-        let is_first_param_device = self.params.get(0).map_or(false, |field| {
+        let is_first_param_device = self.params.first().map_or(false, |field| {
             matches!(
                 field.definition.type_name.as_deref(),
                 Some("VkDevice" | "VkCommandBuffer" | "VkQueue")
