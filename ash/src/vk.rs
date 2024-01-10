@@ -5,7 +5,6 @@
 )]
 #[macro_use]
 mod macros;
-pub use macros::*;
 mod aliases;
 pub use aliases::*;
 mod bitflags;
@@ -21,7 +20,6 @@ pub use enums::*;
 mod extensions;
 pub use extensions::*;
 mod feature_extensions;
-pub use feature_extensions::*;
 mod features;
 pub use features::*;
 mod prelude;
