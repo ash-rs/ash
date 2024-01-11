@@ -1062,8 +1062,12 @@ impl<'a> ApplicationInfo<'a> {
         self
     }
     #[inline]
-    pub unsafe fn application_name_as_c_str(&self) -> &core::ffi::CStr {
-        core::ffi::CStr::from_ptr(self.p_application_name)
+    pub unsafe fn application_name_as_c_str(&self) -> Option<&core::ffi::CStr> {
+        if self.p_application_name.is_null() {
+            None
+        } else {
+            Some(core::ffi::CStr::from_ptr(self.p_application_name))
+        }
     }
     #[inline]
     pub fn application_version(mut self, application_version: u32) -> Self {
@@ -1076,8 +1080,12 @@ impl<'a> ApplicationInfo<'a> {
         self
     }
     #[inline]
-    pub unsafe fn engine_name_as_c_str(&self) -> &core::ffi::CStr {
-        core::ffi::CStr::from_ptr(self.p_engine_name)
+    pub unsafe fn engine_name_as_c_str(&self) -> Option<&core::ffi::CStr> {
+        if self.p_engine_name.is_null() {
+            None
+        } else {
+            Some(core::ffi::CStr::from_ptr(self.p_engine_name))
+        }
     }
     #[inline]
     pub fn engine_version(mut self, engine_version: u32) -> Self {
@@ -3755,8 +3763,12 @@ impl<'a> PipelineShaderStageCreateInfo<'a> {
         self
     }
     #[inline]
-    pub unsafe fn name_as_c_str(&self) -> &core::ffi::CStr {
-        core::ffi::CStr::from_ptr(self.p_name)
+    pub unsafe fn name_as_c_str(&self) -> Option<&core::ffi::CStr> {
+        if self.p_name.is_null() {
+            None
+        } else {
+            Some(core::ffi::CStr::from_ptr(self.p_name))
+        }
     }
     #[inline]
     pub fn specialization_info(mut self, specialization_info: &'a SpecializationInfo<'a>) -> Self {
@@ -7869,8 +7881,12 @@ impl<'a> DisplayPropertiesKHR<'a> {
         self
     }
     #[inline]
-    pub unsafe fn display_name_as_c_str(&self) -> &core::ffi::CStr {
-        core::ffi::CStr::from_ptr(self.display_name)
+    pub unsafe fn display_name_as_c_str(&self) -> Option<&core::ffi::CStr> {
+        if self.display_name.is_null() {
+            None
+        } else {
+            Some(core::ffi::CStr::from_ptr(self.display_name))
+        }
     }
     #[inline]
     pub fn physical_dimensions(mut self, physical_dimensions: Extent2D) -> Self {
@@ -9172,8 +9188,12 @@ impl<'a> DebugMarkerObjectNameInfoEXT<'a> {
         self
     }
     #[inline]
-    pub unsafe fn object_name_as_c_str(&self) -> &core::ffi::CStr {
-        core::ffi::CStr::from_ptr(self.p_object_name)
+    pub unsafe fn object_name_as_c_str(&self) -> Option<&core::ffi::CStr> {
+        if self.p_object_name.is_null() {
+            None
+        } else {
+            Some(core::ffi::CStr::from_ptr(self.p_object_name))
+        }
     }
 }
 #[repr(C)]
@@ -9266,8 +9286,12 @@ impl<'a> DebugMarkerMarkerInfoEXT<'a> {
         self
     }
     #[inline]
-    pub unsafe fn marker_name_as_c_str(&self) -> &core::ffi::CStr {
-        core::ffi::CStr::from_ptr(self.p_marker_name)
+    pub unsafe fn marker_name_as_c_str(&self) -> Option<&core::ffi::CStr> {
+        if self.p_marker_name.is_null() {
+            None
+        } else {
+            Some(core::ffi::CStr::from_ptr(self.p_marker_name))
+        }
     }
     #[inline]
     pub fn color(mut self, color: [f32; 4]) -> Self {
@@ -18726,8 +18750,12 @@ impl<'a> DebugUtilsObjectNameInfoEXT<'a> {
         self
     }
     #[inline]
-    pub unsafe fn object_name_as_c_str(&self) -> &core::ffi::CStr {
-        core::ffi::CStr::from_ptr(self.p_object_name)
+    pub unsafe fn object_name_as_c_str(&self) -> Option<&core::ffi::CStr> {
+        if self.p_object_name.is_null() {
+            None
+        } else {
+            Some(core::ffi::CStr::from_ptr(self.p_object_name))
+        }
     }
 }
 #[repr(C)]
@@ -18816,8 +18844,12 @@ impl<'a> DebugUtilsLabelEXT<'a> {
         self
     }
     #[inline]
-    pub unsafe fn label_name_as_c_str(&self) -> &core::ffi::CStr {
-        core::ffi::CStr::from_ptr(self.p_label_name)
+    pub unsafe fn label_name_as_c_str(&self) -> Option<&core::ffi::CStr> {
+        if self.p_label_name.is_null() {
+            None
+        } else {
+            Some(core::ffi::CStr::from_ptr(self.p_label_name))
+        }
     }
     #[inline]
     pub fn color(mut self, color: [f32; 4]) -> Self {
@@ -18961,8 +18993,12 @@ impl<'a> DebugUtilsMessengerCallbackDataEXT<'a> {
         self
     }
     #[inline]
-    pub unsafe fn message_id_name_as_c_str(&self) -> &core::ffi::CStr {
-        core::ffi::CStr::from_ptr(self.p_message_id_name)
+    pub unsafe fn message_id_name_as_c_str(&self) -> Option<&core::ffi::CStr> {
+        if self.p_message_id_name.is_null() {
+            None
+        } else {
+            Some(core::ffi::CStr::from_ptr(self.p_message_id_name))
+        }
     }
     #[inline]
     pub fn message_id_number(mut self, message_id_number: i32) -> Self {
@@ -18975,8 +19011,12 @@ impl<'a> DebugUtilsMessengerCallbackDataEXT<'a> {
         self
     }
     #[inline]
-    pub unsafe fn message_as_c_str(&self) -> &core::ffi::CStr {
-        core::ffi::CStr::from_ptr(self.p_message)
+    pub unsafe fn message_as_c_str(&self) -> Option<&core::ffi::CStr> {
+        if self.p_message.is_null() {
+            None
+        } else {
+            Some(core::ffi::CStr::from_ptr(self.p_message))
+        }
     }
     #[inline]
     pub fn queue_labels(mut self, queue_labels: &'a [DebugUtilsLabelEXT<'a>]) -> Self {
@@ -42334,8 +42374,12 @@ impl<'a> CuFunctionCreateInfoNVX<'a> {
         self
     }
     #[inline]
-    pub unsafe fn name_as_c_str(&self) -> &core::ffi::CStr {
-        core::ffi::CStr::from_ptr(self.p_name)
+    pub unsafe fn name_as_c_str(&self) -> Option<&core::ffi::CStr> {
+        if self.p_name.is_null() {
+            None
+        } else {
+            Some(core::ffi::CStr::from_ptr(self.p_name))
+        }
     }
 }
 #[repr(C)]
@@ -44790,8 +44834,12 @@ impl<'a> CudaFunctionCreateInfoNV<'a> {
         self
     }
     #[inline]
-    pub unsafe fn name_as_c_str(&self) -> &core::ffi::CStr {
-        core::ffi::CStr::from_ptr(self.p_name)
+    pub unsafe fn name_as_c_str(&self) -> Option<&core::ffi::CStr> {
+        if self.p_name.is_null() {
+            None
+        } else {
+            Some(core::ffi::CStr::from_ptr(self.p_name))
+        }
     }
 }
 #[repr(C)]
@@ -51450,8 +51498,12 @@ impl<'a> ShaderCreateInfoEXT<'a> {
         self
     }
     #[inline]
-    pub unsafe fn name_as_c_str(&self) -> &core::ffi::CStr {
-        core::ffi::CStr::from_ptr(self.p_name)
+    pub unsafe fn name_as_c_str(&self) -> Option<&core::ffi::CStr> {
+        if self.p_name.is_null() {
+            None
+        } else {
+            Some(core::ffi::CStr::from_ptr(self.p_name))
+        }
     }
     #[inline]
     pub fn set_layouts(mut self, set_layouts: &'a [DescriptorSetLayout]) -> Self {
@@ -52262,8 +52314,12 @@ impl<'a> PipelineShaderStageNodeCreateInfoAMDX<'a> {
         self
     }
     #[inline]
-    pub unsafe fn name_as_c_str(&self) -> &core::ffi::CStr {
-        core::ffi::CStr::from_ptr(self.p_name)
+    pub unsafe fn name_as_c_str(&self) -> Option<&core::ffi::CStr> {
+        if self.p_name.is_null() {
+            None
+        } else {
+            Some(core::ffi::CStr::from_ptr(self.p_name))
+        }
     }
     #[inline]
     pub fn index(mut self, index: u32) -> Self {

@@ -838,6 +838,8 @@ impl FieldExt for vkxml::Field {
 
     fn is_pointer_to_static_sized_array(&self) -> bool {
         matches!(self.array, Some(vkxml::ArrayType::Dynamic))
+            // TODO: This should not be hardcoded to one field name, but recognize this pattern somehow
+            // (by checking if the len field is an expression consisting of purely constants)
             && self.name.as_deref() == Some("pVersionData")
     }
 }
@@ -2009,8 +2011,12 @@ fn derive_getters_and_setters(
                     }
                     #deprecated
                     #[inline]
-                    pub unsafe fn #param_ident_as_c_str(&self) -> &core::ffi::CStr {
-                        core::ffi::CStr::from_ptr(self.#param_ident)
+                    pub unsafe fn #param_ident_as_c_str(&self) -> Option<&core::ffi::CStr> {
+                        if self.#param_ident.is_null() {
+                            None
+                        } else {
+                            Some(core::ffi::CStr::from_ptr(self.#param_ident))
+                        }
                     }
                 });
             } else if is_static_array(field) {
@@ -2047,8 +2053,9 @@ fn derive_getters_and_setters(
 
                 let mut slice_param_ty_tokens = field.safe_type_tokens(quote!('a), type_lifetime.clone(), None);
 
-                // vkxml wrongly annotates static arrays with a len= field is dynamic. These fields have a static length,
-                // and a runtime field to describe the actual number of valid items in this static array.
+                // vkxml considers static arrays with len= to be Dynamic (which they are to some
+                // extent). These fields have a static upper-bound length, and a runtime field to
+                // describe the actual number of valid items in this static array.
                 if is_static_array(field) {
                     let array_size_ident = format_ident!("{}", array_size.to_snake_case());
                     let param_ident_short_as_slice = format_ident!("{}_as_slice", param_ident_short);
