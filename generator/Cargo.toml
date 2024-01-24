@@ -6,7 +6,7 @@ edition = "2021"
 publish = false
 
 [dependencies]
-bindgen = "0.69"
+bindgen = "=0.69.2"
 heck = "0.4"
 itertools = "0.12"
 nom = "7.1"
