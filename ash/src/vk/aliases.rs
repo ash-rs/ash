@@ -39,6 +39,7 @@ pub type CopyAccelerationStructureModeNV = CopyAccelerationStructureModeKHR;
 pub type AccelerationStructureTypeNV = AccelerationStructureTypeKHR;
 pub type GeometryTypeNV = GeometryTypeKHR;
 pub type RayTracingShaderGroupTypeNV = RayTracingShaderGroupTypeKHR;
+pub type LineRasterizationModeEXT = LineRasterizationModeKHR;
 pub type ScopeNV = ScopeKHR;
 pub type ComponentTypeNV = ComponentTypeKHR;
 pub type TessellationDomainOriginKHR = TessellationDomainOrigin;
@@ -212,6 +213,7 @@ pub type PhysicalDeviceTextureCompressionASTCHDRFeaturesEXT<'a> =
 pub type PipelineCreationFeedbackEXT = PipelineCreationFeedback;
 pub type PipelineCreationFeedbackCreateInfoEXT<'a> = PipelineCreationFeedbackCreateInfo<'a>;
 pub type QueryPoolCreateInfoINTEL<'a> = QueryPoolPerformanceQueryCreateInfoINTEL<'a>;
+pub type PhysicalDeviceIndexTypeUint8FeaturesEXT<'a> = PhysicalDeviceIndexTypeUint8FeaturesKHR<'a>;
 pub type PhysicalDeviceSeparateDepthStencilLayoutsFeaturesKHR<'a> =
     PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'a>;
 pub type AttachmentReferenceStencilLayoutKHR<'a> = AttachmentReferenceStencilLayout<'a>;
@@ -231,6 +233,12 @@ pub type ShaderRequiredSubgroupSizeCreateInfoEXT<'a> =
     PipelineShaderStageRequiredSubgroupSizeCreateInfo<'a>;
 pub type MemoryOpaqueCaptureAddressAllocateInfoKHR<'a> = MemoryOpaqueCaptureAddressAllocateInfo<'a>;
 pub type DeviceMemoryOpaqueCaptureAddressInfoKHR<'a> = DeviceMemoryOpaqueCaptureAddressInfo<'a>;
+pub type PhysicalDeviceLineRasterizationFeaturesEXT<'a> =
+    PhysicalDeviceLineRasterizationFeaturesKHR<'a>;
+pub type PhysicalDeviceLineRasterizationPropertiesEXT<'a> =
+    PhysicalDeviceLineRasterizationPropertiesKHR<'a>;
+pub type PipelineRasterizationLineStateCreateInfoEXT<'a> =
+    PipelineRasterizationLineStateCreateInfoKHR<'a>;
 pub type PhysicalDevicePipelineCreationCacheControlFeaturesEXT<'a> =
     PhysicalDevicePipelineCreationCacheControlFeatures<'a>;
 pub type PhysicalDeviceToolPropertiesEXT<'a> = PhysicalDeviceToolProperties<'a>;

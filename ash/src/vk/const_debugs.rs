@@ -350,7 +350,7 @@ impl fmt::Debug for AttachmentLoadOp {
             Self::LOAD => Some("LOAD"),
             Self::CLEAR => Some("CLEAR"),
             Self::DONT_CARE => Some("DONT_CARE"),
-            Self::NONE_EXT => Some("NONE_EXT"),
+            Self::NONE_KHR => Some("NONE_KHR"),
             _ => None,
         };
         if let Some(x) = name {
@@ -1710,12 +1710,10 @@ impl fmt::Debug for DynamicState {
             Self::EXCLUSIVE_SCISSOR_ENABLE_NV => Some("EXCLUSIVE_SCISSOR_ENABLE_NV"),
             Self::EXCLUSIVE_SCISSOR_NV => Some("EXCLUSIVE_SCISSOR_NV"),
             Self::FRAGMENT_SHADING_RATE_KHR => Some("FRAGMENT_SHADING_RATE_KHR"),
-            Self::LINE_STIPPLE_EXT => Some("LINE_STIPPLE_EXT"),
             Self::VERTEX_INPUT_EXT => Some("VERTEX_INPUT_EXT"),
             Self::PATCH_CONTROL_POINTS_EXT => Some("PATCH_CONTROL_POINTS_EXT"),
             Self::LOGIC_OP_EXT => Some("LOGIC_OP_EXT"),
             Self::COLOR_WRITE_ENABLE_EXT => Some("COLOR_WRITE_ENABLE_EXT"),
-            Self::TESSELLATION_DOMAIN_ORIGIN_EXT => Some("TESSELLATION_DOMAIN_ORIGIN_EXT"),
             Self::DEPTH_CLAMP_ENABLE_EXT => Some("DEPTH_CLAMP_ENABLE_EXT"),
             Self::POLYGON_MODE_EXT => Some("POLYGON_MODE_EXT"),
             Self::RASTERIZATION_SAMPLES_EXT => Some("RASTERIZATION_SAMPLES_EXT"),
@@ -1726,6 +1724,7 @@ impl fmt::Debug for DynamicState {
             Self::COLOR_BLEND_ENABLE_EXT => Some("COLOR_BLEND_ENABLE_EXT"),
             Self::COLOR_BLEND_EQUATION_EXT => Some("COLOR_BLEND_EQUATION_EXT"),
             Self::COLOR_WRITE_MASK_EXT => Some("COLOR_WRITE_MASK_EXT"),
+            Self::TESSELLATION_DOMAIN_ORIGIN_EXT => Some("TESSELLATION_DOMAIN_ORIGIN_EXT"),
             Self::RASTERIZATION_STREAM_EXT => Some("RASTERIZATION_STREAM_EXT"),
             Self::CONSERVATIVE_RASTERIZATION_MODE_EXT => {
                 Some("CONSERVATIVE_RASTERIZATION_MODE_EXT")
@@ -1757,6 +1756,7 @@ impl fmt::Debug for DynamicState {
             Self::ATTACHMENT_FEEDBACK_LOOP_ENABLE_EXT => {
                 Some("ATTACHMENT_FEEDBACK_LOOP_ENABLE_EXT")
             }
+            Self::LINE_STIPPLE_KHR => Some("LINE_STIPPLE_KHR"),
             Self::CULL_MODE => Some("CULL_MODE"),
             Self::FRONT_FACE => Some("FRONT_FACE"),
             Self::PRIMITIVE_TOPOLOGY => Some("PRIMITIVE_TOPOLOGY"),
@@ -2725,6 +2725,7 @@ impl fmt::Debug for ImageLayout {
             Self::FRAGMENT_SHADING_RATE_ATTACHMENT_OPTIMAL_KHR => {
                 Some("FRAGMENT_SHADING_RATE_ATTACHMENT_OPTIMAL_KHR")
             }
+            Self::RENDERING_LOCAL_READ_KHR => Some("RENDERING_LOCAL_READ_KHR"),
             Self::VIDEO_ENCODE_DST_KHR => Some("VIDEO_ENCODE_DST_KHR"),
             Self::VIDEO_ENCODE_SRC_KHR => Some("VIDEO_ENCODE_SRC_KHR"),
             Self::VIDEO_ENCODE_DPB_KHR => Some("VIDEO_ENCODE_DPB_KHR"),
@@ -2899,7 +2900,7 @@ impl fmt::Debug for IndexType {
             Self::UINT16 => Some("UINT16"),
             Self::UINT32 => Some("UINT32"),
             Self::NONE_KHR => Some("NONE_KHR"),
-            Self::UINT8_EXT => Some("UINT8_EXT"),
+            Self::UINT8_KHR => Some("UINT8_KHR"),
             _ => None,
         };
         if let Some(x) = name {
@@ -3038,7 +3039,7 @@ impl fmt::Debug for LayeredDriverUnderlyingApiMSFT {
         }
     }
 }
-impl fmt::Debug for LineRasterizationModeEXT {
+impl fmt::Debug for LineRasterizationModeKHR {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match *self {
             Self::DEFAULT => Some("DEFAULT"),
@@ -5681,8 +5682,20 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_COHERENT_MEMORY_FEATURES_AMD => {
                 Some("PHYSICAL_DEVICE_COHERENT_MEMORY_FEATURES_AMD")
             }
+            Self::PHYSICAL_DEVICE_DYNAMIC_RENDERING_LOCAL_READ_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_DYNAMIC_RENDERING_LOCAL_READ_FEATURES_KHR")
+            }
+            Self::RENDERING_ATTACHMENT_LOCATION_INFO_KHR => {
+                Some("RENDERING_ATTACHMENT_LOCATION_INFO_KHR")
+            }
+            Self::RENDERING_INPUT_ATTACHMENT_INDEX_INFO_KHR => {
+                Some("RENDERING_INPUT_ATTACHMENT_INDEX_INFO_KHR")
+            }
             Self::PHYSICAL_DEVICE_SHADER_IMAGE_ATOMIC_INT64_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_SHADER_IMAGE_ATOMIC_INT64_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_SHADER_QUAD_CONTROL_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_SHADER_QUAD_CONTROL_FEATURES_KHR")
             }
             Self::PHYSICAL_DEVICE_MEMORY_BUDGET_PROPERTIES_EXT => {
                 Some("PHYSICAL_DEVICE_MEMORY_BUDGET_PROPERTIES_EXT")
@@ -5746,20 +5759,8 @@ impl fmt::Debug for StructureType {
                 Some("SURFACE_FULL_SCREEN_EXCLUSIVE_WIN32_INFO_EXT")
             }
             Self::HEADLESS_SURFACE_CREATE_INFO_EXT => Some("HEADLESS_SURFACE_CREATE_INFO_EXT"),
-            Self::PHYSICAL_DEVICE_LINE_RASTERIZATION_FEATURES_EXT => {
-                Some("PHYSICAL_DEVICE_LINE_RASTERIZATION_FEATURES_EXT")
-            }
-            Self::PIPELINE_RASTERIZATION_LINE_STATE_CREATE_INFO_EXT => {
-                Some("PIPELINE_RASTERIZATION_LINE_STATE_CREATE_INFO_EXT")
-            }
-            Self::PHYSICAL_DEVICE_LINE_RASTERIZATION_PROPERTIES_EXT => {
-                Some("PHYSICAL_DEVICE_LINE_RASTERIZATION_PROPERTIES_EXT")
-            }
             Self::PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_FEATURES_EXT")
-            }
-            Self::PHYSICAL_DEVICE_INDEX_TYPE_UINT8_FEATURES_EXT => {
-                Some("PHYSICAL_DEVICE_INDEX_TYPE_UINT8_FEATURES_EXT")
             }
             Self::PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_FEATURES_EXT")
@@ -6242,6 +6243,9 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_ARM => {
                 Some("PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_ARM")
             }
+            Self::PHYSICAL_DEVICE_SHADER_SUBGROUP_ROTATE_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_SHADER_SUBGROUP_ROTATE_FEATURES_KHR")
+            }
             Self::DEVICE_QUEUE_SHADER_CORE_CONTROL_CREATE_INFO_ARM => {
                 Some("DEVICE_QUEUE_SHADER_CORE_CONTROL_CREATE_INFO_ARM")
             }
@@ -6311,6 +6315,9 @@ impl fmt::Debug for StructureType {
             }
             Self::PHYSICAL_DEVICE_LINEAR_COLOR_ATTACHMENT_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_LINEAR_COLOR_ATTACHMENT_FEATURES_NV")
+            }
+            Self::PHYSICAL_DEVICE_SHADER_MAXIMAL_RECONVERGENCE_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_SHADER_MAXIMAL_RECONVERGENCE_FEATURES_KHR")
             }
             Self::PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_SWAPCHAIN_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_SWAPCHAIN_FEATURES_EXT")
@@ -6530,6 +6537,9 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES_KHR => {
                 Some("PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES_KHR")
             }
+            Self::PHYSICAL_DEVICE_SHADER_FLOAT_CONTROLS_2_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_SHADER_FLOAT_CONTROLS_2_FEATURES_KHR")
+            }
             Self::SCREEN_BUFFER_PROPERTIES_QNX => Some("SCREEN_BUFFER_PROPERTIES_QNX"),
             Self::SCREEN_BUFFER_FORMAT_PROPERTIES_QNX => {
                 Some("SCREEN_BUFFER_FORMAT_PROPERTIES_QNX")
@@ -6542,7 +6552,22 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_LAYERED_DRIVER_PROPERTIES_MSFT => {
                 Some("PHYSICAL_DEVICE_LAYERED_DRIVER_PROPERTIES_MSFT")
             }
+            Self::PHYSICAL_DEVICE_INDEX_TYPE_UINT8_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_INDEX_TYPE_UINT8_FEATURES_KHR")
+            }
+            Self::PHYSICAL_DEVICE_LINE_RASTERIZATION_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_LINE_RASTERIZATION_FEATURES_KHR")
+            }
+            Self::PIPELINE_RASTERIZATION_LINE_STATE_CREATE_INFO_KHR => {
+                Some("PIPELINE_RASTERIZATION_LINE_STATE_CREATE_INFO_KHR")
+            }
+            Self::PHYSICAL_DEVICE_LINE_RASTERIZATION_PROPERTIES_KHR => {
+                Some("PHYSICAL_DEVICE_LINE_RASTERIZATION_PROPERTIES_KHR")
+            }
             Self::CALIBRATED_TIMESTAMP_INFO_KHR => Some("CALIBRATED_TIMESTAMP_INFO_KHR"),
+            Self::PHYSICAL_DEVICE_SHADER_EXPECT_ASSUME_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_SHADER_EXPECT_ASSUME_FEATURES_KHR")
+            }
             Self::PHYSICAL_DEVICE_MAINTENANCE_6_FEATURES_KHR => {
                 Some("PHYSICAL_DEVICE_MAINTENANCE_6_FEATURES_KHR")
             }

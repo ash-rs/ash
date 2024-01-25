@@ -11497,6 +11497,89 @@ impl MemoryPropertyFlags {
 impl StructureType {
     pub const PHYSICAL_DEVICE_COHERENT_MEMORY_FEATURES_AMD: Self = Self(1_000_229_000);
 }
+impl KhrDynamicRenderingLocalReadFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_dynamic_rendering_local_read\0")
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetRenderingAttachmentLocationsKHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_location_info: *const RenderingAttachmentLocationInfoKHR<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetRenderingInputAttachmentIndicesKHR = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_location_info: *const RenderingInputAttachmentIndexInfoKHR<'_>,
+);
+#[derive(Clone)]
+pub struct KhrDynamicRenderingLocalReadFn {
+    pub cmd_set_rendering_attachment_locations_khr: PFN_vkCmdSetRenderingAttachmentLocationsKHR,
+    pub cmd_set_rendering_input_attachment_indices_khr:
+        PFN_vkCmdSetRenderingInputAttachmentIndicesKHR,
+}
+unsafe impl Send for KhrDynamicRenderingLocalReadFn {}
+unsafe impl Sync for KhrDynamicRenderingLocalReadFn {}
+impl KhrDynamicRenderingLocalReadFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {
+            cmd_set_rendering_attachment_locations_khr: unsafe {
+                unsafe extern "system" fn cmd_set_rendering_attachment_locations_khr(
+                    _command_buffer: CommandBuffer,
+                    _p_location_info: *const RenderingAttachmentLocationInfoKHR<'_>,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_rendering_attachment_locations_khr)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetRenderingAttachmentLocationsKHR\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_rendering_attachment_locations_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_rendering_input_attachment_indices_khr: unsafe {
+                unsafe extern "system" fn cmd_set_rendering_input_attachment_indices_khr(
+                    _command_buffer: CommandBuffer,
+                    _p_location_info: *const RenderingInputAttachmentIndexInfoKHR<'_>,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_rendering_input_attachment_indices_khr)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetRenderingInputAttachmentIndicesKHR\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_rendering_input_attachment_indices_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+}
+#[doc = "Generated from 'VK_KHR_dynamic_rendering_local_read'"]
+impl ImageLayout {
+    pub const RENDERING_LOCAL_READ_KHR: Self = Self(1_000_232_000);
+}
+#[doc = "Generated from 'VK_KHR_dynamic_rendering_local_read'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_DYNAMIC_RENDERING_LOCAL_READ_FEATURES_KHR: Self = Self(1_000_232_000);
+    pub const RENDERING_ATTACHMENT_LOCATION_INFO_KHR: Self = Self(1_000_232_001);
+    pub const RENDERING_INPUT_ATTACHMENT_INDEX_INFO_KHR: Self = Self(1_000_232_002);
+}
 impl ExtShaderImageAtomicInt64Fn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
         ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_image_atomic_int64\0")
@@ -11508,6 +11591,17 @@ pub struct ExtShaderImageAtomicInt64Fn;
 #[doc = "Generated from 'VK_EXT_shader_image_atomic_int64'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_IMAGE_ATOMIC_INT64_FEATURES_EXT: Self = Self(1_000_234_000);
+}
+impl KhrShaderQuadControlFn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_quad_control\0") };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct KhrShaderQuadControlFn;
+#[doc = "Generated from 'VK_KHR_shader_quad_control'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_QUAD_CONTROL_FEATURES_KHR: Self = Self(1_000_235_000);
 }
 impl KhrSpirv14Fn {
     pub const NAME: &'static ::std::ffi::CStr =
@@ -12285,14 +12379,14 @@ impl ExtLineRasterizationFn {
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetLineStippleEXT = unsafe extern "system" fn(
+pub type PFN_vkCmdSetLineStippleKHR = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     line_stipple_factor: u32,
     line_stipple_pattern: u16,
 );
 #[derive(Clone)]
 pub struct ExtLineRasterizationFn {
-    pub cmd_set_line_stipple_ext: PFN_vkCmdSetLineStippleEXT,
+    pub cmd_set_line_stipple_ext: PFN_vkCmdSetLineStippleKHR,
 }
 unsafe impl Send for ExtLineRasterizationFn {}
 unsafe impl Sync for ExtLineRasterizationFn {}
@@ -12327,13 +12421,16 @@ impl ExtLineRasterizationFn {
 }
 #[doc = "Generated from 'VK_EXT_line_rasterization'"]
 impl DynamicState {
-    pub const LINE_STIPPLE_EXT: Self = Self(1_000_259_000);
+    pub const LINE_STIPPLE_EXT: Self = Self::LINE_STIPPLE_KHR;
 }
 #[doc = "Generated from 'VK_EXT_line_rasterization'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_LINE_RASTERIZATION_FEATURES_EXT: Self = Self(1_000_259_000);
-    pub const PIPELINE_RASTERIZATION_LINE_STATE_CREATE_INFO_EXT: Self = Self(1_000_259_001);
-    pub const PHYSICAL_DEVICE_LINE_RASTERIZATION_PROPERTIES_EXT: Self = Self(1_000_259_002);
+    pub const PHYSICAL_DEVICE_LINE_RASTERIZATION_FEATURES_EXT: Self =
+        Self::PHYSICAL_DEVICE_LINE_RASTERIZATION_FEATURES_KHR;
+    pub const PIPELINE_RASTERIZATION_LINE_STATE_CREATE_INFO_EXT: Self =
+        Self::PIPELINE_RASTERIZATION_LINE_STATE_CREATE_INFO_KHR;
+    pub const PHYSICAL_DEVICE_LINE_RASTERIZATION_PROPERTIES_EXT: Self =
+        Self::PHYSICAL_DEVICE_LINE_RASTERIZATION_PROPERTIES_KHR;
 }
 impl ExtShaderAtomicFloatFn {
     pub const NAME: &'static ::std::ffi::CStr =
@@ -12405,11 +12502,12 @@ impl ExtIndexTypeUint8Fn {
 pub struct ExtIndexTypeUint8Fn;
 #[doc = "Generated from 'VK_EXT_index_type_uint8'"]
 impl IndexType {
-    pub const UINT8_EXT: Self = Self(1_000_265_000);
+    pub const UINT8_EXT: Self = Self::UINT8_KHR;
 }
 #[doc = "Generated from 'VK_EXT_index_type_uint8'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_INDEX_TYPE_UINT8_FEATURES_EXT: Self = Self(1_000_265_000);
+    pub const PHYSICAL_DEVICE_INDEX_TYPE_UINT8_FEATURES_EXT: Self =
+        Self::PHYSICAL_DEVICE_INDEX_TYPE_UINT8_FEATURES_KHR;
 }
 impl ExtExtendedDynamicStateFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
@@ -17997,7 +18095,7 @@ impl ExtLoadStoreOpNoneFn {
 pub struct ExtLoadStoreOpNoneFn;
 #[doc = "Generated from 'VK_EXT_load_store_op_none'"]
 impl AttachmentLoadOp {
-    pub const NONE_EXT: Self = Self(1_000_400_000);
+    pub const NONE_EXT: Self = Self::NONE_KHR;
 }
 #[doc = "Generated from 'VK_EXT_load_store_op_none'"]
 impl AttachmentStoreOp {
@@ -18289,6 +18387,18 @@ pub struct ArmShaderCorePropertiesFn;
 #[doc = "Generated from 'VK_ARM_shader_core_properties'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_ARM: Self = Self(1_000_415_000);
+}
+impl KhrShaderSubgroupRotateFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_subgroup_rotate\0")
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct KhrShaderSubgroupRotateFn;
+#[doc = "Generated from 'VK_KHR_shader_subgroup_rotate'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_SUBGROUP_ROTATE_FEATURES_KHR: Self = Self(1_000_416_000);
 }
 impl ArmSchedulingControlsFn {
     pub const NAME: &'static ::std::ffi::CStr =
@@ -18778,6 +18888,18 @@ impl GoogleSurfacelessQueryFn {
 }
 #[derive(Clone)]
 pub struct GoogleSurfacelessQueryFn;
+impl KhrShaderMaximalReconvergenceFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_maximal_reconvergence\0")
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct KhrShaderMaximalReconvergenceFn;
+#[doc = "Generated from 'VK_KHR_shader_maximal_reconvergence'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_MAXIMAL_RECONVERGENCE_FEATURES_KHR: Self = Self(1_000_434_000);
+}
 impl ExtImageCompressionControlSwapchainFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
         ::std::ffi::CStr::from_bytes_with_nul_unchecked(
@@ -18871,11 +18993,6 @@ impl ExtExtendedDynamicState3Fn {
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetTessellationDomainOriginEXT = unsafe extern "system" fn(
-    command_buffer: CommandBuffer,
-    domain_origin: TessellationDomainOrigin,
-);
-#[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetDepthClampEnableEXT =
     unsafe extern "system" fn(command_buffer: CommandBuffer, depth_clamp_enable: Bool32);
 #[allow(non_camel_case_types)]
@@ -18921,6 +19038,11 @@ pub type PFN_vkCmdSetColorWriteMaskEXT = unsafe extern "system" fn(
     first_attachment: u32,
     attachment_count: u32,
     p_color_write_masks: *const ColorComponentFlags,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetTessellationDomainOriginEXT = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    domain_origin: TessellationDomainOrigin,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetRasterizationStreamEXT =
@@ -19011,7 +19133,6 @@ pub type PFN_vkCmdSetCoverageReductionModeNV = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct ExtExtendedDynamicState3Fn {
-    pub cmd_set_tessellation_domain_origin_ext: PFN_vkCmdSetTessellationDomainOriginEXT,
     pub cmd_set_depth_clamp_enable_ext: PFN_vkCmdSetDepthClampEnableEXT,
     pub cmd_set_polygon_mode_ext: PFN_vkCmdSetPolygonModeEXT,
     pub cmd_set_rasterization_samples_ext: PFN_vkCmdSetRasterizationSamplesEXT,
@@ -19022,6 +19143,7 @@ pub struct ExtExtendedDynamicState3Fn {
     pub cmd_set_color_blend_enable_ext: PFN_vkCmdSetColorBlendEnableEXT,
     pub cmd_set_color_blend_equation_ext: PFN_vkCmdSetColorBlendEquationEXT,
     pub cmd_set_color_write_mask_ext: PFN_vkCmdSetColorWriteMaskEXT,
+    pub cmd_set_tessellation_domain_origin_ext: PFN_vkCmdSetTessellationDomainOriginEXT,
     pub cmd_set_rasterization_stream_ext: PFN_vkCmdSetRasterizationStreamEXT,
     pub cmd_set_conservative_rasterization_mode_ext: PFN_vkCmdSetConservativeRasterizationModeEXT,
     pub cmd_set_extra_primitive_overestimation_size_ext:
@@ -19053,26 +19175,6 @@ impl ExtExtendedDynamicState3Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         Self {
-            cmd_set_tessellation_domain_origin_ext: unsafe {
-                unsafe extern "system" fn cmd_set_tessellation_domain_origin_ext(
-                    _command_buffer: CommandBuffer,
-                    _domain_origin: TessellationDomainOrigin,
-                ) {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(cmd_set_tessellation_domain_origin_ext)
-                    ))
-                }
-                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
-                    b"vkCmdSetTessellationDomainOriginEXT\0",
-                );
-                let val = _f(cname);
-                if val.is_null() {
-                    cmd_set_tessellation_domain_origin_ext
-                } else {
-                    ::std::mem::transmute(val)
-                }
-            },
             cmd_set_depth_clamp_enable_ext: unsafe {
                 unsafe extern "system" fn cmd_set_depth_clamp_enable_ext(
                     _command_buffer: CommandBuffer,
@@ -19272,6 +19374,26 @@ impl ExtExtendedDynamicState3Fn {
                 let val = _f(cname);
                 if val.is_null() {
                     cmd_set_color_write_mask_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_tessellation_domain_origin_ext: unsafe {
+                unsafe extern "system" fn cmd_set_tessellation_domain_origin_ext(
+                    _command_buffer: CommandBuffer,
+                    _domain_origin: TessellationDomainOrigin,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_tessellation_domain_origin_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetTessellationDomainOriginEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_tessellation_domain_origin_ext
                 } else {
                     ::std::mem::transmute(val)
                 }
@@ -19685,7 +19807,6 @@ impl ExtExtendedDynamicState3Fn {
 }
 #[doc = "Generated from 'VK_EXT_extended_dynamic_state3'"]
 impl DynamicState {
-    pub const TESSELLATION_DOMAIN_ORIGIN_EXT: Self = Self(1_000_455_002);
     pub const DEPTH_CLAMP_ENABLE_EXT: Self = Self(1_000_455_003);
     pub const POLYGON_MODE_EXT: Self = Self(1_000_455_004);
     pub const RASTERIZATION_SAMPLES_EXT: Self = Self(1_000_455_005);
@@ -19696,6 +19817,7 @@ impl DynamicState {
     pub const COLOR_BLEND_ENABLE_EXT: Self = Self(1_000_455_010);
     pub const COLOR_BLEND_EQUATION_EXT: Self = Self(1_000_455_011);
     pub const COLOR_WRITE_MASK_EXT: Self = Self(1_000_455_012);
+    pub const TESSELLATION_DOMAIN_ORIGIN_EXT: Self = Self(1_000_455_002);
     pub const RASTERIZATION_STREAM_EXT: Self = Self(1_000_455_013);
     pub const CONSERVATIVE_RASTERIZATION_MODE_EXT: Self = Self(1_000_455_014);
     pub const EXTRA_PRIMITIVE_OVERESTIMATION_SIZE_EXT: Self = Self(1_000_455_015);
@@ -22150,6 +22272,29 @@ impl StructureType {
     pub const PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_KHR: Self = Self(1_000_190_001);
     pub const PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES_KHR: Self = Self(1_000_190_002);
 }
+impl KhrLoadStoreOpNoneFn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_load_store_op_none\0") };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct KhrLoadStoreOpNoneFn;
+#[doc = "Generated from 'VK_KHR_load_store_op_none'"]
+impl AttachmentLoadOp {
+    pub const NONE_KHR: Self = Self(1_000_400_000);
+}
+impl KhrShaderFloatControls2Fn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_float_controls2\0")
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct KhrShaderFloatControls2Fn;
+#[doc = "Generated from 'VK_KHR_shader_float_controls2'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_FLOAT_CONTROLS_2_FEATURES_KHR: Self = Self(1_000_528_000);
+}
 impl QnxExternalMemoryScreenBufferFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
         ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QNX_external_memory_screen_buffer\0")
@@ -22222,6 +22367,71 @@ pub struct MsftLayeredDriverFn;
 impl StructureType {
     pub const PHYSICAL_DEVICE_LAYERED_DRIVER_PROPERTIES_MSFT: Self = Self(1_000_530_000);
 }
+impl KhrIndexTypeUint8Fn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_index_type_uint8\0") };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct KhrIndexTypeUint8Fn;
+#[doc = "Generated from 'VK_KHR_index_type_uint8'"]
+impl IndexType {
+    pub const UINT8_KHR: Self = Self(1_000_265_000);
+}
+#[doc = "Generated from 'VK_KHR_index_type_uint8'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_INDEX_TYPE_UINT8_FEATURES_KHR: Self = Self(1_000_265_000);
+}
+impl KhrLineRasterizationFn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_line_rasterization\0") };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct KhrLineRasterizationFn {
+    pub cmd_set_line_stipple_khr: crate::vk::PFN_vkCmdSetLineStippleKHR,
+}
+unsafe impl Send for KhrLineRasterizationFn {}
+unsafe impl Sync for KhrLineRasterizationFn {}
+impl KhrLineRasterizationFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Self {
+            cmd_set_line_stipple_khr: unsafe {
+                unsafe extern "system" fn cmd_set_line_stipple_khr(
+                    _command_buffer: CommandBuffer,
+                    _line_stipple_factor: u32,
+                    _line_stipple_pattern: u16,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_line_stipple_khr)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetLineStippleKHR\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_line_stipple_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+}
+#[doc = "Generated from 'VK_KHR_line_rasterization'"]
+impl DynamicState {
+    pub const LINE_STIPPLE_KHR: Self = Self(1_000_259_000);
+}
+#[doc = "Generated from 'VK_KHR_line_rasterization'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_LINE_RASTERIZATION_FEATURES_KHR: Self = Self(1_000_259_000);
+    pub const PIPELINE_RASTERIZATION_LINE_STATE_CREATE_INFO_KHR: Self = Self(1_000_259_001);
+    pub const PHYSICAL_DEVICE_LINE_RASTERIZATION_PROPERTIES_KHR: Self = Self(1_000_259_002);
+}
 impl KhrCalibratedTimestampsFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
         ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_calibrated_timestamps\0")
@@ -22292,6 +22502,18 @@ impl KhrCalibratedTimestampsFn {
 #[doc = "Generated from 'VK_KHR_calibrated_timestamps'"]
 impl StructureType {
     pub const CALIBRATED_TIMESTAMP_INFO_KHR: Self = Self(1_000_184_000);
+}
+impl KhrShaderExpectAssumeFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_expect_assume\0")
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct KhrShaderExpectAssumeFn;
+#[doc = "Generated from 'VK_KHR_shader_expect_assume'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_EXPECT_ASSUME_FEATURES_KHR: Self = Self(1_000_544_000);
 }
 impl KhrMaintenance6Fn {
     pub const NAME: &'static ::std::ffi::CStr =
