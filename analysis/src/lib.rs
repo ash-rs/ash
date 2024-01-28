@@ -1,3 +1,4 @@
+mod cdecl;
 mod xml;
 
 use std::{fs, path::Path};
