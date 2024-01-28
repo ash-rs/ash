@@ -1,3 +1,5 @@
+use crate::cdecl::{CDecl, CDeclMode, CTok, CType};
+use roxmltree::NodeType;
 use roxmltree::StringStorage;
 use std::fmt::Write;
 use tracing::{info_span, trace};
@@ -36,17 +38,6 @@ fn child_text(node: Node, name: &str) -> Option<&'static str> {
     child.map(|node| leak(node.text_storage().unwrap().clone()))
 }
 
-/// Retrieves the text of all of `node`'s descendants, concatenated.
-/// Anything within a `<comment>` element will be ignored.
-fn descendant_text(node: Node) -> String {
-    node.descendants()
-        .filter(Node::is_text)
-        // Ignore any text within a <comment> element.
-        .filter(|node| !node.ancestors().any(|node| node.has_tag_name("comment")))
-        .map(|node| node.text().unwrap())
-        .collect::<String>()
-}
-
 /// Returns [`true`] when the `node`'s "api" attribute matches the `expected` API.
 fn api_matches(node: &Node, expected: &str) -> bool {
     node.attribute("api")
@@ -62,6 +53,65 @@ fn node_span_field(node: &Node) -> String {
     }
 
     output + ">"
+}
+
+impl CDecl<'static> {
+    fn from_xml(mode: CDeclMode, children: roxmltree::Children<'_, 'static>) -> CDecl<'static> {
+        let mut c_tokens = vec![];
+        for child in children {
+            let text = || leak(child.text_storage().unwrap().clone());
+            match child.node_type() {
+                NodeType::Text => {
+                    CTok::lex_into(text(), &mut c_tokens).unwrap();
+                }
+                NodeType::Element => {
+                    assert_eq!(child.attributes().len(), 0);
+                    let text = || {
+                        assert_eq!(child.children().count(), 1);
+                        text()
+                    };
+                    c_tokens.push(match child.tag_name().name() {
+                        "comment" => continue,
+                        "type" => CTok::TypeName(text()),
+                        "enum" => CTok::ValueName(text()),
+                        "name" => CTok::DeclName(text()),
+                        tag => unreachable!("unexpected `<{tag}>` in C declaration"),
+                    })
+                }
+                NodeType::Root | NodeType::PI | NodeType::Comment => unreachable!(),
+            }
+        }
+
+        c_tokens.retain_mut(|tok| {
+            if let CTok::StrayIdent(name) = tok {
+                match &name[..] {
+                    // HACK(eddyb) work around `video.xml` spec bug (missing `<enum>`).
+                    "STD_VIDEO_H264_MAX_NUM_LIST_REF" | "STD_VIDEO_H265_MAX_NUM_LIST_REF" => {
+                        *tok = CTok::ValueName(name);
+                    }
+
+                    // HACK(eddyb) work around `vk.xml` spec bug (missing `<type>`).
+                    "VkBool32" | "PFN_vkVoidFunction" => {
+                        *tok = CTok::TypeName(name);
+                    }
+
+                    _ => {}
+                }
+            }
+
+            match tok {
+                // HACK(eddyb) ideally we'd expand this to something using the
+                // C++11/C23 `[[...]]` attribute syntax, but that'd need support
+                // in `cdecl`, and it's redundant since all function pointers
+                // equally get it, so we can just remove it here.
+                CTok::StrayIdent("VKAPI_PTR") => false,
+
+                _ => true,
+            }
+        });
+
+        CDecl::parse(mode, &c_tokens).unwrap()
+    }
 }
 
 /// Raw representation of Vulkan XML files (`vk.xml`, `video.xml`).
@@ -334,16 +384,14 @@ impl EnumType {
 
 #[derive(Debug)]
 pub struct FuncPointer {
-    pub name: &'static str,
-    pub c_declaration: String,
+    pub c_decl: CDecl<'static>,
     pub requires: Option<&'static str>,
 }
 
 impl FuncPointer {
     fn from_node(node: Node) -> FuncPointer {
         FuncPointer {
-            name: child_text(node, "name").unwrap(),
-            c_declaration: descendant_text(node),
+            c_decl: CDecl::from_xml(CDeclMode::TypeDef, node.children()),
             requires: attribute(node, "requires"),
         }
     }
@@ -351,8 +399,7 @@ impl FuncPointer {
 
 #[derive(Debug)]
 pub struct StructureMember {
-    pub name: &'static str,
-    pub c_declaration: String,
+    pub c_decl: CDecl<'static>,
     pub values: Option<&'static str>,
     pub len: Vec<&'static str>,
     pub altlen: Option<&'static str>,
@@ -362,8 +409,7 @@ pub struct StructureMember {
 impl StructureMember {
     fn from_node(node: Node) -> StructureMember {
         StructureMember {
-            name: child_text(node, "name").unwrap(),
-            c_declaration: descendant_text(node),
+            c_decl: CDecl::from_xml(CDeclMode::StructMember, node.children()),
             values: attribute(node, "values"),
             len: attribute_comma_separated(node, "len"),
             altlen: attribute(node, "altlen"),
@@ -512,8 +558,7 @@ impl BitMask {
 
 #[derive(Debug)]
 pub struct CommandParam {
-    pub name: &'static str,
-    pub c_declaration: String,
+    pub c_decl: CDecl<'static>,
     pub len: Option<&'static str>,
     pub altlen: Option<&'static str>,
     pub optional: Vec<&'static str>,
@@ -522,8 +567,7 @@ pub struct CommandParam {
 impl CommandParam {
     fn from_node(node: Node) -> CommandParam {
         CommandParam {
-            name: child_text(node, "name").unwrap(),
-            c_declaration: descendant_text(node),
+            c_decl: CDecl::from_xml(CDeclMode::FuncParam, node.children()),
             len: attribute(node, "len"),
             altlen: attribute(node, "altlen"),
             optional: attribute_comma_separated(node, "optional"),
@@ -533,7 +577,7 @@ impl CommandParam {
 
 #[derive(Debug)]
 pub struct Command {
-    pub return_type: &'static str,
+    pub return_type: Option<CType<'static>>,
     pub name: &'static str,
     pub params: Vec<CommandParam>,
 }
@@ -545,9 +589,11 @@ impl Command {
             .find(|child| child.has_tag_name("proto"))
             .filter(|node| api_matches(node, api))
             .unwrap();
+        // FIXME(eddyb) `CDeclMode::StructMember` should work but isn't accurate.
+        let proto_cdecl = CDecl::from_xml(CDeclMode::StructMember, proto.children());
         Command {
-            return_type: child_text(proto, "type").unwrap(),
-            name: child_text(proto, "name").unwrap(),
+            return_type: Some(proto_cdecl.ty).filter(|ty| *ty != CType::VOID),
+            name: proto_cdecl.name,
             params: node
                 .children()
                 .filter(|child| child.has_tag_name("param"))

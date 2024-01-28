@@ -1,3 +1,4 @@
+pub mod cdecl;
 pub mod xml;
 
 use std::{fs, path::Path};
