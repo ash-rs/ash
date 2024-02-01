@@ -18392,13 +18392,18 @@ impl KhrShaderSubgroupRotateFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
         ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_subgroup_rotate\0")
     };
-    pub const SPEC_VERSION: u32 = 1u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
 #[derive(Clone)]
 pub struct KhrShaderSubgroupRotateFn;
 #[doc = "Generated from 'VK_KHR_shader_subgroup_rotate'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_SUBGROUP_ROTATE_FEATURES_KHR: Self = Self(1_000_416_000);
+}
+#[doc = "Generated from 'VK_KHR_shader_subgroup_rotate'"]
+impl SubgroupFeatureFlags {
+    pub const ROTATE_KHR: Self = Self(0b10_0000_0000);
+    pub const ROTATE_CLUSTERED_KHR: Self = Self(0b100_0000_0000);
 }
 impl ArmSchedulingControlsFn {
     pub const NAME: &'static ::std::ffi::CStr =
@@ -22108,6 +22113,25 @@ impl StructureType {
         Self(1_000_510_000);
     pub const MULTIVIEW_PER_VIEW_RENDER_AREAS_RENDER_PASS_BEGIN_INFO_QCOM: Self =
         Self(1_000_510_001);
+}
+impl KhrVideoDecodeAv1Fn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_decode_av1\0") };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct KhrVideoDecodeAv1Fn;
+#[doc = "Generated from 'VK_KHR_video_decode_av1'"]
+impl StructureType {
+    pub const VIDEO_DECODE_AV1_CAPABILITIES_KHR: Self = Self(1_000_512_000);
+    pub const VIDEO_DECODE_AV1_PICTURE_INFO_KHR: Self = Self(1_000_512_001);
+    pub const VIDEO_DECODE_AV1_PROFILE_INFO_KHR: Self = Self(1_000_512_003);
+    pub const VIDEO_DECODE_AV1_SESSION_PARAMETERS_CREATE_INFO_KHR: Self = Self(1_000_512_004);
+    pub const VIDEO_DECODE_AV1_DPB_SLOT_INFO_KHR: Self = Self(1_000_512_005);
+}
+#[doc = "Generated from 'VK_KHR_video_decode_av1'"]
+impl VideoCodecOperationFlagsKHR {
+    pub const DECODE_AV1: Self = Self(0b100);
 }
 impl KhrVideoMaintenance1Fn {
     pub const NAME: &'static ::std::ffi::CStr =

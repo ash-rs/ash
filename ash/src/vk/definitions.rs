@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 276;
+pub const HEADER_VERSION: u32 = 277;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -39587,6 +39587,224 @@ impl<'a> VideoDecodeH265DpbSlotInfoKHR<'a> {
     pub fn std_reference_info(
         mut self,
         std_reference_info: &'a StdVideoDecodeH265ReferenceInfo,
+    ) -> Self {
+        self.p_std_reference_info = std_reference_info;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeAV1ProfileInfoKHR.html>"]
+#[must_use]
+pub struct VideoDecodeAV1ProfileInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub std_profile: StdVideoAV1Profile,
+    pub film_grain_support: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for VideoDecodeAV1ProfileInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            std_profile: StdVideoAV1Profile::default(),
+            film_grain_support: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for VideoDecodeAV1ProfileInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_AV1_PROFILE_INFO_KHR;
+}
+unsafe impl ExtendsVideoProfileInfoKHR for VideoDecodeAV1ProfileInfoKHR<'_> {}
+unsafe impl ExtendsQueryPoolCreateInfo for VideoDecodeAV1ProfileInfoKHR<'_> {}
+impl<'a> VideoDecodeAV1ProfileInfoKHR<'a> {
+    #[inline]
+    pub fn std_profile(mut self, std_profile: StdVideoAV1Profile) -> Self {
+        self.std_profile = std_profile;
+        self
+    }
+    #[inline]
+    pub fn film_grain_support(mut self, film_grain_support: bool) -> Self {
+        self.film_grain_support = film_grain_support.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeAV1CapabilitiesKHR.html>"]
+#[must_use]
+pub struct VideoDecodeAV1CapabilitiesKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub max_level: StdVideoAV1Level,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for VideoDecodeAV1CapabilitiesKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            max_level: StdVideoAV1Level::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for VideoDecodeAV1CapabilitiesKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_AV1_CAPABILITIES_KHR;
+}
+unsafe impl ExtendsVideoCapabilitiesKHR for VideoDecodeAV1CapabilitiesKHR<'_> {}
+impl<'a> VideoDecodeAV1CapabilitiesKHR<'a> {
+    #[inline]
+    pub fn max_level(mut self, max_level: StdVideoAV1Level) -> Self {
+        self.max_level = max_level;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeAV1SessionParametersCreateInfoKHR.html>"]
+#[must_use]
+pub struct VideoDecodeAV1SessionParametersCreateInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub p_std_sequence_header: *const StdVideoAV1SequenceHeader,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for VideoDecodeAV1SessionParametersCreateInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            p_std_sequence_header: ::std::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for VideoDecodeAV1SessionParametersCreateInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::VIDEO_DECODE_AV1_SESSION_PARAMETERS_CREATE_INFO_KHR;
+}
+unsafe impl ExtendsVideoSessionParametersCreateInfoKHR
+    for VideoDecodeAV1SessionParametersCreateInfoKHR<'_>
+{
+}
+impl<'a> VideoDecodeAV1SessionParametersCreateInfoKHR<'a> {
+    #[inline]
+    pub fn std_sequence_header(
+        mut self,
+        std_sequence_header: &'a StdVideoAV1SequenceHeader,
+    ) -> Self {
+        self.p_std_sequence_header = std_sequence_header;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeAV1PictureInfoKHR.html>"]
+#[must_use]
+pub struct VideoDecodeAV1PictureInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub p_std_picture_info: *const StdVideoDecodeAV1PictureInfo,
+    pub reference_name_slot_indices: [i32; MAX_VIDEO_AV1_REFERENCES_PER_FRAME_KHR],
+    pub frame_header_offset: u32,
+    pub tile_count: u32,
+    pub p_tile_offsets: *const u32,
+    pub p_tile_sizes: *const u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for VideoDecodeAV1PictureInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            p_std_picture_info: ::std::ptr::null(),
+            reference_name_slot_indices: unsafe { ::std::mem::zeroed() },
+            frame_header_offset: u32::default(),
+            tile_count: u32::default(),
+            p_tile_offsets: ::std::ptr::null(),
+            p_tile_sizes: ::std::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for VideoDecodeAV1PictureInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_AV1_PICTURE_INFO_KHR;
+}
+unsafe impl ExtendsVideoDecodeInfoKHR for VideoDecodeAV1PictureInfoKHR<'_> {}
+impl<'a> VideoDecodeAV1PictureInfoKHR<'a> {
+    #[inline]
+    pub fn std_picture_info(mut self, std_picture_info: &'a StdVideoDecodeAV1PictureInfo) -> Self {
+        self.p_std_picture_info = std_picture_info;
+        self
+    }
+    #[inline]
+    pub fn reference_name_slot_indices(
+        mut self,
+        reference_name_slot_indices: [i32; MAX_VIDEO_AV1_REFERENCES_PER_FRAME_KHR],
+    ) -> Self {
+        self.reference_name_slot_indices = reference_name_slot_indices;
+        self
+    }
+    #[inline]
+    pub fn frame_header_offset(mut self, frame_header_offset: u32) -> Self {
+        self.frame_header_offset = frame_header_offset;
+        self
+    }
+    #[inline]
+    pub fn tile_offsets(mut self, tile_offsets: &'a [u32]) -> Self {
+        self.tile_count = tile_offsets.len() as _;
+        self.p_tile_offsets = tile_offsets.as_ptr();
+        self
+    }
+    #[inline]
+    pub fn tile_sizes(mut self, tile_sizes: &'a [u32]) -> Self {
+        self.tile_count = tile_sizes.len() as _;
+        self.p_tile_sizes = tile_sizes.as_ptr();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeAV1DpbSlotInfoKHR.html>"]
+#[must_use]
+pub struct VideoDecodeAV1DpbSlotInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub p_std_reference_info: *const StdVideoDecodeAV1ReferenceInfo,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for VideoDecodeAV1DpbSlotInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null(),
+            p_std_reference_info: ::std::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for VideoDecodeAV1DpbSlotInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::VIDEO_DECODE_AV1_DPB_SLOT_INFO_KHR;
+}
+unsafe impl ExtendsVideoReferenceSlotInfoKHR for VideoDecodeAV1DpbSlotInfoKHR<'_> {}
+impl<'a> VideoDecodeAV1DpbSlotInfoKHR<'a> {
+    #[inline]
+    pub fn std_reference_info(
+        mut self,
+        std_reference_info: &'a StdVideoDecodeAV1ReferenceInfo,
     ) -> Self {
         self.p_std_reference_info = std_reference_info;
         self

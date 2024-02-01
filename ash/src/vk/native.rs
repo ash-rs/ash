@@ -6589,6 +6589,3220 @@ fn bindgen_test_layout_StdVideoDecodeH265ReferenceInfo() {
         )
     );
 }
+pub const StdVideoAV1Profile_STD_VIDEO_AV1_PROFILE_MAIN: StdVideoAV1Profile = 0;
+pub const StdVideoAV1Profile_STD_VIDEO_AV1_PROFILE_HIGH: StdVideoAV1Profile = 1;
+pub const StdVideoAV1Profile_STD_VIDEO_AV1_PROFILE_PROFESSIONAL: StdVideoAV1Profile = 2;
+pub const StdVideoAV1Profile_STD_VIDEO_AV1_PROFILE_INVALID: StdVideoAV1Profile = 2147483647;
+pub type StdVideoAV1Profile = ::std::os::raw::c_uint;
+pub const StdVideoAV1Level_STD_VIDEO_AV1_LEVEL_2_0: StdVideoAV1Level = 0;
+pub const StdVideoAV1Level_STD_VIDEO_AV1_LEVEL_2_1: StdVideoAV1Level = 1;
+pub const StdVideoAV1Level_STD_VIDEO_AV1_LEVEL_2_2: StdVideoAV1Level = 2;
+pub const StdVideoAV1Level_STD_VIDEO_AV1_LEVEL_2_3: StdVideoAV1Level = 3;
+pub const StdVideoAV1Level_STD_VIDEO_AV1_LEVEL_3_0: StdVideoAV1Level = 4;
+pub const StdVideoAV1Level_STD_VIDEO_AV1_LEVEL_3_1: StdVideoAV1Level = 5;
+pub const StdVideoAV1Level_STD_VIDEO_AV1_LEVEL_3_2: StdVideoAV1Level = 6;
+pub const StdVideoAV1Level_STD_VIDEO_AV1_LEVEL_3_3: StdVideoAV1Level = 7;
+pub const StdVideoAV1Level_STD_VIDEO_AV1_LEVEL_4_0: StdVideoAV1Level = 8;
+pub const StdVideoAV1Level_STD_VIDEO_AV1_LEVEL_4_1: StdVideoAV1Level = 9;
+pub const StdVideoAV1Level_STD_VIDEO_AV1_LEVEL_4_2: StdVideoAV1Level = 10;
+pub const StdVideoAV1Level_STD_VIDEO_AV1_LEVEL_4_3: StdVideoAV1Level = 11;
+pub const StdVideoAV1Level_STD_VIDEO_AV1_LEVEL_5_0: StdVideoAV1Level = 12;
+pub const StdVideoAV1Level_STD_VIDEO_AV1_LEVEL_5_1: StdVideoAV1Level = 13;
+pub const StdVideoAV1Level_STD_VIDEO_AV1_LEVEL_5_2: StdVideoAV1Level = 14;
+pub const StdVideoAV1Level_STD_VIDEO_AV1_LEVEL_5_3: StdVideoAV1Level = 15;
+pub const StdVideoAV1Level_STD_VIDEO_AV1_LEVEL_6_0: StdVideoAV1Level = 16;
+pub const StdVideoAV1Level_STD_VIDEO_AV1_LEVEL_6_1: StdVideoAV1Level = 17;
+pub const StdVideoAV1Level_STD_VIDEO_AV1_LEVEL_6_2: StdVideoAV1Level = 18;
+pub const StdVideoAV1Level_STD_VIDEO_AV1_LEVEL_6_3: StdVideoAV1Level = 19;
+pub const StdVideoAV1Level_STD_VIDEO_AV1_LEVEL_7_0: StdVideoAV1Level = 20;
+pub const StdVideoAV1Level_STD_VIDEO_AV1_LEVEL_7_1: StdVideoAV1Level = 21;
+pub const StdVideoAV1Level_STD_VIDEO_AV1_LEVEL_7_2: StdVideoAV1Level = 22;
+pub const StdVideoAV1Level_STD_VIDEO_AV1_LEVEL_7_3: StdVideoAV1Level = 23;
+pub const StdVideoAV1Level_STD_VIDEO_AV1_LEVEL_INVALID: StdVideoAV1Level = 2147483647;
+pub type StdVideoAV1Level = ::std::os::raw::c_uint;
+pub const StdVideoAV1FrameType_STD_VIDEO_AV1_FRAME_TYPE_KEY: StdVideoAV1FrameType = 0;
+pub const StdVideoAV1FrameType_STD_VIDEO_AV1_FRAME_TYPE_INTER: StdVideoAV1FrameType = 1;
+pub const StdVideoAV1FrameType_STD_VIDEO_AV1_FRAME_TYPE_INTRA_ONLY: StdVideoAV1FrameType = 2;
+pub const StdVideoAV1FrameType_STD_VIDEO_AV1_FRAME_TYPE_SWITCH: StdVideoAV1FrameType = 3;
+pub const StdVideoAV1FrameType_STD_VIDEO_AV1_FRAME_TYPE_INVALID: StdVideoAV1FrameType = 2147483647;
+pub type StdVideoAV1FrameType = ::std::os::raw::c_uint;
+pub const StdVideoAV1InterpolationFilter_STD_VIDEO_AV1_INTERPOLATION_FILTER_EIGHTTAP:
+    StdVideoAV1InterpolationFilter = 0;
+pub const StdVideoAV1InterpolationFilter_STD_VIDEO_AV1_INTERPOLATION_FILTER_EIGHTTAP_SMOOTH:
+    StdVideoAV1InterpolationFilter = 1;
+pub const StdVideoAV1InterpolationFilter_STD_VIDEO_AV1_INTERPOLATION_FILTER_EIGHTTAP_SHARP:
+    StdVideoAV1InterpolationFilter = 2;
+pub const StdVideoAV1InterpolationFilter_STD_VIDEO_AV1_INTERPOLATION_FILTER_BILINEAR:
+    StdVideoAV1InterpolationFilter = 3;
+pub const StdVideoAV1InterpolationFilter_STD_VIDEO_AV1_INTERPOLATION_FILTER_SWITCHABLE:
+    StdVideoAV1InterpolationFilter = 4;
+pub const StdVideoAV1InterpolationFilter_STD_VIDEO_AV1_INTERPOLATION_FILTER_INVALID:
+    StdVideoAV1InterpolationFilter = 2147483647;
+pub type StdVideoAV1InterpolationFilter = ::std::os::raw::c_uint;
+pub const StdVideoAV1TxMode_STD_VIDEO_AV1_TX_MODE_ONLY_4X4: StdVideoAV1TxMode = 0;
+pub const StdVideoAV1TxMode_STD_VIDEO_AV1_TX_MODE_LARGEST: StdVideoAV1TxMode = 1;
+pub const StdVideoAV1TxMode_STD_VIDEO_AV1_TX_MODE_SELECT: StdVideoAV1TxMode = 2;
+pub const StdVideoAV1TxMode_STD_VIDEO_AV1_TX_MODE_INVALID: StdVideoAV1TxMode = 2147483647;
+pub type StdVideoAV1TxMode = ::std::os::raw::c_uint;
+pub const StdVideoAV1FrameRestorationType_STD_VIDEO_AV1_FRAME_RESTORATION_TYPE_NONE:
+    StdVideoAV1FrameRestorationType = 0;
+pub const StdVideoAV1FrameRestorationType_STD_VIDEO_AV1_FRAME_RESTORATION_TYPE_WIENER:
+    StdVideoAV1FrameRestorationType = 1;
+pub const StdVideoAV1FrameRestorationType_STD_VIDEO_AV1_FRAME_RESTORATION_TYPE_SGRPROJ:
+    StdVideoAV1FrameRestorationType = 2;
+pub const StdVideoAV1FrameRestorationType_STD_VIDEO_AV1_FRAME_RESTORATION_TYPE_SWITCHABLE:
+    StdVideoAV1FrameRestorationType = 3;
+pub const StdVideoAV1FrameRestorationType_STD_VIDEO_AV1_FRAME_RESTORATION_TYPE_INVALID:
+    StdVideoAV1FrameRestorationType = 2147483647;
+pub type StdVideoAV1FrameRestorationType = ::std::os::raw::c_uint;
+pub const StdVideoAV1ColorPrimaries_STD_VIDEO_AV1_COLOR_PRIMARIES_BT_709:
+    StdVideoAV1ColorPrimaries = 1;
+pub const StdVideoAV1ColorPrimaries_STD_VIDEO_AV1_COLOR_PRIMARIES_BT_UNSPECIFIED:
+    StdVideoAV1ColorPrimaries = 2;
+pub const StdVideoAV1ColorPrimaries_STD_VIDEO_AV1_COLOR_PRIMARIES_BT_470_M:
+    StdVideoAV1ColorPrimaries = 4;
+pub const StdVideoAV1ColorPrimaries_STD_VIDEO_AV1_COLOR_PRIMARIES_BT_470_B_G:
+    StdVideoAV1ColorPrimaries = 5;
+pub const StdVideoAV1ColorPrimaries_STD_VIDEO_AV1_COLOR_PRIMARIES_BT_601:
+    StdVideoAV1ColorPrimaries = 6;
+pub const StdVideoAV1ColorPrimaries_STD_VIDEO_AV1_COLOR_PRIMARIES_SMPTE_240:
+    StdVideoAV1ColorPrimaries = 7;
+pub const StdVideoAV1ColorPrimaries_STD_VIDEO_AV1_COLOR_PRIMARIES_GENERIC_FILM:
+    StdVideoAV1ColorPrimaries = 8;
+pub const StdVideoAV1ColorPrimaries_STD_VIDEO_AV1_COLOR_PRIMARIES_BT_2020:
+    StdVideoAV1ColorPrimaries = 9;
+pub const StdVideoAV1ColorPrimaries_STD_VIDEO_AV1_COLOR_PRIMARIES_XYZ: StdVideoAV1ColorPrimaries =
+    10;
+pub const StdVideoAV1ColorPrimaries_STD_VIDEO_AV1_COLOR_PRIMARIES_SMPTE_431:
+    StdVideoAV1ColorPrimaries = 11;
+pub const StdVideoAV1ColorPrimaries_STD_VIDEO_AV1_COLOR_PRIMARIES_SMPTE_432:
+    StdVideoAV1ColorPrimaries = 12;
+pub const StdVideoAV1ColorPrimaries_STD_VIDEO_AV1_COLOR_PRIMARIES_EBU_3213:
+    StdVideoAV1ColorPrimaries = 22;
+pub const StdVideoAV1ColorPrimaries_STD_VIDEO_AV1_COLOR_PRIMARIES_INVALID:
+    StdVideoAV1ColorPrimaries = 2147483647;
+pub type StdVideoAV1ColorPrimaries = ::std::os::raw::c_uint;
+pub const StdVideoAV1TransferCharacteristics_STD_VIDEO_AV1_TRANSFER_CHARACTERISTICS_RESERVED_0:
+    StdVideoAV1TransferCharacteristics = 0;
+pub const StdVideoAV1TransferCharacteristics_STD_VIDEO_AV1_TRANSFER_CHARACTERISTICS_BT_709:
+    StdVideoAV1TransferCharacteristics = 1;
+pub const StdVideoAV1TransferCharacteristics_STD_VIDEO_AV1_TRANSFER_CHARACTERISTICS_UNSPECIFIED:
+    StdVideoAV1TransferCharacteristics = 2;
+pub const StdVideoAV1TransferCharacteristics_STD_VIDEO_AV1_TRANSFER_CHARACTERISTICS_RESERVED_3:
+    StdVideoAV1TransferCharacteristics = 3;
+pub const StdVideoAV1TransferCharacteristics_STD_VIDEO_AV1_TRANSFER_CHARACTERISTICS_BT_470_M:
+    StdVideoAV1TransferCharacteristics = 4;
+pub const StdVideoAV1TransferCharacteristics_STD_VIDEO_AV1_TRANSFER_CHARACTERISTICS_BT_470_B_G:
+    StdVideoAV1TransferCharacteristics = 5;
+pub const StdVideoAV1TransferCharacteristics_STD_VIDEO_AV1_TRANSFER_CHARACTERISTICS_BT_601:
+    StdVideoAV1TransferCharacteristics = 6;
+pub const StdVideoAV1TransferCharacteristics_STD_VIDEO_AV1_TRANSFER_CHARACTERISTICS_SMPTE_240:
+    StdVideoAV1TransferCharacteristics = 7;
+pub const StdVideoAV1TransferCharacteristics_STD_VIDEO_AV1_TRANSFER_CHARACTERISTICS_LINEAR:
+    StdVideoAV1TransferCharacteristics = 8;
+pub const StdVideoAV1TransferCharacteristics_STD_VIDEO_AV1_TRANSFER_CHARACTERISTICS_LOG_100:
+    StdVideoAV1TransferCharacteristics = 9;
+pub const StdVideoAV1TransferCharacteristics_STD_VIDEO_AV1_TRANSFER_CHARACTERISTICS_LOG_100_SQRT10 : StdVideoAV1TransferCharacteristics = 10 ;
+pub const StdVideoAV1TransferCharacteristics_STD_VIDEO_AV1_TRANSFER_CHARACTERISTICS_IEC_61966:
+    StdVideoAV1TransferCharacteristics = 11;
+pub const StdVideoAV1TransferCharacteristics_STD_VIDEO_AV1_TRANSFER_CHARACTERISTICS_BT_1361:
+    StdVideoAV1TransferCharacteristics = 12;
+pub const StdVideoAV1TransferCharacteristics_STD_VIDEO_AV1_TRANSFER_CHARACTERISTICS_SRGB:
+    StdVideoAV1TransferCharacteristics = 13;
+pub const StdVideoAV1TransferCharacteristics_STD_VIDEO_AV1_TRANSFER_CHARACTERISTICS_BT_2020_10_BIT : StdVideoAV1TransferCharacteristics = 14 ;
+pub const StdVideoAV1TransferCharacteristics_STD_VIDEO_AV1_TRANSFER_CHARACTERISTICS_BT_2020_12_BIT : StdVideoAV1TransferCharacteristics = 15 ;
+pub const StdVideoAV1TransferCharacteristics_STD_VIDEO_AV1_TRANSFER_CHARACTERISTICS_SMPTE_2084:
+    StdVideoAV1TransferCharacteristics = 16;
+pub const StdVideoAV1TransferCharacteristics_STD_VIDEO_AV1_TRANSFER_CHARACTERISTICS_SMPTE_428:
+    StdVideoAV1TransferCharacteristics = 17;
+pub const StdVideoAV1TransferCharacteristics_STD_VIDEO_AV1_TRANSFER_CHARACTERISTICS_HLG:
+    StdVideoAV1TransferCharacteristics = 18;
+pub const StdVideoAV1TransferCharacteristics_STD_VIDEO_AV1_TRANSFER_CHARACTERISTICS_INVALID:
+    StdVideoAV1TransferCharacteristics = 2147483647;
+pub type StdVideoAV1TransferCharacteristics = ::std::os::raw::c_uint;
+pub const StdVideoAV1MatrixCoefficients_STD_VIDEO_AV1_MATRIX_COEFFICIENTS_IDENTITY:
+    StdVideoAV1MatrixCoefficients = 0;
+pub const StdVideoAV1MatrixCoefficients_STD_VIDEO_AV1_MATRIX_COEFFICIENTS_BT_709:
+    StdVideoAV1MatrixCoefficients = 1;
+pub const StdVideoAV1MatrixCoefficients_STD_VIDEO_AV1_MATRIX_COEFFICIENTS_UNSPECIFIED:
+    StdVideoAV1MatrixCoefficients = 2;
+pub const StdVideoAV1MatrixCoefficients_STD_VIDEO_AV1_MATRIX_COEFFICIENTS_RESERVED_3:
+    StdVideoAV1MatrixCoefficients = 3;
+pub const StdVideoAV1MatrixCoefficients_STD_VIDEO_AV1_MATRIX_COEFFICIENTS_FCC:
+    StdVideoAV1MatrixCoefficients = 4;
+pub const StdVideoAV1MatrixCoefficients_STD_VIDEO_AV1_MATRIX_COEFFICIENTS_BT_470_B_G:
+    StdVideoAV1MatrixCoefficients = 5;
+pub const StdVideoAV1MatrixCoefficients_STD_VIDEO_AV1_MATRIX_COEFFICIENTS_BT_601:
+    StdVideoAV1MatrixCoefficients = 6;
+pub const StdVideoAV1MatrixCoefficients_STD_VIDEO_AV1_MATRIX_COEFFICIENTS_SMPTE_240:
+    StdVideoAV1MatrixCoefficients = 7;
+pub const StdVideoAV1MatrixCoefficients_STD_VIDEO_AV1_MATRIX_COEFFICIENTS_SMPTE_YCGCO:
+    StdVideoAV1MatrixCoefficients = 8;
+pub const StdVideoAV1MatrixCoefficients_STD_VIDEO_AV1_MATRIX_COEFFICIENTS_BT_2020_NCL:
+    StdVideoAV1MatrixCoefficients = 9;
+pub const StdVideoAV1MatrixCoefficients_STD_VIDEO_AV1_MATRIX_COEFFICIENTS_BT_2020_CL:
+    StdVideoAV1MatrixCoefficients = 10;
+pub const StdVideoAV1MatrixCoefficients_STD_VIDEO_AV1_MATRIX_COEFFICIENTS_SMPTE_2085:
+    StdVideoAV1MatrixCoefficients = 11;
+pub const StdVideoAV1MatrixCoefficients_STD_VIDEO_AV1_MATRIX_COEFFICIENTS_CHROMAT_NCL:
+    StdVideoAV1MatrixCoefficients = 12;
+pub const StdVideoAV1MatrixCoefficients_STD_VIDEO_AV1_MATRIX_COEFFICIENTS_CHROMAT_CL:
+    StdVideoAV1MatrixCoefficients = 13;
+pub const StdVideoAV1MatrixCoefficients_STD_VIDEO_AV1_MATRIX_COEFFICIENTS_ICTCP:
+    StdVideoAV1MatrixCoefficients = 14;
+pub const StdVideoAV1MatrixCoefficients_STD_VIDEO_AV1_MATRIX_COEFFICIENTS_INVALID:
+    StdVideoAV1MatrixCoefficients = 2147483647;
+pub type StdVideoAV1MatrixCoefficients = ::std::os::raw::c_uint;
+pub const StdVideoAV1ChromaSamplePosition_STD_VIDEO_AV1_CHROMA_SAMPLE_POSITION_UNKNOWN:
+    StdVideoAV1ChromaSamplePosition = 0;
+pub const StdVideoAV1ChromaSamplePosition_STD_VIDEO_AV1_CHROMA_SAMPLE_POSITION_VERTICAL:
+    StdVideoAV1ChromaSamplePosition = 1;
+pub const StdVideoAV1ChromaSamplePosition_STD_VIDEO_AV1_CHROMA_SAMPLE_POSITION_COLOCATED:
+    StdVideoAV1ChromaSamplePosition = 2;
+pub const StdVideoAV1ChromaSamplePosition_STD_VIDEO_AV1_CHROMA_SAMPLE_POSITION_RESERVED:
+    StdVideoAV1ChromaSamplePosition = 3;
+pub const StdVideoAV1ChromaSamplePosition_STD_VIDEO_AV1_CHROMA_SAMPLE_POSITION_INVALID:
+    StdVideoAV1ChromaSamplePosition = 2147483647;
+pub type StdVideoAV1ChromaSamplePosition = ::std::os::raw::c_uint;
+#[repr(C)]
+#[repr(align(4))]
+#[derive(Debug, Copy, Clone)]
+pub struct StdVideoAV1ColorConfigFlags {
+    pub _bitfield_align_1: [u32; 0],
+    pub _bitfield_1: __BindgenBitfieldUnit<[u8; 4usize]>,
+}
+#[test]
+fn bindgen_test_layout_StdVideoAV1ColorConfigFlags() {
+    assert_eq!(
+        ::std::mem::size_of::<StdVideoAV1ColorConfigFlags>(),
+        4usize,
+        concat!("Size of: ", stringify!(StdVideoAV1ColorConfigFlags))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<StdVideoAV1ColorConfigFlags>(),
+        4usize,
+        concat!("Alignment of ", stringify!(StdVideoAV1ColorConfigFlags))
+    );
+}
+impl StdVideoAV1ColorConfigFlags {
+    #[inline]
+    pub fn mono_chrome(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(0usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_mono_chrome(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(0usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn color_range(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(1usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_color_range(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(1usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn separate_uv_delta_q(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(2usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_separate_uv_delta_q(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(2usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn color_description_present_flag(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(3usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_color_description_present_flag(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(3usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn reserved(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(4usize, 28u8) as u32) }
+    }
+    #[inline]
+    pub fn set_reserved(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(4usize, 28u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn new_bitfield_1(
+        mono_chrome: u32,
+        color_range: u32,
+        separate_uv_delta_q: u32,
+        color_description_present_flag: u32,
+        reserved: u32,
+    ) -> __BindgenBitfieldUnit<[u8; 4usize]> {
+        let mut __bindgen_bitfield_unit: __BindgenBitfieldUnit<[u8; 4usize]> = Default::default();
+        __bindgen_bitfield_unit.set(0usize, 1u8, {
+            let mono_chrome: u32 = unsafe { ::std::mem::transmute(mono_chrome) };
+            mono_chrome as u64
+        });
+        __bindgen_bitfield_unit.set(1usize, 1u8, {
+            let color_range: u32 = unsafe { ::std::mem::transmute(color_range) };
+            color_range as u64
+        });
+        __bindgen_bitfield_unit.set(2usize, 1u8, {
+            let separate_uv_delta_q: u32 = unsafe { ::std::mem::transmute(separate_uv_delta_q) };
+            separate_uv_delta_q as u64
+        });
+        __bindgen_bitfield_unit.set(3usize, 1u8, {
+            let color_description_present_flag: u32 =
+                unsafe { ::std::mem::transmute(color_description_present_flag) };
+            color_description_present_flag as u64
+        });
+        __bindgen_bitfield_unit.set(4usize, 28u8, {
+            let reserved: u32 = unsafe { ::std::mem::transmute(reserved) };
+            reserved as u64
+        });
+        __bindgen_bitfield_unit
+    }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct StdVideoAV1ColorConfig {
+    pub flags: StdVideoAV1ColorConfigFlags,
+    pub BitDepth: u8,
+    pub subsampling_x: u8,
+    pub subsampling_y: u8,
+    pub reserved1: u8,
+    pub color_primaries: StdVideoAV1ColorPrimaries,
+    pub transfer_characteristics: StdVideoAV1TransferCharacteristics,
+    pub matrix_coefficients: StdVideoAV1MatrixCoefficients,
+    pub chroma_sample_position: StdVideoAV1ChromaSamplePosition,
+}
+#[test]
+fn bindgen_test_layout_StdVideoAV1ColorConfig() {
+    const UNINIT: ::std::mem::MaybeUninit<StdVideoAV1ColorConfig> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<StdVideoAV1ColorConfig>(),
+        24usize,
+        concat!("Size of: ", stringify!(StdVideoAV1ColorConfig))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<StdVideoAV1ColorConfig>(),
+        4usize,
+        concat!("Alignment of ", stringify!(StdVideoAV1ColorConfig))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).flags) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1ColorConfig),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).BitDepth) as usize - ptr as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1ColorConfig),
+            "::",
+            stringify!(BitDepth)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).subsampling_x) as usize - ptr as usize },
+        5usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1ColorConfig),
+            "::",
+            stringify!(subsampling_x)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).subsampling_y) as usize - ptr as usize },
+        6usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1ColorConfig),
+            "::",
+            stringify!(subsampling_y)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).reserved1) as usize - ptr as usize },
+        7usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1ColorConfig),
+            "::",
+            stringify!(reserved1)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).color_primaries) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1ColorConfig),
+            "::",
+            stringify!(color_primaries)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).transfer_characteristics) as usize - ptr as usize },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1ColorConfig),
+            "::",
+            stringify!(transfer_characteristics)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).matrix_coefficients) as usize - ptr as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1ColorConfig),
+            "::",
+            stringify!(matrix_coefficients)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).chroma_sample_position) as usize - ptr as usize },
+        20usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1ColorConfig),
+            "::",
+            stringify!(chroma_sample_position)
+        )
+    );
+}
+#[repr(C)]
+#[repr(align(4))]
+#[derive(Debug, Copy, Clone)]
+pub struct StdVideoAV1TimingInfoFlags {
+    pub _bitfield_align_1: [u32; 0],
+    pub _bitfield_1: __BindgenBitfieldUnit<[u8; 4usize]>,
+}
+#[test]
+fn bindgen_test_layout_StdVideoAV1TimingInfoFlags() {
+    assert_eq!(
+        ::std::mem::size_of::<StdVideoAV1TimingInfoFlags>(),
+        4usize,
+        concat!("Size of: ", stringify!(StdVideoAV1TimingInfoFlags))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<StdVideoAV1TimingInfoFlags>(),
+        4usize,
+        concat!("Alignment of ", stringify!(StdVideoAV1TimingInfoFlags))
+    );
+}
+impl StdVideoAV1TimingInfoFlags {
+    #[inline]
+    pub fn equal_picture_interval(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(0usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_equal_picture_interval(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(0usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn reserved(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(1usize, 31u8) as u32) }
+    }
+    #[inline]
+    pub fn set_reserved(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(1usize, 31u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn new_bitfield_1(
+        equal_picture_interval: u32,
+        reserved: u32,
+    ) -> __BindgenBitfieldUnit<[u8; 4usize]> {
+        let mut __bindgen_bitfield_unit: __BindgenBitfieldUnit<[u8; 4usize]> = Default::default();
+        __bindgen_bitfield_unit.set(0usize, 1u8, {
+            let equal_picture_interval: u32 =
+                unsafe { ::std::mem::transmute(equal_picture_interval) };
+            equal_picture_interval as u64
+        });
+        __bindgen_bitfield_unit.set(1usize, 31u8, {
+            let reserved: u32 = unsafe { ::std::mem::transmute(reserved) };
+            reserved as u64
+        });
+        __bindgen_bitfield_unit
+    }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct StdVideoAV1TimingInfo {
+    pub flags: StdVideoAV1TimingInfoFlags,
+    pub num_units_in_display_tick: u32,
+    pub time_scale: u32,
+    pub num_ticks_per_picture_minus_1: u32,
+}
+#[test]
+fn bindgen_test_layout_StdVideoAV1TimingInfo() {
+    const UNINIT: ::std::mem::MaybeUninit<StdVideoAV1TimingInfo> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<StdVideoAV1TimingInfo>(),
+        16usize,
+        concat!("Size of: ", stringify!(StdVideoAV1TimingInfo))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<StdVideoAV1TimingInfo>(),
+        4usize,
+        concat!("Alignment of ", stringify!(StdVideoAV1TimingInfo))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).flags) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1TimingInfo),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).num_units_in_display_tick) as usize - ptr as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1TimingInfo),
+            "::",
+            stringify!(num_units_in_display_tick)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).time_scale) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1TimingInfo),
+            "::",
+            stringify!(time_scale)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            ::std::ptr::addr_of!((*ptr).num_ticks_per_picture_minus_1) as usize - ptr as usize
+        },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1TimingInfo),
+            "::",
+            stringify!(num_ticks_per_picture_minus_1)
+        )
+    );
+}
+#[repr(C)]
+#[repr(align(4))]
+#[derive(Debug, Copy, Clone)]
+pub struct StdVideoAV1LoopFilterFlags {
+    pub _bitfield_align_1: [u32; 0],
+    pub _bitfield_1: __BindgenBitfieldUnit<[u8; 4usize]>,
+}
+#[test]
+fn bindgen_test_layout_StdVideoAV1LoopFilterFlags() {
+    assert_eq!(
+        ::std::mem::size_of::<StdVideoAV1LoopFilterFlags>(),
+        4usize,
+        concat!("Size of: ", stringify!(StdVideoAV1LoopFilterFlags))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<StdVideoAV1LoopFilterFlags>(),
+        4usize,
+        concat!("Alignment of ", stringify!(StdVideoAV1LoopFilterFlags))
+    );
+}
+impl StdVideoAV1LoopFilterFlags {
+    #[inline]
+    pub fn loop_filter_delta_enabled(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(0usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_loop_filter_delta_enabled(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(0usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn loop_filter_delta_update(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(1usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_loop_filter_delta_update(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(1usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn reserved(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(2usize, 30u8) as u32) }
+    }
+    #[inline]
+    pub fn set_reserved(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(2usize, 30u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn new_bitfield_1(
+        loop_filter_delta_enabled: u32,
+        loop_filter_delta_update: u32,
+        reserved: u32,
+    ) -> __BindgenBitfieldUnit<[u8; 4usize]> {
+        let mut __bindgen_bitfield_unit: __BindgenBitfieldUnit<[u8; 4usize]> = Default::default();
+        __bindgen_bitfield_unit.set(0usize, 1u8, {
+            let loop_filter_delta_enabled: u32 =
+                unsafe { ::std::mem::transmute(loop_filter_delta_enabled) };
+            loop_filter_delta_enabled as u64
+        });
+        __bindgen_bitfield_unit.set(1usize, 1u8, {
+            let loop_filter_delta_update: u32 =
+                unsafe { ::std::mem::transmute(loop_filter_delta_update) };
+            loop_filter_delta_update as u64
+        });
+        __bindgen_bitfield_unit.set(2usize, 30u8, {
+            let reserved: u32 = unsafe { ::std::mem::transmute(reserved) };
+            reserved as u64
+        });
+        __bindgen_bitfield_unit
+    }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct StdVideoAV1LoopFilter {
+    pub flags: StdVideoAV1LoopFilterFlags,
+    pub loop_filter_level: [u8; 4usize],
+    pub loop_filter_sharpness: u8,
+    pub update_ref_delta: u8,
+    pub loop_filter_ref_deltas: [i8; 8usize],
+    pub update_mode_delta: u8,
+    pub loop_filter_mode_deltas: [i8; 2usize],
+}
+#[test]
+fn bindgen_test_layout_StdVideoAV1LoopFilter() {
+    const UNINIT: ::std::mem::MaybeUninit<StdVideoAV1LoopFilter> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<StdVideoAV1LoopFilter>(),
+        24usize,
+        concat!("Size of: ", stringify!(StdVideoAV1LoopFilter))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<StdVideoAV1LoopFilter>(),
+        4usize,
+        concat!("Alignment of ", stringify!(StdVideoAV1LoopFilter))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).flags) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1LoopFilter),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).loop_filter_level) as usize - ptr as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1LoopFilter),
+            "::",
+            stringify!(loop_filter_level)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).loop_filter_sharpness) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1LoopFilter),
+            "::",
+            stringify!(loop_filter_sharpness)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).update_ref_delta) as usize - ptr as usize },
+        9usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1LoopFilter),
+            "::",
+            stringify!(update_ref_delta)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).loop_filter_ref_deltas) as usize - ptr as usize },
+        10usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1LoopFilter),
+            "::",
+            stringify!(loop_filter_ref_deltas)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).update_mode_delta) as usize - ptr as usize },
+        18usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1LoopFilter),
+            "::",
+            stringify!(update_mode_delta)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).loop_filter_mode_deltas) as usize - ptr as usize },
+        19usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1LoopFilter),
+            "::",
+            stringify!(loop_filter_mode_deltas)
+        )
+    );
+}
+#[repr(C)]
+#[repr(align(4))]
+#[derive(Debug, Copy, Clone)]
+pub struct StdVideoAV1QuantizationFlags {
+    pub _bitfield_align_1: [u32; 0],
+    pub _bitfield_1: __BindgenBitfieldUnit<[u8; 4usize]>,
+}
+#[test]
+fn bindgen_test_layout_StdVideoAV1QuantizationFlags() {
+    assert_eq!(
+        ::std::mem::size_of::<StdVideoAV1QuantizationFlags>(),
+        4usize,
+        concat!("Size of: ", stringify!(StdVideoAV1QuantizationFlags))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<StdVideoAV1QuantizationFlags>(),
+        4usize,
+        concat!("Alignment of ", stringify!(StdVideoAV1QuantizationFlags))
+    );
+}
+impl StdVideoAV1QuantizationFlags {
+    #[inline]
+    pub fn using_qmatrix(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(0usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_using_qmatrix(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(0usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn diff_uv_delta(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(1usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_diff_uv_delta(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(1usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn reserved(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(2usize, 30u8) as u32) }
+    }
+    #[inline]
+    pub fn set_reserved(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(2usize, 30u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn new_bitfield_1(
+        using_qmatrix: u32,
+        diff_uv_delta: u32,
+        reserved: u32,
+    ) -> __BindgenBitfieldUnit<[u8; 4usize]> {
+        let mut __bindgen_bitfield_unit: __BindgenBitfieldUnit<[u8; 4usize]> = Default::default();
+        __bindgen_bitfield_unit.set(0usize, 1u8, {
+            let using_qmatrix: u32 = unsafe { ::std::mem::transmute(using_qmatrix) };
+            using_qmatrix as u64
+        });
+        __bindgen_bitfield_unit.set(1usize, 1u8, {
+            let diff_uv_delta: u32 = unsafe { ::std::mem::transmute(diff_uv_delta) };
+            diff_uv_delta as u64
+        });
+        __bindgen_bitfield_unit.set(2usize, 30u8, {
+            let reserved: u32 = unsafe { ::std::mem::transmute(reserved) };
+            reserved as u64
+        });
+        __bindgen_bitfield_unit
+    }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct StdVideoAV1Quantization {
+    pub flags: StdVideoAV1QuantizationFlags,
+    pub base_q_idx: u8,
+    pub DeltaQYDc: i8,
+    pub DeltaQUDc: i8,
+    pub DeltaQUAc: i8,
+    pub DeltaQVDc: i8,
+    pub DeltaQVAc: i8,
+    pub qm_y: u8,
+    pub qm_u: u8,
+    pub qm_v: u8,
+}
+#[test]
+fn bindgen_test_layout_StdVideoAV1Quantization() {
+    const UNINIT: ::std::mem::MaybeUninit<StdVideoAV1Quantization> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<StdVideoAV1Quantization>(),
+        16usize,
+        concat!("Size of: ", stringify!(StdVideoAV1Quantization))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<StdVideoAV1Quantization>(),
+        4usize,
+        concat!("Alignment of ", stringify!(StdVideoAV1Quantization))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).flags) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1Quantization),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).base_q_idx) as usize - ptr as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1Quantization),
+            "::",
+            stringify!(base_q_idx)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).DeltaQYDc) as usize - ptr as usize },
+        5usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1Quantization),
+            "::",
+            stringify!(DeltaQYDc)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).DeltaQUDc) as usize - ptr as usize },
+        6usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1Quantization),
+            "::",
+            stringify!(DeltaQUDc)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).DeltaQUAc) as usize - ptr as usize },
+        7usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1Quantization),
+            "::",
+            stringify!(DeltaQUAc)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).DeltaQVDc) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1Quantization),
+            "::",
+            stringify!(DeltaQVDc)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).DeltaQVAc) as usize - ptr as usize },
+        9usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1Quantization),
+            "::",
+            stringify!(DeltaQVAc)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).qm_y) as usize - ptr as usize },
+        10usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1Quantization),
+            "::",
+            stringify!(qm_y)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).qm_u) as usize - ptr as usize },
+        11usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1Quantization),
+            "::",
+            stringify!(qm_u)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).qm_v) as usize - ptr as usize },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1Quantization),
+            "::",
+            stringify!(qm_v)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct StdVideoAV1Segmentation {
+    pub FeatureEnabled: [u8; 8usize],
+    pub FeatureData: [[i16; 8usize]; 8usize],
+}
+#[test]
+fn bindgen_test_layout_StdVideoAV1Segmentation() {
+    const UNINIT: ::std::mem::MaybeUninit<StdVideoAV1Segmentation> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<StdVideoAV1Segmentation>(),
+        136usize,
+        concat!("Size of: ", stringify!(StdVideoAV1Segmentation))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<StdVideoAV1Segmentation>(),
+        2usize,
+        concat!("Alignment of ", stringify!(StdVideoAV1Segmentation))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).FeatureEnabled) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1Segmentation),
+            "::",
+            stringify!(FeatureEnabled)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).FeatureData) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1Segmentation),
+            "::",
+            stringify!(FeatureData)
+        )
+    );
+}
+#[repr(C)]
+#[repr(align(4))]
+#[derive(Debug, Copy, Clone)]
+pub struct StdVideoAV1TileInfoFlags {
+    pub _bitfield_align_1: [u32; 0],
+    pub _bitfield_1: __BindgenBitfieldUnit<[u8; 4usize]>,
+}
+#[test]
+fn bindgen_test_layout_StdVideoAV1TileInfoFlags() {
+    assert_eq!(
+        ::std::mem::size_of::<StdVideoAV1TileInfoFlags>(),
+        4usize,
+        concat!("Size of: ", stringify!(StdVideoAV1TileInfoFlags))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<StdVideoAV1TileInfoFlags>(),
+        4usize,
+        concat!("Alignment of ", stringify!(StdVideoAV1TileInfoFlags))
+    );
+}
+impl StdVideoAV1TileInfoFlags {
+    #[inline]
+    pub fn uniform_tile_spacing_flag(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(0usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_uniform_tile_spacing_flag(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(0usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn reserved(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(1usize, 31u8) as u32) }
+    }
+    #[inline]
+    pub fn set_reserved(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(1usize, 31u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn new_bitfield_1(
+        uniform_tile_spacing_flag: u32,
+        reserved: u32,
+    ) -> __BindgenBitfieldUnit<[u8; 4usize]> {
+        let mut __bindgen_bitfield_unit: __BindgenBitfieldUnit<[u8; 4usize]> = Default::default();
+        __bindgen_bitfield_unit.set(0usize, 1u8, {
+            let uniform_tile_spacing_flag: u32 =
+                unsafe { ::std::mem::transmute(uniform_tile_spacing_flag) };
+            uniform_tile_spacing_flag as u64
+        });
+        __bindgen_bitfield_unit.set(1usize, 31u8, {
+            let reserved: u32 = unsafe { ::std::mem::transmute(reserved) };
+            reserved as u64
+        });
+        __bindgen_bitfield_unit
+    }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct StdVideoAV1TileInfo {
+    pub flags: StdVideoAV1TileInfoFlags,
+    pub TileCols: u8,
+    pub TileRows: u8,
+    pub context_update_tile_id: u16,
+    pub tile_size_bytes_minus_1: u8,
+    pub reserved1: [u8; 7usize],
+    pub pMiColStarts: *const u16,
+    pub pMiRowStarts: *const u16,
+    pub pWidthInSbsMinus1: *const u16,
+    pub pHeightInSbsMinus1: *const u16,
+}
+#[test]
+fn bindgen_test_layout_StdVideoAV1TileInfo() {
+    const UNINIT: ::std::mem::MaybeUninit<StdVideoAV1TileInfo> = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<StdVideoAV1TileInfo>(),
+        48usize,
+        concat!("Size of: ", stringify!(StdVideoAV1TileInfo))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<StdVideoAV1TileInfo>(),
+        8usize,
+        concat!("Alignment of ", stringify!(StdVideoAV1TileInfo))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).flags) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1TileInfo),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).TileCols) as usize - ptr as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1TileInfo),
+            "::",
+            stringify!(TileCols)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).TileRows) as usize - ptr as usize },
+        5usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1TileInfo),
+            "::",
+            stringify!(TileRows)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).context_update_tile_id) as usize - ptr as usize },
+        6usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1TileInfo),
+            "::",
+            stringify!(context_update_tile_id)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).tile_size_bytes_minus_1) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1TileInfo),
+            "::",
+            stringify!(tile_size_bytes_minus_1)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).reserved1) as usize - ptr as usize },
+        9usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1TileInfo),
+            "::",
+            stringify!(reserved1)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pMiColStarts) as usize - ptr as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1TileInfo),
+            "::",
+            stringify!(pMiColStarts)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pMiRowStarts) as usize - ptr as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1TileInfo),
+            "::",
+            stringify!(pMiRowStarts)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pWidthInSbsMinus1) as usize - ptr as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1TileInfo),
+            "::",
+            stringify!(pWidthInSbsMinus1)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pHeightInSbsMinus1) as usize - ptr as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1TileInfo),
+            "::",
+            stringify!(pHeightInSbsMinus1)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct StdVideoAV1CDEF {
+    pub cdef_damping_minus_3: u8,
+    pub cdef_bits: u8,
+    pub cdef_y_pri_strength: [u8; 8usize],
+    pub cdef_y_sec_strength: [u8; 8usize],
+    pub cdef_uv_pri_strength: [u8; 8usize],
+    pub cdef_uv_sec_strength: [u8; 8usize],
+}
+#[test]
+fn bindgen_test_layout_StdVideoAV1CDEF() {
+    const UNINIT: ::std::mem::MaybeUninit<StdVideoAV1CDEF> = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<StdVideoAV1CDEF>(),
+        34usize,
+        concat!("Size of: ", stringify!(StdVideoAV1CDEF))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<StdVideoAV1CDEF>(),
+        1usize,
+        concat!("Alignment of ", stringify!(StdVideoAV1CDEF))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cdef_damping_minus_3) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1CDEF),
+            "::",
+            stringify!(cdef_damping_minus_3)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cdef_bits) as usize - ptr as usize },
+        1usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1CDEF),
+            "::",
+            stringify!(cdef_bits)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cdef_y_pri_strength) as usize - ptr as usize },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1CDEF),
+            "::",
+            stringify!(cdef_y_pri_strength)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cdef_y_sec_strength) as usize - ptr as usize },
+        10usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1CDEF),
+            "::",
+            stringify!(cdef_y_sec_strength)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cdef_uv_pri_strength) as usize - ptr as usize },
+        18usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1CDEF),
+            "::",
+            stringify!(cdef_uv_pri_strength)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cdef_uv_sec_strength) as usize - ptr as usize },
+        26usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1CDEF),
+            "::",
+            stringify!(cdef_uv_sec_strength)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct StdVideoAV1LoopRestoration {
+    pub FrameRestorationType: [StdVideoAV1FrameRestorationType; 3usize],
+    pub LoopRestorationSize: [u16; 3usize],
+}
+#[test]
+fn bindgen_test_layout_StdVideoAV1LoopRestoration() {
+    const UNINIT: ::std::mem::MaybeUninit<StdVideoAV1LoopRestoration> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<StdVideoAV1LoopRestoration>(),
+        20usize,
+        concat!("Size of: ", stringify!(StdVideoAV1LoopRestoration))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<StdVideoAV1LoopRestoration>(),
+        4usize,
+        concat!("Alignment of ", stringify!(StdVideoAV1LoopRestoration))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).FrameRestorationType) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1LoopRestoration),
+            "::",
+            stringify!(FrameRestorationType)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).LoopRestorationSize) as usize - ptr as usize },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1LoopRestoration),
+            "::",
+            stringify!(LoopRestorationSize)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct StdVideoAV1GlobalMotion {
+    pub GmType: [u8; 8usize],
+    pub gm_params: [[i32; 6usize]; 8usize],
+}
+#[test]
+fn bindgen_test_layout_StdVideoAV1GlobalMotion() {
+    const UNINIT: ::std::mem::MaybeUninit<StdVideoAV1GlobalMotion> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<StdVideoAV1GlobalMotion>(),
+        200usize,
+        concat!("Size of: ", stringify!(StdVideoAV1GlobalMotion))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<StdVideoAV1GlobalMotion>(),
+        4usize,
+        concat!("Alignment of ", stringify!(StdVideoAV1GlobalMotion))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).GmType) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1GlobalMotion),
+            "::",
+            stringify!(GmType)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).gm_params) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1GlobalMotion),
+            "::",
+            stringify!(gm_params)
+        )
+    );
+}
+#[repr(C)]
+#[repr(align(4))]
+#[derive(Debug, Copy, Clone)]
+pub struct StdVideoAV1FilmGrainFlags {
+    pub _bitfield_align_1: [u32; 0],
+    pub _bitfield_1: __BindgenBitfieldUnit<[u8; 4usize]>,
+}
+#[test]
+fn bindgen_test_layout_StdVideoAV1FilmGrainFlags() {
+    assert_eq!(
+        ::std::mem::size_of::<StdVideoAV1FilmGrainFlags>(),
+        4usize,
+        concat!("Size of: ", stringify!(StdVideoAV1FilmGrainFlags))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<StdVideoAV1FilmGrainFlags>(),
+        4usize,
+        concat!("Alignment of ", stringify!(StdVideoAV1FilmGrainFlags))
+    );
+}
+impl StdVideoAV1FilmGrainFlags {
+    #[inline]
+    pub fn chroma_scaling_from_luma(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(0usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_chroma_scaling_from_luma(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(0usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn overlap_flag(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(1usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_overlap_flag(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(1usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn clip_to_restricted_range(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(2usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_clip_to_restricted_range(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(2usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn update_grain(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(3usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_update_grain(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(3usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn reserved(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(4usize, 28u8) as u32) }
+    }
+    #[inline]
+    pub fn set_reserved(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(4usize, 28u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn new_bitfield_1(
+        chroma_scaling_from_luma: u32,
+        overlap_flag: u32,
+        clip_to_restricted_range: u32,
+        update_grain: u32,
+        reserved: u32,
+    ) -> __BindgenBitfieldUnit<[u8; 4usize]> {
+        let mut __bindgen_bitfield_unit: __BindgenBitfieldUnit<[u8; 4usize]> = Default::default();
+        __bindgen_bitfield_unit.set(0usize, 1u8, {
+            let chroma_scaling_from_luma: u32 =
+                unsafe { ::std::mem::transmute(chroma_scaling_from_luma) };
+            chroma_scaling_from_luma as u64
+        });
+        __bindgen_bitfield_unit.set(1usize, 1u8, {
+            let overlap_flag: u32 = unsafe { ::std::mem::transmute(overlap_flag) };
+            overlap_flag as u64
+        });
+        __bindgen_bitfield_unit.set(2usize, 1u8, {
+            let clip_to_restricted_range: u32 =
+                unsafe { ::std::mem::transmute(clip_to_restricted_range) };
+            clip_to_restricted_range as u64
+        });
+        __bindgen_bitfield_unit.set(3usize, 1u8, {
+            let update_grain: u32 = unsafe { ::std::mem::transmute(update_grain) };
+            update_grain as u64
+        });
+        __bindgen_bitfield_unit.set(4usize, 28u8, {
+            let reserved: u32 = unsafe { ::std::mem::transmute(reserved) };
+            reserved as u64
+        });
+        __bindgen_bitfield_unit
+    }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct StdVideoAV1FilmGrain {
+    pub flags: StdVideoAV1FilmGrainFlags,
+    pub grain_scaling_minus_8: u8,
+    pub ar_coeff_lag: u8,
+    pub ar_coeff_shift_minus_6: u8,
+    pub grain_scale_shift: u8,
+    pub grain_seed: u16,
+    pub film_grain_params_ref_idx: u8,
+    pub num_y_points: u8,
+    pub point_y_value: [u8; 14usize],
+    pub point_y_scaling: [u8; 14usize],
+    pub num_cb_points: u8,
+    pub point_cb_value: [u8; 10usize],
+    pub point_cb_scaling: [u8; 10usize],
+    pub num_cr_points: u8,
+    pub point_cr_value: [u8; 10usize],
+    pub point_cr_scaling: [u8; 10usize],
+    pub ar_coeffs_y_plus_128: [i8; 24usize],
+    pub ar_coeffs_cb_plus_128: [i8; 25usize],
+    pub ar_coeffs_cr_plus_128: [i8; 25usize],
+    pub cb_mult: u8,
+    pub cb_luma_mult: u8,
+    pub cb_offset: u16,
+    pub cr_mult: u8,
+    pub cr_luma_mult: u8,
+    pub cr_offset: u16,
+}
+#[test]
+fn bindgen_test_layout_StdVideoAV1FilmGrain() {
+    const UNINIT: ::std::mem::MaybeUninit<StdVideoAV1FilmGrain> = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<StdVideoAV1FilmGrain>(),
+        164usize,
+        concat!("Size of: ", stringify!(StdVideoAV1FilmGrain))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<StdVideoAV1FilmGrain>(),
+        4usize,
+        concat!("Alignment of ", stringify!(StdVideoAV1FilmGrain))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).flags) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1FilmGrain),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).grain_scaling_minus_8) as usize - ptr as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1FilmGrain),
+            "::",
+            stringify!(grain_scaling_minus_8)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).ar_coeff_lag) as usize - ptr as usize },
+        5usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1FilmGrain),
+            "::",
+            stringify!(ar_coeff_lag)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).ar_coeff_shift_minus_6) as usize - ptr as usize },
+        6usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1FilmGrain),
+            "::",
+            stringify!(ar_coeff_shift_minus_6)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).grain_scale_shift) as usize - ptr as usize },
+        7usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1FilmGrain),
+            "::",
+            stringify!(grain_scale_shift)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).grain_seed) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1FilmGrain),
+            "::",
+            stringify!(grain_seed)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).film_grain_params_ref_idx) as usize - ptr as usize },
+        10usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1FilmGrain),
+            "::",
+            stringify!(film_grain_params_ref_idx)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).num_y_points) as usize - ptr as usize },
+        11usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1FilmGrain),
+            "::",
+            stringify!(num_y_points)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).point_y_value) as usize - ptr as usize },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1FilmGrain),
+            "::",
+            stringify!(point_y_value)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).point_y_scaling) as usize - ptr as usize },
+        26usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1FilmGrain),
+            "::",
+            stringify!(point_y_scaling)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).num_cb_points) as usize - ptr as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1FilmGrain),
+            "::",
+            stringify!(num_cb_points)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).point_cb_value) as usize - ptr as usize },
+        41usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1FilmGrain),
+            "::",
+            stringify!(point_cb_value)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).point_cb_scaling) as usize - ptr as usize },
+        51usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1FilmGrain),
+            "::",
+            stringify!(point_cb_scaling)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).num_cr_points) as usize - ptr as usize },
+        61usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1FilmGrain),
+            "::",
+            stringify!(num_cr_points)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).point_cr_value) as usize - ptr as usize },
+        62usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1FilmGrain),
+            "::",
+            stringify!(point_cr_value)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).point_cr_scaling) as usize - ptr as usize },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1FilmGrain),
+            "::",
+            stringify!(point_cr_scaling)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).ar_coeffs_y_plus_128) as usize - ptr as usize },
+        82usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1FilmGrain),
+            "::",
+            stringify!(ar_coeffs_y_plus_128)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).ar_coeffs_cb_plus_128) as usize - ptr as usize },
+        106usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1FilmGrain),
+            "::",
+            stringify!(ar_coeffs_cb_plus_128)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).ar_coeffs_cr_plus_128) as usize - ptr as usize },
+        131usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1FilmGrain),
+            "::",
+            stringify!(ar_coeffs_cr_plus_128)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cb_mult) as usize - ptr as usize },
+        156usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1FilmGrain),
+            "::",
+            stringify!(cb_mult)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cb_luma_mult) as usize - ptr as usize },
+        157usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1FilmGrain),
+            "::",
+            stringify!(cb_luma_mult)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cb_offset) as usize - ptr as usize },
+        158usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1FilmGrain),
+            "::",
+            stringify!(cb_offset)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cr_mult) as usize - ptr as usize },
+        160usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1FilmGrain),
+            "::",
+            stringify!(cr_mult)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cr_luma_mult) as usize - ptr as usize },
+        161usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1FilmGrain),
+            "::",
+            stringify!(cr_luma_mult)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cr_offset) as usize - ptr as usize },
+        162usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1FilmGrain),
+            "::",
+            stringify!(cr_offset)
+        )
+    );
+}
+#[repr(C)]
+#[repr(align(4))]
+#[derive(Debug, Copy, Clone)]
+pub struct StdVideoAV1SequenceHeaderFlags {
+    pub _bitfield_align_1: [u16; 0],
+    pub _bitfield_1: __BindgenBitfieldUnit<[u8; 4usize]>,
+}
+#[test]
+fn bindgen_test_layout_StdVideoAV1SequenceHeaderFlags() {
+    assert_eq!(
+        ::std::mem::size_of::<StdVideoAV1SequenceHeaderFlags>(),
+        4usize,
+        concat!("Size of: ", stringify!(StdVideoAV1SequenceHeaderFlags))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<StdVideoAV1SequenceHeaderFlags>(),
+        4usize,
+        concat!("Alignment of ", stringify!(StdVideoAV1SequenceHeaderFlags))
+    );
+}
+impl StdVideoAV1SequenceHeaderFlags {
+    #[inline]
+    pub fn still_picture(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(0usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_still_picture(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(0usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn reduced_still_picture_header(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(1usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_reduced_still_picture_header(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(1usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn use_128x128_superblock(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(2usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_use_128x128_superblock(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(2usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn enable_filter_intra(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(3usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_enable_filter_intra(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(3usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn enable_intra_edge_filter(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(4usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_enable_intra_edge_filter(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(4usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn enable_interintra_compound(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(5usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_enable_interintra_compound(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(5usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn enable_masked_compound(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(6usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_enable_masked_compound(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(6usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn enable_warped_motion(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(7usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_enable_warped_motion(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(7usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn enable_dual_filter(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(8usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_enable_dual_filter(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(8usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn enable_order_hint(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(9usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_enable_order_hint(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(9usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn enable_jnt_comp(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(10usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_enable_jnt_comp(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(10usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn enable_ref_frame_mvs(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(11usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_enable_ref_frame_mvs(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(11usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn frame_id_numbers_present_flag(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(12usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_frame_id_numbers_present_flag(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(12usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn enable_superres(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(13usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_enable_superres(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(13usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn enable_cdef(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(14usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_enable_cdef(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(14usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn enable_restoration(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(15usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_enable_restoration(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(15usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn film_grain_params_present(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(16usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_film_grain_params_present(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(16usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn timing_info_present_flag(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(17usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_timing_info_present_flag(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(17usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn initial_display_delay_present_flag(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(18usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_initial_display_delay_present_flag(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(18usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn reserved(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(19usize, 13u8) as u32) }
+    }
+    #[inline]
+    pub fn set_reserved(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(19usize, 13u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn new_bitfield_1(
+        still_picture: u32,
+        reduced_still_picture_header: u32,
+        use_128x128_superblock: u32,
+        enable_filter_intra: u32,
+        enable_intra_edge_filter: u32,
+        enable_interintra_compound: u32,
+        enable_masked_compound: u32,
+        enable_warped_motion: u32,
+        enable_dual_filter: u32,
+        enable_order_hint: u32,
+        enable_jnt_comp: u32,
+        enable_ref_frame_mvs: u32,
+        frame_id_numbers_present_flag: u32,
+        enable_superres: u32,
+        enable_cdef: u32,
+        enable_restoration: u32,
+        film_grain_params_present: u32,
+        timing_info_present_flag: u32,
+        initial_display_delay_present_flag: u32,
+        reserved: u32,
+    ) -> __BindgenBitfieldUnit<[u8; 4usize]> {
+        let mut __bindgen_bitfield_unit: __BindgenBitfieldUnit<[u8; 4usize]> = Default::default();
+        __bindgen_bitfield_unit.set(0usize, 1u8, {
+            let still_picture: u32 = unsafe { ::std::mem::transmute(still_picture) };
+            still_picture as u64
+        });
+        __bindgen_bitfield_unit.set(1usize, 1u8, {
+            let reduced_still_picture_header: u32 =
+                unsafe { ::std::mem::transmute(reduced_still_picture_header) };
+            reduced_still_picture_header as u64
+        });
+        __bindgen_bitfield_unit.set(2usize, 1u8, {
+            let use_128x128_superblock: u32 =
+                unsafe { ::std::mem::transmute(use_128x128_superblock) };
+            use_128x128_superblock as u64
+        });
+        __bindgen_bitfield_unit.set(3usize, 1u8, {
+            let enable_filter_intra: u32 = unsafe { ::std::mem::transmute(enable_filter_intra) };
+            enable_filter_intra as u64
+        });
+        __bindgen_bitfield_unit.set(4usize, 1u8, {
+            let enable_intra_edge_filter: u32 =
+                unsafe { ::std::mem::transmute(enable_intra_edge_filter) };
+            enable_intra_edge_filter as u64
+        });
+        __bindgen_bitfield_unit.set(5usize, 1u8, {
+            let enable_interintra_compound: u32 =
+                unsafe { ::std::mem::transmute(enable_interintra_compound) };
+            enable_interintra_compound as u64
+        });
+        __bindgen_bitfield_unit.set(6usize, 1u8, {
+            let enable_masked_compound: u32 =
+                unsafe { ::std::mem::transmute(enable_masked_compound) };
+            enable_masked_compound as u64
+        });
+        __bindgen_bitfield_unit.set(7usize, 1u8, {
+            let enable_warped_motion: u32 = unsafe { ::std::mem::transmute(enable_warped_motion) };
+            enable_warped_motion as u64
+        });
+        __bindgen_bitfield_unit.set(8usize, 1u8, {
+            let enable_dual_filter: u32 = unsafe { ::std::mem::transmute(enable_dual_filter) };
+            enable_dual_filter as u64
+        });
+        __bindgen_bitfield_unit.set(9usize, 1u8, {
+            let enable_order_hint: u32 = unsafe { ::std::mem::transmute(enable_order_hint) };
+            enable_order_hint as u64
+        });
+        __bindgen_bitfield_unit.set(10usize, 1u8, {
+            let enable_jnt_comp: u32 = unsafe { ::std::mem::transmute(enable_jnt_comp) };
+            enable_jnt_comp as u64
+        });
+        __bindgen_bitfield_unit.set(11usize, 1u8, {
+            let enable_ref_frame_mvs: u32 = unsafe { ::std::mem::transmute(enable_ref_frame_mvs) };
+            enable_ref_frame_mvs as u64
+        });
+        __bindgen_bitfield_unit.set(12usize, 1u8, {
+            let frame_id_numbers_present_flag: u32 =
+                unsafe { ::std::mem::transmute(frame_id_numbers_present_flag) };
+            frame_id_numbers_present_flag as u64
+        });
+        __bindgen_bitfield_unit.set(13usize, 1u8, {
+            let enable_superres: u32 = unsafe { ::std::mem::transmute(enable_superres) };
+            enable_superres as u64
+        });
+        __bindgen_bitfield_unit.set(14usize, 1u8, {
+            let enable_cdef: u32 = unsafe { ::std::mem::transmute(enable_cdef) };
+            enable_cdef as u64
+        });
+        __bindgen_bitfield_unit.set(15usize, 1u8, {
+            let enable_restoration: u32 = unsafe { ::std::mem::transmute(enable_restoration) };
+            enable_restoration as u64
+        });
+        __bindgen_bitfield_unit.set(16usize, 1u8, {
+            let film_grain_params_present: u32 =
+                unsafe { ::std::mem::transmute(film_grain_params_present) };
+            film_grain_params_present as u64
+        });
+        __bindgen_bitfield_unit.set(17usize, 1u8, {
+            let timing_info_present_flag: u32 =
+                unsafe { ::std::mem::transmute(timing_info_present_flag) };
+            timing_info_present_flag as u64
+        });
+        __bindgen_bitfield_unit.set(18usize, 1u8, {
+            let initial_display_delay_present_flag: u32 =
+                unsafe { ::std::mem::transmute(initial_display_delay_present_flag) };
+            initial_display_delay_present_flag as u64
+        });
+        __bindgen_bitfield_unit.set(19usize, 13u8, {
+            let reserved: u32 = unsafe { ::std::mem::transmute(reserved) };
+            reserved as u64
+        });
+        __bindgen_bitfield_unit
+    }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct StdVideoAV1SequenceHeader {
+    pub flags: StdVideoAV1SequenceHeaderFlags,
+    pub seq_profile: StdVideoAV1Profile,
+    pub frame_width_bits_minus_1: u8,
+    pub frame_height_bits_minus_1: u8,
+    pub max_frame_width_minus_1: u16,
+    pub max_frame_height_minus_1: u16,
+    pub delta_frame_id_length_minus_2: u8,
+    pub additional_frame_id_length_minus_1: u8,
+    pub order_hint_bits_minus_1: u8,
+    pub seq_force_integer_mv: u8,
+    pub seq_force_screen_content_tools: u8,
+    pub reserved1: [u8; 5usize],
+    pub pColorConfig: *const StdVideoAV1ColorConfig,
+    pub pTimingInfo: *const StdVideoAV1TimingInfo,
+}
+#[test]
+fn bindgen_test_layout_StdVideoAV1SequenceHeader() {
+    const UNINIT: ::std::mem::MaybeUninit<StdVideoAV1SequenceHeader> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<StdVideoAV1SequenceHeader>(),
+        40usize,
+        concat!("Size of: ", stringify!(StdVideoAV1SequenceHeader))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<StdVideoAV1SequenceHeader>(),
+        8usize,
+        concat!("Alignment of ", stringify!(StdVideoAV1SequenceHeader))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).flags) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1SequenceHeader),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).seq_profile) as usize - ptr as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1SequenceHeader),
+            "::",
+            stringify!(seq_profile)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).frame_width_bits_minus_1) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1SequenceHeader),
+            "::",
+            stringify!(frame_width_bits_minus_1)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).frame_height_bits_minus_1) as usize - ptr as usize },
+        9usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1SequenceHeader),
+            "::",
+            stringify!(frame_height_bits_minus_1)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).max_frame_width_minus_1) as usize - ptr as usize },
+        10usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1SequenceHeader),
+            "::",
+            stringify!(max_frame_width_minus_1)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).max_frame_height_minus_1) as usize - ptr as usize },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1SequenceHeader),
+            "::",
+            stringify!(max_frame_height_minus_1)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            ::std::ptr::addr_of!((*ptr).delta_frame_id_length_minus_2) as usize - ptr as usize
+        },
+        14usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1SequenceHeader),
+            "::",
+            stringify!(delta_frame_id_length_minus_2)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            ::std::ptr::addr_of!((*ptr).additional_frame_id_length_minus_1) as usize - ptr as usize
+        },
+        15usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1SequenceHeader),
+            "::",
+            stringify!(additional_frame_id_length_minus_1)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).order_hint_bits_minus_1) as usize - ptr as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1SequenceHeader),
+            "::",
+            stringify!(order_hint_bits_minus_1)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).seq_force_integer_mv) as usize - ptr as usize },
+        17usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1SequenceHeader),
+            "::",
+            stringify!(seq_force_integer_mv)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            ::std::ptr::addr_of!((*ptr).seq_force_screen_content_tools) as usize - ptr as usize
+        },
+        18usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1SequenceHeader),
+            "::",
+            stringify!(seq_force_screen_content_tools)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).reserved1) as usize - ptr as usize },
+        19usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1SequenceHeader),
+            "::",
+            stringify!(reserved1)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pColorConfig) as usize - ptr as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1SequenceHeader),
+            "::",
+            stringify!(pColorConfig)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pTimingInfo) as usize - ptr as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoAV1SequenceHeader),
+            "::",
+            stringify!(pTimingInfo)
+        )
+    );
+}
+#[repr(C)]
+#[repr(align(4))]
+#[derive(Debug, Copy, Clone)]
+pub struct StdVideoDecodeAV1PictureInfoFlags {
+    pub _bitfield_align_1: [u8; 0],
+    pub _bitfield_1: __BindgenBitfieldUnit<[u8; 4usize]>,
+}
+#[test]
+fn bindgen_test_layout_StdVideoDecodeAV1PictureInfoFlags() {
+    assert_eq!(
+        ::std::mem::size_of::<StdVideoDecodeAV1PictureInfoFlags>(),
+        4usize,
+        concat!("Size of: ", stringify!(StdVideoDecodeAV1PictureInfoFlags))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<StdVideoDecodeAV1PictureInfoFlags>(),
+        4usize,
+        concat!(
+            "Alignment of ",
+            stringify!(StdVideoDecodeAV1PictureInfoFlags)
+        )
+    );
+}
+impl StdVideoDecodeAV1PictureInfoFlags {
+    #[inline]
+    pub fn error_resilient_mode(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(0usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_error_resilient_mode(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(0usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn disable_cdf_update(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(1usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_disable_cdf_update(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(1usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn use_superres(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(2usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_use_superres(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(2usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn render_and_frame_size_different(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(3usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_render_and_frame_size_different(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(3usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn allow_screen_content_tools(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(4usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_allow_screen_content_tools(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(4usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn is_filter_switchable(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(5usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_is_filter_switchable(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(5usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn force_integer_mv(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(6usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_force_integer_mv(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(6usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn frame_size_override_flag(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(7usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_frame_size_override_flag(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(7usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn buffer_removal_time_present_flag(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(8usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_buffer_removal_time_present_flag(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(8usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn allow_intrabc(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(9usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_allow_intrabc(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(9usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn frame_refs_short_signaling(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(10usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_frame_refs_short_signaling(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(10usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn allow_high_precision_mv(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(11usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_allow_high_precision_mv(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(11usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn is_motion_mode_switchable(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(12usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_is_motion_mode_switchable(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(12usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn use_ref_frame_mvs(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(13usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_use_ref_frame_mvs(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(13usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn disable_frame_end_update_cdf(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(14usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_disable_frame_end_update_cdf(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(14usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn allow_warped_motion(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(15usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_allow_warped_motion(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(15usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn reduced_tx_set(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(16usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_reduced_tx_set(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(16usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn reference_select(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(17usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_reference_select(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(17usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn skip_mode_present(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(18usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_skip_mode_present(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(18usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn delta_q_present(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(19usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_delta_q_present(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(19usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn delta_lf_present(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(20usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_delta_lf_present(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(20usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn delta_lf_multi(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(21usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_delta_lf_multi(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(21usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn segmentation_enabled(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(22usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_segmentation_enabled(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(22usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn segmentation_update_map(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(23usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_segmentation_update_map(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(23usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn segmentation_temporal_update(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(24usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_segmentation_temporal_update(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(24usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn segmentation_update_data(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(25usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_segmentation_update_data(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(25usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn UsesLr(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(26usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_UsesLr(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(26usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn usesChromaLr(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(27usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_usesChromaLr(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(27usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn apply_grain(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(28usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_apply_grain(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(28usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn reserved(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(29usize, 3u8) as u32) }
+    }
+    #[inline]
+    pub fn set_reserved(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(29usize, 3u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn new_bitfield_1(
+        error_resilient_mode: u32,
+        disable_cdf_update: u32,
+        use_superres: u32,
+        render_and_frame_size_different: u32,
+        allow_screen_content_tools: u32,
+        is_filter_switchable: u32,
+        force_integer_mv: u32,
+        frame_size_override_flag: u32,
+        buffer_removal_time_present_flag: u32,
+        allow_intrabc: u32,
+        frame_refs_short_signaling: u32,
+        allow_high_precision_mv: u32,
+        is_motion_mode_switchable: u32,
+        use_ref_frame_mvs: u32,
+        disable_frame_end_update_cdf: u32,
+        allow_warped_motion: u32,
+        reduced_tx_set: u32,
+        reference_select: u32,
+        skip_mode_present: u32,
+        delta_q_present: u32,
+        delta_lf_present: u32,
+        delta_lf_multi: u32,
+        segmentation_enabled: u32,
+        segmentation_update_map: u32,
+        segmentation_temporal_update: u32,
+        segmentation_update_data: u32,
+        UsesLr: u32,
+        usesChromaLr: u32,
+        apply_grain: u32,
+        reserved: u32,
+    ) -> __BindgenBitfieldUnit<[u8; 4usize]> {
+        let mut __bindgen_bitfield_unit: __BindgenBitfieldUnit<[u8; 4usize]> = Default::default();
+        __bindgen_bitfield_unit.set(0usize, 1u8, {
+            let error_resilient_mode: u32 = unsafe { ::std::mem::transmute(error_resilient_mode) };
+            error_resilient_mode as u64
+        });
+        __bindgen_bitfield_unit.set(1usize, 1u8, {
+            let disable_cdf_update: u32 = unsafe { ::std::mem::transmute(disable_cdf_update) };
+            disable_cdf_update as u64
+        });
+        __bindgen_bitfield_unit.set(2usize, 1u8, {
+            let use_superres: u32 = unsafe { ::std::mem::transmute(use_superres) };
+            use_superres as u64
+        });
+        __bindgen_bitfield_unit.set(3usize, 1u8, {
+            let render_and_frame_size_different: u32 =
+                unsafe { ::std::mem::transmute(render_and_frame_size_different) };
+            render_and_frame_size_different as u64
+        });
+        __bindgen_bitfield_unit.set(4usize, 1u8, {
+            let allow_screen_content_tools: u32 =
+                unsafe { ::std::mem::transmute(allow_screen_content_tools) };
+            allow_screen_content_tools as u64
+        });
+        __bindgen_bitfield_unit.set(5usize, 1u8, {
+            let is_filter_switchable: u32 = unsafe { ::std::mem::transmute(is_filter_switchable) };
+            is_filter_switchable as u64
+        });
+        __bindgen_bitfield_unit.set(6usize, 1u8, {
+            let force_integer_mv: u32 = unsafe { ::std::mem::transmute(force_integer_mv) };
+            force_integer_mv as u64
+        });
+        __bindgen_bitfield_unit.set(7usize, 1u8, {
+            let frame_size_override_flag: u32 =
+                unsafe { ::std::mem::transmute(frame_size_override_flag) };
+            frame_size_override_flag as u64
+        });
+        __bindgen_bitfield_unit.set(8usize, 1u8, {
+            let buffer_removal_time_present_flag: u32 =
+                unsafe { ::std::mem::transmute(buffer_removal_time_present_flag) };
+            buffer_removal_time_present_flag as u64
+        });
+        __bindgen_bitfield_unit.set(9usize, 1u8, {
+            let allow_intrabc: u32 = unsafe { ::std::mem::transmute(allow_intrabc) };
+            allow_intrabc as u64
+        });
+        __bindgen_bitfield_unit.set(10usize, 1u8, {
+            let frame_refs_short_signaling: u32 =
+                unsafe { ::std::mem::transmute(frame_refs_short_signaling) };
+            frame_refs_short_signaling as u64
+        });
+        __bindgen_bitfield_unit.set(11usize, 1u8, {
+            let allow_high_precision_mv: u32 =
+                unsafe { ::std::mem::transmute(allow_high_precision_mv) };
+            allow_high_precision_mv as u64
+        });
+        __bindgen_bitfield_unit.set(12usize, 1u8, {
+            let is_motion_mode_switchable: u32 =
+                unsafe { ::std::mem::transmute(is_motion_mode_switchable) };
+            is_motion_mode_switchable as u64
+        });
+        __bindgen_bitfield_unit.set(13usize, 1u8, {
+            let use_ref_frame_mvs: u32 = unsafe { ::std::mem::transmute(use_ref_frame_mvs) };
+            use_ref_frame_mvs as u64
+        });
+        __bindgen_bitfield_unit.set(14usize, 1u8, {
+            let disable_frame_end_update_cdf: u32 =
+                unsafe { ::std::mem::transmute(disable_frame_end_update_cdf) };
+            disable_frame_end_update_cdf as u64
+        });
+        __bindgen_bitfield_unit.set(15usize, 1u8, {
+            let allow_warped_motion: u32 = unsafe { ::std::mem::transmute(allow_warped_motion) };
+            allow_warped_motion as u64
+        });
+        __bindgen_bitfield_unit.set(16usize, 1u8, {
+            let reduced_tx_set: u32 = unsafe { ::std::mem::transmute(reduced_tx_set) };
+            reduced_tx_set as u64
+        });
+        __bindgen_bitfield_unit.set(17usize, 1u8, {
+            let reference_select: u32 = unsafe { ::std::mem::transmute(reference_select) };
+            reference_select as u64
+        });
+        __bindgen_bitfield_unit.set(18usize, 1u8, {
+            let skip_mode_present: u32 = unsafe { ::std::mem::transmute(skip_mode_present) };
+            skip_mode_present as u64
+        });
+        __bindgen_bitfield_unit.set(19usize, 1u8, {
+            let delta_q_present: u32 = unsafe { ::std::mem::transmute(delta_q_present) };
+            delta_q_present as u64
+        });
+        __bindgen_bitfield_unit.set(20usize, 1u8, {
+            let delta_lf_present: u32 = unsafe { ::std::mem::transmute(delta_lf_present) };
+            delta_lf_present as u64
+        });
+        __bindgen_bitfield_unit.set(21usize, 1u8, {
+            let delta_lf_multi: u32 = unsafe { ::std::mem::transmute(delta_lf_multi) };
+            delta_lf_multi as u64
+        });
+        __bindgen_bitfield_unit.set(22usize, 1u8, {
+            let segmentation_enabled: u32 = unsafe { ::std::mem::transmute(segmentation_enabled) };
+            segmentation_enabled as u64
+        });
+        __bindgen_bitfield_unit.set(23usize, 1u8, {
+            let segmentation_update_map: u32 =
+                unsafe { ::std::mem::transmute(segmentation_update_map) };
+            segmentation_update_map as u64
+        });
+        __bindgen_bitfield_unit.set(24usize, 1u8, {
+            let segmentation_temporal_update: u32 =
+                unsafe { ::std::mem::transmute(segmentation_temporal_update) };
+            segmentation_temporal_update as u64
+        });
+        __bindgen_bitfield_unit.set(25usize, 1u8, {
+            let segmentation_update_data: u32 =
+                unsafe { ::std::mem::transmute(segmentation_update_data) };
+            segmentation_update_data as u64
+        });
+        __bindgen_bitfield_unit.set(26usize, 1u8, {
+            let UsesLr: u32 = unsafe { ::std::mem::transmute(UsesLr) };
+            UsesLr as u64
+        });
+        __bindgen_bitfield_unit.set(27usize, 1u8, {
+            let usesChromaLr: u32 = unsafe { ::std::mem::transmute(usesChromaLr) };
+            usesChromaLr as u64
+        });
+        __bindgen_bitfield_unit.set(28usize, 1u8, {
+            let apply_grain: u32 = unsafe { ::std::mem::transmute(apply_grain) };
+            apply_grain as u64
+        });
+        __bindgen_bitfield_unit.set(29usize, 3u8, {
+            let reserved: u32 = unsafe { ::std::mem::transmute(reserved) };
+            reserved as u64
+        });
+        __bindgen_bitfield_unit
+    }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct StdVideoDecodeAV1PictureInfo {
+    pub flags: StdVideoDecodeAV1PictureInfoFlags,
+    pub frame_type: StdVideoAV1FrameType,
+    pub current_frame_id: u32,
+    pub OrderHint: u8,
+    pub primary_ref_frame: u8,
+    pub refresh_frame_flags: u8,
+    pub reserved1: u8,
+    pub interpolation_filter: StdVideoAV1InterpolationFilter,
+    pub TxMode: StdVideoAV1TxMode,
+    pub delta_q_res: u8,
+    pub delta_lf_res: u8,
+    pub SkipModeFrame: [u8; 2usize],
+    pub coded_denom: u8,
+    pub reserved2: [u8; 3usize],
+    pub OrderHints: [u8; 8usize],
+    pub expectedFrameId: [u32; 8usize],
+    pub pTileInfo: *const StdVideoAV1TileInfo,
+    pub pQuantization: *const StdVideoAV1Quantization,
+    pub pSegmentation: *const StdVideoAV1Segmentation,
+    pub pLoopFilter: *const StdVideoAV1LoopFilter,
+    pub pCDEF: *const StdVideoAV1CDEF,
+    pub pLoopRestoration: *const StdVideoAV1LoopRestoration,
+    pub pGlobalMotion: *const StdVideoAV1GlobalMotion,
+    pub pFilmGrain: *const StdVideoAV1FilmGrain,
+}
+#[test]
+fn bindgen_test_layout_StdVideoDecodeAV1PictureInfo() {
+    const UNINIT: ::std::mem::MaybeUninit<StdVideoDecodeAV1PictureInfo> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<StdVideoDecodeAV1PictureInfo>(),
+        136usize,
+        concat!("Size of: ", stringify!(StdVideoDecodeAV1PictureInfo))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<StdVideoDecodeAV1PictureInfo>(),
+        8usize,
+        concat!("Alignment of ", stringify!(StdVideoDecodeAV1PictureInfo))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).flags) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoDecodeAV1PictureInfo),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).frame_type) as usize - ptr as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoDecodeAV1PictureInfo),
+            "::",
+            stringify!(frame_type)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).current_frame_id) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoDecodeAV1PictureInfo),
+            "::",
+            stringify!(current_frame_id)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).OrderHint) as usize - ptr as usize },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoDecodeAV1PictureInfo),
+            "::",
+            stringify!(OrderHint)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).primary_ref_frame) as usize - ptr as usize },
+        13usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoDecodeAV1PictureInfo),
+            "::",
+            stringify!(primary_ref_frame)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).refresh_frame_flags) as usize - ptr as usize },
+        14usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoDecodeAV1PictureInfo),
+            "::",
+            stringify!(refresh_frame_flags)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).reserved1) as usize - ptr as usize },
+        15usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoDecodeAV1PictureInfo),
+            "::",
+            stringify!(reserved1)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).interpolation_filter) as usize - ptr as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoDecodeAV1PictureInfo),
+            "::",
+            stringify!(interpolation_filter)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).TxMode) as usize - ptr as usize },
+        20usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoDecodeAV1PictureInfo),
+            "::",
+            stringify!(TxMode)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).delta_q_res) as usize - ptr as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoDecodeAV1PictureInfo),
+            "::",
+            stringify!(delta_q_res)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).delta_lf_res) as usize - ptr as usize },
+        25usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoDecodeAV1PictureInfo),
+            "::",
+            stringify!(delta_lf_res)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).SkipModeFrame) as usize - ptr as usize },
+        26usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoDecodeAV1PictureInfo),
+            "::",
+            stringify!(SkipModeFrame)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).coded_denom) as usize - ptr as usize },
+        28usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoDecodeAV1PictureInfo),
+            "::",
+            stringify!(coded_denom)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).reserved2) as usize - ptr as usize },
+        29usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoDecodeAV1PictureInfo),
+            "::",
+            stringify!(reserved2)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).OrderHints) as usize - ptr as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoDecodeAV1PictureInfo),
+            "::",
+            stringify!(OrderHints)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).expectedFrameId) as usize - ptr as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoDecodeAV1PictureInfo),
+            "::",
+            stringify!(expectedFrameId)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pTileInfo) as usize - ptr as usize },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoDecodeAV1PictureInfo),
+            "::",
+            stringify!(pTileInfo)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pQuantization) as usize - ptr as usize },
+        80usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoDecodeAV1PictureInfo),
+            "::",
+            stringify!(pQuantization)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pSegmentation) as usize - ptr as usize },
+        88usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoDecodeAV1PictureInfo),
+            "::",
+            stringify!(pSegmentation)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pLoopFilter) as usize - ptr as usize },
+        96usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoDecodeAV1PictureInfo),
+            "::",
+            stringify!(pLoopFilter)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pCDEF) as usize - ptr as usize },
+        104usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoDecodeAV1PictureInfo),
+            "::",
+            stringify!(pCDEF)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pLoopRestoration) as usize - ptr as usize },
+        112usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoDecodeAV1PictureInfo),
+            "::",
+            stringify!(pLoopRestoration)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pGlobalMotion) as usize - ptr as usize },
+        120usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoDecodeAV1PictureInfo),
+            "::",
+            stringify!(pGlobalMotion)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pFilmGrain) as usize - ptr as usize },
+        128usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoDecodeAV1PictureInfo),
+            "::",
+            stringify!(pFilmGrain)
+        )
+    );
+}
+#[repr(C)]
+#[repr(align(4))]
+#[derive(Debug, Copy, Clone)]
+pub struct StdVideoDecodeAV1ReferenceInfoFlags {
+    pub _bitfield_align_1: [u32; 0],
+    pub _bitfield_1: __BindgenBitfieldUnit<[u8; 4usize]>,
+}
+#[test]
+fn bindgen_test_layout_StdVideoDecodeAV1ReferenceInfoFlags() {
+    assert_eq!(
+        ::std::mem::size_of::<StdVideoDecodeAV1ReferenceInfoFlags>(),
+        4usize,
+        concat!("Size of: ", stringify!(StdVideoDecodeAV1ReferenceInfoFlags))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<StdVideoDecodeAV1ReferenceInfoFlags>(),
+        4usize,
+        concat!(
+            "Alignment of ",
+            stringify!(StdVideoDecodeAV1ReferenceInfoFlags)
+        )
+    );
+}
+impl StdVideoDecodeAV1ReferenceInfoFlags {
+    #[inline]
+    pub fn disable_frame_end_update_cdf(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(0usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_disable_frame_end_update_cdf(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(0usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn segmentation_enabled(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(1usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set_segmentation_enabled(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(1usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn reserved(&self) -> u32 {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(2usize, 30u8) as u32) }
+    }
+    #[inline]
+    pub fn set_reserved(&mut self, val: u32) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(2usize, 30u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn new_bitfield_1(
+        disable_frame_end_update_cdf: u32,
+        segmentation_enabled: u32,
+        reserved: u32,
+    ) -> __BindgenBitfieldUnit<[u8; 4usize]> {
+        let mut __bindgen_bitfield_unit: __BindgenBitfieldUnit<[u8; 4usize]> = Default::default();
+        __bindgen_bitfield_unit.set(0usize, 1u8, {
+            let disable_frame_end_update_cdf: u32 =
+                unsafe { ::std::mem::transmute(disable_frame_end_update_cdf) };
+            disable_frame_end_update_cdf as u64
+        });
+        __bindgen_bitfield_unit.set(1usize, 1u8, {
+            let segmentation_enabled: u32 = unsafe { ::std::mem::transmute(segmentation_enabled) };
+            segmentation_enabled as u64
+        });
+        __bindgen_bitfield_unit.set(2usize, 30u8, {
+            let reserved: u32 = unsafe { ::std::mem::transmute(reserved) };
+            reserved as u64
+        });
+        __bindgen_bitfield_unit
+    }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct StdVideoDecodeAV1ReferenceInfo {
+    pub flags: StdVideoDecodeAV1ReferenceInfoFlags,
+    pub frame_type: u8,
+    pub RefFrameSignBias: u8,
+    pub OrderHint: u8,
+    pub SavedOrderHints: [u8; 8usize],
+}
+#[test]
+fn bindgen_test_layout_StdVideoDecodeAV1ReferenceInfo() {
+    const UNINIT: ::std::mem::MaybeUninit<StdVideoDecodeAV1ReferenceInfo> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<StdVideoDecodeAV1ReferenceInfo>(),
+        16usize,
+        concat!("Size of: ", stringify!(StdVideoDecodeAV1ReferenceInfo))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<StdVideoDecodeAV1ReferenceInfo>(),
+        4usize,
+        concat!("Alignment of ", stringify!(StdVideoDecodeAV1ReferenceInfo))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).flags) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoDecodeAV1ReferenceInfo),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).frame_type) as usize - ptr as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoDecodeAV1ReferenceInfo),
+            "::",
+            stringify!(frame_type)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).RefFrameSignBias) as usize - ptr as usize },
+        5usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoDecodeAV1ReferenceInfo),
+            "::",
+            stringify!(RefFrameSignBias)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).OrderHint) as usize - ptr as usize },
+        6usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoDecodeAV1ReferenceInfo),
+            "::",
+            stringify!(OrderHint)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).SavedOrderHints) as usize - ptr as usize },
+        7usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(StdVideoDecodeAV1ReferenceInfo),
+            "::",
+            stringify!(SavedOrderHints)
+        )
+    );
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct StdVideoEncodeH264WeightTableFlags {

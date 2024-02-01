@@ -6493,6 +6493,13 @@ impl fmt::Debug for StructureType {
             Self::MULTIVIEW_PER_VIEW_RENDER_AREAS_RENDER_PASS_BEGIN_INFO_QCOM => {
                 Some("MULTIVIEW_PER_VIEW_RENDER_AREAS_RENDER_PASS_BEGIN_INFO_QCOM")
             }
+            Self::VIDEO_DECODE_AV1_CAPABILITIES_KHR => Some("VIDEO_DECODE_AV1_CAPABILITIES_KHR"),
+            Self::VIDEO_DECODE_AV1_PICTURE_INFO_KHR => Some("VIDEO_DECODE_AV1_PICTURE_INFO_KHR"),
+            Self::VIDEO_DECODE_AV1_PROFILE_INFO_KHR => Some("VIDEO_DECODE_AV1_PROFILE_INFO_KHR"),
+            Self::VIDEO_DECODE_AV1_SESSION_PARAMETERS_CREATE_INFO_KHR => {
+                Some("VIDEO_DECODE_AV1_SESSION_PARAMETERS_CREATE_INFO_KHR")
+            }
+            Self::VIDEO_DECODE_AV1_DPB_SLOT_INFO_KHR => Some("VIDEO_DECODE_AV1_DPB_SLOT_INFO_KHR"),
             Self::PHYSICAL_DEVICE_VIDEO_MAINTENANCE_1_FEATURES_KHR => {
                 Some("PHYSICAL_DEVICE_VIDEO_MAINTENANCE_1_FEATURES_KHR")
             }
@@ -6948,6 +6955,11 @@ impl fmt::Debug for SubgroupFeatureFlags {
             (SubgroupFeatureFlags::CLUSTERED.0, "CLUSTERED"),
             (SubgroupFeatureFlags::QUAD.0, "QUAD"),
             (SubgroupFeatureFlags::PARTITIONED_NV.0, "PARTITIONED_NV"),
+            (SubgroupFeatureFlags::ROTATE_KHR.0, "ROTATE_KHR"),
+            (
+                SubgroupFeatureFlags::ROTATE_CLUSTERED_KHR.0,
+                "ROTATE_CLUSTERED_KHR",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -7318,6 +7330,7 @@ impl fmt::Debug for VideoCodecOperationFlagsKHR {
             (VideoCodecOperationFlagsKHR::ENCODE_H265.0, "ENCODE_H265"),
             (VideoCodecOperationFlagsKHR::DECODE_H264.0, "DECODE_H264"),
             (VideoCodecOperationFlagsKHR::DECODE_H265.0, "DECODE_H265"),
+            (VideoCodecOperationFlagsKHR::DECODE_AV1.0, "DECODE_AV1"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
