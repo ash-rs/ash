@@ -13395,6 +13395,27 @@ impl StructureType {
     pub const MEMORY_MAP_INFO_KHR: Self = Self(1_000_271_000);
     pub const MEMORY_UNMAP_INFO_KHR: Self = Self(1_000_271_001);
 }
+impl ExtMapMemoryPlacedFn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_map_memory_placed\0") };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct ExtMapMemoryPlacedFn;
+#[doc = "Generated from 'VK_EXT_map_memory_placed'"]
+impl MemoryMapFlags {
+    pub const PLACED_EXT: Self = Self(0b1);
+}
+#[doc = "Generated from 'VK_EXT_map_memory_placed'"]
+impl MemoryUnmapFlagsKHR {
+    pub const RESERVE_EXT: Self = Self(0b1);
+}
+#[doc = "Generated from 'VK_EXT_map_memory_placed'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_MAP_MEMORY_PLACED_FEATURES_EXT: Self = Self(1_000_272_000);
+    pub const PHYSICAL_DEVICE_MAP_MEMORY_PLACED_PROPERTIES_EXT: Self = Self(1_000_272_001);
+    pub const MEMORY_MAP_PLACED_INFO_EXT: Self = Self(1_000_272_002);
+}
 impl ExtShaderAtomicFloat2Fn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
         ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_atomic_float2\0")
@@ -21652,7 +21673,7 @@ impl ObjectType {
 }
 #[doc = "Generated from 'VK_EXT_shader_object'"]
 impl Result {
-    pub const ERROR_INCOMPATIBLE_SHADER_BINARY_EXT: Self = Self(1_000_482_000);
+    pub const INCOMPATIBLE_SHADER_BINARY_EXT: Self = Self(1_000_482_000);
 }
 #[doc = "Generated from 'VK_EXT_shader_object'"]
 impl ShaderCreateFlagsEXT {
@@ -22742,4 +22763,16 @@ impl DescriptorPoolCreateFlags {
 impl StructureType {
     pub const PHYSICAL_DEVICE_DESCRIPTOR_POOL_OVERALLOCATION_FEATURES_NV: Self =
         Self(1_000_546_000);
+}
+impl NvShaderAtomicFloat16VectorFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_shader_atomic_float16_vector\0")
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct NvShaderAtomicFloat16VectorFn;
+#[doc = "Generated from 'VK_NV_shader_atomic_float16_vector'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT16_VECTOR_FEATURES_NV: Self = Self(1_000_563_000);
 }

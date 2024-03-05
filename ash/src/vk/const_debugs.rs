@@ -3122,7 +3122,7 @@ impl fmt::Debug for MemoryHeapFlags {
 }
 impl fmt::Debug for MemoryMapFlags {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[];
+        const KNOWN: &[(Flags, &str)] = &[(MemoryMapFlags::PLACED_EXT.0, "PLACED_EXT")];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -3165,7 +3165,7 @@ impl fmt::Debug for MemoryPropertyFlags {
 }
 impl fmt::Debug for MemoryUnmapFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[];
+        const KNOWN: &[(Flags, &str)] = &[(MemoryUnmapFlagsKHR::RESERVE_EXT.0, "RESERVE_EXT")];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -5795,6 +5795,13 @@ impl fmt::Debug for StructureType {
             }
             Self::MEMORY_MAP_INFO_KHR => Some("MEMORY_MAP_INFO_KHR"),
             Self::MEMORY_UNMAP_INFO_KHR => Some("MEMORY_UNMAP_INFO_KHR"),
+            Self::PHYSICAL_DEVICE_MAP_MEMORY_PLACED_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_MAP_MEMORY_PLACED_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_MAP_MEMORY_PLACED_PROPERTIES_EXT => {
+                Some("PHYSICAL_DEVICE_MAP_MEMORY_PLACED_PROPERTIES_EXT")
+            }
+            Self::MEMORY_MAP_PLACED_INFO_EXT => Some("MEMORY_MAP_PLACED_INFO_EXT"),
             Self::PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_2_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_2_FEATURES_EXT")
             }
@@ -6596,6 +6603,9 @@ impl fmt::Debug for StructureType {
             }
             Self::PHYSICAL_DEVICE_DESCRIPTOR_POOL_OVERALLOCATION_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_DESCRIPTOR_POOL_OVERALLOCATION_FEATURES_NV")
+            }
+            Self::PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT16_VECTOR_FEATURES_NV => {
+                Some("PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT16_VECTOR_FEATURES_NV")
             }
             Self::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES => {
                 Some("PHYSICAL_DEVICE_SUBGROUP_PROPERTIES")
