@@ -22764,6 +22764,17 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_DESCRIPTOR_POOL_OVERALLOCATION_FEATURES_NV: Self =
         Self(1_000_546_000);
 }
+impl NvRawAccessChainsFn {
+    pub const NAME: &'static ::std::ffi::CStr =
+        unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_raw_access_chains\0") };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct NvRawAccessChainsFn;
+#[doc = "Generated from 'VK_NV_raw_access_chains'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_RAW_ACCESS_CHAINS_FEATURES_NV: Self = Self(1_000_555_000);
+}
 impl NvShaderAtomicFloat16VectorFn {
     pub const NAME: &'static ::std::ffi::CStr = unsafe {
         ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_shader_atomic_float16_vector\0")

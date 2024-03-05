@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 278;
+pub const HEADER_VERSION: u32 = 279;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -3889,6 +3889,7 @@ impl ::std::default::Default for ComputePipelineIndirectBufferInfoNV<'_> {
 unsafe impl<'a> TaggedStructure for ComputePipelineIndirectBufferInfoNV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMPUTE_PIPELINE_INDIRECT_BUFFER_INFO_NV;
 }
+unsafe impl ExtendsComputePipelineCreateInfo for ComputePipelineIndirectBufferInfoNV<'_> {}
 impl<'a> ComputePipelineIndirectBufferInfoNV<'a> {
     #[inline]
     pub fn device_address(mut self, device_address: DeviceAddress) -> Self {
@@ -55446,6 +55447,41 @@ impl<'a> MemoryMapPlacedInfoEXT<'a> {
     #[inline]
     pub fn placed_address(mut self, placed_address: *mut c_void) -> Self {
         self.p_placed_address = placed_address;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceRawAccessChainsFeaturesNV.html>"]
+#[must_use]
+pub struct PhysicalDeviceRawAccessChainsFeaturesNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub shader_raw_access_chains: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceRawAccessChainsFeaturesNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            shader_raw_access_chains: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceRawAccessChainsFeaturesNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_RAW_ACCESS_CHAINS_FEATURES_NV;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRawAccessChainsFeaturesNV<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRawAccessChainsFeaturesNV<'_> {}
+impl<'a> PhysicalDeviceRawAccessChainsFeaturesNV<'a> {
+    #[inline]
+    pub fn shader_raw_access_chains(mut self, shader_raw_access_chains: bool) -> Self {
+        self.shader_raw_access_chains = shader_raw_access_chains.into();
         self
     }
 }
