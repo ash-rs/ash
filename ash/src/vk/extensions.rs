@@ -22787,3 +22787,15 @@ pub struct NvShaderAtomicFloat16VectorFn;
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT16_VECTOR_FEATURES_NV: Self = Self(1_000_563_000);
 }
+impl NvRayTracingValidationFn {
+    pub const NAME: &'static ::std::ffi::CStr = unsafe {
+        ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_ray_tracing_validation\0")
+    };
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[derive(Clone)]
+pub struct NvRayTracingValidationFn;
+#[doc = "Generated from 'VK_NV_ray_tracing_validation'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_RAY_TRACING_VALIDATION_FEATURES_NV: Self = Self(1_000_568_000);
+}

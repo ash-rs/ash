@@ -58,7 +58,7 @@ pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_3.html>"]
 pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 279;
+pub const HEADER_VERSION: u32 = 280;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 3, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -44543,6 +44543,41 @@ impl<'a> PhysicalDeviceRayTracingMotionBlurFeaturesNV<'a> {
     ) -> Self {
         self.ray_tracing_motion_blur_pipeline_trace_rays_indirect =
             ray_tracing_motion_blur_pipeline_trace_rays_indirect.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceRayTracingValidationFeaturesNV.html>"]
+#[must_use]
+pub struct PhysicalDeviceRayTracingValidationFeaturesNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub ray_tracing_validation: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+impl ::std::default::Default for PhysicalDeviceRayTracingValidationFeaturesNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::std::ptr::null_mut(),
+            ray_tracing_validation: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceRayTracingValidationFeaturesNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_RAY_TRACING_VALIDATION_FEATURES_NV;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRayTracingValidationFeaturesNV<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRayTracingValidationFeaturesNV<'_> {}
+impl<'a> PhysicalDeviceRayTracingValidationFeaturesNV<'a> {
+    #[inline]
+    pub fn ray_tracing_validation(mut self, ray_tracing_validation: bool) -> Self {
+        self.ray_tracing_validation = ray_tracing_validation.into();
         self
     }
 }

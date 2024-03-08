@@ -6610,6 +6610,9 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT16_VECTOR_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT16_VECTOR_FEATURES_NV")
             }
+            Self::PHYSICAL_DEVICE_RAY_TRACING_VALIDATION_FEATURES_NV => {
+                Some("PHYSICAL_DEVICE_RAY_TRACING_VALIDATION_FEATURES_NV")
+            }
             Self::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES => {
                 Some("PHYSICAL_DEVICE_SUBGROUP_PROPERTIES")
             }
