@@ -42,4 +42,9 @@ impl CooperativeMatrix {
     pub fn fp(&self) -> &vk::KhrCooperativeMatrixFn {
         &self.fp
     }
+
+    #[inline]
+    pub unsafe fn fp_mut(&mut self) -> &mut vk::KhrCooperativeMatrixFn {
+        &mut self.fp
+    }
 }

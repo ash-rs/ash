@@ -709,6 +709,11 @@ impl ShaderObject {
     }
 
     #[inline]
+    pub unsafe fn fp_mut(&mut self) -> &mut vk::ExtShaderObjectFn {
+        &mut self.fp
+    }
+
+    #[inline]
     pub fn device(&self) -> vk::Device {
         self.handle
     }

@@ -38,4 +38,9 @@ impl DynamicRendering {
     pub fn fp(&self) -> &vk::KhrDynamicRenderingFn {
         &self.fp
     }
+
+    #[inline]
+    pub unsafe fn fp_mut(&mut self) -> &mut vk::KhrDynamicRenderingFn {
+        &mut self.fp
+    }
 }

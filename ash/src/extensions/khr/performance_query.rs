@@ -113,6 +113,11 @@ impl PerformanceQuery {
     }
 
     #[inline]
+    pub unsafe fn fp_mut(&mut self) -> &mut vk::KhrPerformanceQueryFn {
+        &mut self.fp
+    }
+
+    #[inline]
     pub fn instance(&self) -> vk::Instance {
         self.handle
     }

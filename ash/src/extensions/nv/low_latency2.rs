@@ -80,6 +80,11 @@ impl LowLatency2 {
     }
 
     #[inline]
+    pub unsafe fn fp_mut(&mut self) -> &mut vk::NvLowLatency2Fn {
+        &mut self.fp
+    }
+
+    #[inline]
     pub fn device(&self) -> vk::Device {
         self.handle
     }

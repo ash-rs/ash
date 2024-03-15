@@ -80,4 +80,9 @@ impl GetSurfaceCapabilities2 {
     pub fn fp(&self) -> &vk::KhrGetSurfaceCapabilities2Fn {
         &self.fp
     }
+
+    #[inline]
+    pub unsafe fn fp_mut(&mut self) -> &mut vk::KhrGetSurfaceCapabilities2Fn {
+        &mut self.fp
+    }
 }

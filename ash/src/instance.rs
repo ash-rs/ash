@@ -346,7 +346,7 @@ impl Instance {
     pub fn fp_v1_0(&self) -> &vk::InstanceFnV1_0 {
         &self.instance_fn_1_0
     }
-    
+
     #[inline]
     pub unsafe fn fp_v1_0_mut(&mut self) -> &mut vk::InstanceFnV1_0 {
         &mut self.instance_fn_1_0

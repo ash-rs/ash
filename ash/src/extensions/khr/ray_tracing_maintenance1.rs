@@ -36,4 +36,9 @@ impl RayTracingMaintenance1 {
     pub fn fp(&self) -> &vk::KhrRayTracingMaintenance1Fn {
         &self.fp
     }
+
+    #[inline]
+    pub unsafe fn fp_mut(&mut self) -> &mut vk::KhrRayTracingMaintenance1Fn {
+        &mut self.fp
+    }
 }

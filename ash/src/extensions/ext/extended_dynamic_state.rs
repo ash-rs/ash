@@ -190,4 +190,9 @@ impl ExtendedDynamicState {
     pub fn fp(&self) -> &vk::ExtExtendedDynamicStateFn {
         &self.fp
     }
+
+    #[inline]
+    pub unsafe fn fp_mut(&mut self) -> &mut vk::ExtExtendedDynamicStateFn {
+        &mut self.fp
+    }
 }

@@ -49,4 +49,9 @@ impl AcquireDrmDisplay {
     pub fn fp(&self) -> &vk::ExtAcquireDrmDisplayFn {
         &self.fp
     }
+
+    #[inline]
+    pub unsafe fn fp_mut(&mut self) -> &mut vk::ExtAcquireDrmDisplayFn {
+        &mut self.fp
+    }
 }

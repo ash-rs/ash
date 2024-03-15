@@ -56,6 +56,11 @@ impl ExternalMemoryWin32 {
     }
 
     #[inline]
+    pub unsafe fn fp_mut(&mut self) -> &mut vk::KhrExternalMemoryWin32Fn {
+        &mut self.fp
+    }
+
+    #[inline]
     pub fn device(&self) -> vk::Device {
         self.handle
     }

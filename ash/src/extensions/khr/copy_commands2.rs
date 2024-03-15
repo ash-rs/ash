@@ -78,4 +78,9 @@ impl CopyCommands2 {
     pub fn fp(&self) -> &vk::KhrCopyCommands2Fn {
         &self.fp
     }
+
+    #[inline]
+    pub unsafe fn fp_mut(&mut self) -> &mut vk::KhrCopyCommands2Fn {
+        &mut self.fp
+    }
 }

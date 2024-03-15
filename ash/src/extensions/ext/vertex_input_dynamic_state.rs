@@ -40,4 +40,9 @@ impl VertexInputDynamicState {
     pub fn fp(&self) -> &vk::ExtVertexInputDynamicStateFn {
         &self.fp
     }
+
+    #[inline]
+    pub unsafe fn fp_mut(&mut self) -> &mut vk::ExtVertexInputDynamicStateFn {
+        &mut self.fp
+    }
 }

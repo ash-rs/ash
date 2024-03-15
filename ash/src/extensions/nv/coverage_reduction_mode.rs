@@ -66,4 +66,9 @@ impl CoverageReductionMode {
     pub fn fp(&self) -> &vk::NvCoverageReductionModeFn {
         &self.fp
     }
+
+    #[inline]
+    pub unsafe fn fp_mut(&mut self) -> &mut vk::NvCoverageReductionModeFn {
+        &mut self.fp
+    }
 }
