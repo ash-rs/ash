@@ -63,6 +63,11 @@ impl Device {
         &self.device_fn_1_3
     }
 
+    #[inline]
+    pub unsafe fn fp_v1_3_mut(&mut self) -> &mut vk::DeviceFnV1_3 {
+        &mut self.device_fn_1_3
+    }
+
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreatePrivateDataSlot.html>
     #[inline]
     pub unsafe fn create_private_data_slot(
@@ -553,6 +558,11 @@ impl Device {
         &self.device_fn_1_2
     }
 
+    #[inline]
+    pub unsafe fn fp_v1_2_mut(&mut self) -> &mut vk::DeviceFnV1_2 {
+        &mut self.device_fn_1_2
+    }
+
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdDrawIndirectCount.html>
     #[inline]
     pub unsafe fn cmd_draw_indirect_count(
@@ -731,6 +741,11 @@ impl Device {
     #[inline]
     pub fn fp_v1_1(&self) -> &vk::DeviceFnV1_1 {
         &self.device_fn_1_1
+    }
+
+    #[inline]
+    pub unsafe fn fp_v1_1_mut(&mut self) -> &mut vk::DeviceFnV1_1 {
+        &mut self.device_fn_1_1
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkBindBufferMemory2.html>
@@ -977,6 +992,11 @@ impl Device {
     #[inline]
     pub fn fp_v1_0(&self) -> &vk::DeviceFnV1_0 {
         &self.device_fn_1_0
+    }
+
+    #[inline]
+    pub unsafe fn fp_v1_0_mut(&mut self) -> &mut vk::DeviceFnV1_0 {
+        &mut self.device_fn_1_0
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroyDevice.html>

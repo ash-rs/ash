@@ -61,6 +61,11 @@ impl Instance {
         &self.instance_fn_1_3
     }
 
+    #[inline]
+    pub unsafe fn fp_v1_3_mut(&mut self) -> &mut vk::InstanceFnV1_3 {
+        &mut self.instance_fn_1_3
+    }
+
     /// Retrieve the number of elements to pass to [`get_physical_device_tool_properties()`][Self::get_physical_device_tool_properties()]
     #[inline]
     pub unsafe fn get_physical_device_tool_properties_len(
@@ -104,6 +109,11 @@ impl Instance {
     #[inline]
     pub fn fp_v1_1(&self) -> &vk::InstanceFnV1_1 {
         &self.instance_fn_1_1
+    }
+
+    #[inline]
+    pub unsafe fn fp_v1_1_mut(&mut self) -> &mut vk::InstanceFnV1_1 {
+        &mut self.instance_fn_1_1
     }
 
     /// Retrieve the number of elements to pass to [`enumerate_physical_device_groups()`][Self::enumerate_physical_device_groups()]
@@ -335,6 +345,11 @@ impl Instance {
     #[inline]
     pub fn fp_v1_0(&self) -> &vk::InstanceFnV1_0 {
         &self.instance_fn_1_0
+    }
+    
+    #[inline]
+    pub unsafe fn fp_v1_0_mut(&mut self) -> &mut vk::InstanceFnV1_0 {
+        &mut self.instance_fn_1_0
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateDevice.html>
