@@ -1,3 +1,5 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_private_data.html>
+
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
@@ -6,7 +8,6 @@ use std::mem;
 
 pub const NAME: &CStr = vk::ext_private_data::NAME;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_private_data.html>
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,

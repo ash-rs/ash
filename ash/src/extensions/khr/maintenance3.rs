@@ -1,10 +1,11 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_maintenance3.html>
+
 use crate::vk;
 use std::ffi::CStr;
 use std::mem;
 
 pub const NAME: &CStr = vk::khr_maintenance3::NAME;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_maintenance3.html>
 #[derive(Clone)]
 pub struct Maintenance3 {
     handle: vk::Device,

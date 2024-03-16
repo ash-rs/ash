@@ -1,3 +1,5 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_debug_utils.html>
+
 use crate::prelude::*;
 use crate::{vk, RawPtr};
 use std::ffi::CStr;
@@ -5,8 +7,7 @@ use std::mem;
 
 pub const NAME: &CStr = vk::ext_debug_utils::NAME;
 
-/// High-level device function wrapper for
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_debug_utils.html>
+/// High-level device function wrapper
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,
@@ -103,8 +104,7 @@ impl Device {
     }
 }
 
-/// High-level instance function wrapper for
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_debug_utils.html>
+/// High-level instance function wrapper
 #[derive(Clone)]
 pub struct Instance {
     handle: vk::Instance,

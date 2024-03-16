@@ -1,3 +1,5 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_image_compression_control.html>
+
 #[cfg(doc)]
 use super::{super::khr::Maintenance5, HostImageCopy};
 use crate::vk;
@@ -6,7 +8,6 @@ use std::mem;
 
 pub const NAME: &CStr = vk::ext_image_compression_control::NAME;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_image_compression_control.html>
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,

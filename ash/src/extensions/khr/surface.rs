@@ -1,3 +1,5 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_surface.html>
+
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
@@ -6,7 +8,6 @@ use std::mem;
 
 pub const NAME: &CStr = vk::khr_surface::NAME;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_surface.html>
 #[derive(Clone)]
 pub struct Instance {
     handle: vk::Instance,

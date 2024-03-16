@@ -1,10 +1,11 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_ray_tracing_maintenance1.html>
+
 use crate::vk;
 use std::ffi::CStr;
 use std::mem;
 
 pub const NAME: &CStr = vk::khr_ray_tracing_maintenance1::NAME;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_ray_tracing_maintenance1.html>
 #[derive(Clone)]
 pub struct RayTracingMaintenance1 {
     fp: vk::khr_ray_tracing_maintenance1::DeviceFn,

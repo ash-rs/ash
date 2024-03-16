@@ -1,3 +1,5 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_hdr_metadata.html>
+
 use crate::vk;
 use crate::{Device, Instance};
 use std::ffi::CStr;
@@ -5,7 +7,6 @@ use std::mem;
 
 pub const NAME: &CStr = vk::ext_hdr_metadata::NAME;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_hdr_metadata.html>
 #[derive(Clone)]
 pub struct HdrMetadata {
     handle: vk::Device,

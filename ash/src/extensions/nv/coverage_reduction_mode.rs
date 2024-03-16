@@ -1,3 +1,5 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_coverage_reduction_mode.html>
+
 use crate::prelude::*;
 use crate::vk;
 use std::ffi::CStr;
@@ -6,7 +8,6 @@ use std::ptr;
 
 pub const NAME: &CStr = vk::nv_coverage_reduction_mode::NAME;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_coverage_reduction_mode.html>
 #[derive(Clone)]
 pub struct CoverageReductionMode {
     fp: vk::nv_coverage_reduction_mode::InstanceFn,

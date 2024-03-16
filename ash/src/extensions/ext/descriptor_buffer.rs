@@ -1,3 +1,5 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_descriptor_buffer.html>
+
 use crate::prelude::*;
 use crate::vk;
 use std::ffi::CStr;
@@ -5,7 +7,6 @@ use std::mem;
 
 pub const NAME: &CStr = vk::ext_descriptor_buffer::NAME;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_descriptor_buffer.html>
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,

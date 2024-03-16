@@ -1,3 +1,5 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_full_screen_exclusive.html>
+
 use crate::prelude::*;
 use crate::vk;
 use std::ffi::CStr;
@@ -5,8 +7,7 @@ use std::mem;
 
 pub const NAME: &CStr = vk::ext_full_screen_exclusive::NAME;
 
-/// High-level device function wrapper for
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_full_screen_exclusive.html>
+/// High-level device function wrapper
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,
@@ -66,8 +67,7 @@ impl Device {
     }
 }
 
-/// High-level instance function wrapper for
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_full_screen_exclusive.html>
+/// High-level instance function wrapper
 #[derive(Clone)]
 pub struct Instance {
     fp: vk::ext_full_screen_exclusive::InstanceFn,

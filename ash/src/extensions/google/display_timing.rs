@@ -1,3 +1,5 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_GOOGLE_display_timing.html>
+
 use crate::prelude::*;
 use crate::vk;
 use std::ffi::CStr;
@@ -5,7 +7,6 @@ use std::mem;
 
 pub const NAME: &CStr = vk::google_display_timing::NAME;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_GOOGLE_display_timing.html>
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,

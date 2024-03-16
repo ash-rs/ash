@@ -1,3 +1,5 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_push_descriptor.html>
+
 use crate::vk;
 use std::ffi::c_void;
 use std::ffi::CStr;

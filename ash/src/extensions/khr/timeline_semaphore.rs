@@ -1,3 +1,5 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_timeline_semaphore.html>
+
 use crate::prelude::*;
 use crate::vk;
 use std::ffi::CStr;

@@ -1,3 +1,5 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_sampler_ycbcr_conversion.html>
+
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
@@ -6,7 +8,6 @@ use std::mem;
 
 pub const NAME: &CStr = vk::khr_sampler_ycbcr_conversion::NAME;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_sampler_ycbcr_conversion.html>
 #[derive(Clone)]
 pub struct SamplerYcbcrConversion {
     handle: vk::Device,

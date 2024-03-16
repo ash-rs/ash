@@ -1,3 +1,5 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_performance_query.html>
+
 use crate::prelude::*;
 use crate::vk;
 use std::ffi::CStr;
@@ -6,8 +8,7 @@ use std::ptr;
 
 pub const NAME: &CStr = vk::khr_performance_query::NAME;
 
-/// High-level device function wrapper for
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_performance_query.html>
+/// High-level device function wrapper
 #[derive(Clone)]
 pub struct PerformanceQueryDevice {
     handle: vk::Device,
@@ -49,8 +50,7 @@ impl PerformanceQueryDevice {
     }
 }
 
-/// High-level instance function wrapper for
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_performance_query.html>
+/// High-level instance function wrapper
 #[derive(Clone)]
 pub struct PerformanceQueryInstance {
     fp: vk::khr_performance_query::InstanceFn,

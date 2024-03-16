@@ -1,3 +1,5 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_device_group_creation.html>
+
 use crate::prelude::*;
 use crate::vk;
 use std::ffi::CStr;
@@ -6,7 +8,6 @@ use std::ptr;
 
 pub const NAME: &CStr = vk::khr_device_group_creation::NAME;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_device_group_creation.html>
 #[derive(Clone)]
 pub struct DeviceGroupCreation {
     handle: vk::Instance,

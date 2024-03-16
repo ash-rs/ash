@@ -1,3 +1,5 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_get_surface_capabilities2.html>
+
 use crate::prelude::*;
 use crate::vk;
 use std::ffi::CStr;
@@ -6,7 +8,6 @@ use std::ptr;
 
 pub const NAME: &CStr = vk::khr_get_surface_capabilities2::NAME;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_get_surface_capabilities2.html>
 #[derive(Clone)]
 pub struct GetSurfaceCapabilities2 {
     fp: vk::khr_get_surface_capabilities2::InstanceFn,

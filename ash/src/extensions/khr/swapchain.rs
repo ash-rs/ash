@@ -1,3 +1,5 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_swapchain.html>
+
 #[cfg(doc)]
 use super::{DeviceGroupDevice, DeviceGroupInstance};
 use crate::prelude::*;
@@ -8,8 +10,7 @@ use std::mem;
 
 pub const NAME: &CStr = vk::khr_swapchain::NAME;
 
-/// High-level device function wrapper for
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_swapchain.html>
+/// High-level device function wrapper
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,
@@ -188,8 +189,7 @@ impl Device {
     }
 }
 
-/// High-level instance function wrapper for
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_swapchain.html>
+/// High-level instance function wrapper
 #[derive(Clone)]
 pub struct Instance {
     fp: vk::khr_swapchain::InstanceFn,

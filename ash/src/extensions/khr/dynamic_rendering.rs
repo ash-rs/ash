@@ -1,10 +1,11 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_dynamic_rendering.html>
+
 use crate::vk;
 use std::ffi::CStr;
 use std::mem;
 
 pub const NAME: &CStr = vk::khr_dynamic_rendering::NAME;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_dynamic_rendering.html>
 #[derive(Clone)]
 pub struct DynamicRendering {
     fp: vk::khr_dynamic_rendering::DeviceFn,

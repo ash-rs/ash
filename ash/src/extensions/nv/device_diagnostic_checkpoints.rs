@@ -1,3 +1,5 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_device_diagnostic_checkpoints.html>
+
 use crate::vk;
 use std::ffi::CStr;
 use std::mem;
@@ -6,7 +8,6 @@ use std::ptr;
 
 pub const NAME: &CStr = vk::nv_device_diagnostic_checkpoints::NAME;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_device_diagnostic_checkpoints.html>
 #[derive(Clone)]
 pub struct DeviceDiagnosticCheckpoints {
     fp: vk::nv_device_diagnostic_checkpoints::DeviceFn,

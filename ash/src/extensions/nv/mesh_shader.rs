@@ -1,10 +1,11 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_mesh_shader.html>
+
 use crate::vk;
 use std::ffi::CStr;
 use std::mem;
 
 pub const NAME: &CStr = vk::nv_mesh_shader::NAME;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_mesh_shader.html>
 #[derive(Clone)]
 pub struct MeshShader {
     fp: vk::nv_mesh_shader::DeviceFn,

@@ -1,3 +1,5 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_cuda_kernel_launch.html>
+
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
@@ -7,7 +9,6 @@ use std::mem;
 
 pub const NAME: &CStr = vk::nv_cuda_kernel_launch::NAME;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_cuda_kernel_launch.html>
 #[derive(Clone)]
 pub struct CudaKernelLaunch {
     handle: vk::Device,

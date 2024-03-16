@@ -1,3 +1,5 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_device_group.html>
+
 #[cfg(doc)]
 use super::swapchain::{Device, Instance};
 use crate::prelude::*;
@@ -7,8 +9,7 @@ use std::mem;
 
 pub const NAME: &CStr = vk::khr_device_group::NAME;
 
-/// High-level device function wrapper for
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_device_group.html>
+/// High-level device function wrapper
 #[derive(Clone)]
 pub struct DeviceGroupDevice {
     handle: vk::Device,
@@ -123,7 +124,7 @@ impl DeviceGroupDevice {
     #[inline]
     pub unsafe fn acquire_next_image2(
         &self,
-        acquire_info: &vk::AcquireNextImageInfoKHR,
+        acquire_info: &vk::AcquireNextImageInfoKHR<'_>,
     ) -> VkResult<(u32, bool)> {
         let mut index = mem::MaybeUninit::uninit();
         let err_code =
@@ -146,8 +147,7 @@ impl DeviceGroupDevice {
     }
 }
 
-/// High-level instance function wrapper for
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_device_group.html>
+/// High-level instance function wrapper
 #[derive(Clone)]
 pub struct DeviceGroupInstance {
     fp: vk::khr_device_group::InstanceFn,

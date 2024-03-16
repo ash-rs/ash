@@ -1,3 +1,5 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_ray_tracing.html>
+
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
@@ -7,12 +9,12 @@ use std::mem;
 pub const NAME: &CStr = vk::nv_ray_tracing::NAME;
 
 #[derive(Clone)]
-pub struct RayTracing {
+pub struct Device {
     handle: vk::Device,
     fp: vk::nv_ray_tracing::DeviceFn,
 }
 
-impl RayTracing {
+impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::nv_ray_tracing::DeviceFn::load(|name| unsafe {

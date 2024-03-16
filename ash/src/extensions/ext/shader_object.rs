@@ -1,3 +1,5 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_shader_object.html>
+
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
@@ -7,7 +9,6 @@ use std::ptr;
 
 pub const NAME: &CStr = vk::ext_shader_object::NAME;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_shader_object.html>
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,

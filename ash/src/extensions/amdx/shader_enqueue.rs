@@ -1,3 +1,5 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_AMDX_shader_enqueue.html>
+
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
@@ -6,7 +8,6 @@ use std::mem;
 
 pub const NAME: &CStr = vk::amdx_shader_enqueue::NAME;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_AMDX_shader_enqueue.html>
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,

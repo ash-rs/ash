@@ -1,10 +1,11 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_AMD_buffer_marker.html>
+
 use crate::vk;
 use std::ffi::CStr;
 use std::mem;
 
 pub const NAME: &CStr = vk::amd_buffer_marker::NAME;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_AMD_buffer_marker.html>
 #[derive(Clone)]
 pub struct Device {
     fp: vk::amd_buffer_marker::DeviceFn,

@@ -1,3 +1,5 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_external_semaphore_fd.html>
+
 use crate::prelude::*;
 use crate::vk;
 use std::ffi::CStr;

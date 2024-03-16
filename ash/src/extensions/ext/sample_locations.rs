@@ -1,11 +1,12 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_sample_locations.html>
+
 use crate::vk;
 use std::ffi::CStr;
 use std::mem;
 
 pub const NAME: &CStr = vk::ext_sample_locations::NAME;
 
-/// High-level device function wrapper for
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_sample_locations.html>
+/// High-level device function wrapper
 #[derive(Clone)]
 pub struct Device {
     fp: vk::ext_sample_locations::DeviceFn,
@@ -35,8 +36,7 @@ impl Device {
     }
 }
 
-/// High-level instance function wrapper for
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_sample_locations.html>
+/// High-level instance function wrapper
 #[derive(Clone)]
 pub struct SampleLocationsInstance {
     fp: vk::ext_sample_locations::InstanceFn,

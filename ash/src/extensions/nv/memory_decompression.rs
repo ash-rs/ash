@@ -1,10 +1,11 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_memory_decompression.html>
+
 use crate::{vk, Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
 pub const NAME: &CStr = vk::nv_memory_decompression::NAME;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_memory_decompression.html>
 #[derive(Clone)]
 pub struct MemoryDecompression {
     fp: vk::nv_memory_decompression::DeviceFn,
