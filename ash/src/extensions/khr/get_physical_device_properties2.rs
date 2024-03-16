@@ -9,11 +9,11 @@ use std::ptr;
 pub const NAME: &CStr = vk::khr_get_physical_device_properties2::NAME;
 
 #[derive(Clone)]
-pub struct GetPhysicalDeviceProperties2 {
+pub struct Instance {
     fp: vk::khr_get_physical_device_properties2::InstanceFn,
 }
 
-impl GetPhysicalDeviceProperties2 {
+impl Instance {
     pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let fp = vk::khr_get_physical_device_properties2::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))

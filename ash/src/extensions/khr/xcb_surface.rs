@@ -9,12 +9,12 @@ use std::mem;
 pub const NAME: &CStr = vk::khr_xcb_surface::NAME;
 
 #[derive(Clone)]
-pub struct XcbSurface {
+pub struct Instance {
     handle: vk::Instance,
     fp: vk::khr_xcb_surface::InstanceFn,
 }
 
-impl XcbSurface {
+impl Instance {
     pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let handle = instance.handle();
         let fp = vk::khr_xcb_surface::InstanceFn::load(|name| unsafe {

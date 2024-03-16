@@ -49,7 +49,7 @@ pub unsafe fn create_surface(
             let surface_desc = vk::Win32SurfaceCreateInfoKHR::default()
                 .hinstance(window.hinstance as isize)
                 .hwnd(window.hwnd as isize);
-            let surface_fn = win32_surface::Win32Surface::new(entry, instance);
+            let surface_fn = win32_surface::Instance::new(entry, instance);
             surface_fn.create_win32_surface(&surface_desc, allocation_callbacks)
         }
 
@@ -57,7 +57,7 @@ pub unsafe fn create_surface(
             let surface_desc = vk::WaylandSurfaceCreateInfoKHR::default()
                 .display(display.display)
                 .surface(window.surface);
-            let surface_fn = wayland_surface::WaylandSurface::new(entry, instance);
+            let surface_fn = wayland_surface::Instance::new(entry, instance);
             surface_fn.create_wayland_surface(&surface_desc, allocation_callbacks)
         }
 
@@ -65,7 +65,7 @@ pub unsafe fn create_surface(
             let surface_desc = vk::XlibSurfaceCreateInfoKHR::default()
                 .dpy(display.display.cast())
                 .window(window.window);
-            let surface_fn = xlib_surface::XlibSurface::new(entry, instance);
+            let surface_fn = xlib_surface::Instance::new(entry, instance);
             surface_fn.create_xlib_surface(&surface_desc, allocation_callbacks)
         }
 
@@ -73,14 +73,14 @@ pub unsafe fn create_surface(
             let surface_desc = vk::XcbSurfaceCreateInfoKHR::default()
                 .connection(display.connection)
                 .window(window.window);
-            let surface_fn = xcb_surface::XcbSurface::new(entry, instance);
+            let surface_fn = xcb_surface::Instance::new(entry, instance);
             surface_fn.create_xcb_surface(&surface_desc, allocation_callbacks)
         }
 
         (RawDisplayHandle::Android(_), RawWindowHandle::AndroidNdk(window)) => {
             let surface_desc =
                 vk::AndroidSurfaceCreateInfoKHR::default().window(window.a_native_window);
-            let surface_fn = android_surface::AndroidSurface::new(entry, instance);
+            let surface_fn = android_surface::Instance::new(entry, instance);
             surface_fn.create_android_surface(&surface_desc, allocation_callbacks)
         }
 

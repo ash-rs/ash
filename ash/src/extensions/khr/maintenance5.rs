@@ -9,12 +9,12 @@ use std::mem;
 pub const NAME: &CStr = vk::khr_maintenance5::NAME;
 
 #[derive(Clone)]
-pub struct Maintenance5 {
+pub struct Device {
     handle: vk::Device,
     fp: vk::khr_maintenance5::DeviceFn,
 }
 
-impl Maintenance5 {
+impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::khr_maintenance5::DeviceFn::load(|name| unsafe {

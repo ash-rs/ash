@@ -7,12 +7,12 @@ use std::mem;
 pub const NAME: &CStr = vk::khr_buffer_device_address::NAME;
 
 #[derive(Clone)]
-pub struct BufferDeviceAddress {
+pub struct Device {
     handle: vk::Device,
     fp: vk::khr_buffer_device_address::DeviceFn,
 }
 
-impl BufferDeviceAddress {
+impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::khr_buffer_device_address::DeviceFn::load(|name| unsafe {

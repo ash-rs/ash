@@ -9,12 +9,12 @@ use std::ptr;
 pub const NAME: &CStr = vk::khr_device_group_creation::NAME;
 
 #[derive(Clone)]
-pub struct DeviceGroupCreation {
+pub struct Instance {
     handle: vk::Instance,
     fp: vk::khr_device_group_creation::InstanceFn,
 }
 
-impl DeviceGroupCreation {
+impl Instance {
     pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let handle = instance.handle();
         let fp = vk::khr_device_group_creation::InstanceFn::load(|name| unsafe {

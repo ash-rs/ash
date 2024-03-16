@@ -8,12 +8,12 @@ use std::mem;
 pub const NAME: &CStr = vk::khr_present_wait::NAME;
 
 #[derive(Clone)]
-pub struct PresentWait {
+pub struct Device {
     handle: vk::Device,
     fp: vk::khr_present_wait::DeviceFn,
 }
 
-impl PresentWait {
+impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::khr_present_wait::DeviceFn::load(|name| unsafe {

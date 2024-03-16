@@ -9,11 +9,11 @@ use std::ptr;
 pub const NAME: &CStr = vk::nv_coverage_reduction_mode::NAME;
 
 #[derive(Clone)]
-pub struct CoverageReductionMode {
+pub struct Instance {
     fp: vk::nv_coverage_reduction_mode::InstanceFn,
 }
 
-impl CoverageReductionMode {
+impl Instance {
     pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let fp = vk::nv_coverage_reduction_mode::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))

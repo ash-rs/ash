@@ -7,11 +7,11 @@ use std::mem;
 pub const NAME: &CStr = vk::khr_draw_indirect_count::NAME;
 
 #[derive(Clone)]
-pub struct DrawIndirectCount {
+pub struct Device {
     fp: vk::khr_draw_indirect_count::DeviceFn,
 }
 
-impl DrawIndirectCount {
+impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let fp = vk::khr_draw_indirect_count::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))

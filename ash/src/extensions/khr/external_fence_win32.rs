@@ -8,12 +8,12 @@ use std::mem;
 pub const NAME: &CStr = vk::khr_external_fence_win32::NAME;
 
 #[derive(Clone)]
-pub struct ExternalFenceWin32 {
+pub struct Device {
     handle: vk::Device,
     fp: vk::khr_external_fence_win32::DeviceFn,
 }
 
-impl ExternalFenceWin32 {
+impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::khr_external_fence_win32::DeviceFn::load(|name| unsafe {

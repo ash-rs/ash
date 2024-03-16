@@ -9,11 +9,11 @@ use std::ptr;
 pub const NAME: &CStr = vk::nv_device_diagnostic_checkpoints::NAME;
 
 #[derive(Clone)]
-pub struct DeviceDiagnosticCheckpoints {
+pub struct Device {
     fp: vk::nv_device_diagnostic_checkpoints::DeviceFn,
 }
 
-impl DeviceDiagnosticCheckpoints {
+impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let fp = vk::nv_device_diagnostic_checkpoints::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))

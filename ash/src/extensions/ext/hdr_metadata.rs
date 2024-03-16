@@ -1,20 +1,19 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_hdr_metadata.html>
 
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
 pub const NAME: &CStr = vk::ext_hdr_metadata::NAME;
 
 #[derive(Clone)]
-pub struct HdrMetadata {
+pub struct Device {
     handle: vk::Device,
     fp: vk::ext_hdr_metadata::DeviceFn,
 }
 
-impl HdrMetadata {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::ext_hdr_metadata::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))

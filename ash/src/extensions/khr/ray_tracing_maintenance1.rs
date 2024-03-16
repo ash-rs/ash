@@ -7,11 +7,11 @@ use std::mem;
 pub const NAME: &CStr = vk::khr_ray_tracing_maintenance1::NAME;
 
 #[derive(Clone)]
-pub struct RayTracingMaintenance1 {
+pub struct Device {
     fp: vk::khr_ray_tracing_maintenance1::DeviceFn,
 }
 
-impl RayTracingMaintenance1 {
+impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::khr_ray_tracing_maintenance1::DeviceFn::load(|name| unsafe {

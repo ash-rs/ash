@@ -9,12 +9,12 @@ use std::mem;
 pub const NAME: &CStr = vk::khr_win32_surface::NAME;
 
 #[derive(Clone)]
-pub struct Win32Surface {
+pub struct Instance {
     handle: vk::Instance,
     fp: vk::khr_win32_surface::InstanceFn,
 }
 
-impl Win32Surface {
+impl Instance {
     pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let handle = instance.handle();
         let fp = vk::khr_win32_surface::InstanceFn::load(|name| unsafe {

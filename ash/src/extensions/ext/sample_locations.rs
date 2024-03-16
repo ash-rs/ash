@@ -38,11 +38,11 @@ impl Device {
 
 /// High-level instance function wrapper
 #[derive(Clone)]
-pub struct SampleLocationsInstance {
+pub struct Instance {
     fp: vk::ext_sample_locations::InstanceFn,
 }
 
-impl SampleLocationsInstance {
+impl Instance {
     pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let fp = vk::ext_sample_locations::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))

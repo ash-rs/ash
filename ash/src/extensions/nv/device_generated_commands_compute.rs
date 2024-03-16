@@ -7,12 +7,12 @@ use std::mem;
 pub const NAME: &CStr = vk::nv_device_generated_commands_compute::NAME;
 
 #[derive(Clone)]
-pub struct DeviceGeneratedCommandsCompute {
+pub struct Device {
     handle: vk::Device,
     fp: vk::nv_device_generated_commands_compute::DeviceFn,
 }
 
-impl DeviceGeneratedCommandsCompute {
+impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::nv_device_generated_commands_compute::DeviceFn::load(|name| unsafe {

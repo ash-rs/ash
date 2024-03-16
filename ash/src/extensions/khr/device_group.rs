@@ -11,12 +11,12 @@ pub const NAME: &CStr = vk::khr_device_group::NAME;
 
 /// High-level device function wrapper
 #[derive(Clone)]
-pub struct DeviceGroupDevice {
+pub struct Device {
     handle: vk::Device,
     fp: vk::khr_device_group::DeviceFn,
 }
 
-impl DeviceGroupDevice {
+impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::khr_device_group::DeviceFn::load(|name| unsafe {
@@ -149,11 +149,11 @@ impl DeviceGroupDevice {
 
 /// High-level instance function wrapper
 #[derive(Clone)]
-pub struct DeviceGroupInstance {
+pub struct Instance {
     fp: vk::khr_device_group::InstanceFn,
 }
 
-impl DeviceGroupInstance {
+impl Instance {
     pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let handle = instance.handle();
         let fp = vk::khr_device_group::InstanceFn::load(|name| unsafe {

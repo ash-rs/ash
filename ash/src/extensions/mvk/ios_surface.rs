@@ -9,12 +9,12 @@ use std::mem;
 pub const NAME: &CStr = vk::mvk_ios_surface::NAME;
 
 #[derive(Clone)]
-pub struct IOSSurface {
+pub struct Instance {
     handle: vk::Instance,
     fp: vk::mvk_ios_surface::InstanceFn,
 }
 
-impl IOSSurface {
+impl Instance {
     pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let handle = instance.handle();
         let fp = vk::mvk_ios_surface::InstanceFn::load(|name| unsafe {

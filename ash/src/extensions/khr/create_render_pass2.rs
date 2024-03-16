@@ -9,12 +9,12 @@ use std::mem;
 pub const NAME: &CStr = vk::khr_create_renderpass2::NAME;
 
 #[derive(Clone)]
-pub struct CreateRenderPass2 {
+pub struct Device {
     handle: vk::Device,
     fp: vk::khr_create_renderpass2::DeviceFn,
 }
 
-impl CreateRenderPass2 {
+impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::khr_create_renderpass2::DeviceFn::load(|name| unsafe {

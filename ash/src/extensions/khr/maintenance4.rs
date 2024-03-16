@@ -8,12 +8,12 @@ use std::ptr;
 pub const NAME: &CStr = vk::khr_maintenance4::NAME;
 
 #[derive(Clone)]
-pub struct Maintenance4 {
+pub struct Device {
     handle: vk::Device,
     fp: vk::khr_maintenance4::DeviceFn,
 }
 
-impl Maintenance4 {
+impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::khr_maintenance4::DeviceFn::load(|name| unsafe {

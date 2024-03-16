@@ -9,12 +9,12 @@ use std::mem;
 pub const NAME: &CStr = vk::khr_acceleration_structure::NAME;
 
 #[derive(Clone)]
-pub struct AccelerationStructure {
+pub struct Device {
     handle: vk::Device,
     fp: vk::khr_acceleration_structure::DeviceFn,
 }
 
-impl AccelerationStructure {
+impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::khr_acceleration_structure::DeviceFn::load(|name| unsafe {

@@ -9,12 +9,12 @@ use std::mem;
 pub const NAME: &CStr = vk::khr_sampler_ycbcr_conversion::NAME;
 
 #[derive(Clone)]
-pub struct SamplerYcbcrConversion {
+pub struct Device {
     handle: vk::Device,
     fp: vk::khr_sampler_ycbcr_conversion::DeviceFn,
 }
 
-impl SamplerYcbcrConversion {
+impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::khr_sampler_ycbcr_conversion::DeviceFn::load(|name| unsafe {

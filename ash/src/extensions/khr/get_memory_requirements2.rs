@@ -8,12 +8,12 @@ use std::ptr;
 pub const NAME: &CStr = vk::khr_get_memory_requirements2::NAME;
 
 #[derive(Clone)]
-pub struct GetMemoryRequirements2 {
+pub struct Device {
     handle: vk::Device,
     fp: vk::khr_get_memory_requirements2::DeviceFn,
 }
 
-impl GetMemoryRequirements2 {
+impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::khr_get_memory_requirements2::DeviceFn::load(|name| unsafe {

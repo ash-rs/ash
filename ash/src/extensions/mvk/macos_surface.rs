@@ -9,12 +9,12 @@ use std::mem;
 pub const NAME: &CStr = vk::mvk_macos_surface::NAME;
 
 #[derive(Clone)]
-pub struct MacOSSurface {
+pub struct Instance {
     handle: vk::Instance,
     fp: vk::mvk_macos_surface::InstanceFn,
 }
 
-impl MacOSSurface {
+impl Instance {
     pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let handle = instance.handle();
         let fp = vk::mvk_macos_surface::InstanceFn::load(|name| unsafe {

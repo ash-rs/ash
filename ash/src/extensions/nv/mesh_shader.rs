@@ -7,11 +7,11 @@ use std::mem;
 pub const NAME: &CStr = vk::nv_mesh_shader::NAME;
 
 #[derive(Clone)]
-pub struct MeshShader {
+pub struct Device {
     fp: vk::nv_mesh_shader::DeviceFn,
 }
 
-impl MeshShader {
+impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let fp = vk::nv_mesh_shader::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))

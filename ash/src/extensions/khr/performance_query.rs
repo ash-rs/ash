@@ -10,12 +10,12 @@ pub const NAME: &CStr = vk::khr_performance_query::NAME;
 
 /// High-level device function wrapper
 #[derive(Clone)]
-pub struct PerformanceQueryDevice {
+pub struct Device {
     handle: vk::Device,
     fp: vk::khr_performance_query::DeviceFn,
 }
 
-impl PerformanceQueryDevice {
+impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::khr_performance_query::DeviceFn::load(|name| unsafe {
@@ -52,11 +52,11 @@ impl PerformanceQueryDevice {
 
 /// High-level instance function wrapper
 #[derive(Clone)]
-pub struct PerformanceQueryInstance {
+pub struct Instance {
     fp: vk::khr_performance_query::InstanceFn,
 }
 
-impl PerformanceQueryInstance {
+impl Instance {
     pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let fp = vk::khr_performance_query::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))

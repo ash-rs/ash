@@ -8,12 +8,12 @@ use std::mem;
 pub const NAME: &CStr = vk::khr_pipeline_executable_properties::NAME;
 
 #[derive(Clone)]
-pub struct PipelineExecutableProperties {
+pub struct Device {
     handle: vk::Device,
     fp: vk::khr_pipeline_executable_properties::DeviceFn,
 }
 
-impl PipelineExecutableProperties {
+impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::khr_pipeline_executable_properties::DeviceFn::load(|name| unsafe {

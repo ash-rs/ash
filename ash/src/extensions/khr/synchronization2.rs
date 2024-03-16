@@ -8,11 +8,11 @@ use std::mem;
 pub const NAME: &CStr = vk::khr_synchronization2::NAME;
 
 #[derive(Clone)]
-pub struct Synchronization2 {
+pub struct Device {
     fp: vk::khr_synchronization2::DeviceFn,
 }
 
-impl Synchronization2 {
+impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let fp = vk::khr_synchronization2::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))

@@ -8,12 +8,12 @@ use std::mem;
 pub const NAME: &CStr = vk::khr_timeline_semaphore::NAME;
 
 #[derive(Clone)]
-pub struct TimelineSemaphore {
+pub struct Device {
     handle: vk::Device,
     fp: vk::khr_timeline_semaphore::DeviceFn,
 }
 
-impl TimelineSemaphore {
+impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::khr_timeline_semaphore::DeviceFn::load(|name| unsafe {

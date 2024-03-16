@@ -9,12 +9,12 @@ use std::mem;
 pub const NAME: &CStr = vk::khr_deferred_host_operations::NAME;
 
 #[derive(Clone)]
-pub struct DeferredHostOperations {
+pub struct Device {
     handle: vk::Device,
     fp: vk::khr_deferred_host_operations::DeviceFn,
 }
 
-impl DeferredHostOperations {
+impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::khr_deferred_host_operations::DeviceFn::load(|name| unsafe {

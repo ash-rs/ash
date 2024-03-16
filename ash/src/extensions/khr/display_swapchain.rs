@@ -9,12 +9,12 @@ use std::mem;
 pub const NAME: &CStr = vk::khr_display_swapchain::NAME;
 
 #[derive(Clone)]
-pub struct DisplaySwapchain {
+pub struct Device {
     handle: vk::Device,
     fp: vk::khr_display_swapchain::DeviceFn,
 }
 
-impl DisplaySwapchain {
+impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp = vk::khr_display_swapchain::DeviceFn::load(|name| unsafe {

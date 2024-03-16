@@ -9,12 +9,12 @@ use std::mem;
 pub const NAME: &CStr = vk::nn_vi_surface::NAME;
 
 #[derive(Clone)]
-pub struct ViSurface {
+pub struct Instance {
     handle: vk::Instance,
     fp: vk::nn_vi_surface::InstanceFn,
 }
 
-impl ViSurface {
+impl Instance {
     pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let handle = instance.handle();
         let fp = vk::nn_vi_surface::InstanceFn::load(|name| unsafe {
