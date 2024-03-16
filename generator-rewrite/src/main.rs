@@ -1,5 +1,7 @@
 use analysis::Analysis;
 
 fn main() {
-    let _analysis = Analysis::new("generator/Vulkan-Headers");
+    tracing_subscriber::fmt::init();
+    let _analysis = Analysis::new("generator-rewrite/Vulkan-Headers");
+    // dbg!(_analysis);
 }
