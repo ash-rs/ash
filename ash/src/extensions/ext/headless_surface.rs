@@ -6,7 +6,7 @@ use std::mem;
 
 pub const NAME: &CStr = vk::ext_headless_surface::NAME;
 
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_headless_surface.html>
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_headless_surface.html>
 #[derive(Clone)]
 pub struct Instance {
     handle: vk::Instance,
@@ -22,7 +22,7 @@ impl Instance {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateHeadlessSurfaceEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateHeadlessSurfaceEXT.html>
     #[inline]
     pub unsafe fn create_headless_surface(
         &self,

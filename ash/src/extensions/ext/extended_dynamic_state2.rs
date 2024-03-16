@@ -4,7 +4,7 @@ use std::mem;
 
 pub const NAME: &CStr = vk::ext_extended_dynamic_state2::NAME;
 
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_extended_dynamic_state2.html>
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_extended_dynamic_state2.html>
 #[derive(Clone)]
 pub struct Device {
     fp: vk::ext_extended_dynamic_state2::DeviceFn,
@@ -18,7 +18,7 @@ impl Device {
         Self { fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetPatchControlPointsEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetPatchControlPointsEXT.html>
     #[inline]
     pub unsafe fn cmd_set_patch_control_points(
         &self,
@@ -28,7 +28,7 @@ impl Device {
         (self.fp.cmd_set_patch_control_points_ext)(command_buffer, patch_control_points)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetRasterizerDiscardEnableEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetRasterizerDiscardEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_rasterizer_discard_enable(
         &self,
@@ -41,7 +41,7 @@ impl Device {
         )
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthBiasEnableEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthBiasEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_depth_bias_enable(
         &self,
@@ -51,7 +51,7 @@ impl Device {
         (self.fp.cmd_set_depth_bias_enable_ext)(command_buffer, depth_bias_enable.into())
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetLogicOpEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetLogicOpEXT.html>
     #[inline]
     pub unsafe fn cmd_set_logic_op(
         &self,
@@ -61,7 +61,7 @@ impl Device {
         (self.fp.cmd_set_logic_op_ext)(command_buffer, logic_op)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetPrimitiveRestartEnableEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetPrimitiveRestartEnableEXT.html>
     #[inline]
     pub unsafe fn cmd_set_primitive_restart_enable(
         &self,

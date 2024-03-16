@@ -5,7 +5,7 @@ use std::mem;
 
 pub const NAME: &CStr = vk::ext_pipeline_properties::NAME;
 
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_pipeline_properties.html>
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_pipeline_properties.html>
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,
@@ -21,7 +21,7 @@ impl Device {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPipelinePropertiesEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelinePropertiesEXT.html>
     #[inline]
     pub unsafe fn get_pipeline_properties(
         &self,

@@ -5,7 +5,7 @@ use std::mem;
 
 pub const NAME: &CStr = vk::ext_acquire_drm_display::NAME;
 
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_acquire_drm_display.html>
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_acquire_drm_display.html>
 #[derive(Clone)]
 pub struct Instance {
     fp: vk::ext_acquire_drm_display::InstanceFn,
@@ -20,7 +20,7 @@ impl Instance {
         Self { fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkAcquireDrmDisplayEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAcquireDrmDisplayEXT.html>
     #[inline]
     pub unsafe fn acquire_drm_display(
         &self,
@@ -31,7 +31,7 @@ impl Instance {
         (self.fp.acquire_drm_display_ext)(physical_device, drm_fd, display).result()
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDrmDisplayEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDrmDisplayEXT.html>
     #[inline]
     pub unsafe fn get_drm_display(
         &self,

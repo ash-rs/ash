@@ -20,7 +20,7 @@ impl Maintenance1 {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkTrimCommandPoolKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkTrimCommandPoolKHR.html>
     #[inline]
     pub unsafe fn trim_command_pool(
         &self,

@@ -18,7 +18,7 @@ impl PushDescriptor {
         Self { fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetKHR.html>
     #[inline]
     pub unsafe fn cmd_push_descriptor_set(
         &self,
@@ -38,7 +38,7 @@ impl PushDescriptor {
         );
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetWithTemplateKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetWithTemplateKHR.html>
     #[inline]
     pub unsafe fn cmd_push_descriptor_set_with_template(
         &self,

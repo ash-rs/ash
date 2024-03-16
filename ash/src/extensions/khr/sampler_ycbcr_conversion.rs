@@ -6,7 +6,7 @@ use std::mem;
 
 pub const NAME: &CStr = vk::khr_sampler_ycbcr_conversion::NAME;
 
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_sampler_ycbcr_conversion.html>
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_sampler_ycbcr_conversion.html>
 #[derive(Clone)]
 pub struct SamplerYcbcrConversion {
     handle: vk::Device,
@@ -22,7 +22,7 @@ impl SamplerYcbcrConversion {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateSamplerYcbcrConversion.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateSamplerYcbcrConversion.html>
     #[inline]
     pub unsafe fn create_sampler_ycbcr_conversion(
         &self,
@@ -39,7 +39,7 @@ impl SamplerYcbcrConversion {
         .assume_init_on_success(ycbcr_conversion)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroySamplerYcbcrConversion.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroySamplerYcbcrConversion.html>
     #[inline]
     pub unsafe fn destroy_sampler_ycbcr_conversion(
         &self,

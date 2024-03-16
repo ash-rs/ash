@@ -22,7 +22,7 @@ impl AccelerationStructure {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateAccelerationStructureKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateAccelerationStructureKHR.html>
     #[inline]
     pub unsafe fn create_acceleration_structure(
         &self,
@@ -39,7 +39,7 @@ impl AccelerationStructure {
         .assume_init_on_success(accel_struct)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroyAccelerationStructureKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyAccelerationStructureKHR.html>
     #[inline]
     pub unsafe fn destroy_acceleration_structure(
         &self,
@@ -53,7 +53,7 @@ impl AccelerationStructure {
         );
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBuildAccelerationStructuresKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBuildAccelerationStructuresKHR.html>
     #[inline]
     pub unsafe fn cmd_build_acceleration_structures(
         &self,
@@ -80,7 +80,7 @@ impl AccelerationStructure {
         );
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBuildAccelerationStructuresIndirectKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBuildAccelerationStructuresIndirectKHR.html>
     #[inline]
     pub unsafe fn cmd_build_acceleration_structures_indirect(
         &self,
@@ -113,7 +113,7 @@ impl AccelerationStructure {
         );
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkBuildAccelerationStructuresKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkBuildAccelerationStructuresKHR.html>
     #[inline]
     pub unsafe fn build_acceleration_structures(
         &self,
@@ -142,7 +142,7 @@ impl AccelerationStructure {
         .result()
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCopyAccelerationStructureKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCopyAccelerationStructureKHR.html>
     #[inline]
     pub unsafe fn copy_acceleration_structure(
         &self,
@@ -152,7 +152,7 @@ impl AccelerationStructure {
         (self.fp.copy_acceleration_structure_khr)(self.handle, deferred_operation, info).result()
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCopyAccelerationStructureToMemoryKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCopyAccelerationStructureToMemoryKHR.html>
     #[inline]
     pub unsafe fn copy_acceleration_structure_to_memory(
         &self,
@@ -163,7 +163,7 @@ impl AccelerationStructure {
             .result()
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCopyMemoryToAccelerationStructureKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCopyMemoryToAccelerationStructureKHR.html>
     #[inline]
     pub unsafe fn copy_memory_to_acceleration_structure(
         &self,
@@ -174,7 +174,7 @@ impl AccelerationStructure {
             .result()
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkWriteAccelerationStructuresPropertiesKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkWriteAccelerationStructuresPropertiesKHR.html>
     #[inline]
     pub unsafe fn write_acceleration_structures_properties(
         &self,
@@ -195,7 +195,7 @@ impl AccelerationStructure {
         .result()
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdCopyAccelerationStructureKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyAccelerationStructureKHR.html>
     #[inline]
     pub unsafe fn cmd_copy_acceleration_structure(
         &self,
@@ -205,7 +205,7 @@ impl AccelerationStructure {
         (self.fp.cmd_copy_acceleration_structure_khr)(command_buffer, info);
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdCopyAccelerationStructureToMemoryKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyAccelerationStructureToMemoryKHR.html>
     #[inline]
     pub unsafe fn cmd_copy_acceleration_structure_to_memory(
         &self,
@@ -215,7 +215,7 @@ impl AccelerationStructure {
         (self.fp.cmd_copy_acceleration_structure_to_memory_khr)(command_buffer, info);
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdCopyMemoryToAccelerationStructureKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyMemoryToAccelerationStructureKHR.html>
     #[inline]
     pub unsafe fn cmd_copy_memory_to_acceleration_structure(
         &self,
@@ -225,7 +225,7 @@ impl AccelerationStructure {
         (self.fp.cmd_copy_memory_to_acceleration_structure_khr)(command_buffer, info);
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetAccelerationStructureHandleKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetAccelerationStructureHandleKHR.html>
     #[inline]
     pub unsafe fn get_acceleration_structure_device_address(
         &self,
@@ -234,7 +234,7 @@ impl AccelerationStructure {
         (self.fp.get_acceleration_structure_device_address_khr)(self.handle, info)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdWriteAccelerationStructuresPropertiesKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdWriteAccelerationStructuresPropertiesKHR.html>
     #[inline]
     pub unsafe fn cmd_write_acceleration_structures_properties(
         &self,
@@ -254,7 +254,7 @@ impl AccelerationStructure {
         );
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceAccelerationStructureCompatibilityKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceAccelerationStructureCompatibilityKHR.html>
     #[inline]
     pub unsafe fn get_device_acceleration_structure_compatibility(
         &self,
@@ -269,7 +269,7 @@ impl AccelerationStructure {
         compatibility.assume_init()
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetAccelerationStructureBuildSizesKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetAccelerationStructureBuildSizesKHR.html>
     #[inline]
     pub unsafe fn get_acceleration_structure_build_sizes(
         &self,

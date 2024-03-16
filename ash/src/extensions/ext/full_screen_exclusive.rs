@@ -6,7 +6,7 @@ use std::mem;
 pub const NAME: &CStr = vk::ext_full_screen_exclusive::NAME;
 
 /// High-level device function wrapper for
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_full_screen_exclusive.html>
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_full_screen_exclusive.html>
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,
@@ -22,7 +22,7 @@ impl Device {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkAcquireFullScreenExclusiveModeEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAcquireFullScreenExclusiveModeEXT.html>
     #[inline]
     pub unsafe fn acquire_full_screen_exclusive_mode(
         &self,
@@ -31,7 +31,7 @@ impl Device {
         (self.fp.acquire_full_screen_exclusive_mode_ext)(self.handle, swapchain).result()
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkReleaseFullScreenExclusiveModeEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkReleaseFullScreenExclusiveModeEXT.html>
     #[inline]
     pub unsafe fn release_full_screen_exclusive_mode(
         &self,
@@ -40,7 +40,7 @@ impl Device {
         (self.fp.release_full_screen_exclusive_mode_ext)(self.handle, swapchain).result()
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceGroupSurfacePresentModes2EXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceGroupSurfacePresentModes2EXT.html>
     #[inline]
     pub unsafe fn get_device_group_surface_present_modes2(
         &self,
@@ -67,7 +67,7 @@ impl Device {
 }
 
 /// High-level instance function wrapper for
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_full_screen_exclusive.html>
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_full_screen_exclusive.html>
 #[derive(Clone)]
 pub struct Instance {
     fp: vk::ext_full_screen_exclusive::InstanceFn,
@@ -82,7 +82,7 @@ impl Instance {
         Self { fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfacePresentModes2EXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfacePresentModes2EXT.html>
     #[inline]
     pub unsafe fn get_physical_device_surface_present_modes2(
         &self,

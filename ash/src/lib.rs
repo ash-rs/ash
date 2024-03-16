@@ -14,7 +14,7 @@
 #![cfg_attr(docsrs, feature(doc_cfg))]
 //! # Vulkan API
 //!
-//! <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/html/index.html>
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/html/index.html>
 //!
 //! ## Examples
 //!

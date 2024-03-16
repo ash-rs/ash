@@ -17,7 +17,7 @@ impl DrawIndirectCount {
         Self { fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdDrawIndexedIndirectCountKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawIndexedIndirectCountKHR.html>
     #[inline]
     pub unsafe fn cmd_draw_indexed_indirect_count(
         &self,
@@ -40,7 +40,7 @@ impl DrawIndirectCount {
         );
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdDrawIndirectCountKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawIndirectCountKHR.html>
     #[inline]
     pub unsafe fn cmd_draw_indirect_count(
         &self,

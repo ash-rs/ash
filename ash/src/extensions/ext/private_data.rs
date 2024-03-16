@@ -6,7 +6,7 @@ use std::mem;
 
 pub const NAME: &CStr = vk::ext_private_data::NAME;
 
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_private_data.html>
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_private_data.html>
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,
@@ -22,7 +22,7 @@ impl Device {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreatePrivateDataSlotEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreatePrivateDataSlotEXT.html>
     #[inline]
     pub unsafe fn create_private_data_slot(
         &self,
@@ -39,7 +39,7 @@ impl Device {
         .assume_init_on_success(private_data_slot)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroyPrivateDataSlotEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyPrivateDataSlotEXT.html>
     #[inline]
     pub unsafe fn destroy_private_data_slot(
         &self,
@@ -53,7 +53,7 @@ impl Device {
         )
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkSetPrivateDataEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSetPrivateDataEXT.html>
     #[inline]
     pub unsafe fn set_private_data<T: vk::Handle>(
         &self,
@@ -71,7 +71,7 @@ impl Device {
         .result()
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPrivateDataEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPrivateDataEXT.html>
     #[inline]
     pub unsafe fn get_private_data<T: vk::Handle>(
         &self,

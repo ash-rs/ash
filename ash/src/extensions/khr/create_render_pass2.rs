@@ -21,7 +21,7 @@ impl CreateRenderPass2 {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateRenderPass2.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateRenderPass2.html>
     #[inline]
     pub unsafe fn create_render_pass2(
         &self,
@@ -38,7 +38,7 @@ impl CreateRenderPass2 {
         .assume_init_on_success(renderpass)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBeginRenderPass2.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBeginRenderPass2.html>
     #[inline]
     pub unsafe fn cmd_begin_render_pass2(
         &self,
@@ -53,7 +53,7 @@ impl CreateRenderPass2 {
         );
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdNextSubpass2.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdNextSubpass2.html>
     #[inline]
     pub unsafe fn cmd_next_subpass2(
         &self,
@@ -64,7 +64,7 @@ impl CreateRenderPass2 {
         (self.fp.cmd_next_subpass2_khr)(command_buffer, subpass_begin_info, subpass_end_info);
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdEndRenderPass2.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdEndRenderPass2.html>
     #[inline]
     pub unsafe fn cmd_end_render_pass2(
         &self,

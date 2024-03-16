@@ -5,7 +5,7 @@ use std::mem;
 pub const NAME: &CStr = vk::ext_sample_locations::NAME;
 
 /// High-level device function wrapper for
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_sample_locations.html>
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_sample_locations.html>
 #[derive(Clone)]
 pub struct Device {
     fp: vk::ext_sample_locations::DeviceFn,
@@ -19,7 +19,7 @@ impl Device {
         Self { fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetSampleLocationsEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetSampleLocationsEXT.html>
     #[inline]
     pub unsafe fn cmd_set_sample_locations(
         &self,
@@ -36,7 +36,7 @@ impl Device {
 }
 
 /// High-level instance function wrapper for
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_sample_locations.html>
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_sample_locations.html>
 #[derive(Clone)]
 pub struct SampleLocationsInstance {
     fp: vk::ext_sample_locations::InstanceFn,
@@ -50,7 +50,7 @@ impl SampleLocationsInstance {
         Self { fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceMultisamplePropertiesEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceMultisamplePropertiesEXT.html>
     #[inline]
     pub unsafe fn get_physical_device_multisample_properties(
         &self,

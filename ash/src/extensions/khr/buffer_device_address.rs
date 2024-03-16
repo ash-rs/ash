@@ -19,7 +19,7 @@ impl BufferDeviceAddress {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetBufferDeviceAddressKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetBufferDeviceAddressKHR.html>
     #[inline]
     pub unsafe fn get_buffer_device_address(
         &self,
@@ -28,7 +28,7 @@ impl BufferDeviceAddress {
         (self.fp.get_buffer_device_address_khr)(self.handle, info)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetBufferOpaqueCaptureAddressKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetBufferOpaqueCaptureAddressKHR.html>
     #[inline]
     pub unsafe fn get_buffer_opaque_capture_address(
         &self,
@@ -37,7 +37,7 @@ impl BufferDeviceAddress {
         (self.fp.get_buffer_opaque_capture_address_khr)(self.handle, info)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceMemoryOpaqueCaptureAddressKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceMemoryOpaqueCaptureAddressKHR.html>
     #[inline]
     pub unsafe fn get_device_memory_opaque_capture_address(
         &self,

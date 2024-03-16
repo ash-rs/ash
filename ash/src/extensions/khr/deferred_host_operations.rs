@@ -21,7 +21,7 @@ impl DeferredHostOperations {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateDeferredOperationKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateDeferredOperationKHR.html>
     #[inline]
     pub unsafe fn create_deferred_operation(
         &self,
@@ -36,7 +36,7 @@ impl DeferredHostOperations {
         .assume_init_on_success(operation)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDeferredOperationJoinKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDeferredOperationJoinKHR.html>
     #[inline]
     pub unsafe fn deferred_operation_join(
         &self,
@@ -45,7 +45,7 @@ impl DeferredHostOperations {
         (self.fp.deferred_operation_join_khr)(self.handle, operation).result()
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroyDeferredOperationKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyDeferredOperationKHR.html>
     #[inline]
     pub unsafe fn destroy_deferred_operation(
         &self,
@@ -59,7 +59,7 @@ impl DeferredHostOperations {
         );
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeferredOperationMaxConcurrencyKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeferredOperationMaxConcurrencyKHR.html>
     #[inline]
     pub unsafe fn get_deferred_operation_max_concurrency(
         &self,
@@ -68,7 +68,7 @@ impl DeferredHostOperations {
         (self.fp.get_deferred_operation_max_concurrency_khr)(self.handle, operation)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeferredOperationResultKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeferredOperationResultKHR.html>
     #[inline]
     pub unsafe fn get_deferred_operation_result(
         &self,

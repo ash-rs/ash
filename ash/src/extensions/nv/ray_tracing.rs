@@ -21,7 +21,7 @@ impl RayTracing {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateAccelerationStructureNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateAccelerationStructureNV.html>
     #[inline]
     pub unsafe fn create_acceleration_structure(
         &self,
@@ -38,7 +38,7 @@ impl RayTracing {
         .assume_init_on_success(accel_struct)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroyAccelerationStructureNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyAccelerationStructureNV.html>
     #[inline]
     pub unsafe fn destroy_acceleration_structure(
         &self,
@@ -52,7 +52,7 @@ impl RayTracing {
         );
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetAccelerationStructureMemoryRequirementsNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetAccelerationStructureMemoryRequirementsNV.html>
     #[inline]
     pub unsafe fn get_acceleration_structure_memory_requirements(
         &self,
@@ -67,7 +67,7 @@ impl RayTracing {
         requirements
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkBindAccelerationStructureMemoryNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkBindAccelerationStructureMemoryNV.html>
     #[inline]
     pub unsafe fn bind_acceleration_structure_memory(
         &self,
@@ -81,7 +81,7 @@ impl RayTracing {
         .result()
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBuildAccelerationStructureNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBuildAccelerationStructureNV.html>
     #[inline]
     pub unsafe fn cmd_build_acceleration_structure(
         &self,
@@ -108,7 +108,7 @@ impl RayTracing {
         );
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdCopyAccelerationStructureNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdCopyAccelerationStructureNV.html>
     #[inline]
     pub unsafe fn cmd_copy_acceleration_structure(
         &self,
@@ -120,7 +120,7 @@ impl RayTracing {
         (self.fp.cmd_copy_acceleration_structure_nv)(command_buffer, dst, src, mode);
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdTraceRaysNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdTraceRaysNV.html>
     #[inline]
     pub unsafe fn cmd_trace_rays(
         &self,
@@ -159,7 +159,7 @@ impl RayTracing {
         );
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateRayTracingPipelinesNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateRayTracingPipelinesNV.html>
     #[inline]
     pub unsafe fn create_ray_tracing_pipelines(
         &self,
@@ -179,7 +179,7 @@ impl RayTracing {
         .set_vec_len_on_success(pipelines, create_info.len())
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetRayTracingShaderGroupHandlesNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetRayTracingShaderGroupHandlesNV.html>
     #[inline]
     pub unsafe fn get_ray_tracing_shader_group_handles(
         &self,
@@ -199,7 +199,7 @@ impl RayTracing {
         .result()
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetAccelerationStructureHandleNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetAccelerationStructureHandleNV.html>
     #[inline]
     pub unsafe fn get_acceleration_structure_handle(
         &self,
@@ -215,7 +215,7 @@ impl RayTracing {
         .assume_init_on_success(handle)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdWriteAccelerationStructuresPropertiesNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdWriteAccelerationStructuresPropertiesNV.html>
     #[inline]
     pub unsafe fn cmd_write_acceleration_structures_properties(
         &self,
@@ -235,7 +235,7 @@ impl RayTracing {
         );
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCompileDeferredNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCompileDeferredNV.html>
     #[inline]
     pub unsafe fn compile_deferred(&self, pipeline: vk::Pipeline, shader: u32) -> VkResult<()> {
         (self.fp.compile_deferred_nv)(self.handle, pipeline, shader).result()

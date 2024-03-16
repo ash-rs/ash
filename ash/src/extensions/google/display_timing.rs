@@ -5,7 +5,7 @@ use std::mem;
 
 pub const NAME: &CStr = vk::google_display_timing::NAME;
 
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_GOOGLE_display_timing.html>
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_GOOGLE_display_timing.html>
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,
@@ -21,7 +21,7 @@ impl Device {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPastPresentationTimingGOOGLE.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPastPresentationTimingGOOGLE.html>
     #[inline]
     pub unsafe fn get_past_presentation_timing(
         &self,
@@ -32,7 +32,7 @@ impl Device {
         })
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetRefreshCycleDurationGOOGLE.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetRefreshCycleDurationGOOGLE.html>
     #[inline]
     pub unsafe fn get_refresh_cycle_duration(
         &self,

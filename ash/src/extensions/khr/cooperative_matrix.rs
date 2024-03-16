@@ -5,7 +5,7 @@ use std::mem;
 
 pub const NAME: &CStr = vk::khr_cooperative_matrix::NAME;
 
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_cooperative_matrix.html>
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_cooperative_matrix.html>
 #[derive(Clone)]
 pub struct CooperativeMatrix {
     fp: vk::khr_cooperative_matrix::InstanceFn,

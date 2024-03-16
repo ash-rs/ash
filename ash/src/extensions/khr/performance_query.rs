@@ -7,7 +7,7 @@ use std::ptr;
 pub const NAME: &CStr = vk::khr_performance_query::NAME;
 
 /// High-level device function wrapper for
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_performance_query.html>
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_performance_query.html>
 #[derive(Clone)]
 pub struct PerformanceQueryDevice {
     handle: vk::Device,
@@ -50,7 +50,7 @@ impl PerformanceQueryDevice {
 }
 
 /// High-level instance function wrapper for
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_performance_query.html>
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_performance_query.html>
 #[derive(Clone)]
 pub struct PerformanceQueryInstance {
     fp: vk::khr_performance_query::InstanceFn,

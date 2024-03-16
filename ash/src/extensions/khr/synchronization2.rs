@@ -18,7 +18,7 @@ impl Synchronization2 {
         Self { fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPipelineBarrier2KHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdPipelineBarrier2KHR.html>
     #[inline]
     pub unsafe fn cmd_pipeline_barrier2(
         &self,
@@ -28,7 +28,7 @@ impl Synchronization2 {
         (self.fp.cmd_pipeline_barrier2_khr)(command_buffer, dependency_info)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdResetEvent2KHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdResetEvent2KHR.html>
     #[inline]
     pub unsafe fn cmd_reset_event2(
         &self,
@@ -39,7 +39,7 @@ impl Synchronization2 {
         (self.fp.cmd_reset_event2_khr)(command_buffer, event, stage_mask)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetEvent2KHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetEvent2KHR.html>
     #[inline]
     pub unsafe fn cmd_set_event2(
         &self,
@@ -50,7 +50,7 @@ impl Synchronization2 {
         (self.fp.cmd_set_event2_khr)(command_buffer, event, dependency_info)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdWaitEvents2KHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdWaitEvents2KHR.html>
     #[inline]
     pub unsafe fn cmd_wait_events2(
         &self,
@@ -67,7 +67,7 @@ impl Synchronization2 {
         )
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdWriteTimestamp2KHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdWriteTimestamp2KHR.html>
     #[inline]
     pub unsafe fn cmd_write_timestamp2(
         &self,
@@ -79,7 +79,7 @@ impl Synchronization2 {
         (self.fp.cmd_write_timestamp2_khr)(command_buffer, stage, query_pool, query)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkQueueSubmit2KHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkQueueSubmit2KHR.html>
     #[inline]
     pub unsafe fn queue_submit2(
         &self,
