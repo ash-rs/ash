@@ -20,7 +20,7 @@ impl Surface {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceSupportKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceSupportKHR.html>
     #[inline]
     pub unsafe fn get_physical_device_surface_support(
         &self,
@@ -39,7 +39,7 @@ impl Surface {
         Ok(b.assume_init() > 0)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfacePresentModesKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfacePresentModesKHR.html>
     #[inline]
     pub unsafe fn get_physical_device_surface_present_modes(
         &self,
@@ -56,7 +56,7 @@ impl Surface {
         })
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilitiesKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilitiesKHR.html>
     #[inline]
     pub unsafe fn get_physical_device_surface_capabilities(
         &self,
@@ -72,7 +72,7 @@ impl Surface {
         .assume_init_on_success(surface_capabilities)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceFormatsKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceFormatsKHR.html>
     #[inline]
     pub unsafe fn get_physical_device_surface_formats(
         &self,
@@ -84,7 +84,7 @@ impl Surface {
         })
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroySurfaceKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroySurfaceKHR.html>
     #[inline]
     pub unsafe fn destroy_surface(
         &self,

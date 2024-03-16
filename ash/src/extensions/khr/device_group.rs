@@ -6,7 +6,7 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_device_group.html>
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_device_group.html>
 #[derive(Clone)]
 pub struct DeviceGroup {
     handle: vk::Device,
@@ -22,7 +22,7 @@ impl DeviceGroup {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceGroupPeerMemoryFeaturesKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceGroupPeerMemoryFeaturesKHR.html>
     #[inline]
     pub unsafe fn get_device_group_peer_memory_features(
         &self,
@@ -41,13 +41,13 @@ impl DeviceGroup {
         peer_memory_features.assume_init()
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDeviceMaskKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDeviceMaskKHR.html>
     #[inline]
     pub unsafe fn cmd_set_device_mask(&self, command_buffer: vk::CommandBuffer, device_mask: u32) {
         (self.fp.cmd_set_device_mask_khr)(command_buffer, device_mask)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdDispatchBaseKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDispatchBaseKHR.html>
     #[inline]
     pub unsafe fn cmd_dispatch_base(
         &self,
@@ -70,10 +70,10 @@ impl DeviceGroup {
     ///
     /// Also available as [`Swapchain::get_device_group_present_capabilities()`] since [Vulkan 1.1].
     ///
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceGroupPresentCapabilitiesKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceGroupPresentCapabilitiesKHR.html>
     ///
-    /// [Vulkan 1.1]: https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_VERSION_1_1.html
-    /// [`VK_KHR_surface`]: https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_surface.html
+    /// [Vulkan 1.1]: https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_VERSION_1_1.html
+    /// [`VK_KHR_surface`]: https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_surface.html
     #[inline]
     pub unsafe fn get_device_group_present_capabilities(
         &self,
@@ -90,10 +90,10 @@ impl DeviceGroup {
     ///
     /// Also available as [`Swapchain::get_device_group_surface_present_modes()`] since [Vulkan 1.1].
     ///
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceGroupSurfacePresentModesKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceGroupSurfacePresentModesKHR.html>
     ///
-    /// [Vulkan 1.1]: https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_VERSION_1_1.html
-    /// [`VK_KHR_surface`]: https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_surface.html
+    /// [Vulkan 1.1]: https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_VERSION_1_1.html
+    /// [`VK_KHR_surface`]: https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_surface.html
     #[inline]
     pub unsafe fn get_device_group_surface_present_modes(
         &self,
@@ -112,10 +112,10 @@ impl DeviceGroup {
     ///
     /// Also available as [`Swapchain::get_physical_device_present_rectangles()`] since [Vulkan 1.1].
     ///
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDevicePresentRectanglesKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDevicePresentRectanglesKHR.html>
     ///
-    /// [Vulkan 1.1]: https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_VERSION_1_1.html
-    /// [`VK_KHR_surface`]: https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_surface.html
+    /// [Vulkan 1.1]: https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_VERSION_1_1.html
+    /// [`VK_KHR_surface`]: https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_surface.html
     #[inline]
     pub unsafe fn get_physical_device_present_rectangles(
         &self,
@@ -138,10 +138,10 @@ impl DeviceGroup {
     ///
     /// Also available as [`Swapchain::acquire_next_image2()`] since [Vulkan 1.1].
     ///
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkAcquireNextImage2KHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAcquireNextImage2KHR.html>
     ///
-    /// [Vulkan 1.1]: https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_VERSION_1_1.html
-    /// [`VK_KHR_swapchain`]: https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_swapchain.html
+    /// [Vulkan 1.1]: https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_VERSION_1_1.html
+    /// [`VK_KHR_swapchain`]: https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_swapchain.html
     #[inline]
     pub unsafe fn acquire_next_image2(
         &self,

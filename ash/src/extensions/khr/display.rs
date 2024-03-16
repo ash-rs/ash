@@ -20,7 +20,7 @@ impl Display {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceDisplayPropertiesKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceDisplayPropertiesKHR.html>
     #[inline]
     pub unsafe fn get_physical_device_display_properties(
         &self,
@@ -31,7 +31,7 @@ impl Display {
         })
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceDisplayPlanePropertiesKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceDisplayPlanePropertiesKHR.html>
     #[inline]
     pub unsafe fn get_physical_device_display_plane_properties(
         &self,
@@ -42,7 +42,7 @@ impl Display {
         })
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDisplayPlaneSupportedDisplaysKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDisplayPlaneSupportedDisplaysKHR.html>
     #[inline]
     pub unsafe fn get_display_plane_supported_displays(
         &self,
@@ -59,7 +59,7 @@ impl Display {
         })
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDisplayModePropertiesKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDisplayModePropertiesKHR.html>
     #[inline]
     pub unsafe fn get_display_mode_properties(
         &self,
@@ -71,7 +71,7 @@ impl Display {
         })
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateDisplayModeKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateDisplayModeKHR.html>
     #[inline]
     pub unsafe fn create_display_mode(
         &self,
@@ -91,7 +91,7 @@ impl Display {
         .assume_init_on_success(display_mode)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDisplayPlaneCapabilitiesKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDisplayPlaneCapabilitiesKHR.html>
     #[inline]
     pub unsafe fn get_display_plane_capabilities(
         &self,
@@ -109,7 +109,7 @@ impl Display {
         .assume_init_on_success(display_plane_capabilities)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateDisplayPlaneSurfaceKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateDisplayPlaneSurfaceKHR.html>
     #[inline]
     pub unsafe fn create_display_plane_surface(
         &self,

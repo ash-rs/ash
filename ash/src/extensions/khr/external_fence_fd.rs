@@ -19,7 +19,7 @@ impl ExternalFenceFd {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkImportFenceFdKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkImportFenceFdKHR.html>
     #[inline]
     pub unsafe fn import_fence_fd(
         &self,
@@ -28,7 +28,7 @@ impl ExternalFenceFd {
         (self.fp.import_fence_fd_khr)(self.handle, import_info).result()
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetFenceFdKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetFenceFdKHR.html>
     #[inline]
     pub unsafe fn get_fence_fd(&self, get_info: &vk::FenceGetFdInfoKHR<'_>) -> VkResult<i32> {
         let mut fd = mem::MaybeUninit::uninit();

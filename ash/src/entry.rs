@@ -197,7 +197,7 @@ impl Entry {
         &self.static_fn
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceVersion.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceVersion.html>
     ///
     /// # Example
     ///
@@ -236,7 +236,7 @@ impl Entry {
         }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateInstance.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateInstance.html>
     ///
     /// # Safety
     ///
@@ -263,7 +263,7 @@ impl Entry {
         Ok(Instance::load(&self.static_fn, instance))
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceLayerProperties.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceLayerProperties.html>
     #[inline]
     pub unsafe fn enumerate_instance_layer_properties(&self) -> VkResult<Vec<vk::LayerProperties>> {
         read_into_uninitialized_vector(|count, data| {
@@ -271,7 +271,7 @@ impl Entry {
         })
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceExtensionProperties.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceExtensionProperties.html>
     #[inline]
     pub unsafe fn enumerate_instance_extension_properties(
         &self,
@@ -286,7 +286,7 @@ impl Entry {
         })
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetInstanceProcAddr.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetInstanceProcAddr.html>
     #[inline]
     pub unsafe fn get_instance_proc_addr(
         &self,
@@ -305,7 +305,7 @@ impl Entry {
     }
 
     #[deprecated = "This function is unavailable and therefore panics on Vulkan 1.0, please use `try_enumerate_instance_version()` instead"]
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceVersion.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceVersion.html>
     ///
     /// Please use [`try_enumerate_instance_version()`][Self::try_enumerate_instance_version()] instead.
     #[inline]

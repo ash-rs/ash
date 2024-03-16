@@ -5,7 +5,7 @@ use std::ffi::CStr;
 use std::mem;
 use std::ptr;
 
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_performance_query.html>
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_performance_query.html>
 #[derive(Clone)]
 pub struct PerformanceQuery {
     handle: vk::Instance,

@@ -16,7 +16,7 @@ impl MeshShader {
         Self { fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksNV.html>
     #[inline]
     pub unsafe fn cmd_draw_mesh_tasks(
         &self,
@@ -27,7 +27,7 @@ impl MeshShader {
         (self.fp.cmd_draw_mesh_tasks_nv)(command_buffer, task_count, first_task);
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksIndirectNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksIndirectNV.html>
     #[inline]
     pub unsafe fn cmd_draw_mesh_tasks_indirect(
         &self,
@@ -46,7 +46,7 @@ impl MeshShader {
         );
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksIndirectCountNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksIndirectCountNV.html>
     #[inline]
     pub unsafe fn cmd_draw_mesh_tasks_indirect_count(
         &self,

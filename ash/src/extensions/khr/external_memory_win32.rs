@@ -4,7 +4,7 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_external_memory_win32.html>
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_external_memory_win32.html>
 #[derive(Clone)]
 pub struct ExternalMemoryWin32 {
     handle: vk::Device,
@@ -20,7 +20,7 @@ impl ExternalMemoryWin32 {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetMemoryWin32HandleKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemoryWin32HandleKHR.html>
     #[inline]
     pub unsafe fn get_memory_win32_handle(
         &self,
@@ -31,7 +31,7 @@ impl ExternalMemoryWin32 {
             .assume_init_on_success(handle)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetMemoryWin32HandlePropertiesKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetMemoryWin32HandlePropertiesKHR.html>
     #[inline]
     pub unsafe fn get_memory_win32_handle_properties(
         &self,

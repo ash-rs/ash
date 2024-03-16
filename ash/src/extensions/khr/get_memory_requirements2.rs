@@ -19,7 +19,7 @@ impl GetMemoryRequirements2 {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetBufferMemoryRequirements2KHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetBufferMemoryRequirements2KHR.html>
     #[inline]
     pub unsafe fn get_buffer_memory_requirements2(
         &self,
@@ -29,7 +29,7 @@ impl GetMemoryRequirements2 {
         (self.fp.get_buffer_memory_requirements2_khr)(self.handle, info, memory_requirements);
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetImageMemoryRequirements2KHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageMemoryRequirements2KHR.html>
     #[inline]
     pub unsafe fn get_image_memory_requirements2(
         &self,
@@ -55,7 +55,7 @@ impl GetMemoryRequirements2 {
         count.assume_init() as usize
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetImageSparseMemoryRequirements2KHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageSparseMemoryRequirements2KHR.html>
     ///
     /// Call [`get_image_sparse_memory_requirements2_len()`][Self::get_image_sparse_memory_requirements2_len()] to query the number of elements to pass to `out`.
     /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.

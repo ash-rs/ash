@@ -3,7 +3,7 @@ use crate::{Entry, Instance};
 use std::ffi::CStr;
 use std::mem;
 
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_sample_locations.html>
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_sample_locations.html>
 #[derive(Clone)]
 pub struct SampleLocations {
     fp: vk::ExtSampleLocationsFn,
@@ -17,7 +17,7 @@ impl SampleLocations {
         Self { fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceMultisamplePropertiesEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceMultisamplePropertiesEXT.html>
     #[inline]
     pub unsafe fn get_physical_device_multisample_properties(
         &self,
@@ -32,7 +32,7 @@ impl SampleLocations {
         )
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetSampleLocationsEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetSampleLocationsEXT.html>
     #[inline]
     pub unsafe fn cmd_set_sample_locations(
         &self,

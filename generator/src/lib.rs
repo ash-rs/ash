@@ -273,7 +273,7 @@ fn parse_c_parameter(i: &str) -> IResult<&str, CParameter<'_>> {
 
 fn khronos_link<S: Display + ?Sized>(name: &S) -> Literal {
     Literal::string(&format!(
-        "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/{name}.html>"
+        "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/{name}.html>"
     ))
 }
 
@@ -1983,7 +1983,7 @@ fn derive_getters_and_setters(
                 /// Sets `p_sample_mask` to `null` if the slice is empty. The mask will
                 /// be treated as if it has all bits set to `1`.
                 ///
-                /// See <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineMultisampleStateCreateInfo.html#_description>
+                /// See <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineMultisampleStateCreateInfo.html#_description>
                 /// for more details.
                 #[inline]
                 pub fn sample_mask(mut self, sample_mask: &'a [SampleMask]) -> Self {
@@ -2333,7 +2333,7 @@ pub fn generate_struct(
             }
             #[repr(C)]
             #[derive(Copy, Clone)]
-            #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureInstanceKHR.html>"]
+            #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureInstanceKHR.html>"]
             pub struct AccelerationStructureInstanceKHR {
                 pub transform: TransformMatrixKHR,
                 /// Use [`Packed24_8::new(instance_custom_index, mask)`][Packed24_8::new()] to construct this field
@@ -2349,7 +2349,7 @@ pub fn generate_struct(
         return quote! {
             #[repr(C)]
             #[derive(Copy, Clone)]
-            #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureSRTMotionInstanceNV.html>"]
+            #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureSRTMotionInstanceNV.html>"]
             pub struct AccelerationStructureSRTMotionInstanceNV {
                 pub transform_t0: SRTDataNV,
                 pub transform_t1: SRTDataNV,
@@ -2366,7 +2366,7 @@ pub fn generate_struct(
         return quote! {
             #[repr(C)]
             #[derive(Copy, Clone)]
-            #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/AccelerationStructureMatrixMotionInstanceNV.html>"]
+            #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/AccelerationStructureMatrixMotionInstanceNV.html>"]
             pub struct AccelerationStructureMatrixMotionInstanceNV {
                 pub transform_t0: TransformMatrixKHR,
                 pub transform_t1: TransformMatrixKHR,

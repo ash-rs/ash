@@ -20,7 +20,7 @@ impl Maintenance4 {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceBufferMemoryRequirementsKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceBufferMemoryRequirementsKHR.html>
     #[inline]
     pub unsafe fn get_device_buffer_memory_requirements(
         &self,
@@ -30,7 +30,7 @@ impl Maintenance4 {
         (self.fp.get_device_buffer_memory_requirements_khr)(self.handle, memory_requirements, out)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceImageMemoryRequirementsKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceImageMemoryRequirementsKHR.html>
     #[inline]
     pub unsafe fn get_device_image_memory_requirements(
         &self,
@@ -56,7 +56,7 @@ impl Maintenance4 {
         count.assume_init() as usize
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceImageSparseMemoryRequirementsKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceImageSparseMemoryRequirementsKHR.html>
     ///
     /// Call [`get_device_image_sparse_memory_requirements_len()`][Self::get_device_image_sparse_memory_requirements_len()] to query the number of elements to pass to `out`.
     /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.
