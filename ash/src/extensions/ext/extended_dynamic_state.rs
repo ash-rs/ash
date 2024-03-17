@@ -5,16 +5,16 @@ use std::ffi::CStr;
 use std::mem;
 use std::ptr;
 
-pub const NAME: &CStr = vk::ext_extended_dynamic_state::NAME;
+pub const NAME: &CStr = vk::ext::extended_dynamic_state::NAME;
 
 #[derive(Clone)]
 pub struct Device {
-    fp: vk::ext_extended_dynamic_state::DeviceFn,
+    fp: vk::ext::extended_dynamic_state::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let fp = vk::ext_extended_dynamic_state::DeviceFn::load(|name| unsafe {
+        let fp = vk::ext::extended_dynamic_state::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -188,7 +188,7 @@ impl Device {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::ext_extended_dynamic_state::DeviceFn {
+    pub fn fp(&self) -> &vk::ext::extended_dynamic_state::DeviceFn {
         &self.fp
     }
 }

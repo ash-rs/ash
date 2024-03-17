@@ -5,18 +5,18 @@ use crate::vk;
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::ext_descriptor_buffer::NAME;
+pub const NAME: &CStr = vk::ext::descriptor_buffer::NAME;
 
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,
-    fp: vk::ext_descriptor_buffer::DeviceFn,
+    fp: vk::ext::descriptor_buffer::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::ext_descriptor_buffer::DeviceFn::load(|name| unsafe {
+        let fp = vk::ext::descriptor_buffer::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -197,7 +197,7 @@ impl Device {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::ext_descriptor_buffer::DeviceFn {
+    pub fn fp(&self) -> &vk::ext::descriptor_buffer::DeviceFn {
         &self.fp
     }
 

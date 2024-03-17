@@ -5,16 +5,16 @@ use crate::vk;
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::ext_tooling_info::NAME;
+pub const NAME: &CStr = vk::ext::tooling_info::NAME;
 
 #[derive(Clone)]
 pub struct Instance {
-    fp: vk::ext_tooling_info::InstanceFn,
+    fp: vk::ext::tooling_info::InstanceFn,
 }
 
 impl Instance {
     pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-        let fp = vk::ext_tooling_info::InstanceFn::load(|name| unsafe {
+        let fp = vk::ext::tooling_info::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -32,7 +32,7 @@ impl Instance {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::ext_tooling_info::InstanceFn {
+    pub fn fp(&self) -> &vk::ext::tooling_info::InstanceFn {
         &self.fp
     }
 }

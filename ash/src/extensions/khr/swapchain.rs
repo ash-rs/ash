@@ -8,19 +8,19 @@ use crate::RawPtr;
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::khr_swapchain::NAME;
+pub const NAME: &CStr = vk::khr::swapchain::NAME;
 
 /// High-level device function wrapper
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,
-    fp: vk::khr_swapchain::DeviceFn,
+    fp: vk::khr::swapchain::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::khr_swapchain::DeviceFn::load(|name| unsafe {
+        let fp = vk::khr::swapchain::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -179,7 +179,7 @@ impl Device {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::khr_swapchain::DeviceFn {
+    pub fn fp(&self) -> &vk::khr::swapchain::DeviceFn {
         &self.fp
     }
 
@@ -192,12 +192,12 @@ impl Device {
 /// High-level instance function wrapper
 #[derive(Clone)]
 pub struct Instance {
-    fp: vk::khr_swapchain::InstanceFn,
+    fp: vk::khr::swapchain::InstanceFn,
 }
 
 impl Instance {
     pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-        let fp = vk::khr_swapchain::InstanceFn::load(|name| unsafe {
+        let fp = vk::khr::swapchain::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -229,7 +229,7 @@ impl Instance {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::khr_swapchain::InstanceFn {
+    pub fn fp(&self) -> &vk::khr::swapchain::InstanceFn {
         &self.fp
     }
 }

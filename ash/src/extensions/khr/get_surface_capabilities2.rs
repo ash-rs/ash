@@ -6,16 +6,16 @@ use std::ffi::CStr;
 use std::mem;
 use std::ptr;
 
-pub const NAME: &CStr = vk::khr_get_surface_capabilities2::NAME;
+pub const NAME: &CStr = vk::khr::get_surface_capabilities2::NAME;
 
 #[derive(Clone)]
 pub struct Instance {
-    fp: vk::khr_get_surface_capabilities2::InstanceFn,
+    fp: vk::khr::get_surface_capabilities2::InstanceFn,
 }
 
 impl Instance {
     pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-        let fp = vk::khr_get_surface_capabilities2::InstanceFn::load(|name| unsafe {
+        let fp = vk::khr::get_surface_capabilities2::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -77,7 +77,7 @@ impl Instance {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::khr_get_surface_capabilities2::InstanceFn {
+    pub fn fp(&self) -> &vk::khr::get_surface_capabilities2::InstanceFn {
         &self.fp
     }
 }

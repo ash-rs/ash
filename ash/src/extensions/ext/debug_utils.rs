@@ -5,19 +5,19 @@ use crate::{vk, RawPtr};
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::ext_debug_utils::NAME;
+pub const NAME: &CStr = vk::ext::debug_utils::NAME;
 
 /// High-level device function wrapper
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,
-    fp: vk::ext_debug_utils::DeviceFn,
+    fp: vk::ext::debug_utils::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::ext_debug_utils::DeviceFn::load(|name| unsafe {
+        let fp = vk::ext::debug_utils::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -94,7 +94,7 @@ impl Device {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::ext_debug_utils::DeviceFn {
+    pub fn fp(&self) -> &vk::ext::debug_utils::DeviceFn {
         &self.fp
     }
 
@@ -108,13 +108,13 @@ impl Device {
 #[derive(Clone)]
 pub struct Instance {
     handle: vk::Instance,
-    fp: vk::ext_debug_utils::InstanceFn,
+    fp: vk::ext::debug_utils::InstanceFn,
 }
 
 impl Instance {
     pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::ext_debug_utils::InstanceFn::load(|name| unsafe {
+        let fp = vk::ext::debug_utils::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -164,7 +164,7 @@ impl Instance {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::ext_debug_utils::InstanceFn {
+    pub fn fp(&self) -> &vk::ext::debug_utils::InstanceFn {
         &self.fp
     }
 

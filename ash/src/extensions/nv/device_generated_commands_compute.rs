@@ -4,18 +4,18 @@ use crate::vk;
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::nv_device_generated_commands_compute::NAME;
+pub const NAME: &CStr = vk::nv::device_generated_commands_compute::NAME;
 
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,
-    fp: vk::nv_device_generated_commands_compute::DeviceFn,
+    fp: vk::nv::device_generated_commands_compute::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::nv_device_generated_commands_compute::DeviceFn::load(|name| unsafe {
+        let fp = vk::nv::device_generated_commands_compute::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -60,7 +60,7 @@ impl Device {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::nv_device_generated_commands_compute::DeviceFn {
+    pub fn fp(&self) -> &vk::nv::device_generated_commands_compute::DeviceFn {
         &self.fp
     }
 

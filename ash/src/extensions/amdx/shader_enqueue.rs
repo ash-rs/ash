@@ -6,18 +6,18 @@ use crate::RawPtr;
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::amdx_shader_enqueue::NAME;
+pub const NAME: &CStr = vk::amdx::shader_enqueue::NAME;
 
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,
-    fp: vk::amdx_shader_enqueue::DeviceFn,
+    fp: vk::amdx::shader_enqueue::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::amdx_shader_enqueue::DeviceFn::load(|name| unsafe {
+        let fp = vk::amdx::shader_enqueue::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -119,7 +119,7 @@ impl Device {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::amdx_shader_enqueue::DeviceFn {
+    pub fn fp(&self) -> &vk::amdx::shader_enqueue::DeviceFn {
         &self.fp
     }
 

@@ -5,18 +5,18 @@ use crate::vk;
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::khr_timeline_semaphore::NAME;
+pub const NAME: &CStr = vk::khr::timeline_semaphore::NAME;
 
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,
-    fp: vk::khr_timeline_semaphore::DeviceFn,
+    fp: vk::khr::timeline_semaphore::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::khr_timeline_semaphore::DeviceFn::load(|name| unsafe {
+        let fp = vk::khr::timeline_semaphore::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -50,7 +50,7 @@ impl Device {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::khr_timeline_semaphore::DeviceFn {
+    pub fn fp(&self) -> &vk::khr::timeline_semaphore::DeviceFn {
         &self.fp
     }
 

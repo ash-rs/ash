@@ -5,17 +5,17 @@ use crate::vk;
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::ext_acquire_drm_display::NAME;
+pub const NAME: &CStr = vk::ext::acquire_drm_display::NAME;
 
 #[derive(Clone)]
 pub struct Instance {
-    fp: vk::ext_acquire_drm_display::InstanceFn,
+    fp: vk::ext::acquire_drm_display::InstanceFn,
 }
 
 impl Instance {
     pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::ext_acquire_drm_display::InstanceFn::load(|name| unsafe {
+        let fp = vk::ext::acquire_drm_display::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { fp }
@@ -46,7 +46,7 @@ impl Instance {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::ext_acquire_drm_display::InstanceFn {
+    pub fn fp(&self) -> &vk::ext::acquire_drm_display::InstanceFn {
         &self.fp
     }
 }

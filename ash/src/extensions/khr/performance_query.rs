@@ -6,19 +6,19 @@ use std::ffi::CStr;
 use std::mem;
 use std::ptr;
 
-pub const NAME: &CStr = vk::khr_performance_query::NAME;
+pub const NAME: &CStr = vk::khr::performance_query::NAME;
 
 /// High-level device function wrapper
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,
-    fp: vk::khr_performance_query::DeviceFn,
+    fp: vk::khr::performance_query::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::khr_performance_query::DeviceFn::load(|name| unsafe {
+        let fp = vk::khr::performance_query::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -40,7 +40,7 @@ impl Device {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::khr_performance_query::DeviceFn {
+    pub fn fp(&self) -> &vk::khr::performance_query::DeviceFn {
         &self.fp
     }
 
@@ -53,12 +53,12 @@ impl Device {
 /// High-level instance function wrapper
 #[derive(Clone)]
 pub struct Instance {
-    fp: vk::khr_performance_query::InstanceFn,
+    fp: vk::khr::performance_query::InstanceFn,
 }
 
 impl Instance {
     pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-        let fp = vk::khr_performance_query::InstanceFn::load(|name| unsafe {
+        let fp = vk::khr::performance_query::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -133,7 +133,7 @@ impl Instance {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::khr_performance_query::InstanceFn {
+    pub fn fp(&self) -> &vk::khr::performance_query::InstanceFn {
         &self.fp
     }
 }

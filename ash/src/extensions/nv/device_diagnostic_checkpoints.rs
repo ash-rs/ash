@@ -6,16 +6,16 @@ use std::mem;
 use std::os::raw::c_void;
 use std::ptr;
 
-pub const NAME: &CStr = vk::nv_device_diagnostic_checkpoints::NAME;
+pub const NAME: &CStr = vk::nv::device_diagnostic_checkpoints::NAME;
 
 #[derive(Clone)]
 pub struct Device {
-    fp: vk::nv_device_diagnostic_checkpoints::DeviceFn,
+    fp: vk::nv::device_diagnostic_checkpoints::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let fp = vk::nv_device_diagnostic_checkpoints::DeviceFn::load(|name| unsafe {
+        let fp = vk::nv::device_diagnostic_checkpoints::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -55,7 +55,7 @@ impl Device {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::nv_device_diagnostic_checkpoints::DeviceFn {
+    pub fn fp(&self) -> &vk::nv::device_diagnostic_checkpoints::DeviceFn {
         &self.fp
     }
 }

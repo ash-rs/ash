@@ -5,16 +5,16 @@ use crate::vk;
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::khr_synchronization2::NAME;
+pub const NAME: &CStr = vk::khr::synchronization2::NAME;
 
 #[derive(Clone)]
 pub struct Device {
-    fp: vk::khr_synchronization2::DeviceFn,
+    fp: vk::khr::synchronization2::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let fp = vk::khr_synchronization2::DeviceFn::load(|name| unsafe {
+        let fp = vk::khr::synchronization2::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -93,7 +93,7 @@ impl Device {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::khr_synchronization2::DeviceFn {
+    pub fn fp(&self) -> &vk::khr::synchronization2::DeviceFn {
         &self.fp
     }
 }

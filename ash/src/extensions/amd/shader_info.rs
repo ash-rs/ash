@@ -5,18 +5,18 @@ use crate::vk;
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::amd_shader_info::NAME;
+pub const NAME: &CStr = vk::amd::shader_info::NAME;
 
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,
-    fp: vk::amd_shader_info::DeviceFn,
+    fp: vk::amd::shader_info::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::amd_shader_info::DeviceFn::load(|name| unsafe {
+        let fp = vk::amd::shader_info::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -67,7 +67,7 @@ impl Device {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::amd_shader_info::DeviceFn {
+    pub fn fp(&self) -> &vk::amd::shader_info::DeviceFn {
         &self.fp
     }
 

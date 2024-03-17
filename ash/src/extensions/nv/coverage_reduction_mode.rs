@@ -6,16 +6,16 @@ use std::ffi::CStr;
 use std::mem;
 use std::ptr;
 
-pub const NAME: &CStr = vk::nv_coverage_reduction_mode::NAME;
+pub const NAME: &CStr = vk::nv::coverage_reduction_mode::NAME;
 
 #[derive(Clone)]
 pub struct Instance {
-    fp: vk::nv_coverage_reduction_mode::InstanceFn,
+    fp: vk::nv::coverage_reduction_mode::InstanceFn,
 }
 
 impl Instance {
     pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-        let fp = vk::nv_coverage_reduction_mode::InstanceFn::load(|name| unsafe {
+        let fp = vk::nv::coverage_reduction_mode::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -63,7 +63,7 @@ impl Instance {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::nv_coverage_reduction_mode::InstanceFn {
+    pub fn fp(&self) -> &vk::nv::coverage_reduction_mode::InstanceFn {
         &self.fp
     }
 }

@@ -5,19 +5,19 @@ use crate::vk;
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::ext_full_screen_exclusive::NAME;
+pub const NAME: &CStr = vk::ext::full_screen_exclusive::NAME;
 
 /// High-level device function wrapper
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,
-    fp: vk::ext_full_screen_exclusive::DeviceFn,
+    fp: vk::ext::full_screen_exclusive::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::ext_full_screen_exclusive::DeviceFn::load(|name| unsafe {
+        let fp = vk::ext::full_screen_exclusive::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -57,7 +57,7 @@ impl Device {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::ext_full_screen_exclusive::DeviceFn {
+    pub fn fp(&self) -> &vk::ext::full_screen_exclusive::DeviceFn {
         &self.fp
     }
 
@@ -70,13 +70,13 @@ impl Device {
 /// High-level instance function wrapper
 #[derive(Clone)]
 pub struct Instance {
-    fp: vk::ext_full_screen_exclusive::InstanceFn,
+    fp: vk::ext::full_screen_exclusive::InstanceFn,
 }
 
 impl Instance {
     pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::ext_full_screen_exclusive::InstanceFn::load(|name| unsafe {
+        let fp = vk::ext::full_screen_exclusive::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { fp }
@@ -100,7 +100,7 @@ impl Instance {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::ext_full_screen_exclusive::InstanceFn {
+    pub fn fp(&self) -> &vk::ext::full_screen_exclusive::InstanceFn {
         &self.fp
     }
 }

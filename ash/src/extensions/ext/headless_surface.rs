@@ -6,18 +6,18 @@ use crate::RawPtr;
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::ext_headless_surface::NAME;
+pub const NAME: &CStr = vk::ext::headless_surface::NAME;
 
 #[derive(Clone)]
 pub struct Instance {
     handle: vk::Instance,
-    fp: vk::ext_headless_surface::InstanceFn,
+    fp: vk::ext::headless_surface::InstanceFn,
 }
 
 impl Instance {
     pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::ext_headless_surface::InstanceFn::load(|name| unsafe {
+        let fp = vk::ext::headless_surface::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -41,7 +41,7 @@ impl Instance {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::ext_headless_surface::InstanceFn {
+    pub fn fp(&self) -> &vk::ext::headless_surface::InstanceFn {
         &self.fp
     }
 

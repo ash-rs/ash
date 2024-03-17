@@ -4,16 +4,16 @@ use crate::vk;
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::khr_draw_indirect_count::NAME;
+pub const NAME: &CStr = vk::khr::draw_indirect_count::NAME;
 
 #[derive(Clone)]
 pub struct Device {
-    fp: vk::khr_draw_indirect_count::DeviceFn,
+    fp: vk::khr::draw_indirect_count::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let fp = vk::khr_draw_indirect_count::DeviceFn::load(|name| unsafe {
+        let fp = vk::khr::draw_indirect_count::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -66,7 +66,7 @@ impl Device {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::khr_draw_indirect_count::DeviceFn {
+    pub fn fp(&self) -> &vk::khr::draw_indirect_count::DeviceFn {
         &self.fp
     }
 }

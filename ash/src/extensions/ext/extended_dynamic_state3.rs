@@ -4,16 +4,16 @@ use crate::vk;
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::ext_extended_dynamic_state3::NAME;
+pub const NAME: &CStr = vk::ext::extended_dynamic_state3::NAME;
 
 #[derive(Clone)]
 pub struct Device {
-    fp: vk::ext_extended_dynamic_state3::DeviceFn,
+    fp: vk::ext::extended_dynamic_state3::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let fp = vk::ext_extended_dynamic_state3::DeviceFn::load(|name| unsafe {
+        let fp = vk::ext::extended_dynamic_state3::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -399,7 +399,7 @@ impl Device {
         (self.fp.cmd_set_coverage_reduction_mode_nv)(command_buffer, coverage_reduction_mode)
     }
     #[inline]
-    pub fn fp(&self) -> &vk::ext_extended_dynamic_state3::DeviceFn {
+    pub fn fp(&self) -> &vk::ext::extended_dynamic_state3::DeviceFn {
         &self.fp
     }
 }

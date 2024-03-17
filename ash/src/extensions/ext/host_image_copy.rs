@@ -7,18 +7,18 @@ use crate::vk;
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::ext_host_image_copy::NAME;
+pub const NAME: &CStr = vk::ext::host_image_copy::NAME;
 
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,
-    fp: vk::ext_host_image_copy::DeviceFn,
+    fp: vk::ext::host_image_copy::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::ext_host_image_copy::DeviceFn::load(|name| unsafe {
+        let fp = vk::ext::host_image_copy::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -86,7 +86,7 @@ impl Device {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::ext_host_image_copy::DeviceFn {
+    pub fn fp(&self) -> &vk::ext::host_image_copy::DeviceFn {
         &self.fp
     }
 

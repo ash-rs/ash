@@ -6,18 +6,18 @@ use crate::RawPtr;
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::khr_display_swapchain::NAME;
+pub const NAME: &CStr = vk::khr::display_swapchain::NAME;
 
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,
-    fp: vk::khr_display_swapchain::DeviceFn,
+    fp: vk::khr::display_swapchain::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::khr_display_swapchain::DeviceFn::load(|name| unsafe {
+        let fp = vk::khr::display_swapchain::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -42,7 +42,7 @@ impl Device {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::khr_display_swapchain::DeviceFn {
+    pub fn fp(&self) -> &vk::khr::display_swapchain::DeviceFn {
         &self.fp
     }
 

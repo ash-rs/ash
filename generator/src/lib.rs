@@ -911,10 +911,10 @@ pub type CommandMap<'a> = HashMap<vkxml::Identifier, &'a vk_parse::CommandDefini
 
 fn generate_function_pointers<'a>(
     ident: Ident,
-    module: &str,
+    module: Option<(&str, &Ident)>,
     commands: &[&'a vk_parse::CommandDefinition],
     rename_commands: &HashMap<&'a str, &'a str>,
-    fn_cache: &mut HashMap<&'a str, Ident>,
+    fn_cache: &mut HashMap<&'a str, (Ident, Ident)>,
     has_lifetimes: &HashSet<Ident>,
 ) -> TokenStream {
     // Commands can have duplicates inside them because they are declared per features. But we only
@@ -925,7 +925,7 @@ fn generate_function_pointers<'a>(
         .collect::<Vec<_>>();
 
     struct Command<'a> {
-        type_in_module: Option<Ident>,
+        type_in_module: Option<(Ident, Ident)>,
         type_name: Ident,
         pfn_type_name: Ident,
         function_name_c: &'a str,
@@ -993,8 +993,13 @@ fn generate_function_pointers<'a>(
 
             let type_in_module = fn_cache.get(name.as_str()).cloned();
 
-            if type_in_module.is_none() && !module.is_empty() {
-                fn_cache.insert(name, format_ident!("{}", module));
+            if let Some((vendor, ident)) = module {
+                if type_in_module.is_none() {
+                    fn_cache.insert(
+                        name,
+                        (format_ident!("{}", vendor.to_lowercase()), ident.clone()),
+                    );
+                }
             }
 
             Command {
@@ -1070,9 +1075,9 @@ fn generate_function_pointers<'a>(
     impl<'a> quote::ToTokens for CommandToMember<'a> {
         fn to_tokens(&self, tokens: &mut TokenStream) {
             let type_name = &self.0.pfn_type_name;
-            let type_name = if let Some(module) = &self.0.type_in_module {
+            let type_name = if let Some((vendor, ext)) = &self.0.type_in_module {
                 // Type is defined in another module
-                quote!(crate::vk::#module::#type_name)
+                quote!(crate::vk::#vendor::#ext::#type_name)
             } else {
                 // Type is defined in local scope
                 quote!(#type_name)
@@ -1254,13 +1259,13 @@ pub fn generate_extension_constants<'a>(
     quote!(#(#enum_tokens)*)
 }
 pub fn generate_extension_commands<'a>(
-    extension_name: &str,
+    extension_name: &'a str,
     items: &'a [vk_parse::ExtensionChild],
     cmd_map: &CommandMap<'a>,
     cmd_aliases: &HashMap<&'a str, &'a str>,
-    fn_cache: &mut HashMap<&'a str, Ident>,
+    fn_cache: &mut HashMap<&'a str, (Ident, Ident)>,
     has_lifetimes: &HashSet<Ident>,
-) -> TokenStream {
+) -> (&'a str, TokenStream) {
     let spec_version = items
         .iter()
         .filter_map(get_variant!(vk_parse::ExtensionChild::Require { items }))
@@ -1278,8 +1283,12 @@ pub fn generate_extension_commands<'a>(
 
     let byte_name_ident = Literal::byte_string(format!("{extension_name}\0").as_bytes());
 
-    let extension_name = extension_name.strip_prefix("VK_").unwrap().to_lowercase();
-    let extension_ident = format_ident!("{}", extension_name);
+    let extension_name = extension_name.strip_prefix("VK_").unwrap();
+    let (vendor, extension_ident) = extension_name.split_once('_').unwrap();
+    let extension_ident = match extension_ident.chars().next().unwrap().is_ascii_digit() {
+        false => format_ident!("{}", extension_ident.to_lowercase()),
+        true => format_ident!("_{}", extension_ident.to_lowercase()),
+    };
 
     let mut instance_commands = Vec::new();
     let mut device_commands = Vec::new();
@@ -1318,7 +1327,7 @@ pub fn generate_extension_commands<'a>(
 
         generate_function_pointers(
             instance_ident,
-            &extension_name,
+            Some((&vendor, &extension_ident)),
             &instance_commands,
             &rename_commands,
             fn_cache,
@@ -1331,7 +1340,7 @@ pub fn generate_extension_commands<'a>(
 
         generate_function_pointers(
             device_ident,
-            &extension_name,
+            Some((&vendor, &extension_ident)),
             &device_commands,
             &rename_commands,
             fn_cache,
@@ -1339,50 +1348,24 @@ pub fn generate_extension_commands<'a>(
         )
     });
 
-    quote! {
-        pub mod #extension_ident {
-            use super::*;
+    (
+        vendor,
+        quote! {
+            pub mod #extension_ident {
+                use crate::vk::extensions::*;
 
-            pub const NAME: &::std::ffi::CStr = unsafe {
-                ::std::ffi::CStr::from_bytes_with_nul_unchecked(#byte_name_ident)
-            };
-            #spec_version
+                pub const NAME: &::std::ffi::CStr = unsafe {
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(#byte_name_ident)
+                };
+                #spec_version
 
-            #instance_fp
-            #device_fp
-        }
-    }
+                #instance_fp
+                #device_fp
+            }
+        },
+    )
 }
-pub fn generate_extension<'a>(
-    extension: &'a vk_parse::Extension,
-    cmd_map: &CommandMap<'a>,
-    const_cache: &mut HashSet<&'a str>,
-    const_values: &mut BTreeMap<Ident, ConstantTypeInfo>,
-    cmd_aliases: &HashMap<&'a str, &'a str>,
-    fn_cache: &mut HashMap<&'a str, Ident>,
-    has_lifetimes: &HashSet<Ident>,
-) -> Option<TokenStream> {
-    let extension_tokens = generate_extension_constants(
-        &extension.name,
-        extension.number.unwrap_or(0),
-        &extension.children,
-        const_cache,
-        const_values,
-    );
-    let fp = generate_extension_commands(
-        &extension.name,
-        &extension.children,
-        cmd_map,
-        cmd_aliases,
-        fn_cache,
-        has_lifetimes,
-    );
-    let q = quote! {
-        #fp
-        #extension_tokens
-    };
-    Some(q)
-}
+
 pub fn generate_define(
     define: &vk_parse::Type,
     allowed_types: &HashSet<&str>,
@@ -2668,7 +2651,7 @@ pub fn generate_definition(
 pub fn generate_feature<'a>(
     feature: &vkxml::Feature,
     commands: &CommandMap<'a>,
-    fn_cache: &mut HashMap<&'a str, Ident>,
+    fn_cache: &mut HashMap<&'a str, (Ident, Ident)>,
     has_lifetimes: &HashSet<Ident>,
 ) -> TokenStream {
     if !contains_desired_api(&feature.api) {
@@ -2699,7 +2682,7 @@ pub fn generate_feature<'a>(
     let static_fn = if feature.is_version(1, 0) {
         generate_function_pointers(
             format_ident!("{}", "StaticFn"),
-            "",
+            None,
             &static_commands,
             &HashMap::new(),
             fn_cache,
@@ -2710,7 +2693,7 @@ pub fn generate_feature<'a>(
     };
     let entry = generate_function_pointers(
         format_ident!("EntryFnV{}", version),
-        "",
+        None,
         &entry_commands,
         &HashMap::new(),
         fn_cache,
@@ -2718,7 +2701,7 @@ pub fn generate_feature<'a>(
     );
     let instance = generate_function_pointers(
         format_ident!("InstanceFnV{}", version),
-        "",
+        None,
         &instance_commands,
         &HashMap::new(),
         fn_cache,
@@ -2726,7 +2709,7 @@ pub fn generate_feature<'a>(
     );
     let device = generate_function_pointers(
         format_ident!("DeviceFnV{}", version),
-        "",
+        None,
         &device_commands,
         &HashMap::new(),
         fn_cache,
@@ -3136,20 +3119,39 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         }
     }
 
-    let extension_code = extensions
+    let extension_constants = extensions
         .iter()
-        .filter_map(|ext| {
-            generate_extension(
-                ext,
-                &commands,
+        .map(|ext| {
+            generate_extension_constants(
+                &ext.name,
+                ext.number.unwrap_or(0),
+                &ext.children,
                 &mut const_cache,
                 &mut const_values,
-                &cmd_aliases,
-                &mut fn_cache,
-                &has_lifetimes,
             )
         })
         .collect_vec();
+
+    let mut extension_cmds = BTreeMap::<&str, Vec<TokenStream>>::new();
+    for ext in extensions.iter() {
+        let (vendor, code) = generate_extension_commands(
+            &ext.name,
+            &ext.children,
+            &commands,
+            &cmd_aliases,
+            &mut fn_cache,
+            &has_lifetimes,
+        );
+        extension_cmds.entry(vendor).or_default().push(code);
+    }
+    let extension_cmds = extension_cmds.into_iter().map(|(vendor, code)| {
+        let vendor_ident = format_ident!("{}", vendor.to_lowercase());
+        quote! {
+            pub mod #vendor_ident {
+                #(#code)*
+            }
+        }
+    });
 
     let vk_parse_types = spec2
         .0
@@ -3269,7 +3271,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
 
     let extension_code = quote! {
         #![allow(unused_qualifications)] // Because we do not know in what file the PFNs are defined
-        #![allow(unused_imports)]        // for sometimes-dead `use super::*` from generate_extension_commands
+        #![allow(unused_imports)]        // for sometimes-dead `use` in extension modules
 
         use std::os::raw::*;
         use crate::vk::platform_types::*;
@@ -3277,7 +3279,8 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         use crate::vk::bitflags::*;
         use crate::vk::definitions::*;
         use crate::vk::enums::*;
-        #(#extension_code)*
+        #(#extension_constants)*
+        #(#extension_cmds)*
     };
 
     let feature_extensions_code = quote! {

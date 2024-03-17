@@ -6,18 +6,18 @@ use crate::RawPtr;
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::ext_private_data::NAME;
+pub const NAME: &CStr = vk::ext::private_data::NAME;
 
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,
-    fp: vk::ext_private_data::DeviceFn,
+    fp: vk::ext::private_data::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::ext_private_data::DeviceFn::load(|name| unsafe {
+        let fp = vk::ext::private_data::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -91,7 +91,7 @@ impl Device {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::ext_private_data::DeviceFn {
+    pub fn fp(&self) -> &vk::ext::private_data::DeviceFn {
         &self.fp
     }
 

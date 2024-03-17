@@ -5,19 +5,19 @@ use crate::vk;
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::android_external_memory_android_hardware_buffer::NAME;
+pub const NAME: &CStr = vk::android::external_memory_android_hardware_buffer::NAME;
 
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,
-    fp: vk::android_external_memory_android_hardware_buffer::DeviceFn,
+    fp: vk::android::external_memory_android_hardware_buffer::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
         let fp =
-            vk::android_external_memory_android_hardware_buffer::DeviceFn::load(|name| unsafe {
+            vk::android::external_memory_android_hardware_buffer::DeviceFn::load(|name| unsafe {
                 mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
             });
         Self { handle, fp }
@@ -46,7 +46,7 @@ impl Device {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::android_external_memory_android_hardware_buffer::DeviceFn {
+    pub fn fp(&self) -> &vk::android::external_memory_android_hardware_buffer::DeviceFn {
         &self.fp
     }
 

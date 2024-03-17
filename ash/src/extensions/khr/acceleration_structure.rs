@@ -6,18 +6,18 @@ use crate::RawPtr;
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::khr_acceleration_structure::NAME;
+pub const NAME: &CStr = vk::khr::acceleration_structure::NAME;
 
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,
-    fp: vk::khr_acceleration_structure::DeviceFn,
+    fp: vk::khr::acceleration_structure::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::khr_acceleration_structure::DeviceFn::load(|name| unsafe {
+        let fp = vk::khr::acceleration_structure::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -291,7 +291,7 @@ impl Device {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::khr_acceleration_structure::DeviceFn {
+    pub fn fp(&self) -> &vk::khr::acceleration_structure::DeviceFn {
         &self.fp
     }
 

@@ -4,16 +4,16 @@ use crate::vk;
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::amd_buffer_marker::NAME;
+pub const NAME: &CStr = vk::amd::buffer_marker::NAME;
 
 #[derive(Clone)]
 pub struct Device {
-    fp: vk::amd_buffer_marker::DeviceFn,
+    fp: vk::amd::buffer_marker::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let fp = vk::amd_buffer_marker::DeviceFn::load(|name| unsafe {
+        let fp = vk::amd::buffer_marker::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -39,7 +39,7 @@ impl Device {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::amd_buffer_marker::DeviceFn {
+    pub fn fp(&self) -> &vk::amd::buffer_marker::DeviceFn {
         &self.fp
     }
 }

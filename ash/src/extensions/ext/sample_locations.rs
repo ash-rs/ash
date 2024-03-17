@@ -4,17 +4,17 @@ use crate::vk;
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::ext_sample_locations::NAME;
+pub const NAME: &CStr = vk::ext::sample_locations::NAME;
 
 /// High-level device function wrapper
 #[derive(Clone)]
 pub struct Device {
-    fp: vk::ext_sample_locations::DeviceFn,
+    fp: vk::ext::sample_locations::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let fp = vk::ext_sample_locations::DeviceFn::load(|name| unsafe {
+        let fp = vk::ext::sample_locations::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -31,7 +31,7 @@ impl Device {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::ext_sample_locations::DeviceFn {
+    pub fn fp(&self) -> &vk::ext::sample_locations::DeviceFn {
         &self.fp
     }
 }
@@ -39,12 +39,12 @@ impl Device {
 /// High-level instance function wrapper
 #[derive(Clone)]
 pub struct Instance {
-    fp: vk::ext_sample_locations::InstanceFn,
+    fp: vk::ext::sample_locations::InstanceFn,
 }
 
 impl Instance {
     pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
-        let fp = vk::ext_sample_locations::InstanceFn::load(|name| unsafe {
+        let fp = vk::ext::sample_locations::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -66,7 +66,7 @@ impl Instance {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::ext_sample_locations::InstanceFn {
+    pub fn fp(&self) -> &vk::ext::sample_locations::InstanceFn {
         &self.fp
     }
 }

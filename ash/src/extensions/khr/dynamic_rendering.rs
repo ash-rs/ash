@@ -4,16 +4,16 @@ use crate::vk;
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::khr_dynamic_rendering::NAME;
+pub const NAME: &CStr = vk::khr::dynamic_rendering::NAME;
 
 #[derive(Clone)]
 pub struct Device {
-    fp: vk::khr_dynamic_rendering::DeviceFn,
+    fp: vk::khr::dynamic_rendering::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let fp = vk::khr_dynamic_rendering::DeviceFn::load(|name| unsafe {
+        let fp = vk::khr::dynamic_rendering::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -36,7 +36,7 @@ impl Device {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::khr_dynamic_rendering::DeviceFn {
+    pub fn fp(&self) -> &vk::khr::dynamic_rendering::DeviceFn {
         &self.fp
     }
 }

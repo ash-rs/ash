@@ -4,17 +4,17 @@ use crate::vk;
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::khr_ray_tracing_maintenance1::NAME;
+pub const NAME: &CStr = vk::khr::ray_tracing_maintenance1::NAME;
 
 #[derive(Clone)]
 pub struct Device {
-    fp: vk::khr_ray_tracing_maintenance1::DeviceFn,
+    fp: vk::khr::ray_tracing_maintenance1::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::khr_ray_tracing_maintenance1::DeviceFn::load(|name| unsafe {
+        let fp = vk::khr::ray_tracing_maintenance1::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { fp }
@@ -33,7 +33,7 @@ impl Device {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::khr_ray_tracing_maintenance1::DeviceFn {
+    pub fn fp(&self) -> &vk::khr::ray_tracing_maintenance1::DeviceFn {
         &self.fp
     }
 }

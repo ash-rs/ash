@@ -4,16 +4,16 @@ use crate::vk;
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::nv_mesh_shader::NAME;
+pub const NAME: &CStr = vk::nv::mesh_shader::NAME;
 
 #[derive(Clone)]
 pub struct Device {
-    fp: vk::nv_mesh_shader::DeviceFn,
+    fp: vk::nv::mesh_shader::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let fp = vk::nv_mesh_shader::DeviceFn::load(|name| unsafe {
+        let fp = vk::nv::mesh_shader::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -73,7 +73,7 @@ impl Device {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::nv_mesh_shader::DeviceFn {
+    pub fn fp(&self) -> &vk::nv::mesh_shader::DeviceFn {
         &self.fp
     }
 }

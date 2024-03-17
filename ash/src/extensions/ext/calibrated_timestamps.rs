@@ -5,19 +5,19 @@ use crate::vk;
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::ext_calibrated_timestamps::NAME;
+pub const NAME: &CStr = vk::ext::calibrated_timestamps::NAME;
 
 /// High-level device function wrapper
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,
-    fp: vk::ext_calibrated_timestamps::DeviceFn,
+    fp: vk::ext::calibrated_timestamps::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::ext_calibrated_timestamps::DeviceFn::load(|name| unsafe {
+        let fp = vk::ext::calibrated_timestamps::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -46,7 +46,7 @@ impl Device {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::ext_calibrated_timestamps::DeviceFn {
+    pub fn fp(&self) -> &vk::ext::calibrated_timestamps::DeviceFn {
         &self.fp
     }
 
@@ -59,13 +59,13 @@ impl Device {
 /// High-level instance function wrapper
 #[derive(Clone)]
 pub struct Instance {
-    fp: vk::ext_calibrated_timestamps::InstanceFn,
+    fp: vk::ext::calibrated_timestamps::InstanceFn,
 }
 
 impl Instance {
     pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::ext_calibrated_timestamps::InstanceFn::load(|name| unsafe {
+        let fp = vk::ext::calibrated_timestamps::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { fp }
@@ -87,7 +87,7 @@ impl Instance {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::ext_calibrated_timestamps::InstanceFn {
+    pub fn fp(&self) -> &vk::ext::calibrated_timestamps::InstanceFn {
         &self.fp
     }
 }

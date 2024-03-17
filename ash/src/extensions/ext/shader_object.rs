@@ -7,18 +7,18 @@ use std::ffi::CStr;
 use std::mem;
 use std::ptr;
 
-pub const NAME: &CStr = vk::ext_shader_object::NAME;
+pub const NAME: &CStr = vk::ext::shader_object::NAME;
 
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,
-    fp: vk::ext_shader_object::DeviceFn,
+    fp: vk::ext::shader_object::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::ext_shader_object::DeviceFn::load(|name| unsafe {
+        let fp = vk::ext::shader_object::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -704,7 +704,7 @@ impl Device {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::ext_shader_object::DeviceFn {
+    pub fn fp(&self) -> &vk::ext::shader_object::DeviceFn {
         &self.fp
     }
 

@@ -5,18 +5,18 @@ use crate::vk;
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::khr_pipeline_executable_properties::NAME;
+pub const NAME: &CStr = vk::khr::pipeline_executable_properties::NAME;
 
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,
-    fp: vk::khr_pipeline_executable_properties::DeviceFn,
+    fp: vk::khr::pipeline_executable_properties::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::khr_pipeline_executable_properties::DeviceFn::load(|name| unsafe {
+        let fp = vk::khr::pipeline_executable_properties::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -71,7 +71,7 @@ impl Device {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::khr_pipeline_executable_properties::DeviceFn {
+    pub fn fp(&self) -> &vk::khr::pipeline_executable_properties::DeviceFn {
         &self.fp
     }
 

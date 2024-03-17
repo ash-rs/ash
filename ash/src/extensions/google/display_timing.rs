@@ -5,18 +5,18 @@ use crate::vk;
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::google_display_timing::NAME;
+pub const NAME: &CStr = vk::google::display_timing::NAME;
 
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,
-    fp: vk::google_display_timing::DeviceFn,
+    fp: vk::google::display_timing::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::google_display_timing::DeviceFn::load(|name| unsafe {
+        let fp = vk::google::display_timing::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -45,7 +45,7 @@ impl Device {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::google_display_timing::DeviceFn {
+    pub fn fp(&self) -> &vk::google::display_timing::DeviceFn {
         &self.fp
     }
 

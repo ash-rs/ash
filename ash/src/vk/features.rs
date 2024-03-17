@@ -3682,7 +3682,7 @@ impl EntryFnV1_1 {
     }
 }
 #[derive(Clone)]
-pub struct InstanceFnV1_1 { pub enumerate_physical_device_groups : crate :: vk :: khr_device_group_creation :: PFN_vkEnumeratePhysicalDeviceGroups , pub get_physical_device_features2 : crate :: vk :: khr_get_physical_device_properties2 :: PFN_vkGetPhysicalDeviceFeatures2 , pub get_physical_device_properties2 : crate :: vk :: khr_get_physical_device_properties2 :: PFN_vkGetPhysicalDeviceProperties2 , pub get_physical_device_format_properties2 : crate :: vk :: khr_get_physical_device_properties2 :: PFN_vkGetPhysicalDeviceFormatProperties2 , pub get_physical_device_image_format_properties2 : crate :: vk :: khr_get_physical_device_properties2 :: PFN_vkGetPhysicalDeviceImageFormatProperties2 , pub get_physical_device_queue_family_properties2 : crate :: vk :: khr_get_physical_device_properties2 :: PFN_vkGetPhysicalDeviceQueueFamilyProperties2 , pub get_physical_device_memory_properties2 : crate :: vk :: khr_get_physical_device_properties2 :: PFN_vkGetPhysicalDeviceMemoryProperties2 , pub get_physical_device_sparse_image_format_properties2 : crate :: vk :: khr_get_physical_device_properties2 :: PFN_vkGetPhysicalDeviceSparseImageFormatProperties2 , pub get_physical_device_external_buffer_properties : crate :: vk :: khr_external_memory_capabilities :: PFN_vkGetPhysicalDeviceExternalBufferProperties , pub get_physical_device_external_fence_properties : crate :: vk :: khr_external_fence_capabilities :: PFN_vkGetPhysicalDeviceExternalFenceProperties , pub get_physical_device_external_semaphore_properties : crate :: vk :: khr_external_semaphore_capabilities :: PFN_vkGetPhysicalDeviceExternalSemaphoreProperties , }
+pub struct InstanceFnV1_1 { pub enumerate_physical_device_groups : crate :: vk :: khr :: device_group_creation :: PFN_vkEnumeratePhysicalDeviceGroups , pub get_physical_device_features2 : crate :: vk :: khr :: get_physical_device_properties2 :: PFN_vkGetPhysicalDeviceFeatures2 , pub get_physical_device_properties2 : crate :: vk :: khr :: get_physical_device_properties2 :: PFN_vkGetPhysicalDeviceProperties2 , pub get_physical_device_format_properties2 : crate :: vk :: khr :: get_physical_device_properties2 :: PFN_vkGetPhysicalDeviceFormatProperties2 , pub get_physical_device_image_format_properties2 : crate :: vk :: khr :: get_physical_device_properties2 :: PFN_vkGetPhysicalDeviceImageFormatProperties2 , pub get_physical_device_queue_family_properties2 : crate :: vk :: khr :: get_physical_device_properties2 :: PFN_vkGetPhysicalDeviceQueueFamilyProperties2 , pub get_physical_device_memory_properties2 : crate :: vk :: khr :: get_physical_device_properties2 :: PFN_vkGetPhysicalDeviceMemoryProperties2 , pub get_physical_device_sparse_image_format_properties2 : crate :: vk :: khr :: get_physical_device_properties2 :: PFN_vkGetPhysicalDeviceSparseImageFormatProperties2 , pub get_physical_device_external_buffer_properties : crate :: vk :: khr :: external_memory_capabilities :: PFN_vkGetPhysicalDeviceExternalBufferProperties , pub get_physical_device_external_fence_properties : crate :: vk :: khr :: external_fence_capabilities :: PFN_vkGetPhysicalDeviceExternalFenceProperties , pub get_physical_device_external_semaphore_properties : crate :: vk :: khr :: external_semaphore_capabilities :: PFN_vkGetPhysicalDeviceExternalSemaphoreProperties , }
 unsafe impl Send for InstanceFnV1_1 {}
 unsafe impl Sync for InstanceFnV1_1 {}
 impl InstanceFnV1_1 {
@@ -3931,32 +3931,32 @@ pub type PFN_vkGetDeviceQueue2 = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct DeviceFnV1_1 {
-    pub bind_buffer_memory2: crate::vk::khr_bind_memory2::PFN_vkBindBufferMemory2,
-    pub bind_image_memory2: crate::vk::khr_bind_memory2::PFN_vkBindImageMemory2,
+    pub bind_buffer_memory2: crate::vk::khr::bind_memory2::PFN_vkBindBufferMemory2,
+    pub bind_image_memory2: crate::vk::khr::bind_memory2::PFN_vkBindImageMemory2,
     pub get_device_group_peer_memory_features:
-        crate::vk::khr_device_group::PFN_vkGetDeviceGroupPeerMemoryFeatures,
-    pub cmd_set_device_mask: crate::vk::khr_device_group::PFN_vkCmdSetDeviceMask,
-    pub cmd_dispatch_base: crate::vk::khr_device_group::PFN_vkCmdDispatchBase,
+        crate::vk::khr::device_group::PFN_vkGetDeviceGroupPeerMemoryFeatures,
+    pub cmd_set_device_mask: crate::vk::khr::device_group::PFN_vkCmdSetDeviceMask,
+    pub cmd_dispatch_base: crate::vk::khr::device_group::PFN_vkCmdDispatchBase,
     pub get_image_memory_requirements2:
-        crate::vk::khr_get_memory_requirements2::PFN_vkGetImageMemoryRequirements2,
+        crate::vk::khr::get_memory_requirements2::PFN_vkGetImageMemoryRequirements2,
     pub get_buffer_memory_requirements2:
-        crate::vk::khr_get_memory_requirements2::PFN_vkGetBufferMemoryRequirements2,
+        crate::vk::khr::get_memory_requirements2::PFN_vkGetBufferMemoryRequirements2,
     pub get_image_sparse_memory_requirements2:
-        crate::vk::khr_get_memory_requirements2::PFN_vkGetImageSparseMemoryRequirements2,
-    pub trim_command_pool: crate::vk::khr_maintenance1::PFN_vkTrimCommandPool,
+        crate::vk::khr::get_memory_requirements2::PFN_vkGetImageSparseMemoryRequirements2,
+    pub trim_command_pool: crate::vk::khr::maintenance1::PFN_vkTrimCommandPool,
     pub get_device_queue2: PFN_vkGetDeviceQueue2,
     pub create_sampler_ycbcr_conversion:
-        crate::vk::khr_sampler_ycbcr_conversion::PFN_vkCreateSamplerYcbcrConversion,
+        crate::vk::khr::sampler_ycbcr_conversion::PFN_vkCreateSamplerYcbcrConversion,
     pub destroy_sampler_ycbcr_conversion:
-        crate::vk::khr_sampler_ycbcr_conversion::PFN_vkDestroySamplerYcbcrConversion,
+        crate::vk::khr::sampler_ycbcr_conversion::PFN_vkDestroySamplerYcbcrConversion,
     pub create_descriptor_update_template:
-        crate::vk::khr_descriptor_update_template::PFN_vkCreateDescriptorUpdateTemplate,
+        crate::vk::khr::descriptor_update_template::PFN_vkCreateDescriptorUpdateTemplate,
     pub destroy_descriptor_update_template:
-        crate::vk::khr_descriptor_update_template::PFN_vkDestroyDescriptorUpdateTemplate,
+        crate::vk::khr::descriptor_update_template::PFN_vkDestroyDescriptorUpdateTemplate,
     pub update_descriptor_set_with_template:
-        crate::vk::khr_descriptor_update_template::PFN_vkUpdateDescriptorSetWithTemplate,
+        crate::vk::khr::descriptor_update_template::PFN_vkUpdateDescriptorSetWithTemplate,
     pub get_descriptor_set_layout_support:
-        crate::vk::khr_maintenance3::PFN_vkGetDescriptorSetLayoutSupport,
+        crate::vk::khr::maintenance3::PFN_vkGetDescriptorSetLayoutSupport,
 }
 unsafe impl Send for DeviceFnV1_1 {}
 unsafe impl Sync for DeviceFnV1_1 {}
@@ -4293,24 +4293,24 @@ pub struct EntryFnV1_2;
 pub struct InstanceFnV1_2;
 #[derive(Clone)]
 pub struct DeviceFnV1_2 {
-    pub cmd_draw_indirect_count: crate::vk::amd_draw_indirect_count::PFN_vkCmdDrawIndirectCount,
+    pub cmd_draw_indirect_count: crate::vk::amd::draw_indirect_count::PFN_vkCmdDrawIndirectCount,
     pub cmd_draw_indexed_indirect_count:
-        crate::vk::amd_draw_indirect_count::PFN_vkCmdDrawIndexedIndirectCount,
-    pub create_render_pass2: crate::vk::khr_create_renderpass2::PFN_vkCreateRenderPass2,
-    pub cmd_begin_render_pass2: crate::vk::khr_create_renderpass2::PFN_vkCmdBeginRenderPass2,
-    pub cmd_next_subpass2: crate::vk::khr_create_renderpass2::PFN_vkCmdNextSubpass2,
-    pub cmd_end_render_pass2: crate::vk::khr_create_renderpass2::PFN_vkCmdEndRenderPass2,
-    pub reset_query_pool: crate::vk::ext_host_query_reset::PFN_vkResetQueryPool,
+        crate::vk::amd::draw_indirect_count::PFN_vkCmdDrawIndexedIndirectCount,
+    pub create_render_pass2: crate::vk::khr::create_renderpass2::PFN_vkCreateRenderPass2,
+    pub cmd_begin_render_pass2: crate::vk::khr::create_renderpass2::PFN_vkCmdBeginRenderPass2,
+    pub cmd_next_subpass2: crate::vk::khr::create_renderpass2::PFN_vkCmdNextSubpass2,
+    pub cmd_end_render_pass2: crate::vk::khr::create_renderpass2::PFN_vkCmdEndRenderPass2,
+    pub reset_query_pool: crate::vk::ext::host_query_reset::PFN_vkResetQueryPool,
     pub get_semaphore_counter_value:
-        crate::vk::khr_timeline_semaphore::PFN_vkGetSemaphoreCounterValue,
-    pub wait_semaphores: crate::vk::khr_timeline_semaphore::PFN_vkWaitSemaphores,
-    pub signal_semaphore: crate::vk::khr_timeline_semaphore::PFN_vkSignalSemaphore,
+        crate::vk::khr::timeline_semaphore::PFN_vkGetSemaphoreCounterValue,
+    pub wait_semaphores: crate::vk::khr::timeline_semaphore::PFN_vkWaitSemaphores,
+    pub signal_semaphore: crate::vk::khr::timeline_semaphore::PFN_vkSignalSemaphore,
     pub get_buffer_device_address:
-        crate::vk::ext_buffer_device_address::PFN_vkGetBufferDeviceAddress,
+        crate::vk::ext::buffer_device_address::PFN_vkGetBufferDeviceAddress,
     pub get_buffer_opaque_capture_address:
-        crate::vk::khr_buffer_device_address::PFN_vkGetBufferOpaqueCaptureAddress,
+        crate::vk::khr::buffer_device_address::PFN_vkGetBufferOpaqueCaptureAddress,
     pub get_device_memory_opaque_capture_address:
-        crate::vk::khr_buffer_device_address::PFN_vkGetDeviceMemoryOpaqueCaptureAddress,
+        crate::vk::khr::buffer_device_address::PFN_vkGetDeviceMemoryOpaqueCaptureAddress,
 }
 unsafe impl Send for DeviceFnV1_2 {}
 unsafe impl Sync for DeviceFnV1_2 {}
@@ -4575,7 +4575,7 @@ pub struct EntryFnV1_3;
 #[derive(Clone)]
 pub struct InstanceFnV1_3 {
     pub get_physical_device_tool_properties:
-        crate::vk::ext_tooling_info::PFN_vkGetPhysicalDeviceToolProperties,
+        crate::vk::ext::tooling_info::PFN_vkGetPhysicalDeviceToolProperties,
 }
 unsafe impl Send for InstanceFnV1_3 {}
 unsafe impl Sync for InstanceFnV1_3 {}
@@ -4611,56 +4611,57 @@ impl InstanceFnV1_3 {
 }
 #[derive(Clone)]
 pub struct DeviceFnV1_3 {
-    pub create_private_data_slot: crate::vk::ext_private_data::PFN_vkCreatePrivateDataSlot,
-    pub destroy_private_data_slot: crate::vk::ext_private_data::PFN_vkDestroyPrivateDataSlot,
-    pub set_private_data: crate::vk::ext_private_data::PFN_vkSetPrivateData,
-    pub get_private_data: crate::vk::ext_private_data::PFN_vkGetPrivateData,
-    pub cmd_set_event2: crate::vk::khr_synchronization2::PFN_vkCmdSetEvent2,
-    pub cmd_reset_event2: crate::vk::khr_synchronization2::PFN_vkCmdResetEvent2,
-    pub cmd_wait_events2: crate::vk::khr_synchronization2::PFN_vkCmdWaitEvents2,
-    pub cmd_pipeline_barrier2: crate::vk::khr_synchronization2::PFN_vkCmdPipelineBarrier2,
-    pub cmd_write_timestamp2: crate::vk::khr_synchronization2::PFN_vkCmdWriteTimestamp2,
-    pub queue_submit2: crate::vk::khr_synchronization2::PFN_vkQueueSubmit2,
-    pub cmd_copy_buffer2: crate::vk::khr_copy_commands2::PFN_vkCmdCopyBuffer2,
-    pub cmd_copy_image2: crate::vk::khr_copy_commands2::PFN_vkCmdCopyImage2,
-    pub cmd_copy_buffer_to_image2: crate::vk::khr_copy_commands2::PFN_vkCmdCopyBufferToImage2,
-    pub cmd_copy_image_to_buffer2: crate::vk::khr_copy_commands2::PFN_vkCmdCopyImageToBuffer2,
-    pub cmd_blit_image2: crate::vk::khr_copy_commands2::PFN_vkCmdBlitImage2,
-    pub cmd_resolve_image2: crate::vk::khr_copy_commands2::PFN_vkCmdResolveImage2,
-    pub cmd_begin_rendering: crate::vk::khr_dynamic_rendering::PFN_vkCmdBeginRendering,
-    pub cmd_end_rendering: crate::vk::khr_dynamic_rendering::PFN_vkCmdEndRendering,
-    pub cmd_set_cull_mode: crate::vk::ext_extended_dynamic_state::PFN_vkCmdSetCullMode,
-    pub cmd_set_front_face: crate::vk::ext_extended_dynamic_state::PFN_vkCmdSetFrontFace,
+    pub create_private_data_slot: crate::vk::ext::private_data::PFN_vkCreatePrivateDataSlot,
+    pub destroy_private_data_slot: crate::vk::ext::private_data::PFN_vkDestroyPrivateDataSlot,
+    pub set_private_data: crate::vk::ext::private_data::PFN_vkSetPrivateData,
+    pub get_private_data: crate::vk::ext::private_data::PFN_vkGetPrivateData,
+    pub cmd_set_event2: crate::vk::khr::synchronization2::PFN_vkCmdSetEvent2,
+    pub cmd_reset_event2: crate::vk::khr::synchronization2::PFN_vkCmdResetEvent2,
+    pub cmd_wait_events2: crate::vk::khr::synchronization2::PFN_vkCmdWaitEvents2,
+    pub cmd_pipeline_barrier2: crate::vk::khr::synchronization2::PFN_vkCmdPipelineBarrier2,
+    pub cmd_write_timestamp2: crate::vk::khr::synchronization2::PFN_vkCmdWriteTimestamp2,
+    pub queue_submit2: crate::vk::khr::synchronization2::PFN_vkQueueSubmit2,
+    pub cmd_copy_buffer2: crate::vk::khr::copy_commands2::PFN_vkCmdCopyBuffer2,
+    pub cmd_copy_image2: crate::vk::khr::copy_commands2::PFN_vkCmdCopyImage2,
+    pub cmd_copy_buffer_to_image2: crate::vk::khr::copy_commands2::PFN_vkCmdCopyBufferToImage2,
+    pub cmd_copy_image_to_buffer2: crate::vk::khr::copy_commands2::PFN_vkCmdCopyImageToBuffer2,
+    pub cmd_blit_image2: crate::vk::khr::copy_commands2::PFN_vkCmdBlitImage2,
+    pub cmd_resolve_image2: crate::vk::khr::copy_commands2::PFN_vkCmdResolveImage2,
+    pub cmd_begin_rendering: crate::vk::khr::dynamic_rendering::PFN_vkCmdBeginRendering,
+    pub cmd_end_rendering: crate::vk::khr::dynamic_rendering::PFN_vkCmdEndRendering,
+    pub cmd_set_cull_mode: crate::vk::ext::extended_dynamic_state::PFN_vkCmdSetCullMode,
+    pub cmd_set_front_face: crate::vk::ext::extended_dynamic_state::PFN_vkCmdSetFrontFace,
     pub cmd_set_primitive_topology:
-        crate::vk::ext_extended_dynamic_state::PFN_vkCmdSetPrimitiveTopology,
+        crate::vk::ext::extended_dynamic_state::PFN_vkCmdSetPrimitiveTopology,
     pub cmd_set_viewport_with_count:
-        crate::vk::ext_extended_dynamic_state::PFN_vkCmdSetViewportWithCount,
+        crate::vk::ext::extended_dynamic_state::PFN_vkCmdSetViewportWithCount,
     pub cmd_set_scissor_with_count:
-        crate::vk::ext_extended_dynamic_state::PFN_vkCmdSetScissorWithCount,
+        crate::vk::ext::extended_dynamic_state::PFN_vkCmdSetScissorWithCount,
     pub cmd_bind_vertex_buffers2:
-        crate::vk::ext_extended_dynamic_state::PFN_vkCmdBindVertexBuffers2,
+        crate::vk::ext::extended_dynamic_state::PFN_vkCmdBindVertexBuffers2,
     pub cmd_set_depth_test_enable:
-        crate::vk::ext_extended_dynamic_state::PFN_vkCmdSetDepthTestEnable,
+        crate::vk::ext::extended_dynamic_state::PFN_vkCmdSetDepthTestEnable,
     pub cmd_set_depth_write_enable:
-        crate::vk::ext_extended_dynamic_state::PFN_vkCmdSetDepthWriteEnable,
-    pub cmd_set_depth_compare_op: crate::vk::ext_extended_dynamic_state::PFN_vkCmdSetDepthCompareOp,
+        crate::vk::ext::extended_dynamic_state::PFN_vkCmdSetDepthWriteEnable,
+    pub cmd_set_depth_compare_op:
+        crate::vk::ext::extended_dynamic_state::PFN_vkCmdSetDepthCompareOp,
     pub cmd_set_depth_bounds_test_enable:
-        crate::vk::ext_extended_dynamic_state::PFN_vkCmdSetDepthBoundsTestEnable,
+        crate::vk::ext::extended_dynamic_state::PFN_vkCmdSetDepthBoundsTestEnable,
     pub cmd_set_stencil_test_enable:
-        crate::vk::ext_extended_dynamic_state::PFN_vkCmdSetStencilTestEnable,
-    pub cmd_set_stencil_op: crate::vk::ext_extended_dynamic_state::PFN_vkCmdSetStencilOp,
+        crate::vk::ext::extended_dynamic_state::PFN_vkCmdSetStencilTestEnable,
+    pub cmd_set_stencil_op: crate::vk::ext::extended_dynamic_state::PFN_vkCmdSetStencilOp,
     pub cmd_set_rasterizer_discard_enable:
-        crate::vk::ext_extended_dynamic_state2::PFN_vkCmdSetRasterizerDiscardEnable,
+        crate::vk::ext::extended_dynamic_state2::PFN_vkCmdSetRasterizerDiscardEnable,
     pub cmd_set_depth_bias_enable:
-        crate::vk::ext_extended_dynamic_state2::PFN_vkCmdSetDepthBiasEnable,
+        crate::vk::ext::extended_dynamic_state2::PFN_vkCmdSetDepthBiasEnable,
     pub cmd_set_primitive_restart_enable:
-        crate::vk::ext_extended_dynamic_state2::PFN_vkCmdSetPrimitiveRestartEnable,
+        crate::vk::ext::extended_dynamic_state2::PFN_vkCmdSetPrimitiveRestartEnable,
     pub get_device_buffer_memory_requirements:
-        crate::vk::khr_maintenance4::PFN_vkGetDeviceBufferMemoryRequirements,
+        crate::vk::khr::maintenance4::PFN_vkGetDeviceBufferMemoryRequirements,
     pub get_device_image_memory_requirements:
-        crate::vk::khr_maintenance4::PFN_vkGetDeviceImageMemoryRequirements,
+        crate::vk::khr::maintenance4::PFN_vkGetDeviceImageMemoryRequirements,
     pub get_device_image_sparse_memory_requirements:
-        crate::vk::khr_maintenance4::PFN_vkGetDeviceImageSparseMemoryRequirements,
+        crate::vk::khr::maintenance4::PFN_vkGetDeviceImageSparseMemoryRequirements,
 }
 unsafe impl Send for DeviceFnV1_3 {}
 unsafe impl Sync for DeviceFnV1_3 {}

@@ -5,18 +5,18 @@ use crate::vk;
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::khr_external_memory_fd::NAME;
+pub const NAME: &CStr = vk::khr::external_memory_fd::NAME;
 
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,
-    fp: vk::khr_external_memory_fd::DeviceFn,
+    fp: vk::khr::external_memory_fd::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::khr_external_memory_fd::DeviceFn::load(|name| unsafe {
+        let fp = vk::khr::external_memory_fd::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -43,7 +43,7 @@ impl Device {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::khr_external_memory_fd::DeviceFn {
+    pub fn fp(&self) -> &vk::khr::external_memory_fd::DeviceFn {
         &self.fp
     }
 

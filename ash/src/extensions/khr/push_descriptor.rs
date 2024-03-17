@@ -5,16 +5,16 @@ use std::ffi::c_void;
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::khr_push_descriptor::NAME;
+pub const NAME: &CStr = vk::khr::push_descriptor::NAME;
 
 #[derive(Clone)]
 pub struct Device {
-    fp: vk::khr_push_descriptor::DeviceFn,
+    fp: vk::khr::push_descriptor::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
-        let fp = vk::khr_push_descriptor::DeviceFn::load(|name| unsafe {
+        let fp = vk::khr::push_descriptor::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -60,7 +60,7 @@ impl Device {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::khr_push_descriptor::DeviceFn {
+    pub fn fp(&self) -> &vk::khr::push_descriptor::DeviceFn {
         &self.fp
     }
 }

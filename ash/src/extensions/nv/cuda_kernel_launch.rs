@@ -6,18 +6,18 @@ use crate::RawPtr;
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::nv_cuda_kernel_launch::NAME;
+pub const NAME: &CStr = vk::nv::cuda_kernel_launch::NAME;
 
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,
-    fp: vk::nv_cuda_kernel_launch::DeviceFn,
+    fp: vk::nv::cuda_kernel_launch::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::nv_cuda_kernel_launch::DeviceFn::load(|name| unsafe {
+        let fp = vk::nv::cuda_kernel_launch::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -96,7 +96,7 @@ impl Device {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::nv_cuda_kernel_launch::DeviceFn {
+    pub fn fp(&self) -> &vk::nv::cuda_kernel_launch::DeviceFn {
         &self.fp
     }
 

@@ -6,18 +6,18 @@ use crate::RawPtr;
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::khr_ray_tracing_pipeline::NAME;
+pub const NAME: &CStr = vk::khr::ray_tracing_pipeline::NAME;
 
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,
-    fp: vk::khr_ray_tracing_pipeline::DeviceFn,
+    fp: vk::khr::ray_tracing_pipeline::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::khr_ray_tracing_pipeline::DeviceFn::load(|name| unsafe {
+        let fp = vk::khr::ray_tracing_pipeline::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -164,7 +164,7 @@ impl Device {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::khr_ray_tracing_pipeline::DeviceFn {
+    pub fn fp(&self) -> &vk::khr::ray_tracing_pipeline::DeviceFn {
         &self.fp
     }
 

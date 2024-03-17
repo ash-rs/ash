@@ -6,18 +6,18 @@ use std::ffi::CStr;
 use std::mem;
 use std::ptr;
 
-pub const NAME: &CStr = vk::khr_device_group_creation::NAME;
+pub const NAME: &CStr = vk::khr::device_group_creation::NAME;
 
 #[derive(Clone)]
 pub struct Instance {
     handle: vk::Instance,
-    fp: vk::khr_device_group_creation::InstanceFn,
+    fp: vk::khr::device_group_creation::InstanceFn,
 }
 
 impl Instance {
     pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::khr_device_group_creation::InstanceFn::load(|name| unsafe {
+        let fp = vk::khr::device_group_creation::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -53,7 +53,7 @@ impl Instance {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::khr_device_group_creation::InstanceFn {
+    pub fn fp(&self) -> &vk::khr::device_group_creation::InstanceFn {
         &self.fp
     }
 

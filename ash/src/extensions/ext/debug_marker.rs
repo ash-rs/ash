@@ -5,18 +5,18 @@ use crate::vk;
 use std::ffi::CStr;
 use std::mem;
 
-pub const NAME: &CStr = vk::ext_debug_marker::NAME;
+pub const NAME: &CStr = vk::ext::debug_marker::NAME;
 
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,
-    fp: vk::ext_debug_marker::DeviceFn,
+    fp: vk::ext::debug_marker::DeviceFn,
 }
 
 impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::ext_debug_marker::DeviceFn::load(|name| unsafe {
+        let fp = vk::ext::debug_marker::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -58,7 +58,7 @@ impl Device {
     }
 
     #[inline]
-    pub fn fp(&self) -> &vk::ext_debug_marker::DeviceFn {
+    pub fn fp(&self) -> &vk::ext::debug_marker::DeviceFn {
         &self.fp
     }
 
