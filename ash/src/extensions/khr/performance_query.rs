@@ -28,7 +28,7 @@ impl Device {
     #[inline]
     pub unsafe fn acquire_profiling_lock(
         &self,
-        info: &vk::AcquireProfilingLockInfoKHR,
+        info: &vk::AcquireProfilingLockInfoKHR<'_>,
     ) -> VkResult<()> {
         (self.fp.acquire_profiling_lock_khr)(self.handle, info).result()
     }
