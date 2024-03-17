@@ -1,7 +1,7 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_maintenance5.html>
 
 #[cfg(doc)]
-use super::super::ext::{HostImageCopy, ImageCompressionControl};
+use super::super::ext::{host_image_copy, image_compression_control};
 use crate::vk;
 use std::ffi::CStr;
 use std::mem;
@@ -63,10 +63,10 @@ impl Device {
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageSubresourceLayout2KHR.html>
     ///
-    /// Also available as [`HostImageCopy::get_image_subresource_layout2()`]
+    /// Also available as [`host_image_copy::Device::get_image_subresource_layout2()`]
     /// when [`VK_EXT_host_image_copy`] is enabled.
     ///
-    /// Also available as [`ImageCompressionControl::get_image_subresource_layout2()`]
+    /// Also available as [`image_compression_control::Device::get_image_subresource_layout2()`]
     /// when [`VK_EXT_image_compression_control`] is enabled.
     ///
     /// [`VK_EXT_host_image_copy`]: https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_host_image_copy.html

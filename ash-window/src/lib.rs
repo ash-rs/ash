@@ -2,6 +2,8 @@
 
 use std::os::raw::c_char;
 
+#[cfg(doc)]
+use ash::extensions::khr;
 use ash::{
     extensions::{
         ext::metal_surface,
@@ -23,9 +25,9 @@ use raw_window_handle::{RawDisplayHandle, RawWindowHandle};
 ///
 /// There is a [parent/child relation] between [`Instance`] and [`Entry`], and the resulting
 /// [`vk::SurfaceKHR`].  The application must not [destroy][Instance::destroy_instance()] these
-/// parent objects before first [destroying][khr::Surface::destroy_surface()] the returned
+/// parent objects before first [destroying][khr::surface::Instance::destroy_surface()] the returned
 /// [`vk::SurfaceKHR`] child object.  [`vk::SurfaceKHR`] does _not_ implement [drop][drop()]
-/// semantics and can only be destroyed via [`destroy_surface()`][khr::Surface::destroy_surface()].
+/// semantics and can only be destroyed via [`destroy_surface()`][khr::surface::Instance::destroy_surface()].
 ///
 /// See the [`Entry::create_instance()`] documentation for more destruction ordering rules on
 /// [`Instance`].

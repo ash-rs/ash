@@ -3269,6 +3269,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
 
     let extension_code = quote! {
         #![allow(unused_qualifications)] // Because we do not know in what file the PFNs are defined
+        #![allow(unused_imports)]        // for sometimes-dead `use super::*` from generate_extension_commands
 
         use std::os::raw::*;
         use crate::vk::platform_types::*;

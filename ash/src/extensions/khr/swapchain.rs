@@ -1,7 +1,7 @@
 //! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_swapchain.html>
 
 #[cfg(doc)]
-use super::{DeviceGroupDevice, DeviceGroupInstance};
+use super::device_group;
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
@@ -110,7 +110,7 @@ impl Device {
 
     /// Only available since [Vulkan 1.1].
     ///
-    /// Also available as [`DeviceGroupDevice::get_device_group_present_capabilities()`]
+    /// Also available as [`device_group::Device::get_device_group_present_capabilities()`]
     /// when [`VK_KHR_surface`] is enabled.
     ///
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceGroupPresentCapabilitiesKHR.html>
@@ -131,7 +131,7 @@ impl Device {
 
     /// Only available since [Vulkan 1.1].
     ///
-    /// Also available as [`DeviceGroupDevice::get_device_group_surface_present_modes()`]
+    /// Also available as [`device_group::Device::get_device_group_surface_present_modes()`]
     /// when [`VK_KHR_surface`] is enabled.
     ///
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceGroupSurfacePresentModesKHR.html>
@@ -156,7 +156,7 @@ impl Device {
     ///
     /// Only available since [Vulkan 1.1].
     ///
-    /// Also available as [`DeviceGroupDevice::acquire_next_image2()`]
+    /// Also available as [`device_group::Device::acquire_next_image2()`]
     /// when [`VK_KHR_swapchain`] is enabled.
     ///
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAcquireNextImage2KHR.html>
@@ -205,7 +205,7 @@ impl Instance {
 
     /// Only available since [Vulkan 1.1].
     ///
-    /// Also available as [`DeviceGroupInstance::get_physical_device_present_rectangles()`]
+    /// Also available as [`device_group::Instance::get_physical_device_present_rectangles()`]
     /// when [`VK_KHR_surface`] is enabled.
     ///
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDevicePresentRectanglesKHR.html>

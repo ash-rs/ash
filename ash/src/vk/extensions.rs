@@ -1,4 +1,5 @@
 #![allow(unused_qualifications)]
+#![allow(unused_imports)]
 use crate::vk::aliases::*;
 use crate::vk::bitflags::*;
 use crate::vk::definitions::*;
