@@ -45,6 +45,11 @@ impl AndroidSurface {
     }
 
     #[inline]
+    pub unsafe fn fp_mut(&mut self) -> &mut vk::KhrAndroidSurfaceFn {
+        &mut self.fp
+    }
+
+    #[inline]
     pub fn instance(&self) -> vk::Instance {
         self.handle
     }

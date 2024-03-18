@@ -58,4 +58,9 @@ impl DeviceDiagnosticCheckpoints {
     pub fn fp(&self) -> &vk::NvDeviceDiagnosticCheckpointsFn {
         &self.fp
     }
+
+    #[inline]
+    pub unsafe fn fp_mut(&mut self) -> &mut vk::NvDeviceDiagnosticCheckpointsFn {
+        &mut self.fp
+    }
 }

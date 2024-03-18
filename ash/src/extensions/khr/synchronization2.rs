@@ -95,4 +95,9 @@ impl Synchronization2 {
     pub fn fp(&self) -> &vk::KhrSynchronization2Fn {
         &self.fp
     }
+
+    #[inline]
+    pub unsafe fn fp_mut(&mut self) -> &mut vk::KhrSynchronization2Fn {
+        &mut self.fp
+    }
 }

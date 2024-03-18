@@ -48,4 +48,9 @@ impl SampleLocations {
     pub fn fp(&self) -> &vk::ExtSampleLocationsFn {
         &self.fp
     }
+
+    #[inline]
+    pub unsafe fn fp_mut(&mut self) -> &mut vk::ExtSampleLocationsFn {
+        &mut self.fp
+    }
 }

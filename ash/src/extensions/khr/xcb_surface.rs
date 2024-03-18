@@ -64,6 +64,11 @@ impl XcbSurface {
     }
 
     #[inline]
+    pub unsafe fn fp_mut(&mut self) -> &mut vk::KhrXcbSurfaceFn {
+        &mut self.fp
+    }
+
+    #[inline]
     pub fn instance(&self) -> vk::Instance {
         self.handle
     }

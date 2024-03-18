@@ -193,8 +193,18 @@ impl Entry {
     }
 
     #[inline]
+    pub unsafe fn fp_v1_0_mut(&mut self) -> &mut vk::EntryFnV1_0 {
+        &mut self.entry_fn_1_0
+    }
+
+    #[inline]
     pub fn static_fn(&self) -> &vk::StaticFn {
         &self.static_fn
+    }
+
+    #[inline]
+    pub unsafe fn static_fn_mut(&mut self) -> &mut vk::StaticFn {
+        &mut self.static_fn
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceVersion.html>
@@ -302,6 +312,11 @@ impl Entry {
     #[inline]
     pub fn fp_v1_1(&self) -> &vk::EntryFnV1_1 {
         &self.entry_fn_1_1
+    }
+
+    #[inline]
+    pub unsafe fn fp_v1_1_mut(&mut self) -> &mut vk::EntryFnV1_1 {
+        &mut self.entry_fn_1_1
     }
 
     #[deprecated = "This function is unavailable and therefore panics on Vulkan 1.0, please use `try_enumerate_instance_version()` instead"]

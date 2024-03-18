@@ -51,4 +51,9 @@ impl MemoryDecompression {
     pub fn fp(&self) -> &vk::NvMemoryDecompressionFn {
         &self.fp
     }
+
+    #[inline]
+    pub unsafe fn fp_mut(&mut self) -> &mut vk::NvMemoryDecompressionFn {
+        &mut self.fp
+    }
 }

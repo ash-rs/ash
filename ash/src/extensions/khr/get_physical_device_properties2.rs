@@ -161,4 +161,9 @@ impl GetPhysicalDeviceProperties2 {
     pub fn fp(&self) -> &vk::KhrGetPhysicalDeviceProperties2Fn {
         &self.fp
     }
+
+    #[inline]
+    pub unsafe fn fp_mut(&mut self) -> &mut vk::KhrGetPhysicalDeviceProperties2Fn {
+        &mut self.fp
+    }
 }

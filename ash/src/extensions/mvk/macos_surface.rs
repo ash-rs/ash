@@ -45,6 +45,11 @@ impl MacOSSurface {
     }
 
     #[inline]
+    pub unsafe fn fp_mut(&mut self) -> &mut vk::MvkMacosSurfaceFn {
+        &mut self.fp
+    }
+
+    #[inline]
     pub fn instance(&self) -> vk::Instance {
         self.handle
     }

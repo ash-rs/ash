@@ -68,4 +68,9 @@ impl DrawIndirectCount {
     pub fn fp(&self) -> &vk::KhrDrawIndirectCountFn {
         &self.fp
     }
+
+    #[inline]
+    pub unsafe fn fp_mut(&mut self) -> &mut vk::KhrDrawIndirectCountFn {
+        &mut self.fp
+    }
 }

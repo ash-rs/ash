@@ -75,4 +75,9 @@ impl MeshShader {
     pub fn fp(&self) -> &vk::NvMeshShaderFn {
         &self.fp
     }
+
+    #[inline]
+    pub unsafe fn fp_mut(&mut self) -> &mut vk::NvMeshShaderFn {
+        &mut self.fp
+    }
 }

@@ -34,4 +34,9 @@ impl ToolingInfo {
     pub fn fp(&self) -> &vk::ExtToolingInfoFn {
         &self.fp
     }
+
+    #[inline]
+    pub unsafe fn fp_mut(&mut self) -> &mut vk::ExtToolingInfoFn {
+        &mut self.fp
+    }
 }

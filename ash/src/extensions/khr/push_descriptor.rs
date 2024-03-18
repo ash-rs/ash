@@ -62,4 +62,9 @@ impl PushDescriptor {
     pub fn fp(&self) -> &vk::KhrPushDescriptorFn {
         &self.fp
     }
+
+    #[inline]
+    pub unsafe fn fp_mut(&mut self) -> &mut vk::KhrPushDescriptorFn {
+        &mut self.fp
+    }
 }

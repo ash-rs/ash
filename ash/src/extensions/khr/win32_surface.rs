@@ -60,6 +60,11 @@ impl Win32Surface {
     }
 
     #[inline]
+    pub unsafe fn fp_mut(&mut self) -> &mut vk::KhrWin32SurfaceFn {
+        &mut self.fp
+    }
+
+    #[inline]
     pub fn instance(&self) -> vk::Instance {
         self.handle
     }

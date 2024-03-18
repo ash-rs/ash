@@ -91,6 +91,11 @@ impl HostImageCopy {
     }
 
     #[inline]
+    pub unsafe fn fp_mut(&mut self) -> &mut vk::ExtHostImageCopyFn {
+        &mut self.fp
+    }
+
+    #[inline]
     pub fn device(&self) -> vk::Device {
         self.handle
     }
