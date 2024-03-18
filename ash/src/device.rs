@@ -6,7 +6,12 @@ use std::mem;
 use std::os::raw::c_void;
 use std::ptr;
 
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDevice.html>
+/// Holds a Vulkan [`vk::Device`] handle together with Vulkan 1.0 - 1.3 device-level function pointers loaded from it, 
+/// providing convenient wrappers to call these functions.
+/// 
+/// The internal handle is available through [`handle()`][Self::handle()] if needed externally.
+
+
 #[derive(Clone)]
 pub struct Device {
     pub(crate) handle: vk::Device,

@@ -8,7 +8,12 @@ use std::mem;
 use std::os::raw::c_char;
 use std::ptr;
 
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkInstance.html>
+/// Holds a Vulkan [`vk::Instance`] handle together with Vulkan 1.0 - 1.3 instance-level function pointers loaded from it, providing convenient wrappers to call these functions:
+/// All functions from the Vulkan API (except those from extensions) which have a `VkInstance` as their first argument have become methods of `ash::Instance`.
+/// Their `VkInstance` argument is always passed implicitly.
+///
+/// The internal handle is available through [`handle()`][Self::handle()] if needed externally.
+
 #[derive(Clone)]
 pub struct Instance {
     pub(crate) handle: vk::Instance,
