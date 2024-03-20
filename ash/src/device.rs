@@ -2135,6 +2135,32 @@ impl Device {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateGraphicsPipelines.html>
+    ///
+    /// Multiple pipelines can be created in a single call [^1].  Each [`vk::Pipeline`] in the
+    /// returned [`Vec`] corresponds to a [`vk::GraphicsPipelineCreateInfo`] at the same index in
+    /// `create_infos`.
+    ///
+    /// When attempting to create many pipelines in a single command, it is possible that creation
+    /// may fail for a subset of them. In this case, the corresponding returned elements will
+    /// be equal to [`vk::Pipeline::null()`].  If creation fails for a pipeline despite valid
+    /// arguments (for example, due to out of memory errors), the [`Result`] code returned by the
+    /// pipeline creation command will indicate why.  The implementation will attempt to create all
+    /// pipelines, and only return [`vk::Pipeline::null()`] values for those that actually failed.
+    ///
+    /// If creation fails for a pipeline that has the
+    /// [`vk::PipelineCreateFlags::EARLY_RETURN_ON_FAILURE`] bit set in its
+    /// [`vk::GraphicsPipelineCreateInfo`], pipelines at an index in the returned array greater than
+    /// or equal to that of the failing pipeline will be set to [`vk::Pipeline::null()`].
+    ///
+    /// If creation fails for multiple pipelines, the returned [`Result`] must be the return value
+    /// of any one of the pipelines which did not succeed.  An application can reliably clean up
+    /// from a failed call by iterating over the pPipelines array and destroying every element that
+    /// is not [`vk::Handle::is_null()`].
+    ///
+    /// If the entire command fails and no pipelines are created, all elements of pPipelines will be
+    /// set to [`vk::Pipeline::null()`].
+    ///
+    /// [^1]: <https://registry.khronos.org/vulkan/specs/1.3-extensions/html/chap10.html#pipelines-multiple>
     #[inline]
     pub unsafe fn create_graphics_pipelines(
         &self,
@@ -2159,6 +2185,32 @@ impl Device {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateComputePipelines.html>
+    ///
+    /// Multiple pipelines can be created in a single call [^1].  Each [`vk::Pipeline`] in the
+    /// returned [`Vec`] corresponds to a [`vk::ComputePipelineCreateInfo`] at the same index in
+    /// `create_infos`.
+    ///
+    /// When attempting to create many pipelines in a single command, it is possible that creation
+    /// may fail for a subset of them. In this case, the corresponding returned elements will
+    /// be equal to [`vk::Pipeline::null()`].  If creation fails for a pipeline despite valid
+    /// arguments (for example, due to out of memory errors), the [`Result`] code returned by the
+    /// pipeline creation command will indicate why.  The implementation will attempt to create all
+    /// pipelines, and only return [`vk::Pipeline::null()`] values for those that actually failed.
+    ///
+    /// If creation fails for a pipeline that has the
+    /// [`vk::PipelineCreateFlags::EARLY_RETURN_ON_FAILURE`] bit set in its
+    /// [`vk::ComputePipelineCreateInfo`], pipelines at an index in the returned array greater than
+    /// or equal to that of the failing pipeline will be set to [`vk::Pipeline::null()`].
+    ///
+    /// If creation fails for multiple pipelines, the returned [`Result`] must be the return value
+    /// of any one of the pipelines which did not succeed.  An application can reliably clean up
+    /// from a failed call by iterating over the pPipelines array and destroying every element that
+    /// is not [`vk::Handle::is_null()`].
+    ///
+    /// If the entire command fails and no pipelines are created, all elements of pPipelines will be
+    /// set to [`vk::Pipeline::null()`].
+    ///
+    /// [^1]: <https://registry.khronos.org/vulkan/specs/1.3-extensions/html/chap10.html#pipelines-multiple>
     #[inline]
     pub unsafe fn create_compute_pipelines(
         &self,

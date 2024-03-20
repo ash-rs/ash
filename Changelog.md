@@ -50,6 +50,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `VK_KHR_device_group_creation`: Take borrow of `Entry` in `fn new()` (#753)
 - `VK_KHR_device_group_creation`: Rename `vk::Instance`-returning function from `device()` to `instance()` (#759)
 - Windows `HANDLE` types (`HWND`, `HINSTANCE`, `HMONITOR`) are now defined as `isize` instead of `*const c_void` (#797)
+- extensions: Make all `vk::Pipeline` and `vk::ShaderEXT` creation functions return their impartial result on error (#828)
+  - `VK_AMDX_shader_enqueue`
+  - `VK_EXT_shader_object`
+  - `VK_KHR_ray_tracing_pipeline`
+  - `VK_NV_ray_tracing`
 - extensions/ext/ray_tracing_pipeline: Pass indirect SBT regions as single item reference (#829)
 - Replaced `c_char` array setters with `CStr` setters (#831)
 

@@ -23,21 +23,34 @@ impl ShaderObject {
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateShadersEXT.html>
+    ///
+    /// When this function returns, whether or not it succeeds, it is guaranteed that every returned
+    /// element is either [`vk::ShaderEXT::null()`] or a valid [`vk::ShaderEXT`] handle.
+    ///
+    /// This means that whenever shader creation fails, the application can determine which shader
+    /// the returned error pertains to by locating the first [`vk::Handle::is_null()`] element
+    /// in the returned [`Vec`]. It also means that an application can reliably clean up from a
+    /// failed call by iterating over the returned [`Vec`] and destroying every element that is not
+    /// [`vk::Handle::is_null()`].
     #[inline]
     pub unsafe fn create_shaders(
         &self,
         create_infos: &[vk::ShaderCreateInfoEXT<'_>],
         allocator: Option<&vk::AllocationCallbacks<'_>>,
-    ) -> VkResult<Vec<vk::ShaderEXT>> {
+    ) -> Result<Vec<vk::ShaderEXT>, (Vec<vk::ShaderEXT>, vk::Result)> {
         let mut shaders = Vec::with_capacity(create_infos.len());
-        (self.fp.create_shaders_ext)(
+        let err_code = (self.fp.create_shaders_ext)(
             self.handle,
             create_infos.len() as u32,
             create_infos.as_ptr(),
             allocator.as_raw_ptr(),
             shaders.as_mut_ptr(),
-        )
-        .set_vec_len_on_success(shaders, create_infos.len())
+        );
+        shaders.set_len(create_infos.len());
+        match err_code {
+            vk::Result::SUCCESS => Ok(shaders),
+            _ => Err((shaders, err_code)),
+        }
     }
 
     /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroyShaderEXT.html>
