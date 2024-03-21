@@ -16,7 +16,7 @@ categories = [
     "rendering::graphics-api"
 ]
 edition = "2021"
-rust-version = "1.69.0"
+rust-version = "1.77.0"
 
 [dependencies]
 ash = { path = "../ash", version = "0.37", default-features = false }
