@@ -1,5 +1,6 @@
 pub mod android_surface;
 pub mod buffer_device_address;
+pub mod calibrated_timestamps;
 pub mod cooperative_matrix;
 pub mod copy_commands2;
 pub mod create_render_pass2;
