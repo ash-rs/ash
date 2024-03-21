@@ -11,6 +11,7 @@ pub mod display;
 pub mod display_swapchain;
 pub mod draw_indirect_count;
 pub mod dynamic_rendering;
+pub mod dynamic_rendering_local_read;
 pub mod external_fence_fd;
 pub mod external_fence_win32;
 pub mod external_memory_fd;
