@@ -2,7 +2,6 @@
 
 use std::default::Default;
 use std::error::Error;
-use std::ffi;
 use std::io::Cursor;
 use std::mem;
 
@@ -229,7 +228,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             .create_pipeline_layout(&layout_create_info, None)
             .unwrap();
 
-        let shader_entry_name = ffi::CStr::from_bytes_with_nul_unchecked(b"main\0");
+        let shader_entry_name = c"main";
         let shader_stage_create_infos = [
             vk::PipelineShaderStageCreateInfo {
                 module: vertex_shader_module,
