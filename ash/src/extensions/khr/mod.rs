@@ -1,4 +1,3 @@
-pub mod acceleration_structure;
 pub mod android_surface;
 pub mod buffer_device_address;
 pub mod cooperative_matrix;
@@ -21,6 +20,7 @@ pub mod external_semaphore_win32;
 pub mod get_memory_requirements2;
 pub mod get_physical_device_properties2;
 pub mod get_surface_capabilities2;
+pub mod line_rasterization;
 pub mod maintenance1;
 pub mod maintenance3;
 pub mod maintenance4;
