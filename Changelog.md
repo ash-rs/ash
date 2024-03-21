@@ -34,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `#[must_use]` to Vulkan structs to make it more clear that they are moved by the builder pattern (#845)
 - Added `load_with()` function on `Device` and `Instance` for providing custom `get_xxx_proc_addr()` implementations (#846)
 - Added `Send`/`Sync` to all Vulkan structs (#869)
+- Added `VK_KHR_dynamic_rendering_local_read` device extension (#888)
 
 ### Changed
 
