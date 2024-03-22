@@ -414,8 +414,9 @@ impl ExampleBase {
                 .command_pool(pool)
                 .level(vk::CommandBufferLevel::PRIMARY);
 
-            let command_buffers = device
-                .allocate_command_buffers(&command_buffer_allocate_info)
+            let mut command_buffers = [vk::CommandBuffer::null();2];            
+            device
+                .allocate_command_buffers(&command_buffer_allocate_info,&mut command_buffers)
                 .unwrap();
             let setup_command_buffer = command_buffers[0];
             let draw_command_buffer = command_buffers[1];

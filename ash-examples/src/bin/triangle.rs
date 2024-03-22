@@ -341,9 +341,10 @@ fn main() {
             .layout(pipeline_layout)
             .render_pass(renderpass);
 
-        let graphics_pipelines = base
+        let mut graphics_pipelines = [vk::Pipeline::null()]; 
+        base
             .device
-            .create_graphics_pipelines(vk::PipelineCache::null(), &[graphic_pipeline_info], None)
+            .create_graphics_pipelines(vk::PipelineCache::null(), &[graphic_pipeline_info],&mut graphics_pipelines, None)
             .expect("Unable to create graphics pipeline");
 
         let graphic_pipeline = graphics_pipelines[0];

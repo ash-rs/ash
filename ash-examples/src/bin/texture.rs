@@ -501,9 +501,11 @@ fn main() {
         let desc_alloc_info = vk::DescriptorSetAllocateInfo::default()
             .descriptor_pool(descriptor_pool)
             .set_layouts(&desc_set_layouts);
-        let descriptor_sets = base
+
+        let mut descriptor_sets = [vk::DescriptorSet::null()];
+        base
             .device
-            .allocate_descriptor_sets(&desc_alloc_info)
+            .allocate_descriptor_sets(&desc_alloc_info,&mut descriptor_sets)
             .unwrap();
 
         let uniform_color_buffer_descriptor = vk::DescriptorBufferInfo {
@@ -679,9 +681,10 @@ fn main() {
             .layout(pipeline_layout)
             .render_pass(renderpass);
 
-        let graphics_pipelines = base
+        let mut graphics_pipelines = [vk::Pipeline::null()];
+        base
             .device
-            .create_graphics_pipelines(vk::PipelineCache::null(), &[graphic_pipeline_infos], None)
+            .create_graphics_pipelines(vk::PipelineCache::null(), &[graphic_pipeline_infos],&mut graphics_pipelines, None)
             .unwrap();
 
         let graphic_pipeline = graphics_pipelines[0];
