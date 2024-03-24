@@ -2,6 +2,7 @@ use crate::vk;
 use crate::{Device, Instance};
 use core::ffi::CStr;
 use core::mem;
+use core::ptr;
 
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_maintenance4.html>
 #[derive(Clone)]
@@ -50,7 +51,7 @@ impl Maintenance4 {
             self.handle,
             memory_requirements,
             count.as_mut_ptr(),
-            core::ptr::null_mut(),
+            ptr::null_mut(),
         );
         count.assume_init() as usize
     }

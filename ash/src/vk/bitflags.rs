@@ -381,6 +381,12 @@ impl QueryPipelineStatisticFlags {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMemoryMapFlagBits.html>"]
+pub struct MemoryMapFlags(pub(crate) Flags);
+vk_bitflags_wrapped!(MemoryMapFlags, Flags);
+impl MemoryMapFlags {}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImageAspectFlagBits.html>"]
 pub struct ImageAspectFlags(pub(crate) Flags);
 vk_bitflags_wrapped!(ImageAspectFlags, Flags);
@@ -1198,8 +1204,8 @@ impl PresentGravityFlagsEXT {
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceSchedulingControlsFlagBitsARM.html>"]
-pub struct PhysicalDeviceSchedulingControlsFlagsARM(pub(crate) Flags);
-vk_bitflags_wrapped!(PhysicalDeviceSchedulingControlsFlagsARM, Flags);
+pub struct PhysicalDeviceSchedulingControlsFlagsARM(pub(crate) Flags64);
+vk_bitflags_wrapped!(PhysicalDeviceSchedulingControlsFlagsARM, Flags64);
 impl PhysicalDeviceSchedulingControlsFlagsARM {
     pub const SHADER_CORE_COUNT: Self = Self(0b1);
 }
@@ -1291,6 +1297,12 @@ impl VideoDecodeCapabilityFlagsKHR {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeFlagBitsKHR.html>"]
+pub struct VideoEncodeFlagsKHR(pub(crate) Flags);
+vk_bitflags_wrapped!(VideoEncodeFlagsKHR, Flags);
+impl VideoEncodeFlagsKHR {}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeUsageFlagBitsKHR.html>"]
 pub struct VideoEncodeUsageFlagsKHR(pub(crate) Flags);
 vk_bitflags_wrapped!(VideoEncodeUsageFlagsKHR, Flags);
@@ -1344,10 +1356,10 @@ impl VideoEncodeRateControlModeFlagsKHR {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH264CapabilityFlagBitsEXT.html>"]
-pub struct VideoEncodeH264CapabilityFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(VideoEncodeH264CapabilityFlagsEXT, Flags);
-impl VideoEncodeH264CapabilityFlagsEXT {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH264CapabilityFlagBitsKHR.html>"]
+pub struct VideoEncodeH264CapabilityFlagsKHR(pub(crate) Flags);
+vk_bitflags_wrapped!(VideoEncodeH264CapabilityFlagsKHR, Flags);
+impl VideoEncodeH264CapabilityFlagsKHR {
     pub const HRD_COMPLIANCE: Self = Self(0b1);
     pub const PREDICTION_WEIGHT_TABLE_GENERATED: Self = Self(0b10);
     pub const ROW_UNALIGNED_SLICE: Self = Self(0b100);
@@ -1360,10 +1372,10 @@ impl VideoEncodeH264CapabilityFlagsEXT {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH264StdFlagBitsEXT.html>"]
-pub struct VideoEncodeH264StdFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(VideoEncodeH264StdFlagsEXT, Flags);
-impl VideoEncodeH264StdFlagsEXT {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH264StdFlagBitsKHR.html>"]
+pub struct VideoEncodeH264StdFlagsKHR(pub(crate) Flags);
+vk_bitflags_wrapped!(VideoEncodeH264StdFlagsKHR, Flags);
+impl VideoEncodeH264StdFlagsKHR {
     pub const SEPARATE_COLOR_PLANE_FLAG_SET: Self = Self(0b1);
     pub const QPPRIME_Y_ZERO_TRANSFORM_BYPASS_FLAG_SET: Self = Self(0b10);
     pub const SCALING_MATRIX_PRESENT_FLAG_SET: Self = Self(0b100);
@@ -1387,10 +1399,10 @@ impl VideoEncodeH264StdFlagsEXT {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH264RateControlFlagBitsEXT.html>"]
-pub struct VideoEncodeH264RateControlFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(VideoEncodeH264RateControlFlagsEXT, Flags);
-impl VideoEncodeH264RateControlFlagsEXT {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH264RateControlFlagBitsKHR.html>"]
+pub struct VideoEncodeH264RateControlFlagsKHR(pub(crate) Flags);
+vk_bitflags_wrapped!(VideoEncodeH264RateControlFlagsKHR, Flags);
+impl VideoEncodeH264RateControlFlagsKHR {
     pub const ATTEMPT_HRD_COMPLIANCE: Self = Self(0b1);
     pub const REGULAR_GOP: Self = Self(0b10);
     pub const REFERENCE_PATTERN_FLAT: Self = Self(0b100);
@@ -1509,10 +1521,10 @@ impl RenderingFlags {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265CapabilityFlagBitsEXT.html>"]
-pub struct VideoEncodeH265CapabilityFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(VideoEncodeH265CapabilityFlagsEXT, Flags);
-impl VideoEncodeH265CapabilityFlagsEXT {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265CapabilityFlagBitsKHR.html>"]
+pub struct VideoEncodeH265CapabilityFlagsKHR(pub(crate) Flags);
+vk_bitflags_wrapped!(VideoEncodeH265CapabilityFlagsKHR, Flags);
+impl VideoEncodeH265CapabilityFlagsKHR {
     pub const HRD_COMPLIANCE: Self = Self(0b1);
     pub const PREDICTION_WEIGHT_TABLE_GENERATED: Self = Self(0b10);
     pub const ROW_UNALIGNED_SLICE_SEGMENT: Self = Self(0b100);
@@ -1526,10 +1538,10 @@ impl VideoEncodeH265CapabilityFlagsEXT {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265StdFlagBitsEXT.html>"]
-pub struct VideoEncodeH265StdFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(VideoEncodeH265StdFlagsEXT, Flags);
-impl VideoEncodeH265StdFlagsEXT {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265StdFlagBitsKHR.html>"]
+pub struct VideoEncodeH265StdFlagsKHR(pub(crate) Flags);
+vk_bitflags_wrapped!(VideoEncodeH265StdFlagsKHR, Flags);
+impl VideoEncodeH265StdFlagsKHR {
     pub const SEPARATE_COLOR_PLANE_FLAG_SET: Self = Self(0b1);
     pub const SAMPLE_ADAPTIVE_OFFSET_ENABLED_FLAG_SET: Self = Self(0b10);
     pub const SCALING_LIST_DATA_PRESENT_FLAG_SET: Self = Self(0b100);
@@ -1554,10 +1566,10 @@ impl VideoEncodeH265StdFlagsEXT {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265RateControlFlagBitsEXT.html>"]
-pub struct VideoEncodeH265RateControlFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(VideoEncodeH265RateControlFlagsEXT, Flags);
-impl VideoEncodeH265RateControlFlagsEXT {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265RateControlFlagBitsKHR.html>"]
+pub struct VideoEncodeH265RateControlFlagsKHR(pub(crate) Flags);
+vk_bitflags_wrapped!(VideoEncodeH265RateControlFlagsKHR, Flags);
+impl VideoEncodeH265RateControlFlagsKHR {
     pub const ATTEMPT_HRD_COMPLIANCE: Self = Self(0b1);
     pub const REGULAR_GOP: Self = Self(0b10);
     pub const REFERENCE_PATTERN_FLAT: Self = Self(0b100);
@@ -1566,20 +1578,20 @@ impl VideoEncodeH265RateControlFlagsEXT {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265CtbSizeFlagBitsEXT.html>"]
-pub struct VideoEncodeH265CtbSizeFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(VideoEncodeH265CtbSizeFlagsEXT, Flags);
-impl VideoEncodeH265CtbSizeFlagsEXT {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265CtbSizeFlagBitsKHR.html>"]
+pub struct VideoEncodeH265CtbSizeFlagsKHR(pub(crate) Flags);
+vk_bitflags_wrapped!(VideoEncodeH265CtbSizeFlagsKHR, Flags);
+impl VideoEncodeH265CtbSizeFlagsKHR {
     pub const TYPE_16: Self = Self(0b1);
     pub const TYPE_32: Self = Self(0b10);
     pub const TYPE_64: Self = Self(0b100);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265TransformBlockSizeFlagBitsEXT.html>"]
-pub struct VideoEncodeH265TransformBlockSizeFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(VideoEncodeH265TransformBlockSizeFlagsEXT, Flags);
-impl VideoEncodeH265TransformBlockSizeFlagsEXT {
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265TransformBlockSizeFlagBitsKHR.html>"]
+pub struct VideoEncodeH265TransformBlockSizeFlagsKHR(pub(crate) Flags);
+vk_bitflags_wrapped!(VideoEncodeH265TransformBlockSizeFlagsKHR, Flags);
+impl VideoEncodeH265TransformBlockSizeFlagsKHR {
     pub const TYPE_4: Self = Self(0b1);
     pub const TYPE_8: Self = Self(0b10);
     pub const TYPE_16: Self = Self(0b100);
@@ -1718,3 +1730,9 @@ vk_bitflags_wrapped!(ShaderCreateFlagsEXT, Flags);
 impl ShaderCreateFlagsEXT {
     pub const LINK_STAGE: Self = Self(0b1);
 }
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMemoryUnmapFlagBitsKHR.html>"]
+pub struct MemoryUnmapFlagsKHR(pub(crate) Flags);
+vk_bitflags_wrapped!(MemoryUnmapFlagsKHR, Flags);
+impl MemoryUnmapFlagsKHR {}

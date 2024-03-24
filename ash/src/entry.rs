@@ -338,7 +338,7 @@ impl vk::StaticFn {
                 if val.is_null() {
                     return Err(MissingEntryPoint);
                 } else {
-                    ::core::mem::transmute(val)
+                    mem::transmute(val)
                 }
             },
         })

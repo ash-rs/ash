@@ -350,7 +350,7 @@ impl fmt::Debug for AttachmentLoadOp {
             Self::LOAD => Some("LOAD"),
             Self::CLEAR => Some("CLEAR"),
             Self::DONT_CARE => Some("DONT_CARE"),
-            Self::NONE_EXT => Some("NONE_EXT"),
+            Self::NONE_KHR => Some("NONE_KHR"),
             _ => None,
         };
         if let Some(x) = name {
@@ -527,6 +527,10 @@ impl fmt::Debug for BufferCreateFlags {
             (
                 BufferCreateFlags::DESCRIPTOR_BUFFER_CAPTURE_REPLAY_EXT.0,
                 "DESCRIPTOR_BUFFER_CAPTURE_REPLAY_EXT",
+            ),
+            (
+                BufferCreateFlags::VIDEO_PROFILE_INDEPENDENT_KHR.0,
+                "VIDEO_PROFILE_INDEPENDENT_KHR",
             ),
             (BufferCreateFlags::PROTECTED.0, "PROTECTED"),
             (
@@ -1334,6 +1338,10 @@ impl fmt::Debug for DescriptorSetLayoutCreateFlags {
                 "HOST_ONLY_POOL_EXT",
             ),
             (
+                DescriptorSetLayoutCreateFlags::PER_STAGE_NV.0,
+                "PER_STAGE_NV",
+            ),
+            (
                 DescriptorSetLayoutCreateFlags::UPDATE_AFTER_BIND_POOL.0,
                 "UPDATE_AFTER_BIND_POOL",
             ),
@@ -1702,12 +1710,10 @@ impl fmt::Debug for DynamicState {
             Self::EXCLUSIVE_SCISSOR_ENABLE_NV => Some("EXCLUSIVE_SCISSOR_ENABLE_NV"),
             Self::EXCLUSIVE_SCISSOR_NV => Some("EXCLUSIVE_SCISSOR_NV"),
             Self::FRAGMENT_SHADING_RATE_KHR => Some("FRAGMENT_SHADING_RATE_KHR"),
-            Self::LINE_STIPPLE_EXT => Some("LINE_STIPPLE_EXT"),
             Self::VERTEX_INPUT_EXT => Some("VERTEX_INPUT_EXT"),
             Self::PATCH_CONTROL_POINTS_EXT => Some("PATCH_CONTROL_POINTS_EXT"),
             Self::LOGIC_OP_EXT => Some("LOGIC_OP_EXT"),
             Self::COLOR_WRITE_ENABLE_EXT => Some("COLOR_WRITE_ENABLE_EXT"),
-            Self::TESSELLATION_DOMAIN_ORIGIN_EXT => Some("TESSELLATION_DOMAIN_ORIGIN_EXT"),
             Self::DEPTH_CLAMP_ENABLE_EXT => Some("DEPTH_CLAMP_ENABLE_EXT"),
             Self::POLYGON_MODE_EXT => Some("POLYGON_MODE_EXT"),
             Self::RASTERIZATION_SAMPLES_EXT => Some("RASTERIZATION_SAMPLES_EXT"),
@@ -1718,6 +1724,7 @@ impl fmt::Debug for DynamicState {
             Self::COLOR_BLEND_ENABLE_EXT => Some("COLOR_BLEND_ENABLE_EXT"),
             Self::COLOR_BLEND_EQUATION_EXT => Some("COLOR_BLEND_EQUATION_EXT"),
             Self::COLOR_WRITE_MASK_EXT => Some("COLOR_WRITE_MASK_EXT"),
+            Self::TESSELLATION_DOMAIN_ORIGIN_EXT => Some("TESSELLATION_DOMAIN_ORIGIN_EXT"),
             Self::RASTERIZATION_STREAM_EXT => Some("RASTERIZATION_STREAM_EXT"),
             Self::CONSERVATIVE_RASTERIZATION_MODE_EXT => {
                 Some("CONSERVATIVE_RASTERIZATION_MODE_EXT")
@@ -1749,6 +1756,7 @@ impl fmt::Debug for DynamicState {
             Self::ATTACHMENT_FEEDBACK_LOOP_ENABLE_EXT => {
                 Some("ATTACHMENT_FEEDBACK_LOOP_ENABLE_EXT")
             }
+            Self::LINE_STIPPLE_KHR => Some("LINE_STIPPLE_KHR"),
             Self::CULL_MODE => Some("CULL_MODE"),
             Self::FRONT_FACE => Some("FRONT_FACE"),
             Self::PRIMITIVE_TOPOLOGY => Some("PRIMITIVE_TOPOLOGY"),
@@ -2666,6 +2674,10 @@ impl fmt::Debug for ImageCreateFlags {
                 ImageCreateFlags::FRAGMENT_DENSITY_MAP_OFFSET_QCOM.0,
                 "FRAGMENT_DENSITY_MAP_OFFSET_QCOM",
             ),
+            (
+                ImageCreateFlags::VIDEO_PROFILE_INDEPENDENT_KHR.0,
+                "VIDEO_PROFILE_INDEPENDENT_KHR",
+            ),
             (ImageCreateFlags::ALIAS.0, "ALIAS"),
             (
                 ImageCreateFlags::SPLIT_INSTANCE_BIND_REGIONS.0,
@@ -2713,6 +2725,7 @@ impl fmt::Debug for ImageLayout {
             Self::FRAGMENT_SHADING_RATE_ATTACHMENT_OPTIMAL_KHR => {
                 Some("FRAGMENT_SHADING_RATE_ATTACHMENT_OPTIMAL_KHR")
             }
+            Self::RENDERING_LOCAL_READ_KHR => Some("RENDERING_LOCAL_READ_KHR"),
             Self::VIDEO_ENCODE_DST_KHR => Some("VIDEO_ENCODE_DST_KHR"),
             Self::VIDEO_ENCODE_SRC_KHR => Some("VIDEO_ENCODE_SRC_KHR"),
             Self::VIDEO_ENCODE_DPB_KHR => Some("VIDEO_ENCODE_DPB_KHR"),
@@ -2887,7 +2900,7 @@ impl fmt::Debug for IndexType {
             Self::UINT16 => Some("UINT16"),
             Self::UINT32 => Some("UINT32"),
             Self::NONE_KHR => Some("NONE_KHR"),
-            Self::UINT8_EXT => Some("UINT8_EXT"),
+            Self::UINT8_KHR => Some("UINT8_KHR"),
             _ => None,
         };
         if let Some(x) = name {
@@ -2992,6 +3005,26 @@ impl fmt::Debug for LatencyMarkerNV {
         }
     }
 }
+impl fmt::Debug for LayerSettingTypeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let name = match *self {
+            Self::BOOL32 => Some("BOOL32"),
+            Self::INT32 => Some("INT32"),
+            Self::INT64 => Some("INT64"),
+            Self::UINT32 => Some("UINT32"),
+            Self::UINT64 => Some("UINT64"),
+            Self::FLOAT32 => Some("FLOAT32"),
+            Self::FLOAT64 => Some("FLOAT64"),
+            Self::STRING => Some("STRING"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
 impl fmt::Debug for LayeredDriverUnderlyingApiMSFT {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match *self {
@@ -3006,7 +3039,7 @@ impl fmt::Debug for LayeredDriverUnderlyingApiMSFT {
         }
     }
 }
-impl fmt::Debug for LineRasterizationModeEXT {
+impl fmt::Debug for LineRasterizationModeKHR {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match *self {
             Self::DEFAULT => Some("DEFAULT"),
@@ -3089,7 +3122,7 @@ impl fmt::Debug for MemoryHeapFlags {
 }
 impl fmt::Debug for MemoryMapFlags {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[];
+        const KNOWN: &[(Flags, &str)] = &[(MemoryMapFlags::PLACED_EXT.0, "PLACED_EXT")];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -3132,7 +3165,7 @@ impl fmt::Debug for MemoryPropertyFlags {
 }
 impl fmt::Debug for MemoryUnmapFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[];
+        const KNOWN: &[(Flags, &str)] = &[(MemoryUnmapFlagsKHR::RESERVE_EXT.0, "RESERVE_EXT")];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -3451,7 +3484,7 @@ impl fmt::Debug for PerformanceValueTypeINTEL {
 }
 impl fmt::Debug for PhysicalDeviceSchedulingControlsFlagsARM {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(
+        const KNOWN: &[(Flags64, &str)] = &[(
             PhysicalDeviceSchedulingControlsFlagsARM::SHADER_CORE_COUNT.0,
             "SHADER_CORE_COUNT",
         )];
@@ -5072,77 +5105,77 @@ impl fmt::Debug for StructureType {
             Self::CU_LAUNCH_INFO_NVX => Some("CU_LAUNCH_INFO_NVX"),
             Self::IMAGE_VIEW_HANDLE_INFO_NVX => Some("IMAGE_VIEW_HANDLE_INFO_NVX"),
             Self::IMAGE_VIEW_ADDRESS_PROPERTIES_NVX => Some("IMAGE_VIEW_ADDRESS_PROPERTIES_NVX"),
-            Self::VIDEO_ENCODE_H264_CAPABILITIES_EXT => Some("VIDEO_ENCODE_H264_CAPABILITIES_EXT"),
-            Self::VIDEO_ENCODE_H264_SESSION_PARAMETERS_CREATE_INFO_EXT => {
-                Some("VIDEO_ENCODE_H264_SESSION_PARAMETERS_CREATE_INFO_EXT")
+            Self::VIDEO_ENCODE_H264_CAPABILITIES_KHR => Some("VIDEO_ENCODE_H264_CAPABILITIES_KHR"),
+            Self::VIDEO_ENCODE_H264_SESSION_PARAMETERS_CREATE_INFO_KHR => {
+                Some("VIDEO_ENCODE_H264_SESSION_PARAMETERS_CREATE_INFO_KHR")
             }
-            Self::VIDEO_ENCODE_H264_SESSION_PARAMETERS_ADD_INFO_EXT => {
-                Some("VIDEO_ENCODE_H264_SESSION_PARAMETERS_ADD_INFO_EXT")
+            Self::VIDEO_ENCODE_H264_SESSION_PARAMETERS_ADD_INFO_KHR => {
+                Some("VIDEO_ENCODE_H264_SESSION_PARAMETERS_ADD_INFO_KHR")
             }
-            Self::VIDEO_ENCODE_H264_PICTURE_INFO_EXT => Some("VIDEO_ENCODE_H264_PICTURE_INFO_EXT"),
-            Self::VIDEO_ENCODE_H264_DPB_SLOT_INFO_EXT => {
-                Some("VIDEO_ENCODE_H264_DPB_SLOT_INFO_EXT")
+            Self::VIDEO_ENCODE_H264_PICTURE_INFO_KHR => Some("VIDEO_ENCODE_H264_PICTURE_INFO_KHR"),
+            Self::VIDEO_ENCODE_H264_DPB_SLOT_INFO_KHR => {
+                Some("VIDEO_ENCODE_H264_DPB_SLOT_INFO_KHR")
             }
-            Self::VIDEO_ENCODE_H264_NALU_SLICE_INFO_EXT => {
-                Some("VIDEO_ENCODE_H264_NALU_SLICE_INFO_EXT")
+            Self::VIDEO_ENCODE_H264_NALU_SLICE_INFO_KHR => {
+                Some("VIDEO_ENCODE_H264_NALU_SLICE_INFO_KHR")
             }
-            Self::VIDEO_ENCODE_H264_GOP_REMAINING_FRAME_INFO_EXT => {
-                Some("VIDEO_ENCODE_H264_GOP_REMAINING_FRAME_INFO_EXT")
+            Self::VIDEO_ENCODE_H264_GOP_REMAINING_FRAME_INFO_KHR => {
+                Some("VIDEO_ENCODE_H264_GOP_REMAINING_FRAME_INFO_KHR")
             }
-            Self::VIDEO_ENCODE_H264_PROFILE_INFO_EXT => Some("VIDEO_ENCODE_H264_PROFILE_INFO_EXT"),
-            Self::VIDEO_ENCODE_H264_RATE_CONTROL_INFO_EXT => {
-                Some("VIDEO_ENCODE_H264_RATE_CONTROL_INFO_EXT")
+            Self::VIDEO_ENCODE_H264_PROFILE_INFO_KHR => Some("VIDEO_ENCODE_H264_PROFILE_INFO_KHR"),
+            Self::VIDEO_ENCODE_H264_RATE_CONTROL_INFO_KHR => {
+                Some("VIDEO_ENCODE_H264_RATE_CONTROL_INFO_KHR")
             }
-            Self::VIDEO_ENCODE_H264_RATE_CONTROL_LAYER_INFO_EXT => {
-                Some("VIDEO_ENCODE_H264_RATE_CONTROL_LAYER_INFO_EXT")
+            Self::VIDEO_ENCODE_H264_RATE_CONTROL_LAYER_INFO_KHR => {
+                Some("VIDEO_ENCODE_H264_RATE_CONTROL_LAYER_INFO_KHR")
             }
-            Self::VIDEO_ENCODE_H264_SESSION_CREATE_INFO_EXT => {
-                Some("VIDEO_ENCODE_H264_SESSION_CREATE_INFO_EXT")
+            Self::VIDEO_ENCODE_H264_SESSION_CREATE_INFO_KHR => {
+                Some("VIDEO_ENCODE_H264_SESSION_CREATE_INFO_KHR")
             }
-            Self::VIDEO_ENCODE_H264_QUALITY_LEVEL_PROPERTIES_EXT => {
-                Some("VIDEO_ENCODE_H264_QUALITY_LEVEL_PROPERTIES_EXT")
+            Self::VIDEO_ENCODE_H264_QUALITY_LEVEL_PROPERTIES_KHR => {
+                Some("VIDEO_ENCODE_H264_QUALITY_LEVEL_PROPERTIES_KHR")
             }
-            Self::VIDEO_ENCODE_H264_SESSION_PARAMETERS_GET_INFO_EXT => {
-                Some("VIDEO_ENCODE_H264_SESSION_PARAMETERS_GET_INFO_EXT")
+            Self::VIDEO_ENCODE_H264_SESSION_PARAMETERS_GET_INFO_KHR => {
+                Some("VIDEO_ENCODE_H264_SESSION_PARAMETERS_GET_INFO_KHR")
             }
-            Self::VIDEO_ENCODE_H264_SESSION_PARAMETERS_FEEDBACK_INFO_EXT => {
-                Some("VIDEO_ENCODE_H264_SESSION_PARAMETERS_FEEDBACK_INFO_EXT")
+            Self::VIDEO_ENCODE_H264_SESSION_PARAMETERS_FEEDBACK_INFO_KHR => {
+                Some("VIDEO_ENCODE_H264_SESSION_PARAMETERS_FEEDBACK_INFO_KHR")
             }
-            Self::VIDEO_ENCODE_H265_CAPABILITIES_EXT => Some("VIDEO_ENCODE_H265_CAPABILITIES_EXT"),
-            Self::VIDEO_ENCODE_H265_SESSION_PARAMETERS_CREATE_INFO_EXT => {
-                Some("VIDEO_ENCODE_H265_SESSION_PARAMETERS_CREATE_INFO_EXT")
+            Self::VIDEO_ENCODE_H265_CAPABILITIES_KHR => Some("VIDEO_ENCODE_H265_CAPABILITIES_KHR"),
+            Self::VIDEO_ENCODE_H265_SESSION_PARAMETERS_CREATE_INFO_KHR => {
+                Some("VIDEO_ENCODE_H265_SESSION_PARAMETERS_CREATE_INFO_KHR")
             }
-            Self::VIDEO_ENCODE_H265_SESSION_PARAMETERS_ADD_INFO_EXT => {
-                Some("VIDEO_ENCODE_H265_SESSION_PARAMETERS_ADD_INFO_EXT")
+            Self::VIDEO_ENCODE_H265_SESSION_PARAMETERS_ADD_INFO_KHR => {
+                Some("VIDEO_ENCODE_H265_SESSION_PARAMETERS_ADD_INFO_KHR")
             }
-            Self::VIDEO_ENCODE_H265_PICTURE_INFO_EXT => Some("VIDEO_ENCODE_H265_PICTURE_INFO_EXT"),
-            Self::VIDEO_ENCODE_H265_DPB_SLOT_INFO_EXT => {
-                Some("VIDEO_ENCODE_H265_DPB_SLOT_INFO_EXT")
+            Self::VIDEO_ENCODE_H265_PICTURE_INFO_KHR => Some("VIDEO_ENCODE_H265_PICTURE_INFO_KHR"),
+            Self::VIDEO_ENCODE_H265_DPB_SLOT_INFO_KHR => {
+                Some("VIDEO_ENCODE_H265_DPB_SLOT_INFO_KHR")
             }
-            Self::VIDEO_ENCODE_H265_NALU_SLICE_SEGMENT_INFO_EXT => {
-                Some("VIDEO_ENCODE_H265_NALU_SLICE_SEGMENT_INFO_EXT")
+            Self::VIDEO_ENCODE_H265_NALU_SLICE_SEGMENT_INFO_KHR => {
+                Some("VIDEO_ENCODE_H265_NALU_SLICE_SEGMENT_INFO_KHR")
             }
-            Self::VIDEO_ENCODE_H265_GOP_REMAINING_FRAME_INFO_EXT => {
-                Some("VIDEO_ENCODE_H265_GOP_REMAINING_FRAME_INFO_EXT")
+            Self::VIDEO_ENCODE_H265_GOP_REMAINING_FRAME_INFO_KHR => {
+                Some("VIDEO_ENCODE_H265_GOP_REMAINING_FRAME_INFO_KHR")
             }
-            Self::VIDEO_ENCODE_H265_PROFILE_INFO_EXT => Some("VIDEO_ENCODE_H265_PROFILE_INFO_EXT"),
-            Self::VIDEO_ENCODE_H265_RATE_CONTROL_INFO_EXT => {
-                Some("VIDEO_ENCODE_H265_RATE_CONTROL_INFO_EXT")
+            Self::VIDEO_ENCODE_H265_PROFILE_INFO_KHR => Some("VIDEO_ENCODE_H265_PROFILE_INFO_KHR"),
+            Self::VIDEO_ENCODE_H265_RATE_CONTROL_INFO_KHR => {
+                Some("VIDEO_ENCODE_H265_RATE_CONTROL_INFO_KHR")
             }
-            Self::VIDEO_ENCODE_H265_RATE_CONTROL_LAYER_INFO_EXT => {
-                Some("VIDEO_ENCODE_H265_RATE_CONTROL_LAYER_INFO_EXT")
+            Self::VIDEO_ENCODE_H265_RATE_CONTROL_LAYER_INFO_KHR => {
+                Some("VIDEO_ENCODE_H265_RATE_CONTROL_LAYER_INFO_KHR")
             }
-            Self::VIDEO_ENCODE_H265_SESSION_CREATE_INFO_EXT => {
-                Some("VIDEO_ENCODE_H265_SESSION_CREATE_INFO_EXT")
+            Self::VIDEO_ENCODE_H265_SESSION_CREATE_INFO_KHR => {
+                Some("VIDEO_ENCODE_H265_SESSION_CREATE_INFO_KHR")
             }
-            Self::VIDEO_ENCODE_H265_QUALITY_LEVEL_PROPERTIES_EXT => {
-                Some("VIDEO_ENCODE_H265_QUALITY_LEVEL_PROPERTIES_EXT")
+            Self::VIDEO_ENCODE_H265_QUALITY_LEVEL_PROPERTIES_KHR => {
+                Some("VIDEO_ENCODE_H265_QUALITY_LEVEL_PROPERTIES_KHR")
             }
-            Self::VIDEO_ENCODE_H265_SESSION_PARAMETERS_GET_INFO_EXT => {
-                Some("VIDEO_ENCODE_H265_SESSION_PARAMETERS_GET_INFO_EXT")
+            Self::VIDEO_ENCODE_H265_SESSION_PARAMETERS_GET_INFO_KHR => {
+                Some("VIDEO_ENCODE_H265_SESSION_PARAMETERS_GET_INFO_KHR")
             }
-            Self::VIDEO_ENCODE_H265_SESSION_PARAMETERS_FEEDBACK_INFO_EXT => {
-                Some("VIDEO_ENCODE_H265_SESSION_PARAMETERS_FEEDBACK_INFO_EXT")
+            Self::VIDEO_ENCODE_H265_SESSION_PARAMETERS_FEEDBACK_INFO_KHR => {
+                Some("VIDEO_ENCODE_H265_SESSION_PARAMETERS_FEEDBACK_INFO_KHR")
             }
             Self::VIDEO_DECODE_H264_CAPABILITIES_KHR => Some("VIDEO_DECODE_H264_CAPABILITIES_KHR"),
             Self::VIDEO_DECODE_H264_PICTURE_INFO_KHR => Some("VIDEO_DECODE_H264_PICTURE_INFO_KHR"),
@@ -5536,7 +5569,6 @@ impl fmt::Debug for StructureType {
             Self::PIPELINE_COMPILER_CONTROL_CREATE_INFO_AMD => {
                 Some("PIPELINE_COMPILER_CONTROL_CREATE_INFO_AMD")
             }
-            Self::CALIBRATED_TIMESTAMP_INFO_EXT => Some("CALIBRATED_TIMESTAMP_INFO_EXT"),
             Self::PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_AMD => {
                 Some("PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_AMD")
             }
@@ -5566,12 +5598,6 @@ impl fmt::Debug for StructureType {
             }
             Self::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_EXT => {
                 Some("PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_EXT")
-            }
-            Self::PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_EXT => {
-                Some("PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_EXT")
-            }
-            Self::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES_EXT => {
-                Some("PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES_EXT")
             }
             Self::PRESENT_FRAME_TOKEN_GGP => Some("PRESENT_FRAME_TOKEN_GGP"),
             Self::PHYSICAL_DEVICE_COMPUTE_SHADER_DERIVATIVES_FEATURES_NV => {
@@ -5656,8 +5682,20 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_COHERENT_MEMORY_FEATURES_AMD => {
                 Some("PHYSICAL_DEVICE_COHERENT_MEMORY_FEATURES_AMD")
             }
+            Self::PHYSICAL_DEVICE_DYNAMIC_RENDERING_LOCAL_READ_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_DYNAMIC_RENDERING_LOCAL_READ_FEATURES_KHR")
+            }
+            Self::RENDERING_ATTACHMENT_LOCATION_INFO_KHR => {
+                Some("RENDERING_ATTACHMENT_LOCATION_INFO_KHR")
+            }
+            Self::RENDERING_INPUT_ATTACHMENT_INDEX_INFO_KHR => {
+                Some("RENDERING_INPUT_ATTACHMENT_INDEX_INFO_KHR")
+            }
             Self::PHYSICAL_DEVICE_SHADER_IMAGE_ATOMIC_INT64_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_SHADER_IMAGE_ATOMIC_INT64_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_SHADER_QUAD_CONTROL_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_SHADER_QUAD_CONTROL_FEATURES_KHR")
             }
             Self::PHYSICAL_DEVICE_MEMORY_BUDGET_PROPERTIES_EXT => {
                 Some("PHYSICAL_DEVICE_MEMORY_BUDGET_PROPERTIES_EXT")
@@ -5721,20 +5759,8 @@ impl fmt::Debug for StructureType {
                 Some("SURFACE_FULL_SCREEN_EXCLUSIVE_WIN32_INFO_EXT")
             }
             Self::HEADLESS_SURFACE_CREATE_INFO_EXT => Some("HEADLESS_SURFACE_CREATE_INFO_EXT"),
-            Self::PHYSICAL_DEVICE_LINE_RASTERIZATION_FEATURES_EXT => {
-                Some("PHYSICAL_DEVICE_LINE_RASTERIZATION_FEATURES_EXT")
-            }
-            Self::PIPELINE_RASTERIZATION_LINE_STATE_CREATE_INFO_EXT => {
-                Some("PIPELINE_RASTERIZATION_LINE_STATE_CREATE_INFO_EXT")
-            }
-            Self::PHYSICAL_DEVICE_LINE_RASTERIZATION_PROPERTIES_EXT => {
-                Some("PHYSICAL_DEVICE_LINE_RASTERIZATION_PROPERTIES_EXT")
-            }
             Self::PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_FEATURES_EXT")
-            }
-            Self::PHYSICAL_DEVICE_INDEX_TYPE_UINT8_FEATURES_EXT => {
-                Some("PHYSICAL_DEVICE_INDEX_TYPE_UINT8_FEATURES_EXT")
             }
             Self::PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_FEATURES_EXT")
@@ -5769,6 +5795,13 @@ impl fmt::Debug for StructureType {
             }
             Self::MEMORY_MAP_INFO_KHR => Some("MEMORY_MAP_INFO_KHR"),
             Self::MEMORY_UNMAP_INFO_KHR => Some("MEMORY_UNMAP_INFO_KHR"),
+            Self::PHYSICAL_DEVICE_MAP_MEMORY_PLACED_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_MAP_MEMORY_PLACED_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_MAP_MEMORY_PLACED_PROPERTIES_EXT => {
+                Some("PHYSICAL_DEVICE_MAP_MEMORY_PLACED_PROPERTIES_EXT")
+            }
+            Self::MEMORY_MAP_PLACED_INFO_EXT => Some("MEMORY_MAP_PLACED_INFO_EXT"),
             Self::PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_2_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_2_FEATURES_EXT")
             }
@@ -6202,6 +6235,9 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_PROPERTIES_HUAWEI => {
                 Some("PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_PROPERTIES_HUAWEI")
             }
+            Self::PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_VRS_FEATURES_HUAWEI => {
+                Some("PHYSICAL_DEVICE_CLUSTER_CULLING_SHADER_VRS_FEATURES_HUAWEI")
+            }
             Self::PHYSICAL_DEVICE_BORDER_COLOR_SWIZZLE_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_BORDER_COLOR_SWIZZLE_FEATURES_EXT")
             }
@@ -6213,6 +6249,9 @@ impl fmt::Debug for StructureType {
             }
             Self::PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_ARM => {
                 Some("PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_ARM")
+            }
+            Self::PHYSICAL_DEVICE_SHADER_SUBGROUP_ROTATE_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_SHADER_SUBGROUP_ROTATE_FEATURES_KHR")
             }
             Self::DEVICE_QUEUE_SHADER_CORE_CONTROL_CREATE_INFO_ARM => {
                 Some("DEVICE_QUEUE_SHADER_CORE_CONTROL_CREATE_INFO_ARM")
@@ -6242,6 +6281,15 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_NON_SEAMLESS_CUBE_MAP_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_NON_SEAMLESS_CUBE_MAP_FEATURES_EXT")
             }
+            Self::PHYSICAL_DEVICE_RENDER_PASS_STRIPED_FEATURES_ARM => {
+                Some("PHYSICAL_DEVICE_RENDER_PASS_STRIPED_FEATURES_ARM")
+            }
+            Self::PHYSICAL_DEVICE_RENDER_PASS_STRIPED_PROPERTIES_ARM => {
+                Some("PHYSICAL_DEVICE_RENDER_PASS_STRIPED_PROPERTIES_ARM")
+            }
+            Self::RENDER_PASS_STRIPE_BEGIN_INFO_ARM => Some("RENDER_PASS_STRIPE_BEGIN_INFO_ARM"),
+            Self::RENDER_PASS_STRIPE_INFO_ARM => Some("RENDER_PASS_STRIPE_INFO_ARM"),
+            Self::RENDER_PASS_STRIPE_SUBMIT_INFO_ARM => Some("RENDER_PASS_STRIPE_SUBMIT_INFO_ARM"),
             Self::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_OFFSET_FEATURES_QCOM => {
                 Some("PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_OFFSET_FEATURES_QCOM")
             }
@@ -6274,6 +6322,9 @@ impl fmt::Debug for StructureType {
             }
             Self::PHYSICAL_DEVICE_LINEAR_COLOR_ATTACHMENT_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_LINEAR_COLOR_ATTACHMENT_FEATURES_NV")
+            }
+            Self::PHYSICAL_DEVICE_SHADER_MAXIMAL_RECONVERGENCE_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_SHADER_MAXIMAL_RECONVERGENCE_FEATURES_KHR")
             }
             Self::PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_SWAPCHAIN_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_SWAPCHAIN_FEATURES_EXT")
@@ -6414,6 +6465,7 @@ impl fmt::Debug for StructureType {
             Self::MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_EXT => {
                 Some("MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_EXT")
             }
+            Self::LAYER_SETTINGS_CREATE_INFO_EXT => Some("LAYER_SETTINGS_CREATE_INFO_EXT"),
             Self::PHYSICAL_DEVICE_SHADER_CORE_BUILTINS_FEATURES_ARM => {
                 Some("PHYSICAL_DEVICE_SHADER_CORE_BUILTINS_FEATURES_ARM")
             }
@@ -6448,6 +6500,20 @@ impl fmt::Debug for StructureType {
             Self::MULTIVIEW_PER_VIEW_RENDER_AREAS_RENDER_PASS_BEGIN_INFO_QCOM => {
                 Some("MULTIVIEW_PER_VIEW_RENDER_AREAS_RENDER_PASS_BEGIN_INFO_QCOM")
             }
+            Self::VIDEO_DECODE_AV1_CAPABILITIES_KHR => Some("VIDEO_DECODE_AV1_CAPABILITIES_KHR"),
+            Self::VIDEO_DECODE_AV1_PICTURE_INFO_KHR => Some("VIDEO_DECODE_AV1_PICTURE_INFO_KHR"),
+            Self::VIDEO_DECODE_AV1_PROFILE_INFO_KHR => Some("VIDEO_DECODE_AV1_PROFILE_INFO_KHR"),
+            Self::VIDEO_DECODE_AV1_SESSION_PARAMETERS_CREATE_INFO_KHR => {
+                Some("VIDEO_DECODE_AV1_SESSION_PARAMETERS_CREATE_INFO_KHR")
+            }
+            Self::VIDEO_DECODE_AV1_DPB_SLOT_INFO_KHR => Some("VIDEO_DECODE_AV1_DPB_SLOT_INFO_KHR"),
+            Self::PHYSICAL_DEVICE_VIDEO_MAINTENANCE_1_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_VIDEO_MAINTENANCE_1_FEATURES_KHR")
+            }
+            Self::VIDEO_INLINE_QUERY_INFO_KHR => Some("VIDEO_INLINE_QUERY_INFO_KHR"),
+            Self::PHYSICAL_DEVICE_PER_STAGE_DESCRIPTOR_SET_FEATURES_NV => {
+                Some("PHYSICAL_DEVICE_PER_STAGE_DESCRIPTOR_SET_FEATURES_NV")
+            }
             Self::PHYSICAL_DEVICE_IMAGE_PROCESSING_2_FEATURES_QCOM => {
                 Some("PHYSICAL_DEVICE_IMAGE_PROCESSING_2_FEATURES_QCOM")
             }
@@ -6476,6 +6542,18 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_ATTACHMENT_FEEDBACK_LOOP_DYNAMIC_STATE_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_ATTACHMENT_FEEDBACK_LOOP_DYNAMIC_STATE_FEATURES_EXT")
             }
+            Self::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_KHR => {
+                Some("PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_KHR")
+            }
+            Self::PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_KHR => {
+                Some("PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_KHR")
+            }
+            Self::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES_KHR")
+            }
+            Self::PHYSICAL_DEVICE_SHADER_FLOAT_CONTROLS_2_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_SHADER_FLOAT_CONTROLS_2_FEATURES_KHR")
+            }
             Self::SCREEN_BUFFER_PROPERTIES_QNX => Some("SCREEN_BUFFER_PROPERTIES_QNX"),
             Self::SCREEN_BUFFER_FORMAT_PROPERTIES_QNX => {
                 Some("SCREEN_BUFFER_FORMAT_PROPERTIES_QNX")
@@ -6488,8 +6566,52 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_LAYERED_DRIVER_PROPERTIES_MSFT => {
                 Some("PHYSICAL_DEVICE_LAYERED_DRIVER_PROPERTIES_MSFT")
             }
+            Self::PHYSICAL_DEVICE_INDEX_TYPE_UINT8_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_INDEX_TYPE_UINT8_FEATURES_KHR")
+            }
+            Self::PHYSICAL_DEVICE_LINE_RASTERIZATION_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_LINE_RASTERIZATION_FEATURES_KHR")
+            }
+            Self::PIPELINE_RASTERIZATION_LINE_STATE_CREATE_INFO_KHR => {
+                Some("PIPELINE_RASTERIZATION_LINE_STATE_CREATE_INFO_KHR")
+            }
+            Self::PHYSICAL_DEVICE_LINE_RASTERIZATION_PROPERTIES_KHR => {
+                Some("PHYSICAL_DEVICE_LINE_RASTERIZATION_PROPERTIES_KHR")
+            }
+            Self::CALIBRATED_TIMESTAMP_INFO_KHR => Some("CALIBRATED_TIMESTAMP_INFO_KHR"),
+            Self::PHYSICAL_DEVICE_SHADER_EXPECT_ASSUME_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_SHADER_EXPECT_ASSUME_FEATURES_KHR")
+            }
+            Self::PHYSICAL_DEVICE_MAINTENANCE_6_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_MAINTENANCE_6_FEATURES_KHR")
+            }
+            Self::PHYSICAL_DEVICE_MAINTENANCE_6_PROPERTIES_KHR => {
+                Some("PHYSICAL_DEVICE_MAINTENANCE_6_PROPERTIES_KHR")
+            }
+            Self::BIND_MEMORY_STATUS_KHR => Some("BIND_MEMORY_STATUS_KHR"),
+            Self::BIND_DESCRIPTOR_SETS_INFO_KHR => Some("BIND_DESCRIPTOR_SETS_INFO_KHR"),
+            Self::PUSH_CONSTANTS_INFO_KHR => Some("PUSH_CONSTANTS_INFO_KHR"),
+            Self::PUSH_DESCRIPTOR_SET_INFO_KHR => Some("PUSH_DESCRIPTOR_SET_INFO_KHR"),
+            Self::PUSH_DESCRIPTOR_SET_WITH_TEMPLATE_INFO_KHR => {
+                Some("PUSH_DESCRIPTOR_SET_WITH_TEMPLATE_INFO_KHR")
+            }
+            Self::SET_DESCRIPTOR_BUFFER_OFFSETS_INFO_EXT => {
+                Some("SET_DESCRIPTOR_BUFFER_OFFSETS_INFO_EXT")
+            }
+            Self::BIND_DESCRIPTOR_BUFFER_EMBEDDED_SAMPLERS_INFO_EXT => {
+                Some("BIND_DESCRIPTOR_BUFFER_EMBEDDED_SAMPLERS_INFO_EXT")
+            }
             Self::PHYSICAL_DEVICE_DESCRIPTOR_POOL_OVERALLOCATION_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_DESCRIPTOR_POOL_OVERALLOCATION_FEATURES_NV")
+            }
+            Self::PHYSICAL_DEVICE_RAW_ACCESS_CHAINS_FEATURES_NV => {
+                Some("PHYSICAL_DEVICE_RAW_ACCESS_CHAINS_FEATURES_NV")
+            }
+            Self::PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT16_VECTOR_FEATURES_NV => {
+                Some("PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT16_VECTOR_FEATURES_NV")
+            }
+            Self::PHYSICAL_DEVICE_RAY_TRACING_VALIDATION_FEATURES_NV => {
+                Some("PHYSICAL_DEVICE_RAY_TRACING_VALIDATION_FEATURES_NV")
             }
             Self::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES => {
                 Some("PHYSICAL_DEVICE_SUBGROUP_PROPERTIES")
@@ -6849,6 +6971,11 @@ impl fmt::Debug for SubgroupFeatureFlags {
             (SubgroupFeatureFlags::CLUSTERED.0, "CLUSTERED"),
             (SubgroupFeatureFlags::QUAD.0, "QUAD"),
             (SubgroupFeatureFlags::PARTITIONED_NV.0, "PARTITIONED_NV"),
+            (SubgroupFeatureFlags::ROTATE_KHR.0, "ROTATE_KHR"),
+            (
+                SubgroupFeatureFlags::ROTATE_CLUSTERED_KHR.0,
+                "ROTATE_CLUSTERED_KHR",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -7033,7 +7160,7 @@ impl fmt::Debug for TessellationDomainOrigin {
         }
     }
 }
-impl fmt::Debug for TimeDomainEXT {
+impl fmt::Debug for TimeDomainKHR {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match *self {
             Self::DEVICE => Some("DEVICE"),
@@ -7215,16 +7342,11 @@ impl fmt::Debug for VideoCodecOperationFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (VideoCodecOperationFlagsKHR::NONE.0, "NONE"),
-            (
-                VideoCodecOperationFlagsKHR::ENCODE_H264_EXT.0,
-                "ENCODE_H264_EXT",
-            ),
-            (
-                VideoCodecOperationFlagsKHR::ENCODE_H265_EXT.0,
-                "ENCODE_H265_EXT",
-            ),
+            (VideoCodecOperationFlagsKHR::ENCODE_H264.0, "ENCODE_H264"),
+            (VideoCodecOperationFlagsKHR::ENCODE_H265.0, "ENCODE_H265"),
             (VideoCodecOperationFlagsKHR::DECODE_H264.0, "DECODE_H264"),
             (VideoCodecOperationFlagsKHR::DECODE_H265.0, "DECODE_H265"),
+            (VideoCodecOperationFlagsKHR::DECODE_AV1.0, "DECODE_AV1"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -7358,355 +7480,355 @@ impl fmt::Debug for VideoEncodeFlagsKHR {
         debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Debug for VideoEncodeH264CapabilityFlagsEXT {
+impl fmt::Debug for VideoEncodeH264CapabilityFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                VideoEncodeH264CapabilityFlagsEXT::HRD_COMPLIANCE.0,
+                VideoEncodeH264CapabilityFlagsKHR::HRD_COMPLIANCE.0,
                 "HRD_COMPLIANCE",
             ),
             (
-                VideoEncodeH264CapabilityFlagsEXT::PREDICTION_WEIGHT_TABLE_GENERATED.0,
+                VideoEncodeH264CapabilityFlagsKHR::PREDICTION_WEIGHT_TABLE_GENERATED.0,
                 "PREDICTION_WEIGHT_TABLE_GENERATED",
             ),
             (
-                VideoEncodeH264CapabilityFlagsEXT::ROW_UNALIGNED_SLICE.0,
+                VideoEncodeH264CapabilityFlagsKHR::ROW_UNALIGNED_SLICE.0,
                 "ROW_UNALIGNED_SLICE",
             ),
             (
-                VideoEncodeH264CapabilityFlagsEXT::DIFFERENT_SLICE_TYPE.0,
+                VideoEncodeH264CapabilityFlagsKHR::DIFFERENT_SLICE_TYPE.0,
                 "DIFFERENT_SLICE_TYPE",
             ),
             (
-                VideoEncodeH264CapabilityFlagsEXT::B_FRAME_IN_L0_LIST.0,
+                VideoEncodeH264CapabilityFlagsKHR::B_FRAME_IN_L0_LIST.0,
                 "B_FRAME_IN_L0_LIST",
             ),
             (
-                VideoEncodeH264CapabilityFlagsEXT::B_FRAME_IN_L1_LIST.0,
+                VideoEncodeH264CapabilityFlagsKHR::B_FRAME_IN_L1_LIST.0,
                 "B_FRAME_IN_L1_LIST",
             ),
             (
-                VideoEncodeH264CapabilityFlagsEXT::PER_PICTURE_TYPE_MIN_MAX_QP.0,
+                VideoEncodeH264CapabilityFlagsKHR::PER_PICTURE_TYPE_MIN_MAX_QP.0,
                 "PER_PICTURE_TYPE_MIN_MAX_QP",
             ),
             (
-                VideoEncodeH264CapabilityFlagsEXT::PER_SLICE_CONSTANT_QP.0,
+                VideoEncodeH264CapabilityFlagsKHR::PER_SLICE_CONSTANT_QP.0,
                 "PER_SLICE_CONSTANT_QP",
             ),
             (
-                VideoEncodeH264CapabilityFlagsEXT::GENERATE_PREFIX_NALU.0,
+                VideoEncodeH264CapabilityFlagsKHR::GENERATE_PREFIX_NALU.0,
                 "GENERATE_PREFIX_NALU",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Debug for VideoEncodeH264RateControlFlagsEXT {
+impl fmt::Debug for VideoEncodeH264RateControlFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                VideoEncodeH264RateControlFlagsEXT::ATTEMPT_HRD_COMPLIANCE.0,
+                VideoEncodeH264RateControlFlagsKHR::ATTEMPT_HRD_COMPLIANCE.0,
                 "ATTEMPT_HRD_COMPLIANCE",
             ),
             (
-                VideoEncodeH264RateControlFlagsEXT::REGULAR_GOP.0,
+                VideoEncodeH264RateControlFlagsKHR::REGULAR_GOP.0,
                 "REGULAR_GOP",
             ),
             (
-                VideoEncodeH264RateControlFlagsEXT::REFERENCE_PATTERN_FLAT.0,
+                VideoEncodeH264RateControlFlagsKHR::REFERENCE_PATTERN_FLAT.0,
                 "REFERENCE_PATTERN_FLAT",
             ),
             (
-                VideoEncodeH264RateControlFlagsEXT::REFERENCE_PATTERN_DYADIC.0,
+                VideoEncodeH264RateControlFlagsKHR::REFERENCE_PATTERN_DYADIC.0,
                 "REFERENCE_PATTERN_DYADIC",
             ),
             (
-                VideoEncodeH264RateControlFlagsEXT::TEMPORAL_LAYER_PATTERN_DYADIC.0,
+                VideoEncodeH264RateControlFlagsKHR::TEMPORAL_LAYER_PATTERN_DYADIC.0,
                 "TEMPORAL_LAYER_PATTERN_DYADIC",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Debug for VideoEncodeH264StdFlagsEXT {
+impl fmt::Debug for VideoEncodeH264StdFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                VideoEncodeH264StdFlagsEXT::SEPARATE_COLOR_PLANE_FLAG_SET.0,
+                VideoEncodeH264StdFlagsKHR::SEPARATE_COLOR_PLANE_FLAG_SET.0,
                 "SEPARATE_COLOR_PLANE_FLAG_SET",
             ),
             (
-                VideoEncodeH264StdFlagsEXT::QPPRIME_Y_ZERO_TRANSFORM_BYPASS_FLAG_SET.0,
+                VideoEncodeH264StdFlagsKHR::QPPRIME_Y_ZERO_TRANSFORM_BYPASS_FLAG_SET.0,
                 "QPPRIME_Y_ZERO_TRANSFORM_BYPASS_FLAG_SET",
             ),
             (
-                VideoEncodeH264StdFlagsEXT::SCALING_MATRIX_PRESENT_FLAG_SET.0,
+                VideoEncodeH264StdFlagsKHR::SCALING_MATRIX_PRESENT_FLAG_SET.0,
                 "SCALING_MATRIX_PRESENT_FLAG_SET",
             ),
             (
-                VideoEncodeH264StdFlagsEXT::CHROMA_QP_INDEX_OFFSET.0,
+                VideoEncodeH264StdFlagsKHR::CHROMA_QP_INDEX_OFFSET.0,
                 "CHROMA_QP_INDEX_OFFSET",
             ),
             (
-                VideoEncodeH264StdFlagsEXT::SECOND_CHROMA_QP_INDEX_OFFSET.0,
+                VideoEncodeH264StdFlagsKHR::SECOND_CHROMA_QP_INDEX_OFFSET.0,
                 "SECOND_CHROMA_QP_INDEX_OFFSET",
             ),
             (
-                VideoEncodeH264StdFlagsEXT::PIC_INIT_QP_MINUS26.0,
+                VideoEncodeH264StdFlagsKHR::PIC_INIT_QP_MINUS26.0,
                 "PIC_INIT_QP_MINUS26",
             ),
             (
-                VideoEncodeH264StdFlagsEXT::WEIGHTED_PRED_FLAG_SET.0,
+                VideoEncodeH264StdFlagsKHR::WEIGHTED_PRED_FLAG_SET.0,
                 "WEIGHTED_PRED_FLAG_SET",
             ),
             (
-                VideoEncodeH264StdFlagsEXT::WEIGHTED_BIPRED_IDC_EXPLICIT.0,
+                VideoEncodeH264StdFlagsKHR::WEIGHTED_BIPRED_IDC_EXPLICIT.0,
                 "WEIGHTED_BIPRED_IDC_EXPLICIT",
             ),
             (
-                VideoEncodeH264StdFlagsEXT::WEIGHTED_BIPRED_IDC_IMPLICIT.0,
+                VideoEncodeH264StdFlagsKHR::WEIGHTED_BIPRED_IDC_IMPLICIT.0,
                 "WEIGHTED_BIPRED_IDC_IMPLICIT",
             ),
             (
-                VideoEncodeH264StdFlagsEXT::TRANSFORM_8X8_MODE_FLAG_SET.0,
+                VideoEncodeH264StdFlagsKHR::TRANSFORM_8X8_MODE_FLAG_SET.0,
                 "TRANSFORM_8X8_MODE_FLAG_SET",
             ),
             (
-                VideoEncodeH264StdFlagsEXT::DIRECT_SPATIAL_MV_PRED_FLAG_UNSET.0,
+                VideoEncodeH264StdFlagsKHR::DIRECT_SPATIAL_MV_PRED_FLAG_UNSET.0,
                 "DIRECT_SPATIAL_MV_PRED_FLAG_UNSET",
             ),
             (
-                VideoEncodeH264StdFlagsEXT::ENTROPY_CODING_MODE_FLAG_UNSET.0,
+                VideoEncodeH264StdFlagsKHR::ENTROPY_CODING_MODE_FLAG_UNSET.0,
                 "ENTROPY_CODING_MODE_FLAG_UNSET",
             ),
             (
-                VideoEncodeH264StdFlagsEXT::ENTROPY_CODING_MODE_FLAG_SET.0,
+                VideoEncodeH264StdFlagsKHR::ENTROPY_CODING_MODE_FLAG_SET.0,
                 "ENTROPY_CODING_MODE_FLAG_SET",
             ),
             (
-                VideoEncodeH264StdFlagsEXT::DIRECT_8X8_INFERENCE_FLAG_UNSET.0,
+                VideoEncodeH264StdFlagsKHR::DIRECT_8X8_INFERENCE_FLAG_UNSET.0,
                 "DIRECT_8X8_INFERENCE_FLAG_UNSET",
             ),
             (
-                VideoEncodeH264StdFlagsEXT::CONSTRAINED_INTRA_PRED_FLAG_SET.0,
+                VideoEncodeH264StdFlagsKHR::CONSTRAINED_INTRA_PRED_FLAG_SET.0,
                 "CONSTRAINED_INTRA_PRED_FLAG_SET",
             ),
             (
-                VideoEncodeH264StdFlagsEXT::DEBLOCKING_FILTER_DISABLED.0,
+                VideoEncodeH264StdFlagsKHR::DEBLOCKING_FILTER_DISABLED.0,
                 "DEBLOCKING_FILTER_DISABLED",
             ),
             (
-                VideoEncodeH264StdFlagsEXT::DEBLOCKING_FILTER_ENABLED.0,
+                VideoEncodeH264StdFlagsKHR::DEBLOCKING_FILTER_ENABLED.0,
                 "DEBLOCKING_FILTER_ENABLED",
             ),
             (
-                VideoEncodeH264StdFlagsEXT::DEBLOCKING_FILTER_PARTIAL.0,
+                VideoEncodeH264StdFlagsKHR::DEBLOCKING_FILTER_PARTIAL.0,
                 "DEBLOCKING_FILTER_PARTIAL",
             ),
             (
-                VideoEncodeH264StdFlagsEXT::SLICE_QP_DELTA.0,
+                VideoEncodeH264StdFlagsKHR::SLICE_QP_DELTA.0,
                 "SLICE_QP_DELTA",
             ),
             (
-                VideoEncodeH264StdFlagsEXT::DIFFERENT_SLICE_QP_DELTA.0,
+                VideoEncodeH264StdFlagsKHR::DIFFERENT_SLICE_QP_DELTA.0,
                 "DIFFERENT_SLICE_QP_DELTA",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Debug for VideoEncodeH265CapabilityFlagsEXT {
+impl fmt::Debug for VideoEncodeH265CapabilityFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                VideoEncodeH265CapabilityFlagsEXT::HRD_COMPLIANCE.0,
+                VideoEncodeH265CapabilityFlagsKHR::HRD_COMPLIANCE.0,
                 "HRD_COMPLIANCE",
             ),
             (
-                VideoEncodeH265CapabilityFlagsEXT::PREDICTION_WEIGHT_TABLE_GENERATED.0,
+                VideoEncodeH265CapabilityFlagsKHR::PREDICTION_WEIGHT_TABLE_GENERATED.0,
                 "PREDICTION_WEIGHT_TABLE_GENERATED",
             ),
             (
-                VideoEncodeH265CapabilityFlagsEXT::ROW_UNALIGNED_SLICE_SEGMENT.0,
+                VideoEncodeH265CapabilityFlagsKHR::ROW_UNALIGNED_SLICE_SEGMENT.0,
                 "ROW_UNALIGNED_SLICE_SEGMENT",
             ),
             (
-                VideoEncodeH265CapabilityFlagsEXT::DIFFERENT_SLICE_SEGMENT_TYPE.0,
+                VideoEncodeH265CapabilityFlagsKHR::DIFFERENT_SLICE_SEGMENT_TYPE.0,
                 "DIFFERENT_SLICE_SEGMENT_TYPE",
             ),
             (
-                VideoEncodeH265CapabilityFlagsEXT::B_FRAME_IN_L0_LIST.0,
+                VideoEncodeH265CapabilityFlagsKHR::B_FRAME_IN_L0_LIST.0,
                 "B_FRAME_IN_L0_LIST",
             ),
             (
-                VideoEncodeH265CapabilityFlagsEXT::B_FRAME_IN_L1_LIST.0,
+                VideoEncodeH265CapabilityFlagsKHR::B_FRAME_IN_L1_LIST.0,
                 "B_FRAME_IN_L1_LIST",
             ),
             (
-                VideoEncodeH265CapabilityFlagsEXT::PER_PICTURE_TYPE_MIN_MAX_QP.0,
+                VideoEncodeH265CapabilityFlagsKHR::PER_PICTURE_TYPE_MIN_MAX_QP.0,
                 "PER_PICTURE_TYPE_MIN_MAX_QP",
             ),
             (
-                VideoEncodeH265CapabilityFlagsEXT::PER_SLICE_SEGMENT_CONSTANT_QP.0,
+                VideoEncodeH265CapabilityFlagsKHR::PER_SLICE_SEGMENT_CONSTANT_QP.0,
                 "PER_SLICE_SEGMENT_CONSTANT_QP",
             ),
             (
-                VideoEncodeH265CapabilityFlagsEXT::MULTIPLE_TILES_PER_SLICE_SEGMENT.0,
+                VideoEncodeH265CapabilityFlagsKHR::MULTIPLE_TILES_PER_SLICE_SEGMENT.0,
                 "MULTIPLE_TILES_PER_SLICE_SEGMENT",
             ),
             (
-                VideoEncodeH265CapabilityFlagsEXT::MULTIPLE_SLICE_SEGMENTS_PER_TILE.0,
+                VideoEncodeH265CapabilityFlagsKHR::MULTIPLE_SLICE_SEGMENTS_PER_TILE.0,
                 "MULTIPLE_SLICE_SEGMENTS_PER_TILE",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Debug for VideoEncodeH265CtbSizeFlagsEXT {
+impl fmt::Debug for VideoEncodeH265CtbSizeFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (VideoEncodeH265CtbSizeFlagsEXT::TYPE_16.0, "TYPE_16"),
-            (VideoEncodeH265CtbSizeFlagsEXT::TYPE_32.0, "TYPE_32"),
-            (VideoEncodeH265CtbSizeFlagsEXT::TYPE_64.0, "TYPE_64"),
+            (VideoEncodeH265CtbSizeFlagsKHR::TYPE_16.0, "TYPE_16"),
+            (VideoEncodeH265CtbSizeFlagsKHR::TYPE_32.0, "TYPE_32"),
+            (VideoEncodeH265CtbSizeFlagsKHR::TYPE_64.0, "TYPE_64"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Debug for VideoEncodeH265RateControlFlagsEXT {
+impl fmt::Debug for VideoEncodeH265RateControlFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                VideoEncodeH265RateControlFlagsEXT::ATTEMPT_HRD_COMPLIANCE.0,
+                VideoEncodeH265RateControlFlagsKHR::ATTEMPT_HRD_COMPLIANCE.0,
                 "ATTEMPT_HRD_COMPLIANCE",
             ),
             (
-                VideoEncodeH265RateControlFlagsEXT::REGULAR_GOP.0,
+                VideoEncodeH265RateControlFlagsKHR::REGULAR_GOP.0,
                 "REGULAR_GOP",
             ),
             (
-                VideoEncodeH265RateControlFlagsEXT::REFERENCE_PATTERN_FLAT.0,
+                VideoEncodeH265RateControlFlagsKHR::REFERENCE_PATTERN_FLAT.0,
                 "REFERENCE_PATTERN_FLAT",
             ),
             (
-                VideoEncodeH265RateControlFlagsEXT::REFERENCE_PATTERN_DYADIC.0,
+                VideoEncodeH265RateControlFlagsKHR::REFERENCE_PATTERN_DYADIC.0,
                 "REFERENCE_PATTERN_DYADIC",
             ),
             (
-                VideoEncodeH265RateControlFlagsEXT::TEMPORAL_SUB_LAYER_PATTERN_DYADIC.0,
+                VideoEncodeH265RateControlFlagsKHR::TEMPORAL_SUB_LAYER_PATTERN_DYADIC.0,
                 "TEMPORAL_SUB_LAYER_PATTERN_DYADIC",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Debug for VideoEncodeH265StdFlagsEXT {
+impl fmt::Debug for VideoEncodeH265StdFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                VideoEncodeH265StdFlagsEXT::SEPARATE_COLOR_PLANE_FLAG_SET.0,
+                VideoEncodeH265StdFlagsKHR::SEPARATE_COLOR_PLANE_FLAG_SET.0,
                 "SEPARATE_COLOR_PLANE_FLAG_SET",
             ),
             (
-                VideoEncodeH265StdFlagsEXT::SAMPLE_ADAPTIVE_OFFSET_ENABLED_FLAG_SET.0,
+                VideoEncodeH265StdFlagsKHR::SAMPLE_ADAPTIVE_OFFSET_ENABLED_FLAG_SET.0,
                 "SAMPLE_ADAPTIVE_OFFSET_ENABLED_FLAG_SET",
             ),
             (
-                VideoEncodeH265StdFlagsEXT::SCALING_LIST_DATA_PRESENT_FLAG_SET.0,
+                VideoEncodeH265StdFlagsKHR::SCALING_LIST_DATA_PRESENT_FLAG_SET.0,
                 "SCALING_LIST_DATA_PRESENT_FLAG_SET",
             ),
             (
-                VideoEncodeH265StdFlagsEXT::PCM_ENABLED_FLAG_SET.0,
+                VideoEncodeH265StdFlagsKHR::PCM_ENABLED_FLAG_SET.0,
                 "PCM_ENABLED_FLAG_SET",
             ),
             (
-                VideoEncodeH265StdFlagsEXT::SPS_TEMPORAL_MVP_ENABLED_FLAG_SET.0,
+                VideoEncodeH265StdFlagsKHR::SPS_TEMPORAL_MVP_ENABLED_FLAG_SET.0,
                 "SPS_TEMPORAL_MVP_ENABLED_FLAG_SET",
             ),
             (
-                VideoEncodeH265StdFlagsEXT::INIT_QP_MINUS26.0,
+                VideoEncodeH265StdFlagsKHR::INIT_QP_MINUS26.0,
                 "INIT_QP_MINUS26",
             ),
             (
-                VideoEncodeH265StdFlagsEXT::WEIGHTED_PRED_FLAG_SET.0,
+                VideoEncodeH265StdFlagsKHR::WEIGHTED_PRED_FLAG_SET.0,
                 "WEIGHTED_PRED_FLAG_SET",
             ),
             (
-                VideoEncodeH265StdFlagsEXT::WEIGHTED_BIPRED_FLAG_SET.0,
+                VideoEncodeH265StdFlagsKHR::WEIGHTED_BIPRED_FLAG_SET.0,
                 "WEIGHTED_BIPRED_FLAG_SET",
             ),
             (
-                VideoEncodeH265StdFlagsEXT::LOG2_PARALLEL_MERGE_LEVEL_MINUS2.0,
+                VideoEncodeH265StdFlagsKHR::LOG2_PARALLEL_MERGE_LEVEL_MINUS2.0,
                 "LOG2_PARALLEL_MERGE_LEVEL_MINUS2",
             ),
             (
-                VideoEncodeH265StdFlagsEXT::SIGN_DATA_HIDING_ENABLED_FLAG_SET.0,
+                VideoEncodeH265StdFlagsKHR::SIGN_DATA_HIDING_ENABLED_FLAG_SET.0,
                 "SIGN_DATA_HIDING_ENABLED_FLAG_SET",
             ),
             (
-                VideoEncodeH265StdFlagsEXT::TRANSFORM_SKIP_ENABLED_FLAG_SET.0,
+                VideoEncodeH265StdFlagsKHR::TRANSFORM_SKIP_ENABLED_FLAG_SET.0,
                 "TRANSFORM_SKIP_ENABLED_FLAG_SET",
             ),
             (
-                VideoEncodeH265StdFlagsEXT::TRANSFORM_SKIP_ENABLED_FLAG_UNSET.0,
+                VideoEncodeH265StdFlagsKHR::TRANSFORM_SKIP_ENABLED_FLAG_UNSET.0,
                 "TRANSFORM_SKIP_ENABLED_FLAG_UNSET",
             ),
             (
-                VideoEncodeH265StdFlagsEXT::PPS_SLICE_CHROMA_QP_OFFSETS_PRESENT_FLAG_SET.0,
+                VideoEncodeH265StdFlagsKHR::PPS_SLICE_CHROMA_QP_OFFSETS_PRESENT_FLAG_SET.0,
                 "PPS_SLICE_CHROMA_QP_OFFSETS_PRESENT_FLAG_SET",
             ),
             (
-                VideoEncodeH265StdFlagsEXT::TRANSQUANT_BYPASS_ENABLED_FLAG_SET.0,
+                VideoEncodeH265StdFlagsKHR::TRANSQUANT_BYPASS_ENABLED_FLAG_SET.0,
                 "TRANSQUANT_BYPASS_ENABLED_FLAG_SET",
             ),
             (
-                VideoEncodeH265StdFlagsEXT::CONSTRAINED_INTRA_PRED_FLAG_SET.0,
+                VideoEncodeH265StdFlagsKHR::CONSTRAINED_INTRA_PRED_FLAG_SET.0,
                 "CONSTRAINED_INTRA_PRED_FLAG_SET",
             ),
             (
-                VideoEncodeH265StdFlagsEXT::ENTROPY_CODING_SYNC_ENABLED_FLAG_SET.0,
+                VideoEncodeH265StdFlagsKHR::ENTROPY_CODING_SYNC_ENABLED_FLAG_SET.0,
                 "ENTROPY_CODING_SYNC_ENABLED_FLAG_SET",
             ),
             (
-                VideoEncodeH265StdFlagsEXT::DEBLOCKING_FILTER_OVERRIDE_ENABLED_FLAG_SET.0,
+                VideoEncodeH265StdFlagsKHR::DEBLOCKING_FILTER_OVERRIDE_ENABLED_FLAG_SET.0,
                 "DEBLOCKING_FILTER_OVERRIDE_ENABLED_FLAG_SET",
             ),
             (
-                VideoEncodeH265StdFlagsEXT::DEPENDENT_SLICE_SEGMENTS_ENABLED_FLAG_SET.0,
+                VideoEncodeH265StdFlagsKHR::DEPENDENT_SLICE_SEGMENTS_ENABLED_FLAG_SET.0,
                 "DEPENDENT_SLICE_SEGMENTS_ENABLED_FLAG_SET",
             ),
             (
-                VideoEncodeH265StdFlagsEXT::DEPENDENT_SLICE_SEGMENT_FLAG_SET.0,
+                VideoEncodeH265StdFlagsKHR::DEPENDENT_SLICE_SEGMENT_FLAG_SET.0,
                 "DEPENDENT_SLICE_SEGMENT_FLAG_SET",
             ),
             (
-                VideoEncodeH265StdFlagsEXT::SLICE_QP_DELTA.0,
+                VideoEncodeH265StdFlagsKHR::SLICE_QP_DELTA.0,
                 "SLICE_QP_DELTA",
             ),
             (
-                VideoEncodeH265StdFlagsEXT::DIFFERENT_SLICE_QP_DELTA.0,
+                VideoEncodeH265StdFlagsKHR::DIFFERENT_SLICE_QP_DELTA.0,
                 "DIFFERENT_SLICE_QP_DELTA",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Debug for VideoEncodeH265TransformBlockSizeFlagsEXT {
+impl fmt::Debug for VideoEncodeH265TransformBlockSizeFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                VideoEncodeH265TransformBlockSizeFlagsEXT::TYPE_4.0,
+                VideoEncodeH265TransformBlockSizeFlagsKHR::TYPE_4.0,
                 "TYPE_4",
             ),
             (
-                VideoEncodeH265TransformBlockSizeFlagsEXT::TYPE_8.0,
+                VideoEncodeH265TransformBlockSizeFlagsKHR::TYPE_8.0,
                 "TYPE_8",
             ),
             (
-                VideoEncodeH265TransformBlockSizeFlagsEXT::TYPE_16.0,
+                VideoEncodeH265TransformBlockSizeFlagsKHR::TYPE_16.0,
                 "TYPE_16",
             ),
             (
-                VideoEncodeH265TransformBlockSizeFlagsEXT::TYPE_32.0,
+                VideoEncodeH265TransformBlockSizeFlagsKHR::TYPE_32.0,
                 "TYPE_32",
             ),
         ];
@@ -7775,6 +7897,10 @@ impl fmt::Debug for VideoSessionCreateFlagsKHR {
             (
                 VideoSessionCreateFlagsKHR::ALLOW_ENCODE_PARAMETER_OPTIMIZATIONS.0,
                 "ALLOW_ENCODE_PARAMETER_OPTIMIZATIONS",
+            ),
+            (
+                VideoSessionCreateFlagsKHR::INLINE_QUERIES.0,
+                "INLINE_QUERIES",
             ),
         ];
         debug_flags(f, KNOWN, self.0)

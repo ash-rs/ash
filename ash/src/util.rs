@@ -30,10 +30,9 @@ pub struct AlignIter<'a, T> {
 
 impl<T: Copy> Align<T> {
     pub fn copy_from_slice(&mut self, slice: &[T]) {
-        use slice::from_raw_parts_mut;
         if self.elem_size == size_of::<T>() as u64 {
             unsafe {
-                let mapped_slice = from_raw_parts_mut(self.ptr.cast(), slice.len());
+                let mapped_slice = slice::from_raw_parts_mut(self.ptr.cast(), slice.len());
                 mapped_slice.copy_from_slice(slice);
             }
         } else {
