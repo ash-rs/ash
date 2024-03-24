@@ -1284,7 +1284,7 @@ impl<'a> DeviceQueueCreateInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsDeviceQueueCreateInfo>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsDeviceQueueCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -1376,7 +1376,7 @@ impl<'a> DeviceCreateInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsDeviceCreateInfo>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsDeviceCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -1450,7 +1450,7 @@ impl<'a> InstanceCreateInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsInstanceCreateInfo>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsInstanceCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -1594,7 +1594,7 @@ impl<'a> MemoryAllocateInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsMemoryAllocateInfo>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsMemoryAllocateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -1994,7 +1994,7 @@ impl<'a> WriteDescriptorSet<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsWriteDescriptorSet>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsWriteDescriptorSet + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -2182,7 +2182,7 @@ impl<'a> BufferCreateInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsBufferCreateInfo>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsBufferCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -2257,7 +2257,7 @@ impl<'a> BufferViewCreateInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsBufferViewCreateInfo>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsBufferViewCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -2484,7 +2484,7 @@ impl<'a> BufferMemoryBarrier<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsBufferMemoryBarrier>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsBufferMemoryBarrier + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -2580,7 +2580,7 @@ impl<'a> ImageMemoryBarrier<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsImageMemoryBarrier>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsImageMemoryBarrier + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -2707,7 +2707,7 @@ impl<'a> ImageCreateInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsImageCreateInfo>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsImageCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -2828,7 +2828,7 @@ impl<'a> ImageViewCreateInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsImageViewCreateInfo>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsImageViewCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -3137,7 +3137,7 @@ impl<'a> BindSparseInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsBindSparseInfo>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsBindSparseInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -3434,7 +3434,7 @@ impl<'a> ShaderModuleCreateInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsShaderModuleCreateInfo>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsShaderModuleCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -3545,7 +3545,7 @@ impl<'a> DescriptorSetLayoutCreateInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsDescriptorSetLayoutCreateInfo>(
+    pub fn push_next<T: ExtendsDescriptorSetLayoutCreateInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -3633,7 +3633,7 @@ impl<'a> DescriptorPoolCreateInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsDescriptorPoolCreateInfo>(
+    pub fn push_next<T: ExtendsDescriptorPoolCreateInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -3693,7 +3693,7 @@ impl<'a> DescriptorSetAllocateInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsDescriptorSetAllocateInfo>(
+    pub fn push_next<T: ExtendsDescriptorSetAllocateInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -3844,7 +3844,7 @@ impl<'a> PipelineShaderStageCreateInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsPipelineShaderStageCreateInfo>(
+    pub fn push_next<T: ExtendsPipelineShaderStageCreateInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -3922,7 +3922,7 @@ impl<'a> ComputePipelineCreateInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsComputePipelineCreateInfo>(
+    pub fn push_next<T: ExtendsComputePipelineCreateInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -4144,7 +4144,7 @@ impl<'a> PipelineVertexInputStateCreateInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsPipelineVertexInputStateCreateInfo>(
+    pub fn push_next<T: ExtendsPipelineVertexInputStateCreateInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -4247,7 +4247,7 @@ impl<'a> PipelineTessellationStateCreateInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsPipelineTessellationStateCreateInfo>(
+    pub fn push_next<T: ExtendsPipelineTessellationStateCreateInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -4327,7 +4327,7 @@ impl<'a> PipelineViewportStateCreateInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsPipelineViewportStateCreateInfo>(
+    pub fn push_next<T: ExtendsPipelineViewportStateCreateInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -4447,7 +4447,7 @@ impl<'a> PipelineRasterizationStateCreateInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsPipelineRasterizationStateCreateInfo>(
+    pub fn push_next<T: ExtendsPipelineRasterizationStateCreateInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -4548,7 +4548,7 @@ impl<'a> PipelineMultisampleStateCreateInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsPipelineMultisampleStateCreateInfo>(
+    pub fn push_next<T: ExtendsPipelineMultisampleStateCreateInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -4686,7 +4686,7 @@ impl<'a> PipelineColorBlendStateCreateInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsPipelineColorBlendStateCreateInfo>(
+    pub fn push_next<T: ExtendsPipelineColorBlendStateCreateInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -5056,7 +5056,7 @@ impl<'a> GraphicsPipelineCreateInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsGraphicsPipelineCreateInfo>(
+    pub fn push_next<T: ExtendsGraphicsPipelineCreateInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -5389,7 +5389,7 @@ impl<'a> SamplerCreateInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsSamplerCreateInfo>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsSamplerCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -5556,7 +5556,7 @@ impl<'a> CommandBufferInheritanceInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsCommandBufferInheritanceInfo>(
+    pub fn push_next<T: ExtendsCommandBufferInheritanceInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -5616,7 +5616,7 @@ impl<'a> CommandBufferBeginInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsCommandBufferBeginInfo>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsCommandBufferBeginInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -5700,7 +5700,7 @@ impl<'a> RenderPassBeginInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsRenderPassBeginInfo>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsRenderPassBeginInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -6076,7 +6076,7 @@ impl<'a> RenderPassCreateInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsRenderPassCreateInfo>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsRenderPassCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -6123,7 +6123,7 @@ impl<'a> EventCreateInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsEventCreateInfo>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsEventCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -6170,7 +6170,7 @@ impl<'a> FenceCreateInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsFenceCreateInfo>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsFenceCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -7532,7 +7532,7 @@ impl<'a> SemaphoreCreateInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsSemaphoreCreateInfo>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsSemaphoreCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -7600,7 +7600,7 @@ impl<'a> QueryPoolCreateInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsQueryPoolCreateInfo>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsQueryPoolCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -7690,7 +7690,7 @@ impl<'a> FramebufferCreateInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsFramebufferCreateInfo>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsFramebufferCreateInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -7915,7 +7915,7 @@ impl<'a> SubmitInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsSubmitInfo>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsSubmitInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -8956,7 +8956,7 @@ impl<'a> SwapchainCreateInfoKHR<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsSwapchainCreateInfoKHR>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsSwapchainCreateInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -9032,7 +9032,7 @@ impl<'a> PresentInfoKHR<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsPresentInfoKHR>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsPresentInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -10847,7 +10847,7 @@ impl<'a> PhysicalDeviceFeatures2<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsPhysicalDeviceFeatures2>(
+    pub fn push_next<T: ExtendsPhysicalDeviceFeatures2 + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -10897,7 +10897,7 @@ impl<'a> PhysicalDeviceProperties2<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsPhysicalDeviceProperties2>(
+    pub fn push_next<T: ExtendsPhysicalDeviceProperties2 + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -10947,7 +10947,7 @@ impl<'a> FormatProperties2<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsFormatProperties2>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsFormatProperties2 + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -10997,7 +10997,7 @@ impl<'a> ImageFormatProperties2<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsImageFormatProperties2>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsImageFormatProperties2 + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -11072,7 +11072,7 @@ impl<'a> PhysicalDeviceImageFormatInfo2<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsPhysicalDeviceImageFormatInfo2>(
+    pub fn push_next<T: ExtendsPhysicalDeviceImageFormatInfo2 + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -11125,7 +11125,7 @@ impl<'a> QueueFamilyProperties2<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsQueueFamilyProperties2>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsQueueFamilyProperties2 + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -11172,7 +11172,7 @@ impl<'a> PhysicalDeviceMemoryProperties2<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsPhysicalDeviceMemoryProperties2>(
+    pub fn push_next<T: ExtendsPhysicalDeviceMemoryProperties2 + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -11717,7 +11717,7 @@ impl<'a> PhysicalDeviceExternalBufferInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsPhysicalDeviceExternalBufferInfo>(
+    pub fn push_next<T: ExtendsPhysicalDeviceExternalBufferInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -12420,7 +12420,7 @@ impl<'a> PhysicalDeviceExternalSemaphoreInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsPhysicalDeviceExternalSemaphoreInfo>(
+    pub fn push_next<T: ExtendsPhysicalDeviceExternalSemaphoreInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -13785,7 +13785,7 @@ impl<'a> BindBufferMemoryInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsBindBufferMemoryInfo>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsBindBufferMemoryInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -13882,7 +13882,7 @@ impl<'a> BindImageMemoryInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsBindImageMemoryInfo>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsBindImageMemoryInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -15411,7 +15411,7 @@ impl<'a> PhysicalDeviceSurfaceInfo2KHR<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsPhysicalDeviceSurfaceInfo2KHR>(
+    pub fn push_next<T: ExtendsPhysicalDeviceSurfaceInfo2KHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -15461,7 +15461,7 @@ impl<'a> SurfaceCapabilities2KHR<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsSurfaceCapabilities2KHR>(
+    pub fn push_next<T: ExtendsSurfaceCapabilities2KHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -15511,7 +15511,7 @@ impl<'a> SurfaceFormat2KHR<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsSurfaceFormat2KHR>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsSurfaceFormat2KHR + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -15982,7 +15982,7 @@ impl<'a> ImageMemoryRequirementsInfo2<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsImageMemoryRequirementsInfo2>(
+    pub fn push_next<T: ExtendsImageMemoryRequirementsInfo2 + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -16103,7 +16103,7 @@ impl<'a> MemoryRequirements2<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsMemoryRequirements2>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsMemoryRequirements2 + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -16494,7 +16494,7 @@ impl<'a> SamplerYcbcrConversionCreateInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsSamplerYcbcrConversionCreateInfo>(
+    pub fn push_next<T: ExtendsSamplerYcbcrConversionCreateInfo + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -18343,7 +18343,7 @@ impl<'a> DescriptorSetLayoutSupport<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsDescriptorSetLayoutSupport>(
+    pub fn push_next<T: ExtendsDescriptorSetLayoutSupport + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -19361,7 +19361,7 @@ impl<'a> DebugUtilsMessengerCallbackDataEXT<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsDebugUtilsMessengerCallbackDataEXT>(
+    pub fn push_next<T: ExtendsDebugUtilsMessengerCallbackDataEXT + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -20749,7 +20749,7 @@ impl<'a> AttachmentDescription2<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsAttachmentDescription2>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsAttachmentDescription2 + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -20810,7 +20810,7 @@ impl<'a> AttachmentReference2<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsAttachmentReference2>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsAttachmentReference2 + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -20922,7 +20922,7 @@ impl<'a> SubpassDescription2<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsSubpassDescription2>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsSubpassDescription2 + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -21018,7 +21018,7 @@ impl<'a> SubpassDependency2<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsSubpassDependency2>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsSubpassDependency2 + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -21105,7 +21105,7 @@ impl<'a> RenderPassCreateInfo2<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsRenderPassCreateInfo2>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsRenderPassCreateInfo2 + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -21177,7 +21177,7 @@ impl<'a> SubpassEndInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsSubpassEndInfo>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsSubpassEndInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -21750,7 +21750,7 @@ impl<'a> AndroidHardwareBufferPropertiesANDROID<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsAndroidHardwareBufferPropertiesANDROID>(
+    pub fn push_next<T: ExtendsAndroidHardwareBufferPropertiesANDROID + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -24473,7 +24473,7 @@ impl<'a> RayTracingPipelineCreateInfoNV<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsRayTracingPipelineCreateInfoNV>(
+    pub fn push_next<T: ExtendsRayTracingPipelineCreateInfoNV + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -24598,7 +24598,7 @@ impl<'a> RayTracingPipelineCreateInfoKHR<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsRayTracingPipelineCreateInfoKHR>(
+    pub fn push_next<T: ExtendsRayTracingPipelineCreateInfoKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -24934,7 +24934,7 @@ impl<'a> AccelerationStructureCreateInfoNV<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsAccelerationStructureCreateInfoNV>(
+    pub fn push_next<T: ExtendsAccelerationStructureCreateInfoNV + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -32776,7 +32776,7 @@ impl<'a> AccelerationStructureGeometryTrianglesDataKHR<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsAccelerationStructureGeometryTrianglesDataKHR>(
+    pub fn push_next<T: ExtendsAccelerationStructureGeometryTrianglesDataKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -33183,7 +33183,7 @@ impl<'a> AccelerationStructureCreateInfoKHR<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsAccelerationStructureCreateInfoKHR>(
+    pub fn push_next<T: ExtendsAccelerationStructureCreateInfoKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -34937,7 +34937,7 @@ impl<'a> PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPhysicalDeviceClusterCullingShaderFeaturesHUAWEI>(
+    pub fn push_next<T: ExtendsPhysicalDeviceClusterCullingShaderFeaturesHUAWEI + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -35151,7 +35151,7 @@ impl<'a> ImageBlit2<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsImageBlit2>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsImageBlit2 + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -35233,7 +35233,7 @@ impl<'a> BufferImageCopy2<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsBufferImageCopy2>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsBufferImageCopy2 + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -35490,7 +35490,7 @@ impl<'a> BlitImageInfo2<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsBlitImageInfo2>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsBlitImageInfo2 + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -37042,7 +37042,7 @@ impl<'a> ImageMemoryBarrier2<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsImageMemoryBarrier2>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsImageMemoryBarrier2 + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -37145,7 +37145,7 @@ impl<'a> BufferMemoryBarrier2<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsBufferMemoryBarrier2>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsBufferMemoryBarrier2 + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -37320,7 +37320,10 @@ impl<'a> CommandBufferSubmitInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsCommandBufferSubmitInfo>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsCommandBufferSubmitInfo + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -37406,7 +37409,7 @@ impl<'a> SubmitInfo2<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsSubmitInfo2>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsSubmitInfo2 + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -38472,7 +38475,7 @@ impl<'a> PhysicalDeviceVideoFormatInfoKHR<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsPhysicalDeviceVideoFormatInfoKHR>(
+    pub fn push_next<T: ExtendsPhysicalDeviceVideoFormatInfoKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -38617,7 +38620,7 @@ impl<'a> VideoProfileInfoKHR<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsVideoProfileInfoKHR>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsVideoProfileInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -38726,7 +38729,7 @@ impl<'a> VideoCapabilitiesKHR<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsVideoCapabilitiesKHR>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsVideoCapabilitiesKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -38928,7 +38931,7 @@ impl<'a> VideoReferenceSlotInfoKHR<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsVideoReferenceSlotInfoKHR>(
+    pub fn push_next<T: ExtendsVideoReferenceSlotInfoKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -39096,7 +39099,7 @@ impl<'a> VideoDecodeInfoKHR<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsVideoDecodeInfoKHR>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsVideoDecodeInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -40031,7 +40034,7 @@ impl<'a> VideoSessionCreateInfoKHR<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsVideoSessionCreateInfoKHR>(
+    pub fn push_next<T: ExtendsVideoSessionCreateInfoKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -40098,7 +40101,7 @@ impl<'a> VideoSessionParametersCreateInfoKHR<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsVideoSessionParametersCreateInfoKHR>(
+    pub fn push_next<T: ExtendsVideoSessionParametersCreateInfoKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -40148,7 +40151,7 @@ impl<'a> VideoSessionParametersUpdateInfoKHR<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsVideoSessionParametersUpdateInfoKHR>(
+    pub fn push_next<T: ExtendsVideoSessionParametersUpdateInfoKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -40202,7 +40205,7 @@ impl<'a> VideoEncodeSessionParametersGetInfoKHR<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsVideoEncodeSessionParametersGetInfoKHR>(
+    pub fn push_next<T: ExtendsVideoEncodeSessionParametersGetInfoKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -40253,7 +40256,7 @@ impl<'a> VideoEncodeSessionParametersFeedbackInfoKHR<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsVideoEncodeSessionParametersFeedbackInfoKHR>(
+    pub fn push_next<T: ExtendsVideoEncodeSessionParametersFeedbackInfoKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -40330,7 +40333,7 @@ impl<'a> VideoBeginCodingInfoKHR<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsVideoBeginCodingInfoKHR>(
+    pub fn push_next<T: ExtendsVideoBeginCodingInfoKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -40412,7 +40415,7 @@ impl<'a> VideoCodingControlInfoKHR<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsVideoCodingControlInfoKHR>(
+    pub fn push_next<T: ExtendsVideoCodingControlInfoKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -40571,7 +40574,7 @@ impl<'a> VideoEncodeInfoKHR<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsVideoEncodeInfoKHR>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsVideoEncodeInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -40742,7 +40745,7 @@ impl<'a> VideoEncodeQualityLevelPropertiesKHR<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsVideoEncodeQualityLevelPropertiesKHR>(
+    pub fn push_next<T: ExtendsVideoEncodeQualityLevelPropertiesKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -40884,7 +40887,7 @@ impl<'a> VideoEncodeRateControlLayerInfoKHR<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsVideoEncodeRateControlLayerInfoKHR>(
+    pub fn push_next<T: ExtendsVideoEncodeRateControlLayerInfoKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -43778,7 +43781,7 @@ impl<'a> DescriptorBufferBindingInfoEXT<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsDescriptorBufferBindingInfoEXT>(
+    pub fn push_next<T: ExtendsDescriptorBufferBindingInfoEXT + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -46138,7 +46141,7 @@ impl<'a> RenderingInfo<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsRenderingInfo>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsRenderingInfo + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -47454,7 +47457,7 @@ impl<'a> SubresourceLayout2KHR<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsSubresourceLayout2KHR>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsSubresourceLayout2KHR + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*mut T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -48836,7 +48839,7 @@ impl<'a> ExportMetalObjectsInfoEXT<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsExportMetalObjectsInfoEXT>(
+    pub fn push_next<T: ExtendsExportMetalObjectsInfoEXT + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -50218,7 +50221,7 @@ impl<'a> OpticalFlowSessionCreateInfoNV<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsOpticalFlowSessionCreateInfoNV>(
+    pub fn push_next<T: ExtendsOpticalFlowSessionCreateInfoNV + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -50750,7 +50753,7 @@ impl<'a> DepthBiasInfoEXT<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsDepthBiasInfoEXT>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsDepthBiasInfoEXT + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -52127,7 +52130,7 @@ impl<'a> MemoryMapInfoKHR<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsMemoryMapInfoKHR>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsMemoryMapInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -52361,7 +52364,7 @@ impl<'a> ShaderCreateInfoEXT<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsShaderCreateInfoEXT>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsShaderCreateInfoEXT + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -52566,7 +52569,7 @@ impl<'a> ScreenBufferPropertiesQNX<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsScreenBufferPropertiesQNX>(
+    pub fn push_next<T: ExtendsScreenBufferPropertiesQNX + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -53102,7 +53105,7 @@ impl<'a> ExecutionGraphPipelineCreateInfoAMDX<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ?Sized + ExtendsExecutionGraphPipelineCreateInfoAMDX>(
+    pub fn push_next<T: ExtendsExecutionGraphPipelineCreateInfoAMDX + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -53380,7 +53383,10 @@ impl<'a> BindDescriptorSetsInfoKHR<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBindDescriptorSetsInfoKHR>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsBindDescriptorSetsInfoKHR + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -53451,7 +53457,7 @@ impl<'a> PushConstantsInfoKHR<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPushConstantsInfoKHR>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsPushConstantsInfoKHR + ?Sized>(mut self, next: &'a mut T) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -53522,7 +53528,10 @@ impl<'a> PushDescriptorSetInfoKHR<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPushDescriptorSetInfoKHR>(mut self, next: &'a mut T) -> Self {
+    pub fn push_next<T: ExtendsPushDescriptorSetInfoKHR + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
         unsafe {
             let next_ptr = <*const T>::cast(next);
             let last_next = ptr_chain_iter(next).last().unwrap();
@@ -53593,7 +53602,7 @@ impl<'a> PushDescriptorSetWithTemplateInfoKHR<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsPushDescriptorSetWithTemplateInfoKHR>(
+    pub fn push_next<T: ExtendsPushDescriptorSetWithTemplateInfoKHR + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -53675,7 +53684,7 @@ impl<'a> SetDescriptorBufferOffsetsInfoEXT<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsSetDescriptorBufferOffsetsInfoEXT>(
+    pub fn push_next<T: ExtendsSetDescriptorBufferOffsetsInfoEXT + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
@@ -53740,7 +53749,7 @@ impl<'a> BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {
     #[doc = r" valid extension structs can be pushed into the chain."]
     #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
     #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsBindDescriptorBufferEmbeddedSamplersInfoEXT>(
+    pub fn push_next<T: ExtendsBindDescriptorBufferEmbeddedSamplersInfoEXT + ?Sized>(
         mut self,
         next: &'a mut T,
     ) -> Self {
