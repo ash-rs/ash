@@ -597,6 +597,8 @@ pub struct BaseOutStructure<'a> {
     pub p_next: *mut Self,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BaseOutStructure<'_> {}
+unsafe impl Sync for BaseOutStructure<'_> {}
 impl ::std::default::Default for BaseOutStructure<'_> {
     #[inline]
     fn default() -> Self {
@@ -617,6 +619,8 @@ pub struct BaseInStructure<'a> {
     pub p_next: *const Self,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BaseInStructure<'_> {}
+unsafe impl Sync for BaseInStructure<'_> {}
 impl ::std::default::Default for BaseInStructure<'_> {
     #[inline]
     fn default() -> Self {
@@ -1082,6 +1086,8 @@ pub struct ApplicationInfo<'a> {
     pub api_version: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ApplicationInfo<'_> {}
+unsafe impl Sync for ApplicationInfo<'_> {}
 impl ::std::default::Default for ApplicationInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -1156,6 +1162,8 @@ pub struct AllocationCallbacks<'a> {
     pub pfn_internal_free: PFN_vkInternalFreeNotification,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for AllocationCallbacks<'_> {}
+unsafe impl Sync for AllocationCallbacks<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for AllocationCallbacks<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -1244,6 +1252,8 @@ pub struct DeviceQueueCreateInfo<'a> {
     pub p_queue_priorities: *const f32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DeviceQueueCreateInfo<'_> {}
+unsafe impl Sync for DeviceQueueCreateInfo<'_> {}
 impl ::std::default::Default for DeviceQueueCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -1314,6 +1324,8 @@ pub struct DeviceCreateInfo<'a> {
     pub p_enabled_features: *const PhysicalDeviceFeatures,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DeviceCreateInfo<'_> {}
+unsafe impl Sync for DeviceCreateInfo<'_> {}
 impl ::std::default::Default for DeviceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -1402,6 +1414,8 @@ pub struct InstanceCreateInfo<'a> {
     pub pp_enabled_extension_names: *const *const c_char,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for InstanceCreateInfo<'_> {}
+unsafe impl Sync for InstanceCreateInfo<'_> {}
 impl ::std::default::Default for InstanceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -1562,6 +1576,8 @@ pub struct MemoryAllocateInfo<'a> {
     pub memory_type_index: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MemoryAllocateInfo<'_> {}
+unsafe impl Sync for MemoryAllocateInfo<'_> {}
 impl ::std::default::Default for MemoryAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -1752,6 +1768,8 @@ pub struct MappedMemoryRange<'a> {
     pub size: DeviceSize,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MappedMemoryRange<'_> {}
+unsafe impl Sync for MappedMemoryRange<'_> {}
 impl ::std::default::Default for MappedMemoryRange<'_> {
     #[inline]
     fn default() -> Self {
@@ -1923,6 +1941,8 @@ pub struct WriteDescriptorSet<'a> {
     pub p_texel_buffer_view: *const BufferView,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for WriteDescriptorSet<'_> {}
+unsafe impl Sync for WriteDescriptorSet<'_> {}
 impl ::std::default::Default for WriteDescriptorSet<'_> {
     #[inline]
     fn default() -> Self {
@@ -2021,6 +2041,8 @@ pub struct CopyDescriptorSet<'a> {
     pub descriptor_count: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CopyDescriptorSet<'_> {}
+unsafe impl Sync for CopyDescriptorSet<'_> {}
 impl ::std::default::Default for CopyDescriptorSet<'_> {
     #[inline]
     fn default() -> Self {
@@ -2089,6 +2111,8 @@ pub struct BufferUsageFlags2CreateInfoKHR<'a> {
     pub usage: BufferUsageFlags2KHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BufferUsageFlags2CreateInfoKHR<'_> {}
+unsafe impl Sync for BufferUsageFlags2CreateInfoKHR<'_> {}
 impl ::std::default::Default for BufferUsageFlags2CreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -2130,6 +2154,8 @@ pub struct BufferCreateInfo<'a> {
     pub p_queue_family_indices: *const u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BufferCreateInfo<'_> {}
+unsafe impl Sync for BufferCreateInfo<'_> {}
 impl ::std::default::Default for BufferCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -2207,6 +2233,8 @@ pub struct BufferViewCreateInfo<'a> {
     pub range: DeviceSize,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BufferViewCreateInfo<'_> {}
+unsafe impl Sync for BufferViewCreateInfo<'_> {}
 impl ::std::default::Default for BufferViewCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -2378,6 +2406,8 @@ pub struct MemoryBarrier<'a> {
     pub dst_access_mask: AccessFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MemoryBarrier<'_> {}
+unsafe impl Sync for MemoryBarrier<'_> {}
 impl ::std::default::Default for MemoryBarrier<'_> {
     #[inline]
     fn default() -> Self {
@@ -2422,6 +2452,8 @@ pub struct BufferMemoryBarrier<'a> {
     pub size: DeviceSize,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BufferMemoryBarrier<'_> {}
+unsafe impl Sync for BufferMemoryBarrier<'_> {}
 impl ::std::default::Default for BufferMemoryBarrier<'_> {
     #[inline]
     fn default() -> Self {
@@ -2512,6 +2544,8 @@ pub struct ImageMemoryBarrier<'a> {
     pub subresource_range: ImageSubresourceRange,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImageMemoryBarrier<'_> {}
+unsafe impl Sync for ImageMemoryBarrier<'_> {}
 impl ::std::default::Default for ImageMemoryBarrier<'_> {
     #[inline]
     fn default() -> Self {
@@ -2613,6 +2647,8 @@ pub struct ImageCreateInfo<'a> {
     pub initial_layout: ImageLayout,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImageCreateInfo<'_> {}
+unsafe impl Sync for ImageCreateInfo<'_> {}
 impl ::std::default::Default for ImageCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -2772,6 +2808,8 @@ pub struct ImageViewCreateInfo<'a> {
     pub subresource_range: ImageSubresourceRange,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImageViewCreateInfo<'_> {}
+unsafe impl Sync for ImageViewCreateInfo<'_> {}
 impl ::std::default::Default for ImageViewCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -2960,6 +2998,8 @@ pub struct SparseBufferMemoryBindInfo<'a> {
     pub p_binds: *const SparseMemoryBind,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SparseBufferMemoryBindInfo<'_> {}
+unsafe impl Sync for SparseBufferMemoryBindInfo<'_> {}
 impl ::std::default::Default for SparseBufferMemoryBindInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -2995,6 +3035,8 @@ pub struct SparseImageOpaqueMemoryBindInfo<'a> {
     pub p_binds: *const SparseMemoryBind,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SparseImageOpaqueMemoryBindInfo<'_> {}
+unsafe impl Sync for SparseImageOpaqueMemoryBindInfo<'_> {}
 impl ::std::default::Default for SparseImageOpaqueMemoryBindInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -3030,6 +3072,8 @@ pub struct SparseImageMemoryBindInfo<'a> {
     pub p_binds: *const SparseImageMemoryBind,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SparseImageMemoryBindInfo<'_> {}
+unsafe impl Sync for SparseImageMemoryBindInfo<'_> {}
 impl ::std::default::Default for SparseImageMemoryBindInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -3074,6 +3118,8 @@ pub struct BindSparseInfo<'a> {
     pub p_signal_semaphores: *const Semaphore,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BindSparseInfo<'_> {}
+unsafe impl Sync for BindSparseInfo<'_> {}
 impl ::std::default::Default for BindSparseInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -3399,6 +3445,8 @@ pub struct ShaderModuleCreateInfo<'a> {
     pub p_code: *const u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ShaderModuleCreateInfo<'_> {}
+unsafe impl Sync for ShaderModuleCreateInfo<'_> {}
 impl ::std::default::Default for ShaderModuleCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -3457,6 +3505,8 @@ pub struct DescriptorSetLayoutBinding<'a> {
     pub p_immutable_samplers: *const Sampler,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DescriptorSetLayoutBinding<'_> {}
+unsafe impl Sync for DescriptorSetLayoutBinding<'_> {}
 impl ::std::default::Default for DescriptorSetLayoutBinding<'_> {
     #[inline]
     fn default() -> Self {
@@ -3511,6 +3561,8 @@ pub struct DescriptorSetLayoutCreateInfo<'a> {
     pub p_bindings: *const DescriptorSetLayoutBinding<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DescriptorSetLayoutCreateInfo<'_> {}
+unsafe impl Sync for DescriptorSetLayoutCreateInfo<'_> {}
 impl ::std::default::Default for DescriptorSetLayoutCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -3590,6 +3642,8 @@ pub struct DescriptorPoolCreateInfo<'a> {
     pub p_pool_sizes: *const DescriptorPoolSize,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DescriptorPoolCreateInfo<'_> {}
+unsafe impl Sync for DescriptorPoolCreateInfo<'_> {}
 impl ::std::default::Default for DescriptorPoolCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -3653,6 +3707,8 @@ pub struct DescriptorSetAllocateInfo<'a> {
     pub p_set_layouts: *const DescriptorSetLayout,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DescriptorSetAllocateInfo<'_> {}
+unsafe impl Sync for DescriptorSetAllocateInfo<'_> {}
 impl ::std::default::Default for DescriptorSetAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -3736,6 +3792,8 @@ pub struct SpecializationInfo<'a> {
     pub p_data: *const c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SpecializationInfo<'_> {}
+unsafe impl Sync for SpecializationInfo<'_> {}
 impl ::std::default::Default for SpecializationInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -3777,6 +3835,8 @@ pub struct PipelineShaderStageCreateInfo<'a> {
     pub p_specialization_info: *const SpecializationInfo<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineShaderStageCreateInfo<'_> {}
+unsafe impl Sync for PipelineShaderStageCreateInfo<'_> {}
 impl ::std::default::Default for PipelineShaderStageCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -3860,6 +3920,8 @@ pub struct ComputePipelineCreateInfo<'a> {
     pub base_pipeline_index: i32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ComputePipelineCreateInfo<'_> {}
+unsafe impl Sync for ComputePipelineCreateInfo<'_> {}
 impl ::std::default::Default for ComputePipelineCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -3933,6 +3995,8 @@ pub struct ComputePipelineIndirectBufferInfoNV<'a> {
     pub pipeline_device_address_capture_replay: DeviceAddress,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ComputePipelineIndirectBufferInfoNV<'_> {}
+unsafe impl Sync for ComputePipelineIndirectBufferInfoNV<'_> {}
 impl ::std::default::Default for ComputePipelineIndirectBufferInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -3981,6 +4045,8 @@ pub struct PipelineCreateFlags2CreateInfoKHR<'a> {
     pub flags: PipelineCreateFlags2KHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineCreateFlags2CreateInfoKHR<'_> {}
+unsafe impl Sync for PipelineCreateFlags2CreateInfoKHR<'_> {}
 impl ::std::default::Default for PipelineCreateFlags2CreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -4081,6 +4147,8 @@ pub struct PipelineVertexInputStateCreateInfo<'a> {
     pub p_vertex_attribute_descriptions: *const VertexInputAttributeDescription,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineVertexInputStateCreateInfo<'_> {}
+unsafe impl Sync for PipelineVertexInputStateCreateInfo<'_> {}
 impl ::std::default::Default for PipelineVertexInputStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -4155,6 +4223,8 @@ pub struct PipelineInputAssemblyStateCreateInfo<'a> {
     pub primitive_restart_enable: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineInputAssemblyStateCreateInfo<'_> {}
+unsafe impl Sync for PipelineInputAssemblyStateCreateInfo<'_> {}
 impl ::std::default::Default for PipelineInputAssemblyStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -4200,6 +4270,8 @@ pub struct PipelineTessellationStateCreateInfo<'a> {
     pub patch_control_points: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineTessellationStateCreateInfo<'_> {}
+unsafe impl Sync for PipelineTessellationStateCreateInfo<'_> {}
 impl ::std::default::Default for PipelineTessellationStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -4260,6 +4332,8 @@ pub struct PipelineViewportStateCreateInfo<'a> {
     pub p_scissors: *const Rect2D,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineViewportStateCreateInfo<'_> {}
+unsafe impl Sync for PipelineViewportStateCreateInfo<'_> {}
 impl ::std::default::Default for PipelineViewportStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -4343,6 +4417,8 @@ pub struct PipelineRasterizationStateCreateInfo<'a> {
     pub line_width: f32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineRasterizationStateCreateInfo<'_> {}
+unsafe impl Sync for PipelineRasterizationStateCreateInfo<'_> {}
 impl ::std::default::Default for PipelineRasterizationStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -4459,6 +4535,8 @@ pub struct PipelineMultisampleStateCreateInfo<'a> {
     pub alpha_to_one_enable: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineMultisampleStateCreateInfo<'_> {}
+unsafe impl Sync for PipelineMultisampleStateCreateInfo<'_> {}
 impl ::std::default::Default for PipelineMultisampleStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -4616,6 +4694,8 @@ pub struct PipelineColorBlendStateCreateInfo<'a> {
     pub blend_constants: [f32; 4],
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineColorBlendStateCreateInfo<'_> {}
+unsafe impl Sync for PipelineColorBlendStateCreateInfo<'_> {}
 impl ::std::default::Default for PipelineColorBlendStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -4694,6 +4774,8 @@ pub struct PipelineDynamicStateCreateInfo<'a> {
     pub p_dynamic_states: *const DynamicState,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineDynamicStateCreateInfo<'_> {}
+unsafe impl Sync for PipelineDynamicStateCreateInfo<'_> {}
 impl ::std::default::Default for PipelineDynamicStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -4794,6 +4876,8 @@ pub struct PipelineDepthStencilStateCreateInfo<'a> {
     pub max_depth_bounds: f32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineDepthStencilStateCreateInfo<'_> {}
+unsafe impl Sync for PipelineDepthStencilStateCreateInfo<'_> {}
 impl ::std::default::Default for PipelineDepthStencilStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -4896,6 +4980,8 @@ pub struct GraphicsPipelineCreateInfo<'a> {
     pub base_pipeline_index: i32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for GraphicsPipelineCreateInfo<'_> {}
+unsafe impl Sync for GraphicsPipelineCreateInfo<'_> {}
 impl ::std::default::Default for GraphicsPipelineCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -5061,6 +5147,8 @@ pub struct PipelineCacheCreateInfo<'a> {
     pub p_initial_data: *const c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineCacheCreateInfo<'_> {}
+unsafe impl Sync for PipelineCacheCreateInfo<'_> {}
 impl ::std::default::Default for PipelineCacheCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -5183,6 +5271,8 @@ pub struct PipelineLayoutCreateInfo<'a> {
     pub p_push_constant_ranges: *const PushConstantRange,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineLayoutCreateInfo<'_> {}
+unsafe impl Sync for PipelineLayoutCreateInfo<'_> {}
 impl ::std::default::Default for PipelineLayoutCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -5252,6 +5342,8 @@ pub struct SamplerCreateInfo<'a> {
     pub unnormalized_coordinates: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SamplerCreateInfo<'_> {}
+unsafe impl Sync for SamplerCreateInfo<'_> {}
 impl ::std::default::Default for SamplerCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -5390,6 +5482,8 @@ pub struct CommandPoolCreateInfo<'a> {
     pub queue_family_index: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CommandPoolCreateInfo<'_> {}
+unsafe impl Sync for CommandPoolCreateInfo<'_> {}
 impl ::std::default::Default for CommandPoolCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -5430,6 +5524,8 @@ pub struct CommandBufferAllocateInfo<'a> {
     pub command_buffer_count: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CommandBufferAllocateInfo<'_> {}
+unsafe impl Sync for CommandBufferAllocateInfo<'_> {}
 impl ::std::default::Default for CommandBufferAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -5479,6 +5575,8 @@ pub struct CommandBufferInheritanceInfo<'a> {
     pub pipeline_statistics: QueryPipelineStatisticFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CommandBufferInheritanceInfo<'_> {}
+unsafe impl Sync for CommandBufferInheritanceInfo<'_> {}
 impl ::std::default::Default for CommandBufferInheritanceInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -5557,6 +5655,8 @@ pub struct CommandBufferBeginInfo<'a> {
     pub p_inheritance_info: *const CommandBufferInheritanceInfo<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CommandBufferBeginInfo<'_> {}
+unsafe impl Sync for CommandBufferBeginInfo<'_> {}
 impl ::std::default::Default for CommandBufferBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -5616,6 +5716,8 @@ pub struct RenderPassBeginInfo<'a> {
     pub p_clear_values: *const ClearValue,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for RenderPassBeginInfo<'_> {}
+unsafe impl Sync for RenderPassBeginInfo<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for RenderPassBeginInfo<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -5872,6 +5974,8 @@ pub struct SubpassDescription<'a> {
     pub p_preserve_attachments: *const u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SubpassDescription<'_> {}
+unsafe impl Sync for SubpassDescription<'_> {}
 impl ::std::default::Default for SubpassDescription<'_> {
     #[inline]
     fn default() -> Self {
@@ -6002,6 +6106,8 @@ pub struct RenderPassCreateInfo<'a> {
     pub p_dependencies: *const SubpassDependency,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for RenderPassCreateInfo<'_> {}
+unsafe impl Sync for RenderPassCreateInfo<'_> {}
 impl ::std::default::Default for RenderPassCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -6073,6 +6179,8 @@ pub struct EventCreateInfo<'a> {
     pub flags: EventCreateFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for EventCreateInfo<'_> {}
+unsafe impl Sync for EventCreateInfo<'_> {}
 impl ::std::default::Default for EventCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -6120,6 +6228,8 @@ pub struct FenceCreateInfo<'a> {
     pub flags: FenceCreateFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for FenceCreateInfo<'_> {}
+unsafe impl Sync for FenceCreateInfo<'_> {}
 impl ::std::default::Default for FenceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -7482,6 +7592,8 @@ pub struct SemaphoreCreateInfo<'a> {
     pub flags: SemaphoreCreateFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SemaphoreCreateInfo<'_> {}
+unsafe impl Sync for SemaphoreCreateInfo<'_> {}
 impl ::std::default::Default for SemaphoreCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -7532,6 +7644,8 @@ pub struct QueryPoolCreateInfo<'a> {
     pub pipeline_statistics: QueryPipelineStatisticFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for QueryPoolCreateInfo<'_> {}
+unsafe impl Sync for QueryPoolCreateInfo<'_> {}
 impl ::std::default::Default for QueryPoolCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -7603,6 +7717,8 @@ pub struct FramebufferCreateInfo<'a> {
     pub layers: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for FramebufferCreateInfo<'_> {}
+unsafe impl Sync for FramebufferCreateInfo<'_> {}
 impl ::std::default::Default for FramebufferCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -7840,6 +7956,8 @@ pub struct SubmitInfo<'a> {
     pub p_signal_semaphores: *const Semaphore,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SubmitInfo<'_> {}
+unsafe impl Sync for SubmitInfo<'_> {}
 impl ::std::default::Default for SubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -7916,6 +8034,8 @@ pub struct DisplayPropertiesKHR<'a> {
     pub persistent_content: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DisplayPropertiesKHR<'_> {}
+unsafe impl Sync for DisplayPropertiesKHR<'_> {}
 impl ::std::default::Default for DisplayPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -8051,6 +8171,8 @@ pub struct DisplayModeCreateInfoKHR<'a> {
     pub parameters: DisplayModeParametersKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DisplayModeCreateInfoKHR<'_> {}
+unsafe impl Sync for DisplayModeCreateInfoKHR<'_> {}
 impl ::std::default::Default for DisplayModeCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -8159,6 +8281,8 @@ pub struct DisplaySurfaceCreateInfoKHR<'a> {
     pub image_extent: Extent2D,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DisplaySurfaceCreateInfoKHR<'_> {}
+unsafe impl Sync for DisplaySurfaceCreateInfoKHR<'_> {}
 impl ::std::default::Default for DisplaySurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -8235,6 +8359,8 @@ pub struct DisplayPresentInfoKHR<'a> {
     pub persistent: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DisplayPresentInfoKHR<'_> {}
+unsafe impl Sync for DisplayPresentInfoKHR<'_> {}
 impl ::std::default::Default for DisplayPresentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -8353,6 +8479,8 @@ pub struct AndroidSurfaceCreateInfoKHR<'a> {
     pub window: *mut ANativeWindow,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for AndroidSurfaceCreateInfoKHR<'_> {}
+unsafe impl Sync for AndroidSurfaceCreateInfoKHR<'_> {}
 impl ::std::default::Default for AndroidSurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -8392,6 +8520,8 @@ pub struct ViSurfaceCreateInfoNN<'a> {
     pub window: *mut c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ViSurfaceCreateInfoNN<'_> {}
+unsafe impl Sync for ViSurfaceCreateInfoNN<'_> {}
 impl ::std::default::Default for ViSurfaceCreateInfoNN<'_> {
     #[inline]
     fn default() -> Self {
@@ -8432,6 +8562,8 @@ pub struct WaylandSurfaceCreateInfoKHR<'a> {
     pub surface: *mut wl_surface,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for WaylandSurfaceCreateInfoKHR<'_> {}
+unsafe impl Sync for WaylandSurfaceCreateInfoKHR<'_> {}
 impl ::std::default::Default for WaylandSurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -8478,6 +8610,8 @@ pub struct Win32SurfaceCreateInfoKHR<'a> {
     pub hwnd: HWND,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for Win32SurfaceCreateInfoKHR<'_> {}
+unsafe impl Sync for Win32SurfaceCreateInfoKHR<'_> {}
 impl ::std::default::Default for Win32SurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -8524,6 +8658,8 @@ pub struct XlibSurfaceCreateInfoKHR<'a> {
     pub window: Window,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for XlibSurfaceCreateInfoKHR<'_> {}
+unsafe impl Sync for XlibSurfaceCreateInfoKHR<'_> {}
 impl ::std::default::Default for XlibSurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -8570,6 +8706,8 @@ pub struct XcbSurfaceCreateInfoKHR<'a> {
     pub window: xcb_window_t,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for XcbSurfaceCreateInfoKHR<'_> {}
+unsafe impl Sync for XcbSurfaceCreateInfoKHR<'_> {}
 impl ::std::default::Default for XcbSurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -8616,6 +8754,8 @@ pub struct DirectFBSurfaceCreateInfoEXT<'a> {
     pub surface: *mut IDirectFBSurface,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DirectFBSurfaceCreateInfoEXT<'_> {}
+unsafe impl Sync for DirectFBSurfaceCreateInfoEXT<'_> {}
 impl ::std::default::Default for DirectFBSurfaceCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -8661,6 +8801,8 @@ pub struct ImagePipeSurfaceCreateInfoFUCHSIA<'a> {
     pub image_pipe_handle: zx_handle_t,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImagePipeSurfaceCreateInfoFUCHSIA<'_> {}
+unsafe impl Sync for ImagePipeSurfaceCreateInfoFUCHSIA<'_> {}
 impl ::std::default::Default for ImagePipeSurfaceCreateInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
@@ -8700,6 +8842,8 @@ pub struct StreamDescriptorSurfaceCreateInfoGGP<'a> {
     pub stream_descriptor: GgpStreamDescriptor,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for StreamDescriptorSurfaceCreateInfoGGP<'_> {}
+unsafe impl Sync for StreamDescriptorSurfaceCreateInfoGGP<'_> {}
 impl ::std::default::Default for StreamDescriptorSurfaceCreateInfoGGP<'_> {
     #[inline]
     fn default() -> Self {
@@ -8740,6 +8884,8 @@ pub struct ScreenSurfaceCreateInfoQNX<'a> {
     pub window: *mut _screen_window,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ScreenSurfaceCreateInfoQNX<'_> {}
+unsafe impl Sync for ScreenSurfaceCreateInfoQNX<'_> {}
 impl ::std::default::Default for ScreenSurfaceCreateInfoQNX<'_> {
     #[inline]
     fn default() -> Self {
@@ -8820,6 +8966,8 @@ pub struct SwapchainCreateInfoKHR<'a> {
     pub old_swapchain: SwapchainKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SwapchainCreateInfoKHR<'_> {}
+unsafe impl Sync for SwapchainCreateInfoKHR<'_> {}
 impl ::std::default::Default for SwapchainCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -8958,6 +9106,8 @@ pub struct PresentInfoKHR<'a> {
     pub p_results: *mut Result,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PresentInfoKHR<'_> {}
+unsafe impl Sync for PresentInfoKHR<'_> {}
 impl ::std::default::Default for PresentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -9030,6 +9180,8 @@ pub struct DebugReportCallbackCreateInfoEXT<'a> {
     pub p_user_data: *mut c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DebugReportCallbackCreateInfoEXT<'_> {}
+unsafe impl Sync for DebugReportCallbackCreateInfoEXT<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for DebugReportCallbackCreateInfoEXT<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -9088,6 +9240,8 @@ pub struct ValidationFlagsEXT<'a> {
     pub p_disabled_validation_checks: *const ValidationCheckEXT,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ValidationFlagsEXT<'_> {}
+unsafe impl Sync for ValidationFlagsEXT<'_> {}
 impl ::std::default::Default for ValidationFlagsEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -9129,6 +9283,8 @@ pub struct ValidationFeaturesEXT<'a> {
     pub p_disabled_validation_features: *const ValidationFeatureDisableEXT,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ValidationFeaturesEXT<'_> {}
+unsafe impl Sync for ValidationFeaturesEXT<'_> {}
 impl ::std::default::Default for ValidationFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -9179,6 +9335,8 @@ pub struct LayerSettingsCreateInfoEXT<'a> {
     pub p_settings: *const LayerSettingEXT<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for LayerSettingsCreateInfoEXT<'_> {}
+unsafe impl Sync for LayerSettingsCreateInfoEXT<'_> {}
 impl ::std::default::Default for LayerSettingsCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -9216,6 +9374,8 @@ pub struct LayerSettingEXT<'a> {
     pub p_values: *const c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for LayerSettingEXT<'_> {}
+unsafe impl Sync for LayerSettingEXT<'_> {}
 impl ::std::default::Default for LayerSettingEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -9279,6 +9439,8 @@ pub struct PipelineRasterizationStateRasterizationOrderAMD<'a> {
     pub rasterization_order: RasterizationOrderAMD,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineRasterizationStateRasterizationOrderAMD<'_> {}
+unsafe impl Sync for PipelineRasterizationStateRasterizationOrderAMD<'_> {}
 impl ::std::default::Default for PipelineRasterizationStateRasterizationOrderAMD<'_> {
     #[inline]
     fn default() -> Self {
@@ -9318,6 +9480,8 @@ pub struct DebugMarkerObjectNameInfoEXT<'a> {
     pub p_object_name: *const c_char,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DebugMarkerObjectNameInfoEXT<'_> {}
+unsafe impl Sync for DebugMarkerObjectNameInfoEXT<'_> {}
 impl ::std::default::Default for DebugMarkerObjectNameInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -9374,6 +9538,8 @@ pub struct DebugMarkerObjectTagInfoEXT<'a> {
     pub p_tag: *const c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DebugMarkerObjectTagInfoEXT<'_> {}
+unsafe impl Sync for DebugMarkerObjectTagInfoEXT<'_> {}
 impl ::std::default::Default for DebugMarkerObjectTagInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -9427,6 +9593,8 @@ pub struct DebugMarkerMarkerInfoEXT<'a> {
     pub color: [f32; 4],
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DebugMarkerMarkerInfoEXT<'_> {}
+unsafe impl Sync for DebugMarkerMarkerInfoEXT<'_> {}
 impl ::std::default::Default for DebugMarkerMarkerInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -9473,6 +9641,8 @@ pub struct DedicatedAllocationImageCreateInfoNV<'a> {
     pub dedicated_allocation: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DedicatedAllocationImageCreateInfoNV<'_> {}
+unsafe impl Sync for DedicatedAllocationImageCreateInfoNV<'_> {}
 impl ::std::default::Default for DedicatedAllocationImageCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -9506,6 +9676,8 @@ pub struct DedicatedAllocationBufferCreateInfoNV<'a> {
     pub dedicated_allocation: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DedicatedAllocationBufferCreateInfoNV<'_> {}
+unsafe impl Sync for DedicatedAllocationBufferCreateInfoNV<'_> {}
 impl ::std::default::Default for DedicatedAllocationBufferCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -9540,6 +9712,8 @@ pub struct DedicatedAllocationMemoryAllocateInfoNV<'a> {
     pub buffer: Buffer,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DedicatedAllocationMemoryAllocateInfoNV<'_> {}
+unsafe impl Sync for DedicatedAllocationMemoryAllocateInfoNV<'_> {}
 impl ::std::default::Default for DedicatedAllocationMemoryAllocateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -9625,6 +9799,8 @@ pub struct ExternalMemoryImageCreateInfoNV<'a> {
     pub handle_types: ExternalMemoryHandleTypeFlagsNV,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ExternalMemoryImageCreateInfoNV<'_> {}
+unsafe impl Sync for ExternalMemoryImageCreateInfoNV<'_> {}
 impl ::std::default::Default for ExternalMemoryImageCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -9658,6 +9834,8 @@ pub struct ExportMemoryAllocateInfoNV<'a> {
     pub handle_types: ExternalMemoryHandleTypeFlagsNV,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ExportMemoryAllocateInfoNV<'_> {}
+unsafe impl Sync for ExportMemoryAllocateInfoNV<'_> {}
 impl ::std::default::Default for ExportMemoryAllocateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -9692,6 +9870,8 @@ pub struct ImportMemoryWin32HandleInfoNV<'a> {
     pub handle: HANDLE,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImportMemoryWin32HandleInfoNV<'_> {}
+unsafe impl Sync for ImportMemoryWin32HandleInfoNV<'_> {}
 impl ::std::default::Default for ImportMemoryWin32HandleInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -9732,6 +9912,8 @@ pub struct ExportMemoryWin32HandleInfoNV<'a> {
     pub dw_access: DWORD,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ExportMemoryWin32HandleInfoNV<'_> {}
+unsafe impl Sync for ExportMemoryWin32HandleInfoNV<'_> {}
 impl ::std::default::Default for ExportMemoryWin32HandleInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -9777,6 +9959,8 @@ pub struct Win32KeyedMutexAcquireReleaseInfoNV<'a> {
     pub p_release_keys: *const u64,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for Win32KeyedMutexAcquireReleaseInfoNV<'_> {}
+unsafe impl Sync for Win32KeyedMutexAcquireReleaseInfoNV<'_> {}
 impl ::std::default::Default for Win32KeyedMutexAcquireReleaseInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -9842,6 +10026,8 @@ pub struct PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'a> {
     pub device_generated_commands: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -9879,6 +10065,8 @@ pub struct PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'a> {
     pub device_generated_compute_capture_replay: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -9936,6 +10124,8 @@ pub struct DevicePrivateDataCreateInfo<'a> {
     pub private_data_slot_request_count: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DevicePrivateDataCreateInfo<'_> {}
+unsafe impl Sync for DevicePrivateDataCreateInfo<'_> {}
 impl ::std::default::Default for DevicePrivateDataCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -9969,6 +10159,8 @@ pub struct PrivateDataSlotCreateInfo<'a> {
     pub flags: PrivateDataSlotCreateFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PrivateDataSlotCreateInfo<'_> {}
+unsafe impl Sync for PrivateDataSlotCreateInfo<'_> {}
 impl ::std::default::Default for PrivateDataSlotCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -10001,6 +10193,8 @@ pub struct PhysicalDevicePrivateDataFeatures<'a> {
     pub private_data: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDevicePrivateDataFeatures<'_> {}
+unsafe impl Sync for PhysicalDevicePrivateDataFeatures<'_> {}
 impl ::std::default::Default for PhysicalDevicePrivateDataFeatures<'_> {
     #[inline]
     fn default() -> Self {
@@ -10043,6 +10237,8 @@ pub struct PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'a> {
     pub min_indirect_commands_buffer_offset_alignment: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -10152,6 +10348,8 @@ pub struct PhysicalDeviceMultiDrawPropertiesEXT<'a> {
     pub max_multi_draw_count: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceMultiDrawPropertiesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceMultiDrawPropertiesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceMultiDrawPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -10188,6 +10386,8 @@ pub struct GraphicsShaderGroupCreateInfoNV<'a> {
     pub p_tessellation_state: *const PipelineTessellationStateCreateInfo<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for GraphicsShaderGroupCreateInfoNV<'_> {}
+unsafe impl Sync for GraphicsShaderGroupCreateInfoNV<'_> {}
 impl ::std::default::Default for GraphicsShaderGroupCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -10243,6 +10443,8 @@ pub struct GraphicsPipelineShaderGroupsCreateInfoNV<'a> {
     pub p_pipelines: *const Pipeline,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for GraphicsPipelineShaderGroupsCreateInfoNV<'_> {}
+unsafe impl Sync for GraphicsPipelineShaderGroupsCreateInfoNV<'_> {}
 impl ::std::default::Default for GraphicsPipelineShaderGroupsCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -10404,6 +10606,8 @@ pub struct IndirectCommandsLayoutTokenNV<'a> {
     pub p_index_type_values: *const u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for IndirectCommandsLayoutTokenNV<'_> {}
+unsafe impl Sync for IndirectCommandsLayoutTokenNV<'_> {}
 impl ::std::default::Default for IndirectCommandsLayoutTokenNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -10516,6 +10720,8 @@ pub struct IndirectCommandsLayoutCreateInfoNV<'a> {
     pub p_stream_strides: *const u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for IndirectCommandsLayoutCreateInfoNV<'_> {}
+unsafe impl Sync for IndirectCommandsLayoutCreateInfoNV<'_> {}
 impl ::std::default::Default for IndirectCommandsLayoutCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -10582,6 +10788,8 @@ pub struct GeneratedCommandsInfoNV<'a> {
     pub sequences_index_offset: DeviceSize,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for GeneratedCommandsInfoNV<'_> {}
+unsafe impl Sync for GeneratedCommandsInfoNV<'_> {}
 impl ::std::default::Default for GeneratedCommandsInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -10688,6 +10896,8 @@ pub struct GeneratedCommandsMemoryRequirementsInfoNV<'a> {
     pub max_sequences_count: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for GeneratedCommandsMemoryRequirementsInfoNV<'_> {}
+unsafe impl Sync for GeneratedCommandsMemoryRequirementsInfoNV<'_> {}
 impl ::std::default::Default for GeneratedCommandsMemoryRequirementsInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -10743,6 +10953,8 @@ pub struct PipelineIndirectDeviceAddressInfoNV<'a> {
     pub pipeline: Pipeline,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineIndirectDeviceAddressInfoNV<'_> {}
+unsafe impl Sync for PipelineIndirectDeviceAddressInfoNV<'_> {}
 impl ::std::default::Default for PipelineIndirectDeviceAddressInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -10796,6 +11008,8 @@ pub struct PhysicalDeviceFeatures2<'a> {
     pub features: PhysicalDeviceFeatures,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceFeatures2<'_> {}
+unsafe impl Sync for PhysicalDeviceFeatures2<'_> {}
 impl ::std::default::Default for PhysicalDeviceFeatures2<'_> {
     #[inline]
     fn default() -> Self {
@@ -10844,6 +11058,8 @@ pub struct PhysicalDeviceProperties2<'a> {
     pub properties: PhysicalDeviceProperties,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceProperties2<'_> {}
+unsafe impl Sync for PhysicalDeviceProperties2<'_> {}
 impl ::std::default::Default for PhysicalDeviceProperties2<'_> {
     #[inline]
     fn default() -> Self {
@@ -10891,6 +11107,8 @@ pub struct FormatProperties2<'a> {
     pub format_properties: FormatProperties,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for FormatProperties2<'_> {}
+unsafe impl Sync for FormatProperties2<'_> {}
 impl ::std::default::Default for FormatProperties2<'_> {
     #[inline]
     fn default() -> Self {
@@ -10938,6 +11156,8 @@ pub struct ImageFormatProperties2<'a> {
     pub image_format_properties: ImageFormatProperties,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImageFormatProperties2<'_> {}
+unsafe impl Sync for ImageFormatProperties2<'_> {}
 impl ::std::default::Default for ImageFormatProperties2<'_> {
     #[inline]
     fn default() -> Self {
@@ -10992,6 +11212,8 @@ pub struct PhysicalDeviceImageFormatInfo2<'a> {
     pub flags: ImageCreateFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceImageFormatInfo2<'_> {}
+unsafe impl Sync for PhysicalDeviceImageFormatInfo2<'_> {}
 impl ::std::default::Default for PhysicalDeviceImageFormatInfo2<'_> {
     #[inline]
     fn default() -> Self {
@@ -11063,6 +11285,8 @@ pub struct QueueFamilyProperties2<'a> {
     pub queue_family_properties: QueueFamilyProperties,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for QueueFamilyProperties2<'_> {}
+unsafe impl Sync for QueueFamilyProperties2<'_> {}
 impl ::std::default::Default for QueueFamilyProperties2<'_> {
     #[inline]
     fn default() -> Self {
@@ -11113,6 +11337,8 @@ pub struct PhysicalDeviceMemoryProperties2<'a> {
     pub memory_properties: PhysicalDeviceMemoryProperties,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceMemoryProperties2<'_> {}
+unsafe impl Sync for PhysicalDeviceMemoryProperties2<'_> {}
 impl ::std::default::Default for PhysicalDeviceMemoryProperties2<'_> {
     #[inline]
     fn default() -> Self {
@@ -11160,6 +11386,8 @@ pub struct SparseImageFormatProperties2<'a> {
     pub properties: SparseImageFormatProperties,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SparseImageFormatProperties2<'_> {}
+unsafe impl Sync for SparseImageFormatProperties2<'_> {}
 impl ::std::default::Default for SparseImageFormatProperties2<'_> {
     #[inline]
     fn default() -> Self {
@@ -11196,6 +11424,8 @@ pub struct PhysicalDeviceSparseImageFormatInfo2<'a> {
     pub tiling: ImageTiling,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceSparseImageFormatInfo2<'_> {}
+unsafe impl Sync for PhysicalDeviceSparseImageFormatInfo2<'_> {}
 impl ::std::default::Default for PhysicalDeviceSparseImageFormatInfo2<'_> {
     #[inline]
     fn default() -> Self {
@@ -11252,6 +11482,8 @@ pub struct PhysicalDevicePushDescriptorPropertiesKHR<'a> {
     pub max_push_descriptors: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDevicePushDescriptorPropertiesKHR<'_> {}
+unsafe impl Sync for PhysicalDevicePushDescriptorPropertiesKHR<'_> {}
 impl ::std::default::Default for PhysicalDevicePushDescriptorPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -11321,6 +11553,8 @@ pub struct PhysicalDeviceDriverProperties<'a> {
     pub conformance_version: ConformanceVersion,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceDriverProperties<'_> {}
+unsafe impl Sync for PhysicalDeviceDriverProperties<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for PhysicalDeviceDriverProperties<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -11402,6 +11636,8 @@ pub struct PresentRegionsKHR<'a> {
     pub p_regions: *const PresentRegionKHR<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PresentRegionsKHR<'_> {}
+unsafe impl Sync for PresentRegionsKHR<'_> {}
 impl ::std::default::Default for PresentRegionsKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -11436,6 +11672,8 @@ pub struct PresentRegionKHR<'a> {
     pub p_rectangles: *const RectLayerKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PresentRegionKHR<'_> {}
+unsafe impl Sync for PresentRegionKHR<'_> {}
 impl ::std::default::Default for PresentRegionKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -11493,6 +11731,8 @@ pub struct PhysicalDeviceVariablePointersFeatures<'a> {
     pub variable_pointers: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceVariablePointersFeatures<'_> {}
+unsafe impl Sync for PhysicalDeviceVariablePointersFeatures<'_> {}
 impl ::std::default::Default for PhysicalDeviceVariablePointersFeatures<'_> {
     #[inline]
     fn default() -> Self {
@@ -11572,6 +11812,8 @@ pub struct PhysicalDeviceExternalImageFormatInfo<'a> {
     pub handle_type: ExternalMemoryHandleTypeFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceExternalImageFormatInfo<'_> {}
+unsafe impl Sync for PhysicalDeviceExternalImageFormatInfo<'_> {}
 impl ::std::default::Default for PhysicalDeviceExternalImageFormatInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -11605,6 +11847,8 @@ pub struct ExternalImageFormatProperties<'a> {
     pub external_memory_properties: ExternalMemoryProperties,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ExternalImageFormatProperties<'_> {}
+unsafe impl Sync for ExternalImageFormatProperties<'_> {}
 impl ::std::default::Default for ExternalImageFormatProperties<'_> {
     #[inline]
     fn default() -> Self {
@@ -11643,6 +11887,8 @@ pub struct PhysicalDeviceExternalBufferInfo<'a> {
     pub handle_type: ExternalMemoryHandleTypeFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceExternalBufferInfo<'_> {}
+unsafe impl Sync for PhysicalDeviceExternalBufferInfo<'_> {}
 impl ::std::default::Default for PhysicalDeviceExternalBufferInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -11705,6 +11951,8 @@ pub struct ExternalBufferProperties<'a> {
     pub external_memory_properties: ExternalMemoryProperties,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ExternalBufferProperties<'_> {}
+unsafe impl Sync for ExternalBufferProperties<'_> {}
 impl ::std::default::Default for ExternalBufferProperties<'_> {
     #[inline]
     fn default() -> Self {
@@ -11744,6 +11992,8 @@ pub struct PhysicalDeviceIDProperties<'a> {
     pub device_luid_valid: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceIDProperties<'_> {}
+unsafe impl Sync for PhysicalDeviceIDProperties<'_> {}
 impl ::std::default::Default for PhysicalDeviceIDProperties<'_> {
     #[inline]
     fn default() -> Self {
@@ -11801,6 +12051,8 @@ pub struct ExternalMemoryImageCreateInfo<'a> {
     pub handle_types: ExternalMemoryHandleTypeFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ExternalMemoryImageCreateInfo<'_> {}
+unsafe impl Sync for ExternalMemoryImageCreateInfo<'_> {}
 impl ::std::default::Default for ExternalMemoryImageCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -11834,6 +12086,8 @@ pub struct ExternalMemoryBufferCreateInfo<'a> {
     pub handle_types: ExternalMemoryHandleTypeFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ExternalMemoryBufferCreateInfo<'_> {}
+unsafe impl Sync for ExternalMemoryBufferCreateInfo<'_> {}
 impl ::std::default::Default for ExternalMemoryBufferCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -11867,6 +12121,8 @@ pub struct ExportMemoryAllocateInfo<'a> {
     pub handle_types: ExternalMemoryHandleTypeFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ExportMemoryAllocateInfo<'_> {}
+unsafe impl Sync for ExportMemoryAllocateInfo<'_> {}
 impl ::std::default::Default for ExportMemoryAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -11902,6 +12158,8 @@ pub struct ImportMemoryWin32HandleInfoKHR<'a> {
     pub name: LPCWSTR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImportMemoryWin32HandleInfoKHR<'_> {}
+unsafe impl Sync for ImportMemoryWin32HandleInfoKHR<'_> {}
 impl ::std::default::Default for ImportMemoryWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -11949,6 +12207,8 @@ pub struct ExportMemoryWin32HandleInfoKHR<'a> {
     pub name: LPCWSTR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ExportMemoryWin32HandleInfoKHR<'_> {}
+unsafe impl Sync for ExportMemoryWin32HandleInfoKHR<'_> {}
 impl ::std::default::Default for ExportMemoryWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -11995,6 +12255,8 @@ pub struct ImportMemoryZirconHandleInfoFUCHSIA<'a> {
     pub handle: zx_handle_t,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImportMemoryZirconHandleInfoFUCHSIA<'_> {}
+unsafe impl Sync for ImportMemoryZirconHandleInfoFUCHSIA<'_> {}
 impl ::std::default::Default for ImportMemoryZirconHandleInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
@@ -12034,6 +12296,8 @@ pub struct MemoryZirconHandlePropertiesFUCHSIA<'a> {
     pub memory_type_bits: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MemoryZirconHandlePropertiesFUCHSIA<'_> {}
+unsafe impl Sync for MemoryZirconHandlePropertiesFUCHSIA<'_> {}
 impl ::std::default::Default for MemoryZirconHandlePropertiesFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
@@ -12067,6 +12331,8 @@ pub struct MemoryGetZirconHandleInfoFUCHSIA<'a> {
     pub handle_type: ExternalMemoryHandleTypeFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MemoryGetZirconHandleInfoFUCHSIA<'_> {}
+unsafe impl Sync for MemoryGetZirconHandleInfoFUCHSIA<'_> {}
 impl ::std::default::Default for MemoryGetZirconHandleInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
@@ -12105,6 +12371,8 @@ pub struct MemoryWin32HandlePropertiesKHR<'a> {
     pub memory_type_bits: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MemoryWin32HandlePropertiesKHR<'_> {}
+unsafe impl Sync for MemoryWin32HandlePropertiesKHR<'_> {}
 impl ::std::default::Default for MemoryWin32HandlePropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -12138,6 +12406,8 @@ pub struct MemoryGetWin32HandleInfoKHR<'a> {
     pub handle_type: ExternalMemoryHandleTypeFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MemoryGetWin32HandleInfoKHR<'_> {}
+unsafe impl Sync for MemoryGetWin32HandleInfoKHR<'_> {}
 impl ::std::default::Default for MemoryGetWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -12177,6 +12447,8 @@ pub struct ImportMemoryFdInfoKHR<'a> {
     pub fd: c_int,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImportMemoryFdInfoKHR<'_> {}
+unsafe impl Sync for ImportMemoryFdInfoKHR<'_> {}
 impl ::std::default::Default for ImportMemoryFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -12216,6 +12488,8 @@ pub struct MemoryFdPropertiesKHR<'a> {
     pub memory_type_bits: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MemoryFdPropertiesKHR<'_> {}
+unsafe impl Sync for MemoryFdPropertiesKHR<'_> {}
 impl ::std::default::Default for MemoryFdPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -12249,6 +12523,8 @@ pub struct MemoryGetFdInfoKHR<'a> {
     pub handle_type: ExternalMemoryHandleTypeFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MemoryGetFdInfoKHR<'_> {}
+unsafe impl Sync for MemoryGetFdInfoKHR<'_> {}
 impl ::std::default::Default for MemoryGetFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -12293,6 +12569,8 @@ pub struct Win32KeyedMutexAcquireReleaseInfoKHR<'a> {
     pub p_release_keys: *const u64,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for Win32KeyedMutexAcquireReleaseInfoKHR<'_> {}
+unsafe impl Sync for Win32KeyedMutexAcquireReleaseInfoKHR<'_> {}
 impl ::std::default::Default for Win32KeyedMutexAcquireReleaseInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -12358,6 +12636,8 @@ pub struct PhysicalDeviceExternalSemaphoreInfo<'a> {
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceExternalSemaphoreInfo<'_> {}
+unsafe impl Sync for PhysicalDeviceExternalSemaphoreInfo<'_> {}
 impl ::std::default::Default for PhysicalDeviceExternalSemaphoreInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -12410,6 +12690,8 @@ pub struct ExternalSemaphoreProperties<'a> {
     pub external_semaphore_features: ExternalSemaphoreFeatureFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ExternalSemaphoreProperties<'_> {}
+unsafe impl Sync for ExternalSemaphoreProperties<'_> {}
 impl ::std::default::Default for ExternalSemaphoreProperties<'_> {
     #[inline]
     fn default() -> Self {
@@ -12463,6 +12745,8 @@ pub struct ExportSemaphoreCreateInfo<'a> {
     pub handle_types: ExternalSemaphoreHandleTypeFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ExportSemaphoreCreateInfo<'_> {}
+unsafe impl Sync for ExportSemaphoreCreateInfo<'_> {}
 impl ::std::default::Default for ExportSemaphoreCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -12500,6 +12784,8 @@ pub struct ImportSemaphoreWin32HandleInfoKHR<'a> {
     pub name: LPCWSTR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImportSemaphoreWin32HandleInfoKHR<'_> {}
+unsafe impl Sync for ImportSemaphoreWin32HandleInfoKHR<'_> {}
 impl ::std::default::Default for ImportSemaphoreWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -12558,6 +12844,8 @@ pub struct ExportSemaphoreWin32HandleInfoKHR<'a> {
     pub name: LPCWSTR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ExportSemaphoreWin32HandleInfoKHR<'_> {}
+unsafe impl Sync for ExportSemaphoreWin32HandleInfoKHR<'_> {}
 impl ::std::default::Default for ExportSemaphoreWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -12606,6 +12894,8 @@ pub struct D3D12FenceSubmitInfoKHR<'a> {
     pub p_signal_semaphore_values: *const u64,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for D3D12FenceSubmitInfoKHR<'_> {}
+unsafe impl Sync for D3D12FenceSubmitInfoKHR<'_> {}
 impl ::std::default::Default for D3D12FenceSubmitInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -12650,6 +12940,8 @@ pub struct SemaphoreGetWin32HandleInfoKHR<'a> {
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SemaphoreGetWin32HandleInfoKHR<'_> {}
+unsafe impl Sync for SemaphoreGetWin32HandleInfoKHR<'_> {}
 impl ::std::default::Default for SemaphoreGetWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -12691,6 +12983,8 @@ pub struct ImportSemaphoreFdInfoKHR<'a> {
     pub fd: c_int,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImportSemaphoreFdInfoKHR<'_> {}
+unsafe impl Sync for ImportSemaphoreFdInfoKHR<'_> {}
 impl ::std::default::Default for ImportSemaphoreFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -12742,6 +13036,8 @@ pub struct SemaphoreGetFdInfoKHR<'a> {
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SemaphoreGetFdInfoKHR<'_> {}
+unsafe impl Sync for SemaphoreGetFdInfoKHR<'_> {}
 impl ::std::default::Default for SemaphoreGetFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -12783,6 +13079,8 @@ pub struct ImportSemaphoreZirconHandleInfoFUCHSIA<'a> {
     pub zircon_handle: zx_handle_t,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImportSemaphoreZirconHandleInfoFUCHSIA<'_> {}
+unsafe impl Sync for ImportSemaphoreZirconHandleInfoFUCHSIA<'_> {}
 impl ::std::default::Default for ImportSemaphoreZirconHandleInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
@@ -12835,6 +13133,8 @@ pub struct SemaphoreGetZirconHandleInfoFUCHSIA<'a> {
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SemaphoreGetZirconHandleInfoFUCHSIA<'_> {}
+unsafe impl Sync for SemaphoreGetZirconHandleInfoFUCHSIA<'_> {}
 impl ::std::default::Default for SemaphoreGetZirconHandleInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
@@ -12873,6 +13173,8 @@ pub struct PhysicalDeviceExternalFenceInfo<'a> {
     pub handle_type: ExternalFenceHandleTypeFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceExternalFenceInfo<'_> {}
+unsafe impl Sync for PhysicalDeviceExternalFenceInfo<'_> {}
 impl ::std::default::Default for PhysicalDeviceExternalFenceInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -12907,6 +13209,8 @@ pub struct ExternalFenceProperties<'a> {
     pub external_fence_features: ExternalFenceFeatureFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ExternalFenceProperties<'_> {}
+unsafe impl Sync for ExternalFenceProperties<'_> {}
 impl ::std::default::Default for ExternalFenceProperties<'_> {
     #[inline]
     fn default() -> Self {
@@ -12960,6 +13264,8 @@ pub struct ExportFenceCreateInfo<'a> {
     pub handle_types: ExternalFenceHandleTypeFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ExportFenceCreateInfo<'_> {}
+unsafe impl Sync for ExportFenceCreateInfo<'_> {}
 impl ::std::default::Default for ExportFenceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -12997,6 +13303,8 @@ pub struct ImportFenceWin32HandleInfoKHR<'a> {
     pub name: LPCWSTR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImportFenceWin32HandleInfoKHR<'_> {}
+unsafe impl Sync for ImportFenceWin32HandleInfoKHR<'_> {}
 impl ::std::default::Default for ImportFenceWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -13055,6 +13363,8 @@ pub struct ExportFenceWin32HandleInfoKHR<'a> {
     pub name: LPCWSTR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ExportFenceWin32HandleInfoKHR<'_> {}
+unsafe impl Sync for ExportFenceWin32HandleInfoKHR<'_> {}
 impl ::std::default::Default for ExportFenceWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -13101,6 +13411,8 @@ pub struct FenceGetWin32HandleInfoKHR<'a> {
     pub handle_type: ExternalFenceHandleTypeFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for FenceGetWin32HandleInfoKHR<'_> {}
+unsafe impl Sync for FenceGetWin32HandleInfoKHR<'_> {}
 impl ::std::default::Default for FenceGetWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -13142,6 +13454,8 @@ pub struct ImportFenceFdInfoKHR<'a> {
     pub fd: c_int,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImportFenceFdInfoKHR<'_> {}
+unsafe impl Sync for ImportFenceFdInfoKHR<'_> {}
 impl ::std::default::Default for ImportFenceFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -13193,6 +13507,8 @@ pub struct FenceGetFdInfoKHR<'a> {
     pub handle_type: ExternalFenceHandleTypeFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for FenceGetFdInfoKHR<'_> {}
+unsafe impl Sync for FenceGetFdInfoKHR<'_> {}
 impl ::std::default::Default for FenceGetFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -13233,6 +13549,8 @@ pub struct PhysicalDeviceMultiviewFeatures<'a> {
     pub multiview_tessellation_shader: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceMultiviewFeatures<'_> {}
+unsafe impl Sync for PhysicalDeviceMultiviewFeatures<'_> {}
 impl ::std::default::Default for PhysicalDeviceMultiviewFeatures<'_> {
     #[inline]
     fn default() -> Self {
@@ -13280,6 +13598,8 @@ pub struct PhysicalDeviceMultiviewProperties<'a> {
     pub max_multiview_instance_index: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceMultiviewProperties<'_> {}
+unsafe impl Sync for PhysicalDeviceMultiviewProperties<'_> {}
 impl ::std::default::Default for PhysicalDeviceMultiviewProperties<'_> {
     #[inline]
     fn default() -> Self {
@@ -13324,6 +13644,8 @@ pub struct RenderPassMultiviewCreateInfo<'a> {
     pub p_correlation_masks: *const u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for RenderPassMultiviewCreateInfo<'_> {}
+unsafe impl Sync for RenderPassMultiviewCreateInfo<'_> {}
 impl ::std::default::Default for RenderPassMultiviewCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -13385,6 +13707,8 @@ pub struct SurfaceCapabilities2EXT<'a> {
     pub supported_surface_counters: SurfaceCounterFlagsEXT,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SurfaceCapabilities2EXT<'_> {}
+unsafe impl Sync for SurfaceCapabilities2EXT<'_> {}
 impl ::std::default::Default for SurfaceCapabilities2EXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -13483,6 +13807,8 @@ pub struct DisplayPowerInfoEXT<'a> {
     pub power_state: DisplayPowerStateEXT,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DisplayPowerInfoEXT<'_> {}
+unsafe impl Sync for DisplayPowerInfoEXT<'_> {}
 impl ::std::default::Default for DisplayPowerInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -13515,6 +13841,8 @@ pub struct DeviceEventInfoEXT<'a> {
     pub device_event: DeviceEventTypeEXT,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DeviceEventInfoEXT<'_> {}
+unsafe impl Sync for DeviceEventInfoEXT<'_> {}
 impl ::std::default::Default for DeviceEventInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -13547,6 +13875,8 @@ pub struct DisplayEventInfoEXT<'a> {
     pub display_event: DisplayEventTypeEXT,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DisplayEventInfoEXT<'_> {}
+unsafe impl Sync for DisplayEventInfoEXT<'_> {}
 impl ::std::default::Default for DisplayEventInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -13579,6 +13909,8 @@ pub struct SwapchainCounterCreateInfoEXT<'a> {
     pub surface_counters: SurfaceCounterFlagsEXT,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SwapchainCounterCreateInfoEXT<'_> {}
+unsafe impl Sync for SwapchainCounterCreateInfoEXT<'_> {}
 impl ::std::default::Default for SwapchainCounterCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -13613,6 +13945,8 @@ pub struct PhysicalDeviceGroupProperties<'a> {
     pub subset_allocation: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceGroupProperties<'_> {}
+unsafe impl Sync for PhysicalDeviceGroupProperties<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for PhysicalDeviceGroupProperties<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -13670,6 +14004,8 @@ pub struct MemoryAllocateFlagsInfo<'a> {
     pub device_mask: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MemoryAllocateFlagsInfo<'_> {}
+unsafe impl Sync for MemoryAllocateFlagsInfo<'_> {}
 impl ::std::default::Default for MemoryAllocateFlagsInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -13711,6 +14047,8 @@ pub struct BindBufferMemoryInfo<'a> {
     pub memory_offset: DeviceSize,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BindBufferMemoryInfo<'_> {}
+unsafe impl Sync for BindBufferMemoryInfo<'_> {}
 impl ::std::default::Default for BindBufferMemoryInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -13771,6 +14109,8 @@ pub struct BindBufferMemoryDeviceGroupInfo<'a> {
     pub p_device_indices: *const u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BindBufferMemoryDeviceGroupInfo<'_> {}
+unsafe impl Sync for BindBufferMemoryDeviceGroupInfo<'_> {}
 impl ::std::default::Default for BindBufferMemoryDeviceGroupInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -13808,6 +14148,8 @@ pub struct BindImageMemoryInfo<'a> {
     pub memory_offset: DeviceSize,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BindImageMemoryInfo<'_> {}
+unsafe impl Sync for BindImageMemoryInfo<'_> {}
 impl ::std::default::Default for BindImageMemoryInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -13870,6 +14212,8 @@ pub struct BindImageMemoryDeviceGroupInfo<'a> {
     pub p_split_instance_bind_regions: *const Rect2D,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BindImageMemoryDeviceGroupInfo<'_> {}
+unsafe impl Sync for BindImageMemoryDeviceGroupInfo<'_> {}
 impl ::std::default::Default for BindImageMemoryDeviceGroupInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -13918,6 +14262,8 @@ pub struct DeviceGroupRenderPassBeginInfo<'a> {
     pub p_device_render_areas: *const Rect2D,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DeviceGroupRenderPassBeginInfo<'_> {}
+unsafe impl Sync for DeviceGroupRenderPassBeginInfo<'_> {}
 impl ::std::default::Default for DeviceGroupRenderPassBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -13960,6 +14306,8 @@ pub struct DeviceGroupCommandBufferBeginInfo<'a> {
     pub device_mask: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DeviceGroupCommandBufferBeginInfo<'_> {}
+unsafe impl Sync for DeviceGroupCommandBufferBeginInfo<'_> {}
 impl ::std::default::Default for DeviceGroupCommandBufferBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -13998,6 +14346,8 @@ pub struct DeviceGroupSubmitInfo<'a> {
     pub p_signal_semaphore_device_indices: *const u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DeviceGroupSubmitInfo<'_> {}
+unsafe impl Sync for DeviceGroupSubmitInfo<'_> {}
 impl ::std::default::Default for DeviceGroupSubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -14056,6 +14406,8 @@ pub struct DeviceGroupBindSparseInfo<'a> {
     pub memory_device_index: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DeviceGroupBindSparseInfo<'_> {}
+unsafe impl Sync for DeviceGroupBindSparseInfo<'_> {}
 impl ::std::default::Default for DeviceGroupBindSparseInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -14096,6 +14448,8 @@ pub struct DeviceGroupPresentCapabilitiesKHR<'a> {
     pub modes: DeviceGroupPresentModeFlagsKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DeviceGroupPresentCapabilitiesKHR<'_> {}
+unsafe impl Sync for DeviceGroupPresentCapabilitiesKHR<'_> {}
 impl ::std::default::Default for DeviceGroupPresentCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -14134,6 +14488,8 @@ pub struct ImageSwapchainCreateInfoKHR<'a> {
     pub swapchain: SwapchainKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImageSwapchainCreateInfoKHR<'_> {}
+unsafe impl Sync for ImageSwapchainCreateInfoKHR<'_> {}
 impl ::std::default::Default for ImageSwapchainCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -14168,6 +14524,8 @@ pub struct BindImageMemorySwapchainInfoKHR<'a> {
     pub image_index: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BindImageMemorySwapchainInfoKHR<'_> {}
+unsafe impl Sync for BindImageMemorySwapchainInfoKHR<'_> {}
 impl ::std::default::Default for BindImageMemorySwapchainInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -14211,6 +14569,8 @@ pub struct AcquireNextImageInfoKHR<'a> {
     pub device_mask: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for AcquireNextImageInfoKHR<'_> {}
+unsafe impl Sync for AcquireNextImageInfoKHR<'_> {}
 impl ::std::default::Default for AcquireNextImageInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -14269,6 +14629,8 @@ pub struct DeviceGroupPresentInfoKHR<'a> {
     pub mode: DeviceGroupPresentModeFlagsKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DeviceGroupPresentInfoKHR<'_> {}
+unsafe impl Sync for DeviceGroupPresentInfoKHR<'_> {}
 impl ::std::default::Default for DeviceGroupPresentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -14311,6 +14673,8 @@ pub struct DeviceGroupDeviceCreateInfo<'a> {
     pub p_physical_devices: *const PhysicalDevice,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DeviceGroupDeviceCreateInfo<'_> {}
+unsafe impl Sync for DeviceGroupDeviceCreateInfo<'_> {}
 impl ::std::default::Default for DeviceGroupDeviceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -14346,6 +14710,8 @@ pub struct DeviceGroupSwapchainCreateInfoKHR<'a> {
     pub modes: DeviceGroupPresentModeFlagsKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DeviceGroupSwapchainCreateInfoKHR<'_> {}
+unsafe impl Sync for DeviceGroupSwapchainCreateInfoKHR<'_> {}
 impl ::std::default::Default for DeviceGroupSwapchainCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -14431,6 +14797,8 @@ pub struct DescriptorUpdateTemplateCreateInfo<'a> {
     pub set: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DescriptorUpdateTemplateCreateInfo<'_> {}
+unsafe impl Sync for DescriptorUpdateTemplateCreateInfo<'_> {}
 impl ::std::default::Default for DescriptorUpdateTemplateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -14525,6 +14893,8 @@ pub struct PhysicalDevicePresentIdFeaturesKHR<'a> {
     pub present_id: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDevicePresentIdFeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDevicePresentIdFeaturesKHR<'_> {}
 impl ::std::default::Default for PhysicalDevicePresentIdFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -14560,6 +14930,8 @@ pub struct PresentIdKHR<'a> {
     pub p_present_ids: *const u64,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PresentIdKHR<'_> {}
+unsafe impl Sync for PresentIdKHR<'_> {}
 impl ::std::default::Default for PresentIdKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -14595,6 +14967,8 @@ pub struct PhysicalDevicePresentWaitFeaturesKHR<'a> {
     pub present_wait: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDevicePresentWaitFeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDevicePresentWaitFeaturesKHR<'_> {}
 impl ::std::default::Default for PhysicalDevicePresentWaitFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -14636,6 +15010,8 @@ pub struct HdrMetadataEXT<'a> {
     pub max_frame_average_light_level: f32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for HdrMetadataEXT<'_> {}
+unsafe impl Sync for HdrMetadataEXT<'_> {}
 impl ::std::default::Default for HdrMetadataEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -14710,6 +15086,8 @@ pub struct DisplayNativeHdrSurfaceCapabilitiesAMD<'a> {
     pub local_dimming_support: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DisplayNativeHdrSurfaceCapabilitiesAMD<'_> {}
+unsafe impl Sync for DisplayNativeHdrSurfaceCapabilitiesAMD<'_> {}
 impl ::std::default::Default for DisplayNativeHdrSurfaceCapabilitiesAMD<'_> {
     #[inline]
     fn default() -> Self {
@@ -14744,6 +15122,8 @@ pub struct SwapchainDisplayNativeHdrCreateInfoAMD<'a> {
     pub local_dimming_enable: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SwapchainDisplayNativeHdrCreateInfoAMD<'_> {}
+unsafe impl Sync for SwapchainDisplayNativeHdrCreateInfoAMD<'_> {}
 impl ::std::default::Default for SwapchainDisplayNativeHdrCreateInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
@@ -14833,6 +15213,8 @@ pub struct PresentTimesInfoGOOGLE<'a> {
     pub p_times: *const PresentTimeGOOGLE,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PresentTimesInfoGOOGLE<'_> {}
+unsafe impl Sync for PresentTimesInfoGOOGLE<'_> {}
 impl ::std::default::Default for PresentTimesInfoGOOGLE<'_> {
     #[inline]
     fn default() -> Self {
@@ -14890,6 +15272,8 @@ pub struct IOSSurfaceCreateInfoMVK<'a> {
     pub p_view: *const c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for IOSSurfaceCreateInfoMVK<'_> {}
+unsafe impl Sync for IOSSurfaceCreateInfoMVK<'_> {}
 impl ::std::default::Default for IOSSurfaceCreateInfoMVK<'_> {
     #[inline]
     fn default() -> Self {
@@ -14929,6 +15313,8 @@ pub struct MacOSSurfaceCreateInfoMVK<'a> {
     pub p_view: *const c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MacOSSurfaceCreateInfoMVK<'_> {}
+unsafe impl Sync for MacOSSurfaceCreateInfoMVK<'_> {}
 impl ::std::default::Default for MacOSSurfaceCreateInfoMVK<'_> {
     #[inline]
     fn default() -> Self {
@@ -14968,6 +15354,8 @@ pub struct MetalSurfaceCreateInfoEXT<'a> {
     pub p_layer: *const CAMetalLayer,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MetalSurfaceCreateInfoEXT<'_> {}
+unsafe impl Sync for MetalSurfaceCreateInfoEXT<'_> {}
 impl ::std::default::Default for MetalSurfaceCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -15029,6 +15417,8 @@ pub struct PipelineViewportWScalingStateCreateInfoNV<'a> {
     pub p_viewport_w_scalings: *const ViewportWScalingNV,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineViewportWScalingStateCreateInfoNV<'_> {}
+unsafe impl Sync for PipelineViewportWScalingStateCreateInfoNV<'_> {}
 impl ::std::default::Default for PipelineViewportWScalingStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -15109,6 +15499,8 @@ pub struct PipelineViewportSwizzleStateCreateInfoNV<'a> {
     pub p_viewport_swizzles: *const ViewportSwizzleNV,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineViewportSwizzleStateCreateInfoNV<'_> {}
+unsafe impl Sync for PipelineViewportSwizzleStateCreateInfoNV<'_> {}
 impl ::std::default::Default for PipelineViewportSwizzleStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -15154,6 +15546,8 @@ pub struct PhysicalDeviceDiscardRectanglePropertiesEXT<'a> {
     pub max_discard_rectangles: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceDiscardRectanglePropertiesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceDiscardRectanglePropertiesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceDiscardRectanglePropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -15191,6 +15585,8 @@ pub struct PipelineDiscardRectangleStateCreateInfoEXT<'a> {
     pub p_discard_rectangles: *const Rect2D,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineDiscardRectangleStateCreateInfoEXT<'_> {}
+unsafe impl Sync for PipelineDiscardRectangleStateCreateInfoEXT<'_> {}
 impl ::std::default::Default for PipelineDiscardRectangleStateCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -15242,6 +15638,8 @@ pub struct PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'a> {
     pub per_view_position_all_components: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'_> {}
+unsafe impl Sync for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'_> {}
 impl ::std::default::Default for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'_> {
     #[inline]
     fn default() -> Self {
@@ -15310,6 +15708,8 @@ pub struct RenderPassInputAttachmentAspectCreateInfo<'a> {
     pub p_aspect_references: *const InputAttachmentAspectReference,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for RenderPassInputAttachmentAspectCreateInfo<'_> {}
+unsafe impl Sync for RenderPassInputAttachmentAspectCreateInfo<'_> {}
 impl ::std::default::Default for RenderPassInputAttachmentAspectCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -15349,6 +15749,8 @@ pub struct PhysicalDeviceSurfaceInfo2KHR<'a> {
     pub surface: SurfaceKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceSurfaceInfo2KHR<'_> {}
+unsafe impl Sync for PhysicalDeviceSurfaceInfo2KHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceSurfaceInfo2KHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -15396,6 +15798,8 @@ pub struct SurfaceCapabilities2KHR<'a> {
     pub surface_capabilities: SurfaceCapabilitiesKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SurfaceCapabilities2KHR<'_> {}
+unsafe impl Sync for SurfaceCapabilities2KHR<'_> {}
 impl ::std::default::Default for SurfaceCapabilities2KHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -15443,6 +15847,8 @@ pub struct SurfaceFormat2KHR<'a> {
     pub surface_format: SurfaceFormatKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SurfaceFormat2KHR<'_> {}
+unsafe impl Sync for SurfaceFormat2KHR<'_> {}
 impl ::std::default::Default for SurfaceFormat2KHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -15490,6 +15896,8 @@ pub struct DisplayProperties2KHR<'a> {
     pub display_properties: DisplayPropertiesKHR<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DisplayProperties2KHR<'_> {}
+unsafe impl Sync for DisplayProperties2KHR<'_> {}
 impl ::std::default::Default for DisplayProperties2KHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -15522,6 +15930,8 @@ pub struct DisplayPlaneProperties2KHR<'a> {
     pub display_plane_properties: DisplayPlanePropertiesKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DisplayPlaneProperties2KHR<'_> {}
+unsafe impl Sync for DisplayPlaneProperties2KHR<'_> {}
 impl ::std::default::Default for DisplayPlaneProperties2KHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -15557,6 +15967,8 @@ pub struct DisplayModeProperties2KHR<'a> {
     pub display_mode_properties: DisplayModePropertiesKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DisplayModeProperties2KHR<'_> {}
+unsafe impl Sync for DisplayModeProperties2KHR<'_> {}
 impl ::std::default::Default for DisplayModeProperties2KHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -15593,6 +16005,8 @@ pub struct DisplayPlaneInfo2KHR<'a> {
     pub plane_index: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DisplayPlaneInfo2KHR<'_> {}
+unsafe impl Sync for DisplayPlaneInfo2KHR<'_> {}
 impl ::std::default::Default for DisplayPlaneInfo2KHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -15631,6 +16045,8 @@ pub struct DisplayPlaneCapabilities2KHR<'a> {
     pub capabilities: DisplayPlaneCapabilitiesKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DisplayPlaneCapabilities2KHR<'_> {}
+unsafe impl Sync for DisplayPlaneCapabilities2KHR<'_> {}
 impl ::std::default::Default for DisplayPlaneCapabilities2KHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -15663,6 +16079,8 @@ pub struct SharedPresentSurfaceCapabilitiesKHR<'a> {
     pub shared_present_supported_usage_flags: ImageUsageFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SharedPresentSurfaceCapabilitiesKHR<'_> {}
+unsafe impl Sync for SharedPresentSurfaceCapabilitiesKHR<'_> {}
 impl ::std::default::Default for SharedPresentSurfaceCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -15702,6 +16120,8 @@ pub struct PhysicalDevice16BitStorageFeatures<'a> {
     pub storage_input_output16: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDevice16BitStorageFeatures<'_> {}
+unsafe impl Sync for PhysicalDevice16BitStorageFeatures<'_> {}
 impl ::std::default::Default for PhysicalDevice16BitStorageFeatures<'_> {
     #[inline]
     fn default() -> Self {
@@ -15761,6 +16181,8 @@ pub struct PhysicalDeviceSubgroupProperties<'a> {
     pub quad_operations_in_all_stages: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceSubgroupProperties<'_> {}
+unsafe impl Sync for PhysicalDeviceSubgroupProperties<'_> {}
 impl ::std::default::Default for PhysicalDeviceSubgroupProperties<'_> {
     #[inline]
     fn default() -> Self {
@@ -15812,6 +16234,8 @@ pub struct PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'a> {
     pub shader_subgroup_extended_types: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'_> {
     #[inline]
     fn default() -> Self {
@@ -15850,6 +16274,8 @@ pub struct BufferMemoryRequirementsInfo2<'a> {
     pub buffer: Buffer,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BufferMemoryRequirementsInfo2<'_> {}
+unsafe impl Sync for BufferMemoryRequirementsInfo2<'_> {}
 impl ::std::default::Default for BufferMemoryRequirementsInfo2<'_> {
     #[inline]
     fn default() -> Self {
@@ -15882,6 +16308,8 @@ pub struct DeviceBufferMemoryRequirements<'a> {
     pub p_create_info: *const BufferCreateInfo<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DeviceBufferMemoryRequirements<'_> {}
+unsafe impl Sync for DeviceBufferMemoryRequirements<'_> {}
 impl ::std::default::Default for DeviceBufferMemoryRequirements<'_> {
     #[inline]
     fn default() -> Self {
@@ -15914,6 +16342,8 @@ pub struct ImageMemoryRequirementsInfo2<'a> {
     pub image: Image,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImageMemoryRequirementsInfo2<'_> {}
+unsafe impl Sync for ImageMemoryRequirementsInfo2<'_> {}
 impl ::std::default::Default for ImageMemoryRequirementsInfo2<'_> {
     #[inline]
     fn default() -> Self {
@@ -15961,6 +16391,8 @@ pub struct ImageSparseMemoryRequirementsInfo2<'a> {
     pub image: Image,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImageSparseMemoryRequirementsInfo2<'_> {}
+unsafe impl Sync for ImageSparseMemoryRequirementsInfo2<'_> {}
 impl ::std::default::Default for ImageSparseMemoryRequirementsInfo2<'_> {
     #[inline]
     fn default() -> Self {
@@ -15994,6 +16426,8 @@ pub struct DeviceImageMemoryRequirements<'a> {
     pub plane_aspect: ImageAspectFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DeviceImageMemoryRequirements<'_> {}
+unsafe impl Sync for DeviceImageMemoryRequirements<'_> {}
 impl ::std::default::Default for DeviceImageMemoryRequirements<'_> {
     #[inline]
     fn default() -> Self {
@@ -16032,6 +16466,8 @@ pub struct MemoryRequirements2<'a> {
     pub memory_requirements: MemoryRequirements,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MemoryRequirements2<'_> {}
+unsafe impl Sync for MemoryRequirements2<'_> {}
 impl ::std::default::Default for MemoryRequirements2<'_> {
     #[inline]
     fn default() -> Self {
@@ -16079,6 +16515,8 @@ pub struct SparseImageMemoryRequirements2<'a> {
     pub memory_requirements: SparseImageMemoryRequirements,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SparseImageMemoryRequirements2<'_> {}
+unsafe impl Sync for SparseImageMemoryRequirements2<'_> {}
 impl ::std::default::Default for SparseImageMemoryRequirements2<'_> {
     #[inline]
     fn default() -> Self {
@@ -16114,6 +16552,8 @@ pub struct PhysicalDevicePointClippingProperties<'a> {
     pub point_clipping_behavior: PointClippingBehavior,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDevicePointClippingProperties<'_> {}
+unsafe impl Sync for PhysicalDevicePointClippingProperties<'_> {}
 impl ::std::default::Default for PhysicalDevicePointClippingProperties<'_> {
     #[inline]
     fn default() -> Self {
@@ -16151,6 +16591,8 @@ pub struct MemoryDedicatedRequirements<'a> {
     pub requires_dedicated_allocation: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MemoryDedicatedRequirements<'_> {}
+unsafe impl Sync for MemoryDedicatedRequirements<'_> {}
 impl ::std::default::Default for MemoryDedicatedRequirements<'_> {
     #[inline]
     fn default() -> Self {
@@ -16191,6 +16633,8 @@ pub struct MemoryDedicatedAllocateInfo<'a> {
     pub buffer: Buffer,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MemoryDedicatedAllocateInfo<'_> {}
+unsafe impl Sync for MemoryDedicatedAllocateInfo<'_> {}
 impl ::std::default::Default for MemoryDedicatedAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -16230,6 +16674,8 @@ pub struct ImageViewUsageCreateInfo<'a> {
     pub usage: ImageUsageFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImageViewUsageCreateInfo<'_> {}
+unsafe impl Sync for ImageViewUsageCreateInfo<'_> {}
 impl ::std::default::Default for ImageViewUsageCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -16264,6 +16710,8 @@ pub struct ImageViewSlicedCreateInfoEXT<'a> {
     pub slice_count: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImageViewSlicedCreateInfoEXT<'_> {}
+unsafe impl Sync for ImageViewSlicedCreateInfoEXT<'_> {}
 impl ::std::default::Default for ImageViewSlicedCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -16303,6 +16751,8 @@ pub struct PipelineTessellationDomainOriginStateCreateInfo<'a> {
     pub domain_origin: TessellationDomainOrigin,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineTessellationDomainOriginStateCreateInfo<'_> {}
+unsafe impl Sync for PipelineTessellationDomainOriginStateCreateInfo<'_> {}
 impl ::std::default::Default for PipelineTessellationDomainOriginStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -16340,6 +16790,8 @@ pub struct SamplerYcbcrConversionInfo<'a> {
     pub conversion: SamplerYcbcrConversion,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SamplerYcbcrConversionInfo<'_> {}
+unsafe impl Sync for SamplerYcbcrConversionInfo<'_> {}
 impl ::std::default::Default for SamplerYcbcrConversionInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -16381,6 +16833,8 @@ pub struct SamplerYcbcrConversionCreateInfo<'a> {
     pub force_explicit_reconstruction: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SamplerYcbcrConversionCreateInfo<'_> {}
+unsafe impl Sync for SamplerYcbcrConversionCreateInfo<'_> {}
 impl ::std::default::Default for SamplerYcbcrConversionCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -16473,6 +16927,8 @@ pub struct BindImagePlaneMemoryInfo<'a> {
     pub plane_aspect: ImageAspectFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BindImagePlaneMemoryInfo<'_> {}
+unsafe impl Sync for BindImagePlaneMemoryInfo<'_> {}
 impl ::std::default::Default for BindImagePlaneMemoryInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -16506,6 +16962,8 @@ pub struct ImagePlaneMemoryRequirementsInfo<'a> {
     pub plane_aspect: ImageAspectFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImagePlaneMemoryRequirementsInfo<'_> {}
+unsafe impl Sync for ImagePlaneMemoryRequirementsInfo<'_> {}
 impl ::std::default::Default for ImagePlaneMemoryRequirementsInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -16539,6 +16997,8 @@ pub struct PhysicalDeviceSamplerYcbcrConversionFeatures<'a> {
     pub sampler_ycbcr_conversion: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceSamplerYcbcrConversionFeatures<'_> {}
+unsafe impl Sync for PhysicalDeviceSamplerYcbcrConversionFeatures<'_> {}
 impl ::std::default::Default for PhysicalDeviceSamplerYcbcrConversionFeatures<'_> {
     #[inline]
     fn default() -> Self {
@@ -16574,6 +17034,8 @@ pub struct SamplerYcbcrConversionImageFormatProperties<'a> {
     pub combined_image_sampler_descriptor_count: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SamplerYcbcrConversionImageFormatProperties<'_> {}
+unsafe impl Sync for SamplerYcbcrConversionImageFormatProperties<'_> {}
 impl ::std::default::Default for SamplerYcbcrConversionImageFormatProperties<'_> {
     #[inline]
     fn default() -> Self {
@@ -16611,6 +17073,8 @@ pub struct TextureLODGatherFormatPropertiesAMD<'a> {
     pub supports_texture_gather_lod_bias_amd: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for TextureLODGatherFormatPropertiesAMD<'_> {}
+unsafe impl Sync for TextureLODGatherFormatPropertiesAMD<'_> {}
 impl ::std::default::Default for TextureLODGatherFormatPropertiesAMD<'_> {
     #[inline]
     fn default() -> Self {
@@ -16649,6 +17113,8 @@ pub struct ConditionalRenderingBeginInfoEXT<'a> {
     pub flags: ConditionalRenderingFlagsEXT,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ConditionalRenderingBeginInfoEXT<'_> {}
+unsafe impl Sync for ConditionalRenderingBeginInfoEXT<'_> {}
 impl ::std::default::Default for ConditionalRenderingBeginInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -16693,6 +17159,8 @@ pub struct ProtectedSubmitInfo<'a> {
     pub protected_submit: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ProtectedSubmitInfo<'_> {}
+unsafe impl Sync for ProtectedSubmitInfo<'_> {}
 impl ::std::default::Default for ProtectedSubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -16726,6 +17194,8 @@ pub struct PhysicalDeviceProtectedMemoryFeatures<'a> {
     pub protected_memory: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceProtectedMemoryFeatures<'_> {}
+unsafe impl Sync for PhysicalDeviceProtectedMemoryFeatures<'_> {}
 impl ::std::default::Default for PhysicalDeviceProtectedMemoryFeatures<'_> {
     #[inline]
     fn default() -> Self {
@@ -16760,6 +17230,8 @@ pub struct PhysicalDeviceProtectedMemoryProperties<'a> {
     pub protected_no_fault: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceProtectedMemoryProperties<'_> {}
+unsafe impl Sync for PhysicalDeviceProtectedMemoryProperties<'_> {}
 impl ::std::default::Default for PhysicalDeviceProtectedMemoryProperties<'_> {
     #[inline]
     fn default() -> Self {
@@ -16796,6 +17268,8 @@ pub struct DeviceQueueInfo2<'a> {
     pub queue_index: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DeviceQueueInfo2<'_> {}
+unsafe impl Sync for DeviceQueueInfo2<'_> {}
 impl ::std::default::Default for DeviceQueueInfo2<'_> {
     #[inline]
     fn default() -> Self {
@@ -16842,6 +17316,8 @@ pub struct PipelineCoverageToColorStateCreateInfoNV<'a> {
     pub coverage_to_color_location: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineCoverageToColorStateCreateInfoNV<'_> {}
+unsafe impl Sync for PipelineCoverageToColorStateCreateInfoNV<'_> {}
 impl ::std::default::Default for PipelineCoverageToColorStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -16892,6 +17368,8 @@ pub struct PhysicalDeviceSamplerFilterMinmaxProperties<'a> {
     pub filter_minmax_image_component_mapping: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceSamplerFilterMinmaxProperties<'_> {}
+unsafe impl Sync for PhysicalDeviceSamplerFilterMinmaxProperties<'_> {}
 impl ::std::default::Default for PhysicalDeviceSamplerFilterMinmaxProperties<'_> {
     #[inline]
     fn default() -> Self {
@@ -16962,6 +17440,8 @@ pub struct SampleLocationsInfoEXT<'a> {
     pub p_sample_locations: *const SampleLocationEXT,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SampleLocationsInfoEXT<'_> {}
+unsafe impl Sync for SampleLocationsInfoEXT<'_> {}
 impl ::std::default::Default for SampleLocationsInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -17066,6 +17546,8 @@ pub struct RenderPassSampleLocationsBeginInfoEXT<'a> {
     pub p_post_subpass_sample_locations: *const SubpassSampleLocationsEXT<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for RenderPassSampleLocationsBeginInfoEXT<'_> {}
+unsafe impl Sync for RenderPassSampleLocationsBeginInfoEXT<'_> {}
 impl ::std::default::Default for RenderPassSampleLocationsBeginInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -17118,6 +17600,8 @@ pub struct PipelineSampleLocationsStateCreateInfoEXT<'a> {
     pub sample_locations_info: SampleLocationsInfoEXT<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineSampleLocationsStateCreateInfoEXT<'_> {}
+unsafe impl Sync for PipelineSampleLocationsStateCreateInfoEXT<'_> {}
 impl ::std::default::Default for PipelineSampleLocationsStateCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -17168,6 +17652,8 @@ pub struct PhysicalDeviceSampleLocationsPropertiesEXT<'a> {
     pub variable_sample_locations: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceSampleLocationsPropertiesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceSampleLocationsPropertiesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceSampleLocationsPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -17235,6 +17721,8 @@ pub struct MultisamplePropertiesEXT<'a> {
     pub max_sample_location_grid_size: Extent2D,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MultisamplePropertiesEXT<'_> {}
+unsafe impl Sync for MultisamplePropertiesEXT<'_> {}
 impl ::std::default::Default for MultisamplePropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -17270,6 +17758,8 @@ pub struct SamplerReductionModeCreateInfo<'a> {
     pub reduction_mode: SamplerReductionMode,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SamplerReductionModeCreateInfo<'_> {}
+unsafe impl Sync for SamplerReductionModeCreateInfo<'_> {}
 impl ::std::default::Default for SamplerReductionModeCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -17303,6 +17793,8 @@ pub struct PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'a> {
     pub advanced_blend_coherent_operations: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -17341,6 +17833,8 @@ pub struct PhysicalDeviceMultiDrawFeaturesEXT<'a> {
     pub multi_draw: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceMultiDrawFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceMultiDrawFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceMultiDrawFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -17380,6 +17874,8 @@ pub struct PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'a> {
     pub advanced_blend_all_operations: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -17466,6 +17962,8 @@ pub struct PipelineColorBlendAdvancedStateCreateInfoEXT<'a> {
     pub blend_overlap: BlendOverlapEXT,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineColorBlendAdvancedStateCreateInfoEXT<'_> {}
+unsafe impl Sync for PipelineColorBlendAdvancedStateCreateInfoEXT<'_> {}
 impl ::std::default::Default for PipelineColorBlendAdvancedStateCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -17516,6 +18014,8 @@ pub struct PhysicalDeviceInlineUniformBlockFeatures<'a> {
     pub descriptor_binding_inline_uniform_block_update_after_bind: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceInlineUniformBlockFeatures<'_> {}
+unsafe impl Sync for PhysicalDeviceInlineUniformBlockFeatures<'_> {}
 impl ::std::default::Default for PhysicalDeviceInlineUniformBlockFeatures<'_> {
     #[inline]
     fn default() -> Self {
@@ -17565,6 +18065,8 @@ pub struct PhysicalDeviceInlineUniformBlockProperties<'a> {
     pub max_descriptor_set_update_after_bind_inline_uniform_blocks: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceInlineUniformBlockProperties<'_> {}
+unsafe impl Sync for PhysicalDeviceInlineUniformBlockProperties<'_> {}
 impl ::std::default::Default for PhysicalDeviceInlineUniformBlockProperties<'_> {
     #[inline]
     fn default() -> Self {
@@ -17639,6 +18141,8 @@ pub struct WriteDescriptorSetInlineUniformBlock<'a> {
     pub p_data: *const c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for WriteDescriptorSetInlineUniformBlock<'_> {}
+unsafe impl Sync for WriteDescriptorSetInlineUniformBlock<'_> {}
 impl ::std::default::Default for WriteDescriptorSetInlineUniformBlock<'_> {
     #[inline]
     fn default() -> Self {
@@ -17674,6 +18178,8 @@ pub struct DescriptorPoolInlineUniformBlockCreateInfo<'a> {
     pub max_inline_uniform_block_bindings: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DescriptorPoolInlineUniformBlockCreateInfo<'_> {}
+unsafe impl Sync for DescriptorPoolInlineUniformBlockCreateInfo<'_> {}
 impl ::std::default::Default for DescriptorPoolInlineUniformBlockCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -17715,6 +18221,8 @@ pub struct PipelineCoverageModulationStateCreateInfoNV<'a> {
     pub p_coverage_modulation_table: *const f32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineCoverageModulationStateCreateInfoNV<'_> {}
+unsafe impl Sync for PipelineCoverageModulationStateCreateInfoNV<'_> {}
 impl ::std::default::Default for PipelineCoverageModulationStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -17779,6 +18287,8 @@ pub struct ImageFormatListCreateInfo<'a> {
     pub p_view_formats: *const Format,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImageFormatListCreateInfo<'_> {}
+unsafe impl Sync for ImageFormatListCreateInfo<'_> {}
 impl ::std::default::Default for ImageFormatListCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -17818,6 +18328,8 @@ pub struct ValidationCacheCreateInfoEXT<'a> {
     pub p_initial_data: *const c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ValidationCacheCreateInfoEXT<'_> {}
+unsafe impl Sync for ValidationCacheCreateInfoEXT<'_> {}
 impl ::std::default::Default for ValidationCacheCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -17858,6 +18370,8 @@ pub struct ShaderModuleValidationCacheCreateInfoEXT<'a> {
     pub validation_cache: ValidationCacheEXT,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ShaderModuleValidationCacheCreateInfoEXT<'_> {}
+unsafe impl Sync for ShaderModuleValidationCacheCreateInfoEXT<'_> {}
 impl ::std::default::Default for ShaderModuleValidationCacheCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -17894,6 +18408,8 @@ pub struct PhysicalDeviceMaintenance3Properties<'a> {
     pub max_memory_allocation_size: DeviceSize,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceMaintenance3Properties<'_> {}
+unsafe impl Sync for PhysicalDeviceMaintenance3Properties<'_> {}
 impl ::std::default::Default for PhysicalDeviceMaintenance3Properties<'_> {
     #[inline]
     fn default() -> Self {
@@ -17933,6 +18449,8 @@ pub struct PhysicalDeviceMaintenance4Features<'a> {
     pub maintenance4: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceMaintenance4Features<'_> {}
+unsafe impl Sync for PhysicalDeviceMaintenance4Features<'_> {}
 impl ::std::default::Default for PhysicalDeviceMaintenance4Features<'_> {
     #[inline]
     fn default() -> Self {
@@ -17967,6 +18485,8 @@ pub struct PhysicalDeviceMaintenance4Properties<'a> {
     pub max_buffer_size: DeviceSize,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceMaintenance4Properties<'_> {}
+unsafe impl Sync for PhysicalDeviceMaintenance4Properties<'_> {}
 impl ::std::default::Default for PhysicalDeviceMaintenance4Properties<'_> {
     #[inline]
     fn default() -> Self {
@@ -18000,6 +18520,8 @@ pub struct PhysicalDeviceMaintenance5FeaturesKHR<'a> {
     pub maintenance5: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceMaintenance5FeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceMaintenance5FeaturesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceMaintenance5FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -18039,6 +18561,8 @@ pub struct PhysicalDeviceMaintenance5PropertiesKHR<'a> {
     pub non_strict_wide_lines_use_parallelogram: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceMaintenance5PropertiesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceMaintenance5PropertiesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceMaintenance5PropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -18122,6 +18646,8 @@ pub struct PhysicalDeviceMaintenance6FeaturesKHR<'a> {
     pub maintenance6: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceMaintenance6FeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceMaintenance6FeaturesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceMaintenance6FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -18158,6 +18684,8 @@ pub struct PhysicalDeviceMaintenance6PropertiesKHR<'a> {
     pub fragment_shading_rate_clamp_combiner_inputs: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceMaintenance6PropertiesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceMaintenance6PropertiesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceMaintenance6PropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -18220,6 +18748,8 @@ pub struct RenderingAreaInfoKHR<'a> {
     pub stencil_attachment_format: Format,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for RenderingAreaInfoKHR<'_> {}
+unsafe impl Sync for RenderingAreaInfoKHR<'_> {}
 impl ::std::default::Default for RenderingAreaInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -18272,6 +18802,8 @@ pub struct DescriptorSetLayoutSupport<'a> {
     pub supported: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DescriptorSetLayoutSupport<'_> {}
+unsafe impl Sync for DescriptorSetLayoutSupport<'_> {}
 impl ::std::default::Default for DescriptorSetLayoutSupport<'_> {
     #[inline]
     fn default() -> Self {
@@ -18319,6 +18851,8 @@ pub struct PhysicalDeviceShaderDrawParametersFeatures<'a> {
     pub shader_draw_parameters: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderDrawParametersFeatures<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderDrawParametersFeatures<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderDrawParametersFeatures<'_> {
     #[inline]
     fn default() -> Self {
@@ -18355,6 +18889,8 @@ pub struct PhysicalDeviceShaderFloat16Int8Features<'a> {
     pub shader_int8: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderFloat16Int8Features<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderFloat16Int8Features<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderFloat16Int8Features<'_> {
     #[inline]
     fn default() -> Self {
@@ -18412,6 +18948,8 @@ pub struct PhysicalDeviceFloatControlsProperties<'a> {
     pub shader_rounding_mode_rtz_float64: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceFloatControlsProperties<'_> {}
+unsafe impl Sync for PhysicalDeviceFloatControlsProperties<'_> {}
 impl ::std::default::Default for PhysicalDeviceFloatControlsProperties<'_> {
     #[inline]
     fn default() -> Self {
@@ -18586,6 +19124,8 @@ pub struct PhysicalDeviceHostQueryResetFeatures<'a> {
     pub host_query_reset: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceHostQueryResetFeatures<'_> {}
+unsafe impl Sync for PhysicalDeviceHostQueryResetFeatures<'_> {}
 impl ::std::default::Default for PhysicalDeviceHostQueryResetFeatures<'_> {
     #[inline]
     fn default() -> Self {
@@ -18645,6 +19185,8 @@ pub struct NativeBufferANDROID<'a> {
     pub usage2: NativeBufferUsage2ANDROID,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for NativeBufferANDROID<'_> {}
+unsafe impl Sync for NativeBufferANDROID<'_> {}
 impl ::std::default::Default for NativeBufferANDROID<'_> {
     #[inline]
     fn default() -> Self {
@@ -18701,6 +19243,8 @@ pub struct SwapchainImageCreateInfoANDROID<'a> {
     pub usage: SwapchainImageUsageFlagsANDROID,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SwapchainImageCreateInfoANDROID<'_> {}
+unsafe impl Sync for SwapchainImageCreateInfoANDROID<'_> {}
 impl ::std::default::Default for SwapchainImageCreateInfoANDROID<'_> {
     #[inline]
     fn default() -> Self {
@@ -18733,6 +19277,8 @@ pub struct PhysicalDevicePresentationPropertiesANDROID<'a> {
     pub shared_image: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDevicePresentationPropertiesANDROID<'_> {}
+unsafe impl Sync for PhysicalDevicePresentationPropertiesANDROID<'_> {}
 impl ::std::default::Default for PhysicalDevicePresentationPropertiesANDROID<'_> {
     #[inline]
     fn default() -> Self {
@@ -18870,6 +19416,8 @@ pub struct DeviceQueueGlobalPriorityCreateInfoKHR<'a> {
     pub global_priority: QueueGlobalPriorityKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DeviceQueueGlobalPriorityCreateInfoKHR<'_> {}
+unsafe impl Sync for DeviceQueueGlobalPriorityCreateInfoKHR<'_> {}
 impl ::std::default::Default for DeviceQueueGlobalPriorityCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -18904,6 +19452,8 @@ pub struct PhysicalDeviceGlobalPriorityQueryFeaturesKHR<'a> {
     pub global_priority_query: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceGlobalPriorityQueryFeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceGlobalPriorityQueryFeaturesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceGlobalPriorityQueryFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -18939,6 +19489,8 @@ pub struct QueueFamilyGlobalPriorityPropertiesKHR<'a> {
     pub priorities: [QueueGlobalPriorityKHR; MAX_GLOBAL_PRIORITY_SIZE_KHR],
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for QueueFamilyGlobalPriorityPropertiesKHR<'_> {}
+unsafe impl Sync for QueueFamilyGlobalPriorityPropertiesKHR<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for QueueFamilyGlobalPriorityPropertiesKHR<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -18992,6 +19544,8 @@ pub struct DebugUtilsObjectNameInfoEXT<'a> {
     pub p_object_name: *const c_char,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DebugUtilsObjectNameInfoEXT<'_> {}
+unsafe impl Sync for DebugUtilsObjectNameInfoEXT<'_> {}
 impl ::std::default::Default for DebugUtilsObjectNameInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -19045,6 +19599,8 @@ pub struct DebugUtilsObjectTagInfoEXT<'a> {
     pub p_tag: *const c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DebugUtilsObjectTagInfoEXT<'_> {}
+unsafe impl Sync for DebugUtilsObjectTagInfoEXT<'_> {}
 impl ::std::default::Default for DebugUtilsObjectTagInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -19094,6 +19650,8 @@ pub struct DebugUtilsLabelEXT<'a> {
     pub color: [f32; 4],
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DebugUtilsLabelEXT<'_> {}
+unsafe impl Sync for DebugUtilsLabelEXT<'_> {}
 impl ::std::default::Default for DebugUtilsLabelEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -19143,6 +19701,8 @@ pub struct DebugUtilsMessengerCreateInfoEXT<'a> {
     pub p_user_data: *mut c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DebugUtilsMessengerCreateInfoEXT<'_> {}
+unsafe impl Sync for DebugUtilsMessengerCreateInfoEXT<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for DebugUtilsMessengerCreateInfoEXT<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -19229,6 +19789,8 @@ pub struct DebugUtilsMessengerCallbackDataEXT<'a> {
     pub p_objects: *const DebugUtilsObjectNameInfoEXT<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DebugUtilsMessengerCallbackDataEXT<'_> {}
+unsafe impl Sync for DebugUtilsMessengerCallbackDataEXT<'_> {}
 impl ::std::default::Default for DebugUtilsMessengerCallbackDataEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -19337,6 +19899,8 @@ pub struct PhysicalDeviceDeviceMemoryReportFeaturesEXT<'a> {
     pub device_memory_report: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -19373,6 +19937,8 @@ pub struct DeviceDeviceMemoryReportCreateInfoEXT<'a> {
     pub p_user_data: *mut c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DeviceDeviceMemoryReportCreateInfoEXT<'_> {}
+unsafe impl Sync for DeviceDeviceMemoryReportCreateInfoEXT<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for DeviceDeviceMemoryReportCreateInfoEXT<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -19443,6 +20009,8 @@ pub struct DeviceMemoryReportCallbackDataEXT<'a> {
     pub heap_index: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DeviceMemoryReportCallbackDataEXT<'_> {}
+unsafe impl Sync for DeviceMemoryReportCallbackDataEXT<'_> {}
 impl ::std::default::Default for DeviceMemoryReportCallbackDataEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -19508,6 +20076,8 @@ pub struct ImportMemoryHostPointerInfoEXT<'a> {
     pub p_host_pointer: *mut c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImportMemoryHostPointerInfoEXT<'_> {}
+unsafe impl Sync for ImportMemoryHostPointerInfoEXT<'_> {}
 impl ::std::default::Default for ImportMemoryHostPointerInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -19547,6 +20117,8 @@ pub struct MemoryHostPointerPropertiesEXT<'a> {
     pub memory_type_bits: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MemoryHostPointerPropertiesEXT<'_> {}
+unsafe impl Sync for MemoryHostPointerPropertiesEXT<'_> {}
 impl ::std::default::Default for MemoryHostPointerPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -19579,6 +20151,8 @@ pub struct PhysicalDeviceExternalMemoryHostPropertiesEXT<'a> {
     pub min_imported_host_pointer_alignment: DeviceSize,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceExternalMemoryHostPropertiesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceExternalMemoryHostPropertiesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceExternalMemoryHostPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -19624,6 +20198,8 @@ pub struct PhysicalDeviceConservativeRasterizationPropertiesEXT<'a> {
     pub conservative_rasterization_post_depth_coverage: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceConservativeRasterizationPropertiesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceConservativeRasterizationPropertiesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceConservativeRasterizationPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -19731,6 +20307,8 @@ pub struct CalibratedTimestampInfoKHR<'a> {
     pub time_domain: TimeDomainKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CalibratedTimestampInfoKHR<'_> {}
+unsafe impl Sync for CalibratedTimestampInfoKHR<'_> {}
 impl ::std::default::Default for CalibratedTimestampInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -19776,6 +20354,8 @@ pub struct PhysicalDeviceShaderCorePropertiesAMD<'a> {
     pub vgpr_allocation_granularity: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderCorePropertiesAMD<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderCorePropertiesAMD<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderCorePropertiesAMD<'_> {
     #[inline]
     fn default() -> Self {
@@ -19888,6 +20468,8 @@ pub struct PhysicalDeviceShaderCoreProperties2AMD<'a> {
     pub active_compute_unit_count: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderCoreProperties2AMD<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderCoreProperties2AMD<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderCoreProperties2AMD<'_> {
     #[inline]
     fn default() -> Self {
@@ -19933,6 +20515,8 @@ pub struct PipelineRasterizationConservativeStateCreateInfoEXT<'a> {
     pub extra_primitive_overestimation_size: f32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineRasterizationConservativeStateCreateInfoEXT<'_> {}
+unsafe impl Sync for PipelineRasterizationConservativeStateCreateInfoEXT<'_> {}
 impl ::std::default::Default for PipelineRasterizationConservativeStateCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -20007,6 +20591,8 @@ pub struct PhysicalDeviceDescriptorIndexingFeatures<'a> {
     pub runtime_descriptor_array: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceDescriptorIndexingFeatures<'_> {}
+unsafe impl Sync for PhysicalDeviceDescriptorIndexingFeatures<'_> {}
 impl ::std::default::Default for PhysicalDeviceDescriptorIndexingFeatures<'_> {
     #[inline]
     fn default() -> Self {
@@ -20253,6 +20839,8 @@ pub struct PhysicalDeviceDescriptorIndexingProperties<'a> {
     pub max_descriptor_set_update_after_bind_input_attachments: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceDescriptorIndexingProperties<'_> {}
+unsafe impl Sync for PhysicalDeviceDescriptorIndexingProperties<'_> {}
 impl ::std::default::Default for PhysicalDeviceDescriptorIndexingProperties<'_> {
     #[inline]
     fn default() -> Self {
@@ -20506,6 +21094,8 @@ pub struct DescriptorSetLayoutBindingFlagsCreateInfo<'a> {
     pub p_binding_flags: *const DescriptorBindingFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DescriptorSetLayoutBindingFlagsCreateInfo<'_> {}
+unsafe impl Sync for DescriptorSetLayoutBindingFlagsCreateInfo<'_> {}
 impl ::std::default::Default for DescriptorSetLayoutBindingFlagsCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -20543,6 +21133,8 @@ pub struct DescriptorSetVariableDescriptorCountAllocateInfo<'a> {
     pub p_descriptor_counts: *const u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DescriptorSetVariableDescriptorCountAllocateInfo<'_> {}
+unsafe impl Sync for DescriptorSetVariableDescriptorCountAllocateInfo<'_> {}
 impl ::std::default::Default for DescriptorSetVariableDescriptorCountAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -20582,6 +21174,8 @@ pub struct DescriptorSetVariableDescriptorCountLayoutSupport<'a> {
     pub max_variable_descriptor_count: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DescriptorSetVariableDescriptorCountLayoutSupport<'_> {}
+unsafe impl Sync for DescriptorSetVariableDescriptorCountLayoutSupport<'_> {}
 impl ::std::default::Default for DescriptorSetVariableDescriptorCountLayoutSupport<'_> {
     #[inline]
     fn default() -> Self {
@@ -20627,6 +21221,8 @@ pub struct AttachmentDescription2<'a> {
     pub final_layout: ImageLayout,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for AttachmentDescription2<'_> {}
+unsafe impl Sync for AttachmentDescription2<'_> {}
 impl ::std::default::Default for AttachmentDescription2<'_> {
     #[inline]
     fn default() -> Self {
@@ -20724,6 +21320,8 @@ pub struct AttachmentReference2<'a> {
     pub aspect_mask: ImageAspectFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for AttachmentReference2<'_> {}
+unsafe impl Sync for AttachmentReference2<'_> {}
 impl ::std::default::Default for AttachmentReference2<'_> {
     #[inline]
     fn default() -> Self {
@@ -20793,6 +21391,8 @@ pub struct SubpassDescription2<'a> {
     pub p_preserve_attachments: *const u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SubpassDescription2<'_> {}
+unsafe impl Sync for SubpassDescription2<'_> {}
 impl ::std::default::Default for SubpassDescription2<'_> {
     #[inline]
     fn default() -> Self {
@@ -20902,6 +21502,8 @@ pub struct SubpassDependency2<'a> {
     pub view_offset: i32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SubpassDependency2<'_> {}
+unsafe impl Sync for SubpassDependency2<'_> {}
 impl ::std::default::Default for SubpassDependency2<'_> {
     #[inline]
     fn default() -> Self {
@@ -20999,6 +21601,8 @@ pub struct RenderPassCreateInfo2<'a> {
     pub p_correlated_view_masks: *const u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for RenderPassCreateInfo2<'_> {}
+unsafe impl Sync for RenderPassCreateInfo2<'_> {}
 impl ::std::default::Default for RenderPassCreateInfo2<'_> {
     #[inline]
     fn default() -> Self {
@@ -21078,6 +21682,8 @@ pub struct SubpassBeginInfo<'a> {
     pub contents: SubpassContents,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SubpassBeginInfo<'_> {}
+unsafe impl Sync for SubpassBeginInfo<'_> {}
 impl ::std::default::Default for SubpassBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -21109,6 +21715,8 @@ pub struct SubpassEndInfo<'a> {
     pub p_next: *const c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SubpassEndInfo<'_> {}
+unsafe impl Sync for SubpassEndInfo<'_> {}
 impl ::std::default::Default for SubpassEndInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -21150,6 +21758,8 @@ pub struct PhysicalDeviceTimelineSemaphoreFeatures<'a> {
     pub timeline_semaphore: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceTimelineSemaphoreFeatures<'_> {}
+unsafe impl Sync for PhysicalDeviceTimelineSemaphoreFeatures<'_> {}
 impl ::std::default::Default for PhysicalDeviceTimelineSemaphoreFeatures<'_> {
     #[inline]
     fn default() -> Self {
@@ -21185,6 +21795,8 @@ pub struct PhysicalDeviceTimelineSemaphoreProperties<'a> {
     pub max_timeline_semaphore_value_difference: u64,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceTimelineSemaphoreProperties<'_> {}
+unsafe impl Sync for PhysicalDeviceTimelineSemaphoreProperties<'_> {}
 impl ::std::default::Default for PhysicalDeviceTimelineSemaphoreProperties<'_> {
     #[inline]
     fn default() -> Self {
@@ -21223,6 +21835,8 @@ pub struct SemaphoreTypeCreateInfo<'a> {
     pub initial_value: u64,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SemaphoreTypeCreateInfo<'_> {}
+unsafe impl Sync for SemaphoreTypeCreateInfo<'_> {}
 impl ::std::default::Default for SemaphoreTypeCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -21266,6 +21880,8 @@ pub struct TimelineSemaphoreSubmitInfo<'a> {
     pub p_signal_semaphore_values: *const u64,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for TimelineSemaphoreSubmitInfo<'_> {}
+unsafe impl Sync for TimelineSemaphoreSubmitInfo<'_> {}
 impl ::std::default::Default for TimelineSemaphoreSubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -21313,6 +21929,8 @@ pub struct SemaphoreWaitInfo<'a> {
     pub p_values: *const u64,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SemaphoreWaitInfo<'_> {}
+unsafe impl Sync for SemaphoreWaitInfo<'_> {}
 impl ::std::default::Default for SemaphoreWaitInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -21361,6 +21979,8 @@ pub struct SemaphoreSignalInfo<'a> {
     pub value: u64,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SemaphoreSignalInfo<'_> {}
+unsafe impl Sync for SemaphoreSignalInfo<'_> {}
 impl ::std::default::Default for SemaphoreSignalInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -21421,6 +22041,8 @@ pub struct PipelineVertexInputDivisorStateCreateInfoKHR<'a> {
     pub p_vertex_binding_divisors: *const VertexInputBindingDivisorDescriptionKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineVertexInputDivisorStateCreateInfoKHR<'_> {}
+unsafe impl Sync for PipelineVertexInputDivisorStateCreateInfoKHR<'_> {}
 impl ::std::default::Default for PipelineVertexInputDivisorStateCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -21463,6 +22085,8 @@ pub struct PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'a> {
     pub max_vertex_attrib_divisor: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -21501,6 +22125,8 @@ pub struct PhysicalDeviceVertexAttributeDivisorPropertiesKHR<'a> {
     pub supports_non_zero_first_instance: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceVertexAttributeDivisorPropertiesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceVertexAttributeDivisorPropertiesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceVertexAttributeDivisorPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -21550,6 +22176,8 @@ pub struct PhysicalDevicePCIBusInfoPropertiesEXT<'a> {
     pub pci_function: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDevicePCIBusInfoPropertiesEXT<'_> {}
+unsafe impl Sync for PhysicalDevicePCIBusInfoPropertiesEXT<'_> {}
 impl ::std::default::Default for PhysicalDevicePCIBusInfoPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -21602,6 +22230,8 @@ pub struct ImportAndroidHardwareBufferInfoANDROID<'a> {
     pub buffer: *mut AHardwareBuffer,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImportAndroidHardwareBufferInfoANDROID<'_> {}
+unsafe impl Sync for ImportAndroidHardwareBufferInfoANDROID<'_> {}
 impl ::std::default::Default for ImportAndroidHardwareBufferInfoANDROID<'_> {
     #[inline]
     fn default() -> Self {
@@ -21636,6 +22266,8 @@ pub struct AndroidHardwareBufferUsageANDROID<'a> {
     pub android_hardware_buffer_usage: u64,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for AndroidHardwareBufferUsageANDROID<'_> {}
+unsafe impl Sync for AndroidHardwareBufferUsageANDROID<'_> {}
 impl ::std::default::Default for AndroidHardwareBufferUsageANDROID<'_> {
     #[inline]
     fn default() -> Self {
@@ -21670,6 +22302,8 @@ pub struct AndroidHardwareBufferPropertiesANDROID<'a> {
     pub memory_type_bits: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for AndroidHardwareBufferPropertiesANDROID<'_> {}
+unsafe impl Sync for AndroidHardwareBufferPropertiesANDROID<'_> {}
 impl ::std::default::Default for AndroidHardwareBufferPropertiesANDROID<'_> {
     #[inline]
     fn default() -> Self {
@@ -21726,6 +22360,8 @@ pub struct MemoryGetAndroidHardwareBufferInfoANDROID<'a> {
     pub memory: DeviceMemory,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MemoryGetAndroidHardwareBufferInfoANDROID<'_> {}
+unsafe impl Sync for MemoryGetAndroidHardwareBufferInfoANDROID<'_> {}
 impl ::std::default::Default for MemoryGetAndroidHardwareBufferInfoANDROID<'_> {
     #[inline]
     fn default() -> Self {
@@ -21766,6 +22402,8 @@ pub struct AndroidHardwareBufferFormatPropertiesANDROID<'a> {
     pub suggested_y_chroma_offset: ChromaLocation,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for AndroidHardwareBufferFormatPropertiesANDROID<'_> {}
+unsafe impl Sync for AndroidHardwareBufferFormatPropertiesANDROID<'_> {}
 impl ::std::default::Default for AndroidHardwareBufferFormatPropertiesANDROID<'_> {
     #[inline]
     fn default() -> Self {
@@ -21851,6 +22489,8 @@ pub struct CommandBufferInheritanceConditionalRenderingInfoEXT<'a> {
     pub conditional_rendering_enable: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CommandBufferInheritanceConditionalRenderingInfoEXT<'_> {}
+unsafe impl Sync for CommandBufferInheritanceConditionalRenderingInfoEXT<'_> {}
 impl ::std::default::Default for CommandBufferInheritanceConditionalRenderingInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -21888,6 +22528,8 @@ pub struct ExternalFormatANDROID<'a> {
     pub external_format: u64,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ExternalFormatANDROID<'_> {}
+unsafe impl Sync for ExternalFormatANDROID<'_> {}
 impl ::std::default::Default for ExternalFormatANDROID<'_> {
     #[inline]
     fn default() -> Self {
@@ -21927,6 +22569,8 @@ pub struct PhysicalDevice8BitStorageFeatures<'a> {
     pub storage_push_constant8: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDevice8BitStorageFeatures<'_> {}
+unsafe impl Sync for PhysicalDevice8BitStorageFeatures<'_> {}
 impl ::std::default::Default for PhysicalDevice8BitStorageFeatures<'_> {
     #[inline]
     fn default() -> Self {
@@ -21977,6 +22621,8 @@ pub struct PhysicalDeviceConditionalRenderingFeaturesEXT<'a> {
     pub inherited_conditional_rendering: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceConditionalRenderingFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceConditionalRenderingFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceConditionalRenderingFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -22023,6 +22669,8 @@ pub struct PhysicalDeviceVulkanMemoryModelFeatures<'a> {
     pub vulkan_memory_model_availability_visibility_chains: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceVulkanMemoryModelFeatures<'_> {}
+unsafe impl Sync for PhysicalDeviceVulkanMemoryModelFeatures<'_> {}
 impl ::std::default::Default for PhysicalDeviceVulkanMemoryModelFeatures<'_> {
     #[inline]
     fn default() -> Self {
@@ -22078,6 +22726,8 @@ pub struct PhysicalDeviceShaderAtomicInt64Features<'a> {
     pub shader_shared_int64_atomics: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderAtomicInt64Features<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderAtomicInt64Features<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderAtomicInt64Features<'_> {
     #[inline]
     fn default() -> Self {
@@ -22130,6 +22780,8 @@ pub struct PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a> {
     pub sparse_image_float32_atomic_add: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -22260,6 +22912,8 @@ pub struct PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {
     pub sparse_image_float32_atomic_min_max: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -22392,6 +23046,8 @@ pub struct PhysicalDeviceVertexAttributeDivisorFeaturesKHR<'a> {
     pub vertex_attribute_instance_rate_zero_divisor: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceVertexAttributeDivisorFeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceVertexAttributeDivisorFeaturesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceVertexAttributeDivisorFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -22440,6 +23096,8 @@ pub struct QueueFamilyCheckpointPropertiesNV<'a> {
     pub checkpoint_execution_stage_mask: PipelineStageFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for QueueFamilyCheckpointPropertiesNV<'_> {}
+unsafe impl Sync for QueueFamilyCheckpointPropertiesNV<'_> {}
 impl ::std::default::Default for QueueFamilyCheckpointPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -22477,6 +23135,8 @@ pub struct CheckpointDataNV<'a> {
     pub p_checkpoint_marker: *mut c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CheckpointDataNV<'_> {}
+unsafe impl Sync for CheckpointDataNV<'_> {}
 impl ::std::default::Default for CheckpointDataNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -22518,6 +23178,8 @@ pub struct PhysicalDeviceDepthStencilResolveProperties<'a> {
     pub independent_resolve: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceDepthStencilResolveProperties<'_> {}
+unsafe impl Sync for PhysicalDeviceDepthStencilResolveProperties<'_> {}
 impl ::std::default::Default for PhysicalDeviceDepthStencilResolveProperties<'_> {
     #[inline]
     fn default() -> Self {
@@ -22578,6 +23240,8 @@ pub struct SubpassDescriptionDepthStencilResolve<'a> {
     pub p_depth_stencil_resolve_attachment: *const AttachmentReference2<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SubpassDescriptionDepthStencilResolve<'_> {}
+unsafe impl Sync for SubpassDescriptionDepthStencilResolve<'_> {}
 impl ::std::default::Default for SubpassDescriptionDepthStencilResolve<'_> {
     #[inline]
     fn default() -> Self {
@@ -22626,6 +23290,8 @@ pub struct ImageViewASTCDecodeModeEXT<'a> {
     pub decode_mode: Format,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImageViewASTCDecodeModeEXT<'_> {}
+unsafe impl Sync for ImageViewASTCDecodeModeEXT<'_> {}
 impl ::std::default::Default for ImageViewASTCDecodeModeEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -22659,6 +23325,8 @@ pub struct PhysicalDeviceASTCDecodeFeaturesEXT<'a> {
     pub decode_mode_shared_exponent: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceASTCDecodeFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceASTCDecodeFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceASTCDecodeFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -22694,6 +23362,8 @@ pub struct PhysicalDeviceTransformFeedbackFeaturesEXT<'a> {
     pub geometry_streams: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceTransformFeedbackFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceTransformFeedbackFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceTransformFeedbackFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -22744,6 +23414,8 @@ pub struct PhysicalDeviceTransformFeedbackPropertiesEXT<'a> {
     pub transform_feedback_draw: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceTransformFeedbackPropertiesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceTransformFeedbackPropertiesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceTransformFeedbackPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -22853,6 +23525,8 @@ pub struct PipelineRasterizationStateStreamCreateInfoEXT<'a> {
     pub rasterization_stream: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineRasterizationStateStreamCreateInfoEXT<'_> {}
+unsafe impl Sync for PipelineRasterizationStateStreamCreateInfoEXT<'_> {}
 impl ::std::default::Default for PipelineRasterizationStateStreamCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -22896,6 +23570,8 @@ pub struct PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'a> {
     pub representative_fragment_test: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -22934,6 +23610,8 @@ pub struct PipelineRepresentativeFragmentTestStateCreateInfoNV<'a> {
     pub representative_fragment_test_enable: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineRepresentativeFragmentTestStateCreateInfoNV<'_> {}
+unsafe impl Sync for PipelineRepresentativeFragmentTestStateCreateInfoNV<'_> {}
 impl ::std::default::Default for PipelineRepresentativeFragmentTestStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -22974,6 +23652,8 @@ pub struct PhysicalDeviceExclusiveScissorFeaturesNV<'a> {
     pub exclusive_scissor: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceExclusiveScissorFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceExclusiveScissorFeaturesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceExclusiveScissorFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -23010,6 +23690,8 @@ pub struct PipelineViewportExclusiveScissorStateCreateInfoNV<'a> {
     pub p_exclusive_scissors: *const Rect2D,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineViewportExclusiveScissorStateCreateInfoNV<'_> {}
+unsafe impl Sync for PipelineViewportExclusiveScissorStateCreateInfoNV<'_> {}
 impl ::std::default::Default for PipelineViewportExclusiveScissorStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -23049,6 +23731,8 @@ pub struct PhysicalDeviceCornerSampledImageFeaturesNV<'a> {
     pub corner_sampled_image: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceCornerSampledImageFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceCornerSampledImageFeaturesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceCornerSampledImageFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -23085,6 +23769,8 @@ pub struct PhysicalDeviceComputeShaderDerivativesFeaturesNV<'a> {
     pub compute_derivative_group_linear: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceComputeShaderDerivativesFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceComputeShaderDerivativesFeaturesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceComputeShaderDerivativesFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -23132,6 +23818,8 @@ pub struct PhysicalDeviceShaderImageFootprintFeaturesNV<'a> {
     pub image_footprint: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderImageFootprintFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderImageFootprintFeaturesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderImageFootprintFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -23167,6 +23855,8 @@ pub struct PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'a> {
     pub dedicated_allocation_image_aliasing: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -23211,6 +23901,8 @@ pub struct PhysicalDeviceCopyMemoryIndirectFeaturesNV<'a> {
     pub indirect_copy: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -23246,6 +23938,8 @@ pub struct PhysicalDeviceCopyMemoryIndirectPropertiesNV<'a> {
     pub supported_queues: QueueFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceCopyMemoryIndirectPropertiesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceCopyMemoryIndirectPropertiesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceCopyMemoryIndirectPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -23280,6 +23974,8 @@ pub struct PhysicalDeviceMemoryDecompressionFeaturesNV<'a> {
     pub memory_decompression: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceMemoryDecompressionFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceMemoryDecompressionFeaturesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceMemoryDecompressionFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -23316,6 +24012,8 @@ pub struct PhysicalDeviceMemoryDecompressionPropertiesNV<'a> {
     pub max_decompression_indirect_count: u64,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceMemoryDecompressionPropertiesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceMemoryDecompressionPropertiesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceMemoryDecompressionPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -23361,6 +24059,8 @@ pub struct ShadingRatePaletteNV<'a> {
     pub p_shading_rate_palette_entries: *const ShadingRatePaletteEntryNV,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ShadingRatePaletteNV<'_> {}
+unsafe impl Sync for ShadingRatePaletteNV<'_> {}
 impl ::std::default::Default for ShadingRatePaletteNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -23395,6 +24095,8 @@ pub struct PipelineViewportShadingRateImageStateCreateInfoNV<'a> {
     pub p_shading_rate_palettes: *const ShadingRatePaletteNV<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineViewportShadingRateImageStateCreateInfoNV<'_> {}
+unsafe impl Sync for PipelineViewportShadingRateImageStateCreateInfoNV<'_> {}
 impl ::std::default::Default for PipelineViewportShadingRateImageStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -23444,6 +24146,8 @@ pub struct PhysicalDeviceShadingRateImageFeaturesNV<'a> {
     pub shading_rate_coarse_sample_order: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShadingRateImageFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceShadingRateImageFeaturesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceShadingRateImageFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -23490,6 +24194,8 @@ pub struct PhysicalDeviceShadingRateImagePropertiesNV<'a> {
     pub shading_rate_max_coarse_samples: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShadingRateImagePropertiesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceShadingRateImagePropertiesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceShadingRateImagePropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -23536,6 +24242,8 @@ pub struct PhysicalDeviceInvocationMaskFeaturesHUAWEI<'a> {
     pub invocation_mask: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'_> {}
+unsafe impl Sync for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'_> {}
 impl ::std::default::Default for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
@@ -23599,6 +24307,8 @@ pub struct CoarseSampleOrderCustomNV<'a> {
     pub p_sample_locations: *const CoarseSampleLocationNV,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CoarseSampleOrderCustomNV<'_> {}
+unsafe impl Sync for CoarseSampleOrderCustomNV<'_> {}
 impl ::std::default::Default for CoarseSampleOrderCustomNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -23642,6 +24352,8 @@ pub struct PipelineViewportCoarseSampleOrderStateCreateInfoNV<'a> {
     pub p_custom_sample_orders: *const CoarseSampleOrderCustomNV<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineViewportCoarseSampleOrderStateCreateInfoNV<'_> {}
+unsafe impl Sync for PipelineViewportCoarseSampleOrderStateCreateInfoNV<'_> {}
 impl ::std::default::Default for PipelineViewportCoarseSampleOrderStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -23691,6 +24403,8 @@ pub struct PhysicalDeviceMeshShaderFeaturesNV<'a> {
     pub mesh_shader: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceMeshShaderFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceMeshShaderFeaturesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceMeshShaderFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -23743,6 +24457,8 @@ pub struct PhysicalDeviceMeshShaderPropertiesNV<'a> {
     pub mesh_output_per_primitive_granularity: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceMeshShaderPropertiesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceMeshShaderPropertiesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceMeshShaderPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -23879,6 +24595,8 @@ pub struct PhysicalDeviceMeshShaderFeaturesEXT<'a> {
     pub mesh_shader_queries: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceMeshShaderFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceMeshShaderFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceMeshShaderFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -23968,6 +24686,8 @@ pub struct PhysicalDeviceMeshShaderPropertiesEXT<'a> {
     pub prefers_compact_primitive_output: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceMeshShaderPropertiesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceMeshShaderPropertiesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceMeshShaderPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -24225,6 +24945,8 @@ pub struct RayTracingShaderGroupCreateInfoNV<'a> {
     pub intersection_shader: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for RayTracingShaderGroupCreateInfoNV<'_> {}
+unsafe impl Sync for RayTracingShaderGroupCreateInfoNV<'_> {}
 impl ::std::default::Default for RayTracingShaderGroupCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -24286,6 +25008,8 @@ pub struct RayTracingShaderGroupCreateInfoKHR<'a> {
     pub p_shader_group_capture_replay_handle: *const c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for RayTracingShaderGroupCreateInfoKHR<'_> {}
+unsafe impl Sync for RayTracingShaderGroupCreateInfoKHR<'_> {}
 impl ::std::default::Default for RayTracingShaderGroupCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -24359,6 +25083,8 @@ pub struct RayTracingPipelineCreateInfoNV<'a> {
     pub base_pipeline_index: i32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for RayTracingPipelineCreateInfoNV<'_> {}
+unsafe impl Sync for RayTracingPipelineCreateInfoNV<'_> {}
 impl ::std::default::Default for RayTracingPipelineCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -24457,6 +25183,8 @@ pub struct RayTracingPipelineCreateInfoKHR<'a> {
     pub base_pipeline_index: i32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for RayTracingPipelineCreateInfoKHR<'_> {}
+unsafe impl Sync for RayTracingPipelineCreateInfoKHR<'_> {}
 impl ::std::default::Default for RayTracingPipelineCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -24578,6 +25306,8 @@ pub struct GeometryTrianglesNV<'a> {
     pub transform_offset: DeviceSize,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for GeometryTrianglesNV<'_> {}
+unsafe impl Sync for GeometryTrianglesNV<'_> {}
 impl ::std::default::Default for GeometryTrianglesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -24673,6 +25403,8 @@ pub struct GeometryAABBNV<'a> {
     pub offset: DeviceSize,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for GeometryAABBNV<'_> {}
+unsafe impl Sync for GeometryAABBNV<'_> {}
 impl ::std::default::Default for GeometryAABBNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -24747,6 +25479,8 @@ pub struct GeometryNV<'a> {
     pub flags: GeometryFlagsKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for GeometryNV<'_> {}
+unsafe impl Sync for GeometryNV<'_> {}
 impl ::std::default::Default for GeometryNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -24795,6 +25529,8 @@ pub struct AccelerationStructureInfoNV<'a> {
     pub p_geometries: *const GeometryNV<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for AccelerationStructureInfoNV<'_> {}
+unsafe impl Sync for AccelerationStructureInfoNV<'_> {}
 impl ::std::default::Default for AccelerationStructureInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -24848,6 +25584,8 @@ pub struct AccelerationStructureCreateInfoNV<'a> {
     pub info: AccelerationStructureInfoNV<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for AccelerationStructureCreateInfoNV<'_> {}
+unsafe impl Sync for AccelerationStructureCreateInfoNV<'_> {}
 impl ::std::default::Default for AccelerationStructureCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -24908,6 +25646,8 @@ pub struct BindAccelerationStructureMemoryInfoNV<'a> {
     pub p_device_indices: *const u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BindAccelerationStructureMemoryInfoNV<'_> {}
+unsafe impl Sync for BindAccelerationStructureMemoryInfoNV<'_> {}
 impl ::std::default::Default for BindAccelerationStructureMemoryInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -24964,6 +25704,8 @@ pub struct WriteDescriptorSetAccelerationStructureKHR<'a> {
     pub p_acceleration_structures: *const AccelerationStructureKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for WriteDescriptorSetAccelerationStructureKHR<'_> {}
+unsafe impl Sync for WriteDescriptorSetAccelerationStructureKHR<'_> {}
 impl ::std::default::Default for WriteDescriptorSetAccelerationStructureKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -25004,6 +25746,8 @@ pub struct WriteDescriptorSetAccelerationStructureNV<'a> {
     pub p_acceleration_structures: *const AccelerationStructureNV,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for WriteDescriptorSetAccelerationStructureNV<'_> {}
+unsafe impl Sync for WriteDescriptorSetAccelerationStructureNV<'_> {}
 impl ::std::default::Default for WriteDescriptorSetAccelerationStructureNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -25044,6 +25788,8 @@ pub struct AccelerationStructureMemoryRequirementsInfoNV<'a> {
     pub acceleration_structure: AccelerationStructureNV,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for AccelerationStructureMemoryRequirementsInfoNV<'_> {}
+unsafe impl Sync for AccelerationStructureMemoryRequirementsInfoNV<'_> {}
 impl ::std::default::Default for AccelerationStructureMemoryRequirementsInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -25090,6 +25836,8 @@ pub struct PhysicalDeviceAccelerationStructureFeaturesKHR<'a> {
     pub descriptor_binding_acceleration_structure_update_after_bind: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceAccelerationStructureFeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceAccelerationStructureFeaturesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceAccelerationStructureFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -25166,6 +25914,8 @@ pub struct PhysicalDeviceRayTracingPipelineFeaturesKHR<'a> {
     pub ray_traversal_primitive_culling: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceRayTracingPipelineFeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceRayTracingPipelineFeaturesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceRayTracingPipelineFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -25240,6 +25990,8 @@ pub struct PhysicalDeviceRayQueryFeaturesKHR<'a> {
     pub ray_query: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceRayQueryFeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceRayQueryFeaturesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceRayQueryFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -25281,6 +26033,8 @@ pub struct PhysicalDeviceAccelerationStructurePropertiesKHR<'a> {
     pub min_acceleration_structure_scratch_offset_alignment: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceAccelerationStructurePropertiesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceAccelerationStructurePropertiesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceAccelerationStructurePropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -25387,6 +26141,8 @@ pub struct PhysicalDeviceRayTracingPipelinePropertiesKHR<'a> {
     pub max_ray_hit_attribute_size: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceRayTracingPipelinePropertiesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceRayTracingPipelinePropertiesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceRayTracingPipelinePropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -25476,6 +26232,8 @@ pub struct PhysicalDeviceRayTracingPropertiesNV<'a> {
     pub max_descriptor_set_acceleration_structures: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceRayTracingPropertiesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceRayTracingPropertiesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceRayTracingPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -25733,6 +26491,8 @@ pub struct PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'a> {
     pub ray_tracing_pipeline_trace_rays_indirect2: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -25779,6 +26539,8 @@ pub struct DrmFormatModifierPropertiesListEXT<'a> {
     pub p_drm_format_modifier_properties: *mut DrmFormatModifierPropertiesEXT,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DrmFormatModifierPropertiesListEXT<'_> {}
+unsafe impl Sync for DrmFormatModifierPropertiesListEXT<'_> {}
 impl ::std::default::Default for DrmFormatModifierPropertiesListEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -25850,6 +26612,8 @@ pub struct PhysicalDeviceImageDrmFormatModifierInfoEXT<'a> {
     pub p_queue_family_indices: *const u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceImageDrmFormatModifierInfoEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceImageDrmFormatModifierInfoEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceImageDrmFormatModifierInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -25902,6 +26666,8 @@ pub struct ImageDrmFormatModifierListCreateInfoEXT<'a> {
     pub p_drm_format_modifiers: *const u64,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImageDrmFormatModifierListCreateInfoEXT<'_> {}
+unsafe impl Sync for ImageDrmFormatModifierListCreateInfoEXT<'_> {}
 impl ::std::default::Default for ImageDrmFormatModifierListCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -25940,6 +26706,8 @@ pub struct ImageDrmFormatModifierExplicitCreateInfoEXT<'a> {
     pub p_plane_layouts: *const SubresourceLayout,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImageDrmFormatModifierExplicitCreateInfoEXT<'_> {}
+unsafe impl Sync for ImageDrmFormatModifierExplicitCreateInfoEXT<'_> {}
 impl ::std::default::Default for ImageDrmFormatModifierExplicitCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -25982,6 +26750,8 @@ pub struct ImageDrmFormatModifierPropertiesEXT<'a> {
     pub drm_format_modifier: u64,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImageDrmFormatModifierPropertiesEXT<'_> {}
+unsafe impl Sync for ImageDrmFormatModifierPropertiesEXT<'_> {}
 impl ::std::default::Default for ImageDrmFormatModifierPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -26014,6 +26784,8 @@ pub struct ImageStencilUsageCreateInfo<'a> {
     pub stencil_usage: ImageUsageFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImageStencilUsageCreateInfo<'_> {}
+unsafe impl Sync for ImageStencilUsageCreateInfo<'_> {}
 impl ::std::default::Default for ImageStencilUsageCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -26048,6 +26820,8 @@ pub struct DeviceMemoryOverallocationCreateInfoAMD<'a> {
     pub overallocation_behavior: MemoryOverallocationBehaviorAMD,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DeviceMemoryOverallocationCreateInfoAMD<'_> {}
+unsafe impl Sync for DeviceMemoryOverallocationCreateInfoAMD<'_> {}
 impl ::std::default::Default for DeviceMemoryOverallocationCreateInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
@@ -26087,6 +26861,8 @@ pub struct PhysicalDeviceFragmentDensityMapFeaturesEXT<'a> {
     pub fragment_density_map_non_subsampled_images: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceFragmentDensityMapFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceFragmentDensityMapFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceFragmentDensityMapFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -26138,6 +26914,8 @@ pub struct PhysicalDeviceFragmentDensityMap2FeaturesEXT<'a> {
     pub fragment_density_map_deferred: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -26173,6 +26951,8 @@ pub struct PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'a> {
     pub fragment_density_map_offset: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'_> {}
+unsafe impl Sync for PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'_> {}
 impl ::std::default::Default for PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
@@ -26213,6 +26993,8 @@ pub struct PhysicalDeviceFragmentDensityMapPropertiesEXT<'a> {
     pub fragment_density_invocations: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceFragmentDensityMapPropertiesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceFragmentDensityMapPropertiesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceFragmentDensityMapPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -26268,6 +27050,8 @@ pub struct PhysicalDeviceFragmentDensityMap2PropertiesEXT<'a> {
     pub max_descriptor_set_subsampled_samplers: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceFragmentDensityMap2PropertiesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceFragmentDensityMap2PropertiesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceFragmentDensityMap2PropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -26330,6 +27114,8 @@ pub struct PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM<'a> {
     pub fragment_density_offset_granularity: Extent2D,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM<'_> {}
+unsafe impl Sync for PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM<'_> {}
 impl ::std::default::Default for PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM<'_> {
     #[inline]
     fn default() -> Self {
@@ -26370,6 +27156,8 @@ pub struct RenderPassFragmentDensityMapCreateInfoEXT<'a> {
     pub fragment_density_map_attachment: AttachmentReference,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for RenderPassFragmentDensityMapCreateInfoEXT<'_> {}
+unsafe impl Sync for RenderPassFragmentDensityMapCreateInfoEXT<'_> {}
 impl ::std::default::Default for RenderPassFragmentDensityMapCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -26409,6 +27197,8 @@ pub struct SubpassFragmentDensityMapOffsetEndInfoQCOM<'a> {
     pub p_fragment_density_offsets: *const Offset2D,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SubpassFragmentDensityMapOffsetEndInfoQCOM<'_> {}
+unsafe impl Sync for SubpassFragmentDensityMapOffsetEndInfoQCOM<'_> {}
 impl ::std::default::Default for SubpassFragmentDensityMapOffsetEndInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
@@ -26445,6 +27235,8 @@ pub struct PhysicalDeviceScalarBlockLayoutFeatures<'a> {
     pub scalar_block_layout: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceScalarBlockLayoutFeatures<'_> {}
+unsafe impl Sync for PhysicalDeviceScalarBlockLayoutFeatures<'_> {}
 impl ::std::default::Default for PhysicalDeviceScalarBlockLayoutFeatures<'_> {
     #[inline]
     fn default() -> Self {
@@ -26480,6 +27272,8 @@ pub struct SurfaceProtectedCapabilitiesKHR<'a> {
     pub supports_protected: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SurfaceProtectedCapabilitiesKHR<'_> {}
+unsafe impl Sync for SurfaceProtectedCapabilitiesKHR<'_> {}
 impl ::std::default::Default for SurfaceProtectedCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -26513,6 +27307,8 @@ pub struct PhysicalDeviceUniformBufferStandardLayoutFeatures<'a> {
     pub uniform_buffer_standard_layout: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceUniformBufferStandardLayoutFeatures<'_> {}
+unsafe impl Sync for PhysicalDeviceUniformBufferStandardLayoutFeatures<'_> {}
 impl ::std::default::Default for PhysicalDeviceUniformBufferStandardLayoutFeatures<'_> {
     #[inline]
     fn default() -> Self {
@@ -26551,6 +27347,8 @@ pub struct PhysicalDeviceDepthClipEnableFeaturesEXT<'a> {
     pub depth_clip_enable: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceDepthClipEnableFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceDepthClipEnableFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceDepthClipEnableFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -26587,6 +27385,8 @@ pub struct PipelineRasterizationDepthClipStateCreateInfoEXT<'a> {
     pub depth_clip_enable: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineRasterizationDepthClipStateCreateInfoEXT<'_> {}
+unsafe impl Sync for PipelineRasterizationDepthClipStateCreateInfoEXT<'_> {}
 impl ::std::default::Default for PipelineRasterizationDepthClipStateCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -26631,6 +27431,8 @@ pub struct PhysicalDeviceMemoryBudgetPropertiesEXT<'a> {
     pub heap_usage: [DeviceSize; MAX_MEMORY_HEAPS],
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceMemoryBudgetPropertiesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceMemoryBudgetPropertiesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceMemoryBudgetPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -26671,6 +27473,8 @@ pub struct PhysicalDeviceMemoryPriorityFeaturesEXT<'a> {
     pub memory_priority: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceMemoryPriorityFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceMemoryPriorityFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceMemoryPriorityFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -26706,6 +27510,8 @@ pub struct MemoryPriorityAllocateInfoEXT<'a> {
     pub priority: f32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MemoryPriorityAllocateInfoEXT<'_> {}
+unsafe impl Sync for MemoryPriorityAllocateInfoEXT<'_> {}
 impl ::std::default::Default for MemoryPriorityAllocateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -26739,6 +27545,8 @@ pub struct PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'a> {
     pub pageable_device_local_memory: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -26779,6 +27587,8 @@ pub struct PhysicalDeviceBufferDeviceAddressFeatures<'a> {
     pub buffer_device_address_multi_device: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceBufferDeviceAddressFeatures<'_> {}
+unsafe impl Sync for PhysicalDeviceBufferDeviceAddressFeatures<'_> {}
 impl ::std::default::Default for PhysicalDeviceBufferDeviceAddressFeatures<'_> {
     #[inline]
     fn default() -> Self {
@@ -26834,6 +27644,8 @@ pub struct PhysicalDeviceBufferDeviceAddressFeaturesEXT<'a> {
     pub buffer_device_address_multi_device: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -26887,6 +27699,8 @@ pub struct BufferDeviceAddressInfo<'a> {
     pub buffer: Buffer,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BufferDeviceAddressInfo<'_> {}
+unsafe impl Sync for BufferDeviceAddressInfo<'_> {}
 impl ::std::default::Default for BufferDeviceAddressInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -26919,6 +27733,8 @@ pub struct BufferOpaqueCaptureAddressCreateInfo<'a> {
     pub opaque_capture_address: u64,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BufferOpaqueCaptureAddressCreateInfo<'_> {}
+unsafe impl Sync for BufferOpaqueCaptureAddressCreateInfo<'_> {}
 impl ::std::default::Default for BufferOpaqueCaptureAddressCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -26952,6 +27768,8 @@ pub struct BufferDeviceAddressCreateInfoEXT<'a> {
     pub device_address: DeviceAddress,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BufferDeviceAddressCreateInfoEXT<'_> {}
+unsafe impl Sync for BufferDeviceAddressCreateInfoEXT<'_> {}
 impl ::std::default::Default for BufferDeviceAddressCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -26985,6 +27803,8 @@ pub struct PhysicalDeviceImageViewImageFormatInfoEXT<'a> {
     pub image_view_type: ImageViewType,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceImageViewImageFormatInfoEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceImageViewImageFormatInfoEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceImageViewImageFormatInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -27023,6 +27843,8 @@ pub struct FilterCubicImageViewImageFormatPropertiesEXT<'a> {
     pub filter_cubic_minmax: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for FilterCubicImageViewImageFormatPropertiesEXT<'_> {}
+unsafe impl Sync for FilterCubicImageViewImageFormatPropertiesEXT<'_> {}
 impl ::std::default::Default for FilterCubicImageViewImageFormatPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -27063,6 +27885,8 @@ pub struct PhysicalDeviceImagelessFramebufferFeatures<'a> {
     pub imageless_framebuffer: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceImagelessFramebufferFeatures<'_> {}
+unsafe impl Sync for PhysicalDeviceImagelessFramebufferFeatures<'_> {}
 impl ::std::default::Default for PhysicalDeviceImagelessFramebufferFeatures<'_> {
     #[inline]
     fn default() -> Self {
@@ -27099,6 +27923,8 @@ pub struct FramebufferAttachmentsCreateInfo<'a> {
     pub p_attachment_image_infos: *const FramebufferAttachmentImageInfo<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for FramebufferAttachmentsCreateInfo<'_> {}
+unsafe impl Sync for FramebufferAttachmentsCreateInfo<'_> {}
 impl ::std::default::Default for FramebufferAttachmentsCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -27143,6 +27969,8 @@ pub struct FramebufferAttachmentImageInfo<'a> {
     pub p_view_formats: *const Format,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for FramebufferAttachmentImageInfo<'_> {}
+unsafe impl Sync for FramebufferAttachmentImageInfo<'_> {}
 impl ::std::default::Default for FramebufferAttachmentImageInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -27208,6 +28036,8 @@ pub struct RenderPassAttachmentBeginInfo<'a> {
     pub p_attachments: *const ImageView,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for RenderPassAttachmentBeginInfo<'_> {}
+unsafe impl Sync for RenderPassAttachmentBeginInfo<'_> {}
 impl ::std::default::Default for RenderPassAttachmentBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -27243,6 +28073,8 @@ pub struct PhysicalDeviceTextureCompressionASTCHDRFeatures<'a> {
     pub texture_compression_astc_hdr: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceTextureCompressionASTCHDRFeatures<'_> {}
+unsafe impl Sync for PhysicalDeviceTextureCompressionASTCHDRFeatures<'_> {}
 impl ::std::default::Default for PhysicalDeviceTextureCompressionASTCHDRFeatures<'_> {
     #[inline]
     fn default() -> Self {
@@ -27279,6 +28111,8 @@ pub struct PhysicalDeviceCooperativeMatrixFeaturesNV<'a> {
     pub cooperative_matrix_robust_buffer_access: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceCooperativeMatrixFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceCooperativeMatrixFeaturesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceCooperativeMatrixFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -27324,6 +28158,8 @@ pub struct PhysicalDeviceCooperativeMatrixPropertiesNV<'a> {
     pub cooperative_matrix_supported_stages: ShaderStageFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceCooperativeMatrixPropertiesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceCooperativeMatrixPropertiesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceCooperativeMatrixPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -27368,6 +28204,8 @@ pub struct CooperativeMatrixPropertiesNV<'a> {
     pub scope: ScopeNV,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CooperativeMatrixPropertiesNV<'_> {}
+unsafe impl Sync for CooperativeMatrixPropertiesNV<'_> {}
 impl ::std::default::Default for CooperativeMatrixPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -27442,6 +28280,8 @@ pub struct PhysicalDeviceYcbcrImageArraysFeaturesEXT<'a> {
     pub ycbcr_image_arrays: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -27479,6 +28319,8 @@ pub struct ImageViewHandleInfoNVX<'a> {
     pub sampler: Sampler,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImageViewHandleInfoNVX<'_> {}
+unsafe impl Sync for ImageViewHandleInfoNVX<'_> {}
 impl ::std::default::Default for ImageViewHandleInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
@@ -27524,6 +28366,8 @@ pub struct ImageViewAddressPropertiesNVX<'a> {
     pub size: DeviceSize,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImageViewAddressPropertiesNVX<'_> {}
+unsafe impl Sync for ImageViewAddressPropertiesNVX<'_> {}
 impl ::std::default::Default for ImageViewAddressPropertiesNVX<'_> {
     #[inline]
     fn default() -> Self {
@@ -27562,6 +28406,8 @@ pub struct PresentFrameTokenGGP<'a> {
     pub frame_token: GgpFrameToken,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PresentFrameTokenGGP<'_> {}
+unsafe impl Sync for PresentFrameTokenGGP<'_> {}
 impl ::std::default::Default for PresentFrameTokenGGP<'_> {
     #[inline]
     fn default() -> Self {
@@ -27618,6 +28464,8 @@ pub struct PipelineCreationFeedbackCreateInfo<'a> {
     pub p_pipeline_stage_creation_feedbacks: *mut PipelineCreationFeedback,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineCreationFeedbackCreateInfo<'_> {}
+unsafe impl Sync for PipelineCreationFeedbackCreateInfo<'_> {}
 impl ::std::default::Default for PipelineCreationFeedbackCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -27669,6 +28517,8 @@ pub struct SurfaceFullScreenExclusiveInfoEXT<'a> {
     pub full_screen_exclusive: FullScreenExclusiveEXT,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SurfaceFullScreenExclusiveInfoEXT<'_> {}
+unsafe impl Sync for SurfaceFullScreenExclusiveInfoEXT<'_> {}
 impl ::std::default::Default for SurfaceFullScreenExclusiveInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -27703,6 +28553,8 @@ pub struct SurfaceFullScreenExclusiveWin32InfoEXT<'a> {
     pub hmonitor: HMONITOR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SurfaceFullScreenExclusiveWin32InfoEXT<'_> {}
+unsafe impl Sync for SurfaceFullScreenExclusiveWin32InfoEXT<'_> {}
 impl ::std::default::Default for SurfaceFullScreenExclusiveWin32InfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -27738,6 +28590,8 @@ pub struct SurfaceCapabilitiesFullScreenExclusiveEXT<'a> {
     pub full_screen_exclusive_supported: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SurfaceCapabilitiesFullScreenExclusiveEXT<'_> {}
+unsafe impl Sync for SurfaceCapabilitiesFullScreenExclusiveEXT<'_> {}
 impl ::std::default::Default for SurfaceCapabilitiesFullScreenExclusiveEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -27775,6 +28629,8 @@ pub struct PhysicalDevicePresentBarrierFeaturesNV<'a> {
     pub present_barrier: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDevicePresentBarrierFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDevicePresentBarrierFeaturesNV<'_> {}
 impl ::std::default::Default for PhysicalDevicePresentBarrierFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -27810,6 +28666,8 @@ pub struct SurfaceCapabilitiesPresentBarrierNV<'a> {
     pub present_barrier_supported: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SurfaceCapabilitiesPresentBarrierNV<'_> {}
+unsafe impl Sync for SurfaceCapabilitiesPresentBarrierNV<'_> {}
 impl ::std::default::Default for SurfaceCapabilitiesPresentBarrierNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -27843,6 +28701,8 @@ pub struct SwapchainPresentBarrierCreateInfoNV<'a> {
     pub present_barrier_enable: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SwapchainPresentBarrierCreateInfoNV<'_> {}
+unsafe impl Sync for SwapchainPresentBarrierCreateInfoNV<'_> {}
 impl ::std::default::Default for SwapchainPresentBarrierCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -27877,6 +28737,8 @@ pub struct PhysicalDevicePerformanceQueryFeaturesKHR<'a> {
     pub performance_counter_multiple_query_pools: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDevicePerformanceQueryFeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDevicePerformanceQueryFeaturesKHR<'_> {}
 impl ::std::default::Default for PhysicalDevicePerformanceQueryFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -27925,6 +28787,8 @@ pub struct PhysicalDevicePerformanceQueryPropertiesKHR<'a> {
     pub allow_command_buffer_query_copies: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDevicePerformanceQueryPropertiesKHR<'_> {}
+unsafe impl Sync for PhysicalDevicePerformanceQueryPropertiesKHR<'_> {}
 impl ::std::default::Default for PhysicalDevicePerformanceQueryPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -27965,6 +28829,8 @@ pub struct PerformanceCounterKHR<'a> {
     pub uuid: [u8; UUID_SIZE],
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PerformanceCounterKHR<'_> {}
+unsafe impl Sync for PerformanceCounterKHR<'_> {}
 impl ::std::default::Default for PerformanceCounterKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -28017,6 +28883,8 @@ pub struct PerformanceCounterDescriptionKHR<'a> {
     pub description: [c_char; MAX_DESCRIPTION_SIZE],
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PerformanceCounterDescriptionKHR<'_> {}
+unsafe impl Sync for PerformanceCounterDescriptionKHR<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for PerformanceCounterDescriptionKHR<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -28106,6 +28974,8 @@ pub struct QueryPoolPerformanceCreateInfoKHR<'a> {
     pub p_counter_indices: *const u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for QueryPoolPerformanceCreateInfoKHR<'_> {}
+unsafe impl Sync for QueryPoolPerformanceCreateInfoKHR<'_> {}
 impl ::std::default::Default for QueryPoolPerformanceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -28165,6 +29035,8 @@ pub struct AcquireProfilingLockInfoKHR<'a> {
     pub timeout: u64,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for AcquireProfilingLockInfoKHR<'_> {}
+unsafe impl Sync for AcquireProfilingLockInfoKHR<'_> {}
 impl ::std::default::Default for AcquireProfilingLockInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -28203,6 +29075,8 @@ pub struct PerformanceQuerySubmitInfoKHR<'a> {
     pub counter_pass_index: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PerformanceQuerySubmitInfoKHR<'_> {}
+unsafe impl Sync for PerformanceQuerySubmitInfoKHR<'_> {}
 impl ::std::default::Default for PerformanceQuerySubmitInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -28237,6 +29111,8 @@ pub struct HeadlessSurfaceCreateInfoEXT<'a> {
     pub flags: HeadlessSurfaceCreateFlagsEXT,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for HeadlessSurfaceCreateInfoEXT<'_> {}
+unsafe impl Sync for HeadlessSurfaceCreateInfoEXT<'_> {}
 impl ::std::default::Default for HeadlessSurfaceCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -28269,6 +29145,8 @@ pub struct PhysicalDeviceCoverageReductionModeFeaturesNV<'a> {
     pub coverage_reduction_mode: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceCoverageReductionModeFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceCoverageReductionModeFeaturesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceCoverageReductionModeFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -28305,6 +29183,8 @@ pub struct PipelineCoverageReductionStateCreateInfoNV<'a> {
     pub coverage_reduction_mode: CoverageReductionModeNV,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineCoverageReductionStateCreateInfoNV<'_> {}
+unsafe impl Sync for PipelineCoverageReductionStateCreateInfoNV<'_> {}
 impl ::std::default::Default for PipelineCoverageReductionStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -28354,6 +29234,8 @@ pub struct FramebufferMixedSamplesCombinationNV<'a> {
     pub color_samples: SampleCountFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for FramebufferMixedSamplesCombinationNV<'_> {}
+unsafe impl Sync for FramebufferMixedSamplesCombinationNV<'_> {}
 impl ::std::default::Default for FramebufferMixedSamplesCombinationNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -28407,6 +29289,8 @@ pub struct PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'a> {
     pub shader_integer_functions2: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'_> {
     #[inline]
     fn default() -> Self {
@@ -28490,6 +29374,8 @@ pub struct InitializePerformanceApiInfoINTEL<'a> {
     pub p_user_data: *mut c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for InitializePerformanceApiInfoINTEL<'_> {}
+unsafe impl Sync for InitializePerformanceApiInfoINTEL<'_> {}
 impl ::std::default::Default for InitializePerformanceApiInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
@@ -28522,6 +29408,8 @@ pub struct QueryPoolPerformanceQueryCreateInfoINTEL<'a> {
     pub performance_counters_sampling: QueryPoolSamplingModeINTEL,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for QueryPoolPerformanceQueryCreateInfoINTEL<'_> {}
+unsafe impl Sync for QueryPoolPerformanceQueryCreateInfoINTEL<'_> {}
 impl ::std::default::Default for QueryPoolPerformanceQueryCreateInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
@@ -28559,6 +29447,8 @@ pub struct PerformanceMarkerInfoINTEL<'a> {
     pub marker: u64,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PerformanceMarkerInfoINTEL<'_> {}
+unsafe impl Sync for PerformanceMarkerInfoINTEL<'_> {}
 impl ::std::default::Default for PerformanceMarkerInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
@@ -28591,6 +29481,8 @@ pub struct PerformanceStreamMarkerInfoINTEL<'a> {
     pub marker: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PerformanceStreamMarkerInfoINTEL<'_> {}
+unsafe impl Sync for PerformanceStreamMarkerInfoINTEL<'_> {}
 impl ::std::default::Default for PerformanceStreamMarkerInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
@@ -28625,6 +29517,8 @@ pub struct PerformanceOverrideInfoINTEL<'a> {
     pub parameter: u64,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PerformanceOverrideInfoINTEL<'_> {}
+unsafe impl Sync for PerformanceOverrideInfoINTEL<'_> {}
 impl ::std::default::Default for PerformanceOverrideInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
@@ -28669,6 +29563,8 @@ pub struct PerformanceConfigurationAcquireInfoINTEL<'a> {
     pub ty: PerformanceConfigurationTypeINTEL,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PerformanceConfigurationAcquireInfoINTEL<'_> {}
+unsafe impl Sync for PerformanceConfigurationAcquireInfoINTEL<'_> {}
 impl ::std::default::Default for PerformanceConfigurationAcquireInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
@@ -28703,6 +29599,8 @@ pub struct PhysicalDeviceShaderClockFeaturesKHR<'a> {
     pub shader_device_clock: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderClockFeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderClockFeaturesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderClockFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -28743,6 +29641,8 @@ pub struct PhysicalDeviceIndexTypeUint8FeaturesKHR<'a> {
     pub index_type_uint8: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceIndexTypeUint8FeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceIndexTypeUint8FeaturesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceIndexTypeUint8FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -28779,6 +29679,8 @@ pub struct PhysicalDeviceShaderSMBuiltinsPropertiesNV<'a> {
     pub shader_warps_per_sm: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -28819,6 +29721,8 @@ pub struct PhysicalDeviceShaderSMBuiltinsFeaturesNV<'a> {
     pub shader_sm_builtins: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -28856,6 +29760,8 @@ pub struct PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'a> {
     pub fragment_shader_shading_rate_interlock: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -28915,6 +29821,8 @@ pub struct PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'a> {
     pub separate_depth_stencil_layouts: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'_> {}
+unsafe impl Sync for PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'_> {}
 impl ::std::default::Default for PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'_> {
     #[inline]
     fn default() -> Self {
@@ -28953,6 +29861,8 @@ pub struct AttachmentReferenceStencilLayout<'a> {
     pub stencil_layout: ImageLayout,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for AttachmentReferenceStencilLayout<'_> {}
+unsafe impl Sync for AttachmentReferenceStencilLayout<'_> {}
 impl ::std::default::Default for AttachmentReferenceStencilLayout<'_> {
     #[inline]
     fn default() -> Self {
@@ -28987,6 +29897,8 @@ pub struct PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'a> {
     pub primitive_topology_patch_list_restart: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -29038,6 +29950,8 @@ pub struct AttachmentDescriptionStencilLayout<'a> {
     pub stencil_final_layout: ImageLayout,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for AttachmentDescriptionStencilLayout<'_> {}
+unsafe impl Sync for AttachmentDescriptionStencilLayout<'_> {}
 impl ::std::default::Default for AttachmentDescriptionStencilLayout<'_> {
     #[inline]
     fn default() -> Self {
@@ -29077,6 +29991,8 @@ pub struct PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'a> {
     pub pipeline_executable_info: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'_> {}
 impl ::std::default::Default for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -29115,6 +30031,8 @@ pub struct PipelineInfoKHR<'a> {
     pub pipeline: Pipeline,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineInfoKHR<'_> {}
+unsafe impl Sync for PipelineInfoKHR<'_> {}
 impl ::std::default::Default for PipelineInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -29149,6 +30067,8 @@ pub struct PipelineExecutablePropertiesKHR<'a> {
     pub subgroup_size: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineExecutablePropertiesKHR<'_> {}
+unsafe impl Sync for PipelineExecutablePropertiesKHR<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for PipelineExecutablePropertiesKHR<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -29229,6 +30149,8 @@ pub struct PipelineExecutableInfoKHR<'a> {
     pub executable_index: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineExecutableInfoKHR<'_> {}
+unsafe impl Sync for PipelineExecutableInfoKHR<'_> {}
 impl ::std::default::Default for PipelineExecutableInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -29284,6 +30206,8 @@ pub struct PipelineExecutableStatisticKHR<'a> {
     pub value: PipelineExecutableStatisticValueKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineExecutableStatisticKHR<'_> {}
+unsafe impl Sync for PipelineExecutableStatisticKHR<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for PipelineExecutableStatisticKHR<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -29366,6 +30290,8 @@ pub struct PipelineExecutableInternalRepresentationKHR<'a> {
     pub p_data: *mut c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineExecutableInternalRepresentationKHR<'_> {}
+unsafe impl Sync for PipelineExecutableInternalRepresentationKHR<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for PipelineExecutableInternalRepresentationKHR<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -29449,6 +30375,8 @@ pub struct PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'a> {
     pub shader_demote_to_helper_invocation: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'_> {
     #[inline]
     fn default() -> Self {
@@ -29490,6 +30418,8 @@ pub struct PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'a> {
     pub texel_buffer_alignment: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -29528,6 +30458,8 @@ pub struct PhysicalDeviceTexelBufferAlignmentProperties<'a> {
     pub uniform_texel_buffer_offset_single_texel_alignment: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceTexelBufferAlignmentProperties<'_> {}
+unsafe impl Sync for PhysicalDeviceTexelBufferAlignmentProperties<'_> {}
 impl ::std::default::Default for PhysicalDeviceTexelBufferAlignmentProperties<'_> {
     #[inline]
     fn default() -> Self {
@@ -29597,6 +30529,8 @@ pub struct PhysicalDeviceSubgroupSizeControlFeatures<'a> {
     pub compute_full_subgroups: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceSubgroupSizeControlFeatures<'_> {}
+unsafe impl Sync for PhysicalDeviceSubgroupSizeControlFeatures<'_> {}
 impl ::std::default::Default for PhysicalDeviceSubgroupSizeControlFeatures<'_> {
     #[inline]
     fn default() -> Self {
@@ -29641,6 +30575,8 @@ pub struct PhysicalDeviceSubgroupSizeControlProperties<'a> {
     pub required_subgroup_size_stages: ShaderStageFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceSubgroupSizeControlProperties<'_> {}
+unsafe impl Sync for PhysicalDeviceSubgroupSizeControlProperties<'_> {}
 impl ::std::default::Default for PhysicalDeviceSubgroupSizeControlProperties<'_> {
     #[inline]
     fn default() -> Self {
@@ -29696,6 +30632,8 @@ pub struct PipelineShaderStageRequiredSubgroupSizeCreateInfo<'a> {
     pub required_subgroup_size: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'_> {}
+unsafe impl Sync for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'_> {}
 impl ::std::default::Default for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -29735,6 +30673,8 @@ pub struct SubpassShadingPipelineCreateInfoHUAWEI<'a> {
     pub subpass: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SubpassShadingPipelineCreateInfoHUAWEI<'_> {}
+unsafe impl Sync for SubpassShadingPipelineCreateInfoHUAWEI<'_> {}
 impl ::std::default::Default for SubpassShadingPipelineCreateInfoHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
@@ -29775,6 +30715,8 @@ pub struct PhysicalDeviceSubpassShadingPropertiesHUAWEI<'a> {
     pub max_subpass_shading_workgroup_size_aspect_ratio: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'_> {}
+unsafe impl Sync for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'_> {}
 impl ::std::default::Default for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
@@ -29816,6 +30758,8 @@ pub struct PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'a> {
     pub indirect_buffer_offset_alignment: DeviceSize,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'_> {}
+unsafe impl Sync for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'_> {}
 impl ::std::default::Default for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
@@ -29874,6 +30818,8 @@ pub struct MemoryOpaqueCaptureAddressAllocateInfo<'a> {
     pub opaque_capture_address: u64,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MemoryOpaqueCaptureAddressAllocateInfo<'_> {}
+unsafe impl Sync for MemoryOpaqueCaptureAddressAllocateInfo<'_> {}
 impl ::std::default::Default for MemoryOpaqueCaptureAddressAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -29908,6 +30854,8 @@ pub struct DeviceMemoryOpaqueCaptureAddressInfo<'a> {
     pub memory: DeviceMemory,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DeviceMemoryOpaqueCaptureAddressInfo<'_> {}
+unsafe impl Sync for DeviceMemoryOpaqueCaptureAddressInfo<'_> {}
 impl ::std::default::Default for DeviceMemoryOpaqueCaptureAddressInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -29945,6 +30893,8 @@ pub struct PhysicalDeviceLineRasterizationFeaturesKHR<'a> {
     pub stippled_smooth_lines: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceLineRasterizationFeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceLineRasterizationFeaturesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceLineRasterizationFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -30010,6 +30960,8 @@ pub struct PhysicalDeviceLineRasterizationPropertiesKHR<'a> {
     pub line_sub_pixel_precision_bits: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceLineRasterizationPropertiesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceLineRasterizationPropertiesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceLineRasterizationPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -30047,6 +30999,8 @@ pub struct PipelineRasterizationLineStateCreateInfoKHR<'a> {
     pub line_stipple_pattern: u16,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineRasterizationLineStateCreateInfoKHR<'_> {}
+unsafe impl Sync for PipelineRasterizationLineStateCreateInfoKHR<'_> {}
 impl ::std::default::Default for PipelineRasterizationLineStateCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -30105,6 +31059,8 @@ pub struct PhysicalDevicePipelineCreationCacheControlFeatures<'a> {
     pub pipeline_creation_cache_control: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDevicePipelineCreationCacheControlFeatures<'_> {}
+unsafe impl Sync for PhysicalDevicePipelineCreationCacheControlFeatures<'_> {}
 impl ::std::default::Default for PhysicalDevicePipelineCreationCacheControlFeatures<'_> {
     #[inline]
     fn default() -> Self {
@@ -30157,6 +31113,8 @@ pub struct PhysicalDeviceVulkan11Features<'a> {
     pub shader_draw_parameters: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceVulkan11Features<'_> {}
+unsafe impl Sync for PhysicalDeviceVulkan11Features<'_> {}
 impl ::std::default::Default for PhysicalDeviceVulkan11Features<'_> {
     #[inline]
     fn default() -> Self {
@@ -30278,6 +31236,8 @@ pub struct PhysicalDeviceVulkan11Properties<'a> {
     pub max_memory_allocation_size: DeviceSize,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceVulkan11Properties<'_> {}
+unsafe impl Sync for PhysicalDeviceVulkan11Properties<'_> {}
 impl ::std::default::Default for PhysicalDeviceVulkan11Properties<'_> {
     #[inline]
     fn default() -> Self {
@@ -30453,6 +31413,8 @@ pub struct PhysicalDeviceVulkan12Features<'a> {
     pub subgroup_broadcast_dynamic_id: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceVulkan12Features<'_> {}
+unsafe impl Sync for PhysicalDeviceVulkan12Features<'_> {}
 impl ::std::default::Default for PhysicalDeviceVulkan12Features<'_> {
     #[inline]
     fn default() -> Self {
@@ -30904,6 +31866,8 @@ pub struct PhysicalDeviceVulkan12Properties<'a> {
     pub framebuffer_integer_color_sample_counts: SampleCountFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceVulkan12Properties<'_> {}
+unsafe impl Sync for PhysicalDeviceVulkan12Properties<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for PhysicalDeviceVulkan12Properties<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -31621,6 +32585,8 @@ pub struct PhysicalDeviceVulkan13Features<'a> {
     pub maintenance4: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceVulkan13Features<'_> {}
+unsafe impl Sync for PhysicalDeviceVulkan13Features<'_> {}
 impl ::std::default::Default for PhysicalDeviceVulkan13Features<'_> {
     #[inline]
     fn default() -> Self {
@@ -31798,6 +32764,8 @@ pub struct PhysicalDeviceVulkan13Properties<'a> {
     pub max_buffer_size: DeviceSize,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceVulkan13Properties<'_> {}
+unsafe impl Sync for PhysicalDeviceVulkan13Properties<'_> {}
 impl ::std::default::Default for PhysicalDeviceVulkan13Properties<'_> {
     #[inline]
     fn default() -> Self {
@@ -32199,6 +33167,8 @@ pub struct PipelineCompilerControlCreateInfoAMD<'a> {
     pub compiler_control_flags: PipelineCompilerControlFlagsAMD,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineCompilerControlCreateInfoAMD<'_> {}
+unsafe impl Sync for PipelineCompilerControlCreateInfoAMD<'_> {}
 impl ::std::default::Default for PipelineCompilerControlCreateInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
@@ -32240,6 +33210,8 @@ pub struct PhysicalDeviceCoherentMemoryFeaturesAMD<'a> {
     pub device_coherent_memory: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceCoherentMemoryFeaturesAMD<'_> {}
+unsafe impl Sync for PhysicalDeviceCoherentMemoryFeaturesAMD<'_> {}
 impl ::std::default::Default for PhysicalDeviceCoherentMemoryFeaturesAMD<'_> {
     #[inline]
     fn default() -> Self {
@@ -32278,6 +33250,8 @@ pub struct PhysicalDeviceToolProperties<'a> {
     pub layer: [c_char; MAX_EXTENSION_NAME_SIZE],
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceToolProperties<'_> {}
+unsafe impl Sync for PhysicalDeviceToolProperties<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for PhysicalDeviceToolProperties<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -32380,6 +33354,8 @@ pub struct SamplerCustomBorderColorCreateInfoEXT<'a> {
     pub format: Format,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SamplerCustomBorderColorCreateInfoEXT<'_> {}
+unsafe impl Sync for SamplerCustomBorderColorCreateInfoEXT<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for SamplerCustomBorderColorCreateInfoEXT<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -32431,6 +33407,8 @@ pub struct PhysicalDeviceCustomBorderColorPropertiesEXT<'a> {
     pub max_custom_border_color_samplers: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceCustomBorderColorPropertiesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceCustomBorderColorPropertiesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceCustomBorderColorPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -32469,6 +33447,8 @@ pub struct PhysicalDeviceCustomBorderColorFeaturesEXT<'a> {
     pub custom_border_color_without_format: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceCustomBorderColorFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceCustomBorderColorFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceCustomBorderColorFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -32514,6 +33494,8 @@ pub struct SamplerBorderColorComponentMappingCreateInfoEXT<'a> {
     pub srgb: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SamplerBorderColorComponentMappingCreateInfoEXT<'_> {}
+unsafe impl Sync for SamplerBorderColorComponentMappingCreateInfoEXT<'_> {}
 impl ::std::default::Default for SamplerBorderColorComponentMappingCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -32555,6 +33537,8 @@ pub struct PhysicalDeviceBorderColorSwizzleFeaturesEXT<'a> {
     pub border_color_swizzle_from_image: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -32643,6 +33627,8 @@ pub struct AccelerationStructureGeometryTrianglesDataKHR<'a> {
     pub transform_data: DeviceOrHostAddressConstKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for AccelerationStructureGeometryTrianglesDataKHR<'_> {}
+unsafe impl Sync for AccelerationStructureGeometryTrianglesDataKHR<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for AccelerationStructureGeometryTrianglesDataKHR<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -32746,6 +33732,8 @@ pub struct AccelerationStructureGeometryAabbsDataKHR<'a> {
     pub stride: DeviceSize,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for AccelerationStructureGeometryAabbsDataKHR<'_> {}
+unsafe impl Sync for AccelerationStructureGeometryAabbsDataKHR<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for AccelerationStructureGeometryAabbsDataKHR<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -32796,6 +33784,8 @@ pub struct AccelerationStructureGeometryInstancesDataKHR<'a> {
     pub data: DeviceOrHostAddressConstKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for AccelerationStructureGeometryInstancesDataKHR<'_> {}
+unsafe impl Sync for AccelerationStructureGeometryInstancesDataKHR<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for AccelerationStructureGeometryInstancesDataKHR<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -32861,6 +33851,8 @@ pub struct AccelerationStructureGeometryKHR<'a> {
     pub flags: GeometryFlagsKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for AccelerationStructureGeometryKHR<'_> {}
+unsafe impl Sync for AccelerationStructureGeometryKHR<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for AccelerationStructureGeometryKHR<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -32924,6 +33916,8 @@ pub struct AccelerationStructureBuildGeometryInfoKHR<'a> {
     pub scratch_data: DeviceOrHostAddressKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for AccelerationStructureBuildGeometryInfoKHR<'_> {}
+unsafe impl Sync for AccelerationStructureBuildGeometryInfoKHR<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for AccelerationStructureBuildGeometryInfoKHR<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -33073,6 +34067,8 @@ pub struct AccelerationStructureCreateInfoKHR<'a> {
     pub device_address: DeviceAddress,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for AccelerationStructureCreateInfoKHR<'_> {}
+unsafe impl Sync for AccelerationStructureCreateInfoKHR<'_> {}
 impl ::std::default::Default for AccelerationStructureCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -33220,6 +34216,8 @@ pub struct AccelerationStructureDeviceAddressInfoKHR<'a> {
     pub acceleration_structure: AccelerationStructureKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for AccelerationStructureDeviceAddressInfoKHR<'_> {}
+unsafe impl Sync for AccelerationStructureDeviceAddressInfoKHR<'_> {}
 impl ::std::default::Default for AccelerationStructureDeviceAddressInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -33256,6 +34254,8 @@ pub struct AccelerationStructureVersionInfoKHR<'a> {
     pub p_version_data: *const [u8; 2 * UUID_SIZE],
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for AccelerationStructureVersionInfoKHR<'_> {}
+unsafe impl Sync for AccelerationStructureVersionInfoKHR<'_> {}
 impl ::std::default::Default for AccelerationStructureVersionInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -33290,6 +34290,8 @@ pub struct CopyAccelerationStructureInfoKHR<'a> {
     pub mode: CopyAccelerationStructureModeKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CopyAccelerationStructureInfoKHR<'_> {}
+unsafe impl Sync for CopyAccelerationStructureInfoKHR<'_> {}
 impl ::std::default::Default for CopyAccelerationStructureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -33335,6 +34337,8 @@ pub struct CopyAccelerationStructureToMemoryInfoKHR<'a> {
     pub mode: CopyAccelerationStructureModeKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CopyAccelerationStructureToMemoryInfoKHR<'_> {}
+unsafe impl Sync for CopyAccelerationStructureToMemoryInfoKHR<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for CopyAccelerationStructureToMemoryInfoKHR<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -33393,6 +34397,8 @@ pub struct CopyMemoryToAccelerationStructureInfoKHR<'a> {
     pub mode: CopyAccelerationStructureModeKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CopyMemoryToAccelerationStructureInfoKHR<'_> {}
+unsafe impl Sync for CopyMemoryToAccelerationStructureInfoKHR<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for CopyMemoryToAccelerationStructureInfoKHR<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -33451,6 +34457,8 @@ pub struct RayTracingPipelineInterfaceCreateInfoKHR<'a> {
     pub max_pipeline_ray_hit_attribute_size: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for RayTracingPipelineInterfaceCreateInfoKHR<'_> {}
+unsafe impl Sync for RayTracingPipelineInterfaceCreateInfoKHR<'_> {}
 impl ::std::default::Default for RayTracingPipelineInterfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -33494,6 +34502,8 @@ pub struct PipelineLibraryCreateInfoKHR<'a> {
     pub p_libraries: *const Pipeline,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineLibraryCreateInfoKHR<'_> {}
+unsafe impl Sync for PipelineLibraryCreateInfoKHR<'_> {}
 impl ::std::default::Default for PipelineLibraryCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -33529,6 +34539,8 @@ pub struct PhysicalDeviceExtendedDynamicStateFeaturesEXT<'a> {
     pub extended_dynamic_state: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -33566,6 +34578,8 @@ pub struct PhysicalDeviceExtendedDynamicState2FeaturesEXT<'a> {
     pub extended_dynamic_state2_patch_control_points: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -33650,6 +34664,8 @@ pub struct PhysicalDeviceExtendedDynamicState3FeaturesEXT<'a> {
     pub extended_dynamic_state3_shading_rate_image_enable: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceExtendedDynamicState3FeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceExtendedDynamicState3FeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceExtendedDynamicState3FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -33987,6 +35003,8 @@ pub struct PhysicalDeviceExtendedDynamicState3PropertiesEXT<'a> {
     pub dynamic_primitive_topology_unrestricted: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceExtendedDynamicState3PropertiesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceExtendedDynamicState3PropertiesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceExtendedDynamicState3PropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -34112,6 +35130,8 @@ pub struct RenderPassTransformBeginInfoQCOM<'a> {
     pub transform: SurfaceTransformFlagsKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for RenderPassTransformBeginInfoQCOM<'_> {}
+unsafe impl Sync for RenderPassTransformBeginInfoQCOM<'_> {}
 impl ::std::default::Default for RenderPassTransformBeginInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
@@ -34145,6 +35165,8 @@ pub struct CopyCommandTransformInfoQCOM<'a> {
     pub transform: SurfaceTransformFlagsKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CopyCommandTransformInfoQCOM<'_> {}
+unsafe impl Sync for CopyCommandTransformInfoQCOM<'_> {}
 impl ::std::default::Default for CopyCommandTransformInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
@@ -34180,6 +35202,8 @@ pub struct CommandBufferInheritanceRenderPassTransformInfoQCOM<'a> {
     pub render_area: Rect2D,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CommandBufferInheritanceRenderPassTransformInfoQCOM<'_> {}
+unsafe impl Sync for CommandBufferInheritanceRenderPassTransformInfoQCOM<'_> {}
 impl ::std::default::Default for CommandBufferInheritanceRenderPassTransformInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
@@ -34223,6 +35247,8 @@ pub struct PhysicalDeviceDiagnosticsConfigFeaturesNV<'a> {
     pub diagnostics_config: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceDiagnosticsConfigFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceDiagnosticsConfigFeaturesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceDiagnosticsConfigFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -34258,6 +35284,8 @@ pub struct DeviceDiagnosticsConfigCreateInfoNV<'a> {
     pub flags: DeviceDiagnosticsConfigFlagsNV,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DeviceDiagnosticsConfigCreateInfoNV<'_> {}
+unsafe impl Sync for DeviceDiagnosticsConfigCreateInfoNV<'_> {}
 impl ::std::default::Default for DeviceDiagnosticsConfigCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -34291,6 +35319,8 @@ pub struct PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'a> {
     pub shader_zero_initialize_workgroup_memory: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'_> {}
+unsafe impl Sync for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'_> {}
 impl ::std::default::Default for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'_> {
     #[inline]
     fn default() -> Self {
@@ -34333,6 +35363,8 @@ pub struct PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'a> {
     pub shader_subgroup_uniform_control_flow: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -34379,6 +35411,8 @@ pub struct PhysicalDeviceRobustness2FeaturesEXT<'a> {
     pub null_descriptor: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceRobustness2FeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceRobustness2FeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceRobustness2FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -34426,6 +35460,8 @@ pub struct PhysicalDeviceRobustness2PropertiesEXT<'a> {
     pub robust_uniform_buffer_access_size_alignment: DeviceSize,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceRobustness2PropertiesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceRobustness2PropertiesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceRobustness2PropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -34474,6 +35510,8 @@ pub struct PhysicalDeviceImageRobustnessFeatures<'a> {
     pub robust_image_access: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceImageRobustnessFeatures<'_> {}
+unsafe impl Sync for PhysicalDeviceImageRobustnessFeatures<'_> {}
 impl ::std::default::Default for PhysicalDeviceImageRobustnessFeatures<'_> {
     #[inline]
     fn default() -> Self {
@@ -34511,6 +35549,8 @@ pub struct PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'a> {
     pub workgroup_memory_explicit_layout16_bit_access: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -34596,6 +35636,8 @@ pub struct PhysicalDevicePortabilitySubsetFeaturesKHR<'a> {
     pub vertex_attribute_access_beyond_stride: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDevicePortabilitySubsetFeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDevicePortabilitySubsetFeaturesKHR<'_> {}
 impl ::std::default::Default for PhysicalDevicePortabilitySubsetFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -34728,6 +35770,8 @@ pub struct PhysicalDevicePortabilitySubsetPropertiesKHR<'a> {
     pub min_vertex_input_binding_stride_alignment: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDevicePortabilitySubsetPropertiesKHR<'_> {}
+unsafe impl Sync for PhysicalDevicePortabilitySubsetPropertiesKHR<'_> {}
 impl ::std::default::Default for PhysicalDevicePortabilitySubsetPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -34766,6 +35810,8 @@ pub struct PhysicalDevice4444FormatsFeaturesEXT<'a> {
     pub format_a4b4g4r4: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDevice4444FormatsFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDevice4444FormatsFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDevice4444FormatsFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -34806,6 +35852,8 @@ pub struct PhysicalDeviceSubpassShadingFeaturesHUAWEI<'a> {
     pub subpass_shading: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'_> {}
+unsafe impl Sync for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'_> {}
 impl ::std::default::Default for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
@@ -34842,6 +35890,8 @@ pub struct PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a> {
     pub multiview_cluster_culling_shader: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'_> {}
+unsafe impl Sync for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'_> {}
 impl ::std::default::Default for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
@@ -34907,6 +35957,8 @@ pub struct PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'a> {
     pub cluster_shading_rate: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'_> {}
+unsafe impl Sync for PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'_> {}
 impl ::std::default::Default for PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
@@ -34946,6 +35998,8 @@ pub struct BufferCopy2<'a> {
     pub size: DeviceSize,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BufferCopy2<'_> {}
+unsafe impl Sync for BufferCopy2<'_> {}
 impl ::std::default::Default for BufferCopy2<'_> {
     #[inline]
     fn default() -> Self {
@@ -34994,6 +36048,8 @@ pub struct ImageCopy2<'a> {
     pub extent: Extent3D,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImageCopy2<'_> {}
+unsafe impl Sync for ImageCopy2<'_> {}
 impl ::std::default::Default for ImageCopy2<'_> {
     #[inline]
     fn default() -> Self {
@@ -35053,6 +36109,8 @@ pub struct ImageBlit2<'a> {
     pub dst_offsets: [Offset3D; 2],
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImageBlit2<'_> {}
+unsafe impl Sync for ImageBlit2<'_> {}
 impl ::std::default::Default for ImageBlit2<'_> {
     #[inline]
     fn default() -> Self {
@@ -35123,6 +36181,8 @@ pub struct BufferImageCopy2<'a> {
     pub image_extent: Extent3D,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BufferImageCopy2<'_> {}
+unsafe impl Sync for BufferImageCopy2<'_> {}
 impl ::std::default::Default for BufferImageCopy2<'_> {
     #[inline]
     fn default() -> Self {
@@ -35204,6 +36264,8 @@ pub struct ImageResolve2<'a> {
     pub extent: Extent3D,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImageResolve2<'_> {}
+unsafe impl Sync for ImageResolve2<'_> {}
 impl ::std::default::Default for ImageResolve2<'_> {
     #[inline]
     fn default() -> Self {
@@ -35263,6 +36325,8 @@ pub struct CopyBufferInfo2<'a> {
     pub p_regions: *const BufferCopy2<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CopyBufferInfo2<'_> {}
+unsafe impl Sync for CopyBufferInfo2<'_> {}
 impl ::std::default::Default for CopyBufferInfo2<'_> {
     #[inline]
     fn default() -> Self {
@@ -35314,6 +36378,8 @@ pub struct CopyImageInfo2<'a> {
     pub p_regions: *const ImageCopy2<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CopyImageInfo2<'_> {}
+unsafe impl Sync for CopyImageInfo2<'_> {}
 impl ::std::default::Default for CopyImageInfo2<'_> {
     #[inline]
     fn default() -> Self {
@@ -35378,6 +36444,8 @@ pub struct BlitImageInfo2<'a> {
     pub filter: Filter,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BlitImageInfo2<'_> {}
+unsafe impl Sync for BlitImageInfo2<'_> {}
 impl ::std::default::Default for BlitImageInfo2<'_> {
     #[inline]
     fn default() -> Self {
@@ -35461,6 +36529,8 @@ pub struct CopyBufferToImageInfo2<'a> {
     pub p_regions: *const BufferImageCopy2<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CopyBufferToImageInfo2<'_> {}
+unsafe impl Sync for CopyBufferToImageInfo2<'_> {}
 impl ::std::default::Default for CopyBufferToImageInfo2<'_> {
     #[inline]
     fn default() -> Self {
@@ -35517,6 +36587,8 @@ pub struct CopyImageToBufferInfo2<'a> {
     pub p_regions: *const BufferImageCopy2<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CopyImageToBufferInfo2<'_> {}
+unsafe impl Sync for CopyImageToBufferInfo2<'_> {}
 impl ::std::default::Default for CopyImageToBufferInfo2<'_> {
     #[inline]
     fn default() -> Self {
@@ -35574,6 +36646,8 @@ pub struct ResolveImageInfo2<'a> {
     pub p_regions: *const ImageResolve2<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ResolveImageInfo2<'_> {}
+unsafe impl Sync for ResolveImageInfo2<'_> {}
 impl ::std::default::Default for ResolveImageInfo2<'_> {
     #[inline]
     fn default() -> Self {
@@ -35633,6 +36707,8 @@ pub struct PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'a> {
     pub sparse_image_int64_atomics: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -35675,6 +36751,8 @@ pub struct FragmentShadingRateAttachmentInfoKHR<'a> {
     pub shading_rate_attachment_texel_size: Extent2D,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for FragmentShadingRateAttachmentInfoKHR<'_> {}
+unsafe impl Sync for FragmentShadingRateAttachmentInfoKHR<'_> {}
 impl ::std::default::Default for FragmentShadingRateAttachmentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -35721,6 +36799,8 @@ pub struct PipelineFragmentShadingRateStateCreateInfoKHR<'a> {
     pub combiner_ops: [FragmentShadingRateCombinerOpKHR; 2],
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineFragmentShadingRateStateCreateInfoKHR<'_> {}
+unsafe impl Sync for PipelineFragmentShadingRateStateCreateInfoKHR<'_> {}
 impl ::std::default::Default for PipelineFragmentShadingRateStateCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -35766,6 +36846,8 @@ pub struct PhysicalDeviceFragmentShadingRateFeaturesKHR<'a> {
     pub attachment_fragment_shading_rate: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceFragmentShadingRateFeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceFragmentShadingRateFeaturesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceFragmentShadingRateFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -35835,6 +36917,8 @@ pub struct PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
     pub fragment_shading_rate_strict_multiply_combiner: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceFragmentShadingRatePropertiesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceFragmentShadingRatePropertiesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceFragmentShadingRatePropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -36027,6 +37111,8 @@ pub struct PhysicalDeviceFragmentShadingRateKHR<'a> {
     pub fragment_size: Extent2D,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceFragmentShadingRateKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceFragmentShadingRateKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceFragmentShadingRateKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -36065,6 +37151,8 @@ pub struct PhysicalDeviceShaderTerminateInvocationFeatures<'a> {
     pub shader_terminate_invocation: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderTerminateInvocationFeatures<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderTerminateInvocationFeatures<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderTerminateInvocationFeatures<'_> {
     #[inline]
     fn default() -> Self {
@@ -36102,6 +37190,8 @@ pub struct PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'a> {
     pub no_invocation_fragment_shading_rates: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -36158,6 +37248,8 @@ pub struct PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'a> {
     pub max_fragment_shading_rate_invocation_count: SampleCountFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -36201,6 +37293,8 @@ pub struct PipelineFragmentShadingRateEnumStateCreateInfoNV<'a> {
     pub combiner_ops: [FragmentShadingRateCombinerOpKHR; 2],
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineFragmentShadingRateEnumStateCreateInfoNV<'_> {}
+unsafe impl Sync for PipelineFragmentShadingRateEnumStateCreateInfoNV<'_> {}
 impl ::std::default::Default for PipelineFragmentShadingRateEnumStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -36252,6 +37346,8 @@ pub struct AccelerationStructureBuildSizesInfoKHR<'a> {
     pub build_scratch_size: DeviceSize,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for AccelerationStructureBuildSizesInfoKHR<'_> {}
+unsafe impl Sync for AccelerationStructureBuildSizesInfoKHR<'_> {}
 impl ::std::default::Default for AccelerationStructureBuildSizesInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -36298,6 +37394,8 @@ pub struct PhysicalDeviceImage2DViewOf3DFeaturesEXT<'a> {
     pub sampler2_d_view_of3_d: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -36339,6 +37437,8 @@ pub struct PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'a> {
     pub image_sliced_view_of3_d: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -36374,6 +37474,8 @@ pub struct PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'a> {
     pub attachment_feedback_loop_dynamic_state: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -36420,6 +37522,8 @@ pub struct PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'a> {
     pub mutable_descriptor_type: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -36454,6 +37558,8 @@ pub struct MutableDescriptorTypeListEXT<'a> {
     pub p_descriptor_types: *const DescriptorType,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MutableDescriptorTypeListEXT<'_> {}
+unsafe impl Sync for MutableDescriptorTypeListEXT<'_> {}
 impl ::std::default::Default for MutableDescriptorTypeListEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -36484,6 +37590,8 @@ pub struct MutableDescriptorTypeCreateInfoEXT<'a> {
     pub p_mutable_descriptor_type_lists: *const MutableDescriptorTypeListEXT<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MutableDescriptorTypeCreateInfoEXT<'_> {}
+unsafe impl Sync for MutableDescriptorTypeCreateInfoEXT<'_> {}
 impl ::std::default::Default for MutableDescriptorTypeCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -36523,6 +37631,8 @@ pub struct PhysicalDeviceDepthClipControlFeaturesEXT<'a> {
     pub depth_clip_control: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceDepthClipControlFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceDepthClipControlFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceDepthClipControlFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -36558,6 +37668,8 @@ pub struct PipelineViewportDepthClipControlCreateInfoEXT<'a> {
     pub negative_one_to_one: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineViewportDepthClipControlCreateInfoEXT<'_> {}
+unsafe impl Sync for PipelineViewportDepthClipControlCreateInfoEXT<'_> {}
 impl ::std::default::Default for PipelineViewportDepthClipControlCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -36595,6 +37707,8 @@ pub struct PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'a> {
     pub vertex_input_dynamic_state: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -36633,6 +37747,8 @@ pub struct PhysicalDeviceExternalMemoryRDMAFeaturesNV<'a> {
     pub external_memory_rdma: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -36671,6 +37787,8 @@ pub struct VertexInputBindingDescription2EXT<'a> {
     pub divisor: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VertexInputBindingDescription2EXT<'_> {}
+unsafe impl Sync for VertexInputBindingDescription2EXT<'_> {}
 impl ::std::default::Default for VertexInputBindingDescription2EXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -36724,6 +37842,8 @@ pub struct VertexInputAttributeDescription2EXT<'a> {
     pub offset: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VertexInputAttributeDescription2EXT<'_> {}
+unsafe impl Sync for VertexInputAttributeDescription2EXT<'_> {}
 impl ::std::default::Default for VertexInputAttributeDescription2EXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -36774,6 +37894,8 @@ pub struct PhysicalDeviceColorWriteEnableFeaturesEXT<'a> {
     pub color_write_enable: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceColorWriteEnableFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceColorWriteEnableFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceColorWriteEnableFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -36810,6 +37932,8 @@ pub struct PipelineColorWriteCreateInfoEXT<'a> {
     pub p_color_write_enables: *const Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineColorWriteCreateInfoEXT<'_> {}
+unsafe impl Sync for PipelineColorWriteCreateInfoEXT<'_> {}
 impl ::std::default::Default for PipelineColorWriteCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -36848,6 +37972,8 @@ pub struct MemoryBarrier2<'a> {
     pub dst_access_mask: AccessFlags2,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MemoryBarrier2<'_> {}
+unsafe impl Sync for MemoryBarrier2<'_> {}
 impl ::std::default::Default for MemoryBarrier2<'_> {
     #[inline]
     fn default() -> Self {
@@ -36908,6 +38034,8 @@ pub struct ImageMemoryBarrier2<'a> {
     pub subresource_range: ImageSubresourceRange,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImageMemoryBarrier2<'_> {}
+unsafe impl Sync for ImageMemoryBarrier2<'_> {}
 impl ::std::default::Default for ImageMemoryBarrier2<'_> {
     #[inline]
     fn default() -> Self {
@@ -37017,6 +38145,8 @@ pub struct BufferMemoryBarrier2<'a> {
     pub size: DeviceSize,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BufferMemoryBarrier2<'_> {}
+unsafe impl Sync for BufferMemoryBarrier2<'_> {}
 impl ::std::default::Default for BufferMemoryBarrier2<'_> {
     #[inline]
     fn default() -> Self {
@@ -37118,6 +38248,8 @@ pub struct DependencyInfo<'a> {
     pub p_image_memory_barriers: *const ImageMemoryBarrier2<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DependencyInfo<'_> {}
+unsafe impl Sync for DependencyInfo<'_> {}
 impl ::std::default::Default for DependencyInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -37183,6 +38315,8 @@ pub struct SemaphoreSubmitInfo<'a> {
     pub device_index: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SemaphoreSubmitInfo<'_> {}
+unsafe impl Sync for SemaphoreSubmitInfo<'_> {}
 impl ::std::default::Default for SemaphoreSubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -37234,6 +38368,8 @@ pub struct CommandBufferSubmitInfo<'a> {
     pub device_mask: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CommandBufferSubmitInfo<'_> {}
+unsafe impl Sync for CommandBufferSubmitInfo<'_> {}
 impl ::std::default::Default for CommandBufferSubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -37293,6 +38429,8 @@ pub struct SubmitInfo2<'a> {
     pub p_signal_semaphore_infos: *const SemaphoreSubmitInfo<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SubmitInfo2<'_> {}
+unsafe impl Sync for SubmitInfo2<'_> {}
 impl ::std::default::Default for SubmitInfo2<'_> {
     #[inline]
     fn default() -> Self {
@@ -37373,6 +38511,8 @@ pub struct QueueFamilyCheckpointProperties2NV<'a> {
     pub checkpoint_execution_stage_mask: PipelineStageFlags2,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for QueueFamilyCheckpointProperties2NV<'_> {}
+unsafe impl Sync for QueueFamilyCheckpointProperties2NV<'_> {}
 impl ::std::default::Default for QueueFamilyCheckpointProperties2NV<'_> {
     #[inline]
     fn default() -> Self {
@@ -37410,6 +38550,8 @@ pub struct CheckpointData2NV<'a> {
     pub p_checkpoint_marker: *mut c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CheckpointData2NV<'_> {}
+unsafe impl Sync for CheckpointData2NV<'_> {}
 impl ::std::default::Default for CheckpointData2NV<'_> {
     #[inline]
     fn default() -> Self {
@@ -37448,6 +38590,8 @@ pub struct PhysicalDeviceSynchronization2Features<'a> {
     pub synchronization2: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceSynchronization2Features<'_> {}
+unsafe impl Sync for PhysicalDeviceSynchronization2Features<'_> {}
 impl ::std::default::Default for PhysicalDeviceSynchronization2Features<'_> {
     #[inline]
     fn default() -> Self {
@@ -37482,6 +38626,8 @@ pub struct PhysicalDeviceHostImageCopyFeaturesEXT<'a> {
     pub host_image_copy: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceHostImageCopyFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceHostImageCopyFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceHostImageCopyFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -37522,6 +38668,8 @@ pub struct PhysicalDeviceHostImageCopyPropertiesEXT<'a> {
     pub identical_memory_type_requirements: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceHostImageCopyPropertiesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceHostImageCopyPropertiesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceHostImageCopyPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -37589,6 +38737,8 @@ pub struct MemoryToImageCopyEXT<'a> {
     pub image_extent: Extent3D,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MemoryToImageCopyEXT<'_> {}
+unsafe impl Sync for MemoryToImageCopyEXT<'_> {}
 impl ::std::default::Default for MemoryToImageCopyEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -37656,6 +38806,8 @@ pub struct ImageToMemoryCopyEXT<'a> {
     pub image_extent: Extent3D,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImageToMemoryCopyEXT<'_> {}
+unsafe impl Sync for ImageToMemoryCopyEXT<'_> {}
 impl ::std::default::Default for ImageToMemoryCopyEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -37722,6 +38874,8 @@ pub struct CopyMemoryToImageInfoEXT<'a> {
     pub p_regions: *const MemoryToImageCopyEXT<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CopyMemoryToImageInfoEXT<'_> {}
+unsafe impl Sync for CopyMemoryToImageInfoEXT<'_> {}
 impl ::std::default::Default for CopyMemoryToImageInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -37778,6 +38932,8 @@ pub struct CopyImageToMemoryInfoEXT<'a> {
     pub p_regions: *const ImageToMemoryCopyEXT<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CopyImageToMemoryInfoEXT<'_> {}
+unsafe impl Sync for CopyImageToMemoryInfoEXT<'_> {}
 impl ::std::default::Default for CopyImageToMemoryInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -37836,6 +38992,8 @@ pub struct CopyImageToImageInfoEXT<'a> {
     pub p_regions: *const ImageCopy2<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CopyImageToImageInfoEXT<'_> {}
+unsafe impl Sync for CopyImageToImageInfoEXT<'_> {}
 impl ::std::default::Default for CopyImageToImageInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -37903,6 +39061,8 @@ pub struct HostImageLayoutTransitionInfoEXT<'a> {
     pub subresource_range: ImageSubresourceRange,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for HostImageLayoutTransitionInfoEXT<'_> {}
+unsafe impl Sync for HostImageLayoutTransitionInfoEXT<'_> {}
 impl ::std::default::Default for HostImageLayoutTransitionInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -37953,6 +39113,8 @@ pub struct SubresourceHostMemcpySizeEXT<'a> {
     pub size: DeviceSize,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SubresourceHostMemcpySizeEXT<'_> {}
+unsafe impl Sync for SubresourceHostMemcpySizeEXT<'_> {}
 impl ::std::default::Default for SubresourceHostMemcpySizeEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -37987,6 +39149,8 @@ pub struct HostImageCopyDevicePerformanceQueryEXT<'a> {
     pub identical_memory_layout: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for HostImageCopyDevicePerformanceQueryEXT<'_> {}
+unsafe impl Sync for HostImageCopyDevicePerformanceQueryEXT<'_> {}
 impl ::std::default::Default for HostImageCopyDevicePerformanceQueryEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -38029,6 +39193,8 @@ pub struct PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'a> {
     pub primitives_generated_query_with_non_zero_streams: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -38087,6 +39253,8 @@ pub struct PhysicalDeviceLegacyDitheringFeaturesEXT<'a> {
     pub legacy_dithering: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceLegacyDitheringFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceLegacyDitheringFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceLegacyDitheringFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -38122,6 +39290,8 @@ pub struct PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'a> {
     pub multisampled_render_to_single_sampled: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -38166,6 +39336,8 @@ pub struct SubpassResolvePerformanceQueryEXT<'a> {
     pub optimal: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SubpassResolvePerformanceQueryEXT<'_> {}
+unsafe impl Sync for SubpassResolvePerformanceQueryEXT<'_> {}
 impl ::std::default::Default for SubpassResolvePerformanceQueryEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -38200,6 +39372,8 @@ pub struct MultisampledRenderToSingleSampledInfoEXT<'a> {
     pub rasterization_samples: SampleCountFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MultisampledRenderToSingleSampledInfoEXT<'_> {}
+unsafe impl Sync for MultisampledRenderToSingleSampledInfoEXT<'_> {}
 impl ::std::default::Default for MultisampledRenderToSingleSampledInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -38245,6 +39419,8 @@ pub struct PhysicalDevicePipelineProtectedAccessFeaturesEXT<'a> {
     pub pipeline_protected_access: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDevicePipelineProtectedAccessFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDevicePipelineProtectedAccessFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDevicePipelineProtectedAccessFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -38283,6 +39459,8 @@ pub struct QueueFamilyVideoPropertiesKHR<'a> {
     pub video_codec_operations: VideoCodecOperationFlagsKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for QueueFamilyVideoPropertiesKHR<'_> {}
+unsafe impl Sync for QueueFamilyVideoPropertiesKHR<'_> {}
 impl ::std::default::Default for QueueFamilyVideoPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -38319,6 +39497,8 @@ pub struct QueueFamilyQueryResultStatusPropertiesKHR<'a> {
     pub query_result_status_support: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for QueueFamilyQueryResultStatusPropertiesKHR<'_> {}
+unsafe impl Sync for QueueFamilyQueryResultStatusPropertiesKHR<'_> {}
 impl ::std::default::Default for QueueFamilyQueryResultStatusPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -38354,6 +39534,8 @@ pub struct VideoProfileListInfoKHR<'a> {
     pub p_profiles: *const VideoProfileInfoKHR<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoProfileListInfoKHR<'_> {}
+unsafe impl Sync for VideoProfileListInfoKHR<'_> {}
 impl ::std::default::Default for VideoProfileListInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -38392,6 +39574,8 @@ pub struct PhysicalDeviceVideoFormatInfoKHR<'a> {
     pub image_usage: ImageUsageFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceVideoFormatInfoKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceVideoFormatInfoKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceVideoFormatInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -38447,6 +39631,8 @@ pub struct VideoFormatPropertiesKHR<'a> {
     pub image_usage_flags: ImageUsageFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoFormatPropertiesKHR<'_> {}
+unsafe impl Sync for VideoFormatPropertiesKHR<'_> {}
 impl ::std::default::Default for VideoFormatPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -38512,6 +39698,8 @@ pub struct VideoProfileInfoKHR<'a> {
     pub chroma_bit_depth: VideoComponentBitDepthFlagsKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoProfileInfoKHR<'_> {}
+unsafe impl Sync for VideoProfileInfoKHR<'_> {}
 impl ::std::default::Default for VideoProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -38592,6 +39780,8 @@ pub struct VideoCapabilitiesKHR<'a> {
     pub std_header_version: ExtensionProperties,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoCapabilitiesKHR<'_> {}
+unsafe impl Sync for VideoCapabilitiesKHR<'_> {}
 impl ::std::default::Default for VideoCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -38694,6 +39884,8 @@ pub struct VideoSessionMemoryRequirementsKHR<'a> {
     pub memory_requirements: MemoryRequirements,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoSessionMemoryRequirementsKHR<'_> {}
+unsafe impl Sync for VideoSessionMemoryRequirementsKHR<'_> {}
 impl ::std::default::Default for VideoSessionMemoryRequirementsKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -38735,6 +39927,8 @@ pub struct BindVideoSessionMemoryInfoKHR<'a> {
     pub memory_size: DeviceSize,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BindVideoSessionMemoryInfoKHR<'_> {}
+unsafe impl Sync for BindVideoSessionMemoryInfoKHR<'_> {}
 impl ::std::default::Default for BindVideoSessionMemoryInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -38788,6 +39982,8 @@ pub struct VideoPictureResourceInfoKHR<'a> {
     pub image_view_binding: ImageView,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoPictureResourceInfoKHR<'_> {}
+unsafe impl Sync for VideoPictureResourceInfoKHR<'_> {}
 impl ::std::default::Default for VideoPictureResourceInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -38839,6 +40035,8 @@ pub struct VideoReferenceSlotInfoKHR<'a> {
     pub p_picture_resource: *const VideoPictureResourceInfoKHR<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoReferenceSlotInfoKHR<'_> {}
+unsafe impl Sync for VideoReferenceSlotInfoKHR<'_> {}
 impl ::std::default::Default for VideoReferenceSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -38895,6 +40093,8 @@ pub struct VideoDecodeCapabilitiesKHR<'a> {
     pub flags: VideoDecodeCapabilityFlagsKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoDecodeCapabilitiesKHR<'_> {}
+unsafe impl Sync for VideoDecodeCapabilitiesKHR<'_> {}
 impl ::std::default::Default for VideoDecodeCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -38928,6 +40128,8 @@ pub struct VideoDecodeUsageInfoKHR<'a> {
     pub video_usage_hints: VideoDecodeUsageFlagsKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoDecodeUsageInfoKHR<'_> {}
+unsafe impl Sync for VideoDecodeUsageInfoKHR<'_> {}
 impl ::std::default::Default for VideoDecodeUsageInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -38969,6 +40171,8 @@ pub struct VideoDecodeInfoKHR<'a> {
     pub p_reference_slots: *const VideoReferenceSlotInfoKHR<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoDecodeInfoKHR<'_> {}
+unsafe impl Sync for VideoDecodeInfoKHR<'_> {}
 impl ::std::default::Default for VideoDecodeInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -39060,6 +40264,8 @@ pub struct PhysicalDeviceVideoMaintenance1FeaturesKHR<'a> {
     pub video_maintenance1: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceVideoMaintenance1FeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceVideoMaintenance1FeaturesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceVideoMaintenance1FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -39097,6 +40303,8 @@ pub struct VideoInlineQueryInfoKHR<'a> {
     pub query_count: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoInlineQueryInfoKHR<'_> {}
+unsafe impl Sync for VideoInlineQueryInfoKHR<'_> {}
 impl ::std::default::Default for VideoInlineQueryInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -39144,6 +40352,8 @@ pub struct VideoDecodeH264ProfileInfoKHR<'a> {
     pub picture_layout: VideoDecodeH264PictureLayoutFlagsKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoDecodeH264ProfileInfoKHR<'_> {}
+unsafe impl Sync for VideoDecodeH264ProfileInfoKHR<'_> {}
 impl ::std::default::Default for VideoDecodeH264ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -39185,6 +40395,8 @@ pub struct VideoDecodeH264CapabilitiesKHR<'a> {
     pub field_offset_granularity: Offset2D,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoDecodeH264CapabilitiesKHR<'_> {}
+unsafe impl Sync for VideoDecodeH264CapabilitiesKHR<'_> {}
 impl ::std::default::Default for VideoDecodeH264CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -39227,6 +40439,8 @@ pub struct VideoDecodeH264SessionParametersAddInfoKHR<'a> {
     pub p_std_pp_ss: *const StdVideoH264PictureParameterSet,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoDecodeH264SessionParametersAddInfoKHR<'_> {}
+unsafe impl Sync for VideoDecodeH264SessionParametersAddInfoKHR<'_> {}
 impl ::std::default::Default for VideoDecodeH264SessionParametersAddInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -39276,6 +40490,8 @@ pub struct VideoDecodeH264SessionParametersCreateInfoKHR<'a> {
     pub p_parameters_add_info: *const VideoDecodeH264SessionParametersAddInfoKHR<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoDecodeH264SessionParametersCreateInfoKHR<'_> {}
+unsafe impl Sync for VideoDecodeH264SessionParametersCreateInfoKHR<'_> {}
 impl ::std::default::Default for VideoDecodeH264SessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -39330,6 +40546,8 @@ pub struct VideoDecodeH264PictureInfoKHR<'a> {
     pub p_slice_offsets: *const u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoDecodeH264PictureInfoKHR<'_> {}
+unsafe impl Sync for VideoDecodeH264PictureInfoKHR<'_> {}
 impl ::std::default::Default for VideoDecodeH264PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -39371,6 +40589,8 @@ pub struct VideoDecodeH264DpbSlotInfoKHR<'a> {
     pub p_std_reference_info: *const StdVideoDecodeH264ReferenceInfo,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoDecodeH264DpbSlotInfoKHR<'_> {}
+unsafe impl Sync for VideoDecodeH264DpbSlotInfoKHR<'_> {}
 impl ::std::default::Default for VideoDecodeH264DpbSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -39407,6 +40627,8 @@ pub struct VideoDecodeH265ProfileInfoKHR<'a> {
     pub std_profile_idc: StdVideoH265ProfileIdc,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoDecodeH265ProfileInfoKHR<'_> {}
+unsafe impl Sync for VideoDecodeH265ProfileInfoKHR<'_> {}
 impl ::std::default::Default for VideoDecodeH265ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -39441,6 +40663,8 @@ pub struct VideoDecodeH265CapabilitiesKHR<'a> {
     pub max_level_idc: StdVideoH265LevelIdc,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoDecodeH265CapabilitiesKHR<'_> {}
+unsafe impl Sync for VideoDecodeH265CapabilitiesKHR<'_> {}
 impl ::std::default::Default for VideoDecodeH265CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -39479,6 +40703,8 @@ pub struct VideoDecodeH265SessionParametersAddInfoKHR<'a> {
     pub p_std_pp_ss: *const StdVideoH265PictureParameterSet,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoDecodeH265SessionParametersAddInfoKHR<'_> {}
+unsafe impl Sync for VideoDecodeH265SessionParametersAddInfoKHR<'_> {}
 impl ::std::default::Default for VideoDecodeH265SessionParametersAddInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -39537,6 +40763,8 @@ pub struct VideoDecodeH265SessionParametersCreateInfoKHR<'a> {
     pub p_parameters_add_info: *const VideoDecodeH265SessionParametersAddInfoKHR<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoDecodeH265SessionParametersCreateInfoKHR<'_> {}
+unsafe impl Sync for VideoDecodeH265SessionParametersCreateInfoKHR<'_> {}
 impl ::std::default::Default for VideoDecodeH265SessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -39597,6 +40825,8 @@ pub struct VideoDecodeH265PictureInfoKHR<'a> {
     pub p_slice_segment_offsets: *const u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoDecodeH265PictureInfoKHR<'_> {}
+unsafe impl Sync for VideoDecodeH265PictureInfoKHR<'_> {}
 impl ::std::default::Default for VideoDecodeH265PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -39638,6 +40868,8 @@ pub struct VideoDecodeH265DpbSlotInfoKHR<'a> {
     pub p_std_reference_info: *const StdVideoDecodeH265ReferenceInfo,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoDecodeH265DpbSlotInfoKHR<'_> {}
+unsafe impl Sync for VideoDecodeH265DpbSlotInfoKHR<'_> {}
 impl ::std::default::Default for VideoDecodeH265DpbSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -39675,6 +40907,8 @@ pub struct VideoDecodeAV1ProfileInfoKHR<'a> {
     pub film_grain_support: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoDecodeAV1ProfileInfoKHR<'_> {}
+unsafe impl Sync for VideoDecodeAV1ProfileInfoKHR<'_> {}
 impl ::std::default::Default for VideoDecodeAV1ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -39715,6 +40949,8 @@ pub struct VideoDecodeAV1CapabilitiesKHR<'a> {
     pub max_level: StdVideoAV1Level,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoDecodeAV1CapabilitiesKHR<'_> {}
+unsafe impl Sync for VideoDecodeAV1CapabilitiesKHR<'_> {}
 impl ::std::default::Default for VideoDecodeAV1CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -39748,6 +40984,8 @@ pub struct VideoDecodeAV1SessionParametersCreateInfoKHR<'a> {
     pub p_std_sequence_header: *const StdVideoAV1SequenceHeader,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoDecodeAV1SessionParametersCreateInfoKHR<'_> {}
+unsafe impl Sync for VideoDecodeAV1SessionParametersCreateInfoKHR<'_> {}
 impl ::std::default::Default for VideoDecodeAV1SessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -39793,6 +41031,8 @@ pub struct VideoDecodeAV1PictureInfoKHR<'a> {
     pub p_tile_sizes: *const u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoDecodeAV1PictureInfoKHR<'_> {}
+unsafe impl Sync for VideoDecodeAV1PictureInfoKHR<'_> {}
 impl ::std::default::Default for VideoDecodeAV1PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -39856,6 +41096,8 @@ pub struct VideoDecodeAV1DpbSlotInfoKHR<'a> {
     pub p_std_reference_info: *const StdVideoDecodeAV1ReferenceInfo,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoDecodeAV1DpbSlotInfoKHR<'_> {}
+unsafe impl Sync for VideoDecodeAV1DpbSlotInfoKHR<'_> {}
 impl ::std::default::Default for VideoDecodeAV1DpbSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -39900,6 +41142,8 @@ pub struct VideoSessionCreateInfoKHR<'a> {
     pub p_std_header_version: *const ExtensionProperties,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoSessionCreateInfoKHR<'_> {}
+unsafe impl Sync for VideoSessionCreateInfoKHR<'_> {}
 impl ::std::default::Default for VideoSessionCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -39997,6 +41241,8 @@ pub struct VideoSessionParametersCreateInfoKHR<'a> {
     pub video_session: VideoSessionKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoSessionParametersCreateInfoKHR<'_> {}
+unsafe impl Sync for VideoSessionParametersCreateInfoKHR<'_> {}
 impl ::std::default::Default for VideoSessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -40062,6 +41308,8 @@ pub struct VideoSessionParametersUpdateInfoKHR<'a> {
     pub update_sequence_count: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoSessionParametersUpdateInfoKHR<'_> {}
+unsafe impl Sync for VideoSessionParametersUpdateInfoKHR<'_> {}
 impl ::std::default::Default for VideoSessionParametersUpdateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -40112,6 +41360,8 @@ pub struct VideoEncodeSessionParametersGetInfoKHR<'a> {
     pub video_session_parameters: VideoSessionParametersKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeSessionParametersGetInfoKHR<'_> {}
+unsafe impl Sync for VideoEncodeSessionParametersGetInfoKHR<'_> {}
 impl ::std::default::Default for VideoEncodeSessionParametersGetInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -40166,6 +41416,8 @@ pub struct VideoEncodeSessionParametersFeedbackInfoKHR<'a> {
     pub has_overrides: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeSessionParametersFeedbackInfoKHR<'_> {}
+unsafe impl Sync for VideoEncodeSessionParametersFeedbackInfoKHR<'_> {}
 impl ::std::default::Default for VideoEncodeSessionParametersFeedbackInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -40221,6 +41473,8 @@ pub struct VideoBeginCodingInfoKHR<'a> {
     pub p_reference_slots: *const VideoReferenceSlotInfoKHR<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoBeginCodingInfoKHR<'_> {}
+unsafe impl Sync for VideoBeginCodingInfoKHR<'_> {}
 impl ::std::default::Default for VideoBeginCodingInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -40291,6 +41545,8 @@ pub struct VideoEndCodingInfoKHR<'a> {
     pub flags: VideoEndCodingFlagsKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEndCodingInfoKHR<'_> {}
+unsafe impl Sync for VideoEndCodingInfoKHR<'_> {}
 impl ::std::default::Default for VideoEndCodingInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -40323,6 +41579,8 @@ pub struct VideoCodingControlInfoKHR<'a> {
     pub flags: VideoCodingControlFlagsKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoCodingControlInfoKHR<'_> {}
+unsafe impl Sync for VideoCodingControlInfoKHR<'_> {}
 impl ::std::default::Default for VideoCodingControlInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -40372,6 +41630,8 @@ pub struct VideoEncodeUsageInfoKHR<'a> {
     pub tuning_mode: VideoEncodeTuningModeKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeUsageInfoKHR<'_> {}
+unsafe impl Sync for VideoEncodeUsageInfoKHR<'_> {}
 impl ::std::default::Default for VideoEncodeUsageInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -40426,6 +41686,8 @@ pub struct VideoEncodeInfoKHR<'a> {
     pub preceding_externally_encoded_bytes: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeInfoKHR<'_> {}
+unsafe impl Sync for VideoEncodeInfoKHR<'_> {}
 impl ::std::default::Default for VideoEncodeInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -40526,6 +41788,8 @@ pub struct QueryPoolVideoEncodeFeedbackCreateInfoKHR<'a> {
     pub encode_feedback_flags: VideoEncodeFeedbackFlagsKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for QueryPoolVideoEncodeFeedbackCreateInfoKHR<'_> {}
+unsafe impl Sync for QueryPoolVideoEncodeFeedbackCreateInfoKHR<'_> {}
 impl ::std::default::Default for QueryPoolVideoEncodeFeedbackCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -40563,6 +41827,8 @@ pub struct VideoEncodeQualityLevelInfoKHR<'a> {
     pub quality_level: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeQualityLevelInfoKHR<'_> {}
+unsafe impl Sync for VideoEncodeQualityLevelInfoKHR<'_> {}
 impl ::std::default::Default for VideoEncodeQualityLevelInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -40598,6 +41864,8 @@ pub struct PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'a> {
     pub quality_level: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -40638,6 +41906,8 @@ pub struct VideoEncodeQualityLevelPropertiesKHR<'a> {
     pub preferred_rate_control_layer_count: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeQualityLevelPropertiesKHR<'_> {}
+unsafe impl Sync for VideoEncodeQualityLevelPropertiesKHR<'_> {}
 impl ::std::default::Default for VideoEncodeQualityLevelPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -40705,6 +41975,8 @@ pub struct VideoEncodeRateControlInfoKHR<'a> {
     pub initial_virtual_buffer_size_in_ms: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeRateControlInfoKHR<'_> {}
+unsafe impl Sync for VideoEncodeRateControlInfoKHR<'_> {}
 impl ::std::default::Default for VideoEncodeRateControlInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -40774,6 +42046,8 @@ pub struct VideoEncodeRateControlLayerInfoKHR<'a> {
     pub frame_rate_denominator: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeRateControlLayerInfoKHR<'_> {}
+unsafe impl Sync for VideoEncodeRateControlLayerInfoKHR<'_> {}
 impl ::std::default::Default for VideoEncodeRateControlLayerInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -40848,6 +42122,8 @@ pub struct VideoEncodeCapabilitiesKHR<'a> {
     pub supported_encode_feedback_flags: VideoEncodeFeedbackFlagsKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeCapabilitiesKHR<'_> {}
+unsafe impl Sync for VideoEncodeCapabilitiesKHR<'_> {}
 impl ::std::default::Default for VideoEncodeCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -40938,6 +42214,8 @@ pub struct VideoEncodeH264CapabilitiesKHR<'a> {
     pub std_syntax_flags: VideoEncodeH264StdFlagsKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeH264CapabilitiesKHR<'_> {}
+unsafe impl Sync for VideoEncodeH264CapabilitiesKHR<'_> {}
 impl ::std::default::Default for VideoEncodeH264CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -41060,6 +42338,8 @@ pub struct VideoEncodeH264QualityLevelPropertiesKHR<'a> {
     pub preferred_std_entropy_coding_mode_flag: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeH264QualityLevelPropertiesKHR<'_> {}
+unsafe impl Sync for VideoEncodeH264QualityLevelPropertiesKHR<'_> {}
 impl ::std::default::Default for VideoEncodeH264QualityLevelPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -41161,6 +42441,8 @@ pub struct VideoEncodeH264SessionCreateInfoKHR<'a> {
     pub max_level_idc: StdVideoH264LevelIdc,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeH264SessionCreateInfoKHR<'_> {}
+unsafe impl Sync for VideoEncodeH264SessionCreateInfoKHR<'_> {}
 impl ::std::default::Default for VideoEncodeH264SessionCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -41203,6 +42485,8 @@ pub struct VideoEncodeH264SessionParametersAddInfoKHR<'a> {
     pub p_std_pp_ss: *const StdVideoH264PictureParameterSet,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeH264SessionParametersAddInfoKHR<'_> {}
+unsafe impl Sync for VideoEncodeH264SessionParametersAddInfoKHR<'_> {}
 impl ::std::default::Default for VideoEncodeH264SessionParametersAddInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -41252,6 +42536,8 @@ pub struct VideoEncodeH264SessionParametersCreateInfoKHR<'a> {
     pub p_parameters_add_info: *const VideoEncodeH264SessionParametersAddInfoKHR<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeH264SessionParametersCreateInfoKHR<'_> {}
+unsafe impl Sync for VideoEncodeH264SessionParametersCreateInfoKHR<'_> {}
 impl ::std::default::Default for VideoEncodeH264SessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -41307,6 +42593,8 @@ pub struct VideoEncodeH264SessionParametersGetInfoKHR<'a> {
     pub std_pps_id: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeH264SessionParametersGetInfoKHR<'_> {}
+unsafe impl Sync for VideoEncodeH264SessionParametersGetInfoKHR<'_> {}
 impl ::std::default::Default for VideoEncodeH264SessionParametersGetInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -41363,6 +42651,8 @@ pub struct VideoEncodeH264SessionParametersFeedbackInfoKHR<'a> {
     pub has_std_pps_overrides: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeH264SessionParametersFeedbackInfoKHR<'_> {}
+unsafe impl Sync for VideoEncodeH264SessionParametersFeedbackInfoKHR<'_> {}
 impl ::std::default::Default for VideoEncodeH264SessionParametersFeedbackInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -41406,6 +42696,8 @@ pub struct VideoEncodeH264DpbSlotInfoKHR<'a> {
     pub p_std_reference_info: *const StdVideoEncodeH264ReferenceInfo,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeH264DpbSlotInfoKHR<'_> {}
+unsafe impl Sync for VideoEncodeH264DpbSlotInfoKHR<'_> {}
 impl ::std::default::Default for VideoEncodeH264DpbSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -41445,6 +42737,8 @@ pub struct VideoEncodeH264PictureInfoKHR<'a> {
     pub generate_prefix_nalu: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeH264PictureInfoKHR<'_> {}
+unsafe impl Sync for VideoEncodeH264PictureInfoKHR<'_> {}
 impl ::std::default::Default for VideoEncodeH264PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -41495,6 +42789,8 @@ pub struct VideoEncodeH264ProfileInfoKHR<'a> {
     pub std_profile_idc: StdVideoH264ProfileIdc,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeH264ProfileInfoKHR<'_> {}
+unsafe impl Sync for VideoEncodeH264ProfileInfoKHR<'_> {}
 impl ::std::default::Default for VideoEncodeH264ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -41530,6 +42826,8 @@ pub struct VideoEncodeH264NaluSliceInfoKHR<'a> {
     pub p_std_slice_header: *const StdVideoEncodeH264SliceHeader,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeH264NaluSliceInfoKHR<'_> {}
+unsafe impl Sync for VideoEncodeH264NaluSliceInfoKHR<'_> {}
 impl ::std::default::Default for VideoEncodeH264NaluSliceInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -41572,6 +42870,8 @@ pub struct VideoEncodeH264RateControlInfoKHR<'a> {
     pub temporal_layer_count: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeH264RateControlInfoKHR<'_> {}
+unsafe impl Sync for VideoEncodeH264RateControlInfoKHR<'_> {}
 impl ::std::default::Default for VideoEncodeH264RateControlInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -41687,6 +42987,8 @@ pub struct VideoEncodeH264GopRemainingFrameInfoKHR<'a> {
     pub gop_remaining_b: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeH264GopRemainingFrameInfoKHR<'_> {}
+unsafe impl Sync for VideoEncodeH264GopRemainingFrameInfoKHR<'_> {}
 impl ::std::default::Default for VideoEncodeH264GopRemainingFrameInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -41744,6 +43046,8 @@ pub struct VideoEncodeH264RateControlLayerInfoKHR<'a> {
     pub max_frame_size: VideoEncodeH264FrameSizeKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeH264RateControlLayerInfoKHR<'_> {}
+unsafe impl Sync for VideoEncodeH264RateControlLayerInfoKHR<'_> {}
 impl ::std::default::Default for VideoEncodeH264RateControlLayerInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -41826,6 +43130,8 @@ pub struct VideoEncodeH265CapabilitiesKHR<'a> {
     pub std_syntax_flags: VideoEncodeH265StdFlagsKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeH265CapabilitiesKHR<'_> {}
+unsafe impl Sync for VideoEncodeH265CapabilitiesKHR<'_> {}
 impl ::std::default::Default for VideoEncodeH265CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -41969,6 +43275,8 @@ pub struct VideoEncodeH265QualityLevelPropertiesKHR<'a> {
     pub preferred_max_l1_reference_count: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeH265QualityLevelPropertiesKHR<'_> {}
+unsafe impl Sync for VideoEncodeH265QualityLevelPropertiesKHR<'_> {}
 impl ::std::default::Default for VideoEncodeH265QualityLevelPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -42061,6 +43369,8 @@ pub struct VideoEncodeH265SessionCreateInfoKHR<'a> {
     pub max_level_idc: StdVideoH265LevelIdc,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeH265SessionCreateInfoKHR<'_> {}
+unsafe impl Sync for VideoEncodeH265SessionCreateInfoKHR<'_> {}
 impl ::std::default::Default for VideoEncodeH265SessionCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -42105,6 +43415,8 @@ pub struct VideoEncodeH265SessionParametersAddInfoKHR<'a> {
     pub p_std_pp_ss: *const StdVideoH265PictureParameterSet,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeH265SessionParametersAddInfoKHR<'_> {}
+unsafe impl Sync for VideoEncodeH265SessionParametersAddInfoKHR<'_> {}
 impl ::std::default::Default for VideoEncodeH265SessionParametersAddInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -42163,6 +43475,8 @@ pub struct VideoEncodeH265SessionParametersCreateInfoKHR<'a> {
     pub p_parameters_add_info: *const VideoEncodeH265SessionParametersAddInfoKHR<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeH265SessionParametersCreateInfoKHR<'_> {}
+unsafe impl Sync for VideoEncodeH265SessionParametersCreateInfoKHR<'_> {}
 impl ::std::default::Default for VideoEncodeH265SessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -42226,6 +43540,8 @@ pub struct VideoEncodeH265SessionParametersGetInfoKHR<'a> {
     pub std_pps_id: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeH265SessionParametersGetInfoKHR<'_> {}
+unsafe impl Sync for VideoEncodeH265SessionParametersGetInfoKHR<'_> {}
 impl ::std::default::Default for VideoEncodeH265SessionParametersGetInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -42295,6 +43611,8 @@ pub struct VideoEncodeH265SessionParametersFeedbackInfoKHR<'a> {
     pub has_std_pps_overrides: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeH265SessionParametersFeedbackInfoKHR<'_> {}
+unsafe impl Sync for VideoEncodeH265SessionParametersFeedbackInfoKHR<'_> {}
 impl ::std::default::Default for VideoEncodeH265SessionParametersFeedbackInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -42346,6 +43664,8 @@ pub struct VideoEncodeH265PictureInfoKHR<'a> {
     pub p_std_picture_info: *const StdVideoEncodeH265PictureInfo,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeH265PictureInfoKHR<'_> {}
+unsafe impl Sync for VideoEncodeH265PictureInfoKHR<'_> {}
 impl ::std::default::Default for VideoEncodeH265PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -42391,6 +43711,8 @@ pub struct VideoEncodeH265NaluSliceSegmentInfoKHR<'a> {
     pub p_std_slice_segment_header: *const StdVideoEncodeH265SliceSegmentHeader,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeH265NaluSliceSegmentInfoKHR<'_> {}
+unsafe impl Sync for VideoEncodeH265NaluSliceSegmentInfoKHR<'_> {}
 impl ::std::default::Default for VideoEncodeH265NaluSliceSegmentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -42437,6 +43759,8 @@ pub struct VideoEncodeH265RateControlInfoKHR<'a> {
     pub sub_layer_count: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeH265RateControlInfoKHR<'_> {}
+unsafe impl Sync for VideoEncodeH265RateControlInfoKHR<'_> {}
 impl ::std::default::Default for VideoEncodeH265RateControlInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -42552,6 +43876,8 @@ pub struct VideoEncodeH265GopRemainingFrameInfoKHR<'a> {
     pub gop_remaining_b: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeH265GopRemainingFrameInfoKHR<'_> {}
+unsafe impl Sync for VideoEncodeH265GopRemainingFrameInfoKHR<'_> {}
 impl ::std::default::Default for VideoEncodeH265GopRemainingFrameInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -42609,6 +43935,8 @@ pub struct VideoEncodeH265RateControlLayerInfoKHR<'a> {
     pub max_frame_size: VideoEncodeH265FrameSizeKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeH265RateControlLayerInfoKHR<'_> {}
+unsafe impl Sync for VideoEncodeH265RateControlLayerInfoKHR<'_> {}
 impl ::std::default::Default for VideoEncodeH265RateControlLayerInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -42676,6 +44004,8 @@ pub struct VideoEncodeH265ProfileInfoKHR<'a> {
     pub std_profile_idc: StdVideoH265ProfileIdc,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeH265ProfileInfoKHR<'_> {}
+unsafe impl Sync for VideoEncodeH265ProfileInfoKHR<'_> {}
 impl ::std::default::Default for VideoEncodeH265ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -42710,6 +44040,8 @@ pub struct VideoEncodeH265DpbSlotInfoKHR<'a> {
     pub p_std_reference_info: *const StdVideoEncodeH265ReferenceInfo,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for VideoEncodeH265DpbSlotInfoKHR<'_> {}
+unsafe impl Sync for VideoEncodeH265DpbSlotInfoKHR<'_> {}
 impl ::std::default::Default for VideoEncodeH265DpbSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -42746,6 +44078,8 @@ pub struct PhysicalDeviceInheritedViewportScissorFeaturesNV<'a> {
     pub inherited_viewport_scissor2_d: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceInheritedViewportScissorFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceInheritedViewportScissorFeaturesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceInheritedViewportScissorFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -42786,6 +44120,8 @@ pub struct CommandBufferInheritanceViewportScissorInfoNV<'a> {
     pub p_viewport_depths: *const Viewport,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CommandBufferInheritanceViewportScissorInfoNV<'_> {}
+unsafe impl Sync for CommandBufferInheritanceViewportScissorInfoNV<'_> {}
 impl ::std::default::Default for CommandBufferInheritanceViewportScissorInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -42835,6 +44171,8 @@ pub struct PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'a> {
     pub ycbcr2plane444_formats: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -42871,6 +44209,8 @@ pub struct PhysicalDeviceProvokingVertexFeaturesEXT<'a> {
     pub transform_feedback_preserves_provoking_vertex: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceProvokingVertexFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceProvokingVertexFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceProvokingVertexFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -42917,6 +44257,8 @@ pub struct PhysicalDeviceProvokingVertexPropertiesEXT<'a> {
     pub transform_feedback_preserves_triangle_fan_provoking_vertex: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceProvokingVertexPropertiesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceProvokingVertexPropertiesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceProvokingVertexPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -42964,6 +44306,8 @@ pub struct PipelineRasterizationProvokingVertexStateCreateInfoEXT<'a> {
     pub provoking_vertex_mode: ProvokingVertexModeEXT,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineRasterizationProvokingVertexStateCreateInfoEXT<'_> {}
+unsafe impl Sync for PipelineRasterizationProvokingVertexStateCreateInfoEXT<'_> {}
 impl ::std::default::Default for PipelineRasterizationProvokingVertexStateCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -43002,6 +44346,8 @@ pub struct CuModuleCreateInfoNVX<'a> {
     pub p_data: *const c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CuModuleCreateInfoNVX<'_> {}
+unsafe impl Sync for CuModuleCreateInfoNVX<'_> {}
 impl ::std::default::Default for CuModuleCreateInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
@@ -43037,6 +44383,8 @@ pub struct CuFunctionCreateInfoNVX<'a> {
     pub p_name: *const c_char,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CuFunctionCreateInfoNVX<'_> {}
+unsafe impl Sync for CuFunctionCreateInfoNVX<'_> {}
 impl ::std::default::Default for CuFunctionCreateInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
@@ -43094,6 +44442,8 @@ pub struct CuLaunchInfoNVX<'a> {
     pub p_extras: *const *const c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CuLaunchInfoNVX<'_> {}
+unsafe impl Sync for CuLaunchInfoNVX<'_> {}
 impl ::std::default::Default for CuLaunchInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
@@ -43187,6 +44537,8 @@ pub struct PhysicalDeviceDescriptorBufferFeaturesEXT<'a> {
     pub descriptor_buffer_push_descriptors: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceDescriptorBufferFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceDescriptorBufferFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceDescriptorBufferFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -43281,6 +44633,8 @@ pub struct PhysicalDeviceDescriptorBufferPropertiesEXT<'a> {
     pub descriptor_buffer_address_space_size: DeviceSize,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceDescriptorBufferPropertiesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceDescriptorBufferPropertiesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceDescriptorBufferPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -43592,6 +44946,8 @@ pub struct PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'a> {
     pub combined_image_sampler_density_map_descriptor_size: usize,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -43635,6 +44991,8 @@ pub struct DescriptorAddressInfoEXT<'a> {
     pub format: Format,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DescriptorAddressInfoEXT<'_> {}
+unsafe impl Sync for DescriptorAddressInfoEXT<'_> {}
 impl ::std::default::Default for DescriptorAddressInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -43680,6 +45038,8 @@ pub struct DescriptorBufferBindingInfoEXT<'a> {
     pub usage: BufferUsageFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DescriptorBufferBindingInfoEXT<'_> {}
+unsafe impl Sync for DescriptorBufferBindingInfoEXT<'_> {}
 impl ::std::default::Default for DescriptorBufferBindingInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -43733,6 +45093,8 @@ pub struct DescriptorBufferBindingPushDescriptorBufferHandleEXT<'a> {
     pub buffer: Buffer,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DescriptorBufferBindingPushDescriptorBufferHandleEXT<'_> {}
+unsafe impl Sync for DescriptorBufferBindingPushDescriptorBufferHandleEXT<'_> {}
 impl ::std::default::Default for DescriptorBufferBindingPushDescriptorBufferHandleEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -43791,6 +45153,8 @@ pub struct DescriptorGetInfoEXT<'a> {
     pub data: DescriptorDataEXT<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DescriptorGetInfoEXT<'_> {}
+unsafe impl Sync for DescriptorGetInfoEXT<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for DescriptorGetInfoEXT<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -43840,6 +45204,8 @@ pub struct BufferCaptureDescriptorDataInfoEXT<'a> {
     pub buffer: Buffer,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BufferCaptureDescriptorDataInfoEXT<'_> {}
+unsafe impl Sync for BufferCaptureDescriptorDataInfoEXT<'_> {}
 impl ::std::default::Default for BufferCaptureDescriptorDataInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -43872,6 +45238,8 @@ pub struct ImageCaptureDescriptorDataInfoEXT<'a> {
     pub image: Image,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImageCaptureDescriptorDataInfoEXT<'_> {}
+unsafe impl Sync for ImageCaptureDescriptorDataInfoEXT<'_> {}
 impl ::std::default::Default for ImageCaptureDescriptorDataInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -43904,6 +45272,8 @@ pub struct ImageViewCaptureDescriptorDataInfoEXT<'a> {
     pub image_view: ImageView,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImageViewCaptureDescriptorDataInfoEXT<'_> {}
+unsafe impl Sync for ImageViewCaptureDescriptorDataInfoEXT<'_> {}
 impl ::std::default::Default for ImageViewCaptureDescriptorDataInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -43937,6 +45307,8 @@ pub struct SamplerCaptureDescriptorDataInfoEXT<'a> {
     pub sampler: Sampler,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SamplerCaptureDescriptorDataInfoEXT<'_> {}
+unsafe impl Sync for SamplerCaptureDescriptorDataInfoEXT<'_> {}
 impl ::std::default::Default for SamplerCaptureDescriptorDataInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -43970,6 +45342,8 @@ pub struct AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {
     pub acceleration_structure_nv: AccelerationStructureNV,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for AccelerationStructureCaptureDescriptorDataInfoEXT<'_> {}
+unsafe impl Sync for AccelerationStructureCaptureDescriptorDataInfoEXT<'_> {}
 impl ::std::default::Default for AccelerationStructureCaptureDescriptorDataInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -44015,6 +45389,8 @@ pub struct OpaqueCaptureDescriptorDataCreateInfoEXT<'a> {
     pub opaque_capture_descriptor_data: *const c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {}
+unsafe impl Sync for OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {}
 impl ::std::default::Default for OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -44063,6 +45439,8 @@ pub struct PhysicalDeviceShaderIntegerDotProductFeatures<'a> {
     pub shader_integer_dot_product: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderIntegerDotProductFeatures<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderIntegerDotProductFeatures<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderIntegerDotProductFeatures<'_> {
     #[inline]
     fn default() -> Self {
@@ -44128,6 +45506,8 @@ pub struct PhysicalDeviceShaderIntegerDotProductProperties<'a> {
     pub integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderIntegerDotProductProperties<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderIntegerDotProductProperties<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderIntegerDotProductProperties<'_> {
     #[inline]
     fn default() -> Self {
@@ -44429,6 +45809,8 @@ pub struct PhysicalDeviceDrmPropertiesEXT<'a> {
     pub render_minor: i64,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceDrmPropertiesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceDrmPropertiesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceDrmPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -44492,6 +45874,8 @@ pub struct PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'a> {
     pub fragment_shader_barycentric: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -44530,6 +45914,8 @@ pub struct PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'a> {
     pub tri_strip_vertex_order_independent_of_provoking_vertex: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -44572,6 +45958,8 @@ pub struct PhysicalDeviceRayTracingMotionBlurFeaturesNV<'a> {
     pub ray_tracing_motion_blur_pipeline_trace_rays_indirect: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -44617,6 +46005,8 @@ pub struct PhysicalDeviceRayTracingValidationFeaturesNV<'a> {
     pub ray_tracing_validation: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceRayTracingValidationFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceRayTracingValidationFeaturesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceRayTracingValidationFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -44651,6 +46041,8 @@ pub struct AccelerationStructureGeometryMotionTrianglesDataNV<'a> {
     pub vertex_data: DeviceOrHostAddressConstKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for AccelerationStructureGeometryMotionTrianglesDataNV<'_> {}
+unsafe impl Sync for AccelerationStructureGeometryMotionTrianglesDataNV<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for AccelerationStructureGeometryMotionTrianglesDataNV<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -44699,6 +46091,8 @@ pub struct AccelerationStructureMotionInfoNV<'a> {
     pub flags: AccelerationStructureMotionInfoFlagsNV,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for AccelerationStructureMotionInfoNV<'_> {}
+unsafe impl Sync for AccelerationStructureMotionInfoNV<'_> {}
 impl ::std::default::Default for AccelerationStructureMotionInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -44920,6 +46314,8 @@ pub struct MemoryGetRemoteAddressInfoNV<'a> {
     pub handle_type: ExternalMemoryHandleTypeFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MemoryGetRemoteAddressInfoNV<'_> {}
+unsafe impl Sync for MemoryGetRemoteAddressInfoNV<'_> {}
 impl ::std::default::Default for MemoryGetRemoteAddressInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -44959,6 +46355,8 @@ pub struct ImportMemoryBufferCollectionFUCHSIA<'a> {
     pub index: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImportMemoryBufferCollectionFUCHSIA<'_> {}
+unsafe impl Sync for ImportMemoryBufferCollectionFUCHSIA<'_> {}
 impl ::std::default::Default for ImportMemoryBufferCollectionFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
@@ -44999,6 +46397,8 @@ pub struct BufferCollectionImageCreateInfoFUCHSIA<'a> {
     pub index: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BufferCollectionImageCreateInfoFUCHSIA<'_> {}
+unsafe impl Sync for BufferCollectionImageCreateInfoFUCHSIA<'_> {}
 impl ::std::default::Default for BufferCollectionImageCreateInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
@@ -45040,6 +46440,8 @@ pub struct BufferCollectionBufferCreateInfoFUCHSIA<'a> {
     pub index: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BufferCollectionBufferCreateInfoFUCHSIA<'_> {}
+unsafe impl Sync for BufferCollectionBufferCreateInfoFUCHSIA<'_> {}
 impl ::std::default::Default for BufferCollectionBufferCreateInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
@@ -45080,6 +46482,8 @@ pub struct BufferCollectionCreateInfoFUCHSIA<'a> {
     pub collection_token: zx_handle_t,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BufferCollectionCreateInfoFUCHSIA<'_> {}
+unsafe impl Sync for BufferCollectionCreateInfoFUCHSIA<'_> {}
 impl ::std::default::Default for BufferCollectionCreateInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
@@ -45122,6 +46526,8 @@ pub struct BufferCollectionPropertiesFUCHSIA<'a> {
     pub suggested_y_chroma_offset: ChromaLocation,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BufferCollectionPropertiesFUCHSIA<'_> {}
+unsafe impl Sync for BufferCollectionPropertiesFUCHSIA<'_> {}
 impl ::std::default::Default for BufferCollectionPropertiesFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
@@ -45225,6 +46631,8 @@ pub struct BufferConstraintsInfoFUCHSIA<'a> {
     pub buffer_collection_constraints: BufferCollectionConstraintsInfoFUCHSIA<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BufferConstraintsInfoFUCHSIA<'_> {}
+unsafe impl Sync for BufferConstraintsInfoFUCHSIA<'_> {}
 impl ::std::default::Default for BufferConstraintsInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
@@ -45275,6 +46683,8 @@ pub struct SysmemColorSpaceFUCHSIA<'a> {
     pub color_space: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SysmemColorSpaceFUCHSIA<'_> {}
+unsafe impl Sync for SysmemColorSpaceFUCHSIA<'_> {}
 impl ::std::default::Default for SysmemColorSpaceFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
@@ -45312,6 +46722,8 @@ pub struct ImageFormatConstraintsInfoFUCHSIA<'a> {
     pub p_color_spaces: *const SysmemColorSpaceFUCHSIA<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImageFormatConstraintsInfoFUCHSIA<'_> {}
+unsafe impl Sync for ImageFormatConstraintsInfoFUCHSIA<'_> {}
 impl ::std::default::Default for ImageFormatConstraintsInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
@@ -45376,6 +46788,8 @@ pub struct ImageConstraintsInfoFUCHSIA<'a> {
     pub flags: ImageConstraintsInfoFlagsFUCHSIA,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImageConstraintsInfoFUCHSIA<'_> {}
+unsafe impl Sync for ImageConstraintsInfoFUCHSIA<'_> {}
 impl ::std::default::Default for ImageConstraintsInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
@@ -45432,6 +46846,8 @@ pub struct BufferCollectionConstraintsInfoFUCHSIA<'a> {
     pub min_buffer_count_for_shared_slack: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BufferCollectionConstraintsInfoFUCHSIA<'_> {}
+unsafe impl Sync for BufferCollectionConstraintsInfoFUCHSIA<'_> {}
 impl ::std::default::Default for BufferCollectionConstraintsInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
@@ -45506,6 +46922,8 @@ pub struct CudaModuleCreateInfoNV<'a> {
     pub p_data: *const c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CudaModuleCreateInfoNV<'_> {}
+unsafe impl Sync for CudaModuleCreateInfoNV<'_> {}
 impl ::std::default::Default for CudaModuleCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -45541,6 +46959,8 @@ pub struct CudaFunctionCreateInfoNV<'a> {
     pub p_name: *const c_char,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CudaFunctionCreateInfoNV<'_> {}
+unsafe impl Sync for CudaFunctionCreateInfoNV<'_> {}
 impl ::std::default::Default for CudaFunctionCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -45598,6 +47018,8 @@ pub struct CudaLaunchInfoNV<'a> {
     pub p_extras: *const *const c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CudaLaunchInfoNV<'_> {}
+unsafe impl Sync for CudaLaunchInfoNV<'_> {}
 impl ::std::default::Default for CudaLaunchInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -45688,6 +47110,8 @@ pub struct PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'a> {
     pub format_rgba10x6_without_y_cb_cr_sampler: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -45729,6 +47153,8 @@ pub struct FormatProperties3<'a> {
     pub buffer_features: FormatFeatureFlags2,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for FormatProperties3<'_> {}
+unsafe impl Sync for FormatProperties3<'_> {}
 impl ::std::default::Default for FormatProperties3<'_> {
     #[inline]
     fn default() -> Self {
@@ -45775,6 +47201,8 @@ pub struct DrmFormatModifierPropertiesList2EXT<'a> {
     pub p_drm_format_modifier_properties: *mut DrmFormatModifierProperties2EXT,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DrmFormatModifierPropertiesList2EXT<'_> {}
+unsafe impl Sync for DrmFormatModifierPropertiesList2EXT<'_> {}
 impl ::std::default::Default for DrmFormatModifierPropertiesList2EXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -45850,6 +47278,8 @@ pub struct AndroidHardwareBufferFormatProperties2ANDROID<'a> {
     pub suggested_y_chroma_offset: ChromaLocation,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for AndroidHardwareBufferFormatProperties2ANDROID<'_> {}
+unsafe impl Sync for AndroidHardwareBufferFormatProperties2ANDROID<'_> {}
 impl ::std::default::Default for AndroidHardwareBufferFormatProperties2ANDROID<'_> {
     #[inline]
     fn default() -> Self {
@@ -45939,6 +47369,8 @@ pub struct PipelineRenderingCreateInfo<'a> {
     pub stencil_attachment_format: Format,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineRenderingCreateInfo<'_> {}
+unsafe impl Sync for PipelineRenderingCreateInfo<'_> {}
 impl ::std::default::Default for PipelineRenderingCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -45999,6 +47431,8 @@ pub struct RenderingInfo<'a> {
     pub p_stencil_attachment: *const RenderingAttachmentInfo<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for RenderingInfo<'_> {}
+unsafe impl Sync for RenderingInfo<'_> {}
 impl ::std::default::Default for RenderingInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -46096,6 +47530,8 @@ pub struct RenderingAttachmentInfo<'a> {
     pub clear_value: ClearValue,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for RenderingAttachmentInfo<'_> {}
+unsafe impl Sync for RenderingAttachmentInfo<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for RenderingAttachmentInfo<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -46189,6 +47625,8 @@ pub struct RenderingFragmentShadingRateAttachmentInfoKHR<'a> {
     pub shading_rate_attachment_texel_size: Extent2D,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for RenderingFragmentShadingRateAttachmentInfoKHR<'_> {}
+unsafe impl Sync for RenderingFragmentShadingRateAttachmentInfoKHR<'_> {}
 impl ::std::default::Default for RenderingFragmentShadingRateAttachmentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -46239,6 +47677,8 @@ pub struct RenderingFragmentDensityMapAttachmentInfoEXT<'a> {
     pub image_layout: ImageLayout,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for RenderingFragmentDensityMapAttachmentInfoEXT<'_> {}
+unsafe impl Sync for RenderingFragmentDensityMapAttachmentInfoEXT<'_> {}
 impl ::std::default::Default for RenderingFragmentDensityMapAttachmentInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -46279,6 +47719,8 @@ pub struct PhysicalDeviceDynamicRenderingFeatures<'a> {
     pub dynamic_rendering: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceDynamicRenderingFeatures<'_> {}
+unsafe impl Sync for PhysicalDeviceDynamicRenderingFeatures<'_> {}
 impl ::std::default::Default for PhysicalDeviceDynamicRenderingFeatures<'_> {
     #[inline]
     fn default() -> Self {
@@ -46319,6 +47761,8 @@ pub struct CommandBufferInheritanceRenderingInfo<'a> {
     pub rasterization_samples: SampleCountFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CommandBufferInheritanceRenderingInfo<'_> {}
+unsafe impl Sync for CommandBufferInheritanceRenderingInfo<'_> {}
 impl ::std::default::Default for CommandBufferInheritanceRenderingInfo<'_> {
     #[inline]
     fn default() -> Self {
@@ -46386,6 +47830,8 @@ pub struct AttachmentSampleCountInfoAMD<'a> {
     pub depth_stencil_attachment_samples: SampleCountFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for AttachmentSampleCountInfoAMD<'_> {}
+unsafe impl Sync for AttachmentSampleCountInfoAMD<'_> {}
 impl ::std::default::Default for AttachmentSampleCountInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
@@ -46435,6 +47881,8 @@ pub struct MultiviewPerViewAttributesInfoNVX<'a> {
     pub per_view_attributes_position_x_only: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MultiviewPerViewAttributesInfoNVX<'_> {}
+unsafe impl Sync for MultiviewPerViewAttributesInfoNVX<'_> {}
 impl ::std::default::Default for MultiviewPerViewAttributesInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
@@ -46479,6 +47927,8 @@ pub struct PhysicalDeviceImageViewMinLodFeaturesEXT<'a> {
     pub min_lod: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceImageViewMinLodFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceImageViewMinLodFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceImageViewMinLodFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -46514,6 +47964,8 @@ pub struct ImageViewMinLodCreateInfoEXT<'a> {
     pub min_lod: f32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImageViewMinLodCreateInfoEXT<'_> {}
+unsafe impl Sync for ImageViewMinLodCreateInfoEXT<'_> {}
 impl ::std::default::Default for ImageViewMinLodCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -46549,6 +48001,8 @@ pub struct PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT<'a> {
     pub rasterization_order_stencil_attachment_access: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -46616,6 +48070,8 @@ pub struct PhysicalDeviceLinearColorAttachmentFeaturesNV<'a> {
     pub linear_color_attachment: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceLinearColorAttachmentFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceLinearColorAttachmentFeaturesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceLinearColorAttachmentFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -46651,6 +48107,8 @@ pub struct PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'a> {
     pub graphics_pipeline_library: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -46690,6 +48148,8 @@ pub struct PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'a> {
     pub graphics_pipeline_library_independent_interpolation_decoration: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -46740,6 +48200,8 @@ pub struct GraphicsPipelineLibraryCreateInfoEXT<'a> {
     pub flags: GraphicsPipelineLibraryFlagsEXT,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for GraphicsPipelineLibraryCreateInfoEXT<'_> {}
+unsafe impl Sync for GraphicsPipelineLibraryCreateInfoEXT<'_> {}
 impl ::std::default::Default for GraphicsPipelineLibraryCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -46773,6 +48235,8 @@ pub struct PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'a> {
     pub descriptor_set_host_mapping: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'_> {}
+unsafe impl Sync for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'_> {}
 impl ::std::default::Default for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'_> {
     #[inline]
     fn default() -> Self {
@@ -46812,6 +48276,8 @@ pub struct DescriptorSetBindingReferenceVALVE<'a> {
     pub binding: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DescriptorSetBindingReferenceVALVE<'_> {}
+unsafe impl Sync for DescriptorSetBindingReferenceVALVE<'_> {}
 impl ::std::default::Default for DescriptorSetBindingReferenceVALVE<'_> {
     #[inline]
     fn default() -> Self {
@@ -46851,6 +48317,8 @@ pub struct DescriptorSetLayoutHostMappingInfoVALVE<'a> {
     pub descriptor_size: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DescriptorSetLayoutHostMappingInfoVALVE<'_> {}
+unsafe impl Sync for DescriptorSetLayoutHostMappingInfoVALVE<'_> {}
 impl ::std::default::Default for DescriptorSetLayoutHostMappingInfoVALVE<'_> {
     #[inline]
     fn default() -> Self {
@@ -46892,6 +48360,8 @@ pub struct PhysicalDeviceNestedCommandBufferFeaturesEXT<'a> {
     pub nested_command_buffer_simultaneous_use: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceNestedCommandBufferFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceNestedCommandBufferFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceNestedCommandBufferFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -46945,6 +48415,8 @@ pub struct PhysicalDeviceNestedCommandBufferPropertiesEXT<'a> {
     pub max_command_buffer_nesting_level: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceNestedCommandBufferPropertiesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceNestedCommandBufferPropertiesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceNestedCommandBufferPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -46985,6 +48457,8 @@ pub struct PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'a> {
     pub shader_module_identifier: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -47020,6 +48494,8 @@ pub struct PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'a> {
     pub shader_module_identifier_algorithm_uuid: [u8; UUID_SIZE],
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -47061,6 +48537,8 @@ pub struct PipelineShaderStageModuleIdentifierCreateInfoEXT<'a> {
     pub p_identifier: *const u8,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineShaderStageModuleIdentifierCreateInfoEXT<'_> {}
+unsafe impl Sync for PipelineShaderStageModuleIdentifierCreateInfoEXT<'_> {}
 impl ::std::default::Default for PipelineShaderStageModuleIdentifierCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -47100,6 +48578,8 @@ pub struct ShaderModuleIdentifierEXT<'a> {
     pub identifier: [u8; MAX_SHADER_MODULE_IDENTIFIER_SIZE_EXT],
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ShaderModuleIdentifierEXT<'_> {}
+unsafe impl Sync for ShaderModuleIdentifierEXT<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for ShaderModuleIdentifierEXT<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -47151,6 +48631,8 @@ pub struct ImageCompressionControlEXT<'a> {
     pub p_fixed_rate_flags: *mut ImageCompressionFixedRateFlagsEXT,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImageCompressionControlEXT<'_> {}
+unsafe impl Sync for ImageCompressionControlEXT<'_> {}
 impl ::std::default::Default for ImageCompressionControlEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -47197,6 +48679,8 @@ pub struct PhysicalDeviceImageCompressionControlFeaturesEXT<'a> {
     pub image_compression_control: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceImageCompressionControlFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceImageCompressionControlFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceImageCompressionControlFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -47236,6 +48720,8 @@ pub struct ImageCompressionPropertiesEXT<'a> {
     pub image_compression_fixed_rate_flags: ImageCompressionFixedRateFlagsEXT,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImageCompressionPropertiesEXT<'_> {}
+unsafe impl Sync for ImageCompressionPropertiesEXT<'_> {}
 impl ::std::default::Default for ImageCompressionPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -47283,6 +48769,8 @@ pub struct PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'a> {
     pub image_compression_control_swapchain: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -47327,6 +48815,8 @@ pub struct ImageSubresource2KHR<'a> {
     pub image_subresource: ImageSubresource,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImageSubresource2KHR<'_> {}
+unsafe impl Sync for ImageSubresource2KHR<'_> {}
 impl ::std::default::Default for ImageSubresource2KHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -47359,6 +48849,8 @@ pub struct SubresourceLayout2KHR<'a> {
     pub subresource_layout: SubresourceLayout,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SubresourceLayout2KHR<'_> {}
+unsafe impl Sync for SubresourceLayout2KHR<'_> {}
 impl ::std::default::Default for SubresourceLayout2KHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -47406,6 +48898,8 @@ pub struct RenderPassCreationControlEXT<'a> {
     pub disallow_merging: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for RenderPassCreationControlEXT<'_> {}
+unsafe impl Sync for RenderPassCreationControlEXT<'_> {}
 impl ::std::default::Default for RenderPassCreationControlEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -47455,6 +48949,8 @@ pub struct RenderPassCreationFeedbackCreateInfoEXT<'a> {
     pub p_render_pass_feedback: *mut RenderPassCreationFeedbackInfoEXT,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for RenderPassCreationFeedbackCreateInfoEXT<'_> {}
+unsafe impl Sync for RenderPassCreationFeedbackCreateInfoEXT<'_> {}
 impl ::std::default::Default for RenderPassCreationFeedbackCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -47546,6 +49042,8 @@ pub struct RenderPassSubpassFeedbackCreateInfoEXT<'a> {
     pub p_subpass_feedback: *mut RenderPassSubpassFeedbackInfoEXT,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for RenderPassSubpassFeedbackCreateInfoEXT<'_> {}
+unsafe impl Sync for RenderPassSubpassFeedbackCreateInfoEXT<'_> {}
 impl ::std::default::Default for RenderPassSubpassFeedbackCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -47583,6 +49081,8 @@ pub struct PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'a> {
     pub subpass_merge_feedback: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -47627,6 +49127,8 @@ pub struct MicromapBuildInfoEXT<'a> {
     pub triangle_array_stride: DeviceSize,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MicromapBuildInfoEXT<'_> {}
+unsafe impl Sync for MicromapBuildInfoEXT<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for MicromapBuildInfoEXT<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -47741,6 +49243,8 @@ pub struct MicromapCreateInfoEXT<'a> {
     pub device_address: DeviceAddress,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MicromapCreateInfoEXT<'_> {}
+unsafe impl Sync for MicromapCreateInfoEXT<'_> {}
 impl ::std::default::Default for MicromapCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -47803,6 +49307,8 @@ pub struct MicromapVersionInfoEXT<'a> {
     pub p_version_data: *const [u8; 2 * UUID_SIZE],
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MicromapVersionInfoEXT<'_> {}
+unsafe impl Sync for MicromapVersionInfoEXT<'_> {}
 impl ::std::default::Default for MicromapVersionInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -47837,6 +49343,8 @@ pub struct CopyMicromapInfoEXT<'a> {
     pub mode: CopyMicromapModeEXT,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CopyMicromapInfoEXT<'_> {}
+unsafe impl Sync for CopyMicromapInfoEXT<'_> {}
 impl ::std::default::Default for CopyMicromapInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -47882,6 +49390,8 @@ pub struct CopyMicromapToMemoryInfoEXT<'a> {
     pub mode: CopyMicromapModeEXT,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CopyMicromapToMemoryInfoEXT<'_> {}
+unsafe impl Sync for CopyMicromapToMemoryInfoEXT<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for CopyMicromapToMemoryInfoEXT<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -47939,6 +49449,8 @@ pub struct CopyMemoryToMicromapInfoEXT<'a> {
     pub mode: CopyMicromapModeEXT,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CopyMemoryToMicromapInfoEXT<'_> {}
+unsafe impl Sync for CopyMemoryToMicromapInfoEXT<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for CopyMemoryToMicromapInfoEXT<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -47997,6 +49509,8 @@ pub struct MicromapBuildSizesInfoEXT<'a> {
     pub discardable: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MicromapBuildSizesInfoEXT<'_> {}
+unsafe impl Sync for MicromapBuildSizesInfoEXT<'_> {}
 impl ::std::default::Default for MicromapBuildSizesInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -48097,6 +49611,8 @@ pub struct PhysicalDeviceOpacityMicromapFeaturesEXT<'a> {
     pub micromap_host_commands: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceOpacityMicromapFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceOpacityMicromapFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceOpacityMicromapFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -48145,6 +49661,8 @@ pub struct PhysicalDeviceOpacityMicromapPropertiesEXT<'a> {
     pub max_opacity4_state_subdivision_level: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceOpacityMicromapPropertiesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceOpacityMicromapPropertiesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceOpacityMicromapPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -48197,6 +49715,8 @@ pub struct AccelerationStructureTrianglesOpacityMicromapEXT<'a> {
     pub micromap: MicromapEXT,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for AccelerationStructureTrianglesOpacityMicromapEXT<'_> {}
+unsafe impl Sync for AccelerationStructureTrianglesOpacityMicromapEXT<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for AccelerationStructureTrianglesOpacityMicromapEXT<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -48290,6 +49810,8 @@ pub struct PhysicalDeviceDisplacementMicromapFeaturesNV<'a> {
     pub displacement_micromap: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceDisplacementMicromapFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceDisplacementMicromapFeaturesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceDisplacementMicromapFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -48325,6 +49847,8 @@ pub struct PhysicalDeviceDisplacementMicromapPropertiesNV<'a> {
     pub max_displacement_micromap_subdivision_level: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceDisplacementMicromapPropertiesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceDisplacementMicromapPropertiesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceDisplacementMicromapPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -48380,6 +49904,8 @@ pub struct AccelerationStructureTrianglesDisplacementMicromapNV<'a> {
     pub micromap: MicromapEXT,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for AccelerationStructureTrianglesDisplacementMicromapNV<'_> {}
+unsafe impl Sync for AccelerationStructureTrianglesDisplacementMicromapNV<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for AccelerationStructureTrianglesDisplacementMicromapNV<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -48562,6 +50088,8 @@ pub struct PipelinePropertiesIdentifierEXT<'a> {
     pub pipeline_identifier: [u8; UUID_SIZE],
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelinePropertiesIdentifierEXT<'_> {}
+unsafe impl Sync for PipelinePropertiesIdentifierEXT<'_> {}
 impl ::std::default::Default for PipelinePropertiesIdentifierEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -48594,6 +50122,8 @@ pub struct PhysicalDevicePipelinePropertiesFeaturesEXT<'a> {
     pub pipeline_properties_identifier: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDevicePipelinePropertiesFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDevicePipelinePropertiesFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDevicePipelinePropertiesFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -48629,6 +50159,8 @@ pub struct PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'a> {
     pub shader_early_and_late_fragment_tests: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'_> {
     #[inline]
     fn default() -> Self {
@@ -48673,6 +50205,8 @@ pub struct ExternalMemoryAcquireUnmodifiedEXT<'a> {
     pub acquire_unmodified_memory: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ExternalMemoryAcquireUnmodifiedEXT<'_> {}
+unsafe impl Sync for ExternalMemoryAcquireUnmodifiedEXT<'_> {}
 impl ::std::default::Default for ExternalMemoryAcquireUnmodifiedEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -48709,6 +50243,8 @@ pub struct ExportMetalObjectCreateInfoEXT<'a> {
     pub export_object_type: ExportMetalObjectTypeFlagsEXT,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ExportMetalObjectCreateInfoEXT<'_> {}
+unsafe impl Sync for ExportMetalObjectCreateInfoEXT<'_> {}
 impl ::std::default::Default for ExportMetalObjectCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -48747,6 +50283,8 @@ pub struct ExportMetalObjectsInfoEXT<'a> {
     pub p_next: *const c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ExportMetalObjectsInfoEXT<'_> {}
+unsafe impl Sync for ExportMetalObjectsInfoEXT<'_> {}
 impl ::std::default::Default for ExportMetalObjectsInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -48788,6 +50326,8 @@ pub struct ExportMetalDeviceInfoEXT<'a> {
     pub mtl_device: MTLDevice_id,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ExportMetalDeviceInfoEXT<'_> {}
+unsafe impl Sync for ExportMetalDeviceInfoEXT<'_> {}
 impl ::std::default::Default for ExportMetalDeviceInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -48822,6 +50362,8 @@ pub struct ExportMetalCommandQueueInfoEXT<'a> {
     pub mtl_command_queue: MTLCommandQueue_id,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ExportMetalCommandQueueInfoEXT<'_> {}
+unsafe impl Sync for ExportMetalCommandQueueInfoEXT<'_> {}
 impl ::std::default::Default for ExportMetalCommandQueueInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -48862,6 +50404,8 @@ pub struct ExportMetalBufferInfoEXT<'a> {
     pub mtl_buffer: MTLBuffer_id,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ExportMetalBufferInfoEXT<'_> {}
+unsafe impl Sync for ExportMetalBufferInfoEXT<'_> {}
 impl ::std::default::Default for ExportMetalBufferInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -48901,6 +50445,8 @@ pub struct ImportMetalBufferInfoEXT<'a> {
     pub mtl_buffer: MTLBuffer_id,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImportMetalBufferInfoEXT<'_> {}
+unsafe impl Sync for ImportMetalBufferInfoEXT<'_> {}
 impl ::std::default::Default for ImportMetalBufferInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -48938,6 +50484,8 @@ pub struct ExportMetalTextureInfoEXT<'a> {
     pub mtl_texture: MTLTexture_id,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ExportMetalTextureInfoEXT<'_> {}
+unsafe impl Sync for ExportMetalTextureInfoEXT<'_> {}
 impl ::std::default::Default for ExportMetalTextureInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -48996,6 +50544,8 @@ pub struct ImportMetalTextureInfoEXT<'a> {
     pub mtl_texture: MTLTexture_id,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImportMetalTextureInfoEXT<'_> {}
+unsafe impl Sync for ImportMetalTextureInfoEXT<'_> {}
 impl ::std::default::Default for ImportMetalTextureInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -49036,6 +50586,8 @@ pub struct ExportMetalIOSurfaceInfoEXT<'a> {
     pub io_surface: IOSurfaceRef,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ExportMetalIOSurfaceInfoEXT<'_> {}
+unsafe impl Sync for ExportMetalIOSurfaceInfoEXT<'_> {}
 impl ::std::default::Default for ExportMetalIOSurfaceInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -49075,6 +50627,8 @@ pub struct ImportMetalIOSurfaceInfoEXT<'a> {
     pub io_surface: IOSurfaceRef,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImportMetalIOSurfaceInfoEXT<'_> {}
+unsafe impl Sync for ImportMetalIOSurfaceInfoEXT<'_> {}
 impl ::std::default::Default for ImportMetalIOSurfaceInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -49110,6 +50664,8 @@ pub struct ExportMetalSharedEventInfoEXT<'a> {
     pub mtl_shared_event: MTLSharedEvent_id,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ExportMetalSharedEventInfoEXT<'_> {}
+unsafe impl Sync for ExportMetalSharedEventInfoEXT<'_> {}
 impl ::std::default::Default for ExportMetalSharedEventInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -49155,6 +50711,8 @@ pub struct ImportMetalSharedEventInfoEXT<'a> {
     pub mtl_shared_event: MTLSharedEvent_id,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImportMetalSharedEventInfoEXT<'_> {}
+unsafe impl Sync for ImportMetalSharedEventInfoEXT<'_> {}
 impl ::std::default::Default for ImportMetalSharedEventInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -49189,6 +50747,8 @@ pub struct PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'a> {
     pub non_seamless_cube_map: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -49224,6 +50784,8 @@ pub struct PhysicalDevicePipelineRobustnessFeaturesEXT<'a> {
     pub pipeline_robustness: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDevicePipelineRobustnessFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDevicePipelineRobustnessFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDevicePipelineRobustnessFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -49262,6 +50824,8 @@ pub struct PipelineRobustnessCreateInfoEXT<'a> {
     pub images: PipelineRobustnessImageBehaviorEXT,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineRobustnessCreateInfoEXT<'_> {}
+unsafe impl Sync for PipelineRobustnessCreateInfoEXT<'_> {}
 impl ::std::default::Default for PipelineRobustnessCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -49319,6 +50883,8 @@ pub struct PhysicalDevicePipelineRobustnessPropertiesEXT<'a> {
     pub default_robustness_images: PipelineRobustnessImageBehaviorEXT,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDevicePipelineRobustnessPropertiesEXT<'_> {}
+unsafe impl Sync for PhysicalDevicePipelineRobustnessPropertiesEXT<'_> {}
 impl ::std::default::Default for PhysicalDevicePipelineRobustnessPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -49385,6 +50951,8 @@ pub struct ImageViewSampleWeightCreateInfoQCOM<'a> {
     pub num_phases: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImageViewSampleWeightCreateInfoQCOM<'_> {}
+unsafe impl Sync for ImageViewSampleWeightCreateInfoQCOM<'_> {}
 impl ::std::default::Default for ImageViewSampleWeightCreateInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
@@ -49432,6 +51000,8 @@ pub struct PhysicalDeviceImageProcessingFeaturesQCOM<'a> {
     pub texture_block_match: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceImageProcessingFeaturesQCOM<'_> {}
+unsafe impl Sync for PhysicalDeviceImageProcessingFeaturesQCOM<'_> {}
 impl ::std::default::Default for PhysicalDeviceImageProcessingFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
@@ -49482,6 +51052,8 @@ pub struct PhysicalDeviceImageProcessingPropertiesQCOM<'a> {
     pub max_box_filter_block_size: Extent2D,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceImageProcessingPropertiesQCOM<'_> {}
+unsafe impl Sync for PhysicalDeviceImageProcessingPropertiesQCOM<'_> {}
 impl ::std::default::Default for PhysicalDeviceImageProcessingPropertiesQCOM<'_> {
     #[inline]
     fn default() -> Self {
@@ -49534,6 +51106,8 @@ pub struct PhysicalDeviceTilePropertiesFeaturesQCOM<'a> {
     pub tile_properties: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceTilePropertiesFeaturesQCOM<'_> {}
+unsafe impl Sync for PhysicalDeviceTilePropertiesFeaturesQCOM<'_> {}
 impl ::std::default::Default for PhysicalDeviceTilePropertiesFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
@@ -49571,6 +51145,8 @@ pub struct TilePropertiesQCOM<'a> {
     pub origin: Offset2D,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for TilePropertiesQCOM<'_> {}
+unsafe impl Sync for TilePropertiesQCOM<'_> {}
 impl ::std::default::Default for TilePropertiesQCOM<'_> {
     #[inline]
     fn default() -> Self {
@@ -49615,6 +51191,8 @@ pub struct PhysicalDeviceAmigoProfilingFeaturesSEC<'a> {
     pub amigo_profiling: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceAmigoProfilingFeaturesSEC<'_> {}
+unsafe impl Sync for PhysicalDeviceAmigoProfilingFeaturesSEC<'_> {}
 impl ::std::default::Default for PhysicalDeviceAmigoProfilingFeaturesSEC<'_> {
     #[inline]
     fn default() -> Self {
@@ -49651,6 +51229,8 @@ pub struct AmigoProfilingSubmitInfoSEC<'a> {
     pub swap_buffer_timestamp: u64,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for AmigoProfilingSubmitInfoSEC<'_> {}
+unsafe impl Sync for AmigoProfilingSubmitInfoSEC<'_> {}
 impl ::std::default::Default for AmigoProfilingSubmitInfoSEC<'_> {
     #[inline]
     fn default() -> Self {
@@ -49690,6 +51270,8 @@ pub struct PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'a> {
     pub attachment_feedback_loop_layout: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -49731,6 +51313,8 @@ pub struct PhysicalDeviceDepthClampZeroOneFeaturesEXT<'a> {
     pub depth_clamp_zero_one: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceDepthClampZeroOneFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceDepthClampZeroOneFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceDepthClampZeroOneFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -49766,6 +51350,8 @@ pub struct PhysicalDeviceAddressBindingReportFeaturesEXT<'a> {
     pub report_address_binding: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceAddressBindingReportFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceAddressBindingReportFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceAddressBindingReportFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -49804,6 +51390,8 @@ pub struct DeviceAddressBindingCallbackDataEXT<'a> {
     pub binding_type: DeviceAddressBindingTypeEXT,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DeviceAddressBindingCallbackDataEXT<'_> {}
+unsafe impl Sync for DeviceAddressBindingCallbackDataEXT<'_> {}
 impl ::std::default::Default for DeviceAddressBindingCallbackDataEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -49855,6 +51443,8 @@ pub struct PhysicalDeviceOpticalFlowFeaturesNV<'a> {
     pub optical_flow: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceOpticalFlowFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceOpticalFlowFeaturesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceOpticalFlowFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -49899,6 +51489,8 @@ pub struct PhysicalDeviceOpticalFlowPropertiesNV<'a> {
     pub max_num_regions_of_interest: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceOpticalFlowPropertiesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceOpticalFlowPropertiesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceOpticalFlowPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -49998,6 +51590,8 @@ pub struct OpticalFlowImageFormatInfoNV<'a> {
     pub usage: OpticalFlowUsageFlagsNV,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for OpticalFlowImageFormatInfoNV<'_> {}
+unsafe impl Sync for OpticalFlowImageFormatInfoNV<'_> {}
 impl ::std::default::Default for OpticalFlowImageFormatInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -50032,6 +51626,8 @@ pub struct OpticalFlowImageFormatPropertiesNV<'a> {
     pub format: Format,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for OpticalFlowImageFormatPropertiesNV<'_> {}
+unsafe impl Sync for OpticalFlowImageFormatPropertiesNV<'_> {}
 impl ::std::default::Default for OpticalFlowImageFormatPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -50072,6 +51668,8 @@ pub struct OpticalFlowSessionCreateInfoNV<'a> {
     pub flags: OpticalFlowSessionCreateFlagsNV,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for OpticalFlowSessionCreateInfoNV<'_> {}
+unsafe impl Sync for OpticalFlowSessionCreateInfoNV<'_> {}
 impl ::std::default::Default for OpticalFlowSessionCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -50169,6 +51767,8 @@ pub struct OpticalFlowSessionCreatePrivateDataInfoNV<'a> {
     pub p_private_data: *const c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for OpticalFlowSessionCreatePrivateDataInfoNV<'_> {}
+unsafe impl Sync for OpticalFlowSessionCreatePrivateDataInfoNV<'_> {}
 impl ::std::default::Default for OpticalFlowSessionCreatePrivateDataInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -50220,6 +51820,8 @@ pub struct OpticalFlowExecuteInfoNV<'a> {
     pub p_regions: *const Rect2D,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for OpticalFlowExecuteInfoNV<'_> {}
+unsafe impl Sync for OpticalFlowExecuteInfoNV<'_> {}
 impl ::std::default::Default for OpticalFlowExecuteInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -50261,6 +51863,8 @@ pub struct PhysicalDeviceFaultFeaturesEXT<'a> {
     pub device_fault_vendor_binary: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceFaultFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceFaultFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceFaultFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -50384,6 +51988,8 @@ pub struct DeviceFaultCountsEXT<'a> {
     pub vendor_binary_size: DeviceSize,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DeviceFaultCountsEXT<'_> {}
+unsafe impl Sync for DeviceFaultCountsEXT<'_> {}
 impl ::std::default::Default for DeviceFaultCountsEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -50430,6 +52036,8 @@ pub struct DeviceFaultInfoEXT<'a> {
     pub p_vendor_binary_data: *mut c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DeviceFaultInfoEXT<'_> {}
+unsafe impl Sync for DeviceFaultInfoEXT<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for DeviceFaultInfoEXT<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -50597,6 +52205,8 @@ pub struct PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a> {
     pub pipeline_library_group_handles: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -50637,6 +52247,8 @@ pub struct DepthBiasInfoEXT<'a> {
     pub depth_bias_slope_factor: f32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DepthBiasInfoEXT<'_> {}
+unsafe impl Sync for DepthBiasInfoEXT<'_> {}
 impl ::std::default::Default for DepthBiasInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -50697,6 +52309,8 @@ pub struct DepthBiasRepresentationInfoEXT<'a> {
     pub depth_bias_exact: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DepthBiasRepresentationInfoEXT<'_> {}
+unsafe impl Sync for DepthBiasRepresentationInfoEXT<'_> {}
 impl ::std::default::Default for DepthBiasRepresentationInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -50784,6 +52398,8 @@ pub struct PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'a> {
     pub shader_warps_per_core: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
@@ -50830,6 +52446,8 @@ pub struct PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a> {
     pub shader_core_builtins: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
@@ -50873,6 +52491,8 @@ pub struct FrameBoundaryEXT<'a> {
     pub p_tag: *const c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for FrameBoundaryEXT<'_> {}
+unsafe impl Sync for FrameBoundaryEXT<'_> {}
 impl ::std::default::Default for FrameBoundaryEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -50945,6 +52565,8 @@ pub struct PhysicalDeviceFrameBoundaryFeaturesEXT<'a> {
     pub frame_boundary: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceFrameBoundaryFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceFrameBoundaryFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceFrameBoundaryFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -50980,6 +52602,8 @@ pub struct PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'a> {
     pub dynamic_rendering_unused_attachments: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -51024,6 +52648,8 @@ pub struct SurfacePresentModeEXT<'a> {
     pub present_mode: PresentModeKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SurfacePresentModeEXT<'_> {}
+unsafe impl Sync for SurfacePresentModeEXT<'_> {}
 impl ::std::default::Default for SurfacePresentModeEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -51061,6 +52687,8 @@ pub struct SurfacePresentScalingCapabilitiesEXT<'a> {
     pub max_scaled_image_extent: Extent2D,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SurfacePresentScalingCapabilitiesEXT<'_> {}
+unsafe impl Sync for SurfacePresentScalingCapabilitiesEXT<'_> {}
 impl ::std::default::Default for SurfacePresentScalingCapabilitiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -51128,6 +52756,8 @@ pub struct SurfacePresentModeCompatibilityEXT<'a> {
     pub p_present_modes: *mut PresentModeKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SurfacePresentModeCompatibilityEXT<'_> {}
+unsafe impl Sync for SurfacePresentModeCompatibilityEXT<'_> {}
 impl ::std::default::Default for SurfacePresentModeCompatibilityEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -51163,6 +52793,8 @@ pub struct PhysicalDeviceSwapchainMaintenance1FeaturesEXT<'a> {
     pub swapchain_maintenance1: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceSwapchainMaintenance1FeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceSwapchainMaintenance1FeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceSwapchainMaintenance1FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -51199,6 +52831,8 @@ pub struct SwapchainPresentFenceInfoEXT<'a> {
     pub p_fences: *const Fence,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SwapchainPresentFenceInfoEXT<'_> {}
+unsafe impl Sync for SwapchainPresentFenceInfoEXT<'_> {}
 impl ::std::default::Default for SwapchainPresentFenceInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -51235,6 +52869,8 @@ pub struct SwapchainPresentModesCreateInfoEXT<'a> {
     pub p_present_modes: *const PresentModeKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SwapchainPresentModesCreateInfoEXT<'_> {}
+unsafe impl Sync for SwapchainPresentModesCreateInfoEXT<'_> {}
 impl ::std::default::Default for SwapchainPresentModesCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -51271,6 +52907,8 @@ pub struct SwapchainPresentModeInfoEXT<'a> {
     pub p_present_modes: *const PresentModeKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SwapchainPresentModeInfoEXT<'_> {}
+unsafe impl Sync for SwapchainPresentModeInfoEXT<'_> {}
 impl ::std::default::Default for SwapchainPresentModeInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -51308,6 +52946,8 @@ pub struct SwapchainPresentScalingCreateInfoEXT<'a> {
     pub present_gravity_y: PresentGravityFlagsEXT,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SwapchainPresentScalingCreateInfoEXT<'_> {}
+unsafe impl Sync for SwapchainPresentScalingCreateInfoEXT<'_> {}
 impl ::std::default::Default for SwapchainPresentScalingCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -51355,6 +52995,8 @@ pub struct ReleaseSwapchainImagesInfoEXT<'a> {
     pub p_image_indices: *const u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ReleaseSwapchainImagesInfoEXT<'_> {}
+unsafe impl Sync for ReleaseSwapchainImagesInfoEXT<'_> {}
 impl ::std::default::Default for ReleaseSwapchainImagesInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -51398,6 +53040,8 @@ pub struct PhysicalDeviceDepthBiasControlFeaturesEXT<'a> {
     pub depth_bias_exact: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceDepthBiasControlFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceDepthBiasControlFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceDepthBiasControlFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -51455,6 +53099,8 @@ pub struct PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'a> {
     pub ray_tracing_invocation_reorder: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -51493,6 +53139,8 @@ pub struct PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'a> {
     pub ray_tracing_invocation_reorder_reordering_hint: RayTracingInvocationReorderModeNV,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -51535,6 +53183,8 @@ pub struct PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'a> {
     pub extended_sparse_address_space: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -51575,6 +53225,8 @@ pub struct PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'a> {
     pub extended_sparse_buffer_usage_flags: BufferUsageFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -51633,6 +53285,8 @@ pub struct DirectDriverLoadingInfoLUNARG<'a> {
     pub pfn_get_instance_proc_addr: PFN_vkGetInstanceProcAddrLUNARG,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DirectDriverLoadingInfoLUNARG<'_> {}
+unsafe impl Sync for DirectDriverLoadingInfoLUNARG<'_> {}
 #[cfg(feature = "debug")]
 impl fmt::Debug for DirectDriverLoadingInfoLUNARG<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -51690,6 +53344,8 @@ pub struct DirectDriverLoadingListLUNARG<'a> {
     pub p_drivers: *const DirectDriverLoadingInfoLUNARG<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DirectDriverLoadingListLUNARG<'_> {}
+unsafe impl Sync for DirectDriverLoadingListLUNARG<'_> {}
 impl ::std::default::Default for DirectDriverLoadingListLUNARG<'_> {
     #[inline]
     fn default() -> Self {
@@ -51731,6 +53387,8 @@ pub struct PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'a> {
     pub multiview_per_view_viewports: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'_> {}
+unsafe impl Sync for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'_> {}
 impl ::std::default::Default for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
@@ -51769,6 +53427,8 @@ pub struct PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'a> {
     pub ray_tracing_position_fetch: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -51808,6 +53468,8 @@ pub struct DeviceImageSubresourceInfoKHR<'a> {
     pub p_subresource: *const ImageSubresource2KHR<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DeviceImageSubresourceInfoKHR<'_> {}
+unsafe impl Sync for DeviceImageSubresourceInfoKHR<'_> {}
 impl ::std::default::Default for DeviceImageSubresourceInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -51848,6 +53510,8 @@ pub struct PhysicalDeviceShaderCorePropertiesARM<'a> {
     pub fma_rate: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderCorePropertiesARM<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderCorePropertiesARM<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderCorePropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
@@ -51893,6 +53557,8 @@ pub struct PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'a> {
     pub multiview_per_view_render_areas: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'_> {}
+unsafe impl Sync for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'_> {}
 impl ::std::default::Default for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
@@ -51935,6 +53601,8 @@ pub struct MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'a> {
     pub p_per_view_render_areas: *const Rect2D,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'_> {}
+unsafe impl Sync for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'_> {}
 impl ::std::default::Default for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
@@ -51972,6 +53640,8 @@ pub struct QueryLowLatencySupportNV<'a> {
     pub p_queried_low_latency_data: *mut c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for QueryLowLatencySupportNV<'_> {}
+unsafe impl Sync for QueryLowLatencySupportNV<'_> {}
 impl ::std::default::Default for QueryLowLatencySupportNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -52008,6 +53678,8 @@ pub struct MemoryMapInfoKHR<'a> {
     pub size: DeviceSize,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MemoryMapInfoKHR<'_> {}
+unsafe impl Sync for MemoryMapInfoKHR<'_> {}
 impl ::std::default::Default for MemoryMapInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -52074,6 +53746,8 @@ pub struct MemoryUnmapInfoKHR<'a> {
     pub memory: DeviceMemory,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MemoryUnmapInfoKHR<'_> {}
+unsafe impl Sync for MemoryUnmapInfoKHR<'_> {}
 impl ::std::default::Default for MemoryUnmapInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -52112,6 +53786,8 @@ pub struct PhysicalDeviceShaderObjectFeaturesEXT<'a> {
     pub shader_object: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderObjectFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderObjectFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderObjectFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -52147,6 +53823,8 @@ pub struct PhysicalDeviceShaderObjectPropertiesEXT<'a> {
     pub shader_binary_version: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderObjectPropertiesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderObjectPropertiesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderObjectPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -52198,6 +53876,8 @@ pub struct ShaderCreateInfoEXT<'a> {
     pub p_specialization_info: *const SpecializationInfo<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ShaderCreateInfoEXT<'_> {}
+unsafe impl Sync for ShaderCreateInfoEXT<'_> {}
 impl ::std::default::Default for ShaderCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -52309,6 +53989,8 @@ pub struct PhysicalDeviceShaderTileImageFeaturesEXT<'a> {
     pub shader_tile_image_stencil_read_access: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderTileImageFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderTileImageFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderTileImageFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -52367,6 +54049,8 @@ pub struct PhysicalDeviceShaderTileImagePropertiesEXT<'a> {
     pub shader_tile_image_read_from_helper_invocation: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderTileImagePropertiesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderTileImagePropertiesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderTileImagePropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -52425,6 +54109,8 @@ pub struct ImportScreenBufferInfoQNX<'a> {
     pub buffer: *mut _screen_buffer,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ImportScreenBufferInfoQNX<'_> {}
+unsafe impl Sync for ImportScreenBufferInfoQNX<'_> {}
 impl ::std::default::Default for ImportScreenBufferInfoQNX<'_> {
     #[inline]
     fn default() -> Self {
@@ -52459,6 +54145,8 @@ pub struct ScreenBufferPropertiesQNX<'a> {
     pub memory_type_bits: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ScreenBufferPropertiesQNX<'_> {}
+unsafe impl Sync for ScreenBufferPropertiesQNX<'_> {}
 impl ::std::default::Default for ScreenBufferPropertiesQNX<'_> {
     #[inline]
     fn default() -> Self {
@@ -52520,6 +54208,8 @@ pub struct ScreenBufferFormatPropertiesQNX<'a> {
     pub suggested_y_chroma_offset: ChromaLocation,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ScreenBufferFormatPropertiesQNX<'_> {}
+unsafe impl Sync for ScreenBufferFormatPropertiesQNX<'_> {}
 impl ::std::default::Default for ScreenBufferFormatPropertiesQNX<'_> {
     #[inline]
     fn default() -> Self {
@@ -52607,6 +54297,8 @@ pub struct ExternalFormatQNX<'a> {
     pub external_format: u64,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ExternalFormatQNX<'_> {}
+unsafe impl Sync for ExternalFormatQNX<'_> {}
 impl ::std::default::Default for ExternalFormatQNX<'_> {
     #[inline]
     fn default() -> Self {
@@ -52641,6 +54333,8 @@ pub struct PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'a> {
     pub screen_buffer_import: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'_> {}
+unsafe impl Sync for PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'_> {}
 impl ::std::default::Default for PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'_> {
     #[inline]
     fn default() -> Self {
@@ -52680,6 +54374,8 @@ pub struct PhysicalDeviceCooperativeMatrixFeaturesKHR<'a> {
     pub cooperative_matrix_robust_buffer_access: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceCooperativeMatrixFeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceCooperativeMatrixFeaturesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceCooperativeMatrixFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -52733,6 +54429,8 @@ pub struct CooperativeMatrixPropertiesKHR<'a> {
     pub scope: ScopeKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for CooperativeMatrixPropertiesKHR<'_> {}
+unsafe impl Sync for CooperativeMatrixPropertiesKHR<'_> {}
 impl ::std::default::Default for CooperativeMatrixPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -52813,6 +54511,8 @@ pub struct PhysicalDeviceCooperativeMatrixPropertiesKHR<'a> {
     pub cooperative_matrix_supported_stages: ShaderStageFlags,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceCooperativeMatrixPropertiesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceCooperativeMatrixPropertiesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceCooperativeMatrixPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -52854,6 +54554,8 @@ pub struct PhysicalDeviceShaderEnqueuePropertiesAMDX<'a> {
     pub execution_graph_dispatch_address_alignment: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderEnqueuePropertiesAMDX<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderEnqueuePropertiesAMDX<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderEnqueuePropertiesAMDX<'_> {
     #[inline]
     fn default() -> Self {
@@ -52925,6 +54627,8 @@ pub struct PhysicalDeviceShaderEnqueueFeaturesAMDX<'a> {
     pub shader_enqueue: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderEnqueueFeaturesAMDX<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderEnqueueFeaturesAMDX<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderEnqueueFeaturesAMDX<'_> {
     #[inline]
     fn default() -> Self {
@@ -52966,6 +54670,8 @@ pub struct ExecutionGraphPipelineCreateInfoAMDX<'a> {
     pub base_pipeline_index: i32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ExecutionGraphPipelineCreateInfoAMDX<'_> {}
+unsafe impl Sync for ExecutionGraphPipelineCreateInfoAMDX<'_> {}
 impl ::std::default::Default for ExecutionGraphPipelineCreateInfoAMDX<'_> {
     #[inline]
     fn default() -> Self {
@@ -53049,6 +54755,8 @@ pub struct PipelineShaderStageNodeCreateInfoAMDX<'a> {
     pub index: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PipelineShaderStageNodeCreateInfoAMDX<'_> {}
+unsafe impl Sync for PipelineShaderStageNodeCreateInfoAMDX<'_> {}
 impl ::std::default::Default for PipelineShaderStageNodeCreateInfoAMDX<'_> {
     #[inline]
     fn default() -> Self {
@@ -53097,6 +54805,8 @@ pub struct ExecutionGraphPipelineScratchSizeAMDX<'a> {
     pub size: DeviceSize,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for ExecutionGraphPipelineScratchSizeAMDX<'_> {}
+unsafe impl Sync for ExecutionGraphPipelineScratchSizeAMDX<'_> {}
 impl ::std::default::Default for ExecutionGraphPipelineScratchSizeAMDX<'_> {
     #[inline]
     fn default() -> Self {
@@ -53208,6 +54918,8 @@ pub struct BindMemoryStatusKHR<'a> {
     pub p_result: *mut Result,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BindMemoryStatusKHR<'_> {}
+unsafe impl Sync for BindMemoryStatusKHR<'_> {}
 impl ::std::default::Default for BindMemoryStatusKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -53248,6 +54960,8 @@ pub struct BindDescriptorSetsInfoKHR<'a> {
     pub p_dynamic_offsets: *const u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BindDescriptorSetsInfoKHR<'_> {}
+unsafe impl Sync for BindDescriptorSetsInfoKHR<'_> {}
 impl ::std::default::Default for BindDescriptorSetsInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -53327,6 +55041,8 @@ pub struct PushConstantsInfoKHR<'a> {
     pub p_values: *const c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PushConstantsInfoKHR<'_> {}
+unsafe impl Sync for PushConstantsInfoKHR<'_> {}
 impl ::std::default::Default for PushConstantsInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -53398,6 +55114,8 @@ pub struct PushDescriptorSetInfoKHR<'a> {
     pub p_descriptor_writes: *const WriteDescriptorSet<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PushDescriptorSetInfoKHR<'_> {}
+unsafe impl Sync for PushDescriptorSetInfoKHR<'_> {}
 impl ::std::default::Default for PushDescriptorSetInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -53468,6 +55186,8 @@ pub struct PushDescriptorSetWithTemplateInfoKHR<'a> {
     pub p_data: *const c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PushDescriptorSetWithTemplateInfoKHR<'_> {}
+unsafe impl Sync for PushDescriptorSetWithTemplateInfoKHR<'_> {}
 impl ::std::default::Default for PushDescriptorSetWithTemplateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -53544,6 +55264,8 @@ pub struct SetDescriptorBufferOffsetsInfoEXT<'a> {
     pub p_offsets: *const DeviceSize,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SetDescriptorBufferOffsetsInfoEXT<'_> {}
+unsafe impl Sync for SetDescriptorBufferOffsetsInfoEXT<'_> {}
 impl ::std::default::Default for SetDescriptorBufferOffsetsInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -53623,6 +55345,8 @@ pub struct BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {
     pub set: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BindDescriptorBufferEmbeddedSamplersInfoEXT<'_> {}
+unsafe impl Sync for BindDescriptorBufferEmbeddedSamplersInfoEXT<'_> {}
 impl ::std::default::Default for BindDescriptorBufferEmbeddedSamplersInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -53686,6 +55410,8 @@ pub struct PhysicalDeviceCubicClampFeaturesQCOM<'a> {
     pub cubic_range_clamp: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceCubicClampFeaturesQCOM<'_> {}
+unsafe impl Sync for PhysicalDeviceCubicClampFeaturesQCOM<'_> {}
 impl ::std::default::Default for PhysicalDeviceCubicClampFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
@@ -53720,6 +55446,8 @@ pub struct PhysicalDeviceYcbcrDegammaFeaturesQCOM<'a> {
     pub ycbcr_degamma: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'_> {}
+unsafe impl Sync for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'_> {}
 impl ::std::default::Default for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
@@ -53756,6 +55484,8 @@ pub struct SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'a> {
     pub enable_cb_cr_degamma: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'_> {}
+unsafe impl Sync for SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'_> {}
 impl ::std::default::Default for SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
@@ -53799,6 +55529,8 @@ pub struct PhysicalDeviceCubicWeightsFeaturesQCOM<'a> {
     pub selectable_cubic_weights: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceCubicWeightsFeaturesQCOM<'_> {}
+unsafe impl Sync for PhysicalDeviceCubicWeightsFeaturesQCOM<'_> {}
 impl ::std::default::Default for PhysicalDeviceCubicWeightsFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
@@ -53834,6 +55566,8 @@ pub struct SamplerCubicWeightsCreateInfoQCOM<'a> {
     pub cubic_weights: CubicFilterWeightsQCOM,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SamplerCubicWeightsCreateInfoQCOM<'_> {}
+unsafe impl Sync for SamplerCubicWeightsCreateInfoQCOM<'_> {}
 impl ::std::default::Default for SamplerCubicWeightsCreateInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
@@ -53867,6 +55601,8 @@ pub struct BlitImageCubicWeightsInfoQCOM<'a> {
     pub cubic_weights: CubicFilterWeightsQCOM,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for BlitImageCubicWeightsInfoQCOM<'_> {}
+unsafe impl Sync for BlitImageCubicWeightsInfoQCOM<'_> {}
 impl ::std::default::Default for BlitImageCubicWeightsInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
@@ -53900,6 +55636,8 @@ pub struct PhysicalDeviceImageProcessing2FeaturesQCOM<'a> {
     pub texture_block_match2: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceImageProcessing2FeaturesQCOM<'_> {}
+unsafe impl Sync for PhysicalDeviceImageProcessing2FeaturesQCOM<'_> {}
 impl ::std::default::Default for PhysicalDeviceImageProcessing2FeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
@@ -53935,6 +55673,8 @@ pub struct PhysicalDeviceImageProcessing2PropertiesQCOM<'a> {
     pub max_block_match_window: Extent2D,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceImageProcessing2PropertiesQCOM<'_> {}
+unsafe impl Sync for PhysicalDeviceImageProcessing2PropertiesQCOM<'_> {}
 impl ::std::default::Default for PhysicalDeviceImageProcessing2PropertiesQCOM<'_> {
     #[inline]
     fn default() -> Self {
@@ -53970,6 +55710,8 @@ pub struct SamplerBlockMatchWindowCreateInfoQCOM<'a> {
     pub window_compare_mode: BlockMatchWindowCompareModeQCOM,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SamplerBlockMatchWindowCreateInfoQCOM<'_> {}
+unsafe impl Sync for SamplerBlockMatchWindowCreateInfoQCOM<'_> {}
 impl ::std::default::Default for SamplerBlockMatchWindowCreateInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
@@ -54013,6 +55755,8 @@ pub struct PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'a> {
     pub descriptor_pool_overallocation: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -54051,6 +55795,8 @@ pub struct PhysicalDeviceLayeredDriverPropertiesMSFT<'a> {
     pub underlying_api: LayeredDriverUnderlyingApiMSFT,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceLayeredDriverPropertiesMSFT<'_> {}
+unsafe impl Sync for PhysicalDeviceLayeredDriverPropertiesMSFT<'_> {}
 impl ::std::default::Default for PhysicalDeviceLayeredDriverPropertiesMSFT<'_> {
     #[inline]
     fn default() -> Self {
@@ -54086,6 +55832,8 @@ pub struct PhysicalDevicePerStageDescriptorSetFeaturesNV<'a> {
     pub dynamic_pipeline_layout: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDevicePerStageDescriptorSetFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDevicePerStageDescriptorSetFeaturesNV<'_> {}
 impl ::std::default::Default for PhysicalDevicePerStageDescriptorSetFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -54127,6 +55875,8 @@ pub struct PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a> {
     pub external_format_resolve: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'_> {}
+unsafe impl Sync for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'_> {}
 impl ::std::default::Default for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'_> {
     #[inline]
     fn default() -> Self {
@@ -54167,6 +55917,8 @@ pub struct PhysicalDeviceExternalFormatResolvePropertiesANDROID<'a> {
     pub external_format_resolve_chroma_offset_y: ChromaLocation,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'_> {}
+unsafe impl Sync for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'_> {}
 impl ::std::default::Default for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'_> {
     #[inline]
     fn default() -> Self {
@@ -54226,6 +55978,8 @@ pub struct AndroidHardwareBufferFormatResolvePropertiesANDROID<'a> {
     pub color_attachment_format: Format,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for AndroidHardwareBufferFormatResolvePropertiesANDROID<'_> {}
+unsafe impl Sync for AndroidHardwareBufferFormatResolvePropertiesANDROID<'_> {}
 impl ::std::default::Default for AndroidHardwareBufferFormatResolvePropertiesANDROID<'_> {
     #[inline]
     fn default() -> Self {
@@ -54265,6 +56019,8 @@ pub struct LatencySleepModeInfoNV<'a> {
     pub minimum_interval_us: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for LatencySleepModeInfoNV<'_> {}
+unsafe impl Sync for LatencySleepModeInfoNV<'_> {}
 impl ::std::default::Default for LatencySleepModeInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -54310,6 +56066,8 @@ pub struct LatencySleepInfoNV<'a> {
     pub value: u64,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for LatencySleepInfoNV<'_> {}
+unsafe impl Sync for LatencySleepInfoNV<'_> {}
 impl ::std::default::Default for LatencySleepInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -54349,6 +56107,8 @@ pub struct SetLatencyMarkerInfoNV<'a> {
     pub marker: LatencyMarkerNV,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SetLatencyMarkerInfoNV<'_> {}
+unsafe impl Sync for SetLatencyMarkerInfoNV<'_> {}
 impl ::std::default::Default for SetLatencyMarkerInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -54388,6 +56148,8 @@ pub struct GetLatencyMarkerInfoNV<'a> {
     pub p_timings: *mut LatencyTimingsFrameReportNV<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for GetLatencyMarkerInfoNV<'_> {}
+unsafe impl Sync for GetLatencyMarkerInfoNV<'_> {}
 impl ::std::default::Default for GetLatencyMarkerInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -54435,6 +56197,8 @@ pub struct LatencyTimingsFrameReportNV<'a> {
     pub gpu_render_end_time_us: u64,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for LatencyTimingsFrameReportNV<'_> {}
+unsafe impl Sync for LatencyTimingsFrameReportNV<'_> {}
 impl ::std::default::Default for LatencyTimingsFrameReportNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -54545,6 +56309,8 @@ pub struct OutOfBandQueueTypeInfoNV<'a> {
     pub queue_type: OutOfBandQueueTypeNV,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for OutOfBandQueueTypeInfoNV<'_> {}
+unsafe impl Sync for OutOfBandQueueTypeInfoNV<'_> {}
 impl ::std::default::Default for OutOfBandQueueTypeInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -54577,6 +56343,8 @@ pub struct LatencySubmissionPresentIdNV<'a> {
     pub present_id: u64,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for LatencySubmissionPresentIdNV<'_> {}
+unsafe impl Sync for LatencySubmissionPresentIdNV<'_> {}
 impl ::std::default::Default for LatencySubmissionPresentIdNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -54611,6 +56379,8 @@ pub struct SwapchainLatencyCreateInfoNV<'a> {
     pub latency_mode_enable: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for SwapchainLatencyCreateInfoNV<'_> {}
+unsafe impl Sync for SwapchainLatencyCreateInfoNV<'_> {}
 impl ::std::default::Default for SwapchainLatencyCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -54645,6 +56415,8 @@ pub struct LatencySurfaceCapabilitiesNV<'a> {
     pub p_present_modes: *mut PresentModeKHR,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for LatencySurfaceCapabilitiesNV<'_> {}
+unsafe impl Sync for LatencySurfaceCapabilitiesNV<'_> {}
 impl ::std::default::Default for LatencySurfaceCapabilitiesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -54680,6 +56452,8 @@ pub struct PhysicalDeviceCudaKernelLaunchFeaturesNV<'a> {
     pub cuda_kernel_launch_features: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceCudaKernelLaunchFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceCudaKernelLaunchFeaturesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceCudaKernelLaunchFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -54716,6 +56490,8 @@ pub struct PhysicalDeviceCudaKernelLaunchPropertiesNV<'a> {
     pub compute_capability_major: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceCudaKernelLaunchPropertiesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceCudaKernelLaunchPropertiesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceCudaKernelLaunchPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -54756,6 +56532,8 @@ pub struct DeviceQueueShaderCoreControlCreateInfoARM<'a> {
     pub shader_core_count: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for DeviceQueueShaderCoreControlCreateInfoARM<'_> {}
+unsafe impl Sync for DeviceQueueShaderCoreControlCreateInfoARM<'_> {}
 impl ::std::default::Default for DeviceQueueShaderCoreControlCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
@@ -54791,6 +56569,8 @@ pub struct PhysicalDeviceSchedulingControlsFeaturesARM<'a> {
     pub scheduling_controls: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceSchedulingControlsFeaturesARM<'_> {}
+unsafe impl Sync for PhysicalDeviceSchedulingControlsFeaturesARM<'_> {}
 impl ::std::default::Default for PhysicalDeviceSchedulingControlsFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
@@ -54826,6 +56606,8 @@ pub struct PhysicalDeviceSchedulingControlsPropertiesARM<'a> {
     pub scheduling_controls_flags: PhysicalDeviceSchedulingControlsFlagsARM,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceSchedulingControlsPropertiesARM<'_> {}
+unsafe impl Sync for PhysicalDeviceSchedulingControlsPropertiesARM<'_> {}
 impl ::std::default::Default for PhysicalDeviceSchedulingControlsPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
@@ -54863,6 +56645,8 @@ pub struct PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'a> {
     pub relaxed_line_rasterization: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'_> {}
+unsafe impl Sync for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'_> {}
 impl ::std::default::Default for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'_> {
     #[inline]
     fn default() -> Self {
@@ -54901,6 +56685,8 @@ pub struct PhysicalDeviceRenderPassStripedFeaturesARM<'a> {
     pub render_pass_striped: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceRenderPassStripedFeaturesARM<'_> {}
+unsafe impl Sync for PhysicalDeviceRenderPassStripedFeaturesARM<'_> {}
 impl ::std::default::Default for PhysicalDeviceRenderPassStripedFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
@@ -54937,6 +56723,8 @@ pub struct PhysicalDeviceRenderPassStripedPropertiesARM<'a> {
     pub max_render_pass_stripes: u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceRenderPassStripedPropertiesARM<'_> {}
+unsafe impl Sync for PhysicalDeviceRenderPassStripedPropertiesARM<'_> {}
 impl ::std::default::Default for PhysicalDeviceRenderPassStripedPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
@@ -54980,6 +56768,8 @@ pub struct RenderPassStripeInfoARM<'a> {
     pub stripe_area: Rect2D,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for RenderPassStripeInfoARM<'_> {}
+unsafe impl Sync for RenderPassStripeInfoARM<'_> {}
 impl ::std::default::Default for RenderPassStripeInfoARM<'_> {
     #[inline]
     fn default() -> Self {
@@ -55013,6 +56803,8 @@ pub struct RenderPassStripeBeginInfoARM<'a> {
     pub p_stripe_infos: *const RenderPassStripeInfoARM<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for RenderPassStripeBeginInfoARM<'_> {}
+unsafe impl Sync for RenderPassStripeBeginInfoARM<'_> {}
 impl ::std::default::Default for RenderPassStripeBeginInfoARM<'_> {
     #[inline]
     fn default() -> Self {
@@ -55050,6 +56842,8 @@ pub struct RenderPassStripeSubmitInfoARM<'a> {
     pub p_stripe_semaphore_infos: *const SemaphoreSubmitInfo<'a>,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for RenderPassStripeSubmitInfoARM<'_> {}
+unsafe impl Sync for RenderPassStripeSubmitInfoARM<'_> {}
 impl ::std::default::Default for RenderPassStripeSubmitInfoARM<'_> {
     #[inline]
     fn default() -> Self {
@@ -55088,6 +56882,8 @@ pub struct PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'a> {
     pub shader_maximal_reconvergence: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -55127,6 +56923,8 @@ pub struct PhysicalDeviceShaderSubgroupRotateFeaturesKHR<'a> {
     pub shader_subgroup_rotate_clustered: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderSubgroupRotateFeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderSubgroupRotateFeaturesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderSubgroupRotateFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -55171,6 +56969,8 @@ pub struct PhysicalDeviceShaderExpectAssumeFeaturesKHR<'a> {
     pub shader_expect_assume: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderExpectAssumeFeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderExpectAssumeFeaturesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderExpectAssumeFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -55206,6 +57006,8 @@ pub struct PhysicalDeviceShaderFloatControls2FeaturesKHR<'a> {
     pub shader_float_controls2: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderFloatControls2FeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderFloatControls2FeaturesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderFloatControls2FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -55241,6 +57043,8 @@ pub struct PhysicalDeviceDynamicRenderingLocalReadFeaturesKHR<'a> {
     pub dynamic_rendering_local_read: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceDynamicRenderingLocalReadFeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceDynamicRenderingLocalReadFeaturesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceDynamicRenderingLocalReadFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -55280,6 +57084,8 @@ pub struct RenderingAttachmentLocationInfoKHR<'a> {
     pub p_color_attachment_locations: *const u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for RenderingAttachmentLocationInfoKHR<'_> {}
+unsafe impl Sync for RenderingAttachmentLocationInfoKHR<'_> {}
 impl ::std::default::Default for RenderingAttachmentLocationInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -55319,6 +57125,8 @@ pub struct RenderingInputAttachmentIndexInfoKHR<'a> {
     pub p_stencil_input_attachment_index: *const u32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for RenderingInputAttachmentIndexInfoKHR<'_> {}
+unsafe impl Sync for RenderingInputAttachmentIndexInfoKHR<'_> {}
 impl ::std::default::Default for RenderingInputAttachmentIndexInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -55373,6 +57181,8 @@ pub struct PhysicalDeviceShaderQuadControlFeaturesKHR<'a> {
     pub shader_quad_control: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderQuadControlFeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderQuadControlFeaturesKHR<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderQuadControlFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -55408,6 +57218,8 @@ pub struct PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'a> {
     pub shader_float16_vector_atomics: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
@@ -55448,6 +57260,8 @@ pub struct PhysicalDeviceMapMemoryPlacedFeaturesEXT<'a> {
     pub memory_unmap_reserve: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceMapMemoryPlacedFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceMapMemoryPlacedFeaturesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceMapMemoryPlacedFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -55495,6 +57309,8 @@ pub struct PhysicalDeviceMapMemoryPlacedPropertiesEXT<'a> {
     pub min_placed_memory_map_alignment: DeviceSize,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceMapMemoryPlacedPropertiesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceMapMemoryPlacedPropertiesEXT<'_> {}
 impl ::std::default::Default for PhysicalDeviceMapMemoryPlacedPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -55532,6 +57348,8 @@ pub struct MemoryMapPlacedInfoEXT<'a> {
     pub p_placed_address: *mut c_void,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for MemoryMapPlacedInfoEXT<'_> {}
+unsafe impl Sync for MemoryMapPlacedInfoEXT<'_> {}
 impl ::std::default::Default for MemoryMapPlacedInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
@@ -55565,6 +57383,8 @@ pub struct PhysicalDeviceRawAccessChainsFeaturesNV<'a> {
     pub shader_raw_access_chains: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
+unsafe impl Send for PhysicalDeviceRawAccessChainsFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDeviceRawAccessChainsFeaturesNV<'_> {}
 impl ::std::default::Default for PhysicalDeviceRawAccessChainsFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
