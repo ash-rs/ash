@@ -20,13 +20,13 @@ rust-version = "1.69.0"
 
 [dependencies]
 ash = { path = "../ash", version = "0.37", default-features = false }
-raw-window-handle = "0.5"
+raw-window-handle = "0.6"
 
 [target.'cfg(any(target_os = "macos", target_os = "ios"))'.dependencies]
-raw-window-metal = "0.3"
+raw-window-metal = "0.4"
 
 [dev-dependencies]
-winit = "0.28.0"
+winit = { version = "0.29", features = ["rwh_06"] }
 ash = { path = "../ash", version = "0.37", default-features = false, features = ["linked"] }
 
 [[example]]
