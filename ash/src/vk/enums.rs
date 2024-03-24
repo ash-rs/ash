@@ -1176,9 +1176,9 @@ impl ColorSpaceKHR {
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
-#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkTimeDomainEXT.html>"]
-pub struct TimeDomainEXT(pub(crate) i32);
-impl TimeDomainEXT {
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkTimeDomainKHR.html>"]
+pub struct TimeDomainKHR(pub(crate) i32);
+impl TimeDomainKHR {
     #[inline]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
@@ -1188,7 +1188,7 @@ impl TimeDomainEXT {
         self.0
     }
 }
-impl TimeDomainEXT {
+impl TimeDomainKHR {
     pub const DEVICE: Self = Self(0);
     pub const CLOCK_MONOTONIC: Self = Self(1);
     pub const CLOCK_MONOTONIC_RAW: Self = Self(2);
@@ -1343,6 +1343,30 @@ impl ValidationFeatureDisableEXT {
     pub const CORE_CHECKS: Self = Self(5);
     pub const UNIQUE_HANDLES: Self = Self(6);
     pub const SHADER_VALIDATION_CACHE: Self = Self(7);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkLayerSettingTypeEXT.html>"]
+pub struct LayerSettingTypeEXT(pub(crate) i32);
+impl LayerSettingTypeEXT {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl LayerSettingTypeEXT {
+    pub const BOOL32: Self = Self(0);
+    pub const INT32: Self = Self(1);
+    pub const INT64: Self = Self(2);
+    pub const UINT32: Self = Self(3);
+    pub const UINT64: Self = Self(4);
+    pub const FLOAT32: Self = Self(5);
+    pub const FLOAT64: Self = Self(6);
+    pub const STRING: Self = Self(7);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
@@ -2273,9 +2297,9 @@ impl PipelineExecutableStatisticFormatKHR {
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
-#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkLineRasterizationModeEXT.html>"]
-pub struct LineRasterizationModeEXT(pub(crate) i32);
-impl LineRasterizationModeEXT {
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkLineRasterizationModeKHR.html>"]
+pub struct LineRasterizationModeKHR(pub(crate) i32);
+impl LineRasterizationModeKHR {
     #[inline]
     pub const fn from_raw(x: i32) -> Self {
         Self(x)
@@ -2285,11 +2309,15 @@ impl LineRasterizationModeEXT {
         self.0
     }
 }
-impl LineRasterizationModeEXT {
+impl LineRasterizationModeKHR {
     pub const DEFAULT: Self = Self(0);
+    pub const DEFAULT_EXT: Self = Self::DEFAULT;
     pub const RECTANGULAR: Self = Self(1);
+    pub const RECTANGULAR_EXT: Self = Self::RECTANGULAR;
     pub const BRESENHAM: Self = Self(2);
+    pub const BRESENHAM_EXT: Self = Self::BRESENHAM;
     pub const RECTANGULAR_SMOOTH: Self = Self(3);
+    pub const RECTANGULAR_SMOOTH_EXT: Self = Self::RECTANGULAR_SMOOTH;
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
@@ -3031,9 +3059,7 @@ impl fmt::Debug for Result {
                 Some("ERROR_INVALID_VIDEO_STD_PARAMETERS_KHR")
             }
             Self::ERROR_COMPRESSION_EXHAUSTED_EXT => Some("ERROR_COMPRESSION_EXHAUSTED_EXT"),
-            Self::ERROR_INCOMPATIBLE_SHADER_BINARY_EXT => {
-                Some("ERROR_INCOMPATIBLE_SHADER_BINARY_EXT")
-            }
+            Self::INCOMPATIBLE_SHADER_BINARY_EXT => Some("INCOMPATIBLE_SHADER_BINARY_EXT"),
             Self::ERROR_OUT_OF_POOL_MEMORY => Some("ERROR_OUT_OF_POOL_MEMORY"),
             Self::ERROR_INVALID_EXTERNAL_HANDLE => Some("ERROR_INVALID_EXTERNAL_HANDLE"),
             Self::ERROR_FRAGMENTATION => Some("ERROR_FRAGMENTATION"),
