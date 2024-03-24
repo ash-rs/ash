@@ -7,11 +7,11 @@ use std::mem;
 pub const NAME: &ffi::CStr = vk::khr::line_rasterization::NAME;
 
 #[derive(Clone)]
-pub struct LineRasterization {
+pub struct Device {
     fp: vk::khr::line_rasterization::DeviceFn,
 }
 
-impl LineRasterization {
+impl Device {
     pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let fp = vk::khr::line_rasterization::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
