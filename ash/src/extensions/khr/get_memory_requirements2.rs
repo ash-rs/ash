@@ -1,19 +1,22 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_get_memory_requirements2.html>
+
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 use std::ptr;
 
+pub const NAME: &CStr = vk::khr::get_memory_requirements2::NAME;
+
 #[derive(Clone)]
-pub struct GetMemoryRequirements2 {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::KhrGetMemoryRequirements2Fn,
+    fp: vk::khr::get_memory_requirements2::DeviceFn,
 }
 
-impl GetMemoryRequirements2 {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrGetMemoryRequirements2Fn::load(|name| unsafe {
+        let fp = vk::khr::get_memory_requirements2::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -75,10 +78,8 @@ impl GetMemoryRequirements2 {
         assert_eq!(count as usize, out.len());
     }
 
-    pub const NAME: &'static CStr = vk::KhrGetMemoryRequirements2Fn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrGetMemoryRequirements2Fn {
+    pub fn fp(&self) -> &vk::khr::get_memory_requirements2::DeviceFn {
         &self.fp
     }
 

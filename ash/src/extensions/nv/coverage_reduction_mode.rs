@@ -1,19 +1,21 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_coverage_reduction_mode.html>
+
 use crate::prelude::*;
 use crate::vk;
-use crate::{Entry, Instance};
 use std::ffi::CStr;
 use std::mem;
 use std::ptr;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_coverage_reduction_mode.html>
+pub const NAME: &CStr = vk::nv::coverage_reduction_mode::NAME;
+
 #[derive(Clone)]
-pub struct CoverageReductionMode {
-    fp: vk::NvCoverageReductionModeFn,
+pub struct Instance {
+    fp: vk::nv::coverage_reduction_mode::InstanceFn,
 }
 
-impl CoverageReductionMode {
-    pub fn new(entry: &Entry, instance: &Instance) -> Self {
-        let fp = vk::NvCoverageReductionModeFn::load(|name| unsafe {
+impl Instance {
+    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        let fp = vk::nv::coverage_reduction_mode::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -60,10 +62,8 @@ impl CoverageReductionMode {
         Ok(())
     }
 
-    pub const NAME: &'static CStr = vk::NvCoverageReductionModeFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::NvCoverageReductionModeFn {
+    pub fn fp(&self) -> &vk::nv::coverage_reduction_mode::InstanceFn {
         &self.fp
     }
 }

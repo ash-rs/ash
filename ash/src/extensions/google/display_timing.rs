@@ -1,20 +1,22 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_GOOGLE_display_timing.html>
+
 use crate::prelude::*;
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_GOOGLE_display_timing.html>
+pub const NAME: &CStr = vk::google::display_timing::NAME;
+
 #[derive(Clone)]
-pub struct DisplayTiming {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::GoogleDisplayTimingFn,
+    fp: vk::google::display_timing::DeviceFn,
 }
 
-impl DisplayTiming {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::GoogleDisplayTimingFn::load(|name| unsafe {
+        let fp = vk::google::display_timing::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -42,10 +44,8 @@ impl DisplayTiming {
             .assume_init_on_success(properties)
     }
 
-    pub const NAME: &'static CStr = vk::GoogleDisplayTimingFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::GoogleDisplayTimingFn {
+    pub fn fp(&self) -> &vk::google::display_timing::DeviceFn {
         &self.fp
     }
 

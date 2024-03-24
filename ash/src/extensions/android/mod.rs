@@ -1,3 +1,1 @@
-pub use self::external_memory_android_hardware_buffer::ExternalMemoryAndroidHardwareBuffer;
-
-mod external_memory_android_hardware_buffer;
+pub mod external_memory_android_hardware_buffer;

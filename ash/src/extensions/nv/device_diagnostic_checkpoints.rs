@@ -1,19 +1,21 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_device_diagnostic_checkpoints.html>
+
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 use std::os::raw::c_void;
 use std::ptr;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_device_diagnostic_checkpoints.html>
+pub const NAME: &CStr = vk::nv::device_diagnostic_checkpoints::NAME;
+
 #[derive(Clone)]
-pub struct DeviceDiagnosticCheckpoints {
-    fp: vk::NvDeviceDiagnosticCheckpointsFn,
+pub struct Device {
+    fp: vk::nv::device_diagnostic_checkpoints::DeviceFn,
 }
 
-impl DeviceDiagnosticCheckpoints {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
-        let fp = vk::NvDeviceDiagnosticCheckpointsFn::load(|name| unsafe {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        let fp = vk::nv::device_diagnostic_checkpoints::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -52,10 +54,8 @@ impl DeviceDiagnosticCheckpoints {
         assert_eq!(count as usize, out.len());
     }
 
-    pub const NAME: &'static CStr = vk::NvDeviceDiagnosticCheckpointsFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::NvDeviceDiagnosticCheckpointsFn {
+    pub fn fp(&self) -> &vk::nv::device_diagnostic_checkpoints::DeviceFn {
         &self.fp
     }
 }

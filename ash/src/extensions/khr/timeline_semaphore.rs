@@ -1,19 +1,22 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_timeline_semaphore.html>
+
 use crate::prelude::*;
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::khr::timeline_semaphore::NAME;
+
 #[derive(Clone)]
-pub struct TimelineSemaphore {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::KhrTimelineSemaphoreFn,
+    fp: vk::khr::timeline_semaphore::DeviceFn,
 }
 
-impl TimelineSemaphore {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrTimelineSemaphoreFn::load(|name| unsafe {
+        let fp = vk::khr::timeline_semaphore::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -46,10 +49,8 @@ impl TimelineSemaphore {
         (self.fp.signal_semaphore_khr)(self.handle, signal_info).result()
     }
 
-    pub const NAME: &'static CStr = vk::KhrTimelineSemaphoreFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrTimelineSemaphoreFn {
+    pub fn fp(&self) -> &vk::khr::timeline_semaphore::DeviceFn {
         &self.fp
     }
 

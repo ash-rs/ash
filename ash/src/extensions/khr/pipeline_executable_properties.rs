@@ -1,19 +1,22 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_pipeline_executable_properties.html>
+
 use crate::prelude::*;
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::khr::pipeline_executable_properties::NAME;
+
 #[derive(Clone)]
-pub struct PipelineExecutableProperties {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::KhrPipelineExecutablePropertiesFn,
+    fp: vk::khr::pipeline_executable_properties::DeviceFn,
 }
 
-impl PipelineExecutableProperties {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrPipelineExecutablePropertiesFn::load(|name| unsafe {
+        let fp = vk::khr::pipeline_executable_properties::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -67,10 +70,8 @@ impl PipelineExecutableProperties {
         })
     }
 
-    pub const NAME: &'static CStr = vk::KhrPipelineExecutablePropertiesFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrPipelineExecutablePropertiesFn {
+    pub fn fp(&self) -> &vk::khr::pipeline_executable_properties::DeviceFn {
         &self.fp
     }
 

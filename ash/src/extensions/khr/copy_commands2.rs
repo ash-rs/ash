@@ -1,17 +1,19 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_copy_commands2.html>
+
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_copy_commands2.html>
+pub const NAME: &CStr = vk::khr::copy_commands2::NAME;
+
 #[derive(Clone)]
-pub struct CopyCommands2 {
-    fp: vk::KhrCopyCommands2Fn,
+pub struct Device {
+    fp: vk::khr::copy_commands2::DeviceFn,
 }
 
-impl CopyCommands2 {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
-        let fp = vk::KhrCopyCommands2Fn::load(|name| unsafe {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        let fp = vk::khr::copy_commands2::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -72,10 +74,8 @@ impl CopyCommands2 {
         (self.fp.cmd_resolve_image2_khr)(command_buffer, resolve_image_info)
     }
 
-    pub const NAME: &'static CStr = vk::KhrCopyCommands2Fn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrCopyCommands2Fn {
+    pub fn fp(&self) -> &vk::khr::copy_commands2::DeviceFn {
         &self.fp
     }
 }

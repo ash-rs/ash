@@ -1,19 +1,21 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_device_generated_commands_compute.html>
+
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_device_generated_commands_compute.html>
+pub const NAME: &CStr = vk::nv::device_generated_commands_compute::NAME;
+
 #[derive(Clone)]
-pub struct DeviceGeneratedCommandsCompute {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::NvDeviceGeneratedCommandsComputeFn,
+    fp: vk::nv::device_generated_commands_compute::DeviceFn,
 }
 
-impl DeviceGeneratedCommandsCompute {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::NvDeviceGeneratedCommandsComputeFn::load(|name| unsafe {
+        let fp = vk::nv::device_generated_commands_compute::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -57,10 +59,8 @@ impl DeviceGeneratedCommandsCompute {
         (self.fp.get_pipeline_indirect_device_address_nv)(self.handle, info)
     }
 
-    pub const NAME: &'static CStr = vk::NvDeviceGeneratedCommandsComputeFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::NvDeviceGeneratedCommandsComputeFn {
+    pub fn fp(&self) -> &vk::nv::device_generated_commands_compute::DeviceFn {
         &self.fp
     }
 

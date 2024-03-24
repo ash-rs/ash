@@ -1,17 +1,20 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_extended_dynamic_state.html>
+
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 use std::ptr;
 
+pub const NAME: &CStr = vk::ext::extended_dynamic_state::NAME;
+
 #[derive(Clone)]
-pub struct ExtendedDynamicState {
-    fp: vk::ExtExtendedDynamicStateFn,
+pub struct Device {
+    fp: vk::ext::extended_dynamic_state::DeviceFn,
 }
 
-impl ExtendedDynamicState {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
-        let fp = vk::ExtExtendedDynamicStateFn::load(|name| unsafe {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        let fp = vk::ext::extended_dynamic_state::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -184,10 +187,8 @@ impl ExtendedDynamicState {
         )
     }
 
-    pub const NAME: &'static CStr = vk::ExtExtendedDynamicStateFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::ExtExtendedDynamicStateFn {
+    pub fn fp(&self) -> &vk::ext::extended_dynamic_state::DeviceFn {
         &self.fp
     }
 }

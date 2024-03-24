@@ -1,17 +1,20 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_tooling_info.html>
+
 use crate::prelude::*;
 use crate::vk;
-use crate::{Entry, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::ext::tooling_info::NAME;
+
 #[derive(Clone)]
-pub struct ToolingInfo {
-    fp: vk::ExtToolingInfoFn,
+pub struct Instance {
+    fp: vk::ext::tooling_info::InstanceFn,
 }
 
-impl ToolingInfo {
-    pub fn new(entry: &Entry, instance: &Instance) -> Self {
-        let fp = vk::ExtToolingInfoFn::load(|name| unsafe {
+impl Instance {
+    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        let fp = vk::ext::tooling_info::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -28,10 +31,8 @@ impl ToolingInfo {
         })
     }
 
-    pub const NAME: &'static CStr = vk::ExtToolingInfoFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::ExtToolingInfoFn {
+    pub fn fp(&self) -> &vk::ext::tooling_info::InstanceFn {
         &self.fp
     }
 }

@@ -1,16 +1,19 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_dynamic_rendering.html>
+
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::khr::dynamic_rendering::NAME;
+
 #[derive(Clone)]
-pub struct DynamicRendering {
-    fp: vk::KhrDynamicRenderingFn,
+pub struct Device {
+    fp: vk::khr::dynamic_rendering::DeviceFn,
 }
 
-impl DynamicRendering {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
-        let fp = vk::KhrDynamicRenderingFn::load(|name| unsafe {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        let fp = vk::khr::dynamic_rendering::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -32,10 +35,8 @@ impl DynamicRendering {
         (self.fp.cmd_end_rendering_khr)(command_buffer)
     }
 
-    pub const NAME: &'static CStr = vk::KhrDynamicRenderingFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrDynamicRenderingFn {
+    pub fn fp(&self) -> &vk::khr::dynamic_rendering::DeviceFn {
         &self.fp
     }
 }

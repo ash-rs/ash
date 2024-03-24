@@ -1,17 +1,50 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_sample_locations.html>
+
 use crate::vk;
-use crate::{Entry, Instance};
 use std::ffi::CStr;
 use std::mem;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_sample_locations.html>
+pub const NAME: &CStr = vk::ext::sample_locations::NAME;
+
+/// High-level device function wrapper
 #[derive(Clone)]
-pub struct SampleLocations {
-    fp: vk::ExtSampleLocationsFn,
+pub struct Device {
+    fp: vk::ext::sample_locations::DeviceFn,
 }
 
-impl SampleLocations {
-    pub fn new(entry: &Entry, instance: &Instance) -> Self {
-        let fp = vk::ExtSampleLocationsFn::load(|name| unsafe {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        let fp = vk::ext::sample_locations::DeviceFn::load(|name| unsafe {
+            mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
+        });
+        Self { fp }
+    }
+
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetSampleLocationsEXT.html>
+    #[inline]
+    pub unsafe fn cmd_set_sample_locations(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        sample_locations_info: &vk::SampleLocationsInfoEXT<'_>,
+    ) {
+        (self.fp.cmd_set_sample_locations_ext)(command_buffer, sample_locations_info)
+    }
+
+    #[inline]
+    pub fn fp(&self) -> &vk::ext::sample_locations::DeviceFn {
+        &self.fp
+    }
+}
+
+/// High-level instance function wrapper
+#[derive(Clone)]
+pub struct Instance {
+    fp: vk::ext::sample_locations::InstanceFn,
+}
+
+impl Instance {
+    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        let fp = vk::ext::sample_locations::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -32,20 +65,8 @@ impl SampleLocations {
         )
     }
 
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetSampleLocationsEXT.html>
     #[inline]
-    pub unsafe fn cmd_set_sample_locations(
-        &self,
-        command_buffer: vk::CommandBuffer,
-        sample_locations_info: &vk::SampleLocationsInfoEXT<'_>,
-    ) {
-        (self.fp.cmd_set_sample_locations_ext)(command_buffer, sample_locations_info)
-    }
-
-    pub const NAME: &'static CStr = vk::ExtSampleLocationsFn::NAME;
-
-    #[inline]
-    pub fn fp(&self) -> &vk::ExtSampleLocationsFn {
+    pub fn fp(&self) -> &vk::ext::sample_locations::InstanceFn {
         &self.fp
     }
 }

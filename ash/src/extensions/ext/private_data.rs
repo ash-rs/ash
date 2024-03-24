@@ -1,21 +1,23 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_private_data.html>
+
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_private_data.html>
+pub const NAME: &CStr = vk::ext::private_data::NAME;
+
 #[derive(Clone)]
-pub struct PrivateData {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::ExtPrivateDataFn,
+    fp: vk::ext::private_data::DeviceFn,
 }
 
-impl PrivateData {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::ExtPrivateDataFn::load(|name| unsafe {
+        let fp = vk::ext::private_data::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -88,10 +90,8 @@ impl PrivateData {
         data.assume_init()
     }
 
-    pub const NAME: &'static CStr = vk::ExtPrivateDataFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::ExtPrivateDataFn {
+    pub fn fp(&self) -> &vk::ext::private_data::DeviceFn {
         &self.fp
     }
 

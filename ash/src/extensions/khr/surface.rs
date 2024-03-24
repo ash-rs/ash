@@ -1,20 +1,23 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_surface.html>
+
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use crate::{Entry, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::khr::surface::NAME;
+
 #[derive(Clone)]
-pub struct Surface {
+pub struct Instance {
     handle: vk::Instance,
-    fp: vk::KhrSurfaceFn,
+    fp: vk::khr::surface::InstanceFn,
 }
 
-impl Surface {
-    pub fn new(entry: &Entry, instance: &Instance) -> Self {
+impl Instance {
+    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::KhrSurfaceFn::load(|name| unsafe {
+        let fp = vk::khr::surface::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -94,10 +97,8 @@ impl Surface {
         (self.fp.destroy_surface_khr)(self.handle, surface, allocation_callbacks.as_raw_ptr());
     }
 
-    pub const NAME: &'static CStr = vk::KhrSurfaceFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrSurfaceFn {
+    pub fn fp(&self) -> &vk::khr::surface::InstanceFn {
         &self.fp
     }
 

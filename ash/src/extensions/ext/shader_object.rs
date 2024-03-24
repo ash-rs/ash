@@ -1,22 +1,24 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_shader_object.html>
+
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 use std::ptr;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_shader_object.html>
+pub const NAME: &CStr = vk::ext::shader_object::NAME;
+
 #[derive(Clone)]
-pub struct ShaderObject {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::ExtShaderObjectFn,
+    fp: vk::ext::shader_object::DeviceFn,
 }
 
-impl ShaderObject {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::ExtShaderObjectFn::load(|name| unsafe {
+        let fp = vk::ext::shader_object::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -701,10 +703,8 @@ impl ShaderObject {
         (self.fp.cmd_set_coverage_reduction_mode_nv)(command_buffer, coverage_reduction_mode)
     }
 
-    pub const NAME: &'static CStr = vk::ExtShaderObjectFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::ExtShaderObjectFn {
+    pub fn fp(&self) -> &vk::ext::shader_object::DeviceFn {
         &self.fp
     }
 

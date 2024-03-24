@@ -1,22 +1,26 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_swapchain.html>
+
 #[cfg(doc)]
-use super::DeviceGroup;
+use super::device_group;
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::khr::swapchain::NAME;
+
+/// High-level device function wrapper
 #[derive(Clone)]
-pub struct Swapchain {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::KhrSwapchainFn,
+    fp: vk::khr::swapchain::DeviceFn,
 }
 
-impl Swapchain {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrSwapchainFn::load(|name| unsafe {
+        let fp = vk::khr::swapchain::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -106,7 +110,7 @@ impl Swapchain {
 
     /// Only available since [Vulkan 1.1].
     ///
-    /// Also available as [`DeviceGroup::get_device_group_present_capabilities()`]
+    /// Also available as [`device_group::Device::get_device_group_present_capabilities()`]
     /// when [`VK_KHR_surface`] is enabled.
     ///
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceGroupPresentCapabilitiesKHR.html>
@@ -127,7 +131,7 @@ impl Swapchain {
 
     /// Only available since [Vulkan 1.1].
     ///
-    /// Also available as [`DeviceGroup::get_device_group_surface_present_modes()`]
+    /// Also available as [`device_group::Device::get_device_group_surface_present_modes()`]
     /// when [`VK_KHR_surface`] is enabled.
     ///
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDeviceGroupSurfacePresentModesKHR.html>
@@ -148,9 +152,60 @@ impl Swapchain {
         .assume_init_on_success(modes)
     }
 
+    /// On success, returns the next image's index and whether the swapchain is suboptimal for the surface.
+    ///
     /// Only available since [Vulkan 1.1].
     ///
-    /// Also available as [`DeviceGroup::get_physical_device_present_rectangles()`]
+    /// Also available as [`device_group::Device::acquire_next_image2()`]
+    /// when [`VK_KHR_swapchain`] is enabled.
+    ///
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAcquireNextImage2KHR.html>
+    ///
+    /// [Vulkan 1.1]: https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_VERSION_1_1.html
+    /// [`VK_KHR_swapchain`]: https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_swapchain.html
+    #[inline]
+    pub unsafe fn acquire_next_image2(
+        &self,
+        acquire_info: &vk::AcquireNextImageInfoKHR<'_>,
+    ) -> VkResult<(u32, bool)> {
+        let mut index = mem::MaybeUninit::uninit();
+        let err_code =
+            (self.fp.acquire_next_image2_khr)(self.handle, acquire_info, index.as_mut_ptr());
+        match err_code {
+            vk::Result::SUCCESS => Ok((index.assume_init(), false)),
+            vk::Result::SUBOPTIMAL_KHR => Ok((index.assume_init(), true)),
+            _ => Err(err_code),
+        }
+    }
+
+    #[inline]
+    pub fn fp(&self) -> &vk::khr::swapchain::DeviceFn {
+        &self.fp
+    }
+
+    #[inline]
+    pub fn device(&self) -> vk::Device {
+        self.handle
+    }
+}
+
+/// High-level instance function wrapper
+#[derive(Clone)]
+pub struct Instance {
+    fp: vk::khr::swapchain::InstanceFn,
+}
+
+impl Instance {
+    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        let fp = vk::khr::swapchain::InstanceFn::load(|name| unsafe {
+            mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
+        });
+        Self { fp }
+    }
+
+    /// Only available since [Vulkan 1.1].
+    ///
+    /// Also available as [`device_group::Instance::get_physical_device_present_rectangles()`]
     /// when [`VK_KHR_surface`] is enabled.
     ///
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDevicePresentRectanglesKHR.html>
@@ -173,41 +228,8 @@ impl Swapchain {
         })
     }
 
-    /// On success, returns the next image's index and whether the swapchain is suboptimal for the surface.
-    ///
-    /// Only available since [Vulkan 1.1].
-    ///
-    /// Also available as [`DeviceGroup::acquire_next_image2()`]
-    /// when [`VK_KHR_swapchain`] is enabled.
-    ///
-    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAcquireNextImage2KHR.html>
-    ///
-    /// [Vulkan 1.1]: https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_VERSION_1_1.html
-    /// [`VK_KHR_swapchain`]: https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_swapchain.html
     #[inline]
-    pub unsafe fn acquire_next_image2(
-        &self,
-        acquire_info: &vk::AcquireNextImageInfoKHR<'_>,
-    ) -> VkResult<(u32, bool)> {
-        let mut index = mem::MaybeUninit::uninit();
-        let err_code =
-            (self.fp.acquire_next_image2_khr)(self.handle, acquire_info, index.as_mut_ptr());
-        match err_code {
-            vk::Result::SUCCESS => Ok((index.assume_init(), false)),
-            vk::Result::SUBOPTIMAL_KHR => Ok((index.assume_init(), true)),
-            _ => Err(err_code),
-        }
-    }
-
-    pub const NAME: &'static CStr = vk::KhrSwapchainFn::NAME;
-
-    #[inline]
-    pub fn fp(&self) -> &vk::KhrSwapchainFn {
+    pub fn fp(&self) -> &vk::khr::swapchain::InstanceFn {
         &self.fp
-    }
-
-    #[inline]
-    pub fn device(&self) -> vk::Device {
-        self.handle
     }
 }

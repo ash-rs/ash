@@ -1,21 +1,23 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_sampler_ycbcr_conversion.html>
+
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_sampler_ycbcr_conversion.html>
+pub const NAME: &CStr = vk::khr::sampler_ycbcr_conversion::NAME;
+
 #[derive(Clone)]
-pub struct SamplerYcbcrConversion {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::KhrSamplerYcbcrConversionFn,
+    fp: vk::khr::sampler_ycbcr_conversion::DeviceFn,
 }
 
-impl SamplerYcbcrConversion {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrSamplerYcbcrConversionFn::load(|name| unsafe {
+        let fp = vk::khr::sampler_ycbcr_conversion::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -52,10 +54,8 @@ impl SamplerYcbcrConversion {
         )
     }
 
-    pub const NAME: &'static CStr = vk::KhrSamplerYcbcrConversionFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrSamplerYcbcrConversionFn {
+    pub fn fp(&self) -> &vk::khr::sampler_ycbcr_conversion::DeviceFn {
         &self.fp
     }
 

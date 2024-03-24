@@ -1,20 +1,22 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_image_drm_format_modifier.html>
+
 use crate::prelude::*;
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_image_drm_format_modifier.html>
+pub const NAME: &CStr = vk::ext::image_drm_format_modifier::NAME;
+
 #[derive(Clone)]
-pub struct ImageDrmFormatModifier {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::ExtImageDrmFormatModifierFn,
+    fp: vk::ext::image_drm_format_modifier::DeviceFn,
 }
 
-impl ImageDrmFormatModifier {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::ExtImageDrmFormatModifierFn::load(|name| unsafe {
+        let fp = vk::ext::image_drm_format_modifier::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -31,10 +33,8 @@ impl ImageDrmFormatModifier {
             .result()
     }
 
-    pub const NAME: &'static CStr = vk::ExtImageDrmFormatModifierFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::ExtImageDrmFormatModifierFn {
+    pub fn fp(&self) -> &vk::ext::image_drm_format_modifier::DeviceFn {
         &self.fp
     }
 

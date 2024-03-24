@@ -1,21 +1,23 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_cuda_kernel_launch.html>
+
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_cuda_kernel_launch.html>
+pub const NAME: &CStr = vk::nv::cuda_kernel_launch::NAME;
+
 #[derive(Clone)]
-pub struct CudaKernelLaunch {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::NvCudaKernelLaunchFn,
+    fp: vk::nv::cuda_kernel_launch::DeviceFn,
 }
 
-impl CudaKernelLaunch {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::NvCudaKernelLaunchFn::load(|name| unsafe {
+        let fp = vk::nv::cuda_kernel_launch::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -93,10 +95,8 @@ impl CudaKernelLaunch {
         (self.fp.cmd_cuda_launch_kernel_nv)(command_buffer, launch_info)
     }
 
-    pub const NAME: &'static CStr = vk::NvCudaKernelLaunchFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::NvCudaKernelLaunchFn {
+    pub fn fp(&self) -> &vk::nv::cuda_kernel_launch::DeviceFn {
         &self.fp
     }
 

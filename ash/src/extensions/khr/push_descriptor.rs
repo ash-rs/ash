@@ -1,17 +1,20 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_push_descriptor.html>
+
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::c_void;
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::khr::push_descriptor::NAME;
+
 #[derive(Clone)]
-pub struct PushDescriptor {
-    fp: vk::KhrPushDescriptorFn,
+pub struct Device {
+    fp: vk::khr::push_descriptor::DeviceFn,
 }
 
-impl PushDescriptor {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
-        let fp = vk::KhrPushDescriptorFn::load(|name| unsafe {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        let fp = vk::khr::push_descriptor::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -56,10 +59,8 @@ impl PushDescriptor {
         );
     }
 
-    pub const NAME: &'static CStr = vk::KhrPushDescriptorFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrPushDescriptorFn {
+    pub fn fp(&self) -> &vk::khr::push_descriptor::DeviceFn {
         &self.fp
     }
 }

@@ -1,18 +1,21 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_buffer_device_address.html>
+
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::ext::buffer_device_address::NAME;
+
 #[derive(Clone)]
-pub struct BufferDeviceAddress {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::ExtBufferDeviceAddressFn,
+    fp: vk::ext::buffer_device_address::DeviceFn,
 }
 
-impl BufferDeviceAddress {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::ExtBufferDeviceAddressFn::load(|name| unsafe {
+        let fp = vk::ext::buffer_device_address::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -27,10 +30,8 @@ impl BufferDeviceAddress {
         (self.fp.get_buffer_device_address_ext)(self.handle, info)
     }
 
-    pub const NAME: &'static CStr = vk::ExtBufferDeviceAddressFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::ExtBufferDeviceAddressFn {
+    pub fn fp(&self) -> &vk::ext::buffer_device_address::DeviceFn {
         &self.fp
     }
 

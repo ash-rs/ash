@@ -1,16 +1,19 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_mesh_shader.html>
+
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::nv::mesh_shader::NAME;
+
 #[derive(Clone)]
-pub struct MeshShader {
-    fp: vk::NvMeshShaderFn,
+pub struct Device {
+    fp: vk::nv::mesh_shader::DeviceFn,
 }
 
-impl MeshShader {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
-        let fp = vk::NvMeshShaderFn::load(|name| unsafe {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        let fp = vk::nv::mesh_shader::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -69,10 +72,8 @@ impl MeshShader {
         );
     }
 
-    pub const NAME: &'static CStr = vk::NvMeshShaderFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::NvMeshShaderFn {
+    pub fn fp(&self) -> &vk::nv::mesh_shader::DeviceFn {
         &self.fp
     }
 }

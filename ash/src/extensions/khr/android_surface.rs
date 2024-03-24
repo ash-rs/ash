@@ -1,20 +1,23 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_android_surface.html>
+
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use crate::{Entry, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::khr::android_surface::NAME;
+
 #[derive(Clone)]
-pub struct AndroidSurface {
+pub struct Instance {
     handle: vk::Instance,
-    fp: vk::KhrAndroidSurfaceFn,
+    fp: vk::khr::android_surface::InstanceFn,
 }
 
-impl AndroidSurface {
-    pub fn new(entry: &Entry, instance: &Instance) -> Self {
+impl Instance {
+    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::KhrAndroidSurfaceFn::load(|name| unsafe {
+        let fp = vk::khr::android_surface::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -37,10 +40,8 @@ impl AndroidSurface {
         .assume_init_on_success(surface)
     }
 
-    pub const NAME: &'static CStr = vk::KhrAndroidSurfaceFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrAndroidSurfaceFn {
+    pub fn fp(&self) -> &vk::khr::android_surface::InstanceFn {
         &self.fp
     }
 

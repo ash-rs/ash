@@ -1,17 +1,20 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_synchronization2.html>
+
 use crate::prelude::*;
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::khr::synchronization2::NAME;
+
 #[derive(Clone)]
-pub struct Synchronization2 {
-    fp: vk::KhrSynchronization2Fn,
+pub struct Device {
+    fp: vk::khr::synchronization2::DeviceFn,
 }
 
-impl Synchronization2 {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
-        let fp = vk::KhrSynchronization2Fn::load(|name| unsafe {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        let fp = vk::khr::synchronization2::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -89,10 +92,8 @@ impl Synchronization2 {
         (self.fp.queue_submit2_khr)(queue, submits.len() as u32, submits.as_ptr(), fence).result()
     }
 
-    pub const NAME: &'static CStr = vk::KhrSynchronization2Fn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrSynchronization2Fn {
+    pub fn fp(&self) -> &vk::khr::synchronization2::DeviceFn {
         &self.fp
     }
 }

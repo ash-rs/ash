@@ -1,19 +1,21 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_cooperative_matrix.html>
+
 use crate::prelude::*;
 use crate::vk;
-use crate::{Entry, Instance};
 use std::ffi::CStr;
 use std::mem;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_cooperative_matrix.html>
+pub const NAME: &CStr = vk::khr::cooperative_matrix::NAME;
+
 #[derive(Clone)]
-pub struct CooperativeMatrix {
-    fp: vk::KhrCooperativeMatrixFn,
+pub struct Instance {
+    fp: vk::khr::cooperative_matrix::InstanceFn,
 }
 
-impl CooperativeMatrix {
-    pub fn new(entry: &Entry, instance: &Instance) -> Self {
+impl Instance {
+    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::KhrCooperativeMatrixFn::load(|name| unsafe {
+        let fp = vk::khr::cooperative_matrix::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { fp }
@@ -36,10 +38,8 @@ impl CooperativeMatrix {
         })
     }
 
-    pub const NAME: &'static CStr = vk::KhrCooperativeMatrixFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrCooperativeMatrixFn {
+    pub fn fp(&self) -> &vk::khr::cooperative_matrix::InstanceFn {
         &self.fp
     }
 }

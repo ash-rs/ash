@@ -1,21 +1,23 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_acceleration_structure.html>
+
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_acceleration_structure.html>
+pub const NAME: &CStr = vk::khr::acceleration_structure::NAME;
+
 #[derive(Clone)]
-pub struct AccelerationStructure {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::KhrAccelerationStructureFn,
+    fp: vk::khr::acceleration_structure::DeviceFn,
 }
 
-impl AccelerationStructure {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrAccelerationStructureFn::load(|name| unsafe {
+        let fp = vk::khr::acceleration_structure::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -288,10 +290,8 @@ impl AccelerationStructure {
         )
     }
 
-    pub const NAME: &'static CStr = vk::KhrAccelerationStructureFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrAccelerationStructureFn {
+    pub fn fp(&self) -> &vk::khr::acceleration_structure::DeviceFn {
         &self.fp
     }
 

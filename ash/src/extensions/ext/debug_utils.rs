@@ -1,20 +1,24 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_debug_utils.html>
+
 use crate::prelude::*;
 use crate::{vk, RawPtr};
-use crate::{Entry, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::ext::debug_utils::NAME;
+
+/// High-level device function wrapper
 #[derive(Clone)]
-pub struct DebugUtils {
-    handle: vk::Instance,
-    fp: vk::ExtDebugUtilsFn,
+pub struct Device {
+    handle: vk::Device,
+    fp: vk::ext::debug_utils::DeviceFn,
 }
 
-impl DebugUtils {
-    pub fn new(entry: &Entry, instance: &Instance) -> Self {
-        let handle = instance.handle();
-        let fp = vk::ExtDebugUtilsFn::load(|name| unsafe {
-            mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        let handle = device.handle();
+        let fp = vk::ext::debug_utils::DeviceFn::load(|name| unsafe {
+            mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
     }
@@ -23,20 +27,18 @@ impl DebugUtils {
     #[inline]
     pub unsafe fn set_debug_utils_object_name(
         &self,
-        device: vk::Device,
         name_info: &vk::DebugUtilsObjectNameInfoEXT<'_>,
     ) -> VkResult<()> {
-        (self.fp.set_debug_utils_object_name_ext)(device, name_info).result()
+        (self.fp.set_debug_utils_object_name_ext)(self.handle, name_info).result()
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSetDebugUtilsObjectTagEXT.html>
     #[inline]
     pub unsafe fn set_debug_utils_object_tag(
         &self,
-        device: vk::Device,
         tag_info: &vk::DebugUtilsObjectTagInfoEXT<'_>,
     ) -> VkResult<()> {
-        (self.fp.set_debug_utils_object_tag_ext)(device, tag_info).result()
+        (self.fp.set_debug_utils_object_tag_ext)(self.handle, tag_info).result()
     }
 
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBeginDebugUtilsLabelEXT.html>
@@ -91,6 +93,33 @@ impl DebugUtils {
         (self.fp.queue_insert_debug_utils_label_ext)(queue, label);
     }
 
+    #[inline]
+    pub fn fp(&self) -> &vk::ext::debug_utils::DeviceFn {
+        &self.fp
+    }
+
+    #[inline]
+    pub fn device(&self) -> vk::Device {
+        self.handle
+    }
+}
+
+/// High-level instance function wrapper
+#[derive(Clone)]
+pub struct Instance {
+    handle: vk::Instance,
+    fp: vk::ext::debug_utils::InstanceFn,
+}
+
+impl Instance {
+    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+        let handle = instance.handle();
+        let fp = vk::ext::debug_utils::InstanceFn::load(|name| unsafe {
+            mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+        });
+        Self { handle, fp }
+    }
+
     /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateDebugUtilsMessengerEXT.html>
     #[inline]
     pub unsafe fn create_debug_utils_messenger(
@@ -134,10 +163,8 @@ impl DebugUtils {
         );
     }
 
-    pub const NAME: &'static CStr = vk::ExtDebugUtilsFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::ExtDebugUtilsFn {
+    pub fn fp(&self) -> &vk::ext::debug_utils::InstanceFn {
         &self.fp
     }
 

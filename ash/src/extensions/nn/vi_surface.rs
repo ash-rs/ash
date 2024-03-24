@@ -1,20 +1,23 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NN_vi_surface.html>
+
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use crate::{Entry, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::nn::vi_surface::NAME;
+
 #[derive(Clone)]
-pub struct ViSurface {
+pub struct Instance {
     handle: vk::Instance,
-    fp: vk::NnViSurfaceFn,
+    fp: vk::nn::vi_surface::InstanceFn,
 }
 
-impl ViSurface {
-    pub fn new(entry: &Entry, instance: &Instance) -> Self {
+impl Instance {
+    pub fn new(entry: &crate::Entry, instance: &crate::Instance) -> Self {
         let handle = instance.handle();
-        let fp = vk::NnViSurfaceFn::load(|name| unsafe {
+        let fp = vk::nn::vi_surface::InstanceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -37,10 +40,8 @@ impl ViSurface {
         .assume_init_on_success(surface)
     }
 
-    pub const NAME: &'static CStr = vk::NnViSurfaceFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::NnViSurfaceFn {
+    pub fn fp(&self) -> &vk::nn::vi_surface::InstanceFn {
         &self.fp
     }
 

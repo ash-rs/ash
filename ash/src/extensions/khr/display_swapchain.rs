@@ -1,20 +1,23 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_display_swapchain.html>
+
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::khr::display_swapchain::NAME;
+
 #[derive(Clone)]
-pub struct DisplaySwapchain {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::KhrDisplaySwapchainFn,
+    fp: vk::khr::display_swapchain::DeviceFn,
 }
 
-impl DisplaySwapchain {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrDisplaySwapchainFn::load(|name| unsafe {
+        let fp = vk::khr::display_swapchain::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -38,10 +41,8 @@ impl DisplaySwapchain {
         .set_vec_len_on_success(swapchains, create_infos.len())
     }
 
-    pub const NAME: &'static CStr = vk::KhrDisplaySwapchainFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrDisplaySwapchainFn {
+    pub fn fp(&self) -> &vk::khr::display_swapchain::DeviceFn {
         &self.fp
     }
 

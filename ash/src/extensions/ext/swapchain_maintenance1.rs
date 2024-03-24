@@ -1,20 +1,22 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_swapchain_maintenance1.html>
+
 use crate::prelude::*;
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_swapchain_maintenance1.html>
+pub const NAME: &CStr = vk::ext::swapchain_maintenance1::NAME;
+
 #[derive(Clone)]
-pub struct SwapchainMaintenance1 {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::ExtSwapchainMaintenance1Fn,
+    fp: vk::ext::swapchain_maintenance1::DeviceFn,
 }
 
-impl SwapchainMaintenance1 {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::ExtSwapchainMaintenance1Fn::load(|name| unsafe {
+        let fp = vk::ext::swapchain_maintenance1::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -29,10 +31,8 @@ impl SwapchainMaintenance1 {
         (self.fp.release_swapchain_images_ext)(self.handle, release_info).result()
     }
 
-    pub const NAME: &'static CStr = vk::ExtSwapchainMaintenance1Fn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::ExtSwapchainMaintenance1Fn {
+    pub fn fp(&self) -> &vk::ext::swapchain_maintenance1::DeviceFn {
         &self.fp
     }
 

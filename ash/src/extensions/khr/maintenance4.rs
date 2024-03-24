@@ -1,20 +1,22 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_maintenance4.html>
+
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 use std::ptr;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_maintenance4.html>
+pub const NAME: &CStr = vk::khr::maintenance4::NAME;
+
 #[derive(Clone)]
-pub struct Maintenance4 {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::KhrMaintenance4Fn,
+    fp: vk::khr::maintenance4::DeviceFn,
 }
 
-impl Maintenance4 {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrMaintenance4Fn::load(|name| unsafe {
+        let fp = vk::khr::maintenance4::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -76,10 +78,8 @@ impl Maintenance4 {
         assert_eq!(count as usize, out.len());
     }
 
-    pub const NAME: &'static CStr = vk::KhrMaintenance4Fn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrMaintenance4Fn {
+    pub fn fp(&self) -> &vk::khr::maintenance4::DeviceFn {
         &self.fp
     }
 

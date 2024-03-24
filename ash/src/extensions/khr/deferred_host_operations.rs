@@ -1,20 +1,23 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_deferred_host_operations.html>
+
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::khr::deferred_host_operations::NAME;
+
 #[derive(Clone)]
-pub struct DeferredHostOperations {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::KhrDeferredHostOperationsFn,
+    fp: vk::khr::deferred_host_operations::DeviceFn,
 }
 
-impl DeferredHostOperations {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrDeferredHostOperationsFn::load(|name| unsafe {
+        let fp = vk::khr::deferred_host_operations::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -76,10 +79,8 @@ impl DeferredHostOperations {
         (self.fp.get_deferred_operation_result_khr)(self.handle, operation).result()
     }
 
-    pub const NAME: &'static CStr = vk::KhrDeferredHostOperationsFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrDeferredHostOperationsFn {
+    pub fn fp(&self) -> &vk::khr::deferred_host_operations::DeviceFn {
         &self.fp
     }
 

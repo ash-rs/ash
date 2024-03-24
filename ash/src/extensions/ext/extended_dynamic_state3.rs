@@ -1,17 +1,19 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_extended_dynamic_state3.html>
+
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_extended_dynamic_state3.html>
+pub const NAME: &CStr = vk::ext::extended_dynamic_state3::NAME;
+
 #[derive(Clone)]
-pub struct ExtendedDynamicState3 {
-    fp: vk::ExtExtendedDynamicState3Fn,
+pub struct Device {
+    fp: vk::ext::extended_dynamic_state3::DeviceFn,
 }
 
-impl ExtendedDynamicState3 {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
-        let fp = vk::ExtExtendedDynamicState3Fn::load(|name| unsafe {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+        let fp = vk::ext::extended_dynamic_state3::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         Self { fp }
@@ -396,11 +398,8 @@ impl ExtendedDynamicState3 {
     ) {
         (self.fp.cmd_set_coverage_reduction_mode_nv)(command_buffer, coverage_reduction_mode)
     }
-
-    pub const NAME: &'static CStr = vk::ExtExtendedDynamicState3Fn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::ExtExtendedDynamicState3Fn {
+    pub fn fp(&self) -> &vk::ext::extended_dynamic_state3::DeviceFn {
         &self.fp
     }
 }

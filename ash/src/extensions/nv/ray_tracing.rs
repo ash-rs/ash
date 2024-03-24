@@ -1,20 +1,23 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_ray_tracing.html>
+
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::nv::ray_tracing::NAME;
+
 #[derive(Clone)]
-pub struct RayTracing {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::NvRayTracingFn,
+    fp: vk::nv::ray_tracing::DeviceFn,
 }
 
-impl RayTracing {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::NvRayTracingFn::load(|name| unsafe {
+        let fp = vk::nv::ray_tracing::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -240,10 +243,8 @@ impl RayTracing {
         (self.fp.compile_deferred_nv)(self.handle, pipeline, shader).result()
     }
 
-    pub const NAME: &'static CStr = vk::NvRayTracingFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::NvRayTracingFn {
+    pub fn fp(&self) -> &vk::nv::ray_tracing::DeviceFn {
         &self.fp
     }
 

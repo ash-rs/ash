@@ -1,19 +1,22 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_debug_marker.html>
+
 use crate::prelude::*;
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::ext::debug_marker::NAME;
+
 #[derive(Clone)]
-pub struct DebugMarker {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::ExtDebugMarkerFn,
+    fp: vk::ext::debug_marker::DeviceFn,
 }
 
-impl DebugMarker {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::ExtDebugMarkerFn::load(|name| unsafe {
+        let fp = vk::ext::debug_marker::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -54,10 +57,8 @@ impl DebugMarker {
         (self.fp.cmd_debug_marker_insert_ext)(command_buffer, marker_info);
     }
 
-    pub const NAME: &'static CStr = vk::ExtDebugMarkerFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::ExtDebugMarkerFn {
+    pub fn fp(&self) -> &vk::ext::debug_marker::DeviceFn {
         &self.fp
     }
 

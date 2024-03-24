@@ -1,20 +1,22 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_external_memory_fd.html>
+
 use crate::prelude::*;
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_external_memory_fd.html>
+pub const NAME: &CStr = vk::khr::external_memory_fd::NAME;
+
 #[derive(Clone)]
-pub struct ExternalMemoryFd {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::KhrExternalMemoryFdFn,
+    fp: vk::khr::external_memory_fd::DeviceFn,
 }
 
-impl ExternalMemoryFd {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrExternalMemoryFdFn::load(|name| unsafe {
+        let fp = vk::khr::external_memory_fd::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -40,10 +42,8 @@ impl ExternalMemoryFd {
             .result()
     }
 
-    pub const NAME: &'static CStr = vk::KhrExternalMemoryFdFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrExternalMemoryFdFn {
+    pub fn fp(&self) -> &vk::khr::external_memory_fd::DeviceFn {
         &self.fp
     }
 

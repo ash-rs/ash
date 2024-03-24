@@ -1,20 +1,23 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_ray_tracing_pipeline.html>
+
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
+pub const NAME: &CStr = vk::khr::ray_tracing_pipeline::NAME;
+
 #[derive(Clone)]
-pub struct RayTracingPipeline {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::KhrRayTracingPipelineFn,
+    fp: vk::khr::ray_tracing_pipeline::DeviceFn,
 }
 
-impl RayTracingPipeline {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::KhrRayTracingPipelineFn::load(|name| unsafe {
+        let fp = vk::khr::ray_tracing_pipeline::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -160,10 +163,8 @@ impl RayTracingPipeline {
         (self.fp.cmd_set_ray_tracing_pipeline_stack_size_khr)(command_buffer, pipeline_stack_size);
     }
 
-    pub const NAME: &'static CStr = vk::KhrRayTracingPipelineFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::KhrRayTracingPipelineFn {
+    pub fn fp(&self) -> &vk::khr::ray_tracing_pipeline::DeviceFn {
         &self.fp
     }
 

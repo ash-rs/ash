@@ -8,8 +8,8 @@
 )]
 
 use ash::extensions::{
-    ext::DebugUtils,
-    khr::{Surface, Swapchain},
+    ext::debug_utils,
+    khr::{surface, swapchain},
 };
 use ash::{vk, Entry};
 pub use ash::{Device, Instance};
@@ -22,9 +22,7 @@ use std::ops::Drop;
 use std::os::raw::c_char;
 
 #[cfg(any(target_os = "macos", target_os = "ios"))]
-use ash::vk::{
-    KhrGetPhysicalDeviceProperties2Fn, KhrPortabilityEnumerationFn, KhrPortabilitySubsetFn,
-};
+use ash::vk::khr;
 
 use winit::{
     event::{ElementState, Event, KeyboardInput, VirtualKeyCode, WindowEvent},
@@ -146,9 +144,9 @@ pub struct ExampleBase {
     pub entry: Entry,
     pub instance: Instance,
     pub device: Device,
-    pub surface_loader: Surface,
-    pub swapchain_loader: Swapchain,
-    pub debug_utils_loader: DebugUtils,
+    pub surface_loader: surface::Instance,
+    pub swapchain_loader: swapchain::Device,
+    pub debug_utils_loader: debug_utils::Instance,
     pub window: winit::window::Window,
     pub event_loop: RefCell<EventLoop<()>>,
     pub debug_call_back: vk::DebugUtilsMessengerEXT,
@@ -234,13 +232,13 @@ impl ExampleBase {
                 ash_window::enumerate_required_extensions(window.raw_display_handle())
                     .unwrap()
                     .to_vec();
-            extension_names.push(DebugUtils::NAME.as_ptr());
+            extension_names.push(debug_utils::NAME.as_ptr());
 
             #[cfg(any(target_os = "macos", target_os = "ios"))]
             {
-                extension_names.push(KhrPortabilityEnumerationFn::NAME.as_ptr());
+                extension_names.push(khr::portability_enumeration::NAME.as_ptr());
                 // Enabling this extension is a requirement when using `VK_KHR_portability_subset`
-                extension_names.push(KhrGetPhysicalDeviceProperties2Fn::NAME.as_ptr());
+                extension_names.push(khr::get_physical_device_properties2::NAME.as_ptr());
             }
 
             let appinfo = vk::ApplicationInfo::default()
@@ -279,7 +277,7 @@ impl ExampleBase {
                 )
                 .pfn_user_callback(Some(vulkan_debug_callback));
 
-            let debug_utils_loader = DebugUtils::new(&entry, &instance);
+            let debug_utils_loader = debug_utils::Instance::new(&entry, &instance);
             let debug_call_back = debug_utils_loader
                 .create_debug_utils_messenger(&debug_info, None)
                 .unwrap();
@@ -294,7 +292,7 @@ impl ExampleBase {
             let pdevices = instance
                 .enumerate_physical_devices()
                 .expect("Physical device error");
-            let surface_loader = Surface::new(&entry, &instance);
+            let surface_loader = surface::Instance::new(&entry, &instance);
             let (pdevice, queue_family_index) = pdevices
                 .iter()
                 .find_map(|pdevice| {
@@ -322,9 +320,9 @@ impl ExampleBase {
                 .expect("Couldn't find suitable device.");
             let queue_family_index = queue_family_index as u32;
             let device_extension_names_raw = [
-                Swapchain::NAME.as_ptr(),
+                swapchain::NAME.as_ptr(),
                 #[cfg(any(target_os = "macos", target_os = "ios"))]
-                KhrPortabilitySubsetFn::NAME.as_ptr(),
+                khr::portability_subset::NAME.as_ptr(),
             ];
             let features = vk::PhysicalDeviceFeatures {
                 shader_clip_distance: 1,
@@ -383,7 +381,7 @@ impl ExampleBase {
                 .cloned()
                 .find(|&mode| mode == vk::PresentModeKHR::MAILBOX)
                 .unwrap_or(vk::PresentModeKHR::FIFO);
-            let swapchain_loader = Swapchain::new(&instance, &device);
+            let swapchain_loader = swapchain::Device::new(&instance, &device);
 
             let swapchain_create_info = vk::SwapchainCreateInfoKHR::default()
                 .surface(surface)

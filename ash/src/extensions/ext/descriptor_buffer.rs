@@ -1,20 +1,22 @@
+//! <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_descriptor_buffer.html>
+
 use crate::prelude::*;
 use crate::vk;
-use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
-/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_descriptor_buffer.html>
+pub const NAME: &CStr = vk::ext::descriptor_buffer::NAME;
+
 #[derive(Clone)]
-pub struct DescriptorBuffer {
+pub struct Device {
     handle: vk::Device,
-    fp: vk::ExtDescriptorBufferFn,
+    fp: vk::ext::descriptor_buffer::DeviceFn,
 }
 
-impl DescriptorBuffer {
-    pub fn new(instance: &Instance, device: &Device) -> Self {
+impl Device {
+    pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
         let handle = device.handle();
-        let fp = vk::ExtDescriptorBufferFn::load(|name| unsafe {
+        let fp = vk::ext::descriptor_buffer::DeviceFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
         });
         Self { handle, fp }
@@ -194,10 +196,8 @@ impl DescriptorBuffer {
         .result()
     }
 
-    pub const NAME: &'static CStr = vk::ExtDescriptorBufferFn::NAME;
-
     #[inline]
-    pub fn fp(&self) -> &vk::ExtDescriptorBufferFn {
+    pub fn fp(&self) -> &vk::ext::descriptor_buffer::DeviceFn {
         &self.fp
     }
 
