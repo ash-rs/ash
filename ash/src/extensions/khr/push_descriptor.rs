@@ -1,7 +1,6 @@
 use crate::vk;
 use crate::{Device, Instance};
-use core::ffi::c_void;
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 #[derive(Clone)]
@@ -45,7 +44,7 @@ impl PushDescriptor {
         descriptor_update_template: vk::DescriptorUpdateTemplate,
         layout: vk::PipelineLayout,
         set: u32,
-        p_data: *const c_void,
+        p_data: *const ffi::c_void,
     ) {
         (self.fp.cmd_push_descriptor_set_with_template_khr)(
             command_buffer,
@@ -56,7 +55,7 @@ impl PushDescriptor {
         );
     }
 
-    pub const NAME: &'static CStr = vk::KhrPushDescriptorFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::KhrPushDescriptorFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrPushDescriptorFn {

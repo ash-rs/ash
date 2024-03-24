@@ -5,7 +5,7 @@ use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
 use alloc::vec::Vec;
-use core::ffi::c_char;
+use core::ffi;
 use core::mem;
 use core::ptr;
 
@@ -21,7 +21,7 @@ pub struct Instance {
 
 impl Instance {
     pub unsafe fn load(static_fn: &vk::StaticFn, instance: vk::Instance) -> Self {
-        let load_fn = |name: &core::ffi::CStr| {
+        let load_fn = |name: &ffi::CStr| {
             mem::transmute((static_fn.get_instance_proc_addr)(instance, name.as_ptr()))
         };
 
@@ -375,7 +375,7 @@ impl Instance {
     pub unsafe fn get_device_proc_addr(
         &self,
         device: vk::Device,
-        p_name: *const c_char,
+        p_name: *const ffi::c_char,
     ) -> vk::PFN_vkVoidFunction {
         (self.instance_fn_1_0.get_device_proc_addr)(device, p_name)
     }

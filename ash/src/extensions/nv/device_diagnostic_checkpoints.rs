@@ -1,7 +1,6 @@
 use crate::vk;
 use crate::{Device, Instance};
-use core::ffi::c_void;
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 use core::ptr;
 
@@ -24,7 +23,7 @@ impl DeviceDiagnosticCheckpoints {
     pub unsafe fn cmd_set_checkpoint(
         &self,
         command_buffer: vk::CommandBuffer,
-        p_checkpoint_marker: *const c_void,
+        p_checkpoint_marker: *const ffi::c_void,
     ) {
         (self.fp.cmd_set_checkpoint_nv)(command_buffer, p_checkpoint_marker);
     }
@@ -52,7 +51,7 @@ impl DeviceDiagnosticCheckpoints {
         assert_eq!(count as usize, out.len());
     }
 
-    pub const NAME: &'static CStr = vk::NvDeviceDiagnosticCheckpointsFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::NvDeviceDiagnosticCheckpointsFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::NvDeviceDiagnosticCheckpointsFn {

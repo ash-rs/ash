@@ -352,7 +352,7 @@ impl fmt::Display for MissingEntryPoint {
         write!(f, "Cannot load `vkGetInstanceProcAddr` symbol from library")
     }
 }
-#[cfg(feature = "std")]
+#[cfg(feature = "std")] // TODO: implement when error_in_core is stabilized
 impl std::error::Error for MissingEntryPoint {}
 
 #[cfg(feature = "linked")]
