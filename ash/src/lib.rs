@@ -52,8 +52,6 @@
 //! * **linked**: Link the Vulkan loader at compile time.
 //! * **std** (default): Whether ash depends on the standard library (otherwise alloc is required)
 
-#[cfg_attr(feature = "std", allow(unused_extern_crates))]
-#[macro_use]
 extern crate alloc;
 
 pub use crate::device::Device;

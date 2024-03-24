@@ -89,8 +89,7 @@ where
     loop {
         let mut count = N::default();
         f(&mut count, ptr::null_mut()).result()?;
-        let mut data =
-            vec![Default::default(); count.try_into().expect("`N` failed to convert to `usize`")];
+        let mut data = alloc::vec![Default::default(); count.try_into().expect("`N` failed to convert to `usize`")];
 
         let err_code = f(&mut count, data.as_mut_ptr());
         if err_code != vk::Result::INCOMPLETE {
