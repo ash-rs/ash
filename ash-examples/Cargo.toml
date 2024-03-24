@@ -6,7 +6,7 @@ edition = "2021"
 publish = false
 
 [dependencies]
-image = "0.24"
+image = "0.25"
 winit = { version = "0.29", features = ["rwh_06"] }
 # The examples require the validation layers, which means the SDK or
 # equivalent development packages should be present, so we can link
