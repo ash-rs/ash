@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::{Entry, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 use core::ptr;
 
@@ -60,7 +60,7 @@ impl CoverageReductionMode {
         Ok(())
     }
 
-    pub const NAME: &'static CStr = vk::NvCoverageReductionModeFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::NvCoverageReductionModeFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::NvCoverageReductionModeFn {

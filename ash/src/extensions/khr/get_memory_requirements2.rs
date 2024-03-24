@@ -1,6 +1,6 @@
 use crate::vk;
 use crate::{Device, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 use core::ptr;
 
@@ -75,7 +75,7 @@ impl GetMemoryRequirements2 {
         assert_eq!(count as usize, out.len());
     }
 
-    pub const NAME: &'static CStr = vk::KhrGetMemoryRequirements2Fn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::KhrGetMemoryRequirements2Fn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrGetMemoryRequirements2Fn {

@@ -3,9 +3,7 @@ use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
 use alloc::vec::Vec;
-use core::ffi::c_char;
-use core::ffi::c_void;
-use core::ffi::CStr;
+use core::ffi;
 use core::fmt;
 use core::mem;
 use core::ptr;
@@ -159,7 +157,7 @@ impl Entry {
     /// `static_fn` must contain valid function pointers that comply with the semantics specified
     /// by Vulkan 1.0, which must remain valid for at least the lifetime of the returned [`Entry`].
     pub unsafe fn from_static_fn(static_fn: vk::StaticFn) -> Self {
-        let load_fn = move |name: &CStr| {
+        let load_fn = move |name: &ffi::CStr| {
             mem::transmute((static_fn.get_instance_proc_addr)(
                 vk::Instance::null(),
                 name.as_ptr(),
@@ -221,7 +219,7 @@ impl Entry {
     #[inline]
     pub unsafe fn try_enumerate_instance_version(&self) -> VkResult<Option<u32>> {
         let enumerate_instance_version: Option<vk::PFN_vkEnumerateInstanceVersion> = {
-            let name = CStr::from_bytes_with_nul_unchecked(b"vkEnumerateInstanceVersion\0");
+            let name = ffi::CStr::from_bytes_with_nul_unchecked(b"vkEnumerateInstanceVersion\0");
             mem::transmute((self.static_fn.get_instance_proc_addr)(
                 vk::Instance::null(),
                 name.as_ptr(),
@@ -276,7 +274,7 @@ impl Entry {
     #[inline]
     pub unsafe fn enumerate_instance_extension_properties(
         &self,
-        layer_name: Option<&CStr>,
+        layer_name: Option<&ffi::CStr>,
     ) -> VkResult<Vec<vk::ExtensionProperties>> {
         read_into_uninitialized_vector(|count, data| {
             (self.entry_fn_1_0.enumerate_instance_extension_properties)(
@@ -292,7 +290,7 @@ impl Entry {
     pub unsafe fn get_instance_proc_addr(
         &self,
         instance: vk::Instance,
-        p_name: *const c_char,
+        p_name: *const ffi::c_char,
     ) -> vk::PFN_vkVoidFunction {
         (self.static_fn.get_instance_proc_addr)(instance, p_name)
     }
@@ -329,11 +327,11 @@ impl Default for Entry {
 impl vk::StaticFn {
     pub fn load_checked<F>(mut _f: F) -> Result<Self, MissingEntryPoint>
     where
-        F: FnMut(&CStr) -> *const c_void,
+        F: FnMut(&ffi::CStr) -> *const ffi::c_void,
     {
         Ok(Self {
             get_instance_proc_addr: unsafe {
-                let cname = CStr::from_bytes_with_nul_unchecked(b"vkGetInstanceProcAddr\0");
+                let cname = ffi::CStr::from_bytes_with_nul_unchecked(b"vkGetInstanceProcAddr\0");
                 let val = _f(cname);
                 if val.is_null() {
                     return Err(MissingEntryPoint);
@@ -357,8 +355,10 @@ impl std::error::Error for MissingEntryPoint {}
 
 #[cfg(feature = "linked")]
 extern "system" {
-    fn vkGetInstanceProcAddr(instance: vk::Instance, name: *const c_char)
-        -> vk::PFN_vkVoidFunction;
+    fn vkGetInstanceProcAddr(
+        instance: vk::Instance,
+        name: *const ffi::c_char,
+    ) -> vk::PFN_vkVoidFunction;
 }
 
 #[cfg(feature = "loaded")]

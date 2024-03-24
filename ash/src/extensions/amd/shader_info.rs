@@ -2,7 +2,7 @@ use crate::prelude::*;
 use crate::vk;
 use crate::{Device, Instance};
 use alloc::vec::Vec;
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_AMD_shader_info.html>
@@ -65,7 +65,7 @@ impl ShaderInfo {
         }
     }
 
-    pub const NAME: &'static CStr = vk::AmdShaderInfoFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::AmdShaderInfoFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::AmdShaderInfoFn {

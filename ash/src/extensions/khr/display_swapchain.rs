@@ -3,7 +3,7 @@ use crate::vk;
 use crate::RawPtr;
 use crate::{Device, Instance};
 use alloc::vec::Vec;
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 #[derive(Clone)]
@@ -39,7 +39,7 @@ impl DisplaySwapchain {
         .set_vec_len_on_success(swapchains, create_infos.len())
     }
 
-    pub const NAME: &'static CStr = vk::KhrDisplaySwapchainFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::KhrDisplaySwapchainFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrDisplaySwapchainFn {

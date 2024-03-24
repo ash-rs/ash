@@ -3,7 +3,7 @@ use crate::vk;
 use crate::RawPtr;
 use crate::{Device, Instance};
 use alloc::vec::Vec;
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_acceleration_structure.html>
@@ -289,7 +289,7 @@ impl AccelerationStructure {
         )
     }
 
-    pub const NAME: &'static CStr = vk::KhrAccelerationStructureFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::KhrAccelerationStructureFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrAccelerationStructureFn {

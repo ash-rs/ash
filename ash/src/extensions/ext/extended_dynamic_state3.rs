@@ -1,6 +1,6 @@
 use crate::vk;
 use crate::{Device, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_extended_dynamic_state3.html>
@@ -397,7 +397,7 @@ impl ExtendedDynamicState3 {
         (self.fp.cmd_set_coverage_reduction_mode_nv)(command_buffer, coverage_reduction_mode)
     }
 
-    pub const NAME: &'static CStr = vk::ExtExtendedDynamicState3Fn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::ExtExtendedDynamicState3Fn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ExtExtendedDynamicState3Fn {

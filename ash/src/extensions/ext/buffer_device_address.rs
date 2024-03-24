@@ -1,6 +1,6 @@
 use crate::vk;
 use crate::{Device, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 #[derive(Clone)]
@@ -27,7 +27,7 @@ impl BufferDeviceAddress {
         (self.fp.get_buffer_device_address_ext)(self.handle, info)
     }
 
-    pub const NAME: &'static CStr = vk::ExtBufferDeviceAddressFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::ExtBufferDeviceAddressFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ExtBufferDeviceAddressFn {

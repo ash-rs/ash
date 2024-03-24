@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::{Device, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_image_drm_format_modifier.html>
@@ -31,7 +31,7 @@ impl ImageDrmFormatModifier {
             .result()
     }
 
-    pub const NAME: &'static CStr = vk::ExtImageDrmFormatModifierFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::ExtImageDrmFormatModifierFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ExtImageDrmFormatModifierFn {

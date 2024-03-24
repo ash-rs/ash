@@ -2,7 +2,7 @@ use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
 use crate::{Device, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 #[derive(Clone)]
@@ -76,7 +76,7 @@ impl DeferredHostOperations {
         (self.fp.get_deferred_operation_result_khr)(self.handle, operation).result()
     }
 
-    pub const NAME: &'static CStr = vk::KhrDeferredHostOperationsFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::KhrDeferredHostOperationsFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrDeferredHostOperationsFn {

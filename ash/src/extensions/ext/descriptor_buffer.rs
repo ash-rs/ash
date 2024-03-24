@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::{Device, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_descriptor_buffer.html>
@@ -194,7 +194,7 @@ impl DescriptorBuffer {
         .result()
     }
 
-    pub const NAME: &'static CStr = vk::ExtDescriptorBufferFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::ExtDescriptorBufferFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ExtDescriptorBufferFn {

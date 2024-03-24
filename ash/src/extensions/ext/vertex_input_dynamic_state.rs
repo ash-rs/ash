@@ -1,6 +1,6 @@
 use crate::vk;
 use crate::{Device, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_vertex_input_dynamic_state.html>
@@ -34,7 +34,7 @@ impl VertexInputDynamicState {
         )
     }
 
-    pub const NAME: &'static CStr = vk::ExtVertexInputDynamicStateFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::ExtVertexInputDynamicStateFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ExtVertexInputDynamicStateFn {

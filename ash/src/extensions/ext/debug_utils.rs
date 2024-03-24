@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::{vk, RawPtr};
 use crate::{Entry, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 #[derive(Clone)]
@@ -134,7 +134,7 @@ impl DebugUtils {
         );
     }
 
-    pub const NAME: &'static CStr = vk::ExtDebugUtilsFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::ExtDebugUtilsFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ExtDebugUtilsFn {

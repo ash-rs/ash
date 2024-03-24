@@ -2,7 +2,7 @@ use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
 use crate::{Entry, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 #[derive(Clone)]
@@ -51,7 +51,7 @@ impl DebugReport {
         .assume_init_on_success(debug_cb)
     }
 
-    pub const NAME: &'static CStr = vk::ExtDebugReportFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::ExtDebugReportFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ExtDebugReportFn {

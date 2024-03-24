@@ -2,7 +2,7 @@
 use super::super::ext::{HostImageCopy, ImageCompressionControl};
 use crate::vk;
 use crate::{Device, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_maintenance5.html>
@@ -79,7 +79,7 @@ impl Maintenance5 {
         (self.fp.get_image_subresource_layout2_khr)(self.handle, image, subresource, layout)
     }
 
-    pub const NAME: &'static CStr = vk::KhrMaintenance5Fn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::KhrMaintenance5Fn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrMaintenance5Fn {

@@ -2,7 +2,7 @@ use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
 use crate::{Entry, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 #[derive(Clone)]
@@ -56,7 +56,7 @@ impl XcbSurface {
         b > 0
     }
 
-    pub const NAME: &'static CStr = vk::KhrXcbSurfaceFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::KhrXcbSurfaceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrXcbSurfaceFn {

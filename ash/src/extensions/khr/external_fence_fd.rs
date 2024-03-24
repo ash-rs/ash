@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::{Device, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 #[derive(Clone)]
@@ -36,7 +36,7 @@ impl ExternalFenceFd {
             .assume_init_on_success(fd)
     }
 
-    pub const NAME: &'static CStr = vk::KhrExternalFenceFdFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::KhrExternalFenceFdFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrExternalFenceFdFn {

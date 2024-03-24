@@ -1,6 +1,6 @@
 use crate::vk;
 use crate::{Device, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 #[derive(Clone)]
@@ -45,7 +45,7 @@ impl BufferDeviceAddress {
         (self.fp.get_device_memory_opaque_capture_address_khr)(self.handle, info)
     }
 
-    pub const NAME: &'static CStr = vk::KhrBufferDeviceAddressFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::KhrBufferDeviceAddressFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrBufferDeviceAddressFn {

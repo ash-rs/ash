@@ -3,7 +3,7 @@ use crate::vk;
 use crate::RawPtr;
 use crate::{Device, Instance};
 use alloc::vec::Vec;
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_cuda_kernel_launch.html>
@@ -94,7 +94,7 @@ impl CudaKernelLaunch {
         (self.fp.cmd_cuda_launch_kernel_nv)(command_buffer, launch_info)
     }
 
-    pub const NAME: &'static CStr = vk::NvCudaKernelLaunchFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::NvCudaKernelLaunchFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::NvCudaKernelLaunchFn {

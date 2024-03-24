@@ -1,6 +1,6 @@
 use crate::vk;
 use crate::{Device, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_mesh_shader.html>
@@ -82,7 +82,7 @@ impl MeshShader {
         )
     }
 
-    pub const NAME: &'static CStr = vk::ExtMeshShaderFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::ExtMeshShaderFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ExtMeshShaderFn {

@@ -5,7 +5,7 @@ use crate::vk;
 use crate::RawPtr;
 use crate::{Device, Instance};
 use alloc::vec::Vec;
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 #[derive(Clone)]
@@ -200,7 +200,7 @@ impl Swapchain {
         }
     }
 
-    pub const NAME: &'static CStr = vk::KhrSwapchainFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::KhrSwapchainFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrSwapchainFn {

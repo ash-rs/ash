@@ -1,6 +1,6 @@
 use crate::vk;
 use crate::{Device, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_maintenance1.html>
@@ -29,7 +29,7 @@ impl Maintenance1 {
         (self.fp.trim_command_pool_khr)(self.handle, command_pool, flags);
     }
 
-    pub const NAME: &'static CStr = vk::KhrMaintenance1Fn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::KhrMaintenance1Fn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrMaintenance1Fn {

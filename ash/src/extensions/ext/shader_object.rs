@@ -3,7 +3,7 @@ use crate::vk;
 use crate::RawPtr;
 use crate::{Device, Instance};
 use alloc::vec::Vec;
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 use core::ptr;
 
@@ -702,7 +702,7 @@ impl ShaderObject {
         (self.fp.cmd_set_coverage_reduction_mode_nv)(command_buffer, coverage_reduction_mode)
     }
 
-    pub const NAME: &'static CStr = vk::ExtShaderObjectFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::ExtShaderObjectFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ExtShaderObjectFn {

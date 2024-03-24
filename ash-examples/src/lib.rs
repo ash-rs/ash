@@ -17,7 +17,7 @@ use raw_window_handle::{HasRawDisplayHandle, HasRawWindowHandle};
 use std::borrow::Cow;
 use std::cell::RefCell;
 use std::default::Default;
-use std::ffi::CStr;
+use std::ffi;
 use std::ops::Drop;
 use std::os::raw::c_char;
 
@@ -111,13 +111,13 @@ unsafe extern "system" fn vulkan_debug_callback(
     let message_id_name = if callback_data.p_message_id_name.is_null() {
         Cow::from("")
     } else {
-        CStr::from_ptr(callback_data.p_message_id_name).to_string_lossy()
+        ffi::CStr::from_ptr(callback_data.p_message_id_name).to_string_lossy()
     };
 
     let message = if callback_data.p_message.is_null() {
         Cow::from("")
     } else {
-        CStr::from_ptr(callback_data.p_message).to_string_lossy()
+        ffi::CStr::from_ptr(callback_data.p_message).to_string_lossy()
     };
 
     println!(
@@ -220,9 +220,9 @@ impl ExampleBase {
                 .build(&event_loop)
                 .unwrap();
             let entry = Entry::linked();
-            let app_name = CStr::from_bytes_with_nul_unchecked(b"VulkanTriangle\0");
+            let app_name = ffi::CStr::from_bytes_with_nul_unchecked(b"VulkanTriangle\0");
 
-            let layer_names = [CStr::from_bytes_with_nul_unchecked(
+            let layer_names = [ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_LAYER_KHRONOS_validation\0",
             )];
             let layers_names_raw: Vec<*const c_char> = layer_names

@@ -1,6 +1,6 @@
 use crate::vk;
 use crate::{Entry, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_sample_locations.html>
@@ -42,7 +42,7 @@ impl SampleLocations {
         (self.fp.cmd_set_sample_locations_ext)(command_buffer, sample_locations_info)
     }
 
-    pub const NAME: &'static CStr = vk::ExtSampleLocationsFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::ExtSampleLocationsFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ExtSampleLocationsFn {

@@ -2,7 +2,7 @@ use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
 use crate::{Device, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_NV_low_latency2.html>
@@ -72,7 +72,7 @@ impl LowLatency2 {
         (self.fp.queue_notify_out_of_band_nv)(queue, queue_type_info)
     }
 
-    pub const NAME: &'static CStr = vk::NvLowLatency2Fn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::NvLowLatency2Fn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::NvLowLatency2Fn {

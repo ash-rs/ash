@@ -1,6 +1,6 @@
 use crate::vk;
 use crate::{Device, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_copy_commands2.html>
@@ -72,7 +72,7 @@ impl CopyCommands2 {
         (self.fp.cmd_resolve_image2_khr)(command_buffer, resolve_image_info)
     }
 
-    pub const NAME: &'static CStr = vk::KhrCopyCommands2Fn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::KhrCopyCommands2Fn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrCopyCommands2Fn {

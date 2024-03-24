@@ -2,7 +2,7 @@ use crate::prelude::*;
 use crate::vk;
 use crate::{Entry, Instance};
 use alloc::vec::Vec;
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 #[derive(Clone)]
@@ -29,7 +29,7 @@ impl ToolingInfo {
         })
     }
 
-    pub const NAME: &'static CStr = vk::ExtToolingInfoFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::ExtToolingInfoFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ExtToolingInfoFn {

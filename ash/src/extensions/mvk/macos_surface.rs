@@ -2,7 +2,7 @@ use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
 use crate::{Entry, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 #[derive(Clone)]
@@ -37,7 +37,7 @@ impl MacOSSurface {
         .assume_init_on_success(surface)
     }
 
-    pub const NAME: &'static CStr = vk::MvkMacosSurfaceFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::MvkMacosSurfaceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::MvkMacosSurfaceFn {

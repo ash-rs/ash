@@ -3,7 +3,7 @@ use crate::vk;
 use crate::RawPtr;
 use crate::{Entry, Instance};
 use alloc::vec::Vec;
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 #[derive(Clone)]
@@ -127,7 +127,7 @@ impl Display {
         .assume_init_on_success(surface)
     }
 
-    pub const NAME: &'static CStr = vk::KhrDisplayFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::KhrDisplayFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrDisplayFn {

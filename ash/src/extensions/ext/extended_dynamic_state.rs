@@ -1,6 +1,6 @@
 use crate::vk;
 use crate::{Device, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 use core::ptr;
 
@@ -184,7 +184,7 @@ impl ExtendedDynamicState {
         )
     }
 
-    pub const NAME: &'static CStr = vk::ExtExtendedDynamicStateFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::ExtExtendedDynamicStateFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ExtExtendedDynamicStateFn {

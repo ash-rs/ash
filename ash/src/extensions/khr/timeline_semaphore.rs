@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::{Device, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 #[derive(Clone)]
@@ -46,7 +46,7 @@ impl TimelineSemaphore {
         (self.fp.signal_semaphore_khr)(self.handle, signal_info).result()
     }
 
-    pub const NAME: &'static CStr = vk::KhrTimelineSemaphoreFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::KhrTimelineSemaphoreFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrTimelineSemaphoreFn {

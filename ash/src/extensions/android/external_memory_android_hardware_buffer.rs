@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::{Device, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_ANDROID_external_memory_android_hardware_buffer.html>
@@ -42,7 +42,7 @@ impl ExternalMemoryAndroidHardwareBuffer {
             .assume_init_on_success(buffer)
     }
 
-    pub const NAME: &'static CStr = vk::AndroidExternalMemoryAndroidHardwareBufferFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::AndroidExternalMemoryAndroidHardwareBufferFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::AndroidExternalMemoryAndroidHardwareBufferFn {

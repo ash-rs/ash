@@ -3,7 +3,7 @@ use super::{super::khr::Maintenance5, ImageCompressionControl};
 use crate::prelude::*;
 use crate::vk;
 use crate::{Device, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_host_image_copy.html>
@@ -83,7 +83,7 @@ impl HostImageCopy {
         (self.fp.get_image_subresource_layout2_ext)(self.handle, image, subresource, layout)
     }
 
-    pub const NAME: &'static CStr = vk::ExtHostImageCopyFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::ExtHostImageCopyFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ExtHostImageCopyFn {

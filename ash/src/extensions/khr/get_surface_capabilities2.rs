@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::{Entry, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 use core::ptr;
 
@@ -74,7 +74,7 @@ impl GetSurfaceCapabilities2 {
         err_code.result()
     }
 
-    pub const NAME: &'static CStr = vk::KhrGetSurfaceCapabilities2Fn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::KhrGetSurfaceCapabilities2Fn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrGetSurfaceCapabilities2Fn {

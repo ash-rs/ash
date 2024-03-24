@@ -2,7 +2,7 @@ use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
 use crate::{Entry, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 #[derive(Clone)]
@@ -52,7 +52,7 @@ impl Win32Surface {
         b > 0
     }
 
-    pub const NAME: &'static CStr = vk::KhrWin32SurfaceFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::KhrWin32SurfaceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrWin32SurfaceFn {

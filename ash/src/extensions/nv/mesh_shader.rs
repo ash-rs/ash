@@ -1,6 +1,6 @@
 use crate::vk;
 use crate::{Device, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 #[derive(Clone)]
@@ -69,7 +69,7 @@ impl MeshShader {
         );
     }
 
-    pub const NAME: &'static CStr = vk::NvMeshShaderFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::NvMeshShaderFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::NvMeshShaderFn {

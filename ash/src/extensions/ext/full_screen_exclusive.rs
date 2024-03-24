@@ -2,7 +2,7 @@ use crate::prelude::*;
 use crate::vk;
 use crate::{Device, Instance};
 use alloc::vec::Vec;
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 #[derive(Clone)]
@@ -70,7 +70,7 @@ impl FullScreenExclusive {
         .assume_init_on_success(present_modes)
     }
 
-    pub const NAME: &'static CStr = vk::ExtFullScreenExclusiveFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::ExtFullScreenExclusiveFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ExtFullScreenExclusiveFn {

@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::{Device, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_external_memory_fd.html>
@@ -40,7 +40,7 @@ impl ExternalMemoryFd {
             .result()
     }
 
-    pub const NAME: &'static CStr = vk::KhrExternalMemoryFdFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::KhrExternalMemoryFdFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrExternalMemoryFdFn {

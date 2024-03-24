@@ -2,7 +2,7 @@ use crate::prelude::*;
 use crate::vk;
 use crate::{Entry, Instance};
 use alloc::vec::Vec;
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 #[derive(Clone)]
@@ -58,7 +58,7 @@ impl CalibratedTimestamps {
         Ok((timestamps, max_deviation))
     }
 
-    pub const NAME: &'static CStr = vk::ExtCalibratedTimestampsFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::ExtCalibratedTimestampsFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ExtCalibratedTimestampsFn {

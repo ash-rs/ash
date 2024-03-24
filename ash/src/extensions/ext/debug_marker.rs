@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::{Device, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 #[derive(Clone)]
@@ -54,7 +54,7 @@ impl DebugMarker {
         (self.fp.cmd_debug_marker_insert_ext)(command_buffer, marker_info);
     }
 
-    pub const NAME: &'static CStr = vk::ExtDebugMarkerFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::ExtDebugMarkerFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ExtDebugMarkerFn {

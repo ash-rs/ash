@@ -1,6 +1,6 @@
 use crate::vk;
 use crate::{Device, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_ray_tracing_maintenance1.html>
@@ -30,7 +30,7 @@ impl RayTracingMaintenance1 {
         (self.fp.cmd_trace_rays_indirect2_khr)(command_buffer, indirect_device_address);
     }
 
-    pub const NAME: &'static CStr = vk::KhrRayTracingMaintenance1Fn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::KhrRayTracingMaintenance1Fn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrRayTracingMaintenance1Fn {

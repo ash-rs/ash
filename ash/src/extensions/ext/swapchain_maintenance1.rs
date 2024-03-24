@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::{Device, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_swapchain_maintenance1.html>
@@ -29,7 +29,7 @@ impl SwapchainMaintenance1 {
         (self.fp.release_swapchain_images_ext)(self.handle, release_info).result()
     }
 
-    pub const NAME: &'static CStr = vk::ExtSwapchainMaintenance1Fn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::ExtSwapchainMaintenance1Fn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ExtSwapchainMaintenance1Fn {

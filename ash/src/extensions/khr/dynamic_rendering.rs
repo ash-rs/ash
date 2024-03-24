@@ -1,6 +1,6 @@
 use crate::vk;
 use crate::{Device, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 #[derive(Clone)]
@@ -32,7 +32,7 @@ impl DynamicRendering {
         (self.fp.cmd_end_rendering_khr)(command_buffer)
     }
 
-    pub const NAME: &'static CStr = vk::KhrDynamicRenderingFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::KhrDynamicRenderingFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrDynamicRenderingFn {

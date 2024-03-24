@@ -3,7 +3,7 @@ use crate::vk;
 use crate::RawPtr;
 use crate::{Entry, Instance};
 use alloc::vec::Vec;
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 #[derive(Clone)]
@@ -95,7 +95,7 @@ impl Surface {
         (self.fp.destroy_surface_khr)(self.handle, surface, allocation_callbacks.as_raw_ptr());
     }
 
-    pub const NAME: &'static CStr = vk::KhrSurfaceFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::KhrSurfaceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrSurfaceFn {

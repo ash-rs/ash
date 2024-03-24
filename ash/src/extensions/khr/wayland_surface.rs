@@ -2,7 +2,7 @@ use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
 use crate::{Entry, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 #[derive(Clone)]
@@ -54,7 +54,7 @@ impl WaylandSurface {
         b > 0
     }
 
-    pub const NAME: &'static CStr = vk::KhrWaylandSurfaceFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::KhrWaylandSurfaceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrWaylandSurfaceFn {

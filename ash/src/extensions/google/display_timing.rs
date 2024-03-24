@@ -2,7 +2,7 @@ use crate::prelude::*;
 use crate::vk;
 use crate::{Device, Instance};
 use alloc::vec::Vec;
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_GOOGLE_display_timing.html>
@@ -43,7 +43,7 @@ impl DisplayTiming {
             .assume_init_on_success(properties)
     }
 
-    pub const NAME: &'static CStr = vk::GoogleDisplayTimingFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::GoogleDisplayTimingFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::GoogleDisplayTimingFn {

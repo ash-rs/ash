@@ -3,7 +3,7 @@ use crate::vk;
 use crate::RawPtr;
 use crate::{Device, Instance};
 use alloc::vec::Vec;
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 #[derive(Clone)]
@@ -241,7 +241,7 @@ impl RayTracing {
         (self.fp.compile_deferred_nv)(self.handle, pipeline, shader).result()
     }
 
-    pub const NAME: &'static CStr = vk::NvRayTracingFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::NvRayTracingFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::NvRayTracingFn {

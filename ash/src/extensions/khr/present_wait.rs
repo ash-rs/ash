@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::{Device, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 #[derive(Clone)]
@@ -30,7 +30,7 @@ impl PresentWait {
         (self.fp.wait_for_present_khr)(self.handle, swapchain, present_id, timeout).result()
     }
 
-    pub const NAME: &'static CStr = vk::KhrPresentWaitFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::KhrPresentWaitFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrPresentWaitFn {

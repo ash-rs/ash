@@ -1,6 +1,6 @@
 use crate::vk;
 use crate::{Device, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 #[derive(Clone)]
@@ -62,7 +62,7 @@ impl DrawIndirectCount {
         );
     }
 
-    pub const NAME: &'static CStr = vk::KhrDrawIndirectCountFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::KhrDrawIndirectCountFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrDrawIndirectCountFn {

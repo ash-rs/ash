@@ -3,7 +3,7 @@ use crate::vk;
 use crate::RawPtr;
 use crate::{Device, Instance};
 use alloc::vec::Vec;
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 #[derive(Clone)]
@@ -161,7 +161,7 @@ impl RayTracingPipeline {
         (self.fp.cmd_set_ray_tracing_pipeline_stack_size_khr)(command_buffer, pipeline_stack_size);
     }
 
-    pub const NAME: &'static CStr = vk::KhrRayTracingPipelineFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::KhrRayTracingPipelineFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrRayTracingPipelineFn {

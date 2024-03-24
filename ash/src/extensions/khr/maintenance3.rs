@@ -1,6 +1,6 @@
 use crate::vk;
 use crate::{Device, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_maintenance3.html>
@@ -29,7 +29,7 @@ impl Maintenance3 {
         (self.fp.get_descriptor_set_layout_support_khr)(self.handle, create_info, out);
     }
 
-    pub const NAME: &'static CStr = vk::KhrMaintenance3Fn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::KhrMaintenance3Fn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrMaintenance3Fn {

@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::{Device, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 #[derive(Clone)]
@@ -89,7 +89,7 @@ impl Synchronization2 {
         (self.fp.queue_submit2_khr)(queue, submits.len() as u32, submits.as_ptr(), fence).result()
     }
 
-    pub const NAME: &'static CStr = vk::KhrSynchronization2Fn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::KhrSynchronization2Fn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrSynchronization2Fn {

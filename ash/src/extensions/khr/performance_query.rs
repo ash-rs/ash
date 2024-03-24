@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::{Entry, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 use core::ptr;
 
@@ -105,7 +105,7 @@ impl PerformanceQuery {
         (self.fp.release_profiling_lock_khr)(device)
     }
 
-    pub const NAME: &'static CStr = vk::KhrPerformanceQueryFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::KhrPerformanceQueryFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrPerformanceQueryFn {

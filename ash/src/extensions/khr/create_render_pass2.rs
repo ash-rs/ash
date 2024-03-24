@@ -2,7 +2,7 @@ use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
 use crate::{Device, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 #[derive(Clone)]
@@ -73,7 +73,7 @@ impl CreateRenderPass2 {
         (self.fp.cmd_end_render_pass2_khr)(command_buffer, subpass_end_info);
     }
 
-    pub const NAME: &'static CStr = vk::KhrCreateRenderpass2Fn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::KhrCreateRenderpass2Fn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrCreateRenderpass2Fn {

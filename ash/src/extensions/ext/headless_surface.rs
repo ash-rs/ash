@@ -2,7 +2,7 @@ use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
 use crate::{Entry, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_headless_surface.html>
@@ -38,7 +38,7 @@ impl HeadlessSurface {
         .assume_init_on_success(surface)
     }
 
-    pub const NAME: &'static CStr = vk::ExtHeadlessSurfaceFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::ExtHeadlessSurfaceFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ExtHeadlessSurfaceFn {

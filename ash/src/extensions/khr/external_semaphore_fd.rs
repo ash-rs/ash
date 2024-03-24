@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::{Device, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 #[derive(Clone)]
@@ -39,7 +39,7 @@ impl ExternalSemaphoreFd {
             .assume_init_on_success(fd)
     }
 
-    pub const NAME: &'static CStr = vk::KhrExternalSemaphoreFdFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::KhrExternalSemaphoreFdFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrExternalSemaphoreFdFn {

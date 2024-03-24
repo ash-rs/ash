@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::{Entry, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_acquire_drm_display.html>
@@ -43,7 +43,7 @@ impl AcquireDrmDisplay {
             .assume_init_on_success(display)
     }
 
-    pub const NAME: &'static CStr = vk::ExtAcquireDrmDisplayFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::ExtAcquireDrmDisplayFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::ExtAcquireDrmDisplayFn {

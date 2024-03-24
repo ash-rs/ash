@@ -4,7 +4,7 @@ use crate::prelude::*;
 use crate::vk;
 use crate::{Device, Instance};
 use alloc::vec::Vec;
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_device_group.html>
@@ -158,7 +158,7 @@ impl DeviceGroup {
         }
     }
 
-    pub const NAME: &'static CStr = vk::KhrDeviceGroupFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::KhrDeviceGroupFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrDeviceGroupFn {

@@ -1,6 +1,6 @@
 use crate::vk;
 use crate::{Device, Instance};
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 use core::ptr;
 
@@ -76,7 +76,7 @@ impl Maintenance4 {
         assert_eq!(count as usize, out.len());
     }
 
-    pub const NAME: &'static CStr = vk::KhrMaintenance4Fn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::KhrMaintenance4Fn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrMaintenance4Fn {

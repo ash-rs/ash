@@ -2,7 +2,7 @@ use crate::prelude::*;
 use crate::vk;
 use crate::{Device, Instance};
 use alloc::vec::Vec;
-use core::ffi::CStr;
+use core::ffi;
 use core::mem;
 
 #[derive(Clone)]
@@ -68,7 +68,7 @@ impl PipelineExecutableProperties {
         })
     }
 
-    pub const NAME: &'static CStr = vk::KhrPipelineExecutablePropertiesFn::NAME;
+    pub const NAME: &'static ffi::CStr = vk::KhrPipelineExecutablePropertiesFn::NAME;
 
     #[inline]
     pub fn fp(&self) -> &vk::KhrPipelineExecutablePropertiesFn {
