@@ -204,7 +204,7 @@ Make sure that you have a Vulkan ready driver and install the [LunarG Vulkan SDK
 
 #### Linux
 
-Make sure that you have a Vulkan ready driver and install the [LunarG Vulkan SDK](https://lunarg.com/vulkan-sdk/). You also have to add the library and layers to your path. Have a look at my [post](http://askubuntu.com/a/803110/77183) if you are unsure how to do that.
+Make sure that you have a Vulkan ready driver and install the [LunarG Vulkan SDK](https://lunarg.com/vulkan-sdk/). You also have to add the library and layers to your path. Have a look at my [post](https://askubuntu.com/a/803110/77183) if you are unsure how to do that.
 
 #### macOS
 
@@ -226,7 +226,7 @@ Displays a triangle with vertex colors.
 cargo run -p ash-examples --bin triangle
 ```
 
-![screenshot](http://i.imgur.com/PQZcL6w.jpg)
+![screenshot](https://i.imgur.com/PQZcL6w.jpg)
 
 ### [Texture](https://github.com/ash-rs/ash/blob/master/ash-examples/src/bin/texture.rs)
 
@@ -236,7 +236,7 @@ Displays a texture on a quad.
 cargo run -p ash-examples --bin texture
 ```
 
-![texture](http://i.imgur.com/trow00H.png)
+![texture](https://i.imgur.com/trow00H.png)
 
 ## Useful resources
 
@@ -260,7 +260,7 @@ cargo run -p ash-examples --bin texture
 ## A thanks to
 
 - [Api with no secrets](https://software.intel.com/en-us/articles/api-without-secrets-introduction-to-vulkan-part-1)
-- [Vulkan tutorial](http://jhenriques.net/development.html)
+- [Vulkan tutorial](https://jhenriques.net/development.html)
 - [Vulkan examples](https://github.com/SaschaWillems/Vulkan)
 - [Vulkan tutorial](https://vulkan-tutorial.com/)
 - [Vulkano](https://github.com/vulkano-rs/vulkano)
