@@ -2206,7 +2206,7 @@ fn derive_getters_and_setters(
             /// valid extension structs can be pushed into the chain.
             /// If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the
             /// chain will look like `A -> D -> B -> C`.
-            pub fn push_next<T: #extends_name>(mut self, next: &'a mut T) -> Self {
+            pub fn push_next<T: ?Sized + #extends_name>(mut self, next: &'a mut T) -> Self {
                 unsafe {
                     let next_ptr = <*#mutability T>::cast(next);
                     // `next` here can contain a pointer chain. This means that we must correctly
