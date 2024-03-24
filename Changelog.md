@@ -37,6 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `VK_KHR_dynamic_rendering_local_read` device extension (#888)
 - Added `VK_KHR_line_rasterization` device extension (#889)
 - Added `VK_KHR_calibrated_timestamps` device extension (#890)
+- Added `VK_KHR_maintenance6` device extension (#891)
 
 ### Changed
 
