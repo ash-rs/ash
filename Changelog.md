@@ -38,6 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `VK_KHR_line_rasterization` device extension (#889)
 - Added `VK_KHR_calibrated_timestamps` device extension (#890)
 - Added `VK_KHR_maintenance6` device extension (#891)
+- Added `VK_NV_copy_memory_indirect` device extension (#892)
 
 ### Changed
 

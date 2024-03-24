@@ -1,3 +1,4 @@
+pub mod copy_memory_indirect;
 pub mod coverage_reduction_mode;
 pub mod cuda_kernel_launch;
 pub mod device_diagnostic_checkpoints;
