@@ -3789,21 +3789,21 @@ impl StructureType {
 }
 pub mod amd {
     pub mod rasterization_order {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_rasterization_order\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod shader_trinary_minmax {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_trinary_minmax\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod shader_explicit_vertex_parameter {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_AMD_shader_explicit_vertex_parameter\0",
@@ -3812,13 +3812,13 @@ pub mod amd {
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod gcn_shader {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_gcn_shader\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod draw_indirect_count {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_draw_indirect_count\0")
         };
@@ -3911,34 +3911,34 @@ pub mod amd {
         }
     }
     pub mod negative_viewport_height {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_negative_viewport_height\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod gpu_shader_half_float {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_gpu_shader_half_float\0")
         };
         pub const SPEC_VERSION: u32 = 2u32;
     }
     pub mod shader_ballot {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_ballot\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod texture_gather_bias_lod {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_texture_gather_bias_lod\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod shader_info {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_info\0") };
         pub const SPEC_VERSION: u32 = 1u32;
@@ -3989,35 +3989,35 @@ pub mod amd {
         }
     }
     pub mod shader_image_load_store_lod {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_image_load_store_lod\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod gpu_shader_int16 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_gpu_shader_int16\0")
         };
         pub const SPEC_VERSION: u32 = 2u32;
     }
     pub mod mixed_attachment_samples {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_mixed_attachment_samples\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod shader_fragment_mask {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_fragment_mask\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod buffer_marker {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_buffer_marker\0") };
         pub const SPEC_VERSION: u32 = 1u32;
@@ -4069,21 +4069,21 @@ pub mod amd {
         }
     }
     pub mod pipeline_compiler_control {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_pipeline_compiler_control\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod shader_core_properties {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_core_properties\0")
         };
         pub const SPEC_VERSION: u32 = 2u32;
     }
     pub mod memory_overallocation_behavior {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_AMD_memory_overallocation_behavior\0",
@@ -4092,7 +4092,7 @@ pub mod amd {
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod display_native_hdr {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_display_native_hdr\0")
         };
@@ -4141,21 +4141,21 @@ pub mod amd {
         }
     }
     pub mod shader_core_properties2 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_shader_core_properties2\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod device_coherent_memory {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMD_device_coherent_memory\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod shader_early_and_late_fragment_tests {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_AMD_shader_early_and_late_fragment_tests\0",
@@ -4166,7 +4166,7 @@ pub mod amd {
 }
 pub mod amdx {
     pub mod shader_enqueue {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_AMDX_shader_enqueue\0") };
         pub const SPEC_VERSION: u32 = 1u32;
@@ -4393,7 +4393,7 @@ pub mod amdx {
 }
 pub mod android {
     pub mod native_buffer {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_ANDROID_native_buffer\0")
         };
@@ -4545,7 +4545,7 @@ pub mod android {
         }
     }
     pub mod external_memory_android_hardware_buffer {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_ANDROID_external_memory_android_hardware_buffer\0",
@@ -4628,7 +4628,7 @@ pub mod android {
         }
     }
     pub mod external_format_resolve {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_ANDROID_external_format_resolve\0")
         };
@@ -4637,7 +4637,7 @@ pub mod android {
 }
 pub mod arm {
     pub mod rasterization_order_attachment_access {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_ARM_rasterization_order_attachment_access\0",
@@ -4646,21 +4646,21 @@ pub mod arm {
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod shader_core_properties {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_ARM_shader_core_properties\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod scheduling_controls {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_ARM_scheduling_controls\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod shader_core_builtins {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_ARM_shader_core_builtins\0")
         };
@@ -4669,7 +4669,7 @@ pub mod arm {
 }
 pub mod ext {
     pub mod debug_report {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_debug_report\0") };
         pub const SPEC_VERSION: u32 = 10u32;
@@ -4785,14 +4785,14 @@ pub mod ext {
         }
     }
     pub mod depth_range_unrestricted {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_depth_range_unrestricted\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod debug_marker {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_debug_marker\0") };
         pub const SPEC_VERSION: u32 = 4u32;
@@ -4939,7 +4939,7 @@ pub mod ext {
         }
     }
     pub mod transform_feedback {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_transform_feedback\0")
         };
@@ -5156,42 +5156,42 @@ pub mod ext {
         }
     }
     pub mod video_encode_h264 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_encode_h264\0")
         };
         pub const SPEC_VERSION: u32 = 12u32;
     }
     pub mod video_encode_h265 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_video_encode_h265\0")
         };
         pub const SPEC_VERSION: u32 = 12u32;
     }
     pub mod validation_flags {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_validation_flags\0")
         };
         pub const SPEC_VERSION: u32 = 2u32;
     }
     pub mod shader_subgroup_ballot {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_subgroup_ballot\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod shader_subgroup_vote {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_subgroup_vote\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod texture_compression_astc_hdr {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_EXT_texture_compression_astc_hdr\0",
@@ -5200,21 +5200,21 @@ pub mod ext {
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod astc_decode_mode {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_astc_decode_mode\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod pipeline_robustness {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pipeline_robustness\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod conditional_rendering {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_conditional_rendering\0")
         };
@@ -5286,7 +5286,7 @@ pub mod ext {
         }
     }
     pub mod direct_mode_display {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_direct_mode_display\0")
         };
@@ -5330,7 +5330,7 @@ pub mod ext {
         }
     }
     pub mod acquire_xlib_display {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_acquire_xlib_display\0")
         };
@@ -5409,7 +5409,7 @@ pub mod ext {
         }
     }
     pub mod display_surface_counter {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_display_surface_counter\0")
         };
@@ -5460,7 +5460,7 @@ pub mod ext {
         }
     }
     pub mod display_control {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_display_control\0") };
         pub const SPEC_VERSION: u32 = 1u32;
@@ -5600,7 +5600,7 @@ pub mod ext {
         }
     }
     pub mod discard_rectangles {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_discard_rectangles\0")
         };
@@ -5703,28 +5703,28 @@ pub mod ext {
         }
     }
     pub mod conservative_rasterization {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_conservative_rasterization\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod depth_clip_enable {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_depth_clip_enable\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod swapchain_colorspace {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_swapchain_colorspace\0")
         };
         pub const SPEC_VERSION: u32 = 4u32;
     }
     pub mod hdr_metadata {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_hdr_metadata\0") };
         pub const SPEC_VERSION: u32 = 2u32;
@@ -5771,21 +5771,21 @@ pub mod ext {
         }
     }
     pub mod external_memory_dma_buf {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_external_memory_dma_buf\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod queue_family_foreign {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_queue_family_foreign\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod debug_utils {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_debug_utils\0") };
         pub const SPEC_VERSION: u32 = 2u32;
@@ -6102,28 +6102,28 @@ pub mod ext {
         }
     }
     pub mod sampler_filter_minmax {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_sampler_filter_minmax\0")
         };
         pub const SPEC_VERSION: u32 = 2u32;
     }
     pub mod inline_uniform_block {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_inline_uniform_block\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod shader_stencil_export {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_stencil_export\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod sample_locations {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_sample_locations\0")
         };
@@ -6213,21 +6213,21 @@ pub mod ext {
         }
     }
     pub mod blend_operation_advanced {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_blend_operation_advanced\0")
         };
         pub const SPEC_VERSION: u32 = 2u32;
     }
     pub mod post_depth_coverage {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_post_depth_coverage\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod image_drm_format_modifier {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_drm_format_modifier\0")
         };
@@ -6278,7 +6278,7 @@ pub mod ext {
         }
     }
     pub mod validation_cache {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_validation_cache\0")
         };
@@ -6417,33 +6417,33 @@ pub mod ext {
         }
     }
     pub mod descriptor_indexing {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_descriptor_indexing\0")
         };
         pub const SPEC_VERSION: u32 = 2u32;
     }
     pub mod shader_viewport_index_layer {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_viewport_index_layer\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod filter_cubic {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_filter_cubic\0") };
         pub const SPEC_VERSION: u32 = 3u32;
     }
     pub mod global_priority {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_global_priority\0") };
         pub const SPEC_VERSION: u32 = 2u32;
     }
     pub mod external_memory_host {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_external_memory_host\0")
         };
@@ -6497,7 +6497,7 @@ pub mod ext {
         }
     }
     pub mod calibrated_timestamps {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_calibrated_timestamps\0")
         };
@@ -6594,27 +6594,27 @@ pub mod ext {
         }
     }
     pub mod vertex_attribute_divisor {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_vertex_attribute_divisor\0")
         };
         pub const SPEC_VERSION: u32 = 3u32;
     }
     pub mod pipeline_creation_feedback {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pipeline_creation_feedback\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod pci_bus_info {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pci_bus_info\0") };
         pub const SPEC_VERSION: u32 = 2u32;
     }
     pub mod metal_surface {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_metal_surface\0") };
         pub const SPEC_VERSION: u32 = 1u32;
@@ -6664,47 +6664,47 @@ pub mod ext {
         }
     }
     pub mod fragment_density_map {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_fragment_density_map\0")
         };
         pub const SPEC_VERSION: u32 = 2u32;
     }
     pub mod scalar_block_layout {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_scalar_block_layout\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod subgroup_size_control {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_subgroup_size_control\0")
         };
         pub const SPEC_VERSION: u32 = 2u32;
     }
     pub mod shader_image_atomic_int64 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_image_atomic_int64\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod memory_budget {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_memory_budget\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod memory_priority {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_memory_priority\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod buffer_device_address {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_buffer_device_address\0")
         };
@@ -6751,7 +6751,7 @@ pub mod ext {
         }
     }
     pub mod tooling_info {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_tooling_info\0") };
         pub const SPEC_VERSION: u32 = 1u32;
@@ -6800,42 +6800,42 @@ pub mod ext {
         }
     }
     pub mod separate_stencil_usage {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_separate_stencil_usage\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod validation_features {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_validation_features\0")
         };
         pub const SPEC_VERSION: u32 = 5u32;
     }
     pub mod fragment_shader_interlock {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_fragment_shader_interlock\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod ycbcr_image_arrays {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_ycbcr_image_arrays\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod provoking_vertex {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_provoking_vertex\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod full_screen_exclusive {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_full_screen_exclusive\0")
         };
@@ -6980,7 +6980,7 @@ pub mod ext {
         }
     }
     pub mod headless_surface {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_headless_surface\0")
         };
@@ -7031,7 +7031,7 @@ pub mod ext {
         }
     }
     pub mod line_rasterization {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_line_rasterization\0")
         };
@@ -7080,14 +7080,14 @@ pub mod ext {
         }
     }
     pub mod shader_atomic_float {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_atomic_float\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod host_query_reset {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_host_query_reset\0")
         };
@@ -7135,14 +7135,14 @@ pub mod ext {
         }
     }
     pub mod index_type_uint8 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_index_type_uint8\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod extended_dynamic_state {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extended_dynamic_state\0")
         };
@@ -7485,7 +7485,7 @@ pub mod ext {
         }
     }
     pub mod host_image_copy {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_host_image_copy\0") };
         pub const SPEC_VERSION: u32 = 1u32;
@@ -7641,21 +7641,21 @@ pub mod ext {
         }
     }
     pub mod shader_atomic_float2 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_atomic_float2\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod surface_maintenance1 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_surface_maintenance1\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod swapchain_maintenance1 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_swapchain_maintenance1\0")
         };
@@ -7702,7 +7702,7 @@ pub mod ext {
         }
     }
     pub mod shader_demote_to_helper_invocation {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_EXT_shader_demote_to_helper_invocation\0",
@@ -7711,14 +7711,14 @@ pub mod ext {
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod texel_buffer_alignment {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_texel_buffer_alignment\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod depth_bias_control {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_depth_bias_control\0")
         };
@@ -7765,14 +7765,14 @@ pub mod ext {
         }
     }
     pub mod device_memory_report {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_device_memory_report\0")
         };
         pub const SPEC_VERSION: u32 = 2u32;
     }
     pub mod acquire_drm_display {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_acquire_drm_display\0")
         };
@@ -7848,20 +7848,20 @@ pub mod ext {
         }
     }
     pub mod robustness2 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_robustness2\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod custom_border_color {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_custom_border_color\0")
         };
         pub const SPEC_VERSION: u32 = 12u32;
     }
     pub mod private_data {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_private_data\0") };
         pub const SPEC_VERSION: u32 = 1u32;
@@ -7997,7 +7997,7 @@ pub mod ext {
         }
     }
     pub mod pipeline_creation_cache_control {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_EXT_pipeline_creation_cache_control\0",
@@ -8006,7 +8006,7 @@ pub mod ext {
         pub const SPEC_VERSION: u32 = 3u32;
     }
     pub mod metal_objects {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_metal_objects\0") };
         pub const SPEC_VERSION: u32 = 1u32;
@@ -8052,7 +8052,7 @@ pub mod ext {
         }
     }
     pub mod descriptor_buffer {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_descriptor_buffer\0")
         };
@@ -8406,14 +8406,14 @@ pub mod ext {
         }
     }
     pub mod graphics_pipeline_library {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_graphics_pipeline_library\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod mesh_shader {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_mesh_shader\0") };
         pub const SPEC_VERSION: u32 = 1u32;
@@ -8531,28 +8531,28 @@ pub mod ext {
         }
     }
     pub mod ycbcr_2plane_444_formats {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_ycbcr_2plane_444_formats\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod fragment_density_map2 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_fragment_density_map2\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod image_robustness {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_robustness\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod image_compression_control {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_compression_control\0")
         };
@@ -8597,7 +8597,7 @@ pub mod ext {
         }
     }
     pub mod attachment_feedback_loop_layout {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_EXT_attachment_feedback_loop_layout\0",
@@ -8606,13 +8606,13 @@ pub mod ext {
         pub const SPEC_VERSION: u32 = 2u32;
     }
     pub mod _4444_formats {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_4444_formats\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod device_fault {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_device_fault\0") };
         pub const SPEC_VERSION: u32 = 2u32;
@@ -8660,14 +8660,14 @@ pub mod ext {
         }
     }
     pub mod rgba10x6_formats {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_rgba10x6_formats\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod directfb_surface {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_directfb_surface\0")
         };
@@ -8748,7 +8748,7 @@ pub mod ext {
         }
     }
     pub mod vertex_input_dynamic_state {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_vertex_input_dynamic_state\0")
         };
@@ -8801,14 +8801,14 @@ pub mod ext {
         }
     }
     pub mod physical_device_drm {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_physical_device_drm\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod device_address_binding_report {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_EXT_device_address_binding_report\0",
@@ -8817,14 +8817,14 @@ pub mod ext {
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod depth_clip_control {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_depth_clip_control\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod primitive_topology_list_restart {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_EXT_primitive_topology_list_restart\0",
@@ -8833,7 +8833,7 @@ pub mod ext {
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod pipeline_properties {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pipeline_properties\0")
         };
@@ -8889,13 +8889,13 @@ pub mod ext {
         }
     }
     pub mod frame_boundary {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_frame_boundary\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod multisampled_render_to_single_sampled {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_EXT_multisampled_render_to_single_sampled\0",
@@ -8904,7 +8904,7 @@ pub mod ext {
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod extended_dynamic_state2 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extended_dynamic_state2\0")
         };
@@ -9046,7 +9046,7 @@ pub mod ext {
         }
     }
     pub mod color_write_enable {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_color_write_enable\0")
         };
@@ -9095,28 +9095,28 @@ pub mod ext {
         }
     }
     pub mod primitives_generated_query {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_primitives_generated_query\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod global_priority_query {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_global_priority_query\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod image_view_min_lod {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_view_min_lod\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod multi_draw {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_multi_draw\0") };
         pub const SPEC_VERSION: u32 = 1u32;
@@ -9202,21 +9202,21 @@ pub mod ext {
         }
     }
     pub mod image_2d_view_of_3d {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_2d_view_of_3d\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod shader_tile_image {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_tile_image\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod opacity_micromap {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_opacity_micromap\0")
         };
@@ -9630,21 +9630,21 @@ pub mod ext {
         }
     }
     pub mod load_store_op_none {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_load_store_op_none\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod border_color_swizzle {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_border_color_swizzle\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod pageable_device_local_memory {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_EXT_pageable_device_local_memory\0",
@@ -9692,28 +9692,28 @@ pub mod ext {
         }
     }
     pub mod image_sliced_view_of_3d {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_image_sliced_view_of_3d\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod depth_clamp_zero_one {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_depth_clamp_zero_one\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod non_seamless_cube_map {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_non_seamless_cube_map\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod image_compression_control_swapchain {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_EXT_image_compression_control_swapchain\0",
@@ -9722,14 +9722,14 @@ pub mod ext {
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod nested_command_buffer {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_nested_command_buffer\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod external_memory_acquire_unmodified {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_EXT_external_memory_acquire_unmodified\0",
@@ -9738,7 +9738,7 @@ pub mod ext {
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod extended_dynamic_state3 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_extended_dynamic_state3\0")
         };
@@ -10578,14 +10578,14 @@ pub mod ext {
         }
     }
     pub mod subpass_merge_feedback {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_subpass_merge_feedback\0")
         };
         pub const SPEC_VERSION: u32 = 2u32;
     }
     pub mod shader_module_identifier {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_module_identifier\0")
         };
@@ -10663,7 +10663,7 @@ pub mod ext {
         }
     }
     pub mod rasterization_order_attachment_access {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_EXT_rasterization_order_attachment_access\0",
@@ -10672,21 +10672,21 @@ pub mod ext {
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod legacy_dithering {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_legacy_dithering\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod pipeline_protected_access {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_pipeline_protected_access\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod shader_object {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_shader_object\0") };
         pub const SPEC_VERSION: u32 = 1u32;
@@ -11815,14 +11815,14 @@ pub mod ext {
         }
     }
     pub mod mutable_descriptor_type {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_EXT_mutable_descriptor_type\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod pipeline_library_group_handles {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_EXT_pipeline_library_group_handles\0",
@@ -11831,7 +11831,7 @@ pub mod ext {
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod dynamic_rendering_unused_attachments {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_EXT_dynamic_rendering_unused_attachments\0",
@@ -11840,7 +11840,7 @@ pub mod ext {
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod attachment_feedback_loop_dynamic_state {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_EXT_attachment_feedback_loop_dynamic_state\0",
@@ -11890,7 +11890,7 @@ pub mod ext {
 }
 pub mod fuchsia {
     pub mod imagepipe_surface {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_FUCHSIA_imagepipe_surface\0")
         };
@@ -11941,7 +11941,7 @@ pub mod fuchsia {
         }
     }
     pub mod external_memory {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_FUCHSIA_external_memory\0")
         };
@@ -12022,7 +12022,7 @@ pub mod fuchsia {
         }
     }
     pub mod external_semaphore {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_FUCHSIA_external_semaphore\0")
         };
@@ -12101,7 +12101,7 @@ pub mod fuchsia {
         }
     }
     pub mod buffer_collection {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_FUCHSIA_buffer_collection\0")
         };
@@ -12272,7 +12272,7 @@ pub mod fuchsia {
 }
 pub mod ggp {
     pub mod stream_descriptor_surface {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GGP_stream_descriptor_surface\0")
         };
@@ -12324,7 +12324,7 @@ pub mod ggp {
         }
     }
     pub mod frame_token {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GGP_frame_token\0") };
         pub const SPEC_VERSION: u32 = 1u32;
@@ -12332,7 +12332,7 @@ pub mod ggp {
 }
 pub mod google {
     pub mod display_timing {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_display_timing\0")
         };
@@ -12412,27 +12412,27 @@ pub mod google {
         }
     }
     pub mod hlsl_functionality1 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_hlsl_functionality1\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod decorate_string {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_decorate_string\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod user_type {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_user_type\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod surfaceless_query {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_surfaceless_query\0")
         };
@@ -12441,7 +12441,7 @@ pub mod google {
 }
 pub mod huawei {
     pub mod subpass_shading {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_HUAWEI_subpass_shading\0")
         };
@@ -12515,7 +12515,7 @@ pub mod huawei {
         }
     }
     pub mod invocation_mask {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_HUAWEI_invocation_mask\0")
         };
@@ -12564,7 +12564,7 @@ pub mod huawei {
         }
     }
     pub mod cluster_culling_shader {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_HUAWEI_cluster_culling_shader\0")
         };
@@ -12645,19 +12645,19 @@ pub mod huawei {
 }
 pub mod img {
     pub mod filter_cubic {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_IMG_filter_cubic\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod format_pvrtc {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_IMG_format_pvrtc\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod relaxed_line_rasterization {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_IMG_relaxed_line_rasterization\0")
         };
@@ -12666,14 +12666,14 @@ pub mod img {
 }
 pub mod intel {
     pub mod shader_integer_functions2 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_INTEL_shader_integer_functions2\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod performance_query {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_INTEL_performance_query\0")
         };
@@ -12936,7 +12936,7 @@ pub mod intel {
 }
 pub mod khr {
     pub mod surface {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_surface\0") };
         pub const SPEC_VERSION: u32 = 25u32;
@@ -13105,7 +13105,7 @@ pub mod khr {
         }
     }
     pub mod swapchain {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_swapchain\0") };
         pub const SPEC_VERSION: u32 = 70u32;
@@ -13398,7 +13398,7 @@ pub mod khr {
         }
     }
     pub mod display {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_display\0") };
         pub const SPEC_VERSION: u32 = 23u32;
@@ -13632,7 +13632,7 @@ pub mod khr {
         }
     }
     pub mod display_swapchain {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_display_swapchain\0")
         };
@@ -13685,7 +13685,7 @@ pub mod khr {
         }
     }
     pub mod xlib_surface {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_xlib_surface\0") };
         pub const SPEC_VERSION: u32 = 6u32;
@@ -13767,7 +13767,7 @@ pub mod khr {
         }
     }
     pub mod xcb_surface {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_xcb_surface\0") };
         pub const SPEC_VERSION: u32 = 6u32;
@@ -13849,7 +13849,7 @@ pub mod khr {
         }
     }
     pub mod wayland_surface {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_wayland_surface\0") };
         pub const SPEC_VERSION: u32 = 6u32;
@@ -13929,7 +13929,7 @@ pub mod khr {
         }
     }
     pub mod android_surface {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_android_surface\0") };
         pub const SPEC_VERSION: u32 = 6u32;
@@ -13979,7 +13979,7 @@ pub mod khr {
         }
     }
     pub mod win32_surface {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_win32_surface\0") };
         pub const SPEC_VERSION: u32 = 6u32;
@@ -14057,7 +14057,7 @@ pub mod khr {
         }
     }
     pub mod sampler_mirror_clamp_to_edge {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_KHR_sampler_mirror_clamp_to_edge\0",
@@ -14066,7 +14066,7 @@ pub mod khr {
         pub const SPEC_VERSION: u32 = 3u32;
     }
     pub mod video_queue {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_queue\0") };
         pub const SPEC_VERSION: u32 = 8u32;
@@ -14448,7 +14448,7 @@ pub mod khr {
         }
     }
     pub mod video_decode_queue {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_decode_queue\0")
         };
@@ -14492,14 +14492,14 @@ pub mod khr {
         }
     }
     pub mod video_decode_h264 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_decode_h264\0")
         };
         pub const SPEC_VERSION: u32 = 8u32;
     }
     pub mod dynamic_rendering {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_dynamic_rendering\0")
         };
@@ -14568,13 +14568,13 @@ pub mod khr {
         }
     }
     pub mod multiview {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_multiview\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod get_physical_device_properties2 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_KHR_get_physical_device_properties2\0",
@@ -14796,7 +14796,7 @@ pub mod khr {
         }
     }
     pub mod device_group {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_device_group\0") };
         pub const SPEC_VERSION: u32 = 4u32;
@@ -15013,14 +15013,14 @@ pub mod khr {
         }
     }
     pub mod shader_draw_parameters {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_draw_parameters\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod maintenance1 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance1\0") };
         pub const SPEC_VERSION: u32 = 2u32;
@@ -15068,7 +15068,7 @@ pub mod khr {
         }
     }
     pub mod device_group_creation {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_device_group_creation\0")
         };
@@ -15119,7 +15119,7 @@ pub mod khr {
         }
     }
     pub mod external_memory_capabilities {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_KHR_external_memory_capabilities\0",
@@ -15171,13 +15171,13 @@ pub mod khr {
         }
     }
     pub mod external_memory {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_memory\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod external_memory_win32 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_memory_win32\0")
         };
@@ -15259,7 +15259,7 @@ pub mod khr {
         }
     }
     pub mod external_memory_fd {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_memory_fd\0")
         };
@@ -15334,14 +15334,14 @@ pub mod khr {
         }
     }
     pub mod win32_keyed_mutex {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_win32_keyed_mutex\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod external_semaphore_capabilities {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_KHR_external_semaphore_capabilities\0",
@@ -15395,14 +15395,14 @@ pub mod khr {
         }
     }
     pub mod external_semaphore {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_semaphore\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod external_semaphore_win32 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_semaphore_win32\0")
         };
@@ -15477,7 +15477,7 @@ pub mod khr {
         }
     }
     pub mod external_semaphore_fd {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_semaphore_fd\0")
         };
@@ -15549,7 +15549,7 @@ pub mod khr {
         }
     }
     pub mod push_descriptor {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_push_descriptor\0") };
         pub const SPEC_VERSION: u32 = 2u32;
@@ -15636,27 +15636,27 @@ pub mod khr {
         }
     }
     pub mod shader_float16_int8 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_float16_int8\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod _16bit_storage {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_16bit_storage\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod incremental_present {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_incremental_present\0")
         };
         pub const SPEC_VERSION: u32 = 2u32;
     }
     pub mod descriptor_update_template {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_descriptor_update_template\0")
         };
@@ -15791,14 +15791,14 @@ pub mod khr {
         }
     }
     pub mod imageless_framebuffer {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_imageless_framebuffer\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod create_renderpass2 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_create_renderpass2\0")
         };
@@ -15931,7 +15931,7 @@ pub mod khr {
         }
     }
     pub mod shared_presentable_image {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shared_presentable_image\0")
         };
@@ -15976,7 +15976,7 @@ pub mod khr {
         }
     }
     pub mod external_fence_capabilities {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_fence_capabilities\0")
         };
@@ -16026,13 +16026,13 @@ pub mod khr {
         }
     }
     pub mod external_fence {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_fence\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod external_fence_win32 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_fence_win32\0")
         };
@@ -16109,7 +16109,7 @@ pub mod khr {
         }
     }
     pub mod external_fence_fd {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_external_fence_fd\0")
         };
@@ -16177,7 +16177,7 @@ pub mod khr {
         }
     }
     pub mod performance_query {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_performance_query\0")
         };
@@ -16321,13 +16321,13 @@ pub mod khr {
         }
     }
     pub mod maintenance2 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance2\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod get_surface_capabilities2 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_get_surface_capabilities2\0")
         };
@@ -16409,14 +16409,14 @@ pub mod khr {
         }
     }
     pub mod variable_pointers {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_variable_pointers\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod get_display_properties2 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_get_display_properties2\0")
         };
@@ -16556,14 +16556,14 @@ pub mod khr {
         }
     }
     pub mod dedicated_allocation {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_dedicated_allocation\0")
         };
         pub const SPEC_VERSION: u32 = 3u32;
     }
     pub mod storage_buffer_storage_class {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_KHR_storage_buffer_storage_class\0",
@@ -16572,14 +16572,14 @@ pub mod khr {
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod relaxed_block_layout {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_relaxed_block_layout\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod get_memory_requirements2 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_get_memory_requirements2\0")
         };
@@ -16686,14 +16686,14 @@ pub mod khr {
         }
     }
     pub mod image_format_list {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_image_format_list\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod acceleration_structure {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_acceleration_structure\0")
         };
@@ -17203,7 +17203,7 @@ pub mod khr {
         }
     }
     pub mod ray_tracing_pipeline {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_ray_tracing_pipeline\0")
         };
@@ -17456,13 +17456,13 @@ pub mod khr {
         }
     }
     pub mod ray_query {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_ray_query\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod sampler_ycbcr_conversion {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_sampler_ycbcr_conversion\0")
         };
@@ -17541,7 +17541,7 @@ pub mod khr {
         }
     }
     pub mod bind_memory2 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_bind_memory2\0") };
         pub const SPEC_VERSION: u32 = 1u32;
@@ -17617,14 +17617,14 @@ pub mod khr {
         }
     }
     pub mod portability_subset {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_portability_subset\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod maintenance3 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance3\0") };
         pub const SPEC_VERSION: u32 = 1u32;
@@ -17672,7 +17672,7 @@ pub mod khr {
         }
     }
     pub mod draw_indirect_count {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_draw_indirect_count\0")
         };
@@ -17747,7 +17747,7 @@ pub mod khr {
         }
     }
     pub mod shader_subgroup_extended_types {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_KHR_shader_subgroup_extended_types\0",
@@ -17756,67 +17756,67 @@ pub mod khr {
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod _8bit_storage {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_8bit_storage\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod shader_atomic_int64 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_atomic_int64\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod shader_clock {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_clock\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod video_decode_h265 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_decode_h265\0")
         };
         pub const SPEC_VERSION: u32 = 7u32;
     }
     pub mod global_priority {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_global_priority\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod driver_properties {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_driver_properties\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod shader_float_controls {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_float_controls\0")
         };
         pub const SPEC_VERSION: u32 = 4u32;
     }
     pub mod depth_stencil_resolve {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_depth_stencil_resolve\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod swapchain_mutable_format {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_swapchain_mutable_format\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod timeline_semaphore {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_timeline_semaphore\0")
         };
@@ -17913,21 +17913,21 @@ pub mod khr {
         }
     }
     pub mod vulkan_memory_model {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_vulkan_memory_model\0")
         };
         pub const SPEC_VERSION: u32 = 3u32;
     }
     pub mod shader_terminate_invocation {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_terminate_invocation\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod fragment_shading_rate {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_fragment_shading_rate\0")
         };
@@ -18022,13 +18022,13 @@ pub mod khr {
         }
     }
     pub mod spirv_1_4 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_spirv_1_4\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod surface_protected_capabilities {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_KHR_surface_protected_capabilities\0",
@@ -18037,7 +18037,7 @@ pub mod khr {
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod separate_depth_stencil_layouts {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_KHR_separate_depth_stencil_layouts\0",
@@ -18046,7 +18046,7 @@ pub mod khr {
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod present_wait {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_present_wait\0") };
         pub const SPEC_VERSION: u32 = 1u32;
@@ -18093,7 +18093,7 @@ pub mod khr {
         }
     }
     pub mod uniform_buffer_standard_layout {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_KHR_uniform_buffer_standard_layout\0",
@@ -18102,7 +18102,7 @@ pub mod khr {
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod buffer_device_address {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_buffer_device_address\0")
         };
@@ -18199,7 +18199,7 @@ pub mod khr {
         }
     }
     pub mod deferred_host_operations {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_deferred_host_operations\0")
         };
@@ -18349,7 +18349,7 @@ pub mod khr {
         }
     }
     pub mod pipeline_executable_properties {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_KHR_pipeline_executable_properties\0",
@@ -18466,7 +18466,7 @@ pub mod khr {
         }
     }
     pub mod map_memory2 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_map_memory2\0") };
         pub const SPEC_VERSION: u32 = 1u32;
@@ -18532,34 +18532,34 @@ pub mod khr {
         }
     }
     pub mod shader_integer_dot_product {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_integer_dot_product\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod pipeline_library {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_pipeline_library\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod shader_non_semantic_info {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_shader_non_semantic_info\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod present_id {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_present_id\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod video_encode_queue {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_encode_queue\0")
         };
@@ -18684,7 +18684,7 @@ pub mod khr {
         }
     }
     pub mod synchronization2 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_synchronization2\0")
         };
@@ -18923,14 +18923,14 @@ pub mod khr {
         }
     }
     pub mod fragment_shader_barycentric {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_fragment_shader_barycentric\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod shader_subgroup_uniform_control_flow {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_KHR_shader_subgroup_uniform_control_flow\0",
@@ -18939,7 +18939,7 @@ pub mod khr {
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod zero_initialize_workgroup_memory {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_KHR_zero_initialize_workgroup_memory\0",
@@ -18948,7 +18948,7 @@ pub mod khr {
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod workgroup_memory_explicit_layout {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_KHR_workgroup_memory_explicit_layout\0",
@@ -18957,7 +18957,7 @@ pub mod khr {
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod copy_commands2 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_copy_commands2\0") };
         pub const SPEC_VERSION: u32 = 1u32;
@@ -19124,14 +19124,14 @@ pub mod khr {
         }
     }
     pub mod format_feature_flags2 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_format_feature_flags2\0")
         };
         pub const SPEC_VERSION: u32 = 2u32;
     }
     pub mod ray_tracing_maintenance1 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_ray_tracing_maintenance1\0")
         };
@@ -19178,14 +19178,14 @@ pub mod khr {
         }
     }
     pub mod portability_enumeration {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_portability_enumeration\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod maintenance4 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance4\0") };
         pub const SPEC_VERSION: u32 = 2u32;
@@ -19292,7 +19292,7 @@ pub mod khr {
         }
     }
     pub mod maintenance5 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance5\0") };
         pub const SPEC_VERSION: u32 = 1u32;
@@ -19424,14 +19424,14 @@ pub mod khr {
         }
     }
     pub mod ray_tracing_position_fetch {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_ray_tracing_position_fetch\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod cooperative_matrix {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_KHR_cooperative_matrix\0")
         };
@@ -19484,7 +19484,7 @@ pub mod khr {
 }
 pub mod lunarg {
     pub mod direct_driver_loading {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_LUNARG_direct_driver_loading\0")
         };
@@ -19493,7 +19493,7 @@ pub mod lunarg {
 }
 pub mod msft {
     pub mod layered_driver {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_MSFT_layered_driver\0") };
         pub const SPEC_VERSION: u32 = 1u32;
@@ -19501,7 +19501,7 @@ pub mod msft {
 }
 pub mod mvk {
     pub mod ios_surface {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_MVK_ios_surface\0") };
         pub const SPEC_VERSION: u32 = 3u32;
@@ -19551,7 +19551,7 @@ pub mod mvk {
         }
     }
     pub mod macos_surface {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_MVK_macos_surface\0") };
         pub const SPEC_VERSION: u32 = 3u32;
@@ -19603,7 +19603,7 @@ pub mod mvk {
 }
 pub mod nn {
     pub mod vi_surface {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NN_vi_surface\0") };
         pub const SPEC_VERSION: u32 = 1u32;
@@ -19652,27 +19652,27 @@ pub mod nn {
 }
 pub mod nv {
     pub mod glsl_shader {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_glsl_shader\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod dedicated_allocation {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_dedicated_allocation\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod corner_sampled_image {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_corner_sampled_image\0")
         };
         pub const SPEC_VERSION: u32 = 2u32;
     }
     pub mod external_memory_capabilities {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_external_memory_capabilities\0")
         };
@@ -19733,13 +19733,13 @@ pub mod nv {
         }
     }
     pub mod external_memory {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_external_memory\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod external_memory_win32 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_external_memory_win32\0")
         };
@@ -19790,14 +19790,14 @@ pub mod nv {
         }
     }
     pub mod win32_keyed_mutex {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_win32_keyed_mutex\0")
         };
         pub const SPEC_VERSION: u32 = 2u32;
     }
     pub mod clip_space_w_scaling {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_clip_space_w_scaling\0")
         };
@@ -19848,7 +19848,7 @@ pub mod nv {
         }
     }
     pub mod sample_mask_override_coverage {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_NV_sample_mask_override_coverage\0",
@@ -19857,53 +19857,53 @@ pub mod nv {
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod geometry_shader_passthrough {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_geometry_shader_passthrough\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod viewport_array2 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_viewport_array2\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod viewport_swizzle {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_viewport_swizzle\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod fragment_coverage_to_color {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_fragment_coverage_to_color\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod framebuffer_mixed_samples {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_framebuffer_mixed_samples\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod fill_rectangle {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_fill_rectangle\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod shader_sm_builtins {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_shader_sm_builtins\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod shading_rate_image {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_shading_rate_image\0")
         };
@@ -20012,7 +20012,7 @@ pub mod nv {
         }
     }
     pub mod ray_tracing {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_ray_tracing\0") };
         pub const SPEC_VERSION: u32 = 3u32;
@@ -20414,28 +20414,28 @@ pub mod nv {
         }
     }
     pub mod representative_fragment_test {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_representative_fragment_test\0")
         };
         pub const SPEC_VERSION: u32 = 2u32;
     }
     pub mod shader_subgroup_partitioned {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_shader_subgroup_partitioned\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod compute_shader_derivatives {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_compute_shader_derivatives\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod mesh_shader {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_mesh_shader\0") };
         pub const SPEC_VERSION: u32 = 1u32;
@@ -20551,21 +20551,21 @@ pub mod nv {
         }
     }
     pub mod fragment_shader_barycentric {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_fragment_shader_barycentric\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod shader_image_footprint {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_shader_image_footprint\0")
         };
         pub const SPEC_VERSION: u32 = 2u32;
     }
     pub mod scissor_exclusive {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_scissor_exclusive\0")
         };
@@ -20646,7 +20646,7 @@ pub mod nv {
         }
     }
     pub mod device_diagnostic_checkpoints {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_NV_device_diagnostic_checkpoints\0",
@@ -20723,7 +20723,7 @@ pub mod nv {
         }
     }
     pub mod dedicated_allocation_image_aliasing {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_NV_dedicated_allocation_image_aliasing\0",
@@ -20732,7 +20732,7 @@ pub mod nv {
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod cooperative_matrix {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_cooperative_matrix\0")
         };
@@ -20783,7 +20783,7 @@ pub mod nv {
         }
     }
     pub mod coverage_reduction_mode {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_coverage_reduction_mode\0")
         };
@@ -20831,7 +20831,7 @@ pub mod nv {
         }
     }
     pub mod device_generated_commands {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_device_generated_commands\0")
         };
@@ -21024,27 +21024,27 @@ pub mod nv {
         }
     }
     pub mod inherited_viewport_scissor {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_inherited_viewport_scissor\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod present_barrier {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_present_barrier\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod device_diagnostics_config {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_device_diagnostics_config\0")
         };
         pub const SPEC_VERSION: u32 = 2u32;
     }
     pub mod cuda_kernel_launch {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_cuda_kernel_launch\0")
         };
@@ -21237,13 +21237,13 @@ pub mod nv {
         }
     }
     pub mod low_latency {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_low_latency\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod fragment_shading_rate_enums {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_fragment_shading_rate_enums\0")
         };
@@ -21292,14 +21292,14 @@ pub mod nv {
         }
     }
     pub mod ray_tracing_motion_blur {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_ray_tracing_motion_blur\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod acquire_winrt_display {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_acquire_winrt_display\0")
         };
@@ -21371,7 +21371,7 @@ pub mod nv {
         }
     }
     pub mod external_memory_rdma {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_external_memory_rdma\0")
         };
@@ -21422,14 +21422,14 @@ pub mod nv {
         }
     }
     pub mod displacement_micromap {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_displacement_micromap\0")
         };
         pub const SPEC_VERSION: u32 = 2u32;
     }
     pub mod copy_memory_indirect {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_copy_memory_indirect\0")
         };
@@ -21516,7 +21516,7 @@ pub mod nv {
         }
     }
     pub mod memory_decompression {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_memory_decompression\0")
         };
@@ -21595,7 +21595,7 @@ pub mod nv {
         }
     }
     pub mod device_generated_commands_compute {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_NV_device_generated_commands_compute\0",
@@ -21702,14 +21702,14 @@ pub mod nv {
         }
     }
     pub mod linear_color_attachment {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_linear_color_attachment\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod optical_flow {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_optical_flow\0") };
         pub const SPEC_VERSION: u32 = 1u32;
@@ -21895,7 +21895,7 @@ pub mod nv {
         }
     }
     pub mod ray_tracing_invocation_reorder {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_NV_ray_tracing_invocation_reorder\0",
@@ -21904,7 +21904,7 @@ pub mod nv {
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod extended_sparse_address_space {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_NV_extended_sparse_address_space\0",
@@ -21913,7 +21913,7 @@ pub mod nv {
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod low_latency2 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NV_low_latency2\0") };
         pub const SPEC_VERSION: u32 = 2u32;
@@ -22067,7 +22067,7 @@ pub mod nv {
         }
     }
     pub mod descriptor_pool_overallocation {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_NV_descriptor_pool_overallocation\0",
@@ -22078,7 +22078,7 @@ pub mod nv {
 }
 pub mod nvx {
     pub mod binary_import {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NVX_binary_import\0") };
         pub const SPEC_VERSION: u32 = 1u32;
@@ -22237,7 +22237,7 @@ pub mod nvx {
         }
     }
     pub mod image_view_handle {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_NVX_image_view_handle\0")
         };
@@ -22312,7 +22312,7 @@ pub mod nvx {
         }
     }
     pub mod multiview_per_view_attributes {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_NVX_multiview_per_view_attributes\0",
@@ -22323,35 +22323,35 @@ pub mod nvx {
 }
 pub mod qcom {
     pub mod render_pass_shader_resolve {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_render_pass_shader_resolve\0")
         };
         pub const SPEC_VERSION: u32 = 4u32;
     }
     pub mod render_pass_transform {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_render_pass_transform\0")
         };
         pub const SPEC_VERSION: u32 = 3u32;
     }
     pub mod render_pass_store_ops {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_render_pass_store_ops\0")
         };
         pub const SPEC_VERSION: u32 = 2u32;
     }
     pub mod rotated_copy_commands {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_rotated_copy_commands\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod fragment_density_map_offset {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_QCOM_fragment_density_map_offset\0",
@@ -22360,14 +22360,14 @@ pub mod qcom {
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod image_processing {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_image_processing\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod tile_properties {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_tile_properties\0")
         };
@@ -22449,7 +22449,7 @@ pub mod qcom {
         }
     }
     pub mod multiview_per_view_viewports {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_QCOM_multiview_per_view_viewports\0",
@@ -22458,7 +22458,7 @@ pub mod qcom {
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod multiview_per_view_render_areas {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_QCOM_multiview_per_view_render_areas\0",
@@ -22467,27 +22467,27 @@ pub mod qcom {
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod image_processing2 {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_image_processing2\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod filter_cubic_weights {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_filter_cubic_weights\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod ycbcr_degamma {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_ycbcr_degamma\0") };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod filter_cubic_clamp {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QCOM_filter_cubic_clamp\0")
         };
@@ -22496,7 +22496,7 @@ pub mod qcom {
 }
 pub mod qnx {
     pub mod screen_surface {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_QNX_screen_surface\0") };
         pub const SPEC_VERSION: u32 = 1u32;
@@ -22576,7 +22576,7 @@ pub mod qnx {
         }
     }
     pub mod external_memory_screen_buffer {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_QNX_external_memory_screen_buffer\0",
@@ -22629,7 +22629,7 @@ pub mod qnx {
 }
 pub mod sec {
     pub mod amigo_profiling {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr =
             unsafe { ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_SEC_amigo_profiling\0") };
         pub const SPEC_VERSION: u32 = 1u32;
@@ -22637,14 +22637,14 @@ pub mod sec {
 }
 pub mod valve {
     pub mod mutable_descriptor_type {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_VALVE_mutable_descriptor_type\0")
         };
         pub const SPEC_VERSION: u32 = 1u32;
     }
     pub mod descriptor_set_host_mapping {
-        use crate::vk::extensions::*;
+        use super::super::*;
         pub const NAME: &::std::ffi::CStr = unsafe {
             ::std::ffi::CStr::from_bytes_with_nul_unchecked(
                 b"VK_VALVE_descriptor_set_host_mapping\0",

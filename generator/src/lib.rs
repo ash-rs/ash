@@ -1287,6 +1287,7 @@ pub fn generate_extension_commands<'a>(
     let (vendor, extension_ident) = extension_name.split_once('_').unwrap();
     let extension_ident = match extension_ident.chars().next().unwrap().is_ascii_digit() {
         false => format_ident!("{}", extension_ident.to_lowercase()),
+        // Some extension names start with a digit, which is not a valid identifier in Rust. Prefix those with _:
         true => format_ident!("_{}", extension_ident.to_lowercase()),
     };
 
@@ -1352,7 +1353,7 @@ pub fn generate_extension_commands<'a>(
         vendor,
         quote! {
             pub mod #extension_ident {
-                use crate::vk::extensions::*;
+                use super::super::*; // Use global imports (i.e. Vulkan structs and enums) from the root module defined by this file
 
                 pub const NAME: &::std::ffi::CStr = unsafe {
                     ::std::ffi::CStr::from_bytes_with_nul_unchecked(#byte_name_ident)
