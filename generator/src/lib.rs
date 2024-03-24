@@ -1082,16 +1082,17 @@ fn generate_function_pointers<'a>(
             let parameters_unused = &self.0.parameters_unused;
             let returns = &self.0.returns;
 
-            let byte_function_name =
-                Literal::byte_string(format!("{}\0", self.0.function_name_c).as_bytes());
+            // TODO: proc-macro and proc-macro2 don't yet have a Literal::c_string constructor
+            let byte_function_name = format!(r#"c"{}""#, self.0.function_name_c)
+                .parse::<TokenStream>()
+                .unwrap();
 
             quote!(
                 #function_name_rust: unsafe {
                     unsafe extern "system" fn #function_name_rust (#parameters_unused) #returns {
                         panic!(concat!("Unable to load ", stringify!(#function_name_rust)))
                     }
-                    let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(#byte_function_name);
-                    let val = _f(cname);
+                    let val = _f(#byte_function_name);
                     if val.is_null() {
                         #function_name_rust
                     } else {
@@ -1309,12 +1310,14 @@ pub fn generate_extension_commands<'a>(
             }
         });
 
-    let byte_name_ident = Literal::byte_string(format!("{extension_name}\0").as_bytes());
+    // TODO: proc-macro and proc-macro2 don't yet have a Literal::c_string constructor
+    let byte_name_ident = format!(r#"c"{extension_name}""#)
+        .parse::<TokenStream>()
+        .unwrap();
+
     let extension_cstr = quote! {
         impl #ident {
-            pub const NAME: &'static ::std::ffi::CStr = unsafe {
-                ::std::ffi::CStr::from_bytes_with_nul_unchecked(#byte_name_ident)
-            };
+            pub const NAME: &'static ::std::ffi::CStr = #byte_name_ident;
             #spec_version
         }
     };
@@ -3267,19 +3270,22 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         #(#aliases)*
     };
 
-    fn write_formatted(text: &[u8], out: File) -> std::process::Child {
-        let mut child = std::process::Command::new("rustfmt")
-            .stdin(std::process::Stdio::piped())
-            .stdout(out)
-            .spawn()
-            .expect("Failed to spawn `rustfmt`");
-        let mut stdin = child.stdin.take().expect("Failed to open stdin");
-        stdin.write_all(text).unwrap();
-        drop(stdin);
-        child
+    fn write_formatted(text: &[u8], mut out: File) {
+        out.write_all(text).unwrap();
     }
+    // fn write_formatted(text: &[u8], out: File) -> std::process::Child {
+    //     let mut child = std::process::Command::new("rustfmt")
+    //         .stdin(std::process::Stdio::piped())
+    //         .stdout(out)
+    //         .spawn()
+    //         .expect("Failed to spawn `rustfmt`");
+    //     let mut stdin = child.stdin.take().expect("Failed to open stdin");
+    //     stdin.write_all(text).unwrap();
+    //     drop(stdin);
+    //     child
+    // }
 
-    let processes = [
+    let _processes = [
         write_formatted(feature_code.to_string().as_bytes(), vk_features_file),
         write_formatted(definition_code.to_string().as_bytes(), vk_definitions_file),
         write_formatted(enum_code.to_string().as_bytes(), vk_enums_file),
@@ -3293,10 +3299,16 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         write_formatted(const_debugs.to_string().as_bytes(), vk_const_debugs_file),
         write_formatted(aliases.to_string().as_bytes(), vk_aliases_file),
     ];
-    for mut p in processes {
-        let status = p.wait().unwrap();
-        assert!(status.success());
-    }
+    // for mut p in processes {
+    //     let status = p.wait().unwrap();
+    //     assert!(status.success());
+    // }
+    // TODO: piping through rustfmt is broken, while running it recursively on the tree is fine
+    let status = std::process::Command::new("cargo")
+        .arg("fmt")
+        .status()
+        .unwrap();
+    assert!(status.success());
 
     let vk_include = vk_headers_dir.join("include");
 
