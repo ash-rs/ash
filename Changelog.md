@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added `std` feature. Disabling this feature makes ash `no_std` (#664)
 - Added `Handle::is_null()` to allow checking if a handle is a `NULL` value (#694)
 - Allow building `Entry`/`Instance`/`Device` from handle+fns (see their `from_parts_1_x()` associated functions) (#748)
 - Update Vulkan-Headers to 1.3.281 (#760, #763, #783, #816, #840)
@@ -31,7 +32,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `descriptor_count()` setter on `ash::vk::WriteDescriptorSet` (#809)
 - Added `*_as_c_str()` getters for `c_char` pointers and `c_char` arrays (#831)
 - Added `#[must_use]` to Vulkan structs to make it more clear that they are moved by the builder pattern (#845)
-- Added `std` feature. Disabling this feature makes ash `no_std` (#664)
 
 ### Changed
 
