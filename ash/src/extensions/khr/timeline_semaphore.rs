@@ -19,7 +19,7 @@ impl TimelineSemaphore {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetSemaphoreCounterValue.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetSemaphoreCounterValue.html>
     #[inline]
     pub unsafe fn get_semaphore_counter_value(&self, semaphore: vk::Semaphore) -> VkResult<u64> {
         let mut value = mem::MaybeUninit::uninit();
@@ -27,7 +27,7 @@ impl TimelineSemaphore {
             .assume_init_on_success(value)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkWaitSemaphores.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkWaitSemaphores.html>
     #[inline]
     pub unsafe fn wait_semaphores(
         &self,
@@ -37,7 +37,7 @@ impl TimelineSemaphore {
         (self.fp.wait_semaphores_khr)(self.handle, wait_info, timeout).result()
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkSignalSemaphore.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkSignalSemaphore.html>
     #[inline]
     pub unsafe fn signal_semaphore(
         &self,

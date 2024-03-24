@@ -5,7 +5,7 @@ use std::mem;
 use std::os::raw::c_void;
 use std::ptr;
 
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_NV_device_diagnostic_checkpoints.html>
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_device_diagnostic_checkpoints.html>
 #[derive(Clone)]
 pub struct DeviceDiagnosticCheckpoints {
     fp: vk::NvDeviceDiagnosticCheckpointsFn,
@@ -19,7 +19,7 @@ impl DeviceDiagnosticCheckpoints {
         Self { fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetCheckpointNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetCheckpointNV.html>
     #[inline]
     pub unsafe fn cmd_set_checkpoint(
         &self,
@@ -37,7 +37,7 @@ impl DeviceDiagnosticCheckpoints {
         count.assume_init() as usize
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetQueueCheckpointDataNV.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetQueueCheckpointDataNV.html>
     ///
     /// Call [`get_queue_checkpoint_data_len()`][Self::get_queue_checkpoint_data_len()] to query the number of elements to pass to `out`.
     /// Be sure to [`Default::default()`]-initialize these elements and optionally set their `p_next` pointer.

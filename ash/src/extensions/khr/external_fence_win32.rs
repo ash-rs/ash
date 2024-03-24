@@ -4,7 +4,7 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_external_fence_win32.html>
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_external_fence_win32.html>
 #[derive(Clone)]
 pub struct ExternalFenceWin32 {
     handle: vk::Device,
@@ -20,7 +20,7 @@ impl ExternalFenceWin32 {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkImportFenceWin32HandleKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkImportFenceWin32HandleKHR.html>
     #[inline]
     pub unsafe fn import_fence_win32_handle(
         &self,
@@ -29,7 +29,7 @@ impl ExternalFenceWin32 {
         (self.fp.import_fence_win32_handle_khr)(self.handle, import_info).result()
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetFenceWin32HandleKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetFenceWin32HandleKHR.html>
     #[inline]
     pub unsafe fn get_fence_win32_handle(
         &self,

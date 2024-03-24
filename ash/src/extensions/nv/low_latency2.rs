@@ -5,7 +5,7 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_NV_low_latency2.html>
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_NV_low_latency2.html>
 #[derive(Clone)]
 pub struct LowLatency2 {
     handle: vk::Device,

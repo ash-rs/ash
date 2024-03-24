@@ -4,7 +4,7 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_image_drm_format_modifier.html>
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_image_drm_format_modifier.html>
 #[derive(Clone)]
 pub struct ImageDrmFormatModifier {
     handle: vk::Device,
@@ -20,7 +20,7 @@ impl ImageDrmFormatModifier {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetImageDrmFormatModifierPropertiesEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageDrmFormatModifierPropertiesEXT.html>
     #[inline]
     pub unsafe fn get_image_drm_format_modifier_properties(
         &self,

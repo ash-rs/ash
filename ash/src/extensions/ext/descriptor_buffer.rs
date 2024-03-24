@@ -4,7 +4,7 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_descriptor_buffer.html>
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_descriptor_buffer.html>
 #[derive(Clone)]
 pub struct DescriptorBuffer {
     handle: vk::Device,
@@ -20,7 +20,7 @@ impl DescriptorBuffer {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDescriptorSetLayoutSizeEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDescriptorSetLayoutSizeEXT.html>
     #[inline]
     pub unsafe fn get_descriptor_set_layout_size(
         &self,
@@ -31,7 +31,7 @@ impl DescriptorBuffer {
         count.assume_init()
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDescriptorSetLayoutBindingOffsetEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDescriptorSetLayoutBindingOffsetEXT.html>
     #[inline]
     pub unsafe fn get_descriptor_set_layout_binding_offset(
         &self,
@@ -48,7 +48,7 @@ impl DescriptorBuffer {
         offset.assume_init()
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDescriptorEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetDescriptorEXT.html>
     #[inline]
     pub unsafe fn get_descriptor(
         &self,
@@ -63,7 +63,7 @@ impl DescriptorBuffer {
         )
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBindDescriptorBuffersEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindDescriptorBuffersEXT.html>
     #[inline]
     pub unsafe fn cmd_bind_descriptor_buffers(
         &self,
@@ -77,7 +77,7 @@ impl DescriptorBuffer {
         )
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDescriptorBufferOffsetsEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetDescriptorBufferOffsetsEXT.html>
     #[inline]
     pub unsafe fn cmd_set_descriptor_buffer_offsets(
         &self,
@@ -100,7 +100,7 @@ impl DescriptorBuffer {
         )
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBindDescriptorBufferEmbeddedSamplersEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdBindDescriptorBufferEmbeddedSamplersEXT.html>
     #[inline]
     pub unsafe fn cmd_bind_descriptor_buffer_embedded_samplers(
         &self,
@@ -117,7 +117,7 @@ impl DescriptorBuffer {
         )
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetBufferOpaqueCaptureDescriptorDataEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetBufferOpaqueCaptureDescriptorDataEXT.html>
     #[inline]
     pub unsafe fn get_buffer_opaque_capture_descriptor_data(
         &self,
@@ -132,7 +132,7 @@ impl DescriptorBuffer {
         .result()
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetImageOpaqueCaptureDescriptorDataEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageOpaqueCaptureDescriptorDataEXT.html>
     #[inline]
     pub unsafe fn get_image_opaque_capture_descriptor_data(
         &self,
@@ -147,7 +147,7 @@ impl DescriptorBuffer {
         .result()
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetImageViewOpaqueCaptureDescriptorDataEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetImageViewOpaqueCaptureDescriptorDataEXT.html>
     #[inline]
     pub unsafe fn get_image_view_opaque_capture_descriptor_data(
         &self,
@@ -162,7 +162,7 @@ impl DescriptorBuffer {
         .result()
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetSamplerOpaqueCaptureDescriptorDataEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetSamplerOpaqueCaptureDescriptorDataEXT.html>
     #[inline]
     pub unsafe fn get_sampler_opaque_capture_descriptor_data(
         &self,
@@ -177,7 +177,7 @@ impl DescriptorBuffer {
         .result()
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT.html>
     #[inline]
     pub unsafe fn get_acceleration_structure_opaque_capture_descriptor_data(
         &self,

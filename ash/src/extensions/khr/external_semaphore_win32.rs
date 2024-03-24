@@ -4,7 +4,7 @@ use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_KHR_external_semaphore_win32.html>
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_external_semaphore_win32.html>
 #[derive(Clone)]
 pub struct ExternalSemaphoreWin32 {
     handle: vk::Device,
@@ -20,7 +20,7 @@ impl ExternalSemaphoreWin32 {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkImportSemaphoreWin32HandleKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkImportSemaphoreWin32HandleKHR.html>
     #[inline]
     pub unsafe fn import_semaphore_win32_handle(
         &self,
@@ -29,7 +29,7 @@ impl ExternalSemaphoreWin32 {
         (self.fp.import_semaphore_win32_handle_khr)(self.handle, import_info).result()
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetSemaphoreWin32HandleKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetSemaphoreWin32HandleKHR.html>
     #[inline]
     pub unsafe fn get_semaphore_win32_handle(
         &self,

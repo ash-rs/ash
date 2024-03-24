@@ -20,7 +20,7 @@ impl XcbSurface {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateXcbSurfaceKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateXcbSurfaceKHR.html>
     #[inline]
     pub unsafe fn create_xcb_surface(
         &self,
@@ -37,7 +37,7 @@ impl XcbSurface {
         .assume_init_on_success(surface)
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceXcbPresentationSupportKHR.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceXcbPresentationSupportKHR.html>
     #[inline]
     pub unsafe fn get_physical_device_xcb_presentation_support(
         &self,

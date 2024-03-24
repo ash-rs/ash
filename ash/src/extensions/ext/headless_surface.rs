@@ -5,7 +5,7 @@ use crate::{Entry, Instance};
 use std::ffi::CStr;
 use std::mem;
 
-/// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_EXT_headless_surface.html>
+/// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_EXT_headless_surface.html>
 #[derive(Clone)]
 pub struct HeadlessSurface {
     handle: vk::Instance,
@@ -21,7 +21,7 @@ impl HeadlessSurface {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateHeadlessSurfaceEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateHeadlessSurfaceEXT.html>
     #[inline]
     pub unsafe fn create_headless_surface(
         &self,

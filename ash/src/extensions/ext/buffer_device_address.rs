@@ -18,7 +18,7 @@ impl BufferDeviceAddress {
         Self { handle, fp }
     }
 
-    /// <https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetBufferDeviceAddressEXT.html>
+    /// <https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetBufferDeviceAddressEXT.html>
     #[inline]
     pub unsafe fn get_buffer_device_address(
         &self,
